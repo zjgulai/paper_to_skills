@@ -105,14 +105,14 @@ version: 0.1.0
 curl "https://export.arxiv.org/api/query?search_query=all:uplift+modeling&start=0&max_results=10"
 ```
 
-### 2. SciSpace 搜索
+### 2. Connected Papers（补充工具）
 
-使用 SciSpace (scispace.com) AI 学术搜索引擎：
+使用 Connected Papers 发现相关论文：
 
 ```bash
-# 访问 https://scispace.com/ 进行搜索
-# 支持按领域、日期、引用量筛选
-# 可直接搜索 AI/ML/DL 方法与6大专题结合的论文
+# 访问 https://www.connectedpapers.com/ 进行搜索
+# 输入核心论文标题，探索相关论文图谱
+# 适合在找到一篇核心论文后，扩展更多相关工作
 ```
 
 ### 3. 论文筛选
