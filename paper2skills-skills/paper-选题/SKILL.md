@@ -105,7 +105,17 @@ version: 0.1.0
 curl "https://export.arxiv.org/api/query?search_query=all:uplift+modeling&start=0&max_results=10"
 ```
 
-### 2. 论文筛选
+### 2. SciSpace 搜索
+
+使用 SciSpace (scispace.com) AI 学术搜索引擎：
+
+```bash
+# 访问 https://scispace.com/ 进行搜索
+# 支持按领域、日期、引用量筛选
+# 可直接搜索 AI/ML/DL 方法与6大专题结合的论文
+```
+
+### 3. 论文筛选
 
 根据以下标准筛选：
 
