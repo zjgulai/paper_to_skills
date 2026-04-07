@@ -15,11 +15,10 @@ version: 0.1.0
 ## 触发方式
 
 用户提及以下内容时触发：
-- "生成 skill 卡片"
-- "萃取论文"
-- "论文转 skill"
-- "生成技能卡片"
-- "创建 skill"
+- "生成 skill 卡片" 或 "生成技能卡片"
+- "萃取论文" 或 "论文萃取"
+- "论文转 skill" 或 "论文转技能"
+- "从论文创建 skill"
 
 ## 工作流程
 
@@ -38,12 +37,12 @@ version: 0.1.0
 ### Step 2: 下载并保存论文PDF
 
 1. 从 arXiv 下载原始 PDF
-2. 保存到 `../paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
+2. 保存到 `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
 3. 如果 PDF 不存在，跳过此步骤继续
 
 ### Step 3: 应用 Master Prompt
 
-使用 `../paper2skills-vault/07-资源库/MasterPrompt.md` 中的 Master Prompt 生成 Skill 卡片。
+使用 `/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/MasterPrompt.md` 中的 Master Prompt 生成 Skill 卡片。
 
 ### Step 4: 生成代码模板
 
@@ -53,15 +52,23 @@ version: 0.1.0
 - 核心算法实现
 - 示例数据和测试用例
 
-### Step 5: 代码一致性验证（关键步骤）
+### Step 5: 代码一致性验证（关键步骤 - 强制执行）
 
-**每次生成 Skill 后必须运行代码验证，这是强制流程。**
+**每次生成 Skill 后必须运行代码验证，这是强制流程。未通过验证的 Skill 不得进行 Step 6 保存操作。**
 
-#### 5.1 提取代码模板
+#### 5.1 验证前置检查
+
+在执行验证前，检查以下条件：
+
+- [ ] 代码文件已生成且非空
+- [ ] 代码语法正确（可通过 `python -m py_compile` 检查）
+- [ ] 必要的依赖已在代码中声明
+
+#### 5.2 提取代码模板
 
 从生成的 Skill 卡片中提取代码部分。
 
-#### 5.2 自动生成测试用例
+#### 5.3 自动生成测试用例
 
 根据代码模板，生成以下测试用例：
 
@@ -69,18 +76,21 @@ version: 0.1.0
 - 边界条件测试
 - 典型输入输出测试
 
-#### 5.3 运行代码验证
+#### 5.4 运行代码验证
 
 ```bash
-cd ../paper2skills-code/[领域]/[算法]/
+cd /Users/pray/project/paper_to_skills/paper2skills-code/[领域]/[算法]/
 python -m pytest model.py -v
 ```
 
-**验证失败处理**：
-- 如果代码运行失败，记录错误信息
-- 标记 Skill 卡片为"待验证"
-- **不允许**将未通过验证的 Skill 保存到 vault
-- 需要修复代码后重新验证
+**验证失败处理（强制约束）**：
+- 如果代码运行失败，记录错误信息到 `verification_errors.md`
+- 标记 Skill 卡片状态为"待验证 - 验证失败"
+- **必须**停止后续流程，不得执行 Step 6 保存操作
+- 需要修复代码后重新执行 Step 5 验证
+- 只有验证通过后才能进入 Step 6
+
+#### 5.5 生成验证报告
 
 #### 5.4 生成验证报告
 
@@ -102,16 +112,18 @@ python -m pytest model.py -v
 | test_xxx | ✅ | 1ms |
 ```
 
-### Step 6: 保存输出
+### Step 6: 保存输出（验证通过后）
+
+**前置条件：必须确认 Step 5 代码验证已通过。验证未通过不得执行此步骤。**
 
 保存到相应目录：
 
-- 原始论文PDF: `../paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
-- 阅读笔记: `../paper2skills-vault/papers/[领域]/[论文ID]/notes.md`
-- 萃取结果: `../paper2skills-vault/papers/[领域]/[论文ID]/extract.md`
-- Skill 卡片: `../paper2skills-vault/[领域]/Skill-[算法名称].md`
-- 代码模板: `../paper2skills-code/[领域]/[算法]/model.py`
-- 验证报告: `../paper2skills-vault/papers/[领域]/[论文ID]/verification_report.md`
+- 原始论文PDF: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
+- 阅读笔记: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/notes.md`
+- 萃取结果: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/extract.md`
+- Skill 卡片: `/Users/pray/project/paper_to_skills/paper2skills-vault/[领域]/Skill-[算法名称].md`
+- 代码模板: `/Users/pray/project/paper_to_skills/paper2skills-code/[领域]/[算法]/model.py`
+- 验证报告: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/verification_report.md`
 
 ## Master Prompt 要点
 

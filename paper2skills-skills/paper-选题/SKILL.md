@@ -15,12 +15,12 @@ version: 0.1.0
 ## 触发方式
 
 用户提及以下内容时触发：
-- "筛选论文"
-- "选择论文"
-- "搜索论文"
-- "找 paper"
-- "论文选题"
+- "筛选论文" 或 "筛选 paper"
+- "选择论文" 或 "选择 paper"
+- "搜索论文" 或 "搜索 paper"
+- "论文选题" 或 "paper 选题"
 - "arXiv 搜索"
+- "找学术论文" 或 "找 arxiv"
 
 ## 筛选标准
 
@@ -34,6 +34,8 @@ version: 0.1.0
 4. **供应链** - 选品决策、备货策略、物流调度
 5. **推荐系统** - 复购推荐、搜索排序、首页推荐
 6. **增长模型** - 拉新、促活、留存、变现
+7. **NLP消费者舆情分析(VOC)** - 评价分析、舆情监控、用户反馈挖掘
+8. **NPS净推荐值** - 客户满意度分析、推荐意愿预测
 
 ### 论文评估标准
 
@@ -76,7 +78,7 @@ version: 0.1.0
 
 ### 关键词参考
 
-参考 `../paper2skills-vault/07-资源库/关键词库.md`
+参考关键词库：`/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/关键词库.md`
 
 ### AI方法与6大专题结合
 
@@ -105,7 +107,27 @@ version: 0.1.0
 curl "https://export.arxiv.org/api/query?search_query=all:uplift+modeling&start=0&max_results=10"
 ```
 
-### 2. Connected Papers（补充工具）
+### 2. GitHub 高收藏项目搜索
+
+优先搜索 GitHub 上高 stars 的相关项目，作为论文补充资源：
+
+**搜索策略**：
+- 使用 `topic:[领域]` 或 `language:python` 筛选
+- 优先选择 stars > 500 的项目
+- 优先选择有 README、docs、tests 的项目
+
+**搜索示例**：
+- 搜索 `uplift modeling` 相关项目：https://github.com/search?q=uplift+modeling&type=repositories
+- 搜索 `causal inference` 相关项目：https://github.com/search?q=causal+inference&type=repositories
+- 搜索 `time series forecasting` 相关项目：https://github.com/search?q=time+series+forecasting&type=repositories
+
+**评估标准**：
+- Stars 数量（越高说明越受欢迎）
+- 最近更新时间（优先选择活跃项目）
+- 代码质量（有测试、有文档）
+- 业务适配度（能否与母婴出海业务结合）
+
+### 3. Connected Papers（补充工具）
 
 使用 Connected Papers 发现相关论文：
 
@@ -115,7 +137,7 @@ curl "https://export.arxiv.org/api/query?search_query=all:uplift+modeling&start=
 # 适合在找到一篇核心论文后，扩展更多相关工作
 ```
 
-### 3. 论文筛选
+### 4. 论文筛选
 
 根据以下标准筛选：
 
@@ -123,6 +145,19 @@ curl "https://export.arxiv.org/api/query?search_query=all:uplift+modeling&start=
 - 引用量：有一定引用量说明经过验证
 - 代码实现：有开源代码的优先
 - 业务适配：能与母婴出海业务场景结合
+
+## 与 Skills Graph 的协作
+
+`paper-选题` 与 `paper-skills-graph` 是互补关系：
+
+| Skill | 适用场景 | 优势 |
+|-------|---------|------|
+| `paper-选题` | 有明确的业务需求或关键词 | 主动搜索，针对性强 |
+| `paper-skills-graph` | 想系统性完善知识体系 | 被动推荐，发现知识缺口 |
+
+**推荐流程**:
+1. 先用 `paper-skills-graph` 分析知识缺口 → 获得推荐关键词
+2. 再用 `paper-选题` 基于关键词搜索论文
 
 ## 输出格式
 
@@ -140,6 +175,22 @@ curl "https://export.arxiv.org/api/query?search_query=all:uplift+modeling&start=
 - **摘要**: [论文摘要]
 - **业务适配度**: ⭐⭐⭐⭐⭐
 - **推荐理由**: [为什么推荐]
+```
+
+### GitHub 项目信息
+
+输出筛选后的高收藏 GitHub 项目：
+
+```
+## 项目名称
+
+- **GitHub URL**: https://github.com/xxx/xxx
+- **Stars**: xxxx
+- **语言**: Python/TypeScript/etc.
+- **最后更新**: YYYY-MM-DD
+- **描述**: [项目描述]
+- **业务适配度**: ⭐⭐⭐⭐⭐
+- **推荐理由**: [为什么推荐，可用于补充论文的工程实现]
 ```
 
 ## 注意事项
