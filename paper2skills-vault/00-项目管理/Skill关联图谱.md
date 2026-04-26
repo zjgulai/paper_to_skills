@@ -1,8 +1,8 @@
 # paper2skills Skill 关联图谱
 
-**版本**: v2.3  
-**更新日期**: 2026-04-17  
-**覆盖技能数**: 43 个已萃取同步技能
+**版本**: v2.7
+**更新日期**: 2026-04-26
+**覆盖技能数**: 48 个已萃取同步技能
 
 ---
 
@@ -14,10 +14,11 @@
 | 02-A/B实验 | 3 | A/B Experimental Design, Multi-Armed Bandit, Thompson Sampling |
 | 03-时间序列 | 3 | Demand Forecasting, Doubly Robust Estimation, Temporal Fusion Transformer |
 | 04-供应链 | 4 | Demand Forecasting, Multi-Echelon Inventory, Two-Echelon Inventory DRL, Monodense价格弹性, TJAP跨市场定价 |
-| 05-推荐系统 | 2 | Matrix Factorization, Deep Learning Recommendation (HI) |
+| 05-推荐系统 | 3 | Matrix Factorization, Deep Learning Recommendation (HI), NeuralNDCG Learning to Rank |
 | 06-增长模型 | 9 | Churn Prediction, New Product Opportunity Mining, Cold Start Recommendation, LTV Prediction, Deep Learning Churn Prediction, User Lifecycle STAN, Customer Journey Prototype, DQN Purchase Prediction, Uplift Churn Prediction |
-| 07-NLP-VOC | 22 | 大规模ABSA, BERT-MoE ABSA, CSK情感聚类, NPS驱动因素分析, AIPL-VOC生命周期标签, CrossLingual情感迁移, REVISION无点击意图, Spiral of Silence沉默挖掘, TopicImpact观点单元, PERSONABOT RAG画像, SoMeR多视角表示, GPLR人群标签, Kano需求分类, iReFeed优先级排序, TSCAN上下文Uplift, OfflineRL触达时机, MAA行动建议, StaR观点排序, AGRS评论摘要, TJAP跨市场定价 |
+| 07-NLP-VOC | 23 | 大规模ABSA, BERT-MoE ABSA, CSK情感聚类, NPS驱动因素分析, AIPL-VOC生命周期标签, CrossLingual情感迁移, REVISION无点击意图, Spiral of Silence沉默挖掘, TopicImpact观点单元, PERSONABOT RAG画像, SoMeR多视角表示, GPLR人群标签, Kano需求分类, iReFeed优先级排序, TSCAN上下文Uplift, OfflineRL触达时机, MAA行动建议, StaR观点排序, AGRS评论摘要, TJAP跨市场定价, **AdaNEN流式分类** |
 | 08-知识图谱 | 2 | Knowledge Graph for Skills Management, GraphRAG Knowledge Enhanced Retrieval |
+| 09-DataAgent-LLM | 3 | DeepAnalyze 自主数据科学Agent, Argos Agentic异常检测, Data-to-Dashboard 多Agent可视化 |
 
 ---
 
@@ -66,7 +67,16 @@
     └──────────────┘      └──────────────┘      └──────────────┘
                                  ▲
                                  │
-    REVISION (搜索意图) ─────────┘
+                         ┌───────┘
+                         │
+                         ▼
+                  ┌──────────────┐
+                  │  NeuralNDCG  │
+                  │ Learning to  │
+                  │    Rank      │
+                  └──────┬───────┘
+                         │
+    REVISION (搜索意图) ───┘
 
                                  │
                                  ▼
@@ -91,43 +101,65 @@
                                  │
                                  ▼
 【VOC 与产品决策】（最完整链路）
+    ┌──────────────┐      ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+    │  REVISION    │      │Spiral of     │      │     CSK      │      │   AdaNEN     │
+    │  搜索意图     │      │Silence       │      │  情感聚类     │      │ 流式分类/漂移 │
+    └──────┬───────┘      └──────┬───────┘      └──────┬───────┘      └──────┬───────┘
+           │                     │                     │                     │
+           └─────────────────────┼─────────────────────┘                     │
+                                 │                                           │
+                                 ▼                                           ▼
+    ┌──────────────┐      ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+    │ TopicImpact  │      │ PERSONABOT   │      │    SoMeR     │      │ AutoTag/     │
+    │ 观点单元提取  │      │ RAG画像生成   │      │ 多视角表示    │      │ OpenCML      │
+    └──────┬───────┘      └──────────────┘      └──────┬───────┘      └──────┬───────┘
+           │                                           │                     │
+           │              ┌────────────────────────────┘                     │
+           │              ▼                                                     │
+           │       ┌──────────────┐                                             │
+           │       │    GPLR      │                                             │
+           │       │ 人群标签生成  │                                             │
+           │       └──────┬───────┘                                             │
+           │              │                                                     │
+           │              ▼                                                     │
+           │       ┌──────────────┐      ┌──────────────┐                       │
+           └──────►│     Kano     │─────►│   iReFeed    │                       │
+                   │ 需求分类      │      │ 优先级排序    │                       │
+                   └──────┬───────┘      └──────┬───────┘                       │
+                          │                     │                               │
+                          ▼                     ▼                               │
+    ┌──────────────┐      ┌──────────────┐      ┌──────────────┐                │
+    │    AIPL      │      │  NPS Driver  │      │   MAA/StaR   │                │
+    │ 生命周期标签  │      │  驱动因素分析  │      │  行动/摘要   │                │
+    └──────┬───────┘      └──────┬───────┘      └──────────────┘                │
+           │                     │                                              │
+           │                     ▼                                              │
+           │              ┌──────────────┐      ┌──────────────┐                │
+           └─────────────►│   AGRS       │◄────►│   TSCAN      │                │
+                          │ 评论摘要生成  │      │ 挽回策略     │                │
+                          └──────────────┘      └──────────────┘                │
+                                                                                │
+                          【分布监控层】AdaNEN 实时监控分类质量，触发模型更新告警 │
+
+【数据智能监控】（新增链路）
     ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
-    │  REVISION    │      │Spiral of     │      │     CSK      │
-    │  搜索意图     │      │Silence       │      │  情感聚类     │
-    └──────┬───────┘      └──────┬───────┘      └──────┬───────┘
-           │                     │                     │
-           └─────────────────────┼─────────────────────┘
-                                 │
-                                 ▼
+    │    Argos     │─────►│  DeepAnalyze │─────►│ Data-to-    │
+    │Agentic异常检测│      │ 自主数据科学  │      │ Dashboard   │
+    └──────┬───────┘      └──────────────┘      └──────────────┘
+           │                                      │
+           │                                      ▼
+           │                               ┌──────────────┐
+           │                               │ 自动可视化   │
+           │                               │ 仪表板生成   │
+           │                               └──────────────┘
+           │
+           ├──────────────────────────────────────────────────────┐
+           │                                                     │
+           ▼                                                     ▼
     ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
-    │ TopicImpact  │      │ PERSONABOT   │      │    SoMeR     │
-    │ 观点单元提取  │      │ RAG画像生成   │      │ 多视角表示    │
-    └──────┬───────┘      └──────────────┘      └──────┬───────┘
-           │                                           │
-           │              ┌────────────────────────────┘
-           │              ▼
-           │       ┌──────────────┐
-           │       │    GPLR      │
-           │       │ 人群标签生成  │
-           │       └──────┬───────┘
-           │              │
-           │              ▼
-           │       ┌──────────────┐      ┌──────────────┐
-           └──────►│     Kano     │─────►│   iReFeed    │
-                   │ 需求分类      │      │ 优先级排序    │
-                   └──────┬───────┘      └──────┬───────┘
-                          │                     │
-                          ▼                     ▼
-    ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
-    │    AIPL      │      │  NPS Driver  │      │   MAA/StaR   │
-    │ 生命周期标签  │      │  驱动因素分析  │      │  行动/摘要   │
-    └──────┬───────┘      └──────┬───────┘      └──────────────┘
-           │                     │
-           │                     ▼
-           │              ┌──────────────┐      ┌──────────────┐
-           └─────────────►│   AGRS       │◄────►│   TSCAN      │
-                          │ 评论摘要生成  │      │ 挽回策略     │
-                          └──────────────┘      └──────────────┘
+    │ Demand       │      │  VOC数据     │      │ 用户行为     │
+    │ Forecasting  │      │ 异常监控     │      │ 异常检测     │
+    └──────────────┘      └──────────────┘      └──────────────┘
 
 【用户运营闭环】
     ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
@@ -185,16 +217,36 @@ A/B Experimental Design (实验设计基础)
     → Uplift Modeling (效果评估)
 ```
 
-### 链路 5: 搜索与推荐（有缺口）
+### 链路 5: 搜索与推荐（已补齐）
 
 ```
 REVISION (无点击意图挖掘)
-    → [Learning to Rank] ← 缺失
+    → NeuralNDCG (Learning to Rank)
     → Deep Learning Recommendation (HI)
     → Matrix Factorization
 ```
 
-**问题**: REVISION 识别了搜索意图，但缺少将意图转化为排序决策的**搜索排序学习**技能。
+**状态**: ✅ Learning to Rank 已补齐。NeuralNDCG 通过可微分排序松弛直接优化 NDCG，将 REVISION 识别的搜索意图转化为排序决策。
+
+### 链路 6: 数据异常监控 → 自动分析 → 可视化（已完整）
+
+```
+多源业务数据（销售/库存/VOC/用户行为）
+    → Argos Agentic异常检测（自适应规则生成 + 准确率保证）
+    → DeepAnalyze 自主数据科学Agent（异常触发 → 根因分析 → 报告生成）
+    → Data-to-Dashboard 多Agent可视化（洞察 → 图表 → 仪表板）
+    → 业务决策
+```
+
+**关联强度**: ⭐⭐⭐⭐⭐  
+**业务价值**: 从被动监控转向主动洞察，Argos 识别异常后自动触发 DeepAnalyze 深度分析，再由 D2D 生成可视化仪表板，全程无需人工介入  
+**关键连接**:
+- Argos → Demand Forecasting: 销量异常检测 → 预测模型校准信号
+- Argos → VOC链路: 评论量/情感异常 → 触发TopicImpact/GPLR分析
+- Argos → 增长模型: 用户行为异常 → 触发Churn预警
+- DeepAnalyze → Kano: 深度分析报告 → 产品需求输入
+- DeepAnalyze → Data-to-Dashboard: 分析报告 → 自动可视化呈现
+- Data-to-Dashboard → 管理层: 可视化仪表板 → 决策视图
 
 ---
 
@@ -210,6 +262,7 @@ REVISION (无点击意图挖掘)
 | 4 | **Kano 需求分类** | VOC→产品决策桥梁 | 5 |
 | 5 | **MAA 行动建议生成** | VOC 输出端枢纽 | 5 |
 | 6 | **SoMeR 多视角表示** | 用户画像基座 | 5 |
+| 7 | **DeepAnalyze** | 数据智能分析中枢 | 5 |
 
 ### 跨领域组合推荐
 
@@ -230,6 +283,19 @@ REVISION (无点击意图挖掘)
 | 新品培育闭环 | AIPL VOC | DQN Purchase | 阶段分群 + 购买预测 | 新品冷启动 |
 | 多语言舆情一体化 | CrossLingual | NPS Driver | 一套模型覆盖全球 + 归因 | 出海市场监控 |
 | 全球用户画像 | CrossLingual | PERSONABOT | 多语言VOC → 统一画像 | 全球化用户洞察 |
+| 流式分类自适应 | AdaNEN | InsightNet | 漂移检测 + 高精度静态分类 | 季节性评论分类 |
+| 开放世界流式分类 | AdaNEN | OpenCML | 分布漂移 + 新类别发现 | 新品上市监控 |
+| 实时情绪监控 | AdaNEN | TSCAN | 分布漂移检测 + 挽回策略匹配 | 大促期情绪监控 |
+| 异常→自动分析 | Argos | DeepAnalyze | 异常检测触发 → 深度报告生成 | 销售异常根因分析 |
+| 预测校准预警 | Demand Forecasting | Argos | 预测基线 + 自适应异常检测 | 需求预测偏差监控 |
+| 评论异常洞察 | AdaNEN | Argos | 分类质量监控 + 数据异常检测 | VOC数据质量告警 |
+| 智能产品决策 | DeepAnalyze | Kano | 深度数据分析 → 需求分层 | 季度产品规划 |
+| 用户异常挽留 | Argos | Churn Prediction | 行为异常检测 + 流失预警 | 沉默用户识别 |
+| 分析+可视化闭环 | DeepAnalyze | Data-to-Dashboard | 深度分析 + 自动图表生成 | 周报自动生成 |
+| 异常监控可视化 | Argos | Data-to-Dashboard | 异常检测 + 实时监控面板 | 业务异常告警面板 |
+| VOC洞察可视化 | TopicImpact | Data-to-Dashboard | 话题提取 + 可视化呈现 | 产品复盘报告 |
+| 预测趋势可视化 | Demand Forecasting | Data-to-Dashboard | 预测结果 + 趋势图表 | 需求预测仪表板 |
+| 搜索意图→排序 | REVISION | NeuralNDCG | 意图识别 + 排序优化 | 智能搜索结果排序 |
 
 ---
 
@@ -241,12 +307,14 @@ REVISION (无点击意图挖掘)
 | 02-A/B实验 | ████░░░░ | ████████ | ████░░░░ | **4** |
 | 03-时间序列 | ██░░░░░░ | ████░░░░ | ████░░░░ | 3 |
 | 04-供应链 | ████░░░░ | ████████ | ██████░░ | 4 |
-| 05-推荐系统 | ████████ | ████████ | ████████ | **8** |
+| 05-推荐系统 | ████████ | ████████ | ███████░ | **7** |
 | 06-增长模型 | ██░░░░░░ | ████░░░░ | ████░░░░ | 3 |
 | 07-NLP-VOC | ██░░░░░░ | ██░░░░░░ | ██░░░░░░ | 2 |
 | 08-知识图谱 | ████████ | ████████ | ████████ | 6 |
+| 09-DataAgent-LLM | ████░░░░ | ████████ | ████░░░░ | 4 |
 
-**高密度缺口领域**: 02-A/B实验、05-推荐系统、08-知识图谱
+**高密度缺口领域**: 02-A/B实验、05-推荐系统、08-知识图谱  
+**新增领域**: 09-DataAgent-LLM（刚引入，关联待扩展）
 
 **最低密度缺口领域**: 07-NLP-VOC（闭环最完整）
 
@@ -260,18 +328,28 @@ REVISION (无点击意图挖掘)
   - 缺口: Kano → 产品路线图的必经断点
   - 预期产出: `Skill-iReFeed-需求优先级排序.md`
 
-### P1: 补全商业闭环核心缺口
-- [x] **A/B 实验设计基础** (02-A/B实验)
-  - 状态: 已完成 (`Skill-AB-Experimental-Design.md`)
-  - 覆盖: 连续/二分类样本量、相对提升 Delta method、Power/MDE、分层随机分配、CUPED
-- [ ] **Learning to Rank** (05-推荐系统)
-  - 缺口: REVISION 有意图但无排序决策能力
-  - 关联: 搜索→推荐的桥梁
+### P1: 补全商业闭环核心缺口（已更新）
+- [x] **DeepAnalyze 自主数据科学Agent** (09-DataAgent-LLM)
+  - 状态: 已完成 (`Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md`)
+  - 覆盖: 五动作编排架构，端到端数据分析报告生成
+  - 关联: VOC分析、增长模型、供应链分析
+- [x] **Argos Agentic异常检测** (09-DataAgent-LLM)
+  - 状态: 已完成 (`Skill-Argos-Agentic-Anomaly-Detection.md`)
+  - 覆盖: 三Agent协作规则生成，时序异常检测，准确率保证
+  - 关联: 预测校准、用户行为监控、VOC质量告警
+- [x] **NeuralNDCG Learning to Rank** (05-推荐系统)
+  - 状态: 已完成 (`Skill-NeuralNDCG-Learning-to-Rank.md`)
+  - 覆盖: 可微分排序松弛直接优化NDCG，三种LTR范式对比
+  - 关联: REVISION搜索意图 → NeuralNDCG排序决策 → DLR推荐
 - [x] **动态定价 / 价格弹性模型** (04-供应链)
   - 状态: 已完成 (`Skill-Monodense-单品价格弹性估计.md`)
   - 覆盖: Monodense DLM 单品级价格弹性估计，无需对照实验
 
 ### P2: 深度扩展
+- [x] **Data-to-Dashboard 多Agent可视化** (09-DataAgent-LLM)
+  - 状态: 已完成 (`Skill-Data-to-Dashboard-Multi-Agent-Visualization.md`)
+  - 覆盖: 两阶段多Agent架构（Data-to-Insight + Insight-to-Chart），Tree-of-Thoughts 可视化选择
+  - 关联: DeepAnalyze 分析结果 → 自动可视化仪表板
 - [ ] **序列推荐 Session-based Recommendation** (05-推荐系统)
 - [ ] **LLM 驱动个性化文案生成** (07-NLP-VOC 营销策略层)
 - [ ] **多目标推荐 Multi-Task Learning** (05-推荐系统)
@@ -286,12 +364,14 @@ REVISION (无点击意图挖掘)
 
 ### Phase 2: 短期补全（2-4周）
 3. ~~萃取 **A/B 实验设计基础**，建立实验严谨性~~ ✅ 已完成
-4. 萃取 **Learning to Rank**，完善搜索推荐能力
+4. ~~萃取 **DeepAnalyze + Argos**，建立数据智能监控链路~~ ✅ 已完成
 5. ~~萃取 **动态定价模型**，补齐供应链利润闭环~~ ✅ 已完成
+6. ~~萃取 **Learning to Rank**，完善搜索推荐能力~~ ✅ 已完成
 
 ### Phase 3: 中期扩展（1-2月）
-6. 探索 **序列推荐** 和 **文案生成**，提升转化率
-7. 引入 **客服对话分析** 技能，扩展 VOC 数据源
+7. ~~探索 **Data-to-Dashboard**，将 DeepAnalyze 分析结果自动转化为管理层可视化仪表板~~ ✅ 已完成
+8. 探索 **序列推荐** 和 **文案生成**，提升转化率
+9. 引入 **客服对话分析** 技能，扩展 VOC 数据源
 
 ---
 
