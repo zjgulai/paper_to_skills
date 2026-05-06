@@ -194,6 +194,12 @@ curl "https://export.arxiv.org/api/query?search_query=all:uplift+modeling&start=
 
 Search priority: Papers with code implementations > experimental validation > theoretical only. Exclude surveys, meta-analyses, and pure theory papers without experiments.
 
+## Recent Skills Added
+
+| Date | Skill | Domain | Commit |
+|------|-------|--------|--------|
+| 2026-05-06 | Self-Improving LLM Agent Pipeline | 07-NLP-VOC | `985e82b` |
+
 ## Sync Status Tracking
 
 The sync system tracks publication status across platforms:
