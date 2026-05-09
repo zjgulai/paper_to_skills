@@ -69,7 +69,13 @@ def normalize_nps(value) -> str | None:
 
 
 def load_jsonl(path: Path) -> list[dict]:
-    return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    out: list[dict] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                out.append(json.loads(line))
+    return out
 
 
 def index_by_review(records: list[dict]) -> dict[str, dict]:
