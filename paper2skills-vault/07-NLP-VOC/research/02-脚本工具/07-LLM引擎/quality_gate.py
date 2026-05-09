@@ -36,7 +36,13 @@ def load_json(path: Path) -> dict:
 
 
 def load_jsonl(path: Path) -> list[dict]:
-    return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    out: list[dict] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                out.append(json.loads(line))
+    return out
 
 
 def fmt_pass(ok: bool) -> str:
@@ -164,10 +170,55 @@ def gate_week1(args) -> tuple[list[dict], bool]:
     return checks, overall
 
 
+def _stream_pred_stats(path: Path) -> tuple[int, int, float, int]:
+    """Stream-aggregate pred jsonl → (n_pred, n_labels, sum_conf, n_with_nps)
+
+    避免把 364K × 500M 记录一次性装进内存（原 load_jsonl 会 OOM）。
+    """
+    n_pred = 0
+    n_labels = 0
+    sum_conf = 0.0
+    n_with_nps = 0
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            n_pred += 1
+            for l in r.get("labels") or []:
+                c = l.get("confidence")
+                if isinstance(c, (int, float)):
+                    sum_conf += float(c)
+                    n_labels += 1
+            if r.get("proxy_nps_final") or r.get("proxy_nps"):
+                n_with_nps += 1
+    return n_pred, n_labels, sum_conf, n_with_nps
+
+
+def _stream_persona_stats(path: Path) -> tuple[int, int]:
+    n_total = 0
+    n_hit = 0
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            n_total += 1
+            if r.get("persona_tags"):
+                n_hit += 1
+    return n_total, n_hit
+
+
 def gate_week2(args) -> tuple[list[dict], bool]:
     checks: list[dict] = []
-    pred_records = load_jsonl(args.pred) if args.pred and args.pred.exists() else []
-    n_pred = len(pred_records)
 
     coverage = load_json(args.coverage_json) if args.coverage_json and args.coverage_json.exists() else {}
 
@@ -178,25 +229,25 @@ def gate_week2(args) -> tuple[list[dict], bool]:
     checks.append({"id": 11, "name": "Effective coverage", "threshold": ">= 0.94",
                    "value": round(eff_cov, 4), "pass": eff_cov >= 0.94})
 
-    confs = []
-    for r in pred_records:
-        for l in r.get("labels") or []:
-            c = l.get("confidence")
-            if isinstance(c, (int, float)):
-                confs.append(float(c))
-    avg_conf = (sum(confs) / len(confs)) if confs else 0.0
+    if args.pred and args.pred.exists():
+        n_pred, n_labels, sum_conf, n_with_nps = _stream_pred_stats(args.pred)
+    else:
+        n_pred = n_labels = n_with_nps = 0
+        sum_conf = 0.0
+    avg_conf = (sum_conf / n_labels) if n_labels else 0.0
     checks.append({"id": 12, "name": "Average confidence", "threshold": ">= 0.75",
                    "value": round(avg_conf, 4), "pass": avg_conf >= 0.75,
-                   "note": f"n_labels={len(confs)}"})
+                   "note": f"n_labels={n_labels}"})
 
-    persona_records = load_jsonl(args.persona_pred) if args.persona_pred and args.persona_pred.exists() else []
-    n_persona_hit = sum(1 for r in persona_records if (r.get("persona_tags") or []))
-    persona_rate = n_persona_hit / max(len(persona_records), 1)
+    if args.persona_pred and args.persona_pred.exists():
+        n_persona_total, n_persona_hit = _stream_persona_stats(args.persona_pred)
+    else:
+        n_persona_total = n_persona_hit = 0
+    persona_rate = n_persona_hit / max(n_persona_total, 1)
     checks.append({"id": 13, "name": "Persona penetration", "threshold": ">= 0.60",
                    "value": round(persona_rate, 4), "pass": persona_rate >= 0.60,
-                   "note": f"hit={n_persona_hit}, n={len(persona_records)}"})
+                   "note": f"hit={n_persona_hit}, n={n_persona_total}"})
 
-    n_with_nps = sum(1 for r in pred_records if r.get("proxy_nps_final") or r.get("proxy_nps"))
     nps_cov = n_with_nps / max(n_pred, 1)
     checks.append({"id": 14, "name": "Proxy NPS coverage", "threshold": ">= 0.95",
                    "value": round(nps_cov, 4), "pass": nps_cov >= 0.95,
