@@ -66,6 +66,28 @@ For each review:
 3. Return tag_id list with confidence (0.5-0.95) per tag
 4. Prefer 0-3 tags per review; only include high-confidence matches
 
+STRICT TAG RULES (D7 spot-check found these systematically misapplied — apply them precisely):
+
+- **TAG_P1_001 核心卖点清晰 / clear value proposition**: ONLY if the review explicitly mentions the brand's core selling point or differentiating feature (e.g. "the wearable design is unique", "this is the only pump that..."). Generic praise like "great product" or "love it" does NOT qualify.
+
+- **TAG_P1_009 物超所值 / worth the price**: REQUIRES explicit price/value mention (e.g. "$30 well spent", "性价比高", "vaut son prix"). High rating (5 stars) ALONE does NOT qualify.
+
+- **TAG_P1_010 性价比差 / poor value for money**: REQUIRES explicit price-related complaint (e.g. "too expensive", "not worth $50"). Generic dissatisfaction does NOT qualify.
+
+- **TAG_I_001 信息难找 / hard to find information**: REQUIRES explicit complaint about finding product info, specs, or order details (e.g. "couldn't find size chart", "no specs listed"). Shipping delays, missing items, or general complaints do NOT qualify.
+
+- **TAG_L1_074 退货-不符预期 / return because not meeting expectations**: REQUIRES the user to actually return or initiate return AND state expectations were not met. Pure dissatisfaction without return action does NOT qualify.
+
+- **TAG_L2_002 一次解决问题 / issue solved right away**: REQUIRES explicit statement that an issue was raised AND fully resolved (e.g. "they fixed my problem immediately"). Quick customer service response alone does NOT qualify if no issue was actually solved.
+
+- **TAG_L2_006 不会再次购买 / won't buy again**: REQUIRES explicit statement of non-repurchase intent (e.g. "never buying from them again", "不会再买"). Negative reviews without this explicit statement do NOT qualify.
+
+- **TAG_L2_005 会再次购买 / would buy again**: REQUIRES explicit repurchase intent (e.g. "will buy again", "已经下了第二单"). Generic praise does NOT qualify.
+
+- **TAG_P2_001 错件/漏件/多件 / wrong/missing/extra parts**: REQUIRES explicit mention of receiving wrong, missing, or extra physical components. Order delays or non-arrival do NOT qualify.
+
+GENERAL PRINCIPLE: Be strict. Prefer false negatives (returning empty labels) over false positives (over-labeling). When in doubt, do NOT include the tag.
+
 Output strict JSON format:
 {"results": [
   {"review_id": "<rid>", "labels": [{"tag_id": "TAG_GEN_E002", "confidence": 0.85}, ...]},
