@@ -458,8 +458,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="输入 jsonl")
     ap.add_argument("--base-dict",
                     type=Path,
-                    default=RESEARCH_ROOT_DEFAULT / "04-输出结果/01-字典版本/tag_dictionary_v4.0.xlsx",
-                    help="基础字典 xlsx")
+                    default=RESEARCH_ROOT_DEFAULT / "04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx",
+                    help="基础字典 xlsx（默认 v4.1，Phase 6 D2 起切换）")
     ap.add_argument("--output-dict", type=Path,
                     default=Path("/tmp") / "tag_dictionary_v4.1_dryrun.xlsx",
                     help="新版字典输出路径")

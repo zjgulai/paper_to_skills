@@ -9,7 +9,7 @@
 
 输入：
   - phase5_intermediate_merged.jsonl（打标记录）
-  - tag_dictionary_v4.0.xlsx（含主责部门 + 业务动作 + 情感极性列）
+  - tag_dictionary_v4.1.xlsx（含主责部门 + 业务动作 + 情感极性列；v4.1 含 LLM 补齐的优化建议）
 
 输出：
   - 部门周报 Markdown（Top 10 行动建议 + SRAC 四维评分 + 3 条代表评论 + 预期指标变化）
@@ -368,8 +368,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="部门名（中文，如『产品研发部』，或英文别名 product_rd）")
     ap.add_argument("--dict", type=Path,
                     default=Path(__file__).resolve().parent.parent.parent
-                    / "04-输出结果/01-字典版本/tag_dictionary_v4.0.xlsx",
-                    help="v4.0 字典路径")
+                    / "04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx",
+                    help="字典路径（默认 v4.1，Phase 6 D2 起切换）")
     ap.add_argument("--output", required=True, type=Path,
                     help="输出 Markdown 路径")
     ap.add_argument("--top-n", type=int, default=10,

@@ -318,8 +318,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="按主责部门过滤标签（仅 group_by=tag 有效）")
     ap.add_argument("--dict", type=Path,
                     default=Path(__file__).resolve().parent.parent.parent
-                    / "04-输出结果/01-字典版本/tag_dictionary_v4.0.xlsx",
-                    help="v4.0 字典路径（仅 --filter-dept 时使用）")
+                    / "04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx",
+                    help="字典路径（默认 v4.1，Phase 6 D2 起切换；仅 --filter-dept 时使用）")
     ap.add_argument("--output", required=True, type=Path,
                     help="Markdown 输出路径")
     ap.add_argument("--json-output", type=Path, default=None,
