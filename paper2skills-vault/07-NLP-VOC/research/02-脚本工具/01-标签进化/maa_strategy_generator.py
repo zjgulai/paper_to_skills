@@ -83,6 +83,31 @@ class TopicStats:
         return self.sum_abs_sentiment / max(self.hit_count, 1)
 
 
+_SENTIMENT_STR_TO_FLOAT = {
+    "positive": 1.0, "negative": -1.0, "neutral": 0.0,
+    "pos": 1.0, "neg": -1.0, "neu": 0.0,
+    "正向": 1.0, "负向": -1.0, "中性": 0.0,
+}
+
+
+def _to_sentiment_float(raw: Any) -> float:
+    """历史数据里 sentiment_calibrated 可能是 float 也可能是 "positive"/"negative"/"neutral" 字符串。
+    统一转为 [-1, 1] 浮点数；无法识别的返回 0.0。"""
+    if raw is None:
+        return 0.0
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    if isinstance(raw, str):
+        key = raw.strip().lower()
+        if key in _SENTIMENT_STR_TO_FLOAT:
+            return _SENTIMENT_STR_TO_FLOAT[key]
+        try:
+            return float(raw)
+        except ValueError:
+            return 0.0
+    return 0.0
+
+
 def load_dict_dept_map(xlsx_path: Path) -> dict[str, TagMeta]:
     wb = openpyxl.load_workbook(str(xlsx_path), read_only=True, data_only=True)
     ws = wb["01_通用标签主表"]
@@ -151,7 +176,8 @@ def topic_impact(
                     stats[tid] = s
                 s.hit_count += 1
                 conf = float(lbl.get("confidence") or 0.0)
-                sent = abs(float(lbl.get("sentiment_calibrated") or 0.0))
+                sc_raw = lbl.get("sentiment_calibrated")
+                sent = abs(_to_sentiment_float(sc_raw))
                 s.sum_confidence += conf
                 s.sum_abs_sentiment += sent
                 if len(s.review_evidences) < max_evidences:
