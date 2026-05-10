@@ -1,0 +1,38 @@
+services:
+  superset-redis:
+    image: redis:7
+    container_name: voc_superset_redis
+    restart: unless-stopped
+    volumes:
+      - superset_redis_data:/data
+
+  superset:
+    image: apache/superset:4.1.1
+    container_name: voc_superset
+    restart: unless-stopped
+    depends_on:
+      - superset-redis
+    user: root
+    environment:
+      SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
+      SUPERSET_SECRET_KEY: voc_bi_dev_secret_key_not_for_production_20260510
+      DATABASE_URL: sqlite:////app/superset_home/superset.db
+    ports:
+      - "8088:8088"
+    volumes:
+      - superset_home:/app/superset_home
+      - ./superset_config.py:/app/pythonpath/superset_config.py:ro
+      - ./superset_bootstrap.sh:/app/docker/superset_bootstrap.sh:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    entrypoint: ["/bin/bash", "/app/docker/superset_bootstrap.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8088/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+volumes:
+  superset_home:
+  superset_redis_data:
