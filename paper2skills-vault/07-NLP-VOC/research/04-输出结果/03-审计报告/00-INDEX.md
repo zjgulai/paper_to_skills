@@ -1,24 +1,50 @@
 ---
 name: audit-reports-index
-description: research/04-输出结果/03-审计报告/ 下 42 份审计/进度/评估报告的分类索引。按 Phase 和类型分组（Phase 3 / Phase 4 / Phase 5 D1-D8 / v3.6-v3.7 字典审计）。当需要追溯某个指标的原始证据、对照某日 QA 结果、或做外部审计材料索引时使用。
+description: research/04-输出结果/03-审计报告/ 下 118 份审计/进度/评估报告的分类索引。按 Phase 和类型分组（Phase 3 / Phase 4 / Phase 5 D1-D14 / Phase 6 D1-D10 / Phase 7 D1-D4 / 字典版本审计）。当需要追溯某个指标的原始证据、对照某日 QA 结果、或做外部审计材料索引时使用。
 title: 审计报告索引
 doc_type: index
 module: voc-nlp
 topic: audit-reports-index
 status: stable
 created: 2026-05-08
-updated: 2026-05-08
+updated: 2026-05-11
 owner: self
 source: ai
 ---
 
 # 审计报告索引
 
-> **本目录**：[research/04-输出结果/03-审计报告/](./)  共 42 个文件
+> **本目录**：[research/04-输出结果/03-审计报告/](./)  共 **118 个文件**
 > **说明**：文件**原地保留**不移动（脚本写死了文件名），只通过本 INDEX 提供分类导航
 > **命名约定**：`phase{N}_d{M}_*` 是 Phase N 第 M 天产出；`*.json` 是机器可读版本，同名 `*.md` 是人读版本
 
-## Phase 5 每日进度报告（D1-D8 核心）
+## Phase 7 BI B 路径（D1-D4，2026-05-08 → 05-11）
+
+| 日 | 报告 | 主题 | 关键结论 |
+|---|---|---|---|
+| - | [phase7_complete_retrospective.md](phase7_complete_retrospective.md) | **Phase 7 完整复盘** | 4 天 / ~7h / $0 LLM 成本 / BI B 路径完整闭环 |
+| D1 | [phase7_d1_progress_report.md](phase7_d1_progress_report.md) | voc_bi 数据库 + ETL + 6 SQL 视图 | 37s 导入 364K reviews + 690K labels |
+| D2 | [phase7_d2_progress_report.md](phase7_d2_progress_report.md) | Superset Docker + voc_bi 接入 | 6 datasets 注册 + SQL Lab 烟测 |
+| D3 | [phase7_d3_progress_report.md](phase7_d3_progress_report.md) | 12 charts + 8 dashboards | Playwright 验证真实数据渲染 |
+| D4 | [phase7_d4_progress_report.md](phase7_d4_progress_report.md) | 10 native filters | dept polarity 端到端 PASS / Overview pie 渲染 bug |
+
+## Phase 6 字典进化与质量提升（D1-D10，2026-05-09 → 05-10）
+
+| 日 | 报告 | 主题 | 关键结论 |
+|---|---|---|---|
+| - | [phase5_6_complete_retrospective.md](phase5_6_complete_retrospective.md) | **Phase 5+6 完整复盘** | D14 部分收官到 BI 看板上线的 17 commit 旅程 |
+| D1 | [phase6_d1_progress_report.md](phase6_d1_progress_report.md) / [v41_dict_fix.md](phase6_d1_v41_dict_fix.md) | v4.0 字段质量修复（v4.1 字典就绪） | dictionary_validator + auto-fill |
+| D2 | [phase6_d2_progress_report.md](phase6_d2_progress_report.md) / [Gate](phase6_d2_week2_gate_v41.md) | F8 v4.1 下游切换 + 重测 | Gate 数字未动，根因诊断 |
+| D3 | [phase6_d3_progress_report.md](phase6_d3_progress_report.md) / [confidence_rebalance.md](phase6_d3_confidence_rebalance.md) | F5 离线 confidence 重赋 | Gate #12 PASS，5/7 |
+| D4 | [phase6_d4_progress_report.md](phase6_d4_progress_report.md) / [multilingual.md](phase6_d4_multilingual.md) | F4 多语言重打 + Gate 改善 | 5/7 hold，#10/#11 缩小 31-39% 差距 |
+| D5 | [phase6_d5_progress_report.md](phase6_d5_progress_report.md) / [amazon_merge.md](phase6_d5_amazon_merge.md) / [zendesk_merge.md](phase6_d5_zendesk_merge.md) | F3 zendesk + amazon 重打 | Phase 5 收官 7/7 PASS 🎉 |
+| D6 | [phase6_d6_progress_report.md](phase6_d6_progress_report.md) / [golden_consensus.md](phase6_d6_golden_consensus.md) / [qa2_regression.md](phase6_d6_qa2_regression.md) | F1 Kimi 共识填充 golden_set | QA-2 解锁 |
+| D7 | [phase6_d7_progress_report.md](phase6_d7_progress_report.md) / [spot_check.md](phase6_d7_spot_check.md) | #3 LLM 输出抽样质量评估 | 暴露 precision 0.639 风险 |
+| D8 | [phase6_d8_progress_report.md](phase6_d8_progress_report.md) / [dual_coverage.md](phase6_d8_dual_coverage.md) / [week2_gate.md](phase6_d8_week2_gate.md) | strict prompt 重打修复 precision | 0.639→0.885，但 Gate 7/7→5/7 |
+| D9 | [phase6_d9_progress_report.md](phase6_d9_progress_report.md) / [filter.md](phase6_d9_filter.md) / [week2_gate.md](phase6_d9_week2_gate.md) | **Method C 后处理过滤** | Gate **7/7 + precision 0.896** 🎉 |
+| D10 | [phase6_d10_progress_report.md](phase6_d10_progress_report.md) | **BI 看板实质上线 C+A 双路径** | 14 周报 + 125KB HTML（C 路径，被 Phase 7 替代） |
+
+## Phase 5 AI 打标闭环（D1-D14，2026-05-07 → 05-08）
 
 | 日 | 报告 | 主题 | 关键结论 |
 |---|---|---|---|
@@ -29,7 +55,11 @@ source: ai
 | D5 | [phase5_d5_progress_report.md](phase5_d5_progress_report.md) | Proxy NPS + Week 1 Gate | NPS 99.8% 一致率；双口径评估追溯 drop-tag bug |
 | D6 | [phase5_d6_progress_report.md](phase5_d6_progress_report.md) | 55 画像标签 | 渗透率 73.92%，覆盖 54/55 |
 | D7 | [phase5_d7_progress_report.md](phase5_d7_progress_report.md) | Unified + Week 1 收口 | self-test 32/32，Week 1 Gate 9/9 PASS |
-| D8 | [phase5_d8_progress_report.md](phase5_d8_progress_report.md) | 全量增打启动 | 87K chunked 运行（chunked 工程化解 asyncio 瓶颈） |
+| D8 | [phase5_d8_progress_report.md](phase5_d8_progress_report.md) | 全量增打启动 | 87K chunked（chunked 工程化解 asyncio 瓶颈） |
+| D10 | [phase5_d10_progress_report.md](phase5_d10_progress_report.md) | 双覆盖率 | 全量 364K 双覆盖率上线 |
+| D11 | [phase5_d11_progress_report.md](phase5_d11_progress_report.md) | AGRS + MAA | 周报输入产线 |
+| D12 | [phase5_d12_progress_report.md](phase5_d12_progress_report.md) / [dryrun_log.md](phase5_d12_dryrun_log.md) | 月度演进 cron | 全量集成测试 |
+| D14 | [phase5_d14_progress_report.md](phase5_d14_progress_report.md) | **Momus 审阅通过 + 归档** | **Phase 5 部分收官** |
 
 ## Phase 5 关键质量证据
 
@@ -78,7 +108,7 @@ source: ai
 | [phase3_final_summary.md](phase3_final_summary.md) | Phase 3 summary |
 | [coverage_diagnosis_report.md](coverage_diagnosis_report.md) | 覆盖率诊断（Phase 3 后期） |
 
-## 字典版本审计（v3.6 / v3.7 历史）
+## 字典版本审计
 
 | 报告 | 字典版本 |
 |---|---|
@@ -86,21 +116,40 @@ source: ai
 | [v3.7_final_audit_report.md](v3.7_final_audit_report.md) | v3.7 终版 |
 | [auto_fill_v36_audit_report.md](auto_fill_v36_audit_report.md) | v3.6 自动填值 |
 | [week1-2_P0_comprehensive_audit_report.md](week1-2_P0_comprehensive_audit_report.md) | v3.x 时代 P0 审计 |
+| [monthly_evolution_latest.md](monthly_evolution_latest.md) | 月度演进 cron 输出 |
 
 ---
 
 ## 按证据类型查询
 
+### 「想看当前 BI 看板怎么上线的」
+
+1. [phase7_complete_retrospective.md](phase7_complete_retrospective.md) — Phase 7 完整复盘
+2. [phase7_d4_progress_report.md](phase7_d4_progress_report.md) §五 暴露的 D3 遗留 bug
+3. [phase7_d1_progress_report.md](phase7_d1_progress_report.md) — ETL 37s 导入 364K
+
+### 「想看 Method C 后处理过滤怎么把 precision 提到 0.896」
+
+1. [phase6_d9_progress_report.md](phase6_d9_progress_report.md) — D9 主报告
+2. [phase6_d9_filter.md](phase6_d9_filter.md) — filter 算法
+3. [phase6_d9_week2_gate.md](phase6_d9_week2_gate.md) — Gate 7/7 PASS
+
 ### 「想看 Phase 5 覆盖率是真的吗」
 
 1. [phase5_d2_progress_report.md](phase5_d2_progress_report.md) §三 覆盖率深度对比
-2. [phase5_d2_full_5k_audit.json](phase5_d2_full_5k_audit.json) 机器可读原始数据
+2. [phase5_d2_full_5k_audit.json](phase5_d2_full_5k_audit.json) — 机器可读原始数据
 
 ### 「想看 9/9 Quality Gate 怎么过的」
 
 1. [phase5_d7_week1_gate_final.md](phase5_d7_week1_gate_final.md) 终版（口径 B）
 2. [phase5_week1_gate_human149.md](phase5_week1_gate_human149.md) D5 口径 B 首次 PASS
 3. [phase5_d5_quality_gate_week1.md](phase5_d5_quality_gate_week1.md) 初版（对比用）
+
+### 「想看 7/7 Week 2 Gate 怎么过的」
+
+1. [phase6_d9_week2_gate.md](phase6_d9_week2_gate.md) 终版（Method C 后处理）
+2. [phase6_d8_week2_gate.md](phase6_d8_week2_gate.md) D8 strict prompt（5/7 → 退回） 
+3. [phase6_d5_week2_gate.md](phase6_d5_week2_gate.md) D5 首次 7/7
 
 ### 「想看金标质量怎么验证」
 
@@ -112,6 +161,11 @@ source: ai
 
 1. [phase5_d8_progress_report.md §五 性能瓶颈定位](phase5_d8_progress_report.md)
 2. [phase5_d8_monitor_final.json](phase5_d8_monitor_final.json) 实时指标终态
+
+### 「想看 dual coverage 怎么算」
+
+1. [phase5_d10_progress_report.md](phase5_d10_progress_report.md) — 算法
+2. [phase6_d{4,5,8,9}_dual_coverage.md](.) — 每次重打后的双覆盖率
 
 ---
 
