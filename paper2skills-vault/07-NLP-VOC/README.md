@@ -182,9 +182,15 @@ curl -sS http://localhost:8088/health
 |---|---|
 | AI 助手规约 | [CLAUDE.md](CLAUDE.md) |
 | Phase 5 主复盘 | [research/01-设计文档/00-Phase5-汇报与复盘/](research/01-设计文档/00-Phase5-汇报与复盘/) |
+| **Phase 6+7 白话汇报** ⭐ | [phase6-7-executive-brief.md](research/01-设计文档/00-Phase5-汇报与复盘/phase6-7-executive-brief.md) |
+| **Phase 7 架构图集**（Mermaid） ⭐ | [phase7-architecture-diagrams.md](research/01-设计文档/00-Phase5-汇报与复盘/phase7-architecture-diagrams.md) |
+| **Phase 7 架构图集**（HTML 高保真） ⭐ | [phase7-architecture-diagrams.html](research/01-设计文档/00-Phase5-汇报与复盘/phase7-architecture-diagrams.html) |
+| **Superset BI 运维 SOP** ⭐ | [Superset_BI_SOP.md](research/01-设计文档/07-操作指南/Superset_BI_SOP.md) |
+| **ETL Pipeline SOP** ⭐ | [ETL_pipeline_SOP.md](research/01-设计文档/07-操作指南/ETL_pipeline_SOP.md) |
 | Phase 5+6 完整复盘 | [phase5_6_complete_retrospective.md](research/04-输出结果/03-审计报告/phase5_6_complete_retrospective.md) |
 | Phase 7 完整复盘 | [phase7_complete_retrospective.md](research/04-输出结果/03-审计报告/phase7_complete_retrospective.md) |
 | 每日进度索引 | [research/04-输出结果/03-审计报告/00-INDEX.md](research/04-输出结果/03-审计报告/00-INDEX.md) |
+| Phase 计划文档（5/6/7） | [research/01-设计文档/08-Phase计划/](research/01-设计文档/08-Phase计划/) |
 | Superset 看板导出 | [research/04-输出结果/11-BI看板/superset_exports/](research/04-输出结果/11-BI看板/superset_exports/) |
 | 算法卡片 | [00-知识库-Skill卡片/00-INDEX.md](00-知识库-Skill卡片/00-INDEX.md) |
 | 业务架构图 | [00-知识库-架构图谱/00-INDEX.md](00-知识库-架构图谱/00-INDEX.md) |
