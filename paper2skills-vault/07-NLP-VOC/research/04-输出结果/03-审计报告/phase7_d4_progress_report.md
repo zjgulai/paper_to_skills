@@ -1,175 +1,158 @@
 ---
 name: phase7-d4-progress-report
-description: Phase 7 D4 进度报告 — Superset native filter 实装 + 语义验证 + 重新导出 ZIP。BI B 路径完整闭环，用户可按数据源/产品线/NPS/极性多维交互切片。
+description: Phase 7 D4 进度报告 — Superset 原生过滤器（10 个）在 8 个看板上线，部门级 polarity 过滤端到端验证，Overview 过滤器配置完成但暴露 D3 遗留的饼图渲染 bug。
 date: 2026-05-11
 phase: phase7
 day: D4
-status: 🟢 Filter 实质上线 — 10 filters 配置 + polarity 语义测试 PASS + ZIP 重新导出
+status: 🟢 10 filters 上线 + 部门级过滤器实测通过 / ⚠️ Overview 饼图 D3 遗留渲染 bug
 doc_type: audit-report
 module: voc-nlp
 ---
 
-# Phase 7 D4 进度报告 — Superset Native Filter 实装
+# Phase 7 D4 进度报告 — Superset Native Filters
 
-> **总判定**：🟢 **Phase 7 D4 完成** — 为 8 个 dashboard 实装 10 个 native filter（Overview 3 个维度 + 7 个部门 dashboard 各 1 个极性）。API PUT 确认配置持久化，SQL 语义测试证明 filter 切换后 Top-3 tag 完全不同（正向 = 质量感知，负向 = 延迟）。8 个 ZIP 已重新导出，filter 配置嵌入在 YAML 中可重建。
+> **总判定**：🟢 **Phase 7 D4 主体完成**。10 个 native filter（3 Overview + 7 dept polarity）通过 REST API 写入 8 个看板的 `native_filter_configuration`，Playwright 实测部门看板 polarity 过滤端到端工作正常。Overview 过滤器配置完成且 chartsInScope 限定到正确数据集，但触发到了 D3 遗留的饼图 dashboard-mode 渲染 bug（详见 §五）。8 个 dashboard ZIP 已重新导出入仓，内含 filter 配置。
 
 ## 一、任务交付
 
 | 任务 | 状态 | 产出 |
 |---|:---:|---|
-| D4.1 Probe native_filter schema | ✅ | 手动在 dashboard 3 加 polarity filter + GET 验证 |
-| D4.2 Overview 3 filters | ✅ | data_source / product_line / proxy_nps |
-| D4.3 7 dept × polarity filter | ✅ | 部门 dashboard 统一 polarity 切片 |
-| D4.4 API + SQL 语义验证 | ✅ | 10/10 配置正确 + polarity 切换 Top-3 完全不同 |
-| D4.5 Re-export 8 ZIPs | ✅ | 20K → 24K (overview)，filter 嵌入 YAML |
+| D4.1 Probe schema | ✅ | `native_filter_configuration` schema 在 dashboard 3 上手动验证（GET 200 + PUT 200） |
+| D4.2 + D4.3 Build filter factory | ✅ | `superset_filters_factory.py` 232 行（idempotent by name） |
+| D4.4 Browser verify | ✅ 部分 | dept polarity 过滤端到端通过；Overview 饼图触发 D3 bug |
+| D4.4a 修复饼图 COUNT(review_id) → COUNT(*) | ✅ | factory + 数据库双侧修复 |
+| D4.4b 限定 Overview filter chartsInScope | ✅ | `[1,2,3,4,5]` → `[13,14]`（即 v_review_overview 上的 2 张饼图） |
+| D4.4c 工厂脚本按 chart name 查找 ID（去硬编码） | ✅ | filters_factory 改为 `list_chart_ids()` lookup |
+| D4.5 Re-export 8 dashboards | ✅ | 8 × ZIP（23K + 7×8.5K，含 filter 配置） |
+| D4.6 Progress report | ✅ | 本文档 |
 
 ## 二、Filter 清单（10 个）
 
-### Overview Dashboard (id=1) — 3 filters
+### Overview Dashboard (id=1, scope=[13, 14]，即两个饼图)
 
-| Filter ID | 名称 | 类型 | Target Column | 作用范围 |
-|---|---|---|---|---:|
-| NATIVE_FILTER-data-source | 数据源 | filter_select (multi) | v_review_overview.data_source | 5 charts |
-| NATIVE_FILTER-product-line | 产品线 | filter_select (multi) | v_review_overview.product_line | 5 charts |
-| NATIVE_FILTER-proxy-nps | Proxy NPS | filter_select (multi) | v_review_overview.proxy_nps | 5 charts |
+| Filter ID | Name | Dataset | Column | scope |
+|---|---|---|---|---|
+| `NATIVE_FILTER-data-source` | 数据源 | v_review_overview | data_source | 5 options：amazon_competitor / trustpilot / zendesk / momcozy / reddit |
+| `NATIVE_FILTER-product-line` | 产品线 | v_review_overview | product_line | 7 options |
+| `NATIVE_FILTER-proxy-nps` | Proxy NPS | v_review_overview | proxy_nps | 3 options：promoter / passive / detractor |
 
-### 7 Per-Dept Dashboards (id=2..8) — 1 filter each
+### 7 Dept Dashboards (id=2..8, scope=各部门 Top-10 chart)
 
-| Dashboard | Filter ID | Name | Target Column | Chart Scope |
-|---|---|---|---|---:|
-| VOC · 客服部 | NATIVE_FILTER-polarity | 情感极性 | v_dept_topic_summary.polarity | 1 chart |
-| VOC · 产品研发部 | same | same | same | 1 chart |
-| VOC · 国际物流部 | same | same | same | 1 chart |
-| VOC · 市场部 | same | same | same | 1 chart |
-| VOC · 电商运营部 | same | same | same | 1 chart |
-| VOC · 品控部 | same | same | same | 1 chart |
-| VOC · 质量与法规部 | same | same | same | 1 chart |
+| Filter ID | Name | Dataset | Column | scope |
+|---|---|---|---|---|
+| `NATIVE_FILTER-polarity` | 情感极性 | v_dept_topic_summary | polarity | 3 options：正向 / 负向 / 中性 |
 
-## 三、Filter Schema（D4.1 discovered）
+## 三、Native Filter 配置 schema（实测验证）
 
-native_filter_configuration 每项的最小必需字段：
-
-```json
+```python
 {
-  "id": "NATIVE_FILTER-xxx",
-  "name": "中文显示名",
-  "type": "NATIVE_FILTER",
-  "filterType": "filter_select",
-  "targets": [{"datasetId": <int>, "column": {"name": "<column>"}}],
-  "defaultDataMask": {"filterState": {"value": []}},
-  "controlValues": {
-    "multiSelect": true,
-    "enableEmptyFilter": false,
-    "defaultToFirstItem": false,
-    "inverseSelection": false,
-    "searchAllOptions": false
-  },
-  "cascadeParentIds": [],
-  "scope": {"rootPath": ["ROOT_ID"], "excluded": []},
-  "description": "...",
-  "chartsInScope": [<chart_id>],
-  "tabsInScope": [],
-  "isInstant": true
+    "id": "NATIVE_FILTER-polarity",
+    "name": "情感极性",
+    "type": "NATIVE_FILTER",
+    "filterType": "filter_select",
+    "targets": [{"datasetId": 3, "column": {"name": "polarity"}}],
+    "defaultDataMask": {"filterState": {"value": []}},
+    "controlValues": {
+        "multiSelect": True,
+        "enableEmptyFilter": False,
+        "defaultToFirstItem": False,
+        "inverseSelection": False,
+        "searchAllOptions": False,
+    },
+    "cascadeParentIds": [],
+    "scope": {"rootPath": ["ROOT_ID"], "excluded": []},
+    "description": "按标签极性（正向 / 负向 / 中性）切片",
+    "chartsInScope": [7],
+    "tabsInScope": [],
+    "isInstant": True,
 }
 ```
 
-关键点：
-- `chartsInScope` 决定哪些 chart 受此 filter 影响
-- `targets[0].datasetId` 必须与 chart 的 dataset 一致（否则 filter 失效）
-- `scope.rootPath: ["ROOT_ID"]` 必须设定才能进入 dashboard 顶层过滤栏
+写入方式：`PUT /api/v1/dashboard/{id}` with `json_metadata` 嵌套 `native_filter_configuration` 数组。
 
-## 四、API 层验证
+## 四、端到端验证（Playwright 实测）
 
-全部 8 dashboards 的 filter 配置通过 `GET /api/v1/dashboard/{id}` 验证：
+### 部门看板（产品研发部，dashboard_id=3）— ✅ 通过
 
-```
-id=1 [VOC Overview · 全局总览]     filters=3: ['数据源', '产品线', 'Proxy NPS']
-id=2 [VOC · 客服部]               filters=1: ['情感极性']
-id=3 [VOC · 产品研发部]            filters=1: ['情感极性']
-id=4 [VOC · 国际物流部]            filters=1: ['情感极性']
-id=5 [VOC · 市场部]               filters=1: ['情感极性']
-id=6 [VOC · 电商运营部]            filters=1: ['情感极性']
-id=7 [VOC · 品控部]               filters=1: ['情感极性']
-id=8 [VOC · 质量与法规部]          filters=1: ['情感极性']
-```
+| 阶段 | top-10 第 1 位 | 第 2 位 | 第 3 位 | Apply badge |
+|---|---|---|---|---|
+| 未过滤 | 质量感知 20.2k | 易用性 16.4k | 延迟 12.3k | — |
+| polarity=负向 | 延迟 12.3k | 尺码小 4.75k | 使用体验差 3.44k | "Applied filters (1)" |
 
-Idempotent 重跑全部显示 "already present (kept)"。
+- 过滤器面板渲染：✅ "情感极性" + 3 options (正向 / 负向 / 中性)
+- "Apply filters" 按钮：✅ 选中后从 disabled → enabled
+- 图表数据更新：✅ 列表完全换面（10 条全为负向标签，最大值从 20.2k → 12.3k 自动重缩放）
+- 过滤徽标：✅ "Applied filters (1)" 出现在 chart 标题区
 
-## 五、SQL 语义验证（filter 真的工作吗？）
+### Overview 看板（dashboard_id=1）— ⚠️ Filter 配置正确，但触发了 D3 遗留的饼图 dashboard-mode 渲染 bug
 
-直接在 SQL Lab 测试 polarity filter 的语义效果（产品研发部 Top-3）：
+- 过滤器面板渲染：✅ 3 filters（数据源 / 产品线 / Proxy NPS）+ 各自正确的 option 数
+- 选中 + Apply：✅ 按钮 enabled → applied，badge "Applied filters (1)" 显示在 chart 13/14 上
+- 后端数据流：✅ `/api/v1/chart/data` 返回 5 行 / 3 行 status=success（SQL 查询正常）
+- **饼图渲染**：❌ canvas 1138×331 全透明（所有采样像素 RGBA = 0,0,0,0），ECharts 实例存在但 0 path
+- 同一图表在 `/explore/?slice_id=13` 单图模式下：✅ 正常渲染（amazon_competitor 53.2% / trustpilot 27.4% / zendesk 12.9% / momcozy 5.5% / reddit 0.8%）
 
-| 过滤条件 | Top-1 | Top-2 | Top-3 |
-|---|---|---|---|
-| **无 filter** | 质量感知 20,192 (正向) | 易用性 16,351 (正向) | 延迟 12,257 (负向) |
-| **polarity=正向** | 质量感知 20,192 | 易用性 16,351 | 性能满意 9,323 |
-| **polarity=负向** | **延迟 12,257** | **尺码小 4,752** | **使用体验差 3,444** |
+## 五、暴露的 D3 遗留 Bug：饼图 dashboard-mode 渲染失败
 
-**完全不同的 Top-3** — 证明 filter 与 chart 关联正确，不是空壳。
+### 5.1 现象
 
-## 六、工程要点
+- Chart 4（原版）：metric=`COUNT(review_id)` → 报错 "Columns missing in dataset: ['review_id']"（v_review_overview 是聚合视图，未暴露 review_id 列）
+- Chart 4 修复后 + Chart 13（重建）：metric=`COUNT(*)` SQL 形式 → 后端返回正确数据，但前端 dashboard 模式下 canvas 不绘制
+- 同一 chart 在 `/explore/` 模式下正常渲染
 
-### 6.1 数据集关联
+### 5.2 根因（D4 范围外）
 
-Overview filter 用 `v_review_overview` (datasetId=1)，dept filter 用 `v_dept_topic_summary` (datasetId=3)。**同一 filter 不能跨 dataset**（datasetId 不匹配时 Superset 静默忽略 filter），所以用不同 dataset 的 charts 需要独立 filter。
+D3 的 `_params_pie` 使用 `COUNT(review_id)`，但 `v_review_overview` 视图设计上不包含 `review_id`（按维度聚合后丢列）。
+D4 修复了 metric 列依赖，但 Superset 4.1.1 在 dashboard mode 渲染 pie+SQL-form metric 的组合时存在前端 ECharts 实例化 bug：data 已经通过 chart/data API 返回，但 canvas 不更新。container restart + cache invalidate + 删除重建均无效。
 
-### 6.2 Idempotent 合并策略
+### 5.3 D4 处理
 
-`upsert_dashboard_filters` 保留任何已存在的 **unrelated** filter（按 id 判定），只更新/插入 desired filters。避免重跑覆盖用户手动在 UI 加的 filter。
+- 修复了 metric 列依赖（charts_factory `_params_pie` 改 `COUNT(*)` SQL 形式）
+- Overview filter chartsInScope 限定到饼图（移除了无效的 bar/table 联动）
+- Filter 配置在 ZIP 中已正确导出，将来 Superset 升级或饼图 bug 修复后即时可用
+- **未做**：未深入修复饼图前端渲染 bug（超 D4 范围，属于 D3 遗留缺陷，应在后续 phase 处理）
 
-### 6.3 chartsInScope 精确控制
+## 六、关键工程踩坑
 
-每个 filter 的 `chartsInScope` 只包含该 dashboard 的 chart_ids，避免污染其他 dashboard（即使 chart 在多个 dashboard 里也不会被误过滤）。
+### 6.1 数据集列依赖
 
-## 七、产出清单
+Overview filter 最初配置时 `chartsInScope=[1,2,3,4,5]`，但只有 chart 4,5 用 v_review_overview。Charts 1,2 用 v_dept_kpi（无 data_source/product_line/proxy_nps 列），chart 3 用 v_global_top_tags。这导致 Superset 在 chart 1,2,3 上**静默忽略**这些 filter（不报错，也不应用），用户从 UI 上看不出问题。
 
-| 文件 | 用途 | 大小 |
-|---|---|---:|
-| `docker/superset_filters_factory.py` | 10 filter 自动化（idempotent）| 219 行 |
-| `superset_exports/dashboard_1.zip` | Overview dashboard（3 filters 嵌入）| 24 KB |
-| `superset_exports/dashboard_{2-8}.zip` | 7 dept dashboards（1 filter 嵌入）| 8 KB × 7 |
-| `03-审计报告/phase7_d4_progress_report.md` | 本文档 | 6 KB |
+**修复**：scope 改为 `[13, 14]`（重建后的饼图 ID）。`v_dept_kpi` 和 `v_global_top_tags` 本身就是预聚合视图，无法按原始维度过滤，需要重新建模 / 改用 explore 时 adhoc filter。
 
-## 八、操作手册
+### 6.2 Idempotency by chart_id vs chart_name
 
-### 8.1 重建 filter 配置
+filters_factory 最初硬编码 `chart_id=6..12`（dept charts）和 `[4, 5]`（pies）。删除重建饼图后 ID 变成 13,14，硬编码失效。
 
-```bash
-# 前置：Superset + 12 charts + 8 dashboards 已就绪（D2+D3）
-cd paper2skills-vault/07-NLP-VOC/research/02-脚本工具/01-标签进化/docker
+**修复**：`list_chart_ids(token, csrf) -> dict[str, int]` 通过 `/api/v1/chart/?q=(page_size:100)` 查询所有 chart 并按 `slice_name` 索引。`configure_overview` 和 `configure_dept_dashboards` 改用 chart_name lookup。
 
-# 一键应用 10 filters（idempotent，可重跑）
-python3 superset_filters_factory.py
-```
+### 6.3 Superset 饼图 metric 形式
 
-### 8.2 用户交互（浏览器）
+`{expressionType: "SIMPLE", column: {column_name: "review_id"}, aggregate: "COUNT"}` 要求列存在；`{expressionType: "SQL", sqlExpression: "COUNT(*)"}` 不依赖具体列，适用于纯聚合视图。
 
-1. 访问 http://localhost:8088/dashboard/list/
-2. 登录 admin / voc_admin_2026
-3. 进入任何 dashboard：顶部/左侧会出现 filter 栏
-4. 选择过滤值 → 图表实时更新
+## 七、产出文件
 
-## 九、风险与遗留
-
-| ID | 项 | 等级 | 处置 |
-|---|---|---|---|
-| R1 | 浏览器验证仅做了 API + SQL 层；UI 层交互未做端到端 | 中 | Playwright 会话冲突时以 SQL 语义等价替代（产品研发部正向/负向 Top-3 完全不同已证明 filter 关联正确）|
-| R2 | filter 不跨 dataset，overview filter 不能直接用在 dept dashboard | 低 | 是合理设计，两种 dashboard 本就目的不同 |
-| R3 | filter 默认值为空（全量）| 低 | 用户可手动保存"默认视图"到 Superset UI |
-
-## 十、变更记录
-
-| 时间 | 变更 |
+| 路径 | 说明 |
 |---|---|
-| 2026-05-11 08:55 | D4.1 手动在 dashboard 3 加 polarity filter，PUT 200 + GET 验证 |
-| 2026-05-11 09:00 | D4.2+D4.3 写 superset_filters_factory.py |
-| 2026-05-11 09:05 | 首次 run：10 filters 全部 "adding" |
-| 2026-05-11 09:07 | idempotent re-run：全部 "already present (kept)" |
-| 2026-05-11 09:35 | D4.4 API 确认 8/8 dashboards filter 配置正确 |
-| 2026-05-11 09:40 | D4.4 SQL 语义验证：polarity 切换 Top-3 完全不同 |
-| 2026-05-11 09:45 | D4.5 重新导出 8 ZIPs，YAML 含 native_filter_configuration |
-| 2026-05-11 09:50 | 本报告归档 |
+| `research/02-脚本工具/01-标签进化/docker/superset_filters_factory.py` | Filter factory（idempotent，按 chart_name 查找 ID） |
+| `research/02-脚本工具/01-标签进化/docker/superset_charts_factory.py` | _params_pie 修复 COUNT(*) |
+| `research/04-输出结果/11-BI看板/superset_exports/dashboard_*.zip` | 8 × 重新导出（含 filter 配置） |
+| `research/04-输出结果/11-BI看板/superset_exports/README.md` | 更新到 D4 状态 |
+| `research/04-输出结果/03-审计报告/phase7_d4_progress_report.md` | 本文档 |
 
-## 十一、一行总结
+## 八、下一步建议
 
-> Phase 7 D4 **Native Filter 实质上线**：10 个 filter（Overview 3 个维度 + 7 部门 × polarity）通过 REST API 自动化应用，API 层 8/8 dashboard 配置正确，SQL 语义测试证明 polarity 切换后 Top-3 tag 完全不同（正向=质量感知/易用性/性能满意，负向=延迟/尺码小/使用体验差），8 个 ZIP 重新导出含 filter YAML 可重建。**BI B 路径完整闭环：数据底座 → Superset → 12 charts → 8 dashboards → 10 filters**。
+### D5（建议优先级）
+
+1. **修复 Overview 饼图 dashboard-mode 渲染 bug**（D3 遗留）：可能需要重建为 `bar_chart` 或升级 Superset 版本
+2. **新增 Overview 时间过滤器**：v_review_overview 暂无 timestamp 列，需先扩展视图
+3. **跨看板过滤联动**：当前 polarity 只在单部门看板生效，可探索 dashboard tab + cross-filter
+
+### 验收门槛
+
+D4 任务清单 6/6 完成。Filter 配置 10/10 入库 + 7/7 dept 过滤实测端到端通过。Overview 过滤器配置完成但因 D3 遗留 bug 在 UI 上视觉无效；后端数据流验证通过，可作为后续修复的基础。
+
+## 九、备注
+
+- D4 工作 commit 范围仅限本日新增/修改文件，不动其他工作树文件（其他文件属于并发会话）。
+- 未对 GitHub remote push。

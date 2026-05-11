@@ -41,16 +41,19 @@ DATASET_REVIEW = 1
 DATASET_DEPT_TOPIC = 3
 
 DEPT_DASHBOARDS = [
-    {"id": 2, "dept": "客服部", "chart_id": 6},
-    {"id": 3, "dept": "产品研发部", "chart_id": 7},
-    {"id": 4, "dept": "国际物流部", "chart_id": 8},
-    {"id": 5, "dept": "市场部", "chart_id": 9},
-    {"id": 6, "dept": "电商运营部", "chart_id": 10},
-    {"id": 7, "dept": "品控部", "chart_id": 11},
-    {"id": 8, "dept": "质量与法规部", "chart_id": 12},
+    {"id": 2, "dept": "客服部", "chart_name": "客服部 · Top 10 话题（按命中量）"},
+    {"id": 3, "dept": "产品研发部", "chart_name": "产品研发部 · Top 10 话题（按命中量）"},
+    {"id": 4, "dept": "国际物流部", "chart_name": "国际物流部 · Top 10 话题（按命中量）"},
+    {"id": 5, "dept": "市场部", "chart_name": "市场部 · Top 10 话题（按命中量）"},
+    {"id": 6, "dept": "电商运营部", "chart_name": "电商运营部 · Top 10 话题（按命中量）"},
+    {"id": 7, "dept": "品控部", "chart_name": "品控部 · Top 10 话题（按命中量）"},
+    {"id": 8, "dept": "质量与法规部", "chart_name": "质量与法规部 · Top 10 话题（按命中量）"},
 ]
 
-OVERVIEW_CHART_IDS = [4, 5]
+OVERVIEW_CHART_NAMES = [
+    "Overview · 数据源分布",
+    "Overview · Proxy NPS 分布",
+]
 
 
 def _request(method: str, path: str, *, headers: dict, body: dict | None = None) -> tuple[int, dict | str]:
@@ -172,32 +175,48 @@ def upsert_filters(token: str, csrf: str, dashboard_id: int,
     return len(final)
 
 
-def configure_overview(token: str, csrf: str) -> None:
+def list_chart_ids(token: str, csrf: str) -> dict[str, int]:
+    _, resp = _request("GET", "/api/v1/chart/?q=(page_size:100)",
+                       headers=auth_headers(token, csrf))
+    if not isinstance(resp, dict):
+        return {}
+    return {c["slice_name"]: c["id"] for c in resp.get("result", []) if "slice_name" in c}
+
+
+def configure_overview(token: str, csrf: str, chart_ids_by_name: dict[str, int]) -> None:
+    overview_ids = [chart_ids_by_name[n] for n in OVERVIEW_CHART_NAMES if n in chart_ids_by_name]
+    if not overview_ids:
+        print("   ⚠ Overview pie charts not found, skipping Overview filter setup", file=sys.stderr)
+        return
     filters = [
         build_filter("NATIVE_FILTER-data-source", "数据源",
-                     DATASET_REVIEW, "data_source", OVERVIEW_CHART_IDS,
+                     DATASET_REVIEW, "data_source", overview_ids,
                      "按数据来源（amazon / trustpilot / zendesk / momcozy / reddit）切片"),
         build_filter("NATIVE_FILTER-product-line", "产品线",
-                     DATASET_REVIEW, "product_line", OVERVIEW_CHART_IDS,
+                     DATASET_REVIEW, "product_line", overview_ids,
                      "按产品品线（吸奶器 / 内衣服饰 / 等）切片"),
         build_filter("NATIVE_FILTER-proxy-nps", "Proxy NPS",
-                     DATASET_REVIEW, "proxy_nps", OVERVIEW_CHART_IDS,
+                     DATASET_REVIEW, "proxy_nps", overview_ids,
                      "按 Proxy NPS（promoter / passive / detractor）切片"),
     ]
-    print("⏳ Overview dashboard (id=1)", file=sys.stderr)
+    print(f"⏳ Overview dashboard (id=1, scope={overview_ids})", file=sys.stderr)
     n = upsert_filters(token, csrf, 1, filters, "Overview")
     print(f"   → {n} filter(s) total\n", file=sys.stderr)
 
 
-def configure_dept_dashboards(token: str, csrf: str) -> None:
+def configure_dept_dashboards(token: str, csrf: str, chart_ids_by_name: dict[str, int]) -> None:
     for dd in DEPT_DASHBOARDS:
+        chart_id = chart_ids_by_name.get(dd["chart_name"])
+        if chart_id is None:
+            print(f"   ⚠ Dept chart '{dd['chart_name']}' not found, skipping", file=sys.stderr)
+            continue
         filters = [
             build_filter("NATIVE_FILTER-polarity", "情感极性",
-                         DATASET_DEPT_TOPIC, "polarity", [dd["chart_id"]],
+                         DATASET_DEPT_TOPIC, "polarity", [chart_id],
                          "按标签极性（正向 / 负向 / 中性）切片"),
         ]
         label = f"Dept {dd['dept']}"
-        print(f"⏳ {label} dashboard (id={dd['id']})", file=sys.stderr)
+        print(f"⏳ {label} dashboard (id={dd['id']}, chart={chart_id})", file=sys.stderr)
         n = upsert_filters(token, csrf, dd["id"], filters, label)
         print(f"   → {n} filter(s) total\n", file=sys.stderr)
 
@@ -210,8 +229,11 @@ def main(argv: list[str] | None = None) -> int:
     token, csrf = login()
     print("   ✅ token obtained\n", file=sys.stderr)
 
-    configure_overview(token, csrf)
-    configure_dept_dashboards(token, csrf)
+    chart_ids = list_chart_ids(token, csrf)
+    print(f"   📊 found {len(chart_ids)} charts\n", file=sys.stderr)
+
+    configure_overview(token, csrf, chart_ids)
+    configure_dept_dashboards(token, csrf, chart_ids)
 
     print("\n✅ Done. Filters applied to 1 overview + 7 dept dashboards.", file=sys.stderr)
     print(f"   Browse: {SUPERSET_URL}/dashboard/list/", file=sys.stderr)

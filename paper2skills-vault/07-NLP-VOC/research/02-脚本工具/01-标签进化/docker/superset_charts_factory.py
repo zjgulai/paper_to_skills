@@ -135,12 +135,13 @@ def _params_dist_bar_horizontal(metric_label: str, groupby: str, limit: int = 7)
 
 
 def _params_pie(metric_label: str, groupby: str, limit: int = 10) -> dict:
+    # Use COUNT(*) instead of COUNT(review_id): v_review_overview is a pre-aggregated
+    # view that doesn't expose review_id. SQL-form metric avoids the column dependency.
     return {
         "viz_type": "pie",
         "metric": {
-            "expressionType": "SIMPLE",
-            "column": {"column_name": "review_id", "type": "TEXT"},
-            "aggregate": "COUNT",
+            "expressionType": "SQL",
+            "sqlExpression": "COUNT(*)",
             "label": metric_label,
         },
         "groupby": [groupby],
