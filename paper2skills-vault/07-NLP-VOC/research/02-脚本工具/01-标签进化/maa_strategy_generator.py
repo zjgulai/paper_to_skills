@@ -34,18 +34,18 @@ import openpyxl
 
 
 DEPT_ALIAS = {
-    "product_rd": "产品中心/品线",
-    "customer_service": "全球客服与体验中心",
-    "logistics": "供应链中心",
+    "product_rd": "产品中心",
+    "customer_service": "全球客服中心",
+    "logistics": "仓储物流部",
     "marketing": "品牌市场中心",
     "ecommerce": "电商运营部",
-    "quality_control": "品控部",
-    "regulatory": "质量与法规部",
+    "quality_control": "品质管理中心",
+    "regulatory": "法务合规部",
 }
 
 DEPARTMENTS_SEVEN = [
-    "全球客服与体验中心", "产品中心/品线", "供应链中心", "品牌市场中心",
-    "电商运营部", "品控部", "质量与法规部",
+    "全球客服中心", "产品中心", "仓储物流部", "品牌市场中心",
+    "电商运营部", "品质管理中心", "法务合规部",
 ]
 
 
@@ -391,7 +391,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--input", required=True, type=Path,
                     help="输入 jsonl（phase5_intermediate_merged.jsonl）")
     ap.add_argument("--dept", required=True,
-                    help="部门名（中文，如『产品中心/品线』，或英文别名 product_rd）")
+                    help="部门名（中文，如『产品中心』，或英文别名 product_rd）")
     ap.add_argument("--dict", type=Path,
                     default=Path(__file__).resolve().parent.parent.parent
                     / "04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx",
