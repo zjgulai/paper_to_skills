@@ -24,7 +24,7 @@ module: voc-nlp
 
 ## 二、QA 场景验证
 
-### 场景 1：产品中心/品线 MAA 样例（T11.1 Pass 标准）
+### 场景 1：产品中心 MAA 样例（T11.1 Pass 标准）
 
 | 维度 | 阈值 | 实测 | 结果 |
 |---|---|---|:---:|
@@ -70,7 +70,7 @@ Total = 0.70 × Reach + 0.15 × Severity + 0.10 × Actionability + 0.05 × Confi
 ```bash
 python bi_spec_validator.py \
   --spec phase5-bi-dashboard-spec.md \
-  --required-departments "全球客服与体验中心,产品中心/品线,供应链中心,品牌市场中心,电商运营部,品控部,质量与法规部" \
+  --required-departments "全球客服中心,产品中心,仓储物流部,品牌市场中心,电商运营部,品质管理中心,法务合规部" \
   --required-sections "KPI列表,数据源,标签映射,刷新频率,样例周报"
 # ✅ 35 个断言全过（7 部门 × 5 章节）+ 无 TBD 关键词
 # exit 0
@@ -90,10 +90,10 @@ research/01-设计文档/
 └── phase5-bi-dashboard-spec.md      14.7K  # T11.3 (7 dept × 5 section)
 
 research/04-输出结果/10-周报/2026-W19/
-├── 产品中心/品线.md                     7.8K  # MAA QA1 产出
-├── 产品中心/品线_srac.json              1.2K
-├── 全球客服与体验中心_AGRS.md                    9.4K  # AGRS 实测
-└── 全球客服与体验中心_AGRS.json                 11.2K
+├── 产品中心.md                     7.8K  # MAA QA1 产出
+├── 产品中心_srac.json              1.2K
+├── 全球客服中心_AGRS.md                    9.4K  # AGRS 实测
+└── 全球客服中心_AGRS.json                 11.2K
 ```
 
 ## 四、与 spec 决策对照
@@ -111,7 +111,7 @@ research/04-输出结果/10-周报/2026-W19/
 
 D10 双覆盖率审计暴露了三个修复路径（zendesk 客服字典、trustpilot 多语言、amazon 残留），**D11 的 MAA + AGRS 是这些修复路径的「下游消费者」**：
 
-- 全球客服与体验中心 MAA 现在可以基于 37 个 v4.0 客服标签产出周报；如 D11+ 把客服标签扩到 50+，MAA 输出会更丰富
+- 全球客服中心 MAA 现在可以基于 37 个 v4.0 客服标签产出周报；如 D11+ 把客服标签扩到 50+，MAA 输出会更丰富
 - AGRS 不依赖 LLM，对多语言摘要会"原样返回"；多语言修复后 AGRS 自然受益
 - D11 不阻塞 D10 修复路径——两条线并行推进
 
@@ -121,7 +121,7 @@ D10 双覆盖率审计暴露了三个修复路径（zendesk 客服字典、trust
 |---|---|---|---|
 | R1 | SRAC 权重 0.70 偏 Reach，对小众但严重的负向标签欠敏感 | 中 | D14 按 Momus 反馈调整；当前为满足 spec QA-1 必要权衡 |
 | R2 | AGRS 摘要为离线规则版（非 LLM），聚合摘要"模板感"强 | 中 | v5.0 阶段接入 LLM 升级；本期满足 BI 看板「评论快讯」需求 |
-| R3 | BI Spec 未生成全部 7 部门的实际周报（仅 product_rd + 全球客服与体验中心）| 低 | D14 验收前批量产出 7 份；MAA + AGRS 工具已就绪 |
+| R3 | BI Spec 未生成全部 7 部门的实际周报（仅 product_rd + 全球客服中心）| 低 | D14 验收前批量产出 7 份；MAA + AGRS 工具已就绪 |
 | R4 | maa_strategy_generator 不接 LLM，无法生成"超越字典"的洞察 | 中 | v5.0 升级；本期为 spec "5 Agent 简化版"原意 |
 
 ## 七、D12 解锁条件
@@ -143,7 +143,7 @@ D10 双覆盖率审计暴露了三个修复路径（zendesk 客服字典、trust
 | 2026-05-09 11:35 | 公式 v2 log-Reach 加权（spread 0.69）/ v3 spec 字面乘法（spread 1.34）均不达标 |
 | 2026-05-09 11:42 | 公式 v4 rank-Reach + 0.70 权重 → spread 5.30 ✅，QA-1 PASS |
 | 2026-05-09 11:50 | T11.2 agrs_summarizer 实现（离线规则评分 + 蓄水池采样无关，长度归一 + 情感对齐）|
-| 2026-05-09 11:55 | T11.2 跑全球客服与体验中心 → 10 组 + 30 句 Top-K 抽样，正负情感分布合理 |
+| 2026-05-09 11:55 | T11.2 跑全球客服中心 → 10 组 + 30 句 Top-K 抽样，正负情感分布合理 |
 | 2026-05-09 12:00 | T11.3 BI Spec 7 部门 × 5 章节 落地 |
 | 2026-05-09 12:05 | T11.3.5 bi_spec_validator + 35 断言 PASS |
 | 2026-05-09 12:10 | LSP 全清，回归测试 QA1 + QA2 双通过，D11 收口 |

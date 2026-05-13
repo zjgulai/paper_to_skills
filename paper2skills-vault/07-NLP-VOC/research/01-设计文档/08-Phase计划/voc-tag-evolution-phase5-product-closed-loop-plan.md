@@ -369,12 +369,12 @@ source: human+ai
   - T11.2 写 `$RESEARCH_ROOT/02-脚本工具/01-标签进化/agrs_summarizer.py`
   - T11.3 写 `$RESEARCH_ROOT/01-设计文档/phase5-bi-dashboard-spec.md`：7 部门看板字段定义
 - **🧪 QA 场景**
-  - **场景 1（产品中心/品线 MAA 样例）**
+  - **场景 1（产品中心 MAA 样例）**
     - 命令：`python maa_strategy_generator.py --dept product_rd --input $RESEARCH_ROOT/04-输出结果/unified_labeling/phase5_intermediate_merged.jsonl --output rd_top10_actions.md`
     - 预期：Top 10 行动建议，每条含 SRAC 四维评分、代表评论 3 条、预期指标变化
     - Pass：10 条建议，评分区分度足够（最高/最低差 ≥ 5 分，10 分制）；业务人员快速复核 ≥ 7/10 条合理
   - **场景 2（BI Spec 完整性）**
-    - 命令：`python $RESEARCH_ROOT/02-脚本工具/06-诊断工具/bi_spec_validator.py --spec $RESEARCH_ROOT/01-设计文档/phase5-bi-dashboard-spec.md --required-departments "全球客服与体验中心,产品中心/品线,供应链中心,品牌市场中心,电商运营部,品控部,质量与法规部" --required-sections "KPI列表,数据源,标签映射,刷新频率,样例周报"`
+    - 命令：`python $RESEARCH_ROOT/02-脚本工具/06-诊断工具/bi_spec_validator.py --spec $RESEARCH_ROOT/01-设计文档/phase5-bi-dashboard-spec.md --required-departments "全球客服中心,产品中心,仓储物流部,品牌市场中心,电商运营部,品质管理中心,法务合规部" --required-sections "KPI列表,数据源,标签映射,刷新频率,样例周报"`
     - **⚠️ 校验器新建任务（T11.3.5）**：新写 `bi_spec_validator.py`（~80 行）—— 用 markdown 标题正则扫描 7 部门 5 章节是否齐全，缺任意项报错。
     - 预期：7 部门 × 5 章节 = 35 个断言全通过，无 TBD 关键词
     - Pass：validator exit code 0（自动判定，无需目检）
@@ -642,13 +642,13 @@ if primary_result.confidence < threshold or primary_result.labels == []:
 
 | 部门 | 核心指标 | 主要标签来源 | 更新频率 |
 |---|---|---|---|
-| 全球客服与体验中心 | TAG_SRV_01~10 命中量 / 负面工单率 | Zendesk | 日 |
-| 产品中心/品线 | 产品质量缺陷 TOP 10 / ABSA 产品满意度 | Amazon + Trustpilot + Zendesk | 周 |
-| 供应链中心 | 物流问题率 / 配送咨询量 | Zendesk + Amazon | 日 |
+| 全球客服中心 | TAG_SRV_01~10 命中量 / 负面工单率 | Zendesk | 日 |
+| 产品中心 | 产品质量缺陷 TOP 10 / ABSA 产品满意度 | Amazon + Trustpilot + Zendesk | 周 |
+| 仓储物流部 | 物流问题率 / 配送咨询量 | Zendesk + Amazon | 日 |
 | 品牌市场中心 | Proxy NPS / 品牌提及趋势 / 竞品对比 | Trustpilot + Amazon 竞品 | 周 |
 | 电商运营部 | AIPL 漏斗转化率 / 购买体验 | 全源 | 周 |
-| 品控部 | 8 缺陷聚类趋势 / 缺陷品类热力图 | Amazon + Momcozy | 周 |
-| 质量与法规部 | 安全/合规标签 | 全源 | 月 |
+| 品质管理中心 | 8 缺陷聚类趋势 / 缺陷品类热力图 | Amazon + Momcozy | 周 |
+| 法务合规部 | 安全/合规标签 | 全源 | 月 |
 
 ### 8.2 策略包自动生成（MAA 简化版）
 

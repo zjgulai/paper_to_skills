@@ -56,13 +56,13 @@ open http://localhost:8088
 | Dashboard | 路径 | Filters |
 |---|---|---|
 | VOC Overview · 全局总览 | `/dashboard/1/` | 数据源 / 产品线 / Proxy NPS（针对饼图） |
-| VOC · 全球客服与体验中心 | `/dashboard/2/` | 情感极性 |
-| VOC · 产品中心/品线 | `/dashboard/3/` | 情感极性 |
-| VOC · 供应链中心 | `/dashboard/4/` | 情感极性 |
+| VOC · 全球客服中心 | `/dashboard/2/` | 情感极性 |
+| VOC · 产品中心 | `/dashboard/3/` | 情感极性 |
+| VOC · 仓储物流部 | `/dashboard/4/` | 情感极性 |
 | VOC · 品牌市场中心 | `/dashboard/5/` | 情感极性 |
 | VOC · 电商运营部 | `/dashboard/6/` | 情感极性 |
-| VOC · 品控部 | `/dashboard/7/` | 情感极性 |
-| VOC · 质量与法规部 | `/dashboard/8/` | 情感极性 |
+| VOC · 品质管理中心 | `/dashboard/7/` | 情感极性 |
+| VOC · 法务合规部 | `/dashboard/8/` | 情感极性 |
 
 ### 重建（迁移环境时）
 

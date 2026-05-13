@@ -156,7 +156,7 @@ git branch -D chore/dept-rename-2026-05-13
 
 - [ ] `git status` clean，分支回到 main
 - [ ] 仓库内 ripgrep 老部门名命中数恢复到执行前的基线
-- [ ] 腾讯云 PG `dim_tag` distinct 部门 = 执行前的 10 个值（含「全球营销服务中心」「营运部」）
+- [ ] 腾讯云 PG `dim_tag` distinct 部门 = 执行前的 10 个值（含「品牌市场中心」「电商运营部」）
 - [ ] Superset 浏览器登录后 8 个 dashboard 标题为旧名
 - [ ] Playwright 端到端测试通过（dashboard 3 polarity 切换 Top-3 还是「质量感知 / 易用性 / 延迟」）
 

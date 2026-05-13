@@ -565,7 +565,7 @@ def demo():
                          ["compared", "vs", "better than"]))
     tag_dict.add(TagSeed("TAG_L1_001", "suction_too_weak", "吸力差", "L1", "产品核心性能", "negative",
                          ["suction", "weak", "not strong"], ["breast_pump"],
-                         strategy_pack="核心体验改良包", owner_dept="产品中心/品线", priority="P0"))
+                         strategy_pack="核心体验改良包", owner_dept="产品中心", priority="P0"))
     tag_dict.add(TagSeed("TAG_L2_001", "slow_customer_service", "客服响应慢", "L2", "问题解决效率", "negative",
                          ["customer service", "slow", "no response"],
                          strategy_pack="服务体验优化包", owner_dept="客户服务部", priority="P0"))
@@ -707,7 +707,7 @@ ReviewQuality-Scoring (4维度) + SpamDetector (5规则)
 Proxy NPS / AIPL 漏斗 / 驱动分析 / 画像交叉
     ↓
 【决策输出层】
-策略包路由 → 产品中心/品线/客户服务部/品牌营销部...
+策略包路由 → 产品中心/客户服务部/品牌营销部...
 ```
 
 ---

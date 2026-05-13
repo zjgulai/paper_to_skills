@@ -160,9 +160,9 @@ exec /usr/bin/run-server.sh
 
 | 维度 | D1 SQL 查询 | D3 浏览器显示 | 一致性 |
 |---|---:|---:|:---:|
-| 产品中心/品线 · 质量感知 | 20,192 | 20.2k | ✅ |
-| 产品中心/品线 · 易用性 | 16,351 | 16.4k | ✅ |
-| 产品中心/品线 · 延迟 | 12,257 | 12.3k | ✅ |
+| 产品中心 · 质量感知 | 20,192 | 20.2k | ✅ |
+| 产品中心 · 易用性 | 16,351 | 16.4k | ✅ |
+| 产品中心 · 延迟 | 12,257 | 12.3k | ✅ |
 
 ### 5.2 D4 Filter 语义验证
 
@@ -246,7 +246,7 @@ exec /usr/bin/run-server.sh
 | R3 | 同步 SQL Lab，大查询会阻塞 worker | 低 | 689K 数据下查询 < 5s 可接受 |
 | R4 | 镜像 ~1.5GB，容器内存 ~500MB | 低 | 个人 mac 无压力 |
 | R5 | 容器重启 psycopg2 重装（~3s）| 低 | bootstrap.sh idempotent |
-| R6 | 浏览器验证仅做了 API + SQL 层；UI 层交互未做端到端 | 中 | Playwright 会话冲突时以 SQL 语义等价替代（产品中心/品线正向/负向 Top-3 完全不同已证明 filter 关联正确）|
+| R6 | 浏览器验证仅做了 API + SQL 层；UI 层交互未做端到端 | 中 | Playwright 会话冲突时以 SQL 语义等价替代（产品中心正向/负向 Top-3 完全不同已证明 filter 关联正确）|
 | R7 | filter 不跨 dataset，overview filter 不能直接用在 dept dashboard | 低 | 是合理设计，两种 dashboard 本就目的不同 |
 
 ## 十一、与 Phase 5/6 Gate 对齐
@@ -282,7 +282,7 @@ exec /usr/bin/run-server.sh
 | 2026-05-10 19:00 | D3 首次运行：12 charts 创建成功，8 dashboards 创建但 charts 空 |
 | 2026-05-10 19:10 | D3 发现 position_json 不足以建立关联，需 PUT chart.dashboards |
 | 2026-05-10 19:15 | D3 修复 attach_charts_to_dashboard 为 2-call protocol |
-| 2026-05-10 19:20 | D3 重跑 factory，Playwright 验证产品中心/品线真实数据渲染 ✅ |
+| 2026-05-10 19:20 | D3 重跑 factory，Playwright 验证产品中心真实数据渲染 ✅ |
 | 2026-05-10 19:26 | D3 导出 8 × ZIP + README |
 | 2026-05-10 19:30 | D3 commit + push (0d92103) |
 | 2026-05-11 08:55 | D4 启动：手动在 dashboard 3 加 polarity filter，PUT 200 + GET 验证 |

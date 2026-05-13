@@ -3,12 +3,12 @@ name: phase5-d11-agrs-summary
 description: Phase 5 D11 AGRS 评论摘要——按 tag 分组，每组 Top-3 代表句 + 聚合摘要 + 情感分布。BI 看板「评论快讯」模块的离线版数据源。
 generated_at: 2026-05-10T16:05:09
 group_by: tag
-dept_filter: 品控部
+dept_filter: 品质管理中心
 doc_type: agrs-summary
 module: voc-nlp
 ---
 
-# AGRS 评论摘要 — group_by=tag / dept=品控部
+# AGRS 评论摘要 — group_by=tag / dept=品质管理中心
 
 分组数：10（min_group_size 过滤后保留）
 

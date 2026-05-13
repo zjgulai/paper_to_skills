@@ -107,7 +107,7 @@ L9 Superset 重跑 factories + 重新导出 ZIP + 重启容器
 
 **文件**：`02-脚本工具/01-标签进化/sql/voc_bi_views.sql`
 
-**变更点**：注释里 1 处「市场部」（line 待定，1 处命中）
+**变更点**：注释里 1 处「品牌市场中心」（line 待定，1 处命中）
 
 **注**：视图 SQL 本身不依赖部门字符串（部门是 `dept_owner` 字段值，不是 SQL 关键字），所以仅是注释更新。
 
@@ -130,7 +130,7 @@ L9 Superset 重跑 factories + 重新导出 ZIP + 重启容器
 
 **验证**：
 - `python3 -m py_compile`
-- yaml 里的部门只能出现 D1-D8 / 「未分类」 / 「内容运营部」/「KOL运营部」/「培训部」（保留）
+- yaml 里的部门只能出现 D1-D8 / 「未分类」 / 「内容电商运营部」/「KOL电商运营部」/「培训部」（保留）
 
 ---
 
@@ -200,14 +200,14 @@ BEGIN;
 \copy (SELECT dept_owner, COUNT(*) FROM dim_tag GROUP BY dept_owner) TO '/tmp/dept_before_<ts>.tsv' CSV HEADER;
 
 -- 应用映射
-UPDATE dim_tag SET dept_owner = '全球客服中心'   WHERE dept_owner = '全球客服与体验中心';
-UPDATE dim_tag SET dept_owner = '产品中心'       WHERE dept_owner = '产品中心/品线';
-UPDATE dim_tag SET dept_owner = '仓储物流部'     WHERE dept_owner = '供应链中心';
-UPDATE dim_tag SET dept_owner = '品质管理中心'   WHERE dept_owner = '品控部';
-UPDATE dim_tag SET dept_owner = '法务合规部'     WHERE dept_owner = '质量与法规部';
+UPDATE dim_tag SET dept_owner = '全球客服中心'   WHERE dept_owner = '全球客服中心';
+UPDATE dim_tag SET dept_owner = '产品中心'       WHERE dept_owner = '产品中心';
+UPDATE dim_tag SET dept_owner = '仓储物流部'     WHERE dept_owner = '仓储物流部';
+UPDATE dim_tag SET dept_owner = '品质管理中心'   WHERE dept_owner = '品质管理中心';
+UPDATE dim_tag SET dept_owner = '法务合规部'     WHERE dept_owner = '法务合规部';
 -- E1/E2 等你确认后追加：
--- UPDATE dim_tag SET dept_owner = '品牌市场中心' WHERE dept_owner = '全球营销服务中心';
--- UPDATE dim_tag SET dept_owner = '电商运营部'   WHERE dept_owner = '营运部';
+-- UPDATE dim_tag SET dept_owner = '品牌市场中心' WHERE dept_owner = '品牌市场中心';
+-- UPDATE dim_tag SET dept_owner = '电商运营部'   WHERE dept_owner = '电商运营部';
 
 -- 验证：所有部门只能在新白名单里
 SELECT dept_owner, COUNT(*) FROM dim_tag GROUP BY dept_owner ORDER BY 2 DESC;

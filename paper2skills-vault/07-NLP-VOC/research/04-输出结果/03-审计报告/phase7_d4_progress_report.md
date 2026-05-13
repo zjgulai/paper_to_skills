@@ -72,7 +72,7 @@ module: voc-nlp
 
 ## 四、端到端验证（Playwright 实测）
 
-### 部门看板（产品中心/品线，dashboard_id=3）— ✅ 通过
+### 部门看板（产品中心，dashboard_id=3）— ✅ 通过
 
 | 阶段 | top-10 第 1 位 | 第 2 位 | 第 3 位 | Apply badge |
 |---|---|---|---|---|

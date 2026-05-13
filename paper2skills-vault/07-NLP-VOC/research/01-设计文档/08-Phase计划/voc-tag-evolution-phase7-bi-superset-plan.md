@@ -198,7 +198,7 @@ audience: pm-and-engineer
 
 详见 [phase7_d4_progress_report.md §四](../../04-输出结果/03-审计报告/phase7_d4_progress_report.md)。
 
-**产品中心/品线 dashboard polarity=负向 测试**：
+**产品中心 dashboard polarity=负向 测试**：
 - 未过滤：质量感知 20.2k → 易用性 16.4k → 延迟 12.3k
 - 过滤后：延迟 12.3k → 尺码小 4.75k → 使用体验差 3.44k
 - "Applied filters (1)" badge 显示

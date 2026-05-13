@@ -290,7 +290,7 @@ audience: executive, business, pm, engineer
 |---|---|---|
 | 看板生成 | ✅ | 单文件 HTML，可分发 |
 | 部门覆盖 | ✅ 7 部门 | AGRS + MAA 形成部门级内容 |
-| 业务样例 | ✅ | 产品中心/品线、客服中心等有真实周报输出 |
+| 业务样例 | ✅ | 产品中心、客服中心等有真实周报输出 |
 | 产品定位 | ✅ | 作为 C 路径快速交付，被 Phase 7 B 路径替代 |
 
 ### 主证据
@@ -300,8 +300,8 @@ audience: executive, business, pm, engineer
 
 ### 交叉证据
 
-- [产品中心/品线 MAA 周报](../../04-输出结果/10-周报/2026-W19-d9/产品中心-品线_MAA.md)
-- [全球客服与体验中心 AGRS 周报](../../04-输出结果/10-周报/2026-W19-d9/全球客服与体验中心_AGRS.md)
+- [产品中心 MAA 周报](../../04-输出结果/10-周报/2026-W19-d9/产品中心-品线_MAA.md)
+- [全球客服中心 AGRS 周报](../../04-输出结果/10-周报/2026-W19-d9/全球客服中心_AGRS.md)
 - [Phase 6+7 白话汇报](phase6-7-executive-brief.md)
 
 ### 遗留风险 / 需要补充确认
@@ -346,7 +346,7 @@ audience: executive, business, pm, engineer
 | D2 Superset | ✅ | Docker + 6 datasets 注册 |
 | D3 Dashboard | ✅ | 12 charts + 8 dashboards，ZIP 导出 |
 | D4 Filters | ✅ | 10 native filters 写入 |
-| 部门过滤 | ✅ | 产品中心/品线 polarity=负向后 Top-3 完全变化 |
+| 部门过滤 | ✅ | 产品中心 polarity=负向后 Top-3 完全变化 |
 | Overview 饼图 | ⚠️ | dashboard-mode 饼图渲染 bug，单图模式正常 |
 
 ### 主证据
@@ -431,7 +431,7 @@ audience: executive, business, pm, engineer
 | Phase 6 precision 风险被主动发现并修复 | [Phase 6 计划](../08-Phase计划/voc-tag-evolution-phase6-dictionary-quality-plan.md) | [Phase 5+6 完整复盘](../../04-输出结果/03-审计报告/phase5_6_complete_retrospective.md) | [Phase 6+7 白话汇报](phase6-7-executive-brief.md) | 高 | 必须重点讲 |
 | Method C 后处理后 precision 0.896 | [Phase 6 计划](../08-Phase计划/voc-tag-evolution-phase6-dictionary-quality-plan.md) | [CLAUDE.md](../../../CLAUDE.md) | [Phase 5+6 完整复盘](../../04-输出结果/03-审计报告/phase5_6_complete_retrospective.md) | 高 | 主线展示，附口径说明 |
 | HTML 看板已交付但归档 | [Phase 6 HTML 归档说明](../../00-归档资料/phase6_html_dashboard/README.md) | [Phase 5+6 完整复盘](../../04-输出结果/03-审计报告/phase5_6_complete_retrospective.md) | [Phase 6+7 白话汇报](phase6-7-executive-brief.md) | 中高 | 作为过渡页展示 |
-| 7 部门周报已有真实输出 | [产品中心/品线 MAA](../../04-输出结果/10-周报/2026-W19-d9/产品中心-品线_MAA.md) | [全球客服 AGRS](../../04-输出结果/10-周报/2026-W19-d9/全球客服与体验中心_AGRS.md) | [Phase 5+6 完整复盘](../../04-输出结果/03-审计报告/phase5_6_complete_retrospective.md) | 中高 | 展示样例，但注意待填写项 |
+| 7 部门周报已有真实输出 | [产品中心 MAA](../../04-输出结果/10-周报/2026-W19-d9/产品中心-品线_MAA.md) | [全球客服 AGRS](../../04-输出结果/10-周报/2026-W19-d9/全球客服中心_AGRS.md) | [Phase 5+6 完整复盘](../../04-输出结果/03-审计报告/phase5_6_complete_retrospective.md) | 中高 | 展示样例，但注意待填写项 |
 | Superset BI B 路径完整闭环 | [Phase 7 完整复盘](../../04-输出结果/03-审计报告/phase7_complete_retrospective.md) | [Phase 7 D4 报告](../../04-输出结果/03-审计报告/phase7_d4_progress_report.md) | [Superset BI SOP](../07-操作指南/Superset_BI_SOP.md) | 高 | 主线展示 |
 | 部门 polarity filter 端到端有效 | [Phase 7 D4 报告](../../04-输出结果/03-审计报告/phase7_d4_progress_report.md) | [Phase 7 完整复盘](../../04-输出结果/03-审计报告/phase7_complete_retrospective.md) | [Phase 7 图集](phase7-architecture-diagrams.md) | 高 | 主线展示 |
 | Overview 饼图仍有遗留 bug | [Phase 7 D4 报告](../../04-输出结果/03-审计报告/phase7_d4_progress_report.md) | [Phase 7 计划](../08-Phase计划/voc-tag-evolution-phase7-bi-superset-plan.md) | [CLAUDE.md](../../../CLAUDE.md) | 高 | 风险页必须说明 |
@@ -472,7 +472,7 @@ audience: executive, business, pm, engineer
 | 指标口径 | precision 0.896 是否作为正式管理层指标 | 需说明 targeted 口径 | 项目负责人 / 算法负责人 |
 | 金标口径 | Top-1 100% 是否放主线 | 易被误解为全量准确率 | 项目负责人 |
 | BI 状态 | Overview 饼图 bug 是否仍存在 | 决定风险页表述 | BI 负责人 |
-| 数据脱敏 | 代表评论与 review_id 是否可展示 | 涉及隐私/合规 | 业务负责人 / 法务或数据治理 |
+| 数据脱敏 | 代表评论与 review_id 是否可展示 | 涉及隐私/合规 | 业务负责人 / 法务合规部或数据治理 |
 | 周报内容 | MAA 中“【待填写】”是否补全 | 影响业务可信度 | 各部门 owner |
 | 平台访问 | 是否已有内网或正式演示环境 | 决定是否可现场 demo | 运维/IT |
 | 组织闭环 | 7 部门是否有 owner 与处理 SLA | 决定下一阶段落地 | 管理层 |
