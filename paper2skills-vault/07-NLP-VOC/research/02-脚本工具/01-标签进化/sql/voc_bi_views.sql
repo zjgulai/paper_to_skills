@@ -126,7 +126,7 @@ SELECT
 FROM voc_brand_mention bm
 LEFT JOIN v_label_with_dept l ON bm.review_id = l.review_id;
 
-COMMENT ON VIEW v_label_brand IS 'brand × label 交叉。市场部「品牌提及 × 标签」分析';
+COMMENT ON VIEW v_label_brand IS 'brand × label 交叉。品牌市场中心「品牌提及 × 标签」分析';
 
 
 -- ============================================================================
