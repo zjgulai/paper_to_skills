@@ -289,7 +289,7 @@ SELECT dept_owner, count(*) FROM v_dept_kpi GROUP BY dept_owner;
 SELECT polarity, count(*) FROM v_label_with_dept GROUP BY polarity;
 
 \echo '✅ 5. 一个具体部门的 top-3 话题'
-SELECT * FROM v_dept_topic_summary WHERE dept_owner='产品研发部' ORDER BY hit_count DESC LIMIT 3;
+SELECT * FROM v_dept_topic_summary WHERE dept_owner='产品中心/品线' ORDER BY hit_count DESC LIMIT 3;
 
 \echo '✅ 6. 全局 top-3 标签'
 SELECT * FROM v_global_top_tags LIMIT 3;
@@ -304,7 +304,7 @@ EOF
 | 2 | 3 行 |
 | 3 | 7 行（客服 / 产品研发 / 国际物流 / 市场 / 电商运营 / 品控 / 质量与法规） |
 | 4 | 3 行（正向 / 负向 / 中性） |
-| 5 | 产品研发部 top-3：质量感知 ~20.2k / 易用性 ~16.4k / 延迟 ~12.3k |
+| 5 | 产品中心/品线 top-3：质量感知 ~20.2k / 易用性 ~16.4k / 延迟 ~12.3k |
 | 6 | 第一名 hit_count > 30,000 |
 
 **全部通过** = ETL 成功，下一步去 [Superset_BI_SOP.md §2](Superset_BI_SOP.md#§2-从零启动-superset) 起 Superset。
@@ -382,7 +382,7 @@ docker exec voc_superset_redis redis-cli FLUSHDB
 psql -h localhost -U voc_user -d voc_bi -c "
 EXPLAIN ANALYZE
 SELECT * FROM v_dept_topic_summary
-WHERE dept_owner='产品研发部' AND polarity='负向'
+WHERE dept_owner='产品中心/品线' AND polarity='负向'
 ORDER BY hit_count DESC LIMIT 10;
 "
 # 期望：Execution Time < 100ms（无索引）

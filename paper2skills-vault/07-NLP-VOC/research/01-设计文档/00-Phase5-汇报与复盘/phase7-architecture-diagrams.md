@@ -179,10 +179,10 @@ flowchart LR
         D1[("VOC Overview")]
     end
     subgraph DEPT["Dashboards 2-8（7 部门）"]
-        D2[("客服部")]
-        D3[("产品研发部")]
-        D4[("国际物流部")]
-        D5[("市场部")]
+        D2[("全球客服与体验中心")]
+        D3[("产品中心/品线")]
+        D4[("供应链中心")]
+        D5[("品牌市场中心")]
         D6[("电商运营部")]
         D7[("品控部")]
         D8[("质量与法规部")]
@@ -197,10 +197,10 @@ flowchart LR
     end
 
     subgraph CHARTS_DEPT["Per-Dept Charts (7)"]
-        C6["6. 客服部 Top-10"]
-        C7["7. 产品研发部 Top-10"]
-        C8["8. 国际物流部 Top-10"]
-        C9["9. 市场部 Top-10"]
+        C6["6. 全球客服与体验中心 Top-10"]
+        C7["7. 产品中心/品线 Top-10"]
+        C8["8. 供应链中心 Top-10"]
+        C9["9. 品牌市场中心 Top-10"]
         C10["10. 电商运营部 Top-10"]
         C11["11. 品控部 Top-10"]
         C12["12. 质量与法规部 Top-10"]
@@ -286,7 +286,7 @@ sequenceDiagram
         Note over U,SS: 首次加载 dashboard
         U->>B: 打开 /dashboard/3/
         B->>SS: GET /dashboard/3/
-        SS->>PG: SELECT * FROM v_dept_topic_summary<br/>WHERE dept_owner='产品研发部'<br/>ORDER BY hit_count DESC LIMIT 10
+        SS->>PG: SELECT * FROM v_dept_topic_summary<br/>WHERE dept_owner='产品中心/品线'<br/>ORDER BY hit_count DESC LIMIT 10
         PG-->>SS: 10 行结果
         SS->>CACHE: SET cache_key (TTL 5min)
         SS-->>B: HTML + chart-data API 调用
@@ -297,7 +297,7 @@ sequenceDiagram
         Note over U,SS: 应用 polarity=负向
         U->>B: 选择「情感极性=负向」+ Apply
         B->>SS: POST /api/v1/chart/data<br/>+ filter_state.value=['负向']
-        SS->>PG: SELECT * FROM v_dept_topic_summary<br/>WHERE dept_owner='产品研发部'<br/>  AND polarity='负向'<br/>ORDER BY hit_count DESC LIMIT 10
+        SS->>PG: SELECT * FROM v_dept_topic_summary<br/>WHERE dept_owner='产品中心/品线'<br/>  AND polarity='负向'<br/>ORDER BY hit_count DESC LIMIT 10
         PG-->>SS: 10 行（不同结果）
         SS-->>B: chart-data JSON
         B-->>U: 重渲染<br/>top-1: 延迟 12.3k<br/>显示 "Applied filters (1)" badge

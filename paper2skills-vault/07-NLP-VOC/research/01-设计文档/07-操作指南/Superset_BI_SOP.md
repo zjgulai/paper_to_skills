@@ -148,7 +148,7 @@ python3 research/02-脚本工具/01-标签进化/docker/superset_charts_factory.
 # 期望输出末尾：
 #   📊 Total charts: 12 / 12
 #   overview dashboard → id=1 (5 charts)
-#   dept 客服部 → id=2
+#   dept 全球客服与体验中心 → id=2
 #   ...
 ```
 
@@ -193,17 +193,17 @@ curl -sS -X POST http://localhost:8088/api/v1/security/login \
 | ID | Dashboard | URL |
 |---|---|---|
 | 1 | VOC Overview · 全局总览 | `http://localhost:8088/dashboard/1/` |
-| 2 | VOC · 客服部 | `http://localhost:8088/dashboard/2/` |
-| 3 | VOC · 产品研发部 | `http://localhost:8088/dashboard/3/` |
-| 4 | VOC · 国际物流部 | `http://localhost:8088/dashboard/4/` |
-| 5 | VOC · 市场部 | `http://localhost:8088/dashboard/5/` |
+| 2 | VOC · 全球客服与体验中心 | `http://localhost:8088/dashboard/2/` |
+| 3 | VOC · 产品中心/品线 | `http://localhost:8088/dashboard/3/` |
+| 4 | VOC · 供应链中心 | `http://localhost:8088/dashboard/4/` |
+| 5 | VOC · 品牌市场中心 | `http://localhost:8088/dashboard/5/` |
 | 6 | VOC · 电商运营部 | `http://localhost:8088/dashboard/6/` |
 | 7 | VOC · 品控部 | `http://localhost:8088/dashboard/7/` |
 | 8 | VOC · 质量与法规部 | `http://localhost:8088/dashboard/8/` |
 
 ### 3.3 使用过滤器
 
-1. 打开任一部门 dashboard（例如 `/dashboard/3/` 产品研发部）
+1. 打开任一部门 dashboard（例如 `/dashboard/3/` 产品中心/品线）
 2. 左侧「过滤」面板 → 点击「情感极性」下拉
 3. 选择「负向」→ 点击底部「Apply filters」
 4. 3-5s 后图表重绘，显示「Applied filters (1)」badge

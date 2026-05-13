@@ -8,12 +8,7 @@ venv/
 env/
 ENV/
 *.egg-info/
-dist/
 build/
-
-# Data
-*.csv
-*.pdf
 
 # IDE
 .vscode/
@@ -25,5 +20,23 @@ build/
 .DS_Store
 Thumbs.db
 
-# Claude
+# Claude / OpenCode
 .claude/
+.sisyphus/
+.kiro/
+
+# NLP-VOC presentation 临时（playwright 验证残留）
+paper2skills-vault/07-NLP-VOC/node_modules/
+paper2skills-vault/07-NLP-VOC/package.json
+paper2skills-vault/07-NLP-VOC/package-lock.json
+paper2skills-vault/07-NLP-VOC/.playwright-mcp/
+paper2skills-vault/07-NLP-VOC/presentation/_pw.mjs
+paper2skills-vault/07-NLP-VOC/presentation/node_modules/
+
+# 全局 dist/build 但保留 presentation/dist/ 内的成品 PDF
+dist/
+!paper2skills-vault/07-NLP-VOC/presentation/dist/
+!paper2skills-vault/07-NLP-VOC/presentation/dist/**
+
+# Data 大文件类（保留 .csv 在 fixtures 目录里的覆盖规则可后加）
+*.csv

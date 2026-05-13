@@ -41,10 +41,10 @@ DATASET_REVIEW = 1
 DATASET_DEPT_TOPIC = 3
 
 DEPT_DASHBOARDS = [
-    {"id": 2, "dept": "客服部", "chart_name": "客服部 · Top 10 话题（按命中量）"},
-    {"id": 3, "dept": "产品研发部", "chart_name": "产品研发部 · Top 10 话题（按命中量）"},
-    {"id": 4, "dept": "国际物流部", "chart_name": "国际物流部 · Top 10 话题（按命中量）"},
-    {"id": 5, "dept": "市场部", "chart_name": "市场部 · Top 10 话题（按命中量）"},
+    {"id": 2, "dept": "全球客服与体验中心", "chart_name": "全球客服与体验中心 · Top 10 话题（按命中量）"},
+    {"id": 3, "dept": "产品中心/品线", "chart_name": "产品中心/品线 · Top 10 话题（按命中量）"},
+    {"id": 4, "dept": "供应链中心", "chart_name": "供应链中心 · Top 10 话题（按命中量）"},
+    {"id": 5, "dept": "品牌市场中心", "chart_name": "品牌市场中心 · Top 10 话题（按命中量）"},
     {"id": 6, "dept": "电商运营部", "chart_name": "电商运营部 · Top 10 话题（按命中量）"},
     {"id": 7, "dept": "品控部", "chart_name": "品控部 · Top 10 话题（按命中量）"},
     {"id": 8, "dept": "质量与法规部", "chart_name": "质量与法规部 · Top 10 话题（按命中量）"},

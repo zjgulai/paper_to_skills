@@ -28,7 +28,7 @@ owner: voc-nlp
 
 ## 二、部门看板定义
 
-### 客服部
+### 全球客服与体验中心
 
 #### KPI列表
 
@@ -48,7 +48,7 @@ owner: voc-nlp
 
 #### 标签映射
 
-- 主责标签：v4.0 字典 `主责部门=客服部` 共 37 个标签（TAG_L2_001~009、TAG_SRV_05~10、TAG_GEN_C001、TAG_ZEN_R001~009 等）
+- 主责标签：v4.0 字典 `主责部门=全球客服与体验中心` 共 37 个标签（TAG_L2_001~009、TAG_SRV_05~10、TAG_GEN_C001、TAG_ZEN_R001~009 等）
 - AIPL 节点：以 P3（Purchase）+ L1-L4（Loyalty）为主，反映售后体验
 - 情感映射：客服响应快/一次解决问题为正向；优化售后政策/说明书为负向
 
@@ -60,23 +60,23 @@ owner: voc-nlp
 #### 样例周报
 
 ```markdown
-## 客服部周报（2026-W19）
+## 全球客服与体验中心周报（2026-W19）
 - 一次解决率 67.2%（环比 +2.1pp，超阈值线 60%）
 - 负面工单率 28.4%（黄色预警，已超 25%）
 - TOP-3 投诉：售后政策模糊（+18%）/ 说明书缺失（+12%）/ 退款流程慢（+9%）
-- 推荐行动：见 [maa_strategy_generator --dept customer_service Top-10](../04-输出结果/10-周报/2026-W19/客服部.md)
-- 代表评论：见 [agrs_summarizer --filter-dept 客服部](../04-输出结果/10-周报/2026-W19/客服部_AGRS.md)
+- 推荐行动：见 [maa_strategy_generator --dept customer_service Top-10](../04-输出结果/10-周报/2026-W19/全球客服与体验中心.md)
+- 代表评论：见 [agrs_summarizer --filter-dept 全球客服与体验中心](../04-输出结果/10-周报/2026-W19/全球客服与体验中心_AGRS.md)
 ```
 
 ---
 
-### 产品研发部
+### 产品中心/品线
 
 #### KPI列表
 
 | KPI | 定义 | 单位 | 阈值（黄/红）|
 |---|---|---|---|
-| 产品质量缺陷 TOP 10 | 主责部门=产品研发部的负向标签 Top 10 | 条 | TOP-1 > 1000 / > 5000 |
+| 产品质量缺陷 TOP 10 | 主责部门=产品中心/品线的负向标签 Top 10 | 条 | TOP-1 > 1000 / > 5000 |
 | ABSA 产品满意度 | aspects 中 `product quality` 主导情感 = positive 占比 | % | < 60 / < 40 |
 | 按键故障命中量 | TAG_L1_005 周新增量 | 条 | > 50 / > 100 |
 | 充电类故障 | TAG_L1_013/014 合计周新增量 | 条 | > 30 / > 60 |
@@ -90,7 +90,7 @@ owner: voc-nlp
 
 #### 标签映射
 
-- 主责标签：v4.0 字典 `主责部门=产品研发部` 共 62 个标签
+- 主责标签：v4.0 字典 `主责部门=产品中心/品线` 共 62 个标签
 - AIPL 节点：以 L0-L1（Lifestyle/Loyalty）为主，反映长期使用体感
 - aspect 映射：10_Aspect库 中 category=`product_quality` / `usability` / `durability` 三类 25 行
 
@@ -102,16 +102,16 @@ owner: voc-nlp
 #### 样例周报
 
 ```markdown
-## 产品研发部周报（2026-W19）
+## 产品中心/品线周报（2026-W19）
 - TOP-1 缺陷：延迟（7,893 条，环比 +5.2%）
 - 充电类故障合计 442 条（达红色阈值线 60，触发紧急排查）
-- 推荐行动：见 [maa_strategy_generator --dept product_rd](../04-输出结果/10-周报/2026-W19/产品研发部.md)
+- 推荐行动：见 [maa_strategy_generator --dept product_rd](../04-输出结果/10-周报/2026-W19/产品中心/品线.md)
 - SRAC TOP-3：质量感知 / 易用性 / 性能满意（spread = 5.30）
 ```
 
 ---
 
-### 国际物流部
+### 供应链中心
 
 #### KPI列表
 
@@ -130,7 +130,7 @@ owner: voc-nlp
 
 #### 标签映射
 
-- 主责标签：v4.0 字典 `主责部门=国际物流部` 共 39 个标签
+- 主责标签：v4.0 字典 `主责部门=供应链中心` 共 39 个标签
 - 关键 tag_id：TAG_L1_040（延迟）、TAG_L1_031（破损）、TAG_ZEN_R009（取消订单）等
 - AIPL 节点：P3（Purchase）+ L4（Loyalty 因物流体验流失）
 
@@ -142,16 +142,16 @@ owner: voc-nlp
 #### 样例周报
 
 ```markdown
-## 国际物流部周报（2026-W19）
+## 供应链中心周报（2026-W19）
 - 物流问题率 7.8%（黄色预警，已超 5%）
 - 延迟相关 TAG_L1_040 周命中 7,893 条（环比 +12%）
 - 重点市场：德国/法国（配送时效抱怨集中）
-- 推荐行动：见 [maa_strategy_generator --dept logistics](../04-输出结果/10-周报/2026-W19/国际物流部.md)
+- 推荐行动：见 [maa_strategy_generator --dept logistics](../04-输出结果/10-周报/2026-W19/供应链中心.md)
 ```
 
 ---
 
-### 市场部
+### 品牌市场中心
 
 #### KPI列表
 
@@ -171,7 +171,7 @@ owner: voc-nlp
 
 #### 标签映射
 
-- 主责标签：v4.0 字典 `主责部门=市场部` 共 34 个标签
+- 主责标签：v4.0 字典 `主责部门=品牌市场中心` 共 34 个标签
 - 关键 tag_id：TAG_GEN_016 / TAG_GEN_017 / TAG_GEN_E001/E003（市场卖点）
 - AIPL 节点：A（Awareness）+ I（Interest）+ P0-P2（Pre-purchase）
 
@@ -183,11 +183,11 @@ owner: voc-nlp
 #### 样例周报
 
 ```markdown
-## 市场部周报（2026-W19）
+## 品牌市场中心周报（2026-W19）
 - Proxy NPS 41.3%（健康，> 30 阈值线）
 - 品牌提及环比 +3.2%（稳定）
 - TOP 竞品对比：Momcozy vs Spectra（132 次）/ vs Medela（87 次）
-- 推荐行动：见 [maa_strategy_generator --dept marketing](../04-输出结果/10-周报/2026-W19/市场部.md)
+- 推荐行动：见 [maa_strategy_generator --dept marketing](../04-输出结果/10-周报/2026-W19/品牌市场中心.md)
 ```
 
 ---

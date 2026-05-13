@@ -284,7 +284,7 @@ ValueInsightEngine
   "description": "情感极性-0.60低于阈值-0.50",
   "recommended_action": "立即排查产品核心体验问题",
   "top_themes": [{"theme": "产品核心性能", "count": 8}],
-  "owner": "产品研发部"
+  "owner": "产品中心/品线"
 }
 ```
 
@@ -346,7 +346,7 @@ ValueInsightEngine
 
 | 类型 | 触发条件 | 策略示例 | 主责部门 |
 |------|---------|---------|---------|
-| **fix** | 异常检测 | 针对[噪音水平]启动产品体验优化专项 | 产品研发部 |
+| **fix** | 异常检测 | 针对[噪音水平]启动产品体验优化专项 | 产品中心/品线 |
 | **grow** | 机会识别 | 扩大[静音功能]的内容营销覆盖 | 营销增长部 |
 | **convert** | 漏斗漏损 | 推出限时优惠+免邮，降低首购门槛 | 用户增长部 |
 
@@ -363,7 +363,7 @@ score = urgency_score(30/15/5) + type_score(fix=20, convert=25, grow=10) + impac
   {
     "action_id": "STRAT_FIX_WHAT_P1",
     "action": "【紧急】针对 [噪音水平] 启动产品体验优化专项",
-    "owner": "产品研发部",
+    "owner": "产品中心/品线",
     "deadline": "3个工作日内",
     "status": "pending"
   },

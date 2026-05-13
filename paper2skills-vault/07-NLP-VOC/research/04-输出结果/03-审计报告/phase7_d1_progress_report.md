@@ -22,7 +22,7 @@ module: voc-nlp
 | D1.3 etl_to_postgres.py | ✅ | 流式 jsonl 导入，psycopg2 batch=1000 |
 | D1.4 ETL 实跑 | ✅ | **37 秒**导入 364K reviews + 690K labels + 33K brands + 267 dim_tag |
 | D1.5 6 SQL 视图层 | ✅ | v_review_overview / v_label_with_dept / v_dept_topic_summary / v_label_brand / v_global_top_tags / v_dept_kpi |
-| D1.6 验证 | ✅ | 产品研发部 top-3 标签命中数与 D10 MAA Markdown 完全一致 |
+| D1.6 验证 | ✅ | 产品中心/品线 top-3 标签命中数与 D10 MAA Markdown 完全一致 |
 
 ## 二、数据底座架构
 
@@ -43,7 +43,7 @@ voc_review (364,569 rows, master fact, 1 per review)
 | `v_review_overview` | 364,569 | 总览：source / nps / sentiment / product_line 切分 |
 | `v_label_with_dept` | 689,774 | 三表 JOIN 扁平表（含部门归属，**主消费视图**）|
 | `v_dept_topic_summary` | ~250 | per-dept × per-tag 聚合（MAA Top-N 替代）|
-| `v_label_brand` | ~33K | brand × label 交叉（市场部品牌分析）|
+| `v_label_brand` | ~33K | brand × label 交叉（品牌市场中心品牌分析）|
 | `v_global_top_tags` | ~150 | 全局标签命中排行 |
 | `v_dept_kpi` | 17 | 7 部门 KPI 概览（一行一个部门）|
 
@@ -91,17 +91,17 @@ ETL 内复用了 D10 同款 `_to_sentiment_float()` helper：将 `"positive"/"ne
 
 | 部门 | distinct_tags | distinct_reviews | total_hits | avg_conf | pct_neg |
 |---|---:|---:|---:|---:|---:|
-| 产品研发部 | 62 | 101,295 | 136,205 | 0.8200 | 29.6% |
-| 市场部 | 34 | 71,889 | 76,480 | 0.9211 | 19.8% |
-| 客服部 | 36 | 45,187 | 58,664 | 0.8297 | 34.3% |
-| 国际物流部 | 39 | 36,938 | 45,113 | 0.8343 | 48.1% |
+| 产品中心/品线 | 62 | 101,295 | 136,205 | 0.8200 | 29.6% |
+| 品牌市场中心 | 34 | 71,889 | 76,480 | 0.9211 | 19.8% |
+| 全球客服与体验中心 | 36 | 45,187 | 58,664 | 0.8297 | 34.3% |
+| 供应链中心 | 39 | 36,938 | 45,113 | 0.8343 | 48.1% |
 | 电商运营部 | 34 | 29,988 | 33,145 | 0.7696 | 48.5% |
 | 品控部 | 14 | 9,523 | 10,229 | 0.7791 | 92.4% |
 | 质量与法规部 | 8 | 1,534 | 2,253 | 0.8170 | 94.5% |
 
 **业务洞察一致**：品控部 + 质量与法规部 90%+ 负向，与 D10 MAA 一致。
 
-### 5.2 产品研发部 Top-10
+### 5.2 产品中心/品线 Top-10
 
 ```
 tag_id        | tag_cn   | polarity | hit_count | avg_confidence

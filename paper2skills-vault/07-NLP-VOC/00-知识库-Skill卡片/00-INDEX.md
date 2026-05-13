@@ -102,6 +102,16 @@ source: ai
 | [TopicImpact-观点单元画像抽取](Skill-TopicImpact-观点单元画像抽取.md) | 主题影响力观点抽取 |
 | [VOC-Semantic-Blueprint](Skill-VOC-Semantic-Blueprint.md) | VOC 语义蓝图 |
 
+### I. 统一信息抽取 × 语义结构（工作流基础设施）
+
+> 本组为 **SRL → 语义蓝图 → MAS 工作流** 的基础技能，2026-05-10 新建。
+
+| Skill | 工作流位置 | 关联代码 |
+|---|---|---|
+| ⭐ [InstructUIE-Unified-Information-Extraction](Skill-InstructUIE-Unified-Information-Extraction.md) | Phase 1: 长文本 → 结构化实体/关系/事件 | `paper2skills-code/nlp_voc/instructuie_unified_ie/` |
+| ⭐ [BERT-SRL-Event-Frame-Extraction](Skill-BERT-SRL-Event-Frame-Extraction.md) | Phase 2: 谓词检测 + 论元分类 → 事件框架 | `paper2skills-code/nlp_voc/bert_srl/` |
+| ⭐ [Semantic-Blueprint-Compiler](Skill-Semantic-Blueprint-Compiler.md) | Phase 3: 抽取结果 → 标准化语义蓝图 + Task Blueprint | `paper2skills-code/nlp_voc/semantic_blueprint_compiler/` |
+
 ---
 
 ## 按 Phase 5 直接采用情况分类
@@ -138,10 +148,11 @@ source: ai
 
 ## 统计
 
-- **总数**：40 张
-- **Phase 5 D1-D8 已采用**：11 张 = 27.5%
-- **Phase 6 规划采用**：3 张 = 7.5%
-- **待激活**：26 张 = 65%
+- **总数**：43 张（40 Phase 5 + 3 工作流基础设施）
+- **Phase 5 D1-D8 已采用**：11 张 = 25.6%
+- **Phase 6 规划采用**：3 张 = 7.0%
+- **工作流基础设施（已萃取）**：3 张 = 7.0%
+- **待激活**：26 张 = 60.5%
 - **总代码模板**：40 个对应 Python 模块（在 `paper2skills-code/nlp_voc/` 下）
 
 ---

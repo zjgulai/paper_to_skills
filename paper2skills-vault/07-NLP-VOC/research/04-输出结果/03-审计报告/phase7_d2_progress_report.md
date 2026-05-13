@@ -97,13 +97,13 @@ exec /usr/bin/run-server.sh
 烟测返回（部门 7 行）：
 ```json
 [
-  {"dept_owner": "产品研发部", "total_label_hits": 136205},
+  {"dept_owner": "产品中心/品线", "total_label_hits": 136205},
   {"dept_owner": "私域运营部", "total_label_hits": 77417},
-  {"dept_owner": "市场部",     "total_label_hits": 76480},
-  {"dept_owner": "客服部",     "total_label_hits": 58664},
-  {"dept_owner": "国际物流部", "total_label_hits": 45113},
+  {"dept_owner": "品牌市场中心",     "total_label_hits": 76480},
+  {"dept_owner": "全球客服与体验中心",     "total_label_hits": 58664},
+  {"dept_owner": "供应链中心", "total_label_hits": 45113},
   {"dept_owner": "电商运营部", "total_label_hits": 33145},
-  {"dept_owner": "产品部",     "total_label_hits": 12092}
+  {"dept_owner": "产品中心/品线",     "total_label_hits": 12092}
 ]
 ```
 

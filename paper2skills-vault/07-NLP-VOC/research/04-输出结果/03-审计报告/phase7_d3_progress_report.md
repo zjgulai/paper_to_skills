@@ -11,7 +11,7 @@ module: voc-nlp
 
 # Phase 7 D3 进度报告 — Superset Charts + Dashboards 自动化
 
-> **总判定**：🟢 **Phase 7 D3 全部完成** — 12 charts (5 overview + 7 dept) + 8 dashboards (1 overview + 7 dept) 通过 REST API 自动化创建，Playwright 浏览器验证产品研发部 dashboard 渲染真实数据（质量感知 20.2k / 易用性 16.4k / 延迟 12.3k），8 个 dashboard 导出为 ZIP 入仓可重建。**BI B 路径完整交付**。
+> **总判定**：🟢 **Phase 7 D3 全部完成** — 12 charts (5 overview + 7 dept) + 8 dashboards (1 overview + 7 dept) 通过 REST API 自动化创建，Playwright 浏览器验证产品中心/品线 dashboard 渲染真实数据（质量感知 20.2k / 易用性 16.4k / 延迟 12.3k），8 个 dashboard 导出为 ZIP 入仓可重建。**BI B 路径完整交付**。
 
 ## 一、任务交付
 
@@ -20,7 +20,7 @@ module: voc-nlp
 | D3.1 Probe Superset chart API | ✅ | 确认 viz_type=dist_bar/pie/table + params schema |
 | D3.2 Build chart factory | ✅ | 12 charts via REST API (idempotent) |
 | D3.3 Assemble dashboards | ✅ | 8 dashboards + position_json layout |
-| D3.4 Browser verify | ✅ | Playwright 验证产品研发部 top-10 真实数据 |
+| D3.4 Browser verify | ✅ | Playwright 验证产品中心/品线 top-10 真实数据 |
 | D3.5 Export dashboards | ✅ | 8 × ZIP (20K + 7×7K) + README |
 
 ## 二、Charts 清单（12 个）
@@ -39,10 +39,10 @@ module: voc-nlp
 
 | Chart ID | Name | viz_type | Dataset | adhoc_filter |
 |---:|---|---|---|---|
-| 6 | 客服部 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '客服部' |
-| 7 | 产品研发部 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '产品研发部' |
-| 8 | 国际物流部 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '国际物流部' |
-| 9 | 市场部 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '市场部' |
+| 6 | 全球客服与体验中心 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '全球客服与体验中心' |
+| 7 | 产品中心/品线 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '产品中心/品线' |
+| 8 | 供应链中心 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '供应链中心' |
+| 9 | 品牌市场中心 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '品牌市场中心' |
 | 10 | 电商运营部 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '电商运营部' |
 | 11 | 品控部 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '品控部' |
 | 12 | 质量与法规部 · Top 10 话题 | dist_bar | v_dept_topic_summary | dept_owner == '质量与法规部' |
@@ -52,10 +52,10 @@ module: voc-nlp
 | Dashboard ID | Title | Slug | Charts |
 |---:|---|---|---:|
 | 1 | VOC Overview · 全局总览 | voc-overview | 5 |
-| 2 | VOC · 客服部 | voc-dept-客服部 | 1 |
-| 3 | VOC · 产品研发部 | voc-dept-产品研发部 | 1 |
-| 4 | VOC · 国际物流部 | voc-dept-国际物流部 | 1 |
-| 5 | VOC · 市场部 | voc-dept-市场部 | 1 |
+| 2 | VOC · 全球客服与体验中心 | voc-dept-全球客服与体验中心 | 1 |
+| 3 | VOC · 产品中心/品线 | voc-dept-产品中心/品线 | 1 |
+| 4 | VOC · 供应链中心 | voc-dept-供应链中心 | 1 |
+| 5 | VOC · 品牌市场中心 | voc-dept-品牌市场中心 | 1 |
 | 6 | VOC · 电商运营部 | voc-dept-电商运营部 | 1 |
 | 7 | VOC · 品控部 | voc-dept-品控部 | 1 |
 | 8 | VOC · 质量与法规部 | voc-dept-质量与法规部 | 1 |
@@ -100,11 +100,11 @@ ROOT_ID
 | Chart dimensions | All 1121×400 with content ✅ |
 | Console errors | 0 ✅ |
 
-### 5.2 产品研发部 Dashboard
+### 5.2 产品中心/品线 Dashboard
 
 | 检查 | 结果 |
 |---|---|
-| Page title | `VOC · 产品研发部` ✅ |
+| Page title | `VOC · 产品中心/品线` ✅ |
 | Slice containers | 1/1 ✅ |
 | SVG elements | 14 ✅ |
 | **Real data labels** | 质量感知, 易用性, 延迟, 性能满意, 舒适体验, 外观设计, 夜间使用, 材质提及, 颜色提及, 尺码小 ✅ |
@@ -192,10 +192,10 @@ done
 | 2026-05-10 19:00 | D3.3 首次运行：12 charts 创建成功，8 dashboards 创建但 charts 空 |
 | 2026-05-10 19:10 | 发现 position_json 不足以建立关联，需 PUT chart.dashboards |
 | 2026-05-10 19:15 | 修复 attach_charts_to_dashboard 为 2-call protocol |
-| 2026-05-10 19:20 | 重跑 factory，Playwright 验证产品研发部真实数据渲染 ✅ |
+| 2026-05-10 19:20 | 重跑 factory，Playwright 验证产品中心/品线真实数据渲染 ✅ |
 | 2026-05-10 19:26 | D3.5 导出 8 × ZIP + README |
 | 2026-05-10 19:30 | 本报告归档 |
 
 ## 十一、一行总结
 
-> Phase 7 D3 **Superset 看板实质上线**：12 charts (5 overview + 7 dept) + 8 dashboards 通过 REST API 自动化创建，修了 chart→dashboard 2-call protocol 踩坑，Playwright 浏览器验证产品研发部 dashboard 渲染真实数据（质量感知 20.2k / 易用性 16.4k / 延迟 12.3k 与 D1 SQL 100% 一致），8 个 dashboard 导出为 ZIP 入仓可重建。**BI B 路径（Superset）完整交付**，与 D10 静态 HTML 看板形成互补（静态 = 快速分发，Superset = 实时交互）。
+> Phase 7 D3 **Superset 看板实质上线**：12 charts (5 overview + 7 dept) + 8 dashboards 通过 REST API 自动化创建，修了 chart→dashboard 2-call protocol 踩坑，Playwright 浏览器验证产品中心/品线 dashboard 渲染真实数据（质量感知 20.2k / 易用性 16.4k / 延迟 12.3k 与 D1 SQL 100% 一致），8 个 dashboard 导出为 ZIP 入仓可重建。**BI B 路径（Superset）完整交付**，与 D10 静态 HTML 看板形成互补（静态 = 快速分发，Superset = 实时交互）。

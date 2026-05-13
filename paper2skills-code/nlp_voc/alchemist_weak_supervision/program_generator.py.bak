@@ -1,0 +1,242 @@
+"""LLM 程序生成器
+
+模拟 LLM 根据标签定义和示例生成 Label Functions。
+生产环境替换为真实 LLM API 调用。
+"""
+
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass
+from typing import Optional
+
+from label_function import LabelFunction
+
+
+class ProgramGenerator:
+    """标注程序生成器
+
+    生产环境：
+        - 替换 _generate_with_llm 为真实 API 调用
+        - 使用 OpenAI / Claude API
+        - prompt 工程优化：要求输出可执行 Python 函数
+    """
+
+    def __init__(self, model_name: str = "simulated"):
+        self.model_name = model_name
+
+    def generate(
+        self,
+        label_name: str,
+        description: str,
+        positive_examples: list[str],
+        negative_examples: Optional[list[str]] = None,
+        n_programs: int = 3,
+    ) -> list[LabelFunction]:
+        """为给定标签生成多个标注程序
+
+        Args:
+            label_name: 标签名称（如"过敏反应"）
+            description: 标签描述
+            positive_examples: 正例文本列表
+            negative_examples: 反例文本列表
+            n_programs: 生成程序数量
+
+        Returns:
+            生成的 LabelFunction 列表
+        """
+        if self.model_name == "simulated":
+            return self._generate_simulated(label_name, description, positive_examples, negative_examples, n_programs)
+        return self._generate_with_llm(label_name, description, positive_examples, negative_examples, n_programs)
+
+    def _generate_simulated(
+        self,
+        label_name: str,
+        description: str,
+        positive_examples: list[str],
+        negative_examples: Optional[list[str]] = None,
+        n_programs: int = 3,
+    ) -> list[LabelFunction]:
+        """模拟 LLM 程序生成
+
+        基于正例提取关键词，生成不同策略的程序：
+        - 策略1: 关键词匹配
+        - 策略2: 正则表达式
+        - 策略3: 组合条件
+        """
+        neg_examples = negative_examples or []
+
+        # 从正例中提取高频词（简单分词）
+        all_words: dict[str, int] = {}
+        for text in positive_examples:
+            for i in range(len(text) - 1):
+                word = text[i:i+2]
+                if len(word) == 2 and any("\u4e00" <= c <= "\u9fff" for c in word):
+                    all_words[word] = all_words.get(word, 0) + 1
+
+        # 过滤在负例中出现的高频词
+        neg_words = set()
+        for text in neg_examples:
+            for i in range(len(text) - 1):
+                neg_words.add(text[i:i+2])
+
+        keywords = [
+            w for w, c in sorted(all_words.items(), key=lambda x: x[1], reverse=True)
+            if w not in neg_words and c >= 2
+        ][:8]
+
+        programs: list[LabelFunction] = []
+
+        # 策略1: 关键词匹配
+        if keywords and n_programs >= 1:
+            kw_list = keywords[:5]
+            programs.append(LabelFunction(
+                name=f"lf_{label_name}_keywords",
+                func=lambda t, kws=kw_list, ln=label_name: ln if any(kw in t for kw in kws) else None,
+                description=f"关键词匹配: {', '.join(kw_list)}",
+                source="llm_generated",
+            ))
+
+        # 策略2: 正则模式匹配（模拟）
+        if n_programs >= 2 and keywords:
+            patterns = keywords[:3]
+            programs.append(LabelFunction(
+                name=f"lf_{label_name}_pattern",
+                func=lambda t, pts=patterns, ln=label_name: ln if any(p in t for p in pts) else None,
+                description=f"模式匹配: {', '.join(patterns)}",
+                source="llm_generated",
+            ))
+
+        # 策略3: 否定规则（排除反例特征）
+        if n_programs >= 3 and neg_examples:
+            neg_keywords = []
+            for text in neg_examples[:3]:
+                for i in range(len(text) - 1):
+                    word = text[i:i+2]
+                    if len(word) == 2 and any("\u4e00" <= c <= "\u9fff" for c in word):
+                        neg_keywords.append(word)
+            neg_keywords = list(set(neg_keywords))[:3]
+
+            if neg_keywords and keywords:
+                programs.append(LabelFunction(
+                    name=f"lf_{label_name}_filtered",
+                    func=lambda t, kws=keywords[:3], negs=neg_keywords, ln=label_name: (
+                        ln if any(kw in t for kw in kws) and not any(n in t for n in negs) else None
+                    ),
+                    description=f"过滤规则: 包含{', '.join(keywords[:3])} 但不包含{', '.join(neg_keywords)}",
+                    source="llm_generated",
+                ))
+
+        return programs
+
+    def _generate_with_llm(
+        self,
+        label_name: str,
+        description: str,
+        positive_examples: list[str],
+        negative_examples: Optional[list[str]] = None,
+        n_programs: int = 3,
+    ) -> list[LabelFunction]:
+        """真实 LLM 程序生成（生产环境实现）"""
+
+        neg_text = ""
+        if negative_examples:
+            neg_text = "\n反例文本:\n" + "\n".join(f'- "{t}"' for t in negative_examples[:5])
+
+        prompt = f"""你是一名数据标注专家。请为以下标签编写 Python 函数，用于自动判断文本是否属于该标签。
+
+标签名称: {label_name}
+标签定义: {description}
+
+正例文本:
+{chr(10).join(f'- "{t}"' for t in positive_examples[:5])}
+{neg_text}
+
+要求:
+1. 函数签名: def lf_{label_name.lower().replace(' ', '_')}(text: str) -> str | None:
+2. 匹配时返回标签名称，不匹配时返回 None（弃权）
+3. 使用简单的关键词匹配或正则表达式
+4. 函数要轻量化，避免复杂逻辑
+
+请直接输出 Python 函数代码，不要解释。"""
+
+        # TODO: 生产环境接入真实 LLM API
+        # response = openai.ChatCompletion.create(...)
+        # code = extract_code(response)
+        # func = compile_function(code)
+
+        raise NotImplementedError("生产环境需接入真实 LLM API，或使用 model_name='simulated'")
+
+
+# ── 测试 ──────────────────────────────────────────────────────
+
+def test_program_generator():
+    """测试程序生成器"""
+    print("=" * 60)
+    print("测试: ProgramGenerator")
+    print("=" * 60)
+
+    generator = ProgramGenerator(model_name="simulated")
+
+    # 为"过敏反应"标签生成程序
+    label_name = "过敏反应"
+    description = "用户反馈使用后出现皮肤过敏症状（红疹、发红、瘙痒等）"
+
+    positive_examples = [
+        "宝宝用了后起红疹，怀疑是过敏",
+        "腰部一圈红红的，是不是过敏了",
+        "大腿内侧发红，应该是过敏",
+        "红屁屁严重，怀疑是过敏反应",
+        "用了三天，屁股上起了小疙瘩",
+        "之前用别的牌子没事，这个一用就红",
+        "皮肤敏感的宝宝慎买",
+        "材质可能不适合敏感肌",
+    ]
+
+    negative_examples = [
+        "这个尺码偏小，勒得宝宝不舒服",
+        "面料太硬了，摩擦得皮肤不舒服",
+        "物流太慢了",
+        "价格有点贵",
+    ]
+
+    print(f"\n--- 为标签 '{label_name}' 生成程序 ---")
+    print(f"正例: {len(positive_examples)} 条")
+    print(f"反例: {len(negative_examples)} 条")
+
+    programs = generator.generate(
+        label_name=label_name,
+        description=description,
+        positive_examples=positive_examples,
+        negative_examples=negative_examples,
+        n_programs=3,
+    )
+
+    print(f"\n生成 {len(programs)} 个程序:")
+    for i, prog in enumerate(programs, 1):
+        print(f"\n  [程序{i}] {prog.name}")
+        print(f"  描述: {prog.description}")
+
+    # 测试生成的程序
+    test_texts = [
+        "宝宝用了后起红疹",
+        "腰部一圈红红的",
+        "尺码偏小，勒得不舒服",
+        "物流太慢了",
+    ]
+
+    print("\n--- 程序标注测试 ---")
+    for text in test_texts:
+        print(f"\n  文本: '{text}'")
+        for prog in programs:
+            result = prog(text)
+            status = result if result else "[弃权]"
+            print(f"    {prog.name}: {status}")
+
+    print("\n" + "=" * 60)
+    print("程序生成器测试完成 ✓")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    test_program_generator()

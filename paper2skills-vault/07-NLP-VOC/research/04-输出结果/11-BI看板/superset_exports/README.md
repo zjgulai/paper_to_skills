@@ -9,10 +9,10 @@
 | File | Dashboard | Charts | Filters |
 |---|---|---:|---|
 | `dashboard_1.zip` | VOC Overview · 全局总览 | 5 | 数据源 / 产品线 / Proxy NPS（针对 v_review_overview 上的 2 张饼图） |
-| `dashboard_2.zip` | VOC · 客服部 | 1 | 情感极性 |
-| `dashboard_3.zip` | VOC · 产品研发部 | 1 | 情感极性 |
-| `dashboard_4.zip` | VOC · 国际物流部 | 1 | 情感极性 |
-| `dashboard_5.zip` | VOC · 市场部 | 1 | 情感极性 |
+| `dashboard_2.zip` | VOC · 全球客服与体验中心 | 1 | 情感极性 |
+| `dashboard_3.zip` | VOC · 产品中心/品线 | 1 | 情感极性 |
+| `dashboard_4.zip` | VOC · 供应链中心 | 1 | 情感极性 |
+| `dashboard_5.zip` | VOC · 品牌市场中心 | 1 | 情感极性 |
 | `dashboard_6.zip` | VOC · 电商运营部 | 1 | 情感极性 |
 | `dashboard_7.zip` | VOC · 品控部 | 1 | 情感极性 |
 | `dashboard_8.zip` | VOC · 质量与法规部 | 1 | 情感极性 |

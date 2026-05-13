@@ -7,6 +7,8 @@ import os
 
 SECRET_KEY = os.environ.get("SUPERSET_SECRET_KEY", "voc_bi_dev_secret_key_not_for_production")
 
+APP_NAME = "路特VOC自助工作台"
+
 WTF_CSRF_ENABLED = False
 
 FEATURE_FLAGS = {

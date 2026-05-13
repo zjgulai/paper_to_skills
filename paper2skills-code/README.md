@@ -11,7 +11,10 @@
 ├── time_series/         # 时间序列预测
 ├── supply_chain/        # 供应链优化
 ├── recommendation/      # 推荐系统
-└── growth_model/        # 增长模型
+├── growth_model/        # 增长模型
+├── nlp_voc/             # NLP 舆情分析
+├── knowledge_graph/     # 知识图谱 (HGT / HGCN)
+└── mas/                 # 多智能体系统 (AutoGen / ReAct / ToT)
 ```
 
 ## 安装
