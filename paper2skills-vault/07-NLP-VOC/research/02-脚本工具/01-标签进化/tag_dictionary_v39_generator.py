@@ -76,29 +76,29 @@ def derive_fields(tag: dict) -> dict:
     dept_map = {
         "Order_Placement": "电商运营部",
         "Payment_Issue": "电商运营部",
-        "Shipping_and_Delivery": "供应链中心",
-        "Delivery_Problem": "供应链中心",
-        "Return_Request": "全球客服与体验中心",
-        "Refund_Request": "全球客服与体验中心",
-        "Warranty_Claim": "全球客服与体验中心",
-        "Customer_Service": "全球客服与体验中心",
-        "Product_Inquiry": "全球客服与体验中心",
-        "General_Feedback": "全球客服与体验中心",
+        "Shipping_and_Delivery": "仓储物流部",
+        "Delivery_Problem": "仓储物流部",
+        "Return_Request": "全球客服中心",
+        "Refund_Request": "全球客服中心",
+        "Warranty_Claim": "全球客服中心",
+        "Customer_Service": "全球客服中心",
+        "Product_Inquiry": "全球客服中心",
+        "General_Feedback": "全球客服中心",
     }
-    main_dept = dept_map.get(tag_en, "全球客服与体验中心")
+    main_dept = dept_map.get(tag_en, "全球客服中心")
 
     # ── 协同部门推导 ──
     collab_map = {
-        "Order_Placement": "物流运营部",
+        "Order_Placement": "仓储物流部",
         "Payment_Issue": "财务部门",
-        "Shipping_and_Delivery": "物流运营部",
-        "Delivery_Problem": "物流运营部",
-        "Return_Request": "电商运营部; 供应链中心",
+        "Shipping_and_Delivery": "仓储物流部",
+        "Delivery_Problem": "仓储物流部",
+        "Return_Request": "电商运营部; 仓储物流部",
         "Refund_Request": "电商运营部; 财务部门",
-        "Warranty_Claim": "品控部; 产品中心/品线",
-        "Customer_Service": "品控部",
-        "Product_Inquiry": "产品中心/品线; 电商运营部",
-        "General_Feedback": "品牌市场中心; 产品中心/品线",
+        "Warranty_Claim": "品质管理中心; 产品中心",
+        "Customer_Service": "品质管理中心",
+        "Product_Inquiry": "产品中心; 电商运营部",
+        "General_Feedback": "品牌市场中心; 产品中心",
     }
     collab_dept = collab_map.get(tag_en, "")
 
