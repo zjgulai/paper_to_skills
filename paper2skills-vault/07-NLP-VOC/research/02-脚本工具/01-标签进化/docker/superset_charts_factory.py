@@ -17,7 +17,7 @@ Charts created:
 
 Dashboards:
   overview                        含 5 个总览图表
-  dept_全球客服与体验中心 / 产品中心/品线 / ...   含该部门 topic_top10 + 通用 KPI 卡片
+  dept_全球客服中心 / 产品中心 / ...   含该部门 topic_top10 + 通用 KPI 卡片
 
 Idempotent: skips charts/dashboards that already exist.
 
@@ -43,8 +43,8 @@ ADMIN_USER = "admin"
 ADMIN_PASS = "voc_admin_2026"
 
 DEPARTMENTS = [
-    "全球客服与体验中心", "产品中心/品线", "供应链中心",
-    "品牌市场中心", "电商运营部", "品控部", "质量与法规部",
+    "全球客服中心", "产品中心", "仓储物流部",
+    "品牌市场中心", "电商运营部", "品质管理中心", "法务合规部",
 ]
 
 DATASET_ID = {

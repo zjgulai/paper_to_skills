@@ -41,13 +41,13 @@ DATASET_REVIEW = 1
 DATASET_DEPT_TOPIC = 3
 
 DEPT_DASHBOARDS = [
-    {"id": 2, "dept": "全球客服与体验中心", "chart_name": "全球客服与体验中心 · Top 10 话题（按命中量）"},
-    {"id": 3, "dept": "产品中心/品线", "chart_name": "产品中心/品线 · Top 10 话题（按命中量）"},
-    {"id": 4, "dept": "供应链中心", "chart_name": "供应链中心 · Top 10 话题（按命中量）"},
+    {"id": 2, "dept": "全球客服中心", "chart_name": "全球客服中心 · Top 10 话题（按命中量）"},
+    {"id": 3, "dept": "产品中心", "chart_name": "产品中心 · Top 10 话题（按命中量）"},
+    {"id": 4, "dept": "仓储物流部", "chart_name": "仓储物流部 · Top 10 话题（按命中量）"},
     {"id": 5, "dept": "品牌市场中心", "chart_name": "品牌市场中心 · Top 10 话题（按命中量）"},
     {"id": 6, "dept": "电商运营部", "chart_name": "电商运营部 · Top 10 话题（按命中量）"},
-    {"id": 7, "dept": "品控部", "chart_name": "品控部 · Top 10 话题（按命中量）"},
-    {"id": 8, "dept": "质量与法规部", "chart_name": "质量与法规部 · Top 10 话题（按命中量）"},
+    {"id": 7, "dept": "品质管理中心", "chart_name": "品质管理中心 · Top 10 话题（按命中量）"},
+    {"id": 8, "dept": "法务合规部", "chart_name": "法务合规部 · Top 10 话题（按命中量）"},
 ]
 
 OVERVIEW_CHART_NAMES = [
