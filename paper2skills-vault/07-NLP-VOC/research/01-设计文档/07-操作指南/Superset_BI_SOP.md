@@ -1,32 +1,45 @@
 ---
 name: superset-bi-sop
-description: Superset BI 看板运维 SOP — 高详细度操作手册。覆盖从零启动、日常访问、添加 chart/filter、迁移重建、故障处置、权限管理、备份恢复的全流程。面向接手的工程/运维同事，逐行命令 + 故障判断树 + 底脱图。
+description: Superset BI 看板运维 SOP — 高详细度操作手册。覆盖从零启动、日常访问、添加 chart/filter、迁移重建、故障处置、权限管理、备份恢复的全流程。面向接手的工程/运维同事，逐行命令 + 故障判断树 + 底脱图。v2 (L7) 升级：覆盖 Phase 7 8-dashboard + MVP L4-L6 新增 5 dashboard / 30 chart / 4 dataset，部署在腾讯云 https://voc.lute-tlz-dddd.top。
 title: Superset BI 看板运维 SOP
 doc_type: sop
 module: voc-nlp
 topic: superset-bi-operations
 status: stable
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-14
+version: v2
 owner: self
 source: ai
 audience: engineer
 ---
 
-# Superset BI 看板运维 SOP
+# Superset BI 看板运维 SOP（v2 / L7 升级）
 
-> **文档定位**：接手人能照着逐行做，不需要去翻 Phase 7 的 4 份进度报告。
+> **文档定位**：接手人能照着逐行做，不需要去翻 Phase 7 的 4 份进度报告 + MVP L4/L5/L6 三份进度报告。
+>
+> **v2 关键升级（2026-05-14 / L7）**：
+> - 部署地址从 `http://localhost:8088` 升级为腾讯云 `https://voc.lute-tlz-dddd.top`
+> - 资产规模：8 dashboard / 12 chart / 6 dataset → **13 dashboard / 42 chart / 10 dataset**
+> - 新增覆盖：MVP L4 (D-Health) + L5 (D-Diag 三专题) + L6 (D-Action 7 部门行动队列)
+> - 新增 §B「MVP L4-L6 资产清单 + 重建/回滚」专章
 >
 > **配套文档**：
 > - 白话背景：[phase6-7-executive-brief.md](../00-Phase5-汇报与复盘/phase6-7-executive-brief.md)
 > - 架构图：[phase7-architecture-diagrams.md](../00-Phase5-汇报与复盘/phase7-architecture-diagrams.md)
 > - ETL 上游：[ETL_pipeline_SOP.md](ETL_pipeline_SOP.md)
+> - MVP 设计：[01-mvp-design.md](../10-VOC深度分析MVP/01-mvp-design.md)
+> - L4 进度：[mvp_l4_progress_report.md](../../04-输出结果/03-审计报告/mvp_l4_progress_report.md)（如已归档）
+> - L5 进度：[mvp_l5_progress_report.md](../../04-输出结果/03-审计报告/mvp_l5_progress_report.md)
+> - L6 进度：[mvp_l6_progress_report.md](../../04-输出结果/03-审计报告/mvp_l6_progress_report.md)
 >
-> **当前生产配置**：
+> **当前生产配置（2026-05-14）**：
 > - Superset 版本：4.1.1（Docker）
-> - 访问地址：`http://localhost:8088`
-> - 管理员：`admin / voc_admin_2026`
-> - 后端数据库：`voc_bi`（Postgres，host network）
+> - **生产访问**：`https://voc.lute-tlz-dddd.top`（腾讯云 · HTTPS）
+> - 本机开发（仅可选）：`http://localhost:8088`
+> - 管理员：`admin / voc_admin_2026`（⚠️ 默认密码，未来 P8 加固时更换）
+> - 后端数据库：`voc_bi`（Postgres，腾讯云容器内）
+> - 数据规模：364,569 条 review · 1.4M+ labels · ~13 工日累计建设
 
 ---
 
@@ -42,6 +55,7 @@ audience: engineer
 8. [§8 故障处置判断树](#§8-故障处置判断树)
 9. [§9 安全与权限](#§9-安全与权限)
 10. [§A 附录：Docker / API 常用命令](#§a-附录docker--api-常用命令)
+11. [§B MVP L4-L6 资产清单 + 重建/回滚（v2 新增）](#§b-mvp-l4-l6-资产清单--重建--回滚v2-新增)
 
 ---
 
@@ -178,28 +192,44 @@ curl -sS -X POST http://localhost:8088/api/v1/security/login \
 
 ### 3.1 URL 速查
 
-| 用途 | URL |
-|---|---|
-| 首页 | `http://localhost:8088/` |
-| 登录 | `http://localhost:8088/login/` |
-| Dashboard 列表 | `http://localhost:8088/dashboard/list/` |
-| Chart 列表 | `http://localhost:8088/chart/list/` |
-| Dataset 列表 | `http://localhost:8088/tablemodelview/list/` |
-| SQL Lab | `http://localhost:8088/sqllab/` |
-| API 文档 | `http://localhost:8088/swagger/v1` |
-
-### 3.2 8 个 Dashboard 直达链接
-
-| ID | Dashboard | URL |
+| 用途 | 生产 URL（腾讯云） | 本机 URL（开发） |
 |---|---|---|
-| 1 | VOC Overview · 全局总览 | `http://localhost:8088/dashboard/1/` |
-| 2 | VOC · 全球客服中心 | `http://localhost:8088/dashboard/2/` |
-| 3 | VOC · 产品中心 | `http://localhost:8088/dashboard/3/` |
-| 4 | VOC · 仓储物流部 | `http://localhost:8088/dashboard/4/` |
-| 5 | VOC · 品牌市场中心 | `http://localhost:8088/dashboard/5/` |
-| 6 | VOC · 电商运营部 | `http://localhost:8088/dashboard/6/` |
-| 7 | VOC · 品质管理中心 | `http://localhost:8088/dashboard/7/` |
-| 8 | VOC · 法务合规部 | `http://localhost:8088/dashboard/8/` |
+| 首页 | `https://voc.lute-tlz-dddd.top/` | `http://localhost:8088/` |
+| 登录 | `https://voc.lute-tlz-dddd.top/login/` | `http://localhost:8088/login/` |
+| Dashboard 列表 | `https://voc.lute-tlz-dddd.top/dashboard/list/` | `http://localhost:8088/dashboard/list/` |
+| Chart 列表 | `https://voc.lute-tlz-dddd.top/chart/list/` | `http://localhost:8088/chart/list/` |
+| Dataset 列表 | `https://voc.lute-tlz-dddd.top/tablemodelview/list/` | 同上 |
+| SQL Lab | `https://voc.lute-tlz-dddd.top/sqllab/` | 同上 |
+| API 文档 | `https://voc.lute-tlz-dddd.top/swagger/v1` | 同上 |
+
+### 3.2 13 个 Dashboard 直达链接（v2）
+
+#### Phase 7 看板（id 1-8 · 8 个）
+
+| ID | Dashboard | URL | slug |
+|----|---|---|---|
+| 1 | VOC Overview · 全局总览 | `https://voc.lute-tlz-dddd.top/superset/dashboard/1/` | `voc-overview` |
+| 2 | VOC · 全球客服中心 | `https://voc.lute-tlz-dddd.top/superset/dashboard/2/` | `voc-dept-全球客服与体验中心` |
+| 3 | VOC · 产品中心 ⭐ | `https://voc.lute-tlz-dddd.top/superset/dashboard/3/` | `voc-dept-产品中心品线` |
+| 4 | VOC · 仓储物流部 | `https://voc.lute-tlz-dddd.top/superset/dashboard/4/` | `voc-dept-供应链中心` |
+| 5 | VOC · 品牌市场中心 | `https://voc.lute-tlz-dddd.top/superset/dashboard/5/` | `voc-dept-品牌市场中心` |
+| 6 | VOC · 电商运营部 | `https://voc.lute-tlz-dddd.top/superset/dashboard/6/` | `voc-dept-电商运营部` |
+| 7 | VOC · 品质管理中心 | `https://voc.lute-tlz-dddd.top/superset/dashboard/7/` | `voc-dept-品控部` |
+| 8 | VOC · 法务合规部 | `https://voc.lute-tlz-dddd.top/superset/dashboard/8/` | `voc-dept-质量与法规部` |
+
+> ⭐ 部门 dashboard（2-8）在 L6 后已经在末尾追加 D-Action 行动队列 chart。
+
+#### MVP 看板（id 9-13 · 5 个新增）
+
+| ID | Dashboard | URL | slug |
+|----|---|---|---|
+| 9 | VOC · 深度分析 D-Health（L4） | `https://voc.lute-tlz-dddd.top/superset/dashboard/9/` | `voc-deep-health` |
+| 10 | VOC · 深度分析 D-Diag-Product 产品力诊断（L5） | `https://voc.lute-tlz-dddd.top/superset/dashboard/10/` | `voc-deep-diag-product` |
+| 11 | VOC · 深度分析 D-Diag-Service 服务力诊断（L5） | `https://voc.lute-tlz-dddd.top/superset/dashboard/11/` | `voc-deep-diag-service` |
+| 12 | VOC · 深度分析 D-Diag-Brand 品牌内容力诊断（L5） | `https://voc.lute-tlz-dddd.top/superset/dashboard/12/` | `voc-deep-diag-brand` |
+| 13 | VOC · 深度分析 D-Action 7 部门行动总队列（L6）⭐⭐ | `https://voc.lute-tlz-dddd.top/superset/dashboard/13/` | `voc-deep-action-overview` |
+
+> ⭐⭐ id 13 是管理层入口：一页看到全部门 Top 20 行动项 + 7 个部门各自 Top 10。
 
 ### 3.3 使用过滤器
 
@@ -628,7 +658,254 @@ for f in meta.get('native_filter_configuration', []):
 
 ---
 
-## §A 附录：Docker / API 常用命令
+## §B MVP L4-L6 资产清单 + 重建 / 回滚（v2 新增）
+
+> 本章覆盖 MVP L4 (D-Health) / L5 (D-Diag 三专题) / L6 (D-Action 7 部门行动队列) 共 5 个新 dashboard + 30 个新 chart + 4 个新 dataset 的：完整对象清单、重建脚本、一键回滚。
+
+### §B.1 资产规模对比（Phase 7 → MVP L7）
+
+| 维度 | Phase 7 末态 | MVP L7 末态 | Δ |
+|---|---:|---:|---:|
+| Dataset | 6 | **10** | +4（L4 新增） |
+| Chart | 19（含 5/4 D3 bug 修复后） | **42** | +23（L4:7 + L5:15 + L6:8 - 注：L4 重建 ch4/5 → 13/14 是覆盖关系） |
+| Dashboard | 8 | **13** | +5（L4:1 + L5:3 + L6:1） |
+| Postgres view | 6 | **10** | +4（L3 新增 4 个深度分析视图） |
+| voc_review 列 | 15 | **17** | +2（country + ts_inferred，L1） |
+| dim_tag 列 | 11 | **12** | +1（atomic_indicator_id，L2） |
+| 工程周期 | Phase 5+6+7 = 22d | + MVP L0-L7 = 13d → **35d 累计** | +13 |
+
+### §B.2 4 个 MVP 新视图（L3 产出）
+
+```bash
+# 视图定义文件
+research/02-脚本工具/01-标签进化/sql/mvp_l3_views.sql
+
+# 4 个视图（普通 VIEW，无物化）
+1. v_atomic_indicator_score   · 50 SAT × month × country × product_line 得分
+2. v_aipl_node_score          · L1-L4 AIPL 节点得分
+3. v_country_dept_health      · country × dept × month 健康度
+4. v_proxy_nps_calibrated     · 按 04-NPS 偏差校准 Proxy NPS
+
+# 重建命令
+psql -h <prod-pg> -U voc_user -d voc_bi \
+  -f research/02-脚本工具/01-标签进化/sql/mvp_l3_views.sql
+
+# 回滚命令
+psql -h <prod-pg> -U voc_user -d voc_bi -c "
+  DROP VIEW v_aipl_node_score, v_atomic_indicator_score,
+           v_country_dept_health, v_proxy_nps_calibrated CASCADE;
+"
+```
+
+### §B.3 MVP L4 D-Health（dashboard 9）
+
+| Chart ID | viz | 用途 |
+|---:|---|---|
+| 13 | big_number_total | 总 reviews 数（重建后用） |
+| 14 | big_number_total | 平均 SAT 分 |
+| 15 | big_number_total | 校准 NPS |
+| 16 | dist_bar | AIPL 节点健康度 by country |
+| 17 | table | SAT 排行 Top/Bottom 10 |
+| 18 | heatmap | Country × Dept 负向率热力 |
+| 19 | dist_bar | 校准前后 NPS by source |
+
+**重建脚本**：
+
+```bash
+# 1. 注册 4 个 dataset（v_atomic_indicator_score 等）
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l4_create_charts.py
+# 期望末尾：created 7 charts (id 13-19)
+
+# 2. 装配 dashboard
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l4_create_dashboard.py
+# 期望末尾：DASHBOARD ID = 9
+```
+
+**回滚**：
+
+```bash
+# 删除 1 dashboard + 7 charts + 4 datasets
+# 详见 ~/.secrets/backups/voc-deep-analysis-mvp/L4-*/MANIFEST.md
+```
+
+### §B.4 MVP L5 D-Diag 三专题（dashboard 10/11/12）
+
+| Dashboard | Charts | 主题 |
+|---:|---|---|
+| 10 | 20-24 (P-1~P-5) | 产品力诊断 |
+| 11 | 25-29 (S-1~S-5) | 服务力诊断 |
+| 12 | 30-34 (B-1~B-5) | 内容/品牌力诊断 |
+
+**15 charts 概览**：
+
+| code | dashboard | viz | name |
+|---|:---:|---|---|
+| P-1 | 10 | table | 产品中心 SAT 失血 Top 10 |
+| P-2 | 10 | heatmap | 产品中心 × 国家 负向率热力 |
+| P-3 | 10 | table | 产品中心 × 国家 体量+负向率 |
+| P-4 | 10 | dist_bar | L1 使用层 SAT 全量表现 |
+| P-5 | 10 | dist_bar | 产品中心 国家×负向率（单批快照） |
+| S-1 | 11 | heatmap | 服务三部门 × 国家 负向率热力 |
+| S-2 | 11 | table | L3 服务层 SAT 失血 Top 10 |
+| S-3 | 11 | heatmap | 数据源 × 国家 NPS 校准矩阵 |
+| S-4 | 11 | dist_bar | 仓储物流 SAT 明细排行 |
+| S-5 | 11 | pie | 核心质量 SAT 体量分布 |
+| B-1 | 12 | table | 品牌市场中心 SAT Top 10 |
+| B-2 | 12 | dist_bar | L4 品牌层 SAT × 国家 |
+| B-3 | 12 | dist_bar | SAT_L4_01 品牌声量 by 国家（单批快照） |
+| B-4 | 12 | dist_bar | SAT_L3_17 内容/社群 × 国家 |
+| B-5 | 12 | dist_bar | 节点体量 vs 节点得分 双轴 |
+
+**重建**：
+
+```bash
+# 1. 15 chart
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l5_create_charts.py
+# 期望末尾：created [{id:20,code:P-1,...}, ...{id:34}]
+
+# 2. 3 dashboards（自动 link chart 到 dashboard）
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l5_create_dashboards.py
+# 期望末尾：3 dashboards 10/11/12 + chart links 全部 200
+```
+
+**回滚**：
+
+```bash
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l5_rollback.py
+# 删除 dashboard 10/11/12 + charts 20-34
+```
+
+> **已知非阻塞限制**：`ts_inferred = voc_review.loaded_at`（ETL 入库时间，单批 ETL 下所有 review 共享 month=2026-05-01）→ P-5 / B-3 line 退化为单点，已切换为 dist_bar 单批快照。upgrade path：真实 timestamp 入库后，反转 viz_type 即可。
+
+### §B.5 MVP L6 D-Action 7 部门行动总队列（dashboard 13 + 7 dept dashboard 追加）
+
+#### B.5.1 双路径
+
+- **Path A**：现有 7 dept dashboard (id 2-8) 末尾追加 D-Action 行动队列 chart
+- **Path B**：新建总览 dashboard 13（含 8 charts：master Top 20 + 7 dept Top 10）
+
+#### B.5.2 8 chart 清单（id 35-42）
+
+| Chart | dept | 关联 dashboard |
+|---:|---|---|
+| 35 | 产品中心 | 3, 13 |
+| 36 | 全球客服中心 | 2, 13 |
+| 37 | 仓储物流部 | 4, 13 |
+| 38 | 品牌市场中心 | 5, 13 |
+| 39 | 品质管理中心 | 7, 13 |
+| 40 | 电商运营部 | 6, 13 |
+| 41 | 法务合规部 | 8, 13 |
+| 42 | 全部门 master Top 20 | 13 |
+
+#### B.5.3 优先级公式
+
+```sql
+priority_score = hit_negative × pct_negative / 100
+-- 体量 × 负向占比 双重加权 · 与 SGCS 失血指标排序逻辑一致
+```
+
+#### B.5.4 关键过滤
+
+⚠️ dim_tag 里 15 个产品中心标签 biz_action 为占位符 `【待填写】`，过滤时必须排除：
+
+```sql
+WHERE biz_action IS NOT NULL
+  AND biz_action <> ''
+  AND biz_action NOT LIKE '%待填写%'
+```
+
+#### B.5.5 重建
+
+```bash
+# 1. 8 charts
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_create_charts.py
+# 期望末尾：created 8 charts (id 35-42)
+
+# 2. Path A: 追加到 7 dept dashboards
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_append_to_dept_dashboards.py
+# 期望末尾：7 entries 'appended'
+
+# 3. Path B: 创建 D-Action 总览
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_create_overview.py
+# 期望末尾：dashboard_id=13 + chart links 8 个 200
+
+# 4. （如需）修复过滤排除占位符
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_fix_action_filter.py
+```
+
+#### B.5.6 回滚
+
+```bash
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_rollback.py
+# Step 1: 从 pre_l6_snapshot.json 还原 7 dept dashboard position_json
+# Step 2: 删除 dashboard 13
+# Step 3: 删除 charts 35-42
+```
+
+### §B.6 完整 MVP 重建顺序（10-15 分钟）
+
+```bash
+# 前置：voc_bi Postgres 已就位 + Phase 7 看板已 bootstrap
+
+# Layer 1 (SQL views) ────────────────────
+psql -h <prod-pg> -U voc_user -d voc_bi \
+  -f research/02-脚本工具/01-标签进化/sql/mvp_l3_views.sql
+# 4 视图就位
+
+# Layer 2 (L4 D-Health) ─────────────────
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l4_create_charts.py
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l4_create_dashboard.py
+# dataset 7-10 + chart 13-19 + dashboard 9
+
+# Layer 3 (L5 D-Diag) ────────────────────
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l5_create_charts.py
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l5_create_dashboards.py
+# chart 20-34 + dashboard 10/11/12
+
+# Layer 4 (L6 D-Action) ──────────────────
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_create_charts.py
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_append_to_dept_dashboards.py
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_create_overview.py
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_fix_action_filter.py
+# chart 35-42 + dashboard 13 + dept dashboard 2-8 各追加 1 row
+
+# 验证
+curl -k https://voc.lute-tlz-dddd.top/health
+# 期望：200
+open https://voc.lute-tlz-dddd.top/superset/dashboard/13/
+# 应看到 8 个 D-Action 表格
+```
+
+### §B.7 完整 MVP 回滚顺序（5-10 分钟）
+
+```bash
+# 倒序回滚：L6 → L5 → L4 → L3 views
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l6_rollback.py
+python3 research/02-脚本工具/01-标签进化/scripts/mvp_l5_rollback.py
+# L4 rollback：参考 ~/.secrets/backups/voc-deep-analysis-mvp/L4-*/MANIFEST.md
+psql -h <prod-pg> -U voc_user -d voc_bi -c "
+  DROP VIEW v_aipl_node_score, v_atomic_indicator_score,
+           v_country_dept_health, v_proxy_nps_calibrated CASCADE;
+"
+```
+
+### §B.8 备份索引（5 个 L 阶段 baseline）
+
+```
+~/.secrets/backups/voc-deep-analysis-mvp/
+├── L0-20260514-102823/      # MVP 准备
+├── L1-20260514-112119/      # voc_review 扩展
+├── L2-20260514-115502/      # 50 SAT 映射
+├── L3-20260514-122215/      # 4 深度视图
+├── L4-20260514-144802/      # D-Health
+├── L5-20260514-163344/      # D-Diag 三专题
+├── L6-20260514-171018/      # D-Action 7 部门
+└── L7-<timestamp>/          # 本 SOP v2 升级
+```
+
+每个 L 目录均有 MANIFEST.md + 重建脚本 + 回滚脚本 + 截图。
+
+---
 
 ### A.1 容器管理
 
