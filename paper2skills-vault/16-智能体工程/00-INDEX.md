@@ -30,7 +30,7 @@ source: human+ai
 | 技能 | 状态 | 论文 | 业务场景 |
 |------|------|------|---------|
 | [Skill-Auto-Skill-Synthesis](./Skill-Auto-Skill-Synthesis.md) | 已萃取 P0 | SkillForge (SIGIR 2026, arxiv:2604.08618) | 从客服历史对话自动生成 Skill |
-| Skill-Skill-Lifecycle-Design | 待萃取 P1 | SoK Agentic Skills (arxiv:2602.20867) | Skill 卡设计哲学与生命周期 |
+| Skill-Skill-Lifecycle-Design | 已萃取 P1 | SoK Agentic Skills (arxiv:2602.20867) | Skill 卡设计哲学与生命周期 |
 | Skill-Co-Evolutionary-Skill-Verification | 待萃取 P2 | EvoSkills (arxiv:2604.01687) | Skill 自动迭代与验证 |
 | Skill-Progressive-Disclosure-Architecture | 待萃取 P2 | Agent Skills Survey (arxiv:2602.12430) | SKILL.md + 渐进式上下文加载 |
 
@@ -108,8 +108,8 @@ source: human+ai
 ## 统计数据
 
 - 规划技能数:15
-- 已萃取:3
-- 待萃取 P0:0 / P1:4 / P2:7 / P3:1
+- 已萃取:4
+- 待萃取 P0:0 / P1:3 / P2:7 / P3:1
 - 论文来源:arxiv 2026-01 至 2026-05
 
 ---
