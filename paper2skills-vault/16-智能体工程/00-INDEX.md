@@ -40,7 +40,7 @@ source: human+ai
 |------|------|------|---------|
 | Skill-Context-Compression | 已萃取 P1 | ACON (arxiv:2510.00615) | 长对话/长 VOC 压缩(内存降 26-54%) |
 | Skill-Agentic-Memory-Management | 已萃取 P1 | AgeMem (arxiv:2601.01885) | 客户长期偏好记忆(母婴 1-3 年周期) |
-| Skill-Active-Context-Pruning | 待萃取 P2 | Focus (arxiv:2601.07190) | 仿生粘菌策略的主动剪枝 |
+| [Skill-Active-Context-Pruning](./Skill-Active-Context-Pruning.md) | 已萃取 P2 | Focus (arxiv:2601.07190) | 仿生粘菌策略的主动剪枝 |
 | Skill-Memory-as-Action | 待萃取 P2 | MemAct (arxiv:2510.12635) | Memory 操作嵌入 policy |
 
 ### C. MAS 协作工程层(与 10-MAS 互补,聚焦协议)
@@ -108,8 +108,8 @@ source: human+ai
 ## 统计数据
 
 - 规划技能数:15
-- 已萃取:8
-- 待萃取 P0:0 / P1:0 / P2:6 / P3:1
+- 已萃取:9
+- 待萃取 P0:0 / P1:0 / P2:5 / P3:1
 - 论文来源:arxiv 2026-01 至 2026-05
 
 ---
