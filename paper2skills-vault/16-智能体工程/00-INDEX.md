@@ -47,7 +47,7 @@ source: human+ai
 
 | 技能 | 状态 | 论文 | 业务场景 |
 |------|------|------|---------|
-| Skill-MCP-A2A-Protocol-Stack | 待萃取 P1 | MAS Orchestration Survey (arxiv:2601.13671) | MCP + A2A 双协议栈选型 |
+| Skill-MCP-A2A-Protocol-Stack | 已萃取 P1 | MAS Orchestration Survey (arxiv:2601.13671) | MCP + A2A 双协议栈选型 |
 | Skill-Orchestration-Trace-RL | 待萃取 P2 | RL via Orchestration Traces (arxiv:2605.02801) | 用 trace 训 RL 优化编排决策 |
 | Skill-Task-Adaptive-Topology | 待萃取 P2 | AdaptOrch (arxiv:2602.16873) | 动态拓扑(比 static 提升 12-23%) |
 
@@ -108,8 +108,8 @@ source: human+ai
 ## 统计数据
 
 - 规划技能数:15
-- 已萃取:6
-- 待萃取 P0:0 / P1:1 / P2:7 / P3:1
+- 已萃取:7
+- 待萃取 P0:0 / P1:0 / P2:7 / P3:1
 - 论文来源:arxiv 2026-01 至 2026-05
 
 ---
