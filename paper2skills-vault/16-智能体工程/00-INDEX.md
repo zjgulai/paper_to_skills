@@ -55,7 +55,7 @@ source: human+ai
 
 | 技能 | 状态 | 论文 | 业务场景 |
 |------|------|------|---------|
-| Skill-Open-Source-Tool-Use-Model | 待萃取 P2 | Hermes 4 (arxiv:2508.18255, 破例纳入) | 开源 tool calling 基座选型 |
+| [Skill-Open-Source-Tool-Use-Model](./Skill-Open-Source-Tool-Use-Model.md) | 已萃取 P2 | Hermes 4 (arxiv:2508.18255, 破例纳入) | 开源 tool calling 基座选型 |
 | Skill-SLM-Tool-Calling-Optimization | 待萃取 P2 | SLM Tool Calling (arxiv:2512.15943) | 客服/工单分类成本优化 |
 
 ### E. MCP 协议 + Tool 描述质量
@@ -108,8 +108,8 @@ source: human+ai
 ## 统计数据
 
 - 规划技能数:15
-- 已萃取:12
-- 待萃取 P0:0 / P1:0 / P2:2 / P3:1
+- 已萃取:13
+- 待萃取 P0:0 / P1:0 / P2:1 / P3:1
 - 论文来源:arxiv 2026-01 至 2026-05
 
 ---
