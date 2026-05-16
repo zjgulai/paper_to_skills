@@ -69,7 +69,7 @@ source: human+ai
 
 | 技能 | 状态 | 论文 | 业务场景 |
 |------|------|------|---------|
-| Skill-Long-Term-Preference-Memory | 待萃取 P0 | Shopping Companion (arxiv:2603.14864) | 母婴用户长周期偏好 RL Agent |
+| Skill-Long-Term-Preference-Memory | 已萃取 P0 | Shopping Companion (arxiv:2603.14864) | 母婴用户长周期偏好 RL Agent |
 | Skill-Agent-Stage-Evaluation | 待萃取 P0 | EComStage (arxiv:2601.02752) | Perception/Planning/Action 三阶段评估 |
 
 ## P0 优先执行顺序(用户已确认"顺序做")
@@ -108,8 +108,8 @@ source: human+ai
 ## 统计数据
 
 - 规划技能数:15
-- 已萃取:1
-- 待萃取 P0:2 / P1:4 / P2:7 / P3:1
+- 已萃取:2
+- 待萃取 P0:1 / P1:4 / P2:7 / P3:1
 - 论文来源:arxiv 2026-01 至 2026-05
 
 ---
