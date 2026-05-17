@@ -55,6 +55,15 @@ class SkillsGraph:
             '04-供应链': 'supply_chain',
             '05-推荐系统': 'recommendation',
             '06-增长模型': 'growth_model',
+            '08-知识图谱': 'knowledge_graph',
+            '09-DataAgent-LLM': 'data_agent_llm',
+            '10-MAS': 'mas',
+            '11-AI人文': 'ai_humanities',
+            '12-ML基础': 'ml_fundamentals',
+            '13-广告分析': 'advertising',
+            '14-用户分析': 'user_analytics',
+            '15-营销投放分析': 'marketing',
+            '16-智能体工程': 'llm_agent_engineering',
         }
 
     def parse_skill_file(self, file_path: Path) -> Optional[SkillNode]:
@@ -146,9 +155,10 @@ class SkillsGraph:
 
     def build_graph(self):
         """构建完整图谱"""
-        # 扫描所有 Skill 文件
-        skill_files = list(self.vault_path.glob('*/Skill-*.md'))
-        skill_files.extend(self.vault_path.glob('*/Skill-*/**/*.md'))
+        # 递归扫描所有 Skill 文件,跳过非技能卡片目录
+        excluded = {'papers', '07-资源库', '00-项目管理'}
+        all_md = self.vault_path.rglob('Skill-*.md')
+        skill_files = [f for f in all_md if not (excluded & set(f.parts))]
 
         print(f"发现 {len(skill_files)} 个 Skill 文件")
 
