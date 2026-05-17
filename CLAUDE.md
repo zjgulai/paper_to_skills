@@ -42,14 +42,27 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
     ├── supply_chain/
     ├── recommendation/
     ├── growth_model/
-    ├── nlp_voc/
+    ├── nlp_voc/              # 保留:VOC 子项目已迁至 ../ai_nlp_voc/,本目录为代码模板镜像
     ├── knowledge_graph/
+    ├── data_agent_llm/
     ├── mas/
-    ├── advertising/
-    ├── user_analytics/
-    ├── marketing/
     └── llm_agent_engineering/
+
+  说明:11-AI人文 / 12-ML基础 / 13-广告分析 / 14-用户分析 / 15-营销投放分析 五个新业务领域
+  目前仅有 vault Skill 卡片,code/ 侧尚未落地子模块,需要时按 Python 包命名规范(英文 snake_case)新建。
 ```
+
+## NLP-VOC 子项目迁出说明
+
+`07-NLP-VOC` 子项目已于 `2026-05-17 commit 47b1dbf` 独立迁出至 `/Users/pray/project/ai_nlp_voc/`。
+本仓库**有意保留**两处残留作为"代码模板 + 论文档案"镜像,而非未清理的脏数据:
+
+- `paper2skills-code/nlp_voc/` (43 子模块) — 历史代码模板,内部 `data_path` 已硬编码改为
+  指向 `../ai_nlp_voc/...` 并加 `try/except`,可被新仓库直接 import 复用,不在本项目运行。
+- `paper2skills-vault/papers/nlp_voc/` — 原始论文 PDF 档案,留作 paper-skills-graph 选题与
+  citation 追踪使用,不再产生新 Skill 卡片。
+
+回退手段:`git reset --hard backup/before-voc-extract-20260517`。
 
 ## Key Files
 
@@ -140,23 +153,29 @@ python -m pytest model.py -v
 
 ## Domain Mapping
 
-| English Directory | Chinese Directory | Domain |
-|-------------------|-------------------|--------|
-| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling |
-| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits |
-| `time_series` | `03-时间序列` | Demand forecasting, time series |
-| `supply_chain` | `04-供应链` | Inventory optimization |
-| `recommendation` | `05-推荐系统` | Recommendation systems |
-| `growth_model` | `06-增长模型` | Churn prediction, LTV |
-| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, hyperbolic embedding |
-| `dataagent_llm` | `09-DataAgent-LLM` | DataAgent, LLM-powered data analysis |
-| `mas` | `10-MAS` | Multi-agent systems, planning, orchestration |
-| `ai_humanities` | `11-AI人文` | AI × Humanities: cross-modal transfer, LoRA, continual learning, prompt tuning as life metaphors |
-| `ml_fundamentals` | `12-ML基础` | Feature engineering, model evaluation fundamentals |
-| `advertising` | `13-广告分析` | Ad attribution (Shapley/Markov), ROAS optimization, budget allocation |
-| `user_analytics` | `14-用户分析` | Funnel analysis, cohort retention, RFM segmentation |
-| `marketing` | `15-营销投放分析` | Marketing Mix Modeling (MMM), promotion effectiveness, causal ML |
-| `llm_agent_engineering` | `16-智能体工程` | Agent Skills/Tools, Context Engineering, MCP/A2A protocols, Function Calling (Hermes) |
+下表 "Code Dir Status" 标识 `paper2skills-code/` 下对应子目录的落地状态:
+- ✅ 已落地 — 目录存在,可 import;
+- 📦 镜像保留 — 子项目已迁出本仓库,代码模板留作复用引用;
+- ⬜ 仅 vault — 当前只有 Skill 卡片,无 code 子目录,需要时按 snake_case 新建。
+
+| English Directory | Chinese Directory | Domain | Code Dir Status |
+|-------------------|-------------------|--------|-----------------|
+| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling | ✅ |
+| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits | ✅ |
+| `time_series` | `03-时间序列` | Demand forecasting, time series | ✅ |
+| `supply_chain` | `04-供应链` | Inventory optimization | ✅ |
+| `recommendation` | `05-推荐系统` | Recommendation systems | ✅ |
+| `growth_model` | `06-增长模型` | Churn prediction, LTV | ✅ |
+| `nlp_voc` | ~~07-NLP-VOC~~ | 已迁至 `../ai_nlp_voc/`,本仓库保留代码模板 | 📦 |
+| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, hyperbolic embedding | ✅ |
+| `data_agent_llm` | `09-DataAgent-LLM` | DataAgent, LLM-powered data analysis | ✅ |
+| `mas` | `10-MAS` | Multi-agent systems, planning, orchestration | ✅ |
+| `ai_humanities` | `11-AI人文` | AI × Humanities: cross-modal transfer, LoRA, continual learning, prompt tuning as life metaphors | ⬜ |
+| `ml_fundamentals` | `12-ML基础` | Feature engineering, model evaluation fundamentals | ⬜ |
+| `advertising` | `13-广告分析` | Ad attribution (Shapley/Markov), ROAS optimization, budget allocation | ⬜ |
+| `user_analytics` | `14-用户分析` | Funnel analysis, cohort retention, RFM segmentation | ⬜ |
+| `marketing` | `15-营销投放分析` | Marketing Mix Modeling (MMM), promotion effectiveness, causal ML | ⬜ |
+| `llm_agent_engineering` | `16-智能体工程` | Agent Skills/Tools, Context Engineering, MCP/A2A protocols, Function Calling (Hermes) | ✅ |
 
 ## Quality Standards
 
