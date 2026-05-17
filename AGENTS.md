@@ -24,7 +24,6 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │   ├── 04-供应链/            # Supply chain skills
 │   ├── 05-推荐系统/          # Recommendation system skills
 │   ├── 06-增长模型/          # Growth model skills
-│   ├── 07-NLP-VOC/           # NLP/Voice of Customer skills
 │   ├── 08-知识图谱/          # Knowledge graph / GNN skills
 │   ├── 10-MAS/               # Multi-Agent System skills
 │   ├── 07-资源库/            # Master Prompt, keywords, sync status
@@ -138,7 +137,6 @@ python -m pytest model.py -v
 | `supply_chain` | `04-供应链` | Inventory optimization |
 | `recommendation` | `05-推荐系统` | Recommendation systems |
 | `growth_model` | `06-增长模型` | Churn prediction, LTV |
-| `nlp_voc` | `07-NLP-VOC` | Sentiment analysis, VOC |
 | `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, hyperbolic embedding |
 | `mas` | `10-MAS` | Multi-agent systems, planning, orchestration |
 

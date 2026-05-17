@@ -465,8 +465,14 @@ def test_with_zendesk_data() -> None:
     """用 Zendesk 真实数据做 POC 验证"""
     import pandas as pd
 
-    data_path = "/Users/pray/project/paper_to_skills/paper2skills-vault/07-NLP-VOC/research/03-数据资产/高质量数据源/zendesk_momcozy_voc_sampled.csv"
-    df = pd.read_csv(data_path, nrows=100)
+    data_path = "/Users/pray/project/ai_nlp_voc/research/03-数据资产/高质量数据源/zendesk_momcozy_voc_sampled.csv"
+    try:
+        df = pd.read_csv(data_path, nrows=100)
+    except FileNotFoundError:
+        print("数据集未找到。VOC 数据已迁至 /Users/pray/project/ai_nlp_voc/")
+        print("请确保 CSV 文件存在于新位置,或通过环境变量提供路径。")
+        return
+
 
     parser = DialogueToActionGraphParser()
     graphs: List[DecisionGraph] = []

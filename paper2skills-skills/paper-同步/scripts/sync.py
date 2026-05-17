@@ -26,8 +26,7 @@ DOMAINS = {
     "time_series": "03-时间序列",
     "supply_chain": "04-供应链",
     "recommendation": "05-推荐系统",
-    "growth_model": "06-增长模型",
-    "nlp_voc": "07-NLP-VOC"
+    "growth_model": "06-增长模型"
 }
 
 # 从 Skill 卡片文件名提取领域
@@ -50,9 +49,8 @@ def extract_domain(skill_name):
         "collaborative": "recommendation",
         "churn": "growth_model",
         "ltv": "growth_model",
-        "sentiment": "nlp_voc",
-        "voc": "nlp_voc",
-        "opinion": "nlp_voc"
+        "advertising": "advertising",
+        "marketing": "marketing"
     }
 
     for keyword, domain in domain_keywords.items():

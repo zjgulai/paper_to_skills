@@ -24,7 +24,6 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │   ├── 04-供应链/            # Supply chain skills
 │   ├── 05-推荐系统/          # Recommendation system skills
 │   ├── 06-增长模型/          # Growth model skills
-│   ├── 07-NLP-VOC/           # NLP/Voice of Customer skills
 │   ├── 08-知识图谱/          # Knowledge graph / GNN skills
 │   ├── 10-MAS/               # Multi-Agent System skills
 │   ├── 07-资源库/            # Master Prompt, keywords, sync status
@@ -138,7 +137,6 @@ python -m pytest model.py -v
 | `supply_chain` | `04-供应链` | Inventory optimization |
 | `recommendation` | `05-推荐系统` | Recommendation systems |
 | `growth_model` | `06-增长模型` | Churn prediction, LTV |
-| `nlp_voc` | `07-NLP-VOC` | Sentiment analysis, VOC |
 | `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, hyperbolic embedding |
 | `mas` | `10-MAS` | Multi-agent systems, planning, orchestration |
 
@@ -204,10 +202,10 @@ Search priority: Papers with code implementations > experimental validation > th
 
 | Date | Skill | Domain | Commit |
 |------|-------|--------|--------|
-| 2026-05-11 | Phase 7 D4 Superset native filters | 07-NLP-VOC | `311e3bd` |
-| 2026-05-10 | Phase 6 D10 BI dashboard C path | 07-NLP-VOC | `cad5be5` |
-| 2026-05-08 | Phase 7 D1-D3 Superset BI B path | 07-NLP-VOC | `a765876` / `6f9211d` / `0d92103` |
-| 2026-05-06 | Self-Improving LLM Agent Pipeline | 07-NLP-VOC | `985e82b` |
+| 2026-05-11 | Phase 7 D4 Superset native filters | 07-NLP-VOC (已迁至 ai_nlp_voc) | `311e3bd` |
+| 2026-05-10 | Phase 6 D10 BI dashboard C path | 07-NLP-VOC (已迁至 ai_nlp_voc) | `cad5be5` |
+| 2026-05-08 | Phase 7 D1-D3 Superset BI B path | 07-NLP-VOC (已迁至 ai_nlp_voc) | `a765876` / `6f9211d` / `0d92103` |
+| 2026-05-06 | Self-Improving LLM Agent Pipeline | 07-NLP-VOC (已迁至 ai_nlp_voc) | `985e82b` |
 
 ## Sync Status Tracking
 

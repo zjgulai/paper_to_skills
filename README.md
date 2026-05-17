@@ -40,7 +40,6 @@ paper_to_skills/
 │   ├── 04-供应链/                    # Supply Chain
 │   ├── 05-推荐系统/                  # Recommendation
 │   ├── 06-增长模型/                  # Growth Models
-│   ├── 07-NLP-VOC/                   # NLP / Voice of Customer
 │   ├── 08-知识图谱/                  # 知识图谱 / 图神经网络
 │   ├── 10-MAS/                       # 多智能体系统
 │   ├── 07-资源库/                    # MasterPrompt / 关键词库
@@ -98,7 +97,6 @@ paper_to_skills/
 | 供应链 | Supply Chain | 选品决策、备货策略、物流调度 | Multi-Echelon Inventory |
 | 推荐系统 | Recommendation | 复购推荐、搜索排序、首页推荐 | Matrix Factorization |
 | 增长模型 | Growth | 拉新、促活、留存、LTV 预测 | Churn Prediction |
-| NLP-VOC | NLP | 评价分析、舆情监控、反馈挖掘 | Aspect Sentiment Analysis |
 | 知识图谱 | Knowledge Graph | 异构表示学习、层次嵌入、语义检索 | HGT / HGCN |
 | 多智能体系统 | MAS | Agent 协作、任务规划、编排执行 | AutoGen / ReAct |
 

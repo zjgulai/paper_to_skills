@@ -55,7 +55,6 @@ class SkillsGraph:
             '04-供应链': 'supply_chain',
             '05-推荐系统': 'recommendation',
             '06-增长模型': 'growth_model',
-            '07-NLP-VOC': 'nlp_voc',
         }
 
     def parse_skill_file(self, file_path: Path) -> Optional[SkillNode]:
@@ -426,8 +425,7 @@ class SkillsGraph:
             'time_series': 'uncertainty quantification transformer',
             'supply_chain': 'multi-echelon reinforcement learning',
             'recommendation': 'causal debiased LLM',
-            'growth_model': 'churn LTV segmentation',
-            'nlp_voc': 'sentiment aspect LLM'
+            'growth_model': 'churn LTV segmentation'
         }
 
         related = domain_keywords.get(domain, 'advanced applications')
