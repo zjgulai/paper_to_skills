@@ -25,7 +25,14 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │   ├── 05-推荐系统/          # Recommendation system skills
 │   ├── 06-增长模型/          # Growth model skills
 │   ├── 08-知识图谱/          # Knowledge graph / GNN skills
+│   ├── 09-DataAgent-LLM/     # DataAgent & LLM-powered analytics
 │   ├── 10-MAS/               # Multi-Agent System skills
+│   ├── 11-AI人文/             # AI × Humanities: healing quotes, philosophical analogies
+│   ├── 12-ML基础/             # Machine learning fundamentals
+│   ├── 13-广告分析/            # Ad attribution, ROAS optimization
+│   ├── 14-用户分析/            # Funnel, cohort, RFM analysis
+│   ├── 15-营销投放分析/         # MMM, promotion effectiveness
+│   ├── 16-智能体工程/           # LLM Agent Engineering: Skills, Context, MCP/A2A
 │   ├── 07-资源库/            # Master Prompt, keywords, sync status
 │   └── papers/               # Downloaded papers by domain
 └── paper2skills-code/       # Python code templates
@@ -37,7 +44,11 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
     ├── growth_model/
     ├── nlp_voc/
     ├── knowledge_graph/
-    └── mas/
+    ├── mas/
+    ├── advertising/
+    ├── user_analytics/
+    ├── marketing/
+    └── llm_agent_engineering/
 ```
 
 ## Key Files
@@ -138,7 +149,14 @@ python -m pytest model.py -v
 | `recommendation` | `05-推荐系统` | Recommendation systems |
 | `growth_model` | `06-增长模型` | Churn prediction, LTV |
 | `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, hyperbolic embedding |
+| `dataagent_llm` | `09-DataAgent-LLM` | DataAgent, LLM-powered data analysis |
 | `mas` | `10-MAS` | Multi-agent systems, planning, orchestration |
+| `ai_humanities` | `11-AI人文` | AI × Humanities: cross-modal transfer, LoRA, continual learning, prompt tuning as life metaphors |
+| `ml_fundamentals` | `12-ML基础` | Feature engineering, model evaluation fundamentals |
+| `advertising` | `13-广告分析` | Ad attribution (Shapley/Markov), ROAS optimization, budget allocation |
+| `user_analytics` | `14-用户分析` | Funnel analysis, cohort retention, RFM segmentation |
+| `marketing` | `15-营销投放分析` | Marketing Mix Modeling (MMM), promotion effectiveness, causal ML |
+| `llm_agent_engineering` | `16-智能体工程` | Agent Skills/Tools, Context Engineering, MCP/A2A protocols, Function Calling (Hermes) |
 
 ## Quality Standards
 
@@ -202,6 +220,11 @@ Search priority: Papers with code implementations > experimental validation > th
 
 | Date | Skill | Domain | Commit |
 |------|-------|--------|--------|
+| 2026-05-15 | Marketing Mix Modeling (MMM) + Promotion Effectiveness (DML) | 15-营销投放分析 | — |
+| 2026-05-15 | Ad Attribution Modeling + ROAS Budget Optimization | 13-广告分析 | — |
+| 2026-05-15 | User Funnel Analysis + Cohort Retention Analysis | 14-用户分析 | — |
+| 2026-05-15 | Feature Engineering fundamentals | 12-ML基础 | — |
+| 2026-05-15 | AI Tech × Healing Quotes Card Library (4 directions: StructLoRA, InfLoRA, Prompt Tuning, Cross-Modal Transfer) | 11-AI人文 | — |
 | 2026-05-11 | Phase 7 D4 Superset native filters | 07-NLP-VOC (已迁至 ai_nlp_voc) | `311e3bd` |
 | 2026-05-10 | Phase 6 D10 BI dashboard C path | 07-NLP-VOC (已迁至 ai_nlp_voc) | `cad5be5` |
 | 2026-05-08 | Phase 7 D1-D3 Superset BI B path | 07-NLP-VOC (已迁至 ai_nlp_voc) | `a765876` / `6f9211d` / `0d92103` |

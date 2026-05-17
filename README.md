@@ -41,7 +41,13 @@ paper_to_skills/
 │   ├── 05-推荐系统/                  # Recommendation
 │   ├── 06-增长模型/                  # Growth Models
 │   ├── 08-知识图谱/                  # 知识图谱 / 图神经网络
+│   ├── 09-DataAgent-LLM/             # DataAgent & LLM 分析
 │   ├── 10-MAS/                       # 多智能体系统
+│   ├── 11-AI人文/                     # AI × 人文：疗愈金句、哲理类比
+│   ├── 12-ML基础/                     # 机器学习基础
+│   ├── 13-广告分析/                    # 广告归因、ROAS 优化
+│   ├── 14-用户分析/                    # 漏斗、留存、RFM
+│   ├── 15-营销投放分析/                 # MMM、促销效果
 │   ├── 07-资源库/                    # MasterPrompt / 关键词库
 │   └── papers/                       # 原始论文存档
 │
@@ -54,7 +60,10 @@ paper_to_skills/
 │   ├── growth_model/                # 增长模型
 │   ├── nlp_voc/                     # NLP 舆情分析
 │   ├── knowledge_graph/             # 知识图谱
-│   └── mas/                         # 多智能体系统
+│   ├── mas/                         # 多智能体系统
+│   ├── advertising/                 # 广告分析
+│   ├── user_analytics/              # 用户分析
+│   └── marketing/                   # 营销投放分析
 │
 ├── 📄 CLAUDE.md                     # Claude Code 开发指南
 └── 📄 README.md                     # 本文件
@@ -87,7 +96,7 @@ paper_to_skills/
 
 ## 🎯 技能领域 | Skill Domains
 
-当前覆盖 7 大核心领域，对应母婴出海电商的关键业务场景：
+当前覆盖 15 大核心领域，对应母婴出海电商的关键业务场景：
 
 | 领域 | 英文 | 典型应用场景 | 示例 Skill |
 |------|------|-------------|-----------|
@@ -98,7 +107,13 @@ paper_to_skills/
 | 推荐系统 | Recommendation | 复购推荐、搜索排序、首页推荐 | Matrix Factorization |
 | 增长模型 | Growth | 拉新、促活、留存、LTV 预测 | Churn Prediction |
 | 知识图谱 | Knowledge Graph | 异构表示学习、层次嵌入、语义检索 | HGT / HGCN |
+| DataAgent-LLM | DataAgent | LLM 驱动的数据分析、根因分析 | SQL Agent / RCA |
 | 多智能体系统 | MAS | Agent 协作、任务规划、编排执行 | AutoGen / ReAct |
+| AI人文 | AI Humanities | AI 概念的人文类比、疗愈金句 | LoRA / Prompt Tuning |
+| ML基础 | ML Fundamentals | 特征工程、模型评估基础 | Feature Engineering |
+| 广告分析 | Advertising | 多触点归因、ROAS 优化、预算分配 | Shapley / Markov |
+| 用户分析 | User Analytics | 漏斗分析、留存分析、用户分群 | Cohort / Funnel / RFM |
+| 营销投放分析 | Marketing | MMM、促销效果评估、因果 ML | Meridian / DML |
 
 ---
 

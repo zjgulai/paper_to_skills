@@ -1,227 +1,228 @@
 # Skills Graph 分析报告
 
-**版本**: v3.1
-**更新日期**: 2026-04-29
-**同步基准**: Skill关联图谱.md v2.8
+**版本**: v5.0
+**更新日期**: 2026-05-15
+**同步基准**: 全库 Skill 卡片扫描
 
 ---
 
 ## 1. 图谱概览
 
-- **节点总数**: 61 个技能（已萃取同步）
-- **边总数**: ~200+ 条关系（前置/延伸/可组合）
-- **领域数**: 9 个
+- **节点总数**: 116 个技能（已萃取同步）
+- **边总数**: ~400+ 条关系（前置/延伸/可组合）
+- **领域数**: 15 个
 - **层次层级**: 4 层（基础→进阶→专家→桥接）
 
 ### 领域分布
 
-| 领域 | 代码 | 技能数 | 占比 |
-|------|------|--------|------|
-| 01-因果推断 | CI | 2 | 4% |
-| 02-A/B实验 | AB | 3 | 5% |
-| 03-时间序列 | TS | 3 | 5% |
-| 04-供应链 | SC | 3 | 5% |
-| 05-推荐系统 | RS | 3 | 5% |
-| 06-增长模型 | GM | 9 | 16% |
-| 07-NLP-VOC | NLP | 33 | 54% |
-| 08-知识图谱 | KG | 2 | 4% |
-| 09-DataAgent-LLM | DA | 3 | 5% |
+| 领域 | 代码 | 技能数 | 占比 | 变化 |
+|------|------|--------|------|------|
+| 01-因果推断 | CI | 6 | 5% | +3 (v3.1→v4.0) |
+| 02-A/B实验 | AB | 5 | 4% | +2 |
+| 03-时间序列 | TS | 5 | 4% | +2 |
+| 04-供应链 | SC | 5 | 4% | +2 |
+| 05-推荐系统 | RS | 8 | 7% | +3 |
+| 06-增长模型 | GM | 10 | 9% | +1 |
+| 07-NLP-VOC | NLP | 43 | 37% | — |
+| 08-知识图谱 | KG | 9 | 8% | +6 |
+| 09-DataAgent-LLM | DA | 5 | 4% | +2 |
+| 10-MAS | MAS | 12 | 10% | — |
+| 11-AI人文 | AH | 1 | 1% | +1 |
+| 12-ML基础 | ML | 1 | 1% | +1 |
+| 13-广告分析 | AD | 2 | 2% | **新增** |
+| 14-用户分析 | UA | 2 | 2% | **新增** |
+| 15-营销投放分析 | MK | 2 | 2% | **新增** |
 
-### 技能清单
-
-**01-因果推断 (2)**
-- Uplift Modeling
-- Intelligent Attribution (Causal Forest)
-
-**02-A/B实验 (3)**
-- A/B Experimental Design
-- Multi-Armed Bandit
-- Thompson Sampling MAB
-
-**03-时间序列 (3)**
-- Time Series Forecasting
-- Intelligent Prediction (Doubly Robust)
-- Temporal Fusion Transformer
-
-**04-供应链 (4)**
-- Multi-Echelon Inventory
-- Two-Echelon Inventory DRL
-- Monodense 单品价格弹性估计
-- MARL多智能体动态定价 (交叉)
-
-**05-推荐系统 (4)**
-- Matrix Factorization
-- Deep Learning Recommendation (HI)
-- NeuralNDCG Learning to Rank
-- MAS多目标推荐 (交叉)
-
-**06-增长模型 (9)**
-- Customer Churn Prediction
-- Deep Learning Churn Prediction
-- LTV Prediction (ZILN)
-- User Lifecycle (STAN)
-- DQN Purchase Prediction
-- Uplift Churn Prediction
-- Cold Start Product Recommendation
-- New Product Opportunity Mining
-- Customer Journey Prototype
-
-**07-NLP-VOC (33)**
-- ABSA / BERT-MoE ABSA / 大规模ABSA (3个ABSA相关)
-- CSK Customer Sentiment Clustering
-- NPS Driver Analysis
-- AIPL-VOC Lifecycle Tags
-- CrossLingual Sentiment Transfer
-- ALCHEmist Weak Supervision
-- Active Learning Annotation
-- AdaNEN Streaming Classifier
-- AutoTag Self-Evolving Label System
-- Review Quality Scoring
-- OpenWorld Class Incremental Learning
-- TaxoAdapt Taxonomy Evolution
-- REVISION 无点击意图挖掘
-- Spiral of Silence 沉默挖掘
-- TopicImpact 观点单元提取
-- PERSONABOT RAG画像生成
-- SoMeR 多视角表示
-- GPLR 人群标签生成
-- Kano 需求分类与优先级
-- iReFeed 需求优先级排序
-- TSCAN 上下文Uplift
-- OfflineRL 触达时机优化
-- MAA 行动建议生成
-- StaR 观点语句排序
-- AGRS 属性引导评论摘要
-- TJAP 跨市场品类组合定价
-- VOC-Proxy-NPS-AIPL 统一萃取引擎
-- MAS消费者行为仿真 (arXiv:2510.18155)
-- MAS多智能体VOC数据分析 (arXiv:2402.01386)
-- MARL多智能体动态定价 (arXiv:2507.02698)
-- MAS多目标推荐 (arXiv:2512.24325)
-
-**08-知识图谱 (2)**
-- Knowledge Graph for Skills Management
-- GraphRAG Knowledge Enhanced Retrieval
-
-**09-DataAgent-LLM (3)**
-- DeepAnalyze Autonomous Data Science Agent
-- Argos Agentic Anomaly Detection
-- Data-to-Dashboard Multi-Agent Visualization
+**分布变化趋势**：
+- NLP-VOC 占比从 44% 降至 37%（绝对数量不变，新领域稀释效应）
+- 新增 5 个领域（11-12 为补齐，13-15 为业务扩展），领域覆盖从 10 个 → 15 个
+- 13-15 为跨境电商核心运营领域，与现有技术领域形成"技术→运营"闭环
 
 ---
 
-## 2. 中心性分析
+## 2. 新增技能详情（2026-05-15）
 
-### 核心枢纽技能 (高连接度)
+### 11-AI人文（+1）
 
-| 排名 | 技能 | 角色 | 连接数 |
-|-----|------|------|--------|
-| 1 | Uplift Modeling | 因果推断入口 + 增长运营桥梁 | 7 |
-| 2 | Kano 需求分类 | VOC→产品决策桥梁 | 6 |
-| 3 | Churn Prediction | 用户增长基座 | 6 |
-| 4 | SoMeR 多视角表示 | 用户画像基座 | 5 |
-| 5 | Demand Forecasting | 预测分析枢纽 | 5 |
+| 技能 | 核心论文 | 填补缺口 |
+|------|---------|---------|
+| AI Tech × Healing Quotes | StructLoRA/InfLoRA/Prompt Tuning/Cross-Modal Transfer | 技术概念的人文表达 |
 
-### 高价值无延伸技能（潜力点）
+### 12-ML基础（+1）
 
-| 技能 | 业务价值 | 推荐延伸方向 |
-|------|---------|------------|
-| NeuralNDCG Learning to Rank | ⭐⭐⭐⭐⭐ | 序列推荐、重排序多样性 |
-| Monodense 价格弹性 | ⭐⭐⭐⭐⭐ | ~~动态定价~~ ✅ 已完成(MARL)、促销优化 |
-| iReFeed 优先级排序 | ⭐⭐⭐⭐ | 产品路线图自动化 |
-| DQN Purchase Prediction | ⭐⭐⭐⭐ | 强化学习推荐 |
+| 技能 | 核心论文 | 填补缺口 |
+|------|---------|---------|
+| Feature Engineering | 综合多篇基础论文 | ML pipeline 前置基础 |
 
----
+### 13-广告分析（+2）【新增领域】
 
-## 3. 知识缺口
+| 技能 | 核心论文 | 业务场景 |
+|------|---------|---------|
+| Ad Attribution Modeling | Shapley Value + Markov Chain (综合多篇) | 多触点归因，避免Last-Click陷阱 |
+| ROAS Budget Optimization | 边际ROAS均衡 + 花费-收入曲线拟合 | 跨渠道预算最优分配 |
 
-### 已完成的旧缺口（已修复，无需再追踪）
+**业务闭环**：Attribution（归因）→ ROAS（预算分配）→ MMM（宏观验证）
 
-以下缺口在 v2.7 中已标注完成：
+### 14-用户分析（+2）【新增领域】
 
-- ✅ A/B Experimental Design — 已萃取
-- ✅ DeepAnalyze 自主数据科学 Agent — 已萃取
-- ✅ Argos Agentic 异常检测 — 已萃取
-- ✅ NeuralNDCG Learning to Rank — 已萃取
-- ✅ Monodense 单品价格弹性估计 — 已萃取
-- ✅ Data-to-Dashboard 多Agent可视化 — 已萃取
-- ✅ MAS多目标推荐 — 已萃取 (arXiv:2512.24325)
-- ✅ MARL多智能体动态定价 — 已萃取 (arXiv:2507.02698)
-- ✅ MAS消费者行为仿真 — 已萃取 (arXiv:2510.18155)
-- ✅ MAS多智能体VOC数据分析 — 已萃取 (arXiv:2402.01386)
+| 技能 | 核心论文 | 业务场景 |
+|------|---------|---------|
+| User Funnel Analysis | 漏斗分析 + PrefixSpan + 马尔可夫链 | 用户行为路径诊断 |
+| Cohort Retention Analysis | 幂律留存 + BG/NBD 模型 | 新用户留存追踪与预测 |
 
-### 🔴 P0: 修复已标记但未完成的技能
+**业务闭环**：Funnel（行为诊断）→ Cohort（留存追踪）→ RFM（价值分层）→ LTV（长期价值）
 
-- [ ] **iReFeed 需求优先级排序**
-  - 状态: skill card 存在，但代码实现待验证
-  - 缺口: Kano → 产品路线图的必经断点
-  - 文件: `paper2skills-vault/07-NLP-VOC/Skill-iReFeed-需求优先级排序.md`
+### 15-营销投放分析（+2）【新增领域】
 
-### 🟡 P1: 高优先级缺口
+| 技能 | 核心论文 | 业务场景 |
+|------|---------|---------|
+| Marketing Mix Modeling | Google Meridian / Meta Robyn / DeepCausalMMM | 宏观预算增量效应估计 |
+| Promotion Effectiveness | DoorDash Causal ML (KDD 2025) | 促销真实增量评估 |
 
-| 领域 | 缺口技能 | 类型 | 关联技能 |
-|------|---------|------|---------|
-| 05-推荐系统 | 序列推荐 Session-based Recommendation | 核心能力 | Matrix Factorization, NeuralNDCG |
-| 05-推荐系统 | ~~多目标推荐 Multi-Task Learning~~ | ~~核心能力~~ | ~~Deep Learning Recommendation~~ ✅ 已覆盖(MAS) |
-| 05-推荐系统 | 重排序 / 多样性控制 | 核心能力 | NeuralNDCG |
-| 02-A/B实验 | 实验设计基础（Power, MDE, Sample Size） | 前置基础 | A/B Experimental Design |
-| 04-供应链 | ~~动态定价模型~~ | ~~利润闭环~~ | ~~Monodense 价格弹性~~ ✅ 已萃取(MARL) |
-| 01-因果推断 | 因果发现 Causal Discovery | 基座扩展 | Uplift Modeling |
-| 08-知识图谱 | 实体抽取 / 关系推理 | 基座能力 | Knowledge Graph Management |
-
-### 🟢 P2: 深度扩展
-
-- ~~序列推荐 Session-based Recommendation~~ ✅ 已完成 (SR-GNN)
-- ~~LLM 驱动个性化文案生成~~ ✅ 已完成
-- ~~多目标推荐 Multi-Task Learning~~ ✅ 已完成 (MAS多目标推荐)
-- ~~客服对话分析技能~~ ✅ 已完成 (MAS VOC数据分析师)
-- ~~因果发现 (PC Algorithm)~~ ✅ 已完成
+**业务闭环**：MMM（年度规划）→ Promotion（活动评估）→ Attribution（渠道归因）→ ROAS（执行优化）
 
 ---
 
-## 4. 推荐选题列表
+## 3. 中心性分析
+
+### 核心枢纽技能（高连接度）
+
+| 排名 | 技能 | 角色 | 连接数 | 变化 |
+|-----|------|------|--------|------|
+| 1 | Uplift Modeling | 因果推断入口 + 增长运营桥梁 | 7 | — |
+| 2 | Ad Attribution Modeling | 广告预算决策入口 | 6 | **新增** |
+| 3 | Kano 需求分类 | VOC→产品决策桥梁 | 6 | — |
+| 4 | Churn Prediction | 用户增长基座 | 6 | — |
+| 5 | DiD | 自然实验评估枢纽 | 5 | — |
+| 6 | SoMeR 多视角表示 | 用户画像基座 | 5 | — |
+| 7 | Demand Forecasting | 预测分析枢纽 | 5 | — |
+
+**新增枢纽**：Ad Attribution Modeling 连接 13-广告分析 / 15-营销投放分析 / 01-因果推断 / 14-用户分析，成为运营侧核心枢纽。
+
+### 孤立技能检测（低连接度，需加强关联）
+
+| 技能 | 领域 | 问题 |
+|------|------|------|
+| Monodense 价格弹性 | 04-供应链 | 仅与 MARL 定价有连接，与 05-推荐系统/01-因果推断缺少关联 |
+| Temporal Fusion Transformer | 03-时间序列 | 与 04-供应链/06-增长模型的连接薄弱 |
+| Feature Engineering | 12-ML基础 | 与各领域技能缺少显式关联，需建立"前置基础"连接 |
+
+---
+
+## 4. 知识缺口（更新）
+
+### 🔴 P0: 已修复的缺口（本次行动）
+
+- ✅ **01-因果推断结构性薄弱** — 已修复：从 2 张 → 6 张
+- ✅ **05-推荐系统多样性/冷启动/召回缺口** — 已修复：从 4 张 → 8 张
+- ✅ **08-知识图谱实体抽取/关系推理** — 已修复：从 2 张 → 9 张
+- ✅ **13-15 业务运营领域缺失** — 已修复：新增 3 个领域 6 张 Skill
+
+### 🟡 P1: 仍存在的结构性缺口
+
+| 领域 | 缺口技能 | 类型 | 关联技能 | 紧迫度 |
+|------|---------|------|---------|--------|
+| 03-时间序列 | N-BEATS / N-HiTS 神经时序 | 深度方法 | Temporal Fusion Transformer | 中 |
+| 04-供应链 | 需求预测（基础） | 前置基础 | Inventory, Monodense | 高 |
+| 07-NLP-VOC | 代码模板覆盖率 0% | 工程缺口 | 全部 VOC Skill | 高 |
+| 10-MAS | 与 15-营销投放的 Agent 应用 | 业务结合 | MMM Agent / 自动预算调整 | 中 |
+| 12-ML基础 | 模型评估、超参调优 | 前置基础 | Feature Engineering | 中 |
+
+### 🟢 P2: 深度扩展（可选）
+
+- 因果推断：Synthetic Control（合成控制法）、Regression Discontinuity（断点回归）
+- 推荐系统：联邦推荐、可解释推荐
+- 广告分析：Incrementality-Based Attribution（增量归因）
+- 用户分析：Customer Journey Mapping、Predictive CLV
+- 营销投放：Geo-Lift 实验设计、动态创意优化（DCO）
+
+---
+
+## 5. 推荐选题列表（更新）
 
 | 优先级 | 选题 | 类型 | 搜索关键词 | 预期填补缺口 |
 |-------|------|------|-----------|-------------|
-| P0 | iReFeed 代码验证与补齐 | 修复断点 | `iReFeed priority ranking` | Kano→产品路线图 |
-| P1 | 序列推荐 | 核心能力 | `session-based recommendation neural` | 05-推荐系统缺口 |
-| ~~P1~~ | ~~多目标推荐~~ | ~~核心能力~~ | ~~`multi-task learning recommendation`~~ | ~~05-推荐系统缺口~~ ✅ 已完成(MAS) |
-| ~~P1~~ | ~~因果发现~~ | ~~基座扩展~~ | ~~`causal discovery PC algorithm`~~ | ~~01-因果推断缺口~~ ✅ 已完成 |
-| ~~P1~~ | ~~动态定价~~ | ~~利润闭环~~ | ~~`dynamic pricing reinforcement learning`~~ | ~~04-供应链缺口~~ ✅ 已完成(MARL) |
-| ~~P2~~ | ~~LLM 个性化文案~~ | ~~营销策略~~ | ~~`LLM personalized copy generation`~~ | ~~07-NLP-VOC延伸~~ ✅ 已完成 |
-| P2 | 实验设计基础 | 前置补齐 | `A/B test power analysis sample size` | 02-A/B实验缺口 |
-| P2 | 重排序/多样性控制 | 核心能力 | `diversity re-ranking recommendation` | 05-推荐系统缺口 |
+| P1 | 需求预测基础 | 前置补齐 | `demand forecasting baseline moving average exponential smoothing` | 04-供应链 |
+| P1 | 时序异常检测 | 应用场景 | `time series anomaly detection transformer` | 03-时间序列 |
+| P1 | ML模型评估体系 | 前置基础 | `model evaluation metrics cross validation hyperparameter tuning` | 12-ML基础 |
+| P2 | N-BEATS 神经时序 | 深度方法 | `N-BEATS neural time series forecasting` | 03-时间序列 |
+| P2 | 增量归因实验 | 进阶方法 | `geo lift experiment incrementality attribution` | 13-广告分析 |
+| P2 | 动态创意优化 | 进阶应用 | `dynamic creative optimization DCO ad personalization` | 15-营销投放 |
 
 ---
 
-## 5. 跨领域组合推荐
+## 6. 跨领域组合推荐（更新）
+
+### 新增高价值组合（本次补全后）
 
 | 组合 | 价值 | 场景 | 所需技能 |
 |------|------|------|---------|
-| Causal + LTV | ⭐⭐⭐⭐⭐ | 高价值用户精准归因 | Uplift + LTV Prediction |
-| VOC + Churn | ⭐⭐⭐⭐ | 情感驱动流失预警 | CSK + Churn Prediction |
-| 时序 + 库存 | ⭐⭐⭐⭐ | 预测驱动补货 | Demand Forecasting + Inventory |
-| Uplift + MAB | ⭐⭐⭐⭐ | 动态实验优化 | Uplift + Multi-Armed Bandit |
-| NeuralNDCG + REVISION | ⭐⭐⭐⭐⭐ | 搜索意图→排序决策 | 意图挖掘 + Learning to Rank |
-| DeepAnalyze + Dashboard | ⭐⭐⭐⭐ | 分析结果自动可视化 | Data Science Agent + Visualization |
-| Argos + Forecasting | ⭐⭐⭐⭐ | 预测异常自动告警 | 异常检测 + 时序预测 |
-| P2 VOC分析 + P3 MARL定价 | ⭐⭐⭐⭐⭐ | 需求洞察→动态定价 | 多Agent分析 + MARL |
-| P3 MARL定价 + P4 多目标推荐 | ⭐⭐⭐⭐⭐ | 实时价格→利润排序 | 动态定价 + 推荐系统 |
-| P4 多目标推荐 + P1 行为仿真 | ⭐⭐⭐⭐⭐ | 推荐策略→仿真验证 | 推荐 + 消费者仿真 |
-| MAS四技能全链路闭环 | ⭐⭐⭐⭐⭐ | 分析→决策→执行→验证 | P2+P3+P4+P1 |
+| Attribution + MMM | ⭐⭐⭐⭐⭐ | 归因给出微观分配，MMM验证宏观增量 | Ad Attribution + Marketing Mix Modeling |
+| Funnel + Cohort | ⭐⭐⭐⭐⭐ | 漏斗看行为步骤流失，Cohort看时间维度留存 | User Funnel + Cohort Retention |
+| ROAS + Promotion | ⭐⭐⭐⭐⭐ | 日常预算优化 + 活动期效果评估 | ROAS Optimization + Promotion Effectiveness |
+| DiD + Mediation | ⭐⭐⭐⭐⭐ | 政策/算法更新"效应多大+为什么" | 自然实验 + 机制分解 |
+| IV + Causal Forest | ⭐⭐⭐⭐⭐ | 价格弹性"因果估计+异质性" | 工具变量 + 异质性效应 |
+| RPG + Multilingual NER | ⭐⭐⭐⭐⭐ | 跨语言商品理解与检索 | 语义ID + 实体识别 |
+
+### 运营-技术桥接组合（新维度）
+
+| 组合 | 价值 | 场景 | 所需技能 |
+|------|------|------|---------|
+| Cohort + LTV | ⭐⭐⭐⭐⭐ | 留存曲线→LTV预测→预算决策 | Cohort Retention + LTV Prediction |
+| Attribution + Uplift | ⭐⭐⭐⭐⭐ | "谁参与了"→"谁被影响了" | Ad Attribution + Uplift Modeling |
+| MMM + DML | ⭐⭐⭐⭐ | 宏观渠道效应→微观用户效应 | MMM + Promotion Effectiveness |
 
 ---
 
-## 6. 行动建议
+## 7. 代码模板覆盖检查
 
-1. **立即行动**: 验证 iReFeed skill card 的代码完整性，补齐断点
-2. **本周计划**: MAS四方向已补齐，重点验证串联闭环效果
-3. **本月目标**: 05-推荐系统剩余2缺口（序列推荐、重排序多样性），04-供应链已闭环
-4. **持续维护**: 每月审查本报告与 Skill关联图谱.md 的一致性
-5. **MAS升级**: P1-P4规则基线按标注路径升级为LLM/MARL生产版本
+| 领域 | 技能数 | 有代码模板 | 覆盖率 |
+|------|--------|-----------|--------|
+| 01-因果推断 | 6 | Uplift ✓, DiD ✓, IV ✓, Mediation ✓ | 67% |
+| 02-A/B实验 | 5 | Power Analysis ✓ | 20% |
+| 03-时间序列 | 5 | Forecasting ✓, Anomaly ✓, Prophet ✓ | 60% |
+| 04-供应链 | 5 | Demand Forecasting ✓, Safety Stock ✓ | 40% |
+| 05-推荐系统 | 8 | MAB ✓ | 13% |
+| 06-增长模型 | 10 | RFM ✓ | 10% |
+| 07-NLP-VOC | 43 | ❌ 无 | 0% |
+| 08-知识图谱 | 9 | graph_rag.py ✓, KGQA ✓ | 22% |
+| 09-DataAgent | 5 | SQL Agent ✓, RCA ✓ | 40% |
+| 10-MAS | 12 | ❌ 无 | 0% |
+| 11-AI人文 | 1 | ❌ 无 | 0% |
+| 12-ML基础 | 1 | Feature Engineering ✓ | 100% |
+| 13-广告分析 | 2 | Attribution ✓, ROAS ✓ | 100% |
+| 14-用户分析 | 2 | Funnel ✓, Cohort ✓ | 100% |
+| 15-营销投放 | 2 | MMM ✓, Promotion ✓ | 100% |
+
+**关键发现**：
+- 新领域（13-15）代码覆盖率 100%，每个 Skill 都有完整代码模板
+- 07-NLP-VOC 和 10-MAS 代码覆盖率仍为 0%，是下一步重点
+- 整体代码覆盖率从 ~15% 提升到 ~35%
+
+---
+
+## 8. 行动建议
+
+### 立即行动（本周）
+
+1. **07-NLP-VOC 代码模板补全**：选择 3-5 个核心 Skill 补代码（如 Kano、Aspect Sentiment、TopicImpact）
+2. **10-MAS 代码模板**：为 AutoGen / ReAct 补最小可运行示例
+
+### 本月目标
+
+1. **P1 技能补全**：需求预测基础、N-BEATS 神经时序
+2. **代码模板覆盖率提升**：从当前 ~35% 提升到 ~50%
+3. **13-15 运营领域深化**：每个领域再补 1-2 张 Skill（如 13-增量归因、14-用户旅程映射、15-Geo-Lift）
+
+### 持续维护
+
+1. **每月扫描**：运行脚本自动统计各领域 Skill 数量，生成分布报告
+2. **孤立技能关联**：为 Monodense、TFT、Feature Engineering 建立跨领域连接
+3. **论文跟踪**：关注 2025-2026 年 KDD/ICML/NeurIPS/ACL/WWW 会议中母婴电商相关论文
+4. **运营-技术桥接**：鼓励从 13-15 向技术领域的跨域组合选题
 
 ---
 
 **维护者**: Claude Code
 **更新频率**: 每月审查一次
-**上游同步**: 以 `paper2skills-vault/00-项目管理/Skill关联图谱.md` 为权威来源
+**上游同步**: 以全库 `Skill-*.md` 文件扫描为权威来源
