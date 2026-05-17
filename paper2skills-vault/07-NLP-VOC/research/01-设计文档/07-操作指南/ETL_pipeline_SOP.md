@@ -15,7 +15,7 @@ audience: engineer
 
 # ETL Pipeline SOP — jsonl → voc_bi → BI 看板
 
-> **文档定位**：从原始 `phase6_d9_filtered.jsonl`（560M）+ 字典 `tag_dictionary_v4.1.xlsx`，到 Postgres `voc_bi` 里 4 张表 + 6 个视图就绪供 Superset 用，逐步走通。
+> **文档定位**：从原始 `phase6_d9_filtered.jsonl`（560M）+ 字典 `tag_dictionary_v4.5.xlsx`，到 Postgres `voc_bi` 里 4 张表 + 6 个视图就绪供 Superset 用，逐步走通。
 >
 > **预期耗时**：完整流程 ~5 分钟（37s ETL + 余下网络/初始化）
 >
@@ -47,7 +47,7 @@ audience: engineer
 │ 输入                             │
 ├─────────────────────────────────┤
 │ • phase6_d9_filtered.jsonl 560M  │  → Phase 6 D9 Method C 过滤后产物
-│ • tag_dictionary_v4.1.xlsx 2.6M  │  → v4.1 字典（643 tag_ids 元信息）
+│ • tag_dictionary_v4.5.xlsx 2.6M  │  → v4.5 字典（645 tag_ids，267 通用 + 378 品线，0 空 / 0 占位 / 0 脏数据）
 │ • ~/.paper2skills/voc_bi_pg.json │  → Postgres 连接配置
 └────────────┬────────────────────┘
              │
@@ -65,7 +65,7 @@ audience: engineer
 ┌─────────────────────────────────┐
 │ voc_bi Postgres 4 张基表          │
 ├─────────────────────────────────┤
-│ • dim_tag           267 rows     │
+│ • dim_tag           692 rows     │  ← 2026-05-14 起：267 通用 + 337 品线 + 88 orphan
 │ • voc_review        364,569      │
 │ • voc_label         ~689K        │
 │ • voc_brand_mention ~varies      │
@@ -171,7 +171,7 @@ ls -lh research/04-输出结果/unified_labeling/phase6_d9_filtered.jsonl
 # 期望：560M（约 36 万行）
 
 # 2. 字典存在
-ls -lh research/04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx
+ls -lh research/04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx
 # 期望：~2.6M
 
 # 3. Python 依赖
@@ -184,7 +184,7 @@ python3 -c "import psycopg2, openpyxl, pydantic; print('✅ deps ok')"
 ```bash
 python3 research/02-脚本工具/01-标签进化/etl_to_postgres.py \
   --input research/04-输出结果/unified_labeling/phase6_d9_filtered.jsonl \
-  --dict research/04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx
+  --dict research/04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx
 
 # 期望输出（约 37 秒）：
 #   ⏳ Connecting to voc_bi @ localhost:5432
@@ -319,7 +319,7 @@ EOF
 # ETL 是 idempotent 的（TRUNCATE before insert），直接重跑
 python3 research/02-脚本工具/01-标签进化/etl_to_postgres.py \
   --input research/04-输出结果/unified_labeling/phase6_d9_filtered.jsonl \
-  --dict research/04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx
+  --dict research/04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx
 
 # 视图基于基表，自动反映新数据，不需要重建
 
@@ -327,13 +327,13 @@ python3 research/02-脚本工具/01-标签进化/etl_to_postgres.py \
 docker exec voc_superset_redis redis-cli FLUSHDB
 ```
 
-### 6.2 场景：字典升级（v4.1 → v5.0）
+### 6.2 场景：字典升级（v4.5 → v4.6 / v5.0）
 
 ```bash
 # 1. 用新字典重跑 ETL（dim_tag 会被新内容替换）
 python3 research/02-脚本工具/01-标签进化/etl_to_postgres.py \
   --input research/04-输出结果/unified_labeling/phase6_d9_filtered.jsonl \
-  --dict research/04-输出结果/01-字典版本/tag_dictionary_v5.0.xlsx
+  --dict research/04-输出结果/01-字典版本/tag_dictionary_v5.0.xlsx  # 或 v4.6.xlsx
 
 # 2. 视图自动反映新 dept_owner 映射
 
@@ -345,6 +345,24 @@ grep -n "dept_owner" research/02-脚本工具/01-标签进化/docker/superset_ch
 python3 research/02-脚本工具/01-标签进化/docker/superset_charts_factory.py
 python3 research/02-脚本工具/01-标签进化/docker/superset_filters_factory.py
 ```
+
+### 6.2.1 场景：v4.4 → v4.5 增量治理（2026-05-14 实战流程）
+
+> 不要直接重跑 etl_to_postgres.py 覆盖 dim_tag（会丢腾讯云独有列 `atomic_indicator_id` + 人工调过的 `biz_action`）。用以下 3 段式增量流程：
+
+```bash
+# A. 字典层：修脏数据 + 补空 + 拆解 (LLM ~5 秒)
+python research/02-脚本工具/01-标签进化/scripts/repair_dict_v45.py --mode batch
+# 产出 tag_dictionary_v4.5.xlsx + dept_repair_v45_diff.md
+
+# B. 本地 dim_tag 层：扩展 schema + 88 orphan 反查回灌
+python research/02-脚本工具/01-标签进化/scripts/fill_orphan_tags.py
+
+# C. 腾讯云生产层：增量 UPSERT 保留人工值 + 自动备份 + try/finally DML 窗口
+python research/02-脚本工具/01-标签进化/scripts/sync_to_tencent_v45.py
+```
+
+详见 [Superset_BI_SOP §C](Superset_BI_SOP.md#§c-v45-字典治理--dim_tag-扩展同步腾讯云v3-新增)。
 
 ### 6.3 场景：只改某个视图（不动数据）
 
@@ -464,7 +482,7 @@ except Exception as e:
 # 诊断
 python3 -c "
 import openpyxl
-wb = openpyxl.load_workbook('research/04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx')
+wb = openpyxl.load_workbook('research/04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx')
 print('Sheets:', wb.sheetnames)
 ws = wb['01_通用标签主表']
 print(f'Rows: {ws.max_row}, Cols: {ws.max_column}')
@@ -522,7 +540,7 @@ psql -h localhost -U voc_user -d voc_bi \
 
 ### A.1 4 张基表
 
-#### `dim_tag`（267 rows）
+#### `dim_tag`（692 rows，2026-05-14 v4.5 起）
 
 | 列 | 类型 | 说明 |
 |---|---|---|
@@ -533,6 +551,17 @@ psql -h localhost -U voc_user -d voc_bi \
 | `polarity` | TEXT | 极性（正向/负向/中性） |
 | `aipl_node` | TEXT | AIPL 节点 |
 | `biz_action` | TEXT | 业务动作建议 |
+| `strategy_pkg` | TEXT | 策略包（49 闭集词表） |
+| `is_general` | BOOLEAN | 是否通用标签 |
+| `audit_status` | TEXT | `已通过 / 已审核-自动填充 / auto_from_label`（NULL = 未审）|
+| `product_line` | TEXT | **2026-05-14 新增**：品线名（吸奶器/内衣服饰/家居家纺/母婴综合护理/喂养电器/智能母婴电器；通用标签为 NULL）|
+| `collab_dept` | TEXT | **2026-05-14 新增**：协同部门（多部门用分号分隔）|
+| `atomic_indicator_id` | TEXT | **腾讯云独有**（MVP L3 注入）：原子指标 ID，本地无；写脚本时绝不能 TRUNCATE/覆盖此列 |
+| `loaded_at` | TIMESTAMPTZ | 最近 ETL 时间 |
+
+> **行数构成**：267 通用主表 + 337 品线（去重 28 个交叉重复）+ 88 orphan auto_from_label = 692
+>
+> **`audit_status='auto_from_label'` 88 行**：从 voc_label 反查回灌（v3.x 历史 TAG_GEN_xxx + ALCHEmist TAG_ALC_xxx + 多语言 TAG_ML_xxx），不在 v4.5 字典 xlsx 中。后续业务方治理决策后写回 v4.6 字典。
 
 #### `voc_review`（364,569 rows）
 
@@ -605,7 +634,7 @@ psql -h localhost -U voc_user -d voc_bi \
 | 下游 BI | [Superset_BI_SOP.md](Superset_BI_SOP.md) |
 | 架构图 | [phase7-architecture-diagrams.md](../00-Phase5-汇报与复盘/phase7-architecture-diagrams.md) |
 | Phase 7 D1 进度报告 | [phase7_d1_progress_report.md](../../04-输出结果/03-审计报告/phase7_d1_progress_report.md) |
-| 字典管理 | [tag_dictionary_v4.1.xlsx](../../04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx) |
+| 字典管理 | [tag_dictionary_v4.5.xlsx](../../04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx) |
 | Phase 6 D9 上游 | [phase6_d9_progress_report.md](../../04-输出结果/03-审计报告/phase6_d9_progress_report.md) |
 
 ---

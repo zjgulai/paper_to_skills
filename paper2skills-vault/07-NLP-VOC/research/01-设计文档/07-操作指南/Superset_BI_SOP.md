@@ -1,6 +1,6 @@
 ---
 name: superset-bi-sop
-description: Superset BI 看板运维 SOP — 高详细度操作手册。覆盖从零启动、日常访问、添加 chart/filter、迁移重建、故障处置、权限管理、备份恢复的全流程。面向接手的工程/运维同事，逐行命令 + 故障判断树 + 底脱图。v2 (L7) 升级：覆盖 Phase 7 8-dashboard + MVP L4-L6 新增 5 dashboard / 30 chart / 4 dataset，部署在腾讯云 https://voc.lute-tlz-dddd.top。
+description: Superset BI 看板运维 SOP — 高详细度操作手册。覆盖从零启动、日常访问、添加 chart/filter、迁移重建、故障处置、权限管理、备份恢复的全流程。面向接手的工程/运维同事，逐行命令 + 故障判断树 + 底脱图。v3 (2026-05-14) 升级：增加 §C「v4.5 字典治理 + dim_tag 扩展同步腾讯云」专章 + chart 3 query_context bug 处置 + 88 orphan 反查回灌方案。部署在腾讯云 https://voc.lute-tlz-dddd.top。
 title: Superset BI 看板运维 SOP
 doc_type: sop
 module: voc-nlp
@@ -8,15 +8,21 @@ topic: superset-bi-operations
 status: stable
 created: 2026-05-11
 updated: 2026-05-14
-version: v2
+version: v3
 owner: self
 source: ai
 audience: engineer
 ---
 
-# Superset BI 看板运维 SOP（v2 / L7 升级）
+# Superset BI 看板运维 SOP（v3 / 2026-05-14 升级）
 
 > **文档定位**：接手人能照着逐行做，不需要去翻 Phase 7 的 4 份进度报告 + MVP L4/L5/L6 三份进度报告。
+>
+> **v3 关键升级（2026-05-14）**：
+> - 新增 §C「v4.5 字典治理 + dim_tag 扩展腾讯云同步」专章（5 项原子操作 + 回滚 SOP）
+> - chart 3 修正：从 `raw mode + all_columns` 切到 `aggregate mode + groupby + hit_count_sum metric` + 必须同步 PUT `query_context`
+> - dim_tag schema 扩展：加 `product_line` + `collab_dept` 列；88 orphan 用 `audit_status='auto_from_label'` 标记
+> - 腾讯云独有列 `atomic_indicator_id` 必须保留（UPSERT 显式列名机制）
 >
 > **v2 关键升级（2026-05-14 / L7）**：
 > - 部署地址从 `http://localhost:8088` 升级为腾讯云 `https://voc.lute-tlz-dddd.top`
@@ -32,6 +38,8 @@ audience: engineer
 > - L4 进度：[mvp_l4_progress_report.md](../../04-输出结果/03-审计报告/mvp_l4_progress_report.md)（如已归档）
 > - L5 进度：[mvp_l5_progress_report.md](../../04-输出结果/03-审计报告/mvp_l5_progress_report.md)
 > - L6 进度：[mvp_l6_progress_report.md](../../04-输出结果/03-审计报告/mvp_l6_progress_report.md)
+> - **v4.5 字典 diff** ⭐：[dept_repair_v45_diff.md](../../04-输出结果/01-字典版本/dept_repair_v45_diff.md)
+> - **v4.5 同步脚本** ⭐：[sync_to_tencent_v45.py](../../02-脚本工具/01-标签进化/scripts/sync_to_tencent_v45.py)
 >
 > **当前生产配置（2026-05-14）**：
 > - Superset 版本：4.1.1（Docker）
@@ -40,6 +48,7 @@ audience: engineer
 > - 管理员：`admin / voc_admin_2026`（⚠️ 默认密码，未来 P8 加固时更换）
 > - 后端数据库：`voc_bi`（Postgres，腾讯云容器内）
 > - 数据规模：364,569 条 review · 1.4M+ labels · ~13 工日累计建设
+> - **dim_tag 表**：692 行（267 通用 + 337 品线 + 88 orphan auto_from_label，2026-05-14）
 
 ---
 
@@ -56,6 +65,7 @@ audience: engineer
 9. [§9 安全与权限](#§9-安全与权限)
 10. [§A 附录：Docker / API 常用命令](#§a-附录docker--api-常用命令)
 11. [§B MVP L4-L6 资产清单 + 重建/回滚（v2 新增）](#§b-mvp-l4-l6-资产清单--重建--回滚v2-新增)
+12. [§C v4.5 字典治理 + dim_tag 扩展同步腾讯云（v3 新增）](#§c-v45-字典治理--dim_tag-扩展同步腾讯云v3-新增)
 
 ---
 
@@ -992,6 +1002,216 @@ psql -h localhost -U voc_user -d voc_bi -f research/02-脚本工具/01-标签进
 
 ---
 
+## §C v4.5 字典治理 + dim_tag 扩展同步腾讯云（v3 新增）
+
+> **本章定位**：2026-05-14 v4.5 字典治理（cleanup 56 行 + LLM 补 230 处空值/占位）+ dim_tag 扩展（schema 加 product_line/collab_dept + 88 orphan 反查回灌）+ 腾讯云增量同步的完整可重放 SOP。
+
+### §C.1 治理目标与状态
+
+| 维度 | Before（v4.4 / 2026-05-13） | After（v4.5 / 2026-05-14） |
+|---|---|---|
+| 字典体量 | 643 行（267 通用 + 376 品线，质量参差） | **645 行**（267 通用 + 378 品线，0 空 / 0 占位 / 0 脏数据） |
+| dim_tag 行数（本地 + 腾讯云）| 267 | **692**（267 通用 + 337 品线 + 88 orphan auto_from_label） |
+| voc_label 命中 dim_tag | 264 / 627 (42%) | **539+88 / 627 = 100%** |
+| dim_tag schema | 11 列（含腾讯云独有 atomic_indicator_id） | **13 列**（+ product_line + collab_dept） |
+| Top-30 全局标签 NULL 行 | 多行 | **0 行** |
+
+### §C.2 三段式治理流程（5 个原子步骤）
+
+#### Step 1：v4.4 → v4.5 字典修复（本地 LLM 跑）
+
+```bash
+cd /path/to/07-NLP-VOC
+python research/02-脚本工具/01-标签进化/scripts/repair_dict_v45.py --mode batch
+```
+
+**做了什么**：
+- 56 行 `[品类] english` 脏 tag_cn 用正则机械拆解
+- 2 行 tag_cn 占位 `【待填写】` → LLM 推中文标签
+- 140 行 `业务动作/责任部门` 空 → DeepSeek 填 `{部门}：{动作}`（concurrency=10）
+- 86 行 `策略包` 空 → DeepSeek 闭集（49 词）选 1
+- 主表 6 处 `主责部门 / 故事线 / 策略包` 空 → LLM 补
+- 08 映射表 10 行批量空 → 反查 01 主表 同名标签机械回填
+
+**产出**：
+- `research/04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx`（350KB）
+- `research/04-输出结果/01-字典版本/dept_repair_v45_diff.md`（diff 报告）
+
+#### Step 2：本地 dim_tag 扩展 + 重灌（无 LLM，0.5s）
+
+```bash
+# 扩展 dim_tag schema + 全量重灌（267 主表 + 378 品线，去重 28 个交叉重复 = 604 行）
+python <<'PY'
+import openpyxl, psycopg2, json
+from psycopg2.extras import execute_values
+from pathlib import Path
+
+cfg = json.loads(Path("~/.paper2skills/voc_bi_pg.json").expanduser().read_text())
+conn = psycopg2.connect(**{k:cfg[k] for k in ['host','port','database','user','password']})
+with conn.cursor() as cur:
+    cur.execute("ALTER TABLE dim_tag ADD COLUMN IF NOT EXISTS product_line TEXT;")
+    cur.execute("ALTER TABLE dim_tag ADD COLUMN IF NOT EXISTS collab_dept TEXT;")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_dim_tag_product_line ON dim_tag(product_line);")
+conn.commit()
+PY
+# 然后跑 etl_to_postgres.py 用 v4.5 字典（仅重灌 dim_tag，不动事实表）
+```
+
+#### Step 3：88 orphan 反查回灌（本地 + 腾讯云通用）
+
+```bash
+python research/02-脚本工具/01-标签进化/scripts/fill_orphan_tags.py
+```
+
+**做了什么**：
+- 从 `voc_label` 反查 88 个 dim_tag 找不到的 tag_id（v3.x TAG_GEN_xxx + ALCHEmist TAG_ALC_xxx + 多语言 TAG_ML_xxx）
+- 直接复用 voc_label 已有的 `tag_cn / tag_en / aipl_node / sentiment_preset`
+- `polarity` 用 sentiment_preset 字典映射（positive→正向, negative→负向, neutral→中性，0 LLM）
+- `[品类] english` tag_cn 自动拆解 + 抽 `product_line`
+- **唯一空字段 `dept_owner`** → DeepSeek 88 条并发 12 跑（5 秒）
+- INSERT 标 `audit_status='auto_from_label'`，**不写回 v4.5 字典 xlsx**（字典是策划级 ground truth）
+
+#### Step 4：腾讯云增量同步（保留 atomic_indicator_id + biz_action 人工值）⭐
+
+```bash
+python research/02-脚本工具/01-标签进化/scripts/sync_to_tencent_v45.py
+```
+
+**做了什么**（< 1 分钟全程）：
+
+| Step | 动作 | 安全机制 |
+|---|---|---|
+| 0 | HTTPS 连接 + 探测 dim_tag 现状 | — |
+| 0.5 | `CREATE TABLE dim_tag_backup_20260514 AS dim_tag` | 服务端备份，rollback 用 |
+| 1 | PUT `/api/v1/database/1` `{"allow_dml": true}` | 临时窗口 |
+| 2 | `ALTER TABLE dim_tag ADD COLUMN IF NOT EXISTS product_line, collab_dept` | 幂等 |
+| 3 | UPSERT 604 行 v4.5 字典 with `ON CONFLICT (tag_id) DO UPDATE SET <显式列名>` | **不动 atomic_indicator_id** + **biz_action 用 CASE WHEN 守护人工值** |
+| 4 | INSERT 88 orphan with `ON CONFLICT DO NOTHING` + LLM 推 dept_owner（5s）| `audit_status='auto_from_label'` |
+| 5 | PUT `allow_dml=false` 关回（try/finally 保证） | 不留生产 DML 窗口 |
+| 6 | 验证：dim_tag=692, orphan=0, atomic_indicator_id=267 行保留 | — |
+
+**关键 SQL 片段**（保人工值机制）：
+
+```sql
+INSERT INTO dim_tag (tag_id, ..., biz_action, ...)
+VALUES (...)
+ON CONFLICT (tag_id) DO UPDATE SET
+  tag_cn       = EXCLUDED.tag_cn,
+  tag_en       = EXCLUDED.tag_en,
+  ...
+  biz_action   = CASE
+    WHEN EXCLUDED.biz_action IS NOT NULL AND EXCLUDED.biz_action <> ''
+    THEN EXCLUDED.biz_action
+    ELSE dim_tag.biz_action       -- 保留腾讯云人工调过的值
+  END,
+  ...                              -- 注意：不更新 atomic_indicator_id 列（不出现在 SET 子句）
+  loaded_at    = NOW();
+```
+
+#### Step 5：chart 3 修复（Top-30 全局标签）⭐
+
+> **重要**：v4.4 时代 chart 3 用 raw mode + all_columns，Superset 4.1.1 在该模式下**不加 ORDER BY**，`LIMIT 30` 拿到随机行。必须切到 aggregate mode。
+
+```python
+# Step 5a: 给 dataset 5 (v_global_top_tags) 加 hit_count_sum metric
+# 用 PUT API merge（不能简单覆盖否则报「metrics already exist」）
+import requests
+URL = "https://voc.lute-tlz-dddd.top"
+s = requests.Session(); s.verify = False
+tok = s.post(f"{URL}/api/v1/security/login",
+  json={"username":"admin","password":"voc_admin_2026","provider":"db","refresh":True}).json()["access_token"]
+s.headers.update({"Authorization": f"Bearer {tok}"})
+
+ds5 = s.get(f"{URL}/api/v1/dataset/5").json()['result']
+# 保留现有 metric 的 id，新增 hit_count_sum 不带 id
+new_metrics = [{"id": m["id"], "metric_name": m["metric_name"], "expression": m["expression"], ...}
+               for m in ds5['metrics']]
+new_metrics.append({"metric_name": "hit_count_sum", "expression": "SUM(hit_count)",
+                    "metric_type": "sum", "d3format": ",.0f"})
+s.put(f"{URL}/api/v1/dataset/5?override_columns=false", json={"metrics": new_metrics})
+
+# Step 5b: 改 chart 3 params 切 aggregate mode + 必须同步 PUT query_context
+new_params = {
+  "viz_type": "table",
+  "query_mode": "aggregate",
+  "groupby": ["tag_id", "tag_cn", "tag_en", "dept_owner", "polarity"],
+  "metrics": ["hit_count_sum"],
+  "row_limit": 30,
+  "order_desc": True,
+  "timeseries_limit_metric": "hit_count_sum",
+}
+new_qc = {
+  "datasource": {"id": 5, "type": "table"},
+  "queries": [{
+    "columns": ["tag_id","tag_cn","tag_en","dept_owner","polarity"],
+    "metrics": ["hit_count_sum"],
+    "row_limit": 30,
+    "orderby": [["hit_count_sum", False]]
+  }]
+}
+s.put(f"{URL}/api/v1/chart/3", json={
+  "params": json.dumps(new_params, ensure_ascii=False),
+  "query_context": json.dumps(new_qc, ensure_ascii=False),
+  "query_context_generation": True,
+})
+```
+
+> ⚠️ **关键陷阱**：仅 PUT `params` 不会重建 SQL，必须**同时** PUT `query_context`，否则 API force=true 仍用旧的查询计划。
+
+### §C.3 验证清单
+
+```bash
+# A. 本地验证
+python <<'PY'
+import psycopg2, json
+from pathlib import Path
+cfg = json.loads(Path("~/.paper2skills/voc_bi_pg.json").expanduser().read_text())
+conn = psycopg2.connect(**{k:cfg[k] for k in ['host','port','database','user','password']})
+with conn.cursor() as cur:
+    cur.execute("SELECT COUNT(*) FROM dim_tag")
+    print(f"dim_tag total: {cur.fetchone()[0]}")  # 期望 692
+    cur.execute("""SELECT COUNT(DISTINCT l.tag_id) FROM voc_label l
+                   LEFT JOIN dim_tag d ON l.tag_id=d.tag_id WHERE d.tag_id IS NULL""")
+    print(f"orphan: {cur.fetchone()[0]}")  # 期望 0
+PY
+
+# B. 腾讯云验证（HTTP API）
+curl -sS -X POST https://voc.lute-tlz-dddd.top/api/v1/security/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"voc_admin_2026","provider":"db","refresh":true}'
+# 然后 GET /api/v1/sqllab/execute/ 跑 SELECT COUNT(*) FROM dim_tag
+
+# C. 浏览器验证 dashboard
+# 打开 https://voc.lute-tlz-dddd.top/superset/dashboard/voc-overview/
+# Cmd+Shift+R 硬刷新（绕过浏览器 React state cache）
+# 看 Top-30 全局标签表 → 应 0 NULL，Top 1 = 总体正面 77,079 用户运营部 正向
+```
+
+### §C.4 回滚 SOP（万一出错）
+
+```sql
+-- 在 Superset SQL Lab（先 PUT allow_dml=true 临时开启）执行：
+DROP TABLE IF EXISTS dim_tag_temp_swap;
+ALTER TABLE dim_tag RENAME TO dim_tag_temp_swap;
+ALTER TABLE dim_tag_backup_20260514 RENAME TO dim_tag;
+-- 验证
+SELECT COUNT(*) FROM dim_tag;  -- 期望 267（v4.4 状态）
+-- 完成后 PUT allow_dml=false 关回
+```
+
+> 📌 **回滚仅在 dim_tag 数据出错时使用**。若仅是某个 chart 渲染问题，不要走数据回滚，先看 §8 故障判断树。
+
+### §C.5 已知遗留（非阻塞，Phase 8 治理）
+
+| 遗留项 | 影响 | 处置 |
+|---|---|---|
+| 37 个 chart 缺 `query_context`（MVP L4-L6 创建时未存）| API force=true 报 "Chart has no query context saved"；**Dashboard 渲染不受影响**（走 form_data_key 路径） | Phase 8 用同样 `query_context_generation` PUT 模式批量补 |
+| 88 个 `audit_status='auto_from_label'` orphan | dim_tag 用，但 v4.5 字典 xlsx 没收 | 业务方治理决策（保留/归档/合并）后写回 v4.6 字典 |
+| 业务动作模板化（核心性能 117 行重复）| BI 看板能用，但下发部门工单时同质化 | v4.6 用更具体 prompt 重跑业务动作 + 人工 review |
+| `dim_tag_backup_20260514` 表 | 占用腾讯云磁盘 ~2MB | 观察一周稳定后跑 `DROP TABLE dim_tag_backup_20260514;` |
+
+---
+
 ## 附：关联文档
 
 | 类型 | 链接 |
@@ -1002,7 +1222,13 @@ psql -h localhost -U voc_user -d voc_bi -f research/02-脚本工具/01-标签进
 | ETL 上游 SOP | [ETL_pipeline_SOP.md](ETL_pipeline_SOP.md) |
 | Phase 7 完整复盘 | [phase7_complete_retrospective.md](../../04-输出结果/03-审计报告/phase7_complete_retrospective.md) |
 | Phase 7 D4 进度报告 | [phase7_d4_progress_report.md](../../04-输出结果/03-审计报告/phase7_d4_progress_report.md) |
+| **v4.5 字典 + diff** ⭐ | [tag_dictionary_v4.5.xlsx](../../04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx) ｜ [dept_repair_v45_diff.md](../../04-输出结果/01-字典版本/dept_repair_v45_diff.md) |
+| **v4.5 修复脚本** ⭐ | [repair_dict_v45.py](../../02-脚本工具/01-标签进化/scripts/repair_dict_v45.py) |
+| **88 orphan 回灌脚本** ⭐ | [fill_orphan_tags.py](../../02-脚本工具/01-标签进化/scripts/fill_orphan_tags.py) |
+| **腾讯云增量同步脚本** ⭐ | [sync_to_tencent_v45.py](../../02-脚本工具/01-标签进化/scripts/sync_to_tencent_v45.py) |
 
 ---
 
 > **SOP 维护约定**：每次 Superset 配置、factory 脚本、或底层数据层发生变化时，更新对应章节。如果整个架构升级（如 Phase 8），本文挪至 00-归档资料/ 并建新版。
+>
+> **v3 升级记录**（2026-05-14）：增加 §C 章 + chart 3 query_context bug 处置 + 88 orphan 反查回灌方案 + 腾讯云增量同步保 atomic_indicator_id 列机制。

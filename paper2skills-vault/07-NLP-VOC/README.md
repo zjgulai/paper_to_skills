@@ -1,38 +1,42 @@
 ---
 name: voc-nlp-readme
-description: 07-NLP-VOC 子项目 README — 项目快速上手入口，含目录全貌、按角色导航、Phase 7 当前状态、BI B 路径与关键链接。新人 5 分钟看完就能知道项目是什么、代码在哪、文档在哪、当前在做什么。
+description: 07-NLP-VOC 子项目 README — 项目快速上手入口，含目录全貌、按角色导航、当前状态、生产部署（腾讯云）与关键链接。新人 5 分钟看完就能知道项目是什么、代码在哪、文档在哪、当前在做什么。
 title: 07-NLP-VOC VOC 标签体系子项目
 doc_type: readme
 module: voc-nlp
 status: stable
 created: 2026-05-08
-updated: 2026-05-11
+updated: 2026-05-14
 owner: self
 source: ai
 ---
 
 # 07-NLP-VOC — VOC 标签体系子项目
 
-> **paper2skills 仓库下的 VOC 标签体系子项目**。用 AI 把跨境电商 364K 条评论转成结构化标签 + NPS + 画像 + 方面情感，落到 Superset BI 看板支撑 7 个部门决策。
+> **paper2skills 仓库下的 VOC 标签体系子项目**。用 AI 把跨境电商 364K 条评论转成结构化标签 + NPS + 画像 + 方面情感，落到腾讯云 Superset BI 看板支撑 7 个部门决策。
 
 ## 🚀 3 分钟入门
 
 | 你是谁 | 先读这份 | 再读这份 |
 |---|---|---|
-| **老板/BD** | [Phase 5 白话汇报 §0+§2](research/01-设计文档/00-Phase5-汇报与复盘/phase5-executive-brief.md)（5 分钟） | [Phase 7 完整复盘](research/04-输出结果/03-审计报告/phase7_complete_retrospective.md)（BI 看板上线） |
-| **跨部门同事** | 本文 + [Phase 7 看板访问指南](#superset-bi-看板) | [架构图集](research/01-设计文档/00-Phase5-汇报与复盘/phase5-architecture-diagrams.md) |
+| **老板/BD** | [VOC 阶段汇报 HTML](research/04-输出结果/03-审计报告/阶段汇报/voc-stage-report-2026-05-14.html)（10-15 分钟，Docusaurus 风左目录+右内容）| [Phase 6+7 白话汇报](research/01-设计文档/00-Phase5-汇报与复盘/phase6-7-executive-brief.md) |
+| **跨部门同事** | [VOC 业务方培训手册 HTML](research/01-设计文档/07-操作指南/VOC_业务方培训手册.html)（5 场景 + 8 FAQ） | [Superset BI 看板](https://voc.lute-tlz-dddd.top) 直接打开 |
 | **技术接手** | [CLAUDE.md](CLAUDE.md)（系统规约） | [Phase 5 主复盘](research/01-设计文档/00-Phase5-汇报与复盘/phase5-architecture-and-workflow-retrospective.md)（30 分钟） |
 | **新人上手** | 本文 → [CLAUDE.md](CLAUDE.md) → [Phase 5 白话汇报](research/01-设计文档/00-Phase5-汇报与复盘/phase5-executive-brief.md) | [01-设计文档 索引](research/01-设计文档/README.md) |
 | **外部审计** | [Phase 5 D7 Week 1 Gate 9/9](research/04-输出结果/03-审计报告/phase5_d7_week1_gate_final.md) | [Phase 6 D9 Week 2 Gate 7/7](research/04-输出结果/03-审计报告/phase6_d9_week2_gate.md) |
 
-## 📊 当前状态（2026-05-11）
+## 📊 当前状态（2026-05-14）
 
 | 维度 | 值 |
 |---|---|
-| **当前阶段** | 🟢 Phase 7 D4 完成（BI B 路径实质上线） |
+| **当前阶段** | 🟢 v4.5 字典治理 + dim_tag 扩展（本地 + 腾讯云双环境同步完成） |
 | Phase 5 | ✅ D14 部分收官（Momus 审阅通过 + 归档） |
 | Phase 6 | ✅ D10 BI 看板实质上线（C+A 双路径，14 周报 + 125KB HTML） |
 | Phase 7 | ✅ Superset 12 charts + 8 dashboards + 10 native filters |
+| MVP L1-L7 | ✅ L7 部署 + 文档 + 培训（13 dashboard / 42 chart / 10 dataset） |
+| **v4.5 字典治理** | ✅ 0 空 / 0 占位 / 0 脏数据；645 行（267 通用 + 378 品线） |
+| **dim_tag BI 表** | ✅ 692 行（含 88 orphan 反查回灌）；voc_label 命中率 42% → 100% |
+| **生产部署** | 🟢 腾讯云 `https://voc.lute-tlz-dddd.top` |
 | 全量打标进度 | 364,569 条 ✅ 全部完成 |
 | Week 1 Gate | 🟢 9/9 PASS（D7 收口） |
 | Week 2 Gate | 🟢 7/7 PASS（D9 Method C 后处理过滤后 precision 0.896） |
@@ -42,27 +46,27 @@ source: ai
 
 ## 🎯 Superset BI 看板
 
-### 访问入口
+### 访问入口（生产）
+
+**腾讯云 HTTPS**：[https://voc.lute-tlz-dddd.top](https://voc.lute-tlz-dddd.top) ｜ 用户/密码：`admin / voc_admin_2026`
+
+### 访问入口（本机开发）
 
 ```bash
 # 启动 Superset (本地)
 docker compose up -d   # 在 research/02-脚本工具/01-标签进化/docker/ 下
 open http://localhost:8088
-# 用户/密码：admin / voc_admin_2026
 ```
 
-### 已上线看板（8 个）
+### 已上线看板（13 个，腾讯云）
 
-| Dashboard | 路径 | Filters |
-|---|---|---|
-| VOC Overview · 全局总览 | `/dashboard/1/` | 数据源 / 产品线 / Proxy NPS（针对饼图） |
-| VOC · 全球客服中心 | `/dashboard/2/` | 情感极性 |
-| VOC · 产品中心 | `/dashboard/3/` | 情感极性 |
-| VOC · 仓储物流部 | `/dashboard/4/` | 情感极性 |
-| VOC · 品牌市场中心 | `/dashboard/5/` | 情感极性 |
-| VOC · 电商运营部 | `/dashboard/6/` | 情感极性 |
-| VOC · 品质管理中心 | `/dashboard/7/` | 情感极性 |
-| VOC · 法务合规部 | `/dashboard/8/` | 情感极性 |
+| 系列 | 数量 | 说明 |
+|---|---:|---|
+| Overview · 全局总览 | 1 | KPI 速记卡 + Top-30 全局标签 + 5 数据源分布 |
+| 部门看板（Phase 7） | 7 | 全球客服 / 产品 / 仓储物流 / 品牌市场 / 电商运营 / 品质管理 / 法务合规 |
+| D-Health · MVP L4 | 1 | 国家 × 部门健康度热图 |
+| D-Diag · MVP L5（三专题） | 3 | 信心/原因/严重度三专题诊断 |
+| D-Action · MVP L6 | 1（含 8 chart） | 7 部门行动队列 Top 10 + 1 master cross-dept |
 
 ### 重建（迁移环境时）
 
@@ -71,9 +75,10 @@ cd research/02-脚本工具/01-标签进化/docker/
 python3 superset_bootstrap.py            # voc_bi 数据库 + 6 datasets
 python3 superset_charts_factory.py       # 12 charts + 8 dashboards
 python3 superset_filters_factory.py      # 10 native filters
+# MVP L4-L6 charts 重建见 [Superset_BI_SOP §B](research/01-设计文档/07-操作指南/Superset_BI_SOP.md)
 ```
 
-或直接导入 8 个 ZIP：[research/04-输出结果/11-BI看板/superset_exports/](research/04-输出结果/11-BI看板/superset_exports/)
+或直接导入 ZIP：[research/04-输出结果/11-BI看板/superset_exports/](research/04-输出结果/11-BI看板/superset_exports/)
 
 ## 📁 目录地图
 
@@ -105,14 +110,14 @@ python3 superset_filters_factory.py      # 10 native filters
         └── unified_labeling/        ⭐ phase6_d9_filtered.jsonl（Phase 7 ETL 主源）
 ```
 
-## 🧭 核心能力（Phase 5-7 累计）
+## 🧭 核心能力（Phase 5-7 + MVP L1-L7 + v4.5 治理累计）
 
 ### 5 层 AI 打标流水线（Phase 5 主体）
 
 | 层 | 做什么 | 引入阶段 |
 |---|---|---|
 | L0 规则层 | 关键词 + 品牌词 + alchemist 弱监督打底 | Phase 4 保留 |
-| **L1 LLM 闭集层** | DeepSeek 主 + Kimi 兜底，643 标签闭集 | **Phase 5 D2 新增** |
+| **L1 LLM 闭集层** | DeepSeek 主 + Kimi 兜底，645 标签闭集（v4.5）| **Phase 5 D2 新增** |
 | **L2 ABSA 层** | 抽 (aspect, sentiment, confidence) 三元组 | **Phase 5 D4 新增** |
 | **L3 画像 + NPS 层** | 55 原子画像 + 三法投票 NPS | **Phase 5 D5/D6 新增** |
 | 统一出口 | 按 review_id 合并 + meta | **Phase 5 D7 新增** |
@@ -128,6 +133,26 @@ python3 superset_filters_factory.py      # 10 native filters
 - voc_bi 数据库 + ETL + 6 SQL 视图
 - 12 charts + 8 dashboards + 10 native filters
 - 累计开发 ~7h，0 LLM 成本
+
+### MVP L1-L7（深度分析 + 业务方文档）
+
+- L1-L3：SAT 指标 + 国家×部门×月健康度 + 原子指标对照
+- L4-L6：D-Health 健康图 + D-Diag 三专题 + D-Action 7 部门行动队列
+- L7：腾讯云生产部署 + Superset_BI_SOP v2 + VOC 业务方培训手册（HTML）
+
+### v4.5 字典治理（2026-05-14）⭐
+
+| 治理事项 | 数量 | 方法 |
+|---|---:|---|
+| `[品类] english` 脏数据拆解 | 56 行 | 正则机械 |
+| `【待填写】` 占位 → 中文标签 | 2 行 | LLM |
+| 业务动作/责任部门 空 → `{部门}：{动作}` | 140 行 | LLM |
+| 策略包 空 → 49 闭集词选 1 | 86 行 | LLM 闭集 |
+| 主表 主责部门 / 故事线 / 策略包 空 | 6 处 | LLM |
+| 08 映射表批量空字段 | 80 cell | 反查 01 主表 |
+| **88 orphan tag_id 反查回灌 dim_tag** | 88 行 | 反查 voc_label + LLM 推 dept_owner |
+| **dim_tag schema 扩展** | 2 列 | ALTER ADD product_line + collab_dept |
+| **腾讯云增量同步**（保留 atomic_indicator_id + 人工值）| dim_tag 267 → 692 | UPSERT + 备份表 + try/finally DML |
 
 ## 🛡 质量保障
 
@@ -167,6 +192,8 @@ curl -sS http://localhost:8088/health
 | `research/04-输出结果/unified_labeling/phase5_intermediate_merged.jsonl` | 6 个脚本默认输入 + symlink 目标 |
 | `research/01-设计文档/02-工作流设计/persona_tags_55.json` | labeler 直读 |
 | `voc_bi` Postgres 数据库 + 6 视图 | Superset 全部依赖 |
+| **`dim_tag.atomic_indicator_id` 列**（腾讯云独有） | MVP L3 视图 v_atomic_indicator_score 依赖 |
+| **`dim_tag_backup_20260514` 表**（腾讯云）| 2026-05-14 同步前的回滚备份，观察一周后可删 |
 
 详见 [CLAUDE.md 工作流约束](CLAUDE.md)。
 
@@ -174,27 +201,34 @@ curl -sS http://localhost:8088/health
 
 - **Phase 8 候选**：修复 Superset 4.1.1 dashboard-mode 饼图渲染 bug（D3 遗留）
 - **Phase 8 候选**：v_review_overview 增加时间戳列以支持时间维度过滤
-- **运维**：完善 Superset 多用户权限模型 + 7 部门 SSO 接入
+- **Phase 8 候选**：补全 37 个 chart 的 query_context（MVP L4-L6 创建时缺）
+- **Phase 8 候选**：88 个 `auto_from_label` orphan 业务方治理（保留/归档/合并 → 决策后写回 v4.6 字典）
+- **运维**：完善 Superset 多用户权限模型 + 7 部门 SSO 接入 + 关闭默认密码
 
 ## 🔗 重要链接
 
 | 类型 | 入口 |
 |---|---|
 | AI 助手规约 | [CLAUDE.md](CLAUDE.md) |
+| **VOC 阶段汇报 HTML** ⭐ | [voc-stage-report-2026-05-14.html](research/04-输出结果/03-审计报告/阶段汇报/voc-stage-report-2026-05-14.html) |
+| **VOC 业务方培训手册 HTML** ⭐ | [VOC_业务方培训手册.html](research/01-设计文档/07-操作指南/VOC_业务方培训手册.html) |
 | Phase 5 主复盘 | [research/01-设计文档/00-Phase5-汇报与复盘/](research/01-设计文档/00-Phase5-汇报与复盘/) |
-| **Phase 6+7 白话汇报** ⭐ | [phase6-7-executive-brief.md](research/01-设计文档/00-Phase5-汇报与复盘/phase6-7-executive-brief.md) |
-| **Phase 7 架构图集**（Mermaid） ⭐ | [phase7-architecture-diagrams.md](research/01-设计文档/00-Phase5-汇报与复盘/phase7-architecture-diagrams.md) |
-| **Phase 7 架构图集**（HTML 高保真） ⭐ | [phase7-architecture-diagrams.html](research/01-设计文档/00-Phase5-汇报与复盘/phase7-architecture-diagrams.html) |
-| **Superset BI 运维 SOP** ⭐ | [Superset_BI_SOP.md](research/01-设计文档/07-操作指南/Superset_BI_SOP.md) |
-| **ETL Pipeline SOP** ⭐ | [ETL_pipeline_SOP.md](research/01-设计文档/07-操作指南/ETL_pipeline_SOP.md) |
+| Phase 6+7 白话汇报 | [phase6-7-executive-brief.md](research/01-设计文档/00-Phase5-汇报与复盘/phase6-7-executive-brief.md) |
+| Phase 7 架构图集（Mermaid）| [phase7-architecture-diagrams.md](research/01-设计文档/00-Phase5-汇报与复盘/phase7-architecture-diagrams.md) |
+| **Superset BI 运维 SOP**（v2 / L7）| [Superset_BI_SOP.md](research/01-设计文档/07-操作指南/Superset_BI_SOP.md) |
+| **ETL Pipeline SOP** | [ETL_pipeline_SOP.md](research/01-设计文档/07-操作指南/ETL_pipeline_SOP.md) |
+| **操作指南索引** | [07-操作指南/00-INDEX.md](research/01-设计文档/07-操作指南/00-INDEX.md) |
+| **v4.5 字典 + diff 报告** ⭐ | [tag_dictionary_v4.5.xlsx](research/04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx) ｜ [dept_repair_v45_diff.md](research/04-输出结果/01-字典版本/dept_repair_v45_diff.md) |
 | Phase 5+6 完整复盘 | [phase5_6_complete_retrospective.md](research/04-输出结果/03-审计报告/phase5_6_complete_retrospective.md) |
 | Phase 7 完整复盘 | [phase7_complete_retrospective.md](research/04-输出结果/03-审计报告/phase7_complete_retrospective.md) |
 | 每日进度索引 | [research/04-输出结果/03-审计报告/00-INDEX.md](research/04-输出结果/03-审计报告/00-INDEX.md) |
 | Phase 计划文档（5/6/7） | [research/01-设计文档/08-Phase计划/](research/01-设计文档/08-Phase计划/) |
-| Superset 看板导出 | [research/04-输出结果/11-BI看板/superset_exports/](research/04-输出结果/11-BI看板/superset_exports/) |
-| 算法卡片 | [00-知识库-Skill卡片/00-INDEX.md](00-知识库-Skill卡片/00-INDEX.md) |
+| Superset 看板导出 ZIP | [research/04-输出结果/11-BI看板/superset_exports/](research/04-输出结果/11-BI看板/superset_exports/) |
+| 算法卡片（44 张） | [00-知识库-Skill卡片/00-INDEX.md](00-知识库-Skill卡片/00-INDEX.md) |
 | 业务架构图 | [00-知识库-架构图谱/00-INDEX.md](00-知识库-架构图谱/00-INDEX.md) |
 
 ---
 
 > **本文档定位**：新人 3 分钟入门 + 老用户快速导航。深度内容在 [CLAUDE.md](CLAUDE.md) 和各 Phase 复盘文档。
+>
+> **最近更新**：2026-05-14 — v4.5 字典治理 + dim_tag 扩展 + 腾讯云增量同步完成。

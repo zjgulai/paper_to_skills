@@ -4,23 +4,30 @@
 
 ## 子项目身份
 
-**paper2skills 项目下 07-NLP-VOC 子模块**——VOC（Voice of Customer）标签体系建设。已完成 Phase 1-7：
+**paper2skills 项目下 07-NLP-VOC 子模块**——VOC（Voice of Customer）标签体系建设。已完成 Phase 1-7 + MVP L1-L7 + v4.5 字典治理：
 - Phase 1-4：基线规则打底，覆盖率 82.58%
 - **Phase 5**：产品级 AI 打标闭环，5K 子集覆盖率 97.22%（D14 部分收官）
 - **Phase 6**：v4.0/v4.1 字典进化 + Method C 后处理过滤（precision 0.896）+ BI 看板 C 路径上线
 - **Phase 7**：Superset BI B 路径完整闭环（D1-D4，2026-05-08 → 05-11，~7h 累计开发）
+- **MVP L1-L7**：从 SAT 指标到业务方培训手册（13 dashboard / 42 chart / 10 dataset）+ 腾讯云生产部署
+- **v4.5 字典治理**（2026-05-14）：56 行脏数据拆解 + 230 处空值 LLM 补齐 + 88 orphan 反查回灌 + dim_tag 扩展品线维度
 
 数据规模：5 数据源 × **364,569 条评论**（Amazon 194K / Trustpilot 100K / Zendesk 47K / Momcozy 20K / Reddit 3K）。
-基线引擎：v4.1 字典 + DeepSeek-V4-Flash 主 LLM + Kimi-K2.6 兜底。
+基线引擎：v4.5 字典 + DeepSeek-V4-Flash 主 LLM + Kimi-K2.6 兜底。
+生产部署：**腾讯云 `https://voc.lute-tlz-dddd.top`**（本机 `localhost:8088` 仅开发用）。
 
-## 当前状态（2026-05-11）
+## 当前状态（2026-05-14）
 
 | 维度 | 值 |
 |---|---|
-| **当前阶段** | 🟢 Phase 7 D4 修订完成（Overview filter scope + 饼图 metric 修复） |
+| **当前阶段** | 🟢 v4.5 字典 + dim_tag 692 行（本地 + 腾讯云双环境同步） |
 | Phase 5 进度 | ✅ D14 部分收官（Momus 审阅通过） |
 | Phase 6 进度 | ✅ D10 BI 看板实质上线（C+A 双路径） |
 | Phase 7 进度 | ✅ D4 完成，10 native filters 在 8 dashboards 上线 |
+| MVP L1-L7 | ✅ L7 完成（13 dashboard / 42 chart / 10 dataset） |
+| **v4.5 字典治理** | ✅ 字段质量 0 空 / 0 占位 / 0 脏数据；645 行（267 通用 + 378 品线） |
+| **dim_tag BI 表** | ✅ 692 行（267 通用 + 337 品线 + 88 auto_from_label）；voc_label orphan = 0 |
+| **腾讯云同步** | ✅ 增量更新完成（保留 atomic_indicator_id 列 + 人工 biz_action + 备份表 dim_tag_backup_20260514） |
 | Week 1 Gate | 🟢 9/9 PASS（D7 收口，口径 B 严格人工真值） |
 | Week 2 Gate | 🟢 7/7 PASS（D9 Method C 后处理过滤） |
 | LLM 三方评估 F1_weighted | 0.831 |
@@ -28,7 +35,7 @@
 | Proxy NPS Cohen κ | 0.996 |
 | 严格金标 Top-1 准确率 | 100%（人工 149 条） |
 | 全量打标 | 364,569 条 ✅ 全部完成 |
-| Superset 状态 | 🟢 Docker 运行中（localhost:8088，admin/voc_admin_2026） |
+| Superset 状态 | 🟢 生产 `https://voc.lute-tlz-dddd.top` / 开发 `localhost:8088`（admin/voc_admin_2026） |
 
 ## 必读文档（接手必看）
 
@@ -145,6 +152,15 @@
 | [superset_filters_factory.py](research/02-脚本工具/01-标签进化/docker/superset_filters_factory.py) | 10 native filters 自动化（按 chart_name 查找 ID） |
 | [etl_to_postgres.py](research/02-脚本工具/01-标签进化/etl_to_postgres.py) | phase6_d9_filtered.jsonl → voc_bi（37s 导入 364K） |
 
+### v4.5 字典治理（2026-05-14 新增）
+
+| 脚本 | 作用 |
+|---|---|
+| [scripts/repair_dict_v45.py](research/02-脚本工具/01-标签进化/scripts/repair_dict_v45.py) | v4.4 → v4.5 字典修复（56 cleanup + 232 LLM 补齐 230 处空值/占位）+ diff 报告生成 |
+| [scripts/fill_orphan_tags.py](research/02-脚本工具/01-标签进化/scripts/fill_orphan_tags.py) | 88 orphan tag_id 反查 voc_label + LLM 推 dept_owner，标 `audit_status='auto_from_label'` |
+| [scripts/sync_to_tencent_v45.py](research/02-脚本工具/01-标签进化/scripts/sync_to_tencent_v45.py) | 腾讯云增量更新（临时开 DML + ALTER + UPSERT 保留 atomic_indicator_id + INSERT orphan + 关 DML） |
+| [01-字典版本/dept_repair_v45_diff.md](research/04-输出结果/01-字典版本/dept_repair_v45_diff.md) | v4.4 → v4.5 + 08 映射表 10 行回填的 diff 报告 |
+
 ## 工作流约束（**重要**）
 
 ### LLM 引擎使用规则
@@ -179,6 +195,17 @@ def label_single_record(record, phase4_label_fn=None, llm_label_fn=None, persona
 3. **饼图 metric 用 `COUNT(*)` SQL 形式**：v_review_overview 是聚合视图，不暴露 review_id 列，必须用 `{"expressionType": "SQL", "sqlExpression": "COUNT(*)"}`，不能用 `COUNT(review_id)`。
 4. **dashboard ZIP 是真正的 source of truth**：[research/04-输出结果/11-BI看板/superset_exports/](research/04-输出结果/11-BI看板/superset_exports/)，迁移环境只需重导。
 5. **已知 bug**：Superset 4.1.1 dashboard-mode 下饼图 pie+SQL-form metric 不渲染（`/explore/` 单图模式正常）。修复方案待 Phase 8。
+6. **table viz 排序陷阱（2026-05-14 发现）**：table chart 在 `query_mode: raw + all_columns` 下不会自动加 ORDER BY，`LIMIT 30` 拿到随机 30 行。**正确做法**：切换 `query_mode: aggregate + groupby + metrics + order_desc=true`，且 dataset 必须有对应 metric（用 PUT API merge 而非覆盖避免「metrics already exist」）。
+7. **chart query_context 缓存**：仅 PUT `params` 不会重建 SQL，必须同时 PUT `query_context` 字段。Dashboard 渲染路径走 `form_data_key` 不受影响，但 API `/chart/{id}/data/?force=true` 会用旧 query_context。
+
+### v4.5 字典治理约束（2026-05-14 新增）
+
+1. **dim_tag schema 扩展**（不可回退）：`product_line TEXT` + `collab_dept TEXT` 两列已通过 `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` 加到本地 + 腾讯云。视图层无破坏（暂未在视图 SELECT 暴露）。
+2. **腾讯云独有列 `atomic_indicator_id` 必须保留**：任何写 dim_tag 的脚本都禁止 TRUNCATE，必须用 `INSERT ... ON CONFLICT (tag_id) DO UPDATE SET <显式列名>`，不能包含 `atomic_indicator_id`。
+3. **`audit_status='auto_from_label'` 的 88 行 orphan 标签**：不进 v4.5 字典 xlsx（字典是策划级 ground truth），只在 BI dim_tag 表用此标记区分。后续业务方治理时只关注这 88 行。
+4. **腾讯云 `allow_dml` 默认 False**：任何写操作必须临时开（PUT `/api/v1/database/{id}` `{"allow_dml": true}`），用 `try/finally` 保证用完关回。绝不能留 DML 窗口在生产环境。
+5. **腾讯云人工调过的字段不覆盖**：`biz_action`、`atomic_indicator_id` 用 `CASE WHEN EXCLUDED.x IS NOT NULL AND EXCLUDED.x <> '' THEN EXCLUDED.x ELSE dim_tag.x END` 守护。
+6. **回滚 SOP**：腾讯云有 `dim_tag_backup_20260514` 备份表，3 行 SQL 即可回滚（见 `sync_to_tencent_v45.py` 末尾输出的 rollback SQL）。
 
 ## 配置依赖
 
@@ -240,13 +267,26 @@ curl -sS http://localhost:8088/health   # 期望 200
 # 1. ETL 导入（37s 导入 364K reviews）
 python research/02-脚本工具/01-标签进化/etl_to_postgres.py \
   --input research/04-输出结果/unified_labeling/phase6_d9_filtered.jsonl \
-  --dict research/04-输出结果/01-字典版本/tag_dictionary_v4.1.xlsx
+  --dict research/04-输出结果/01-字典版本/tag_dictionary_v4.5.xlsx
 
 # 2. 重建 Superset 看板
 cd research/02-脚本工具/01-标签进化/docker
 python3 superset_bootstrap.py
 python3 superset_charts_factory.py
 python3 superset_filters_factory.py
+```
+
+### v4.5 字典治理（2026-05-14 工作流）
+
+```bash
+# 1. v4.4 字典审计 + LLM 修复 → 输出 v4.5.xlsx + diff 报告
+python research/02-脚本工具/01-标签进化/scripts/repair_dict_v45.py --mode batch
+
+# 2. 88 orphan tag 反查回灌（本地 dim_tag）
+python research/02-脚本工具/01-标签进化/scripts/fill_orphan_tags.py
+
+# 3. 腾讯云增量同步（保留 atomic_indicator_id + biz_action 人工值 + 自动建备份表）
+python research/02-脚本工具/01-标签进化/scripts/sync_to_tencent_v45.py
 ```
 
 ### 重现 D7：Week 1 Gate
@@ -282,6 +322,9 @@ python research/02-脚本工具/07-LLM引擎/quality_gate.py --gate week2 \
 | Cache miss 飙升 | cache_hit < 85% | 检查字典版本是否变更 |
 | Superset 启动失败 | `docker ps` 无 voc_superset | `docker compose up -d` + 等 30s |
 | Superset chart 不渲染 | dashboard 空白 / canvas 0px | 先看 `/explore/?slice_id=N` 单图模式；饼图 D3 遗留 bug 待修 |
+| Top-30 表格 NULL dept/polarity | dashboard chart 出现 N/A | 检查：(1) dim_tag 是否覆盖 voc_label tag_id（orphan 检查）(2) chart 3 是否还在 raw mode（应切 aggregate + ORDER BY hit_count_sum DESC）(3) 是否 PUT params 时漏带 query_context |
+| 腾讯云 allow_dml 写操作失败 | SQL Lab 报「DML disabled」 | 临时 PUT `/api/v1/database/{id}` `{"allow_dml":true}`，用完用 try/finally 关回 |
+| dim_tag 数据被覆盖丢列 | atomic_indicator_id 列 NULL | 用 `dim_tag_backup_20260514` 表回滚（见 [sync_to_tencent_v45.py](research/02-脚本工具/01-标签进化/scripts/sync_to_tencent_v45.py) 末尾输出的 rollback SQL） |
 
 ## 不可做（NEVER）
 
@@ -294,6 +337,10 @@ python research/02-脚本工具/07-LLM引擎/quality_gate.py --gate week2 \
 - ❌ 改 `phase5_unified_labeler.label_single_record` 签名：会破坏 Phase 4 兼容契约
 - ❌ 修改 Superset charts factory 时硬编码 chart_id：用 `slice_name` 查找
 - ❌ 给饼图 metric 用 `COUNT(review_id)`：v_review_overview 不暴露 review_id，必须 `COUNT(*)` SQL 形式
+- ❌ **TRUNCATE 腾讯云 dim_tag**：会丢失 `atomic_indicator_id` 列数据。必须用 `INSERT ... ON CONFLICT DO UPDATE SET <显式列>`
+- ❌ **把 `audit_status='auto_from_label'` 的 88 行写回 v4.5 字典 xlsx**：字典是策划级 ground truth，不应被运行时 LLM 推导污染
+- ❌ **腾讯云 `allow_dml` 留开**：任何写操作必须 `try/finally` 关回 False
+- ❌ **PUT chart params 不带 query_context**：API force=true 会用旧 query_context 生成错 SQL
 
 ## Phase 5-7 关键决策共识（不可推翻）
 
@@ -307,9 +354,13 @@ python research/02-脚本工具/07-LLM引擎/quality_gate.py --gate week2 \
 | D-06 | 9 项 Quality Gate + 7-check Schema | 防止单点过拟合 |
 | D-07 | chunked LLM labeler | 87K asyncio.as_completed 瓶颈实测验证 |
 | D-08 | 55 画像规则单源真值（JSON） | 已有业务校准 |
-| **D-09** | **Method C 后处理过滤**（Phase 6 D9） | precision 0.639 → 0.896，Week 2 Gate 7/7 |
-| **D-10** | **Superset B 路径作为主 BI** | 实时交互 > 静态 HTML；Phase 7 完整闭环 |
-| **D-11** | **Charts/filters factory by name** | 跨 delete+recreate 鲁棒（D4 实测验证） |
+| D-09 | **Method C 后处理过滤**（Phase 6 D9） | precision 0.639 → 0.896，Week 2 Gate 7/7 |
+| D-10 | **Superset B 路径作为主 BI** | 实时交互 > 静态 HTML；Phase 7 完整闭环 |
+| D-11 | **Charts/filters factory by name** | 跨 delete+recreate 鲁棒（D4 实测验证） |
+| **D-12** | **v4.5 字典治理：cleanup + LLM 补 + orphan 反查三段式** | 单纯 LLM 重打有过度生成风险；先机械拆解干净 + 再 LLM 补空 + 再反查 voc_label 自带元数据，最稳 |
+| **D-13** | **dim_tag 扩展 product_line + collab_dept 列**（2026-05-14） | 品线 sheet 378 行进库才有路径打通 v_label_with_dept dept_owner 覆盖率 50% → 100% |
+| **D-14** | **腾讯云增量同步保留 atomic_indicator_id 列** | 该列是腾讯云独有人工挂指标，不可被本地字典覆盖；UPSERT 显式列名机制 |
+| **D-15** | **88 orphan 不污染字典 xlsx，只填 dim_tag** | TAG_GEN_xxx/TAG_ALC_xxx 是历史命名空间，需业务方决策保留/归档/合并，不能让运行时 LLM 写入 ground truth |
 
 ## 文档更新约定
 
@@ -317,4 +368,6 @@ python research/02-脚本工具/07-LLM引擎/quality_gate.py --gate week2 \
 
 ---
 
-> **最近更新**：2026-05-11 — Phase 7 D4 完成 + 项目清理（回收 7.1G）+ 重写 CLAUDE.md 涵盖 Phase 6/7。
+> **最近更新**：2026-05-14 — v4.5 字典治理（cleanup 56 行 + LLM 补 230 处空值/占位 + 88 orphan 反查回灌）+ dim_tag 扩展 product_line/collab_dept 列 + 腾讯云增量同步（保留 atomic_indicator_id + biz_action 人工值 + 备份表）。
+>
+> **上次更新**：2026-05-11 — Phase 7 D4 完成 + 项目清理（回收 7.1G）+ 重写 CLAUDE.md 涵盖 Phase 6/7。
