@@ -2,31 +2,31 @@
 
 ## 1. 图谱概览
 
-- **节点总数**: 97 个技能
-- **边总数**: 538 条关系
+- **节点总数**: 107 个技能
+- **边总数**: 581 条关系
 - **领域分布**:
   - ab_testing: 6 个
-  - advertising: 2 个
+  - advertising: 4 个
   - ai_humanities: 1 个
   - causal_inference: 7 个
-  - data_agent_llm: 6 个
-  - growth_model: 10 个
+  - data_agent_llm: 7 个
+  - growth_model: 11 个
   - knowledge_graph: 11 个
   - llm_agent_engineering: 16 个
   - marketing: 3 个
   - mas: 12 个
   - ml_fundamentals: 1 个
   - recommendation: 9 个
-  - supply_chain: 5 个
-  - time_series: 6 个
-  - user_analytics: 2 个
+  - supply_chain: 6 个
+  - time_series: 7 个
+  - user_analytics: 6 个
 
 ## 2. 中心性分析
 
 ### 核心基础技能 (高被依赖数)
 | 排名 | 技能 | 被依赖数 |
 |-----|------|---------|
-| 1 | Skill-Feature-Engineering | 13 |
+| 1 | Skill-Feature-Engineering | 16 |
 | 2 | AutoGen | 9 |
 | 3 | Self-Refine | 8 |
 | 4 | CAMEL | 8 |
