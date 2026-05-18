@@ -242,19 +242,18 @@ def collate_fn(batch):
     return list(sessions), list(targets)
 ---
 
+
 ## ④ 技能关联
 
-- **前置技能**:
-  - Skill-Matrix-Factorization — 理解商品 embedding 基本概念
-  - Skill-Deep-Learning-Recommendation-HI — 神经网络推荐基础框架
-- **延伸技能**:
-  - Skill-NeuralNDCG-Learning-to-Rank — SR-GNN 召回后 NeuralNDCG 精排
-  - Skill-Cold-Start-Product-Recommendation — 图结构辅助新品冷启动
-- **可组合技能**:
-  - + NeuralNDCG: session 意图识别 + 可微分排序优化
-  - + REVISION: 搜索意图挖掘 → session 内点击预测
+### 前置技能
+- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — GNN 推荐的隐因子初始化常用 MF 结果
+- [Skill-HGT-Heterogeneous-Graph-Transformer](../08-知识图谱/Skill-HGT-Heterogeneous-Graph-Transformer.md) — 异构图结构是 SR-GNN 的方法学基础
 
----
+### 延伸技能
+- [Skill-NeuralNDCG-Learning-to-Rank](../05-推荐系统/Skill-NeuralNDCG-Learning-to-Rank.md) — session 召回后用 L2R 精排
+
+### 可组合
+- [Skill-Semantic-ID-Retrieval-RPG](../05-推荐系统/Skill-Semantic-ID-Retrieval-RPG.md) — session 序列与语义 ID 双路召回
 
 ## ⑤ 商业价值评估
 

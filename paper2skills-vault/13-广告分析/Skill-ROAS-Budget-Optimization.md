@@ -228,13 +228,17 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：Ad Attribution（理解各渠道贡献）
-- **延伸**：Marketing Mix Modeling（MMM，宏观预算分配）
-- **可组合**：+ Multi-Armed Bandit → 动态预算分配的在线学习版本
+### 前置技能
+- [Skill-Ad-Attribution-Modeling](../13-广告分析/Skill-Ad-Attribution-Modeling.md) — 归因结果是预算优化的输入
 
----
+### 延伸技能
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/Skill-Promotion-Effectiveness.md) — 预算优化后看促销因果增量
+
+### 可组合
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — MMM 弹性曲线为优化提供约束
 
 ## ⑤ 商业价值评估
 

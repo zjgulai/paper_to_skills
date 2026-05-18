@@ -249,13 +249,17 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：A/B Experimental Design（理解实验和增量）
-- **延伸**：MMM（Marketing Mix Modeling，宏观渠道预算分配）
-- **可组合**：+ Uplift Modeling → 归因告诉你"谁参与了"，Uplift告诉你"谁被影响了"
+### 前置技能
+- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md) — 因果森林为归因提供反事实基础
 
----
+### 延伸技能
+- [Skill-ROAS-Budget-Optimization](../13-广告分析/Skill-ROAS-Budget-Optimization.md) — 归因结果驱动预算分配优化
+
+### 可组合
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — 渠道归因 + MMM 形成短长期视角统一
 
 ## ⑤ 商业价值评估
 

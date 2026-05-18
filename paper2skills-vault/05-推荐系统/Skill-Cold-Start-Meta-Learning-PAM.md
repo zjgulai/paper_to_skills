@@ -200,13 +200,17 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：Matrix Factorization（理解协同过滤基础）
-- **延伸**：Transfer Learning Cold-Start（跨品类迁移）
-- **可组合**：+ Diversity Reranking（给新品曝光机会）
+### 前置技能
+- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — 理解隐因子学习是元学习初始化的基础
 
----
+### 延伸技能
+- [Skill-Explainable-Recommendation](../05-推荐系统/Skill-Explainable-Recommendation.md) — 冷启动后向用户说明『为什么推荐』提升信任
+
+### 可组合
+- [Skill-Cold-Start-Product-Recommendation](../05-推荐系统/Skill-Cold-Start-Product-Recommendation.md) — 新品上架的端到端冷启动管线
 
 ## ⑤ 商业价值评估
 

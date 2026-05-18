@@ -445,6 +445,19 @@ python agent.py
 - **+ Data-to-Dashboard** → 自动数据可视化仪表板
 - **+ 多Agent协作** → 专业分工（数据清洗Agent + 分析Agent + 报告Agent）
 
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/Skill-SQL-Agent-Text-to-SQL.md) — SQL Agent 是数据查询底层工具
+- [Skill-ReAct-Reasoning-Acting](../10-MAS/Skill-ReAct-Reasoning-Acting.md) — Agent 推理范式基础
+
+### 延伸技能
+- [Skill-Root-Cause-Analysis-Agent](../09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md) — 数据科学 Agent 升级为 RCA Agent
+
+### 可组合
+- [Skill-Data-to-Dashboard-Multi-Agent-Visualization](../09-DataAgent-LLM/Skill-Data-to-Dashboard-Multi-Agent-Visualization.md) — 分析结果交由可视化 Agent 呈现
+
 ## 5. 商业价值评估
 
 | 维度 | 评分 | 说明 |

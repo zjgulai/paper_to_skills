@@ -185,13 +185,18 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：Matrix Factorization（理解传统召回）
-- **延伸**：Multi-Modal Retrieval（图文检索统一语义空间）
-- **可组合**：+ NLP-VOC（用评论主题增强商品语义表示）
+### 前置技能
+- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — 理解 embedding 的语义检索基础
 
----
+### 延伸技能
+- [Skill-Diversity-Reranking-SMMR](../05-推荐系统/Skill-Diversity-Reranking-SMMR.md) — 语义召回后做多样性重排
+
+### 可组合
+- [Skill-Session-Based-Recommendation-SR-GNN](../05-推荐系统/Skill-Session-Based-Recommendation-SR-GNN.md) — session 序列与语义 ID 联合召回
+- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](../08-知识图谱/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md) — 搜索-推荐共享语义索引
 
 ## ⑤ 商业价值评估
 

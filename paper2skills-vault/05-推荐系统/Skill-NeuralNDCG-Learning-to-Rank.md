@@ -296,6 +296,18 @@ python neural_ndcg.py
 - **+ 在线学习** → 实时反馈更新排序模型
 - **+ Cold Start** → 新商品/新用户的排序策略
 
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — L2R 的输入特征通常包含 MF 隐因子
+
+### 延伸技能
+- [Skill-Diversity-Reranking-SMMR](../05-推荐系统/Skill-Diversity-Reranking-SMMR.md) — NDCG 排序后做多样性重排
+
+### 可组合
+- [Skill-Session-Based-Recommendation-SR-GNN](../05-推荐系统/Skill-Session-Based-Recommendation-SR-GNN.md) — Session-based 召回 + L2R 精排
+
 ## 5. 商业价值评估
 
 | 维度 | 评分 | 说明 |

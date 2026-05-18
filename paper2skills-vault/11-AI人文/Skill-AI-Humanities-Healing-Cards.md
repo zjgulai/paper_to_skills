@@ -534,3 +534,16 @@ source: human+ai
 | "自我唤醒" | Prompt Tuning | 启发 |
 | "底层相通" | 跨模态迁移 | 通透 |
 | "渐进改变" | CURLoRA | 安稳 |
+
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — 理解 ML 基础有助于消化技术与人文的类比
+
+### 延伸技能
+- 无（本 Skill 是终端/聚合卡）
+
+### 可组合
+- [Skill-LTV-Prediction-ZILN](../06-增长模型/Skill-LTV-Prediction-ZILN.md) — LTV 长尾分布与人生长尾价值的金句类比
+- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — 因果反事实与人生决策反思的金句类比

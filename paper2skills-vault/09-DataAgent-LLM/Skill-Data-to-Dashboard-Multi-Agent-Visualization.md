@@ -389,6 +389,18 @@ python dashboard_agent.py
 - **+ 前端渲染** → 将 matplotlib 输出升级为交互式 Plotly/Dash 仪表板
 - **+ 定时调度** → 周报/日报自动生成并推送
 
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/Skill-SQL-Agent-Text-to-SQL.md) — 可视化的数据来源依赖 SQL Agent
+
+### 延伸技能
+- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md) — 可视化嵌入自治数据分析 Agent
+
+### 可组合
+- [Skill-MAS-Orchestrator](../10-MAS/Skill-MAS-Orchestrator.md) — 可视化作为多 Agent 编排的最终输出环节
+
 ## 5. 商业价值评估
 
 | 维度 | 评分 | 说明 |

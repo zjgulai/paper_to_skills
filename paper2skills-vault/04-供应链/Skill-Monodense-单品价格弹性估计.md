@@ -194,3 +194,16 @@ category
 | Double Machine Learning | 36.1% | 0.43 |
 
 Monodense-DLM 在需求预测精度和弹性估计一致性上均显著优于传统 ML 方法。
+
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — 弹性估计需要价格、销量、促销等特征工程
+
+### 延伸技能
+- [Skill-ROAS-Budget-Optimization](../13-广告分析/Skill-ROAS-Budget-Optimization.md) — 弹性 + 广告 ROI 形成定价-投放联合优化
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/Skill-Promotion-Effectiveness.md) — 弹性是促销效果分析的微观基础
+
+### 可组合
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — 弹性是 MMM 的关键输入参数

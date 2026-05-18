@@ -65,15 +65,18 @@ python tft_model.py
 
 ---
 
+
 ## ④ 技能关联
 
-**前置技能**：LSTM/GRU、Attention 机制、时间序列分解
+### 前置技能
+- [Skill-Prophet-Forecasting](../03-时间序列/Skill-Prophet-Forecasting.md) — 理解经典时序模型再进入深度方法
+- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — TFT 多源特征需要前置工程化
 
-**延伸技能**：DeepAR、N-BEATS、Prophet
+### 延伸技能
+- [Skill-Time-Series-Anomaly-Detection](../03-时间序列/Skill-Time-Series-Anomaly-Detection.md) — TFT 残差可用于异常检测
 
-**可组合**：因果推断（促销效果）、库存优化、动态定价
-
----
+### 可组合
+- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/Skill-Demand-Forecasting-Supply-Chain.md) — TFT 高精度预测落地到库存计划
 
 ## ⑤ 商业价值评估
 

@@ -94,18 +94,18 @@ source: ai
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置技能**：
-  - Skill-Uplift-Modeling — 理解因果效应估计的基本概念
-  - Skill-AB-Experimental-Design — 理解实验与观测数据的区别
-- **延伸技能**：
-  - Skill-Intelligent-Attribution-Causal-Forest — 因果发现得到结构后，用 Causal Forest 估计具体效应大小
-- **可组合技能**：
-  - + Uplift-Modeling: 因果发现识别结构 → Uplift 估计效应大小，形成发现+量化闭环
-  - + Intelligent-Prediction-Doubly-Robust: 因果发现确定变量关系 → Doubly Robust 做稳健预测
+### 前置技能
+- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — PC 算法的输入是变量集合，需要先做特征筛选
 
----
+### 延伸技能
+- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md) — 因果发现后估计因果效应
+- [Skill-Mediation-Causal-Mechanism-Analysis](../01-因果推断/Skill-Mediation-Causal-Mechanism-Analysis.md) — 因果发现后做中介机制分析
+
+### 可组合
+- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — 因果图指导 Uplift 特征选择
 
 ## ⑤ 商业价值评估
 

@@ -521,6 +521,18 @@ python anomaly_detector.py
 - **+ 多模态异常检测** → 结合文本评论情绪变化检测隐性异常
 - **+ 自动阈值调优** → 基于业务反馈自动调整threshold参数
 
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-Time-Series-Anomaly-Detection](../03-时间序列/Skill-Time-Series-Anomaly-Detection.md) — 传统异常检测算法是 Agent 推理的方法基础
+
+### 延伸技能
+- [Skill-Root-Cause-Analysis-Agent](../09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md) — 异常检测后接根因分析
+
+### 可组合
+- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md) — 异常检测嵌入数据科学 Agent 工作流
+
 ## 5. 商业价值评估
 
 | 维度 | 评分 | 说明 |

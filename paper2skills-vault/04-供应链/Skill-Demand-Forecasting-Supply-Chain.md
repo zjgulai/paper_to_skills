@@ -241,13 +241,19 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：Time-Series-Forecasting（通用时序基础）
-- **延伸**：Safety Stock & Replenishment（预测→库存决策）
-- **可组合**：+ Price Elasticity（Monodense）→ 价格变动对需求的量化影响
+### 前置技能
+- [Skill-Prophet-Forecasting](../03-时间序列/Skill-Prophet-Forecasting.md) — Prophet 是供应链需求预测的常用基线
+- [Skill-Temporal-Fusion-Transformer](../03-时间序列/Skill-Temporal-Fusion-Transformer.md) — TFT 提供更精细的需求曲线
 
----
+### 延伸技能
+- [Skill-Safety-Stock-Replenishment](../04-供应链/Skill-Safety-Stock-Replenishment.md) — 需求预测下游接安全库存计算
+- [Skill-Two-Echelon-Inventory-DRL](../04-供应链/Skill-Two-Echelon-Inventory-DRL.md) — 需求预测驱动多级库存优化
+
+### 可组合
+- [Skill-Monodense-单品价格弹性估计](../04-供应链/Skill-Monodense-单品价格弹性估计.md) — 弹性 + 需求预测联合定价决策
 
 ## ⑤ 商业价值评估
 

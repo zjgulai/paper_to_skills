@@ -63,7 +63,7 @@ source: human+ai
 | 技能 | 状态 | 论文 | 业务场景 |
 |------|------|------|---------|
 | [Skill-Tool-Description-Audit](./Skill-Tool-Description-Audit.md) | 已萃取 P2 | MCP Descriptions Smelly (arxiv:2602.14878) | Skill/Tool 描述质量审核 6 维评分 |
-| Skill-MCP-Tool-Use-Benchmark | 待萃取 P3 | MCPAgentBench (arxiv:2512.24565) | 工具选择与区分能力评估 |
+| [Skill-MCP-Tool-Use-Benchmark](./Skill-MCP-Tool-Use-Benchmark.md) | 已萃取 P3 | MCPAgentBench (arxiv:2512.24565) | 工具选择与区分能力评估 |
 
 ### F. 电商 Agent 落地(与项目业务场景强契合)
 
@@ -108,8 +108,8 @@ source: human+ai
 ## 统计数据
 
 - 规划技能数:15
-- 已萃取:14
-- 待萃取 P0:0 / P1:0 / P2:0 / P3:1
+- 已萃取:15
+- 待萃取 P0:0 / P1:0 / P2:0 / P3:0
 - 论文来源:arxiv 2026-01 至 2026-05
 
 ---

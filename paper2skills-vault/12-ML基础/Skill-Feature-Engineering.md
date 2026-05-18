@@ -253,13 +253,19 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：数据清洗（缺失值处理、异常值检测）
-- **延伸**：AutoML特征工程（自动特征构造）
-- **可组合**：+ 所有ML技能 — 特征工程是所有预测模型的前置步骤
+### 前置技能
+- 无（本 Skill 是基础入口卡）
 
----
+### 延伸技能
+- [Skill-Causal-Discovery-PC-Algorithm](../01-因果推断/Skill-Causal-Discovery-PC-Algorithm.md) — 特征工程后用因果发现做变量筛选
+- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — 特征工程是 Uplift 建模的核心环节
+
+### 可组合
+- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — 推荐系统的隐因子也是特征工程的延伸
+- [Skill-Customer-Churn-Prediction](../06-增长模型/Skill-Customer-Churn-Prediction.md) — 流失模型严重依赖特征工程
 
 ## ⑤ 商业价值评估
 

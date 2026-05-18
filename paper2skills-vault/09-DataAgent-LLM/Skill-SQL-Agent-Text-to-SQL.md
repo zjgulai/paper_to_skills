@@ -342,13 +342,18 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：SQL基础（理解表结构、JOIN、GROUP BY）
-- **延伸**：Automated Report Generation（SQL结果→自动报告）
-- **可组合**：+ DeepAnalyze Agent → 自然语言提问→SQL查询→数据分析→可视化报告
+### 前置技能
+- [Skill-ReAct-Reasoning-Acting](../10-MAS/Skill-ReAct-Reasoning-Acting.md) — SQL Agent 的推理-执行循环建立在 ReAct 范式上
 
----
+### 延伸技能
+- [Skill-Data-to-Dashboard-Multi-Agent-Visualization](../09-DataAgent-LLM/Skill-Data-to-Dashboard-Multi-Agent-Visualization.md) — SQL 结果直接驱动可视化
+- [Skill-Root-Cause-Analysis-Agent](../09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md) — SQL Agent 是 RCA 的查询底层
+
+### 可组合
+- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md) — SQL Agent 是自治数据科学 Agent 的工具节点
 
 ## ⑤ 商业价值评估
 

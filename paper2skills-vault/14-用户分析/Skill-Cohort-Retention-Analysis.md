@@ -268,13 +268,18 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：RFM Customer Segmentation（用户价值分层）
-- **延伸**：LTV Prediction（留存→LTV预测）
-- **可组合**：+ Funnel Analysis → Cohort看时间维度留存，Funnel看行为步骤流失
+### 前置技能
+- [Skill-User-Funnel-Analysis](../14-用户分析/Skill-User-Funnel-Analysis.md) — 漏斗分析是留存分析的姊妹方法
 
----
+### 延伸技能
+- [Skill-RFM-Customer-Segmentation](../06-增长模型/Skill-RFM-Customer-Segmentation.md) — 对各 cohort 进一步做 RFM 分群
+- [Skill-LTV-Prediction-ZILN](../06-增长模型/Skill-LTV-Prediction-ZILN.md) — cohort 留存曲线是 LTV 模型核心输入
+
+### 可组合
+- [Skill-Customer-Churn-Prediction](../06-增长模型/Skill-Customer-Churn-Prediction.md) — Cohort 留存指标定义流失阈值
 
 ## ⑤ 商业价值评估
 

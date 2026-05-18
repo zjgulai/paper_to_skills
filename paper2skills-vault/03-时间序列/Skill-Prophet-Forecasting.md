@@ -234,13 +234,18 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：Time-Series-Forecasting（理解时序基础概念）
-- **延伸**：NeuralProphet（深度学习增强版）
-- **可组合**：+ Demand-Forecasting-Supply-Chain → 供应链场景下的精准预测
+### 前置技能
+- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — Prophet 输入需要节假日/季节特征
 
----
+### 延伸技能
+- [Skill-Time-Series-Forecasting](../03-时间序列/Skill-Time-Series-Forecasting.md) — Prophet 是时间序列预测的入门方法
+- [Skill-Temporal-Fusion-Transformer](../03-时间序列/Skill-Temporal-Fusion-Transformer.md) — TFT 是 Prophet 的深度学习升级
+
+### 可组合
+- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/Skill-Demand-Forecasting-Supply-Chain.md) — Prophet 预测结果直接驱动备货
 
 ## ⑤ 商业价值评估
 

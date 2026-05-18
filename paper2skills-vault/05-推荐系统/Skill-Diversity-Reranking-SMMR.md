@@ -172,13 +172,17 @@ if __name__ == '__main__':
 
 ---
 
+
 ## ④ 技能关联
 
-- **前置**：Matrix Factorization / NeuralNDCG（召回+排序）
-- **延伸**：Session-Based Recommendation（序列多样性）
-- **可组合**：+ Cold-Start（多样性给新品曝光机会）
+### 前置技能
+- [Skill-NeuralNDCG-Learning-to-Rank](../05-推荐系统/Skill-NeuralNDCG-Learning-to-Rank.md) — 重排建立在已有排序结果之上
 
----
+### 延伸技能
+- [Skill-Explainable-Recommendation](../05-推荐系统/Skill-Explainable-Recommendation.md) — 解释为何选取多样性最大化的子集
+
+### 可组合
+- [Skill-Semantic-ID-Retrieval-RPG](../05-推荐系统/Skill-Semantic-ID-Retrieval-RPG.md) — 语义 ID 召回 + SMMR 多样性重排
 
 ## ⑤ 商业价值评估
 
