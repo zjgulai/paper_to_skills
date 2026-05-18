@@ -1,5 +1,45 @@
 # paper2skills Skill 关联图谱
 
+**版本**: v3.0(增量更新 2026-05-17 下午)
+**更新日期**: 2026-05-17
+**覆盖技能数**: **107 个**已萃取同步技能(从 v2.8 的 52 个翻倍)
+
+---
+
+## v3.0 最新状态(2026-05-17)
+
+> 由 `skills_graph_analyzer.py --analyze` 自动产出
+
+| 维度 | v2.8 (2026-04-29) | v3.0 (2026-05-17) |
+|---|---|---|
+| 节点数 | 52 | **107** |
+| 边数 | ~250 | **581** |
+| 领域数 | 14 | **15 + 16-智能体工程** |
+| HIGH 缺口 | 19 | **1**(CausalRAG) |
+| 总缺口 | 156 | **89** |
+| 新增 Skill | — | 19 个(6h 迭代 8 + Sprint 1 4 + Sprint 2 6) |
+
+### Sprint 1+2 新增 10 Skill 关联状态
+
+| Skill | 领域 | 入图边数(估算) |
+|---|---|---|
+| AGRS Review Summarization | 14 | 5-7 |
+| MAA Review-to-Action | 14 | 5-7 |
+| StaR Statement Ranking | 14 | 5-6 |
+| LACA CrossLingual ABSA | 14 | 6-8(WF-C+WF-E 双用) |
+| HiFoReAd 分层调和 | 03 | 5-7 |
+| Gen-QOT Lead Time | 04 | 5-6 |
+| Hierarchical Search Intent | 13 | 5-7 |
+| Dial-In LLM Case Intent | 09 | 5-6 |
+| PVM Attribution Window | 13 | 5-7 |
+| Bass + GEANN New Product | 06 | 6-8 |
+
+详见 [`paper2skills-skills/paper-skills-graph/skills_graph_report.md`](../../paper2skills-skills/paper-skills-graph/skills_graph_report.md).
+
+---
+
+## v2.8 历史快照(归档,2026-04-29)
+
 **版本**: v2.8
 **更新日期**: 2026-04-29
 **覆盖技能数**: 52 个已萃取同步技能

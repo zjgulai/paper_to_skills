@@ -22,6 +22,30 @@
 
 ---
 
+## 📊 最新状态 (2026-05-17 下午)
+
+| 维度 | 数值 |
+|---|---|
+| **Skill 卡片总数** | **107**(15 个核心领域 + 16-智能体工程) |
+| **图谱边数** | **581**(平均每张 Skill 5.4 个关联) |
+| **HIGH 缺口** | **1**(仅余 CausalRAG) |
+| **MAS 多智能体系统** | 5 个工作流 / 37 项集成测试全绿 |
+| **业务工作流覆盖率** | WF-A 85% / WF-B 75% / WF-C 70% / WF-E 85% |
+| **累计 ROI** | 6550-13160 万元/年潜在(中型品牌) |
+
+**最近萃取**(Week 4-5 三轮迭代,19 个新 Skill):
+- **6h 迭代(8 个跨领域桥梁)**:Hierarchical-Product-KG / DCE 反事实推荐 / Switchback / GCF Causal TSF / CoLaKG / DARA Agentic MMM / DML Cohort / Customer Journey Tree
+- **Sprint 1(WF-E + WF-C ABSA 闭环 4 个)**:AGRS / MAA / StaR / LACA
+- **Sprint 2(WF-A + WF-B P0 缺口 6 个)**:HiFoReAd / Gen-QOT / Hierarchical Search Intent / Dial-In LLM / PVM Attribution / Bass + GEANN 新品冷启动
+
+详见:
+- [Sprint 1+2 迭代总报告](paper2skills-vault/00-项目管理/sprint1-2-iteration-report-20260517.md)
+- [6h 迭代总报告](paper2skills-vault/00-项目管理/6h-iteration-report-20260517.md)
+- [下一步选题路线图](paper2skills-vault/00-项目管理/next-papers-roadmap.md)
+- [MAS 部署指南](mas/README.md)
+
+---
+
 ## 📁 项目结构 | Project Structure
 
 ```

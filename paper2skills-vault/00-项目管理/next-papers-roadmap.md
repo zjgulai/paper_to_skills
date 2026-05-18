@@ -9,15 +9,64 @@ owner: self
 source: human+ai
 ---
 
-# 下一步论文选题路线图（next-papers-roadmap）
+# 下一步论文选题路线图(next-papers-roadmap)
 
-> 整合两大来源:
-> 1. `paper2skills-skills/paper-skills-graph/skills_graph_report.md` — 自动图谱分析产出的 19 个高优先级缺口
-> 2. `drafts/analysis/semantic-blueprint-paper-selection-draft-20260428.md` — 用户确认要萃取的语义蓝图 5 方向
+> **v2 更新(2026-05-17 下午):Sprint 1+2 全部 10 个 P0 Skill 萃取完成,图谱 89→107 节点 / 418→581 边. Sprint 3 候选已就绪.**
 
-## 一、来源 A:图谱自动分析的高优先级缺口（节选）
+---
 
-由 `skills_graph_analyzer.py --gaps` 产生。当前共 156 个缺口，其中高优先级 19 个。前置技能缺失是主要类型。
+## 0. 最新状态快照(2026-05-17 下午)
+
+### Sprint 1+2 完成清单 (10 个新 Skill)
+
+**Sprint 1 — WF-E + WF-C 多语种 ABSA 闭环 (4 个):**
+- ✅ Skill-AGRS-Aspect-Guided-Review-Summarization (arXiv:2509.26103, Wayfair 2025)
+- ✅ Skill-MAA-Review-to-Action-Decision (arXiv:2601.12024)
+- ✅ Skill-StaR-Review-Statement-Ranking (arXiv:2604.03724)
+- ✅ Skill-LACA-CrossLingual-ABSA (arXiv:2508.09515, ACL 2025) — WF-C + WF-E 双用
+
+**Sprint 2 — WF-A + WF-B P0 阻塞缺口 (6 个):**
+- ✅ Skill-Hierarchical-Demand-Forecasting-Reconciliation (arXiv:2412.14718, Walmart BigData 2024)
+- ✅ Skill-Lead-Time-Distribution-Risk-GenQOT (arXiv:2310.17168, Amazon 2024)
+- ✅ Skill-Hierarchical-Search-Intent-Classification (arXiv:2403.06021, Amazon WWW 2024)
+- ✅ Skill-DialIn-LLM-Case-Intent-Clustering (arXiv:2412.09049, EMNLP 2025)
+- ✅ Skill-PVM-Attribution-Window-Harmonization (arXiv:2511.22918, NeurIPS 2025)
+- ✅ Skill-Bass-Diffusion-New-Product-Forecasting (arXiv:2307.03595, Amazon 2023)
+
+### 工作流能力覆盖率提升
+
+| 工作流 | 审计前 | Sprint1+2 后 | P0 缺口解锁 |
+|---|---|---|---|
+| WF-A 智能补货 | 55% | **85%+** | 分层调和 + Lead Time 波动 + 新品冷启动 |
+| WF-B 广告优化 | 48% | **75%+** | 月龄意图分类 + 跨平台归因统一 |
+| WF-C 客服分诊 | 38% | **70%+** | 多语种 ABSA + 意图聚类 |
+| WF-E Review 监控 | 25% | **85%+** | StaR + AGRS + MAA + LACA 完整闭环 |
+
+### 累计业务 ROI 估算
+**6550-13160 万元/年潜在**(中型母婴跨境品牌)
+
+详见 [Sprint 1+2 迭代总报告](./sprint1-2-iteration-report-20260517.md).
+
+---
+
+## 0.1 Sprint 3 候选清单(P1 优先级,待启动)
+
+| 候选 Skill | 服务工作流 | 推荐论文方向 | 业务紧迫度 |
+|---|---|---|---|
+| Negative-Keyword-Safe-Guard | WF-B (S03/S04) | Bayesian keyword performance estimation small sample | 高 |
+| Creative-Fatigue-Detection | WF-B (S13) | Creative fatigue survival analysis digital advertising 2024 | 高 |
+| Conformal-Prediction-Demand-UQ | WF-A (P15) | Conformal Prediction for Time Series 2023 | 中 |
+| Multi-Channel-Inventory-Pooling | WF-A (P7) | Cross-channel inventory transshipment 2024 | 高 |
+| Amazon-ToS-Compliance-Guardrail | WF-C + WF-B | LLM compliance guardrail e-commerce 2024 | 极高(合规) |
+| TikTok-Shop-Content-Attribution | WF-B (S16) | Interest-based commerce attribution social 2025 | 高 |
+
+---
+
+## 一、来源 A:图谱自动分析的高优先级缺口(节选)
+
+> 历史 v1 记录(2026-05-17 上午). 当前 HIGH 缺口仅剩 1 个(CausalRAG),需手动选题填补.
+
+由 `skills_graph_analyzer.py --gaps` 产生。当前共 156 个缺口,其中高优先级 19 个。前置技能缺失是主要类型。
 
 ### 必须填补的基础前置 Skill
 

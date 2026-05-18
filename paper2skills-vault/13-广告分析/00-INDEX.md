@@ -13,37 +13,61 @@ source: human+ai
 
 ## 领域定位
 
-聚焦广告投放的归因、预算分配与 ROAS 优化。与 15-营销投放分析 的区别：
+聚焦广告投放的归因、意图分类、预算分配与 ROAS 优化. 与 15-营销投放分析 的区别:
 
-- **13-广告分析**:面向单次投放的"事后归因 + 当下优化"
+- **13-广告分析**:面向单次投放的"事后归因 + 当下优化 + 意图入口"
 - **15-营销投放分析**:面向长周期的"营销组合建模 + 因果效应"
 
-## 已落地 Skill
+> **2026-05-17 重大扩展**:WF-B 广告优化工作流 P0 阻塞缺口全覆盖,新增意图分类 + 跨平台归因统一两大核心能力.
+
+## 已落地 Skill(4 个)
+
+### 基础归因与预算(2)
 
 | 技能 | 状态 | 业务场景 |
 |------|------|---------|
 | [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md) | 已萃取 P0 | 多触点 Shapley/Markov 归因 |
-| [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md) | 已萃取 P0 | 预算分配优化 |
+| [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md) | 已萃取 P0 | 边际 ROAS 均等化 + 预算分配优化 |
 
-## 规划 Skill 路线图
+### WF-B P0 阻塞缺口(Sprint 2, 2026-05-17)
+
+| 技能 | 状态 | 论文 | 业务场景 |
+|------|------|------|---------|
+| [Skill-Hierarchical-Search-Intent-Classification](./Skill-Hierarchical-Search-Intent-Classification.md) | 已萃取 P0 | arXiv:2403.06021 (Amazon WWW 2024) | 月龄敏感词分类 + 信息vs购买意图(Amazon ESCI) |
+| [Skill-PVM-Attribution-Window-Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md) | 已萃取 P0 | arXiv:2511.22918 (NeurIPS 2025) | Amazon/Meta/TikTok 归因窗口对齐 + 跨渠道 ROAS 矫正 |
+
+## 闭环组合(2026-05-17 形成)
+
+```
+Hierarchical-Search-Intent (自动词意图分类)
+  → 高 ROI 词识别(月龄/购买意图)
+  → Ad-Attribution-Modeling (Shapley/Markov)
+  → PVM (跨平台归因窗口统一)
+  → ROAS-Budget-Optimization (跨渠道预算重分配)
+```
+
+## 规划 Skill 路线图(Sprint 3 P1 候选)
 
 | 技能 | 优先级 | 论文/方法 | 业务场景 |
 |------|--------|----------|---------|
-| Skill-Incremental-Attribution-Causal | P0 | Geo-Lift / Causal Forest | 区分 incremental 与 spurious 归因 |
-| Skill-Frequency-Cap-Optimization | P1 | reach/frequency curve | 频次上限对 CTR 与转化的影响建模 |
-| Skill-Creative-Fatigue-Detection | P1 | survival analysis | 创意疲劳曲线与切换时机 |
-| Skill-Cross-Channel-Attribution-MTA | P2 | MTA + position bias | 跨渠道（搜索/社交/展示）归因 |
-| Skill-View-Through-Conversion | P2 | view-through vs click-through | 曝光归因与点击归因融合 |
+| Skill-Negative-Keyword-Safe-Guard | P1 | Bayesian keyword performance 2024 | 否定词置信区间保护 |
+| Skill-Creative-Fatigue-Detection | P1 | Survival analysis 2024 | 创意疲劳检测与切换 |
+| Skill-Incremental-Attribution-Causal | P1 | Geo-Lift / Causal Forest | 区分 incremental 与 spurious 归因 |
+| Skill-Frequency-Cap-Optimization | P2 | reach/frequency curve | 频次上限对 CTR 与转化的影响 |
+| Skill-TikTok-Shop-Content-Attribution | P2 | Interest-based commerce 2025 | TikTok 兴趣电商归因 |
+| Skill-View-Through-Conversion | P2 | VTC vs CTC | 曝光归因与点击归因融合 |
 
 ## 与其他领域的衔接
 
 | 领域 | 衔接点 |
 |------|--------|
 | 01-因果推断 | 归因偏差的因果识别 |
-| 15-营销投放分析 | MMM 的渠道粒度细化 |
+| 15-营销投放分析 | MMM 渠道层 + DARA 跨渠道预算 |
 | 14-用户分析 | 漏斗转化中的广告触点贡献 |
+| 08-知识图谱 | 意图分类基于多语种 NER + Semantic Search |
 
 ## 统计数据
 
-- 已萃取:2
-- 规划待萃取:5
+- 已萃取:**4**(2 基础 + 2 P0 缺口)
+- 规划待萃取:6
+- 服务工作流:**WF-B 广告优化**

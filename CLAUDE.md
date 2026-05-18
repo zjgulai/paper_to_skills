@@ -237,6 +237,43 @@ Search priority: Papers with code implementations > experimental validation > th
 
 ## Recent Skills Added
 
+> 总计 **107 个 Skill** 跨 15 个核心领域(+16-智能体工程). 最近 Week 4-5 完成三轮迭代萃取 19 个新 Skill.
+
+### Sprint 2 (2026-05-17 下午) — WF-A/B P0 阻塞缺口 6 个
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-17 | HiFoReAd 分层时序预测调和 | 03-时间序列 | arXiv:2412.14718 (Walmart BigData 2024) |
+| 2026-05-17 | Gen-QOT 提前期分布风险 | 04-供应链 | arXiv:2310.17168 (Amazon 2024) |
+| 2026-05-17 | Bass + GEANN 新品冷启动需求 | 06-增长模型 | arXiv:2307.03595 (Amazon 2023) |
+| 2026-05-17 | Hierarchical Search Intent Classification | 13-广告分析 | arXiv:2403.06021 (Amazon WWW 2024) |
+| 2026-05-17 | PVM 跨平台归因窗口统一化 | 13-广告分析 | arXiv:2511.22918 (NeurIPS 2025) |
+| 2026-05-17 | Dial-In LLM 客服意图聚类 | 09-DataAgent-LLM | arXiv:2412.09049 (EMNLP 2025) |
+
+### Sprint 1 (2026-05-17 上午) — WF-E/WF-C ABSA 闭环 4 个
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-17 | AGRS 属性引导评论摘要 | 14-用户分析 | arXiv:2509.26103 (Wayfair 2025) |
+| 2026-05-17 | MAA 多 Agent 行动建议 | 14-用户分析 | arXiv:2601.12024 |
+| 2026-05-17 | StaR 观点语句排序 | 14-用户分析 | arXiv:2604.03724 |
+| 2026-05-17 | LACA 跨语言 ABSA | 14-用户分析 | arXiv:2508.09515 (ACL 2025) |
+
+### 6h 迭代 (2026-05-17) — 跨领域桥梁 8 个
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-17 | Hierarchical Product KG Construction | 08-知识图谱 | arXiv:2410.21237 |
+| 2026-05-17 | Counterfactual Recommendation DCE | 05-推荐系统 | arXiv:2403.00817 (WWW 2024 oral) |
+| 2026-05-17 | Switchback Experiment Design | 02-A_B 实验 | arXiv:2406.06768 |
+| 2026-05-17 | GCF Causal Time Series Forecasting | 03-时间序列 | AAAI 2025 (Amazon) |
+| 2026-05-17 | CoLaKG KG-Augmented Recommendation | 08-知识图谱 | SIGIR 2025 |
+| 2026-05-17 | DARA Agentic MMM Optimizer | 15-营销投放 | arXiv:2601.14711 (WWW 2026) |
+| 2026-05-17 | DML Cohort Causal Effect | 01-因果推断 | ECML PKDD 2023 (Amazon) |
+| 2026-05-17 | Customer Journey Decision Tree | 09-DataAgent-LLM | 综合萃取 |
+
+### Phase 1-3 历史 (2026-03 ~ 2026-05-15)
+
 | Date | Skill | Domain | Commit |
 |------|-------|--------|--------|
 | 2026-05-15 | Marketing Mix Modeling (MMM) + Promotion Effectiveness (DML) | 15-营销投放分析 | — |
@@ -248,6 +285,13 @@ Search priority: Papers with code implementations > experimental validation > th
 | 2026-05-10 | Phase 6 D10 BI dashboard C path | 07-NLP-VOC (已迁至 ai_nlp_voc) | `cad5be5` |
 | 2026-05-08 | Phase 7 D1-D3 Superset BI B path | 07-NLP-VOC (已迁至 ai_nlp_voc) | `a765876` / `6f9211d` / `0d92103` |
 | 2026-05-06 | Self-Improving LLM Agent Pipeline | 07-NLP-VOC (已迁至 ai_nlp_voc) | `985e82b` |
+
+### MAS 多智能体系统 MVP (2026-05-17)
+
+- **5 个业务工作流**: WF-A 智能补货 / WF-B 广告优化 / WF-C 客服分诊 / WF-D 选品扫描 / WF-E Review 监控
+- **14 个核心模块**: agents/ + graphs/ + skills/ + state/ + hitl/ + checkpointing/ + observability/
+- **37/37 集成测试全绿**(MAS 骨架 12 + 各工作流 5+5+5+4 + 集成 6)
+- **入口**: [`mas/main.py`](mas/main.py) + [`mas/README.md`](mas/README.md) 部署指南
 
 ## Sync Status Tracking
 

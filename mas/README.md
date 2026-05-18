@@ -1,6 +1,19 @@
 # MAS 部署与运维指南
 
+> **最新更新**:2026-05-17 下午
+> Skill 卡片库已达 **107** 个,Sprint 1+2 新增 10 个 P0 Skill 待集成到 MAS Agents
+
 母婴跨境电商多智能体系统 (MAS) - 阶段 0~6 MVP 已就绪。
+
+## 集成现状与下一步
+
+- **MAS 基础设施**:5 工作流 + 14 模块 + 37/37 测试全绿(2026-05-17 第一轮)
+- **Skill 库存**:107 个 Skill 卡片,18 个有对应代码模板
+- **下一步**:将 Week 4-5 萃取的 19 个新 Skill(6h + Sprint1 + Sprint2)接入对应 Agent
+  - SupplyChainAgent:Bass + Gen-QOT + HiFoReAd
+  - MarketingAgent:PVM + Hierarchical-Search-Intent
+  - CustomerServiceAgent:LACA + Dial-In LLM + AGRS + MAA + StaR
+  - SelectionAgent:Hierarchical-Product-KG + CoLaKG
 
 ## 一、架构总览
 
