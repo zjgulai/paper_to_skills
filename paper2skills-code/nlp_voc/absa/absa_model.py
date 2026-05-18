@@ -14,7 +14,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, f1_score
 import warnings
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')  # disabled 2026-05-17: prefer local catch_warnings; un-comment if demo noise is excessive
 
 
 # 模拟 LLM 提取的方面（实际项目中使用 GPT-4 API）

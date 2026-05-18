@@ -211,7 +211,7 @@ Skill 卡片必须通过以下审核标准（总分 ≥ 7/10）：
 | **Master Prompt** | `paper2skills-vault/07-资源库/MasterPrompt.md` | 论文转 Skill 的核心 Prompt |
 | **关键词库** | `paper2skills-vault/07-资源库/关键词库.md` | ArXiv 搜索关键词分类 |
 | **审核问题库** | `paper2skills-vault/07-资源库/审核问题库.md` | 常见质量问题记录 |
-| **同步状态** | `paper2skills-vault/07-资源库/sync_status.json` | 各平台同步状态追踪 |
+| **同步状态** | `paper2skills-vault/07-资源库/sync_status.json` | ⚠️ 自 Phase 3 起停止手动维护（覆盖率 24%），以 vault 文件系统为准；如需重建快照运行 `rebuild_sync_status.py` |
 | **开发指南** | `CLAUDE.md` | 给 Claude Code 的开发指南 |
 
 ---

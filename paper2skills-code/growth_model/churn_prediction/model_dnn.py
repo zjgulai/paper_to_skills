@@ -15,7 +15,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
 from imblearn.under_sampling import RandomUnderSampler
 import warnings
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')  # disabled 2026-05-17: prefer local catch_warnings; un-comment if demo noise is excessive
 
 
 def generate_maternity_ecommerce_data(n_samples=10000):
@@ -109,7 +109,7 @@ class DeepChurnPredictor(nn.Module):
         return self.network(x)
 
 
-def train_churn_model(model, train_loader, val_loader, epochs=50, lr=0.001, device='cpu'):
+def train_churn_model(model, train_loader, val_loader, epochs=50, lr=0.001, device='cpu', model_path='best_churn_model.pt'):
     """训练流失预测模型"""
     model = model.to(device)
     criterion = nn.BCELoss()
@@ -155,7 +155,7 @@ def train_churn_model(model, train_loader, val_loader, epochs=50, lr=0.001, devi
         
         if val_auc > best_val_auc:
             best_val_auc = val_auc
-            torch.save(model.state_dict(), 'best_churn_model.pt')
+            torch.save(model.state_dict(), model_path)
         
         if (epoch + 1) % 10 == 0:
             print(f"Epoch {epoch+1}/{epochs} - Loss: {np.mean(train_losses):.4f}, Val AUC: {val_auc:.4f}")
@@ -237,7 +237,7 @@ def main():
     
     # 8. 评估
     print("\n[4] 模型评估...")
-    model.load_state_dict(torch.load('best_churn_model.pt'))
+    model.load_state_dict(torch.load('best_churn_model.pt', weights_only=True))
     
     val_probs = predict_churn_risk(model, X_val_scaled, device)
     val_preds = (val_probs > 0.5).astype(int)

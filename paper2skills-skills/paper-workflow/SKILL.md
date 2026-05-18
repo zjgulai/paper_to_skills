@@ -155,22 +155,22 @@ Step 4: 多端同步 ░░░░░░░░░░░ 0%
 ### Master Prompt
 
 完整的 Master Prompt 存储在：
-- **`/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/MasterPrompt.md`**
+- **`/Users/lute/project/paper_to_skills/paper2skills-vault/07-资源库/MasterPrompt.md`**
 
 ### 关键词库
 
 论文搜索关键词库：
-- **`/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/关键词库.md`**
+- **`/Users/lute/project/paper_to_skills/paper2skills-vault/07-资源库/关键词库.md`**
 
 ### 已有 Skill 卡片
 
 已生成的 Skill 卡片：
-- **`/Users/pray/project/paper_to_skills/paper2skills-vault/01-因果推断/Skill-Uplift-Modeling.md`**
+- **`/Users/lute/project/paper_to_skills/paper2skills-vault/01-因果推断/Skill-Uplift-Modeling.md`**
 
 ### 代码模板
 
 Python 代码模板：
-- **`/Users/pray/project/paper_to_skills/paper2skills-code/`**
+- **`/Users/lute/project/paper_to_skills/paper2skills-code/`**
 
 ## 子技能详情
 

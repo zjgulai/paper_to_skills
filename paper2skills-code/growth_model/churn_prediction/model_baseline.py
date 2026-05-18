@@ -11,7 +11,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.metrics import roc_auc_score, f1_score
 import warnings
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')  # disabled 2026-05-17: prefer local catch_warnings; un-comment if demo noise is excessive
 
 
 class ChurnPredictor:

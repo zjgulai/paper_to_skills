@@ -21,7 +21,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-warnings.filterwarnings("ignore")
+# warnings.filterwarnings("ignore")  # disabled 2026-05-17: prefer local catch_warnings; un-comment if demo noise is excessive
 
 
 class MonodenseLayer(nn.Module):

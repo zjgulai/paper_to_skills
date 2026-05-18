@@ -78,7 +78,7 @@ version: 0.1.0
 
 ### 关键词参考
 
-参考关键词库：`/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/关键词库.md`
+参考关键词库：`/Users/lute/project/paper_to_skills/paper2skills-vault/07-资源库/关键词库.md`
 
 ### AI方法与6大专题结合
 

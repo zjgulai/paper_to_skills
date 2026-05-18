@@ -48,6 +48,7 @@ class SkillsGraph:
         self.vault_path = Path(vault_path)
         self.nodes: Dict[str, SkillNode] = {}
         self.edges: List[SkillEdge] = []
+        self.aliases: Dict[str, str] = self._load_aliases()
         self.domain_mapping = {
             '01-因果推断': 'causal_inference',
             '02-A_B实验': 'ab_testing',
@@ -126,28 +127,39 @@ class SkillsGraph:
 
         subsection_content = subsection_match.group(0)
 
-        # 提取列表项 - 匹配多种格式
         items = []
 
-        # 格式 1: - **技能名**：描述
+        pattern_link = r'[-*]\s*\[([^\]]+?)\]\(([^)]*?)\)'
+        for match in re.finditer(pattern_link, subsection_content):
+            display = match.group(1).strip()
+            href = match.group(2).strip()
+            candidate = ""
+            if href:
+                fname = href.rsplit('/', 1)[-1]
+                if fname.startswith('Skill-') and fname.endswith('.md'):
+                    candidate = fname[:-3]
+            if not candidate and display.startswith('Skill-'):
+                candidate = display
+            if not candidate:
+                candidate = display
+            if candidate and len(candidate) < 100 and candidate not in items:
+                items.append(candidate)
+
         pattern1 = r'[-*]\s*\*\*([^*]+?)\*\*\s*[:：]'
         for match in re.finditer(pattern1, subsection_content):
             item = match.group(1).strip()
-            if item and len(item) < 100:  # 过滤过长的文本
+            if item and len(item) < 100 and item not in items:
                 items.append(item)
 
-        # 格式 2: - **技能名** (无冒号描述)
         pattern2 = r'[-*]\s*\*\*([^*]+?)\*\*\s*$'
         for match in re.finditer(pattern2, subsection_content, re.MULTILINE):
             item = match.group(1).strip()
             if item and len(item) < 100 and item not in items:
                 items.append(item)
 
-        # 格式 3: - 技能名：描述 (无加粗)
-        pattern3 = r'[-*]\s*([^\n*]+?)\s*[:：]\s*'
+        pattern3 = r'[-*]\s*([^\n*\[]+?)\s*[:：]\s*'
         for match in re.finditer(pattern3, subsection_content):
             item = match.group(1).strip()
-            # 过滤掉纯描述性文字
             if item and len(item) < 50 and not item.startswith('http') and item not in items:
                 items.append(item)
 
@@ -268,26 +280,53 @@ class SkillsGraph:
 
     def _normalize_skill_name(self, text: str) -> str:
         """规范化 skill 名称用于匹配"""
-        # 移除 Skill- 前缀（如果存在）
         text = re.sub(r'^Skill-', '', text, flags=re.IGNORECASE)
-        # 转换为小写
         text = text.lower()
-        # 统一连字符和空格
         text = text.replace('-', ' ')
-        # 移除多余空格
         text = ' '.join(text.split())
         return text
 
+    def _load_aliases(self) -> Dict[str, str]:
+        alias_file = self.vault_path / "07-资源库" / "skill-aliases.json"
+        if not alias_file.exists():
+            return {}
+        try:
+            with open(alias_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            return data.get("aliases", {}) if isinstance(data, dict) else {}
+        except Exception:
+            return {}
+
+    def _resolve_alias(self, name: str) -> str:
+        if not self.aliases:
+            return name
+        if name in self.aliases:
+            target = self.aliases[name]
+            if target in ("__MIGRATED_TO_AI_NLP_VOC__", "__GENUINE_GAP__"):
+                return target
+            return target
+        norm_in = self._normalize_skill_name(name)
+        for alias_key, alias_target in self.aliases.items():
+            if self._normalize_skill_name(alias_key) == norm_in:
+                if alias_target in ("__MIGRATED_TO_AI_NLP_VOC__", "__GENUINE_GAP__"):
+                    return alias_target
+                return alias_target
+        return name
+
     def _skill_exists(self, skill_name: str, all_skill_ids: Set[str]) -> bool:
-        """检查 skill 是否存在（支持模糊匹配）"""
-        normalized_input = self._normalize_skill_name(skill_name)
+        """检查 skill 是否存在（支持别名映射 + 模糊匹配）"""
+        resolved = self._resolve_alias(skill_name)
+        if resolved == "__MIGRATED_TO_AI_NLP_VOC__":
+            return True
+        if resolved == "__GENUINE_GAP__":
+            return False
+
+        normalized_input = self._normalize_skill_name(resolved)
 
         for skill_id in all_skill_ids:
             normalized_id = self._normalize_skill_name(skill_id)
-            # 完全匹配或包含匹配
             if normalized_input == normalized_id:
                 return True
-            # 如果输入包含在 skill_id 中，或 skill_id 包含输入
             if normalized_input in normalized_id or normalized_id in normalized_input:
                 return True
 
@@ -559,8 +598,9 @@ def main():
     parser.add_argument('--skill', type=str, help='分析特定技能')
     parser.add_argument('--gaps', action='store_true', help='仅显示知识缺口')
     parser.add_argument('--export', type=str, help='导出图谱 JSON 文件路径')
+    _default_vault = os.environ.get("PAPER2SKILLS_ROOT") or str(Path(__file__).resolve().parents[3])
     parser.add_argument('--vault', type=str,
-                        default='/Users/pray/project/paper_to_skills/paper2skills-vault',
+                        default=str(Path(_default_vault) / 'paper2skills-vault'),
                         help='Vault 路径')
 
     args = parser.parse_args()
