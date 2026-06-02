@@ -825,6 +825,8 @@ if __name__ == "__main__":
 - **延伸技能**：[[Skill-SSBC-Small-Sample-Conformal]]
 - **可组合技能**：[[Skill-Uplift-Modeling]] | [[Skill-Conformal-ROI-Prediction]]
 - **相关技能**：[[Skill-STATE-Robust-Variance-Reduction]]
+- **跨域关联**：[[Skill-Customer-Churn-Prediction]]
+- **关联**：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值评估
 

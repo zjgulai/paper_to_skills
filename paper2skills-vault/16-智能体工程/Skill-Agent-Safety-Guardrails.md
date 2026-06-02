@@ -56,6 +56,7 @@ print("[✓] Agent Safety Guardrails 测试通过")
 ---
 - **相关技能**：[[Skill-MUZZLE-Web-Agent-Red-Teaming]]
 - **相关技能**：[[Skill-Agent-Payment-Security-Red-Team]]
+- **跨域关联**：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值
 

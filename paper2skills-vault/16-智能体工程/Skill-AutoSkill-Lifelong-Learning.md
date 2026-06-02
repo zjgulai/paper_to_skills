@@ -450,6 +450,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Skill-Lifecycle-Design]] / [[Skill-Auto-Skill-Synthesis]] / [[Skill-EvoSC-Self-Consolidation]]
 
 ---
+- **关联**：[[Skill-Customer-Churn-Prediction]]
 
 ## ⑤ 商业价值评估
 

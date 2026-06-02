@@ -249,6 +249,9 @@ if __name__ == '__main__':
 ---
 - **相关技能**：[[Skill-Ensemble-Methods]]
 - **相关技能**：[[Skill-Model-Performance-Monitor]]
+- **跨域关联**：[[Skill-AIGP-LLM-Dynamic-Pricing]]
+- **跨域关联**：[[Skill-Conformal-Prediction-Demand-UQ]]
+- **关联**：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值评估
 

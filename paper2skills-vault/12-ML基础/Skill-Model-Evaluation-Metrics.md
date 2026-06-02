@@ -392,6 +392,7 @@ if __name__ == '__main__':
 ---
 - **相关技能**：[[Skill-Feature-Selection]]
 - **相关技能**：[[Skill-Data-Drift-Detection]]
+- **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值评估
 

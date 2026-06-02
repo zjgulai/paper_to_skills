@@ -200,6 +200,7 @@ if __name__ == '__main__':
 - **相关技能**：[[Skill-AIGP-LLM-Dynamic-Pricing]]
 - **相关技能**：[[Skill-Bundle-Pricing-Strategy]]
 - **相关技能**：[[Skill-Markdown-Optimization]]
+- **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值评估
 

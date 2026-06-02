@@ -55,6 +55,8 @@ print("[✓] Category Trend 测试通过")
 
 ---
 - **相关技能**：[[Skill-Cross-Market-Product-Transfer]]
+- **相关**：[[Skill-Product-Lifecycle-Stage]]
+- **相关**：[[Skill-Market-Size-Estimation]]
 
 ## ⑤ 商业价值
 

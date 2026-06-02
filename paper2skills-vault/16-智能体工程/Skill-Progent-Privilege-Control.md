@@ -96,6 +96,7 @@ print(result.action, result.requires_approval)  # PENDING True
 - **可组合**：[[Skill-SDOF-State-Constrained-Orchestration]] | [[Skill-Agent-Payment-Security-Red-Team]]
 
 ---
+- **关联**：[[Skill-Cross-Border-Compliance-Framework]]
 
 ## ⑤ 商业价值
 

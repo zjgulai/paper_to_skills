@@ -144,6 +144,7 @@ if __name__ == '__main__':
 ---
 - **相关技能**：[[Skill-Contextual-Dynamic-Pricing-Optimal]]
 - **相关技能**：[[Skill-AIGP-LLM-Dynamic-Pricing]]
+- **关联**：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值评估
 

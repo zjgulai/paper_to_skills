@@ -473,6 +473,7 @@ if __name__ == "__main__":
   - [[Skill-Product-Opportunity-Scoring]] — 选品时评估该品类的 Listing 可优化空间
 
 ---
+- **跨域关联**：[[Skill-Dense-Retrieval-Ecommerce-Semantic-Search]]
 
 ## ⑤ 商业价值评估
 

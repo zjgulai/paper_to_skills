@@ -450,6 +450,7 @@ if __name__ == "__main__":
 - **相关技能**：[[Skill-DAG-Task-Decomposition-Planning]]
 - **相关技能**：[[Skill-LDP-Identity-Aware-Protocol]]
 - **相关技能**：[[Skill-Tool-Call-Decision-Framework]]
+- **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值评估
 

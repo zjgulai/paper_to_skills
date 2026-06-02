@@ -391,6 +391,7 @@ if __name__ == '__main__':
 - **跨域关联**：[[Skill-Cold-Start-Meta-Learning-PAM]]
 - **相关技能**：[[Skill-Network-Effect-Experiments]]
 - **相关技能**：[[Skill-CUPED-Variance-Reduction]]
+- **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值评估
 

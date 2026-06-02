@@ -477,6 +477,13 @@ if __name__ == "__main__":
 
 - **跨域关联**：[[Skill-DML-Cohort-Causal-Effect]] / [[Skill-Causal-Time-Series-Forecasting-GCF]]
 - **跨域关联**：[[Skill-KG-Auto-Construction-Agent-Driven]]
+- **跨域关联**：[[Skill-Demand-Forecasting-Supply-Chain]]
+- **关联**：[[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]
+- **关联**：[[Skill-Sparse-Matrix-Completion]]
+- **关联**：[[Skill-Multimodal-Table-Understanding]]
+- **关联**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
+- **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **关联**：[[Skill-AI-Consumer-Wellbeing-Ethics]]
 
 ## ⑤ 商业价值
 

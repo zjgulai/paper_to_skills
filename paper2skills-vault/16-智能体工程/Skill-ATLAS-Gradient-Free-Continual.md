@@ -425,6 +425,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Flowr-Supply-Chain-MAS]] / [[Skill-MASEval-System-Evaluation]] / [[Skill-ReliabilityBench-Agent-Reliability]]
 
 ---
+- **关联**：[[Skill-Shopping-Companion-Agent]]
 
 ## ⑤ 商业价值评估
 

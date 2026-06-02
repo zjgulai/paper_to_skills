@@ -97,6 +97,7 @@ ParaManager 协调：
 - （假设）[[Skill-Cost-Aware-Agent-Scheduling]]：成本感知调度与并行预算控制
 - （假设）[[Skill-Agentic-Workflow-Compilation]]：工作流编译优化
 - （假设）[[Skill-Tool-Call-Decision-Framework]]：Tool 调用决策框架
+- **关联**：[[Skill-Dynamic-Pricing-Elasticity]]
 
 ## ⑤ 商业价值
 

@@ -371,6 +371,10 @@ if __name__ == '__main__':
 - **跨域关联**：[[Skill-Counterfactual-Recommendation-DCE]]
 - **相关技能**：[[Skill-Generative-Agent-Simulation]]
 - **相关技能**：[[Skill-User-Lifecycle-STAN]]
+- **跨域关联**：[[Skill-DARA-Agentic-MMM-Optimizer]]
+- **关联**：[[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]
+- **关联**：[[Skill-Multimodal-Table-Understanding]]
+- **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
 
 ## ⑤ 商业价值评估
 

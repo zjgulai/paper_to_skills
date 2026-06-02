@@ -99,6 +99,7 @@ if __name__ == '__main__':
 
 ---
 - **相关技能**：[[Skill-Competitive-Response-Modeling]]
+- **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
 
 ## ⑤ 商业价值评估
 

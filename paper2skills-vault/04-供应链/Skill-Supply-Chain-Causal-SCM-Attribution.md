@@ -548,6 +548,12 @@ if __name__ == "__main__":
 
 
 - **跨域关联**：[[Skill-CausalRAG-Causal-Graph-Retrieval]] / [[Skill-Helicase-Supply-Chain-KG-MAS]]
+- **跨域关联**：[[Skill-EventCast-LLM-Event-Forecasting]]
+- **关联**：[[Skill-Multimodal-Table-Understanding]]
+- **关联**：[[Skill-CSDM-Diffusion-ColdStart]]
+- **关联**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
+- **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **关联**：[[Skill-AI-Brand-Storytelling]]
 
 ## ⑤ 商业价值
 

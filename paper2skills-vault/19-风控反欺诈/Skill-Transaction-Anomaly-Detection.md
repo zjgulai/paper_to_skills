@@ -53,6 +53,7 @@ print("[✓] Transaction Anomaly 测试通过")
 - **相关技能**：[[Skill-Click-Fraud-Detection]]
 - **相关技能**：[[Skill-FraudSquad-LLM-Review-Detection]]
 - **相关技能**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **关联**：[[Skill-ROAS-Budget-Optimization]]
 
 ## ⑤ 商业价值
 

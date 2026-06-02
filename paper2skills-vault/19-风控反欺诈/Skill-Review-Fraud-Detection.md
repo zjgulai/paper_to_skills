@@ -56,6 +56,7 @@ print("[✓] Review Fraud Detection 测试通过")
 - **相关技能**：[[Skill-FraudSquad-LLM-Review-Detection]]
 - **相关技能**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
 - **相关技能**：[[Skill-Transaction-Anomaly-Detection]]
+- **跨域关联**：[[Skill-KG-Auto-Construction-Agent-Driven]]
 
 ## ⑤ 商业价值
 

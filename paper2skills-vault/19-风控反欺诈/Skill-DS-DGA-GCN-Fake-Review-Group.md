@@ -547,6 +547,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-AGRS-Aspect-Guided-Review-Summarization]]（先过滤虚假评论，再做真实摘要）/ [[Skill-Flowr-Supply-Chain-MAS]] / [[Skill-Category-Compliance-Prescan]]
 
 ---
+- **关联**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
 
 ## ⑤ 商业价值
 

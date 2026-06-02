@@ -122,6 +122,7 @@ print(f"检测到注入: {result.is_injection}, 置信度: {result.confidence:.2
 - [[Skill-Shopping-Companion-Agent]] — 在导购 Agent 流水线中集成防御层
 
 ---
+- **跨域关联**：[[Skill-Consumer-Complaint-Recall-Prediction]]
 
 ## ⑤ 商业价值
 

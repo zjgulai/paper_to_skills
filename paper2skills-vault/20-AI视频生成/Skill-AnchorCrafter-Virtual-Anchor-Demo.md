@@ -273,6 +273,7 @@ if __name__ == '__main__':
 - **相关技能**：[[Skill-Aquarius-Brand-Video-Generation]]
 - **相关技能**：[[Skill-BrandFusion-Multi-Agent]]
 - **相关技能**：[[Skill-E-Commerce-Video-Benchmark]]
+- **关联**：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值评估
 

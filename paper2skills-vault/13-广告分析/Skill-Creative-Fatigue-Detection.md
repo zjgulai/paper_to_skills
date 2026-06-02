@@ -215,6 +215,7 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-TikTok-Shop-Content-Attribution]] | [[Skill-Customer-Churn-Prediction]]（生存分析方法论互通）
 
 ---
+- **关联**：[[Skill-Listing-Quality-Scoring]]
 
 ## ⑤ 商业价值评估
 

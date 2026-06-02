@@ -145,6 +145,7 @@ print(roas_df)
 ---
 
 - **可组合**：[[Skill-ROAS-Budget-Optimization]] / [[Skill-TikTok-Shop-Content-Attribution]]
+- **相关**：[[Skill-CABB-Cross-Category-Attribution]]
 
 ## ⑤ 商业价值评估
 

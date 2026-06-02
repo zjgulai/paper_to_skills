@@ -454,6 +454,8 @@ if __name__ == "__main__":
   - [[Skill-Review-Fraud-Detection]] — 合规风险高的品类，刷评风险也更高（竞争激烈 + 监管注意力集中）
 
 ---
+- **跨域关联**：[[Skill-Ad-Attribution-Modeling]]
+- **关联**：[[Skill-Time-Series-Anomaly-Detection]]
 
 ## ⑤ 商业价值评估
 

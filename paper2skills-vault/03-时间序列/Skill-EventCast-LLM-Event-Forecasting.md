@@ -432,6 +432,12 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Flowr-Supply-Chain-MAS]]（预测结果→多 Agent 补货链路）/ [[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]（LLM 记忆增强）/ [[Skill-Supplier-Capacity-Planning]]（预测→产能约束联动）
 
 ---
+- **关联**：[[Skill-Bass-Diffusion-New-Product-Forecasting]]
+- **关联**：[[Skill-Agentic-Workflow-Compilation]]
+- **关联**：[[Skill-TikTok-Shop-Content-Attribution]]
+- **关联**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
+- **关联**：[[Skill-Dynamic-Pricing-Elasticity]]
+- **关联**：[[Skill-AI-Consumer-Wellbeing-Ethics]]
 
 ## ⑤ 商业价值
 

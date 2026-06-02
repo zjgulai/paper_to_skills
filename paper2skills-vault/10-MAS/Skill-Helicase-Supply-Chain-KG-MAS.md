@@ -519,6 +519,8 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Category-Compliance-Prescan]] / [[Skill-Graph-Grounded-MAS-Protocol]] / [[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]
 
 ---
+- **跨域关联**：[[Skill-KG-Augmented-Recommendation-CoLaKG]]
+- **关联**：[[Skill-CDA-Privacy-Causal-Attribution]]
 
 ## ⑤ 商业价值评估
 

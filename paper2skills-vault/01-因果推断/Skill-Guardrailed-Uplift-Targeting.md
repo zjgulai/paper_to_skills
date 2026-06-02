@@ -437,6 +437,10 @@ if __name__ == "__main__":
 
 ---
 - **跨域关联**：[[Skill-Review-Fraud-Detection]]
+- **跨域关联**：[[Skill-DAWN-Talking-Head-Review]]
+- **关联**：[[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]
+- **关联**：[[Skill-Multimodal-Table-Understanding]]
+- **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值
 

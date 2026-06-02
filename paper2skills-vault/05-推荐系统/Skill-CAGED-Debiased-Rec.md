@@ -191,6 +191,7 @@ print(f"无偏推荐: {[i for i, _ in result['unbiased'][:5]]}")
 - **CAGED + Explainable Rec**：无偏权重可以作为推荐可解释性的额外特征（"为什么推这个：非热度驱动"）
 
 ---
+- **关联**：[[Skill-Agentic-Workflow-Compilation]]
 
 ## ⑤ 商业价值评估
 

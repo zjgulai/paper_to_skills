@@ -62,6 +62,7 @@ print("[✓] Click Fraud Detection 测试通过")
 
 ---
 - **相关技能**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **关联**：[[Skill-Negative-Keyword-Safe-Guard]]
 
 ## ⑤ 商业价值
 

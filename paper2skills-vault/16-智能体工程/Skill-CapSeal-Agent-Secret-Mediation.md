@@ -254,6 +254,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-MCP-A2A-Protocol-Stack]] / [[Skill-Agent-SLO-Manager]] / [[Skill-SDOF-State-Constrained-Orchestration]]
 
 ---
+- **关联**：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值
 

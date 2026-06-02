@@ -904,6 +904,9 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-Feature-Engineering]] | [[Skill-Model-Evaluation-Metrics]]
 - **延伸技能**：[[Skill-BlockEcho-Missing-Data]] | [[Skill-Utimac-Uncertainty-Completion]]
 - **可组合技能**：[[Skill-Matrix-Factorization]]
+- **关联**：[[Skill-Dynamic-Pricing-Elasticity]]
+- **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
+- **关联**：[[Skill-Consumer-Complaint-Recall-Prediction]]
 
 ## ⑤ 商业价值评估
 
