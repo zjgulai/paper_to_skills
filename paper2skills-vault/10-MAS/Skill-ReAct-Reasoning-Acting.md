@@ -202,6 +202,9 @@ python react_agent.py
 
 - **可组合**：[[Skill-MAS-Orchestrator]]
 
+
+- **可组合（延伸）**：[[Skill-SQL-Agent-Text-to-SQL]] / [[Skill-DeepAnalyze-Autonomous-Data-Science-Agent]] / [[Skill-Customer-Journey-Decision-Tree]] / [[Skill-CAMEL-Role-Playing-Agents]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

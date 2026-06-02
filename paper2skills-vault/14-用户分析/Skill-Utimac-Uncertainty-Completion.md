@@ -810,11 +810,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Sparse Matrix Completion (Hájek-GD)](Skill-Sparse-Matrix-Completion.md) | Hájek-GD 做点估计（无区间），Utimac 在其基础上加入不确定性量化；先理解低秩点估计再理解统计推断框架 |
-| 前置 | [User Funnel Analysis](Skill-User-Funnel-Analysis.md) | 理解页面转移矩阵的业务含义（漏斗各阶段），才能正确解读补全结果 |
-| 组合 | [Cohort Retention Analysis](Skill-Cohort-Retention-Analysis.md) | Utimac 补全转移矩阵（横截面），Cohort 分析跨时间留存趋势；两者叠加形成"时空双维度"用户路径分析 |
-| 延伸 | [Session Intent Shift](Skill-Session-Intent-Shift.md) | 在补全的完整转移矩阵上，进一步检测 session 内意图漂移，识别异常路径 |
-| 延伸 | [Trajectory Pattern Mining](Skill-Trajectory-Pattern-Mining.md) | 将补全后的矩阵作为输入，挖掘高频转移模式和关键路径 |
+| 前置 | [Sparse Matrix Completion (Hájek-GD)]([[Skill-Sparse-Matrix-Completion]].md) | Hájek-GD 做点估计（无区间），Utimac 在其基础上加入不确定性量化；先理解低秩点估计再理解统计推断框架 |
+| 前置 | [User Funnel Analysis]([[Skill-User-Funnel-Analysis]].md) | 理解页面转移矩阵的业务含义（漏斗各阶段），才能正确解读补全结果 |
+| 组合 | [Cohort Retention Analysis]([[Skill-Cohort-Retention-Analysis]].md) | Utimac 补全转移矩阵（横截面），Cohort 分析跨时间留存趋势；两者叠加形成"时空双维度"用户路径分析 |
+| 延伸 | [Session Intent Shift]([[Skill-Session-Intent-Shift]].md) | 在补全的完整转移矩阵上，进一步检测 session 内意图漂移，识别异常路径 |
+| 延伸 | [Trajectory Pattern Mining]([[Skill-Trajectory-Pattern-Mining]].md) | 将补全后的矩阵作为输入，挖掘高频转移模式和关键路径 |
 
 ---
 

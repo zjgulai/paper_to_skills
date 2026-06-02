@@ -757,11 +757,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-Customer-Journey-Prototype](../06-增长模型/Skill-Customer-Journey-Prototype.md) | 旅程原型识别是意图漂移检测的基础；需先理解用户旅程框架，才能定义"漂移"的参考基准 |
-| 前置 | [Skill-User-Lifecycle-STAN](../06-增长模型/Skill-User-Lifecycle-STAN.md) | 生命周期阶段（孕期/新生儿期/成长期）与意图漂移高度相关；生命周期分类可作为意图漂移的先验条件 |
-| 组合 | [Skill-TRACE-Clickstream-Embedding](./Skill-TRACE-Clickstream-Embedding.md) | Clickstream 嵌入+意图标签=完整session理解；TRACE 负责建模"用户去哪了"，SessionIntentBench 负责解释"用户为何这样走" |
-| 组合 | [Skill-Trajectory-Pattern-Mining](./Skill-Trajectory-Pattern-Mining.md) | 轨迹模式挖掘提供路径骨架，意图语义提供路径叙事；两者结合=桑基图的完整故事 |
-| 延伸 | [Skill-NonItem-Page-Path-Modeling](./Skill-NonItem-Page-Path-Modeling.md) | 非商品页（首页/分类页/博客页）的路径建模与意图漂移互为补充，覆盖完整的用户决策过程 |
+| 前置 | [Skill-Customer-Journey-Prototype](../06-增长模型/[[Skill-Customer-Journey-Prototype]].md) | 旅程原型识别是意图漂移检测的基础；需先理解用户旅程框架，才能定义"漂移"的参考基准 |
+| 前置 | [Skill-User-Lifecycle-STAN](../06-增长模型/[[Skill-User-Lifecycle-STAN]].md) | 生命周期阶段（孕期/新生儿期/成长期）与意图漂移高度相关；生命周期分类可作为意图漂移的先验条件 |
+| 组合 | [Skill-TRACE-Clickstream-Embedding](./[[Skill-TRACE-Clickstream-Embedding]].md) | Clickstream 嵌入+意图标签=完整session理解；TRACE 负责建模"用户去哪了"，SessionIntentBench 负责解释"用户为何这样走" |
+| 组合 | [Skill-Trajectory-Pattern-Mining](./[[Skill-Trajectory-Pattern-Mining]].md) | 轨迹模式挖掘提供路径骨架，意图语义提供路径叙事；两者结合=桑基图的完整故事 |
+| 延伸 | [Skill-NonItem-Page-Path-Modeling](./[[Skill-NonItem-Page-Path-Modeling]].md) | 非商品页（首页/分类页/博客页）的路径建模与意图漂移互为补充，覆盖完整的用户决策过程 |
 
 ---
 

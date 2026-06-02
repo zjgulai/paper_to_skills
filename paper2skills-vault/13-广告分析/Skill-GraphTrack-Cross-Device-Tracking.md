@@ -537,11 +537,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-Identity-Fragmentation-Debiasing](./Skill-Identity-Fragmentation-Debiasing.md) | GraphTrack 解决"哪两个设备是同一人"，Identity Fragmentation 解决"拼接后如何去偏 ATE"，前者是后者的前置输入 |
-| 前置 | [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md) | 跨设备追踪是多触点归因的数据前提：先拼人再归因 |
+| 前置 | [Skill-Identity-Fragmentation-Debiasing](./[[Skill-Identity-Fragmentation-Debiasing]].md) | GraphTrack 解决"哪两个设备是同一人"，Identity Fragmentation 解决"拼接后如何去偏 ATE"，前者是后者的前置输入 |
+| 前置 | [Skill-Ad-Attribution-Modeling](./[[Skill-Ad-Attribution-Modeling]].md) | 跨设备追踪是多触点归因的数据前提：先拼人再归因 |
 | 组合 | HGNN Cross-Device Matching（08-知识图谱） | GraphTrack 无监督+轻量（冷启动），HGNN 深度学习高精度（有标签时）；前者作为 HGNN 的特征预处理或 baseline |
-| 组合 | [Skill-PVM-Attribution-Window-Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md) | 跨设备追踪（GraphTrack）+跨平台归因（PVM）串联=完整用户拼图：先识别跨端同一用户，再公平分配多平台归因信用 |
-| 延伸 | [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md) | 跨端用户拼接后，ROAS 计算不再因设备碎片化而失真，预算优化准确性大幅提升 |
+| 组合 | [Skill-PVM-Attribution-Window-Harmonization](./[[Skill-PVM-Attribution-Window-Harmonization]].md) | 跨设备追踪（GraphTrack）+跨平台归因（PVM）串联=完整用户拼图：先识别跨端同一用户，再公平分配多平台归因信用 |
+| 延伸 | [Skill-ROAS-Budget-Optimization](./[[Skill-ROAS-Budget-Optimization]].md) | 跨端用户拼接后，ROAS 计算不再因设备碎片化而失真，预算优化准确性大幅提升 |
 
 ---
 

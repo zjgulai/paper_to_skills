@@ -836,12 +836,12 @@ if __name__ == '__main__':
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Uplift Modeling](Skill-Uplift-Modeling.md) | rDRP 基于 uplift/DRP 框架，需先理解 CATE 估计 |
-| 前置 | [Intelligent Attribution (Causal Forest)](Skill-Intelligent-Attribution-Causal-Forest.md) | 归因值是 rDRP 的输入，Causal Forest 提供基础区间估计思路 |
-| 前置 | [DML Cohort Causal Effect](Skill-DML-Cohort-Causal-Effect.md) | DML 的双重鲁棒估计与 rDRP 的校准思路互补 |
+| 前置 | [Uplift Modeling]([[Skill-Uplift-Modeling]].md) | rDRP 基于 uplift/DRP 框架，需先理解 CATE 估计 |
+| 前置 | [Intelligent Attribution (Causal Forest)]([[Skill-Intelligent-Attribution-Causal-Forest]].md) | 归因值是 rDRP 的输入，Causal Forest 提供基础区间估计思路 |
+| 前置 | [DML Cohort Causal Effect]([[Skill-DML-Cohort-Causal-Effect]].md) | DML 的双重鲁棒估计与 rDRP 的校准思路互补 |
 | 组合 | Customer Journey Tree (09-DataAgent-LLM) | 路径转移概率 + ROI 置信区间 = 可信桑基图（完整解决方案） |
 | 组合 | One-Sided Matrix Completion (如有) | 补全矩阵 + 置信区间 = 完整的可信数据底座 |
-| 延伸 | [DiD Difference-in-Differences](Skill-DiD-Difference-in-Differences.md) | rDRP 结果可用 DiD 验证渠道级别的政策效果 |
+| 延伸 | [DiD Difference-in-Differences]([[Skill-DiD-Difference-in-Differences]].md) | rDRP 结果可用 DiD 验证渠道级别的政策效果 |
 | 延伸 | A/B 实验设计 (02-A_B实验) | 共形预测的校准集本质是小规模 RCT，与实验设计紧密相关 |
 
 ---

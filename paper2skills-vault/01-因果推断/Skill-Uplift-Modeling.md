@@ -559,6 +559,9 @@ if __name__ == '__main__':
 
 - **可组合**：[[Skill-DML-Cohort-Causal-Effect]]
 
+
+- **可组合（延伸）**：[[Skill-PIE-Experimental-MTA]] / [[Skill-Uplift-Churn-Prediction]] / [[Skill-BCCB-Causal-Bandits]] / [[Skill-AB-Test-Result-Interpretation]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

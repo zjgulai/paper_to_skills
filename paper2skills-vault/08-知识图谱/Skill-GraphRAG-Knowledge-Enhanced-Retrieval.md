@@ -661,6 +661,8 @@ if __name__ == '__main__':
 
 - **可组合**：[[Skill-KGQA-Question-Answering]] / [[Skill-KG-Augmented-Recommendation-CoLaKG]]
 
+- **可组合**：[[Skill-KG-Auto-Construction-Agent-Driven]] / [[Skill-HGT-Heterogeneous-Graph-Transformer]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

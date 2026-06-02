@@ -957,12 +957,12 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-User-Funnel-Analysis](Skill-User-Funnel-Analysis.md) | 漏斗分析提供页面层级定义和转化率基准，是轨迹分析的业务背景 |
-| 前置 | [Skill-Cohort-Retention-Analysis](Skill-Cohort-Retention-Analysis.md) | Cohort 分析提供用户分群框架，轨迹分析可按 cohort 分组 |
-| 延伸 | Skill-Customer-Journey-Prototype | 轨迹挖掘结果可直接驱动 Customer Journey Map 的节点与边 |
-| 延伸 | Skill-TRACE-Clickstream-Embedding | TRACE 用深度学习嵌入 clickstream，是本 Skill 的神经网络升级版 |
-| 组合 | [Skill-PersonaBot-RAG-Profiling](Skill-PersonaBot-RAG-Profiling.md) | 轨迹聚类结果的每个 cluster 可作为用户画像输入 PersonaBot |
-| 组合 | Skill-AGRS-Aspect-Guided-Review-Summarization | 高停留时间的评论页轨迹节点可触发 AGRS 评论挖掘 |
+| 前置 | [Skill-User-Funnel-Analysis]([[Skill-User-Funnel-Analysis]].md) | 漏斗分析提供页面层级定义和转化率基准，是轨迹分析的业务背景 |
+| 前置 | [Skill-Cohort-Retention-Analysis]([[Skill-Cohort-Retention-Analysis]].md) | Cohort 分析提供用户分群框架，轨迹分析可按 cohort 分组 |
+| 延伸 | [[Skill-Customer-Journey-Prototype]] | 轨迹挖掘结果可直接驱动 Customer Journey Map 的节点与边 |
+| 延伸 | [[Skill-TRACE-Clickstream-Embedding]] | TRACE 用深度学习嵌入 clickstream，是本 Skill 的神经网络升级版 |
+| 组合 | [Skill-PersonaBot-RAG-Profiling]([[Skill-PersonaBot-RAG-Profiling]].md) | 轨迹聚类结果的每个 cluster 可作为用户画像输入 PersonaBot |
+| 组合 | [[Skill-AGRS-Aspect-Guided-Review-Summarization]] | 高停留时间的评论页轨迹节点可触发 AGRS 评论挖掘 |
 
 ---
 

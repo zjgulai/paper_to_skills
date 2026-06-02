@@ -689,12 +689,12 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [User Funnel Analysis](Skill-User-Funnel-Analysis.md) | 漏斗分析是来源维度分析的基础；来源分析 = 漏斗分析 × 渠道维度 |
+| 前置 | [User Funnel Analysis]([[Skill-User-Funnel-Analysis]].md) | 漏斗分析是来源维度分析的基础；来源分析 = 漏斗分析 × 渠道维度 |
 | 组合 | [Hierarchical Search Intent](../13-广告分析/Skill-Hierarchical-Search-Intent.md) | 来源分析（从哪来）+ 搜索意图分类（搜什么）= 完整流量质量画像 |
-| 组合 | [Trajectory Pattern Mining](Skill-Trajectory-Pattern-Mining.md) | 来源质量分 + 用户行为路径 = 桑基图完整数据（节点宽度+节点颜色） |
+| 组合 | [Trajectory Pattern Mining]([[Skill-Trajectory-Pattern-Mining]].md) | 来源质量分 + 用户行为路径 = 桑基图完整数据（节点宽度+节点颜色） |
 | 延伸 | [PVM Attribution Window](../13-广告分析/Skill-PVM-Attribution-Window.md) | 来源级 CVR 是单触点分析；多触点归因模型是进阶版 |
-| 延伸 | [Cohort Retention Analysis](Skill-Cohort-Retention-Analysis.md) | 来源质量的长期版：不同来源的用户 30/60/90 天留存对比 |
-| 依赖 | [NonItem Page Path Modeling](Skill-NonItem-Page-Path-Modeling.md) | 结账流失分析需要页面级路径数据支撑 |
+| 延伸 | [Cohort Retention Analysis]([[Skill-Cohort-Retention-Analysis]].md) | 来源质量的长期版：不同来源的用户 30/60/90 天留存对比 |
+| 依赖 | [NonItem Page Path Modeling]([[Skill-NonItem-Page-Path-Modeling]].md) | 结账流失分析需要页面级路径数据支撑 |
 
 ---
 

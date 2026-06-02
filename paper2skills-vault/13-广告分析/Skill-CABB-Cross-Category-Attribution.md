@@ -768,11 +768,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-Ad-Attribution-Modeling (Shapley)](Skill-Ad-Attribution-Modeling.md) | Shapley 归因是基础，CABB 补充 Shapley 无法处理的跨品类 Session 场景 |
-| 组合 | [Skill-FrontDoor-Causal-MTA](Skill-FrontDoor-Causal-MTA.md) | CABB 修正 Session 偏差后，FrontDoor 进一步处理渠道选择性偏差，两者串联消偏更彻底 |
-| 组合 | [Skill-PIE-Experimental-MTA](Skill-PIE-Experimental-MTA.md) | CABB 补充 PIE 框架中未覆盖的跨品类购买路径，PIE RCT 校准后可叠加 CABB 权重修正 |
-| 延伸 | [Skill-ROAS-Budget-Optimization](Skill-ROAS-Budget-Optimization.md) | 归因修正后输入更准确的 ROAS 信号，提升预算优化质量 |
-| 延伸 | [Skill-PVM-Attribution-Window-Harmonization](Skill-PVM-Attribution-Window-Harmonization.md) | CABB 解决"购买商品不匹配"偏差，PVM 解决"归因时间窗口不一致"偏差，两类偏差正交互补 |
+| 前置 | [Skill-Ad-Attribution-Modeling (Shapley)]([[Skill-Ad-Attribution-Modeling]].md) | Shapley 归因是基础，CABB 补充 Shapley 无法处理的跨品类 Session 场景 |
+| 组合 | [Skill-FrontDoor-Causal-MTA]([[Skill-FrontDoor-Causal-MTA]].md) | CABB 修正 Session 偏差后，FrontDoor 进一步处理渠道选择性偏差，两者串联消偏更彻底 |
+| 组合 | [Skill-PIE-Experimental-MTA]([[Skill-PIE-Experimental-MTA]].md) | CABB 补充 PIE 框架中未覆盖的跨品类购买路径，PIE RCT 校准后可叠加 CABB 权重修正 |
+| 延伸 | [Skill-ROAS-Budget-Optimization]([[Skill-ROAS-Budget-Optimization]].md) | 归因修正后输入更准确的 ROAS 信号，提升预算优化质量 |
+| 延伸 | [Skill-PVM-Attribution-Window-Harmonization]([[Skill-PVM-Attribution-Window-Harmonization]].md) | CABB 解决"购买商品不匹配"偏差，PVM 解决"归因时间窗口不一致"偏差，两类偏差正交互补 |
 
 ---
 

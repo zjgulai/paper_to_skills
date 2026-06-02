@@ -47,4 +47,6 @@ print("[✓] GNN Foundations 测试通过")
 
 ---
 
+- **可组合**：[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]] / [[Skill-KG-Auto-Construction-Agent-Driven]]
+
 ## ⑤ 商业价值：10-20 万元 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐⭐☆☆

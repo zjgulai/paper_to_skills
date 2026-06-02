@@ -178,6 +178,8 @@ python hgt_model.py
 
 - **可组合**：[[Skill-KGQA-Question-Answering]] / [[Skill-KG-Augmented-Recommendation-CoLaKG]]
 
+- **可组合**：[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]] / [[Skill-KG-Auto-Construction-Agent-Driven]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

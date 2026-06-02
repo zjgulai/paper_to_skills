@@ -254,6 +254,9 @@ if __name__ == '__main__':
 ### 可组合
 - [Skill-Monodense-单品价格弹性估计](../04-供应链/Skill-Monodense-单品价格弹性估计.md) — 弹性影响最优库存水位
 
+
+- **可组合（延伸）**：[[Skill-Multi-Channel-Inventory-Pooling]] / [[Skill-FSDA-DRL]] / [[Skill-PPO_swap]] / [[Skill-Multilevel_FLP]]
+
 ## ⑤ 商业价值评估
 
 - **ROI**：缺货率降低+库存周转提升，年节省成本20-40万

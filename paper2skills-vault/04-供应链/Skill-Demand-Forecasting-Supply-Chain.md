@@ -255,6 +255,9 @@ if __name__ == '__main__':
 ### 可组合
 - [Skill-Monodense-单品价格弹性估计](../04-供应链/Skill-Monodense-单品价格弹性估计.md) — 弹性 + 需求预测联合定价决策
 
+
+- **可组合（延伸）**：[[Skill-Bass-Diffusion-New-Product-Forecasting]] / [[Skill-Cross-Border-Cold-Start-Forecast]] / [[Skill-Category-Trend-Forecasting]] / [[Skill-Switchback-Experiment-Design]]
+
 ## ⑤ 商业价值评估
 
 - **ROI**：缺货率降低50%，库存周转提升50%，年节省库存成本30万+

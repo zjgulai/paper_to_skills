@@ -666,11 +666,11 @@ python Skill-HGNN-Cross-Device-Matching.py
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Identity Fragmentation Debiasing](./Skill-Identity-Fragmentation-Debiasing.md) | Cohort 纠偏是基础（无ID聚合级），HGNN 升级到个体级深度匹配 |
-| 前置 | [CDA Cookieless Attribution](./Skill-CDA-Cookieless-Attribution.md) | 共同解决无 ID 归因问题；CDA 处理聚合级渠道归因，HGNN 处理设备级用户拼接 |
-| 组合 | [PVM Attribution Window Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md) | 跨设备匹配确认用户身份 → PVM 统一跨平台归因窗口，两步构成完整的跨端跨平台归因链路 |
+| 前置 | [Identity Fragmentation Debiasing](./[[Skill-Identity-Fragmentation-Debiasing]].md) | Cohort 纠偏是基础（无ID聚合级），HGNN 升级到个体级深度匹配 |
+| 前置 | [CDA Cookieless Attribution](./[[Skill-CDA-Cookieless-Attribution]].md) | 共同解决无 ID 归因问题；CDA 处理聚合级渠道归因，HGNN 处理设备级用户拼接 |
+| 组合 | [PVM Attribution Window Harmonization](./[[Skill-PVM-Attribution-Window-Harmonization]].md) | 跨设备匹配确认用户身份 → PVM 统一跨平台归因窗口，两步构成完整的跨端跨平台归因链路 |
 | 组合 | GraphTrack Cross-Device Tracking | 互补：HGNN 用深度学习（URL 语义模式匹配），GraphTrack 用随机游走（图结构匹配）；可集成 ensemble |
-| 延伸 | [ROAS Budget Optimization](./Skill-ROAS-Budget-Optimization.md) | HGNN 输出的用户级跨端路径作为更精确的 ROAS 计算输入，优化跨渠道预算分配 |
+| 延伸 | [ROAS Budget Optimization](./[[Skill-ROAS-Budget-Optimization]].md) | HGNN 输出的用户级跨端路径作为更精确的 ROAS 计算输入，优化跨渠道预算分配 |
 | 延伸 | SR-GNN (05-推荐系统) | 同一图神经网络处理会话序列的方法论，可迁移推荐系统跨端个性化场景 |
 
 ---

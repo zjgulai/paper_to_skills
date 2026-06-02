@@ -833,11 +833,11 @@ if __name__ == '__main__':
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Conformal ROI Prediction](Skill-Conformal-ROI-Prediction.md) | 标准 Split Conformal 是 SSBC 的基础，需先理解期望覆盖保证 |
-| 前置 | [Uplift Modeling](Skill-Uplift-Modeling.md) | Uplift 模型是共形预测的常见底层模型 |
+| 前置 | [Conformal ROI Prediction]([[Skill-Conformal-ROI-Prediction]].md) | 标准 Split Conformal 是 SSBC 的基础，需先理解期望覆盖保证 |
+| 前置 | [Uplift Modeling]([[Skill-Uplift-Modeling]].md) | Uplift 模型是共形预测的常见底层模型 |
 | 组合 | EPICSCORE（06-增长模型） | EPICSCORE 改进非一致性分数，SSBC 调整显著性水平，联合使用效果最佳 |
-| 组合 | [DML Cohort Causal Effect](Skill-DML-Cohort-Causal-Effect.md) | DML 小样本产出点估计 + SSBC 保证区间覆盖 |
-| 延伸 | [DiD Difference-in-Differences](Skill-DiD-Difference-in-Differences.md) | DiD 在小样本下的可信区间同样可用 SSBC 增强 |
+| 组合 | [DML Cohort Causal Effect]([[Skill-DML-Cohort-Causal-Effect]].md) | DML 小样本产出点估计 + SSBC 保证区间覆盖 |
+| 延伸 | [DiD Difference-in-Differences]([[Skill-DiD-Difference-in-Differences]].md) | DiD 在小样本下的可信区间同样可用 SSBC 增强 |
 | 延伸 | A/B 实验设计（02-A_B实验） | 共形预测的校准集本质是小规模 RCT，SSBC 减少了所需 RCT 样本量 |
 
 ---

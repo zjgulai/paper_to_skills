@@ -49,4 +49,6 @@ print("[✓] NL2Dashboard 测试通过")
 
 ---
 
+- **可组合**：[[Skill-Root-Cause-Analysis-Agent]] / [[Skill-Data-to-Dashboard-Multi-Agent-Visualization]]
+
 ## ⑤ 商业价值：15-25 万元 | **难度**：⭐⭐⭐☆☆ | **优先级**：⭐⭐⭐☆☆

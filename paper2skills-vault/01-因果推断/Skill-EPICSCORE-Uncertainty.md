@@ -569,11 +569,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-Conformal-ROI-Prediction](./Skill-Conformal-ROI-Prediction.md) | 标准共形是 EPICSCORE 的基础；需先理解非一致性分数、分位数阈值机制 |
+| 前置 | [Skill-Conformal-ROI-Prediction](./[[Skill-Conformal-ROI-Prediction]].md) | 标准共形是 EPICSCORE 的基础；需先理解非一致性分数、分位数阈值机制 |
 | 前置 | 贝叶斯推断基础（GP / MC Dropout / BART） | EPICSCORE 的后端依赖贝叶斯后验，需对后验预测分布有基本认知 |
 | 组合 | Utimac Uncertainty Completion | Utimac 补全缺失的矩阵条目（桑基图边），EPICSCORE 在补全结果上给出自适应置信区间，两者串联：先补全→再量化不确定性 |
-| 组合 | [Skill-DML-Cohort-Causal-Effect](./Skill-DML-Cohort-Causal-Effect.md) | DML 给出因果点估计，EPICSCORE 在样本稀疏的子群（如新兴市场冷门品类）上扩宽区间，避免虚假精准的因果结论 |
-| 扩展 | [Skill-Uplift-Modeling](./Skill-Uplift-Modeling.md) | Uplift 模型输出 CATE 点预测，可接入 EPICSCORE 得到自适应 CATE 区间 |
+| 组合 | [Skill-DML-Cohort-Causal-Effect](./[[Skill-DML-Cohort-Causal-Effect]].md) | DML 给出因果点估计，EPICSCORE 在样本稀疏的子群（如新兴市场冷门品类）上扩宽区间，避免虚假精准的因果结论 |
+| 扩展 | [Skill-Uplift-Modeling](./[[Skill-Uplift-Modeling]].md) | Uplift 模型输出 CATE 点预测，可接入 EPICSCORE 得到自适应 CATE 区间 |
 | 对比 | CQR-r（Rossellini et al.2024） | 仅适用于分位数回归，EPICSCORE 更通用；但 CQR-r 实现更简单，数据充足时两者性能接近 |
 
 ---

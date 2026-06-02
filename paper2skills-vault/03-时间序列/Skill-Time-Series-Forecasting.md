@@ -423,6 +423,9 @@ if __name__ == '__main__':
 
 - **可组合**：[[Skill-Prophet-Forecasting]]
 
+
+- **可组合（延伸）**：[[Skill-DQN-Purchase-Prediction]] / [[Skill-Customer-Journey-Prototype]] / [[Skill-User-Lifecycle-STAN]] / [[Skill-Bass-Diffusion-New-Product-Forecasting]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

@@ -798,10 +798,10 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-User-Funnel-Analysis](./Skill-User-Funnel-Analysis.md) | 理解漏斗各步骤定义是构建混合序列的基础；非商品页对应漏斗的「导航层」 |
-| 前置 | [Skill-Cohort-Retention-Analysis](./Skill-Cohort-Retention-Analysis.md) | 了解用户留存路径，识别哪些非商品页是高价值用户的典型路径节点 |
-| 延伸 | [Skill-TRACE-Clickstream-Embedding](../05-推荐系统/Skill-TRACE-Clickstream-Embedding.md) | TRACE 提供更精细的点击流 Token 化方案，可与非商品页表征联合编码 |
-| 延伸 | [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/Skill-Customer-Journey-Decision-Tree.md) | 非商品页路径分析的结果可直接作为 Journey Tree 的转移概率输入 |
+| 前置 | [Skill-User-Funnel-Analysis](./[[Skill-User-Funnel-Analysis]].md) | 理解漏斗各步骤定义是构建混合序列的基础；非商品页对应漏斗的「导航层」 |
+| 前置 | [Skill-Cohort-Retention-Analysis](./[[Skill-Cohort-Retention-Analysis]].md) | 了解用户留存路径，识别哪些非商品页是高价值用户的典型路径节点 |
+| 延伸 | [Skill-TRACE-Clickstream-Embedding](../05-推荐系统/[[Skill-TRACE-Clickstream-Embedding]].md) | TRACE 提供更精细的点击流 Token 化方案，可与非商品页表征联合编码 |
+| 延伸 | [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/[[Skill-Customer-Journey-Decision-Tree]].md) | 非商品页路径分析的结果可直接作为 Journey Tree 的转移概率输入 |
 | 组合 | [Skill-SR-GNN-Session-Recommendation](../05-推荐系统/Skill-SR-GNN-Session-Recommendation.md) | SR-GNN 图建模 + 非商品页节点嵌入注入：同一 session 内的完整图拓扑推荐 |
 | 组合 | [Skill-Hierarchical-Product-KG](../08-知识图谱/Skill-Hierarchical-Product-KG.md) | KG 的品类层次结构可直接作为 CLP 页面的 CPID 分类属性来源 |
 

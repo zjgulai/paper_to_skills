@@ -240,6 +240,9 @@ if __name__ == '__main__':
 ### 可组合
 - [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — MMM 弹性曲线为优化提供约束
 
+
+- **可组合（延伸）**：[[Skill-Audience-Knowledge-Graph]] / [[Skill-PVM-Attribution-Window-Harmonization]] / [[Skill-Negative-Keyword-Safe-Guard]] / [[Skill-Negative-Keyword-Safe-Guard]]
+
 ## ⑤ 商业价值评估
 
 - **ROI**：预算重新分配后整体ROAS提升20-30%，年增收50万+

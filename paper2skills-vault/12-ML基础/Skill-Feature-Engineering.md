@@ -267,6 +267,9 @@ if __name__ == '__main__':
 - [Skill-Matrix-Factorization](../05-推荐系统/[[Skill-Matrix-Factorization]].md) — 推荐系统的隐因子也是特征工程的延伸
 - [Skill-Customer-Churn-Prediction](../06-增长模型/[[Skill-Customer-Churn-Prediction]].md) — 流失模型严重依赖特征工程
 
+
+- **可组合（延伸）**：[[Skill-Multilingual-NER-Universal-v2]] / [[Skill-Listing-Quality-Scoring]] / [[Skill-Deep-Learning-Churn-Prediction]] / [[Skill-RFM-Customer-Segmentation]]
+
 ## ⑤ 商业价值评估
 
 - **ROI**：特征质量提升 → 模型效果提升30-50%，直接转化为业务收益

@@ -261,6 +261,9 @@ if __name__ == '__main__':
 ### 可组合
 - [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — 渠道归因 + MMM 形成短长期视角统一
 
+
+- **可组合（延伸）**：[[Skill-PVM-Attribution-Window-Harmonization]] / [[Skill-Negative-Keyword-Safe-Guard]] / [[Skill-Negative-Keyword-Safe-Guard]] / [[Skill-FrontDoor-Causal-MTA]]
+
 ## ⑤ 商业价值评估
 
 - **ROI**：预算重新分配后ROAS提升20-40%，年节省浪费预算10万+

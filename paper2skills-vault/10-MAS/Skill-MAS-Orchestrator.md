@@ -226,6 +226,9 @@ python orchestrator.py
 
 - **可组合**：[[Skill-ReAct-Reasoning-Acting]]
 
+
+- **可组合（延伸）**：[[Skill-AgentRouter-KG-Guided]] / [[Skill-DialIn-LLM-Case-Intent-Clustering]] / [[Skill-Customer-Journey-Decision-Tree]] / [[Skill-Data-to-Dashboard-Multi-Agent-Visualization]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

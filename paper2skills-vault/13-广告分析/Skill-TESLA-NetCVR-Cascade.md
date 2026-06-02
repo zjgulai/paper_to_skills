@@ -926,15 +926,15 @@ flowchart LR
     classDef related fill:#c8e6c9
     classDef advanced fill:#e1bee7
 
-    TESLA["Skill-TESLA-NetCVR-Cascade\n（本技能）"]:::core
+    TESLA["[[Skill-TESLA-NetCVR-Cascade]]\n（本技能）"]:::core
 
-    TRACE["Skill-TRACE-Delayed-CVR\n（点击后轨迹条件CVR）"]:::related
+    TRACE["[[Skill-TRACE-Delayed-CVR]]\n（点击后轨迹条件CVR）"]:::related
     TRACE_DESC["前置技能：理解延迟反馈\n基础去偏方法"]
 
-    ATTR["Skill-Ad-Attribution-Modeling\n（多触点归因）"]:::related
+    ATTR["[[Skill-Ad-Attribution-Modeling]]\n（多触点归因）"]:::related
     ATTR_DESC["组合：归因权重 × NetCVR\n= 真实 ROI 归因"]
 
-    ROAS["Skill-ROAS-Budget-Optimization\n（广告预算优化）"]:::related
+    ROAS["[[Skill-ROAS-Budget-Optimization]]\n（广告预算优化）"]:::related
     ROAS_DESC["延伸：NetCVR 排序分\n驱动预算分配"]
 
     PVM["Skill-PVM-Attribution-Window\n（归因窗口协调）"]:::advanced
@@ -948,11 +948,11 @@ flowchart LR
 
 | 关系 | 技能 | 说明 |
 |------|------|------|
-| **前置** | [Skill-TRACE-Delayed-CVR](./Skill-TRACE-Delayed-CVR.md) | 理解延迟反馈基础方法再看 TESLA |
-| **前置** | [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md) | 多触点归因基础 |
-| **延伸** | [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md) | NetCVR 作为排序信号驱动预算分配 |
-| **组合** | [Skill-PVM-Attribution-Window-Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md) | 统一 CVR 和 RFR 的归因时间窗口 |
-| **组合** | [Skill-CDA-Cookieless-Attribution](./Skill-CDA-Cookieless-Attribution.md) | 无 Cookie 场景下的净转化归因 |
+| **前置** | [Skill-TRACE-Delayed-CVR](./[[Skill-TRACE-Delayed-CVR]].md) | 理解延迟反馈基础方法再看 TESLA |
+| **前置** | [Skill-Ad-Attribution-Modeling](./[[Skill-Ad-Attribution-Modeling]].md) | 多触点归因基础 |
+| **延伸** | [Skill-ROAS-Budget-Optimization](./[[Skill-ROAS-Budget-Optimization]].md) | NetCVR 作为排序信号驱动预算分配 |
+| **组合** | [Skill-PVM-Attribution-Window-Harmonization](./[[Skill-PVM-Attribution-Window-Harmonization]].md) | 统一 CVR 和 RFR 的归因时间窗口 |
+| **组合** | [Skill-CDA-Cookieless-Attribution](./[[Skill-CDA-Cookieless-Attribution]].md) | 无 Cookie 场景下的净转化归因 |
 
 ---
 

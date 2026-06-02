@@ -1000,11 +1000,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-Sparse-Matrix-Completion](Skill-Sparse-Matrix-Completion.md) | 同为矩阵补全问题，Hájek-GD 处理无图结构场景，STAMImputer 处理有时空图结构场景；先理解前者再看 MoE 框架更自然 |
-| 前置 | [Skill-Traffic-Source-Analysis](Skill-Traffic-Source-Analysis.md) | 流量来源分析提供渠道定义和业务语义，是构建静态邻接矩阵的输入 |
-| 组合 | [Skill-User-Funnel-Analysis](Skill-User-Funnel-Analysis.md) | 补全后的完整流量矩阵（无缺失）才能支撑准确的漏斗分析，两者构成"补全→分析"流水线 |
-| 组合 | [Skill-Cohort-Retention-Analysis](Skill-Cohort-Retention-Analysis.md) | 补全跨渠道留存数据 + 留存分群 = 不同渠道用户的差异化行为识别 |
-| 延伸 | [Skill-TRACE-Clickstream-Embedding](Skill-TRACE-Clickstream-Embedding.md) | 补全后的流量时序矩阵可作为 Clickstream Embedding 的输入，提升序列建模精度 |
+| 前置 | [Skill-Sparse-Matrix-Completion]([[Skill-Sparse-Matrix-Completion]].md) | 同为矩阵补全问题，Hájek-GD 处理无图结构场景，STAMImputer 处理有时空图结构场景；先理解前者再看 MoE 框架更自然 |
+| 前置 | [Skill-Traffic-Source-Analysis]([[Skill-Traffic-Source-Analysis]].md) | 流量来源分析提供渠道定义和业务语义，是构建静态邻接矩阵的输入 |
+| 组合 | [Skill-User-Funnel-Analysis]([[Skill-User-Funnel-Analysis]].md) | 补全后的完整流量矩阵（无缺失）才能支撑准确的漏斗分析，两者构成"补全→分析"流水线 |
+| 组合 | [Skill-Cohort-Retention-Analysis]([[Skill-Cohort-Retention-Analysis]].md) | 补全跨渠道留存数据 + 留存分群 = 不同渠道用户的差异化行为识别 |
+| 延伸 | [Skill-TRACE-Clickstream-Embedding]([[Skill-TRACE-Clickstream-Embedding]].md) | 补全后的流量时序矩阵可作为 Clickstream Embedding 的输入，提升序列建模精度 |
 | 延伸 | Skill-Spatio-Temporal-Forecasting（待建） | 补全后的完整矩阵可喂入时序预测模型，预测未来 7/14/30 天各渠道流量趋势 |
 
 ---

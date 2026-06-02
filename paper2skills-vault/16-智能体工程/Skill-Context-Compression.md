@@ -218,6 +218,9 @@ python acon.py
 
 ---
 
+
+- **可组合（延伸）**：[[Skill-Tool-Description-Audit]] / [[Skill-Cost-Aware-Agent-Scheduling]] / [[Skill-Orchestration-Trace-RL]] / [[Skill-DAG-Task-Decomposition-Planning]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

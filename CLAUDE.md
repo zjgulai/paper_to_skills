@@ -272,7 +272,7 @@ Search priority: Papers with code implementations > experimental validation > th
 
 ## Recent Skills Added
 
-> 总计 **220 个 Skill** 跨 **22 个领域**. Sprint 4+5 新增 12 个 P0 Skill (2026-05-25). 图谱 252节点 / 2875边. missing_prerequisite 断链 = 0.
+> 总计 **220 个 Skill** 跨 **22 个领域**. Sprint 4+5 新增 12 个 P0 Skill (2026-05-25). 图谱 257节点 / 3203边. missing_prerequisite 断链 = 0.
 
 ### Sprint 5 (2026-05-25) — 供应链供应计划侧 6 个 Skill
 

@@ -932,11 +932,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | Skill-User-Funnel-Analysis | TRACE 的目标之一（PW2、BN5）正是漏斗分析的关键节点，需要先理解转化漏斗结构才能正确定义预测任务 |
-| 前置 | Skill-Customer-Journey-Prototype | TRACE 处理的"旅程 Journey"概念与用户旅程地图高度对应，业务分析先行可指导选择哪些页面作为关键节点 |
+| 前置 | [[Skill-User-Funnel-Analysis]] | TRACE 的目标之一（PW2、BN5）正是漏斗分析的关键节点，需要先理解转化漏斗结构才能正确定义预测任务 |
+| 前置 | [[Skill-Customer-Journey-Prototype]] | TRACE 处理的"旅程 Journey"概念与用户旅程地图高度对应，业务分析先行可指导选择哪些页面作为关键节点 |
 | 延伸 | Skill-STAN-User-Lifecycle | TRACE 产出的用户嵌入可以作为 STAN 用户生命周期分类模型的输入特征，两者形成"嵌入表示→阶段分类"的 Pipeline |
-| 延伸 | Skill-PersonaBot-RAG-Profiling | TRACE 学到的用户群簇（t-SNE 可视化揭示的 latent states）可以喂给 PersonaBot 生成对应 Persona 描述 |
-| 组合 | Skill-Cohort-Retention-Analysis | TRACE 嵌入可以作为留存分析的协变量，识别哪些用户行为模式与 7 日/30 日留存率强相关 |
+| 延伸 | [[Skill-PersonaBot-RAG-Profiling]] | TRACE 学到的用户群簇（t-SNE 可视化揭示的 latent states）可以喂给 PersonaBot 生成对应 Persona 描述 |
+| 组合 | [[Skill-Cohort-Retention-Analysis]] | TRACE 嵌入可以作为留存分析的协变量，识别哪些用户行为模式与 7 日/30 日留存率强相关 |
 
 ---
 

@@ -365,6 +365,9 @@ if __name__ == '__main__':
 
 - **可组合**：[[Skill-RFM-Customer-Segmentation]] / [[Skill-LTV-Prediction-ZILN]]
 
+
+- **可组合（延伸）**：[[Skill-Negative-Keyword-Safe-Guard]] / [[Skill-Creative-Fatigue-Detection]] / [[Skill-DQN-Purchase-Prediction]] / [[Skill-UCB-LDP-Dynamic-Pricing]]
+
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：Churn 预测模型命中率提升 15-20%，每月减少 50-100 名高价值客户流失，按客单价 ¥300 计，月均保留价值 ¥1.5-3 万

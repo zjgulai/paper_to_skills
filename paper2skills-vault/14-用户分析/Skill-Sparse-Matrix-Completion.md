@@ -892,11 +892,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-Trajectory-Pattern-Mining](Skill-Trajectory-Pattern-Mining.md) | 轨迹挖掘产出 session 级页面序列，是本 Skill 的输入数据源 |
-| 前置 | [Skill-NonItem-Page-Path-Modeling](Skill-NonItem-Page-Path-Modeling.md) | 非商品页路径模型提供页面类型定义（d=10的类目体系） |
-| 组合 | [Skill-Traffic-Source-Analysis](Skill-Traffic-Source-Analysis.md) | 来源分析（外部流量）+ 站内转移矩阵（内部流量）= 端到端完整桑基图 |
-| 组合 | [Skill-User-Funnel-Analysis](Skill-User-Funnel-Analysis.md) | 漏斗分析提供宏观聚合数据，本 Skill 提供路径级细节，相互补充 |
-| 组合 | [Skill-Cohort-Retention-Analysis](Skill-Cohort-Retention-Analysis.md) | 补全矩阵 + 留存分群 = 不同用户群的差异化路径识别 |
+| 前置 | [Skill-Trajectory-Pattern-Mining]([[Skill-Trajectory-Pattern-Mining]].md) | 轨迹挖掘产出 session 级页面序列，是本 Skill 的输入数据源 |
+| 前置 | [Skill-NonItem-Page-Path-Modeling]([[Skill-NonItem-Page-Path-Modeling]].md) | 非商品页路径模型提供页面类型定义（d=10的类目体系） |
+| 组合 | [Skill-Traffic-Source-Analysis]([[Skill-Traffic-Source-Analysis]].md) | 来源分析（外部流量）+ 站内转移矩阵（内部流量）= 端到端完整桑基图 |
+| 组合 | [Skill-User-Funnel-Analysis]([[Skill-User-Funnel-Analysis]].md) | 漏斗分析提供宏观聚合数据，本 Skill 提供路径级细节，相互补充 |
+| 组合 | [Skill-Cohort-Retention-Analysis]([[Skill-Cohort-Retention-Analysis]].md) | 补全矩阵 + 留存分群 = 不同用户群的差异化路径识别 |
 | 延伸 | Skill-Conformal-ROI（待建） | 补全矩阵 + 置信区间 = 可信数据底座，量化路径不确定性 |
 
 ---

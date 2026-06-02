@@ -891,11 +891,11 @@ if __name__ == "__main__":
 
 | 关系 | 技能 | 理由 |
 |------|------|------|
-| 前置 | [Skill-Sparse-Matrix-Completion](Skill-Sparse-Matrix-Completion.md) | Hájek-GD 解决的是**稀疏但随机分布**的缺失（每行少量观测）；BlockEcho 解决的是**整块连续**缺失；先理解稀疏矩阵补全的基本框架再理解 BlockEcho 的块缺失扩展 |
-| 前置 | [Skill-Utimac-Uncertainty-Completion](Skill-Utimac-Uncertainty-Completion.md) | Utimac 提供补全值的置信区间；BlockEcho 提供更准确的点估计；两者互补：BlockEcho 补全 → Utimac 量化不确定性 |
-| 组合 | [Skill-Traffic-Source-Analysis](Skill-Traffic-Source-Analysis.md) | 广告渠道数据块缺失（如 TikTok/Facebook 故障）→ BlockEcho 恢复 → 流量来源分析恢复完整桑基图；解决"桑基图整个时间段缺失"问题 |
-| 组合 | [Skill-User-Funnel-Analysis](Skill-User-Funnel-Analysis.md) | 特定时间段（如大促期间）漏斗数据块缺失 → BlockEcho 恢复完整漏斗 → 对比大促前后转化差异 |
-| 组合 | [Skill-Cohort-Retention-Analysis](Skill-Cohort-Retention-Analysis.md) | 队列分析需要完整时间序列；某月数据块缺失时用 BlockEcho 恢复再做留存计算 |
+| 前置 | [Skill-Sparse-Matrix-Completion]([[Skill-Sparse-Matrix-Completion]].md) | Hájek-GD 解决的是**稀疏但随机分布**的缺失（每行少量观测）；BlockEcho 解决的是**整块连续**缺失；先理解稀疏矩阵补全的基本框架再理解 BlockEcho 的块缺失扩展 |
+| 前置 | [Skill-Utimac-Uncertainty-Completion]([[Skill-Utimac-Uncertainty-Completion]].md) | Utimac 提供补全值的置信区间；BlockEcho 提供更准确的点估计；两者互补：BlockEcho 补全 → Utimac 量化不确定性 |
+| 组合 | [Skill-Traffic-Source-Analysis]([[Skill-Traffic-Source-Analysis]].md) | 广告渠道数据块缺失（如 TikTok/Facebook 故障）→ BlockEcho 恢复 → 流量来源分析恢复完整桑基图；解决"桑基图整个时间段缺失"问题 |
+| 组合 | [Skill-User-Funnel-Analysis]([[Skill-User-Funnel-Analysis]].md) | 特定时间段（如大促期间）漏斗数据块缺失 → BlockEcho 恢复完整漏斗 → 对比大促前后转化差异 |
+| 组合 | [Skill-Cohort-Retention-Analysis]([[Skill-Cohort-Retention-Analysis]].md) | 队列分析需要完整时间序列；某月数据块缺失时用 BlockEcho 恢复再做留存计算 |
 | 延伸 | Skill-GAN-Data-Augmentation（待建）| BlockEcho 的 GAN 框架可扩展为数据增强，生成稀缺素材表现数据 |
 | 延伸 | Skill-Anomaly-Detection（待建）| 补全后的完整矩阵可用于检测异常：真实值与 BlockEcho 补全值差异过大处即为异常 |
 

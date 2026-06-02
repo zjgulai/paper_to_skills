@@ -54,4 +54,6 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]] / [[Skill-Phantom-Product-Showcase-I2V]] / [[Skill-DAWN-Talking-Head-Review]]
+
 ## ⑤ 商业价值：技术储备 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐☆☆☆
