@@ -2,13 +2,13 @@
 
 ## 1. 图谱概览
 
-- **节点总数**: 286 个技能
-- **边总数**: 5132 条关系
+- **节点总数**: 287 个技能
+- **边总数**: 5152 条关系
 - **领域分布**:
   - ab_testing: 12 个
   - advertising: 20 个
   - ai_humanities: 6 个
-  - causal_inference: 13 个
+  - causal_inference: 14 个
   - data_agent_llm: 11 个
   - growth_model: 22 个
   - knowledge_graph: 17 个
