@@ -241,19 +241,19 @@ python mas_orchestration.py
 
 ### 前置技能
 
-- **10-MAS Skill-MAS-Orchestrator**:本项目已有的 orchestrator 基础
-- **10-MAS Skill-AutoGen-Multi-Agent-Conversation**:理解多 agent 对话模型
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK):理解 P7 marketplace 模式
+- **10-MAS [[Skill-MAS-Orchestrator]]**:本项目已有的 orchestrator 基础
+- **10-MAS [[Skill-AutoGen-Multi-Agent-Conversation]]**:理解多 agent 对话模型
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK):理解 P7 marketplace 模式
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Orchestration-Trace-RL**(RL via Traces):用 trace 训 orchestration 策略
-- **16-智能体工程 Skill-Task-Adaptive-Topology**(AdaptOrch):动态拓扑选择
+- **16-智能体工程 [[Skill-Orchestration-Trace-RL]]**(RL via Traces):用 trace 训 orchestration 策略
+- **16-智能体工程 [[Skill-Task-Adaptive-Topology]]**(AdaptOrch):动态拓扑选择
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-Agentic-Memory-Management**(AgeMem):State & Knowledge Unit 的实现
-- **16-智能体工程 Skill-Tool-Description-Audit**(MCP Smelly):MCP tool 描述审计
+- **16-智能体工程 [[Skill-Agentic-Memory-Management]]**(AgeMem):State & Knowledge Unit 的实现
+- **16-智能体工程 [[Skill-Tool-Description-Audit]]**(MCP Smelly):MCP tool 描述审计
 - **本项目 paper-同步 skill**:本身就是一个轻 MAS(选题→萃取→审核→同步)
 
 ---

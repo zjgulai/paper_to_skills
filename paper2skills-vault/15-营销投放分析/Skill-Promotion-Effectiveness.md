@@ -380,14 +380,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — MMM 提供渠道基线，促销在此基线上叠加
-- [Skill-Intelligent-Prediction-Doubly-Robust](../03-时间序列/Skill-Intelligent-Prediction-Doubly-Robust.md) — DR 估计是促销因果效应的核心方法
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — MMM 提供渠道基线，促销在此基线上叠加
+- [Skill-Intelligent-Prediction-Doubly-Robust](../03-时间序列/[[Skill-Intelligent-Prediction-Doubly-Robust]].md) — DR 估计是促销因果效应的核心方法
 
 ### 延伸技能
 - [Skill-Monodense-单品价格弹性估计](../04-供应链/Skill-Monodense-单品价格弹性估计.md) — 促销下沉到 SKU 级别价格弹性
 
 ### 可组合
-- [Skill-Ad-Attribution-Modeling](../13-广告分析/Skill-Ad-Attribution-Modeling.md) — 归因 + 促销因果联合给出 ROI 全景
+- [Skill-Ad-Attribution-Modeling](../13-广告分析/[[Skill-Ad-Attribution-Modeling]].md) — 归因 + 促销因果联合给出 ROI 全景
 
 ## ⑤ 商业价值评估
 

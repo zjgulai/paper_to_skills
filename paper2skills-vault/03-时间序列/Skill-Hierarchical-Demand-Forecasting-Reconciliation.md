@@ -217,17 +217,17 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Time-Series-Forecasting](./Skill-Time-Series-Forecasting.md) — 各层独立 base forecasts 基础
-- [Skill-Prophet-Forecasting](./Skill-Prophet-Forecasting.md) — Stage 1 三模型集成成员
-- [Skill-Temporal-Fusion-Transformer](./Skill-Temporal-Fusion-Transformer.md) — 高精度 base forecasts 备选
+- [Skill-Time-Series-Forecasting](./[[Skill-Time-Series-Forecasting]].md) — 各层独立 base forecasts 基础
+- [Skill-Prophet-Forecasting](./[[Skill-Prophet-Forecasting]].md) — Stage 1 三模型集成成员
+- [Skill-Temporal-Fusion-Transformer](./[[Skill-Temporal-Fusion-Transformer]].md) — 高精度 base forecasts 备选
 
 ### 延伸技能
-- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/Skill-Demand-Forecasting-Supply-Chain.md) — HiFoReAd 输出直接驱动 SKU 级补货
-- [Skill-Safety-Stock-Replenishment](../04-供应链/Skill-Safety-Stock-Replenishment.md) — 调和后的预测用于安全库存计算
+- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/[[Skill-Demand-Forecasting-Supply-Chain]].md) — HiFoReAd 输出直接驱动 SKU 级补货
+- [Skill-Safety-Stock-Replenishment](../04-供应链/[[Skill-Safety-Stock-Replenishment]].md) — 调和后的预测用于安全库存计算
 
 ### 可组合
-- [Skill-Causal-Time-Series-Forecasting-GCF](./Skill-Causal-Time-Series-Forecasting-GCF.md) — GCF 反事实需求 + HiFoReAd 层级调和的组合
-- [Skill-Multi-Echelon-Inventory](../04-供应链/Skill-Multi-Echelon-Inventory.md) — 多阶库存调拨 + 多层预测调和形成完整补货闭环
+- [Skill-Causal-Time-Series-Forecasting-GCF](./[[Skill-Causal-Time-Series-Forecasting-GCF]].md) — GCF 反事实需求 + HiFoReAd 层级调和的组合
+- [Skill-Multi-Echelon-Inventory](../04-供应链/[[Skill-Multi-Echelon-Inventory]].md) — 多阶库存调拨 + 多层预测调和形成完整补货闭环
 
 ---
 

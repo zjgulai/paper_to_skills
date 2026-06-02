@@ -132,8 +132,8 @@ print(roas_df)
 ## ④ 技能关联
 
 - **前置技能**：
-  - [Skill-Ad-Attribution-Modeling](Skill-Ad-Attribution-Modeling.md) — MTA 基础（Shapley/Markov 归因）
-  - [Skill-PVM-Attribution-Window-Harmonization](Skill-PVM-Attribution-Window-Harmonization.md) — 跨平台窗口统一（先做窗口对齐再做因果估计）
+  - [Skill-Ad-Attribution-Modeling]([[Skill-Ad-Attribution-Modeling]].md) — MTA 基础（Shapley/Markov 归因）
+  - [Skill-PVM-Attribution-Window-Harmonization]([[Skill-PVM-Attribution-Window-Harmonization]].md) — 跨平台窗口统一（先做窗口对齐再做因果估计）
 - **延伸技能**：
   - `01-因果推断/Skill-Causal-Uplift-Modeling` — 广告渠道 Uplift 分层运营
   - `01-因果推断/Skill-DML-Cohort-Analysis` — 双重机器学习处理连续处理变量

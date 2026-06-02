@@ -246,10 +246,10 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/Skill-Demand-Forecasting-Supply-Chain.md) — 安全库存计算依赖需求预测分布
+- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/[[Skill-Demand-Forecasting-Supply-Chain]].md) — 安全库存计算依赖需求预测分布
 
 ### 延伸技能
-- [Skill-Two-Echelon-Inventory-DRL](../04-供应链/Skill-Two-Echelon-Inventory-DRL.md) — 单层安全库存升级为多层 DRL 决策
+- [Skill-Two-Echelon-Inventory-DRL](../04-供应链/[[Skill-Two-Echelon-Inventory-DRL]].md) — 单层安全库存升级为多层 DRL 决策
 
 ### 可组合
 - [Skill-Monodense-单品价格弹性估计](../04-供应链/Skill-Monodense-单品价格弹性估计.md) — 弹性影响最优库存水位

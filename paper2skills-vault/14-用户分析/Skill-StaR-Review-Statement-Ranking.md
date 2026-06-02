@@ -210,16 +210,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/Skill-Multilingual-NER-Universal-v2.md) — Aspect 实体抽取的基础
-- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](../08-知识图谱/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md) — 语义聚类的 dense embedding 基础
+- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/[[Skill-Multilingual-NER-Universal-v2]].md) — Aspect 实体抽取的基础
+- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](../08-知识图谱/[[Skill-Dense-Retrieval-Ecommerce-Semantic-Search]].md) — 语义聚类的 dense embedding 基础
 
 ### 延伸技能
-- [Skill-AGRS-Aspect-Guided-Review-Summarization](./Skill-AGRS-Aspect-Guided-Review-Summarization.md) — StaR Top statements 作为 AGRS 摘要骨架
-- [Skill-MAA-Review-to-Action-Decision](./Skill-MAA-Review-to-Action-Decision.md) — StaR 提供 atomic statements 喂给 MAA Issue Agent
+- [Skill-AGRS-Aspect-Guided-Review-Summarization](./[[Skill-AGRS-Aspect-Guided-Review-Summarization]].md) — StaR Top statements 作为 AGRS 摘要骨架
+- [Skill-MAA-Review-to-Action-Decision](./[[Skill-MAA-Review-to-Action-Decision]].md) — StaR 提供 atomic statements 喂给 MAA Issue Agent
 
 ### 可组合
-- [Skill-Explainable-Recommendation](../05-推荐系统/Skill-Explainable-Recommendation.md) — StaR 排序解释直接用于推荐解释
-- [Skill-Cohort-Retention-Analysis](./Skill-Cohort-Retention-Analysis.md) — 不同队列用户 statement 偏好对比分析
+- [Skill-Explainable-Recommendation](../05-推荐系统/[[Skill-Explainable-Recommendation]].md) — StaR 排序解释直接用于推荐解释
+- [Skill-Cohort-Retention-Analysis](./[[Skill-Cohort-Retention-Analysis]].md) — 不同队列用户 statement 偏好对比分析
 
 ---
 

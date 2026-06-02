@@ -237,16 +237,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/Skill-Multilingual-NER-Universal-v2.md) — 多语种 ABSA 第一阶段抽取依赖 NER
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — Aspect 频率统计与归一化的特征处理基础
+- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/[[Skill-Multilingual-NER-Universal-v2]].md) — 多语种 ABSA 第一阶段抽取依赖 NER
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — Aspect 频率统计与归一化的特征处理基础
 
 ### 延伸技能
-- [Skill-MAA-Review-to-Action-Decision](./Skill-MAA-Review-to-Action-Decision.md) — AGRS 摘要直接喂 MAA 生成可执行改进建议
-- [Skill-StaR-Review-Statement-Ranking](./Skill-StaR-Review-Statement-Ranking.md) — Aspect 提取后用 StaR 做原子观点排序
+- [Skill-MAA-Review-to-Action-Decision](./[[Skill-MAA-Review-to-Action-Decision]].md) — AGRS 摘要直接喂 MAA 生成可执行改进建议
+- [Skill-StaR-Review-Statement-Ranking](./[[Skill-StaR-Review-Statement-Ranking]].md) — Aspect 提取后用 StaR 做原子观点排序
 
 ### 可组合
-- [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/Skill-Customer-Journey-Decision-Tree.md) — 客服回复时引用 AGRS 摘要作为 FAQ 上下文
-- [Skill-Argos-Agentic-Anomaly-Detection](../09-DataAgent-LLM/Skill-Argos-Agentic-Anomaly-Detection.md) — Argos 检测 Review 异常 + AGRS 总结产品状态形成监控闭环
+- [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/[[Skill-Customer-Journey-Decision-Tree]].md) — 客服回复时引用 AGRS 摘要作为 FAQ 上下文
+- [Skill-Argos-Agentic-Anomaly-Detection](../09-DataAgent-LLM/[[Skill-Argos-Agentic-Anomaly-Detection]].md) — Argos 检测 Review 异常 + AGRS 总结产品状态形成监控闭环
 
 ---
 

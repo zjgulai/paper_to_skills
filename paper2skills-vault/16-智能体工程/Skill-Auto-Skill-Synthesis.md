@@ -181,13 +181,13 @@ python skillforge.py
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK Agentic Skills):Skill 全生命周期理论框架
-- **16-智能体工程 Skill-Co-Evolutionary-Skill-Verification**(EvoSkills):用协同进化验证替代单 LLM-judge
-- **10-MAS Skill-Self-Improving-Agent-Feedback-Loop**:Self-Refine 类自迭代机制
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK Agentic Skills):Skill 全生命周期理论框架
+- **16-智能体工程 [[Skill-Co-Evolutionary-Skill-Verification]]**(EvoSkills):用协同进化验证替代单 LLM-judge
+- **10-MAS [[Skill-Self-Improving-Agent-Feedback-Loop]]**:Self-Refine 类自迭代机制
 
 ### 可组合技能
 
-- **10-MAS Skill-MetaGPT-SOP-Driven-Collaboration**:把 Mined Workflow 转为多 agent SOP
+- **10-MAS [[Skill-MetaGPT-SOP-Driven-Collaboration]]**:把 Mined Workflow 转为多 agent SOP
 - **07-NLP-VOC 自动打标签**:产生 Failure Analyzer 4 维度训练数据
 - **08-知识图谱**:把 Knowledge Extraction 结果结构化为 KG,加速检索
 

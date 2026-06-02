@@ -266,14 +266,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — 漏斗节点定义本质是事件特征构造
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 漏斗节点定义本质是事件特征构造
 
 ### 延伸技能
-- [Skill-Cohort-Retention-Analysis](../14-用户分析/Skill-Cohort-Retention-Analysis.md) — 漏斗看转化，留存看持续，互补维度
-- [Skill-RFM-Customer-Segmentation](../06-增长模型/Skill-RFM-Customer-Segmentation.md) — 漏斗各步可结合 RFM 切群分析
+- [Skill-Cohort-Retention-Analysis](../14-用户分析/[[Skill-Cohort-Retention-Analysis]].md) — 漏斗看转化，留存看持续，互补维度
+- [Skill-RFM-Customer-Segmentation](../06-增长模型/[[Skill-RFM-Customer-Segmentation]].md) — 漏斗各步可结合 RFM 切群分析
 
 ### 可组合
-- [Skill-Customer-Churn-Prediction](../06-增长模型/Skill-Customer-Churn-Prediction.md) — 漏斗流失节点是流失预测的关键输入
+- [Skill-Customer-Churn-Prediction](../06-增长模型/[[Skill-Customer-Churn-Prediction]].md) — 漏斗流失节点是流失预测的关键输入
 
 ## ⑤ 商业价值评估
 

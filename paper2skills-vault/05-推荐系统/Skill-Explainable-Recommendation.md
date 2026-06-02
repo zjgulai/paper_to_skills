@@ -281,14 +281,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-NeuralNDCG-Learning-to-Rank](../05-推荐系统/Skill-NeuralNDCG-Learning-to-Rank.md) — 排序模型是解释性推荐的基础对象
-- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — 隐因子是解释性归因的常用维度
+- [Skill-NeuralNDCG-Learning-to-Rank](../05-推荐系统/[[Skill-NeuralNDCG-Learning-to-Rank]].md) — 排序模型是解释性推荐的基础对象
+- [Skill-Matrix-Factorization](../05-推荐系统/[[Skill-Matrix-Factorization]].md) — 隐因子是解释性归因的常用维度
 
 ### 延伸技能
 - 无（本 Skill 是终端/聚合卡）
 
 ### 可组合
-- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md) — KG 路径提供天然的解释性推理链
+- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/[[Skill-Knowledge-Graph-for-Skills-Management]].md) — KG 路径提供天然的解释性推理链
 
 ## ⑤ 商业价值评估
 

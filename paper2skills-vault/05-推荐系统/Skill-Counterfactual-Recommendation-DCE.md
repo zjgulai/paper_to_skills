@@ -146,16 +146,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Matrix-Factorization](./Skill-Matrix-Factorization.md) — 理解 MF 隐因子是 DCE 倾向模型的方法学基础
-- [Skill-Intelligent-Prediction-Doubly-Robust](../03-时间序列/Skill-Intelligent-Prediction-Doubly-Robust.md) — DR 估计是 DCE 的方法学骨干
+- [Skill-Matrix-Factorization](./[[Skill-Matrix-Factorization]].md) — 理解 MF 隐因子是 DCE 倾向模型的方法学基础
+- [Skill-Intelligent-Prediction-Doubly-Robust](../03-时间序列/[[Skill-Intelligent-Prediction-Doubly-Robust]].md) — DR 估计是 DCE 的方法学骨干
 
 ### 延伸技能
-- [Skill-NeuralNDCG-Learning-to-Rank](./Skill-NeuralNDCG-Learning-to-Rank.md) — DCE 输出的去偏 CTR 直接接入 L2R 精排
-- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — 反事实推荐是 Uplift 思想在推荐场景的具体应用
+- [Skill-NeuralNDCG-Learning-to-Rank](./[[Skill-NeuralNDCG-Learning-to-Rank]].md) — DCE 输出的去偏 CTR 直接接入 L2R 精排
+- [Skill-Uplift-Modeling](../01-因果推断/[[Skill-Uplift-Modeling]].md) — 反事实推荐是 Uplift 思想在推荐场景的具体应用
 
 ### 可组合
-- [Skill-Cold-Start-Meta-Learning-PAM](./Skill-Cold-Start-Meta-Learning-PAM.md) — DCE 解决长尾偏差,元学习解决冷启动,二者互补
-- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md) — 因果森林估计 CATE,DCE 估计去偏 CTR,联合驱动反事实推荐
+- [Skill-Cold-Start-Meta-Learning-PAM](./[[Skill-Cold-Start-Meta-Learning-PAM]].md) — DCE 解决长尾偏差,元学习解决冷启动,二者互补
+- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/[[Skill-Intelligent-Attribution-Causal-Forest]].md) — 因果森林估计 CATE,DCE 估计去偏 CTR,联合驱动反事实推荐
 
 ---
 

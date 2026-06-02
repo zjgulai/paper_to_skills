@@ -144,11 +144,11 @@ print(bias_df)
 ## ④ 技能关联
 
 **前置技能**：
-- [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md)（了解基础归因模型的局限）
-- [Skill-CDA-Cookieless-Attribution](./Skill-CDA-Cookieless-Attribution.md)（聚合级别的无 Cookie 归因）
+- [Skill-Ad-Attribution-Modeling](./[[Skill-Ad-Attribution-Modeling]].md)（了解基础归因模型的局限）
+- [Skill-CDA-Cookieless-Attribution](./[[Skill-CDA-Cookieless-Attribution]].md)（聚合级别的无 Cookie 归因）
 
 **延伸技能**：
-- [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md)（将纠偏后的真实 ROI 输入预算优化）
+- [Skill-ROAS-Budget-Optimization](./[[Skill-ROAS-Budget-Optimization]].md)（将纠偏后的真实 ROI 输入预算优化）
 - `01-因果推断/Skill-DML-Causal-Effect`（双重机器学习，处理更复杂的混淆变量）
 - `02-A_B实验/Skill-Switchback-Experiment`（当无法完全消除碎片化时，用 Switchback 设计替代）
 

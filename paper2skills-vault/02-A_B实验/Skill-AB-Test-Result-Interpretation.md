@@ -230,14 +230,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-AB-Experimental-Design](../02-A_B实验/Skill-AB-Experimental-Design.md) — 解读建立在严谨的实验设计之上
-- [Skill-Power-Analysis-Sample-Size](../02-A_B实验/Skill-Power-Analysis-Sample-Size.md) — 样本量决定结果置信度
+- [Skill-AB-Experimental-Design](../02-A_B实验/[[Skill-AB-Experimental-Design]].md) — 解读建立在严谨的实验设计之上
+- [Skill-Power-Analysis-Sample-Size](../02-A_B实验/[[Skill-Power-Analysis-Sample-Size]].md) — 样本量决定结果置信度
 
 ### 延伸技能
-- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md) — 结果解读后做异质性归因（CATE）
+- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/[[Skill-Intelligent-Attribution-Causal-Forest]].md) — 结果解读后做异质性归因（CATE）
 
 ### 可组合
-- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — Uplift 与 A/B 实验的因果效应估计互补
+- [Skill-Uplift-Modeling](../01-因果推断/[[Skill-Uplift-Modeling]].md) — Uplift 与 A/B 实验的因果效应估计互补
 
 ## ⑤ 商业价值评估
 

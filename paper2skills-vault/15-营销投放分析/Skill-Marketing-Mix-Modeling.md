@@ -341,14 +341,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — MMM 输入需要 adstock/saturation 特征转换
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — MMM 输入需要 adstock/saturation 特征转换
 
 ### 延伸技能
-- [Skill-Promotion-Effectiveness](../15-营销投放分析/Skill-Promotion-Effectiveness.md) — MMM 渠道层结果驱动促销因果验证
-- [Skill-ROAS-Budget-Optimization](../13-广告分析/Skill-ROAS-Budget-Optimization.md) — MMM 估计的渠道弹性指导预算优化
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — MMM 渠道层结果驱动促销因果验证
+- [Skill-ROAS-Budget-Optimization](../13-广告分析/[[Skill-ROAS-Budget-Optimization]].md) — MMM 估计的渠道弹性指导预算优化
 
 ### 可组合
-- [Skill-Ad-Attribution-Modeling](../13-广告分析/Skill-Ad-Attribution-Modeling.md) — MMM 长周期 + MTA 单次归因互补
+- [Skill-Ad-Attribution-Modeling](../13-广告分析/[[Skill-Ad-Attribution-Modeling]].md) — MMM 长周期 + MTA 单次归因互补
 
 ## ⑤ 商业价值评估
 

@@ -262,20 +262,20 @@ python3 adaptorch.py
 
 ### 前置技能
 
-- **10-MAS Skill-MAS-Orchestrator**:理解基础多 agent 编排概念
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**(P1-4):MCP + A2A 双协议栈是 AdaptOrch 的通信基础设施
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK):理解 skill 4-tuple 和 7 模式
+- **10-MAS [[Skill-MAS-Orchestrator]]**:理解基础多 agent 编排概念
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**(P1-4):MCP + A2A 双协议栈是 AdaptOrch 的通信基础设施
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK):理解 skill 4-tuple 和 7 模式
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Orchestration-Trace-RL**(待萃取 P2-5):用 RL 优化编排决策,可替代固定阈值路由
-- **16-智能体工程 Skill-Task-Adaptive-Topology**(本):与 MAS Orchestrator 形成互补
+- **16-智能体工程 [[Skill-Orchestration-Trace-RL]]**(待萃取 P2-5):用 RL 优化编排决策,可替代固定阈值路由
+- **16-智能体工程 [[Skill-Task-Adaptive-Topology]]**(本):与 MAS Orchestrator 形成互补
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**(P1-4):四种 executor 的通信层
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(P0-1):decomposer 本身可由 SkillForge 自动生成
-- **16-智能体工程 Skill-Co-Evolutionary-Skill-Verification**(P2-1):topology 选择错误时用 EvoSkills 自动修复
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**(P1-4):四种 executor 的通信层
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(P0-1):decomposer 本身可由 SkillForge 自动生成
+- **16-智能体工程 [[Skill-Co-Evolutionary-Skill-Verification]]**(P2-1):topology 选择错误时用 EvoSkills 自动修复
 - **本项目 paper-同步 skill**:四阶段流水线本身是 sequential 拓扑,可用 AdaptOrch 动态调优
 
 ---

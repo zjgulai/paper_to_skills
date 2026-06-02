@@ -178,16 +178,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-ReAct-Reasoning-Acting](../10-MAS/Skill-ReAct-Reasoning-Acting.md) — 对话推理范式基础
-- [Skill-SQL-Agent-Text-to-SQL](./Skill-SQL-Agent-Text-to-SQL.md) — Agent 工具调用模板
+- [Skill-ReAct-Reasoning-Acting](../10-MAS/[[Skill-ReAct-Reasoning-Acting]].md) — 对话推理范式基础
+- [Skill-SQL-Agent-Text-to-SQL](./[[Skill-SQL-Agent-Text-to-SQL]].md) — Agent 工具调用模板
 
 ### 延伸技能
-- [Skill-Root-Cause-Analysis-Agent](./Skill-Root-Cause-Analysis-Agent.md) — 决策树叶节点可触发深度根因分析
-- [Skill-Auto-Skill-Synthesis](../16-智能体工程/Skill-Auto-Skill-Synthesis.md) — 从对话日志自动萃取新策略
+- [Skill-Root-Cause-Analysis-Agent](./[[Skill-Root-Cause-Analysis-Agent]].md) — 决策树叶节点可触发深度根因分析
+- [Skill-Auto-Skill-Synthesis](../16-智能体工程/[[Skill-Auto-Skill-Synthesis]].md) — 从对话日志自动萃取新策略
 
 ### 可组合
-- [Skill-Multi-Agent-Debate](../10-MAS/Skill-Multi-Agent-Debate.md) — 复杂案例多 Agent 辩论决策
-- [Skill-MAS-Orchestrator](../10-MAS/Skill-MAS-Orchestrator.md) — 决策树编排多个工具调用
+- [Skill-Multi-Agent-Debate](../10-MAS/[[Skill-Multi-Agent-Debate]].md) — 复杂案例多 Agent 辩论决策
+- [Skill-MAS-Orchestrator](../10-MAS/[[Skill-MAS-Orchestrator]].md) — 决策树编排多个工具调用
 
 ---
 

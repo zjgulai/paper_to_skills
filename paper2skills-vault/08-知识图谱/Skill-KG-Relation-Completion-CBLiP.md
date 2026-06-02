@@ -285,14 +285,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/Skill-Multilingual-NER-Universal-v2.md) — 实体识别是关系补全的前置
-- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md) — 理解 KG schema 是关系建模的基础
+- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/[[Skill-Multilingual-NER-Universal-v2]].md) — 实体识别是关系补全的前置
+- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/[[Skill-Knowledge-Graph-for-Skills-Management]].md) — 理解 KG schema 是关系建模的基础
 
 ### 延伸技能
-- [Skill-KGQA-Question-Answering](../08-知识图谱/Skill-KGQA-Question-Answering.md) — 完整 KG 是 KGQA 的查询底座
+- [Skill-KGQA-Question-Answering](../08-知识图谱/[[Skill-KGQA-Question-Answering]].md) — 完整 KG 是 KGQA 的查询底座
 
 ### 可组合
-- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md) — 补全后的 KG 提升 GraphRAG 检索质量
+- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]].md) — 补全后的 KG 提升 GraphRAG 检索质量
 
 ## ⑤ 商业价值评估
 

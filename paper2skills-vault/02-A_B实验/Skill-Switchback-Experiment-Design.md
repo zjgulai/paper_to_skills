@@ -171,16 +171,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-AB-Experimental-Design](./Skill-AB-Experimental-Design.md) — Switchback 是 A/B 实验在双边市场场景下的拓展
-- [Skill-Power-Analysis-Sample-Size](./Skill-Power-Analysis-Sample-Size.md) — 区间长度选择需要功效分析支撑
+- [Skill-AB-Experimental-Design](./[[Skill-AB-Experimental-Design]].md) — Switchback 是 A/B 实验在双边市场场景下的拓展
+- [Skill-Power-Analysis-Sample-Size](./[[Skill-Power-Analysis-Sample-Size]].md) — 区间长度选择需要功效分析支撑
 
 ### 延伸技能
-- [Skill-AB-Test-Result-Interpretation](./Skill-AB-Test-Result-Interpretation.md) — HT 估计量结果需要严谨解读
-- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md) — Switchback 估计的 GATE 可进一步分群
+- [Skill-AB-Test-Result-Interpretation](./[[Skill-AB-Test-Result-Interpretation]].md) — HT 估计量结果需要严谨解读
+- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/[[Skill-Intelligent-Attribution-Causal-Forest]].md) — Switchback 估计的 GATE 可进一步分群
 
 ### 可组合
-- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/Skill-Demand-Forecasting-Supply-Chain.md) — Switchback 用于物流仓配实验时,需求预测提供基线
-- [Skill-Promotion-Effectiveness](../15-营销投放分析/Skill-Promotion-Effectiveness.md) — Switchback + DR 估计提升促销效果估计精度
+- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/[[Skill-Demand-Forecasting-Supply-Chain]].md) — Switchback 用于物流仓配实验时,需求预测提供基线
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — Switchback + DR 估计提升促销效果估计精度
 
 ---
 

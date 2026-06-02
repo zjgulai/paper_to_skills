@@ -356,3 +356,7 @@ def main():
 
 if __name__ == '__main__':
     predictor = main()
+
+## ④ 技能关联
+
+- **可组合**：[[Skill-RFM-Customer-Segmentation]] / [[Skill-LTV-Prediction-ZILN]]

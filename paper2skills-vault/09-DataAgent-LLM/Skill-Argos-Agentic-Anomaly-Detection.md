@@ -525,13 +525,13 @@ python anomaly_detector.py
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Time-Series-Anomaly-Detection](../03-时间序列/Skill-Time-Series-Anomaly-Detection.md) — 传统异常检测算法是 Agent 推理的方法基础
+- [Skill-Time-Series-Anomaly-Detection](../03-时间序列/[[Skill-Time-Series-Anomaly-Detection]].md) — 传统异常检测算法是 Agent 推理的方法基础
 
 ### 延伸技能
-- [Skill-Root-Cause-Analysis-Agent](../09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md) — 异常检测后接根因分析
+- [Skill-Root-Cause-Analysis-Agent](../09-DataAgent-LLM/[[Skill-Root-Cause-Analysis-Agent]].md) — 异常检测后接根因分析
 
 ### 可组合
-- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md) — 异常检测嵌入数据科学 Agent 工作流
+- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/[[Skill-DeepAnalyze-Autonomous-Data-Science-Agent]].md) — 异常检测嵌入数据科学 Agent 工作流
 
 ## 5. 商业价值评估
 

@@ -212,14 +212,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — 多语 NER 训练前需要语料预处理
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 多语 NER 训练前需要语料预处理
 
 ### 延伸技能
-- [Skill-KG-Auto-Construction-Agent-Driven](../08-知识图谱/Skill-KG-Auto-Construction-Agent-Driven.md) — NER 是 KG 自动构建的实体抽取入口
-- [Skill-KG-Relation-Completion-CBLiP](../08-知识图谱/Skill-KG-Relation-Completion-CBLiP.md) — NER 抽实体后做关系补全
+- [Skill-KG-Auto-Construction-Agent-Driven](../08-知识图谱/[[Skill-KG-Auto-Construction-Agent-Driven]].md) — NER 是 KG 自动构建的实体抽取入口
+- [Skill-KG-Relation-Completion-CBLiP](../08-知识图谱/[[Skill-KG-Relation-Completion-CBLiP]].md) — NER 抽实体后做关系补全
 
 ### 可组合
-- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md) — NER 实体作为 GraphRAG 检索锚点
+- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]].md) — NER 实体作为 GraphRAG 检索锚点
 
 ## ⑤ 商业价值评估
 

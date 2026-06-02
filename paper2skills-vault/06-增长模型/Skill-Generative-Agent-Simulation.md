@@ -130,16 +130,16 @@ print(f"各品牌 WOM 分布: {treatment_result['wom_by_brand']}")
 ## ④ 技能关联
 
 - **前置技能**：
-  - [Skill-Customer-Churn-Prediction](Skill-Customer-Churn-Prediction.md)：理解用户 Persona 建模与分群
-  - [Skill-RFM-Customer-Segmentation](Skill-RFM-Customer-Segmentation.md)：RFM 分层可直接映射为 Agent Persona 初始化
+  - [Skill-Customer-Churn-Prediction]([[Skill-Customer-Churn-Prediction]].md)：理解用户 Persona 建模与分群
+  - [Skill-RFM-Customer-Segmentation]([[Skill-RFM-Customer-Segmentation]].md)：RFM 分层可直接映射为 Agent Persona 初始化
 
 - **延伸技能**：
-  - [Skill-LTV-Prediction-ZILN](Skill-LTV-Prediction-ZILN.md)：沙盒仿真验证后，结合 LTV 模型预测长期财务价值
-  - [Skill-Uplift-Churn-Prediction](Skill-Uplift-Churn-Prediction.md)：将仿真结果作为 Uplift 模型的先验，加速真实实验收敛
-  - [Skill-Bass-Diffusion-New-Product-Forecasting](Skill-Bass-Diffusion-New-Product-Forecasting.md)：Bass 扩散曲线可作为沙盒"新品冷启动"场景的需求形状输入
+  - [Skill-LTV-Prediction-ZILN]([[Skill-LTV-Prediction-ZILN]].md)：沙盒仿真验证后，结合 LTV 模型预测长期财务价值
+  - [Skill-Uplift-Churn-Prediction]([[Skill-Uplift-Churn-Prediction]].md)：将仿真结果作为 Uplift 模型的先验，加速真实实验收敛
+  - [Skill-Bass-Diffusion-New-Product-Forecasting]([[Skill-Bass-Diffusion-New-Product-Forecasting]].md)：Bass 扩散曲线可作为沙盒"新品冷启动"场景的需求形状输入
 
 - **可组合**：
-  - 与 [Skill-DQN-Purchase-Prediction](Skill-DQN-Purchase-Prediction.md) 组合：用 DQN 优化沙盒内 Agent 的长期激励策略，使仿真更接近真实决策
+  - 与 [Skill-DQN-Purchase-Prediction]([[Skill-DQN-Purchase-Prediction]].md) 组合：用 DQN 优化沙盒内 Agent 的长期激励策略，使仿真更接近真实决策
   - 与 MAS 领域 Skill 组合：多个专项 Agent（定价 Agent / 运营 Agent / 分析 Agent）各自负责沙盒的不同层
 
 ---

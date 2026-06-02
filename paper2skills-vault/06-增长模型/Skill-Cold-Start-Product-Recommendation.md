@@ -693,10 +693,10 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Cold-Start-Meta-Learning-PAM](../05-推荐系统/Skill-Cold-Start-Meta-Learning-PAM.md) — 元学习是冷启动 SKU 推荐的核心方法学
+- [Skill-Cold-Start-Meta-Learning-PAM](../05-推荐系统/[[Skill-Cold-Start-Meta-Learning-PAM]].md) — 元学习是冷启动 SKU 推荐的核心方法学
 
 ### 延伸技能
-- [Skill-New-Product-Opportunity-Mining](../06-增长模型/Skill-New-Product-Opportunity-Mining.md) — 冷启动推荐效果反哺新品机会挖掘
+- [Skill-New-Product-Opportunity-Mining](../06-增长模型/[[Skill-New-Product-Opportunity-Mining]].md) — 冷启动推荐效果反哺新品机会挖掘
 
 ### 可组合
-- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — 热启动 SKU 用 MF，冷启动 SKU 用元学习，二者互补
+- [Skill-Matrix-Factorization](../05-推荐系统/[[Skill-Matrix-Factorization]].md) — 热启动 SKU 用 MF，冷启动 SKU 用元学习，二者互补

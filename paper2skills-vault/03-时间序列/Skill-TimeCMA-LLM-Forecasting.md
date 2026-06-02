@@ -137,12 +137,12 @@ print(f"未来 7 天预测 (归一化空间): {pred}")
 ## ④ 技能关联
 
 **前置技能**：
-- [Skill-Temporal-Fusion-Transformer](Skill-Temporal-Fusion-Transformer.md)：理解时序 Transformer 基础；TimeCMA 的数值分支是其轻量变种。
-- [Skill-Time-Series-Forecasting](Skill-Time-Series-Forecasting.md)：掌握时序预测的基础评估指标（MAPE、RMSE、sMAPE）和数据预处理。
+- [Skill-Temporal-Fusion-Transformer]([[Skill-Temporal-Fusion-Transformer]].md)：理解时序 Transformer 基础；TimeCMA 的数值分支是其轻量变种。
+- [Skill-Time-Series-Forecasting]([[Skill-Time-Series-Forecasting]].md)：掌握时序预测的基础评估指标（MAPE、RMSE、sMAPE）和数据预处理。
 
 **延伸技能**：
 - Skill-Dial-In-LLM（`09-DataAgent-LLM/`）：TimeCMA 掌握后，可深入研究如何用 LLM 做时序根因分析（RCA）。
-- Skill-Causal-Time-Series-Forecasting-GCF（`03-时间序列/`）：事件驱动的因果时序预测，与 TimeCMA 的 Prompt 驱动形成互补。
+- [[Skill-Causal-Time-Series-Forecasting-GCF]]（`03-时间序列/`）：事件驱动的因果时序预测，与 TimeCMA 的 Prompt 驱动形成互补。
 
 **可组合**：
 - **TimeCMA + TFT**：TimeCMA 负责语义感知的 7 天短期预测，TFT 负责稳定的中长期趋势，双模型集成（Ensemble）输出最终预测。

@@ -261,18 +261,18 @@ python3 hermes4_client.py
 
 ### 前置技能
 
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**(P1-4):MCP tool 描述格式可直接用于 Hermes 4 `<tool_call>`
-- **16-智能体工程 Skill-Open-Source-Tool-Use-Model**(本):基座选型核心
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**(P1-4):MCP tool 描述格式可直接用于 Hermes 4 `<tool_call>`
+- **16-智能体工程 [[Skill-Open-Source-Tool-Use-Model]]**(本):基座选型核心
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-SLM-Tool-Calling-Optimization**(P2-7):14B 级别的进一步成本优化
-- **16-智能体工程 Skill-Tool-Description-Audit**(P2-8):MCP tool 描述质量审核
+- **16-智能体工程 [[Skill-SLM-Tool-Calling-Optimization]]**(P2-7):14B 级别的进一步成本优化
+- **16-智能体工程 [[Skill-Tool-Description-Audit]]**(P2-8):MCP tool 描述质量审核
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(P0-1):SkillForge 生成的 skill 可用 Hermes 4 执行
-- **16-智能体工程 Skill-Co-Evolutionary-Skill-Verification**(P2-1):EvoSkills Verifier 可用 Hermes 4 70B 替代 Claude
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(P0-1):SkillForge 生成的 skill 可用 Hermes 4 执行
+- **16-智能体工程 [[Skill-Co-Evolutionary-Skill-Verification]]**(P2-1):EvoSkills Verifier 可用 Hermes 4 70B 替代 Claude
 - **本项目 paper-同步 skill**:各阶段可用 Hermes 4 替代 Claude 做萃取/审核
 
 ---

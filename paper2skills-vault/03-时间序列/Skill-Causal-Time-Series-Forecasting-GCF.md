@@ -158,16 +158,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Temporal-Fusion-Transformer](./Skill-Temporal-Fusion-Transformer.md) — 理解时序深度学习是 GCF 的方法学前置
-- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md) — 因果森林的反事实思想与 GCF 一致
+- [Skill-Temporal-Fusion-Transformer](./[[Skill-Temporal-Fusion-Transformer]].md) — 理解时序深度学习是 GCF 的方法学前置
+- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/[[Skill-Intelligent-Attribution-Causal-Forest]].md) — 因果森林的反事实思想与 GCF 一致
 
 ### 延伸技能
-- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/Skill-Demand-Forecasting-Supply-Chain.md) — GCF 反事实需求直接驱动补货决策
-- [Skill-Promotion-Effectiveness](../15-营销投放分析/Skill-Promotion-Effectiveness.md) — 大促反事实需求是促销因果效应的核心输入
+- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/[[Skill-Demand-Forecasting-Supply-Chain]].md) — GCF 反事实需求直接驱动补货决策
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — 大促反事实需求是促销因果效应的核心输入
 
 ### 可组合
-- [Skill-Hierarchical-Product-KG-Construction](../08-知识图谱/Skill-Hierarchical-Product-KG-Construction.md) — 自动构建的商品 KG 直接作为 GCF 的图输入
-- [Skill-HGT-Heterogeneous-Graph-Transformer](../08-知识图谱/Skill-HGT-Heterogeneous-Graph-Transformer.md) — HGT 异构图与 RGCN 是同类方法,可互替
+- [Skill-Hierarchical-Product-KG-Construction](../08-知识图谱/[[Skill-Hierarchical-Product-KG-Construction]].md) — 自动构建的商品 KG 直接作为 GCF 的图输入
+- [Skill-HGT-Heterogeneous-Graph-Transformer](../08-知识图谱/[[Skill-HGT-Heterogeneous-Graph-Transformer]].md) — HGT 异构图与 RGCN 是同类方法,可互替
 
 ---
 

@@ -211,19 +211,19 @@ python skill_contract.py
 ### 前置技能
 
 - **基础**:对 Voyager/CodeAct/Claude Code 的基本理解
-- **10-MAS Skill-Skill-Registry-Dynamic-Loading**:本项目已有的 skill 注册器基础
+- **10-MAS [[Skill-Skill-Registry-Dynamic-Loading]]**:本项目已有的 skill 注册器基础
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(SkillForge):Discovery + Distillation + Update 的具体实现
-- **16-智能体工程 Skill-Co-Evolutionary-Skill-Verification**(EvoSkills,P2):验证机制
-- **16-智能体工程 Skill-Tool-Description-Audit**(MCP Smelly):metadata 质量审计
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(SkillForge):Discovery + Distillation + Update 的具体实现
+- **16-智能体工程 [[Skill-Co-Evolutionary-Skill-Verification]]**(EvoSkills,P2):验证机制
+- **16-智能体工程 [[Skill-Tool-Description-Audit]]**(MCP Smelly):metadata 质量审计
 
 ### 可组合技能
 
 - **本项目 paper-审核 skill**:加入 4 元组完整性 + 7 模式分类检查
 - **本项目 paper-同步 skill**:同步 4 元组元数据到平台
-- **10-MAS Skill-MAS-Orchestrator**:基于 $R$ 程序化调度 sub-skill
+- **10-MAS [[Skill-MAS-Orchestrator]]**:基于 $R$ 程序化调度 sub-skill
 
 ---
 

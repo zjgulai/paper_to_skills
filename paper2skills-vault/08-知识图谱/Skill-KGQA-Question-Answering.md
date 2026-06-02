@@ -326,14 +326,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md) — KG schema 是 KGQA 的查询语义基础
-- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](../08-知识图谱/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md) — 稠密检索定位相关子图
+- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/[[Skill-Knowledge-Graph-for-Skills-Management]].md) — KG schema 是 KGQA 的查询语义基础
+- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](../08-知识图谱/[[Skill-Dense-Retrieval-Ecommerce-Semantic-Search]].md) — 稠密检索定位相关子图
 
 ### 延伸技能
-- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md) — KGQA + RAG 形成知识增强问答
+- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]].md) — KGQA + RAG 形成知识增强问答
 
 ### 可组合
-- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/Skill-SQL-Agent-Text-to-SQL.md) — KGQA 与 Text-to-SQL 共同覆盖结构化问答
+- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/[[Skill-SQL-Agent-Text-to-SQL]].md) — KGQA 与 Text-to-SQL 共同覆盖结构化问答
 
 ## ⑤ 商业价值评估
 

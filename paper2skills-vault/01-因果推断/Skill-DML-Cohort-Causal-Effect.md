@@ -155,16 +155,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Intelligent-Prediction-Doubly-Robust](../03-时间序列/Skill-Intelligent-Prediction-Doubly-Robust.md) — DML 的核心是 doubly robust,DR 是其方法学前置
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — 高维特征工程是 DML 第一阶段 ML 模型输入
+- [Skill-Intelligent-Prediction-Doubly-Robust](../03-时间序列/[[Skill-Intelligent-Prediction-Doubly-Robust]].md) — DML 的核心是 doubly robust,DR 是其方法学前置
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 高维特征工程是 DML 第一阶段 ML 模型输入
 
 ### 延伸技能
-- [Skill-Uplift-Modeling](./Skill-Uplift-Modeling.md) — Cohort CATE 是 Uplift 在群体粒度的特例
-- [Skill-RFM-Customer-Segmentation](../06-增长模型/Skill-RFM-Customer-Segmentation.md) — DML cohort 与 RFM 分群可互替/互补
+- [Skill-Uplift-Modeling](./[[Skill-Uplift-Modeling]].md) — Cohort CATE 是 Uplift 在群体粒度的特例
+- [Skill-RFM-Customer-Segmentation](../06-增长模型/[[Skill-RFM-Customer-Segmentation]].md) — DML cohort 与 RFM 分群可互替/互补
 
 ### 可组合
-- [Skill-Cohort-Retention-Analysis](../14-用户分析/Skill-Cohort-Retention-Analysis.md) — 描述性 cohort 分析 + DML 因果 cohort 分析互补
-- [Skill-Promotion-Effectiveness](../15-营销投放分析/Skill-Promotion-Effectiveness.md) — DML 是促销因果效应估计的核心方法
+- [Skill-Cohort-Retention-Analysis](../14-用户分析/[[Skill-Cohort-Retention-Analysis]].md) — 描述性 cohort 分析 + DML 因果 cohort 分析互补
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — DML 是促销因果效应估计的核心方法
 
 ---
 

@@ -207,9 +207,9 @@ python ecomstage_eval.py
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(SkillForge):用评估结果驱动 Skill 演化
-- **16-智能体工程 Skill-Long-Term-Preference-Memory**(Shopping Companion):Solution Decision 阶段配套 LTM
-- **10-MAS Skill-Multi-Agent-Debate**:把多模型同时评估变为 ensemble 决策
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(SkillForge):用评估结果驱动 Skill 演化
+- **16-智能体工程 [[Skill-Long-Term-Preference-Memory]]**(Shopping Companion):Solution Decision 阶段配套 LTM
+- **10-MAS [[Skill-Multi-Agent-Debate]]**:把多模型同时评估变为 ensemble 决策
 
 ### 可组合技能
 

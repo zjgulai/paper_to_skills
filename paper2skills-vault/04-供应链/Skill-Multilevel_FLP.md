@@ -155,12 +155,12 @@ print(f"\n优化效益: {initial_cost:.2f} → {final_cost:.2f} 万元 (节省 {
 ## ④ 技能关联
 
 **前置技能**：
-- [Skill-Multi-Echelon-Inventory](./Skill-Multi-Echelon-Inventory.md)：多阶库存优化，理解库存成本结构和服务水平约束后，再看 FLP 的容量约束会更自然
-- [Skill-Safety-Stock-Replenishment](./Skill-Safety-Stock-Replenishment.md)：安全库存与补货策略，提供 FLP 中需求估算和波动建模的基础
+- [Skill-Multi-Echelon-Inventory](./[[Skill-Multi-Echelon-Inventory]].md)：多阶库存优化，理解库存成本结构和服务水平约束后，再看 FLP 的容量约束会更自然
+- [Skill-Safety-Stock-Replenishment](./[[Skill-Safety-Stock-Replenishment]].md)：安全库存与补货策略，提供 FLP 中需求估算和波动建模的基础
 
 **延伸技能**：
-- [Skill-Two-Echelon-Inventory-DRL](./Skill-Two-Echelon-Inventory-DRL.md)：网络拓扑确定后，用 DRL 动态调优各节点库存策略
-- [Skill-Lead-Time-Distribution-Risk-GenQOT](./Skill-Lead-Time-Distribution-Risk-GenQOT.md)：FLP 求解后，对提前期风险最高的路段做专项优化
+- [Skill-Two-Echelon-Inventory-DRL](./[[Skill-Two-Echelon-Inventory-DRL]].md)：网络拓扑确定后，用 DRL 动态调优各节点库存策略
+- [Skill-Lead-Time-Distribution-Risk-GenQOT](./[[Skill-Lead-Time-Distribution-Risk-GenQOT]].md)：FLP 求解后，对提前期风险最高的路段做专项优化
 
 **可组合**：
 - 与 **Multi-Echelon-Inventory** 组合：FLP 确定"在哪建仓"，多阶库存确定"各仓备多少货"，形成完整的静态网络规划 + 动态库存决策闭环

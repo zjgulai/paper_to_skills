@@ -244,16 +244,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-AGRS-Aspect-Guided-Review-Summarization](./Skill-AGRS-Aspect-Guided-Review-Summarization.md) — AGRS 摘要为 MAA Clustering Agent 提供高质量输入
-- [Skill-MAS-Orchestrator](../10-MAS/Skill-MAS-Orchestrator.md) — 5 Agent 调度依赖 MAS 编排框架
+- [Skill-AGRS-Aspect-Guided-Review-Summarization](./[[Skill-AGRS-Aspect-Guided-Review-Summarization]].md) — AGRS 摘要为 MAA Clustering Agent 提供高质量输入
+- [Skill-MAS-Orchestrator](../10-MAS/[[Skill-MAS-Orchestrator]].md) — 5 Agent 调度依赖 MAS 编排框架
 
 ### 延伸技能
-- [Skill-Root-Cause-Analysis-Agent](../09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md) — MAA Top 改进建议进入 RCA Agent 验证根因
-- [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/Skill-Customer-Journey-Decision-Tree.md) — MAA 建议 → 客服 FAQ 模板更新
+- [Skill-Root-Cause-Analysis-Agent](../09-DataAgent-LLM/[[Skill-Root-Cause-Analysis-Agent]].md) — MAA Top 改进建议进入 RCA Agent 验证根因
+- [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/[[Skill-Customer-Journey-Decision-Tree]].md) — MAA 建议 → 客服 FAQ 模板更新
 
 ### 可组合
-- [Skill-RFM-Customer-Segmentation](../06-增长模型/Skill-RFM-Customer-Segmentation.md) — 按 RFM 高价值用户 Review 加权聚类
-- [Skill-DML-Cohort-Causal-Effect](../01-因果推断/Skill-DML-Cohort-Causal-Effect.md) — 改进上线后用 DML 验证用户分群因果效应
+- [Skill-RFM-Customer-Segmentation](../06-增长模型/[[Skill-RFM-Customer-Segmentation]].md) — 按 RFM 高价值用户 Review 加权聚类
+- [Skill-DML-Cohort-Causal-Effect](../01-因果推断/[[Skill-DML-Cohort-Causal-Effect]].md) — 改进上线后用 DML 验证用户分群因果效应
 
 ---
 

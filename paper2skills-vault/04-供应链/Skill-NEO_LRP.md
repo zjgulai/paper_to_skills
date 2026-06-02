@@ -123,16 +123,16 @@ print(f"  开仓: {result.open_cost:.2f} | 路径: {result.routing_cost:.2f}")
 ## ④ 技能关联
 
 **前置技能**：
-- [Skill-Multi-Echelon-Inventory](Skill-Multi-Echelon-Inventory.md)：理解多级仓网结构和库存成本建模
-- [Skill-Two-Echelon-Inventory-DRL](Skill-Two-Echelon-Inventory-DRL.md)：了解 DRL 在供应链优化中的应用范式
+- [Skill-Multi-Echelon-Inventory]([[Skill-Multi-Echelon-Inventory]].md)：理解多级仓网结构和库存成本建模
+- [Skill-Two-Echelon-Inventory-DRL]([[Skill-Two-Echelon-Inventory-DRL]].md)：了解 DRL 在供应链优化中的应用范式
 
 **延伸技能**：
 - 真实 GNN 训练：将 `GNNCostSurrogate` 替换为 PyTorch Geometric 实现的 GAT 网络，在历史路线数据上预训练
 - OR-Tools VRP 集成：选址固定后接入 Google OR-Tools 生成生产级路线
 
 **可组合**：
-- [Skill-Demand-Forecasting-Supply-Chain](Skill-Demand-Forecasting-Supply-Chain.md)：预测各小区日均需求 → 作为 `demand` 输入 NEO-LRP
-- [Skill-Lead-Time-Distribution-Risk-GenQOT](Skill-Lead-Time-Distribution-Risk-GenQOT.md)：仓网确定后，用 GenQOT 管理各仓的补货提前期风险
+- [Skill-Demand-Forecasting-Supply-Chain]([[Skill-Demand-Forecasting-Supply-Chain]].md)：预测各小区日均需求 → 作为 `demand` 输入 NEO-LRP
+- [Skill-Lead-Time-Distribution-Risk-GenQOT]([[Skill-Lead-Time-Distribution-Risk-GenQOT]].md)：仓网确定后，用 GenQOT 管理各仓的补货提前期风险
 
 ---
 

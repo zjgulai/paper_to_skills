@@ -132,11 +132,11 @@ regrets = pricer.cumulative_regret()
 
 **前置技能**：
 - [Skill-MAB-Thompson-Sampling](../02-A_B实验/Skill-MAB-Thompson-Sampling.md)：理解 Explore-Exploit 权衡和 UCB 的作用
-- [Skill-Customer-Churn-Prediction](Skill-Customer-Churn-Prediction.md)：理解转化率预测模型（即本算法的"回归预言机"）
+- [Skill-Customer-Churn-Prediction]([[Skill-Customer-Churn-Prediction]].md)：理解转化率预测模型（即本算法的"回归预言机"）
 
 **延伸技能**：
 - [Skill-Customer-LTV-Prediction](Skill-Customer-LTV-Prediction.md)：定价策略优化后，结合 LTV 评估长期价值
-- [Skill-Bass-Diffusion-New-Product-Forecasting](Skill-Bass-Diffusion-New-Product-Forecasting.md)：新品上线期用 Bass 预测需求曲线，为初始候选价格集合提供锚点
+- [Skill-Bass-Diffusion-New-Product-Forecasting]([[Skill-Bass-Diffusion-New-Product-Forecasting]].md)：新品上线期用 Bass 预测需求曲线，为初始候选价格集合提供锚点
 
 **可组合**：
 - **UCB-LDP + A/B 实验**：新品用 A/B 确定价格区间，成熟品用 UCB-LDP 持续优化（节省探索成本）

@@ -257,19 +257,19 @@ python3 mas_rl_trace.py
 
 ### 前置技能
 
-- **10-MAS Skill-MAS-Orchestrator**: 理解基础多 agent 编排
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**(P1-4): 通信协议层
-- **16-智能体工程 Skill-Task-Adaptive-Topology**(P2-4): 拓扑选择是 O2(delegate)的输入
+- **10-MAS [[Skill-MAS-Orchestrator]]**: 理解基础多 agent 编排
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**(P1-4): 通信协议层
+- **16-智能体工程 [[Skill-Task-Adaptive-Topology]]**(P2-4): 拓扑选择是 O2(delegate)的输入
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Agentic-Memory-Management**(AgeMem,P1-3): LTM/STM 管理对应 O3(communicate)
-- **16-智能体工程 Skill-Memory-as-Action**(MemAct,P2-3): memory action 是 orchestration trace 的一种 event
+- **16-智能体工程 [[Skill-Agentic-Memory-Management]]**(AgeMem,P1-3): LTM/STM 管理对应 O3(communicate)
+- **16-智能体工程 [[Skill-Memory-as-Action]]**(MemAct,P2-3): memory action 是 orchestration trace 的一种 event
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-Co-Evolutionary-Skill-Verification**(EvoSkills,P2-1): surrogate verifier 对应 R6(debate/verifier reward)
-- **16-智能体工程 Skill-Context-Compression**(ACON,P1-2): 压缩历史是 O4(aggregate)的一种策略
+- **16-智能体工程 [[Skill-Co-Evolutionary-Skill-Verification]]**(EvoSkills,P2-1): surrogate verifier 对应 R6(debate/verifier reward)
+- **16-智能体工程 [[Skill-Context-Compression]]**(ACON,P1-2): 压缩历史是 O4(aggregate)的一种策略
 - **本项目 paper-同步 skill**: 4 阶段流水线本身就是 orchestration trace 的实例
 
 ---

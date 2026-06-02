@@ -174,16 +174,16 @@ print(f"广告 ROI: {roi:.2f}x")
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-DiD-Difference-in-Differences](./Skill-DiD-Difference-in-Differences.md) — DiD 是 SC 的特殊情形（双向固定效应），是方法学前置
-- [Skill-Intelligent-Attribution-Causal-Forest](./Skill-Intelligent-Attribution-Causal-Forest.md) — 地区级归因场景的替代方法，可对比使用
+- [Skill-DiD-Difference-in-Differences](./[[Skill-DiD-Difference-in-Differences]].md) — DiD 是 SC 的特殊情形（双向固定效应），是方法学前置
+- [Skill-Intelligent-Attribution-Causal-Forest](./[[Skill-Intelligent-Attribution-Causal-Forest]].md) — 地区级归因场景的替代方法，可对比使用
 
 ### 延伸技能
-- [Skill-DML-Cohort-Causal-Effect](./Skill-DML-Cohort-Causal-Effect.md) — DML 处理个体级异质性，ClusterSC 处理地理级宏观归因，互补覆盖
-- [Skill-Causal-Discovery-PC-Algorithm](./Skill-Causal-Discovery-PC-Algorithm.md) — 在供体特征选择阶段，PC 算法可用于识别真正的混杂变量
+- [Skill-DML-Cohort-Causal-Effect](./[[Skill-DML-Cohort-Causal-Effect]].md) — DML 处理个体级异质性，ClusterSC 处理地理级宏观归因，互补覆盖
+- [Skill-Causal-Discovery-PC-Algorithm](./[[Skill-Causal-Discovery-PC-Algorithm]].md) — 在供体特征选择阶段，PC 算法可用于识别真正的混杂变量
 
 ### 可组合
-- [Skill-DiD-Difference-in-Differences](./Skill-DiD-Difference-in-Differences.md) — 安慰剂检验（Placebo Test）可与 DiD 共用，交叉验证 SC 结论
-- [Skill-MMM-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — MMM 给出宏观媒介分配建议；ClusterSC 提供地理级因果验证，两者形成闭环
+- [Skill-DiD-Difference-in-Differences](./[[Skill-DiD-Difference-in-Differences]].md) — 安慰剂检验（Placebo Test）可与 DiD 共用，交叉验证 SC 结论
+- [Skill-MMM-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — MMM 给出宏观媒介分配建议；ClusterSC 提供地理级因果验证，两者形成闭环
 
 ---
 

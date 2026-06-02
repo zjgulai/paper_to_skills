@@ -226,16 +226,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Demand-Forecasting-Supply-Chain](./Skill-Demand-Forecasting-Supply-Chain.md) — demand_mean / demand_std 输入依赖
-- [Skill-Safety-Stock-Replenishment](./Skill-Safety-Stock-Replenishment.md) — 安全库存计算的传统基础
+- [Skill-Demand-Forecasting-Supply-Chain](./[[Skill-Demand-Forecasting-Supply-Chain]].md) — demand_mean / demand_std 输入依赖
+- [Skill-Safety-Stock-Replenishment](./[[Skill-Safety-Stock-Replenishment]].md) — 安全库存计算的传统基础
 
 ### 延伸技能
-- [Skill-Two-Echelon-Inventory-DRL](./Skill-Two-Echelon-Inventory-DRL.md) — Gen-QOT 输出的 ROP 驱动多级库存 DRL 决策
-- [Skill-Multi-Echelon-Inventory](./Skill-Multi-Echelon-Inventory.md) — 多仓 LT 风险联合建模
+- [Skill-Two-Echelon-Inventory-DRL](./[[Skill-Two-Echelon-Inventory-DRL]].md) — Gen-QOT 输出的 ROP 驱动多级库存 DRL 决策
+- [Skill-Multi-Echelon-Inventory](./[[Skill-Multi-Echelon-Inventory]].md) — 多仓 LT 风险联合建模
 
 ### 可组合
-- [Skill-Time-Series-Anomaly-Detection](../03-时间序列/Skill-Time-Series-Anomaly-Detection.md) — LT 异常检测 + Gen-QOT 拥堵预警联动
-- [Skill-Hierarchical-Demand-Forecasting-Reconciliation](../03-时间序列/Skill-Hierarchical-Demand-Forecasting-Reconciliation.md) — 调和后的多层预测 + Gen-QOT 形成完整补货闭环
+- [Skill-Time-Series-Anomaly-Detection](../03-时间序列/[[Skill-Time-Series-Anomaly-Detection]].md) — LT 异常检测 + Gen-QOT 拥堵预警联动
+- [Skill-Hierarchical-Demand-Forecasting-Reconciliation](../03-时间序列/[[Skill-Hierarchical-Demand-Forecasting-Reconciliation]].md) — 调和后的多层预测 + Gen-QOT 形成完整补货闭环
 
 ---
 

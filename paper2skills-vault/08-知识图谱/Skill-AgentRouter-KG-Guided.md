@@ -176,7 +176,7 @@ for agent_name, weight in result.top_k_agents:
 
 - `AgentRouter` + [[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]] → 路由到正确 Agent 的同时提供 KG 增强的上下文
 - `AgentRouter` + [[Skill-Hierarchical-Product-KG-Construction]] → 用层次化产品知识图谱作为 Router 的底座，覆盖更细粒度的产品领域划分
-- `AgentRouter` + `Skill-CoLaKG-KG-Augmented-Recommendation` → 兼顾导购推荐意图的精准 Agent 分发
+- `AgentRouter` + [[Skill-KG-Augmented-Recommendation-CoLaKG]] → 兼顾导购推荐意图的精准 Agent 分发
 
 ---
 

@@ -154,16 +154,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Knowledge-Graph-for-Skills-Management](./Skill-Knowledge-Graph-for-Skills-Management.md) — KG 基础结构理解
-- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — CF 协同嵌入是 CoLaKG 的基底
+- [Skill-Knowledge-Graph-for-Skills-Management](./[[Skill-Knowledge-Graph-for-Skills-Management]].md) — KG 基础结构理解
+- [Skill-Matrix-Factorization](../05-推荐系统/[[Skill-Matrix-Factorization]].md) — CF 协同嵌入是 CoLaKG 的基底
 
 ### 延伸技能
-- [Skill-Hierarchical-Product-KG-Construction](./Skill-Hierarchical-Product-KG-Construction.md) — 自动构建的产品 KG 直接喂给 CoLaKG
-- [Skill-Explainable-Recommendation](../05-推荐系统/Skill-Explainable-Recommendation.md) — LLM 生成的语义理解天然可解释
+- [Skill-Hierarchical-Product-KG-Construction](./[[Skill-Hierarchical-Product-KG-Construction]].md) — 自动构建的产品 KG 直接喂给 CoLaKG
+- [Skill-Explainable-Recommendation](../05-推荐系统/[[Skill-Explainable-Recommendation]].md) — LLM 生成的语义理解天然可解释
 
 ### 可组合
-- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](./Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md) — KG 语义 embedding 共享,搜推一体化
-- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](./Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md) — 推荐 + RAG 检索增强
+- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](./[[Skill-Dense-Retrieval-Ecommerce-Semantic-Search]].md) — KG 语义 embedding 共享,搜推一体化
+- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](./[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]].md) — 推荐 + RAG 检索增强
 
 ---
 

@@ -393,13 +393,13 @@ python dashboard_agent.py
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/Skill-SQL-Agent-Text-to-SQL.md) — 可视化的数据来源依赖 SQL Agent
+- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/[[Skill-SQL-Agent-Text-to-SQL]].md) — 可视化的数据来源依赖 SQL Agent
 
 ### 延伸技能
-- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md) — 可视化嵌入自治数据分析 Agent
+- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/[[Skill-DeepAnalyze-Autonomous-Data-Science-Agent]].md) — 可视化嵌入自治数据分析 Agent
 
 ### 可组合
-- [Skill-MAS-Orchestrator](../10-MAS/Skill-MAS-Orchestrator.md) — 可视化作为多 Agent 编排的最终输出环节
+- [Skill-MAS-Orchestrator](../10-MAS/[[Skill-MAS-Orchestrator]].md) — 可视化作为多 Agent 编排的最终输出环节
 
 ## 5. 商业价值评估
 

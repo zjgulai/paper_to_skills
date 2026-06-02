@@ -248,21 +248,21 @@ python3 evoskills.py
 
 ### 前置技能
 
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(SkillForge):skill 自动萃取的 4 模块流水线,EvoSkills 是其增强版(加入 verifier 协同演化)
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK):理解 skill 4-tuple `(C, π, T, R)` 和 7 阶段生命周期,EvoSkills 主要落在 Generation+Update 阶段
-- **10-MAS Skill-MAS-Orchestrator**:理解多 agent 编排,这里 Generator 和 Verifier 就是 2 个特化 agent
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(SkillForge):skill 自动萃取的 4 模块流水线,EvoSkills 是其增强版(加入 verifier 协同演化)
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK):理解 skill 4-tuple `(C, π, T, R)` 和 7 阶段生命周期,EvoSkills 主要落在 Generation+Update 阶段
+- **10-MAS [[Skill-MAS-Orchestrator]]**:理解多 agent 编排,这里 Generator 和 Verifier 就是 2 个特化 agent
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Active-Context-Pruning**(Focus,待萃取 P2-2):演化轮数过高时压上下文
-- **16-智能体工程 Skill-Memory-as-Action**(MemAct,待萃取 P2-3):把 LTM 操作嵌入演化策略
-- **16-智能体工程 Skill-Tool-Description-Audit**(MCP Smelly,待萃取 P2-8):用类似机制审计 MCP tool 描述质量
+- **16-智能体工程 [[Skill-Active-Context-Pruning]]**(Focus,待萃取 P2-2):演化轮数过高时压上下文
+- **16-智能体工程 [[Skill-Memory-as-Action]]**(MemAct,待萃取 P2-3):把 LTM 操作嵌入演化策略
+- **16-智能体工程 [[Skill-Tool-Description-Audit]]**(MCP Smelly,待萃取 P2-8):用类似机制审计 MCP tool 描述质量
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-Context-Compression**(ACON):context 累积过多时压缩 generator 历史
-- **16-智能体工程 Skill-Agentic-Memory-Management**(AgeMem):演化轨迹存入 LTM,后续任务复用
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**:Generator/Verifier 间用 A2A 通信,oracle 接 MCP 工具
+- **16-智能体工程 [[Skill-Context-Compression]]**(ACON):context 累积过多时压缩 generator 历史
+- **16-智能体工程 [[Skill-Agentic-Memory-Management]]**(AgeMem):演化轨迹存入 LTM,后续任务复用
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**:Generator/Verifier 间用 A2A 通信,oracle 接 MCP 工具
 - **本项目 paper-审核 skill**:本身就是一种 surrogate verification 模式,可借鉴 EvoSkills 升级测试套件的设计
 
 ---

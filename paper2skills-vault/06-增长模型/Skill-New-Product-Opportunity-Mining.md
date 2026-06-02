@@ -687,10 +687,10 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-RFM-Customer-Segmentation](../06-增长模型/Skill-RFM-Customer-Segmentation.md) — 新品机会挖掘需要先识别目标客群
+- [Skill-RFM-Customer-Segmentation](../06-增长模型/[[Skill-RFM-Customer-Segmentation]].md) — 新品机会挖掘需要先识别目标客群
 
 ### 延伸技能
-- [Skill-Cold-Start-Product-Recommendation](../05-推荐系统/Skill-Cold-Start-Product-Recommendation.md) — 新品上线后接冷启动推荐
+- [Skill-Cold-Start-Product-Recommendation](../05-推荐系统/[[Skill-Cold-Start-Product-Recommendation]].md) — 新品上线后接冷启动推荐
 
 ### 可组合
-- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md) — 用 KG 在已有品类上发现机会缺口
+- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/[[Skill-Knowledge-Graph-for-Skills-Management]].md) — 用 KG 在已有品类上发现机会缺口

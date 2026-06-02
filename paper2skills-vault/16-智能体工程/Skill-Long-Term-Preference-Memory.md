@@ -208,14 +208,14 @@ python shopping_companion.py
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Agentic-Memory-Management**(AgeMem):把 Memory 操作训练为 tool actions
-- **16-智能体工程 Skill-Context-Compression**(ACON):长对话压缩
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(SkillForge):从对话历史萃取 Skill
+- **16-智能体工程 [[Skill-Agentic-Memory-Management]]**(AgeMem):把 Memory 操作训练为 tool actions
+- **16-智能体工程 [[Skill-Context-Compression]]**(ACON):长对话压缩
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(SkillForge):从对话历史萃取 Skill
 
 ### 可组合技能
 
 - **05-推荐系统 Cold-Start-Meta-Learning**:新用户冷启动时退化为传统冷启动
-- **10-MAS Skill-AutoGen-Multi-Agent-Conversation**:把 Stage 1/Stage 2 拆为两个 agent
+- **10-MAS [[Skill-AutoGen-Multi-Agent-Conversation]]**:把 Stage 1/Stage 2 拆为两个 agent
 - **08-知识图谱**:产品 KG 增强属性约束检查
 
 ---

@@ -230,14 +230,14 @@ python agemem.py
 ### 前置技能
 
 - **02-A_B实验**:GRPO 组内对比的基础思想
-- **16-智能体工程 Skill-Context-Compression**(ACON):STM 压缩前置
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK):memory 在 Skill 中的角色
+- **16-智能体工程 [[Skill-Context-Compression]]**(ACON):STM 压缩前置
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK):memory 在 Skill 中的角色
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Long-Term-Preference-Memory**(Shopping Companion):Dual-Reward 在购物场景的应用
-- **16-智能体工程 Skill-Active-Context-Pruning**(Focus):仿生剪枝
-- **16-智能体工程 Skill-Memory-as-Action**(MemAct):Memory 操作作 action 的另一变体
+- **16-智能体工程 [[Skill-Long-Term-Preference-Memory]]**(Shopping Companion):Dual-Reward 在购物场景的应用
+- **16-智能体工程 [[Skill-Active-Context-Pruning]]**(Focus):仿生剪枝
+- **16-智能体工程 [[Skill-Memory-as-Action]]**(MemAct):Memory 操作作 action 的另一变体
 
 ### 可组合技能
 

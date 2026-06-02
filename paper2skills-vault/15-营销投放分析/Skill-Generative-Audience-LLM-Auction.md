@@ -126,14 +126,14 @@ python3 paper2skills-code/15-营销投放分析/generative_audience_2025/model.p
 ## ④ 技能关联
 
 - **前置技能**：
-  - [Skill-DARA-Agentic-MMM-Optimizer](./Skill-DARA-Agentic-MMM-Optimizer.md) — 掌握 LLM+RL 广告预算分配的基础概念
-  - [Skill-Marketing-Mix-Modeling](./Skill-Marketing-Mix-Modeling.md) — 理解渠道归因与预算优化逻辑
+  - [Skill-DARA-Agentic-MMM-Optimizer](./[[Skill-DARA-Agentic-MMM-Optimizer]].md) — 掌握 LLM+RL 广告预算分配的基础概念
+  - [Skill-Marketing-Mix-Modeling](./[[Skill-Marketing-Mix-Modeling]].md) — 理解渠道归因与预算优化逻辑
 - **延伸技能**：
   - `09-DataAgent-LLM/Skill-SQL-Agent` — 将用户意图信号与业务数仓打通，做 ROI 回溯分析
   - `05-推荐系统/Skill-Cold-Start-Meta` — 无 Cookie 场景同样面临冷启动，两者方法论互补
 - **可组合**：
-  - [Skill-DARA-Agentic-MMM-Optimizer](./Skill-DARA-Agentic-MMM-Optimizer.md) — GenAI Audience 负责定向+内容，DARA 负责渠道预算分配，形成"投前选渠道 + 投中选受众"闭环
-  - [Skill-Promotion-Effectiveness](./Skill-Promotion-Effectiveness.md) — 将原生广告的转化率提升量化纳入促销效果评估体系
+  - [Skill-DARA-Agentic-MMM-Optimizer](./[[Skill-DARA-Agentic-MMM-Optimizer]].md) — GenAI Audience 负责定向+内容，DARA 负责渠道预算分配，形成"投前选渠道 + 投中选受众"闭环
+  - [Skill-Promotion-Effectiveness](./[[Skill-Promotion-Effectiveness]].md) — 将原生广告的转化率提升量化纳入促销效果评估体系
 
 ---
 

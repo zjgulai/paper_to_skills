@@ -379,3 +379,7 @@ def main():
 
 if __name__ == '__main__':
     bandit = main()
+
+## ④ 技能关联
+
+- **可组合**：[[Skill-AB-Experimental-Design]] / [[Skill-Power-Analysis-Sample-Size]]

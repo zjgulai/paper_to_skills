@@ -223,16 +223,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/Skill-Multilingual-NER-Universal-v2.md) — 多语种实体识别是 ABSA aspect 抽取的方法学基础
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — BIO 序列标签预处理与类别平衡
+- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/[[Skill-Multilingual-NER-Universal-v2]].md) — 多语种实体识别是 ABSA aspect 抽取的方法学基础
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — BIO 序列标签预处理与类别平衡
 
 ### 延伸技能
-- [Skill-AGRS-Aspect-Guided-Review-Summarization](./Skill-AGRS-Aspect-Guided-Review-Summarization.md) — ABSA 提取的 aspect-sentiment 喂给 AGRS 摘要
-- [Skill-StaR-Review-Statement-Ranking](./Skill-StaR-Review-Statement-Ranking.md) — LACA 输出的多语言 statements 用 StaR 排序
+- [Skill-AGRS-Aspect-Guided-Review-Summarization](./[[Skill-AGRS-Aspect-Guided-Review-Summarization]].md) — ABSA 提取的 aspect-sentiment 喂给 AGRS 摘要
+- [Skill-StaR-Review-Statement-Ranking](./[[Skill-StaR-Review-Statement-Ranking]].md) — LACA 输出的多语言 statements 用 StaR 排序
 
 ### 可组合
-- [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/Skill-Customer-Journey-Decision-Tree.md) — 客服决策树用 LACA 输出的情感+意图作为输入
-- [Skill-MAA-Review-to-Action-Decision](./Skill-MAA-Review-to-Action-Decision.md) — 多语种 ABSA → MAA 跨市场决策建议
+- [Skill-Customer-Journey-Decision-Tree](../09-DataAgent-LLM/[[Skill-Customer-Journey-Decision-Tree]].md) — 客服决策树用 LACA 输出的情感+意图作为输入
+- [Skill-MAA-Review-to-Action-Decision](./[[Skill-MAA-Review-to-Action-Decision]].md) — 多语种 ABSA → MAA 跨市场决策建议
 
 ---
 

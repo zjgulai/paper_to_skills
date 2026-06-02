@@ -202,17 +202,17 @@ python acon.py
 
 - **02-A_B实验**:UT/CO 步骤本质上是 A/B 测试 guideline 候选
 - **07-NLP-VOC 文本摘要**:压缩 guideline 即"领域特化的摘要规则"
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK):理解 Skill 全生命周期前提
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK):理解 Skill 全生命周期前提
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Agentic-Memory-Management**(AgeMem):把压缩从 prompt 升到 RL policy
-- **16-智能体工程 Skill-Active-Context-Pruning**(Focus):仿生粘菌主动剪枝
-- **16-智能体工程 Skill-Memory-as-Action**(MemAct):memory 操作整合进 policy
+- **16-智能体工程 [[Skill-Agentic-Memory-Management]]**(AgeMem):把压缩从 prompt 升到 RL policy
+- **16-智能体工程 [[Skill-Active-Context-Pruning]]**(Focus):仿生粘菌主动剪枝
+- **16-智能体工程 [[Skill-Memory-as-Action]]**(MemAct):memory 操作整合进 policy
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(SkillForge):压缩后的 trajectory 用于 SkillForge 萃取
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(SkillForge):压缩后的 trajectory 用于 SkillForge 萃取
 - **09-DataAgent-LLM Skill-SQL-Agent**:多步 SQL Agent 长 trajectory 压缩典型场景
 - **07-NLP-VOC 长篇 VOC 分析**:长 review 阵列的逐步分析压缩
 

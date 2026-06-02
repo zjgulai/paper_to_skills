@@ -302,16 +302,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Multilingual-NER-Universal-v2](./Skill-Multilingual-NER-Universal-v2.md) — 多语 NER 是文本属性提取的方法学基础,本 Skill 用 VLM 替代 NER 处理图片但共享"实体抽取"思路
-- [Skill-Knowledge-Graph-for-Skills-Management](./Skill-Knowledge-Graph-for-Skills-Management.md) — 理解 KG schema 设计是本 Skill 的方法学前置
+- [Skill-Multilingual-NER-Universal-v2](./[[Skill-Multilingual-NER-Universal-v2]].md) — 多语 NER 是文本属性提取的方法学基础,本 Skill 用 VLM 替代 NER 处理图片但共享"实体抽取"思路
+- [Skill-Knowledge-Graph-for-Skills-Management](./[[Skill-Knowledge-Graph-for-Skills-Management]].md) — 理解 KG schema 设计是本 Skill 的方法学前置
 
 ### 延伸技能
-- [Skill-KG-Relation-Completion-CBLiP](./Skill-KG-Relation-Completion-CBLiP.md) — 本 Skill 构建初步 KG 后,用关系补全完善边
-- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](./Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md) — 构建好的产品 KG 直接用于 RAG 检索增强
+- [Skill-KG-Relation-Completion-CBLiP](./[[Skill-KG-Relation-Completion-CBLiP]].md) — 本 Skill 构建初步 KG 后,用关系补全完善边
+- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](./[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]].md) — 构建好的产品 KG 直接用于 RAG 检索增强
 
 ### 可组合
-- [Skill-Cold-Start-Product-Recommendation](../06-增长模型/Skill-Cold-Start-Product-Recommendation.md) — 新 SKU 自动建图后立刻进入冷启动推荐管线,形成端到端冷启动闭环
-- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](./Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md) — KG 节点的多语种别名为稠密检索提供天然查询扩展
+- [Skill-Cold-Start-Product-Recommendation](../06-增长模型/[[Skill-Cold-Start-Product-Recommendation]].md) — 新 SKU 自动建图后立刻进入冷启动推荐管线,形成端到端冷启动闭环
+- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](./[[Skill-Dense-Retrieval-Ecommerce-Semantic-Search]].md) — KG 节点的多语种别名为稠密检索提供天然查询扩展
 
 ---
 

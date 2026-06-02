@@ -92,13 +92,13 @@ python churn_model.py
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — 深度流失预测高度依赖特征工程
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 深度流失预测高度依赖特征工程
 
 ### 延伸技能
-- [Skill-Uplift-Churn-Prediction](../06-增长模型/Skill-Uplift-Churn-Prediction.md) — 从预测谁会流失升级到预测干预谁能挽留
+- [Skill-Uplift-Churn-Prediction](../06-增长模型/[[Skill-Uplift-Churn-Prediction]].md) — 从预测谁会流失升级到预测干预谁能挽留
 
 ### 可组合
-- [Skill-DQN-Purchase-Prediction](../06-增长模型/Skill-DQN-Purchase-Prediction.md) — 流失预测 + 购买预测形成完整生命周期决策
+- [Skill-DQN-Purchase-Prediction](../06-增长模型/[[Skill-DQN-Purchase-Prediction]].md) — 流失预测 + 购买预测形成完整生命周期决策
 
 ## ⑤ 商业价值评估
 

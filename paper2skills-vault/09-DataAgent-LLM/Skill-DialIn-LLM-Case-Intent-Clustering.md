@@ -227,16 +227,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Customer-Journey-Decision-Tree](./Skill-Customer-Journey-Decision-Tree.md) — 客服决策树的意图分类前置
-- [Skill-LACA-CrossLingual-ABSA](../14-用户分析/Skill-LACA-CrossLingual-ABSA.md) — 多语种 Case 的情感+意图联合建模
+- [Skill-Customer-Journey-Decision-Tree](./[[Skill-Customer-Journey-Decision-Tree]].md) — 客服决策树的意图分类前置
+- [Skill-LACA-CrossLingual-ABSA](../14-用户分析/[[Skill-LACA-CrossLingual-ABSA]].md) — 多语种 Case 的情感+意图联合建模
 
 ### 延伸技能
-- [Skill-Root-Cause-Analysis-Agent](./Skill-Root-Cause-Analysis-Agent.md) — 投诉类 Case 触发 RCA Agent 深度分析
-- [Skill-MAA-Review-to-Action-Decision](../14-用户分析/Skill-MAA-Review-to-Action-Decision.md) — Case 意图聚类与 Review 聚类共享方法学
+- [Skill-Root-Cause-Analysis-Agent](./[[Skill-Root-Cause-Analysis-Agent]].md) — 投诉类 Case 触发 RCA Agent 深度分析
+- [Skill-MAA-Review-to-Action-Decision](../14-用户分析/[[Skill-MAA-Review-to-Action-Decision]].md) — Case 意图聚类与 Review 聚类共享方法学
 
 ### 可组合
-- [Skill-MAS-Orchestrator](../10-MAS/Skill-MAS-Orchestrator.md) — 意图分类后路由到多 Agent 工作流
-- [Skill-Long-Term-Preference-Memory](../16-智能体工程/Skill-Long-Term-Preference-Memory.md) — 跨 Case 用户记忆 + 意图分类联动
+- [Skill-MAS-Orchestrator](../10-MAS/[[Skill-MAS-Orchestrator]].md) — 意图分类后路由到多 Agent 工作流
+- [Skill-Long-Term-Preference-Memory](../16-智能体工程/[[Skill-Long-Term-Preference-Memory]].md) — 跨 Case 用户记忆 + 意图分类联动
 
 ---
 

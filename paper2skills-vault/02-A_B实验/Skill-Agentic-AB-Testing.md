@@ -149,13 +149,13 @@ print(f"SMD: {balance['price_sensitivity_smd']} - {'均衡' if balance['is_balan
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-AB-Experimental-Design](./Skill-AB-Experimental-Design.md) — Agent A/B 是标准 A/B 实验在无流量场景的范式升级，需要掌握基础实验设计原则
-- [Skill-Power-Analysis-Sample-Size](./Skill-Power-Analysis-Sample-Size.md) — Agent 数量（样本量）的选择同样需要功效分析支撑
+- [Skill-AB-Experimental-Design](./[[Skill-AB-Experimental-Design]].md) — Agent A/B 是标准 A/B 实验在无流量场景的范式升级，需要掌握基础实验设计原则
+- [Skill-Power-Analysis-Sample-Size](./[[Skill-Power-Analysis-Sample-Size]].md) — Agent 数量（样本量）的选择同样需要功效分析支撑
 
 ### 延伸技能
-- [Skill-AB-Test-Result-Interpretation](./Skill-AB-Test-Result-Interpretation.md) — z 检验结论需要严谨解读（多重检验校正、实际显著性 vs 统计显著性）
-- [Skill-Multi-Armed-Bandit](./Skill-Multi-Armed-Bandit.md) — 当需要同时测试多个版本时，MAB 可替代固定分配实验
-- [Skill-Switchback-Experiment-Design](./Skill-Switchback-Experiment-Design.md) — 当网页测试存在 SUTVA 违反（如库存效应）时结合 Switchback
+- [Skill-AB-Test-Result-Interpretation](./[[Skill-AB-Test-Result-Interpretation]].md) — z 检验结论需要严谨解读（多重检验校正、实际显著性 vs 统计显著性）
+- [Skill-Multi-Armed-Bandit](./[[Skill-Multi-Armed-Bandit]].md) — 当需要同时测试多个版本时，MAB 可替代固定分配实验
+- [Skill-Switchback-Experiment-Design](./[[Skill-Switchback-Experiment-Design]].md) — 当网页测试存在 SUTVA 违反（如库存效应）时结合 Switchback
 
 ### 可组合
 - `16-智能体工程/Skill-ReAct` — Agent 自主仿真的 Perceive-Decide-Act 闭环即 ReAct 框架的直接落地

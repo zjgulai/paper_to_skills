@@ -208,16 +208,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/Skill-Multilingual-NER-Universal-v2.md) — 多语种查询的实体提取基础
-- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](../08-知识图谱/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md) — Query embedding 基础架构
+- [Skill-Multilingual-NER-Universal-v2](../08-知识图谱/[[Skill-Multilingual-NER-Universal-v2]].md) — 多语种查询的实体提取基础
+- [Skill-Dense-Retrieval-Ecommerce-Semantic-Search](../08-知识图谱/[[Skill-Dense-Retrieval-Ecommerce-Semantic-Search]].md) — Query embedding 基础架构
 
 ### 延伸技能
-- [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md) — 不同意图查询贡献不同归因权重
-- [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md) — 按意图分层投放预算
+- [Skill-Ad-Attribution-Modeling](./[[Skill-Ad-Attribution-Modeling]].md) — 不同意图查询贡献不同归因权重
+- [Skill-ROAS-Budget-Optimization](./[[Skill-ROAS-Budget-Optimization]].md) — 按意图分层投放预算
 
 ### 可组合
-- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — MMM 渠道效率 + 意图分类协同优化
-- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/Skill-DARA-Agentic-MMM-Optimizer.md) — DARA Agent 按意图自动调整渠道预算
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — MMM 渠道效率 + 意图分类协同优化
+- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/[[Skill-DARA-Agentic-MMM-Optimizer]].md) — DARA Agent 按意图自动调整渠道预算
 
 ---
 

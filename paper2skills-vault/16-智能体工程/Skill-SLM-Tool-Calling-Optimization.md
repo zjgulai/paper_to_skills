@@ -232,18 +232,18 @@ python3 slm_tool_caller.py
 
 ### 前置技能
 
-- **16-智能体工程 Skill-Open-Source-Tool-Use-Model**(P2-6): Hermes 4 提供开源基座，可与 SLM 形成大小模型分层
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**(P1-4): MCP tool 描述格式可直接用于 SLM 训练数据
+- **16-智能体工程 [[Skill-Open-Source-Tool-Use-Model]]**(P2-6): Hermes 4 提供开源基座，可与 SLM 形成大小模型分层
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**(P1-4): MCP tool 描述格式可直接用于 SLM 训练数据
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Tool-Description-Audit**(P2-8): Tool 描述质量影响 SLM tool 选择准确率
-- **07-NLP-VOC Skill-Context-Compression**(P1-2): SLM 上下文窗口有限，需要压缩
+- **16-智能体工程 [[Skill-Tool-Description-Audit]]**(P2-8): Tool 描述质量影响 SLM tool 选择准确率
+- **07-NLP-VOC [[Skill-Context-Compression]]**(P1-2): SLM 上下文窗口有限，需要压缩
 
 ### 可组合技能
 
 - **07-NLP-VOC VOC 标签体系**: SLM 可替代大模型做标签分类
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(P0-1): SkillForge 生成的 skill 可用 SLM 执行简单任务
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(P0-1): SkillForge 生成的 skill 可用 SLM 执行简单任务
 - **本项目 paper-同步 skill**: SLM 可做简单的分类/路由任务
 
 ---

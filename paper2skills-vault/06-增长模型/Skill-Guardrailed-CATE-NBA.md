@@ -165,16 +165,16 @@ class ProductionCATEEstimator(MockCATEEstimator):
 ## ④ 技能关联
 
 **前置技能**
-- [Skill-Uplift-Churn-Prediction](Skill-Uplift-Churn-Prediction.md)：理解 CATE / Uplift 四象限分类（可说服者 / 必然转化者 / 无法挽回者 / 不要打扰者）
-- [Skill-RFM-Customer-Segmentation](Skill-RFM-Customer-Segmentation.md)：RFM 特征工程，作为 CATE 模型的基础特征
+- [Skill-Uplift-Churn-Prediction]([[Skill-Uplift-Churn-Prediction]].md)：理解 CATE / Uplift 四象限分类（可说服者 / 必然转化者 / 无法挽回者 / 不要打扰者）
+- [Skill-RFM-Customer-Segmentation]([[Skill-RFM-Customer-Segmentation]].md)：RFM 特征工程，作为 CATE 模型的基础特征
 
 **延伸技能**
-- [Skill-Customer-Journey-Prototype](Skill-Customer-Journey-Prototype.md)：把 NBA 输出与用户旅程节点对齐，实现全触点精准干预
-- [Skill-LTV-Prediction-ZILN](Skill-LTV-Prediction-ZILN.md)：用 LTV 预测替换简单 RFM 分层，为护栏高净值门槛提供更精准的价值估算
+- [Skill-Customer-Journey-Prototype]([[Skill-Customer-Journey-Prototype]].md)：把 NBA 输出与用户旅程节点对齐，实现全触点精准干预
+- [Skill-LTV-Prediction-ZILN]([[Skill-LTV-Prediction-ZILN]].md)：用 LTV 预测替换简单 RFM 分层，为护栏高净值门槛提供更精准的价值估算
 
 **可组合**
-- **Skill-Uplift-Churn-Prediction × Guardrailed-CATE-NBA**：先用 Uplift Churn 找出高流失风险的可说服者，再用 NBA 分配最优挽留行动，构成完整"识别→分配"闭环
-- **Skill-Bass-Diffusion-New-Product-Forecasting × Guardrailed-CATE-NBA**：Bass 模型预测新品扩散曲线，NBA 在扩散拐点前精准激活早期采用者，最大化冷启动效率
+- **[[Skill-Uplift-Churn-Prediction]] × Guardrailed-CATE-NBA**：先用 Uplift Churn 找出高流失风险的可说服者，再用 NBA 分配最优挽留行动，构成完整"识别→分配"闭环
+- **[[Skill-Bass-Diffusion-New-Product-Forecasting]] × Guardrailed-CATE-NBA**：Bass 模型预测新品扩散曲线，NBA 在扩散拐点前精准激活早期采用者，最大化冷启动效率
 
 ---
 

@@ -283,18 +283,18 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — 商品特征向量化(价格/品类/产地)是相似品检索的基础
-- [Skill-Cold-Start-Meta-Learning-PAM](../05-推荐系统/Skill-Cold-Start-Meta-Learning-PAM.md) — 元学习冷启动是 F-FOMAML 的方法学基础
-- [Skill-Time-Series-Forecasting](../03-时间序列/Skill-Time-Series-Forecasting.md) — Bass 模型是时序预测的特例
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 商品特征向量化(价格/品类/产地)是相似品检索的基础
+- [Skill-Cold-Start-Meta-Learning-PAM](../05-推荐系统/[[Skill-Cold-Start-Meta-Learning-PAM]].md) — 元学习冷启动是 F-FOMAML 的方法学基础
+- [Skill-Time-Series-Forecasting](../03-时间序列/[[Skill-Time-Series-Forecasting]].md) — Bass 模型是时序预测的特例
 
 ### 延伸技能
-- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/Skill-Demand-Forecasting-Supply-Chain.md) — 冷启动预测后接入正常补货流程
-- [Skill-Hierarchical-Demand-Forecasting-Reconciliation](../03-时间序列/Skill-Hierarchical-Demand-Forecasting-Reconciliation.md) — 新品冷启动 + 分层预测组合
-- [Skill-Lead-Time-Distribution-Risk-GenQOT](../04-供应链/Skill-Lead-Time-Distribution-Risk-GenQOT.md) — Bass 预测驱动动态安全库存
+- [Skill-Demand-Forecasting-Supply-Chain](../04-供应链/[[Skill-Demand-Forecasting-Supply-Chain]].md) — 冷启动预测后接入正常补货流程
+- [Skill-Hierarchical-Demand-Forecasting-Reconciliation](../03-时间序列/[[Skill-Hierarchical-Demand-Forecasting-Reconciliation]].md) — 新品冷启动 + 分层预测组合
+- [Skill-Lead-Time-Distribution-Risk-GenQOT](../04-供应链/[[Skill-Lead-Time-Distribution-Risk-GenQOT]].md) — Bass 预测驱动动态安全库存
 
 ### 可组合
-- [Skill-Cold-Start-Product-Recommendation](./Skill-Cold-Start-Product-Recommendation.md) — 新品冷启动推荐 + 需求预测形成闭环
-- [Skill-Hierarchical-Product-KG-Construction](../08-知识图谱/Skill-Hierarchical-Product-KG-Construction.md) — KG 提供相似品检索的语义信号
+- [Skill-Cold-Start-Product-Recommendation](./[[Skill-Cold-Start-Product-Recommendation]].md) — 新品冷启动推荐 + 需求预测形成闭环
+- [Skill-Hierarchical-Product-KG-Construction](../08-知识图谱/[[Skill-Hierarchical-Product-KG-Construction]].md) — KG 提供相似品检索的语义信号
 
 ---
 

@@ -282,19 +282,19 @@ python3 memact.py
 
 ### 前置技能
 
-- **16-智能体工程 Skill-Active-Context-Pruning**(Focus,P2-2):无训练版本,理解 memory action 的 prompt 端模拟
-- **16-智能体工程 Skill-Agentic-Memory-Management**(AgeMem,P1-3):AgeMem 也用 GRPO 风格 + step-wise advantage,但聚焦 inter-task LTM
-- **16-智能体工程 Skill-Context-Compression**(ACON,P1-2):被动外部压缩对比
+- **16-智能体工程 [[Skill-Active-Context-Pruning]]**(Focus,P2-2):无训练版本,理解 memory action 的 prompt 端模拟
+- **16-智能体工程 [[Skill-Agentic-Memory-Management]]**(AgeMem,P1-3):AgeMem 也用 GRPO 风格 + step-wise advantage,但聚焦 inter-task LTM
+- **16-智能体工程 [[Skill-Context-Compression]]**(ACON,P1-2):被动外部压缩对比
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Orchestration-Trace-RL**(待萃取 P2-5):用 trace 训 orchestration 策略,理念类似但目标不同
-- **16-智能体工程 Skill-Co-Evolutionary-Skill-Verification**(EvoSkills,P2-1):skill 演化时若 context 累积可应用 MemAct
+- **16-智能体工程 [[Skill-Orchestration-Trace-RL]]**(待萃取 P2-5):用 trace 训 orchestration 策略,理念类似但目标不同
+- **16-智能体工程 [[Skill-Co-Evolutionary-Skill-Verification]]**(EvoSkills,P2-1):skill 演化时若 context 累积可应用 MemAct
 
 ### 可组合技能
 
-- **10-MAS Skill-MAS-Orchestrator**:MemAct policy 集成到 MAS 的 worker agent
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK):memory action 作为 first-class skill 注册
+- **10-MAS [[Skill-MAS-Orchestrator]]**:MemAct policy 集成到 MAS 的 worker agent
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK):memory action 作为 first-class skill 注册
 - **本项目 paper-审核**:审核长论文时 agent 可用 MemAct 自动剪枝中间笔记
 
 ---

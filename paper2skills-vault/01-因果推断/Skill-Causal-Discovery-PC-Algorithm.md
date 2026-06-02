@@ -98,14 +98,14 @@ source: ai
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — PC 算法的输入是变量集合，需要先做特征筛选
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — PC 算法的输入是变量集合，需要先做特征筛选
 
 ### 延伸技能
-- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md) — 因果发现后估计因果效应
-- [Skill-Mediation-Causal-Mechanism-Analysis](../01-因果推断/Skill-Mediation-Causal-Mechanism-Analysis.md) — 因果发现后做中介机制分析
+- [Skill-Intelligent-Attribution-Causal-Forest](../01-因果推断/[[Skill-Intelligent-Attribution-Causal-Forest]].md) — 因果发现后估计因果效应
+- [Skill-Mediation-Causal-Mechanism-Analysis](../01-因果推断/[[Skill-Mediation-Causal-Mechanism-Analysis]].md) — 因果发现后做中介机制分析
 
 ### 可组合
-- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — 因果图指导 Uplift 特征选择
+- [Skill-Uplift-Modeling](../01-因果推断/[[Skill-Uplift-Modeling]].md) — 因果图指导 Uplift 特征选择
 
 ## ⑤ 商业价值评估
 

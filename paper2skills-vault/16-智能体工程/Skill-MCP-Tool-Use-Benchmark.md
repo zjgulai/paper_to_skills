@@ -247,18 +247,18 @@ python3 mcp_agent_bench.py
 
 ### 前置技能
 
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**(P1-4): MCP 协议基础
-- **16-智能体工程 Skill-Tool-Description-Audit**(P2-8): Tool 描述质量影响 TFS/TEFS
-- **16-智能体工程 Skill-Open-Source-Tool-Use-Model**(P2-6): Hermes 4 等模型可用本基准评估
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**(P1-4): MCP 协议基础
+- **16-智能体工程 [[Skill-Tool-Description-Audit]]**(P2-8): Tool 描述质量影响 TFS/TEFS
+- **16-智能体工程 [[Skill-Open-Source-Tool-Use-Model]]**(P2-6): Hermes 4 等模型可用本基准评估
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-SLM-Tool-Calling-Optimization**(P2-7): SLM 的 TEFS 通常更低，需要专门优化
-- **16-智能体工程 Skill-Orchestration-Trace-RL**(P2-5): 可用 trace 数据优化并行/串行决策
+- **16-智能体工程 [[Skill-SLM-Tool-Calling-Optimization]]**(P2-7): SLM 的 TEFS 通常更低，需要专门优化
+- **16-智能体工程 [[Skill-Orchestration-Trace-RL]]**(P2-5): 可用 trace 数据优化并行/串行决策
 
 ### 可组合技能
 
-- **02-A_B实验 Skill-AB-Test-Result-Interpretation**: 模型选型可用 A/B 测试验证
+- **02-A_B实验 [[Skill-AB-Test-Result-Interpretation]]**: 模型选型可用 A/B 测试验证
 - **本项目 paper-选题 skill**: 本基准方法论可用于评估新论文的 tool use 能力声明
 
 ---

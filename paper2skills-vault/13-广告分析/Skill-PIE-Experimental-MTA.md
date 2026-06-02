@@ -159,19 +159,19 @@ final_report = pipeline.calibrate()
 
 ### 前置技能
 
-- [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md) — Shapley / Markov 多触点归因基础方法，理解 ML 触点打分的原理
-- [Skill-CDA-Cookieless-Attribution](./Skill-CDA-Cookieless-Attribution.md) — 因果驱动归因，理解选择偏差的根源与时序因果发现
+- [Skill-Ad-Attribution-Modeling](./[[Skill-Ad-Attribution-Modeling]].md) — Shapley / Markov 多触点归因基础方法，理解 ML 触点打分的原理
+- [Skill-CDA-Cookieless-Attribution](./[[Skill-CDA-Cookieless-Attribution]].md) — 因果驱动归因，理解选择偏差的根源与时序因果发现
 
 ### 延伸技能
 
-- [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md) — 用 PIE 去偏 ROAS 驱动预算分配优化
-- [Skill-PVM-Attribution-Window-Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md) — PVM 跨平台窗口统一化，与 PIE 互补（PVM 解决跨平台重复计数，PIE 解决选择偏差）
+- [Skill-ROAS-Budget-Optimization](./[[Skill-ROAS-Budget-Optimization]].md) — 用 PIE 去偏 ROAS 驱动预算分配优化
+- [Skill-PVM-Attribution-Window-Harmonization](./[[Skill-PVM-Attribution-Window-Harmonization]].md) — PVM 跨平台窗口统一化，与 PIE 互补（PVM 解决跨平台重复计数，PIE 解决选择偏差）
 
 ### 可组合
 
-- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — MMM 渠道弹性估计 + PIE 触点级校准，形成宏微观双层归因体系
-- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/Skill-DARA-Agentic-MMM-Optimizer.md) — DARA Agent 消费 PIE 输出的渠道增量，自动执行预算调优
-- [Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — Uplift 用户分层 + PIE 渠道归因，精准到"哪类用户 × 哪个渠道"的最优组合
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — MMM 渠道弹性估计 + PIE 触点级校准，形成宏微观双层归因体系
+- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/[[Skill-DARA-Agentic-MMM-Optimizer]].md) — DARA Agent 消费 PIE 输出的渠道增量，自动执行预算调优
+- [Uplift-Modeling](../01-因果推断/[[Skill-Uplift-Modeling]].md) — Uplift 用户分层 + PIE 渠道归因，精准到"哪类用户 × 哪个渠道"的最优组合
 
 ---
 

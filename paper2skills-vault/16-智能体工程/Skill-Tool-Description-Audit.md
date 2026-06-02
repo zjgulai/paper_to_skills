@@ -233,18 +233,18 @@ python3 mcp_smell_scanner.py
 
 ### 前置技能
 
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**(P1-4): MCP 协议基础，tool 描述格式
-- **16-智能体工程 Skill-Open-Source-Tool-Use-Model**(P2-6): Hermes 4 的 tool_call 格式可直接用于审核
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**(P1-4): MCP 协议基础，tool 描述格式
+- **16-智能体工程 [[Skill-Open-Source-Tool-Use-Model]]**(P2-6): Hermes 4 的 tool_call 格式可直接用于审核
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-MCP-Tool-Use-Benchmark**(P3): MCPAgentBench 评估工具选择能力
-- **16-智能体工程 Skill-SLM-Tool-Calling-Optimization**(P2-7): SLM 对 tool 描述质量更敏感
+- **16-智能体工程 [[Skill-MCP-Tool-Use-Benchmark]]**(P3): MCPAgentBench 评估工具选择能力
+- **16-智能体工程 [[Skill-SLM-Tool-Calling-Optimization]]**(P2-7): SLM 对 tool 描述质量更敏感
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-Auto-Skill-Synthesis**(P0-1): SkillForge 生成的 tool 描述可用本技能审核
-- **16-智能体工程 Skill-Context-Compression**(P1-2): Compact 模式是 context compression 的一种形式
+- **16-智能体工程 [[Skill-Auto-Skill-Synthesis]]**(P0-1): SkillForge 生成的 tool 描述可用本技能审核
+- **16-智能体工程 [[Skill-Context-Compression]]**(P1-2): Compact 模式是 context compression 的一种形式
 - **07-NLP-VOC VOC 标签体系**: 标签定义的质量审核可借鉴六维 rubric
 
 ---

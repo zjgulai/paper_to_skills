@@ -152,15 +152,15 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Marketing-Mix-Modeling](./Skill-Marketing-Mix-Modeling.md) — MMM 提供渠道弹性曲线作为 DARA 的优化对象
-- [Skill-ROAS-Budget-Optimization](../13-广告分析/Skill-ROAS-Budget-Optimization.md) — 传统预算优化是 DARA 的基线对照
+- [Skill-Marketing-Mix-Modeling](./[[Skill-Marketing-Mix-Modeling]].md) — MMM 提供渠道弹性曲线作为 DARA 的优化对象
+- [Skill-ROAS-Budget-Optimization](../13-广告分析/[[Skill-ROAS-Budget-Optimization]].md) — 传统预算优化是 DARA 的基线对照
 
 ### 延伸技能
-- [Skill-Promotion-Effectiveness](./Skill-Promotion-Effectiveness.md) — DARA 输出的预算策略需要促销因果验证
+- [Skill-Promotion-Effectiveness](./[[Skill-Promotion-Effectiveness]].md) — DARA 输出的预算策略需要促销因果验证
 
 ### 可组合
-- [Skill-MCP-A2A-Protocol-Stack](../16-智能体工程/Skill-MCP-A2A-Protocol-Stack.md) — DARA 的 LLM Agent 可通过 MCP 接入 Google Ads / Meta API
-- [Skill-Ad-Attribution-Modeling](../13-广告分析/Skill-Ad-Attribution-Modeling.md) — 归因模型为 DARA 提供反馈信号
+- [Skill-MCP-A2A-Protocol-Stack](../16-智能体工程/[[Skill-MCP-A2A-Protocol-Stack]].md) — DARA 的 LLM Agent 可通过 MCP 接入 Google Ads / Meta API
+- [Skill-Ad-Attribution-Modeling](../13-广告分析/[[Skill-Ad-Attribution-Modeling]].md) — 归因模型为 DARA 提供反馈信号
 
 ---
 

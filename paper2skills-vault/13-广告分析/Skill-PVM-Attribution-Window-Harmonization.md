@@ -225,16 +225,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md) — Shapley/Markov 多触点归因的方法学基础
-- [Skill-Hierarchical-Search-Intent-Classification](./Skill-Hierarchical-Search-Intent-Classification.md) — 不同意图触点归因权重差异
+- [Skill-Ad-Attribution-Modeling](./[[Skill-Ad-Attribution-Modeling]].md) — Shapley/Markov 多触点归因的方法学基础
+- [Skill-Hierarchical-Search-Intent-Classification](./[[Skill-Hierarchical-Search-Intent-Classification]].md) — 不同意图触点归因权重差异
 
 ### 延伸技能
-- [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md) — PVM 归一化 ROAS 驱动预算优化
-- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/Skill-DARA-Agentic-MMM-Optimizer.md) — DARA Agent 用矫正后 ROAS 优化预算
+- [Skill-ROAS-Budget-Optimization](./[[Skill-ROAS-Budget-Optimization]].md) — PVM 归一化 ROAS 驱动预算优化
+- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/[[Skill-DARA-Agentic-MMM-Optimizer]].md) — DARA Agent 用矫正后 ROAS 优化预算
 
 ### 可组合
-- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/Skill-Marketing-Mix-Modeling.md) — MMM 渠道弹性 + PVM 触点归因协同
-- [Skill-Promotion-Effectiveness](../15-营销投放分析/Skill-Promotion-Effectiveness.md) — 大促促销效果的反事实归因
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — MMM 渠道弹性 + PVM 触点归因协同
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — 大促促销效果的反事实归因
 
 ---
 

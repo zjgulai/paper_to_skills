@@ -260,12 +260,12 @@ if __name__ == '__main__':
 - 无（本 Skill 是基础入口卡）
 
 ### 延伸技能
-- [Skill-Causal-Discovery-PC-Algorithm](../01-因果推断/Skill-Causal-Discovery-PC-Algorithm.md) — 特征工程后用因果发现做变量筛选
-- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — 特征工程是 Uplift 建模的核心环节
+- [Skill-Causal-Discovery-PC-Algorithm](../01-因果推断/[[Skill-Causal-Discovery-PC-Algorithm]].md) — 特征工程后用因果发现做变量筛选
+- [Skill-Uplift-Modeling](../01-因果推断/[[Skill-Uplift-Modeling]].md) — 特征工程是 Uplift 建模的核心环节
 
 ### 可组合
-- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — 推荐系统的隐因子也是特征工程的延伸
-- [Skill-Customer-Churn-Prediction](../06-增长模型/Skill-Customer-Churn-Prediction.md) — 流失模型严重依赖特征工程
+- [Skill-Matrix-Factorization](../05-推荐系统/[[Skill-Matrix-Factorization]].md) — 推荐系统的隐因子也是特征工程的延伸
+- [Skill-Customer-Churn-Prediction](../06-增长模型/[[Skill-Customer-Churn-Prediction]].md) — 流失模型严重依赖特征工程
 
 ## ⑤ 商业价值评估
 

@@ -340,14 +340,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Argos-Agentic-Anomaly-Detection](../09-DataAgent-LLM/Skill-Argos-Agentic-Anomaly-Detection.md) — RCA 由异常检测触发
-- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/Skill-SQL-Agent-Text-to-SQL.md) — RCA 需要查询多维数据切片
+- [Skill-Argos-Agentic-Anomaly-Detection](../09-DataAgent-LLM/[[Skill-Argos-Agentic-Anomaly-Detection]].md) — RCA 由异常检测触发
+- [Skill-SQL-Agent-Text-to-SQL](../09-DataAgent-LLM/[[Skill-SQL-Agent-Text-to-SQL]].md) — RCA 需要查询多维数据切片
 
 ### 延伸技能
-- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md) — RCA 是自治数据科学的核心场景
+- [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/[[Skill-DeepAnalyze-Autonomous-Data-Science-Agent]].md) — RCA 是自治数据科学的核心场景
 
 ### 可组合
-- [Skill-Multi-Agent-Debate](../10-MAS/Skill-Multi-Agent-Debate.md) — 多 Agent 辩论提升 RCA 假设质量
+- [Skill-Multi-Agent-Debate](../10-MAS/[[Skill-Multi-Agent-Debate]].md) — 多 Agent 辩论提升 RCA 假设质量
 
 ## ⑤ 商业价值评估
 

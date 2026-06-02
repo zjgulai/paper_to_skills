@@ -173,10 +173,10 @@ for ch, spend in optimal.items():
 ## ④ 技能关联
 
 - **前置技能**：
-  - [Skill-Marketing-Mix-Modeling](Skill-Marketing-Mix-Modeling.md) — 理解传统 Hill 曲线 MMM 的原理与局限
-  - [Skill-Promotion-Effectiveness](Skill-Promotion-Effectiveness.md) — 促销效果评估的基础方法
+  - [Skill-Marketing-Mix-Modeling]([[Skill-Marketing-Mix-Modeling]].md) — 理解传统 Hill 曲线 MMM 的原理与局限
+  - [Skill-Promotion-Effectiveness]([[Skill-Promotion-Effectiveness]].md) — 促销效果评估的基础方法
 - **延伸技能**：
-  - [Skill-DARA-Agentic-MMM-Optimizer](Skill-DARA-Agentic-MMM-Optimizer.md) — 在识别出真实 ROAS 后，用 LLM+RL Agent 做动态预算分配
+  - [Skill-DARA-Agentic-MMM-Optimizer]([[Skill-DARA-Agentic-MMM-Optimizer]].md) — 在识别出真实 ROAS 后，用 LLM+RL Agent 做动态预算分配
 - **可组合**：
   - **Switchback 实验设计**（`02-A_B实验/`）：设计预算冲击实验的地区×时段矩阵，保证实验数据统计有效性
   - **ROAS Budget**（`13-广告分析/`）：将 GP 饱和曲线输出接入实时预算分配引擎

@@ -3,7 +3,7 @@
 ## 1. 图谱概览
 
 - **节点总数**: 246 个技能
-- **边总数**: 2493 条关系
+- **边总数**: 2765 条关系
 - **领域分布**:
   - ab_testing: 11 个
   - advertising: 20 个
@@ -32,10 +32,10 @@
 | 排名 | 技能 | 被依赖数 |
 |-----|------|---------|
 | 1 | Skill-ROAS-Budget-Optimization | 46 |
-| 2 | Skill-Customer-Churn-Prediction | 36 |
-| 3 | 组合 | 34 |
-| 4 | Skill-Ad-Attribution-Modeling | 33 |
-| 5 | Skill-Demand-Forecasting-Supply-Chain | 33 |
+| 2 | Skill-MAS-Orchestrator | 38 |
+| 3 | Skill-Customer-Churn-Prediction | 38 |
+| 4 | Skill-Demand-Forecasting-Supply-Chain | 35 |
+| 5 | 组合 | 34 |
 
 ### 潜力延伸技能 (高价值无延伸)
 | 排名 | 技能 | 业务价值 | 推荐延伸方向 |

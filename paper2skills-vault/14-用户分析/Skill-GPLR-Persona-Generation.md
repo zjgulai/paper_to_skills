@@ -357,16 +357,16 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-User-Funnel-Analysis](./Skill-User-Funnel-Analysis.md) — 漏斗分析提供用户行为数据基础；GPLR 需要交互历史作为图构建输入
-- [Skill-Cohort-Retention-Analysis](./Skill-Cohort-Retention-Analysis.md) — Cohort 分析提供时间维度用户分层，与 Persona 标签互补形成完整用户画像
+- [Skill-User-Funnel-Analysis](./[[Skill-User-Funnel-Analysis]].md) — 漏斗分析提供用户行为数据基础；GPLR 需要交互历史作为图构建输入
+- [Skill-Cohort-Retention-Analysis](./[[Skill-Cohort-Retention-Analysis]].md) — Cohort 分析提供时间维度用户分层，与 Persona 标签互补形成完整用户画像
 
 ### 延伸技能
-- [Skill-MAA-Review-to-Action-Decision](./Skill-MAA-Review-to-Action-Decision.md) — Persona 标签输入 MAA，为不同人群生成差异化的产品改进建议
-- [Skill-AGRS-Aspect-Guided-Review-Summarization](./Skill-AGRS-Aspect-Guided-Review-Summarization.md) — AGRS 提取人群关注的 Aspect，验证和丰富 GPLR 生成的 Persona 标签
+- [Skill-MAA-Review-to-Action-Decision](./[[Skill-MAA-Review-to-Action-Decision]].md) — Persona 标签输入 MAA，为不同人群生成差异化的产品改进建议
+- [Skill-AGRS-Aspect-Guided-Review-Summarization](./[[Skill-AGRS-Aspect-Guided-Review-Summarization]].md) — AGRS 提取人群关注的 Aspect，验证和丰富 GPLR 生成的 Persona 标签
 
 ### 可组合
-- [Skill-Uplift-Modeling](../01-因果推断/Skill-Uplift-Modeling.md) — Persona 分层 × Uplift 模型：识别每个人群中对促销最敏感的"可说服用户"，精准发券
-- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/Skill-DARA-Agentic-MMM-Optimizer.md) — Persona 驱动 MMM 渠道预算拆分：不同人群在不同渠道的响应系数各异，结合 DARA 动态调优预算
+- [Skill-Uplift-Modeling](../01-因果推断/[[Skill-Uplift-Modeling]].md) — Persona 分层 × Uplift 模型：识别每个人群中对促销最敏感的"可说服用户"，精准发券
+- [Skill-DARA-Agentic-MMM-Optimizer](../15-营销投放分析/[[Skill-DARA-Agentic-MMM-Optimizer]].md) — Persona 驱动 MMM 渠道预算拆分：不同人群在不同渠道的响应系数各异，结合 DARA 动态调优预算
 
 ---
 

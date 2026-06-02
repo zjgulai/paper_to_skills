@@ -216,18 +216,18 @@ python3 focus_agent.py
 
 ### 前置技能
 
-- **16-智能体工程 Skill-Context-Compression**(ACON):被动外部压缩对比,Focus 是 agent-centric 版
-- **16-智能体工程 Skill-Skill-Lifecycle-Design**(SoK):理解 Skill 作为 first-class workflow primitive
+- **16-智能体工程 [[Skill-Context-Compression]]**(ACON):被动外部压缩对比,Focus 是 agent-centric 版
+- **16-智能体工程 [[Skill-Skill-Lifecycle-Design]]**(SoK):理解 Skill 作为 first-class workflow primitive
 
 ### 延伸技能
 
-- **16-智能体工程 Skill-Memory-as-Action**(MemAct,待萃取 P2-3):把 memory 操作完全嵌入 policy 的 RL 训练版
-- **16-智能体工程 Skill-Co-Evolutionary-Skill-Verification**(EvoSkills):演化 skill 时 context 累积过多用 Focus
+- **16-智能体工程 [[Skill-Memory-as-Action]]**(MemAct,待萃取 P2-3):把 memory 操作完全嵌入 policy 的 RL 训练版
+- **16-智能体工程 [[Skill-Co-Evolutionary-Skill-Verification]]**(EvoSkills):演化 skill 时 context 累积过多用 Focus
 
 ### 可组合技能
 
-- **16-智能体工程 Skill-Agentic-Memory-Management**(AgeMem):Focus 处理 intra-task,AgeMem 处理 inter-task LTM
-- **16-智能体工程 Skill-MCP-A2A-Protocol-Stack**:Focus tools 注册到 MCP server,跨 agent 复用
+- **16-智能体工程 [[Skill-Agentic-Memory-Management]]**(AgeMem):Focus 处理 intra-task,AgeMem 处理 inter-task LTM
+- **16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]**:Focus tools 注册到 MCP server,跨 agent 复用
 - **本项目 paper-审核 skill**:对长 paper 萃取过程可应用 Focus 压缩中间笔记
 
 ---

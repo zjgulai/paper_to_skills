@@ -300,13 +300,13 @@ python neural_ndcg.py
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Matrix-Factorization](../05-推荐系统/Skill-Matrix-Factorization.md) — L2R 的输入特征通常包含 MF 隐因子
+- [Skill-Matrix-Factorization](../05-推荐系统/[[Skill-Matrix-Factorization]].md) — L2R 的输入特征通常包含 MF 隐因子
 
 ### 延伸技能
-- [Skill-Diversity-Reranking-SMMR](../05-推荐系统/Skill-Diversity-Reranking-SMMR.md) — NDCG 排序后做多样性重排
+- [Skill-Diversity-Reranking-SMMR](../05-推荐系统/[[Skill-Diversity-Reranking-SMMR]].md) — NDCG 排序后做多样性重排
 
 ### 可组合
-- [Skill-Session-Based-Recommendation-SR-GNN](../05-推荐系统/Skill-Session-Based-Recommendation-SR-GNN.md) — Session-based 召回 + L2R 精排
+- [Skill-Session-Based-Recommendation-SR-GNN](../05-推荐系统/[[Skill-Session-Based-Recommendation-SR-GNN]].md) — Session-based 召回 + L2R 精排
 
 ## 5. 商业价值评估
 

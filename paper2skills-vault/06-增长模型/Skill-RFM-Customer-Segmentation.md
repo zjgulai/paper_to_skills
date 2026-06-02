@@ -227,14 +227,14 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/Skill-Feature-Engineering.md) — RFM 三维度本身是特征工程产物
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — RFM 三维度本身是特征工程产物
 
 ### 延伸技能
-- [Skill-LTV-Prediction-ZILN](../06-增长模型/Skill-LTV-Prediction-ZILN.md) — RFM 分群是 LTV 预测的常用先验
+- [Skill-LTV-Prediction-ZILN](../06-增长模型/[[Skill-LTV-Prediction-ZILN]].md) — RFM 分群是 LTV 预测的常用先验
 
 ### 可组合
-- [Skill-Cohort-Retention-Analysis](../14-用户分析/Skill-Cohort-Retention-Analysis.md) — RFM 分群后看每群的留存曲线
-- [Skill-User-Funnel-Analysis](../14-用户分析/Skill-User-Funnel-Analysis.md) — RFM 分群后对比各群的漏斗转化
+- [Skill-Cohort-Retention-Analysis](../14-用户分析/[[Skill-Cohort-Retention-Analysis]].md) — RFM 分群后看每群的留存曲线
+- [Skill-User-Funnel-Analysis](../14-用户分析/[[Skill-User-Funnel-Analysis]].md) — RFM 分群后对比各群的漏斗转化
 
 ## ⑤ 商业价值评估
 

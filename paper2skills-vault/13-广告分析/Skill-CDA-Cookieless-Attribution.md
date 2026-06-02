@@ -136,11 +136,11 @@ print(rec)
 ## ④ 技能关联
 
 **前置技能**：
-- [Skill-Ad-Attribution-Modeling](./Skill-Ad-Attribution-Modeling.md)（了解基础归因模型：Last-Click / 线性 / 时间衰减）
-- [Skill-PVM-Attribution-Window-Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md)（归因窗口校准）
+- [Skill-Ad-Attribution-Modeling](./[[Skill-Ad-Attribution-Modeling]].md)（了解基础归因模型：Last-Click / 线性 / 时间衰减）
+- [Skill-PVM-Attribution-Window-Harmonization](./[[Skill-PVM-Attribution-Window-Harmonization]].md)（归因窗口校准）
 
 **延伸技能**：
-- [Skill-ROAS-Budget-Optimization](./Skill-ROAS-Budget-Optimization.md)（将 CDA 权重输入预算优化模型）
+- [Skill-ROAS-Budget-Optimization](./[[Skill-ROAS-Budget-Optimization]].md)（将 CDA 权重输入预算优化模型）
 - `01-因果推断/Skill-DML-Causal-Effect` → 使用双重机器学习估计更精确的因果效应
 
 **可组合**：

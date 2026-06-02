@@ -122,16 +122,16 @@ print(detail_df[detail_df["selected"]])
 ## ④ 技能关联
 
 ### 前置技能
-- **[Skill-Multi-Echelon-Inventory](Skill-Multi-Echelon-Inventory.md)**：理解库存与销量的互动关系
-- **[Skill-Demand-Forecasting-Supply-Chain](Skill-Demand-Forecasting-Supply-Chain.md)**：理解需求分布估计
+- **[Skill-Multi-Echelon-Inventory]([[Skill-Multi-Echelon-Inventory]].md)**：理解库存与销量的互动关系
+- **[Skill-Demand-Forecasting-Supply-Chain]([[Skill-Demand-Forecasting-Supply-Chain]].md)**：理解需求分布估计
 
 ### 延伸技能
-- **[Skill-FSDA-DRL](Skill-FSDA-DRL.md)**：引入强化学习后，可在允许少量在线探索的场景动态更新 $\mathcal{U}$
+- **[Skill-FSDA-DRL]([[Skill-FSDA-DRL]].md)**：引入强化学习后，可在允许少量在线探索的场景动态更新 $\mathcal{U}$
 - **[Skill-Monodense-单品价格弹性估计](Skill-Monodense-单品价格弹性估计.md)**：将价格弹性纳入 $v_j$ 参数估计，实现价格+选品联合优化
 
 ### 可组合技能
-- **[Skill-Two-Echelon-Inventory-DRL](Skill-Two-Echelon-Inventory-DRL.md)**：PASTA 确定选品组合后，DRL 库存模型为每个 SKU 计算备货量
-- **[Skill-Lead-Time-Distribution-Risk-GenQOT](Skill-Lead-Time-Distribution-Risk-GenQOT.md)**：将提前期风险与选品稳健性联合规划
+- **[Skill-Two-Echelon-Inventory-DRL]([[Skill-Two-Echelon-Inventory-DRL]].md)**：PASTA 确定选品组合后，DRL 库存模型为每个 SKU 计算备货量
+- **[Skill-Lead-Time-Distribution-Risk-GenQOT]([[Skill-Lead-Time-Distribution-Risk-GenQOT]].md)**：将提前期风险与选品稳健性联合规划
 
 ---
 
