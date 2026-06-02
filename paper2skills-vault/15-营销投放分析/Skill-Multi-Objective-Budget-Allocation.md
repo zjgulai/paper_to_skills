@@ -110,6 +110,8 @@ if __name__ == '__main__':
 
 ---
 - **相关技能**：[[Skill-Geo-Level-Marketing-Effectiveness]]
+- **相关**：[[Skill-DARA-Agentic-MMM-Optimizer]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

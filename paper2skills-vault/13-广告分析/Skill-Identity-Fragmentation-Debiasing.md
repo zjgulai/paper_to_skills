@@ -160,6 +160,7 @@ print(bias_df)
 ---
 - **相关技能**：[[Skill-GraphTrack-Cross-Device-Tracking]]
 - **相关**：[[Skill-HGNN-Cross-Device-Matching]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

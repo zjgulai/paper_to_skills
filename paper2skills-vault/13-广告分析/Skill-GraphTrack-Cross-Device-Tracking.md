@@ -548,6 +548,7 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-Ad-Attribution-Modeling]]
 - **延伸技能**：[[Skill-HGNN-Cross-Device-Matching]]
 - **可组合技能**：[[Skill-PVM-Attribution-Window-Harmonization]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

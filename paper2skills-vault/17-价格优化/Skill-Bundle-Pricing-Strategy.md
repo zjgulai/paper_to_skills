@@ -149,6 +149,8 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Product-Opportunity-Scoring]]（新品捆绑机会识别）
 
 ---
+- **相关**：[[Skill-Competitive-Price-Monitoring]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

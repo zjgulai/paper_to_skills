@@ -146,6 +146,8 @@ regrets = pricer.cumulative_regret()
 ---
 
 - **可组合**：[[Skill-RFM-Customer-Segmentation]] / [[Skill-LTV-Prediction-ZILN]]
+- **相关**：[[Skill-Product-Opportunity-Scoring]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

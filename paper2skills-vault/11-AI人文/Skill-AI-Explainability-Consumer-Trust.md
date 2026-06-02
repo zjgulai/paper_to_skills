@@ -381,6 +381,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Shopping-Companion-Agent]] / [[Skill-Counterfactual-Recommendation-DCE]] / [[Skill-Listing-Quality-Scoring]]
 
 ---
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

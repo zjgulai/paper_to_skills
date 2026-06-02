@@ -51,6 +51,8 @@ print("[✓] Ad-to-Behavior Funnel 测试通过")
 - **组合**：[[Skill-TRACE-Clickstream-Embedding]] (14) | [[Skill-TikTok-Shop-Content-Attribution]] (13)
 
 ---
+- **相关**：[[Skill-ROAS-Budget-Optimization]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

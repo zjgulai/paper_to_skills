@@ -48,6 +48,7 @@ print("[✓] Cross-Border Logistics 测试通过")
 - **组合**：[[Skill-Multi-Channel-Inventory-Pooling]] | [[Skill-Last-Mile-Delivery-Prediction]]
 
 ---
+- **相关**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值
 

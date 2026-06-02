@@ -150,6 +150,7 @@ print(f"未来 7 天预测 (归一化空间): {pred}")
 
 ---
 - **相关技能**：[[Skill-EventCast-LLM-Event-Forecasting]] / [[Skill-Prophet-Forecasting]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

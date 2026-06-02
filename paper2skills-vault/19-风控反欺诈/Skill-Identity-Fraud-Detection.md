@@ -133,6 +133,7 @@ if __name__ == "__main__":
 - [[Skill-MUZZLE-Web-Agent-Red-Teaming]] — Web Agent 红队测试（账号注册欺诈行为模拟）
 
 ---
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

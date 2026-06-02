@@ -98,6 +98,7 @@ python -m paper2skills_code.ai_humanities.aigc_detection.model
 - **前置**：[[Skill-AI-Consumer-Wellbeing-Ethics]] / [[Skill-FraudSquad-LLM-Review-Detection]]
 - **延伸**：[[Skill-AI-Brand-Storytelling]] / [[Skill-MUZZLE-Web-Agent-Red-Teaming]]
 - **可组合**：[[Skill-AGRS-Aspect-Guided-Review-Summarization]] / [[Skill-Review-Fraud-Detection]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

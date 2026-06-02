@@ -60,6 +60,9 @@ print("[✓] Audience KG 测试通过")
 
 ---
 - **相关技能**：[[Skill-GNN-Foundations]]
+- **相关**：[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]]
+- **相关**：[[Skill-KG-Auto-Construction-Agent-Driven]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

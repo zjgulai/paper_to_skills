@@ -842,6 +842,8 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-Ad-Attribution-Modeling]]
 - **延伸技能**：[[Skill-TESLA-NetCVR-Cascade]]
 - **可组合技能**：[[Skill-Conformal-ROI-Prediction]]
+- **相关**：[[Skill-ROAS-Budget-Optimization]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

@@ -45,5 +45,7 @@ print("[✓] Multivariate Cointegration 测试通过")
 - **组合**：[[Skill-Category-Trend-Forecasting]]
 
 ---
+- **相关**：[[Skill-EventCast-LLM-Event-Forecasting]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值：8-15 万元 | **难度**：⭐⭐⭐☆☆ | **优先级**：⭐⭐⭐☆☆

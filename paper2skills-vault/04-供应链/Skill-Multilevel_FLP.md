@@ -168,6 +168,8 @@ print(f"\n优化效益: {initial_cost:.2f} → {final_cost:.2f} 万元 (节省 {
 - 与 **Gen-QOT（提前期风险）** 组合：在 FLP 的运输成本中嵌入提前期分布的期望延误惩罚，输出风险调整后的最优拓扑
 
 ---
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
+- **相关**：[[Skill-ROAS-Budget-Optimization]]
 
 ## ⑤ 商业价值评估
 

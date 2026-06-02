@@ -135,6 +135,8 @@ print(f"  开仓: {result.open_cost:.2f} | 路径: {result.routing_cost:.2f}")
 - [Skill-Lead-Time-Distribution-Risk-GenQOT]([[Skill-Lead-Time-Distribution-Risk-GenQOT]].md)：仓网确定后，用 GenQOT 管理各仓的补货提前期风险
 
 ---
+- **相关**：[[Skill-Safety-Stock-Replenishment]]
+- **相关**：[[Skill-ROAS-Budget-Optimization]]
 
 ## ⑤ 商业价值评估
 

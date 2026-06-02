@@ -58,6 +58,8 @@ print("[✓] Sequential AB 测试通过")
 - **组合**：[[Skill-Network-Effect-Experiments]]
 
 ---
+- **相关**：[[Skill-Multi-Armed-Bandit]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

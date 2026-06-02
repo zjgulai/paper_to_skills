@@ -105,6 +105,8 @@ python -m paper2skills_code.ai_humanities.emotional_ai.model
 - **前置**：[[Skill-AI-Consumer-Wellbeing-Ethics]] / [[Skill-AI-Humanities-Healing-Cards]]
 - **延伸**：[[Skill-AIGC-Content-Detection]]
 - **可组合**：[[Skill-Customer-Journey-Prototype]] / [[Skill-MAA-Review-to-Action-Decision]] / [[Skill-DialIn-LLM-Case-Intent-Clustering]]
+- **相关**：[[Skill-AI-Brand-Storytelling]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

@@ -177,6 +177,9 @@ class ProductionCATEEstimator(MockCATEEstimator):
 - **[[Skill-Bass-Diffusion-New-Product-Forecasting]] × Guardrailed-CATE-NBA**：Bass 模型预测新品扩散曲线，NBA 在扩散拐点前精准激活早期采用者，最大化冷启动效率
 
 ---
+- **相关**：[[Skill-Customer-Churn-Prediction]]
+- **相关**：[[Skill-Product-Opportunity-Scoring]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

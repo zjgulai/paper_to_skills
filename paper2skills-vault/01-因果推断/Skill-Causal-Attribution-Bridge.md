@@ -48,6 +48,8 @@ print("[✓] Causal Attribution Bridge 测试通过")
 - **组合**：[[Skill-DML-Cohort-Causal-Effect]] (01) | [[Skill-TikTok-Shop-Content-Attribution]] (13)
 
 ---
+- **相关**：[[Skill-Guardrailed-Uplift-Targeting]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

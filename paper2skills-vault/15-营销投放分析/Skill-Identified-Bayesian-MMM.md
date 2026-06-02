@@ -182,6 +182,7 @@ for ch, spend in optimal.items():
   - **ROAS Budget**（`13-广告分析/`）：将 GP 饱和曲线输出接入实时预算分配引擎
 
 ---
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

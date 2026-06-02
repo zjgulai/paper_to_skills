@@ -43,5 +43,6 @@ print("[✓] Conformal TS 测试通过")
 ---
 
 - **可组合**：[[Skill-Demand-Forecasting-Supply-Chain]] / [[Skill-Prophet-Forecasting]]
+- **相关**：[[Skill-EventCast-LLM-Event-Forecasting]]
 
 ## ⑤ 商业价值：5-10 万元 | **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐☆☆

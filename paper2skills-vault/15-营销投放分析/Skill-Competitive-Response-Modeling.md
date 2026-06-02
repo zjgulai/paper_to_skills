@@ -53,6 +53,9 @@ print(competitive_alert(0.14, [0.28, 0.12], [0.9, 0.5]))
 - **组合**：[[Skill-Channel-Saturation-Curve]] | [[Skill-Competitive-Price-Monitoring]]
 
 ---
+- **相关**：[[Skill-Marketing-Mix-Modeling]]
+- **相关**：[[Skill-DARA-Agentic-MMM-Optimizer]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

@@ -143,6 +143,8 @@ print(f"各品牌 WOM 分布: {treatment_result['wom_by_brand']}")
   - 与 MAS 领域 Skill 组合：多个专项 Agent（定价 Agent / 运营 Agent / 分析 Agent）各自负责沙盒的不同层
 
 ---
+- **相关**：[[Skill-Product-Opportunity-Scoring]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

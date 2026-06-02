@@ -128,6 +128,7 @@ if __name__ == '__main__':
 
 ---
 - **相关**：[[Skill-Supplier-Evaluation-Model]]
+- **相关**：[[Skill-Cross-Market-Product-Transfer]]
 
 ## ⑤ 商业价值评估
 

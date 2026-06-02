@@ -109,5 +109,7 @@ if __name__ == '__main__':
 - **组合**：[[Skill-MAS-Orchestrator]]（5 Agent 协同是 MAS 的典型应用）
 
 ---
+- **相关**：[[Skill-Phantom-Product-Showcase-I2V]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值：50-80 万元/年 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐⭐☆☆

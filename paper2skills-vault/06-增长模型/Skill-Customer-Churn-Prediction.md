@@ -375,6 +375,7 @@ if __name__ == '__main__':
 - **关联**：[[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]
 - **关联**：[[Skill-Multimodal-Table-Understanding]]
 - **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **相关**：[[Skill-Guardrailed-CATE-NBA]]
 
 ## ⑤ 商业价值评估
 

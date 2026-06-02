@@ -46,6 +46,8 @@ print("[✓] Last-Mile Delivery 测试通过")
 
 ---
 - **相关技能**：[[Skill-Returns-Reverse-Logistics]]
+- **相关**：[[Skill-GraphDeepAR-Demand-Forecasting]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

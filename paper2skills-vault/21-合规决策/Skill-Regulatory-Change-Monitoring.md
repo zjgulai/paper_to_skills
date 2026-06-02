@@ -115,6 +115,7 @@ python -m paper2skills_code.compliance.regulatory_change_monitoring.model
 - **前置**：[[Skill-Category-Compliance-Prescan]] / [[Skill-Cross-Border-Compliance-Framework]]
 - **延伸**：[[Skill-Product-Safety-Testing-Requirements]] / [[Skill-Supply-Chain-Due-Diligence]]
 - **可组合**：[[Skill-Consumer-Complaint-Recall-Prediction]] / [[Skill-Agent-SLO-Manager]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

@@ -329,6 +329,8 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Supplier-Capacity-Planning]] / [[Skill-AgenticPay-Procurement-Negotiation]]
 
 ---
+- **相关**：[[Skill-Consumer-Complaint-Recall-Prediction]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

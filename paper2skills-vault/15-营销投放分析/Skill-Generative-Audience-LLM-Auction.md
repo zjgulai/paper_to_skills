@@ -136,6 +136,7 @@ python3 paper2skills-code/15-营销投放分析/generative_audience_2025/model.p
   - [Skill-Promotion-Effectiveness](./[[Skill-Promotion-Effectiveness]].md) — 将原生广告的转化率提升量化纳入促销效果评估体系
 
 ---
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

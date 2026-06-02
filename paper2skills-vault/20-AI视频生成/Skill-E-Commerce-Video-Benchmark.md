@@ -55,5 +55,6 @@ if __name__ == '__main__':
 - **组合**：[[Skill-Model-Evaluation-Metrics]]（评估方法论互通）
 
 ---
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值：技术储备 | **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐☆☆☆

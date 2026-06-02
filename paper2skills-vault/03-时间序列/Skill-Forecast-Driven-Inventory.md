@@ -47,6 +47,7 @@ print("[✓] Forecast-Driven Inventory 测试通过")
 - **组合**：[[Skill-Conformal-Prediction-Demand-UQ]] (03) | [[Skill-Multi-Channel-Inventory-Pooling]] (04)
 
 ---
+- **相关**：[[Skill-EventCast-LLM-Event-Forecasting]]
 
 ## ⑤ 商业价值
 

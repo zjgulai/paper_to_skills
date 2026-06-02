@@ -365,6 +365,9 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-AIM-RM-LLM-Inventory-MAS-Memory]] / [[Skill-Flowr-Supply-Chain-MAS]]
 
 ---
+- **相关**：[[Skill-GraphDeepAR-Demand-Forecasting]]
+- **相关**：[[Skill-Last-Mile-Delivery-Prediction]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

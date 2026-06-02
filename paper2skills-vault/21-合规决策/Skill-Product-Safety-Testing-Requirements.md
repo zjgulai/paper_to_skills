@@ -321,6 +321,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Supplier-Capacity-Planning]] / [[Skill-New-Product-Inventory-Coldstart]]
 
 ---
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

@@ -49,6 +49,7 @@ print("[✓] Returns Logistics 测试通过")
 ---
 - **相关技能**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 - **关联**：[[Skill-Category-Compliance-Prescan]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值
 

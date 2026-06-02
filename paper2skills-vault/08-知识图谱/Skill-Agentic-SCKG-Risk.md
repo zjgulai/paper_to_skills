@@ -208,6 +208,7 @@ for nid, info in sorted(summary.items(), key=lambda x: -x[1]["pagerank"]):
 
 ---
 - **相关**：[[Skill-CausalRAG-Knowledge-Retrieval]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

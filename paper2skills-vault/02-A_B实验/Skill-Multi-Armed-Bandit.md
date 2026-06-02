@@ -393,6 +393,7 @@ if __name__ == '__main__':
 - **相关技能**：[[Skill-CUPED-Variance-Reduction]]
 - **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 - **相关**：[[Skill-DQN-Purchase-Prediction]]
+- **相关**：[[Skill-Customer-Journey-Prototype]]
 
 ## ⑤ 商业价值评估
 

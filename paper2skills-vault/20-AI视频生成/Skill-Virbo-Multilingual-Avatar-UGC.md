@@ -59,5 +59,7 @@ if __name__ == '__main__':
 - **组合**：[[Skill-LACA-CrossLingual-ABSA]]（多语种 Review 情感分析→多语种 UGC 内容生产，形成闭环）
 
 ---
+- **相关**：[[Skill-Phantom-Product-Showcase-I2V]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值：35-60 万元/年 | **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐⭐☆

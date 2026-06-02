@@ -192,6 +192,7 @@ print(f"无偏推荐: {[i for i, _ in result['unbiased'][:5]]}")
 
 ---
 - **关联**：[[Skill-Agentic-Workflow-Compilation]]
+- **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 
