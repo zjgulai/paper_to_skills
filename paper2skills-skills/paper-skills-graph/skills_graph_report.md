@@ -2,26 +2,26 @@
 
 ## 1. 图谱概览
 
-- **节点总数**: 246 个技能
-- **边总数**: 2773 条关系
+- **节点总数**: 252 个技能
+- **边总数**: 2875 条关系
 - **领域分布**:
   - ab_testing: 11 个
   - advertising: 20 个
   - ai_humanities: 1 个
-  - causal_inference: 12 个
+  - causal_inference: 13 个
   - data_agent_llm: 10 个
   - growth_model: 22 个
   - knowledge_graph: 16 个
   - llm_agent_engineering: 32 个
-  - logistics: 3 个
+  - logistics: 4 个
   - marketing: 9 个
   - mas: 23 个
   - ml_fundamentals: 9 个
-  - pricing: 6 个
+  - pricing: 7 个
   - recommendation: 11 个
-  - risk_fraud: 3 个
+  - risk_fraud: 5 个
   - supply_chain: 18 个
-  - time_series: 12 个
+  - time_series: 13 个
   - unknown: 1 个
   - user_analytics: 19 个
   - visual_content: 8 个
@@ -31,10 +31,10 @@
 ### 核心基础技能 (高被依赖数)
 | 排名 | 技能 | 被依赖数 |
 |-----|------|---------|
-| 1 | Skill-ROAS-Budget-Optimization | 46 |
-| 2 | Skill-MAS-Orchestrator | 38 |
-| 3 | Skill-Customer-Churn-Prediction | 38 |
-| 4 | Skill-Demand-Forecasting-Supply-Chain | 35 |
+| 1 | Skill-ROAS-Budget-Optimization | 49 |
+| 2 | Skill-Customer-Churn-Prediction | 39 |
+| 3 | Skill-MAS-Orchestrator | 38 |
+| 4 | Skill-Demand-Forecasting-Supply-Chain | 38 |
 | 5 | 组合 | 34 |
 
 ### 潜力延伸技能 (高价值无延伸)
@@ -57,9 +57,9 @@
 | P1 | 跨领域: causal_inference + mas | 跨领域融合 | `causal_inference mas cross-domain` |
 | P1 | 跨领域: causal_inference + ai_humanities | 跨领域融合 | `causal_inference ai_humanities cross-domain` |
 | P1 | 跨领域: causal_inference + advertising | 跨领域融合 | `causal_inference advertising cross-domain` |
-| P1 | 跨领域: causal_inference + llm_agent_engineering | 跨领域融合 | `causal_inference llm_agent_engineering cross-domain` |
 | P1 | 跨领域: causal_inference + logistics | 跨领域融合 | `causal_inference logistics cross-domain` |
 | P1 | 跨领域: causal_inference + risk_fraud | 跨领域融合 | `causal_inference risk_fraud cross-domain` |
+| P1 | 跨领域: causal_inference + visual_content | 跨领域融合 | `causal_inference visual_content cross-domain` |
 
 ## 5. 行动建议
 
