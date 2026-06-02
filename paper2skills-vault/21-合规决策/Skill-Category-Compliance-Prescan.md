@@ -456,6 +456,8 @@ if __name__ == "__main__":
 ---
 - **跨域关联**：[[Skill-Ad-Attribution-Modeling]]
 - **关联**：[[Skill-Time-Series-Anomaly-Detection]]
+- **相关**：[[Skill-CausalRAG-Causal-Graph-Retrieval]]
+- **相关**：[[Skill-Multimodal-Table-Understanding]]
 
 ## ⑤ 商业价值评估
 

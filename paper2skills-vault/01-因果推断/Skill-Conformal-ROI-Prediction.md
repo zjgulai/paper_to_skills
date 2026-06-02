@@ -850,6 +850,7 @@ if __name__ == '__main__':
 - **延伸技能**：[[Skill-EPICSCORE-Uncertainty]]
 - **可组合技能**：[[Skill-DML-Cohort-Causal-Effect]]
 - **相关技能**：[[Skill-SSBC-Small-Sample-Conformal]]
+- **相关**：[[Skill-TRACE-Delayed-CVR]]
 
 ## ⑤ 商业价值评估
 

@@ -66,6 +66,7 @@ print("[✓] Product Opportunity Scoring 测试通过")
 - **相关技能**：[[Skill-Cross-Market-Product-Transfer]]
 - **相关技能**：[[Skill-Market-Size-Estimation]]
 - **相关技能**：[[Skill-Cross-Border-Cold-Start-Forecast]]
+- **相关**：[[Skill-Listing-Quality-Scoring]]
 
 ## ⑤ 商业价值
 

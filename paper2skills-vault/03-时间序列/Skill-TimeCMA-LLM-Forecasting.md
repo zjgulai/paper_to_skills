@@ -149,6 +149,7 @@ print(f"未来 7 天预测 (归一化空间): {pred}")
 - **TimeCMA + LACA（用户分析）**：LACA 识别高价值用户的购买时间窗，TimeCMA 在该窗口内提供精准的品类需求预测，实现"人群 × 时序"双维度精细化运营。
 
 ---
+- **相关技能**：[[Skill-EventCast-LLM-Event-Forecasting]] / [[Skill-Prophet-Forecasting]]
 
 ## ⑤ 商业价值评估
 

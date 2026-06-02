@@ -944,6 +944,7 @@ if __name__ == "__main__":
 - **延伸技能**：[[Skill-Cohort-Retention-Analysis]]
 - **可组合技能**：[[Skill-RFM-User-Segmentation]] | [[Skill-Session-Intent-Shift]]
 - **相关技能**：[[Skill-NonItem-Page-Path-Modeling]]
+- **相关**：[[Skill-Ad-to-Behavior-Funnel]]
 
 ## ⑤ 商业价值评估
 

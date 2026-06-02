@@ -548,6 +548,7 @@ if __name__ == "__main__":
 
 ---
 - **关联**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
+- **相关**：[[Skill-Customer-Churn-Prediction]]
 
 ## ⑤ 商业价值
 

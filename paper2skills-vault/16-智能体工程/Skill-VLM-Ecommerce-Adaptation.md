@@ -371,6 +371,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]] / [[Skill-Phantom-Product-Showcase-I2V]] / [[Skill-Tool-Call-Decision-Framework]]
 
 ---
+- **相关**：[[Skill-Multimodal-Table-Understanding]]
 
 ## ⑤ 商业价值评估
 

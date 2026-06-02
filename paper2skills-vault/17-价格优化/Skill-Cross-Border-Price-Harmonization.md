@@ -127,6 +127,7 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Multi-Channel-Inventory-Pooling]] | [[Skill-Geo-Level-Marketing-Effectiveness]]
 
 ---
+- **相关**：[[Skill-Supplier-Evaluation-Model]]
 
 ## ⑤ 商业价值评估
 

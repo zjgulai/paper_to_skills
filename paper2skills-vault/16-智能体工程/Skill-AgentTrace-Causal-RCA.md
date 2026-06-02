@@ -352,6 +352,8 @@ if __name__ == "__main__":
 ---
 - **跨域关联**：[[Skill-Causal-Discovery-PC-Algorithm]]
 - **相关技能**：[[Skill-ReliabilityBench-Agent-Reliability]]
+- **相关**：[[Skill-CausalRAG-Causal-Graph-Retrieval]]
+- **相关**：[[Skill-ProRCA-Business-Analysis]]
 
 ## ⑤ 商业价值评估
 

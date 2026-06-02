@@ -53,6 +53,7 @@ print("[✓] Competitor Intelligence 测试通过")
 - **相关技能**：[[Skill-Product-Lifecycle-Stage]]
 - **相关技能**：[[Skill-Cross-Market-Product-Transfer]]
 - **相关技能**：[[Skill-Market-Size-Estimation]]
+- **相关**：[[Skill-Listing-Quality-Scoring]]
 
 ## ⑤ 商业价值
 

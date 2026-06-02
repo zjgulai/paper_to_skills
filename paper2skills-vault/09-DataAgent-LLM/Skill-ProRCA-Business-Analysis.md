@@ -170,6 +170,7 @@ agent_prompt = f"""
 - **ProRCA + LLM Agent**：ProRCA 输出结构化路径，LLM 负责用自然语言汇报，实现"机器人分析师"
 
 ---
+- **相关技能**：[[Skill-AgentTrace-Causal-RCA]] / [[Skill-Supply-Chain-Causal-SCM-Attribution]]
 
 ## ⑤ 商业价值评估
 

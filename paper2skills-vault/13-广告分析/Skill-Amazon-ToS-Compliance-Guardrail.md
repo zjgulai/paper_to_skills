@@ -220,6 +220,7 @@ if __name__ == '__main__':
   - **[[Skill-LACA-CrossLingual-ABSA]]** — 多语种 listing 的合规审查
 
 ---
+- **相关**：[[Skill-Supplier-Evaluation-Model]]
 
 ## ⑤ 商业价值评估
 

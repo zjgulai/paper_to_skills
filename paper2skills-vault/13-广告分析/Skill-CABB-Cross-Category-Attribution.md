@@ -780,6 +780,7 @@ if __name__ == "__main__":
 - **延伸技能**：[[Skill-TESLA-NetCVR-Cascade]]
 - **可组合技能**：[[Skill-Hierarchical-Search-Intent-Classification]]
 - **相关技能**：[[Skill-TikTok-Shop-Content-Attribution]]
+- **相关**：[[Skill-Audience-Knowledge-Graph]]
 
 ## ⑤ 商业价值评估
 

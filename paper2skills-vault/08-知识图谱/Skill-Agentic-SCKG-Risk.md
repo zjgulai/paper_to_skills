@@ -207,6 +207,7 @@ for nid, info in sorted(summary.items(), key=lambda x: -x[1]["pagerank"]):
 - `Agentic SCKG` + 供应链库存 Skill（04-供应链域）→ 风险触发后自动计算最优紧急备货量，实现端到端的"感知-分析-决策"闭环
 
 ---
+- **相关**：[[Skill-CausalRAG-Knowledge-Retrieval]]
 
 ## ⑤ 商业价值评估
 

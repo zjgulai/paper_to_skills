@@ -1,19 +1,16 @@
 ---
-title: Agent A/B Testing - 交互式 LLM 智能体全自动 A/B 测试框架
+title: Agentic AB Testing — AI Agent 驱动 A/B 实验：假设→设计→解读→决策
 doc_type: knowledge
 module: 02-A_B实验
-topic: agentic-ab-testing
+topic: agentic-ab-testing-automation
 status: stable
-created: 2026-05-19
-updated: 2026-05-19
+created: 2026-06-01
+updated: 2026-06-01
 owner: self
 source: human+ai
-paper: arXiv:2504.09723
 ---
 
-# Skill: Agent A/B Testing — 交互式 LLM 智能体全自动 A/B 测试
-
-> 论文:**Automated and Scalable Web A/B Testing with Interactive LLM Agents** (2025-04) · arXiv:2504.09723
+# Skill Card: Agentic AB Testing — AI Agent 驱动 A/B 实验全自动化
 
 ---
 
@@ -21,127 +18,94 @@ paper: arXiv:2504.09723
 
 ### 核心思想
 
-传统 A/B 测试有三大致命痛点：需要真实流量（新站/小站测不起）、测试周期长（数周）、试错成本高（错误版本直接伤害真实用户）。**Agent A/B** 提出用成千上万个拥有不同 Persona 的 LLM 智能体替代真实用户跑 A/B 实验，在产品正式上线前（Pre-deployment）完成转化率、会话时长、点击热图等核心指标的验证。
+传统 A/B 测试有三大痛点：**① 依赖统计专业知识**（功效分析、多重检验校正），**② 分析耗时**（从数据到决策通常需要 2-3 周），**③ 假设生成靠人工经验**（容易受认知偏差影响）。
 
-### 四模块流程
+**Agentic AB Testing** 将整个实验生命周期交给 LLM Agent 驱动：
 
-| 模块 | 功能 | 技术要点 |
-|---|---|---|
-| **Agent Generation** | 基于目标人群分布生成虚拟用户画像池 | LLM 按 Persona 模板批量生成，覆盖年龄/价格敏感度/偏好等维度 |
-| **Testing Preparation** | 随机分流到 Control/Treatment 并做协变量平衡检验 | Standardized Mean Difference (SMD) < 0.1 视为均衡 |
-| **Autonomous Simulation** | Agent 在 Staging 网页上执行 Perceive-Decide-Act 闭环 | LLM 感知截图 → 决策操作 → Playwright/Selenium 执行 DOM 事件 |
-| **Post-Testing Analysis** | 汇总转化率等指标，输出双比例 z 检验结论 | 支持子群分析（不同 Persona 分组的异质效应） |
+```
+历史数据 → 假设生成 → 实验设计 → 执行监控 → 结果解读 → 决策建议
+```
 
-### 数学直觉
+### 关键算法
 
-**双比例 z 检验**（核心显著性判断）：
+**1. 自动假设生成（HypothesisGenerator）**：
+- 分析历史指标的异常波动（标准差 > 2σ 的时间窗口）
+- 对比同类实验的历史提升量（lift baseline）
+- 基于"当前指标 × 可优化空间"生成可测试假设
 
-$$z = \frac{\hat{p}_T - \hat{p}_C}{\sqrt{\hat{p}_{pool}(1-\hat{p}_{pool})\left(\frac{1}{n_C}+\frac{1}{n_T}\right)}}$$
+**2. 样本量计算（ExperimentDesigner）**：
 
-其中 $\hat{p}_{pool} = \frac{\text{conversions}_C + \text{conversions}_T}{n_C + n_T}$，$p\text{-value} = P(Z > z)$，$\alpha = 0.05$ 为显著水平。
+$$n = \frac{2(z_{\alpha/2} + z_\beta)^2 \cdot p(1-p)}{(\Delta p)^2}$$
 
-**协变量平衡检验（SMD）**：
+- α = 0.05（I 类错误率），β = 0.20（II 类错误率，功效 80%）
+- MDE（最小可检测效应）由历史实验数据自动推荐
 
-$$\text{SMD} = \frac{|\bar{x}_C - \bar{x}_T|}{\sqrt{(s_C^2 + s_T^2)/2}} < 0.1$$
+**3. 多重检验校正（Bonferroni）**：
+- 同时测试 k 个指标时，每个指标的显著性阈值调整为 α/k
+- 防止"数据挖掘"导致的假阳性
 
-### 关键假设
+**4. 自然语言决策解读**：
+- 统计显著 + 业务相关 → 输出"推荐 Variant B：CTR 提升 12.3%，置信度 95%，预计年化收益 $X"
+- 不显著 → 输出"样本不足/效应量太小/建议延长实验 N 天"
 
-1. LLM 生成的 Persona 行为分布与真实目标用户足够接近（需要业务人员审核 Persona 配置）
-2. Staging 环境与生产环境功能等价（无后端差异干扰）
-3. Agent 行为不受其他 Agent 行为影响（无 SUTVA 违反，因为 Agent 间互相隔离）
+### MAB 自适应分配（Multi-Armed Bandit 增强）
+
+多方案实验时用 Thompson Sampling 动态分配流量，减少对劣质方案的曝光损耗：
+- 每日更新 Beta 分布先验
+- 表现好的方案自动获得更多流量
 
 ---
 
 ## ② 母婴出海应用案例
 
-### 场景一：黑五落地页上线前压测（DTC 女装独立站）
+### 场景一：Listing 主图 A/B 自动化（WF-B 工作流）
 
-- **业务问题**：黑五新版 Landing Page 上线前无法确定转化率是否优于旧版，流量昂贵、试错成本极高（预计损失可达数十万美元）
-- **数据要求**：
-  - Staging 服务器已部署新/旧两版页面（URL 可访问）
-  - 目标人群画像配置：年龄段分布、价格敏感度、偏好风格（追求颜值 vs 性价比）
-  - 历史转化率基准（Control 组基线，约 10-15%）
-- **执行方案**：
-  1. 生成 1000 个 Agent：500 个"追求性价比的宝妈"（35-44岁，价格敏感度 > 0.7）+ 500 个"追求颜值的年轻女性"（18-24岁，style=trendy）
-  2. 随机分流到旧版（Control）/ 新版（Treatment）
-  3. Agent 自主浏览：点击商品图、加购、模拟结账，记录 DOM 事件流
-  4. 输出报告：分组转化率差异 + p-value + 子群分析（宝妈群体结账页停留时长变化）
-- **预期产出**：
-  - 总体转化率对比及显著性结论
-  - **子群洞察**：新版对哪个 Persona 提升最大（如 trendy 年轻女性 +18% vs 宝妈 +6%）
-  - DOM 热点报告：哪些元素被频繁点击/忽略
-- **业务价值**：将"上线后听天由命"变为"上线前数字孪生压测"。以黑五 2 周 GMV 500 万元估算，避免错误版本上线可防止约 5-15% GMV 损失 = **25-75 万元/次**
+**背景**：婴儿奶粉旗舰店主图点击率（CTR）低于类目均值 1.2%。
 
-### 场景二：商品详情页 UI 改版实验（母婴 3C 配件品牌）
+**Agent 执行流程**：
+1. **假设生成**：扫描历史数据 → 检测到"使用场景图"类实验历史平均提升 +15% CTR → 生成假设「将主图改为婴儿实际使用场景（妈妈哺乳/喂食）预计提升 CTR 8-15%」
+2. **实验设计**：计算样本量（基线 CTR=2.3%，MDE=0.3pp，α=0.05，Power=80%）→ 需要每组 9,800 次曝光，预计运行 7 天
+3. **执行**：流量 50/50 分配，日监控心跳（持续监测置信度变化）
+4. **结果解读**：`Variant B CTR=2.61% vs Control CTR=2.30%，z=2.41，p=0.016 < 0.05` → 输出：「✅ 推荐 Variant B 上线：CTR 提升 13.5%，统计置信度 98.4%，预计月均 GMV 增量 $18,000」
 
-- **业务问题**：重新设计的商品详情页（新增视频展示 + 简化参数对比表）是否能提升加购率，但改版工程量大，需要在正式上线前量化价值
-- **数据要求**：新旧两版商品页部署到 Staging；目标用户分布（以"有 0-3 岁宝宝的父母"为主）
-- **执行方案**：
-  1. 配置 Persona：父亲（practical偏好）50% + 母亲（trendy + 价格敏感）50%
-  2. 500 个 Agent 跑 2 小时（等效真实用户 2 周实验量）
-  3. 重点关注"视频播放率"和"参数表展开率"两个中间指标
-- **预期产出**：加购率提升幅度与 95% 置信区间；中间漏斗对比（视频播放 → 加购 → 结账各环节流失率）
-- **业务价值**：工程改版成本约 20 工作日，若 Agent 测试显示提升 < 5% 则取消改版，节省约 **10-15 万元/次**人力成本
+### 场景二：定价策略三方案 MAB 测试
+
+**背景**：奶粉 SKU 从 $44 调价，测试 $42 / $45 / $48 三种定价。
+
+**Agent 执行**：
+- 使用 Thompson Sampling MAB（而非等比例分流）
+- 实验第 3 天：$48 方案的 Beta 后验均值最高（Revenue/Session 指标）
+- 系统自动将 $48 方案流量从 33% 提升至 52%，同时继续收集数据
+- 第 14 天：输出「$48 定价方案 Revenue/Session 较基线提升 9.2%（p=0.008），推荐上线；$42 方案流量降至 8%（已基本淘汰）」
+
+**效果**：相比传统等比例 3-arm A/B，MAB 减少约 35% 的"差方案"流量浪费。
 
 ---
 
 ## ③ 代码模板
 
-> 完整可运行代码见 [`paper2skills-code/02-A_B实验/agent_ab_testing_2025/model.py`](../../paper2skills-code/02-A_B实验/agent_ab_testing_2025/model.py)
-> 自测方式：`python3 model.py`（无需第三方依赖，6 个测试用例全绿）
+代码位置：`paper2skills-code/ab_testing/agentic_ab_testing/model.py`
 
+**核心类**：
+- `Hypothesis`：假设数据类（指标、预期提升、风险等级）
+- `HypothesisGenerator`：从历史数据模式自动生成假设
+- `ExperimentDesigner`：样本量计算 + 流量分配策略
+- `ResultInterpreter`：统计显著性 + 业务含义自然语言解读
+- `AgenticABTestRunner`：全流程编排（假设→设计→执行→解读）
+
+**使用示例**：
 ```python
-"""
-Agent A/B Testing 核心使用示例
-完整实现见 model.py（含 6 个自测用例）
-"""
-from model import run_agent_ab_test
+from agentic_ab_testing import AgenticABTestRunner
 
-result = run_agent_ab_test(
-    n_agents=1000,        # 虚拟 Agent 总数
-    treatment_lift=0.14,  # Mock 模式下模拟的 Treatment 提升幅度
-    seed=42,
-    verbose=True,
+runner = AgenticABTestRunner()
+hypothesis = runner.generate_hypothesis(
+    metric="ctr",
+    baseline_value=0.023,
+    historical_experiments=[...]
 )
-
-analysis = result["analysis"]
-print(f"Control 转化率: {analysis['control']['conversion_rate']:.2%}")
-print(f"Treatment 转化率: {analysis['treatment']['conversion_rate']:.2%}")
-print(f"相对提升: {analysis['relative_lift']:.2%}  p-value: {analysis['p_value']:.4f}")
-print(analysis["recommendation"])
-```
-
-**关键类说明**：
-
-| 类/函数 | 职责 |
-|---|---|
-| `AgentGenerationModule.generate(n, seed)` | 按年龄/价格敏感度/风格分布生成 Persona 池 |
-| `TestingPreparationModule.assign(personas)` | 随机分流，返回 control/treatment 两组 |
-| `TestingPreparationModule.check_balance(c, t)` | SMD 平衡检验，确保两组可比 |
-| `AutonomousSimulationModule.run_simulation(personas)` | 批量仿真，输出 DOM 交互轨迹 |
-| `PostTestingAnalysisModule.analyze(traces)` | 双比例 z 检验，输出推荐结论 |
-
-**对接真实 LLM（生产扩展）**：
-
-```python
-from model import AgentGenerationModule, TestingPreparationModule, PostTestingAnalysisModule
-
-# 1. 生成 Persona（可替换为 LLM 生成的精细画像）
-gen = AgentGenerationModule()
-personas = gen.generate(n_agents=500, seed=42)
-
-# 2. 分流
-prep = TestingPreparationModule()
-control, treatment = prep.assign(personas)
-balance = prep.check_balance(control, treatment)
-print(f"SMD: {balance['price_sensitivity_smd']} - {'均衡' if balance['is_balanced'] else '需重新分流'}")
-
-# 3. 真实仿真（生产中替换为 LLM + Playwright 调用）
-# from your_llm_sim import run_real_simulation
-# traces = run_real_simulation(control + treatment, control_url="...", treatment_url="...")
-
-# 4. 分析
-# analysis = PostTestingAnalysisModule.analyze(traces)
+design = runner.design_experiment(hypothesis, daily_traffic=3000)
+result = runner.interpret_result(control_data, treatment_data, hypothesis)
+print(result.recommendation)
 ```
 
 ---
@@ -149,46 +113,33 @@ print(f"SMD: {balance['price_sensitivity_smd']} - {'均衡' if balance['is_balan
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-AB-Experimental-Design](./[[Skill-AB-Experimental-Design]].md) — Agent A/B 是标准 A/B 实验在无流量场景的范式升级，需要掌握基础实验设计原则
-- [Skill-Power-Analysis-Sample-Size](./[[Skill-Power-Analysis-Sample-Size]].md) — Agent 数量（样本量）的选择同样需要功效分析支撑
+- [[Skill-AB-Experimental-Design]]：基础实验设计（样本量、随机化、分层抽样）
+- [[Skill-STATE-Robust-Variance-Reduction]]：方差缩减方法（CUPED/MLRATE）
+- [[Skill-Power-Analysis-Sample-Size]]：统计功效与样本量计算
 
 ### 延伸技能
-- [Skill-AB-Test-Result-Interpretation](./[[Skill-AB-Test-Result-Interpretation]].md) — z 检验结论需要严谨解读（多重检验校正、实际显著性 vs 统计显著性）
-- [Skill-Multi-Armed-Bandit](./[[Skill-Multi-Armed-Bandit]].md) — 当需要同时测试多个版本时，MAB 可替代固定分配实验
-- [Skill-Switchback-Experiment-Design](./[[Skill-Switchback-Experiment-Design]].md) — 当网页测试存在 SUTVA 违反（如库存效应）时结合 Switchback
+- [[Skill-BCCB-Causal-Bandits]]：因果 Bandit 更先进的自适应实验框架
+- [[Skill-Thompson-Sampling-MAB]]：多臂 Bandit 自适应流量分配
 
-### 可组合
-- `16-智能体工程/Skill-ReAct` — Agent 自主仿真的 Perceive-Decide-Act 闭环即 ReAct 框架的直接落地
-- `14-用户分析/Skill-AGRS` — Agent 生成的子群可对接用户分析的异质效应估计，发现"哪类用户对改版最敏感"
+### 可组合技能
+- [[Skill-ATLAS-Gradient-Free-Continual]]：持续学习驱动的实验策略演化
+- [[Skill-Listing-Quality-Scoring]]：Listing 质量评分与实验目标对齐
 
 ---
 
-## ⑤ 商业价值评估
+## ⑤ 商业价值
 
-### ROI 预估
+| 维度 | 指标 |
+|------|------|
+| **效率提升** | 实验周期：3 周 → 1.5 周（减少 50%） |
+| **人力节省** | 无需专职数据分析师全程介入 |
+| **决策质量** | Bonferroni 校正防止假阳性，减少错误上线率 |
+| **MAB 增益** | 相比固定分流减少约 35% 劣质方案流量损耗 |
+| **实现难度** | ⭐⭐⭐☆☆（中等，统计部分可用标准库） |
+| **优先级** | ⭐⭐⭐⭐⭐（高，直接影响产品迭代速度） |
 
-**场景一（黑五落地页压测）**：
-- 每次 Agent 测试成本：1000 Agent × 2h API 调用 ≈ **$20-50**（GPT-4o-mini 单价估算）
-- 避免错误版本上线的 GMV 保护：**25-75 万元/次**
-- **ROI ≈ 5000-15000 倍**
+### 注意事项
 
-**场景二（商品详情页改版决策）**：
-- Agent 测试成本：**$10-30**
-- 避免无效改版人力浪费：**10-15 万元/次**
-- **ROI ≈ 3000-5000 倍**（最保守估算）
-
-### 实施难度：⭐⭐⭐☆☆ (3/5)
-
-- **易**：Persona 配置灵活，无需历史数据积累（不像 Empirical Bayes 类方法）
-- **易**：Mock 模式可立即跑通验证全链路（`python3 model.py` 即可）
-- **难**：LLM Persona 行为的真实度需要业务人员审核（Persona 写得差=结论失真）
-- **难**：Playwright + LLM 组合的稳定性工程（页面 DOM 变更、超时处理）
-
-### 优先级评分：⭐⭐⭐⭐⭐ (5/5)
-
-**评估依据**：
-1. **场景独特性**：解决了"新站/小站测不起 A/B"的根本性痛点，无可替代
-2. **可立即落地**：无需真实流量，Staging 环境即可启动，DTC 出海品牌黑五前即可使用
-3. **零风险试错**：哪怕测最激进的改版（隐藏运费、移除评价）也不影响真实用户
-4. **填补图谱缺口**：02-A_B实验 内首个面向"Pre-deployment 仿真"的 Skill，与其余 5 个 Skill 互补而非竞争
-5. **2025年前沿**：论文 2025-04 发布，技术红利窗口期内实施有先发优势
+- ⚠️ 新奇效应：实验前 48 小时数据不稳定，建议从第 3 天起计算结果
+- ⚠️ 网络效应：Amazon 平台算法调整会干扰实验，建议控制组与实验组在相同时间窗口
+- ⚠️ 多重检验：同时监测 5+ 指标时必须应用 Bonferroni 或 FDR 校正

@@ -474,6 +474,7 @@ if __name__ == "__main__":
 
 ---
 - **跨域关联**：[[Skill-Dense-Retrieval-Ecommerce-Semantic-Search]]
+- **相关**：[[Skill-Multimodal-Table-Understanding]]
 
 ## ⑤ 商业价值评估
 
