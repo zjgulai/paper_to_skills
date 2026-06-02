@@ -374,3 +374,9 @@ if __name__ == '__main__':
 
 ### 可组合
 - [Skill-Deep-Learning-Recommendation-HI](../05-推荐系统/[[Skill-Deep-Learning-Recommendation-HI]].md) — MF 隐因子可作为深度推荐网络的初始 embedding
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：协同过滤推荐提升复购率 10-20%，母婴客单价 ¥200-500，月均复购提升价值 ¥5-20 万
+- **实施难度**：⭐⭐☆☆☆（2星，成熟算法，sklearn/surprise 直接使用）
+- **优先级评分**：⭐⭐⭐⭐☆（4星，推荐系统基础，前置技能）

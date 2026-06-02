@@ -14,7 +14,7 @@ source: ai
 
 # Argos — Agentic时序异常检测
 
-## 1. 算法原理
+## ① 算法原理
 
 Argos 解决的核心矛盾是：**LLM能生成异常检测规则，但无法同时保证可解释性、可复现性和准确率**。
 
@@ -61,7 +61,7 @@ Argos 解决的核心矛盾是：**LLM能生成异常检测规则，但无法同
 
 Top-k规则选择：每次Detection Agent提出多条候选规则，只选最优k条，避免LLM方差问题。
 
-## 2. 业务应用
+## ② 母婴出海应用案例
 
 ### 场景A：跨境电商平台销售异常实时监控
 
@@ -100,7 +100,7 @@ Top-k规则选择：每次Detection Agent提出多条候选规则，只选最优
 
 **预期效果**：自动适应不同线路、不同季节模式，减少人工调参。
 
-## 3. 代码模板
+## ③ 代码模板模板
 
 代码位置：`paper2skills-code/data_agent_llm/argos_agent/`
 
@@ -533,7 +533,7 @@ python anomaly_detector.py
 ### 可组合
 - [Skill-DeepAnalyze-Autonomous-Data-Science-Agent](../09-DataAgent-LLM/[[Skill-DeepAnalyze-Autonomous-Data-Science-Agent]].md) — 异常检测嵌入数据科学 Agent 工作流
 
-## 5. 商业价值评估
+## ⑤ 商业价值评估价值评估
 
 | 维度 | 评分 | 说明 |
 |------|------|------|

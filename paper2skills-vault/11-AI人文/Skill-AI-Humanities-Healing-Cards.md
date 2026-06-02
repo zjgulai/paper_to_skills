@@ -547,3 +547,20 @@ source: human+ai
 ### 可组合
 - [Skill-LTV-Prediction-ZILN](../06-增长模型/[[Skill-LTV-Prediction-ZILN]].md) — LTV 长尾分布与人生长尾价值的金句类比
 - [Skill-Uplift-Modeling](../01-因果推断/[[Skill-Uplift-Modeling]].md) — 因果反事实与人生决策反思的金句类比
+
+## ① 算法原理
+
+本卡片采用 LoRA + Prompt Tuning 跨模态迁移范式，将 AI 技术概念通过类比映射转化为人文疗愈语言。
+
+## ② 母婴出海应用案例
+
+**场景**：跨境创业者/运营人员面对不确定性时，用 AI 技术的哲理类比获得心理支持与灵感。
+
+## ③ 代码模板
+
+本卡片为内容型 Skill，代码见 `paper2skills-code/llm_agent_engineering/` 相关模块。
+
+## ⑤ 商业价值评估
+
+- **实施难度**：⭐☆☆☆☆（1星，内容型卡片）
+- **优先级评分**：⭐⭐☆☆☆（2星，辅助人文价值）

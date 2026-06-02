@@ -40,16 +40,28 @@
 ### 潜力延伸技能 (高价值无延伸)
 | 排名 | 技能 | 业务价值 | 推荐延伸方向 |
 |-----|------|---------|------------|
+| 1 | Skill-Customer-Churn-Prediction | ⭐⭐⭐⭐⭐ | Customer Churn Prediction churn LTV segmentation |
+| 2 | Skill-Multi-Armed-Bandit | ⭐⭐⭐⭐ | Multi Armed Bandit sequential testing bandit |
 
 ## 3. 知识缺口
 
 ### 🔴 高优先级缺口
+
+#### 缺口 1: missing_extension
+- **描述**: 高价值技能 Skill-Customer-Churn-Prediction 缺少延伸方向
+- **相关技能**: Skill-Customer-Churn-Prediction
+
+#### 缺口 2: missing_extension
+- **描述**: 高价值技能 Skill-Multi-Armed-Bandit 缺少延伸方向
+- **相关技能**: Skill-Multi-Armed-Bandit
 
 
 ## 4. 推荐选题列表
 
 | 优先级 | 选题 | 类型 | 搜索关键词 |
 |-------|------|------|-----------|
+| P0 | 延伸: Skill-Customer-Churn-Prediction 的高级应用 | 技能延伸拓展 | `Customer Churn Prediction churn LTV segmentation` |
+| P0 | 延伸: Skill-Multi-Armed-Bandit 的高级应用 | 技能延伸拓展 | `Multi Armed Bandit sequential testing bandit` |
 | P1 | 跨领域: causal_inference + ab_testing | 跨领域融合 | `causal_inference ab_testing cross-domain` |
 | P1 | 跨领域: causal_inference + supply_chain | 跨领域融合 | `causal_inference supply_chain cross-domain` |
 | P1 | 跨领域: causal_inference + knowledge_graph | 跨领域融合 | `causal_inference knowledge_graph cross-domain` |
@@ -58,11 +70,9 @@
 | P1 | 跨领域: causal_inference + ai_humanities | 跨领域融合 | `causal_inference ai_humanities cross-domain` |
 | P1 | 跨领域: causal_inference + advertising | 跨领域融合 | `causal_inference advertising cross-domain` |
 | P1 | 跨领域: causal_inference + llm_agent_engineering | 跨领域融合 | `causal_inference llm_agent_engineering cross-domain` |
-| P1 | 跨领域: causal_inference + logistics | 跨领域融合 | `causal_inference logistics cross-domain` |
-| P1 | 跨领域: causal_inference + risk_fraud | 跨领域融合 | `causal_inference risk_fraud cross-domain` |
 
 ## 5. 行动建议
 
-1. **立即行动**: 优先填补 0 个高优先级缺口
+1. **立即行动**: 优先填补 2 个高优先级缺口
 2. **本周计划**: 基于延伸缺口搜索 3-5 篇候选论文
 3. **本月目标**: 建立跨领域桥梁，完成 1 个跨领域 skill

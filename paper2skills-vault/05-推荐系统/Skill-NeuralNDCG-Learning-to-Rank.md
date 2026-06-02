@@ -14,7 +14,7 @@ source: ai
 
 # NeuralNDCG — 可微分排序优化与Learning to Rank
 
-## 1. 算法原理
+## ① 算法原理
 
 Learning to Rank（LTR）的核心问题是**排序评估指标与训练损失函数之间的不匹配**。模型用交叉熵或MSE训练，但业务用 NDCG 评估——这就像用"练习册分数"预测"考试成绩"，两者可能背道而驰。
 
@@ -61,7 +61,7 @@ NeuralNDCG@k(s, y) = N_k^(-1) * sum_{j=1}^k (scale(P_hat) * g(y))_j * d(j)
 - **Standard**: 对排序位置求和
 - **Transposed (NeuralNDCG^T)**: 对文档求和，在大列表上更稳定
 
-## 2. 业务应用
+## ② 母婴出海应用案例
 
 ### 场景A：母婴出海电商平台搜索结果排序优化
 
@@ -93,7 +93,7 @@ NeuralNDCG@k(s, y) = N_k^(-1) * sum_{j=1}^k (scale(P_hat) * g(y))_j * d(j)
 3. NeuralNDCG^T 损失直接优化整个列表的 NDCG
 4. 线上 A/B 测试：点击率 +8.3%，转化率 +5.7%
 
-## 3. 代码模板
+## ③ 代码模板模板
 
 代码位置：`paper2skills-code/recommendation/learning_to_rank/neural_ndcg.py`
 
@@ -308,7 +308,7 @@ python neural_ndcg.py
 ### 可组合
 - [Skill-Session-Based-Recommendation-SR-GNN](../05-推荐系统/[[Skill-Session-Based-Recommendation-SR-GNN]].md) — Session-based 召回 + L2R 精排
 
-## 5. 商业价值评估
+## ⑤ 商业价值评估价值评估
 
 | 维度 | 评分 | 说明 |
 |------|------|------|
