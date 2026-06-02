@@ -65,6 +65,10 @@ class SkillsGraph:
             '14-用户分析': 'user_analytics',
             '15-营销投放分析': 'marketing',
             '16-智能体工程': 'llm_agent_engineering',
+            '17-价格优化': 'pricing',
+            '18-物流履约': 'logistics',
+            '19-风控反欺诈': 'risk_fraud',
+            '20-AI视频生成': 'visual_content',
         }
 
     def parse_skill_file(self, file_path: Path) -> Optional[SkillNode]:
@@ -82,8 +86,8 @@ class SkillsGraph:
                 break
 
         # 提取难度和业务价值（从星级评分）
-        difficulty = self._extract_star_rating(content, '实施难度')
-        business_value = self._extract_star_rating(content, '业务价值|商业价值|优先级')
+        difficulty = self._extract_star_rating(content, '(?:实施难度|难度)')
+        business_value = self._extract_star_rating(content, '(?:业务价值|商业价值|优先级)')
 
         # 提取技能关系
         prerequisites = self._extract_section_items(content, '前置技能')
@@ -101,14 +105,49 @@ class SkillsGraph:
         )
 
     def _extract_star_rating(self, content: str, pattern: str) -> int:
-        """提取星级评分 (⭐)"""
-        matches = re.findall(rf'{pattern}.*?([⭐]{{1,5}})', content)
+        """提取星级评分 (⭐)，兼容多种格式"""
+        # 支持: 实施难度 / 难度 / 业务价值 / 商业价值 / 优先级
+        # 格式: - **难度**：⭐⭐⭐ | 难度：⭐⭐⭐ | | 实施难度 | ⭐⭐⭐ |
+        matches = re.findall(rf'{pattern}[^⭐\n]*([⭐]{{1,5}})', content, re.DOTALL)
         if matches:
             return matches[0].count('⭐')
         return 0
 
+    def _extract_subsection_content(self, section_content: str, section_name: str) -> Optional[str]:
+        """提取子部分内容，支持 ### 标题和 **bold** 平铺两种格式，兼容短标签"""
+        # 生成短标签变体：前置技能 → 前置, 延伸技能 → 延伸, 可组合技能 → 可组合|组合
+        short_names = {
+            '前置技能': ['前置技能', '前置'],
+            '延伸技能': ['延伸技能', '延伸'],
+            '可组合技能': ['可组合技能', '可组合', '组合'],
+        }
+        names = short_names.get(section_name, [section_name])
+        name_alt = '|'.join(re.escape(n) for n in names)
+        name_alt_stop = '|'.join(re.escape(n) for n in ['前置技能','前置','延伸技能','延伸','可组合技能','可组合','组合'])
+
+        # 格式 1：### 标题（标准格式）
+        for name in names:
+            subsection_pattern = rf'### {re.escape(name)}.*?(?=###|\n## |\Z)'
+            subsection_match = re.search(subsection_pattern, section_content, re.DOTALL)
+            if subsection_match:
+                return subsection_match.group(0)
+
+        # 格式 2：**bold** 平铺格式（兼容 **前置技能** 和 **前置**）
+        bold_pattern = rf'\*\*(?:{name_alt})[^*]*\*\*[：:]?.*?(?=\n\*\*(?:{name_alt_stop})[^*]*\*\*|\n## |\Z)'
+        bold_match = re.search(bold_pattern, section_content, re.DOTALL)
+        if bold_match:
+            return bold_match.group(0)
+
+        # 格式 3：列表项内嵌 **bold**（带缩进）
+        list_bold_pattern = rf'(?:^|\n)[-\s]*\*\*(?:{name_alt})[^*]*\*\*.*?(?=\n[-\s]*\*\*(?:{name_alt_stop})[^*]*\*\*|\n## |\Z)'
+        list_bold_match = re.search(list_bold_pattern, section_content, re.DOTALL)
+        if list_bold_match:
+            return list_bold_match.group(0)
+
+        return None
+
     def _extract_section_items(self, content: str, section_name: str) -> List[str]:
-        """提取特定部分的列表项"""
+        """提取特定部分的列表项，兼容 ### 和 **bold** 两种格式"""
         # 找到技能关联部分 - 匹配直到下一个 ## 开头的标题或文件结束
         section_pattern = r'## [④4]\.?\s*技能关联.*?(?=\n## |\Z)'
         section_match = re.search(section_pattern, content, re.DOTALL)
@@ -118,17 +157,22 @@ class SkillsGraph:
 
         section_content = section_match.group(0)
 
-        # 在部分内查找特定子部分
-        subsection_pattern = rf'### {section_name}.*?(?=###|\n## |\Z)'
-        subsection_match = re.search(subsection_pattern, section_content, re.DOTALL)
+        # 提取子部分内容（支持两种格式）
+        subsection_content = self._extract_subsection_content(section_content, section_name)
 
-        if not subsection_match:
+        if not subsection_content:
             return []
-
-        subsection_content = subsection_match.group(0)
 
         items = []
 
+        # Obsidian WikiLink: [[Skill-xxx]] 或 [[Skill-xxx|展示名]]
+        pattern_wikilink = r'\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]'
+        for match in re.finditer(pattern_wikilink, subsection_content):
+            candidate = match.group(1).strip()
+            if candidate.startswith('Skill-') and len(candidate) < 100 and candidate not in items:
+                items.append(candidate)
+
+        # 标准 Markdown 链接: [display](href.md)
         pattern_link = r'[-*]\s*\[([^\]]+?)\]\(([^)]*?)\)'
         for match in re.finditer(pattern_link, subsection_content):
             display = match.group(1).strip()
@@ -145,22 +189,26 @@ class SkillsGraph:
             if candidate and len(candidate) < 100 and candidate not in items:
                 items.append(candidate)
 
+        # 章节标题噪声词过滤（避免把 '前置技能' '延伸技能' '可组合' 等当作 skill 引用）
+        _SECTION_HEADER_NOISE = frozenset(['前置技能', '延伸技能', '可组合技能', '可组合', '技能关联',
+                                           'prerequisites', 'extensions', 'combinable'])
+
         pattern1 = r'[-*]\s*\*\*([^*]+?)\*\*\s*[:：]'
         for match in re.finditer(pattern1, subsection_content):
             item = match.group(1).strip()
-            if item and len(item) < 100 and item not in items:
+            if item and len(item) < 100 and item not in items and item not in _SECTION_HEADER_NOISE:
                 items.append(item)
 
         pattern2 = r'[-*]\s*\*\*([^*]+?)\*\*\s*$'
         for match in re.finditer(pattern2, subsection_content, re.MULTILINE):
             item = match.group(1).strip()
-            if item and len(item) < 100 and item not in items:
+            if item and len(item) < 100 and item not in items and item not in _SECTION_HEADER_NOISE:
                 items.append(item)
 
         pattern3 = r'[-*]\s*([^\n*\[]+?)\s*[:：]\s*'
         for match in re.finditer(pattern3, subsection_content):
             item = match.group(1).strip()
-            if item and len(item) < 50 and not item.startswith('http') and item not in items:
+            if item and len(item) < 50 and not item.startswith('http') and item not in items and item not in _SECTION_HEADER_NOISE:
                 items.append(item)
 
         return items
@@ -211,6 +259,12 @@ class SkillsGraph:
                 self.edges.append(SkillEdge(
                     source=node.id,
                     target=combo,
+                    edge_type='combinable',
+                    weight=0.6
+                ))
+                self.edges.append(SkillEdge(
+                    source=combo,
+                    target=node.id,
                     edge_type='combinable',
                     weight=0.6
                 ))

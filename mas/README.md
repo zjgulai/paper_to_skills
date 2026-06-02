@@ -1,19 +1,20 @@
 # MAS 部署与运维指南
 
-> **最新更新**:2026-05-17 下午
-> Skill 卡片库已达 **107** 个,Sprint 1+2 新增 10 个 P0 Skill 待集成到 MAS Agents
+> **最新更新**：2026-06-01
+> Skill 卡片库已达 **220** 个，MAS 工具注册 **112 个 / 14 个域**，MCP Server 层已落地（4 个 domain server）
 
-母婴跨境电商多智能体系统 (MAS) - 阶段 0~6 MVP 已就绪。
+母婴跨境电商多智能体系统 (MAS) - 阶段 0~8 MVP 已就绪。
 
-## 集成现状与下一步
+## 集成现状
 
-- **MAS 基础设施**:5 工作流 + 14 模块 + 37/37 测试全绿(2026-05-17 第一轮)
-- **Skill 库存**:107 个 Skill 卡片,18 个有对应代码模板
-- **下一步**:将 Week 4-5 萃取的 19 个新 Skill(6h + Sprint1 + Sprint2)接入对应 Agent
-  - SupplyChainAgent:Bass + Gen-QOT + HiFoReAd
-  - MarketingAgent:PVM + Hierarchical-Search-Intent
-  - CustomerServiceAgent:LACA + Dial-In LLM + AGRS + MAA + StaR
-  - SelectionAgent:Hierarchical-Product-KG + CoLaKG
+- **MAS 基础设施**：5 工作流 + 14 模块 + **47/47 测试全绿**（2026-06-01）
+- **Skill 工具注册**：**112 个工具 / 14 个域**（SkillRegistry），含 selection 域（新）
+- **MCP Server 层**：**4 个 domain server / 28 个工具**（阶段 8 已完成）
+  - `supply_chain_server`：9 工具（demand_forecast / safety_stock 接真实实现）
+  - `advertising_server`：7 工具（negative_keywords / dara / mmm 接真实实现）
+  - `customer_service_server`：6 工具（全部接真实实现）
+  - `selection_server`：6 工具（全部接真实实现）
+- **工作流覆盖率**：WF-A 95% / WF-B 90% / WF-C 85% / WF-D 80% / WF-E 85%
 
 ## 一、架构总览
 
@@ -73,15 +74,16 @@ cd paper_to_skills
 python3 --version  # 需要 3.12+
 ```
 
-### 跑全部 31 个集成测试
+### 跑全部 47 个集成测试
 
 ```bash
 python3 -m mas.tests.test_phase0_skeleton     # 12 项 MAS 骨架
 python3 -m mas.tests.test_wfa_restock_e2e      # 5 项 WF-A 补货
-python3 -m mas.tests.test_wfb_ad_campaign_e2e  # 5 项 WF-B 广告
+python3 -m mas.tests.test_wfb_ad_campaign_e2e  # 6 项 WF-B 广告（含工具链断言）
 python3 -m mas.tests.test_wfce_customer_ops_e2e # 5 项 WF-C/E 客服
-python3 -m mas.tests.test_wfd_selection_e2e    # 4 项 WF-D 选品
+python3 -m mas.tests.test_wfd_selection_e2e    # 5 项 WF-D 选品（含 registry 断言）
 python3 -m mas.tests.test_phase6_integration   # 6 项 MAS 集成
+python3 -m mas.tests.test_mcp_server_routing   # 8 项 MCP 路由（新）
 ```
 
 ### 入口 demo
@@ -176,13 +178,17 @@ export PAPER2SKILLS_FEISHU_WEBHOOK=https://open.feishu.cn/...
 1. 在 `requirements.txt` 添加 langgraph
 2. 把 `mas/graphs/base_graph.py` 改为 `from langgraph.graph import StateGraph, START, END`
 3. `interrupt()` 改用 `langgraph.types.interrupt`
-4. 31 个集成测试零修改通过即视为迁移完成
+4. 47 个集成测试零修改通过即视为迁移完成
 
-### 阶段 8：MCP Server 化 Skill 工具
+### 阶段 8：MCP Server 化 Skill 工具 ✅ 已完成
 
-1. 在 `mas/skills/mcp_servers/` 下每个领域写一个 server
-2. Agent 使用 `MultiServerMCPClient` 替换直接 import
-3. 工具权限隔离 / 审计
+`mas/skills/mcp_servers/` 已落地 4 个 domain server + `MultiServerMCPClient`：
+- `supply_chain_server.py`（9 工具）/ `advertising_server.py`（7 工具）
+- `customer_service_server.py`（6 工具）/ `selection_server.py`（6 工具）
+- `client.py`：`MultiServerMCPClient`，工具名 → server 自动路由
+- `SkillRegistry.get_mcp_client()` 可直接获取客户端实例
+
+生产迁移：将 `BaseMCPServer` 改继承 `mcp.server.Server`，用 `@server.tool()` 注册。
 
 ### 阶段 9：多租户与成本控制
 
@@ -196,13 +202,15 @@ export PAPER2SKILLS_FEISHU_WEBHOOK=https://open.feishu.cn/...
 
 | 维度 | 状态 |
 |---|---|
-| **集成测试** | ✅ 37/37 全部通过 (含 6 项阶段 6 集成) |
+| **集成测试** | ✅ **47/47 全部通过**（骨架 12 + WF-A 5 + WF-B 6 + WF-C/E 5 + WF-D 5 + 集成 6 + MCP 8） |
 | **5 个工作流** | ✅ 全部端到端可跑 |
 | **HITL 双路径** | ✅ 同步/异步 callback 都验证 |
 | **Checkpointing** | ✅ SQLite 持久化跨进程加载 |
 | **Tracer** | ✅ token / 事件聚合 |
-| **依赖** | ✅ 纯 Python 标准库 (生产可一键迁 LangGraph) |
-| **总代码量** | ~2500 行,涵盖 14 个核心模块 |
+| **MCP Server 层** | ✅ **4 个 domain server / 28 工具**（阶段 8 已落地） |
+| **SkillRegistry** | ✅ **112 工具 / 14 个域**（含 selection 域新增） |
+| **依赖** | ✅ 纯 Python 标准库（生产可一键迁 LangGraph） |
+| **总代码量** | ~3500 行，涵盖 14 个核心模块 + 7 个 MCP 文件 |
 
 ### 已知限制
 
@@ -230,11 +238,19 @@ mas/
 │   ├── selection_agent.py           # WF-D
 │   └── qa_agent.py                  # 横切质检
 ├── skills/
-│   ├── registry.py                  # SkillRegistry (90+ stub 工具)
+│   ├── registry.py                  # SkillRegistry (112 工具 / 14 域)
 │   ├── supply_chain_tools.py        # WF-A 业务工具
 │   ├── marketing_tools.py           # WF-B 业务工具
 │   ├── customer_service_tools.py    # WF-C/E 业务工具
-│   └── selection_tools.py           # WF-D 业务工具
+│   ├── selection_tools.py           # WF-D 业务工具
+│   └── mcp_servers/                 # 阶段 8 MCP Server 层（已落地）
+│       ├── base.py                  # BaseMCPServer 统一接口
+│       ├── client.py                # MultiServerMCPClient 路由
+│       ├── supply_chain_server.py   # 9 工具
+│       ├── advertising_server.py    # 7 工具
+│       ├── customer_service_server.py # 6 工具
+│       ├── selection_server.py      # 6 工具
+│       └── README.md                # MCP 接口规范 + 生产迁移路径
 ├── graphs/
 │   ├── base_graph.py                # StateGraph + RetryPolicy
 │   ├── restock_graph.py             # WF-A
@@ -253,5 +269,6 @@ mas/
     ├── test_wfb_ad_campaign_e2e.py
     ├── test_wfce_customer_ops_e2e.py
     ├── test_wfd_selection_e2e.py
-    └── test_phase6_integration.py
+    ├── test_phase6_integration.py
+    └── test_mcp_server_routing.py   # 阶段 8 MCP 路由测试（新）
 ```

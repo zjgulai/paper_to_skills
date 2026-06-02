@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from contextlib import closing
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -40,7 +40,7 @@ class SQLiteCheckpointer:
         workflow_type = state.get("workflow_type", "unknown")
         operator_id = state.get("operator_id", "unknown")
         state_json = json.dumps(state, ensure_ascii=False, default=str)
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat()
         with closing(sqlite3.connect(self.db_path)) as conn:
             conn.execute(
                 """INSERT INTO workflow_checkpoints (workflow_id, workflow_type, operator_id, state_json, updated_at)

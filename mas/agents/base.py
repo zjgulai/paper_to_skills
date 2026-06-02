@@ -8,12 +8,75 @@
 
 from __future__ import annotations
 
+import json
+import os
 from typing import Any, Callable, Optional
 
 from mas.state.schema import WorkflowContext
 
 
 SOFT_BUDGET_RESERVE = 1000
+
+
+def _build_real_llm() -> Callable[[list[dict[str, Any]], list[Any]], dict[str, Any]]:
+    """构建真实 LLM 调用器。无 API key 时回退到 stub。"""
+    api_key = os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY")
+    model = os.environ.get("MAS_LLM_MODEL", "claude-3-5-haiku-20241022")
+    provider = os.environ.get("MAS_LLM_PROVIDER", "anthropic")  # anthropic | openai
+
+    if not api_key:
+        return BaseAgent._stub_llm
+
+    if provider == "anthropic":
+        try:
+            from anthropic import Anthropic
+            client = Anthropic(api_key=api_key)
+
+            def _invoke_anthropic(messages, tools):
+                system_msg = ""
+                user_msgs = []
+                for m in messages:
+                    if m.get("role") == "system":
+                        system_msg = m.get("content", "")
+                    else:
+                        user_msgs.append({"role": "user", "content": m.get("content", "")})
+
+                tool_descriptions = []
+                for t in tools:
+                    desc = getattr(t, "description", "") or getattr(t, "__doc__", "") or ""
+                    params = getattr(t, "parameters", {}) if hasattr(t, "parameters") else {}
+                    tool_descriptions.append(
+                        f"Tool: {getattr(t, 'name', 'unknown')}\nDescription: {desc}\n"
+                        f"Parameters: {json.dumps(params, ensure_ascii=False)}"
+                    )
+
+                tool_text = "\n\n".join(tool_descriptions)
+                enhanced = (
+                    f"{system_msg}\n\n可用工具:\n{tool_text}\n\n"
+                    f"返回 JSON: {{\"skill_name\": \"工具名\", \"output\": \"分析/决策内容\", "
+                    f"\"confidence\": 0.0-1.0, \"estimated_cost\": 金额}}\n\n"
+                    f"用户消息: {user_msgs[-1]['content'] if user_msgs else '无'}"
+                )
+
+                resp = client.messages.create(
+                    model=model,
+                    max_tokens=1024,
+                    system="你是母婴跨境电商数据分析Agent。只返回JSON。",
+                    messages=[{"role": "user", "content": enhanced}],
+                )
+                text = resp.content[0].text if resp.content else "{}"
+                try:
+                    result = json.loads(text)
+                except json.JSONDecodeError:
+                    result = {"output": text, "skill_name": "analysis", "confidence": 0.5, "estimated_cost": 0.0}
+                result.setdefault("token_usage", resp.usage.input_tokens + resp.usage.output_tokens if hasattr(resp, 'usage') else 500)
+                return result
+
+            return _invoke_anthropic
+        except ImportError:
+            pass
+
+    return BaseAgent._stub_llm
 
 
 class BaseAgent:
@@ -28,7 +91,7 @@ class BaseAgent:
         self.name = name
         self.role_description = role_description
         self.skill_domains = skill_domains
-        self.llm_invoker = llm_invoker or self._stub_llm
+        self.llm_invoker = llm_invoker or _build_real_llm()
         if tool_registry is None:
             from mas.skills.registry import SkillRegistry
             tool_registry = SkillRegistry()

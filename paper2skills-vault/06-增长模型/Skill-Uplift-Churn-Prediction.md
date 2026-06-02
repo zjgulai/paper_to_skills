@@ -119,14 +119,14 @@ python3 model.py
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-Customer-Churn-Prediction**: 掌握传统流失预测方法，理解用户行为特征
-- **Skill-Uplift-Modeling**: 理解Uplift Modeling基础概念（T/S/X-Learner）
-- **Skill-A-B-Test-Design**: 需要A/B测试数据作为训练样本
+- [[Skill-Customer-Churn-Prediction]]: 掌握传统流失预测方法，理解用户行为特征
+- [[Skill-Uplift-Modeling]]: 理解Uplift Modeling基础概念（T/S/X-Learner）
+- [[Skill-AB-Experimental-Design]]: 需要A/B测试数据作为训练样本
 
 ### 延伸技能
-- **Skill-Causal-Forest**: 基于树的非参数ITE估计，适合大规模数据
-- **Skill-Doubly-Robust-Estimation**: 结合倾向评分的双重稳健估计
-- **Skill-Reinforcement-Learning**: 动态调整干预策略
+- [[Skill-Intelligent-Attribution-Causal-Forest]]: 基于树的非参数ITE估计，适合大规模数据
+- [[Skill-Intelligent-Prediction-Doubly-Robust]]: 结合倾向评分的双重稳健估计
+- [[Skill-DQN-Purchase-Prediction]]: 动态调整干预策略
 
 ### 可组合技能
 | 组合技能 | 组合效果 | 应用场景 |

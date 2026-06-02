@@ -33,6 +33,11 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │   ├── 14-用户分析/            # Funnel, cohort, RFM analysis
 │   ├── 15-营销投放分析/         # MMM, promotion effectiveness
 │   ├── 16-智能体工程/           # LLM Agent Engineering: Skills, Context, MCP/A2A
+│   ├── 17-价格优化/            # Dynamic pricing, competitive monitoring, markdown, bundle
+│   ├── 18-物流履约/            # Cross-border routing, last-mile delivery, returns
+│   ├── 19-风控反欺诈/          # Fake review detection, transaction anomaly, click fraud
+│   ├── 20-AI视频生成/          # Virtual anchor demo, product showcase I2V, brand video, UGC
+│   ├── 21-合规决策/            # Category compliance prescan, regulatory risk, compliance-as-moat
 │   ├── 07-资源库/            # Master Prompt, keywords, sync status
 │   └── papers/               # Downloaded papers by domain
 └── paper2skills-code/       # Python code templates
@@ -46,10 +51,22 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
     ├── knowledge_graph/
     ├── data_agent_llm/
     ├── mas/
-    └── llm_agent_engineering/
+    ├── llm_agent_engineering/
+    ├── ml_fundamentals/
+    ├── advertising/
+    ├── user_analytics/
+    ├── marketing/
+    ├── pricing/
+    ├── logistics/
+    ├── risk_fraud/
+    ├── visual_content/       # AI视频生成: anchor_demo / product_showcase / brand_video / ugc_talking_head
+    └── compliance/           # 合规决策: category_compliance_prescan (Sprint 4 新建)
 
-  说明:11-AI人文 / 12-ML基础 / 13-广告分析 / 14-用户分析 / 15-营销投放分析 五个新业务领域
-  目前仅有 vault Skill 卡片,code/ 侧尚未落地子模块,需要时按 Python 包命名规范(英文 snake_case)新建。
+  已落地 code 子模块: causal_inference / ab_testing / time_series / supply_chain /
+    recommendation / growth_model / knowledge_graph / data_agent_llm / mas /
+    llm_agent_engineering / ml_fundamentals / advertising / compliance (Sprint 4-5 补全)
+  仅 vault Skill 卡片 (按需建立 code 子模块): ai_humanities / user_analytics /
+    marketing / pricing / logistics / risk_fraud / visual_content
 ```
 
 ## NLP-VOC 子项目迁出说明
@@ -156,26 +173,33 @@ python -m pytest model.py -v
 下表 "Code Dir Status" 标识 `paper2skills-code/` 下对应子目录的落地状态:
 - ✅ 已落地 — 目录存在,可 import;
 - 📦 镜像保留 — 子项目已迁出本仓库,代码模板留作复用引用;
-- ⬜ 仅 vault — 当前只有 Skill 卡片,无 code 子目录,需要时按 snake_case 新建。
+- ⬜ 仅 vault — 当前只有 Skill 卡片,无 code 子目录,需要时按 snake_case 新建.
 
-| English Directory | Chinese Directory | Domain | Code Dir Status |
-|-------------------|-------------------|--------|-----------------|
-| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling | ✅ |
-| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits | ✅ |
-| `time_series` | `03-时间序列` | Demand forecasting, time series | ✅ |
-| `supply_chain` | `04-供应链` | Inventory optimization | ✅ |
-| `recommendation` | `05-推荐系统` | Recommendation systems | ✅ |
-| `growth_model` | `06-增长模型` | Churn prediction, LTV | ✅ |
-| `nlp_voc` | ~~07-NLP-VOC~~ | 已迁至 `../ai_nlp_voc/`,本仓库保留代码模板 | 📦 |
-| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, hyperbolic embedding | ✅ |
-| `data_agent_llm` | `09-DataAgent-LLM` | DataAgent, LLM-powered data analysis | ✅ |
-| `mas` | `10-MAS` | Multi-agent systems, planning, orchestration | ✅ |
-| `ai_humanities` | `11-AI人文` | AI × Humanities: cross-modal transfer, LoRA, continual learning, prompt tuning as life metaphors | ⬜ |
-| `ml_fundamentals` | `12-ML基础` | Feature engineering, model evaluation fundamentals | ⬜ |
-| `advertising` | `13-广告分析` | Ad attribution (Shapley/Markov), ROAS optimization, budget allocation | ⬜ |
-| `user_analytics` | `14-用户分析` | Funnel analysis, cohort retention, RFM segmentation | ⬜ |
-| `marketing` | `15-营销投放分析` | Marketing Mix Modeling (MMM), promotion effectiveness, causal ML | ⬜ |
-| `llm_agent_engineering` | `16-智能体工程` | Agent Skills/Tools, Context Engineering, MCP/A2A protocols, Function Calling (Hermes) | ✅ |
+| English Directory | Chinese Directory | Domain | Skill 数 | Code Dir Status |
+|-------------------|-------------------|--------|---------|-----------------|
+| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling, DiD, IV | 12 | ✅ |
+| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits, sequential testing | 11 | ✅ |
+| `time_series` | `03-时间序列` | Demand forecasting, conformal prediction, LLM forecasting | 12 | ✅ |
+| `supply_chain` | `04-供应链` | **18 Skills**: 供应计划全链路（需求预测→促销拆解→预算分配→MOQ批量→产能排产→新品冷启动→健康诊断）+ 库存优化 + 设施选址 | 18 | ✅ |
+| `recommendation` | `05-推荐系统` | Recommendation systems, cold start, diversity reranking | 11 | ✅ |
+| `growth_model` | `06-增长模型` | Churn, LTV, RFM, market size estimation, PLC stage | 22 | ✅ |
+| `nlp_voc` | ~~07-NLP-VOC~~ | 已迁至 `../ai_nlp_voc/`,本仓库保留代码模板 | — | 📦 |
+| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, GNN, KG construction, KGQA | 16 | ✅ |
+| `data_agent_llm` | `09-DataAgent-LLM` | DataAgent, LLM-powered data analysis, NL2Dashboard | 10 | ✅ |
+| `mas` | `10-MAS` | Multi-agent systems, planning, orchestration | 13 | ✅ |
+| `ai_humanities` | `11-AI人文` | AI × Humanities: cross-modal transfer, LoRA | 1 | ⬜ |
+| `ml_fundamentals` | `12-ML基础` | Feature engineering, model evaluation, drift detection, performance monitor | 9 | ✅ |
+| `advertising` | `13-广告分析` | Ad attribution, ROAS, Listing quality, cross-device, delayed CVR | 19 | ✅ |
+| `user_analytics` | `14-用户分析` | Funnel, cohort, clickstream, trajectory, traffic source | 18 | ⬜ |
+| `marketing` | `15-营销投放分析` | MMM, promotion effectiveness, causal ML, channel saturation | 9 | ⬜ |
+| `llm_agent_engineering` | `16-智能体工程` | Agent Skills/Tools, Context, MCP/A2A, Safety/Fault/Cost | 19 | ✅ |
+| `pricing` | `17-价格优化` | Dynamic pricing, competitive monitoring, markdown, bundle | 5 | ⬜ |
+| `logistics` | `18-物流履约` | Cross-border routing, last-mile prediction, returns/reverse logistics | 3 | ⬜ |
+| `risk_fraud` | `19-风控反欺诈` | Fake review detection, transaction anomaly, click fraud | 3 | ⬜ |
+| `visual_content` | `20-AI视频生成` | Virtual anchor demo, product showcase I2V, brand video, talking-head UGC | 8 | ⬜ |
+| `compliance` | `21-合规决策` | **新领域 (2026-05-25)**: Category compliance prescan, regulatory risk, compliance-as-moat | 1 | ✅ |
+
+**说明**：`ml_fundamentals`、`advertising`、`compliance` code 目录已于 Sprint 4-5 补全落地。`user_analytics`、`marketing`、`pricing`、`logistics`、`risk_fraud`、`visual_content` 仍为 vault-only，按需建立 code 子模块。
 
 ## Quality Standards
 
@@ -215,14 +239,25 @@ version: 0.1.0
 
 ## Dependencies
 
-Install Python dependencies:
+> **Python 版本**: 3.14+（`.python-version` 已锁定）
+>
+> **macOS 前置**: `brew install libomp`（lightgbm/causalml 运行时依赖）
+>
+> **MAS 系统**（`mas/`）仅用标准库，无需安装任何包。
 
 ```bash
-cd paper2skills-code
-pip install -r requirements.txt
+# 使用 venv（PEP 668 系统 Python 禁止直接 pip install）
+python3 -m venv .venv
+source .venv/bin/activate
+
+# 锁定版本安装（推荐，可复现）
+pip install -r paper2skills-code/requirements-lock.txt
+
+# 验证
+python -c "import causalml, sklearn, statsmodels; print('OK')"
 ```
 
-Key packages: numpy, pandas, scikit-learn, statsmodels, prophet, causalml, econml
+Key packages: numpy 2.4, pandas 3.0, scikit-learn 1.8, statsmodels 0.14, causalml 0.16
 
 ## ArXiv Search Strategy
 
@@ -237,7 +272,129 @@ Search priority: Papers with code implementations > experimental validation > th
 
 ## Recent Skills Added
 
-> 总计 **107 个 Skill** 跨 15 个核心领域(+16-智能体工程). 最近 Week 4-5 完成三轮迭代萃取 19 个新 Skill.
+> 总计 **220 个 Skill** 跨 **22 个领域**. Sprint 4+5 新增 12 个 P0 Skill (2026-05-25). 图谱 246节点 / 2493边. missing_prerequisite 断链 = 0.
+
+### Sprint 5 (2026-05-25) — 供应链供应计划侧 6 个 Skill
+
+供应计划全链路补缺：促销拆解→预算分配→MOQ批量→产能排产→新品冷启动→健康诊断
+
+| 日期 | Skill | 领域 | 核心论文 |
+|------|-------|------|---------|
+| 2026-05-25 | Promotion-Demand-Decomposition | 04-供应链 | SPADE arXiv:2411.05852 (NeurIPS 2024) + Hewage JoF 2025 + JD.com SSRN:4777632 |
+| 2026-05-25 | Multi-SKU-Procurement-Budget-Allocation | 04-供应链 | arXiv:2301.02662 (Knapsack Ordering 2023) + EJOR Vol.315 2024 |
+| 2026-05-25 | Dynamic-Lot-Sizing-MOQ | 04-供应链 | EJOR Q-jump 2018 + EJOR JRP+MOQ 2022 (Chugh et al.) |
+| 2026-05-25 | Supplier-Capacity-Planning | 04-供应链 | arXiv:2402.14506 (Rolling Horizon 2024) + IJPE Vol.277 2024 + JIMO Vol.20 2024 |
+| 2026-05-25 | New-Product-Inventory-Coldstart | 04-供应链 | M&SOM 21(4) 2019 (Zara Residual Tree) + OR 71(5) 2023 (Bayesian Exploration) |
+| 2026-05-25 | Inventory-Health-Aging-Attribution | 04-供应链 | JSCDM 2024 + OSCM Forum 2023 + ACM ICGAIB 2025 + arXiv:2404.07523 + arXiv:2308.13118 |
+
+### Sprint 4 (2026-05-25) — 业务完整性 P0 补缺 + 新领域 21-合规决策
+
+WF-D 选品扫描补缺 + 模型生产化横切面 + WF-B Listing 质量门控 + 新建合规决策领域
+
+| 日期 | Skill | 领域 | 核心论文 |
+|------|-------|------|---------|
+| 2026-05-25 | Listing-Quality-Scoring | 13-广告分析 | KDD'23 Amazon arXiv:2302.01416 + MetaSynth arXiv:2510.01523 + IPL EMNLP'24 |
+| 2026-05-25 | Product-Lifecycle-Stage | 06-增长模型 | AAAI 2025 PhaseFormer arXiv:2511.16248 + AVM arXiv:2511.17275 |
+| 2026-05-25 | Category-Compliance-Prescan | **21-合规决策** | RECALL-MM arXiv:2503.23213 (ASME IDETC 2025) + Sci.Reports 2025 WOA-BP |
+| 2026-05-25 | Market-Size-Estimation | 06-增长模型 | G-TAB arXiv:2007.13861 (EPFL) + Hu Bass+GT (Kent) + MDPI MonteCarlo 2023 |
+| 2026-05-25 | Data-Drift-Detection | 12-ML基础 | DriftGuard arXiv:2601.08928 (2026) + Cry Wolf ICLR 2026 Workshop |
+| 2026-05-25 | Model-Performance-Monitor | 12-ML基础 | DriftGuard arXiv:2601.08928 + Champion-Challenger 工业实践 |
+
+### Round 5 (2026-05-22) — AI视频生成 新领域 8 个 Skill
+
+**P0 商品上架 (2 个):**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-22 | AnchorCrafter Virtual Anchor Demo | 20-AI视频生成 | arXiv:2411.17383 (中科院+腾讯) |
+| 2026-05-22 | Phantom Product Showcase I2V | 20-AI视频生成 | arXiv:2502.11079 (ByteDance ICCV 2025) |
+
+**P1 品牌+UGC (3 个):**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-22 | Aquarius Brand Video Generation | 20-AI视频生成 | arXiv:2505.10584 (工业级) |
+| 2026-05-22 | BrandFusion Multi-Agent | 20-AI视频生成 | arXiv:2603.02816 (2026最新) |
+| 2026-05-22 | DAWN Talking-Head Review | 20-AI视频生成 | arXiv:2410.13726 |
+
+**P2 技术储备 (3 个):**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-22 | E-Commerce Video Benchmark | 20-AI视频生成 | ICLR 2026 投稿 (淘宝数据) |
+| 2026-05-22 | Text-to-Edit Video Ad | 20-AI视频生成 | arXiv:2501.05884 (商汤) |
+| 2026-05-22 | Virbo Multilingual Avatar UGC | 20-AI视频生成 | arXiv:2403.11700 (万兴科技) |
+
+### Round 4 (2026-05-20) — 桑基图流量转化全栈 19 个
+
+### Sprint 3 (2026-05-21) — ML基础建设 + 孤立修复 + P1候选 共12新Skill + 18关联回填
+
+**A组: 12-ML基础 6个 Skill (领域 1→7)**
+
+| Date | Skill | Domain | Type |
+|------|-------|--------|------|
+| 2026-05-21 | Model Evaluation Metrics | 12-ML基础 | 综合萃取 |
+| 2026-05-21 | Cross Validation Strategies | 12-ML基础 | 综合萃取 |
+| 2026-05-21 | Imbalanced Data Handling | 12-ML基础 | 综合萃取 |
+| 2026-05-21 | Ensemble Methods | 12-ML基础 | 综合萃取 |
+| 2026-05-21 | Feature Selection (SHAP/Boruta) | 12-ML基础 | 综合萃取 |
+| 2026-05-21 | Hyperparameter Optimization | 12-ML基础 | 综合萃取 |
+
+**B组: 18个孤立Skill关联回填 → 967边/0孤立**
+
+**C组: v2 P1候选 6个 Skill**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-21 | Negative Keyword Safe Guard | 13-广告分析 | eBay SIGIR eCom 2025 |
+| 2026-05-21 | Creative Fatigue Detection | 13-广告分析 | arXiv:2204.11588 + 2509.09758 |
+| 2026-05-21 | Conformal Prediction Demand UQ | 03-时间序列 | arXiv:2307.16895 (NeurIPS 2023) |
+| 2026-05-21 | Multi-Channel Inventory Pooling | 04-供应链 | arXiv:2306.11246 + 2310.12183 |
+| 2026-05-21 | Amazon ToS Compliance Guardrail | 13-广告分析 | SAFE-AGENT-L (AAAI 2026 Workshop) |
+| 2026-05-21 | TikTok Shop Content Attribution | 13-广告分析 | arXiv:2401.08875 + 2507.15113 |
+
+**D组: CausalRAG (最后HIGH缺口)** — 已存在占位卡转正式
+
+### Round 4 (2026-05-20) — 桑基图流量转化全栈 19 个
+
+**第一轮：流量转化基础 (8 个)**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-20 | TRACE Clickstream Embedding | 14-用户分析 | arXiv:2409.12972 (2024) |
+| 2026-05-20 | Non-Item Page Path Modeling | 14-用户分析 | arXiv:2408.15953 (RecSys 2024) |
+| 2026-05-20 | Trajectory Pattern Mining | 14-用户分析 | PLOS One 2025 |
+| 2026-05-20 | HGNN Cross-Device Matching | 13-广告分析 | arXiv:2304.03215 (NVIDIA) |
+| 2026-05-20 | GraphTrack Cross-Device Tracking | 13-广告分析 | arXiv:2203.06833 |
+| 2026-05-20 | Traffic Source Analysis | 14-用户分析 | arXiv:2403.16115 (2024) |
+| 2026-05-20 | CABB Cross-Category Attribution | 13-广告分析 | arXiv:2507.15113 (2025) |
+| 2026-05-20 | Session Intent Shift | 14-用户分析 | arXiv:2507.20185 (2025) |
+
+**P0：缺数据可信度 (3 个)**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-20 | Conformal ROI Prediction | 01-因果推断 | arXiv:2407.01065 (2024) |
+| 2026-05-20 | Sparse Matrix Completion (Hájek-GD) | 14-用户分析 | arXiv:2601.12213 (NeurIPS 2025) |
+| 2026-05-20 | BCCB Causal Bandits | 02-A_B实验 | arXiv:2604.26169 (2025) |
+
+**P1：不确定性量化+实时 (4 个)**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-20 | Utimac Uncertainty-Aware Completion | 14-用户分析 | arXiv:2605.02225 (2025) |
+| 2026-05-20 | EPICSCORE Uncertainty Quantification | 01-因果推断 | arXiv:2502.06995 (2025) |
+| 2026-05-20 | SSBC Small Sample Conformal | 01-因果推断 | arXiv:2509.15349 (2025) |
+| 2026-05-20 | TRACE Delayed CVR | 13-广告分析 | arXiv:2604.23197 (2025) |
+
+**P2：极端场景鲁棒 (4 个)**
+
+| Date | Skill | Domain | Paper |
+|------|-------|--------|-------|
+| 2026-05-20 | BlockEcho Block-Wise Missing Data | 14-用户分析 | IJCAI 2024 |
+| 2026-05-20 | STAMImputer Spatio-Temporal MoE | 14-用户分析 | IJCAI 2025 |
+| 2026-05-20 | TESLA Cascaded NetCVR | 13-广告分析 | arXiv:2601.19965 (Taobao 2025) |
+| 2026-05-20 | CSDM Diffusion Cold-Start CTR | 05-推荐系统 | arXiv:2504.06270 (2025) |
 
 ### Sprint 2 (2026-05-17 下午) — WF-A/B P0 阻塞缺口 6 个
 
@@ -289,8 +446,9 @@ Search priority: Papers with code implementations > experimental validation > th
 ### MAS 多智能体系统 MVP (2026-05-17)
 
 - **5 个业务工作流**: WF-A 智能补货 / WF-B 广告优化 / WF-C 客服分诊 / WF-D 选品扫描 / WF-E Review 监控
+- **工作流 Skill 覆盖率** (2026-06-01): WF-A 95% / WF-B 90% / WF-C 85% / WF-D 80% / WF-E 85%
 - **14 个核心模块**: agents/ + graphs/ + skills/ + state/ + hitl/ + checkpointing/ + observability/
-- **37/37 集成测试全绿**(MAS 骨架 12 + 各工作流 5+5+5+4 + 集成 6)
+- **47/47 集成测试全绿**(MAS 骨架 12 + 各工作流 5+5+5+4+6 + MCP 路由 8 + 工具链 2)
 - **入口**: [`mas/main.py`](mas/main.py) + [`mas/README.md`](mas/README.md) 部署指南
 
 ## Sync Status Tracking

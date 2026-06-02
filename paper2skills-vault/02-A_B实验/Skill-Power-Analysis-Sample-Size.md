@@ -294,7 +294,7 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-AB-Experimental-Design** — 理解实验设计的基本概念（对照组、随机化、盲法）
+- [[Skill-AB-Experimental-Design]] — 理解实验设计的基本概念（对照组、随机化、盲法）
 - **基础统计推断** — 理解假设检验、P值、置信区间
 
 ### 延伸技能

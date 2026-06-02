@@ -483,8 +483,8 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-Uplift-Modeling** — 理解因果推断的基本概念（处理效应、潜在结果框架）
-- **Skill-Causal-Discovery-PC-Algorithm** — 用PC算法发现因果结构，为DiD选择合理的对照组提供依据
+- [[Skill-Uplift-Modeling]] — 理解因果推断的基本概念（处理效应、潜在结果框架）
+- [[Skill-Causal-Discovery-PC-Algorithm]] — 用PC算法发现因果结构，为DiD选择合理的对照组提供依据
 
 ### 延伸技能
 - **Callaway-Sant'Anna Staggered DiD** — 处理渐进式干预场景（多时点处理）

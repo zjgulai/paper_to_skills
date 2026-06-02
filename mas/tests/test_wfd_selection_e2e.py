@@ -126,12 +126,33 @@ def test_wfd_auto_approved_zero_cost():
     assert result["final_output"]["executed"] is True
 
 
+def test_wfd_skill_chain_and_registry():
+    from mas.skills.registry import SkillRegistry
+    payload = {"candidates": _mock_candidates()}
+    graph = build_selection_graph(interrupt_fn=lambda r: {"action": "approve", "note": ""})
+    state = init_state("wf-d-chain", "product_selection", "ops-tang", payload, token_budget=20_000)
+    result = graph.invoke(state)
+
+    chain = result["skill_outputs"][-1]["output"]["skill_chain"]
+    assert "growth_new_product_opportunity" in chain
+    assert "kg_kgqa" in chain
+    assert "causal_uplift_modeling" in chain
+
+    reg = SkillRegistry()
+    sel_tools = {t.name for t in reg.get_tools_for_domains(["selection"])}
+    assert "selection_market_space" in sel_tools
+    assert "selection_compliance_risk" in sel_tools
+    assert "selection_composite_score" in sel_tools
+    assert len(sel_tools) == 6
+
+
 def run_all():
     tests = [
         test_wfd_finds_compliant_high_score_candidate,
         test_wfd_excludes_high_compliance_risk,
         test_wfd_low_margin_rejected,
         test_wfd_auto_approved_zero_cost,
+        test_wfd_skill_chain_and_registry,
     ]
     failures = []
     for t in tests:

@@ -1,38 +1,39 @@
 # paper2skills Skill 关联图谱
 
-**版本**: v3.0(增量更新 2026-05-17 下午)
-**更新日期**: 2026-05-17
-**覆盖技能数**: **107 个**已萃取同步技能(从 v2.8 的 52 个翻倍)
+**版本**: v3.1(增量更新 2026-05-19)
+**更新日期**: 2026-05-19
+**覆盖技能数**: **130 个**已萃取同步技能
 
 ---
 
-## v3.0 最新状态(2026-05-17)
+## v3.1 最新状态(2026-05-19)
 
 > 由 `skills_graph_analyzer.py --analyze` 自动产出
 
-| 维度 | v2.8 (2026-04-29) | v3.0 (2026-05-17) |
-|---|---|---|
-| 节点数 | 52 | **107** |
-| 边数 | ~250 | **581** |
-| 领域数 | 14 | **15 + 16-智能体工程** |
-| HIGH 缺口 | 19 | **1**(CausalRAG) |
-| 总缺口 | 156 | **89** |
-| 新增 Skill | — | 19 个(6h 迭代 8 + Sprint 1 4 + Sprint 2 6) |
+| 维度 | v2.8 (2026-04-29) | v3.0 (2026-05-17) | v3.1 (2026-05-19) |
+|---|---|---|---|
+| 节点数 | 52 | 107 | **130** |
+| 边数 | ~250 | 581 | **734** |
+| 领域数 | 14 | 15 + 16-智能体工程 | **15 + 16-智能体工程** |
+| HIGH 缺口 | 19 | 1(CausalRAG) | **1(CausalRAG)** |
+| 总缺口 | 156 | 89 | **87** |
+| 新增 Skill | — | 19 个 | +23 个(Sprint 3 迭代) |
 
-### Sprint 1+2 新增 10 Skill 关联状态
+### v3.1 关键变更
 
-| Skill | 领域 | 入图边数(估算) |
-|---|---|---|
-| AGRS Review Summarization | 14 | 5-7 |
-| MAA Review-to-Action | 14 | 5-7 |
-| StaR Statement Ranking | 14 | 5-6 |
-| LACA CrossLingual ABSA | 14 | 6-8(WF-C+WF-E 双用) |
-| HiFoReAd 分层调和 | 03 | 5-7 |
-| Gen-QOT Lead Time | 04 | 5-6 |
-| Hierarchical Search Intent | 13 | 5-7 |
-| Dial-In LLM Case Intent | 09 | 5-6 |
-| PVM Attribution Window | 13 | 5-7 |
-| Bass + GEANN New Product | 06 | 6-8 |
+- **解析器升级**：`skills_graph_analyzer.py` 现在同时支持 `### 标题` 和 `**bold** 平铺` 两种技能关联格式，以及 Obsidian `[[WikiLink]]` 语法
+- **新增别名**：`skill-aliases.json` 补充 `Skill-MAB-Thompson-Sampling`、`Skill-Customer-LTV-Prediction`、`Skill-Dial-In-LLM` 系列路径变体映射
+- **14 个原孤岛 Skill 全部接入图谱**：`Skill-TimeCMA-LLM-Forecasting`、`Skill-CAGED-Debiased-Rec`、`Skill-Identified-Bayesian-MMM`、`Skill-UCB-LDP-Dynamic-Pricing`、`Skill-Guardrailed-CATE-NBA`、`Skill-Generative-Agent-Simulation`、`Skill-FrontDoor-Causal-MTA`、`Skill-Identity-Fragmentation-Debiasing`、`Skill-AgentRouter-KG-Guided`、`Skill-Agentic-SCKG-Risk`、`Skill-ProRCA-Business-Analysis`、`Skill-NEO_LRP`、`Skill-Multilevel_FLP`、`Skill-Generative-Audience-LLM-Auction`
+
+### 核心基础技能 (高被依赖数，v3.1)
+
+| 排名 | 技能 | 被依赖数 |
+|-----|------|---------|
+| 1 | Skill-Feature-Engineering | 16 |
+| 2 | Skill-ROAS-Budget-Optimization | 9 |
+| 3 | Skill-Demand-Forecasting-Supply-Chain | 9 |
+| 4 | AutoGen (→ Skill-AutoGen-Multi-Agent-Conversation) | 9 |
+| 5 | Skill-Matrix-Factorization | 8 |
 
 详见 [`paper2skills-skills/paper-skills-graph/skills_graph_report.md`](../../paper2skills-skills/paper-skills-graph/skills_graph_report.md).
 

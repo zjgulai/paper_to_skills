@@ -96,14 +96,14 @@ python3 model.py
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-Customer-Churn-Prediction**: 理解用户流失预测基础，掌握用户行为序列特征工程
-- **Skill-Time-Series-Forecasting**: 理解时间序列建模方法，用户行为具有时序特性
-- **Skill-VOC-Aspect-Extraction**: VOC情感分析结果可作为生命周期阶段的辅助特征
+- [[Skill-Customer-Churn-Prediction]]: 理解用户流失预测基础，掌握用户行为序列特征工程
+- [[Skill-Time-Series-Forecasting]]: 理解时间序列建模方法，用户行为具有时序特性
+- [[Skill-AGRS-Aspect-Guided-Review-Summarization]]: VOC情感分析结果可作为生命周期阶段的辅助特征
 
 ### 延伸技能
-- **Skill-LTV-Prediction**: 生命周期阶段可作为LTV预测的重要特征
-- **Skill-Multi-Armed-Bandit**: 结合STAN阶段输出，实现分阶段的个性化定价/优惠券策略
-- **Skill-Causal-Uplift-Modeling**: 评估不同生命周期阶段的干预效果
+- [[Skill-LTV-Prediction-ZILN]]: 生命周期阶段可作为LTV预测的重要特征
+- [[Skill-Multi-Armed-Bandit]]: 结合STAN阶段输出，实现分阶段的个性化定价/优惠券策略
+- [[Skill-Causal-Uplift-Modeling]]: 评估不同生命周期阶段的干预效果
 
 ### 可组合技能
 | 组合技能 | 组合效果 | 应用场景 |

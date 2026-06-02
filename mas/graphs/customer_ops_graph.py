@@ -1,4 +1,15 @@
-"""WF-C/E 客服 + Review 工作流(复用 CustomerServiceAgent)."""
+"""WF-C/E 客服 + Review 工作流(复用 CustomerServiceAgent).
+
+工作流图:
+  START -> orchestrator -> customer_service_agent -> human_approval
+    -> [approved] execute_action -> END
+    -> [rejected] handle_rejection -> END
+
+CustomerServiceAgent 双路径:
+  WF-C (customer_ops): case_intent_classifier -> sentiment_analysis
+    -> kg_graphrag -> data_customer_journey_tree
+  WF-E (review_monitor): review_theme_clustering (avg_rating < 4 触发行动)
+"""
 
 from __future__ import annotations
 

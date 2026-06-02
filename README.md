@@ -22,27 +22,54 @@
 
 ---
 
-## 📊 最新状态 (2026-05-17 下午)
+## 📊 最新状态 (2026-06-01)
 
 | 维度 | 数值 |
 |---|---|
-| **Skill 卡片总数** | **107**(15 个核心领域 + 16-智能体工程) |
-| **图谱边数** | **581**(平均每张 Skill 5.4 个关联) |
-| **HIGH 缺口** | **1**(仅余 CausalRAG) |
-| **MAS 多智能体系统** | 5 个工作流 / 37 项集成测试全绿 |
-| **业务工作流覆盖率** | WF-A 85% / WF-B 75% / WF-C 70% / WF-E 85% |
-| **累计 ROI** | 6550-13160 万元/年潜在(中型品牌) |
+| **Skill 卡片总数** | **246**（22 个领域） |
+| **图谱节点数** | **246** |
+| **图谱边数** | **2493** |
+| **missing_prerequisite 断链** | **0** |
+| **HIGH 缺口** | **0** |
+| **孤立 Skill** | **0** |
+| **MAS 工具注册** | **112 个工具 / 14 个域** |
+| **MCP Server** | **4 个 domain server / 28 个工具** |
+| **MAS 多智能体系统** | 5 个工作流 / **47 项集成测试全绿** |
+| **Python 环境** | Python 3.14 + venv（`.python-version` 锁定） |
+| **业务工作流覆盖率** | WF-A 95% / WF-B 90% / WF-C 85% / WF-E 85% / WF-D 80% |
+| **累计 ROI** | 12000-22000 万元/年潜在（中型品牌） |
 
-**最近萃取**(Week 4-5 三轮迭代,19 个新 Skill):
-- **6h 迭代(8 个跨领域桥梁)**:Hierarchical-Product-KG / DCE 反事实推荐 / Switchback / GCF Causal TSF / CoLaKG / DARA Agentic MMM / DML Cohort / Customer Journey Tree
-- **Sprint 1(WF-E + WF-C ABSA 闭环 4 个)**:AGRS / MAA / StaR / LACA
-- **Sprint 2(WF-A + WF-B P0 缺口 6 个)**:HiFoReAd / Gen-QOT / Hierarchical Search Intent / Dial-In LLM / PVM Attribution / Bass + GEANN 新品冷启动
+**最近萃取 (2026-05-25, Sprint 4+5 共 12 张)**:
+
+**Sprint 5 — 供应链供应计划侧 (6 张, 2026-05-25)**:
+- Promotion-Demand-Decomposition (促销感知需求拆解, SPADE NeurIPS 2024)
+- Multi-SKU-Procurement-Budget-Allocation (多SKU采购预算分配, arXiv:2301.02662)
+- Dynamic-Lot-Sizing-MOQ (MOQ/价格阶梯动态批量, EJOR 2018+2022)
+- Supplier-Capacity-Planning (供应商产能约束排产, arXiv:2402.14506)
+- New-Product-Inventory-Coldstart (新品冷启动库存, M&SOM 2019+OR 2023)
+- Inventory-Health-Aging-Attribution (库存健康+库龄+供应计划归因, JSCDM 2024+arXiv:2404/2308)
+
+**Sprint 4 — 业务完整性 P0 补缺 (6 张, 2026-05-25)**:
+- Listing-Quality-Scoring (Amazon Listing质量评分, KDD 2023 Amazon)
+- Product-Lifecycle-Stage (品类生命周期定位, AAAI 2025 PhaseFormer)
+- Category-Compliance-Prescan (品类合规风险预筛, ASME IDETC 2025 RECALL-MM) **[新领域 21-合规决策]**
+- Market-Size-Estimation (市场容量估算 TAM/SAM, arXiv G-TAB + Bass+GT)
+- Data-Drift-Detection (数据漂移检测, arXiv DriftGuard 2026)
+- Model-Performance-Monitor (模型性能监控, Champion-Challenger + DriftGuard)
+
+**历史萃取 (2026-05-22, AI视频生成 新领域 8 张)**:
+- **P0 商品上架 (2 张)**:AnchorCrafter 虚拟主播带货 / Phantom 商品展示 I2V
+- **P1 品牌+UGC (3 张)**:Aquarius 品牌视频 / BrandFusion 品牌植入 / DAWN 口播 Review
+- **P2 技术储备 (3 张)**:E-Commerce Benchmark / Text-to-Edit 自动剪辑 / Virbo 多语言 UGC
+
+**历史萃取 (2026-05-21, Sprint 3 完成 12 新 Skill + 18 关联回填)**:
+- **12-ML基础 (6 张)** / **v2 P1候选 (6 张)** / **WF-D选品 (4 张)** / **跨域桥梁 (5 张)** / **18-物流 (3 张)** / **19-风控 (3 张)** / **MAS生产化 (3 张)** / **存量精补 (8 张)**
 
 详见:
+- [桑基图流量转化Skills整理](~/Desktop/电商流量转化Skills整理.md)
 - [Sprint 1+2 迭代总报告](paper2skills-vault/00-项目管理/sprint1-2-iteration-report-20260517.md)
 - [6h 迭代总报告](paper2skills-vault/00-项目管理/6h-iteration-report-20260517.md)
 - [下一步选题路线图](paper2skills-vault/00-项目管理/next-papers-roadmap.md)
-- [MAS 部署指南](mas/README.md)
 
 ---
 
@@ -72,6 +99,11 @@ paper_to_skills/
 │   ├── 13-广告分析/                    # 广告归因、ROAS 优化
 │   ├── 14-用户分析/                    # 漏斗、留存、RFM
 │   ├── 15-营销投放分析/                 # MMM、促销效果
+│   ├── 16-智能体工程/                    # Agent Skills、Context、MCP/A2A
+│   ├── 17-价格优化/                      # 动态定价、竞品监测、清仓捆绑
+│   ├── 18-物流履约/                      # 跨境路径、配送时效、退货
+│   ├── 19-风控反欺诈/                    # 虚假评论、异常交易、刷量
+│   ├── 20-AI视频生成/                    # 虚拟主播、商品展示、UGC口播
 │   ├── 07-资源库/                    # MasterPrompt / 关键词库
 │   └── papers/                       # 原始论文存档
 │
@@ -87,7 +119,11 @@ paper_to_skills/
 │   ├── mas/                         # 多智能体系统
 │   ├── advertising/                 # 广告分析
 │   ├── user_analytics/              # 用户分析
-│   └── marketing/                   # 营销投放分析
+│   ├── marketing/                   # 营销投放分析
+│   ├── pricing/                     # 价格优化
+│   ├── logistics/                   # 物流履约
+│   ├── risk_fraud/                  # 风控反欺诈
+│   └── visual_content/              # AI视频生成
 │
 ├── 📄 CLAUDE.md                     # Claude Code 开发指南
 └── 📄 README.md                     # 本文件
@@ -120,24 +156,30 @@ paper_to_skills/
 
 ## 🎯 技能领域 | Skill Domains
 
-当前覆盖 15 大核心领域，对应母婴出海电商的关键业务场景：
+当前覆盖 **22 大核心领域**，对应母婴出海电商的关键业务场景：
 
 | 领域 | 英文 | 典型应用场景 | 示例 Skill |
 |------|------|-------------|-----------|
 | 因果推断 | Causal Inference | 广告投放归因、促销效果评估 | Uplift Modeling |
 | A/B 实验 | A/B Testing | 转化率测试、定价策略验证 | Multi-Armed Bandit |
 | 时间序列 | Time Series | 销量预测、需求预测、库存计划 | Demand Forecasting |
-| 供应链 | Supply Chain | 选品决策、备货策略、物流调度 | Multi-Echelon Inventory |
+| 供应链 | Supply Chain | 供应计划、备货策略、库存优化 | Promotion-Demand-Decomposition |
 | 推荐系统 | Recommendation | 复购推荐、搜索排序、首页推荐 | Matrix Factorization |
-| 增长模型 | Growth | 拉新、促活、留存、LTV 预测 | Churn Prediction |
+| 增长模型 | Growth | 拉新、促活、留存、LTV 预测、市场容量估算 | Churn Prediction / Market-Size-Estimation |
 | 知识图谱 | Knowledge Graph | 异构表示学习、层次嵌入、语义检索 | HGT / HGCN |
 | DataAgent-LLM | DataAgent | LLM 驱动的数据分析、根因分析 | SQL Agent / RCA |
 | 多智能体系统 | MAS | Agent 协作、任务规划、编排执行 | AutoGen / ReAct |
 | AI人文 | AI Humanities | AI 概念的人文类比、疗愈金句 | LoRA / Prompt Tuning |
-| ML基础 | ML Fundamentals | 特征工程、模型评估基础 | Feature Engineering |
-| 广告分析 | Advertising | 多触点归因、ROAS 优化、预算分配 | Shapley / Markov |
+| ML基础 | ML Fundamentals | 特征工程、模型评估、漂移检测、性能监控 | Data-Drift-Detection / Model-Performance-Monitor |
+| 广告分析 | Advertising | 多触点归因、ROAS 优化、Listing 质量 | Listing-Quality-Scoring / Ad-Attribution |
 | 用户分析 | User Analytics | 漏斗分析、留存分析、用户分群 | Cohort / Funnel / RFM |
 | 营销投放分析 | Marketing | MMM、促销效果评估、因果 ML | Meridian / DML |
+| 智能体工程 | Agent Engineering | Agent Skills、Context、MCP/A2A | Skill Registry |
+| 价格优化 | Pricing | 动态定价、竞品监测、清仓捆绑 | Dynamic Pricing |
+| 物流履约 | Logistics | 跨境路径、配送时效、退货 | Cross-Border Routing |
+| 风控反欺诈 | Risk & Fraud | 虚假评论、异常交易、刷量 | Review Fraud |
+| AI视频生成 | Visual Content | 虚拟主播、商品展示、品牌视频、UGC口播 | AnchorCrafter / Phantom |
+| **合规决策** | **Compliance** | **品类合规预筛、监管风险、合规护城河** | **Category-Compliance-Prescan** |
 
 ---
 
@@ -184,9 +226,26 @@ cd paper_to_skills
 
 ### 2. 安装依赖
 
+> **前置条件（macOS）：** `brew install libomp`（lightgbm/causalml 运行时需要）
+>
+> **Python 版本：** 3.14+（`cat .python-version` 查看锁定版本）
+
 ```bash
-cd paper2skills-code
-pip install -r requirements.txt
+# 建议使用 venv 隔离环境（PEP 668，系统 Python 禁止直接 pip install）
+python3 -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+
+# 安装精确锁定版本（推荐，可复现）
+pip install -r paper2skills-code/requirements-lock.txt
+
+# 或使用宽松版本约束
+pip install -r paper2skills-code/requirements.txt
+```
+
+**MAS 系统**（`mas/`）仅依赖 Python 标准库，无需安装上述包即可运行测试：
+
+```bash
+python3 -m pytest mas/tests/ -q
 ```
 
 ### 3. 使用 Claude Code 运行工作流

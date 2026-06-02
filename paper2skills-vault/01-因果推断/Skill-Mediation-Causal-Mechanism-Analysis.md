@@ -434,8 +434,8 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-Uplift-Modeling** — 理解因果效应估计的基本概念
-- **Skill-DiD-Difference-in-Differences** — 中介分析常与DiD结合使用（DiD估计总效应，中介分析分解机制）
+- [[Skill-Uplift-Modeling]] — 理解因果效应估计的基本概念
+- [[Skill-DiD-Difference-in-Differences]] — 中介分析常与DiD结合使用（DiD估计总效应，中介分析分解机制）
 
 ### 延伸技能
 - **Surrogate Index (Chetty & Imai, 2025)** — 用短期中介变量预测长期结果，解决LTV评估的滞后问题

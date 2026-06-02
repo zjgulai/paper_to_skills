@@ -112,3 +112,117 @@
 - 重点：漏斗转化、LTV、用户生命周期
 - 案例方向：拉新、促活、留存、变现
 - 质量要求：必须说明用户分群和触达策略
+
+### ML基础领域（Sprint 3 新增）
+- 重点：模型评估、特征工程、漂移检测、超参调优
+- 案例方向：模型上线监控、生产环境稳定性、数据质量治理
+- 质量要求：必须说明 Champion-Challenger 机制或 KS/PSI 阈值设置
+
+### 广告分析领域（Sprint 2-4 扩展）
+- 重点：多触点归因、ROAS 优化、Listing 质量评分
+- 案例方向：Amazon/TikTok Shop 广告投放优化、搜索词报告清洗
+- 质量要求：归因必须说明时间窗口和 Last-Click vs Data-Driven 对比
+
+### 用户分析领域（Sprint 3-4 扩展）
+- 重点：漏斗分析、流量溯源、会话意图、跨设备追踪
+- 案例方向：Sankey 图流量路径、Clickstream 嵌入、RFM 分群
+- 质量要求：必须说明用户识别方法（Cookie/Device Graph）及准确率
+
+### 营销投放分析领域
+- 重点：MMM 预算分配、渠道饱和曲线、Geo-Lift 实验
+- 案例方向：跨渠道预算分配、大促 ROI 评估
+- 质量要求：必须说明混淆因子处理（节假日/竞品促销）
+
+### 智能体工程领域（Sprint 3-4 扩展）
+- 重点：Agent Skills 设计、Context 压缩、MCP/A2A 协议、成本控制
+- 案例方向：多 Agent 协作系统、工具调用优化、成本感知调度
+- 质量要求：必须说明 Token 预算机制和失败恢复策略
+
+### 合规决策领域（Sprint 4 新建 — 2026-05-25）
+- 重点：品类合规预筛、多辖区召回数据库扫描、监管风险量化
+- 案例方向：新品类进入前合规门控、UV-C/婴儿食品/电动玩具认证路径
+- 质量要求：
+  - 必须覆盖美国（CPSC/FDA）和欧盟（RAPEX/EU GPSR）双轨
+  - 必须给出认证清单和成本区间估算（$X,XXX - $X,XXX / X-X 个月）
+  - 必须说明「合规护城河」逻辑：高门槛品类通过后竞争者更少
+  - 风险等级用 Class I/II/III（FDA）或 Risk Group 1/2/3（IEC 62471）量化
+  - 代码需包含 CPSC/RAPEX API 调用示例（或 mock 数据结构）
+
+### AI视频生成领域（Round 5 新建 — 2026-05-22）
+- 重点：虚拟主播生成（HOI 交互）、商品展示 I2V、品牌视频、UGC 口播
+- 案例方向：TikTok/Amazon 商品展示视频、虚拟主播带货、多语种 UGC
+- 质量要求：
+  - 必须说明输入要求：参考图分辨率、商品图背景要求、GPU 配置
+  - 必须说明局限性：手部动作复杂度上限、VRAM 需求、生成时长
+  - 代码模板使用 HuggingFace Diffusers 或官方推理 pipeline（非从零训练）
+  - 商业价值须量化：节省主播成本（USD/条）或制作周期压缩（天）
+
+### 供应链供应计划侧（Sprint 5 扩展 — 2026-05-25）
+- 重点：促销需求拆解、MOQ 批量决策、供应商产能约束、新品冷启动库存
+- 案例方向：618/双11 大促前备货、新品首批量决策、滚动排产计划
+- 质量要求：
+  - 必须区分 Base Demand 和 Promotional Lift（PPE 效应要单独建模）
+  - 必须说明 MOQ 阶梯定价约束的处理方法（Q-jump 或 MIQP）
+  - 新品冷启动须说明先验数据来源（相似品历史 / Bass 扩散参数）
+
+### MAS 供应链应用领域（Sprint 6 新增 — 2026-06-01）
+- 重点：多 Agent 分工协作的供应链自动化、LLM 记忆增强库存决策、Agent 间通信与协调
+- 案例方向：母婴跨境多 Agent 补货链路（预测→采购→供应商→仓储→预警）、LLM Agent 历史经验检索
+- 质量要求：
+  - 必须明确 Agent 分工（每个 Agent 的职责范围和输入/输出接口）
+  - 必须说明 HITL 触发条件（大额 PO / 异常阈值）和 MCP 接口设计
+  - 代码需实现多 Agent 协调类（Orchestrator + 各专业 Agent），含 mock LLM 调用
+  - 量化效果须引用论文数据（成本降低 % / 供需对齐改善 / 人工协调减少小时数）
+
+### 电商 Agent 应用领域（Sprint 6 新增 — 2026-06-01）
+- 重点：购物助手 Agent（长期偏好记忆）、多 Agent 搜索相关性优化、电商深度研究 Agent
+- 案例方向：母婴选品 Agent（跨会话记忆 + 偏好理解）、Listing 质量自动优化闭环
+- 质量要求：
+  - 购物助手类：必须说明偏好记忆的存储格式和检索机制（向量 vs 结构化）
+  - 多 Agent 闭环：必须说明 bad case 发现 → 修复 → 部署的完整闭环
+  - 量化效果必须有真实平台数据（GMV / 准确率 / 成本）
+
+### Agent 安全与红队（Sprint 6 新增 — 2026-06-01）
+- 重点：Prompt Injection 攻击与防御、支付 Agent 安全漏洞、Web Agent 红队框架
+- 案例方向：电商 AI 导购 Agent 安全审计、多语言安全对齐验证
+- 质量要求：
+  - 必须说明攻击向量类型（直接注入 / 间接注入 / 跨 Agent 传播）
+  - 必须提供防御建议和上线前安全 Checklist（不少于 5 项）
+  - 代码需实现攻击场景模拟 + 防御拦截器
+
+### Agent 推理与规划（Sprint 6 新增 — 2026-06-01）
+- 重点：DAG 任务分解（隔离错误传播）、工作流编译进 LLM 权重、自适应层级规划
+- 案例方向：母婴 MAS 的多步任务分解（预测→安全库存→补货→PO），工具调用决策优化
+- 质量要求：
+  - DAG 类：必须说明子任务依赖关系和错误隔离机制（scoped context）
+  - 工作流编译类：必须说明适用场景（固定 SOP vs 动态工作流）和成本对比
+  - 工具调用决策：必须量化无效调用减少比例，说明三维决策框架（必要性/效用/可负担性）
+
+### Agent 可观测性（Sprint 7 新增）
+- 重点：结构化日志框架（认知/操作/上下文三面）、因果图根因分析、OpenTelemetry 集成
+- 案例方向：母婴 MAS 订单链路故障定位、合规 Agent 决策审计追踪
+- 质量要求：
+  - 必须说明三面可观测性（认知面 = CoT/plan，操作面 = API 调用，上下文面 = 外部交互）
+  - 因果图类：必须说明从日志自动构建 DAG 的算法，给出根因定位时间（秒级）
+  - 代码需集成 OpenTelemetry 标准接口或等效 trace_id/span_id 机制
+
+---
+
+## 工程约束（2026-06-01 更新）
+
+### 技能关联链接格式
+- **统一使用 Obsidian wikilink**：`[[Skill-Name]]`
+- 禁止使用 `**Skill-Name**`（bold 格式）——已批量清理，不再引入
+- 纯文本提及（如"参考 Skill-Name 中的公式"）不需要转为链接
+
+### Python 环境
+- 项目锁定 Python 3.14（`.python-version`）
+- 代码模板须在 venv 中可运行：`python3 -m venv .venv && pip install -r requirements-lock.txt`
+- macOS 额外前置：`brew install libomp`（lightgbm/causalml 依赖）
+- 禁止使用 tensorflow（无 Python 3.14 官方 wheel）
+
+### 代码质量门控
+- 通过标准：总分 ≥ 7/10，代码维度 ≥ 7/10
+- 代码模板放在 `paper2skills-code/<domain>/<skill_snake_case>/model.py`
+- 已落地 code 模块：causal_inference / ab_testing / time_series / supply_chain / recommendation / growth_model / knowledge_graph / data_agent_llm / mas / llm_agent_engineering / ml_fundamentals / advertising / compliance
+- 仅 vault Skill（按需建 code）：ai_humanities / user_analytics / marketing / pricing / logistics / risk_fraud / visual_content

@@ -126,6 +126,31 @@ def test_wfb_rejection_path():
     assert result["final_output"]["reason"] == "rejected_by_human"
 
 
+def test_wfb_skill_chain_complete():
+    from mas.skills.registry import SkillRegistry
+    payload = {
+        "search_term_rows": _mock_search_terms(),
+        "channel_history": _mock_channel_history(),
+        "total_budget": 10_000,
+        "target_tacos": 0.15,
+    }
+    graph = build_ad_campaign_graph(interrupt_fn=lambda r: {"action": "approve", "note": ""})
+    state = init_state("wf-b-chain", "ad_campaign", "ops-li", payload, token_budget=20_000)
+    result = graph.invoke(state)
+
+    chain = result["skill_outputs"][-1]["output"]["skill_chain"]
+    assert "ad_search_term_parse" in chain
+    assert "ad_negative_keywords" in chain
+    assert "causal_uplift_modeling_ad" in chain
+    assert "marketing_mmm" in chain
+    assert "marketing_dara_optimizer" in chain
+
+    reg = SkillRegistry()
+    ad_tools = {t.name for t in reg.get_tools_for_domains(["advertising", "marketing"])}
+    assert "ad_roas_budget_optimization" in ad_tools
+    assert "marketing_mmm" in ad_tools
+
+
 def run_all():
     tests = [
         test_wfb_healthy_tacos_auto_approved,
@@ -133,6 +158,7 @@ def run_all():
         test_wfb_uplift_promotion_high_roas_terms,
         test_wfb_dara_cross_channel_allocation_sums_to_budget,
         test_wfb_rejection_path,
+        test_wfb_skill_chain_complete,
     ]
     failures = []
     for t in tests:

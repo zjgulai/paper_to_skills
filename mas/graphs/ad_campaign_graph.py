@@ -1,4 +1,14 @@
-"""WF-B 广告关键词优化工作流."""
+"""WF-B 广告关键词优化工作流.
+
+工作流图:
+  START -> orchestrator -> marketing_agent -> human_approval
+    -> [approved] execute_action -> END
+    -> [rejected] handle_rejection -> END
+
+MarketingAgent 工具链:
+  ad_search_term_parse -> ad_negative_keywords -> causal_uplift_modeling_ad
+  -> marketing_mmm -> marketing_dara_optimizer
+"""
 
 from __future__ import annotations
 

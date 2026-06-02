@@ -56,13 +56,13 @@ def init_state(
     payload: dict[str, Any],
     token_budget: int = 50_000,
 ) -> WorkflowContext:
-    from datetime import datetime
+    from datetime import datetime, timezone
 
     return WorkflowContext(
         workflow_id=workflow_id,
         workflow_type=workflow_type,
         operator_id=operator_id,
-        initiated_at=datetime.utcnow().isoformat() + "Z",
+        initiated_at=datetime.now(timezone.utc).isoformat(),
         payload=payload,
         messages=[{"role": "user", "content": str(payload)}],
         skill_outputs=[],

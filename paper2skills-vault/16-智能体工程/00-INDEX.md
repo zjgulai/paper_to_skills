@@ -74,9 +74,9 @@ source: human+ai
 
 ## P0 优先执行顺序(用户已确认"顺序做")
 
-1. **Skill-Auto-Skill-Synthesis** (SkillForge) — 客服记录自动萃取 Skill
-2. **Skill-Long-Term-Preference-Memory** (Shopping Companion) — 母婴用户长周期偏好
-3. **Skill-Agent-Stage-Evaluation** (EComStage) — Agent 三阶段评估
+1. [[Skill-Auto-Skill-Synthesis]] (SkillForge) — 客服记录自动萃取 Skill
+2. [[Skill-Long-Term-Preference-Memory]] (Shopping Companion) — 母婴用户长周期偏好
+3. [[Skill-Agent-Stage-Evaluation]] (EComStage) — Agent 三阶段评估
 
 完成 P0 三篇后进入 P1:Skill-Skill-Lifecycle-Design (SoK Agentic Skills) 作为方法论底座。
 

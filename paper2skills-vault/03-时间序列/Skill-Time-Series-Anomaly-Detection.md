@@ -425,7 +425,7 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-Time-Series-Forecasting** — 理解时序分解、趋势、季节性
+- [[Skill-Time-Series-Forecasting]] — 理解时序分解、趋势、季节性
 - **基础统计推断** — 理解正态分布、标准差、置信区间
 
 ### 延伸技能

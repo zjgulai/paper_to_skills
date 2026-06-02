@@ -41,6 +41,11 @@ DOMAINS = {
     "user_analytics": "14-用户分析",
     "marketing": "15-营销投放分析",
     "llm_agent_engineering": "16-智能体工程",
+    "pricing": "17-价格优化",
+    "logistics": "18-物流履约",
+    "risk_fraud": "19-风控反欺诈",
+    "visual_content": "20-AI视频生成",
+    "compliance": "21-合规决策",
 }
 
 

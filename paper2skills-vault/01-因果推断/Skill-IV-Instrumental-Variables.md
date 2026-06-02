@@ -419,8 +419,8 @@ if __name__ == '__main__':
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-Uplift-Modeling** — 理解因果推断的潜在结果框架
-- **Skill-DiD-Difference-in-Differences** — DiD处理自然实验中的时间维度，IV处理截面维度的内生性
+- [[Skill-Uplift-Modeling]] — 理解因果推断的潜在结果框架
+- [[Skill-DiD-Difference-in-Differences]] — DiD处理自然实验中的时间维度，IV处理截面维度的内生性
 
 ### 延伸技能
 - **IV-DML (Scheidegger et al., 2025)** — 用ML估计异质性处理效应，适合电商中不同用户群体的差异化价格弹性

@@ -37,7 +37,7 @@ def test_skill_registry_bootstrap():
 def test_registry_domain_filter():
     reg = SkillRegistry()
     sc_tools = reg.get_tools_for_domains(["supply_chain"])
-    assert len(sc_tools) == 5
+    assert len(sc_tools) >= 5  # 工具数随 Sprint 迭代增长，只保证最低数量
     assert all(t.domain == "supply_chain" for t in sc_tools)
 
 

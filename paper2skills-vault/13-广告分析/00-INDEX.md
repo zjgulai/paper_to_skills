@@ -4,7 +4,7 @@ doc_type: index
 module: 13-广告分析
 status: stable
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-20
 owner: self
 source: human+ai
 ---
@@ -20,7 +20,7 @@ source: human+ai
 
 > **2026-05-17 重大扩展**:WF-B 广告优化工作流 P0 阻塞缺口全覆盖,新增意图分类 + 跨平台归因统一两大核心能力.
 
-## 已落地 Skill(4 个)
+## 已落地 Skill(9 个)
 
 ### 基础归因与预算(2)
 
@@ -33,16 +33,35 @@ source: human+ai
 
 | 技能 | 状态 | 论文 | 业务场景 |
 |------|------|------|---------|
-| [Skill-Hierarchical-Search-Intent-Classification](./Skill-Hierarchical-Search-Intent-Classification.md) | 已萃取 P0 | arXiv:2403.06021 (Amazon WWW 2024) | 月龄敏感词分类 + 信息vs购买意图(Amazon ESCI) |
-| [Skill-PVM-Attribution-Window-Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md) | 已萃取 P0 | arXiv:2511.22918 (NeurIPS 2025) | Amazon/Meta/TikTok 归因窗口对齐 + 跨渠道 ROAS 矫正 |
+| [Skill-Hierarchical-Search-Intent-Classification](./Skill-Hierarchical-Search-Intent-Classification.md) | 已萃取 P0 | arXiv:2403.06021 (Amazon WWW 2024) | 月龄敏感词分类 + 信息vs购买意图 |
+| [Skill-PVM-Attribution-Window-Harmonization](./Skill-PVM-Attribution-Window-Harmonization.md) | 已萃取 P0 | arXiv:2511.22918 (NeurIPS 2025) | 跨平台归因窗口对齐 + 跨渠道 ROAS 矫正 |
 
-## 闭环组合(2026-05-17 形成)
+### 跨设备用户匹配(Sprint 3, 2026-05-20)
+
+| 技能 | 状态 | 论文 | 业务场景 |
+|------|------|------|---------|
+| [Skill-HGNN-Cross-Device-Matching](./Skill-HGNN-Cross-Device-Matching.md) | 已萃取 P1 | arXiv:2304.03215 (NVIDIA 2023) | 层次GNN跨设备用户匹配 |
+| [Skill-GraphTrack-Cross-Device-Tracking](./Skill-GraphTrack-Cross-Device-Tracking.md) | 已萃取 P1 | arXiv:2203.06833 | 无监督图基跨设备追踪 |
+
+### 归因去偏与延迟转化(Round 4, 2026-05-20)
+
+| 技能 | 状态 | 论文 | 业务场景 |
+|------|------|------|---------|
+| [Skill-CABB-Cross-Category-Attribution](./Skill-CABB-Cross-Category-Attribution.md) | 已萃取 P1 | arXiv:2507.15113 (2025) | Click A Buy B 跨品类归因去偏 |
+| [Skill-TRACE-Delayed-CVR](./Skill-TRACE-Delayed-CVR.md) | 已萃取 P1 | arXiv:2604.23197 (2025) | 不等14天窗口实时更新CVR |
+| [Skill-TESLA-NetCVR-Cascade](./Skill-TESLA-NetCVR-Cascade.md) | 已萃取 P2 | arXiv:2601.19965 (Taobao 2025) | 扣除退款的净转化级联建模 |
+
+## 闭环组合(2026-05-20 更新)
 
 ```
 Hierarchical-Search-Intent (自动词意图分类)
   → 高 ROI 词识别(月龄/购买意图)
   → Ad-Attribution-Modeling (Shapley/Markov)
   → PVM (跨平台归因窗口统一)
+  → HGNN + GraphTrack (跨设备用户匹配)
+  → CABB (跨品类归因去偏)
+  → TRACE Delayed CVR (不等窗口实时更新)
+  → TESLA NetCVR (扣除退款的净转化)
   → ROAS-Budget-Optimization (跨渠道预算重分配)
 ```
 
@@ -68,6 +87,6 @@ Hierarchical-Search-Intent (自动词意图分类)
 
 ## 统计数据
 
-- 已萃取:**4**(2 基础 + 2 P0 缺口)
+- 已萃取:**9**(2 基础 + 2 P0 缺口 + 5 桑基图流量转化)
 - 规划待萃取:6
 - 服务工作流:**WF-B 广告优化**

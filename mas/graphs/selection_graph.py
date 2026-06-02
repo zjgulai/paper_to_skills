@@ -1,4 +1,14 @@
-"""WF-D 选品扫描工作流."""
+"""WF-D 选品扫描工作流.
+
+工作流图:
+  START -> orchestrator -> selection_agent -> human_approval
+    -> [approved] execute_action -> END
+    -> [rejected] handle_rejection -> END
+
+SelectionAgent 工具链 (estimated_cost=0, 无 HITL 强制触发):
+  selection_market_space -> selection_gross_margin -> selection_compliance_risk
+  -> selection_kgqa_attributes -> selection_causal_lift -> selection_composite_score
+"""
 
 from __future__ import annotations
 

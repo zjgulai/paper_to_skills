@@ -120,16 +120,16 @@ source: human+ai
 ### Sprint 1（本周）— 补齐图谱基础前置
 
 1. 在已有 Skill 上补充别名（建立 `Skill-A-B-Test-Design`、`Skill-Doubly-Robust-Estimation` 等的引用映射），消除多个"伪缺口"
-2. 萃取 **Skill-Recommendation-System**（综述向，3 篇 review 综合）作为基础前置
+2. 萃取 [[Skill-Recommendation-System]]（综述向，3 篇 review 综合）作为基础前置
 
 ### Sprint 2（下周）— 启动语义蓝图方向 1
 
-3. 萃取 **Skill-Hierarchical-Product-KG-Construction**（arXiv:2410.21237），归入 08-知识图谱
+3. 萃取 [[Skill-Hierarchical-Product-KG-Construction]]（arXiv:2410.21237），归入 08-知识图谱
 4. 同步更新 skills_graph_report.md 验证缺口减少
 
 ### Sprint 3（本月内）— 跨领域桥梁
 
-5. 萃取 **Skill-Causal-Recommendation**（01 + 05 桥梁），可基于 Causal Forest + Uplift 现有 Skill 综合
+5. 萃取 [[Skill-Causal-Recommendation]]（01 + 05 桥梁），可基于 Causal Forest + Uplift 现有 Skill 综合
 6. 萃取 **方向 5 客服对话决策树** 进入 09-DataAgent-LLM
 
 ---
