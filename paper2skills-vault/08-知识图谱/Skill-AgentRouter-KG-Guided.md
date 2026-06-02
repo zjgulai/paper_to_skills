@@ -179,6 +179,7 @@ for agent_name, weight in result.top_k_agents:
 - `AgentRouter` + [[Skill-KG-Augmented-Recommendation-CoLaKG]] → 兼顾导购推荐意图的精准 Agent 分发
 
 ---
+- **相关技能**：[[Skill-Agentic-SCKG-Risk]]
 
 ## ⑤ 商业价值评估
 

@@ -53,6 +53,7 @@ print("[✓] Supplier Evaluation 测试通过")
 - **组合**：[[Skill-Cross-Border-Price-Harmonization]] | [[Skill-Amazon-ToS-Compliance-Guardrail]]
 
 ---
+- **相关技能**：[[Skill-Competitor-Product-Intelligence]]
 
 ## ⑤ 商业价值
 

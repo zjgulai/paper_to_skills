@@ -51,5 +51,6 @@ print("[✓] CUPED 测试通过")
 ---
 
 - **可组合**：[[Skill-Uplift-Modeling]] / [[Skill-Multi-Armed-Bandit]]
+- **相关技能**：[[Skill-Network-Effect-Experiments]]
 
 ## ⑤ 商业价值：20-40 万元 | **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐⭐☆

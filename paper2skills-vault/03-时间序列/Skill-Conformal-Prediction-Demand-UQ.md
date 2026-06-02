@@ -162,6 +162,9 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Demand-Forecasting-Supply-Chain]] | [[Skill-SSBC-Small-Sample-Conformal]]
 
 ---
+- **相关技能**：[[Skill-Multivariate-Cointegration]]
+- **相关技能**：[[Skill-Forecast-Driven-Inventory]]
+- **相关技能**：[[Skill-Conformal-TS-Intervals]]
 
 ## ⑤ 商业价值评估
 

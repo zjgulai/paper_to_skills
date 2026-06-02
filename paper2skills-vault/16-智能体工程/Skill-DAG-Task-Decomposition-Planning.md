@@ -475,6 +475,8 @@ if __name__ == "__main__":
 - [[Skill-Context-Compression]] — context 压缩技术，在 scoped context 基础上二次优化
 
 ---
+- **相关技能**：[[Skill-Atomix-Transactional-Tool-Calls]]
+- **相关技能**：[[Skill-CausalFlow-Agent-Failure-Repair]]
 
 ## ⑤ 商业价值
 

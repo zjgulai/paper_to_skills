@@ -303,6 +303,7 @@ if __name__ == "__main__":
   - [[Skill-ROAS-Budget-Optimization]] — 采购预算分配与广告预算分配逻辑同构，可联合做资金总池规划
 
 ---
+- **相关技能**：[[Skill-New-Product-Inventory-Coldstart]]
 
 ## ⑤ 商业价值评估
 

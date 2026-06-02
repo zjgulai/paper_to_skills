@@ -368,6 +368,8 @@ if __name__ == "__main__":
   - [[Skill-Lead-Time-Distribution-Risk-GenQOT]] — 大促前 lead time 压缩风险与备货量联合决策
 
 ---
+- **相关技能**：[[Skill-Supplier-Capacity-Planning]]
+- **相关技能**：[[Skill-Inventory-Health-Aging-Attribution]]
 
 ## ⑤ 商业价值评估
 

@@ -969,6 +969,8 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-TRACE-Clickstream-Embedding]] | [[Skill-User-Funnel-Analysis]]
 - **延伸技能**：[[Skill-Customer-Journey-Prototype]]
 - **可组合技能**：[[Skill-Cohort-Retention-Analysis]] | [[Skill-Session-Intent-Shift]]
+- **相关技能**：[[Skill-Traffic-Source-Analysis]]
+- **相关技能**：[[Skill-Utimac-Uncertainty-Completion]]
 
 ## ⑤ 商业价值评估
 

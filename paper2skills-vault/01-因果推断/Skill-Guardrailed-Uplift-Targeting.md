@@ -436,6 +436,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-AB-Experimental-Design]] / [[Skill-ReliabilityBench-Agent-Reliability]] / [[Skill-ROAS-Budget-Optimization]]
 
 ---
+- **跨域关联**：[[Skill-Review-Fraud-Detection]]
 
 ## ⑤ 商业价值
 

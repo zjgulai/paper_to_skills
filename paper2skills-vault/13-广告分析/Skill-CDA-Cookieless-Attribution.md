@@ -149,6 +149,10 @@ print(rec)
 - **CDA + DARA Agentic MMM**：`15-营销投放分析/Skill-DARA-Agentic-MMM` → Agent 自动轮询 CDA 结果，触发预算调整动作
 
 ---
+- **相关技能**：[[Skill-HGNN-Cross-Device-Matching]]
+- **相关技能**：[[Skill-PIE-Experimental-MTA]]
+- **相关技能**：[[Skill-Identity-Fragmentation-Debiasing]]
+- **相关技能**：[[Skill-TESLA-NetCVR-Cascade]]
 
 ## ⑤ 商业价值评估
 

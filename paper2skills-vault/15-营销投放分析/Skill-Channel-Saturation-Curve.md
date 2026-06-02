@@ -98,6 +98,7 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Multi-Objective-Budget-Allocation]] | [[Skill-Geo-Level-Marketing-Effectiveness]]
 
 ---
+- **相关技能**：[[Skill-Competitive-Response-Modeling]]
 
 ## ⑤ 商业价值评估
 

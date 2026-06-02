@@ -64,6 +64,8 @@ print("[✓] Agent Fault Tolerance 测试通过")
 - **组合**：[[Skill-Cost-Aware-Agent-Scheduling]] | [[Skill-Orchestration-Trace-RL]]
 
 ---
+- **相关技能**：[[Skill-AgentTrace-Causal-RCA]]
+- **相关技能**：[[Skill-MUZZLE-Web-Agent-Red-Teaming]]
 
 ## ⑤ 商业价值
 

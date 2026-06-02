@@ -701,6 +701,8 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-User-Funnel-Analysis]]
 - **延伸技能**：[[Skill-ROAS-Budget-Optimization]] | [[Skill-NonItem-Page-Path-Modeling]]
 - **可组合技能**：[[Skill-Ad-Attribution-Modeling]]
+- **相关技能**：[[Skill-Sparse-Matrix-Completion]]
+- **相关技能**：[[Skill-STAMImputer-SpatioTemporal]]
 
 ## ⑤ 商业价值评估
 

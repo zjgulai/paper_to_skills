@@ -824,6 +824,7 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-Multi-Armed-Bandit]] | [[Skill-Thompson-Sampling-MAB]]
 - **延伸技能**：[[Skill-SSBC-Small-Sample-Conformal]]
 - **可组合技能**：[[Skill-Uplift-Modeling]] | [[Skill-Conformal-ROI-Prediction]]
+- **相关技能**：[[Skill-STATE-Robust-Variance-Reduction]]
 
 ## ⑤ 商业价值评估
 

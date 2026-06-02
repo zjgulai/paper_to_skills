@@ -61,6 +61,7 @@ print("[✓] Click Fraud Detection 测试通过")
 - **组合**：[[Skill-Transaction-Anomaly-Detection]]（统一风控管道）
 
 ---
+- **相关技能**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
 
 ## ⑤ 商业价值
 

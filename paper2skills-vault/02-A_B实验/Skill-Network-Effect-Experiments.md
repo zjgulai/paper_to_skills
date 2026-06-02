@@ -44,5 +44,6 @@ print("[✓] Network Effect 测试通过")
 ---
 
 - **可组合**：[[Skill-Uplift-Modeling]] / [[Skill-Multi-Armed-Bandit]]
+- **相关技能**：[[Skill-Sequential-AB-Testing]]
 
 ## ⑤ 商业价值：10-20 万元 | **难度**：⭐⭐⭐☆☆ | **优先级**：⭐⭐⭐☆☆

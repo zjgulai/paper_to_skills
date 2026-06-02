@@ -53,6 +53,7 @@ print("[✓] Geo-Level 测试通过")
 - **组合**：[[Skill-Multi-Objective-Budget-Allocation]]
 
 ---
+- **相关技能**：[[Skill-Channel-Saturation-Curve]]
 
 ## ⑤ 商业价值评估
 

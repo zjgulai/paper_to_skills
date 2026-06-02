@@ -390,6 +390,8 @@ if __name__ == '__main__':
   - **[[Skill-Ensemble-Methods]]** — 评估体系驱动集成策略选择
 
 ---
+- **相关技能**：[[Skill-Feature-Selection]]
+- **相关技能**：[[Skill-Data-Drift-Detection]]
 
 ## ⑤ 商业价值评估
 

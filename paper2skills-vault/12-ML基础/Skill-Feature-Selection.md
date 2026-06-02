@@ -215,6 +215,7 @@ if __name__ == '__main__':
   - **[[Skill-Imbalanced-Data-Handling]]** — 不平衡场景下特征选择需特别小心
 
 ---
+- **相关技能**：[[Skill-Hyperparameter-Optimization]]
 
 ## ⑤ 商业价值评估
 

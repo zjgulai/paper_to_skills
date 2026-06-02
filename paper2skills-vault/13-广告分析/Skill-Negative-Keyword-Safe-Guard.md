@@ -251,6 +251,7 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-TikTok-Shop-Content-Attribution]]
 
 ---
+- **相关技能**：[[Skill-Amazon-ToS-Compliance-Guardrail]]
 
 ## ⑤ 商业价值评估
 

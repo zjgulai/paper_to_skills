@@ -59,6 +59,7 @@ print("[✓] Audience KG 测试通过")
 - **组合**：[[Skill-CoLaKG-KG-Augmented-Recommendation]] (08) | [[Skill-CABB-Cross-Category-Attribution]] (13)
 
 ---
+- **相关技能**：[[Skill-GNN-Foundations]]
 
 ## ⑤ 商业价值
 

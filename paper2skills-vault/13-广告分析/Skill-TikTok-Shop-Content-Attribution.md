@@ -198,6 +198,9 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Negative-Keyword-Safe-Guard]] | [[Skill-Creative-Fatigue-Detection]]
 
 ---
+- **相关技能**：[[Skill-FrontDoor-Causal-MTA]]
+- **相关技能**：[[Skill-HMMCB-Cross-Channel-Bidding]]
+- **相关技能**：[[Skill-Ad-to-Behavior-Funnel]]
 
 ## ⑤ 商业价值评估
 

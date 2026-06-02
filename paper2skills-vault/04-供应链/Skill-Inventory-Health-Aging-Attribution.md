@@ -416,6 +416,7 @@ if __name__ == "__main__":
   - [[Skill-Lead-Time-Distribution-Risk-GenQOT]] — 交货延误根因的定量分析，需要交货期分布模型
 
 ---
+- **相关技能**：[[Skill-Supply-Chain-Causal-SCM-Attribution]]
 
 ## ⑤ 商业价值评估
 

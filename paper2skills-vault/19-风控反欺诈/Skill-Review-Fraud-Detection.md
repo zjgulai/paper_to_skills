@@ -53,6 +53,9 @@ print("[✓] Review Fraud Detection 测试通过")
 - **组合**：[[Skill-AGRS-Aspect-Guided-Review-Summarization]]（过滤虚假后做真实摘要）
 
 ---
+- **相关技能**：[[Skill-FraudSquad-LLM-Review-Detection]]
+- **相关技能**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **相关技能**：[[Skill-Transaction-Anomaly-Detection]]
 
 ## ⑤ 商业价值
 

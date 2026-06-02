@@ -455,6 +455,8 @@ if __name__ == "__main__":
 - [[Skill-Hierarchical-Product-KG-Construction]] — 层次化产品 KG 构建，为 SKUGraph 提供数据
 
 ---
+- **相关技能**：[[Skill-Agent-QMix-Topology-Learning]]
+- **相关技能**：[[Skill-Helicase-Supply-Chain-KG-MAS]]
 
 ## ⑤ 商业价值
 

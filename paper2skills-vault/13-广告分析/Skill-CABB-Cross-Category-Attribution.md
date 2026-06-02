@@ -779,6 +779,7 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-Ad-Attribution-Modeling]] | [[Skill-ROAS-Budget-Optimization]]
 - **延伸技能**：[[Skill-TESLA-NetCVR-Cascade]]
 - **可组合技能**：[[Skill-Hierarchical-Search-Intent-Classification]]
+- **相关技能**：[[Skill-TikTok-Shop-Content-Attribution]]
 
 ## ⑤ 商业价值评估
 

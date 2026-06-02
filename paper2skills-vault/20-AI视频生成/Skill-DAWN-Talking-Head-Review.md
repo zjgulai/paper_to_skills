@@ -105,5 +105,7 @@ if __name__ == '__main__':
 ---
 
 - **可组合**：[[Skill-Phantom-Product-Showcase-I2V]]
+- **相关技能**：[[Skill-Virbo-Multilingual-Avatar-UGC]]
+- **相关技能**：[[Skill-Text-to-Edit-Video-Ad]]
 
 ## ⑤ 商业价值：30-60 万元/年 | **难度**：⭐⭐⭐☆☆ | **优先级**：⭐⭐⭐⭐☆

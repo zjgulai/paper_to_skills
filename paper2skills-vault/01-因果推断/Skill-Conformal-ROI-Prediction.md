@@ -849,6 +849,7 @@ if __name__ == '__main__':
 - **前置技能**：[[Skill-Uplift-Modeling]] | [[Skill-Intelligent-Attribution-Causal-Forest]]
 - **延伸技能**：[[Skill-EPICSCORE-Uncertainty]]
 - **可组合技能**：[[Skill-DML-Cohort-Causal-Effect]]
+- **相关技能**：[[Skill-SSBC-Small-Sample-Conformal]]
 
 ## ⑤ 商业价值评估
 

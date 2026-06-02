@@ -142,6 +142,8 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-CABB-Cross-Category-Attribution]]（跨品类的交叉弹性估计）
 
 ---
+- **相关技能**：[[Skill-Contextual-Dynamic-Pricing-Optimal]]
+- **相关技能**：[[Skill-AIGP-LLM-Dynamic-Pricing]]
 
 ## ⑤ 商业价值评估
 

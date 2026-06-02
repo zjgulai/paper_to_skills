@@ -50,6 +50,9 @@ print("[✓] Competitor Intelligence 测试通过")
 - **组合**：[[Skill-Product-Opportunity-Scoring]] | [[Skill-Supplier-Evaluation-Model]]
 
 ---
+- **相关技能**：[[Skill-Product-Lifecycle-Stage]]
+- **相关技能**：[[Skill-Cross-Market-Product-Transfer]]
+- **相关技能**：[[Skill-Market-Size-Estimation]]
 
 ## ⑤ 商业价值
 

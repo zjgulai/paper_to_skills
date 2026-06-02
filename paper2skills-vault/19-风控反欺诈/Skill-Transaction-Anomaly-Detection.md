@@ -50,6 +50,9 @@ print("[✓] Transaction Anomaly 测试通过")
 - **组合**：[[Skill-Review-Fraud-Detection]]（统一风控体系）
 
 ---
+- **相关技能**：[[Skill-Click-Fraud-Detection]]
+- **相关技能**：[[Skill-FraudSquad-LLM-Review-Detection]]
+- **相关技能**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
 
 ## ⑤ 商业价值
 

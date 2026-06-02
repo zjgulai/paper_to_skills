@@ -196,6 +196,10 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Uplift-Modeling]]（因果弹性 vs 相关性弹性）| [[Skill-Multi-Channel-Inventory-Pooling]]
 
 ---
+- **相关技能**：[[Skill-Contextual-Dynamic-Pricing-Optimal]]
+- **相关技能**：[[Skill-AIGP-LLM-Dynamic-Pricing]]
+- **相关技能**：[[Skill-Bundle-Pricing-Strategy]]
+- **相关技能**：[[Skill-Markdown-Optimization]]
 
 ## ⑤ 商业价值评估
 

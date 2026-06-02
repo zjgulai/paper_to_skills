@@ -47,6 +47,7 @@ print("[✓] Returns Logistics 测试通过")
 - **组合**：[[Skill-Amazon-ToS-Compliance-Guardrail]]
 
 ---
+- **相关技能**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值
 

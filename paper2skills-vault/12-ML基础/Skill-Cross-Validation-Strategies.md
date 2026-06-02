@@ -247,6 +247,8 @@ if __name__ == '__main__':
   - **[[Skill-Customer-Churn-Prediction]]** — 流失预测的评估必须用 StratifiedCV + 时序 CV 双重验证
 
 ---
+- **相关技能**：[[Skill-Ensemble-Methods]]
+- **相关技能**：[[Skill-Model-Performance-Monitor]]
 
 ## ⑤ 商业价值评估
 

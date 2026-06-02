@@ -447,6 +447,9 @@ if __name__ == "__main__":
 - [[Skill-MCP-A2A-Protocol-Stack]] — 编译后的 workflow 仍需通过 MCP/A2A 协议与外部工具（数据库/API）交互
 
 ---
+- **相关技能**：[[Skill-DAG-Task-Decomposition-Planning]]
+- **相关技能**：[[Skill-LDP-Identity-Aware-Protocol]]
+- **相关技能**：[[Skill-Tool-Call-Decision-Framework]]
 
 ## ⑤ 商业价值评估
 

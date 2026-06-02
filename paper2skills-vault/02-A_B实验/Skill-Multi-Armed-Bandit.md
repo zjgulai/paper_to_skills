@@ -388,6 +388,9 @@ if __name__ == '__main__':
 - [[Skill-AB-Experimental-Design]] — 从固定流量测试升级到自适应分配
 
 - **可组合**：[[Skill-AB-Experimental-Design]] / [[Skill-Power-Analysis-Sample-Size]]
+- **跨域关联**：[[Skill-Cold-Start-Meta-Learning-PAM]]
+- **相关技能**：[[Skill-Network-Effect-Experiments]]
+- **相关技能**：[[Skill-CUPED-Variance-Reduction]]
 
 ## ⑤ 商业价值评估
 

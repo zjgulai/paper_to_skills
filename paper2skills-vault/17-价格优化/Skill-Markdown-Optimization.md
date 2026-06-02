@@ -126,6 +126,7 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Multi-Channel-Inventory-Pooling]]
 
 ---
+- **相关技能**：[[Skill-Competitive-Price-Monitoring]]
 
 ## ⑤ 商业价值评估
 

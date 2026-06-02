@@ -220,6 +220,7 @@ if __name__ == '__main__':
   - **[[Skill-Feature-Engineering]]** — 好的特征比任何重采样方法都重要
 
 ---
+- **相关技能**：[[Skill-Feature-Selection]]
 
 ## ⑤ 商业价值评估
 

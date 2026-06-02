@@ -268,6 +268,11 @@ if __name__ == '__main__':
   - **[[Skill-Amazon-ToS-Compliance-Guardrail]]** — 虚拟主播内容合规审查
 
 ---
+- **跨域关联**：[[Skill-Creative-Fatigue-Detection]]
+- **相关技能**：[[Skill-Virbo-Multilingual-Avatar-UGC]]
+- **相关技能**：[[Skill-Aquarius-Brand-Video-Generation]]
+- **相关技能**：[[Skill-BrandFusion-Multi-Agent]]
+- **相关技能**：[[Skill-E-Commerce-Video-Benchmark]]
 
 ## ⑤ 商业价值评估
 

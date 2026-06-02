@@ -122,5 +122,6 @@ if __name__ == '__main__':
 - **组合**：[[Skill-Geo-Level-Marketing-Effectiveness]] | [[Skill-TikTok-Shop-Content-Attribution]]
 
 ---
+- **相关技能**：[[Skill-Text-to-Edit-Video-Ad]]
 
 ## ⑤ 商业价值：80-150 万元/年 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐⭐⭐☆

@@ -821,6 +821,7 @@ if __name__ == "__main__":
 - **前置技能**：[[Skill-Sparse-Matrix-Completion]] | [[Skill-STAMImputer-SpatioTemporal]]
 - **延伸技能**：[[Skill-Conformal-ROI-Prediction]]
 - **可组合技能**：[[Skill-EPICSCORE-Uncertainty]]
+- **相关技能**：[[Skill-BlockEcho-Missing-Data]]
 
 ## ⑤ 商业价值评估
 

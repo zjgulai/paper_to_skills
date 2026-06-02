@@ -290,6 +290,10 @@ if __name__ == '__main__':
   - **[[Skill-Category-Trend-Forecasting]]** — 趋势品类优先覆盖视频化
 
 ---
+- **跨域关联**：[[Skill-Listing-Quality-Scoring]]
+- **相关技能**：[[Skill-Aquarius-Brand-Video-Generation]]
+- **相关技能**：[[Skill-Text-to-Edit-Video-Ad]]
+- **相关技能**：[[Skill-DAWN-Talking-Head-Review]]
 
 ## ⑤ 商业价值评估
 

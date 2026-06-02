@@ -367,6 +367,10 @@ if __name__ == '__main__':
 
 
 - **可组合（延伸）**：[[Skill-Negative-Keyword-Safe-Guard]] / [[Skill-Creative-Fatigue-Detection]] / [[Skill-DQN-Purchase-Prediction]] / [[Skill-UCB-LDP-Dynamic-Pricing]]
+- **被以下 Skill 使用**：[[Skill-Guardrailed-Uplift-Targeting]] / [[Skill-User-Funnel-Analysis]] / [[Skill-Last-Mile-Delivery-Prediction]] / [[Skill-Feature-Engineering]] / [[Skill-Customer-Journey-Prototype]]
+- **跨域关联**：[[Skill-Counterfactual-Recommendation-DCE]]
+- **相关技能**：[[Skill-Generative-Agent-Simulation]]
+- **相关技能**：[[Skill-User-Lifecycle-STAN]]
 
 ## ⑤ 商业价值评估
 

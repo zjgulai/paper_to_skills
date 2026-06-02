@@ -48,6 +48,7 @@ print("[✓] Agent Production Engineering 测试通过")
 - **组合**：[[Skill-Context-Compression]] (16) | [[Skill-Agentic-Memory-Management]] (16)
 
 ---
+- **相关技能**：[[Skill-MASEval-System-Evaluation]]
 
 ## ⑤ 商业价值
 

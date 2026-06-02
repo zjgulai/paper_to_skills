@@ -350,6 +350,8 @@ if __name__ == "__main__":
 - [[Skill-Flowr-Supply-Chain-MAS]] — 在供应链 MAS 中集成根因分析
 
 ---
+- **跨域关联**：[[Skill-Causal-Discovery-PC-Algorithm]]
+- **相关技能**：[[Skill-ReliabilityBench-Agent-Reliability]]
 
 ## ⑤ 商业价值评估
 

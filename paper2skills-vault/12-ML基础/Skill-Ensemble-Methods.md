@@ -260,6 +260,7 @@ if __name__ == '__main__':
   - **[[Skill-ROAS-Budget-Optimization]]** — 广告预测模型几乎必用 XGBoost/LightGBM
 
 ---
+- **相关技能**：[[Skill-Feature-Selection]]
 
 ## ⑤ 商业价值评估
 

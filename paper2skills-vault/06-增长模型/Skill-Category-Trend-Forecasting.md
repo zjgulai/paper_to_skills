@@ -54,6 +54,7 @@ print("[✓] Category Trend 测试通过")
 - **组合**：[[Skill-Product-Opportunity-Scoring]] | [[Skill-Competitor-Product-Intelligence]]
 
 ---
+- **相关技能**：[[Skill-Cross-Market-Product-Transfer]]
 
 ## ⑤ 商业价值
 

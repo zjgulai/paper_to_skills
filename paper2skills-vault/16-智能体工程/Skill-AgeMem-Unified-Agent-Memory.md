@@ -361,6 +361,7 @@ if __name__ == "__main__":
 - **可组合**：[[Skill-Context-Compression]] / [[Skill-Active-Context-Pruning]] / [[Skill-Agent-Memory-Learning]]
 
 ---
+- **相关技能**：[[Skill-KLong-Long-Horizon-Agent-Training]]
 
 ## ⑤ 商业价值评估
 

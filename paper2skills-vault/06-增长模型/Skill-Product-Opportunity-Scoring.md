@@ -62,6 +62,10 @@ print("[✓] Product Opportunity Scoring 测试通过")
 - **组合**：[[Skill-Supplier-Evaluation-Model]] | [[Skill-Dynamic-Pricing-Elasticity]]
 
 ---
+- **相关技能**：[[Skill-Product-Lifecycle-Stage]]
+- **相关技能**：[[Skill-Cross-Market-Product-Transfer]]
+- **相关技能**：[[Skill-Market-Size-Estimation]]
+- **相关技能**：[[Skill-Cross-Border-Cold-Start-Forecast]]
 
 ## ⑤ 商业价值
 

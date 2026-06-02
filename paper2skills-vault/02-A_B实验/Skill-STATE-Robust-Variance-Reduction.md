@@ -476,6 +476,7 @@ if __name__ == "__main__":
 
 
 - **跨域关联**：[[Skill-DML-Cohort-Causal-Effect]] / [[Skill-Causal-Time-Series-Forecasting-GCF]]
+- **跨域关联**：[[Skill-KG-Auto-Construction-Agent-Driven]]
 
 ## ⑤ 商业价值
 

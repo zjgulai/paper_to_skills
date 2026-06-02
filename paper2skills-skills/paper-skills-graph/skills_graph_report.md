@@ -3,7 +3,7 @@
 ## 1. 图谱概览
 
 - **节点总数**: 257 个技能
-- **边总数**: 3211 条关系
+- **边总数**: 3778 条关系
 - **领域分布**:
   - ab_testing: 12 个
   - advertising: 20 个
@@ -31,11 +31,11 @@
 ### 核心基础技能 (高被依赖数)
 | 排名 | 技能 | 被依赖数 |
 |-----|------|---------|
-| 1 | Skill-ROAS-Budget-Optimization | 60 |
-| 2 | Skill-Demand-Forecasting-Supply-Chain | 48 |
-| 3 | Skill-Customer-Churn-Prediction | 45 |
-| 4 | Skill-MAS-Orchestrator | 43 |
-| 5 | Skill-Ad-Attribution-Modeling | 38 |
+| 1 | 相关技能 | 129 |
+| 2 | Skill-ROAS-Budget-Optimization | 60 |
+| 3 | Skill-Customer-Churn-Prediction | 56 |
+| 4 | Skill-Demand-Forecasting-Supply-Chain | 48 |
+| 5 | Skill-MAS-Orchestrator | 43 |
 
 ### 潜力延伸技能 (高价值无延伸)
 | 排名 | 技能 | 业务价值 | 推荐延伸方向 |
@@ -56,10 +56,10 @@
 | P1 | 跨领域: causal_inference + ai_humanities | 跨领域融合 | `causal_inference ai_humanities cross-domain` |
 | P1 | 跨领域: causal_inference + advertising | 跨领域融合 | `causal_inference advertising cross-domain` |
 | P1 | 跨领域: causal_inference + logistics | 跨领域融合 | `causal_inference logistics cross-domain` |
-| P1 | 跨领域: causal_inference + risk_fraud | 跨领域融合 | `causal_inference risk_fraud cross-domain` |
 | P1 | 跨领域: causal_inference + visual_content | 跨领域融合 | `causal_inference visual_content cross-domain` |
-| P1 | 跨领域: ab_testing + recommendation | 跨领域融合 | `ab_testing recommendation cross-domain` |
-| P1 | 跨领域: ab_testing + knowledge_graph | 跨领域融合 | `ab_testing knowledge_graph cross-domain` |
+| P1 | 跨领域: ab_testing + data_agent_llm | 跨领域融合 | `ab_testing data_agent_llm cross-domain` |
+| P1 | 跨领域: ab_testing + mas | 跨领域融合 | `ab_testing mas cross-domain` |
+| P1 | 跨领域: ab_testing + ai_humanities | 跨领域融合 | `ab_testing ai_humanities cross-domain` |
 
 ## 5. 行动建议
 

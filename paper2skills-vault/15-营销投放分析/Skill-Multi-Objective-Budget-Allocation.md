@@ -109,6 +109,7 @@ if __name__ == '__main__':
 - **可组合技能**：[[Skill-Marketing-Mix-Modeling]] | [[Skill-DARA-Agentic-MMM]]
 
 ---
+- **相关技能**：[[Skill-Geo-Level-Marketing-Effectiveness]]
 
 ## ⑤ 商业价值评估
 

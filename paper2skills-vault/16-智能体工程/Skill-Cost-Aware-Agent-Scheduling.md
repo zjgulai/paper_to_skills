@@ -54,6 +54,10 @@ print("[✓] Cost-Aware Scheduling 测试通过")
 - **组合**：[[Skill-Context-Compression]]（成本优化的两个维度）
 
 ---
+- **相关技能**：[[Skill-Agent-Safety-Guardrails]]
+- **相关技能**：[[Skill-DAG-Task-Decomposition-Planning]]
+- **相关技能**：[[Skill-Agentic-Workflow-Compilation]]
+- **相关技能**：[[Skill-LDP-Identity-Aware-Protocol]]
 
 ## ⑤ 商业价值
 
