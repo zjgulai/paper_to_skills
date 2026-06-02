@@ -513,6 +513,9 @@ if __name__ == "__main__":
 
 ---
 
+
+- **跨域关联**：[[Skill-Guardrailed-Uplift-Targeting]] / [[Skill-Supply-Chain-Causal-SCM-Attribution]] / [[Skill-CausalRAG-Causal-Graph-Retrieval]]
+
 ## ⑤ 商业价值
 
 | 维度 | 详情 |
