@@ -2,8 +2,8 @@
 
 ## 1. 图谱概览
 
-- **节点总数**: 257 个技能
-- **边总数**: 3778 条关系
+- **节点总数**: 263 个技能
+- **边总数**: 3887 条关系
 - **领域分布**:
   - ab_testing: 12 个
   - advertising: 20 个
@@ -12,7 +12,7 @@
   - data_agent_llm: 10 个
   - growth_model: 22 个
   - knowledge_graph: 17 个
-  - llm_agent_engineering: 33 个
+  - llm_agent_engineering: 39 个
   - logistics: 4 个
   - marketing: 10 个
   - mas: 23 个
@@ -45,11 +45,21 @@
 
 ### 🔴 高优先级缺口
 
+#### 缺口 1: missing_prerequisite
+- **描述**: Skill-Progent-Privilege-Control 依赖的 Skill-CapSeal-Secret-Mediation 尚未建立
+- **缺失技能**: Skill-CapSeal-Secret-Mediation
+
+#### 缺口 2: missing_prerequisite
+- **描述**: Skill-Progent-Privilege-Control 依赖的 Skill-CapSeal-Secret-Mediation 尚未建立
+- **缺失技能**: Skill-CapSeal-Secret-Mediation
+
 
 ## 4. 推荐选题列表
 
 | 优先级 | 选题 | 类型 | 搜索关键词 |
 |-------|------|------|-----------|
+| P0 | 基础: Skill-CapSeal-Secret-Mediation | 前置技能填补 | `CapSeal Secret Mediation tutorial survey` |
+| P0 | 基础: Skill-CapSeal-Secret-Mediation | 前置技能填补 | `CapSeal Secret Mediation tutorial survey` |
 | P1 | 跨领域: causal_inference + ab_testing | 跨领域融合 | `causal_inference ab_testing cross-domain` |
 | P1 | 跨领域: causal_inference + data_agent_llm | 跨领域融合 | `causal_inference data_agent_llm cross-domain` |
 | P1 | 跨领域: causal_inference + mas | 跨领域融合 | `causal_inference mas cross-domain` |
@@ -58,11 +68,9 @@
 | P1 | 跨领域: causal_inference + logistics | 跨领域融合 | `causal_inference logistics cross-domain` |
 | P1 | 跨领域: causal_inference + visual_content | 跨领域融合 | `causal_inference visual_content cross-domain` |
 | P1 | 跨领域: ab_testing + data_agent_llm | 跨领域融合 | `ab_testing data_agent_llm cross-domain` |
-| P1 | 跨领域: ab_testing + mas | 跨领域融合 | `ab_testing mas cross-domain` |
-| P1 | 跨领域: ab_testing + ai_humanities | 跨领域融合 | `ab_testing ai_humanities cross-domain` |
 
 ## 5. 行动建议
 
-1. **立即行动**: 优先填补 0 个高优先级缺口
+1. **立即行动**: 优先填补 2 个高优先级缺口
 2. **本周计划**: 基于延伸缺口搜索 3-5 篇候选论文
 3. **本月目标**: 建立跨领域桥梁，完成 1 个跨领域 skill
