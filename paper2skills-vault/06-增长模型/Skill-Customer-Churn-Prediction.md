@@ -359,6 +359,10 @@ if __name__ == '__main__':
 
 ## ④ 技能关联
 
+- **延伸技能**：
+- [[Skill-Uplift-Churn-Prediction]] — Uplift + Churn 联合建模，识别可说服的流失用户
+- [[Skill-Deep-Learning-Churn-Prediction]] — 深度学习流失预测，捕捉非线性行为特征
+
 - **可组合**：[[Skill-RFM-Customer-Segmentation]] / [[Skill-LTV-Prediction-ZILN]]
 
 ## ⑤ 商业价值评估

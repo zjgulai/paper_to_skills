@@ -382,6 +382,11 @@ if __name__ == '__main__':
 
 ## ④ 技能关联
 
+- **延伸技能**：
+- [[Skill-Thompson-Sampling-MAB]] — Thompson Sampling 的贝叶斯最优化版本
+- [[Skill-BCCB-Causal-Bandits]] — 因果 Bandit，加入干预效果估计
+- [[Skill-AB-Experimental-Design]] — 从固定流量测试升级到自适应分配
+
 - **可组合**：[[Skill-AB-Experimental-Design]] / [[Skill-Power-Analysis-Sample-Size]]
 
 ## ⑤ 商业价值评估
