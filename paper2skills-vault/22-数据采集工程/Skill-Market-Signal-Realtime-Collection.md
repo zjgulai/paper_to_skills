@@ -765,14 +765,15 @@ class ProductionRTTPDetector(RTTPTrendDetector):
 
 ## ⑥ Skill Relations
 
-- **Prerequisite**:
+### 前置技能
   - [[Skill-LLM-Focused-Web-Crawling]]：社交帖子采集需要 LLM 引导爬取能力
   - [[Skill-Web-Page-Change-Detection]]：检测"信号页面"（竞品价格页、榜单页）是否已变化
 
-- **Extends**:
-  - [[Skill-LLM-Focused-Web-Crawling]]：本 Skill 扩展了"何时爬"的感知层，LLM Crawling 解决"怎么爬"
+### 延伸技能
+- [[Skill-LLM-Focused-Web-Crawling]]：本 Skill 扩展了"何时爬"的感知层，LLM Crawling 解决"怎么爬"
+- [[Skill-Adaptive-Crawl-Scheduling]]：本 Skill 的信号直接驱动 Adaptive Crawl 的动态调度
 
-- **Combinable**:
+### 可组合技能
   - [[Skill-Adaptive-Crawl-Scheduling]]：本 Skill 输出的 `CrawlFrequencySignal` 直接驱动 Adaptive Crawl 的动态调度（修复断链目标）
   - [[Skill-Web-Page-Change-Detection]]：变化检测 + 趋势预警双轨驱动，减少无效爬取
 

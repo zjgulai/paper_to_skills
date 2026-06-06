@@ -646,6 +646,8 @@ if __name__ == "__main__":
 - [[Skill-DARA-Agentic-MMM]]：DARA 自动化 MMM 分析可实时更新投放弹性系数，驱动动态重新预测
 - [[Skill-Safety-Stock-Replenishment]]：安全库存补货策略与本 Skill 的 CVaR 容量规划形成双保险，Safety Stock 填补预测误差的余量
 
+- [[Skill-Cross-Border-Logistics-Routing]]：物流路由 → 大促爆仓预防执行层
+- [[Skill-Last-Mile-Delivery-Prediction]]：最后一公里配送能力 → 大促尾期关键约束
 ---
 
 ## 论文来源
