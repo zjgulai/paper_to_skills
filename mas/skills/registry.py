@@ -45,6 +45,20 @@ def _bootstrap_default_tools() -> None:
     _bootstrap_ml_fundamentals()
     _bootstrap_pricing()
     _bootstrap_selection()
+    _bootstrap_data_collection()
+
+
+def _bootstrap_data_collection() -> None:
+    items = [
+        ("data_collection_web_crawl", "竞品信息爬取,品类竞品价格/销量/评分/BSR结构化采集"),
+        ("data_collection_market_signal", "实时市场信号检测,关键词趋势/搜索量/热度/季节性因子"),
+        ("data_collection_quality_assessment", "数据质量评估,完整性/一致性/异常值检测+quality_score"),
+        ("data_collection_product_extraction", "商品信息提取,URL解析→结构化字段(ASIN/价格/评分/变体)"),
+        ("data_collection_fake_review_detection", "假评论检测,机器生成/刷单/异常评论模式识别"),
+        ("data_collection_price_history", "价格历史采集,ASIN价格时序+统计(最高/最低/均价/波动率)"),
+    ]
+    for name, desc in items:
+        register_tool(SkillTool(name=name, description=desc, domain="data_collection", invoke=_stub_invoke(name)))
 
 
 def _bootstrap_pricing() -> None:
@@ -67,6 +81,7 @@ def _bootstrap_selection() -> None:
         ("selection_kgqa_attributes", "KGQA最畅销属性匹配,类目最优属性命中率"),
         ("selection_causal_lift", "因果需求提升估计,BSR趋势+季节性+竞争度综合"),
         ("selection_composite_score", "候选品综合评分排序,五维加权composite_score"),
+        ("selection_market_signal_collection", "实时竞品价格采集,competitor_prices+trending_products+price_alerts"),
     ]
     for name, desc in items:
         register_tool(SkillTool(name=name, description=desc, domain="selection", invoke=_stub_invoke(name)))

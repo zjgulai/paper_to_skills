@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 from mas.skills.mcp_servers.advertising_server import AdvertisingServer
 from mas.skills.mcp_servers.base import BaseMCPServer
 from mas.skills.mcp_servers.customer_service_server import CustomerServiceServer
+from mas.skills.mcp_servers.data_collection_server import DataCollectionServer
 from mas.skills.mcp_servers.selection_server import SelectionServer
 from mas.skills.mcp_servers.supply_chain_server import SupplyChainServer
 
@@ -14,6 +15,7 @@ _DEFAULT_SERVERS: List[BaseMCPServer] = [
     AdvertisingServer(),
     CustomerServiceServer(),
     SelectionServer(),
+    DataCollectionServer(),
 ]
 
 

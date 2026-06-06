@@ -143,7 +143,43 @@ def test_wfd_skill_chain_and_registry():
     assert "selection_market_space" in sel_tools
     assert "selection_compliance_risk" in sel_tools
     assert "selection_composite_score" in sel_tools
-    assert len(sel_tools) == 6
+    assert "selection_market_signal_collection" in sel_tools
+    assert len(sel_tools) == 7
+
+
+def test_market_signal_collection_callable_and_returns_structure():
+    from mas.skills.selection_tools import market_signal_collection
+
+    result = market_signal_collection("bottle", competitor_count=3)
+
+    assert result["skill"] == "market_signal_realtime_collection"
+    assert result["product_category"] == "bottle"
+    assert result["competitor_count"] == 3
+    assert len(result["competitor_prices"]) == 3
+    assert isinstance(result["avg_competitor_price_usd"], float)
+    assert len(result["trending_products"]) == 3
+    assert isinstance(result["price_alerts"], list)
+    assert 0 < result["confidence"] <= 1.0
+
+
+def test_market_signal_collection_default_competitor_count():
+    from mas.skills.selection_tools import market_signal_collection
+
+    result = market_signal_collection("stroller")
+    assert result["competitor_count"] == 5
+
+
+def test_market_signal_in_skill_chain():
+    from mas.graphs.selection_graph import build_selection_graph
+    from mas.state.schema import init_state
+
+    payload = {"candidates": _mock_candidates()}
+    graph = build_selection_graph(interrupt_fn=lambda r: {"action": "approve", "note": ""})
+    state = init_state("wf-d-signal", "product_selection", "ops-tang", payload, token_budget=20_000)
+    result = graph.invoke(state)
+
+    chain = result["skill_outputs"][-1]["output"]["skill_chain"]
+    assert "market_signal_realtime_collection" in chain
 
 
 def run_all():
@@ -153,6 +189,9 @@ def run_all():
         test_wfd_low_margin_rejected,
         test_wfd_auto_approved_zero_cost,
         test_wfd_skill_chain_and_registry,
+        test_market_signal_collection_callable_and_returns_structure,
+        test_market_signal_collection_default_competitor_count,
+        test_market_signal_in_skill_chain,
     ]
     failures = []
     for t in tests:
