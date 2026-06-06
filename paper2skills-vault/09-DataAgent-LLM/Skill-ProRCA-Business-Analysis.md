@@ -173,6 +173,9 @@ agent_prompt = f"""
 - **相关技能**：[[Skill-AgentTrace-Causal-RCA]] / [[Skill-Supply-Chain-Causal-SCM-Attribution]]
 - **相关**：[[Skill-Multimodal-Table-Understanding]]
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
+- **相关**：[[Skill-CDA-Privacy-Causal-Attribution]]
+- **相关**：[[Skill-Dynamic-Pricing-Elasticity]]
+- **相关**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
 
 ## ⑤ 商业价值评估
 

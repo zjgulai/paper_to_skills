@@ -22,22 +22,26 @@
 
 ---
 
-## 📊 最新状态 (2026-06-01)
+## 📊 最新状态 (script-derived baseline)
 
 | 维度 | 数值 |
 |---|---|
-| **Skill 卡片总数** | **274**（22 个领域） |
-| **图谱节点数** | **274** |
-| **图谱边数** | **5132** |
-| **missing_prerequisite 断链** | **0** |
-| **HIGH 缺口** | **0** |
+| **Skill 卡片总数** | **302**（注册领域扫描） |
+| **图谱节点数** | **302** |
+| **图谱边数** | **5390** |
+| **P0/P1 缺口** | **0 / 0** |
+| **P2 图谱复核项** | **9** |
 | **孤立 Skill** | **0** |
 | **MAS 工具注册** | **112 个工具 / 14 个域** |
 | **MCP Server** | **4 个 domain server / 28 个工具** |
-| **MAS 多智能体系统** | 5 个工作流 / **47 项集成测试全绿** |
+| **MAS 多智能体系统** | 5 个工作流 / 标准库测试由 `python3 -m pytest` 验证 |
 | **Python 环境** | Python 3.14 + venv（`.python-version` 锁定） |
 | **业务工作流覆盖率** | WF-A 95% / WF-B 90% / WF-C 85% / WF-E 85% / WF-D 80% |
 | **累计 ROI** | 12000-22000 万元/年潜在（中型品牌） |
+
+> 数字基线由 `python3 -m paper2skills_common.doctor --json`、
+> `skills_graph_analyzer.py --gaps`、`build_asset_inventory.py --dry-run`
+> 重建；README 不再作为手动维护的计数来源。
 
 **最近萃取 (2026-05-25, Sprint 4+5 共 12 张)**:
 
@@ -151,6 +155,18 @@ paper_to_skills/
 | 4 | `paper-同步` | 同步到 Obsidian Vault / GitHub / 飞书 | 100% |
 
 **注意**：Step 2 和 Step 3 可以并行执行，但 Step 4 必须在审核通过后进行。
+
+### 增量治理入口
+
+```bash
+python3 -m paper2skills_common.doctor --json
+python3 paper2skills-skills/paper-选题/scripts/build_candidate_queue.py --dry-run
+python3 paper2skills-skills/paper-workflow/scripts/run_incremental_workflow.py --one-topic
+python3 paper2skills-skills/paper-workflow/scripts/run_darwin_evolution.py --loops 20
+```
+
+`paper_candidate_queue.json` 和 `workflow_runs/*.json` 是脚本派生的审计资产，用于记录 topic/paper/Skill 决策链路，不替代 `CLAUDE.md` 的领域注册。
+`darwin_evolution_runs/*.json` 和 `darwin_evolution_20loop_report.md` 用于记录 mutation / selection / niche / competition / heredity 的 20-loop 进化审计。
 
 ---
 

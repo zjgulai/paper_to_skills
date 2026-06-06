@@ -193,6 +193,10 @@ print(f"无偏推荐: {[i for i, _ in result['unbiased'][:5]]}")
 ---
 - **关联**：[[Skill-Agentic-Workflow-Compilation]]
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
+- **相关**：[[Skill-GraphDeepAR-Demand-Forecasting]]
+- **相关**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **相关**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
+- **相关**：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值评估
 

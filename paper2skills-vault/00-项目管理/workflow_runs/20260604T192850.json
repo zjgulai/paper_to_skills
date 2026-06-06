@@ -1,0 +1,326 @@
+{
+  "run_id": "20260604T192850",
+  "generated_at": "2026-06-04T19:28:52",
+  "mode": "one-topic",
+  "dry_run": true,
+  "status": "completed",
+  "stages": [
+    {
+      "name": "doctor",
+      "status": "completed",
+      "markdown_issues": 0,
+      "ast_issues": 0,
+      "domain_issues": 0,
+      "missing_deps": [
+        "matplotlib",
+        "sklearn",
+        "openai"
+      ],
+      "alignment": {
+        "total_skills": 302,
+        "with_code": 55,
+        "with_tests": 1,
+        "relations_missing": 1
+      }
+    },
+    {
+      "name": "graph_gaps",
+      "status": "completed",
+      "total_gaps": 5,
+      "p0": 0,
+      "p1": 0,
+      "p2": 5,
+      "sample": [
+        {
+          "type": "domain_review",
+          "domain": "compliance",
+          "priority": "P2",
+          "skill_count": 6,
+          "description": "compliance 已纳入图谱健康检查，当前 6 个 Skill，无 P0/P1 断链",
+          "score": 46,
+          "topic_id": "GAP-P2-001-domain_review"
+        },
+        {
+          "type": "missing_bridge",
+          "domain_a": "logistics",
+          "domain_b": "risk_fraud",
+          "priority": "P2",
+          "focus_pair": false,
+          "domain_a_nodes": 6,
+          "domain_b_nodes": 6,
+          "description": "logistics 与 risk_fraud 之间缺少桥梁连接",
+          "score": 44,
+          "topic_id": "GAP-P2-002-missing_bridge"
+        },
+        {
+          "type": "missing_bridge",
+          "domain_a": "logistics",
+          "domain_b": "visual_content",
+          "priority": "P2",
+          "focus_pair": false,
+          "domain_a_nodes": 6,
+          "domain_b_nodes": 8,
+          "description": "logistics 与 visual_content 之间缺少桥梁连接",
+          "score": 44,
+          "topic_id": "GAP-P2-003-missing_bridge"
+        },
+        {
+          "type": "missing_bridge",
+          "domain_a": "marketing",
+          "domain_b": "logistics",
+          "priority": "P2",
+          "focus_pair": false,
+          "domain_a_nodes": 10,
+          "domain_b_nodes": 6,
+          "description": "marketing 与 logistics 之间缺少桥梁连接",
+          "score": 44,
+          "topic_id": "GAP-P2-004-missing_bridge"
+        },
+        {
+          "type": "missing_bridge",
+          "domain_a": "recommendation",
+          "domain_b": "advertising",
+          "priority": "P2",
+          "focus_pair": false,
+          "domain_a_nodes": 11,
+          "domain_b_nodes": 20,
+          "description": "recommendation 与 advertising 之间缺少桥梁连接",
+          "score": 44,
+          "topic_id": "GAP-P2-005-missing_bridge"
+        }
+      ]
+    },
+    {
+      "name": "candidate_queue",
+      "status": "completed",
+      "summary": {
+        "total_candidates": 5,
+        "pending": 5,
+        "selected": 0,
+        "already_exists": 0,
+        "sources": [
+          "skills_graph_gaps"
+        ]
+      },
+      "candidates": [
+        {
+          "topic_id": "GAP-P2-001-DOMAIN-REVIEW",
+          "source": "skills_graph_gaps",
+          "domain": "compliance",
+          "gap_type": "domain_review",
+          "topic": "compliance 已纳入图谱健康检查，当前 6 个 Skill，无 P0/P1 断链",
+          "keywords": "compliance ecommerce guardrail evaluation",
+          "paper_url": null,
+          "arxiv_id": null,
+          "score": 86,
+          "decision": "pending",
+          "reason": "compliance 已纳入图谱健康检查，当前 6 个 Skill，无 P0/P1 断链",
+          "gap_ref": {
+            "type": "domain_review",
+            "domain": "compliance",
+            "priority": "P2",
+            "skill_count": 6,
+            "description": "compliance 已纳入图谱健康检查，当前 6 个 Skill，无 P0/P1 断链",
+            "score": 46,
+            "topic_id": "GAP-P2-001-domain_review"
+          }
+        },
+        {
+          "topic_id": "GAP-P2-002-MISSING-BRIDGE",
+          "source": "skills_graph_gaps",
+          "domain": "logistics",
+          "gap_type": "missing_bridge",
+          "topic": "logistics 与 risk_fraud 之间缺少桥梁连接",
+          "keywords": "logistics risk_fraud cross-domain ecommerce",
+          "paper_url": null,
+          "arxiv_id": null,
+          "score": 86,
+          "decision": "pending",
+          "reason": "logistics 与 risk_fraud 之间缺少桥梁连接",
+          "gap_ref": {
+            "type": "missing_bridge",
+            "domain_a": "logistics",
+            "domain_b": "risk_fraud",
+            "priority": "P2",
+            "focus_pair": false,
+            "domain_a_nodes": 6,
+            "domain_b_nodes": 6,
+            "description": "logistics 与 risk_fraud 之间缺少桥梁连接",
+            "score": 44,
+            "topic_id": "GAP-P2-002-missing_bridge"
+          }
+        },
+        {
+          "topic_id": "GAP-P2-003-MISSING-BRIDGE",
+          "source": "skills_graph_gaps",
+          "domain": "logistics",
+          "gap_type": "missing_bridge",
+          "topic": "logistics 与 visual_content 之间缺少桥梁连接",
+          "keywords": "logistics visual_content cross-domain ecommerce",
+          "paper_url": null,
+          "arxiv_id": null,
+          "score": 86,
+          "decision": "pending",
+          "reason": "logistics 与 visual_content 之间缺少桥梁连接",
+          "gap_ref": {
+            "type": "missing_bridge",
+            "domain_a": "logistics",
+            "domain_b": "visual_content",
+            "priority": "P2",
+            "focus_pair": false,
+            "domain_a_nodes": 6,
+            "domain_b_nodes": 8,
+            "description": "logistics 与 visual_content 之间缺少桥梁连接",
+            "score": 44,
+            "topic_id": "GAP-P2-003-missing_bridge"
+          }
+        },
+        {
+          "topic_id": "GAP-P2-004-MISSING-BRIDGE",
+          "source": "skills_graph_gaps",
+          "domain": "marketing",
+          "gap_type": "missing_bridge",
+          "topic": "marketing 与 logistics 之间缺少桥梁连接",
+          "keywords": "marketing logistics cross-domain ecommerce",
+          "paper_url": null,
+          "arxiv_id": null,
+          "score": 86,
+          "decision": "pending",
+          "reason": "marketing 与 logistics 之间缺少桥梁连接",
+          "gap_ref": {
+            "type": "missing_bridge",
+            "domain_a": "marketing",
+            "domain_b": "logistics",
+            "priority": "P2",
+            "focus_pair": false,
+            "domain_a_nodes": 10,
+            "domain_b_nodes": 6,
+            "description": "marketing 与 logistics 之间缺少桥梁连接",
+            "score": 44,
+            "topic_id": "GAP-P2-004-missing_bridge"
+          }
+        },
+        {
+          "topic_id": "GAP-P2-005-MISSING-BRIDGE",
+          "source": "skills_graph_gaps",
+          "domain": "recommendation",
+          "gap_type": "missing_bridge",
+          "topic": "recommendation 与 advertising 之间缺少桥梁连接",
+          "keywords": "recommendation advertising cross-domain ecommerce",
+          "paper_url": null,
+          "arxiv_id": null,
+          "score": 86,
+          "decision": "pending",
+          "reason": "recommendation 与 advertising 之间缺少桥梁连接",
+          "gap_ref": {
+            "type": "missing_bridge",
+            "domain_a": "recommendation",
+            "domain_b": "advertising",
+            "priority": "P2",
+            "focus_pair": false,
+            "domain_a_nodes": 11,
+            "domain_b_nodes": 20,
+            "description": "recommendation 与 advertising 之间缺少桥梁连接",
+            "score": 44,
+            "topic_id": "GAP-P2-005-missing_bridge"
+          }
+        }
+      ]
+    },
+    {
+      "name": "extraction_bundle",
+      "status": "completed",
+      "bundle": {
+        "generated_at": "2026-06-04T19:28:52",
+        "generator": "paper2skills_common.extraction",
+        "topic_id": "GAP-P2-002-MISSING-BRIDGE",
+        "status": "selected",
+        "allowed_next_statuses": [
+          "extracted"
+        ],
+        "verification_status": "pending_verification",
+        "domain": "logistics",
+        "vault_dir": "18-物流履约",
+        "skill_id": "Skill-logistics-risk-fraud",
+        "paper_id": "GAP-P2-002-MISSING-BRIDGE",
+        "paper_url": null,
+        "arxiv_id": null,
+        "paper_pdf_path": "paper2skills-vault/papers/18-物流履约/GAP-P2-002-MISSING-BRIDGE/paper.pdf",
+        "notes_path": "paper2skills-vault/papers/18-物流履约/GAP-P2-002-MISSING-BRIDGE/notes.md",
+        "extract_path": "paper2skills-vault/papers/18-物流履约/GAP-P2-002-MISSING-BRIDGE/extract.md",
+        "verification_report_path": "paper2skills-vault/papers/18-物流履约/GAP-P2-002-MISSING-BRIDGE/verification_report.md",
+        "skill_path": "paper2skills-vault/18-物流履约/Skill-logistics-risk-fraud.md",
+        "code_path": "paper2skills-code/logistics/logistics_risk_fraud",
+        "expected_code_files": [
+          "__init__.py",
+          "model.py",
+          "example.py",
+          "test_model.py"
+        ],
+        "relations_status": "pending_review",
+        "candidate": {
+          "topic_id": "GAP-P2-002-MISSING-BRIDGE",
+          "source": "skills_graph_gaps",
+          "domain": "logistics",
+          "gap_type": "missing_bridge",
+          "topic": "logistics 与 risk_fraud 之间缺少桥梁连接",
+          "keywords": "logistics risk_fraud cross-domain ecommerce",
+          "paper_url": null,
+          "arxiv_id": null,
+          "score": 86,
+          "decision": "pending",
+          "reason": "logistics 与 risk_fraud 之间缺少桥梁连接",
+          "gap_ref": {
+            "type": "missing_bridge",
+            "domain_a": "logistics",
+            "domain_b": "risk_fraud",
+            "priority": "P2",
+            "focus_pair": false,
+            "domain_a_nodes": 6,
+            "domain_b_nodes": 6,
+            "description": "logistics 与 risk_fraud 之间缺少桥梁连接",
+            "score": 44,
+            "topic_id": "GAP-P2-002-missing_bridge"
+          }
+        }
+      }
+    },
+    {
+      "name": "verification_plan",
+      "status": "completed",
+      "plan": {
+        "required_before_sync": [
+          "python3 -m paper2skills_common.doctor --json",
+          "python3 -m pytest",
+          "python3 -m pytest paper2skills-code -q"
+        ],
+        "code_template_dependency_note": "Install paper2skills-code/requirements-lock.txt before expecting template tests to execute."
+      }
+    },
+    {
+      "name": "sync_dry_run",
+      "status": "completed",
+      "commands": [
+        "python3 paper2skills-skills/paper-同步/scripts/rebuild_sync_status.py --dry-run",
+        "python3 paper2skills-skills/paper-同步/scripts/build_asset_inventory.py --dry-run",
+        "python3 paper2skills-skills/paper-同步/scripts/build_fitness_snapshot.py --dry-run"
+      ]
+    },
+    {
+      "name": "inventory_snapshot",
+      "status": "completed",
+      "total_skills": 302,
+      "with_code": 55,
+      "with_tests": 1,
+      "relations_missing": 1
+    }
+  ],
+  "summary": {
+    "candidate_count": 5,
+    "selected_topic_id": "GAP-P2-002-MISSING-BRIDGE",
+    "declared_generated_outputs": [
+      "paper2skills-vault/00-项目管理/paper_candidate_queue.json",
+      "paper2skills-vault/00-项目管理/workflow_runs/<run_id>.json"
+    ]
+  }
+}

@@ -870,8 +870,8 @@ if __name__ == "__main__":
 ## ⑥ Skill Relations
 
 ### 前置技能（Prerequisites）
-- [[Skill-Linear-Algebra-Fundamentals]]：向量空间、内积、矩阵分解 → 嵌入表示的数学基础
-- [[Skill-Neural-Network-Basics]]：反向传播 + 梯度下降 → 嵌入表学习过程
+- [[Skill-Feature-Engineering]]：特征工程基础（数值/类别编码）→ 嵌入表示的工程前置
+- [[Skill-Model-Performance-Monitor]]：嵌入质量监控（分布漂移 / 向量空间退化检测）
 
 ### 延伸技能（Extends）
 - [[Skill-Feature-Engineering]]：**本 Skill 是 Feature Engineering 的延伸**，嵌入可看作神经化的特征工程

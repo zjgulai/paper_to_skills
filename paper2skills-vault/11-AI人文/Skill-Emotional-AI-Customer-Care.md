@@ -107,6 +107,10 @@ python -m paper2skills_code.ai_humanities.emotional_ai.model
 - **可组合**：[[Skill-Customer-Journey-Prototype]] / [[Skill-MAA-Review-to-Action-Decision]] / [[Skill-DialIn-LLM-Case-Intent-Clustering]]
 - **相关**：[[Skill-AI-Brand-Storytelling]]
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
+- **相关**：[[Skill-CDA-Privacy-Causal-Attribution]]
+- **相关**：[[Skill-Dynamic-Pricing-Elasticity]]
+- **相关**：[[Skill-GraphDeepAR-Demand-Forecasting]]
+- **相关**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
 
 ## ⑤ 商业价值
 

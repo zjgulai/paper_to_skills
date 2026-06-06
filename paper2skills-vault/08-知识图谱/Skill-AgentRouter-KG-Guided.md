@@ -181,6 +181,9 @@ for agent_name, weight in result.top_k_agents:
 ---
 - **相关技能**：[[Skill-Agentic-SCKG-Risk]]
 - **关联**：[[Skill-AI-Consumer-Wellbeing-Ethics]]
+- **相关**：[[Skill-CDA-Privacy-Causal-Attribution]]
+- **相关**：[[Skill-Dynamic-Pricing-Elasticity]]
+- **相关**：[[Skill-AnchorCrafter-Virtual-Anchor-Demo]]
 
 ## ⑤ 商业价值评估
 

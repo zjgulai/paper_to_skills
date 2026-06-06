@@ -14,39 +14,30 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from datetime import datetime
 from pathlib import Path
 
 
 BASE_DIR = Path(os.environ.get("PAPER2SKILLS_ROOT") or Path(__file__).resolve().parents[3])
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from paper2skills_common.assets import detect_code_path as detect_asset_code_path, iter_skill_files
+from paper2skills_common.domains import load_domain_registry
+
 VAULT_DIR = BASE_DIR / "paper2skills-vault"
 CODE_DIR = BASE_DIR / "paper2skills-code"
 DEFAULT_OUTPUT = VAULT_DIR / "07-资源库" / "sync_status.json"
 
 
 def find_all_skill_files() -> list[tuple[str, Path]]:
-    results: list[tuple[str, Path]] = []
-    for domain_dir in sorted(VAULT_DIR.iterdir()):
-        if not domain_dir.is_dir():
-            continue
-        if domain_dir.name in {"papers", "07-资源库", "00-项目管理"}:
-            continue
-        for skill_file in sorted(domain_dir.glob("Skill-*.md")):
-            results.append((domain_dir.name, skill_file))
-    return results
+    return [(skill_file.parent.name, skill_file) for skill_file in iter_skill_files(BASE_DIR)]
 
 
 def detect_code_path(skill_filename: str) -> Path | None:
-    module_name = skill_filename.lower().replace("skill-", "").replace(".md", "").replace("-", "_")
-    if not CODE_DIR.exists():
-        return None
-    for domain_dir in CODE_DIR.iterdir():
-        if not domain_dir.is_dir():
-            continue
-        candidate = domain_dir / module_name
-        if candidate.exists():
-            return candidate.relative_to(BASE_DIR)
-    return None
+    skill_id = skill_filename[:-3] if skill_filename.endswith(".md") else skill_filename
+    return detect_asset_code_path(BASE_DIR, skill_id)
 
 
 def build_status() -> dict:
@@ -56,7 +47,7 @@ def build_status() -> dict:
             "generated_at": now,
             "generator": "paper2skills-skills/paper-同步/scripts/rebuild_sync_status.py",
             "note": "本文件为基于 vault 文件系统的自动重建快照。手动维护已废弃；以 vault 真实文件存在性为准。",
-            "ground_truth": "paper2skills-vault/{01-16}-*/Skill-*.md",
+            "ground_truth": "paper2skills-vault/{registered-domain}/Skill-*.md",
         }
     }
 

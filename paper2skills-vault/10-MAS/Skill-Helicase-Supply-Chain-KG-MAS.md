@@ -522,6 +522,7 @@ if __name__ == "__main__":
 - **跨域关联**：[[Skill-KG-Augmented-Recommendation-CoLaKG]]
 - **关联**：[[Skill-CDA-Privacy-Causal-Attribution]]
 - **相关**：[[Skill-CausalRAG-Causal-Graph-Retrieval]]
+- **相关**：[[Skill-Emotional-AI-Customer-Care]]
 
 ## ⑤ 商业价值评估
 

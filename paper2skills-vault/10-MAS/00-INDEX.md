@@ -53,6 +53,25 @@ SRL 看见结构 → HGT/HGCN 学习结构 → 语义蓝图记住结构 → MAS 
 | [Skill-Multi-Agent-Debate](./00-知识库-Skill卡片/Skill-Multi-Agent-Debate.md) | 已萃取 | MAD (EMNLP 2024) | 多 agent 辩论共识 |
 | [Skill-Agent-Memory-Learning](./00-知识库-Skill卡片/Skill-Agent-Memory-Learning.md) | 已萃取 | MemGPT (2023) | 长期记忆与学习 |
 
+### E. 安全与信任层（2026 新增）
+
+| 技能 | 状态 | 论文 | 业务场景 |
+|------|------|------|---------|
+| [Skill-MAS-Dynamic-Trust](./Skill-MAS-Dynamic-Trust.md) | 已萃取 | DynaTrust + A-Trust + ECL (2026) | 动态信任图抵御 Sleeper Agent，采购/库存 MAS 可信聚合 |
+| [Skill-MAS-Testing-Verification](./Skill-MAS-Testing-Verification.md) | 已萃取 | FLARE + MAESTRO (2026) | 覆盖制导 Fuzzing 发现 MAS 失败，跨框架执行轨迹对比 |
+| [Skill-MAS-Resource-Scheduling](./Skill-MAS-Resource-Scheduling.md) | 已萃取 | HiveMind + AgentRM + MCPP (2026) | OS调度原语消除并发失败，MLFQ防Zombie，MCPP约束满足 |
+| [Skill-MAS-Consensus-Mechanism](./Skill-MAS-Consensus-Mechanism.md) | 已萃取 | Aegean + DySCo + SAC (2026) | 多仓备货Quorum共识，稀疏高效通信，拜占庭容错过滤 |
+| [Skill-MAS-Scale-Management](./Skill-MAS-Scale-Management.md) | 已萃取 | MegaFlow + MonoScale + OrgAgent (2026) | 三服务解耦万级并发，UCB单调扩容，公司制三层架构 |
+
+### F. 跨域桥梁层（2026 新增）
+
+| 技能 | 状态 | 论文 | 业务场景 |
+|------|------|------|---------|
+| [Skill-LLM-AutoBidding-MAS](./Skill-LLM-AutoBidding-MAS.md) | 已萃取 ★ mas↔ads | DARA + LBM (WWW'26) | 双Agent少样本竞价，Think-Act防幻觉，新品期/大促期竞价 |
+| [Skill-MAS-Adversarial-Defense](./Skill-MAS-Adversarial-Defense.md) | 已萃取 | GroupGuard + FlowSteer + Conjunctive (2026) | 群体合谋检测，规划时攻击防御，合取注入识别 |
+| [Skill-Cross-Org-Agent-Protocol](./Skill-Cross-Org-Agent-Protocol.md) | 已萃取 | MPAC + ACP + IETF MACP (2026) | 多委托人协调协议，联邦DID身份验证，动态SLA谈判 |
+| [Skill-MAS-Dynamic-KG-Collaboration](./Skill-MAS-Dynamic-KG-Collaboration.md) | 已萃取 ★ mas↔KG | MemGraphRAG + MAGE (2026) | 三Agent动态KG构建冲突解决，四子图协同进化 |
+
 ## 工作流映射
 
 ```
@@ -77,10 +96,10 @@ SRL 看见结构 → HGT/HGCN 学习结构 → 语义蓝图记住结构 → MAS 
 
 ## 统计数据
 
-- 总技能数: 12
-- 已萃取: 12
+- 总技能数: 34 (+9, 2026-06-04 新增)
+- 已萃取: 34
 - 待萃取: 0
-- 代码模板: 12
+- 代码模板: 34
 
 ## 与上游领域的衔接
 
@@ -92,4 +111,4 @@ SRL 看见结构 → HGT/HGCN 学习结构 → 语义蓝图记住结构 → MAS 
 
 ---
 
-> 最后更新: 2026-05-10
+> 最后更新: 2026-06-04 | 本轮新增 9 个 Skills（W1→W5 完整图谱路径执行完毕）| 新增跨域桥梁：mas↔advertising、mas↔KG

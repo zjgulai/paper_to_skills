@@ -9,6 +9,7 @@ import os
 import shutil
 import argparse
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
 
@@ -18,135 +19,32 @@ import requests
 # 因此 parents[3] 即为 paper_to_skills 项目根）。
 # 可通过环境变量 PAPER2SKILLS_ROOT 覆盖。
 BASE_DIR = Path(os.environ.get("PAPER2SKILLS_ROOT") or Path(__file__).resolve().parents[3])
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from paper2skills_common.domains import DomainInferenceError, infer_domain_or_raise, load_domain_registry
+
 VAULT_DIR = BASE_DIR / "paper2skills-vault"
 CODE_DIR = BASE_DIR / "paper2skills-code"
 SKILLS_DIR = BASE_DIR / "paper2skills-skills"
 STATUS_FILE = VAULT_DIR / "07-资源库" / "sync_status.json"
 
-# 领域映射（16 个领域，与 vault 实际目录结构对齐）
-DOMAINS = {
-    "causal_inference": "01-因果推断",
-    "ab_testing": "02-A_B实验",
-    "time_series": "03-时间序列",
-    "supply_chain": "04-供应链",
-    "recommendation": "05-推荐系统",
-    "growth_model": "06-增长模型",
-    "nlp_voc": "07-NLP-VOC",  # 已迁出，保留映射以便历史 Skill 引用
-    "knowledge_graph": "08-知识图谱",
-    "data_agent_llm": "09-DataAgent-LLM",
-    "mas": "10-MAS",
-    "ai_humanities": "11-AI人文",
-    "ml_fundamentals": "12-ML基础",
-    "advertising": "13-广告分析",
-    "user_analytics": "14-用户分析",
-    "marketing": "15-营销投放分析",
-    "llm_agent_engineering": "16-智能体工程",
-    "pricing": "17-价格优化",
-    "logistics": "18-物流履约",
-    "risk_fraud": "19-风控反欺诈",
-    "visual_content": "20-AI视频生成",
-    "compliance": "21-合规决策",
-}
+DOMAIN_REGISTRY = load_domain_registry(BASE_DIR)
+DOMAINS = {entry.key: entry.vault_dir for entry in DOMAIN_REGISTRY.entries}
 
 
 # 从 Skill 卡片文件名提取领域
+def skill_stem(skill_name):
+    return skill_name[:-3] if skill_name.endswith(".md") else skill_name
+
+
+def status_key(skill_name):
+    return f"{skill_stem(skill_name)}.md"
+
+
 def extract_domain(skill_name):
-    """从 Skill 名称推断领域"""
-    name_lower = skill_name.lower()
-
-    domain_keywords = {
-        # causal_inference
-        "uplift": "causal_inference",
-        "causal": "causal_inference",
-        "treatment": "causal_inference",
-        "doubly-robust": "causal_inference",
-        "doubly_robust": "causal_inference",
-        # ab_testing
-        "bandit": "ab_testing",
-        "experiment": "ab_testing",
-        "thompson": "ab_testing",
-        # time_series
-        "forecasting": "time_series",
-        "demand": "time_series",
-        "time series": "time_series",
-        "tft": "time_series",
-        # supply_chain
-        "inventory": "supply_chain",
-        "supply chain": "supply_chain",
-        "elasticity": "supply_chain",
-        "echelon": "supply_chain",
-        # recommendation
-        "recommendation": "recommendation",
-        "collaborative": "recommendation",
-        "matrix-factorization": "recommendation",
-        "matrix_factorization": "recommendation",
-        "cold-start": "recommendation",
-        "session-based": "recommendation",
-        "sr-gnn": "recommendation",
-        # growth_model
-        "churn": "growth_model",
-        "ltv": "growth_model",
-        "lifecycle": "growth_model",
-        "purchase-prediction": "growth_model",
-        # nlp_voc (legacy)
-        "absa": "nlp_voc",
-        "autotag": "nlp_voc",
-        "voc": "nlp_voc",
-        # knowledge_graph
-        "knowledge-graph": "knowledge_graph",
-        "knowledge_graph": "knowledge_graph",
-        "hgt": "knowledge_graph",
-        "hgcn": "knowledge_graph",
-        "graphrag": "knowledge_graph",
-        "dense-retrieval": "knowledge_graph",
-        "kg-": "knowledge_graph",
-        "ner": "knowledge_graph",
-        # data_agent_llm
-        "data-agent": "data_agent_llm",
-        "argos": "data_agent_llm",
-        "deepanalyze": "data_agent_llm",
-        # mas
-        "autogen": "mas",
-        "camel": "mas",
-        "react-reasoning": "mas",
-        "reflexion": "mas",
-        "metagpt": "mas",
-        "multi-agent": "mas",
-        "tree-of-thoughts": "mas",
-        "subagent": "mas",
-        # ai_humanities
-        "humanities": "ai_humanities",
-        "healing": "ai_humanities",
-        # ml_fundamentals
-        "feature-engineering": "ml_fundamentals",
-        # advertising
-        "attribution": "advertising",
-        "roas": "advertising",
-        "advertising": "advertising",
-        "shapley": "advertising",
-        # user_analytics
-        "funnel": "user_analytics",
-        "cohort": "user_analytics",
-        "rfm": "user_analytics",
-        # marketing
-        "marketing-mix": "marketing",
-        "mmm": "marketing",
-        "promotion": "marketing",
-        "marketing": "marketing",
-        # llm_agent_engineering
-        "mcp-": "llm_agent_engineering",
-        "a2a-": "llm_agent_engineering",
-        "function-calling": "llm_agent_engineering",
-        "hermes": "llm_agent_engineering",
-        "context-engineering": "llm_agent_engineering",
-        "agent-skill": "llm_agent_engineering",
-    }
-
-    for keyword, domain in domain_keywords.items():
-        if keyword in name_lower:
-            return domain
-
-    return "causal_inference"  # 默认
+    """从现有 vault 文件系统推断领域。无法可靠推断时抛错。"""
+    return infer_domain_or_raise(BASE_DIR, skill_name)
 
 
 def load_status():
@@ -178,6 +76,7 @@ def _ensure_pending_status():
 def update_status(skill_name, target, success=True, error=None):
     """更新同步状态（内存缓存，由 main() 批量写盘）"""
     status = _ensure_pending_status()
+    skill_name = status_key(skill_name)
 
     if skill_name not in status:
         status[skill_name] = {}
@@ -201,13 +100,16 @@ def flush_status():
 
 def sync_vault(skill_name, domain=None):
     """同步到 Obsidian Vault"""
+    stem = skill_stem(skill_name)
     if domain is None:
-        domain = extract_domain(skill_name)
+        domain = extract_domain(stem)
+    else:
+        domain = infer_domain_or_raise(BASE_DIR, stem, domain)
 
     # 源文件可能是 skill 输出目录或 vault 已有文件
     possible_sources = [
-        SKILLS_DIR / "output" / f"{skill_name}.md",
-        VAULT_DIR / "output" / f"{skill_name}.md",
+        SKILLS_DIR / "output" / f"{stem}.md",
+        VAULT_DIR / "output" / f"{stem}.md",
     ]
 
     source = None
@@ -218,26 +120,29 @@ def sync_vault(skill_name, domain=None):
 
     if source is None:
         print(f"源文件不存在")
-        update_status(skill_name, "vault", False, "source file not found")
+        update_status(stem, "vault", False, "source file not found")
         return False
 
-    target_dir = VAULT_DIR / DOMAINS.get(domain, domain)
+    target_dir = VAULT_DIR / DOMAIN_REGISTRY.vault_dir_for(domain)
     target_dir.mkdir(parents=True, exist_ok=True)
-    target = target_dir / f"{skill_name}.md"
+    target = target_dir / f"{stem}.md"
 
     shutil.copy2(source, target)
     print(f"已同步到 Vault: {target}")
-    update_status(skill_name, "vault", True)
+    update_status(stem, "vault", True)
     return True
 
 
 def sync_code(skill_name, domain=None):
     """同步到 GitHub 代码仓库"""
+    stem = skill_stem(skill_name)
     if domain is None:
-        domain = extract_domain(skill_name)
+        domain = extract_domain(stem)
+    else:
+        domain = infer_domain_or_raise(BASE_DIR, stem, domain)
 
     # 模块名从 skill 名转换
-    module_name = skill_name.lower().replace("skill-", "").replace("-", "_")
+    module_name = stem.lower().replace("skill-", "").replace("-", "_")
 
     possible_source_dirs = [
         SKILLS_DIR / "output" / module_name,
@@ -252,7 +157,7 @@ def sync_code(skill_name, domain=None):
 
     if source_dir is None:
         print(f"源目录不存在")
-        update_status(skill_name, "github", False, "source directory not found")
+        update_status(stem, "github", False, "source directory not found")
         return False
 
     target_dir = CODE_DIR / domain / module_name
@@ -269,15 +174,16 @@ def sync_code(skill_name, domain=None):
             files_copied += 1
 
     if files_copied == 0:
-        update_status(skill_name, "github", False, "no files to copy")
+        update_status(stem, "github", False, "no files to copy")
         return False
 
-    update_status(skill_name, "github", True)
+    update_status(stem, "github", True)
     return True
 
 
 def sync_feishu(skill_name):
     """同步到飞书（webhook 优先读环境变量 PAPER2SKILLS_FEISHU_WEBHOOK）"""
+    stem = skill_stem(skill_name)
     # P2-3 安全修复：环境变量优先，文件 fallback
     webhook_url = os.environ.get("PAPER2SKILLS_FEISHU_WEBHOOK", "").strip()
 
@@ -288,7 +194,7 @@ def sync_feishu(skill_name):
                 webhook_url = f.read().strip()
 
     if not webhook_url:
-        update_status(skill_name, "feishu", False, "not configured")
+        update_status(stem, "feishu", False, "not configured")
         print("飞书 webhook 未配置（未设置环境变量 PAPER2SKILLS_FEISHU_WEBHOOK 也无配置文件），跳过")
         return False
 
@@ -296,13 +202,13 @@ def sync_feishu(skill_name):
     skill_content = ""
     for domain_dir in VAULT_DIR.iterdir():
         if domain_dir.is_dir():
-            skill_file = domain_dir / f"{skill_name}.md"
+            skill_file = domain_dir / f"{stem}.md"
             if skill_file.exists():
                 skill_content = skill_file.read_text()
                 break
 
     if not skill_content:
-        update_status(skill_name, "feishu", False, "skill content not found")
+        update_status(stem, "feishu", False, "skill content not found")
         return False
 
     try:
@@ -312,20 +218,21 @@ def sync_feishu(skill_name):
         }
         response = requests.post(webhook_url, json=payload, timeout=10)
         if response.status_code == 200:
-            update_status(skill_name, "feishu", True)
+            update_status(stem, "feishu", True)
             print(f"已同步到飞书")
             return True
         else:
-            update_status(skill_name, "feishu", False, f"HTTP {response.status_code}")
+            update_status(stem, "feishu", False, f"HTTP {response.status_code}")
             return False
     except Exception as e:
-        update_status(skill_name, "feishu", False, str(e))
+        update_status(stem, "feishu", False, str(e))
         return False
 
 
 def show_status(skill_name):
     """显示同步状态"""
     status = load_status()
+    skill_name = status_key(skill_name)
 
     if skill_name not in status:
         print(f"未找到 {skill_name} 的同步记录")
@@ -336,7 +243,7 @@ def show_status(skill_name):
         if target.startswith("_"):  # 跳过 _README 等元字段
             continue
         status_str = "✅" if info["synced"] else "❌"
-        print(f"{status_str} {target}: {info['timestamp']}")
+        print(f"{status_str} {target}: {info.get('timestamp', 'n/a')}")
         if info.get("error"):
             print(f"   错误: {info['error']}")
 
@@ -383,14 +290,18 @@ def main():
     success = True
 
     try:
-        if "vault" in targets:
-            success &= sync_vault(args.skill, args.domain)
+        try:
+            if "vault" in targets:
+                success &= sync_vault(args.skill, args.domain)
 
-        if "github" in targets:
-            success &= sync_code(args.skill, args.domain)
+            if "github" in targets:
+                success &= sync_code(args.skill, args.domain)
 
-        if "feishu" in targets:
-            success &= sync_feishu(args.skill)
+            if "feishu" in targets:
+                success &= sync_feishu(args.skill)
+        except DomainInferenceError as e:
+            print(f"领域识别失败: {e}")
+            return 2
     finally:
         # P2-1: 批量写盘，无论成败都 flush 一次
         flush_status()

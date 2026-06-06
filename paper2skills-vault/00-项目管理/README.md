@@ -1,6 +1,6 @@
 # 项目管理
 
-> **最新更新**：2026-06-01（技术债清零 Sprint）
+> **最新更新**：script-derived governance baseline
 
 ## 进度追踪
 - [Week 1] 建系统（Day 1-7）✅
@@ -11,10 +11,12 @@
 - [技术债清零] MCP Server + 图谱断链修复 + 环境治理（2026-06-01）✅
 
 ## 当前状态
-- **Skill 总数**：**220** / 图谱边数：**1938** / missing_prerequisite：**0**
-- **MAS MVP**：5 工作流 / **47 项集成测试全绿** / MCP Server 4 个 domain server
+- **Skill 总数**：**302** / 图谱边数：**5390** / P0/P1 缺口：**0/0** / P2 复核项：**9**
+- **MAS MVP**：5 工作流 / 标准库测试由 `python3 -m pytest` 验证 / MCP Server 4 个 domain server
 - **工具注册**：112 个工具 / 14 个域
 - **累计 ROI**：12000-22000 万元/年潜在（中型品牌）
+
+> 计数类状态不再手动维护为权威来源。请用 `doctor`、`skills_graph_analyzer.py --gaps`、`build_asset_inventory.py --dry-run` 重建。
 
 ## 核心文档导航
 
@@ -41,6 +43,10 @@
 
 | 工具 | 路径 |
 |---|---|
+| 项目健康检查 | `python3 -m paper2skills_common.doctor --json` |
+| Paper 候选队列 | `paper2skills-skills/paper-选题/scripts/build_candidate_queue.py` |
+| 增量 workflow driver | `paper2skills-skills/paper-workflow/scripts/run_incremental_workflow.py` |
+| Darwin 20-loop 进化 | `paper2skills-skills/paper-workflow/scripts/run_darwin_evolution.py` |
 | Skill 图谱分析 | `paper2skills-skills/paper-skills-graph/scripts/skills_graph_analyzer.py` |
 | Skill 别名映射表 | `paper2skills-vault/07-资源库/skill-aliases.json` |
 | sync_status 重建 | `paper2skills-skills/paper-同步/scripts/rebuild_sync_status.py` |

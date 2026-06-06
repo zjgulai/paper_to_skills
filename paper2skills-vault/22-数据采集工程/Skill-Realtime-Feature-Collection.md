@@ -917,8 +917,8 @@ FEATURE_TIERS = {
 - [[Skill-Matrix-Factorization]]：批次协同过滤特征 + 实时行为特征 → 混合排序信号融合
 
 ### 延伸技能（Extends）
-- [[Skill-Online-Learning-Recommendation]]：在本 Skill 的实时特征流基础上，实现模型参数的在线增量更新
-- [[Skill-Feature-Drift-Detection]]：监控实时特征分布漂移，触发批次模型重训信号
+- [[Skill-Cold-Start-Product-Recommendation]]：冷启动推荐 ↔ 实时特征加速新品曝光，是本 Skill 的直接下游
+- [[Skill-Data-Drift-Detection]]：监控实时特征分布漂移，触发批次模型重训信号
 
 ---
 
