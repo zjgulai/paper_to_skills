@@ -1,6 +1,6 @@
 # paper2skills 知识库
 
-> **最近更新：2026-06-01**  · 当前 **220 个 Skill 卡片** 跨 22 个领域 · 图谱 **1938 条边** · missing_prerequisite 断链 = **0**
+> **最近更新：2026-06-04**  · 当前 **302 个 Skill 卡片** 跨 20 个领域 · 图谱 **5,390 条边** · missing_prerequisite 断链 = **0** · 新建跨域桥梁 **2 条**（mas↔advertising / mas↔KG）
 
 ## 项目简介
 将前沿学术论文转化为可落地的商业决策技能卡片，专注于母婴出海跨境电商业务场景。
@@ -8,27 +8,29 @@
 ## 目录结构
 
 ### 技能领域(括号内为 Skill 数量)
-- `01-因果推断/` (12) - Uplift / DML / Causal Forest / DiD / IV / Mediation / PC / Conformal ROI / EPICSCORE / SSBC / ClusterSC / Causal-Attribution-Bridge
-- `02-A_B实验/` (11) - 实验设计 / MAB / Thompson / Switchback / Power Analysis / Result Interpretation / BCCB / CUPED / Network Effect / Sequential AB / Agentic AB
-- `03-时间序列/` (12) - Prophet / TFT / GCF Causal / Doubly Robust / HiFoReAd / Anomaly / TSF / TimeCMA / Conformal UQ / Conformal TS / Multivariate Cointegration / Forecast-Driven-Inventory
-- `04-供应链/` (18) - Multi-Echelon / Two-Echelon DRL / Safety Stock / Gen-QOT / Monodense / Demand / FSDA / PASTA / PPO swap / NEO LRP / Multilevel FLP / Inventory-Pooling / Promotion-Demand-Decomposition / Multi-SKU-Procurement / Dynamic-Lot-Sizing-MOQ / Supplier-Capacity-Planning / New-Product-Coldstart / Inventory-Health-Aging
+- `01-因果推断/` (15) - Uplift / DML / Causal Forest / DiD / IV / Mediation / PC / Conformal ROI / EPICSCORE / SSBC / ClusterSC / Causal-Attribution-Bridge / ...
+- `02-A_B实验/` (12) - 实验设计 / MAB / Thompson / Switchback / Power Analysis / Result Interpretation / BCCB / CUPED / Network Effect / Sequential AB / Agentic AB / ...
+- `03-时间序列/` (14) - Prophet / TFT / GCF Causal / Doubly Robust / HiFoReAd / Anomaly / TSF / TimeCMA / Conformal UQ / Conformal TS / Multivariate Cointegration / Forecast-Driven-Inventory / ...
+- `04-供应链/` (19) - Multi-Echelon / Two-Echelon DRL / Safety Stock / Gen-QOT / Monodense / Demand / FSDA / PASTA / PPO swap / NEO LRP / Multilevel FLP / Inventory-Pooling / Promotion-Demand-Decomposition / Multi-SKU-Procurement / Dynamic-Lot-Sizing-MOQ / Supplier-Capacity-Planning / New-Product-Coldstart / Inventory-Health-Aging / ...
 - `05-推荐系统/` (11) - MF / DL-HI / NeuralNDCG / SR-GNN / Cold-Start Meta / DCE 反事实 / Semantic ID / Diversity / Explainable / CSDM Diffusion / CAGED Debiased
 - `06-增长模型/` (22) - LTV / Churn / Customer Journey / DQN / Uplift Churn / RFM / Lifecycle / Bass / Cold-Start / DL Churn / New Product Mining / UCB-LDP / CATE-NBA / GenAgent / Category-Trend / Competitor-Intelligence / Product-Opportunity / Supplier-Evaluation / Market-Size-Estimation / Product-Lifecycle-Stage / Conformal-ROI / EPICSCORE（共22）
 - `07-NLP-VOC/` - 已迁至 ai_nlp_voc 独立仓库,本仓库保留原始论文档案
-- `08-知识图谱/` (16) - HGT / HGCN / Dense Retrieval / GraphRAG / KG Auto / Hierarchical Product KG / CoLaKG / KG Completion / KGQA / Multilingual NER / KG-Skills / AgentRouter / SCKG Risk / CausalRAG / Audience KG / GNN Foundations
-- `09-DataAgent-LLM/` (10) - DeepAnalyze / Argos / Dashboard / SQL Agent / RCA / Customer Journey Tree / Dial-In LLM / ProRCA / RAG Enhanced / NL2Dashboard
-- `10-MAS/` (13) - MAS Orchestrator / Subagent / Skill Registry / AutoGen / MetaGPT / CAMEL / ReAct / ToT / Reflexion / Debate / Memory / Self-Improving / Agent-Production-Engineering
-- `11-AI人文/` (1) - AI Tech × Healing Cards
-- `12-ML基础/` (9) - Feature Engineering / Model Evaluation / Cross Validation / Imbalanced Data / Ensemble / Feature Selection / Hyperparameter Optimization / Data-Drift-Detection / Model-Performance-Monitor
-- `13-广告分析/` (19) - Ad Attribution / ROAS / Search Intent / PVM / HGNN / GraphTrack / CABB / TRACE Delayed CVR / TESLA / FrontDoor / PIE / Identity Debiasing / Negative Keyword / Creative Fatigue / TikTok Attribution / Compliance Guardrail / Ad-to-Behavior Funnel / CDA Cookieless / Listing-Quality-Scoring
-- `14-用户分析/` (18) - Funnel / Cohort / AGRS / MAA / StaR / LACA / TRACE Clickstream / NonItem-Page / Trajectory / Traffic Source / Session Intent / Sparse Matrix / BlockEcho / STAMImputer / Utimac / PersonaBot / GPLR / Review-Pain-Point-Mining
-- `15-营销投放分析/` (9) - MMM / DARA Agentic MMM / Promotion / Bayesian MMM / GenAudience LLM / Channel Saturation / Competitive Response / Multi-Objective Budget / Geo-Level
-- `16-智能体工程/` (19) - Auto Synthesis / MCP-A2A / Lifecycle / Context Compression / Agentic Memory / Active Pruning / Memory-as-Action / Task-Adaptive / Co-Evolutionary / Hermes Tool-Use / SLM Optimization / Tool Audit / MCP Benchmark / Long-Term Preference / EComStage / Orchestration Trace / Agent Safety / Fault Tolerance / Cost-Aware Scheduling
-- `17-价格优化/` (5) - Dynamic Pricing / Competitive Monitoring / Markdown / Bundle / Cross-Border
-- `18-物流履约/` (3) - Cross-Border Routing / Last-Mile Delivery / Returns
-- `19-风控反欺诈/` (3) - Review Fraud / Transaction Anomaly / Click Fraud
+- `08-知识图谱/` (18) - HGT / HGCN / Dense Retrieval / GraphRAG / KG Auto / Hierarchical Product KG / CoLaKG / KG Completion / KGQA / Multilingual NER / KG-Skills / AgentRouter / SCKG Risk / CausalRAG / Audience KG / GNN Foundations / ...
+- `09-DataAgent-LLM/` (11) - DeepAnalyze / Argos / Dashboard / SQL Agent / RCA / Customer Journey Tree / Dial-In LLM / ProRCA / RAG Enhanced / NL2Dashboard / ...
+- **`10-MAS/` (35)** - MAS Orchestrator / Subagent / Skill Registry / AutoGen / MetaGPT / CAMEL / ReAct / ToT / Reflexion / Debate / Memory / Self-Improving / Agent-Production-Engineering / **Dynamic-Trust** / **Testing-Verification** / **Resource-Scheduling** / **Consensus-Mechanism** / **Scale-Management** / **LLM-AutoBidding-MAS** ★ / **Adversarial-Defense** / **Cross-Org-Protocol** / **Dynamic-KG-Collaboration** ★ / ...
+- `11-AI人文/` (6) - AI Tech × Healing Cards / ...
+- `12-ML基础/` (10) - Feature Engineering / Model Evaluation / Cross Validation / Imbalanced Data / Ensemble / Feature Selection / Hyperparameter Optimization / Data-Drift-Detection / Model-Performance-Monitor / ...
+- `13-广告分析/` (20) - Ad Attribution / ROAS / Search Intent / PVM / HGNN / GraphTrack / CABB / TRACE Delayed CVR / TESLA / FrontDoor / PIE / Identity Debiasing / Negative Keyword / Creative Fatigue / TikTok Attribution / Compliance Guardrail / Ad-to-Behavior Funnel / CDA Cookieless / Listing-Quality-Scoring / ...
+- `14-用户分析/` (21) - Funnel / Cohort / AGRS / MAA / StaR / LACA / TRACE Clickstream / NonItem-Page / Trajectory / Traffic Source / Session Intent / Sparse Matrix / BlockEcho / STAMImputer / Utimac / PersonaBot / GPLR / Review-Pain-Point-Mining / ...
+- `15-营销投放分析/` (10) - MMM / DARA Agentic MMM / Promotion / Bayesian MMM / GenAudience LLM / Channel Saturation / Competitive Response / Multi-Objective Budget / Geo-Level / ...
+- `16-智能体工程/` (45) - Auto Synthesis / MCP-A2A / Lifecycle / Context Compression / Agentic Memory / Active Pruning / Memory-as-Action / Task-Adaptive / Co-Evolutionary / Hermes Tool-Use / SLM Optimization / Tool Audit / MCP Benchmark / Long-Term Preference / EComStage / Orchestration Trace / Agent Safety / Fault Tolerance / Cost-Aware Scheduling / ...（共45）
+- `17-价格优化/` (7) - Dynamic Pricing / Competitive Monitoring / Markdown / Bundle / Cross-Border / ...
+- `18-物流履约/` (6) - Cross-Border Routing / Last-Mile Delivery / Returns / ...
+- `19-风控反欺诈/` (6) - Review Fraud / Transaction Anomaly / Click Fraud / ...
 - `20-AI视频生成/` (8) - AnchorCrafter / Phantom / Aquarius / BrandFusion / DAWN / E-Commerce Benchmark / Text-to-Edit / Virbo
-- `21-合规决策/` (1) - Category-Compliance-Prescan（新领域，2026-05-25）
+- `21-合规决策/` (1) - Category-Compliance-Prescan
+
+> ★ = 跨域桥梁 Skill（2026-06-04 新建）
 
 > **粗体** Skill 为 2026-05-21~22 新增萃取.
 
