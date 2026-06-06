@@ -353,7 +353,7 @@ def demonstrate_tot_vs_cot():
     print("ToT vs CoT 对比")
     print("=" * 70)
 
-    print("""
+    print(r"""
     CoT (Chain-of-Thought):
       问题 → Thought1 → Thought2 → Thought3 → 答案
 

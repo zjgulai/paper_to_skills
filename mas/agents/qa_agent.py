@@ -34,7 +34,7 @@ class QAAgent:
                     "confidence": 1.0,
                     "estimated_cost": 0.0,
                 }],
-                "token_usage": state.get("token_usage", 0) + 100,
+                "token_usage": 100,
             }
 
         last_output = outputs[-1]
@@ -68,7 +68,7 @@ class QAAgent:
                 "estimated_cost": 0.0,
                 "status": "ok" if passed else "qa_failed",
             }],
-            "token_usage": state.get("token_usage", 0) + 200,
+            "token_usage": 200,
         }
 
     @staticmethod

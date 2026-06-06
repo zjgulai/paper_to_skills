@@ -56,7 +56,7 @@ class MarketingAgent:
                 "estimated_cost": analysis["estimated_cost"],
                 "status": "ok",
             }],
-            "token_usage": state.get("token_usage", 0) + 1000,
+            "token_usage": 1000,
         }
 
     @staticmethod

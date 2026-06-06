@@ -67,7 +67,7 @@ class SupplyChainAgent:
                 "estimated_cost": rec["estimated_cost"],
                 "status": "ok",
             }],
-            "token_usage": state.get("token_usage", 0) + 800,
+            "token_usage": 800,
         }
 
     @staticmethod

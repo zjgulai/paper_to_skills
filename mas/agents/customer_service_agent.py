@@ -50,7 +50,7 @@ class CustomerServiceAgent:
                 "estimated_cost": analysis["estimated_cost"],
                 "status": "ok",
             }],
-            "token_usage": state.get("token_usage", 0) + 600,
+            "token_usage": 600,
         }
 
     def _handle_review(self, state: WorkflowContext, payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -81,7 +81,7 @@ class CustomerServiceAgent:
                 "estimated_cost": estimated_cost,
                 "status": "ok",
             }],
-            "token_usage": state.get("token_usage", 0) + 500,
+            "token_usage": 500,
         }
 
     @staticmethod

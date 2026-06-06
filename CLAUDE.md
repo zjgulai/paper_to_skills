@@ -111,6 +111,36 @@ Each step can be triggered separately via skills:
 3. **Review** (`paper-审核`): "审核 skill" / "Review quality of Skill-Uplift-Modeling"
 4. **Sync** (`paper-同步`): Use the sync script directly (see below)
 
+### Governance and Incremental Workflow
+
+Use these commands before any incremental topic update, paper search, extraction,
+Skill creation, or graph optimization:
+
+```bash
+# Quality gate: MAS tests, Markdown UTF-8, AST, domain registry, deps, asset alignment
+python3 -m paper2skills_common.doctor --json
+
+# Build an auditable paper candidate queue from graph gaps + roadmaps
+python3 paper2skills-skills/paper-选题/scripts/build_candidate_queue.py --dry-run
+
+# Run the staged incremental workflow driver. Default behavior is dry-run.
+python3 paper2skills-skills/paper-workflow/scripts/run_incremental_workflow.py --one-topic
+
+# Run 20 Darwin-style autoresearch evolution loops.
+python3 paper2skills-skills/paper-workflow/scripts/run_darwin_evolution.py --loops 20
+
+# Rebuild derived governance snapshots
+python3 paper2skills-skills/paper-同步/scripts/rebuild_sync_status.py --dry-run
+python3 paper2skills-skills/paper-同步/scripts/build_asset_inventory.py --dry-run
+python3 paper2skills-skills/paper-同步/scripts/build_fitness_snapshot.py --dry-run
+```
+
+Generated files such as `paper_candidate_queue.json`, `workflow_runs/*.json`,
+`darwin_evolution_runs/*.json`, `darwin_evolution_20loop_report.md`,
+`sync_status.json`, `skill_asset_inventory.json`, graph reports, and fitness
+snapshots are script-maintained audit artifacts. Do not treat them as a second
+manual source of truth for project structure or domain mapping.
+
 ### Sync Script Usage
 
 ```bash
@@ -198,6 +228,7 @@ python -m pytest model.py -v
 | `risk_fraud` | `19-风控反欺诈` | Fake review detection, transaction anomaly, click fraud | 3 | ⬜ |
 | `visual_content` | `20-AI视频生成` | Virtual anchor demo, product showcase I2V, brand video, talking-head UGC | 8 | ⬜ |
 | `compliance` | `21-合规决策` | **新领域 (2026-05-25)**: Category compliance prescan, regulatory risk, compliance-as-moat | 1 | ✅ |
+| `data_collection` | `22-数据采集工程` | **新领域 (2026-06-05)**: Document intelligence, identity resolution, fake review detection, federated collection, web crawling | 13 | ⬜ |
 
 **说明**：`ml_fundamentals`、`advertising`、`compliance` code 目录已于 Sprint 4-5 补全落地。`user_analytics`、`marketing`、`pricing`、`logistics`、`risk_fraud`、`visual_content` 仍为 vault-only，按需建立 code 子模块。
 
@@ -272,7 +303,7 @@ Search priority: Papers with code implementations > experimental validation > th
 
 ## Recent Skills Added
 
-> 总计 **220 个 Skill** 跨 **22 个领域**. Sprint 4+5 新增 12 个 P0 Skill (2026-05-25). 图谱 274节点 / 4437边. missing_prerequisite 断链 = 0.
+> 当前文件系统可见 **302 个 Skill** 跨注册领域. 最新图谱 dry-run: 302 节点 / 5390 边 / P0=0 / P1=0 / P2=9. 这些数字应通过 `doctor`、`build_asset_inventory.py`、`skills_graph_analyzer.py` 重建,不再手动维护为权威来源。
 
 ### Sprint 5 (2026-05-25) — 供应链供应计划侧 6 个 Skill
 
@@ -448,7 +479,7 @@ WF-D 选品扫描补缺 + 模型生产化横切面 + WF-B Listing 质量门控 +
 - **5 个业务工作流**: WF-A 智能补货 / WF-B 广告优化 / WF-C 客服分诊 / WF-D 选品扫描 / WF-E Review 监控
 - **工作流 Skill 覆盖率** (2026-06-01): WF-A 95% / WF-B 90% / WF-C 85% / WF-D 80% / WF-E 85%
 - **14 个核心模块**: agents/ + graphs/ + skills/ + state/ + hitl/ + checkpointing/ + observability/
-- **47/47 集成测试全绿**(MAS 骨架 12 + 各工作流 5+5+5+4+6 + MCP 路由 8 + 工具链 2)
+- **61/61 集成测试全绿**(含 MAS 工作流、MCP 路由、工具链、治理回归、增量 workflow 与 Darwin evolution 回归)
 - **入口**: [`mas/main.py`](mas/main.py) + [`mas/README.md`](mas/README.md) 部署指南
 
 ## Sync Status Tracking

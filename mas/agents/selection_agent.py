@@ -43,7 +43,7 @@ class SelectionAgent:
                 "estimated_cost": 0.0,
                 "status": "ok",
             }],
-            "token_usage": state.get("token_usage", 0) + 1200,
+            "token_usage": 1200,
         }
 
     @staticmethod

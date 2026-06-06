@@ -96,13 +96,20 @@ def human_approval_gate(
     if interrupt_fn is None:
         return {"pending_approval": approval_request, "approved": None}
 
-    decision = interrupt_fn(approval_request)
-    approved = decision.get("action") == "approve"
-    return {
-        "approved": approved,
-        "approval_note": decision.get("note", ""),
-        "pending_approval": None,
-    }
+    decision = interrupt_fn(approval_request) or {}
+    action = decision.get("action")
+    note = decision.get("note", "")
+
+    if action == "approve":
+        return {"approved": True, "approval_note": note, "pending_approval": None}
+    if action == "reject":
+        return {"approved": False, "approval_note": note, "pending_approval": None}
+    if action in {"pending", "modify"}:
+        approval_request["requested_action"] = action
+        return {"approved": None, "approval_note": note, "pending_approval": approval_request}
+
+    approval_request["requested_action"] = action or "unknown"
+    return {"approved": None, "approval_note": note, "pending_approval": approval_request}
 
 
 def route_after_approval(state: WorkflowContext) -> str:

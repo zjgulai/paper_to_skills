@@ -7,7 +7,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Callable, Dict, List, Optional
 
 
@@ -19,7 +19,7 @@ class ApprovalRequest:
     estimated_cost: float
     risk_level: str
     proposed_action: Dict[str, Any]
-    created_at: str = field(default_factory=lambda: datetime.utcnow().isoformat() + "Z")
+    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     resolved_at: Optional[str] = None
     resolution: Optional[str] = None
     note: str = ""
@@ -50,7 +50,7 @@ class ApprovalStore:
         req = self._store[workflow_id]
         req.resolution = action
         req.note = note
-        req.resolved_at = datetime.utcnow().isoformat() + "Z"
+        req.resolved_at = datetime.now(timezone.utc).isoformat()
         return req
 
     def get(self, workflow_id: str) -> Optional[ApprovalRequest]:
@@ -81,4 +81,5 @@ def make_blocking_interrupt(store: ApprovalStore = GLOBAL_STORE, notifier: Optio
             "action": "pending",
             "note": f"submitted to approval store, workflow_id={req.workflow_id}",
         }
+    _interrupt.approval_store = store  # type: ignore[attr-defined]
     return _interrupt

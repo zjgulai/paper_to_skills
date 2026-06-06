@@ -186,7 +186,7 @@ def build_workflow_graph(
     graph.add_conditional_edges(
         "human_approval",
         route_after_approval,
-        {"execute": "execute_action", "rejected": "rejected", "pending": "human_approval"},
+        {"execute": "execute_action", "rejected": "rejected", "pending": END},
     )
     graph.add_edge("execute_action", END)
     graph.add_edge("rejected", END)

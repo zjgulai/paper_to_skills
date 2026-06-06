@@ -1,13 +1,13 @@
 # MAS 部署与运维指南
 
-> **最新更新**：2026-06-01
-> Skill 卡片库已达 **220** 个，MAS 工具注册 **112 个 / 14 个域**，MCP Server 层已落地（4 个 domain server）
+> **最新更新**：2026-06-04
+> Skill 卡片库当前扫描 **302** 个，MAS 工具注册 **112 个 / 14 个域**，MCP Server 层已落地（4 个 domain server）
 
 母婴跨境电商多智能体系统 (MAS) - 阶段 0~8 MVP 已就绪。
 
 ## 集成现状
 
-- **MAS 基础设施**：5 工作流 + 14 模块 + **47/47 测试全绿**（2026-06-01）
+- **MAS 基础设施**：5 工作流 + 14 模块 + **61/61 测试全绿**（2026-06-04，含治理、增量 workflow 与 Darwin evolution 回归）
 - **Skill 工具注册**：**112 个工具 / 14 个域**（SkillRegistry），含 selection 域（新）
 - **MCP Server 层**：**4 个 domain server / 28 个工具**（阶段 8 已完成）
   - `supply_chain_server`：9 工具（demand_forecast / safety_stock 接真实实现）
@@ -74,7 +74,7 @@ cd paper_to_skills
 python3 --version  # 需要 3.12+
 ```
 
-### 跑全部 47 个集成测试
+### 跑全部 53 个集成测试
 
 ```bash
 python3 -m mas.tests.test_phase0_skeleton     # 12 项 MAS 骨架
@@ -84,6 +84,7 @@ python3 -m mas.tests.test_wfce_customer_ops_e2e # 5 项 WF-C/E 客服
 python3 -m mas.tests.test_wfd_selection_e2e    # 5 项 WF-D 选品（含 registry 断言）
 python3 -m mas.tests.test_phase6_integration   # 6 项 MAS 集成
 python3 -m mas.tests.test_mcp_server_routing   # 8 项 MCP 路由（新）
+python3 -m pytest mas/tests/test_governance_regressions.py -q # 6 项治理回归
 ```
 
 ### 入口 demo
@@ -178,7 +179,7 @@ export PAPER2SKILLS_FEISHU_WEBHOOK=https://open.feishu.cn/...
 1. 在 `requirements.txt` 添加 langgraph
 2. 把 `mas/graphs/base_graph.py` 改为 `from langgraph.graph import StateGraph, START, END`
 3. `interrupt()` 改用 `langgraph.types.interrupt`
-4. 47 个集成测试零修改通过即视为迁移完成
+4. 53 个集成测试零修改通过即视为迁移完成
 
 ### 阶段 8：MCP Server 化 Skill 工具 ✅ 已完成
 
@@ -202,7 +203,7 @@ export PAPER2SKILLS_FEISHU_WEBHOOK=https://open.feishu.cn/...
 
 | 维度 | 状态 |
 |---|---|
-| **集成测试** | ✅ **47/47 全部通过**（骨架 12 + WF-A 5 + WF-B 6 + WF-C/E 5 + WF-D 5 + 集成 6 + MCP 8） |
+| **集成测试** | ✅ **61/61 全部通过**（骨架/工作流/MCP/工具链 + 治理、增量 workflow、Darwin evolution 回归） |
 | **5 个工作流** | ✅ 全部端到端可跑 |
 | **HITL 双路径** | ✅ 同步/异步 callback 都验证 |
 | **Checkpointing** | ✅ SQLite 持久化跨进程加载 |
@@ -214,9 +215,10 @@ export PAPER2SKILLS_FEISHU_WEBHOOK=https://open.feishu.cn/...
 
 ### 已知限制
 
-1. **LLM 仍是 stub** — 生产替换 `BaseAgent._stub_llm` 为真实 ChatAnthropic
-2. **Skill 工具是规则版** — 当前是论文公式的简化实现,生产可接真实 Skill 卡片代码
-3. **HITL 仅 callback 模式** — 异步审批仍需补 FastAPI + 飞书 OpenAPI
+1. **运行模式默认显式显示为 `{'llm': 'stub', 'mcp': 'mcp_stub'}`** — 61/61 通过不等于真实 LLM/MCP 生产就绪
+2. **LLM 仍是 stub** — 生产替换 `BaseAgent._stub_llm` 为真实 ChatAnthropic
+3. **Skill 工具是规则版** — 当前是论文公式的简化实现,生产可接真实 Skill 卡片代码
+4. **HITL 仅 callback 模式** — 异步审批仍需补 FastAPI + 飞书 OpenAPI
 4. **没有并发隔离** — checkpointer SQLite 写入未做行锁,高并发需切 Postgres
 
 ---

@@ -131,7 +131,7 @@ class BaseAgent:
         return {
             "messages": [{"role": "assistant", "content": response.get("output", ""), "agent": self.name}],
             "skill_outputs": [skill_output],
-            "token_usage": state.get("token_usage", 0) + used_tokens,
+            "token_usage": used_tokens,
         }
 
     @staticmethod

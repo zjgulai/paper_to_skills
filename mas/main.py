@@ -10,6 +10,8 @@
 from __future__ import annotations
 
 import uuid
+import os
+import importlib.util
 from typing import Any, Callable, Dict, Optional
 
 from mas.checkpointing.sqlite_saver import SQLiteCheckpointer
@@ -35,18 +37,35 @@ WORKFLOW_TYPE_TO_BUILDER = {
 }
 
 
+def detect_runtime_modes() -> Dict[str, str]:
+    provider = os.environ.get("MAS_LLM_PROVIDER", "anthropic")
+    has_key = bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY"))
+    if provider == "anthropic":
+        provider_available = importlib.util.find_spec("anthropic") is not None
+    elif provider == "openai":
+        provider_available = importlib.util.find_spec("openai") is not None
+    else:
+        provider_available = False
+
+    llm_mode = "real_llm" if has_key and provider_available else "stub"
+    mcp_mode = os.environ.get("MAS_MCP_MODE", "mcp_stub")
+    return {"llm": llm_mode, "mcp": mcp_mode}
+
+
 class MAS:
     def __init__(
         self,
         checkpointer: Optional[SQLiteCheckpointer] = None,
         interrupt_fn: Optional[Callable[[Dict], Dict]] = None,
+        approval_store: Optional[Any] = None,
         default_token_budget: int = 50_000,
     ) -> None:
         self.checkpointer = checkpointer or SQLiteCheckpointer()
         self.interrupt_fn = interrupt_fn
         self.default_token_budget = default_token_budget
         self.tracer = GLOBAL_TRACER
-        self.approval_store = GLOBAL_STORE
+        self.approval_store = approval_store or getattr(interrupt_fn, "approval_store", GLOBAL_STORE)
+        self.runtime_modes = detect_runtime_modes()
 
     def trigger(
         self,
@@ -116,6 +135,7 @@ class MAS:
 def _demo() -> None:
     mas = MAS(interrupt_fn=make_blocking_interrupt())
     print(f"可用工作流: {mas.available_workflows()}")
+    print(f"运行模式: {mas.runtime_modes}")
 
     print("\n=== 演示 1: 选品扫描 ===")
     result = mas.trigger(
