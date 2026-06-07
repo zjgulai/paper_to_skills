@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>块缺失数据补全 - 整段流量数据丢失时的恢复 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-BlockEcho-Missing-Data</nav>
+<h1>块缺失数据补全 - 整段流量数据丢失时的恢复</h1>
+<p class="muted">Skill-BlockEcho-Missing-Data · 14-用户分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景：TikTok Pixel 故障导致3天广告数据丢失</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>块缺失（Blockwise Missing）的独特挑战：当一整段时间（如连续3天）或一个完整维度（如某渠道所有数据）缺失时，传统插值方法（线性插值、KNN、MICE）依赖&quot;相邻元素&quot;做预测，在块缺失场景下这些邻居全部不存在，方法直接失效。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>无法评估那3天的广告效果，素材打分异常</li><li>缺失数据导致 ROAS 计算偏低，影响下月预算审批</li><li>桑基图中&quot;TikTok 广告&quot;整个时间段断裂，渠道归因失真</li><li>**MF 全局模式**：不同素材的长期表现趋势（用长程依赖恢复缺失列）</li><li>**GAN 局部分布**：第1-9天和第13-30天的数据分布特征（非线性模式）</li><li>**双判别器约束**：确保补全数据符合真实广告转化的统计规律</li><li>`(日期, 广告素材/受众包)` 的日级转化率矩阵</li><li>缺失块前后至少各有 5-7 天有效数据</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：3</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2402.18800</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-STAMImputer-SpatioTemporal.html'>Skill-STAMImputer-SpatioTemporal</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-STAMImputer-SpatioTemporal.html'>Skill-STAMImputer-SpatioTemporal</a></li><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

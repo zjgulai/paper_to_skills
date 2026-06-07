@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LLM Augmented Recommendation — 大语言模型增强个性化推荐：自然语言驱动的跨域用户意图理解 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-LLM-Augmented-Recommendation</nav>
+<h1>LLM Augmented Recommendation — 大语言模型增强个性化推荐：自然语言驱动的跨域用户意图理解</h1>
+<p class="muted">Skill-LLM-Augmented-Recommendation · 05-推荐系统 · status=stable</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：新用户冷启动 — 自然语言描述需求直接命中商品</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统推荐系统（Matrix Factorization、深度 CTR 模型）将用户行为编码为稠密向量，擅长捕捉行为规律，但无法理解用户用自然语言表达的复杂意图（如&quot;适合3个月宝宝添加辅食前的益智玩具&quot;）。LLM 增强推荐的核心思路是：以 LLM 为语义桥梁，将自然语言偏好、物品描述、上下文对话统一嵌入到推荐打分过程中，而非单独依赖协同过滤信号。</p>
+    <h2>3. 输入</h2><ul><li>`alpha`（语义权重）：冷启动用 0.7-0.9，热启动用 0.2-0.4</li><li>`CLARIFICATION_ENTROPY_THRESHOLD`：调低 → 更多澄清问题（精准但体验差），调高 → 更快推荐（体验好但不精准）</li><li>Grounding 相似度阈值：建议 0.3 以上，过低会引入噪声物品</li></ul>
+    <h2>4. 输出</h2><ul><li>`alpha`（语义权重）：冷启动用 0.7-0.9，热启动用 0.2-0.4</li><li>`CLARIFICATION_ENTROPY_THRESHOLD`：调低 → 更多澄清问题（精准但体验差），调高 → 更快推荐（体验好但不精准）</li><li>Grounding 相似度阈值：建议 0.3 以上，过低会引入噪声物品</li></ul>
+    <h2>5. 业务场景</h2><ul><li>首屏 CTR：从 2.3% → 7.1%（+209%）</li><li>新用户首单转化率：从 4.5% → 9.2%（+104%）</li><li>注册时用户自然语言输入（可选）</li><li>物品 Title/Description/Category（标准 Feed）</li><li>可选：用户历史（冷启动场景无需）</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：7</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2307.02391</li><li>2308.07107</li><li>2310.10108</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><span class='muted'>Matrix-Factorization]]</span></li><li><span class='muted'>SQL-Agent-Text-to-SQL]]</span></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html'>Skill-SQL-Agent-Text-to-SQL</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Cold-Start-Product-Recommendation]]</span></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>DeepAnalyze-Autonomous-Data-Science-Agent]]</span></li><li><span class='muted'>KG-Augmented-Recommendation-CoLaKG]]</span></li><li><a href='../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html'>Skill-DeepAnalyze-Autonomous-Data-Science-Agent</a></li><li><a href='../skills/Skill-KG-Augmented-Recommendation-CoLaKG.html'>Skill-KG-Augmented-Recommendation-CoLaKG</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>非商品页路径建模 - 导航页在用户旅程中的转化贡献 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-NonItem-Page-Path-Modeling</nav>
+<h1>非商品页路径建模 - 导航页在用户旅程中的转化贡献</h1>
+<p class="muted">Skill-NonItem-Page-Path-Modeling · 14-用户分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>推荐与搜索</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景1：桑基图导航节点权重计算</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统序列推荐系统只捕获「商品交互」（PDP 页面点击），忽略了用户在商品页之间穿插访问的非商品页——如首页、搜索结果页、分类页（Category Listing Page，CLP）、博客详情页、购物车页等。论文证明：这些非商品页携带了关于用户意图的关键信号，能显著提升 NextItem 预测性能。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>每类非商品页的「转化影响系数」（HypTrails Bayes Factor）→ 为桑基图节点赋予量化权重</li><li>含非商品页的 Next-Item 推荐模型，HR@10 较仅商品页基线提升 1-5%</li><li>识别「关键导航路径」：哪种非商品页对特定品类商品购买的预测贡献最大</li><li>直接解答「分类页 CLP 是否值得优化」的问题：若 HypTrails 显示 CLP → PDP 强相关，则 CLP 转化漏斗优化预期带来 10-30% 推荐点击提升</li><li>防止错误删减导航节点：量化证据避免「因为不知道贡献就砍掉」的盲目决策</li><li>预估价值：母婴独立站年 GMV 1 亿，推荐系统 CTR 提升 2% ≈ **200 万增量 GMV/年**</li><li>将搜索 Query 文本编码为向量（使用 sentence-transformers `all-MiniLM-L6-v2`，384 维）</li><li>作为 PE（Page Embedding）注入 SASRec / BERT4Rec 的 embedding 层</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：2</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2408.15953</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><span class='muted'>Skill-Recommendation-Diversity-Reranking</span></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-TRACE-Clickstream-Embedding.html'>Skill-TRACE-Clickstream-Embedding</a></li><li><a href='../skills/Skill-Traffic-Source-Analysis.html'>Skill-Traffic-Source-Analysis</a></li><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Skill-Recommendation-Diversity-Reranking</span></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-Traffic-Source-Analysis.html'>Skill-Traffic-Source-Analysis</a></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Skill-Recommendation-Diversity-Reranking</span></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

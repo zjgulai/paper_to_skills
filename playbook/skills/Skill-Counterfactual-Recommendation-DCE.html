@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>反事实推荐 - 双重校准估计器（DCE） · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Counterfactual-Recommendation-DCE</nav>
+<h1>反事实推荐 - 双重校准估计器（DCE）</h1>
+<p class="muted">Skill-Counterfactual-Recommendation-DCE · 05-推荐系统 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一:东南亚母婴电商奶粉品牌信仰偏差去除</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>电商推荐系统的核心痛点是 MNAR（Missing Not At Random）选择偏差:用户只对系统曝光过的商品产生反馈,而曝光本身受热度/历史 CTR 影响,导致推荐模型陷入&quot;自我强化&quot;循环。DCE 用双重校准同时校准倾向分(propensity)与插补误差(imputation),即插即用与所有 DR 变体兼容。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**:Shopee 印尼站某德国奶粉因历史曝光高 CTR 数据被高估,推荐模型持续压制澳洲/新西兰品牌的同质量 SKU。新妈妈点击不到优质冷门品牌,小品牌冷启动失败率 80%+。</li><li>**数据要求**:用户行为日志(曝光/点击/购买) + 商品特征(品牌/价格/认证)</li><li>**预期产出**:DCE-DR 模型给出的去偏 CTR 预测,新品牌召回率提升</li><li>**业务价值**:小品牌冷启动 ROI 提升 30-50%,平台 SKU 多样性扩大,小品牌入驻意愿↑;按印尼站月 GMV 5000 万元计,长尾品牌 GMV 增量约 200-400 万元/月</li><li>**业务问题**:母婴电商的核心特征是月龄驱动的时间窗口需求(0-6月奶粉1段, 6-12月辅食),用户在&quot;错误时期&quot;未购买 ≠ 无需求,但模型把&quot;未购&quot;当作&quot;不喜欢&quot;。</li><li>**数据要求**:用户行为日志 + 宝宝月龄 + 商品适用月龄属性</li><li>**预期产出**:对每个用户做&quot;如果在正确月龄推送,购买概率是多少&quot;的反事实预测,前置 1-2 月推送</li><li>**业务价值**:前置触达转化率提升 25-40%,以美亚母婴专区 100 万月活计,GMV 增量约 80-150 万元/月</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2403.00817</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Intelligent-Prediction-Doubly-Robust.html'>Skill-Intelligent-Prediction-Doubly-Robust</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-NeuralNDCG-Learning-to-Rank.html'>Skill-NeuralNDCG-Learning-to-Rank</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li><li><a href='../skills/Skill-Intelligent-Attribution-Causal-Forest.html'>Skill-Intelligent-Attribution-Causal-Forest</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

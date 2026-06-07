@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>06-增长模型 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content"><h1>06-增长模型</h1><p>Churn, LTV, RFM, market size estimation, PLC stage</p><div class='cards'><article class="card skill-card">
+  <h3><a href="../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html">GEANN + Bass 新品冷启动需求预测 - 母婴跨境新品备货</a></h3>
+  <p class="muted">06-增长模型 · Skill-Bass-Diffusion-New-Product-Forecasting</p>
+  <p>母婴跨境新品冷启动需求预测痛点:每年 2030 款新品上市,前 8 周零销售记录,人工拍脑袋备货首批,积压或断货损失年化 300+ 万元. 本 Skill 组合两个方法:① Bass 扩散模型生成新品扩散曲线形状(创新+模仿系数);② GEANN 图迁移从相似品历史借用销售信号;③ Bass 参数从相似品加权迁移初始化,实现&quot;形状从理论 + 规模从迁移&quot;的双驱动.</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Category-Trend-Forecasting.html">Category Trend Forecasting（品类趋势预测）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Category-Trend-Forecasting</p>
+  <p>品类趋势预测不是 point forecast，而是识别正在上升/下降的品类需求信号——Google Trends 搜索量、Amazon Best Seller Rank 变化率、社交媒体提及量。多信号融合判别品类所处的生命周期阶段：导入期 → 成长期 → 成熟期 → 衰退期。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Cold-Start-Product-Recommendation.html">Cold-Start Product Recommendation (冷启动商品推荐)</a></h3>
+  <p class="muted">06-增长模型 · Skill-Cold-Start-Product-Recommendation</p>
+  <p>冷启动商品推荐解决的核心问题是：新商品没有历史交互数据时，如何精准推荐给用户。传统方法通过内容特征生成合成嵌入向量，但这会造成冷商品和热商品之间的表征差距。本框架采用LLM用户行为模拟的全新思路：让大语言模型基于世界知识和推理能力，模拟用户可能如何与新商品交互。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Competitor-Product-Intelligence.html">Competitor Product Intelligence（竞品选品监测）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Competitor-Product-Intelligence</p>
+  <p>监测竞品 SKU 的新增/下架/价格变动/评价变化，构建竞品选品雷达。核心是异常检测 + 趋势归类——区分&quot;竞品战略性上新&quot;（值得跟进）和&quot;无效上新&quot;（SKU 测试）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Cross-Border-Cold-Start-Forecast.html">Cross-Border Cold-Start Forecast（跨境冷启动需求预测）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Cross-Border-Cold-Start-Forecast</p>
+  <p>跨境电商的致命问题：7080% 商品在目标市场无历史数据，1525% 上架后零销量，但传统预测模型会给出&quot;看起来合理&quot;的正数预测→导致库存积压。ZODIAC 用双域 LSTM + 双头架构同时解决&quot;零销量预测&quot;和&quot;过预测&quot;两个核心痛点。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Cross-Market-Product-Transfer.html">Cross-Market Product Transfer（跨市场产品适配性预测）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Cross-Market-Product-Transfer</p>
+  <p>一个在国内卖爆的母婴品，在海外市场能火吗？ Bert4XMR 将产品表示分解为两个独立组件：市场偏差（market embedding）和通用语义（item embedding）。训练时学习&quot;同一产品在不同市场的表示应接近&quot;，推理时用目标市场的 market embedding 修正预测，同时防止负迁移——避免把中国市场的偏好（如&quot;坐月子&quot;文化）错误迁移到欧美市场。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Customer-Churn-Prediction.html">Customer Churn Prediction (用户流失预测)</a></h3>
+  <p class="muted">06-增长模型 · Skill-Customer-Churn-Prediction</p>
+  <p>用户流失预测解决的核心问题是：识别哪些用户即将停止使用产品/服务，从而提前采取挽留措施。与被动等待用户流失后分析不同，预测模型可以提前 730 天预警，让运营团队有足够时间干预。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Customer-Journey-Prototype.html">Customer Journey Prototype Detection 客户旅程序列原型检测</a></h3>
+  <p class="muted">06-增长模型 · Skill-Customer-Journey-Prototype</p>
+  <p>客户旅程是跨渠道、多触点的序列数据，传统分析方法难以量化。本方法通过三步法实现旅程分析：1) 定义序列距离识别代表性原型；2) 基于原型距离预测购买概率；3) 对低转化旅程推荐反事实优化路径。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-DQN-Purchase-Prediction.html">DQN-Inspired Purchase Intent Prediction</a></h3>
+  <p class="muted">06-增长模型 · Skill-DQN-Purchase-Prediction</p>
+  <p>传统购买预测模型将问题视为静态分类任务。DQNinspired方法引入强化学习思维：将用户会话视为状态，营销干预视为动作，转化/流失视为奖励。通过经验回放和EpsilonGreedy探索，模型学会识别高价值干预时机。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Deep-Learning-Churn-Prediction.html">Skill: Deep Learning for Customer Churn Prediction</a></h3>
+  <p class="muted">06-增长模型 · Skill-Deep-Learning-Churn-Prediction</p>
+  <p>核心思想：利用深度神经网络（DNN）自动学习用户行为特征表示，预测客户在特定时间窗口内停止购买/使用服务的可能性。相比传统机器学习方法，深度学习能自动捕获非线性关系和复杂特征交互。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Generative-Agent-Simulation.html">生成式智能体营销沙盒仿真 - 零数据消费者行为推演</a></h3>
+  <p class="muted">06-增长模型 · Skill-Generative-Agent-Simulation</p>
+  <p>在产品发售前或营销活动上线前，传统方法（规则 ABM 或事后统计）无法捕捉真实人类社会的复杂性——冲动消费、品牌偏好、朋友间口碑传播。本 Skill 将斯坦福生成式智能体框架首次落地到消费者营销领域：在虚拟商业沙盒（Virtual Town）里，创建数百个拥有不同 Persona 的 LLM Agent，注入资源约束（预算/时间/精力）和社会记忆（品牌历史体验、口碑），然后向沙盒投放营销事件，观察一周内 Agent 的涌现行为。不写一行</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Guardrailed-CATE-NBA.html">Guardrailed CATE-NBA</a></h3>
+  <p class="muted">06-增长模型 · Skill-Guardrailed-CATE-NBA</p>
+  <p>光算出每个用户的增量效应（CATE）还不够——真实业务有预算上限、有高净值用户保护、有每天不能无限制打扰用户的体验红线。Guardrailed CATENBA 打通了&quot;预测→决策&quot;的最后一公里：三层漏斗把因果估算的结果直接转化为带约束的最优行动名单。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-LTV-Prediction-ZILN.html">LTV预测 - 零膨胀对数正态模型 (ZILN)</a></h3>
+  <p class="muted">06-增长模型 · Skill-LTV-Prediction-ZILN</p>
+  <p>LTV (Customer Lifetime Value, 客户生命周期价值) 预测是增长模型的核心能力。传统回归方法难以处理 LTV 分布的两个典型特征：零膨胀（大量用户只购买一次）和长尾分布（少数高价值用户贡献大部分收入）。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Market-Size-Estimation.html">Skill-Market-Size-Estimation</a></h3>
+  <p class="muted">06-增长模型 · Skill-Market-Size-Estimation</p>
+  <p>核心思想：在选品决策前量化「这个品类有多大、能拿多少」，避免「市场很大」的模糊判断。用两条互相校验的路径（Topdown 和 Bottomup）估算 TAM/SAM/SOM，并通过 Google Trends 校准和 Monte Carlo 模拟将点估计扩展为置信区间，输出可进入 ROI 模型的数字范围。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-New-Product-Opportunity-Mining.html">New Product Opportunity Mining (新品机会挖掘模型)</a></h3>
+  <p class="muted">06-增长模型 · Skill-New-Product-Opportunity-Mining</p>
+  <p>新品机会挖掘模型解决的核心问题是：在新商品上市前预测其成功概率，从而优化选品决策和资源配置。与传统的事后分析不同，该模型通过多维度评估框架，在投入大量资源前识别高潜力新品。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Product-Lifecycle-Stage.html">Skill-Product-Lifecycle-Stage</a></h3>
+  <p class="muted">06-增长模型 · Skill-Product-Lifecycle-Stage</p>
+  <p>核心思想：把一个 SKU 或品类的销量时间序列，分解为趋势+季节+残差三层信号，通过微分分析（斜率变化率）自动定位「成长→成熟→衰退」的阶段边界，并用年龄销量矩（AVM）作为阶段状态的低成本代理特征，最终输出四阶段标签（引入/成长/成熟/衰退）+ 进入时机决策建议。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag topic'>客服与VOC</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Product-Opportunity-Scoring.html">Product Opportunity Scoring（新品机会评分卡）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Product-Opportunity-Scoring</p>
+  <p>多维度加权评分卡，综合评估新品机会：</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-RFM-Customer-Segmentation.html">RFM Customer Segmentation for Targeted Marketing</a></h3>
+  <p class="muted">06-增长模型 · Skill-RFM-Customer-Segmentation</p>
+  <p>核心思想：用三个维度刻画用户价值——</p>
+  <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Supplier-Evaluation-Model.html">Supplier Evaluation Model（供应商评估模型）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Supplier-Evaluation-Model</p>
+  <p>多准则决策（MCDM）——TOPSIS 方法评估供应商。综合质量、价格、交期、合规、沟通五个维度。</p>
+  <div><span class='tag'>pricing</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-UCB-LDP-Dynamic-Pricing.html">UCB-LDP Dynamic Pricing（上下文动态定价）</a></h3>
+  <p class="muted">06-增长模型 · Skill-UCB-LDP-Dynamic-Pricing</p>
+  <p>在电商动态定价中，用户真实的保留价格（Valuation，即&quot;最多愿意出多少钱&quot;）是不可观测的——你唯一能看到的是在展示价格 $p$ 下用户是否购买（Binary Buy/NoBuy 反馈）。每位用户的购买意愿又由其上下文（设备、地区、停留时长等）决定。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Uplift-Churn-Prediction.html">Uplift Modeling for Churn Prediction</a></h3>
+  <p class="muted">06-增长模型 · Skill-Uplift-Churn-Prediction</p>
+  <p>Uplift Modeling解决的核心问题：识别哪些用户会因为干预（如优惠券、客服电话）而降低流失概率。传统流失预测模型只告诉你会流失，Uplift模型告诉你干预对谁有效。将用户分为四类：可说服者（Persuadables）、必然转化者（Sure Things）、无法挽回者（Lost Causes）、不要打扰者（Sleeping Dogs）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-User-Lifecycle-STAN.html">STAN 用户生命周期自适应建模</a></h3>
+  <p class="muted">06-增长模型 · Skill-User-Lifecycle-STAN</p>
+  <p>用户在不同生命周期阶段对推荐任务有不同偏好。新用户需要探索，成熟用户需要精准推荐。STAN通过识别用户当前生命周期阶段，自适应调整多任务学习权重，实现&quot;千人千面&quot;的任务优化策略。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article></div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

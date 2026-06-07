@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测） · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/17-价格优化.html">17-价格优化</a> / Skill-AIGP-LLM-Dynamic-Pricing</nav>
+<h1>AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）</h1>
+<p class="muted">Skill-AIGP-LLM-Dynamic-Pricing · 17-价格优化 · status=stable</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：吸奶器动态定价（旺季 / 淡季 / 竞品降价 三情景）</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统 RL 定价只优化短期收益（当日 GMV / 点击转化），忽视了跨周期的用户粘性损耗：盲目降价快速促单，但破坏品牌溢价 → 用户形成&quot;等降价&quot;心理锚点 → 长期 LTV 下降。AIGP 的核心创新是将 LLM 可解释决策与离线 RL 长期价值估计解耦组合，做到&quot;今天的定价对三个月后的 GMV 负责&quot;。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**Bass 扩散前期（上线 0-30 天）**：DPO 训练数据告诉模型：&quot;低价 + 首批买家获评论&quot; 是正确偏好 → AIGP 推荐 **&quot;低于成熟期价格 15-20%&quot;** + 主动索评机制，快速积累社会证明；LTVE 估算 30 天低价换取的评论，在后续 90 天可产生 $3.2 的 LTV 乘数效应。</li><li>**成熟期（30-90 天，评论 &gt;50）**：LTVE 检测到需求曲线从高弹性 → 中弹性转变；DPO 对齐目标从&quot;获客最大化&quot;切换至&quot;利润最大化&quot;；AIGP 建议阶梯提价（每 2 周 +3-5%），观察转化率信号决定是否继续上调。</li><li>**品牌护城河保护**：DPO 负样本包含&quot;过度降价导致次季度无法回调&quot;的历史案例，模型学会避开价格陷阱。</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-Orchestration-Trace-RL.html'>Skill-Orchestration-Trace-RL</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><span class='muted'>待萃取</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Market-Size-Estimation.html'>Skill-Market-Size-Estimation</a></li><li><a href='../skills/Skill-Product-Lifecycle-Stage.html'>Skill-Product-Lifecycle-Stage</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

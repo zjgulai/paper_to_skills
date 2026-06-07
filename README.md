@@ -382,3 +382,10 @@ Skill 卡片必须通过以下审核标准（总分 ≥ 7/10）：
 *Made with ❤️ for Cross-Border E-Commerce Data Scientists*
 
 </div>
+
+## Playbook 使用手册
+
+- 本地入口：[`playbook/index.html`](playbook/index.html)
+- 重新生成：`python3 paper2skills-skills/playbook-generator/scripts/build_playbook.py --root . --vault paper2skills-vault --out playbook`
+- 内容覆盖：领域目录、业务主题、工作流、Skill 详情页、Skills Graph、搜索索引。
+

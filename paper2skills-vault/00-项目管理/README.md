@@ -52,3 +52,10 @@
 | sync_status 重建 | `paper2skills-skills/paper-同步/scripts/rebuild_sync_status.py` |
 | 孤立 Skill 回填 | `paper2skills-skills/paper-skills-graph/scripts/backfill_skill_relations.py` |
 | MAS 系统入口 | `mas/main.py` + `mas/README.md` |
+
+## Playbook 使用手册
+
+- 本地入口：[`playbook/index.html`](../../playbook/index.html)
+- 重新生成：`python3 paper2skills-skills/playbook-generator/scripts/build_playbook.py --root . --vault paper2skills-vault --out playbook`
+- 内容覆盖：领域目录、业务主题、工作流、Skill 详情页、Skills Graph、搜索索引。
+

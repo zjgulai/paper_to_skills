@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tool Call Decision Framework — 必要性/效用/可负担性三维工具调用决策 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Tool-Call-Decision-Framework</nav>
+<h1>Tool Call Decision Framework — 必要性/效用/可负担性三维工具调用决策</h1>
+<p class="muted">Skill-Tool-Call-Decision-Framework · 16-智能体工程 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：选品 Agent 工具调用优化</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>LLM 工具调用存在系统性错位：模型既会过度调用（把可推理的问题交给工具），也会遗漏调用（低估工具对复杂查询的价值）。根本原因在于模型自感知与任务实际需求之间存在认知盲区——模型过度自信于自身知识覆盖，却对边界外的未知盲区无感知。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>对&quot;纸尿裤常规价格查询&quot;：Necessity=0.3（模型已有 30 天内数据），直接 SKIP</li><li>对&quot;新品类合规检查&quot;：Necessity=0.9 + Utility=0.95 → 强制 CALL</li><li>对&quot;促销期价格波动查询&quot;：Affordability 根据剩余 token 预算动态调整</li><li>每次扫描调用次数：10 → 6（减少 40%）</li><li>月节省成本：$200（按 API 单价 $0.02/次 × 10,000 次 × 40%）</li><li>Agent 延迟降低 35%（串行 API 调用减少）</li><li>物流追踪：Necessity=0.85（实时状态超出模型知识）+ Utility=0.9 → CALL</li><li>退款查询：Necessity=0.05（用户未提退款需求）→ SKIP</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2605.00737</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cost-Aware-Agent-Scheduling.html'>Skill-Cost-Aware-Agent-Scheduling</a></li><li><a href='../skills/Skill-SLM-Tool-Calling-Optimization.html'>Skill-SLM-Tool-Calling-Optimization</a></li><li><a href='../skills/Skill-Tool-Description-Audit.html'>Skill-Tool-Description-Audit</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Agentic-Workflow-Compilation.html'>Skill-Agentic-Workflow-Compilation</a></li><li><a href='../skills/Skill-DAG-Task-Decomposition-Planning.html'>Skill-DAG-Task-Decomposition-Planning</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

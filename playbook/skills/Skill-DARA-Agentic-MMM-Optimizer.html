@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DARA - LLM+RL 双阶段广告预算分配 Agent · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-DARA-Agentic-MMM-Optimizer</nav>
+<h1>DARA - LLM+RL 双阶段广告预算分配 Agent</h1>
+<p class="muted">Skill-DARA-Agentic-MMM-Optimizer · 15-营销投放分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一:Google Ads 新品冷启动(fewshot 预算分配)</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>固定总预算下,广告主需在 T 个时段/渠道间分配预算 $b_1, \ldots, b_T$ 最大化总回报。DARA 双阶段架构:Phase 1 Fewshot Reasoner(LLM 读历史 35 周数据生成初始分配) + Phase 2 Finegrained Optimizer(滑窗 ROI 反馈精调),用 GRPOAdaptive(动态参考策略 RL)训练 LLM,解决冷启动 + 数值精度双难题。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**:婴儿推车季节性爆款上线,Google Ads 历史只有 3-5 周数据,传统规则策略难快速找到最优出价时段</li><li>**数据要求**:近 3-5 周 Google Ads ROAS 时段数据 + 月度总预算</li><li>**DARA 配置**:T = 7(一周)或 24(一天时段);Phase 1 LLM 读历史生成日预算向量;Phase 2 每日 ROAS 反馈调整下一日</li><li>**业务价值**:冷启动期 ROAS 提升 15-30%,新品 GMV 增量 30-60 万元/月;以月预算 100 万元计 = **年化收益 360-720 万元**</li><li>**业务问题**:母婴品牌同投 Google Shopping + Meta DPA,每周需调整两渠道预算比例,但 marginal ROAS 随节促(618/双11)动态变化</li><li>**数据要求**:跨渠道历史 ROAS + CPC/CPM + 竞品节奏数据</li><li>**DARA 配置**:T = 渠道数(2-5);Phase 1 LLM 读历史 + 竞品输出初始权重;Phase 2 实时 ROAS 反馈精调,目标&quot;边际 ROAS 等价&quot;</li><li>**业务价值**:跨渠道 ROAS 提升 10-20%,大盘 GMV 增量 5-8%;以中型品牌月广告 500 万元计 = **年化增量 600-1200 万元**</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2601.14711</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Promotion-Effectiveness.html'>Skill-Promotion-Effectiveness</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

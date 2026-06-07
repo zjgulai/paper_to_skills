@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ATLAS — 梯度无关持续学习：Teacher-Student 双架构在线适应 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-ATLAS-Gradient-Free-Continual</nav>
+<h1>ATLAS — 梯度无关持续学习：Teacher-Student 双架构在线适应</h1>
+<p class="muted">Skill-ATLAS-Gradient-Free-Continual · 16-智能体工程 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：WFA 供应链 Agent 自适应补货学习</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统持续学习依赖反向传播更新模型权重，存在三个根本缺陷：必须离线批量训练（无法在服务中实时更新）、灾难性遗忘（新任务覆盖旧能力）、部署 Agent 无法自改（推理阶段参数冻结）。ATLAS 的突破在于：将&quot;学习&quot;从参数空间迁移到系统编排层，通过持久学习记忆（Persistent Learning Memory, PLM）存储经验蒸馏后的指导性知识，无需触碰模型权重。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>&quot;奶粉旺季（11月-2月）基准备货量乘以1.4倍系数&quot;</li><li>&quot;海外仓安全库存 = 预测消耗 × 30天 + 15% 缓冲&quot;</li><li>&quot;新品上架前2周预备量按同类商品历史峰值的60%&quot;</li><li>&quot;退款金额 &gt; ¥500 且非平台责任 → 必须触发人工审核&quot;</li><li>&quot;欧美客户投诉包装破损 → 直接全额退款+发送道歉邮件，不追责&quot;</li><li>&quot;疑似职业差评（30天内同账号&gt;3次退款）→ 标记升级人工&quot;</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：3</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2511.01093</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AgeMem-Unified-Agent-Memory.html'>Skill-AgeMem-Unified-Agent-Memory</a></li><li><a href='../skills/Skill-Agent-Memory-Learning.html'>Skill-Agent-Memory-Learning</a></li><li><a href='../skills/Skill-AutoSkill-Lifelong-Learning.html'>Skill-AutoSkill-Lifelong-Learning</a></li><li><a href='../skills/Skill-EvoSC-Self-Consolidation.html'>Skill-EvoSC-Self-Consolidation</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-MASEval-System-Evaluation.html'>Skill-MASEval-System-Evaluation</a></li><li><a href='../skills/Skill-Reflexion-Self-Improvement.html'>Skill-Reflexion-Self-Improvement</a></li><li><a href='../skills/Skill-ReliabilityBench-Agent-Reliability.html'>Skill-ReliabilityBench-Agent-Reliability</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>延伸</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AgeMem-Unified-Agent-Memory.html'>Skill-AgeMem-Unified-Agent-Memory</a></li><li><a href='../skills/Skill-AutoSkill-Lifelong-Learning.html'>Skill-AutoSkill-Lifelong-Learning</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-MASEval-System-Evaluation.html'>Skill-MASEval-System-Evaluation</a></li><li><a href='../skills/Skill-ReliabilityBench-Agent-Reliability.html'>Skill-ReliabilityBench-Agent-Reliability</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li><li><span class='muted'>关联</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-MASEval-System-Evaluation.html'>Skill-MASEval-System-Evaluation</a></li><li><a href='../skills/Skill-ReliabilityBench-Agent-Reliability.html'>Skill-ReliabilityBench-Agent-Reliability</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li><li><span class='muted'>关联</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

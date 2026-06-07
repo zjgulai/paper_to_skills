@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DARA Agentic MMM — LLM Agent 驱动的营销组合建模：双阶段自动调参与智能归因 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-DARA-Agentic-MMM</nav>
+<h1>DARA Agentic MMM — LLM Agent 驱动的营销组合建模：双阶段自动调参与智能归因</h1>
+<p class="muted">Skill-DARA-Agentic-MMM · 15-营销投放分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：婴儿辅食品牌多渠道广告归因（Amazon + Meta + TikTok）</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统 Marketing Mix Modeling（MMM）存在根本性瓶颈：大量人工调参。数据科学家需要手动尝试 adstock（广告滞留）半衰期、saturation（饱和度）参数、季节性先验，一轮完整建模周期通常需要 28 周。</p>
+    <h2>3. 输入</h2><ul><li>**时序长度**：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li>**渠道数**：2-8 个（超过 8 个建议分组）</li><li>**数据粒度**：周级；日级数据需先聚合</li><li>**外部变量**（可选）：节假日指标、竞争对手促销标记</li></ul>
+    <h2>4. 输出</h2><ul><li>**时序长度**：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li>**渠道数**：2-8 个（超过 8 个建议分组）</li><li>**数据粒度**：周级；日级数据需先聚合</li><li>**外部变量**（可选）：节假日指标、竞争对手促销标记</li></ul>
+    <h2>5. 业务场景</h2><ul><li>周级渠道消耗数据：`{week, channel, spend, impressions}`</li><li>对应期间销售额/转化量：`{week, revenue, units_sold}`</li><li>外部控制变量：`{week, seasonality_index, competitor_spend_estimate}`</li><li>参数优化准确率提升 **22-31%**（vs 人工调参基线）</li><li>TikTok 预算重配后整体 ROAS 提升 **+0.4x**（$2.1 → $2.5 per dollar）</li><li>建模周期从 **6 周压缩至 4 小时**</li><li>单次大促额外 GMV：+$12-18 万美元</li><li>广告浪费成本节省：-$2-3 万美元</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：6</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2601.14711</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><span class='muted'>Marketing-Mix-Modeling]]</span></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>CDA-Cookieless-Attribution]]</span></li><li><span class='muted'>Identity-Fragmentation-Debiasing]]</span></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li><li><a href='../skills/Skill-Identity-Fragmentation-Debiasing.html'>Skill-Identity-Fragmentation-Debiasing</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Multi-Objective-Budget-Allocation]]</span></li><li><span class='muted'>ROAS-Budget-Optimization]]</span></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

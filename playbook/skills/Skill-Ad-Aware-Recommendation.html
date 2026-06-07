@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ad-Aware Recommendation — 广告感知协同排序：有机推荐与赞助商品的联合优化 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Ad-Aware-Recommendation</nav>
+<h1>Ad-Aware Recommendation — 广告感知协同排序：有机推荐与赞助商品的联合优化</h1>
+<p class="muted">Skill-Ad-Aware-Recommendation · 05-推荐系统 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：Amazon 母婴类目 Sponsored Product 与有机搜索的协同排序</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统电商推荐系统中，广告排序（Sponsored Ranking） 和 有机推荐（Organic Recommendation） 是两个完全独立的系统，分别优化 CTR/ROAS 和个性化相关性，导致用户体验分裂——同一用户可能在广告位看到高竞价但低相关商品，在有机推荐区看到高相关但低转化意图商品。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><ul><li>`combined_score`：综合排序分（越高越靠前），已包含广告价值和预算约束</li><li>`item_type`：`&quot;ad-boosted&quot;` 表示受广告加权影响；`&quot;organic&quot;` 表示纯有机排序</li><li>当 `lambda_budget &lt; 0.05` 时，广告商品不参与竞价（避免透支预算）</li></ul>
+    <h2>5. 业务场景</h2><ul><li>用户点击历史（过去 90 天，mock 10万条）</li><li>广告出价数据：奶粉类 $2.5, 纸尿裤 $1.8, 婴儿推车 $3.2</li><li>ROAS 目标：4.0（每投入1美元广告费产出4美元GMV）</li><li>广告 CTR：+18.3%（从0.072 → 0.085）</li><li>有机推荐转化率：+7.2%（广告协同增强相关性）</li><li>月 ROAS：4.8（目标4.0，超出20%）</li><li>广告虚耗（不相关点击）：-34%</li><li>只投放与当前用户兴趣 cos_sim &gt; 0.6 的广告商品</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：4</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2402.17289</li><li>2405.14382</li><li>2501.08341</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><span class='muted'>Matrix-Factorization]]</span></li><li><span class='muted'>ROAS-Budget-Optimization]]</span></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Diversity-Reranking-SMMR]]</span></li><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Ad-Attribution-Modeling]]</span></li><li><span class='muted'>Cold-Start-Product-Recommendation]]</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

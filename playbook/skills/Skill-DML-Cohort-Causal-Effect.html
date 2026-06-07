@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DML Cohort 因果效应 - 群体异质性 HTE 估计 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-DML-Cohort-Causal-Effect</nav>
+<h1>DML Cohort 因果效应 - 群体异质性 HTE 估计</h1>
+<p class="muted">Skill-DML-Cohort-Causal-Effect · 01-因果推断 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一:新妈妈群体促销效应估计</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>电商场景中&quot;促销/拉新/订阅&quot;等干预对不同用户群体(cohort)效应差异巨大,但传统 A/B 难以分群估计。DML(Double Machine Learning)通过双稳健残差化消除高维混杂,Neyman 正交性保证 ML 估计偏差对因果参数为二阶小量,PCA+Kmeans cohort 特征化给出每个客户的个体 CATE。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**:平台对所有新妈妈用户统一发放&quot;新生儿满减券&quot;,ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分</li><li>**数据要求**:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理)</li><li>**DML 配置**:</li><li>第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$</li><li>PCA 降维至 10 维,K-means K=5 群体(囤货型/品牌敏感型/价格敏感型/全品类型/跨境首购型)</li><li>输出每个 cohort 的 CATE β_k</li><li>**业务价值**:识别&quot;0-3 月龄高客单价用户响应最强 (CATE 75/用户)&quot;,促销 ROI 从 1.3x 提升至 2.5x;按月度 1000 万券预算计 = **年化收益 1500-2500 万元**</li><li>**业务问题**:评估&quot;首单立减&quot;对不同孕/育阶段用户 12 月 LTV 的因果效应,以确定是按月龄分层投放还是统一投放</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2401.08290</li><li>2409.02332</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Intelligent-Prediction-Doubly-Robust.html'>Skill-Intelligent-Prediction-Doubly-Robust</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-Promotion-Effectiveness.html'>Skill-Promotion-Effectiveness</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

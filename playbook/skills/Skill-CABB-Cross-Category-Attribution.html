@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Click A Buy B 跨品类归因去偏 - 点击与购买商品不一致的归因修正 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-CABB-Cross-Category-Attribution</nav>
+<h1>Click A Buy B 跨品类归因去偏 - 点击与购买商品不一致的归因修正</h1>
+<p class="muted">Skill-CABB-Cross-Category-Attribution · 13-广告分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景 1：吸奶器广告 → 奶瓶购买的归因恢复</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>电商广告平台大量 Session 存在 CABB（Click A, Buy B） 现象——用户点击了商品 A 的广告，但最终购买的是商品 B。传统的 LastClick 归因模型将这些&quot;点击购买不一致&quot;的会话视为无意义噪声，强行将转化归零，导致系统性学习偏差：模型被迫&quot;奖励那些与购买只是巧合相关、而非真正驱动转化的商品展示&quot;。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>用户 Session 数据：`session_id, clicked_product_id, purchased_product_id, timestamp`</li><li>商品 Taxonomy 树：产品类目层级（至少三级：大类 → 中类 → 小类），如&quot;母婴 → 哺乳用品 → 吸奶器&quot;</li><li>共参与日志：用户在同一 session/7 天窗口内共同点击/收藏/购买的商品对，用于训练品类相似度矩阵</li><li>广告展示日志：`ad_id, product_id, user_id, impression/click/conversion`</li><li>修正后的广告归因权重（区分 CABA/CABB，CABB 按品类相似度加权）</li><li>重新评分的广告 ROAS，恢复被低估渠道的预算贡献</li><li>品类间相似度热力图（运营可用于理解母婴用户交叉购买规律）</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2507.15113</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Audience-Knowledge-Graph.html'>Skill-Audience-Knowledge-Graph</a></li><li><a href='../skills/Skill-Hierarchical-Search-Intent-Classification.html'>Skill-Hierarchical-Search-Intent-Classification</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-TESLA-NetCVR-Cascade.html'>Skill-TESLA-NetCVR-Cascade</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Audience-Knowledge-Graph.html'>Skill-Audience-Knowledge-Graph</a></li><li><a href='../skills/Skill-Hierarchical-Search-Intent-Classification.html'>Skill-Hierarchical-Search-Intent-Classification</a></li><li><a href='../skills/Skill-TESLA-NetCVR-Cascade.html'>Skill-TESLA-NetCVR-Cascade</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Audience-Knowledge-Graph.html'>Skill-Audience-Knowledge-Graph</a></li><li><a href='../skills/Skill-Hierarchical-Search-Intent-Classification.html'>Skill-Hierarchical-Search-Intent-Classification</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>
