@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>03-时间序列 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content"><h1>03-时间序列</h1><p>Demand forecasting, conformal prediction, LLM forecasting</p><div class='cards'><article class="card skill-card">
+  <h3><a href="../skills/Skill-Causal-Time-Series-Forecasting-GCF.html">因果时间序列预测 - GCF 反事实需求建模</a></h3>
+  <p class="muted">03-时间序列 · Skill-Causal-Time-Series-Forecasting-GCF</p>
+  <p>电商场景中,商品因配送延迟、缺货、Banner 压制等干预导致需求被&quot;压制&quot;,真实需求 $Y(0)$(无干预反事实)永远不可观测。GCF 用 RGCN + Dilated CNN 同时建模商品间空间关系(同类竞品图)和时序长程依赖,自动选取未受干预的相似商品作为合成控制组,估计反事实需求。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Conformal-Prediction-Demand-UQ.html">Conformal Prediction Demand UQ（需求预测不确定性量化）</a></h3>
+  <p class="muted">03-时间序列 · Skill-Conformal-Prediction-Demand-UQ</p>
+  <p>传统需求预测只给点估计（&quot;下月卖 1000 件&quot;），业务需要区间估计（&quot;95% 置信区间: 8501200 件&quot;）。Conformal Prediction 提供分布无关的、有限样本有效的预测区间，无需假设误差分布。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>知识图谱与RAG</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Conformal-TS-Intervals.html">Conformal TS Intervals（时序 Conformal 预测区间）</a></h3>
+  <p class="muted">03-时间序列 · Skill-Conformal-TS-Intervals</p>
+  <p>为时序预测的每个时间步生成分布无关的预测区间。EnbPI (Ensemble Batch Prediction Intervals)：用 Bootstrap 集成 + Conformal 残差构建适应时序依赖的预测区间。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag topic'>供应链与补货</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Conformal-Time-Series-Forecasting.html">Conformal Time Series Forecasting — 共形时序预测：有覆盖保证的需求预测区间</a></h3>
+  <p class="muted">03-时间序列 · Skill-Conformal-Time-Series-Forecasting</p>
+  <p>时序共形预测的挑战</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>知识图谱与RAG</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-EventCast-LLM-Event-Forecasting.html">EventCast — LLM 事件感知需求预测：大促/节假日场景 MAE-57%</a></h3>
+  <p class="muted">03-时间序列 · Skill-EventCast-LLM-Event-Forecasting</p>
+  <p>核心思想：传统时序模型（ARIMA、Prophet、TFT）在大促/节假日期间严重失效，原因是分布偏移——大促期的需求量级、峰值形态与日常完全不同，历史模式无法外推。EventCast 的解法是：让 LLM 做语义推理（不做数值预测），将运营事件转化为结构化特征，再喂给专门的预测模型。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Forecast-Driven-Inventory.html">Forecast-Driven Inventory（预测驱动库存优化）</a></h3>
+  <p class="muted">03-时间序列 · Skill-Forecast-Driven-Inventory</p>
+  <p>打通需求预测和库存决策——不是先预测再独立决策，而是将预测不确定性直接编码为库存策略参数。核心：服务水平优化——给定预测分布 $N(\hat{\mu}, \hat{\sigma})$，安全库存 $SS = z_\alpha \cdot \hat{\sigma} \cdot \sqrt{LT}$，其中 $z_\alpha$ 由缺货成本 vs 持有成本决定。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>供应链与补货</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html">HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</a></h3>
+  <p class="muted">03-时间序列 · Skill-Hierarchical-Demand-Forecasting-Reconciliation</p>
+  <p>母婴跨境补货场景下,各 SKU/仓/市场层独立预测后,加总不一致(SKU 求和 ≠ 仓库 ≠ 总量),导致采购计划矛盾、财务对账打架. HiFoReAd 用多阶段调和:① 三模型集成基础预测 → ② TopDown + 谐波对齐保留季节性 → ③ MinTrace 投影使全局误差方差最小 → ④ 末层 stratified scaling 强制叶节点一致. Walmart Ads 已生产部署,各层完全一致.</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>供应链与补货</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Intelligent-Prediction-Doubly-Robust.html">智能预测 - 双重稳健估计 (Doubly Robust Estimation)</a></h3>
+  <p class="muted">03-时间序列 · Skill-Intelligent-Prediction-Doubly-Robust</p>
+  <p>Doubly Robust Estimation（双重稳健估计）是一种鲁棒的因果推断方法，它结合了倾向评分（Propensity Score）和结果回归（Outcome Regression）两种估计量。其核心优势在于：只要两种模型中有一种被正确设定，估计量就是一致的。这使其成为预测任务中对抗模型误设风险的利器。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Multivariate-Cointegration.html">Multivariate Cointegration（多变量协整 VECM）</a></h3>
+  <p class="muted">03-时间序列 · Skill-Multivariate-Cointegration</p>
+  <p>多个时序共享长期均衡关系（如吸奶器销量←→配件销量）。Johansen 协整检验确定协整向量数量，VECM 建模短期动态调整 + 长期均衡约束。$\Delta Y_t = \Pi Y_{t1} + \sum \Gamma_i \Delta Y_{ti} + \epsilon_t$，其中 $\Pi = \alpha\beta&#x27;$（$\beta$ 是协整向量，$\alpha$ 是调整速度）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag topic'>供应链与补货</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Prophet-Forecasting.html">Prophet Forecasting with Seasonality and Holidays</a></h3>
+  <p class="muted">03-时间序列 · Skill-Prophet-Forecasting</p>
+  <p>核心问题：业务时序数据充满&quot;人造季节性&quot;——黑五、Prime Day、圣诞促销让销量暴涨，春节让物流停滞。传统ARIMA难以处理这些不规则的节假日效应，而Prophet专为业务时序设计。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Streaming-Data-Forecasting.html">Streaming Data Forecasting — 流式采集数据驱动的实时需求预测：采集→特征→预测端到端</a></h3>
+  <p class="muted">03-时间序列 · Skill-Streaming-Data-Forecasting</p>
+  <p>传统需求预测依赖离线批处理（T1 日数据训练，次日生效预测），对突发事件（爆品上线、竞品大促、舆情事件）响应迟滞 1224 小时。流式数据实时预测解决的核心问题：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Temporal-Fusion-Transformer.html">Skill: Temporal Fusion Transformer (TFT)</a></h3>
+  <p class="muted">03-时间序列 · Skill-Temporal-Fusion-Transformer</p>
+  <p>核心思想：TFT 是一种专为多水平时间序列预测设计的深度学习架构，能够同时处理静态特征（如产品类别）、时变已知特征（如节假日）和时变未知特征（如历史销量），并提供可解释的预测结果。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Time-Series-Anomaly-Detection.html">Time Series Anomaly Detection for E-Commerce Monitoring</a></h3>
+  <p class="muted">03-时间序列 · Skill-Time-Series-Anomaly-Detection</p>
+  <p>核心问题：母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动。如何区分&quot;正常波动&quot;和&quot;真实异常&quot;？异常检测的本质是：建立正常行为的概率模型，将低概率事件标记为异常。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag topic'>其他</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Time-Series-Forecasting.html">Time Series Forecasting (时间序列预测)</a></h3>
+  <p class="muted">03-时间序列 · Skill-Time-Series-Forecasting</p>
+  <p>时间序列预测解决的核心问题是：基于历史销售数据，预测未来一段时间的需求量，从而指导备货、定价和供应链决策。与简单外推不同， modern 时间序列模型能捕捉季节性、趋势、节假日效应和外部变量（促销、竞品）的影响。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-TimeCMA-LLM-Forecasting.html">TimeCMA - LLM-Empowered Multivariate Time Series Forecasting via Cross-Modality Alignment</a></h3>
+  <p class="muted">03-时间序列 · Skill-TimeCMA-LLM-Forecasting</p>
+  <p>TimeCMA 解决的核心问题是：如何让 LLM 的世界知识真正改善时间序列预测，而不仅仅是把数值序列塞进 Prompt 让 LLM 凑答案。传统纯数值模型（Prophet、TFT）只认识历史数字，一旦遭遇&quot;超级碗促销&quot;、&quot;政策限令&quot;等文本事件就彻底失效；直接把序列转文本输入给 LLM 则会导致语义噪声污染数值周期信号。TimeCMA 通过双分支编码 + 跨模态对齐精确解决了这对矛盾。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article></div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

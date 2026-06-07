@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Supply Chain Causal SCM — 数据驱动供应链根因归因：DAG + DoWhy GCM · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Supply-Chain-Causal-SCM-Attribution</nav>
+<h1>Supply Chain Causal SCM — 数据驱动供应链根因归因：DAG + DoWhy GCM</h1>
+<p class="muted">Skill-Supply-Chain-Causal-SCM-Attribution · 04-供应链 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：母婴奶粉备货短缺根因归因</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>为什么传统归因不够：瀑布式逻辑（&quot;缺货→往上查库存→往上查采购&quot;）本质上是相关性分析，无法区分&quot;A 导致 B&quot;与&quot;C 同时导致 A 和 B&quot;。实际供应链中，多因素常常通过间接路径（中介变量）影响结果——比如&quot;需求预测误差→战术产能调整→Capped Out Hours（COH）&quot;，传统归因会错误地把间接效应归给直接可见的变量。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**：母婴奶粉 SKU 出现缺货（库存降至 0），损失 GMV 约 8 万元/周。管理层需要快速定位：是需求预测误差（预测比实际低 40%）、交货期延误（供应商迟发货 3 天），还是安全库存设置过低？三个因素同时出现，传统瀑布分析无法量化各自责任；</li><li>**数据要求**：30 天历史数据，每日变量：需求预测值、实际需求、采购触发量、供应商交货期、实际到货量、库存水位；共 6 个节点</li><li>**SCM 做法**：PC 算法学习 DAG（需求预测误差→补货量→库存水位，交货期延误→到货量→库存水位，安全库存参数→补货触发点→补货量），拟合结构方程后对缺货时间点执行根因归因</li><li>**预期产出**：输出各因素归因比例，如&quot;需求预测误差贡献 55%，交货期延误贡献 35%，安全库存参数贡献 10%&quot;</li><li>**业务价值**：将缺货根因定位时间从 2-3 天（人工排查）缩短到 **2-3 小时**，针对性整改避免重复缺货</li><li>**业务问题**：WF-A 仓库补货计划师希望量化：如果把需求预测 MAPE 从 25% 降低到 15%，补货量应该如何调整？库存降低多少？这是一个反事实/干预问题，不是回归问题</li><li>**数据要求**：历史 60 天补货决策链路数据（预测误差、补货量、库存日均水位、缺货率），需已有拟合好的 SCM</li><li>**SCM 做法**：执行干预分析 `do(预测误差 = 原误差 × 0.6)` （模拟精度提升40%），通过 SCM 前向传播估计补货量和库存水位的变化；再用反事实推理量化已发生时间段的&quot;假设场景&quot;</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-AgentTrace-Causal-RCA.html'>Skill-AgentTrace-Causal-RCA</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-CSDM-Diffusion-ColdStart.html'>Skill-CSDM-Diffusion-ColdStart</a></li><li><a href='../skills/Skill-Causal-Discovery-PC-Algorithm.html'>Skill-Causal-Discovery-PC-Algorithm</a></li><li><a href='../skills/Skill-Causal-Time-Series-Forecasting-GCF.html'>Skill-Causal-Time-Series-Forecasting-GCF</a></li><li><a href='../skills/Skill-CausalRAG-Causal-Graph-Retrieval.html'>Skill-CausalRAG-Causal-Graph-Retrieval</a></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-EventCast-LLM-Event-Forecasting.html'>Skill-EventCast-LLM-Event-Forecasting</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-Helicase-Supply-Chain-KG-MAS.html'>Skill-Helicase-Supply-Chain-KG-MAS</a></li><li><a href='../skills/Skill-Inventory-Health-Aging-Attribution.html'>Skill-Inventory-Health-Aging-Attribution</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-ProRCA-Business-Analysis.html'>Skill-ProRCA-Business-Analysis</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>相关</span></li><li><span class='muted'>跨域关联</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-AgentTrace-Causal-RCA.html'>Skill-AgentTrace-Causal-RCA</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-CSDM-Diffusion-ColdStart.html'>Skill-CSDM-Diffusion-ColdStart</a></li><li><a href='../skills/Skill-Causal-Time-Series-Forecasting-GCF.html'>Skill-Causal-Time-Series-Forecasting-GCF</a></li><li><a href='../skills/Skill-CausalRAG-Causal-Graph-Retrieval.html'>Skill-CausalRAG-Causal-Graph-Retrieval</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-EventCast-LLM-Event-Forecasting.html'>Skill-EventCast-LLM-Event-Forecasting</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-Helicase-Supply-Chain-KG-MAS.html'>Skill-Helicase-Supply-Chain-KG-MAS</a></li><li><a href='../skills/Skill-Inventory-Health-Aging-Attribution.html'>Skill-Inventory-Health-Aging-Attribution</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-ProRCA-Business-Analysis.html'>Skill-ProRCA-Business-Analysis</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关</span></li><li><span class='muted'>跨域关联</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-CSDM-Diffusion-ColdStart.html'>Skill-CSDM-Diffusion-ColdStart</a></li><li><a href='../skills/Skill-CausalRAG-Causal-Graph-Retrieval.html'>Skill-CausalRAG-Causal-Graph-Retrieval</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-EventCast-LLM-Event-Forecasting.html'>Skill-EventCast-LLM-Event-Forecasting</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-Helicase-Supply-Chain-KG-MAS.html'>Skill-Helicase-Supply-Chain-KG-MAS</a></li><li><a href='../skills/Skill-Inventory-Health-Aging-Attribution.html'>Skill-Inventory-Health-Aging-Attribution</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-ProRCA-Business-Analysis.html'>Skill-ProRCA-Business-Analysis</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关</span></li><li><span class='muted'>跨域关联</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

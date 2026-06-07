@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PIE 实验增量预测多触点归因 - Amazon MTA 框架落地 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-PIE-Experimental-MTA</nav>
+<h1>PIE 实验增量预测多触点归因 - Amazon MTA 框架落地</h1>
+<p class="muted">Skill-PIE-Experimental-MTA · 13-广告分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：品牌全渠道预算沙盘核准（WFB 核心诉求）</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>广告归因的根本悖论：精度 vs 可信度。纯 RCT 实验（停投对照）可以给出无偏的渠道因果增量，但只能看总盘，无法下钻到每一条 Campaign 甚至每一次点击；纯 ML 多触点归因（Shapley / Attention）能细化到触点级别，但平台总是把广告优先投给&quot;本来就要买&quot;的高意图用户，模型捡到的全是&quot;选择偏差&quot;，转化贡献被系统性高估。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**：Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop。投手根据 Last-Click 数据削减 Facebook/TikTok 预算，老板看不到真实因果增量，**高管层（要 RCT）与执行层（要触点）两套数据永远对不上账**，每季度预算分配争论消耗 3-5 天。</li><li>**数据要求**：</li><li>RCT 数据：三渠道分别跑 4 周 Geo-holdout（2500+ 实验单元/渠道）</li><li>触点数据：用户旅程记录（journey_id、channel、timestamp、converted），日均 5000+ 条转化路径</li><li>**预期产出**：</li><li>各渠道 PIE 归因份额（如 Google 59%、Facebook 27%、TikTok 14%）</li><li>替代 Last-Click 的 `roas_pie` 指标，直接写入广告平台报表</li><li>月度预算分配建议表（含 delta 与 action 列）</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2508.08209</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>Uplift-Modeling</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

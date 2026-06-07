@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>STATE — 重尾指标鲁棒 A/B 方差减少：Student-t 回归调整（-70% 方差） · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/02-a_b实验.html">02-A_B实验</a> / Skill-STATE-Robust-Variance-Reduction</nav>
+<h1>STATE — 重尾指标鲁棒 A/B 方差减少：Student-t 回归调整（-70% 方差）</h1>
+<p class="muted">Skill-STATE-Robust-Variance-Reduction · 02-A_B实验 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：母婴新品 Listing AB 测试（GMV 重尾问题）</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>核心问题：电商 GMV / 订单量等指标天然重尾——极少数大客户的超大订单把方差撑得很高。CUPED 假设残差服从高斯分布，重尾数据下高斯假设失效，方差缩减效率大打折扣；CUPAC/MLRATE 用机器学习拟合协变量改进了均值预测，但同样没处理残差的非高斯性。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**：新品奶粉上架后测试两种 Listing 方案（主图 A vs 主图 B），以 GMV 作为主指标。少数大客户（批量采购/月子中心）产生 10-50 倍于普通用户的订单，使 GMV 方差极高。传统 CUPED 需跑 3 周才显著；</li><li>**数据要求**：实验期 GMV（$Y$）+ 实验前 14 天 GMV/浏览/加购等协变量（$X$），用户级别数据</li><li>**STATE 做法**：以 XGBoost 拟合 $\hat{Y} = f(X)$，残差 $\varepsilon$ 用 EM 估 t 分布参数（典型 $\hat{\nu} \approx 3.5$），得到方差缩减后的调整指标</li><li>**预期产出**：方差缩减 70%+，同等功效下实验从 3 周缩短至 **1.5 周**即可得出显著结论</li><li>**业务价值**：母婴新品 Listing 迭代周期减半，每个实验节省约 1.5 周，1 年可多跑约 17 轮实验</li><li>**业务问题**：测试 Google Shopping 出价策略 A vs B，以订单量和 ROAS 为指标。流量高峰期（母婴促销节）产生巨量短期爆单，订单量分布严重右偏</li><li>**数据要求**：广告账户级别实验，用户曝光→点击→订单链路数据；实验前 7 天点击/订单作为协变量</li><li>**STATE 做法**：对订单量用计数型 STATE（t 残差），对 ROAS 用比率型 STATE（delta 展开后 t 残差），EM 估参后得到功效更高的检验统计量</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2407.16337</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-AB-Test-Result-Interpretation.html'>Skill-AB-Test-Result-Interpretation</a></li><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-BCCB-Causal-Bandits.html'>Skill-BCCB-Causal-Bandits</a></li><li><a href='../skills/Skill-Causal-Time-Series-Forecasting-GCF.html'>Skill-Causal-Time-Series-Forecasting-GCF</a></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Guardrailed-Uplift-Targeting.html'>Skill-Guardrailed-Uplift-Targeting</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-Model-Evaluation-Metrics.html'>Skill-Model-Evaluation-Metrics</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-Power-Analysis-Sample-Size.html'>Skill-Power-Analysis-Sample-Size</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><a href='../skills/Skill-Switchback-Experiment-Design.html'>Skill-Switchback-Experiment-Design</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>跨域关联</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-BCCB-Causal-Bandits.html'>Skill-BCCB-Causal-Bandits</a></li><li><a href='../skills/Skill-Causal-Time-Series-Forecasting-GCF.html'>Skill-Causal-Time-Series-Forecasting-GCF</a></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Guardrailed-Uplift-Targeting.html'>Skill-Guardrailed-Uplift-Targeting</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-Model-Evaluation-Metrics.html'>Skill-Model-Evaluation-Metrics</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><a href='../skills/Skill-Switchback-Experiment-Design.html'>Skill-Switchback-Experiment-Design</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>跨域关联</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Causal-Time-Series-Forecasting-GCF.html'>Skill-Causal-Time-Series-Forecasting-GCF</a></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Guardrailed-Uplift-Targeting.html'>Skill-Guardrailed-Uplift-Targeting</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-Model-Evaluation-Metrics.html'>Skill-Model-Evaluation-Metrics</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>跨域关联</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

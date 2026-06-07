@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Subterranean Agent — 将工作流 SOP 编译进 LLM 权重 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Agentic-Workflow-Compilation</nav>
+<h1>Subterranean Agent — 将工作流 SOP 编译进 LLM 权重</h1>
+<p class="muted">Skill-Agentic-Workflow-Compilation · 16-智能体工程 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：SOPB Listing 上架流程编译</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统 LangGraph/CrewAI 等框架在运行时通过 Orchestrator 逐步调用 LLM 完成多步 SOP：每一步都需要独立的 API 调用、上下文窗口填充、token 计费。Subterranean Agent 的核心洞察是：当 SOP 固定时，Orchestrator 的编排逻辑可以从&quot;运行时解释&quot;变为&quot;编译时参数化&quot;——把整个多步工作流的决策逻辑直接烧录进单个模型权重。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>历史 SOP 执行轨迹（输入 SKU 信息 → 各步骤中间结果 → 最终 Listing）</li><li>标准化 SOP 定义文件（每步 Prompt 模板 + 输出 Schema）</li><li>至少 500 条高质量执行示例用于 SFT 训练数据</li><li>编译后单次 API 调用完成全部 4 步 SOP</li><li>输出结构化 JSON 包含：optimized_title / image_description / compliance_flags / keywords</li><li>响应时间从 4 次串行调用（约 12s）降至 1 次推理（约 3s）</li><li>成本节省：$150/天 → 约 $0.5–1.2/天（按 128–462× 节省比例）</li><li>节省金额：约 **$149/天 ≈ $4,400/月 ≈ $53,000/年**</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2605.22502</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cost-Aware-Agent-Scheduling.html'>Skill-Cost-Aware-Agent-Scheduling</a></li><li><a href='../skills/Skill-SLM-Tool-Calling-Optimization.html'>Skill-SLM-Tool-Calling-Optimization</a></li><li><a href='../skills/Skill-Skill-Lifecycle-Design.html'>Skill-Skill-Lifecycle-Design</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Auto-Skill-Synthesis.html'>Skill-Auto-Skill-Synthesis</a></li><li><a href='../skills/Skill-ParaManager-Parallel-Orchestration.html'>Skill-ParaManager-Parallel-Orchestration</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-DAG-Task-Decomposition-Planning.html'>Skill-DAG-Task-Decomposition-Planning</a></li><li><a href='../skills/Skill-GraphDeepAR-Demand-Forecasting.html'>Skill-GraphDeepAR-Demand-Forecasting</a></li><li><a href='../skills/Skill-LDP-Identity-Aware-Protocol.html'>Skill-LDP-Identity-Aware-Protocol</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><a href='../skills/Skill-Tool-Call-Decision-Framework.html'>Skill-Tool-Call-Decision-Framework</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

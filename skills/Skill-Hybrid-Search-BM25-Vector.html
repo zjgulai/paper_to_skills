@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>稀疏+稠密混合检索 — BM25 与向量检索融合 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Hybrid-Search-BM25-Vector</nav>
+<h1>稀疏+稠密混合检索 — BM25 与向量检索融合</h1>
+<p class="muted">Skill-Hybrid-Search-BM25-Vector · 08-知识图谱 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：母婴 SKU 精确匹配 + 语义模糊搜索融合</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>单一检索方式存在固有短板：BM25 擅长精确关键词匹配（SKU 编号、品牌名、型号），但无法理解语义；向量检索擅长语义模糊匹配，但对精确词汇（如&quot;B07X4X5GXD&quot;）敏感度低。混合检索将两路融合，在母婴电商场景中相比单一检索 Recall@10 提升 1525%（arXiv:2210.11773, 2022）。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>综合 Recall@10 提升 15-22%（相比最优单路）</li><li>搜索零结果率下降 45%</li><li>年化营收增量约 **¥35 万**（基于搜索转化率提升 2.5%，月 GMV 200 万）</li><li>中英混合查询准确率：BM25 48% → 向量 71% → **混合 85%**</li><li>FAQ 自动匹配率（无需转人工）：从 62% 提升到 **79%**</li><li>年化节省客服人力成本约 **¥22 万**（月均 4000 工单 × 17% 减少量）</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：3</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2009.10056</li><li>2210.11773</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Embedding-Fundamentals.html'>Skill-Embedding-Fundamentals</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-RAG-Reranking-CrossEncoder.html'>Skill-RAG-Reranking-CrossEncoder</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li><li><a href='../skills/Skill-Semantic-Chunking-Strategy.html'>Skill-Semantic-Chunking-Strategy</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

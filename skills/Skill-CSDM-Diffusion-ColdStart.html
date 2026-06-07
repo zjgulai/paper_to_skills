@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>扩散模型冷启动CTR - 新品零交互时的转化潜力预热 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-CSDM-Diffusion-ColdStart</nav>
+<h1>扩散模型冷启动CTR - 新品零交互时的转化潜力预热</h1>
+<p class="muted">Skill-CSDM-Diffusion-ColdStart · 05-推荐系统 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>视觉内容生成</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景1：Momcozy 新品吸奶器上线首日 CTR 预测（冷启动主场景）</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>传统推荐系统采用 Embedding &amp; MLP 范式：每个商品 ID 对应一个向量，该向量通过用户历史交互数据学习。新品没有历史交互 → Embedding 全为随机噪声 → CTR 预测失效，这就是冷启动问题。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>新品被排序算法压低权重，得不到曝光</li><li>潜在热销品在黄金流量窗口期被埋没</li><li>人工运营需要靠经验手动提权，效率低下</li><li>新品上线**第0天**即获得合理 CTR 分数（而非随机值）</li><li>Warm-up 阶段（前50次交互）AUC 提升 ~15-21%</li><li>新品首周曝光量提升 30-50%（因排序分数合理，不被系统压权重）</li><li>新品孵化周期缩短：从传统&quot;7天冷启动观察期&quot;压缩至 1-2 天</li><li>潜在头部品 GMV 挽回：假设每周有 5 个被埋没的潜力品，每个首周增量 $5000，月均 $100,000 GMV 挽回</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：2</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2504.06270</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Deep-Learning-Recommendation-HI.html'>Skill-Deep-Learning-Recommendation-HI</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li><li><a href='../skills/Skill-Explainable-Recommendation.html'>Skill-Explainable-Recommendation</a></li><li><a href='../skills/Skill-Session-Based-Recommendation-SR-GNN.html'>Skill-Session-Based-Recommendation-SR-GNN</a></li><li><span class='muted'>— 另一种冷启动方案（元学习路径），与 CSDM 互补</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Counterfactual-Recommendation-DCE.html'>Skill-Counterfactual-Recommendation-DCE</a></li><li><a href='../skills/Skill-NeuralNDCG-Learning-to-Rank.html'>Skill-NeuralNDCG-Learning-to-Rank</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

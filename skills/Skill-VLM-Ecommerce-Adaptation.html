@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VLM E-commerce Adaptation — 大规模视觉语言模型电商适配 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-VLM-Ecommerce-Adaptation</nav>
+<h1>VLM E-commerce Adaptation — 大规模视觉语言模型电商适配</h1>
+<p class="muted">Skill-VLM-Ecommerce-Adaptation · 16-智能体工程 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：婴儿奶瓶 Listing 质量自动评估</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>通用 VLM（如 GPT4V、LLaVA 等）在电商场景表现欠佳，根本原因是三大领域偏差：同款多图（同一产品的主图/侧面图/背面图/细节图共享同一 listing，模型需跨图聚合）、属性中心化（电商问答 90% 是围绕结构化属性如&quot;材质/尺寸/颜色&quot;，与图片描述类任务截然不同）、噪声图片（用户上传的低质量/遮挡/非标图占比极高）。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>输入：item_id + 多张图片 URL 列表 + 品类属性 Schema（JSON）</li><li>属性 Schema 样例：`{&quot;capacity_ml&quot;: int, &quot;material&quot;: [&quot;PP&quot;, &quot;PPSU&quot;, &quot;玻璃&quot;], &quot;bpa_free&quot;: bool, &quot;age_range&quot;: str}`</li><li>属性提取结果（JSON，带置信度）</li><li>图片覆盖度评分（0-1，是否覆盖必需角度）</li><li>质量评分（0-1，噪声/遮挡/模糊检测）</li><li>不合格原因列表（供运营直接修改）</li><li>输入：产品全套图片（主图+包装图+认证图，建议 3-8 张）</li><li>认证库：标识模板 + 名称别名映射（FDA / CE / BPA-Free Logo / ASTM F963 等）</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：paper2skills-code/llm_agent_engineering/vlm_ecommerce_adaptation</p>
+    <h2>8. 论文来源</h2><ul><li>2602.11733</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-LMM-Searcher-Multimodal-Context.html'>Skill-LMM-Searcher-Multimodal-Context</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-Phantom-Product-Showcase-I2V.html'>Skill-Phantom-Product-Showcase-I2V</a></li><li><a href='../skills/Skill-Tool-Call-Decision-Framework.html'>Skill-Tool-Call-Decision-Framework</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>相关</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-LMM-Searcher-Multimodal-Context.html'>Skill-LMM-Searcher-Multimodal-Context</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-Phantom-Product-Showcase-I2V.html'>Skill-Phantom-Product-Showcase-I2V</a></li><li><a href='../skills/Skill-Tool-Call-Decision-Framework.html'>Skill-Tool-Call-Decision-Framework</a></li><li><span class='muted'>相关</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-Phantom-Product-Showcase-I2V.html'>Skill-Phantom-Product-Showcase-I2V</a></li><li><a href='../skills/Skill-Tool-Call-Decision-Framework.html'>Skill-Tool-Call-Decision-Framework</a></li><li><span class='muted'>相关</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

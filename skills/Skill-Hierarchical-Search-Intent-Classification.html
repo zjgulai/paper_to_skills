@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>电商搜索层次化意图分类 - 母婴跨境广告自动词分类 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Hierarchical-Search-Intent-Classification</nav>
+<h1>电商搜索层次化意图分类 - 母婴跨境广告自动词分类</h1>
+<p class="muted">Skill-Hierarchical-Search-Intent-Classification · 13-广告分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一:月龄敏感词分类(直接套用层次化意图)</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>WFB 广告优化的核心是&quot;自动词拉取质量&quot;——母婴搜索词意图复杂(月龄敏感/信息查询/购买意图),错分会导致广告全链路失效. 本论文用两层意图分类:① Label Hierarchy(标签图 GCN + 注意力)让 finegrained 子类感知父类约束;② Instance Hierarchy(对比学习负对)区分同父类不同子类的查询;③ Neighborhoodaware Sampling(自训练)解决少数类(敏感词 0.05%0.</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**:Momcozy 跑 Amazon SP 广告时,自动词包含 &quot;baby bottle 0-3 months&quot; 和 &quot;baby bottle 4-6 months&quot;,传统分类器混淆为同一 aspect,导致**0-3 月广告投到 4-6 月用户**(月龄不匹配 → CTR 高但转化率极低,ACOS 飙到 60%+)</li><li>**数据要求**:历史搜索词 + 转化标签 + 月龄标注(可借 Amazon ESCI 数据训练 + 母婴垂类微调)</li><li>**层次配置**:</li><li>对比学习:同 Feeding 父类的 0-3M / 4-6M 互为强负对,模型自动学到月龄边界</li><li>**业务价值**:</li><li>月龄错配广告降低 70-80% → CTR 不变但转化率 +25-40%</li><li>ACOS 从 60% 降至 25-30% (健康值) = 月广告预算 200 万 × 35% 效率提升 = **70 万/月**</li><li>年化:**800-1000 万元**</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：3</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2403.06021</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Multilingual-NER-Universal-v2.html'>Skill-Multilingual-NER-Universal-v2</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

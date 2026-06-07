@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Marketing Data Pipeline — 营销归因多渠道数据采集管道 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Marketing-Data-Pipeline</nav>
+<h1>Marketing Data Pipeline — 营销归因多渠道数据采集管道</h1>
+<p class="muted">Skill-Marketing-Data-Pipeline · 15-营销投放分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：母婴品牌 Meta + TikTok + Amazon 三渠道归因重建</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>营销归因的核心难题是数据孤岛：广告平台（Meta/Google/TikTok）、CRM（Salesforce/HubSpot）、电商平台（Amazon/Shopify）、社交媒体各持一方数据，无法直接关联。数据管道需要解决：</p>
+    <h2>3. 输入</h2><ul><li>Meta: `facebook-business` SDK → `AdInsights` API</li><li>TikTok: TikTok for Business API → `/reports/integrated/get/`</li><li>Amazon: Amazon Attribution API → `attributionReports`</li><li>Shopify: Webhook → `orders/create` 事件</li></ul>
+    <h2>4. 输出</h2><ul><li>Meta: `facebook-business` SDK → `AdInsights` API</li><li>TikTok: TikTok for Business API → `/reports/integrated/get/`</li><li>Amazon: Amazon Attribution API → `attributionReports`</li><li>Shopify: Webhook → `orders/create` 事件</li></ul>
+    <h2>5. 业务场景</h2><ul><li>维持 TikTok 预算（因果归因下增量最大）</li><li>削减 Amazon Sponsored 20%（高 ROAS 主要来自已有意向用户）</li><li>**预计年度广告效率提升：节省 ¥12 万 + 增量 GMV +¥65 万**</li><li>将小红书预算从 ¥15 万提升至 ¥30 万</li><li>次月 DTC 站新用户增长 +38%，月度 GMV +¥82 万</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：5</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2407.14521</li><li>2411.16238</li><li>2501.09917</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><span class='muted'>LLM-Focused-Web-Crawling]]</span></li><li><span class='muted'>Marketing-Mix-Modeling]]</span></li><li><a href='../skills/Skill-LLM-Focused-Web-Crawling.html'>Skill-LLM-Focused-Web-Crawling</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>DARA-Agentic-MMM]]</span></li><li><a href='../skills/Skill-DARA-Agentic-MMM.html'>Skill-DARA-Agentic-MMM</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Data-Provenance-Lineage]]</span></li><li><span class='muted'>Procurement-Email-Extraction]]</span></li><li><a href='../skills/Skill-Data-Provenance-Lineage.html'>Skill-Data-Provenance-Lineage</a></li><li><a href='../skills/Skill-Procurement-Email-Extraction.html'>Skill-Procurement-Email-Extraction</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

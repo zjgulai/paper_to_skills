@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Data Collection Causal Debiasing — 采集偏差因果修正：爬虫选择性采集对因果分析的去污染 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Data-Collection-Causal-Debiasing</nav>
+<h1>Data Collection Causal Debiasing — 采集偏差因果修正：爬虫选择性采集对因果分析的去污染</h1>
+<p class="muted">Skill-Data-Collection-Causal-Debiasing · 22-数据采集工程 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：Amazon 评论爬虫偏差修正——折扣效应因果估计</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>跨境电商数据采集面临一个根本性困境：你能采到的数据，恰恰不是随机样本。Amazon 评论爬虫只能采集到购买且写了评论的买家（约 25% 购买者），而这批人的特征（高参与度、使用经验较强、投诉阈值较低）与全体买家截然不同。当你用这批有偏数据做因果推断（如&quot;折扣是否提升复购率&quot;），估计结果会被选择偏差（Selection Bias）严重扭曲。</p>
+    <h2>3. 输入</h2><ul><li>平台官方人口统计报告（抽样模拟）</li><li>内部 CRM 全量用户数据</li><li>随机对照实验（A/B test）中的控制组</li></ul>
+    <h2>4. 输出</h2><ul><li>平台官方人口统计报告（抽样模拟）</li><li>内部 CRM 全量用户数据</li><li>随机对照实验（A/B test）中的控制组</li></ul>
+    <h2>5. 业务场景</h2><ul><li>高参与度打折买家：权重 0.57（降权，因其过采样）</li><li>低参与度对照买家：权重 1.82（升权，因其欠采样）</li><li>避免基于虚高 CATE（+0.31）多投放 coupon 预算 $82,000/季</li><li>实际 CATE（+0.09）仍显著 → coupon 策略保留但降低力度</li><li>**净节省 coupon 预算 ≈ $65,000/年，同时维持真实复购提升**</li><li>避免过度降价，保护 GMV ¥3,000 万规模下 6% 毛利点 = ¥180 万/年</li><li>**调查偏差修正的 ROI 极高，实施成本仅需 1 周开发**</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：4</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2407.15392</li><li>2501.08734</li><li>2503.12640</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><span class='muted'>LLM-Focused-Web-Crawling]]</span></li><li><a href='../skills/Skill-LLM-Focused-Web-Crawling.html'>Skill-LLM-Focused-Web-Crawling</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>Uplift-Modeling]]</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>DML-Cohort-Causal-Effect]]</span></li><li><span class='muted'>Intelligent-Attribution-Causal-Forest]]</span></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-Intelligent-Attribution-Causal-Forest.html'>Skill-Intelligent-Attribution-Causal-Forest</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

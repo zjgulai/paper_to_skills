@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>客服与VOC · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content"><h1>客服与VOC</h1><div class='cards'><article class="card skill-card">
+  <h3><a href="../skills/Skill-Causal-Cohort-Analysis.html">Causal Cohort Analysis — 因果队列分析：促销干预的长期用户行为效应</a></h3>
+  <p class="muted">01-因果推断 · Skill-Causal-Cohort-Analysis</p>
+  <p>核心问题：传统队列分析的混淆陷阱</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-ClusterSC-Synthetic-Control.html">ClusterSC - 聚类合成控制法</a></h3>
+  <p class="muted">01-因果推断 · Skill-ClusterSC-Synthetic-Control</p>
+  <p>合成控制法（Synthetic Control, SC）通过为目标单元&quot;合成&quot;一个反事实来估计因果效应，是评估地区级/城市级无法做 A/B 的大型干预（如区域广告投放、城市政策）的黄金标准。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-DML-Cohort-Causal-Effect.html">DML Cohort 因果效应 - 群体异质性 HTE 估计</a></h3>
+  <p class="muted">01-因果推断 · Skill-DML-Cohort-Causal-Effect</p>
+  <p>电商场景中&quot;促销/拉新/订阅&quot;等干预对不同用户群体(cohort)效应差异巨大,但传统 A/B 难以分群估计。DML(Double Machine Learning)通过双稳健残差化消除高维混杂,Neyman 正交性保证 ML 估计偏差对因果参数为二阶小量,PCA+Kmeans cohort 特征化给出每个客户的个体 CATE。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Guardrailed-Uplift-Targeting.html">Guardrailed Uplift Targeting — 约束优化 CATE：业务护栏驱动的精准干预</a></h3>
+  <p class="muted">01-因果推断 · Skill-Guardrailed-Uplift-Targeting</p>
+  <p>核心思想：不是问&quot;谁会流失&quot;，而是问&quot;谁会因为我的干预而改变行为&quot;——并且在预算和收入保护约束下，只精准打击这批人。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Mediation-Causal-Mechanism-Analysis.html">Causal Mediation Analysis — Decomposing &quot;Why It Works</a></h3>
+  <p class="muted">01-因果推断 · Skill-Mediation-Causal-Mechanism-Analysis</p>
+  <p>核心思想：中介分析回答&quot;为什么&quot;——一个干预（如推荐算法更新）通过什么机制影响了结果（如转化率）。它将总效应分解为：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-NEO_LRP.html">NEO-LRP（Neural Embedded Optimization for Location-Routing）</a></h3>
+  <p class="muted">04-供应链 · Skill-NEO_LRP</p>
+  <p>核心思想：把&quot;建哪些仓&quot;和&quot;怎么配送&quot;这两个原本耦合的 NPhard 问题解耦——用一个预训练好的图神经网络（GNN）充当配送路径成本的快速估计器，把估计值直接嵌进选址的混合整数规划（MIP）里，从而让 MIP 求解器只需要做高层选址分配决策，而不必在求解过程中展开庞大的车辆路径（VRP）变量。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Two-Echelon-Inventory-DRL.html">Deep RL for Two-Echelon Inventory Optimization</a></h3>
+  <p class="muted">04-供应链 · Skill-Two-Echelon-Inventory-DRL</p>
+  <p>多级库存优化（MultiEchelon Inventory Optimization, MEIO）解决的是供应链中多个节点（工厂、仓库、门店）的联合库存决策问题。相比传统的单点库存管理，DRL方法将供应链建模为马尔可夫决策过程（MDP），智能体（Agent）学习在每个时间步决定&quot;生产多少、发往哪里&quot;，以最大化长期累积利润。</p>
+  <div><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Semantic-ID-Retrieval-RPG.html">Semantic ID Retrieval for Recommendation (RPG)</a></h3>
+  <p class="muted">05-推荐系统 · Skill-Semantic-ID-Retrieval-RPG</p>
+  <p>核心问题：传统推荐系统用无序的onehot ID或量化向量表示商品，丢失了语义信息。&quot;三段奶粉&quot;和&quot;二段奶粉&quot;在向量空间里可能是遥远的点，尽管它们在语义上高度相关。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Competitor-Product-Intelligence.html">Competitor Product Intelligence（竞品选品监测）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Competitor-Product-Intelligence</p>
+  <p>监测竞品 SKU 的新增/下架/价格变动/评价变化，构建竞品选品雷达。核心是异常检测 + 趋势归类——区分&quot;竞品战略性上新&quot;（值得跟进）和&quot;无效上新&quot;（SKU 测试）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Cross-Border-Cold-Start-Forecast.html">Cross-Border Cold-Start Forecast（跨境冷启动需求预测）</a></h3>
+  <p class="muted">06-增长模型 · Skill-Cross-Border-Cold-Start-Forecast</p>
+  <p>跨境电商的致命问题：7080% 商品在目标市场无历史数据，1525% 上架后零销量，但传统预测模型会给出&quot;看起来合理&quot;的正数预测→导致库存积压。ZODIAC 用双域 LSTM + 双头架构同时解决&quot;零销量预测&quot;和&quot;过预测&quot;两个核心痛点。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Customer-Churn-Prediction.html">Customer Churn Prediction (用户流失预测)</a></h3>
+  <p class="muted">06-增长模型 · Skill-Customer-Churn-Prediction</p>
+  <p>用户流失预测解决的核心问题是：识别哪些用户即将停止使用产品/服务，从而提前采取挽留措施。与被动等待用户流失后分析不同，预测模型可以提前 730 天预警，让运营团队有足够时间干预。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Customer-Journey-Prototype.html">Customer Journey Prototype Detection 客户旅程序列原型检测</a></h3>
+  <p class="muted">06-增长模型 · Skill-Customer-Journey-Prototype</p>
+  <p>客户旅程是跨渠道、多触点的序列数据，传统分析方法难以量化。本方法通过三步法实现旅程分析：1) 定义序列距离识别代表性原型；2) 基于原型距离预测购买概率；3) 对低转化旅程推荐反事实优化路径。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-DQN-Purchase-Prediction.html">DQN-Inspired Purchase Intent Prediction</a></h3>
+  <p class="muted">06-增长模型 · Skill-DQN-Purchase-Prediction</p>
+  <p>传统购买预测模型将问题视为静态分类任务。DQNinspired方法引入强化学习思维：将用户会话视为状态，营销干预视为动作，转化/流失视为奖励。通过经验回放和EpsilonGreedy探索，模型学会识别高价值干预时机。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Deep-Learning-Churn-Prediction.html">Skill: Deep Learning for Customer Churn Prediction</a></h3>
+  <p class="muted">06-增长模型 · Skill-Deep-Learning-Churn-Prediction</p>
+  <p>核心思想：利用深度神经网络（DNN）自动学习用户行为特征表示，预测客户在特定时间窗口内停止购买/使用服务的可能性。相比传统机器学习方法，深度学习能自动捕获非线性关系和复杂特征交互。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Generative-Agent-Simulation.html">生成式智能体营销沙盒仿真 - 零数据消费者行为推演</a></h3>
+  <p class="muted">06-增长模型 · Skill-Generative-Agent-Simulation</p>
+  <p>在产品发售前或营销活动上线前，传统方法（规则 ABM 或事后统计）无法捕捉真实人类社会的复杂性——冲动消费、品牌偏好、朋友间口碑传播。本 Skill 将斯坦福生成式智能体框架首次落地到消费者营销领域：在虚拟商业沙盒（Virtual Town）里，创建数百个拥有不同 Persona 的 LLM Agent，注入资源约束（预算/时间/精力）和社会记忆（品牌历史体验、口碑），然后向沙盒投放营销事件，观察一周内 Agent 的涌现行为。不写一行</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Guardrailed-CATE-NBA.html">Guardrailed CATE-NBA</a></h3>
+  <p class="muted">06-增长模型 · Skill-Guardrailed-CATE-NBA</p>
+  <p>光算出每个用户的增量效应（CATE）还不够——真实业务有预算上限、有高净值用户保护、有每天不能无限制打扰用户的体验红线。Guardrailed CATENBA 打通了&quot;预测→决策&quot;的最后一公里：三层漏斗把因果估算的结果直接转化为带约束的最优行动名单。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-LTV-Prediction-ZILN.html">LTV预测 - 零膨胀对数正态模型 (ZILN)</a></h3>
+  <p class="muted">06-增长模型 · Skill-LTV-Prediction-ZILN</p>
+  <p>LTV (Customer Lifetime Value, 客户生命周期价值) 预测是增长模型的核心能力。传统回归方法难以处理 LTV 分布的两个典型特征：零膨胀（大量用户只购买一次）和长尾分布（少数高价值用户贡献大部分收入）。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-New-Product-Opportunity-Mining.html">New Product Opportunity Mining (新品机会挖掘模型)</a></h3>
+  <p class="muted">06-增长模型 · Skill-New-Product-Opportunity-Mining</p>
+  <p>新品机会挖掘模型解决的核心问题是：在新商品上市前预测其成功概率，从而优化选品决策和资源配置。与传统的事后分析不同，该模型通过多维度评估框架，在投入大量资源前识别高潜力新品。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Product-Lifecycle-Stage.html">Skill-Product-Lifecycle-Stage</a></h3>
+  <p class="muted">06-增长模型 · Skill-Product-Lifecycle-Stage</p>
+  <p>核心思想：把一个 SKU 或品类的销量时间序列，分解为趋势+季节+残差三层信号，通过微分分析（斜率变化率）自动定位「成长→成熟→衰退」的阶段边界，并用年龄销量矩（AVM）作为阶段状态的低成本代理特征，最终输出四阶段标签（引入/成长/成熟/衰退）+ 进入时机决策建议。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag topic'>客服与VOC</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-RFM-Customer-Segmentation.html">RFM Customer Segmentation for Targeted Marketing</a></h3>
+  <p class="muted">06-增长模型 · Skill-RFM-Customer-Segmentation</p>
+  <p>核心思想：用三个维度刻画用户价值——</p>
+  <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-UCB-LDP-Dynamic-Pricing.html">UCB-LDP Dynamic Pricing（上下文动态定价）</a></h3>
+  <p class="muted">06-增长模型 · Skill-UCB-LDP-Dynamic-Pricing</p>
+  <p>在电商动态定价中，用户真实的保留价格（Valuation，即&quot;最多愿意出多少钱&quot;）是不可观测的——你唯一能看到的是在展示价格 $p$ 下用户是否购买（Binary Buy/NoBuy 反馈）。每位用户的购买意愿又由其上下文（设备、地区、停留时长等）决定。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Uplift-Churn-Prediction.html">Uplift Modeling for Churn Prediction</a></h3>
+  <p class="muted">06-增长模型 · Skill-Uplift-Churn-Prediction</p>
+  <p>Uplift Modeling解决的核心问题：识别哪些用户会因为干预（如优惠券、客服电话）而降低流失概率。传统流失预测模型只告诉你会流失，Uplift模型告诉你干预对谁有效。将用户分为四类：可说服者（Persuadables）、必然转化者（Sure Things）、无法挽回者（Lost Causes）、不要打扰者（Sleeping Dogs）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-User-Lifecycle-STAN.html">STAN 用户生命周期自适应建模</a></h3>
+  <p class="muted">06-增长模型 · Skill-User-Lifecycle-STAN</p>
+  <p>用户在不同生命周期阶段对推荐任务有不同偏好。新用户需要探索，成熟用户需要精准推荐。STAN通过识别用户当前生命周期阶段，自适应调整多任务学习权重，实现&quot;千人千面&quot;的任务优化策略。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AgentRouter-KG-Guided.html">AgentRouter — 知识图谱引导的多智能体路由器</a></h3>
+  <p class="muted">08-知识图谱 · Skill-AgentRouter-KG-Guided</p>
+  <p>AgentRouter 解决多智能体系统（MAS）中最头疼的调度问题：当一个复杂查询进来时，如何决定把任务交给哪个 Agent？传统路由依赖 LLMasjudge 的 Prompt 规则，看不到查询背后隐藏的深层语义关系，经常把&quot;技术故障导致退换货&quot;错判为纯政策问题。</p>
+  <div><span class='tag'>causal</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-CausalRAG-Knowledge-Retrieval.html">CausalRAG - 因果图驱动的检索增强生成</a></h3>
+  <p class="muted">08-知识图谱 · Skill-CausalRAG-Knowledge-Retrieval</p>
+  <p>传统 RAG 和 GraphRAG 的召回逻辑都基于&quot;语义相似度&quot;，本质是在问「谁和我长得像？」而非「谁是我的根因？」。当用户问&quot;为什么机器突然停了&quot;时，向量检索会把所有提到&quot;停机&quot;的文本块全部塞给大模型，因果关系被肢解在各个文本块中，幻觉无法避免。</p>
+  <div><span class='tag'>causal</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html">面向电商的稠密检索与语义排序</a></h3>
+  <p class="muted">08-知识图谱 · Skill-Dense-Retrieval-Ecommerce-Semantic-Search</p>
+  <p>传统电商搜索基于 BM25/TFIDF 关键词匹配，无法理解语义。例如用户搜&quot;缓解涨奶 pain&quot;，关键词系统只能匹配包含&quot;pain&quot;或&quot;涨奶&quot;字样的商品，无法召回&quot;吸奶器&quot;、&quot;冷敷贴&quot;等语义相关但关键词不匹配的商品。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html">GraphRAG - 知识图谱增强检索生成</a></h3>
+  <p class="muted">08-知识图谱 · Skill-GraphRAG-Knowledge-Enhanced-Retrieval</p>
+  <p>GraphRAG（Graph RetrievalAugmented Generation） 将传统 RAG（检索增强生成）中的文本块检索升级为知识图谱结构化检索，通过图遍历获取与查询相关的实体、关系和子图，显著提升复杂推理场景的答案准确性和可解释性。</p>
+  <div><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Hybrid-Search-BM25-Vector.html">稀疏+稠密混合检索 — BM25 与向量检索融合</a></h3>
+  <p class="muted">08-知识图谱 · Skill-Hybrid-Search-BM25-Vector</p>
+  <p>单一检索方式存在固有短板：BM25 擅长精确关键词匹配（SKU 编号、品牌名、型号），但无法理解语义；向量检索擅长语义模糊匹配，但对精确词汇（如&quot;B07X4X5GXD&quot;）敏感度低。混合检索将两路融合，在母婴电商场景中相比单一检索 Recall@10 提升 1525%（arXiv:2210.11773, 2022）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-KG-Auto-Construction-Agent-Driven.html">AI Agent 驱动的电商知识图谱自动构建</a></h3>
+  <p class="muted">08-知识图谱 · Skill-KG-Auto-Construction-Agent-Driven</p>
+  <p>传统知识图谱构建依赖人工定义 Schema 和编写抽取规则，成本高、扩展性差。AI Agent 驱动的 KG 自动构建 将全流程拆解为三个由 LLM Agent 协作完成的阶段，从非结构化产品描述中自动产出结构化知识图谱，无需预定义 Schema 或人工规则。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-KG-Data-Fusion-Pipeline.html">KG Data Fusion Pipeline — 多源采集数据驱动的知识图谱自动构建：竞品属性图谱融合</a></h3>
+  <p class="muted">08-知识图谱 · Skill-KG-Data-Fusion-Pipeline</p>
+  <p>母婴跨境电商竞品分析需要整合来自 Amazon、Walmart、品牌官网、用户评论等多源异构数据，构建统一的产品属性知识图谱。核心挑战有三：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-KG-Incremental-Update.html">知识图谱增量更新（KG Incremental Update）</a></h3>
+  <p class="muted">08-知识图谱 · Skill-KG-Incremental-Update</p>
+  <p>电商知识图谱的数据不是静态的——新品上架、价格调整、用户评论新增、竞品关系变化，每天都有大量三元组需要更新。若每次变更都触发全量 KG 重建，计算成本极高（百万节点 KG 重建需 48 小时）。增量更新（Incremental Update） 只处理变更的局部子图，将更新耗时压缩至秒级到分钟级。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-KG-Powered-User-Profiling.html">KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐</a></h3>
+  <p class="muted">08-知识图谱 · Skill-KG-Powered-User-Profiling</p>
+  <p>传统协同过滤仅依赖 useritem 矩阵，缺乏对产品语义的理解，导致跨品类推荐能力弱。KGPowered User Profiling 通过异构图融合将产品知识图谱（属性/认证/成分/适用年龄段）与用户行为图（购买/浏览/评价）结合，构建知识增强的用户偏好向量。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-KGQA-Question-Answering.html">Knowledge Graph Question Answering (KGQA)</a></h3>
+  <p class="muted">08-知识图谱 · Skill-KGQA-Question-Answering</p>
+  <p>核心问题：构建了产品知识图谱后，如何让非技术人员（运营、客服、业务方）用自然语言查询它？KGQA把&quot;图谱查询&quot;从SPARQL/Cypher简化为人话。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Multilingual-NER-Universal-v2.html">Multilingual Named Entity Recognition (Universal NER v2)</a></h3>
+  <p class="muted">08-知识图谱 · Skill-Multilingual-NER-Universal-v2</p>
+  <p>核心问题：母婴出海电商的用户评论、客服对话、社交媒体内容涉及多语言（英语、德语、法语、西班牙语、日语等）。传统NER模型按语言独立训练，无法共享跨语言知识，且低资源语言（如荷兰语、波兰语）缺乏标注数据。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Multimodal-RAG.html">Multimodal RAG - 图文混合多模态检索增强生成</a></h3>
+  <p class="muted">08-知识图谱 · Skill-Multimodal-RAG</p>
+  <p>Multimodal RAG（多模态检索增强生成） 将 RAG 系统从纯文本扩展到图文混合模态，实现：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>visual_generation</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Ontology-Schema-Design.html">领域 Ontology 与图谱 Schema 设计</a></h3>
+  <p class="muted">08-知识图谱 · Skill-Ontology-Schema-Design</p>
+  <p>知识图谱的 Schema（本体 / Ontology）是整个 KG 的&quot;地图&quot;——它定义了有哪些实体类型、有哪些关系、每个属性的值域和约束。Schema 质量直接决定下游 KGQA 的检索上限和 GraphRAG 的推理深度。母婴电商领域 Ontology 设计需要平衡覆盖率（覆盖所有业务场景）与可管理性（避免过度细化导致维护失控）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-RAG-Reranking-CrossEncoder.html">检索后精排 — Cross-Encoder Reranking</a></h3>
+  <p class="muted">08-知识图谱 · Skill-RAG-Reranking-CrossEncoder</p>
+  <p>RAG 管道的检索阶段（BM25/向量检索）优先保证召回率，会返回大量候选文档（top50~100）。但这些候选文档与查询的相关性排序往往不准——召回阶段的 Biencoder 是独立编码查询和文档，无法捕捉两者间的细粒度交互。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-RAPTOR-Hierarchical-RAG.html">RAPTOR - 递归抽象树型分层检索</a></h3>
+  <p class="muted">08-知识图谱 · Skill-RAPTOR-Hierarchical-RAG</p>
+  <p>RAPTOR（Recursive Abstractive Processing for TreeOrganized Retrieval） 将长文档转化为一棵&quot;抽象树&quot;：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Semantic-Chunking-Strategy.html">语义分块策略 — RAG 管道的基础层</a></h3>
+  <p class="muted">08-知识图谱 · Skill-Semantic-Chunking-Strategy</p>
+  <p>文档分块（Chunking）是 RAG（检索增强生成）管道中影响效果最大的单一因子。研究表明，分块策略的选择可以导致检索精度 ±30% 的差异（arXiv:2401.00368, 2024）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Argos-Agentic-Anomaly-Detection.html">Argos — Agentic时序异常检测</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-Argos-Agentic-Anomaly-Detection</p>
+  <p>Argos 解决的核心矛盾是：LLM能生成异常检测规则，但无法同时保证可解释性、可复现性和准确率。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Customer-Journey-Decision-Tree.html">客服对话决策树 - 从日志中自学策略</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-Customer-Journey-Decision-Tree</p>
+  <p>从历史客服对话日志中归纳出可执行的决策树策略,而非手工编写规则。三步骤:对话状态聚类(将历史多轮对话聚类为典型 dialog state) → 策略树归纳(用决策树学习从 state 到 action 的转移) → LLM 增强叶节点(每个叶节点由 LLM 生成自然语言回复模板,保持灵活性同时锁定流程)。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Data-Collection-Agent-Pipeline.html">Data Collection Agent Pipeline — LLM Agent 自动化多源数据采集 Pipeline</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-Data-Collection-Agent-Pipeline</p>
+  <p>传统数据采集依赖人工编写爬虫脚本，每个数据源需要单独维护。当数据源频繁变更（电商平台 DOM 更新、API 版本迭代、反爬策略升级）时，维护成本极高。LLM Agent 数据采集 Pipeline 解决的核心问题是：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Data-to-Dashboard-Multi-Agent-Visualization.html">Data-to-Dashboard — 多Agent智能可视化生成</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-Data-to-Dashboard-Multi-Agent-Visualization</p>
+  <p>DatatoDashboard 的核心思想是模拟商业分析师的工作流——不是让 LLM 直接生成图表，而是先理解数据背后的业务洞察，再基于洞察选择最合适的可视化表达方式。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html">DeepAnalyze — 自主数据科学Agent</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-DeepAnalyze-Autonomous-Data-Science-Agent</p>
+  <p>DeepAnalyze 的核心思想是让LLM像人类数据科学家一样工作——不是按预定义工作流执行固定步骤，而是自主决定下一步该做什么。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html">Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-DialIn-LLM-Case-Intent-Clustering</p>
+  <p>WFC 客服分诊的核心是&quot;意图细分&quot;——母婴 Case 复杂(退款/换货/咨询/投诉/物流/产品使用/安全升级),嵌入距离无法区分字面相似但意图截然不同的对话片段(如&quot;宝宝用了这个奶粉一直哭&quot; 可能是质量投诉或产品适配咨询). DialIn LLM 用 LoRA 微调小型 LLM 作为聚类&quot;工具人&quot;(Qwen2.57B / ChatGLM36B):① 连贯性评估器 判断簇语义一致性 ② 意图命名器 生成&quot;动作目标&quot;标签 ③ 迭代搜索自动</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-ProRCA-Business-Analysis.html">ProRCA — 因果图路径溯源根因分析</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-ProRCA-Business-Analysis</p>
+  <p>核心问题：当 GMV 暴跌时，传统监控会同时弹出几百个警报——流量跌、加购跌、结账跌、支付跌……却不告诉你哪个是起因，哪个是被牵连的。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-SQL-Agent-Text-to-SQL.html">Text-to-SQL Agent for Natural Language Data Query</a></h3>
+  <p class="muted">09-DataAgent-LLM · Skill-SQL-Agent-Text-to-SQL</p>
+  <p>核心问题：业务团队（运营、市场、产品）需要数据但不懂SQL。每次提数需求都要排期给数据团队，平均等待23天。TexttoSQL让非技术用户用自然语言直接查询数据库。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Agent-Memory-Learning.html">MemGPT — 长期记忆与虚拟上下文管理</a></h3>
+  <p class="muted">10-MAS · Skill-Agent-Memory-Learning</p>
+  <p>MemGPT 将操作系统的虚拟内存管理思想引入 LLM Agent 的记忆系统。核心洞察：LLM 的上下文窗口就像物理 RAM——容量有限且昂贵，而 Agent 需要处理的任务往往远超这个容量。解决方案是构建一个分层记忆体系，让 LLM 主动管理自己的记忆。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AutoGen-Multi-Agent-Conversation.html">AutoGen — 多智能体对话编排框架</a></h3>
+  <p class="muted">10-MAS · Skill-AutoGen-Multi-Agent-Conversation</p>
+  <p>AutoGen 是一个通用的多智能体对话框架，核心洞察：将复杂的 LLM 应用开发简化为多 agent 之间的对话编排。不同于传统的单 agent 链式调用，AutoGen 允许多个具备不同能力的 agent 通过自然语言对话协作完成复杂任务。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-CAMEL-Role-Playing-Agents.html">CAMEL — 角色扮演式自主协作多 Agent 框架</a></h3>
+  <p class="muted">10-MAS · Skill-CAMEL-Role-Playing-Agents</p>
+  <p>CAMEL (Communicative Agents for &quot;Mind&quot; Exploration of Large Language Model Society) 提出了一种基于角色扮演（RolePlaying）的多 Agent 自主协作范式。核心洞察：当两个互补角色的 Agent（指令发出者 vs 执行者）在结构化协议约束下对话时，可以自主完成复杂任务，无需人工逐步干预。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-EvoSC-Self-Consolidation.html">EvoSC — 对比反思 + 自我巩固：Agent 从失败轨迹进化</a></h3>
+  <p class="muted">10-MAS · Skill-EvoSC-Self-Consolidation</p>
+  <p>EvoSC（SelfConsolidation for SelfEvolving Agents，arXiv 2602.01966，2026年2月）解决了现有 Agent 自我进化框架的两个根本缺陷：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Flowr-Supply-Chain-MAS.html">Flowr — 零售供应链多 Agent 端到端自动化</a></h3>
+  <p class="muted">10-MAS · Skill-Flowr-Supply-Chain-MAS</p>
+  <p>Flowr 将人工密集型零售供应链操作系统性地分解为 6 个专业化 AI Agent 联盟，由中央 Reasoning LLM 协调编排，供应链经理通过 MCP（Model Context Protocol）接口实施人工监督（HITL）。核心洞察是：供应链决策具有天然的功能模块化特征，不同子任务所需的专业知识和数据源存在边界清晰的分工，因此适合由专业化 LLM（而非单一通用模型）各司其职，再由 Reasoning LLM 统一协调。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MAS-Orchestrator.html">MAS Orchestrator — 多智能体编排与调度</a></h3>
+  <p class="muted">10-MAS · Skill-MAS-Orchestrator</p>
+  <p>MAS Orchestrator 是多 Agent 系统的&quot;中枢神经系统&quot;，负责协调多个子 Agent 的执行顺序、数据流转、状态同步和错误恢复。核心洞察：分解后的子任务需要一个可靠的调度器来管理它们的生命周期——启动、监控、通信、容错、收尾。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MAS-Scale-Management.html">MAS Scale Management — 大规模多智能体集群管理：万级并发、单调扩展、公司制架构</a></h3>
+  <p class="muted">10-MAS · Skill-MAS-Scale-Management</p>
+  <p>MAS 的规模扩展面临三个独特挑战，与普通分布式系统不同：</p>
+  <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MAS-Testing-Verification.html">MAS Testing &amp; Verification — 多智能体系统测试验证：覆盖制导 Fuzzing + 跨框架可观测性</a></h3>
+  <p class="muted">10-MAS · Skill-MAS-Testing-Verification</p>
+  <p>MAS 的失败模式与单体软件完全不同：Agent 之间的交互是非确定性的，工具调用可能失败，Agent 可能陷入死循环，而这些问题用传统单元测试根本无法发现。MAS 专用测试体系需要解决三个独特问题：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MetaGPT-SOP-Driven-Collaboration.html">MetaGPT — SOP 驱动的多智能体协作框架</a></h3>
+  <p class="muted">10-MAS · Skill-MetaGPT-SOP-Driven-Collaboration</p>
+  <p>MetaGPT 将人类组织中的 Standardized Operating Procedures（SOP，标准作业程序） 引入多 agent 协作。核心洞察：复杂任务失败的主要原因是 agent 间缺乏标准化协作规范和结构化信息传递。通过模拟软件公司的角色分工（PM → Architect → Engineer → QA）和文档驱动的工作流，MetaGPT 显著减少了多 agent 协作中的幻觉和级联错误。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Multi-Agent-Debate.html">Multi-Agent Debate — 多智能体辩论共识</a></h3>
+  <p class="muted">10-MAS · Skill-Multi-Agent-Debate</p>
+  <p>MultiAgent Debate (MAD) 提出了一种通过多 Agent 辩论来解决复杂推理问题的方法。核心洞察：单个 LLM 一旦对初始答案建立信心，后续的自我反思会陷入&quot;思维退化&quot;（DegenerationofThought），无法产生真正的新思路。多个 Agent 之间的对抗性辩论可以打破这种认知锁定。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-ReAct-Reasoning-Acting.html">ReAct — 推理与行动交替执行</a></h3>
+  <p class="muted">10-MAS · Skill-ReAct-Reasoning-Acting</p>
+  <p>ReAct (Reasoning + Acting) 提出了一种推理与行动交织的范式。核心洞察：纯推理（ChainofThought）容易幻觉，纯行动（Tool Use）缺乏规划——只有把两者交替进行，才能既保持思维连贯性又确保信息准确性。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Reflexion-Self-Improvement.html">Reflexion — 言语强化学习与自我反思</a></h3>
+  <p class="muted">10-MAS · Skill-Reflexion-Self-Improvement</p>
+  <p>Reflexion 提出了一种言语强化学习（Verbal Reinforcement Learning）机制。核心洞察：传统 RL 需要更新模型权重，成本高且难以解释；而 LLM 可以通过自然语言形式的&quot;自我反思&quot;来改进策略，无需任何权重更新。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Self-Improving-Agent-Feedback-Loop.html">Self-Refine + RL — 反馈闭环与自进化 Agent</a></h3>
+  <p class="muted">10-MAS · Skill-Self-Improving-Agent-Feedback-Loop</p>
+  <p>SelfRefine 是一种让 Agent 对自身输出进行批评和改进的迭代机制。核心洞察：语言模型不仅能生成内容，也能评估和改进内容——利用同一模型的双重能力，实现无需外部监督的自我进化。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Skill-Registry-Dynamic-Loading.html">Skill Registry — 技能注册表与动态发现</a></h3>
+  <p class="muted">10-MAS · Skill-Skill-Registry-Dynamic-Loading</p>
+  <p>Skill Registry 是 MAS 工作流的核心基础设施，负责管理所有可用技能的元数据、依赖关系和运行时状态。核心洞察：一个可扩展的多 Agent 系统必须能动态发现、加载和组合技能，而不是硬编码固定流程。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Subagent-Decomposition.html">Subagent Decomposer — 复杂任务子智能体分解</a></h3>
+  <p class="muted">10-MAS · Skill-Subagent-Decomposition</p>
+  <p>Subagent Decomposer 负责将复杂的 Task Blueprint 分解为可独立执行的子任务，并分配给专门的子 Agent。核心洞察：复杂任务（如&quot;生成全品类 VOC 周报&quot;）无法由单个 Agent 高效完成，必须分解为并行/串行的子任务，每个子任务由最优技能的子 Agent 执行。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Tree-of-Thoughts-Planning.html">Tree of Thoughts — 树搜索式任务规划</a></h3>
+  <p class="muted">10-MAS · Skill-Tree-of-Thoughts-Planning</p>
+  <p>Tree of Thoughts (ToT) 将 LLM 的推理过程从线性链式思维（ChainofThought）扩展为树状搜索。核心洞察：人类解决复杂问题时会探索多条路径、评估中间进展、在死胡同回溯——LLM 也应该具备这种&quot;深思熟虑&quot;的能力。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AI-Brand-Storytelling.html">AI Brand Storytelling — AI 辅助品牌故事创作：情感连接与文化适应</a></h3>
+  <p class="muted">11-AI人文 · Skill-AI-Brand-Storytelling</p>
+  <p>品牌叙事的情感结构</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AI-Consumer-Wellbeing-Ethics.html">AI Consumer Wellbeing Ethics — 消费者福祉与 AI 伦理：母婴场景</a></h3>
+  <p class="muted">11-AI人文 · Skill-AI-Consumer-Wellbeing-Ethics</p>
+  <p>AI 伦理四维度框架</p>
+  <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AIGC-Content-Detection.html">AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</a></h3>
+  <p class="muted">11-AI人文 · Skill-AIGC-Content-Detection</p>
+  <p>AI 生成文本与人类写作在统计层面存在系统性差异，可通过以下三类特征加以量化鉴别：</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Cultural-Data-Collection.html">Cultural Data Collection — 跨文化 UGC 采集与母婴消费文化差异识别</a></h3>
+  <p class="muted">11-AI人文 · Skill-Cultural-Data-Collection</p>
+  <p>跨文化 UGC（用户生成内容）采集面临的核心挑战是：文化语境的不可迁移性——相同语义在不同文化中承载截然不同的消费偏好信号。例如&quot;天然/natural&quot;在美国 Amazon 评论中是正面信号，在日本评论中需要结合&quot;安心感&quot;（安全感）语境才能判断其权重；而中文评论中的&quot;刷单痕迹&quot;（短句、无具体描述）本身就是需要过滤的噪声。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Emotional-AI-Customer-Care.html">Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI</a></h3>
+  <p class="muted">11-AI人文 · Skill-Emotional-AI-Customer-Care</p>
+  <p>情感计算在客服场景中涉及三个核心维度：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Data-Drift-Detection.html">Skill-Data-Drift-Detection</a></h3>
+  <p class="muted">12-ML基础 · Skill-Data-Drift-Detection</p>
+  <p>核心思想：生产 ML 模型上线后，输入数据的分布会随时间偏移（用户行为变化、季节性、竞品冲击），导致模型悄然失效。数据漂移检测通过持续监控特征分布（统计漂移）和预测误差（性能漂移）两条并行轨道，在模型失效前触发告警和重训——区别于异常检测，漂移检测关注的是系统性、持续性的分布偏移，而非偶发性异常点。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Feature-Engineering.html">Feature Engineering for E-Commerce Machine Learning</a></h3>
+  <p class="muted">12-ML基础 · Skill-Feature-Engineering</p>
+  <p>核心问题：模型效果的上限由特征质量决定。同样的算法，好的特征 vs 差的特征，效果可能差35倍。特征工程是&quot;把领域知识注入模型的艺术&quot;。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Feature-Selection.html">Feature Selection（特征选择）</a></h3>
+  <p class="muted">12-ML基础 · Skill-Feature-Selection</p>
+  <p>少即是多——从大量特征中筛选出真正有用的子集，提升模型性能、降低过拟合风险、减少训练/推理成本、增强可解释性。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>data_collection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Amazon-ToS-Compliance-Guardrail.html">Amazon ToS Compliance Guardrail（亚马逊合规护栏）</a></h3>
+  <p class="muted">13-广告分析 · Skill-Amazon-ToS-Compliance-Guardrail</p>
+  <p>LLM 在生成商品文案、广告文案、客服回复时可能无意间违反平台规则（医疗声明、安全认证、受限品类）。Compliance Guardrail 在 LLM 输出端建立三层过滤——从确定性规则匹配到风险评分到人工升级——确保所有面向亚马逊的内容合规。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-HGNN-Cross-Device-Matching.html">层次图神经网络跨设备用户匹配 - 无ID的跨端行为拼接</a></h3>
+  <p class="muted">13-广告分析 · Skill-HGNN-Cross-Device-Matching</p>
+  <p>将每台设备的 URL 访问序列 $\mathcal{S}_v = \{s_1, s_2, \ldots, s_n\}$ 构建为层次异构图：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Listing-Quality-Scoring.html">Skill-Listing-Quality-Scoring</a></h3>
+  <p class="muted">13-广告分析 · Skill-Listing-Quality-Scoring</p>
+  <p>核心思想：把 Amazon Listing 的「吸引力」分解为文本质量 + 图像质量两个可量化维度，用神经网络预测每个内容位置（标题/主图/描述/bullet points）对转化成功率的贡献，并反向输出&quot;改哪里能提升最多&quot;的可操作建议。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html">AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline</a></h3>
+  <p class="muted">14-用户分析 · Skill-AGRS-Aspect-Guided-Review-Summarization</p>
+  <p>传统 LLM 摘要&quot;无约束自由生成&quot;产生幻觉(摘要包含评论中不存在的属性). AGRS 把摘要任务结构化:ABSA 提取 aspectsentiment → canonical 归一化 → 代表性评论加权采样 → 结构化 prompt 引导 LLM 生成. 100% 基于真实评论,根本规避幻觉. 4 阶段 pipeline 端到端可扩展到百万产品.</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-GPLR-Persona-Generation.html">GPLR 用户人群标签生成 - 购买行为到可解释 Persona 的低成本桥接</a></h3>
+  <p class="muted">14-用户分析 · Skill-GPLR-Persona-Generation</p>
+  <p>用户购买行为包含丰富的人群信号，但直接为百万用户调用 LLM 标注成本极高。GPLR 解决这个矛盾：用少量 LLM 标注 + 图结构传播覆盖全量用户。三步流程：① DiversityUncertainty（DU）采样选出最有代表性的&quot;原型用户&quot;做 LLM 标注；② LLM 基于购买历史为原型用户赋予 Persona 标签；③ 在用户产品交互图上随机游走，将标签从有标注用户传播至全量未标注用户。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-LACA-CrossLingual-ABSA.html">LACA 跨语言 ABSA - LLM 数据增强多语种情感分析</a></h3>
+  <p class="muted">14-用户分析 · Skill-LACA-CrossLingual-ABSA</p>
+  <p>跨语言 ABSA 痛点:目标语言(德/法/西/日)无标注数据,翻译方法会丢失 aspect 词对齐. LACA 用逆向去噪思路:① 用英文标注模型对目标语言文本做零样本预测 → ② 把伪标签反向喂给 LLM,让 LLM 生成与该标签匹配的干净目标语言句子 → ③ 合并英文真标注 + LLM 生成伪标注重训模型. 绕过 MT 对齐错误,跨语言 ABSA SOTA.</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MAA-Review-to-Action-Decision.html">MAA 多 Agent 行动建议 - 从评论到产品改进决策链</a></h3>
+  <p class="muted">14-用户分析 · Skill-MAA-Review-to-Action-Decision</p>
+  <p>传统评论分析停留在&quot;描述性&quot;层面(情感/属性). MAA 将其升级为&quot;规范性决策链路&quot;:评论 → 问题 → 建议 → 评估 → 排序. 通过 5 个 Agent 分工,把大规模评论语料蒸馏成企业可直接执行的行动清单,而非分析报告.</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Multilingual-Customer-Service-Translation.html">Multilingual Customer Service Translation — 多语言客服自动翻译与情绪感知保全</a></h3>
+  <p class="muted">14-用户分析 · Skill-Multilingual-Customer-Service-Translation</p>
+  <p>母婴出海电商的客服场景中，买家使用西班牙语、德语、日语等多语言发起售后投诉，直接机器翻译存在两大失真：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-PersonaBot-RAG-Profiling.html">PersonaBot RAG画像生成 - LLM+RAG驱动的客户画像落地工具</a></h3>
+  <p class="muted">14-用户分析 · Skill-PersonaBot-RAG-Profiling</p>
+  <p>传统用户画像依赖人工访谈或问卷，周期长（数周）、主观性强、难以规模化更新。PersonaBot 的核心创新是：把 RAG（检索增强生成）与 LLM 结合，将原始评论/调研文本自动转化为结构化画像。RAG 负责&quot;锚定事实&quot;——从真实数据中检索支撑证据，LLM 负责&quot;语义理解&quot;——识别需求、痛点、场景并组织成可读画像。两者结合既保证画像可溯源（每个维度都有评论证据），又保证语义理解深度（超越关键词匹配）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Personalized-Promotion-Targeting.html">Personalized Promotion Targeting — 个性化促销定向：用户响应异质性建模</a></h3>
+  <p class="muted">14-用户分析 · Skill-Personalized-Promotion-Targeting</p>
+  <p>核心问题：促销&quot;一刀切&quot;的浪费</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>客服与VOC</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Review-Pain-Point-Mining.html">Review Pain-Point Mining（竞品差评痛点挖掘）</a></h3>
+  <p class="muted">14-用户分析 · Skill-Review-Pain-Point-Mining</p>
+  <p>竞品的差评就是新品的机会——从竞品评论中自动提取「用户不满意什么」，这些未被满足的需求点就是你新品应该攻克的方向。Painsight 用无监督框架自动完成&quot;情感分析 + 主题抽取 + 不满因子归因&quot;，无需人工标注即可扩展到任何新品类。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Session-Intent-Shift.html">Session意图漂移建模 - 跨会话用户购买意图变化检测</a></h3>
+  <p class="muted">14-用户分析 · Skill-Session-Intent-Shift</p>
+  <p>现有电商推荐系统多依赖商品标题、价格等表层属性推断用户意图，且只关注单次购买或单会话内的短期偏好变化。SessionIntentBench 的核心创新在于：提出意图树（Intention Tree）概念，通过跨会话建模用户意图的时序演化，构建大规模多模态意图基准。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Sparse-Matrix-Completion.html">超稀疏矩阵补全 - 每行仅2-5个观测值的页面转移矩阵恢复</a></h3>
+  <p class="muted">14-用户分析 · Skill-Sparse-Matrix-Completion</p>
+  <p>传统矩阵补全（如 SoftImpute、ALS）假设&quot;大部分条目可观测&quot;，但电商session的页面转移矩阵天然稀疏——每个用户session只有35次页面跳转，导致采样概率 p = C/d（C≈25, d=页面类型数），绝大多数转移对从未被同一用户触发。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-StaR-Review-Statement-Ranking.html">StaR 观点语句排序 - 排序而非生成的可解释评论分析</a></h3>
+  <p class="muted">14-用户分析 · Skill-StaR-Review-Statement-Ranking</p>
+  <p>传统可解释推荐让 LLM 生成自由文本解释,有 3 大问题:① 幻觉(生成评论中不存在的属性)、② 难以评估(自由文本只能用主观打分)、③ 粒度不可控. StaR 把任务重构为对评论中真实出现的&quot;原子语句(statement)&quot;做排序,只输出真实存在的内容,可用 IR 指标客观评估.</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-TRACE-Clickstream-Embedding.html">TRACE 跨会话点击流用户嵌入</a></h3>
+  <p class="muted">14-用户分析 · Skill-TRACE-Clickstream-Embedding</p>
+  <p>传统序列推荐模型只看单会话内的商品点击序列，TRACE 的创新在于：把整个用户的多会话页面浏览历史（包括首页、搜索页、详情页、购物车、结账等各类页面，跨越数天甚至数周）打包成一条有序序列，送入轻量级 Transformer Encoder 学习全局用户状态嵌入。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Trajectory-Pattern-Mining.html">用户行为轨迹模式挖掘与预测 - 变阶马尔可夫模型</a></h3>
+  <p class="muted">14-用户分析 · Skill-Trajectory-Pattern-Mining</p>
+  <p>三步法闭环：① 改进 DBSCAN 密度聚类识别典型轨迹模式（用 LCS 相似度替代欧氏距离）；② 频繁子轨迹挖掘（FPTree 变体，支持度阈值筛选高频页面序列）；③ 变阶马尔可夫模型（VariableOrder Markov, VOM）预测下一步页面。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-User-Profile-Long-Memory.html">User Profile Long Memory — 跨会话用户画像：育儿阶段感知与偏好记忆</a></h3>
+  <p class="muted">14-用户分析 · Skill-User-Profile-Long-Memory</p>
+  <p>传统电商推荐的痛点：每次会话独立，用户偏好从零识别——上月的购买行为、表达过的品牌偏好、当下育儿阶段的隐含需求全部丢失。用户画像长期记忆（User Profile Long Memory）通过跨会话持久化画像，将用户的历史交互沉淀为可更新、可检索的结构化特征，驱动无缝个性化体验。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Channel-Saturation-Curve.html">Channel Saturation Curve（渠道饱和曲线建模）</a></h3>
+  <p class="muted">15-营销投放分析 · Skill-Channel-Saturation-Curve</p>
+  <p>广告预算不是线性回报——每多投 $1，边际回报递减。渠道饱和曲线量化&quot;这个渠道再投多少钱就没增量了&quot;，避免过度投放。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Generative-Audience-LLM-Auction.html">GenAI Advertising — 无 Cookie 生成式受众定向 &amp; LLM 原生广告拍卖</a></h3>
+  <p class="muted">15-营销投放分析 · Skill-Generative-Audience-LLM-Auction</p>
+  <p>传统精准广告的灵魂是 Cookie + Lookalike：先用第三方 Cookie 追踪用户跨站行为，再用 ID 图谱做 Lookalike 扩量。ATT 政策与浏览器全面禁 Cookie 后，这套体系近乎瘫痪。本框架用两个生成式 AI 模块彻底重构广告链路：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-ATLAS-Gradient-Free-Continual.html">ATLAS — 梯度无关持续学习：Teacher-Student 双架构在线适应</a></h3>
+  <p class="muted">16-智能体工程 · Skill-ATLAS-Gradient-Free-Continual</p>
+  <p>传统持续学习依赖反向传播更新模型权重，存在三个根本缺陷：必须离线批量训练（无法在服务中实时更新）、灾难性遗忘（新任务覆盖旧能力）、部署 Agent 无法自改（推理阶段参数冻结）。ATLAS 的突破在于：将&quot;学习&quot;从参数空间迁移到系统编排层，通过持久学习记忆（Persistent Learning Memory, PLM）存储经验蒸馏后的指导性知识，无需触碰模型权重。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Active-Context-Pruning.html">仿生粘菌主动上下文剪枝 — Focus Agent 自主压缩架构</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Active-Context-Pruning</p>
+  <p>Focus 借鉴 Physarum polycephalum(多头绒泡菌,俗称粘菌)的探索收缩策略,把 LLM agent 从被动 &quot;appendonly&quot; 模式升级为主动 &quot;explore → compress → withdraw&quot; 模式:</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AgeMem-Unified-Agent-Memory.html">AgeMem — LTM+STM 统一 Agent 记忆：RL 自适应管理跨会话知识</a></h3>
+  <p class="muted">16-智能体工程 · Skill-AgeMem-Unified-Agent-Memory</p>
+  <p>AgeMem 是首个将 LTM（长期记忆）和 STM（短期记忆）统一到 Agent Policy 的端到端框架。传统方案把两种记忆当作独立模块，由外置 Memory Manager 或启发式 trigger 决策，导致组合效果差、部署成本高（需要额外 expert LLM）。AgeMem 的突破在于：记忆操作本身就是 action，由同一个 LLM policy 通过 RL 学习&quot;何时调什么&quot;。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Agent-Error-Budget.html">Agent Error Budget — 双向错误预算：自主权随可靠性动态调整</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Agent-Error-Budget</p>
+  <p>传统 SRE 错误预算是单向消耗品：违反 SLO 就消耗预算，预算耗尽就停止发布，恢复后窗口重置。Agent 双向错误预算在此基础上引入自主权预算（Autonomy Budget）：好行为可以赢回预算，自主权随可靠性动态升降。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Agent-Payment-Security-Red-Team.html">Whispers of Wealth — Agent 支付协议安全红队：Branded/Vault Whisper 攻击</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Agent-Payment-Security-Red-Team</p>
+  <p>论文针对 Google Agent Payment Protocol（AP2）实施红队测试，揭示了两类间接 Prompt Injection攻击机制：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Agent-Safety-Guardrails.html">Agent Safety Guardrails（Agent 安全对抗护栏）</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Agent-Safety-Guardrails</p>
+  <p>LLM Agent 面临 Prompt Injection、Jailbreak、工具误用等安全风险。三层防护：(1) 输入过滤——检测注入模式；(2) 工具调用前置验证——参数白名单+范围检查；(3) 输出审计——敏感信息脱敏。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Agent-Stage-Evaluation.html">EComStage — 电商 Agent 三阶段(Perception/Planning/Action)双向 Benchmark</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Agent-Stage-Evaluation</p>
+  <p>EComStage 解决现有 ecommerce benchmark 只看&quot;最终任务是否成功&quot;的盲点。它把 LLM Agent 的推理过程分解为三阶段评估,并首次同时覆盖 customeroriented 和 merchantoriented 两类视角:</p>
+  <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AgentTrace-Causal-RCA.html">AgentTrace — 因果图根因分析：0.12s 定位多 Agent 故障</a></h3>
+  <p class="muted">16-智能体工程 · Skill-AgentTrace-Causal-RCA</p>
+  <p>AgentTrace 的核心洞察是：多 Agent 系统（MAS）的故障传播是确定性的因果链，而非需要 LLM 进行语义推理的模糊问题。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AgentTrust-Runtime-Safety-Interception.html">AgentTrust — 运行时安全拦截：95% 准确率，&lt; 1ms，MCP 集成</a></h3>
+  <p class="muted">16-智能体工程 · Skill-AgentTrust-Runtime-Safety-Interception</p>
+  <p>为什么基础设施沙箱不足：容器/seccomp 工作在系统调用层，不理解语义。例如 rm rf /tmp/orders/ 在文件系统层完全合法，但在补货 Agent 上下文中是灾难性操作。AgentTrust 在工具调用层工作，理解&quot;操作意图&quot;而非仅检查&quot;操作权限&quot;。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Agentic-Memory-Management.html">AgeMem — 统一 LTM+STM 管理的 Agentic Memory</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Agentic-Memory-Management</p>
+  <p>AgeMem(Agentic Memory) 颠覆了传统 LTM/STM 分离架构,把记忆管理整合到 Agent 的 policy 本身。现有方法把 LTM 与 STM 当作两个独立模块,要么用 triggerbased 启发式,要么外挂 Memory Manager,导致:</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Agentic-Workflow-Compilation.html">Subterranean Agent — 将工作流 SOP 编译进 LLM 权重</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Agentic-Workflow-Compilation</p>
+  <p>传统 LangGraph/CrewAI 等框架在运行时通过 Orchestrator 逐步调用 LLM 完成多步 SOP：每一步都需要独立的 API 调用、上下文窗口填充、token 计费。Subterranean Agent 的核心洞察是：当 SOP 固定时，Orchestrator 的编排逻辑可以从&quot;运行时解释&quot;变为&quot;编译时参数化&quot;——把整个多步工作流的决策逻辑直接烧录进单个模型权重。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Auto-Skill-Synthesis.html">SkillForge — 领域特定自演化 Agent Skill 萃取与优化</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Auto-Skill-Synthesis</p>
+  <p>SkillForge 解决企业级 Agent Skill 的两大难题:(1) 通用 Skill 创建器缺少领域基础,产出的初始 Skill 与真实任务对不齐;(2) 部署后没有机制把执行失败回溯到 Skill 缺陷并定向修复。它把 Skill 视为可版本化的&quot;软件模块&quot;(包含 SKILL.md + tools.json + references/),建立 创建评估优化 端到端闭环。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AutoSkill-Lifelong-Learning.html">AutoSkill — 经验驱动终身学习：Skill 自进化版本管理</a></h3>
+  <p class="muted">16-智能体工程 · Skill-AutoSkill-Lifelong-Learning</p>
+  <p>RAG 的局限：被动检索，只能复用已显式存入的知识，无法从对话轨迹中自动归纳模式；Finetuning 的局限：参数固化后无法增量更新，每次新能力都需全量重训，知识以黑盒形式埋在权重里，不可审计不可编辑。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-CASCADE-Deployment-Time-Learning.html">CASCADE — 案例推理部署时学习：Contextual Bandit 无参数自适应</a></h3>
+  <p class="muted">16-智能体工程 · Skill-CASCADE-Deployment-Time-Learning</p>
+  <p>部署时学习（DeploymentTime Learning, DTL） 是 CASCADE 提出的第三个 LLM 生命周期阶段：预训练（Pretraining）→ 微调（Finetuning）→ 部署时学习。现有方案只在前两个阶段学习，部署后模型冻结，无法从实际使用中积累经验。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Co-Evolutionary-Skill-Verification.html">Skill 自动演化与验证 — EvoSkills 双 LLM 协同优化</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Co-Evolutionary-Skill-Verification</p>
+  <p>EvoSkills 解决 LLM Agent 多文件 Skill 包自动生成的两个根本挑战:</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Context-Compression.html">ACON — Agent 长上下文压缩与 NL 准则优化</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Context-Compression</p>
+  <p>ACON(Agent Context Optimization) 解决长 horizon LLM Agent 的核心瓶颈:上下文随交互无界增长。Agent 在每一步要积累 observation + action,十几步后 context 就爆炸,带来高成本 + 长上下文稀释相关信息。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Cost-Aware-Agent-Scheduling.html">Cost-Aware Agent Scheduling（成本感知调度）</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Cost-Aware-Agent-Scheduling</p>
+  <p>不是所有 Agent 任务都需要 GPT4——简单分类任务用 SLM（Small LM），复杂推理用 LLM。成本感知调度根据任务复杂度动态路由到最优模型。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Cultural-Adaptation-Agent.html">Cultural Adaptation Agent — 跨文化适应：母婴跨境的本地化 AI 策略</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Cultural-Adaptation-Agent</p>
+  <p>语言翻译是跨境电商的最低门槛，真正影响转化的是文化适配：同一款婴儿奶粉，美国妈妈关注&quot;科学配方/AAP认证&quot;，德国妈妈关注&quot;有机/欧盟标准&quot;，日本妈妈关注&quot;安心品质/无添加&quot;——这些差异不是语言问题，而是深层文化价值观差异。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-LDP-Identity-Aware-Protocol.html">LDP — 身份感知 Agent 通信协议：模型级路由 + 37% Token 节省</a></h3>
+  <p class="muted">16-智能体工程 · Skill-LDP-Identity-Aware-Protocol</p>
+  <p>Google A2A 和 Anthropic MCP 这两大主流 Agent 通信协议存在共同缺陷：不暴露模型级属性。Agent 只知道对方&quot;是一个 Agent&quot;，但不知道对方用的是 Claude Opus 还是 3B 小模型、推理能力如何、token 成本是多少。这导致：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Long-Term-Preference-Memory.html">Shopping Companion — 记忆增强的长期偏好购物 Agent</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Long-Term-Preference-Memory</p>
+  <p>Shopping Companion 解决两个长期被忽视的问题:(1) 缺少能评估跨 session 偏好记忆的端到端购物 benchmark;(2) 现有方法把&quot;偏好识别&quot;和&quot;购物执行&quot;当作独立模块,没有端到端联合优化。它把购物 Agent 形式化为 POMDP,并提出两阶段统一框架 + 双奖励 RL 训练。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MCP-A2A-Protocol-Stack.html">MCP + A2A 双协议栈 — Orchestrated Multi-Agent 企业架构</a></h3>
+  <p class="muted">16-智能体工程 · Skill-MCP-A2A-Protocol-Stack</p>
+  <p>The Orchestration of MultiAgent Systems 把 LLM Agent 系统的演化分三阶段:单 Agent → 松耦合多 Agent → orchestrated 多 Agent。论文的核心贡献是把&quot;orchestration&quot;形式化为四层架构 + 两类协议:</p>
+  <div><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MCP-Tool-Use-Benchmark.html">MCP Tool Use 评估基准 — TFS/TEFS 双指标与干扰测试</a></h3>
+  <p class="muted">16-智能体工程 · Skill-MCP-Tool-Use-Benchmark</p>
+  <p>MCPAgentBench (北京大学 + ZTE, 2026) 是首个专注于工具选择与执行效率的 MCP 评估基准。现有基准 (MCPUniverse, MCPRADAR) 主要测正确性，忽略了一个关键问题：模型能完成任务，但效率极低 —— 该并行时串行、该串行时并行、传过多参数、反复试错。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-MUZZLE-Web-Agent-Red-Teaming.html">MUZZLE — Web Agent 间接 Prompt Injection 红队框架</a></h3>
+  <p class="muted">16-智能体工程 · Skill-MUZZLE-Web-Agent-Red-Teaming</p>
+  <p>间接 Prompt Injection（IPI） 的核心机制：攻击者无法直接访问 Agent 的系统提示，但可通过控制 Agent 抓取的外部内容（商品描述、用户评论、网页正文）向 Agent 上下文注入恶意指令，使 Agent 偏离原始任务目标执行攻击者意图。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Open-Source-Tool-Use-Model.html">开源 Tool Use 基座模型选型 — Hermes 4 混合推理家族</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Open-Source-Tool-Use-Model</p>
+  <p>Hermes 4 是 Nous Research 发布的开源权重混合推理模型家族,核心贡献是证明开源模型可以通过系统性后训练(pipeline)达到接近闭源前沿模型的 tool use 和推理能力。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Orchestration-Trace-RL.html">编排轨迹驱动的强化学习 — MAS RL 三维设计框架</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Orchestration-Trace-RL</p>
+  <p>随着 LLM agent 从单 agent 工具调用进化为协调团队(coordinated teams),RL 的优化对象不再是个体 action,而是编排轨迹(orchestration trace) —— 一个包含 spawn(生成)、delegate(委派)、communicate(通信)、aggregate(聚合)、stop(停止)决策的时序交互图。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-SLM-Tool-Calling-Optimization.html">SLM Tool Calling 成本优化 — 350M 参数击败 LLM</a></h3>
+  <p class="muted">16-智能体工程 · Skill-SLM-Tool-Calling-Optimization</p>
+  <p>AWS 2026 年的实证研究证明：通过领域特定 SFT，仅 350M 参数的小型语言模型 (SLM) 可以在 tool calling 任务上超越 175B+ 参数的 LLM。核心洞察是参数效率  参数规模——通用 LLM 的绝大多数参数被优化用于通用语言理解而非 tool manipulation，导致&quot;参数稀释&quot;。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Skill-Lifecycle-Design.html">SoK Agentic Skills — Agent Skill 全生命周期与方法论底座</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Skill-Lifecycle-Design</p>
+  <p>SoK Agentic Skills(Systematization of Knowledge)是 Agent Skill 领域第一篇综合 survey,把分散在 Voyager / CodeAct / Reflexion / Claude Skills / GPT Store / MCP 等系统中的&quot;Skill 概念&quot;统一为一个理论框架。它解决三个根本问题:</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Task-Adaptive-Topology.html">任务自适应拓扑路由 — AdaptOrch 动态多智能体编排</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Task-Adaptive-Topology</p>
+  <p>AdaptOrch 针对 LLM 能力收敛趋势(2026 年前沿模型 MMLU/HumanEval 差距 &lt;5%)提出一个关键洞察:当个体模型能力趋同时,编排拓扑(拓扑选择) 的方差贡献远超 模型选择 的贡献,成为系统性能的主变量。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Tool-Call-Decision-Framework.html">Tool Call Decision Framework — 必要性/效用/可负担性三维工具调用决策</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Tool-Call-Decision-Framework</p>
+  <p>LLM 工具调用存在系统性错位：模型既会过度调用（把可推理的问题交给工具），也会遗漏调用（低估工具对复杂查询的价值）。根本原因在于模型自感知与任务实际需求之间存在认知盲区——模型过度自信于自身知识覆盖，却对边界外的未知盲区无感知。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Tool-Description-Audit.html">MCP Tool 描述质量审核 — 六维 Smell 扫描与动态路由</a></h3>
+  <p class="muted">16-智能体工程 · Skill-Tool-Description-Audit</p>
+  <p>Queen&#x27;s University 2026 年的大规模实证研究揭示：97.1% 的 MCP tool 描述至少含有一个 smell，这些描述缺陷直接导致 FM 选错工具、传错参数或产生不必要的交互步骤。论文提出六维评分 rubric + 动态组件路由，在提升 agent 准确率 (+5.85pp) 的同时控制 token 开销 (+67.46% steps 的 tradeoff)。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-XSkill-Multimodal-Self-Improvement.html">XSkill — 多模态 Agent 双流自进化：经验+技能协同积累</a></h3>
+  <p class="muted">16-智能体工程 · Skill-XSkill-Multimodal-Self-Improvement</p>
+  <p>XSkill 解决的是 AI Agent 的&quot;每次从零开始&quot;问题——传统 Agent 缺乏跨任务的知识积累机制，执行 100 次类似任务的性能与第 1 次几乎相同。XSkill 通过双流架构实现持续自进化：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AIGP-LLM-Dynamic-Pricing.html">AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）</a></h3>
+  <p class="muted">17-价格优化 · Skill-AIGP-LLM-Dynamic-Pricing</p>
+  <p>传统 RL 定价只优化短期收益（当日 GMV / 点击转化），忽视了跨周期的用户粘性损耗：盲目降价快速促单，但破坏品牌溢价 → 用户形成&quot;等降价&quot;心理锚点 → 长期 LTV 下降。AIGP 的核心创新是将 LLM 可解释决策与离线 RL 长期价值估计解耦组合，做到&quot;今天的定价对三个月后的 GMV 负责&quot;。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-AR-Logistics-Visualization.html">AR Logistics Visualization — 增强现实包裹可视化追踪：跨境物流透明化与客服AI视频答复</a></h3>
+  <p class="muted">18-物流履约 · Skill-AR-Logistics-Visualization</p>
+  <p>跨境母婴电商的物流追踪长期依赖纯文本状态更新（&quot;已揽收&quot;、&quot;在途中&quot;、&quot;清关中&quot;），消费者对包裹实际位置和预期到达时间高度不确定，导致客服咨询量激增。AR Logistics Visualization 将三个技术栈融合：</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Last-Mile-Delivery-Prediction.html">Last-Mile Delivery Prediction（最后一公里配送时效预测）</a></h3>
+  <p class="muted">18-物流履约 · Skill-Last-Mile-Delivery-Prediction</p>
+  <p>预测从&quot;到达目的国仓库&quot;到&quot;用户签收&quot;的时长。用生存分析（Cox PH 或 AFT 模型）建模配送时长分布，考虑承运商、目的地邮编区、包裹体积、节假日等协变量。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Returns-Reverse-Logistics.html">Returns Reverse Logistics（退货逆向物流）</a></h3>
+  <p class="muted">18-物流履约 · Skill-Returns-Reverse-Logistics</p>
+  <p>预测退货概率 + 优化退货处理路径。退货概率用 XGBoost 建模（产品类别、价格、用户历史退货率、配送时长），退货处理用规则+成本优化——退货到 FBA vs 第三方仓 vs 弃置。</p>
+  <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Click-Fraud-Detection.html">Click Fraud Detection（广告刷量检测）</a></h3>
+  <p class="muted">19-风控反欺诈 · Skill-Click-Fraud-Detection</p>
+  <p>检测广告点击中的无效流量（IVT）——Bot 点击、竞品恶意点击、重复点击。用时间序列异常 + 行为模式识别。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html">DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</a></h3>
+  <p class="muted">19-风控反欺诈 · Skill-DS-DGA-GCN-Fake-Review-Group</p>
+  <p>核心思想：在&quot;产品 → 评论 → 评论者&quot;三方动态异构图上检测刷评团伙群组。不看单条评论文本质量，而是看评论者之间的网络行为模式——真实用户构成稀疏随机网络，刷评团伙则共现密集、行为高度同步。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>fraud_detection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Fraud-Signal-Collection.html">Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</a></h3>
+  <p class="muted">19-风控反欺诈 · Skill-Fraud-Signal-Collection</p>
+  <p>欺诈检测系统的核心上限由欺诈信号采集的覆盖度和质量决定。母婴电商面临的三类典型欺诈：</p>
+  <div><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-FraudSquad-LLM-Review-Detection.html">FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换器</a></h3>
+  <p class="muted">19-风控反欺诈 · Skill-FraudSquad-LLM-Review-Detection</p>
+  <p>核心思想：LLM 生成的虚假评论文本质量极高（语法流畅、情感真实），传统文本特征工程（词频/情感/长度）已失效。FraudSquad 转变思路——不只看&quot;单条评论写得怎样&quot;，而是看&quot;这个评论者在评论图中的行为模式是否异常&quot;。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Identity-Fraud-Detection.html">Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证</a></h3>
+  <p class="muted">19-风控反欺诈 · Skill-Identity-Fraud-Detection</p>
+  <p>核心思想：三维欺诈信号融合检测账号欺诈——设备指纹相似度（识别同一设备多账号）+ 行为序列异常（购买/浏览模式偏差）+ 账号关联网络社区（图社区发现）。三维信号通过加权融合输出欺诈概率，任一维度异常均触发预警。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Review-Fraud-Detection.html">Review Fraud Detection（虚假评论检测）</a></h3>
+  <p class="muted">19-风控反欺诈 · Skill-Review-Fraud-Detection</p>
+  <p>GNN 图神经网络检测虚假评论——不是看单条评论文本，而是看评论者产品评分之间的关系图。虚假评论团通常呈现异常图模式：同批次账号、评分极端（1 或 5 星）、评论时间集中、文本相似度高。</p>
+  <div><span class='tag'>causal</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Transaction-Anomaly-Detection.html">Transaction Anomaly Detection（异常交易检测）</a></h3>
+  <p class="muted">19-风控反欺诈 · Skill-Transaction-Anomaly-Detection</p>
+  <p>Isolation Forest + 动态阈值检测异常交易模式。特征：订单金额、支付方式、IP 国家 vs 收货国家、下单到支付间隔、同一 IP 下单频率、地址变更次数。</p>
+  <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-DAWN-Talking-Head-Review.html">DAWN — Talking-Head Review Video（AI口播Review视频）</a></h3>
+  <p class="muted">20-AI视频生成 · Skill-DAWN-Talking-Head-Review</p>
+  <p>首个基于 Diffusion 的非自回归 (NonAutoregressive, NAR) talking head 生成方案。自回归方法逐帧生成 → 误差累积 → 30 秒后嘴歪眼斜。DAWN 一次性生成全序列，无误差累积，支持 3060 秒长视频稳定输出——这正是 UGC review 视频需要的长度。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-E-Commerce-Video-Benchmark.html">E-Commerce Video Benchmark（电商视频质量评估基准）</a></h3>
+  <p class="muted">20-AI视频生成 · Skill-E-Commerce-Video-Benchmark</p>
+  <p>唯一电商域专用 Benchmark。通用 T2V 评测用 UCF101/MSRVTT（自然场景），但电商视频核心要求完全不同——商品颜色/纹理/Logo 不能有任何失真。ECommerceVideo 建立电商专属评测体系。</p>
+  <div><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Text-to-Edit-Video-Ad.html">Text-to-Edit — Video Ad Auto-Editing（MLLM广告自动剪辑）</a></h3>
+  <p class="muted">20-AI视频生成 · Skill-Text-to-Edit-Video-Ad</p>
+  <p>端到端广告视频生成：输入产品信息 + 自然语言编辑需求 + 视频素材片段 → 输出 JSON 剪辑草稿（镜头序列 + 配音脚本 + 装饰标签）。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Virbo-Multilingual-Avatar-UGC.html">Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</a></h3>
+  <p class="muted">20-AI视频生成 · Skill-Virbo-Multilingual-Avatar-UGC</p>
+  <p>完整多语言短视频生成系统：角色图像 → 空间变形+特征解码器 → 对口型 talking avatar → 多语言 TTS（百余语言）→ 特效渲染。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>视觉内容生成</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Consumer-Complaint-Recall-Prediction.html">Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测</a></h3>
+  <p class="muted">21-合规决策 · Skill-Consumer-Complaint-Recall-Prediction</p>
+  <p>核心思想：从 CPSC/NHTSA 非结构化消费者投诉文本出发，通过半参数主题模型（Hierarchical Dirichlet Process PitmanYor, HDPYP）自动提取缺陷主题，预测产品召回发生概率和召回组件类别。与传统 XGBoost/RF 相比，预测准确率提升约 14%（p&lt;0.05），提前约 1 年预警召回事件。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Clickstream-Persona-Pipeline.html">Clickstream Persona Pipeline — 点击流用户画像：VQ-VAE 离散 Persona + 多层行为 KG</a></h3>
+  <p class="muted">22-数据采集工程 · Skill-Clickstream-Persona-Pipeline</p>
+  <p>Skill Card: Clickstream Persona Pipeline — 点击流用户画像：VQVAE 离散 Persona + 多层行为 KG</p>
+  <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>data_collection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Data-Collection-Causal-Debiasing.html">Data Collection Causal Debiasing — 采集偏差因果修正：爬虫选择性采集对因果分析的去污染</a></h3>
+  <p class="muted">22-数据采集工程 · Skill-Data-Collection-Causal-Debiasing</p>
+  <p>跨境电商数据采集面临一个根本性困境：你能采到的数据，恰恰不是随机样本。Amazon 评论爬虫只能采集到购买且写了评论的买家（约 25% 购买者），而这批人的特征（高参与度、使用经验较强、投诉阈值较低）与全体买家截然不同。当你用这批有偏数据做因果推断（如&quot;折扣是否提升复购率&quot;），估计结果会被选择偏差（Selection Bias）严重扭曲。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Fake-Review-Detection.html">Fake Review Detection — 假评论检测：图神经网络+LLM 可解释欺诈识别</a></h3>
+  <p class="muted">22-数据采集工程 · Skill-Fake-Review-Detection</p>
+  <p>Skill Card: Fake Review Detection — 假评论检测：图神经网络+LLM 可解释欺诈识别</p>
+  <div><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-LLM-Focused-Web-Crawling.html">LLM-Focused Web Crawling — LLM/MLLM 引导的主题爬取：KG 驱动发现与动态 JS 页面抽取</a></h3>
+  <p class="muted">22-数据采集工程 · Skill-LLM-Focused-Web-Crawling</p>
+  <p>传统爬虫的两大痛点：</p>
+  <div><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
+</article><article class="card skill-card">
+  <h3><a href="../skills/Skill-Review-Dedup-Quality-Filter.html">Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</a></h3>
+  <p class="muted">22-数据采集工程 · Skill-Review-Dedup-Quality-Filter</p>
+  <p>从 Amazon、TikTok Shop、独立站同时采集的评论中，3040% 是重复或低质量内容（同一用户多平台发布、机器生成水评、极短无意义评论）。直接用于 VOC 分析会严重扭曲洞察结论。</p>
+  <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>data_collection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span></div>
+</article></div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

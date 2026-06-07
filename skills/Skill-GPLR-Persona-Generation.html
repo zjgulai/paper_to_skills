@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GPLR 用户人群标签生成 - 购买行为到可解释 Persona 的低成本桥接 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-GPLR-Persona-Generation</nav>
+<h1>GPLR 用户人群标签生成 - 购买行为到可解释 Persona 的低成本桥接</h1>
+<p class="muted">Skill-GPLR-Persona-Generation · 14-用户分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一：Momcozy 吸奶器用户人群精准分层</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>用户购买行为包含丰富的人群信号，但直接为百万用户调用 LLM 标注成本极高。GPLR 解决这个矛盾：用少量 LLM 标注 + 图结构传播覆盖全量用户。三步流程：① DiversityUncertainty（DU）采样选出最有代表性的&quot;原型用户&quot;做 LLM 标注；② LLM 基于购买历史为原型用户赋予 Persona 标签；③ 在用户产品交互图上随机游走，将标签从有标注用户传播至全量未标注用户。</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**：Momcozy 在 Amazon US 有 10 万+ 活跃用户，现有 RFM 分群只能区分&quot;高消费/低消费&quot;，营销团队无法针对&quot;出差妈妈&quot;&quot;新手妈妈&quot;制定差异化素材；人工打标既慢又贵</li><li>**数据要求**：Amazon 订单数据（`user_id`, `product_id`, `purchase_date`）+ 预定义 Persona 集合（如：职场背奶妈妈 / 全职新手妈妈 / 出差旅行妈妈 / 静音敏感型 / 价格敏感型）</li><li>**GPLR 配置**：</li><li>构建用户-产品交互图（购买=1.0，浏览=0.3）</li><li>DU 采样 5,000 名原型用户（5 万用户 5% 预算）→ LLM 基于购买 SKU 名称 + 品类标注 Persona</li><li>随机游走 2 步传播至全量 10 万用户</li><li>输出 JSON：`{user_id: [(persona, confidence)], ...}`，置信度 ≥0.5 归入主 Persona</li><li>**预期产出**：</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：paper2skills-code/nlp_voc/gplr_persona_generation</p>
+    <h2>8. 论文来源</h2><ul><li>2504.17304</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>Uplift-Modeling]].md) — Persona 分层 × Uplift 模型</span></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

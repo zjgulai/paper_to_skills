@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LACA 跨语言 ABSA - LLM 数据增强多语种情感分析 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-LACA-CrossLingual-ABSA</nav>
+<h1>LACA 跨语言 ABSA - LLM 数据增强多语种情感分析</h1>
+<p class="muted">Skill-LACA-CrossLingual-ABSA · 14-用户分析 · status=stable</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>场景一:WFC 多语种客服 Case 情感分类(德/法/西)</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>跨语言 ABSA 痛点:目标语言(德/法/西/日)无标注数据,翻译方法会丢失 aspect 词对齐. LACA 用逆向去噪思路:① 用英文标注模型对目标语言文本做零样本预测 → ② 把伪标签反向喂给 LLM,让 LLM 生成与该标签匹配的干净目标语言句子 → ③ 合并英文真标注 + LLM 生成伪标注重训模型. 绕过 MT 对齐错误,跨语言 ABSA SOTA.</p>
+    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>5. 业务场景</h2><ul><li>**业务问题**:Momcozy 在德/法/西市场每月接收 5000+ 母语客服工单(如德语 &quot;Die Verpackung ist sehr schwer zu öffnen&quot;). 传统做法用 Google Translate 翻译成英文后跑英文 ABSA,**翻译会丢失 aspect 对齐**(&quot;Verpackung&quot; → &quot;package&quot; 时 BIO</li><li>**数据要求**:英文 ABSA 标注数据(SemEval-2016 或自建母婴标注集 2000-5000 条) + 各市场无标注客服日志</li><li>**LACA 配置**:</li><li>骨干 XLM-R-base + LACA 增强</li><li>母婴扩展 Aspect: `quality / packaging / ingredient / shipping / service / price / safety`</li><li>零样本推断 → 输出 `[(aspect, polarity)]` → 路由对应客服团队</li><li>**业务价值**:</li><li>西/法两市场预期 F1 65-72%(论文实验直接覆盖)</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>7. 代码模板</h2>
+    <p>代码块数量：1</p>
+    <p>代码路径：未检测到独立代码路径</p>
+    <h2>8. 论文来源</h2><ul><li>2204.00791</li><li>2508.09515</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Multilingual-NER-Universal-v2.html'>Skill-Multilingual-NER-Universal-v2</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-StaR-Review-Statement-Ranking.html'>Skill-StaR-Review-Statement-Ranking</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Customer-Journey-Decision-Tree.html'>Skill-Customer-Journey-Decision-Tree</a></li><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li></ul>
+  </aside>
+</div></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>
