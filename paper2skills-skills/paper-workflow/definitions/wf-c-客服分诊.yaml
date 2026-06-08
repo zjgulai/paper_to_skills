@@ -1,0 +1,79 @@
+id: wf-c
+name: WF-C 客服分诊
+description: 从多语言用户声音采集到根因归因与智能分流的端到端客服优化链。
+target_users:
+  - 客服运营负责人
+  - NLP / 用户洞察工程师
+  - 产品经理
+entry_question: 你的客服核心挑战是什么？
+
+steps:
+  - id: step-1
+    name: 评论与工单采集
+    question: 数据来源是什么？
+    branches:
+      - condition: Amazon / 电商平台评论
+        skills:
+          - id: Skill-Review-Dedup-Quality-Filter
+            role: 评论去重与质量过滤
+          - id: Skill-Fake-Review-Detection
+            role: 虚假评论检测与剔除
+          - id: Skill-Review-Pain-Point-Mining
+            role: 评论痛点挖掘与主题聚类
+      - condition: 多语言客服工单
+        skills:
+          - id: Skill-Multilingual-Customer-Service-Translation
+            role: 多语言自动翻译与标准化
+          - id: Skill-LACA-CrossLingual-ABSA
+            role: 跨语言方面级情感分析
+          - id: Skill-DialIn-LLM-Case-Intent-Clustering
+            role: LLM 驱动的工单意图聚类
+
+  - id: step-2
+    name: 情感与根因分析
+    question: 需要哪个粒度的分析？
+    branches:
+      - condition: 产品维度（功能/质量/价格）情感
+        skills:
+          - id: Skill-AGRS-Aspect-Guided-Review-Summarization
+            role: 方面引导的评论摘要生成
+          - id: Skill-StaR-Review-Statement-Ranking
+            role: 评论声明重要性排序
+      - condition: 业务异常根因归因
+        skills:
+          - id: Skill-Root-Cause-Analysis-Agent
+            role: 自主 Agent 多维度根因分析
+          - id: Skill-ProRCA-Business-Analysis
+            role: 因果图路径溯源根因分析
+
+  - id: step-3
+    name: 智能分诊与路由
+    question: 工单量级与复杂度？
+    branches:
+      - condition: 高频标准化工单（退换货 / 物流查询）
+        skills:
+          - id: Skill-AgentRouter-KG-Guided
+            role: 知识图谱引导的智能路由分配
+          - id: Skill-Emotional-AI-Customer-Care
+            role: 情感感知的自动化客户关怀
+      - condition: 复杂多轮咨询（选品建议 / 喂养指导）
+        skills:
+          - id: Skill-Shopping-Companion-Agent
+            role: 购物伴侣 Agent 个性化导购
+          - id: Skill-PersonaBot-RAG-Profiling
+            role: RAG 增强的用户画像驱动回复
+
+  - id: step-4
+    name: VOC 洞察沉淀
+    question: 如何将洞察转化为产品改进信号？
+    skills:
+      - id: Skill-MAA-Review-to-Action-Decision
+        role: 评论→行动决策转化框架
+      - id: Skill-Consumer-Complaint-Recall-Prediction
+        role: 消费者投诉召回风险预测
+
+outcomes:
+  - 客服首次响应解决率从 60% 提升至 85%
+  - 多语言 VOC 覆盖从 25% → 100%
+  - 工单正确路由率从 61% → 82%，年化节省 1900 万元
+  - 客服人力成本节省 30-40%
