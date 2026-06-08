@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-User-Profile-Long-Memory</nav>
 <h1>User Profile Long Memory — 跨会话用户画像：育儿阶段感知与偏好记忆</h1>
-<p class="muted">Skill-User-Profile-Long-Memory · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-User-Profile-Long-Memory · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：跨会话购物助手——无感知升阶推荐</p>
+    <p>传统电商推荐的痛点**：每次会话独立，用户偏好从零识别——上月的购买行为、表达过的品牌偏好、当下育儿阶段的隐含需求全部丢失。用户画像长期记忆（User Profile Long Memory）通过</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统电商推荐的痛点：每次会话独立，用户偏好从零识别——上月的购买行为、表达过的品牌偏好、当下育儿阶段的隐含需求全部丢失。用户画像长期记忆（User Profile Long Memory）通过跨会话持久化画像，将用户的历史交互沉淀为可更新、可检索的结构化特征，驱动无缝个性化体验。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>历史购买记录：品类（Stage 1/2/3 奶粉、辅食泥、学步玩具）+ 购买时间</li><li>浏览行为：浏览了哪些品类页 + 停留时长</li><li>画像特征存储：JSON 结构，持久化到用户数据库</li><li>复购率提升 20-25%（记忆推荐 vs 无记忆推荐）</li><li>客服咨询轮次：平均 4.2 轮 → 1.8 轮（记忆消除重复咨询）</li><li>推荐 CTR 提升 35%（相关性精准）</li><li>用户画像：`BRAND_PREFERENCE`（品牌层级）+ `PRICE_SENSITIVITY`（价格敏感度）+ `QUALITY_WEIGHT`（品质权重）</li><li>选品评分矩阵：默认权重 + 用户偏好调节因子</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：用户上月购买了 Stage 1 奶粉，系统推断宝宝约 2-3 月龄。本月用户再次进入 App，系统需要主动预判宝宝已接近 4-5 月，即将进入 Stage 2 窗口，无需用户重复说明偏好即可精准推荐。</p><p>数据要求： - 历史购买记录：品类（Stage 1/2/3 奶粉、辅食泥、学步玩具）+ 购买时间 - 浏览行为：浏览了哪些品类页 + 停留时长 - 画像特征存储：JSON 结构，持久化到用户数据库</p><p>| 时间节点 | 画像状态 | 推荐行为 | |---------|---------|---------| | 购买 Stage 1（Month 0） | `baby_stage=NEWBORN, brand=Aptamil, organic=True` | 写入画像 | | 用户回访（Month 3） | 推断宝宝≈4月，检测到临近升阶窗口 | 推荐 Stage 2 同品牌有机配方 + 辅食入门套装 | | 用户回访（Month 6） | 推断宝宝≈8月，进入辅食深度期 | 推荐有机米粉/果泥 + Stage 3 过渡产品 |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>育儿阶段感知是母婴场景特有的强信号，其他通用推荐系统缺失此维度</li><li>实现成本低（无 LLM 调用、无向量库），运行成本接近零</li><li>与 Shopping Companion Agent 结合后形成完整的&quot;偏好识别→记忆→复现&quot;闭环</li><li>仅基于购买行为推断，浏览行为未纳入时推断精度受限</li><li>多宝宝家庭（二胎）可能导致阶段推断混乱（需要会话分离机制）</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：paper2skills-code/user_analytics/user_profile_long_memory</p>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/user_analytics/user_profile_long_memory</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+User Profile Long Memory — 跨会话用户画像积累
+来源: Personalized Memory Architecture + LLM Personal Assistant 2025-2026
+场景: 育儿阶段感知 + 品牌偏好 + 价格敏感度的持久化画像管理
+&quot;&quot;&quot;
+
+import math
+import json
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Optional
+
+
+# ─────────────────────────────────────────────
+# 枚举定义
+# ─────────────────────────────────────────────
+
+class UserProfileDimension(Enum):
+    &quot;&quot;&quot;用户画像维度枚举&quot;&quot;&quot;
+    PARENTING_STAGE = &quot;parenting_stage&quot;       # 育儿阶段
+    BRAND_PREFERENCE = &quot;brand_preference&quot;     # 品牌偏好
+    PRICE_SENSITIVITY = &quot;price_sensitivity&quot;   # 价格敏感度
+    ORGANIC_PREFERENCE = &quot;organic_preference&quot; # 有机偏好
+    CATEGORY_AFFINITY = &quot;category_affinity&quot;   # 品类亲和度
+    QUALITY_WEIGHT = &quot;quality_weight&quot;         # 品质权重
+    BABY_AGE_MONTHS = &quot;baby_age_months&quot;       # 宝宝月龄（推断值）
+
+
+class ParentingStage(Enum):
+    &quot;&quot;&quot;育儿阶段枚举&quot;&quot;&quot;
+    NEWBORN = &quot;newborn&quot;           # 新生儿（0-3月）
+    INFANT = &quot;infant&quot;             # 婴儿期（4-6月）
+    CRAWLER = &quot;crawler&quot;           # 爬行期（7-9月）
+    TODDLER_EARLY = &quot;toddler_early&quot;   # 学步初期（10-12月）
+    TODDLER_MID = &quot;toddler_mid&quot;       # 学步中期（13-18月）
+    TODDLER_LATE = &quot;toddler_late&quot;     # 学步晚期（19-24月）
+    PRESCHOOL = &quot;preschool&quot;       # 学前期（25+月）
+    UNKNOWN = &quot;unknown&quot;           # 未知阶段
+
+
+# ─────────────────────────────────────────────
+# 数据类定义
+# ─────────────────────────────────────────────
+
+@dataclass
+class ProfileAttribute:
+    &quot;&quot;&quot;单一画像属性，含置信度与衰减机制&quot;&quot;&quot;
+    value: object
+    confidence: float                          # 置信度 [0,1]
+    last_updated: str                          # ISO 8601 时间戳
+    decay_rate: float = 0.05                   # 月衰减率（λ）
+    source: str = &quot;purchase_history&quot;           # 来源标注
+    evidence_count: int = 1                    # 支撑证据条数
+
+    def effective_confidence(self, now: Optional[datetime] = None) -&gt; float:
+        &quot;&quot;&quot;计算时间衰减后的有效置信度&quot;&quot;&quot;
+        if now is None:
+            now = datetime.now(timezone.utc)
+        last = datetime.fromisoformat(self.last_updated)</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-User-Profile-Long-Memory" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-AgeMem-Unified-Agent-Memory.html'>Skill-AgeMem-Unified-Agent-Memory</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Long-Term-Preference-Memory.html'>Skill-Long-Term-Preference-Memory</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>ATLAS-Gradient-Free-Continual]] — 持续学习框架</span></li><li><span class='muted'>Counterfactual-Recommendation-DCE]] — 反事实推荐</span></li><li><a href='../skills/Skill-ATLAS-Gradient-Free-Continual.html'>Skill-ATLAS-Gradient-Free-Continual</a></li><li><a href='../skills/Skill-Counterfactual-Recommendation-DCE.html'>Skill-Counterfactual-Recommendation-DCE</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

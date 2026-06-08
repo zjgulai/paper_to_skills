@@ -9,45 +9,68 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-CAMEL-Role-Playing-Agents</nav>
 <h1>CAMEL — 角色扮演式自主协作多 Agent 框架</h1>
-<p class="muted">Skill-CAMEL-Role-Playing-Agents · 10-MAS · status=stable</p>
+<p class="muted">Skill-CAMEL-Role-Playing-Agents · 10-MAS</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：VOC 评论分析的角色扮演协作</p>
+    <p>CAMEL** (Communicative Agents for &quot;Mind&quot; Exploration of Large Language Model Society) 提出了一种基于</p>
     <h2>2. 核心算法逻辑</h2>
     <p>CAMEL (Communicative Agents for &quot;Mind&quot; Exploration of Large Language Model Society) 提出了一种基于角色扮演（RolePlaying）的多 Agent 自主协作范式。核心洞察：当两个互补角色的 Agent（指令发出者 vs 执行者）在结构化协议约束下对话时，可以自主完成复杂任务，无需人工逐步干预。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>用户评论文本（Amazon/Trustpilot/Zendesk）</li><li>分析目标（如&quot;找出 Spectra S1 吸奶器的 Top 3 负面驱动因素&quot;）</li><li>业务视角和数据视角的互补，减少分析盲区</li><li>无需人工逐步引导，Agent 自主推进分析深度</li><li>一次对话完成多维度分析，效率提升 3-5x</li><li>竞品报告生成从 1-2 周缩短到 10-30 分钟</li><li>分析框架标准化，不同分析师产出一致性高</li><li>可配置定期自动生成（周报/月报）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>分析母婴产品评论需要&quot;业务视角&quot;（关注什么属性重要）和&quot;数据视角&quot;（从文本中抽取具体信息）的结合。单 Agent 难以同时保持两种视角，容易遗漏关键洞察。</p><p>- 用户评论文本（Amazon/Trustpilot/Zendesk） - 产品品类信息 - 分析目标（如&quot;找出 Spectra S1 吸奶器的 Top 3 负面驱动因素&quot;）</p><p>业务价值： - 业务视角和数据视角的互补，减少分析盲区 - 无需人工逐步引导，Agent 自主推进分析深度 - 一次对话完成多维度分析，效率提升 3-5x</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：低，依赖 LLM 能力，无需额外训练数据</li><li>技术门槛：中，需要理解角色设计和 Inception Prompting</li><li>工程复杂度：中低，核心是 Prompt 工程和对话状态管理</li><li>维护成本：低，Prompt 调整即可适应新场景</li><li>**概念优雅**：Role-Playing 是直觉上最自然的协作方式</li><li>**无需训练**：纯 Prompt 工程，零模型训练成本</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <pre class='code-preview'><code>cd paper2skills-code/mas/camel_role_playing
+python camel_agent.py</code></pre>
     <h2>8. 论文来源</h2><ul><li>2303.17760</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CAMEL-Role-Playing-Agents" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>AutoGen</span></li><li><span class='muted'>LLM Prompt Engineering</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>DyLAN</span></li><li><span class='muted'>Multi-Agent Debate</span></li><li><span class='muted'>Society Simulation</span></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>AutoGen</span></li><li><span class='muted'>InstructUIE</span></li><li><span class='muted'>MetaGPT</span></li><li><span class='muted'>Self-Refine</span></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-ReAct-Reasoning-Acting.html'>Skill-ReAct-Reasoning-Acting</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

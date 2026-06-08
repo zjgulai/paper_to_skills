@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-RAPTOR-Hierarchical-RAG</nav>
 <h1>RAPTOR - 递归抽象树型分层检索</h1>
-<p class="muted">Skill-RAPTOR-Hierarchical-RAG · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-RAPTOR-Hierarchical-RAG · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span></div>
+
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>案例一：亚马逊 ToS 合规问答系统</p>
+    <p>RAPTOR（Recursive Abstractive Processing for Tree-Organized Retrieval）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>RAPTOR（Recursive Abstractive Processing for TreeOrganized Retrieval） 将长文档转化为一棵&quot;抽象树&quot;：</p>
-    <h2>3. 输入</h2><ul><li>推荐块大小：150-300 tokens（语义完整段落）</li><li>避免在句子中间截断（配合 `Skill-Semantic-Chunking-Strategy`）</li><li>标题/章节信息保留在块内（如 `[3.2 清洗规范] 奶瓶每次使用后...`）</li></ul>
-    <h2>4. 输出</h2><ul><li>推荐块大小：150-300 tokens（语义完整段落）</li><li>避免在句子中间截断（配合 `Skill-Semantic-Chunking-Strategy`）</li><li>标题/章节信息保留在块内（如 `[3.2 清洗规范] 奶瓶每次使用后...`）</li></ul>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：亚马逊卖家政策（ToS）文档长达 200+ 页，覆盖商品安全法规、禁售品类、广告规则、FBA 操作手册。母婴类目尤其复杂（儿童安全法规 CPSC、FDA 婴儿食品标准）。合规团队每天需要回答&quot;这款奶瓶清洗液能在亚马逊卖吗？&quot;类问题，人工核查耗时 2-4 小时/问题。</p><p>RAPTOR 方案： 1. 将亚马逊 ToS + CPSC 法规 + FDA 标准文档构建 RAPTOR 树 2. 摘要层覆盖&quot;禁售化学品&quot;、&quot;婴儿食品标准&quot;等主题（全局） 3. 叶节点保留具体条款号和数值标准（细节） 4. 用户提问时，Collapsed Tree 同时命中合规总结 + 具体条款</p><p>量化 ROI： | 指标 | Before | After | 提升 | |---|---|---|---| | 合规问题响应时间 | 2-4 小时 | 3-5 分钟 | 95% 降低 | | 条款引用准确率 | 70%（人工记忆） | 91% | +30% | | 合规团队人力 | 4人 | 1.5人 | 节省 $180K/年 | | ToS 违规处罚风险 | 基准 | 降低 60% | |</p>
+    <h2>4. 输入数据要求</h2><ul><li>推荐块大小：150-300 tokens（语义完整段落）</li><li>避免在句子中间截断（配合 `Skill-Semantic-Chunking-Strategy`）</li><li>标题/章节信息保留在块内（如 `[3.2 清洗规范] 奶瓶每次使用后...`）</li></ul>
+    <h2>5. 输出结果</h2><ul><li>推荐块大小：150-300 tokens（语义完整段落）</li><li>避免在句子中间截断（配合 `Skill-Semantic-Chunking-Strategy`）</li><li>标题/章节信息保留在块内（如 `[3.2 清洗规范] 奶瓶每次使用后...`）</li></ul>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+RAPTOR - 递归抽象树型分层检索系统
+arXiv: 2401.18059 (RAPTOR, Stanford, ICLR 2024)
+
+实现要点：
+1. 文档分块 -&gt; embedding
+2. UMAP 降维 + GMM 软聚类
+3. LLM 生成摘要（mock）
+4. 递归构建抽象树
+5. Collapsed Tree 向量检索
+
+运行环境：Python 3.9+，无需外部 API（全 mock）
+&quot;&quot;&quot;
+
+import ast
+import math
+import random
+from typing import Dict, List, Optional, Tuple
+from dataclasses import dataclass, field
+
+
+# ─────────────────────────────────────────────
+# 数据结构
+# ─────────────────────────────────────────────
+
+@dataclass
+class TreeNode:
+    &quot;&quot;&quot;RAPTOR 树节点&quot;&quot;&quot;
+    node_id: str
+    text: str
+    embedding: List[float]
+    level: int                          # 0=叶节点，1,2,...=摘要层
+    children: List[str] = field(default_factory=list)   # 子节点 ID
+    parent: Optional[str] = None
+    cluster_id: Optional[int] = None
+
+
+@dataclass
+class RAPTORTree:
+    &quot;&quot;&quot;RAPTOR 树结构&quot;&quot;&quot;
+    nodes: Dict[str, TreeNode] = field(default_factory=dict)
+    root_id: Optional[str] = None
+    max_level: int = 0
+
+    def get_all_nodes(self) -&gt; List[TreeNode]:
+        return list(self.nodes.values())
+
+    def get_nodes_by_level(self, level: int) -&gt; List[TreeNode]:
+        return [n for n in self.nodes.values() if n.level == level]
+
+
+# ─────────────────────────────────────────────
+# Mock 工具函数（生产环境替换为真实实现）
+# ─────────────────────────────────────────────
+
+def mock_embed(text: str, dim: int = 16) -&gt; List[float]:
+    &quot;&quot;&quot;Mock embedding：用文本 hash 生成确定性向量&quot;&quot;&quot;
+    random.seed(hash(text) % (2 ** 31))
+    vec = [random.gauss(0, 1) for _ in range(dim)]
+    norm = math.sqrt(sum(v * v for v in vec)) + 1e-9</code></pre>
     <h2>8. 论文来源</h2><ul><li>2401.18059</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-RAPTOR-Hierarchical-RAG" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-Semantic-Chunking-Strategy.html'>Skill-Semantic-Chunking-Strategy</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-HyDE-Hypothetical-Document.html'>Skill-HyDE-Hypothetical-Document</a></li><li><a href='../skills/Skill-RAG-Reranking-CrossEncoder.html'>Skill-RAG-Reranking-CrossEncoder</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

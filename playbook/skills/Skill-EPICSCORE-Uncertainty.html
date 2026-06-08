@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-EPICSCORE-Uncertainty</nav>
 <h1>认知不确定性共形评分 - 数据稀疏区域自适应区间加宽</h1>
-<p class="muted">Skill-EPICSCORE-Uncertainty · 01-因果推断 · status=stable</p>
+<p class="muted">Skill-EPICSCORE-Uncertainty · 01-因果推断</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：桑基图热门路径 vs 冷门路径的差异化区间</p>
+    <p>偶然不确定性**（aleatoric uncertainty，数据本身的随机性），对</p>
     <h2>2. 核心算法逻辑</h2>
     <p>标准共形预测对所有数据点使用统一的非一致性分数，无法区分&quot;数据多的区域&quot;和&quot;数据少的区域&quot;。根本原因：传统共形分数只捕捉偶然不确定性（aleatoric uncertainty，数据本身的随机性），对认知不确定性（epistemic uncertainty，训练数据不足导致的模型无知）视而不见——在数据稀疏区域仍然给出窄区间，形成虚假的高置信度。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>每条桑基图边上有 `(x_i, y_i)` 对：`x_i` 为路径上下文特征（流量来源、时段、品类等），`y_i` 为结果指标（转化率、GMV）</li><li>带不确定性代理的预测模型（任意贝叶斯模型，包括轻量 GP/BART/MC Dropout）</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>桑基图中每条边代表一条用户路径转化，观测量差异极大：</p><p>| 路径边 | 日均观测量 | 标准共形区间 | EPICSCORE 区间 | 决策含义 | |--------|-----------|-------------|----------------|---------| | SEARCH → PDP | 5,000次 | [78%, 82%] | [77%, 83%] | 数据充足，区间无明显变化 | | PDP → CART | 2,100次 | [43%, 49%] | [42%, 50%] | 数据较充足 | | SUPPORT → CHECKOUT | 23次 | 标准方法仍给 [8%, 38%] | [5%, 45%] | 数据稀疏</p><p>一眼看出哪条边可信、哪条边不可信，避免把小样本冷门路径的点估计误作稳定洞察。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+EPICSCORE 完整实现
+论文: arXiv:2502.06995 — Epistemic Uncertainty in Conformal Scores: A Unified Approach
+
+依赖:
+  pip install numpy scipy scikit-learn gpytorch torch bartpy
+  或: conda install numpy scipy scikit-learn pytorch -c pytorch
+      pip install gpytorch bartpy
+&quot;&quot;&quot;
+
+import numpy as np
+from scipy.stats import norm
+from sklearn.linear_model import QuantileRegressor
+from sklearn.model_selection import train_test_split
+import warnings
+warnings.filterwarnings(&quot;ignore&quot;)
+
+
+# ─────────────────────────────────────────────
+# 一、非一致性分数定义（任意分数可替换）
+# ─────────────────────────────────────────────
+
+def regression_split_score(y_pred: np.ndarray, y_true: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;标准回归 split 分数: s(x,y) = |y - g(x)|&quot;&quot;&quot;
+    return np.abs(y_true - y_pred)
+
+
+def cqr_score(q_lo: np.ndarray, q_hi: np.ndarray, y_true: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;CQR 分数: s(x,y) = max(q_lo(x)-y, y-q_hi(x))&quot;&quot;&quot;
+    return np.maximum(q_lo - y_true, y_true - q_hi)
+
+
+# ─────────────────────────────────────────────
+# 二、贝叶斯后端 A — 高斯过程（GP）
+# ─────────────────────────────────────────────
+
+class GPEpistemicModel:
+    &quot;&quot;&quot;
+    用 GP 对非一致性分数的条件分布建模。
+    返回预测均值和方差，用正态近似计算 F(s | x, D)。
+    依赖: gpytorch（可替换为 sklearn.gaussian_process）
+    &quot;&quot;&quot;
+
+    def __init__(self, length_scale: float = 1.0, noise_var: float = 0.1):
+        self.length_scale = length_scale
+        self.noise_var = noise_var
+        self._X_train = None
+        self._s_train = None
+        self._K_inv = None
+
+    def _rbf_kernel(self, X1: np.ndarray, X2: np.ndarray) -&gt; np.ndarray:
+        &quot;&quot;&quot;RBF 核函数&quot;&quot;&quot;
+        diff = X1[:, None, :] - X2[None, :, :]  # (n1, n2, d)
+        dist_sq = np.sum(diff ** 2, axis=-1)
+        return np.exp(-0.5 * dist_sq / self.length_scale ** 2)
+
+    def fit(self, X_cal1: np.ndarray, scores_cal1: np.ndarray):
+        &quot;&quot;&quot;在 D_cal,1 上拟合 GP 后验&quot;&quot;&quot;
+        self._X_train = X_cal1
+        self._s_train = scores_cal1</code></pre>
     <h2>8. 论文来源</h2><ul><li>2502.06995</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-EPICSCORE-Uncertainty" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Conformal-ROI-Prediction.html'>Skill-Conformal-ROI-Prediction</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-SSBC-Small-Sample-Conformal.html'>Skill-SSBC-Small-Sample-Conformal</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-SSBC-Small-Sample-Conformal.html'>Skill-SSBC-Small-Sample-Conformal</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

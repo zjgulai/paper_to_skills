@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-RFM-Customer-Segmentation</nav>
 <h1>RFM Customer Segmentation for Targeted Marketing</h1>
-<p class="muted">Skill-RFM-Customer-Segmentation · 06-增长模型 · status=stable</p>
+<p class="muted">Skill-RFM-Customer-Segmentation · 06-增长模型</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐☆☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：精准营销推送</p>
+    <p>等频分箱（Quantile-based）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心思想：用三个维度刻画用户价值——</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>冠军用户（~5%）：新品预售邀请、VIP专属折扣</li><li>沉睡用户（~20%）：&quot;我们想念你&quot; + 15% off coupon</li><li>新用户（~15%）：首单复购引导（买吸奶器→推荐储奶袋）</li><li>潜力用户（~10%）：快速升级（满$150送配件套装）</li><li>邮件打开率：2% → 8%</li><li>点击率：0.3% → 1.5%</li><li>转化率：0.1% → 0.5%</li><li>冠军 → 忠诚 → 沉睡 → 流失（危险路径）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：Momcozy 有10万注册用户，营销团队想给不同用户发不同的邮件/推送。但一刀切的消息打开率&lt;2%，转化率&lt;0.1%。</p><p>RFM应用： 1. 计算每个用户的R、F、M得分 2. 分群并制定差异化策略： - 冠军用户（~5%）：新品预售邀请、VIP专属折扣 - 沉睡用户（~20%）：&quot;我们想念你&quot; + 15% off coupon - 新用户（~15%）：首单复购引导（买吸奶器→推荐储奶袋） - 潜力用户（~10%）：快速升级（满$150送配件套装）</p><p>预期产出： - 邮件打开率：2% → 8% - 点击率：0.3% → 1.5% - 转化率：0.1% → 0.5%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：营销转化率提升3-5x，营销成本降低30-50%</li><li>**难度**：⭐☆☆☆☆（1/5）— 最简单实用的分群方法</li><li>**优先级**：⭐⭐⭐⭐⭐（5/5）— 任何营销团队的必备基础能力</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+RFM Customer Segmentation — 用户价值分群
+用于精准营销和用户生命周期管理
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+
+
+class RFMSegmentation:
+    &quot;&quot;&quot;RFM用户分群&quot;&quot;&quot;
+
+    def __init__(self, recency_bins=5, frequency_bins=5, monetary_bins=5):
+        self.recency_bins = recency_bins
+        self.frequency_bins = frequency_bins
+        self.monetary_bins = monetary_bins
+
+    def calculate_rfm(self, df, customer_col, date_col, amount_col):
+        &quot;&quot;&quot;
+        计算RFM指标
+
+        Args:
+            df: DataFrame，每行一个订单
+            customer_col: 用户ID列名
+            date_col: 订单日期列名
+            amount_col: 订单金额列名
+        &quot;&quot;&quot;
+        df = df.copy()
+        df[date_col] = pd.to_datetime(df[date_col])
+
+        # 计算基准日期（数据最后一天+1）
+        snapshot_date = df[date_col].max() + timedelta(days=1)
+
+        rfm = df.groupby(customer_col).agg({
+            date_col: lambda x: (snapshot_date - x.max()).days,  # Recency
+            customer_col: &#x27;count&#x27;,  # Frequency
+            amount_col: &#x27;sum&#x27;  # Monetary
+        }).reset_index()
+
+        rfm.columns = [&#x27;customer_id&#x27;, &#x27;recency&#x27;, &#x27;frequency&#x27;, &#x27;monetary&#x27;]
+
+        # R：越小越好（最近购买），所以反转分数
+        rfm[&#x27;r_score&#x27;] = pd.qcut(rfm[&#x27;recency&#x27;], self.recency_bins,
+                                  labels=range(self.recency_bins, 0, -1)).astype(int)
+        # F：越大越好
+        rfm[&#x27;f_score&#x27;] = pd.qcut(rfm[&#x27;frequency&#x27;].rank(method=&#x27;first&#x27;), self.frequency_bins,
+                                  labels=range(1, self.frequency_bins + 1)).astype(int)
+        # M：越大越好
+        rfm[&#x27;m_score&#x27;] = pd.qcut(rfm[&#x27;monetary&#x27;].rank(method=&#x27;first&#x27;), self.monetary_bins,
+                                  labels=range(1, self.monetary_bins + 1)).astype(int)
+
+        return rfm
+
+    def segment(self, rfm):
+        &quot;&quot;&quot;根据RFM得分分群&quot;&quot;&quot;
+        def classify(row):
+            r, f, m = row[&#x27;r_score&#x27;], row[&#x27;f_score&#x27;], row[&#x27;m_score&#x27;]
+
+            if r &gt;= 4 and f &gt;= 4 and m &gt;= 4:</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-RFM-Customer-Segmentation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

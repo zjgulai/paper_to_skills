@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-Mediation-Causal-Mechanism-Analysis</nav>
 <h1>Causal Mediation Analysis — Decomposing &quot;Why It Works</h1>
-<p class="muted">Skill-Mediation-Causal-Mechanism-Analysis · 01-因果推断 · status=stable</p>
+<p class="muted">Skill-Mediation-Causal-Mechanism-Analysis · 01-因果推断</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 10-30万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：推荐算法更新的机制分解</p>
+    <p>核心公式（自然效应框架，Pearl 2001）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心思想：中介分析回答&quot;为什么&quot;——一个干预（如推荐算法更新）通过什么机制影响了结果（如转化率）。它将总效应分解为：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>$M_1$ = 点击率（CTR）</li><li>$M_2$ = 平均浏览页面数</li><li>$M_3$ = 平均客单价</li><li>总效应：+2.0% 转化率提升</li><li>点击率路径（NIE₁）：+1.5%（主要驱动）</li><li>浏览深度路径（NIE₂）：+0.4%</li><li>客单价路径（NIE₃）：-0.2%（负向，被低价商品推荐稀释）</li><li>直接效应（NDE）：+0.3%</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：产品团队上线了新的推荐算法（基于用户行为的协同过滤 → 基于内容的混合推荐），全站转化率提升了2%。但产品经理想知道：这2%是通过什么路径实现的？是点击率提升了？还是用户浏览深度增加了？还是客单价变了？</p><p>中介变量选择： - $M_1$ = 点击率（CTR） - $M_2$ = 平均浏览页面数 - $M_3$ = 平均客单价</p><p>应用流程： 1. 总效应估计：对比算法上线前后，处理组（被推荐商品）vs 对照组（未被推荐商品）的转化率变化 2. 逐个中介分析：对每个中介变量M，估计NDE和NIE 3. 机制排序：比较各中介的间接效应大小，找出主要驱动机制</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：需要同时观测干预、中介和结果三个变量</li><li>技术门槛：低，核心是OLS回归的组合</li><li>主要挑战：选择合理的中介变量 + 论证识别假设（无未观测混杂）</li><li>**从&quot;知道有效&quot;到&quot;知道为什么有效&quot;**：这是从执行层到策略层的跃迁</li><li>**方法极简单**：两个OLS回归即可，但洞察极深刻</li><li>**通用性最强**：任何A/B测试、政策评估、算法更新后都应该做机制分解</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Causal Mediation Analysis — 因果中介效应分析
+用于分解干预的总效应为直接效应和间接效应
+
+支持：经典中介分析、多重中介分析、Surrogate Index
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ==================== 中介分析核心实现 ====================
+
+class MediationAnalysis:
+    &quot;&quot;&quot;因果中介分析器&quot;&quot;&quot;
+
+    def __init__(self, method=&#x27;parametric&#x27;):
+        &quot;&quot;&quot;
+        初始化中介分析器
+
+        Args:
+            method: &#x27;parametric&#x27; (基于回归) 或 &#x27;bootstrap&#x27;
+        &quot;&quot;&quot;
+        self.method = method
+        self.a_coef = None  # T → M 的效应
+        self.b_coef = None  # M → Y 的效应（控制T）
+        self.c_prime = None  # T → Y 的直接效应（控制M）
+        self.results = {}
+
+    def fit(self, T, M, Y, X_controls=None):
+        &quot;&quot;&quot;
+        拟合中介分析模型
+
+        Args:
+            T: 干预变量 (n_samples,)
+            M: 中介变量 (n_samples,) — 可扩展为多重中介
+            Y: 结果变量 (n_samples,)
+            X_controls: 控制变量 (n_samples, n_controls)
+        &quot;&quot;&quot;
+        T = np.array(T).ravel()
+        M = np.array(M).ravel()
+        Y = np.array(Y).ravel()
+        n = len(T)
+
+        # 构建特征矩阵
+        if X_controls is not None:
+            X_controls = np.array(X_controls)
+            if X_controls.ndim == 1:
+                X_controls = X_controls.reshape(-1, 1)
+
+        # ========== 模型1: T → M (路径a) ==========
+        if X_controls is not None:
+            X_a = np.column_stack([T, X_controls])
+        else:
+            X_a = T.reshape(-1, 1)
+
+        model_a = LinearRegression()</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Mediation-Causal-Mechanism-Analysis" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-DiD-Difference-in-Differences.html'>Skill-DiD-Difference-in-Differences</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li></ul>
     <h3>延伸技能</h3><p class='muted'>暂无</p>
     <h3>可组合技能</h3><ul><li><span class='muted'>+ A/B-Testing</span></li><li><span class='muted'>+ DiD</span></li><li><span class='muted'>+ VOC-Analysis</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

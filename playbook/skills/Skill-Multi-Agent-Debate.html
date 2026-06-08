@@ -9,45 +9,68 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-Multi-Agent-Debate</nav>
 <h1>Multi-Agent Debate — 多智能体辩论共识</h1>
-<p class="muted">Skill-Multi-Agent-Debate · 10-MAS · status=stable</p>
+<p class="muted">Skill-Multi-Agent-Debate · 10-MAS</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：评论情感标注质量仲裁</p>
+    <p>- LLM 生成初始答案后，即使答案错误，也会在后续反思中&quot;维护&quot;这个答案</p>
     <h2>2. 核心算法逻辑</h2>
     <p>MultiAgent Debate (MAD) 提出了一种通过多 Agent 辩论来解决复杂推理问题的方法。核心洞察：单个 LLM 一旦对初始答案建立信心，后续的自我反思会陷入&quot;思维退化&quot;（DegenerationofThought），无法产生真正的新思路。多个 Agent 之间的对抗性辩论可以打破这种认知锁定。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>多个标注 Agent（使用不同的 prompt/模型）</li><li>Judge Agent 的裁决标准</li><li>减少单 Agent 的标注偏差，提升标注一致性</li><li>歧义案例的置信度量化，指导人工复核优先级</li><li>复杂情感表达的多维度标注，比单标签更丰富</li><li>市场数据（销售、竞品、用户反馈）</li><li>决策前充分暴露各方案的风险和盲点</li><li>多方视角碰撞产生更优的折中方案</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>一条评论的情感标注可能存在歧义。例如：&quot;Spectra S1 吸奶器价格贵但确实好用&quot;——这到底是正面还是负面？单 Agent 可能因 prompt 偏向而给出不稳定的结果。</p><p>- 待标注的评论文本 - 多个标注 Agent（使用不同的 prompt/模型） - Judge Agent 的裁决标准</p><p>业务价值： - 减少单 Agent 的标注偏差，提升标注一致性 - 歧义案例的置信度量化，指导人工复核优先级 - 复杂情感表达的多维度标注，比单标签更丰富</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：低，无需额外训练数据</li><li>技术门槛：中，核心是 Prompt 设计（角色分化、辩论协议）</li><li>工程复杂度：中低，多 Agent 轮流调用</li><li>维护成本：低，调整角色 prompt 即可</li><li>**解决真实问题**：DoT 是 LLM 自我反思的根本局限</li><li>**成本可控**：GPT-3.5 × N 的总成本可能仍低于 GPT-4 单次调用</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：paper2skills-code/mas/multi_agent_debate</p>
+    <p class="muted">代码块数量：4 · 路径：paper2skills-code/mas/multi_agent_debate</p>
+    <pre class='code-preview'><code>cd paper2skills-code/mas/multi_agent_debate
+python debate_system.py</code></pre>
     <h2>8. 论文来源</h2><ul><li>2305.19118</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multi-Agent-Debate" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>AutoGen</span></li><li><span class='muted'>CAMEL</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Free-MAD</span></li><li><span class='muted'>ReConcile</span></li><li><span class='muted'>Society of Mind</span></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>CAMEL</span></li><li><span class='muted'>MAS Orchestrator</span></li><li><span class='muted'>Reflexion</span></li><li><span class='muted'>Self-Refine</span></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-ReAct-Reasoning-Acting.html'>Skill-ReAct-Reasoning-Acting</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

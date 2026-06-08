@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Data-Collection-Causal-Debiasing</nav>
 <h1>Data Collection Causal Debiasing — 采集偏差因果修正：爬虫选择性采集对因果分析的去污染</h1>
-<p class="muted">Skill-Data-Collection-Causal-Debiasing · 22-数据采集工程 · status=stable</p>
+<p class="muted">Skill-Data-Collection-Causal-Debiasing · 22-数据采集工程</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 180 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：Amazon 评论爬虫偏差修正——折扣效应因果估计</p>
+    <p>你能采到的数据，恰恰不是随机样本</p>
     <h2>2. 核心算法逻辑</h2>
     <p>跨境电商数据采集面临一个根本性困境：你能采到的数据，恰恰不是随机样本。Amazon 评论爬虫只能采集到购买且写了评论的买家（约 25% 购买者），而这批人的特征（高参与度、使用经验较强、投诉阈值较低）与全体买家截然不同。当你用这批有偏数据做因果推断（如&quot;折扣是否提升复购率&quot;），估计结果会被选择偏差（Selection Bias）严重扭曲。</p>
-    <h2>3. 输入</h2><ul><li>平台官方人口统计报告（抽样模拟）</li><li>内部 CRM 全量用户数据</li><li>随机对照实验（A/B test）中的控制组</li></ul>
-    <h2>4. 输出</h2><ul><li>平台官方人口统计报告（抽样模拟）</li><li>内部 CRM 全量用户数据</li><li>随机对照实验（A/B test）中的控制组</li></ul>
-    <h2>5. 业务场景</h2><ul><li>高参与度打折买家：权重 0.57（降权，因其过采样）</li><li>低参与度对照买家：权重 1.82（升权，因其欠采样）</li><li>避免基于虚高 CATE（+0.31）多投放 coupon 预算 $82,000/季</li><li>实际 CATE（+0.09）仍显著 → coupon 策略保留但降低力度</li><li>**净节省 coupon 预算 ≈ $65,000/年，同时维持真实复购提升**</li><li>避免过度降价，保护 GMV ¥3,000 万规模下 6% 毛利点 = ¥180 万/年</li><li>**调查偏差修正的 ROI 极高，实施成本仅需 1 周开发**</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：某母婴品牌通过爬虫采集 Amazon 评论，分析&quot;打折 coupon 是否提升复购率&quot;。原始爬虫样本显示打折组复购率高出对照组 31%，但市场部基于这一结果激进投放 coupon，实际复购提升仅 8%，造成严重的 coupon 成本浪费。</p><p>量化收益： - 避免基于虚高 CATE（+0.31）多投放 coupon 预算 $82,000/季 - 实际 CATE（+0.09）仍显著 → coupon 策略保留但降低力度 - 净节省 coupon 预算 ≈ $65,000/年，同时维持真实复购提升</p><p>业务背景：为了解目标买家对价格敏感度，通过 Amazon Vine + 站内消息发放价格调查问卷，但高收入买家（对价格不敏感）应答率仅 12%，低收入买家（对价格高度敏感）应答率 31%，导致调查结果严重低估价格弹性。</p>
+    <h2>4. 输入数据要求</h2><ul><li>平台官方人口统计报告（抽样模拟）</li><li>内部 CRM 全量用户数据</li><li>随机对照实验（A/B test）中的控制组</li></ul>
+    <h2>5. 输出结果</h2><ul><li>平台官方人口统计报告（抽样模拟）</li><li>内部 CRM 全量用户数据</li><li>随机对照实验（A/B test）中的控制组</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p>180 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Data Collection Causal Debiasing
+整合 IPW 选择偏差修正 + 双重稳健估计 + 爬虫截断检测
+CausalDebiasWeb (arXiv:2407.15392) + SurveyBiasCorrect (arXiv:2501.08734) + CrawlerBiasAudit (arXiv:2503.12640)
+&quot;&quot;&quot;
+
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+from scipy import stats
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.preprocessing import StandardScaler
+import warnings
+warnings.filterwarnings(&quot;ignore&quot;)
+
+
+@dataclass
+class BiasAuditResult:
+    &quot;&quot;&quot;偏差审计结果&quot;&quot;&quot;
+    feature_name: str
+    sample_mean: float
+    population_mean: float
+    bias_ratio: float          # sample_mean / population_mean
+    is_biased: bool            # |bias_ratio - 1| &gt; 0.2 视为显著偏差
+
+
+@dataclass
+class TruncationTestResult:
+    &quot;&quot;&quot;爬虫截断检验结果&quot;&quot;&quot;
+    ks_stat: float
+    p_value: float
+    has_truncation: bool
+    estimated_truncation_point: float
+    extrapolation_factor: float        # 估计的样本外推因子
+
+
+class CrawlerBiasAuditor:
+    &quot;&quot;&quot;
+    爬虫偏差审计器
+    arXiv:2503.12640 CrawlerBiasAudit
+    检测爬虫系统性截断与样本分布偏差
+    &quot;&quot;&quot;
+
+    def __init__(self, truncation_p_threshold: float = 0.05):
+        self.truncation_p_threshold = truncation_p_threshold
+
+    def audit_feature_bias(
+        self,
+        sample_features: np.ndarray,           # 爬虫样本特征
+        population_means: Dict[str, float],     # 已知总体均值（来自平台统计）
+        feature_names: List[str],
+    ) -&gt; List[BiasAuditResult]:
+        &quot;&quot;&quot;检测特征分布偏差&quot;&quot;&quot;
+        results = []
+        for i, name in enumerate(feature_names):
+            if name not in population_means:
+                continue
+            sample_mean = float(np.mean(sample_features[:, i]))
+            pop_mean = population_means[name]
+            bias_ratio = sample_mean / max(abs(pop_mean), 1e-6)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2407.15392</li><li>2501.08734</li><li>2503.12640</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Data-Collection-Causal-Debiasing" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>LLM-Focused-Web-Crawling]]</span></li><li><a href='../skills/Skill-LLM-Focused-Web-Crawling.html'>Skill-LLM-Focused-Web-Crawling</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>Uplift-Modeling]]</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>DML-Cohort-Causal-Effect]]</span></li><li><span class='muted'>Intelligent-Attribution-Causal-Forest]]</span></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-Intelligent-Attribution-Causal-Forest.html'>Skill-Intelligent-Attribution-Causal-Forest</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

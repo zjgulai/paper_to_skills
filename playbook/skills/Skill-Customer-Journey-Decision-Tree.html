@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/09-dataagent-llm.html">09-DataAgent-LLM</a> / Skill-Customer-Journey-Decision-Tree</nav>
 <h1>客服对话决策树 - 从日志中自学策略</h1>
-<p class="muted">Skill-Customer-Journey-Decision-Tree · 09-DataAgent-LLM · status=stable</p>
+<p class="muted">Skill-Customer-Journey-Decision-Tree · 09-DataAgent-LLM</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 600 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一:售后退换货自动化决策树</p>
+    <p>归纳**出可执行的决策树策略,而非手工编写规则。三步骤:</p>
     <h2>2. 核心算法逻辑</h2>
     <p>从历史客服对话日志中归纳出可执行的决策树策略,而非手工编写规则。三步骤:对话状态聚类(将历史多轮对话聚类为典型 dialog state) → 策略树归纳(用决策树学习从 state 到 action 的转移) → LLM 增强叶节点(每个叶节点由 LLM 生成自然语言回复模板,保持灵活性同时锁定流程)。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>**业务问题**:母婴出海电商客服 70% 工单是&quot;退换货咨询&quot;(尺码错、漏发、过敏等),人工处理成本高,响应慢。统一模板回复又不灵活</li><li>**数据要求**:历史退换货对话日志(≥10 万轮) + 处理结果(批准/拒绝/转人工) + 用户满意度评分</li><li>**决策树配置**:</li><li>状态特征:订单时长、商品品类、退换理由 intent、用户历史投诉次数</li><li>决策节点:7 天内 vs 7-30 天 vs 30+ 天;品类敏感度(食品/护肤敏感 vs 服装)</li><li>叶节点 action:自动批准 / 要求图片 / 转人工 / 拒绝</li><li>LLM 叶节点:根据用户语气生成共情回复</li><li>**业务价值**:</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>- 业务问题:母婴出海电商客服 70% 工单是&quot;退换货咨询&quot;(尺码错、漏发、过敏等),人工处理成本高,响应慢。统一模板回复又不灵活 - 数据要求:历史退换货对话日志(≥10 万轮) + 处理结果(批准/拒绝/转人工) + 用户满意度评分 - 决策树配置: - 状态特征:订单时长、商品品类、退换理由 intent、用户历史投诉次数 - 决策节点:7 天内 vs 7-30 天 vs 30+ 天;品类敏感度(食品/护肤敏感 vs 服装) - 叶节点 action:自动批准 / 要求图片 / 转人工 / 拒绝 - LLM 叶节点:根据用户语气生成共情回复 - 业务价值: - 70% 工单自动化处理,客</p><p>- 业务问题:新手妈妈咨询&quot;宝宝 3 月夜醒频繁怎么办&quot;、&quot;5 月辅食怎么添加&quot;等场景,平台希望提供专业回答但医疗建议有合规风险,需要决策树锁定边界 - 数据要求:母婴专家撰写的咨询脚本 + 历史咨询日志 + 转专家次数 - 决策树配置: - 状态:宝宝月龄 + 症状 intent + 紧急度(发烧 38.5+ vs 一般夜醒) - 决策节点:紧急度阈值(高 → 直接推送医院/儿科;中 → 提供专业建议;低 → 一般育儿知识) - 合规叶节点:LLM 生成回复但加入&quot;非医学建议,建议咨询儿科医生&quot;声明 - 业务价值:专业咨询覆盖率从 20% → 80%,新妈妈活跃留存提升 30-40%;年化 </p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>易处:决策树本身工程成熟,sklearn 即可</li><li>难处:对话状态特征化需要 NLU 模块(BERT 或 LLM intent extraction)</li><li>难处:合规叶节点的医疗/法律边界需要法务介入审核</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Customer Journey Decision Tree 最小骨架
+综合 ConvLab + Reward-based Dialog Policy + LLM-as-Leaf 方向
+&quot;&quot;&quot;
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Callable, Dict, List, Optional, Tuple
+
+
+@dataclass
+class DialogState:
+    user_intent: str
+    days_since_order: int
+    product_category: str
+    user_complaint_history: int
+    severity: str = &quot;low&quot;
+
+
+@dataclass
+class DialogAction:
+    action_type: str
+    response_template: str
+
+
+@dataclass
+class DecisionNode:
+    feature: str
+    threshold: Optional[float] = None
+    categories: Optional[Dict[str, &quot;DecisionNode&quot;]] = None
+    left: Optional[&quot;DecisionNode&quot;] = None
+    right: Optional[&quot;DecisionNode&quot;] = None
+    leaf_action: Optional[DialogAction] = None
+
+    def is_leaf(self) -&gt; bool:
+        return self.leaf_action is not None
+
+
+def build_return_policy_tree() -&gt; DecisionNode:
+    &quot;&quot;&quot;硬编码的退换货决策树(生产中由日志学习得来)&quot;&quot;&quot;
+    return DecisionNode(
+        feature=&quot;days_since_order&quot;,
+        threshold=7,
+        left=DecisionNode(
+            feature=&quot;product_category&quot;,
+            categories={
+                &quot;food&quot;: DecisionNode(leaf_action=DialogAction(&quot;auto_approve&quot;, &quot;您好,食品类 7 天内无理由退货已为您批准,退款将在 24 小时内到账&quot;)),
+                &quot;clothing&quot;: DecisionNode(leaf_action=DialogAction(&quot;require_photo&quot;, &quot;请提供商品图片以便快速处理&quot;)),
+                &quot;default&quot;: DecisionNode(leaf_action=DialogAction(&quot;auto_approve&quot;, &quot;已为您批准退货申请&quot;)),
+            },
+        ),
+        right=DecisionNode(
+            feature=&quot;user_complaint_history&quot;,
+            threshold=3,
+            left=DecisionNode(leaf_action=DialogAction(&quot;manual_review&quot;, &quot;您的申请已提交人工审核,1-2 工作日反馈&quot;)),
+            right=DecisionNode(leaf_action=DialogAction(&quot;transfer_human&quot;, &quot;为您转接资深客服处理&quot;)),
+        ),
+    )
+
+
+def traverse_tree(node: DecisionNode, state: DialogState) -&gt; DialogAction:</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Customer-Journey-Decision-Tree" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-ReAct-Reasoning-Acting.html'>Skill-ReAct-Reasoning-Acting</a></li><li><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html'>Skill-SQL-Agent-Text-to-SQL</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Auto-Skill-Synthesis.html'>Skill-Auto-Skill-Synthesis</a></li><li><a href='../skills/Skill-Root-Cause-Analysis-Agent.html'>Skill-Root-Cause-Analysis-Agent</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-Multi-Agent-Debate.html'>Skill-Multi-Agent-Debate</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

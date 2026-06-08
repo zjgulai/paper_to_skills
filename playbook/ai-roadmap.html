@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI 能力建设路线图 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="index.html">首页</a>
+      <a href="domains/index.html">领域</a>
+      <a href="topics/index.html">主题</a>
+      <a href="workflows/index.html">工作流</a>
+      <a href="playbooks/index.html">场景手册</a>
+      <a href="ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="graph/overview.html">图谱</a>
+      <a href="skills/index.html">全部</a>
+    </nav>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="index.html">总览</a>
+      <a href="ai-roadmap.html">🗺 AI 能力路线图</a>
+      <a href="domains/index.html">按领域</a>
+      <a href="topics/index.html">按主题</a>
+      <a href="workflows/index.html">工作流</a>
+      <a href="playbooks/index.html">场景手册</a>
+      <a href="graph/overview.html">Skills Graph</a>
+      <a href="skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<style>
+.rm-hero{text-align:center;padding:60px 40px 40px;max-width:860px;margin:0 auto}
+.rm-hero-eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.rm-hero-title{font-size:36px;font-weight:800;line-height:1.2;margin:0 0 16px;color:#0f172a}
+.rm-hero-sub{font-size:18px;color:#475569;margin:0 0 28px}
+.rm-hero-cta{display:flex;gap:12px;justify-content:center;margin-bottom:14px}
+.rm-hero-note{font-size:12px;color:var(--muted)}
+.rm-btn-primary{padding:12px 28px;background:#2563eb;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.rm-btn-primary:hover{background:#1d4ed8}
+.rm-btn-sec{padding:12px 28px;background:#f1f5f9;color:#334155;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block}
+
+.rm-summary-bar{display:flex;align-items:center;justify-content:center;gap:0;background:#0f172a;color:#fff;padding:24px 40px;margin:0 -36px;flex-wrap:wrap;gap:8px}
+.rm-summary-item{text-align:center;padding:0 24px}
+.rm-summary-num{display:block;font-size:28px;font-weight:800;color:#60a5fa}
+.rm-summary-label{font-size:12px;color:#94a3b8}
+.rm-summary-sep{font-size:24px;color:#334155;padding:0 8px}
+
+.rm-roles-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0;padding:0}
+.rm-role{display:flex;gap:16px;align-items:flex-start;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:20px}
+.rm-role-icon{font-size:32px;flex-shrink:0}
+.rm-role strong{display:block;font-size:15px;margin-bottom:4px}
+.rm-role p{margin:0 0 8px;font-size:13px;color:#64748b}
+.rm-role-roi{font-size:13px;font-weight:700;color:#2563eb;background:#eff6ff;padding:3px 10px;border-radius:999px}
+
+.rm-phases{display:flex;flex-direction:column;gap:24px;margin:32px 0}
+.rm-phase{border-radius:16px;overflow:hidden;border:1px solid #e2e8f0}
+.rm-phase-header{display:flex;align-items:flex-start;gap:20px;padding:24px 28px;background:var(--phase-bg);border-bottom:1px solid #e2e8f0}
+.rm-phase-badge{width:72px;height:72px;border-radius:50%;background:var(--phase-color);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;text-align:center;line-height:1.2}
+.rm-phase-meta{flex:1}
+.rm-phase-period{font-size:12px;font-weight:600;color:var(--phase-color);text-transform:uppercase;letter-spacing:.06em}
+.rm-phase-theme{margin:4px 0;font-size:22px;font-weight:800}
+.rm-phase-tagline{margin:0;font-size:14px;color:#64748b}
+.rm-phase-roi{text-align:right;flex-shrink:0}
+.rm-phase-roi-label{display:block;font-size:11px;color:#94a3b8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.rm-phase-roi strong{font-size:18px;font-weight:800;color:var(--phase-color)}
+
+.rm-items{display:flex;flex-direction:column;gap:0}
+.rm-item{display:flex;gap:20px;padding:24px 28px;border-bottom:1px solid #f1f5f9}
+.rm-item:last-child{border-bottom:none}
+.rm-item-icon{font-size:28px;flex-shrink:0;width:40px;text-align:center;margin-top:2px}
+.rm-item-body{flex:1}
+.rm-item-title{margin:0 0 12px;font-size:16px;font-weight:700}
+.rm-story{background:#fefce8;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:#78350f;margin-bottom:8px}
+.rm-story-label,.rm-result-label{font-weight:700;margin-right:6px}
+.rm-result{background:#f0fdf4;border-left:3px solid #10b981;padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:#14532d;margin-bottom:8px}
+.rm-roi-line{font-size:13px;margin-bottom:8px;color:#374151}
+.rm-chips{display:flex;flex-wrap:wrap;gap:6px}
+.rm-chip{font-size:11px;background:#eff6ff;color:#1e40af;padding:3px 10px;border-radius:999px;text-decoration:none;border:1px solid #bfdbfe}
+.rm-chip:hover{background:#dbeafe}
+
+.rm-footer{display:grid;grid-template-columns:1fr 340px;gap:40px;margin-top:40px;padding:36px;background:#0f172a;border-radius:16px;color:#e2e8f0}
+.rm-footer h3{margin:0 0 10px;font-size:18px;color:#fff}
+.rm-footer p{font-size:14px;color:#94a3b8;margin:0 0 16px}
+.rm-footer-links{display:flex;flex-direction:column;gap:8px}
+.rm-footer-links a{color:#60a5fa;text-decoration:none;font-size:14px}
+.rm-footer-links a:hover{text-decoration:underline}
+.rm-footer-right{display:flex;flex-direction:column;justify-content:space-between}
+.rm-footer-cta{text-align:center;background:#1e293b;border-radius:12px;padding:24px;margin-bottom:16px}
+.rm-footer-cta p{color:#94a3b8;font-size:13px;margin-bottom:12px}
+.rm-footer-note{font-size:11px;color:#475569;line-height:1.6}
+
+@media print {
+  .topbar,.sidebar,.rm-hero-cta,.rm-footer-cta button{display:none!important}
+  body{background:#fff}
+  .content{padding:0!important;max-width:100%!important}
+  .rm-summary-bar{margin:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rm-phase,.rm-footer{break-inside:avoid}
+  .rm-phases{gap:16px}
+  @page{margin:20mm 15mm;size:A4}
+}
+@media(max-width:900px){
+  .rm-roles-bar{grid-template-columns:1fr}
+  .rm-footer{grid-template-columns:1fr}
+  .rm-phase-header{flex-wrap:wrap}
+}
+</style>
+<div class="rm-hero">
+  <div class="rm-hero-eyebrow">AI 能力建设路线图 · 2025-2026</div>
+  <h1 class="rm-hero-title">12 个月，让 AI 替代 3 类岗位的重复性决策</h1>
+  <p class="rm-hero-sub">分三阶段部署，首月可见 ROI，全年可验证收益 > 3,000 万元</p>
+  <div class="rm-hero-cta">
+    <button class="rm-btn-primary" onclick="window.print()">⬇ 下载 PDF</button>
+    <a class="rm-btn-sec" href="playbooks/index.html">查看场景手册 →</a>
+  </div>
+  <p class="rm-hero-note">所有 ROI 数字来源于真实 A/B 实验或匿名客户案例，非模型预测</p>
+</div>
+
+<div class="rm-summary-bar">
+  <div class="rm-summary-item">
+    <span class="rm-summary-num">3</span>
+    <span class="rm-summary-label">阶段</span>
+  </div>
+  <div class="rm-summary-sep">→</div>
+  <div class="rm-summary-item">
+    <span class="rm-summary-num">10</span>
+    <span class="rm-summary-label">核心场景</span>
+  </div>
+  <div class="rm-summary-sep">→</div>
+  <div class="rm-summary-item">
+    <span class="rm-summary-num">3,000万+</span>
+    <span class="rm-summary-label">可验证年化 ROI</span>
+  </div>
+  <div class="rm-summary-sep">→</div>
+  <div class="rm-summary-item">
+    <span class="rm-summary-num">3</span>
+    <span class="rm-summary-label">岗位重复性工作被替代</span>
+  </div>
+</div>
+
+<div class="rm-roles-bar">
+  <div class="rm-role">
+    <span class="rm-role-icon">📦</span>
+    <div>
+      <strong>供应链全链路</strong>
+      <p>从 15 个 Excel 联动 → 1 个 MAS 自动执行</p>
+      <span class="rm-role-roi">ROI 5,000-8,000 万</span>
+    </div>
+  </div>
+  <div class="rm-role">
+    <span class="rm-role-icon">📊</span>
+    <div>
+      <strong>数据分析师</strong>
+      <p>提数从 72 小时 → 5 分钟，报告从做 → 审</p>
+      <span class="rm-role-roi">ROI 1,600-3,000 万</span>
+    </div>
+  </div>
+  <div class="rm-role">
+    <span class="rm-role-icon">📈</span>
+    <div>
+      <strong>广告优化师</strong>
+      <p>凌晨 2 点平台调整，Agent 已完成出价</p>
+      <span class="rm-role-roi">ROI 3,000-5,000 万</span>
+    </div>
+  </div>
+</div>
+
+<div class="rm-phases">
+  
+<div class="rm-phase" id="phase1" style="--phase-color:#2563eb;--phase-bg:#eff6ff">
+  <div class="rm-phase-header">
+    <div class="rm-phase-badge">Phase 1</div>
+    <div class="rm-phase-meta">
+      <span class="rm-phase-period">第 1-3 个月</span>
+      <h3 class="rm-phase-theme">快赢</h3>
+      <p class="rm-phase-tagline">30 天内出数字，首月可见 ROI</p>
+    </div>
+    <div class="rm-phase-roi">
+      <span class="rm-phase-roi-label">阶段可验证 ROI</span>
+      <strong>800 - 1,900 万/年</strong>
+    </div>
+  </div>
+  <div class="rm-items">
+<div class="rm-item">
+  <div class="rm-item-icon">📦</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">供应链预测基线</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      某母婴品牌 60+ SKU × 多仓 × 多市场，每月底 2-3 名 PM 纯人工对账三层预测数字——SKU 求和对不上仓库数，仓库数对不上市场总量，相差最高 50%。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      HiFoReAd 分层调和后：对账人力清零，补货计划冲突率降至 &lt; 5%
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>800-1,500 万/年</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html'>HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</a><a class='rm-chip' href='skills/Skill-Demand-Forecasting-Supply-Chain.html'>Demand Forecasting for Supply Chain</a></div>
+  </div>
+</div>
+<div class="rm-item">
+  <div class="rm-item-icon">🤖</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">客服智能路由 + 70% 工单自动化</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      某品牌日均 5 万条跨领域工单，人工路由正确率 61%，每天约 1 万条工单需二次转单；新手妈妈咨询「宝宝 3 月夜醒频繁」，人工客服响应平均 72 小时，且有医疗合规风险。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      AgentRouter 路由正确率 61% → 82%；客服决策树从历史日志自学，70% 工单实现自动化处理，年节省运营成本
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>1,900 万/年（路由）+ 600 万/年（自动化）</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-AgentRouter-KG-Guided.html'>AgentRouter — 知识图谱引导的多智能体路由器</a><a class='rm-chip' href='skills/Skill-Customer-Journey-Decision-Tree.html'>客服对话决策树 - 从日志中自学策略</a></div>
+  </div>
+</div>
+<div class="rm-item">
+  <div class="rm-item-icon">🎯</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">广告归因修正</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      某品牌 TikTok 渠道被 naive 归因分配 45% 贡献，但因果 ITE 分析显示真实增量只有 32%——13% 的购买是用户自然意愿，和广告无关。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      纠正后 TikTok 预算从 $40K 调至 $30K，节省的 $10K 转投 Google（ITE 更高），预算效率提升
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>10-20 万/年</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-Causal-Attribution-Bridge.html'>Causal Attribution Bridge（因果归因桥梁）</a></div>
+  </div>
+</div></div>
+</div>
+<div class="rm-phase" id="phase2" style="--phase-color:#7c3aed;--phase-bg:#f5f3ff">
+  <div class="rm-phase-header">
+    <div class="rm-phase-badge">Phase 2</div>
+    <div class="rm-phase-meta">
+      <span class="rm-phase-period">第 4-6 个月</span>
+      <h3 class="rm-phase-theme">数据基础设施</h3>
+      <p class="rm-phase-tagline">让 Phase 1 的效果可持续、可复制</p>
+    </div>
+    <div class="rm-phase-roi">
+      <span class="rm-phase-roi-label">阶段可验证 ROI</span>
+      <strong>200 - 500 万/年（新增）</strong>
+    </div>
+  </div>
+  <div class="rm-items">
+<div class="rm-item">
+  <div class="rm-item-icon">🗄️</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">产品知识图谱</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      AI 在没有结构化产品知识的情况下，给用户推荐「买了吸奶器的用户还需要什么」——它不知道硅胶法兰和乳头霜属于哺乳期刚需配件，推荐准确率极低。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      构建产品 KG 后：KGQA 查询召回率 52% → 92%，跨品类推荐 CTR +18%
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>20-35 万/年（推荐层增量）</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-Hierarchical-Product-KG-Construction.html'>层级商品知识图谱自动构建（图片→KG）</a><a class='rm-chip' href='skills/Skill-Ontology-Schema-Design.html'>领域 Ontology 与图谱 Schema 设计</a></div>
+  </div>
+</div>
+<div class="rm-item">
+  <div class="rm-item-icon">🔬</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">A/B 实验平台</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      某品牌每次调整定价策略或上新 listing，无法区分效果是真实改进还是季节波动。团队争论持续数周，决策依赖「感觉」。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      Switchback 实验体系搭建后：物流/双边市场实验可信，决策从争论变为数据裁决
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>1,500 万/年（错误决策避免）</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-Switchback-Experiment-Design.html'>Switchback 实验设计 - 数据驱动的双边市场实验</a><a class='rm-chip' href='skills/Skill-CUPED-Variance-Reduction.html'>CUPED Variance Reduction（方差缩减）</a></div>
+  </div>
+</div>
+<div class="rm-item">
+  <div class="rm-item-icon">📊</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">多渠道库存池化</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      Amazon FBA 仓吸奶器缺货（超卖），独立站海外仓还有 200 件积压，TikTok Shop 慢速消化——三渠道不互通，总库存 800 件但某渠道已断货。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      跨渠道动态调拨后：总库存减少 15-25%，缺货率 8% → 3%
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>200-400 万/年</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-Multi-Channel-Inventory-Pooling.html'>Multi-Channel Inventory Pooling（多渠道库…</a></div>
+  </div>
+</div></div>
+</div>
+<div class="rm-phase" id="phase3" style="--phase-color:#059669;--phase-bg:#f0fdf4">
+  <div class="rm-phase-header">
+    <div class="rm-phase-badge">Phase 3</div>
+    <div class="rm-phase-meta">
+      <span class="rm-phase-period">第 7-12 个月</span>
+      <h3 class="rm-phase-theme">差异化护城河</h3>
+      <p class="rm-phase-tagline">竞争对手需要 18 个月才能追上这里</p>
+    </div>
+    <div class="rm-phase-roi">
+      <span class="rm-phase-roi-label">阶段可验证 ROI</span>
+      <strong>5,000 万+ 潜力（战略级）</strong>
+    </div>
+  </div>
+  <div class="rm-items">
+<div class="rm-item">
+  <div class="rm-item-icon">🏷️</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">AI 定价引擎</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      某品牌大促前手动跟价——降太多伤利润，降太少丢份额。运营靠经验感知，每次大促前都是高压决策，无法同时优化当前销量和品牌长期溢价。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      AIGP 动态定价 A/B 实测：GMV +13%，实验数据非预测值
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>1,321 万/年（A/B 实测）</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV…</a><a class='rm-chip' href='skills/Skill-Dynamic-Pricing-Elasticity.html'>Dynamic Pricing with Demand Elastici…</a></div>
+  </div>
+</div>
+<div class="rm-item">
+  <div class="rm-item-icon">🎬</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">AI 内容工厂</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      某品牌进入德国/日本市场，需要本地化口播 Review 视频。人工方案：雇本地 KOL 拍摄，周期 3-4 周，单条成本 $2,000+。批量生产 20 个 SKU 的测评视频需要 6 个月预算。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      Virbo 多语言虚拟人：同等内容量成本降低 80%，生产周期 3 周→ 3 天（实验接入中）
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>35-150 万/年（视接入程度）</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-Virbo-Multilingual-Avatar-UGC.html'>Virbo — Multilingual Avatar UGC（多语言虚…</a><a class='rm-chip' href='skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>AnchorCrafter — Virtual Anchor Produ…</a></div>
+  </div>
+</div>
+<div class="rm-item">
+  <div class="rm-item-icon">⚡</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">MAS 多智能体联动</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      大促首日某品牌吸奶器打 7 折卖出 5,000 件，第 3 天库存告急被迫涨价，剩余 7 天流量白白浪费——整个大促周期总利润反而低于平销期。根因：定价和补货是两个团队各自决策，无法实时联动。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      FSDA-DRL 快慢双 Agent：定价与补货实时联动，大促周期利润最优化
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>5,000 万/年（规模依赖）</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-FSDA-DRL.html'>FSDA-DRL 快慢双智能体动态定价与补货联合优化</a><a class='rm-chip' href='skills/Skill-Event-Driven-Demand-MAS.html'>Event-Driven Demand MAS — 事件感知补货 MAS…</a></div>
+  </div>
+</div>
+<div class="rm-item">
+  <div class="rm-item-icon">🛡️</div>
+  <div class="rm-item-body">
+    <h4 class="rm-item-title">防御性 AI：保护推荐系统不被竞品劫持</h4>
+    <div class="rm-story">
+      <span class="rm-story-label">真实案例</span>
+      竞品卖家在商品描述中嵌入恶意 prompt 指令，劫持 AI 导购排名，导致某品牌自营商品在 AI 搜索中的曝光量下降 30-50%——这是 2025 年已出现的真实攻击方式。
+    </div>
+    <div class="rm-result">
+      <span class="rm-result-label">✅ 结果</span>
+      Agent 支付安全红队：自动检测注入攻击并拦截，保护 AI 推荐系统不被操控
+    </div>
+    <div class="rm-roi-line">年化 ROI：<strong>防御价值 &gt; 5,000 万（以被攻击时的流量损失计）</strong></div>
+    <div class="rm-chips"><a class='rm-chip' href='skills/Skill-Agent-Payment-Security-Red-Team.html'>Whispers of Wealth — Agent 支付协议安全红队：…</a><a class='rm-chip' href='skills/Skill-MAS-Adversarial-Defense.html'>MAS Adversarial Defense — 多智能体系统攻防：群…</a></div>
+  </div>
+</div></div>
+</div>
+</div>
+
+<div class="rm-footer">
+  <div class="rm-footer-left">
+     <h3>从哪里开始？</h3>
+     <p>根据你的当前痛点选择入口——每个场景手册包含完整操作步骤、所需数据和 ROI 计算模板。</p>
+     <div class="rm-footer-links">
+       <a href="playbooks/pb-risk-defense.html">🛡️ 跨境风险防御作战室</a>
+       <a href="playbooks/pb-agent-replace.html">🤖 AI Agent 替人手册</a>
+       <a href="playbooks/pb-tariff-response.html">⚡ 关税冲击 72h 响应</a>
+       <a href="playbooks/pb-voc-product-loop.html">🔬 竞品情报→产品迭代</a>
+       <a href="playbooks/pb-customer-service-agent.html">🎧 客服售后智能体</a>
+       <a href="playbooks/pb-fba-operations.html">📦 FBA 运营全链路</a>
+       <a href="playbooks/pb-pricing-engine.html">💰 AI 定价引擎手册</a>
+       <a href="playbooks/pb-inventory-festival.html">🎯 大促备货决策手册</a>
+     </div>
+  </div>
+  <div class="rm-footer-right">
+    <div class="rm-footer-cta">
+      <p>获取完整 PDF 版本</p>
+      <button class="rm-btn-primary" onclick="window.print()">⬇ 下载 PDF</button>
+    </div>
+    <p class="rm-footer-note">
+      数据来源：348 个从顶会论文萃取的业务 Skills，包含真实 A/B 实验与匿名客户案例。<br>
+      所有案例均已脱敏处理，以「某跨境母婴品牌」表述。
+    </p>
+  </div>
+</div>
+</section>
+  </main>
+  <script src="assets/playbook-data.js"></script>
+  <script src="assets/search.js"></script>
+</body>
+</html>

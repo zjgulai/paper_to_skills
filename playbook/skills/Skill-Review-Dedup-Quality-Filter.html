@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Review-Dedup-Quality-Filter</nav>
 <h1>Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</h1>
-<p class="muted">Skill-Review-Dedup-Quality-Filter · 22-数据采集工程 · status=stable</p>
+<p class="muted">Skill-Review-Dedup-Quality-Filter · 22-数据采集工程</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 10-50 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：日常评论采集去重流水线（WFE Review 监控）</p>
+    <p>30-40% 是重复或低质量内容</p>
     <h2>2. 核心算法逻辑</h2>
     <p>从 Amazon、TikTok Shop、独立站同时采集的评论中，3040% 是重复或低质量内容（同一用户多平台发布、机器生成水评、极短无意义评论）。直接用于 VOC 分析会严重扭曲洞察结论。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：每日从 Amazon US/UK、TikTok Shop、独立站采集约 500 条新评论，其中约 180 条（36%）是跨平台重复或水评。人工清洗需 30-45 分钟/天。</p><p>业务背景：季度复盘需要分析过去 3 个月全渠道 470 万条评论，识别&quot;静音性能下降&quot;等趋势。人工抽样误差大，全量处理成本高。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>10-50 万元</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：6</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：6 · 路径：未检测到</p>
+    <pre class='code-preview'><code>import hashlib
+import heapq
+import math
+import re
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+
+@dataclass
+class Review:
+    review_id: str
+    text: str
+    platform: str
+    timestamp: float = 0.0
+    rating: float = 3.0
+    verified_purchase: bool = False
+    helpful_votes: int = 0
+    aspects: Dict[str, str] = field(default_factory=dict)
+    quality_score: float = 0.0
+
+
+PLATFORM_PRIORITY = {&quot;amazon&quot;: 3, &quot;independent&quot;: 2, &quot;tiktok&quot;: 1, &quot;other&quot;: 0}
+
+
+class SimHashSignature:
+    def __init__(self, n_bits: int = 64, n_shingles: int = 3):
+        self.n_bits = n_bits
+        self.n_shingles = n_shingles
+
+    def _shingles(self, text: str) -&gt; List[str]:
+        tokens = re.sub(r&#x27;[^\w\s]&#x27;, &#x27;&#x27;, text.lower()).split()
+        return [&quot; &quot;.join(tokens[i:i+self.n_shingles])
+                for i in range(len(tokens) - self.n_shingles + 1)] or [text[:16]]
+
+    def compute(self, text: str) -&gt; int:
+        shingles = self._shingles(text)
+        v = [0] * self.n_bits
+        for s in shingles:
+            h = int(hashlib.md5(s.encode()).hexdigest(), 16)
+            for i in range(self.n_bits):
+                v[i] += 1 if (h &gt;&gt; i) &amp; 1 else -1
+        return sum(1 &lt;&lt; i for i in range(self.n_bits) if v[i] &gt; 0)
+
+    def hamming_distance(self, sig_a: int, sig_b: int) -&gt; int:
+        xor = sig_a ^ sig_b
+        return bin(xor).count(&#x27;1&#x27;)
+
+    def similarity(self, sig_a: int, sig_b: int) -&gt; float:
+        return 1.0 - self.hamming_distance(sig_a, sig_b) / self.n_bits
+
+
+class HNSWIndex:
+    &quot;&quot;&quot;轻量 HNSW 近似最近邻索引（FOLD 核心数据结构）&quot;&quot;&quot;
+
+    def __init__(self, max_neighbors: int = 16, similarity_fn=None):
+        self.max_neighbors = max_neighbors
+        self.nodes: Dict[str, int] = {}
+        self.signatures: List[Tuple[str, int]] = []
+        self.graph: Dict[int, List[int]] = {}
+        self.sim_fn = similarity_fn or (lambda a, b: 1.0 - bin(a ^ b).count(&#x27;1&#x27;) / 64)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2601.07449</li><li>2602.21082</li><li>2606.03001</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Review-Dedup-Quality-Filter" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><p class='muted'>暂无</p>
     <h3>延伸技能</h3><ul><li><span class='muted'>AGRS-Aspect-Guided-Review-Summarization]]</span></li><li><span class='muted'>Fake-Review-Detection]]</span></li><li><span class='muted'>LACA-CrossLingual-ABSA]]</span></li><li><span class='muted'>Review-Pain-Point-Mining]]</span></li><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-Fake-Review-Detection.html'>Skill-Fake-Review-Detection</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-Review-Pain-Point-Mining.html'>Skill-Review-Pain-Point-Mining</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><span class='muted'>MAS-Dynamic-Trust]]</span></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-MAS-Dynamic-Trust.html'>Skill-MAS-Dynamic-Trust</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Multi-Channel-Inventory-Pooling</nav>
 <h1>Multi-Channel Inventory Pooling（多渠道库存池化）</h1>
-<p class="muted">Skill-Multi-Channel-Inventory-Pooling · 04-供应链 · status=unknown</p>
+<p class="muted">Skill-Multi-Channel-Inventory-Pooling · 04-供应链</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 200-400 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：Amazon + 独立站 + TikTok Shop 三渠道库存协同</p>
+    <p>HDPO (Hindsight Differentiable Policy Optimization)</p>
     <h2>2. 核心算法逻辑</h2>
     <p>多个销售渠道（Amazon / 独立站 / TikTok Shop）独立备货会造成总库存冗余——A 渠道缺货的同时 B 渠道积压。库存池化通过调拨中心（transshipment hub）实现跨渠道动态调拨，用 GNN 建模渠道拓扑 + DRL 学习最优调拨策略。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>池化后总安全库存从 1200 降至 900（-25%），同等服务水平</li><li>调拨触发策略：当 A 渠道库存 &lt; 7 天预测需求且 B 渠道 &gt; 14 天时，自动触发调拨</li><li>缺货率从 8% 降至 3%</li><li>库存持有成本节省 25%（$50,000 → $37,500/月）</li><li>缺货损失减少 5pp（每 pp 约 $8,000/月）</li><li>年化总 ROI：**200-400 万元**</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：吸奶器在 Amazon FBA 仓缺货（销量超预期），但独立站海外仓还有 200 件积压，TikTok Shop 也在慢速消化——三渠道信息不互通，总库存 800 件却出现&quot;某渠道缺货 + 某渠道积压&quot;。</p><p>数据要求：各渠道 6 个月日销量 + 库存水位 + 调拨成本与时效。GNN 拓扑：3 节点（渠道）+ 1 中心调拨节点</p><p>预期产出： - 池化后总安全库存从 1200 降至 900（-25%），同等服务水平 - 调拨触发策略：当 A 渠道库存 &lt; 7 天预测需求且 B 渠道 &gt; 14 天时，自动触发调拨 - 缺货率从 8% 降至 3%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：库存持有成本 -25%（$12,500/月）+ 缺货损失 -5pp（$40,000/月）；年化 **200-400 万元**</li><li>**实施难度**：⭐⭐⭐☆☆（3 星）— GNN + DRL 有一定工程复杂度，贪心简化版可快速上线</li><li>**优先级评分**：⭐⭐⭐⭐☆（4 星）— 多渠道场景下 ROI 极高，WF-A P7 核心能力</li><li>**评估依据**：HDPO 论文含完整开源代码（transshipment_backlogged 环境），IBM 论文真实零售链数据验证</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Multi-Channel Inventory Pooling — GNN + Hindsight Policy Optimization
+基于 HDPO (arXiv:2306.11246) 框架的简化实现
+&quot;&quot;&quot;
+
+import numpy as np
+from typing import List, Dict, Tuple
+
+
+class ChannelInventoryPool:
+    &quot;&quot;&quot;多渠道库存池化管理器&quot;&quot;&quot;
+    
+    def __init__(self, n_channels: int, 
+                 transship_cost: np.ndarray,  # (n, n) 调拨成本矩阵
+                 lead_times: np.ndarray):      # (n, n) 调拨提前期
+        self.n = n_channels
+        self.transship_cost = transship_cost
+        self.lead_times = lead_times
+        self.inventory = np.zeros(n_channels)
+    
+    def pool_decision(
+        self, 
+        inventory: np.ndarray,
+        demand_forecast: np.ndarray,  # 未来 7 天预测
+        holding_cost: float = 1.0,
+        shortage_cost: float = 10.0,
+    ) -&gt; Dict:
+        &quot;&quot;&quot;
+        池化决策：决定是否调拨、调拨多少
+        
+        简化贪心策略：对每对 (i,j)，
+        如果 i 缺货风险高且 j 库存充裕 → 调拨
+        &quot;&quot;&quot;
+        n = len(inventory)
+        decisions = []
+        
+        for i in range(n):
+            # 渠道 i 的缺货风险
+            i_demand_7d = demand_forecast[i].sum()
+            i_risk = max(0, i_demand_7d - inventory[i])
+            
+            if i_risk &lt;= 0:
+                continue
+            
+            # 找最优调拨源
+            best_source = -1
+            best_profit = -np.inf
+            
+            for j in range(n):
+                if j == i:
+                    continue
+                j_surplus = inventory[j] - demand_forecast[j].sum()
+                
+                if j_surplus &lt;= 0:
+                    continue
+                
+                transfer_qty = min(i_risk, j_surplus)
+                transfer_cost = transfer_qty * self.transship_cost[j, i]
+                saving = transfer_qty * shortage_cost - transfer_cost - \
+                         transfer_qty * holding_cost * self.lead_times[j, i]</code></pre>
     <h2>8. 论文来源</h2><ul><li>2306.11246</li><li>2310.12183</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multi-Channel-Inventory-Pooling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Multi-Echelon-Inventory.html'>Skill-Multi-Echelon-Inventory</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

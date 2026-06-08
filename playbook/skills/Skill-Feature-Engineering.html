@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/12-ml基础.html">12-ML基础</a> / Skill-Feature-Engineering</nav>
 <h1>Feature Engineering for E-Commerce Machine Learning</h1>
-<p class="muted">Skill-Feature-Engineering · 12-ML基础 · status=stable</p>
+<p class="muted">Skill-Feature-Engineering · 12-ML基础</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：用户流失预测的特征工程</p>
+    <p>**：模型效果的上限由特征质量决定</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：模型效果的上限由特征质量决定。同样的算法，好的特征 vs 差的特征，效果可能差35倍。特征工程是&quot;把领域知识注入模型的艺术&quot;。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>数值特征：对数变换（frequency, monetary）、标准化（全部）</li><li>类别特征：Target Encoding（country, device_type）</li><li>时序特征：滞后（last_month_orders）</li><li>交叉特征：recency × monetary（高价值+高流失风险 = 优先召回）</li><li>原始特征（仅RFM）：AUC = 0.72</li><li>工程后特征（15维）：AUC = 0.84</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：预测哪些用户会在30天内流失，用于精准召回。</p><p>原始数据：用户ID、注册日期、订单记录、浏览记录</p><p>| 特征名 | 计算方式 | 业务含义 | |--------|---------|---------| | recency_days | 今天 - 最后购买日 | 多久没来了 | | frequency_90d | 近90天订单数 | 购买活跃度 | | monetary_total | 累计消费金额 | 用户价值 | | avg_order_value | 总消费 / 订单数 | 客单价偏好 | | browse_to_buy_ratio | 浏览次数 / 购买次数 | 购买决策效率 | | category_diversity | 购买过的品类数 | 兴趣广度 | | days_sinc</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：特征质量提升 → 模型效果提升30-50%，直接转化为业务收益</li><li>**难度**：⭐⭐⭐☆☆（3/5）— 需要领域知识，不是纯技术问题</li><li>**优先级**：⭐⭐⭐⭐⭐（5/5）— 所有ML技能的前置基础，没有它就没有模型效果</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Feature Engineering — 特征工程工具箱
+支持：数值处理、类别编码、时序特征、特征选择
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder
+from sklearn.feature_selection import mutual_info_classif, SelectKBest
+
+
+class FeatureEngineer:
+    &quot;&quot;&quot;特征工程器&quot;&quot;&quot;
+
+    def __init__(self):
+        self.scalers = {}
+        self.encoders = {}
+        self.target_means = {}
+
+    def log_transform(self, df, cols, offset=1):
+        &quot;&quot;&quot;对数变换&quot;&quot;&quot;
+        df = df.copy()
+        for c in cols:
+            df[f&#x27;{c}_log&#x27;] = np.log1p(df[c] + offset)
+        return df
+
+    def binning(self, df, col, n_bins=5, method=&#x27;quantile&#x27;):
+        &quot;&quot;&quot;分箱&quot;&quot;&quot;
+        df = df.copy()
+        if method == &#x27;quantile&#x27;:
+            df[f&#x27;{col}_bin&#x27;] = pd.qcut(df[col], q=n_bins, labels=False, duplicates=&#x27;drop&#x27;)
+        else:
+            df[f&#x27;{col}_bin&#x27;] = pd.cut(df[col], bins=n_bins, labels=False)
+        return df
+
+    def target_encoding(self, df, cat_col, target_col, smoothing=10):
+        &quot;&quot;&quot;目标编码（带平滑）&quot;&quot;&quot;
+        df = df.copy()
+        global_mean = df[target_col].mean()
+
+        stats = df.groupby(cat_col)[target_col].agg([&#x27;mean&#x27;, &#x27;count&#x27;])
+        smoothed = (stats[&#x27;mean&#x27;] * stats[&#x27;count&#x27;] + global_mean * smoothing) / (stats[&#x27;count&#x27;] + smoothing)
+
+        df[f&#x27;{cat_col}_te&#x27;] = df[cat_col].map(smoothed)
+        self.target_means[cat_col] = smoothed.to_dict()
+        return df
+
+    def time_features(self, df, datetime_col):
+        &quot;&quot;&quot;时间特征提取&quot;&quot;&quot;
+        df = df.copy()
+        dt = pd.to_datetime(df[datetime_col])
+        df[&#x27;hour&#x27;] = dt.dt.hour
+        df[&#x27;dayofweek&#x27;] = dt.dt.dayofweek
+        df[&#x27;month&#x27;] = dt.dt.month
+        df[&#x27;is_weekend&#x27;] = (dt.dt.dayofweek &gt;= 5).astype(int)
+        df[&#x27;is_month_start&#x27;] = dt.dt.is_month_start.astype(int)
+        return df
+
+    def rolling_features(self, df, group_col, value_col, windows=[7, 14, 30]):
+        &quot;&quot;&quot;滚动统计特征&quot;&quot;&quot;</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Feature-Engineering" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><p class='muted'>暂无</p>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Causal-Discovery-PC-Algorithm.html'>Skill-Causal-Discovery-PC-Algorithm</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Deep-Learning-Churn-Prediction.html'>Skill-Deep-Learning-Churn-Prediction</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-Multilingual-NER-Universal-v2.html'>Skill-Multilingual-NER-Universal-v2</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><span class='muted'>可组合（延伸）</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

@@ -9,45 +9,89 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Cost-Aware-Agent-Scheduling</nav>
 <h1>Cost-Aware Agent Scheduling（成本感知调度）</h1>
-<p class="muted">Skill-Cost-Aware-Agent-Scheduling · 16-智能体工程 · status=unknown</p>
+<p class="muted">Skill-Cost-Aware-Agent-Scheduling · 16-智能体工程</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>客服 Agent 意图分类（&quot;我的订单到哪了&quot;）→ SLM 处理（$0.001/次）。复杂推理（&quot;比较 S1 和 S2 吸奶器哪个更适合早产儿妈妈&quot;）→ LLM 处理（$0.05/次）。日均 200 次简单 × $0.001 + 30 次复杂 × $0.05 = $1.70/天 vs 全 LLM $11.50/天。年省：$3,500。</p>
+    <p>不是所有 Agent 任务都需要 GPT4——简单分类任务用 SLM（Small LM），复杂推理用 LLM。成本感知调度根据任务复杂度动态路由到最优模型。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>不是所有 Agent 任务都需要 GPT4——简单分类任务用 SLM（Small LM），复杂推理用 LLM。成本感知调度根据任务复杂度动态路由到最优模型。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>客服 Agent 意图分类（&quot;我的订单到哪了&quot;）→ SLM 处理（$0.001/次）。复杂推理（&quot;比较 S1 和 S2 吸奶器哪个更适合早产儿妈妈&quot;）→ LLM 处理（$0.05/次）。日均 200 次简单 × $0.001 + 30 次复杂 × $0.05 = $1.70/天 vs 全 LLM $11.50/天。年省：$3,500。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：年化 Token 成本节省 $2,000-10,000</li><li>**难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐☆☆</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>class CostAwareRouter:
+    MODEL_COSTS = {&#x27;slm&#x27;: 0.001, &#x27;medium&#x27;: 0.01, &#x27;llm&#x27;: 0.05}
+    
+    def classify_complexity(self, query: str) -&gt; str:
+        words = len(query.split()); has_reasoning = any(w in query.lower() 
+            for w in [&#x27;why&#x27;, &#x27;compare&#x27;, &#x27;explain&#x27;, &#x27;analyze&#x27;, &#x27;which is better&#x27;])
+        if has_reasoning or words &gt; 30: return &#x27;llm&#x27;
+        if words &gt; 15: return &#x27;medium&#x27;
+        return &#x27;slm&#x27;
+    
+    def estimate_cost(self, queries: list) -&gt; dict:
+        costs = {&#x27;slm&#x27;: 0, &#x27;medium&#x27;: 0, &#x27;llm&#x27;: 0}
+        for q in queries:
+            level = self.classify_complexity(q)
+            costs[level] += self.MODEL_COSTS[level]
+        total = sum(costs.values()); naive = len(queries) * self.MODEL_COSTS[&#x27;llm&#x27;]
+        return {&#x27;cost&#x27;: total, &#x27;naive&#x27;: naive, &#x27;saving_pct&#x27;: (naive-total)/naive}
+
+router = CostAwareRouter()
+queries = [&quot;where is my order&quot;, &quot;compare S1 vs S2 for premature baby&quot;, &quot;return policy&quot;]
+r = router.estimate_cost(queries)
+print(f&quot;Cost-aware: ${r[&#x27;cost&#x27;]:.3f} vs Naive: ${r[&#x27;naive&#x27;]:.3f} (save {r[&#x27;saving_pct&#x27;]:.0%})&quot;)
+print(&quot;[✓] Cost-Aware Scheduling 测试通过&quot;)</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cost-Aware-Agent-Scheduling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Agent-Fault-Tolerance.html'>Skill-Agent-Fault-Tolerance</a></li><li><a href='../skills/Skill-Agent-Safety-Guardrails.html'>Skill-Agent-Safety-Guardrails</a></li><li><a href='../skills/Skill-Agentic-Workflow-Compilation.html'>Skill-Agentic-Workflow-Compilation</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-DAG-Task-Decomposition-Planning.html'>Skill-DAG-Task-Decomposition-Planning</a></li><li><a href='../skills/Skill-LDP-Identity-Aware-Protocol.html'>Skill-LDP-Identity-Aware-Protocol</a></li><li><a href='../skills/Skill-SLM-Tool-Calling-Optimization.html'>Skill-SLM-Tool-Calling-Optimization</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
     <h3>延伸技能</h3><p class='muted'>暂无</p>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Agent-Safety-Guardrails.html'>Skill-Agent-Safety-Guardrails</a></li><li><a href='../skills/Skill-Agentic-Workflow-Compilation.html'>Skill-Agentic-Workflow-Compilation</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-DAG-Task-Decomposition-Planning.html'>Skill-DAG-Task-Decomposition-Planning</a></li><li><a href='../skills/Skill-LDP-Identity-Aware-Protocol.html'>Skill-LDP-Identity-Aware-Protocol</a></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

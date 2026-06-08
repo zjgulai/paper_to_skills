@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Cohort-Retention-Analysis</nav>
 <h1>Cohort Retention Analysis for User Lifecycle</h1>
-<p class="muted">Skill-Cohort-Retention-Analysis · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-Cohort-Retention-Analysis · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：新客留存诊断</p>
+    <p>**：新用户来了之后，第7天还剩多少？第30天呢？第90天呢？不同月份来的用户，留存曲线一样吗？Cohort分析把用户按&quot;首次活跃时间&quot;分组，追踪每组的留存轨迹</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：新用户来了之后，第7天还剩多少？第30天呢？第90天呢？不同月份来的用户，留存曲线一样吗？Cohort分析把用户按&quot;首次活跃时间&quot;分组，追踪每组的留存轨迹。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>渠道构成变化：1月新客中TikTok占比从20%提升到50%，TikTok用户质量较低</li><li>Onboarding流程：1月更新了注册流程，但新用户引导缺失</li><li>首单体验：1月物流延迟增加，影响复购意愿</li><li>TikTok用户单独设计onboarding流程</li><li>注册后24小时内发送&quot;首单引导&quot;邮件</li><li>物流延迟用户自动发放补偿优惠券</li><li>吸奶器用户首单后强推配件（储奶袋、奶嘴）提升复购</li><li>纸尿裤用户推套装订阅（按月配送）锁定长期留存</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：Momcozy 2025年1月新注册用户10,000人，D7留存15%，D30留存5%。行业标杆D7=25%，D30=12%。差距在哪？</p><p>| Cohort | D1 | D7 | D30 | 诊断 | |--------|-----|-----|-----|------| | 2024-10 | 35% | 22% | 10% | 基准 | | 2024-11 | 33% | 20% | 9% | 下降 | | 2024-12 | 30% | 18% | 8% | 继续下降 | | 2025-01 | 28% | 15% | 5% | 恶化明显 |</p><p>根因分析： - 渠道构成变化：1月新客中TikTok占比从20%提升到50%，TikTok用户质量较低 - Onboarding流程：1月更新了注册流程，但新用户引导缺失 - 首单体验：1月物流延迟增加，影响复购意愿</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：D1留存提升5% → LTV提升20%，年增收百万级</li><li>**难度**：⭐⭐☆☆☆（2/5）— 主要是数据透视和可视化</li><li>**优先级**：⭐⭐⭐⭐⭐（5/5）— 衡量产品健康度的核心指标</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Cohort Retention Analysis — Cohort留存分析
+支持：留存矩阵计算、留存曲线、幂律拟合、BG/NBD简化版
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+
+
+class CohortAnalyzer:
+    &quot;&quot;&quot;Cohort分析器&quot;&quot;&quot;
+
+    def __init__(self):
+        pass
+
+    def create_cohort_table(self, df, user_col, date_col, period=&#x27;M&#x27;):
+        &quot;&quot;&quot;
+        创建Cohort留存表
+
+        Args:
+            df: DataFrame with user_id and activity_date
+            user_col: 用户ID列
+            date_col: 活跃日期列
+            period: &#x27;D&#x27;=日, &#x27;W&#x27;=周, &#x27;M&#x27;=月
+        &quot;&quot;&quot;
+        df = df.copy()
+        df[date_col] = pd.to_datetime(df[date_col])
+
+        # 获取每个用户的首次活跃日期
+        user_first = df.groupby(user_col)[date_col].min().reset_index()
+        user_first.columns = [user_col, &#x27;first_date&#x27;]
+
+        # 合并
+        df = df.merge(user_first, on=user_col)
+
+        # 计算period
+        if period == &#x27;M&#x27;:
+            df[&#x27;first_period&#x27;] = df[&#x27;first_date&#x27;].dt.to_period(&#x27;M&#x27;)
+            df[&#x27;activity_period&#x27;] = df[date_col].dt.to_period(&#x27;M&#x27;)
+        elif period == &#x27;W&#x27;:
+            df[&#x27;first_period&#x27;] = df[&#x27;first_date&#x27;].dt.to_period(&#x27;W&#x27;)
+            df[&#x27;activity_period&#x27;] = df[date_col].dt.to_period(&#x27;W&#x27;)
+        else:
+            df[&#x27;first_period&#x27;] = df[&#x27;first_date&#x27;].dt.date
+            df[&#x27;activity_period&#x27;] = df[date_col].dt.date
+
+        # 计算period_diff
+        df[&#x27;period_diff&#x27;] = (df[&#x27;activity_period&#x27;] - df[&#x27;first_period&#x27;]).apply(
+            lambda x: x.n if hasattr(x, &#x27;n&#x27;) else (x.days if hasattr(x, &#x27;days&#x27;) else 0)
+        )
+
+        # Cohort大小
+        cohort_sizes = user_first.groupby(
+            user_first[&#x27;first_date&#x27;].dt.to_period(&#x27;M&#x27;) if period == &#x27;M&#x27; else user_first[&#x27;first_date&#x27;].dt.date
+        )[user_col].nunique()
+
+        # 留存矩阵
+        cohort_data = df.groupby([&#x27;first_period&#x27;, &#x27;period_diff&#x27;])[user_col].nunique().reset_index()
+        cohort_table = cohort_data.pivot(index=&#x27;first_period&#x27;, columns=&#x27;period_diff&#x27;, values=user_col)</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cohort-Retention-Analysis" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

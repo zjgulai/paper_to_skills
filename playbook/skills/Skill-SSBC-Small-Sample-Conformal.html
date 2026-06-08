@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-SSBC-Small-Sample-Conformal</nav>
 <h1>小样本Beta修正共形预测 - 50个样本也能保证覆盖</h1>
-<p class="muted">Skill-SSBC-Small-Sample-Conformal · 01-因果推断 · status=stable</p>
+<p class="muted">Skill-SSBC-Small-Sample-Conformal · 01-因果推断</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag'>知识图谱与RAG</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 5-20 万/月</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：新市场50条转化数据的可信区间</p>
+    <p>&quot;期望意义&quot;**的——跨多次校准集随机抽取，平均覆盖率为 `1-α`，但</p>
     <h2>2. 核心算法逻辑</h2>
     <p>标准 Split Conformal Prediction 的覆盖保证是&quot;期望意义&quot;的——跨多次校准集随机抽取，平均覆盖率为 1α，但单次校准的覆盖率可能远低于目标值。实验表明：当校准集 n=50 时，目标覆盖率 90% 的标准共形预测，实际违约率高达 ~40%（即 40% 的概率实际覆盖 &lt; 90%）。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>小样本校准集（n ≥ 20 即可用，n ≥ 50 效果稳定）</li><li>任意共形分数（绝对残差、预测区间宽度等均可）</li><li>需指定目标覆盖率 `1-α_target` 和置信参数 `1-δ`</li><li>调整后的 `α_adj`（比 `α_target` 更严格的显著性水平）</li><li>基于 `α_adj` 构建的共形预测集/区间</li><li>可行性判断（n 是否足够达到 (α, δ) 目标）</li><li>小样本下决策可信度从&quot;碰运气&quot;变为&quot;有概率保证&quot;</li><li>给 CEO 汇报：&quot;以 95% 概率保证，我们的预测覆盖率不低于 95%&quot;</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：日本市场刚上线，只收集了50条带标签的转化数据做校准。标准共形预测名义 95% 覆盖率，但实际可能只有 82%——基于此做预算决策犹如&quot;碰运气&quot;。SSBC 修正后保证以 95% 概率实际覆盖 ≥ 95%，做预算决策时心里有底。</p><p>数据要求： - 小样本校准集（n ≥ 20 即可用，n ≥ 50 效果稳定） - 任意共形分数（绝对残差、预测区间宽度等均可） - 需指定目标覆盖率 `1-α_target` 和置信参数 `1-δ`</p><p>预期产出： - 调整后的 `α_adj`（比 `α_target` 更严格的显著性水平） - 基于 `α_adj` 构建的共形预测集/区间 - 可行性判断（n 是否足够达到 (α, δ) 目标）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>现状痛点：日本市场校准集仅 50 条数据，标准共形预测 40% 概率实际覆盖 &lt; 90%</li><li>SSBC 收益：将违约率从 ~40% 降至 ~10%（与目标 δ 对齐），预算决策信心大幅提升</li><li>量化价值：避免每月 1-2 次&quot;基于不可信区间&quot;的错误决策，每次预估损失 3-10 万</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：2</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+SSBC (Small Sample Beta Correction) - 小样本共形预测精确覆盖保证
+论文: arXiv:2509.15349 (2025)
+场景: 母婴出海新市场小样本校准集下的 PAC 覆盖保证
+
+依赖: numpy, scipy, pandas
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy import stats
+from scipy.special import betaln
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ==================== SSBC 核心算法 ====================
+
+class SSBC:
+    &quot;&quot;&quot;
+    Small Sample Beta Correction (SSBC)
+    
+    将标准 Split Conformal Prediction 的期望覆盖保证
+    升级为 PAC (Probably Approximately Correct) 覆盖保证：
+    
+        Pr(coverage &gt;= 1-α_target) &gt;= 1-δ
+    
+    即插即用：不改变模型或共形分数，只调整显著性水平 α_adj。
+    &quot;&quot;&quot;
+    
+    def __init__(self, alpha_target: float, delta: float, n_cal: int, 
+                 m_test: int = None):
+        &quot;&quot;&quot;
+        Args:
+            alpha_target: 目标名义显著性水平（如 0.05 表示 95% 覆盖率）
+            delta: 风险容忍度——以概率 1-delta 保证覆盖（如 0.05）
+            n_cal: 校准集大小
+            m_test: 测试集大小（None 表示无穷，即 Beta 分布；给定时用 Beta-Binomial）
+        &quot;&quot;&quot;
+        self.alpha_target = alpha_target
+        self.delta = delta
+        self.n_cal = n_cal
+        self.m_test = m_test
+        self.alpha_adj = None
+        self.feasible = False
+        self._grid = None
+    
+    def _coverage_prob(self, alpha_prime: float) -&gt; float:
+        &quot;&quot;&quot;
+        计算 Pr(C(α&#x27;) &gt;= 1-α_target)
+        
+        使用 Beta（无穷测试集）或 Beta-Binomial（有限测试集）
+        &quot;&quot;&quot;
+        n = self.n_cal
+        k = int(np.ceil((1 - alpha_prime) * (n + 1)))
+        k = max(1, min(k, n))  # 边界约束
+        
+        a = k        # Beta 参数 a
+        b = n + 1 - k  # Beta 参数 b
+        </code></pre>
     <h2>8. 论文来源</h2><ul><li>2509.15349</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-SSBC-Small-Sample-Conformal" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-BCCB-Causal-Bandits.html'>Skill-BCCB-Causal-Bandits</a></li><li><a href='../skills/Skill-Conformal-ROI-Prediction.html'>Skill-Conformal-ROI-Prediction</a></li><li><a href='../skills/Skill-EPICSCORE-Uncertainty.html'>Skill-EPICSCORE-Uncertainty</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-BCCB-Causal-Bandits.html'>Skill-BCCB-Causal-Bandits</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-BCCB-Causal-Bandits.html'>Skill-BCCB-Causal-Bandits</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

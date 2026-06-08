@@ -9,45 +9,68 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Orchestration-Trace-RL</nav>
 <h1>编排轨迹驱动的强化学习 — MAS RL 三维设计框架</h1>
-<p class="muted">Skill-Orchestration-Trace-RL · 16-智能体工程 · status=stable</p>
+<p class="muted">Skill-Orchestration-Trace-RL · 16-智能体工程</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一:跨境客服多 agent 编排的 RL 训练</p>
+    <p>协调团队(coordinated teams)</p>
     <h2>2. 核心算法逻辑</h2>
     <p>随着 LLM agent 从单 agent 工具调用进化为协调团队(coordinated teams),RL 的优化对象不再是个体 action,而是编排轨迹(orchestration trace) —— 一个包含 spawn(生成)、delegate(委派)、communicate(通信)、aggregate(聚合)、stop(停止)决策的时序交互图。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>固定 5 步流程(识别→分类→处理→质检→回复)</li><li>不能根据工单复杂度动态 spawn agent</li><li>简单查询(物流追踪)和复杂仲裁(多国合规)用同样资源</li><li>spawn 事件: 哪个 agent 被创建, role 是什么</li><li>delegate 事件: 任务分给谁</li><li>communicate 事件: agent 间消息</li><li>aggregate 事件: 如何合并结果</li><li>stop 事件: 何时终止</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>跨境母婴客服 MAS 体系(参考 P1-4 MCP+A2A)有 8+ agent 类型,但编排器(orchestrator)的决策是人工规则: - 固定 5 步流程(识别→分类→处理→质检→回复) - 不能根据工单复杂度动态 spawn agent - 简单查询(物流追踪)和复杂仲裁(多国合规)用同样资源</p><p>RL via Orchestration Traces 落地方案:</p><p>- 简单工单处理成本: -40% (减少不必要的 agent spawn) - 复杂工单准确率: +15% (动态 spawn specialist + debate verification) - 平均处理延迟: -30% (并行编排优化)</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求: 高,需要完整 orchestration trace 历史数据</li><li>技术门槛: 极高,需懂 MARL + LLM RL + 分布式系统</li><li>工程复杂度: 极高,trace 记录 + reward 组合 + credit 分配 + 训练 pipeline</li><li>维护成本: 高,模型迭代需重新训练</li><li>**方法论价值高**: 首个系统化的 MAS RL 设计框架</li><li>**直接落地难**: 需要大量数据和计算资源,小团队不易承担</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：6</p>
-    <p>代码路径：paper2skills-code/llm_agent_engineering/orchestration_trace_rl</p>
+    <p class="muted">代码块数量：6 · 路径：paper2skills-code/llm_agent_engineering/orchestration_trace_rl</p>
+    <pre class='code-preview'><code>cd paper2skills-code/llm_agent_engineering/orchestration_trace_rl
+python3 mas_rl_trace.py</code></pre>
     <h2>8. 论文来源</h2><ul><li>2605.02801</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Orchestration-Trace-RL" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>(P1-4)</span></li><li><span class='muted'>(P2-4)</span></li><li><span class='muted'>10-MAS [[Skill-MAS-Orchestrator]]</span></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><a href='../skills/Skill-Task-Adaptive-Topology.html'>Skill-Task-Adaptive-Topology</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>(AgeMem,P1-3)</span></li><li><span class='muted'>(MemAct,P2-3)</span></li><li><a href='../skills/Skill-Agentic-Memory-Management.html'>Skill-Agentic-Memory-Management</a></li><li><a href='../skills/Skill-Memory-as-Action.html'>Skill-Memory-as-Action</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>(ACON,P1-2)</span></li><li><span class='muted'>(EvoSkills,P2-1)</span></li><li><a href='../skills/Skill-Co-Evolutionary-Skill-Verification.html'>Skill-Co-Evolutionary-Skill-Verification</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><span class='muted'>本项目 paper-同步 skill</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

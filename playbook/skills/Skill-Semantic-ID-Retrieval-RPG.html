@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Semantic-ID-Retrieval-RPG</nav>
 <h1>Semantic ID Retrieval for Recommendation (RPG)</h1>
-<p class="muted">Skill-Semantic-ID-Retrieval-RPG · 05-推荐系统 · status=stable</p>
+<p class="muted">Skill-Semantic-ID-Retrieval-RPG · 05-推荐系统</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：跨语言商品检索</p>
+    <p>**：传统推荐系统用无序的one-hot ID或量化向量表示商品，丢失了语义信息</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：传统推荐系统用无序的onehot ID或量化向量表示商品，丢失了语义信息。&quot;三段奶粉&quot;和&quot;二段奶粉&quot;在向量空间里可能是遥远的点，尽管它们在语义上高度相关。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>核心语义：`[吸奶器][电动][便携][单边]`</li><li>语言变体：`[breast_pump][electric][portable][single]` / `[Milchpumpe][elektrisch]`</li><li>跨语言搜索准确率：60% → 85%</li><li>新品自动关联：上架即被相似商品的用户看到</li><li>检索延迟：&lt;10ms（与候选集大小无关）</li><li>减少多语言维护成本</li><li>支持语音/图片搜索（统一映射到语义ID）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：Momcozy 在欧美多国销售，商品信息用英语、德语、法语维护。用户用不同语言搜索&quot;breast pump&quot; / &quot;Milchpumpe&quot; / &quot;tire-lait&quot;，传统ID-based检索无法跨语言关联同一商品。</p><p>RPG 应用： 1. 语义ID编码：每个商品生成多语言语义ID - 核心语义：`[吸奶器][电动][便携][单边]` - 语言变体：`[breast_pump][electric][portable][single]` / `[Milchpumpe][elektrisch]` 2. 用户query编码：将用户搜索词编码为语义ID前缀 3. 检索：在语义ID空间中找最相近的商品</p><p>预期产出： - 跨语言搜索准确率：60% → 85% - 新品自动关联：上架即被相似商品的用户看到 - 检索延迟：&lt;10ms（与候选集大小无关）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：检索准确率提升25-40%，跨语言运营成本降低50%</li><li>**难度**：⭐⭐⭐☆☆（3/5）— 概念新颖，但可用TF-IDF/BERT简化实现</li><li>**优先级**：⭐⭐⭐⭐☆（4/5）— Meta开源，落地路径清晰，但需向量检索基建</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Semantic ID Retrieval — RPG-inspired implementation
+用于推荐系统的语义ID编码与检索
+&quot;&quot;&quot;
+
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+class SemanticIDEncoder:
+    &quot;&quot;&quot;语义ID编码器&quot;&quot;&quot;
+
+    def __init__(self, max_tokens=8):
+        self.max_tokens = max_tokens
+        self.token_vocab = {}
+        self.token_idx = 0
+
+    def encode(self, item_attributes):
+        &quot;&quot;&quot;
+        将商品属性编码为语义ID
+
+        Args:
+            item_attributes: dict，如 {
+                &#x27;category&#x27;: &#x27;奶粉&#x27;,
+                &#x27;subcategory&#x27;: &#x27;3段&#x27;,
+                &#x27;brand&#x27;: &#x27;爱他美&#x27;,
+                &#x27;origin&#x27;: &#x27;德国&#x27;,
+                &#x27;feature&#x27;: &#x27;益生菌&#x27;
+            }
+        &quot;&quot;&quot;
+        tokens = []
+        for key, value in item_attributes.items():
+            token = f&quot;{key}={value}&quot;
+            if token not in self.token_vocab:
+                self.token_vocab[token] = self.token_idx
+                self.token_idx += 1
+            tokens.append(self.token_vocab[token])
+
+        # 补齐到固定长度
+        while len(tokens) &lt; self.max_tokens:
+            tokens.append(-1)
+
+        return tokens[:self.max_tokens]
+
+    def decode(self, token_ids):
+        &quot;&quot;&quot;将语义ID解码为可读的属性描述&quot;&quot;&quot;
+        inv_vocab = {v: k for k, v in self.token_vocab.items()}
+        return [inv_vocab.get(tid, &#x27;[PAD]&#x27;) for tid in token_ids if tid != -1]
+
+
+class SemanticRetrieval:
+    &quot;&quot;&quot;语义ID检索系统&quot;&quot;&quot;
+
+    def __init__(self, embedding_dim=128):
+        self.encoder = SemanticIDEncoder()
+        self.vectorizer = TfidfVectorizer(max_features=embedding_dim)
+        self.item_ids = []
+        self.item_embeddings = None
+</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Semantic-ID-Retrieval-RPG" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Session-Based-Recommendation-SR-GNN.html'>Skill-Session-Based-Recommendation-SR-GNN</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

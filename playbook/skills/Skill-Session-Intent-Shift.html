@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Session-Intent-Shift</nav>
 <h1>Session意图漂移建模 - 跨会话用户购买意图变化检测</h1>
-<p class="muted">Skill-Session-Intent-Shift · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-Session-Intent-Shift · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：桑基图路径语义标注</p>
+    <p>表层属性**推断用户意图，且只关注</p>
     <h2>2. 核心算法逻辑</h2>
     <p>现有电商推荐系统多依赖商品标题、价格等表层属性推断用户意图，且只关注单次购买或单会话内的短期偏好变化。SessionIntentBench 的核心创新在于：提出意图树（Intention Tree）概念，通过跨会话建模用户意图的时序演化，构建大规模多模态意图基准。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>孕中期：PDP 停留时间长、多次比较婴儿车 → **比较型意图**（Task4 Score=2）</li><li>孕晚期：搜索关键词变化（&quot;新生儿用品&quot;&quot;待产包&quot;）→ **意图漂移检测点**（Task2 属性突变）</li><li>产后：直接搜索&quot;吸奶器型号&quot;、&quot;纸尿裤 NB 码&quot; → **目标购买型意图**（Task4 Score=1）</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：桑基图展示了页面间流量（如&quot;首页→分类页→PDP→加购→支付&quot;），但缺少&quot;为什么用户走这条路&quot;的语义信息。例如同样是&quot;PDP → 加购&quot;路径，有的用户是目标型（直接搜索特定型号奶粉来购买），有的是探索型（随机浏览发现心仪产品），有的是比价型（连续访问多个 PDP 后才加购）。意图漂移检测可以为桑基图每条路径的&quot;边&quot;标注语义标签，让运营人员直观理解流量结构。</p><p>| 字段 | 类型 | 示例 | |------|------|------| | user_id | string | &quot;usr_abc123&quot; | | session_id | string | &quot;sess_2026042001&quot; | | event_type | category | &quot;view&quot; / &quot;click&quot; / &quot;add_cart&quot; / &quot;purchase&quot; | | page_type | category | &quot;homepage&quot; / &quot;category&quot; / &quot;pdp&quot; / &quot;cart&quot; / &quot;checkout&quot; | | product_id | string | &quot;ASI</p><p>最低要求：至少3个连续商品访问构成一个完整会话，有可提取的商品属性信息。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Session Intent Shift Detection — 跨会话意图漂移检测
+arXiv: 2507.20185 | SessionIntentBench (ACL 2026 Findings)
+
+功能：
+  1. 从会话数据构建意图树（规则+embedding模拟LLM意图推断）
+  2. 跨会话意图漂移检测（余弦相似度 + 属性变化追踪）
+  3. 为桑基图路径标注意图语义标签
+  4. 意图演化阶段预测（探索/比较/目标购买）
+
+环境依赖: pip install numpy scikit-learn
+可选依赖: pip install openai  # 如需接入真实LLM意图推断
+&quot;&quot;&quot;
+
+import math
+import random
+import hashlib
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+# ─────────────────────────────────────────────
+# 1. 数据结构
+# ─────────────────────────────────────────────
+
+@dataclass
+class Product:
+    &quot;&quot;&quot;电商商品（母婴品类）&quot;&quot;&quot;
+    product_id: str
+    title: str
+    category: str          # 品类：如 &quot;Baby Formula&quot;, &quot;Stroller&quot;, &quot;Diaper&quot;
+    price: float
+    attributes: Dict[str, str] = field(default_factory=dict)
+    # 例：{&quot;material&quot;: &quot;organic&quot;, &quot;age_range&quot;: &quot;0-6m&quot;, &quot;brand&quot;: &quot;Similac&quot;}
+
+    def get_embedding(self, dim: int = 32) -&gt; np.ndarray:
+        &quot;&quot;&quot;
+        模拟商品向量表示（真实场景可替换为 text-embedding-ada-002 等）
+        用商品属性的哈希值生成确定性伪随机向量
+        &quot;&quot;&quot;
+        seed_str = f&quot;{self.category}|{self.price:.0f}|&quot; + &quot;|&quot;.join(
+            f&quot;{k}:{v}&quot; for k, v in sorted(self.attributes.items())
+        )
+        seed = int(hashlib.md5(seed_str.encode()).hexdigest(), 16) % (2**31)
+        rng = np.random.RandomState(seed)
+        vec = rng.randn(dim).astype(np.float32)
+        return vec / (np.linalg.norm(vec) + 1e-9)
+
+
+@dataclass
+class IntentionEntry:
+    &quot;&quot;&quot;单步意图条目（对应论文中 Intention Tree 的一个节点）&quot;&quot;&quot;
+    step: int               # 在会话中的时间步
+    intent_text: str        # 意图描述，如 &quot;寻找有机奶粉，追求性价比&quot;
+    key_attribute: str      # 驱动此意图的关键属性，如 &quot;price: affordable&quot;
+    comparison: str         # 与上一商品的比较依据（Task3 输入）
+    intent_vector: np.ndarray = field(default_factory=lambda: np.zeros(32))
+
+    def drift_score(self, other: &quot;IntentionEntry&quot;) -&gt; float:</code></pre>
     <h2>8. 论文来源</h2><ul><li>2507.20185</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Session-Intent-Shift" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-PersonaBot-RAG-Profiling.html'>Skill-PersonaBot-RAG-Profiling</a></li><li><span class='muted'>Skill-RFM-User-Segmentation</span></li><li><a href='../skills/Skill-TRACE-Clickstream-Embedding.html'>Skill-TRACE-Clickstream-Embedding</a></li><li><a href='../skills/Skill-Trajectory-Pattern-Mining.html'>Skill-Trajectory-Pattern-Mining</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-PersonaBot-RAG-Profiling.html'>Skill-PersonaBot-RAG-Profiling</a></li><li><span class='muted'>Skill-RFM-User-Segmentation</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><span class='muted'>Skill-RFM-User-Segmentation</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

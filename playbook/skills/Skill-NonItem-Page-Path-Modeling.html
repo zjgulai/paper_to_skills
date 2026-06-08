@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-NonItem-Page-Path-Modeling</nav>
 <h1>非商品页路径建模 - 导航页在用户旅程中的转化贡献</h1>
-<p class="muted">Skill-NonItem-Page-Path-Modeling · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-NonItem-Page-Path-Modeling · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>推荐与搜索</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 5000 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：桑基图导航节点权重计算</p>
+    <p>传统序列推荐系统只捕获「商品交互」（PDP 页面点击），忽略了用户在商品页之间穿插访问的非商品页——如首页、搜索结果页、分类页（Category Listing Page，CLP）、博客详情页、购物车页等。论文证明：这些非商品页携带了关于用户意图的关键信号，能显著提升 NextItem 预测性能。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统序列推荐系统只捕获「商品交互」（PDP 页面点击），忽略了用户在商品页之间穿插访问的非商品页——如首页、搜索结果页、分类页（Category Listing Page，CLP）、博客详情页、购物车页等。论文证明：这些非商品页携带了关于用户意图的关键信号，能显著提升 NextItem 预测性能。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>每类非商品页的「转化影响系数」（HypTrails Bayes Factor）→ 为桑基图节点赋予量化权重</li><li>含非商品页的 Next-Item 推荐模型，HR@10 较仅商品页基线提升 1-5%</li><li>识别「关键导航路径」：哪种非商品页对特定品类商品购买的预测贡献最大</li><li>直接解答「分类页 CLP 是否值得优化」的问题：若 HypTrails 显示 CLP → PDP 强相关，则 CLP 转化漏斗优化预期带来 10-30% 推荐点击提升</li><li>防止错误删减导航节点：量化证据避免「因为不知道贡献就砍掉」的盲目决策</li><li>预估价值：母婴独立站年 GMV 1 亿，推荐系统 CTR 提升 2% ≈ **200 万增量 GMV/年**</li><li>将搜索 Query 文本编码为向量（使用 sentence-transformers `all-MiniLM-L6-v2`，384 维）</li><li>作为 PE（Page Embedding）注入 SASRec / BERT4Rec 的 embedding 层</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：母婴独立站（如 Momcozy/Graco 品牌站）的首页、分类页（奶瓶/奶粉/童车）、搜索页在转化漏斗中起什么作用？桑基图中这些节点的「转化贡献权重」该如何科学量化？砍掉或降级某个导航页会损失多少转化？</p><p>| 母婴独立站页面类型 | 论文非商品页类型 | 表征策略推荐 | |-----------------|---------------|------------| | 首页（Homepage） | 单体非商品页 | CPID: `type:homepage` | | 搜索结果页（SRP） | 商品列表页 | PE: 用搜索词嵌入 / CPID: 频繁分类组合 | | 分类页（CLP，如 `/breast-pumps/`） | 商品列表页 | CPID: `category:breast-pump` | | 博客/选购指南页 | 单体非商品页 | PE: 页面文本嵌入 | | 购物车页 | 单</p><p>| 字段 | 类型 | 示例 | |------|------|------| | `session_id` | string | `&quot;sess_abc123&quot;` | | `event_time` | datetime | `&quot;2026-05-01 10:23:45&quot;` | | `page_type` | string | `&quot;pdp&quot;` / `&quot;clp&quot;` / `&quot;srp&quot;` / `&quot;homepage&quot;` / `&quot;cart&quot;` | | `page_id` | string | `&quot;pdp_M001&quot;` / `&quot;clp_breast-pump&quot;` / `&quot;srp_q123&quot;` | | `ite</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>5000 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：2</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Non-Item Page Path Modeling — 非商品页路径建模
+论文: arXiv:2408.15953 (ACM TORS 2025)
+场景: 母婴出海独立站，桑基图导航节点权重量化 + 含非商品页的 Next-Item 预测
+
+包含:
+1. 页面序列数据模拟（母婴电商场景）
+2. HypTrails 假设检验：验证非商品页影响力
+3. 非商品页 CPID/PE 编码
+4. 序列推荐模型（简化 SASRec 变体）：对比 Items-Only vs 含非商品页
+5. 非商品页贡献度消融实验（Ablation Study）
+&quot;&quot;&quot;
+
+from __future__ import annotations
+
+import random
+import math
+from collections import defaultdict, Counter
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+import numpy as np
+
+
+# ============================================================
+# 1. 数据结构定义
+# ============================================================
+
+@dataclass
+class PageEvent:
+    &quot;&quot;&quot;单次页面交互事件&quot;&quot;&quot;
+    page_type: str          # &quot;pdp&quot; / &quot;clp&quot; / &quot;srp&quot; / &quot;homepage&quot; / &quot;cart&quot; / &quot;blog&quot;
+    page_id: str            # 页面唯一标识
+    item_id: Optional[str]  # 仅 PDP 有商品 ID
+    categories: List[str]   # 页面分类标签（非商品页最重要的内容信号）
+    query_embedding: Optional[List[float]] = None  # 搜索页专用
+
+    @property
+    def is_item(self) -&gt; bool:
+        &quot;&quot;&quot;是否为商品页（PDP）&quot;&quot;&quot;
+        return self.page_type == &quot;pdp&quot; and self.item_id is not None
+
+    def get_cpid(self) -&gt; str:
+        &quot;&quot;&quot;构造 Content-based Page ID&quot;&quot;&quot;
+        if self.is_item:
+            return f&quot;item:{self.item_id}&quot;
+        if self.categories:
+            cat_str = &quot;|&quot;.join(sorted(self.categories))
+            return f&quot;{self.page_type}:{cat_str}&quot;
+        return f&quot;{self.page_type}:{self.page_id}&quot;
+
+
+@dataclass
+class UserSession:
+    &quot;&quot;&quot;用户会话：包含商品页和非商品页的混合序列&quot;&quot;&quot;
+    session_id: str
+    events: List[PageEvent] = field(default_factory=list)
+
+    def get_item_sequence(self) -&gt; List[str]:
+        &quot;&quot;&quot;仅返回商品页序列（传统方式）&quot;&quot;&quot;
+        return [e.item_id for e in self.events if e.is_item]</code></pre>
     <h2>8. 论文来源</h2><ul><li>2408.15953</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-NonItem-Page-Path-Modeling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Skill-Recommendation-Diversity-Reranking</span></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-TRACE-Clickstream-Embedding.html'>Skill-TRACE-Clickstream-Embedding</a></li><li><a href='../skills/Skill-Traffic-Source-Analysis.html'>Skill-Traffic-Source-Analysis</a></li><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li><li><span class='muted'>相关技能</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Skill-Recommendation-Diversity-Reranking</span></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-Traffic-Source-Analysis.html'>Skill-Traffic-Source-Analysis</a></li><li><span class='muted'>相关技能</span></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Skill-Recommendation-Diversity-Reranking</span></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

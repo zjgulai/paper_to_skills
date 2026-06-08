@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Listing-Quality-Scoring</nav>
 <h1>Skill-Listing-Quality-Scoring</h1>
-<p class="muted">Skill-Listing-Quality-Scoring · 13-广告分析 · status=unknown</p>
+<p class="muted">Skill-Listing-Quality-Scoring · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景 A：新品上架前的 Listing 质量门控</p>
+    <p>1. 多维线性加权评分（IPL 框架）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心思想：把 Amazon Listing 的「吸引力」分解为文本质量 + 图像质量两个可量化维度，用神经网络预测每个内容位置（标题/主图/描述/bullet points）对转化成功率的贡献，并反向输出&quot;改哪里能提升最多&quot;的可操作建议。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>**业务问题**：baby sterilizer 新品上架前，无法量化判断 Listing 质量是否达到投放标准。广告烧钱但 CVR 低，不知道是广告问题还是 Listing 问题。</li><li>**数据要求**：</li><li>标题文本（英文，≤200字符）</li><li>主图 URL（≥1000×1000px）</li><li>Bullet points（5条）</li><li>竞品 Top 10 ASIN 的同等字段（用于 exemplar 对比）</li><li>**预期产出**：</li><li>`listing_score`：0-100 分的综合质量分</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>场景 A：新品上架前的 Listing 质量门控</p><p>- 业务问题：baby sterilizer 新品上架前，无法量化判断 Listing 质量是否达到投放标准。广告烧钱但 CVR 低，不知道是广告问题还是 Listing 问题。 - 数据要求： - 标题文本（英文，≤200字符） - 主图 URL（≥1000×1000px） - Bullet points（5条） - 竞品 Top 10 ASIN 的同等字段（用于 exemplar 对比） - 预期产出： - `listing_score`：0-100 分的综合质量分 - 分维度得分（标题/图片/描述各自评分） - Top 3 改进建议（具体到&quot;第2个 bullet point 缺少量化数字</p><p>场景 B：存量 SKU 定期 Listing 健康度巡检</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：</li><li>基准：baby sterilizer 品类 ACoS 25%，日广告预算 $200，当前 CVR 8%</li><li>Listing 质量从 D 级（&lt;55分）优化至 B 级（70+分）：CVR 提升约 4-6pp（参考 MetaSynth A/B：CTR +10.26%；Mercari 图片优化：ATPU +7%）</li><li>CVR 8% → 12%：等效广告效率提升 50%，月节省无效广告支出约 $1,800</li><li>上架审核人工成本：从 30分钟/SKU → &lt;5分钟/SKU，10 个 SKU 每月节省 ~8小时</li><li>**实施难度**：⭐⭐☆☆☆（2/5）— 纯规则+NLP，无需训练，直接可运行</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：5</p>
-    <p>代码路径：paper2skills-code/advertising/listing_quality_scoring</p>
+    <p class="muted">代码块数量：5 · 路径：paper2skills-code/advertising/listing_quality_scoring</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Skill-Listing-Quality-Scoring
+基于 KDD&#x27;23 Amazon + EMNLP&#x27;24 IPL + IEEE Big Data 2025 MetaSynth
+母婴跨境电商 Amazon Listing 质量评分工具
+&quot;&quot;&quot;
+
+import re
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Optional
+import warnings
+warnings.filterwarnings(&quot;ignore&quot;)
+
+
+# ── 数据结构 ───────────────────────────────────────────────
+@dataclass
+class ListingInput:
+    asin: str
+    title: str
+    bullet_points: list[str]          # 最多5条
+    description: str = &quot;&quot;
+    main_image_url: Optional[str] = None
+    has_aplus: bool = False
+    has_video: bool = False
+    price: float = 0.0
+    category: str = &quot;baby&quot;
+    review_count: int = 0
+    rating: float = 0.0
+
+
+@dataclass
+class ListingScore:
+    asin: str
+    total_score: float                # 0-100
+    title_score: float
+    bullets_score: float
+    description_score: float
+    image_score: float
+    completeness_score: float
+    grade: str                        # A/B/C/D
+    top_issues: list[str] = field(default_factory=list)
+    recommendations: list[str] = field(default_factory=list)
+
+
+# ── 标题质量评分 ───────────────────────────────────────────
+def score_title(title: str, category: str = &quot;baby&quot;) -&gt; tuple[float, list[str]]:
+    &quot;&quot;&quot;
+    评分维度（参考 KDD&#x27;23 Amazon 框架）：
+    - 长度合规性（Amazon 推荐 150-200 字符）
+    - 关键词密度（品类核心词覆盖率）
+    - 数字/规格信息（量化描述）
+    - 可读性（避免堆砌关键词）
+    &quot;&quot;&quot;
+    issues = []
+    score = 100.0
+
+    # 1. 长度检查
+    length = len(title)
+    if length &lt; 80:
+        score -= 20</code></pre>
     <h2>8. 论文来源</h2><ul><li>2302.01416</li><li>2408.11349</li><li>2510.01523</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Listing-Quality-Scoring" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Hierarchical-Search-Intent-Classification.html'>Skill-Hierarchical-Search-Intent-Classification</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Multimodal-Table-Understanding.html'>Skill-Multimodal-Table-Understanding</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>跨域关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

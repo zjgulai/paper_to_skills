@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/17-价格优化.html">17-价格优化</a> / Skill-Price-Signal-Collection</nav>
 <h1>Price Signal Collection — 竞品价格信号实时采集与结构化</h1>
-<p class="muted">Skill-Price-Signal-Collection · 17-价格优化 · status=stable</p>
+<p class="muted">Skill-Price-Signal-Collection · 17-价格优化</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 73.2 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：Amazon US 婴儿安抚奶嘴竞品价格监控</p>
+    <p>在于：数据异构性（多平台格式差异）、反爬对抗（动态 JS 渲染、验证码）、实时性需求（价格窗口窄、竞品调价响应快）三重矛盾</p>
     <h2>2. 核心算法逻辑</h2>
     <p>竞品价格信号采集的核心挑战在于：数据异构性（多平台格式差异）、反爬对抗（动态 JS 渲染、验证码）、实时性需求（价格窗口窄、竞品调价响应快）三重矛盾。</p>
-    <h2>3. 输入</h2><ul><li>`dt_min=15`（促销期可调至 5 min）</li><li>`dt_max=1440`（非活跃 SKU 每天一次）</li><li>`lam=3.0`（调高 → 更激进高频；调低 → 更平滑）</li><li>**反爬应对**：建议使用住宅 IP 代理池 + User-Agent 轮换 + 随机延迟 [0.5, 3.0]s</li><li>**汇率更新**：`CURRENCY_RATES` 应每小时从 ECB/OpenExchangeRates 刷新</li></ul>
-    <h2>4. 输出</h2><ul><li>`dt_min=15`（促销期可调至 5 min）</li><li>`dt_max=1440`（非活跃 SKU 每天一次）</li><li>`lam=3.0`（调高 → 更激进高频；调低 → 更平滑）</li><li>**反爬应对**：建议使用住宅 IP 代理池 + User-Agent 轮换 + 随机延迟 [0.5, 3.0]s</li><li>**汇率更新**：`CURRENCY_RATES` 应每小时从 ECB/OpenExchangeRates 刷新</li></ul>
-    <h2>5. 业务场景</h2><ul><li>大促前 3 天：σ高 → Δt=15 min（高频）</li><li>平日：σ低 → Δt=240 min（节省资源）</li><li>竞品降价捕获率：71% → 94%（+23 pp）</li><li>平均响应延迟：47 min → 18 min（-62%）</li><li>Buy Box 获得率月均：41% → 79%（+38 pp）</li><li>月度 GMV 增量：约 **+$32,000**（基于 Buy Box 转化率提升测算）</li><li>识别出 2 家长期低价供应商（P10 分位，低于市场均价 12%）</li><li>年度采购规模 ¥580 万，节省采购成本 **¥69.6 万/年**</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：某母婴 DTC 品牌旗下安抚奶嘴（ASIN B0XXXX001）面对 Top5 竞品的价格战。需要在竞品降价 30 分钟内做出调价响应，否则 Buy Box 获得率从 82% 跌至 41%。</p><p>效果量化： - 竞品降价捕获率：71% → 94%（+23 pp） - 平均响应延迟：47 min → 18 min（-62%） - Buy Box 获得率月均：41% → 79%（+38 pp） - 月度 GMV 增量：约 +$32,000（基于 Buy Box 转化率提升测算）</p><p>ROI：爬取基础设施成本 $800/月，GMV 增量带来毛利约 $9,600/月，ROI ≈ 12x。</p>
+    <h2>4. 输入数据要求</h2><ul><li>`dt_min=15`（促销期可调至 5 min）</li><li>`dt_max=1440`（非活跃 SKU 每天一次）</li><li>`lam=3.0`（调高 → 更激进高频；调低 → 更平滑）</li><li>**反爬应对**：建议使用住宅 IP 代理池 + User-Agent 轮换 + 随机延迟 [0.5, 3.0]s</li><li>**汇率更新**：`CURRENCY_RATES` 应每小时从 ECB/OpenExchangeRates 刷新</li></ul>
+    <h2>5. 输出结果</h2><ul><li>`dt_min=15`（促销期可调至 5 min）</li><li>`dt_max=1440`（非活跃 SKU 每天一次）</li><li>`lam=3.0`（调高 → 更激进高频；调低 → 更平滑）</li><li>**反爬应对**：建议使用住宅 IP 代理池 + User-Agent 轮换 + 随机延迟 [0.5, 3.0]s</li><li>**汇率更新**：`CURRENCY_RATES` 应每小时从 ECB/OpenExchangeRates 刷新</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p>73.2 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Price Signal Collection Pipeline
+整合 PriceHunter (DOM抽取) + DART-Price (自适应调度) + SignalFusion (Kalman融合)
+使用 mock 数据，可直接运行
+&quot;&quot;&quot;
+
+import re
+import math
+import time
+import random
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+from datetime import datetime, timedelta
+
+
+# ── 数据结构 ────────────────────────────────────────────────────────────
+
+@dataclass
+class PriceRecord:
+    &quot;&quot;&quot;单次价格采集记录&quot;&quot;&quot;
+    sku_id: str
+    source: str          # amazon / walmart / 1688
+    raw_price: float     # 原始价格（本地货币）
+    currency: str        # USD / CNY / EUR
+    timestamp: datetime
+    stock_status: str    # in_stock / out_of_stock / limited
+    seller: str = &quot;&quot;
+
+
+@dataclass
+class PriceSignal:
+    &quot;&quot;&quot;融合后的价格信号&quot;&quot;&quot;
+    sku_id: str
+    fused_price: float          # Kalman 融合价格（USD）
+    price_change_pct: float     # 相对上次融合值的变化百分比
+    volatility: float           # 历史波动率 σ
+    anomaly: bool               # 是否异常（价格突变）
+    sources_count: int          # 本次融合的数据源数量
+    updated_at: datetime
+
+
+# ── PriceHunter：DOM 语义价格抽取 ───────────────────────────────────────
+
+class PriceHunter:
+    &quot;&quot;&quot;
+    模拟 DOM 树剪枝 + 语义价格抽取
+    真实环境中使用 playwright + BeautifulSoup 替换 mock_html_fetch
+    &quot;&quot;&quot;
+
+    # 货币符号 + 数字模式
+    PRICE_PATTERN = re.compile(
+        r&#x27;([$€¥£₩])\s*(\d{1,6}(?:[,，]\d{3})*(?:\.\d{1,2})?)&#x27;
+        r&#x27;|(\d{1,6}(?:[,，]\d{3})*(?:\.\d{1,2})?)\s*(USD|CNY|EUR|GBP)&#x27;
+    )
+    CURRENCY_RATES = {&quot;USD&quot;: 1.0, &quot;CNY&quot;: 0.138, &quot;EUR&quot;: 1.08, &quot;GBP&quot;: 1.27, &quot;$&quot;: 1.0, &quot;¥&quot;: 0.138, &quot;€&quot;: 1.08, &quot;£&quot;: 1.27, &quot;₩&quot;: 0.00073}
+
+    def extract_from_html(self, html: str, sku_id: str, source: str) -&gt; Optional[PriceRecord]:
+        &quot;&quot;&quot;从 HTML 字符串中抽取价格&quot;&quot;&quot;
+        matches = self.PRICE_PATTERN.findall(html)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2412.09883</li><li>2501.14423</li><li>2503.07612</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Price-Signal-Collection" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Dynamic-Pricing-Elasticity]]</span></li><li><span class='muted'>Market-Signal-Realtime-Collection]]</span></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Market-Signal-Realtime-Collection.html'>Skill-Market-Signal-Realtime-Collection</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-UCB-LDP-Dynamic-Pricing.html'>Skill-UCB-LDP-Dynamic-Pricing</a></li><li><span class='muted'>UCB-LDP-Dynamic-Pricing]]</span></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Adaptive-Crawl-Scheduling]]</span></li><li><a href='../skills/Skill-Adaptive-Crawl-Scheduling.html'>Skill-Adaptive-Crawl-Scheduling</a></li><li><a href='../skills/Skill-Web-Page-Change-Detection.html'>Skill-Web-Page-Change-Detection</a></li><li><span class='muted'>Web-Page-Change-Detection]]</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

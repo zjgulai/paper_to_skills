@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Ad-Aware-Recommendation</nav>
 <h1>Ad-Aware Recommendation — 广告感知协同排序：有机推荐与赞助商品的联合优化</h1>
-<p class="muted">Skill-Ad-Aware-Recommendation · 05-推荐系统 · status=stable</p>
+<p class="muted">Skill-Ad-Aware-Recommendation · 05-推荐系统</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：Amazon 母婴类目 Sponsored Product 与有机搜索的协同排序</p>
+    <p>广告排序（Sponsored Ranking）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统电商推荐系统中，广告排序（Sponsored Ranking） 和 有机推荐（Organic Recommendation） 是两个完全独立的系统，分别优化 CTR/ROAS 和个性化相关性，导致用户体验分裂——同一用户可能在广告位看到高竞价但低相关商品，在有机推荐区看到高相关但低转化意图商品。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><ul><li>`combined_score`：综合排序分（越高越靠前），已包含广告价值和预算约束</li><li>`item_type`：`&quot;ad-boosted&quot;` 表示受广告加权影响；`&quot;organic&quot;` 表示纯有机排序</li><li>当 `lambda_budget &lt; 0.05` 时，广告商品不参与竞价（避免透支预算）</li></ul>
-    <h2>5. 业务场景</h2><ul><li>用户点击历史（过去 90 天，mock 10万条）</li><li>广告出价数据：奶粉类 $2.5, 纸尿裤 $1.8, 婴儿推车 $3.2</li><li>ROAS 目标：4.0（每投入1美元广告费产出4美元GMV）</li><li>广告 CTR：+18.3%（从0.072 → 0.085）</li><li>有机推荐转化率：+7.2%（广告协同增强相关性）</li><li>月 ROAS：4.8（目标4.0，超出20%）</li><li>广告虚耗（不相关点击）：-34%</li><li>只投放与当前用户兴趣 cos_sim &gt; 0.6 的广告商品</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：某母婴品牌同时运营 Sponsored Products 广告和自然搜索排名。广告团队为&quot;婴儿奶粉&quot;出价 $2.5/click，但广告曝光位常被用于低相关商品（竞品投放），有机推荐又没有利用广告转化信号。</p><p>Ad-Aware Recommendation 应用：</p><p>数据需求：用户点击日志、广告出价接口（或历史出价数据）、商品 Embedding（可用现有 MF 模型产出）。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><ul><li>`combined_score`：综合排序分（越高越靠前），已包含广告价值和预算约束</li><li>`item_type`：`&quot;ad-boosted&quot;` 表示受广告加权影响；`&quot;organic&quot;` 表示纯有机排序</li><li>当 `lambda_budget &lt; 0.05` 时，广告商品不参与竞价（避免透支预算）</li></ul>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Ad-Aware Recommendation: 广告感知协同排序
+整合 BPR-MF 个性化推荐 + CTR 预估 + ROAS 约束联合优化
+完全使用 mock 数据，无需真实 API
+&quot;&quot;&quot;
+
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+import ast  # 仅用于验证代码语法，运行时不需要
+
+
+# ── 数据结构定义 ─────────────────────────────────────────────────────────────
+
+@dataclass
+class AdCampaign:
+    &quot;&quot;&quot;广告投放活动&quot;&quot;&quot;
+    advertiser_id: str
+    product_id: str
+    bid: float           # 出价（美元/次点击）
+    daily_budget: float  # 日预算
+    spent: float = 0.0   # 已花费
+    target_roas: float = 4.0
+
+    @property
+    def budget_ratio(self) -&gt; float:
+        &quot;&quot;&quot;预算剩余系数 λ_budget&quot;&quot;&quot;
+        remaining = max(0.0, self.daily_budget - self.spent)
+        return min(1.0, remaining / self.daily_budget)
+
+    @property
+    def is_active(self) -&gt; bool:
+        return self.budget_ratio &gt; 0.05  # 剩余5%以上才投放
+
+
+@dataclass
+class UserProfile:
+    &quot;&quot;&quot;用户画像&quot;&quot;&quot;
+    user_id: str
+    click_history: List[str] = field(default_factory=list)
+    embedding: Optional[np.ndarray] = None
+
+
+@dataclass
+class Product:
+    &quot;&quot;&quot;商品信息&quot;&quot;&quot;
+    product_id: str
+    category: str
+    price: float
+    embedding: Optional[np.ndarray] = None
+    organic_score: float = 0.0  # 有机推荐分
+
+
+# ── 核心模型 ─────────────────────────────────────────────────────────────────
+
+class MatrixFactorizationMock:
+    &quot;&quot;&quot;
+    BPR-MF 模型（mock版，用随机Embedding模拟训练结果）
+    真实场景替换为 implicit 库或 LightFM
+    &quot;&quot;&quot;</code></pre>
     <h2>8. 论文来源</h2><ul><li>2402.17289</li><li>2405.14382</li><li>2501.08341</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Ad-Aware-Recommendation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Matrix-Factorization]]</span></li><li><span class='muted'>ROAS-Budget-Optimization]]</span></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Diversity-Reranking-SMMR]]</span></li><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Ad-Attribution-Modeling]]</span></li><li><span class='muted'>Cold-Start-Product-Recommendation]]</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-Conformal-ROI-Prediction</nav>
 <h1>共形预测ROI区间估计 - 小样本下的可信转化贡献量化</h1>
-<p class="muted">Skill-Conformal-ROI-Prediction · 01-因果推断 · status=stable</p>
+<p class="muted">Skill-Conformal-ROI-Prediction · 01-因果推断</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 5-15 万/月</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：桑基图数字的可信度标注</p>
+    <p>共形预测 + MC Dropout</p>
     <h2>2. 核心算法逻辑</h2>
     <p>rDRP（robust Direct ROI Prediction）在标准 DRP (Direct ROI Prediction, AAAI 2023) 基础上，用共形预测 + MC Dropout 做 ROI 区间估计，再通过启发式校准将区间信息融回点估计。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>训练集：历史 2-4 周的 RCT 数据（渠道-页面路径-转化标签），用于训练 DRP 模型</li><li>校准集：1-2 天新鲜 RCT 数据（与当前部署期分布一致），用于共形分数校准</li><li>特征：用户特征（设备、国家、来源渠道）+ 页面行为序列（停留时长、点击路径）</li><li>**避免误砍高效渠道**：区间宽度作为&quot;不确定性预警&quot;，宽区间渠道先收集更多数据再决策</li><li>**精准加投**：区间下界仍高的渠道（如 Google Ads）才是真正可信的高 ROI 路径</li><li>月广告预算 30 万时，避免一次错误决策潜在损失 5-10 万</li><li>用 380 条数据训练轻量 DRP（或用源市场模型迁移）</li><li>MC Dropout 自动在样本稀疏区域给出更宽区间</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：桑基图显示 &quot;Google Ads → 首页 → 搜索 → PDP → 支付&quot; 这条路径贡献了 35% 的转化。但这是一个点估计——如果实际只有 25% 怎么办？砍掉 Google Ads 预算会不会是致命错误？需要为桑基图的每个节点/边标注置信区间。</p><p>数据要求： - 训练集：历史 2-4 周的 RCT 数据（渠道-页面路径-转化标签），用于训练 DRP 模型 - 校准集：1-2 天新鲜 RCT 数据（与当前部署期分布一致），用于共形分数校准 - 特征：用户特征（设备、国家、来源渠道）+ 页面行为序列（停留时长、点击路径）</p><p>业务价值： - 避免误砍高效渠道：区间宽度作为&quot;不确定性预警&quot;，宽区间渠道先收集更多数据再决策 - 精准加投：区间下界仍高的渠道（如 Google Ads）才是真正可信的高 ROI 路径 - 月广告预算 30 万时，避免一次错误决策潜在损失 5-10 万</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>当前痛点：桑基图中各渠道 ROI 是点估计，置信区间未知</li><li>错误决策风险：基于不可信点估计砍错渠道，潜在损失 **20-30%** 预算效率（6-9 万/月）</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+rDRP (Robust Direct ROI Prediction) - 共形预测驱动的ROI区间估计
+论文: arXiv:2407.01065 (ICDE 2024)
+场景: 母婴出海桑基图可信度标注 + 小样本新市场ROI区间估计
+
+依赖: numpy, pandas, scikit-learn, torch (可选，用MLP), scipy
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from scipy.optimize import brentq
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ==================== DRP 点估计模型（简化版） ====================
+
+class DRPModel:
+    &quot;&quot;&quot;
+    Direct ROI Prediction 模型（简化版，使用 sklearn MLP 模拟）
+    
+    核心：凸损失函数保证损失收敛时 ROI 排序无偏
+    注：生产环境建议用 PyTorch 实现带 Dropout 的深度网络
+    &quot;&quot;&quot;
+    
+    def __init__(self, hidden_layers=(64, 32), random_state=42):
+        self.scaler = StandardScaler()
+        self.model = MLPRegressor(
+            hidden_layer_sizes=hidden_layers,
+            activation=&#x27;relu&#x27;,
+            max_iter=500,
+            random_state=random_state,
+            early_stopping=True,
+            validation_fraction=0.1
+        )
+        self.is_fitted = False
+    
+    def fit(self, X, roi_labels):
+        &quot;&quot;&quot;
+        训练 DRP 模型
+        
+        Args:
+            X: 特征矩阵 (n_samples, n_features)
+            roi_labels: ROI 标签 (n_samples,)，来自 RCT 数据
+                        roi = (y_revenue_treated - y_revenue_control) / 
+                              (y_cost_treated - y_cost_control)
+        &quot;&quot;&quot;
+        X_scaled = self.scaler.fit_transform(X)
+        self.model.fit(X_scaled, roi_labels)
+        self.is_fitted = True
+        return self
+    
+    def predict(self, X):
+        &quot;&quot;&quot;点估计：预测 ROI 分数&quot;&quot;&quot;
+        if not self.is_fitted:
+            raise ValueError(&quot;模型未训练，请先调用 fit()&quot;)
+        X_scaled = self.scaler.transform(X)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2407.01065</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Conformal-ROI-Prediction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-EPICSCORE-Uncertainty.html'>Skill-EPICSCORE-Uncertainty</a></li><li><a href='../skills/Skill-Intelligent-Attribution-Causal-Forest.html'>Skill-Intelligent-Attribution-Causal-Forest</a></li><li><a href='../skills/Skill-SSBC-Small-Sample-Conformal.html'>Skill-SSBC-Small-Sample-Conformal</a></li><li><a href='../skills/Skill-TRACE-Delayed-CVR.html'>Skill-TRACE-Delayed-CVR</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-EPICSCORE-Uncertainty.html'>Skill-EPICSCORE-Uncertainty</a></li><li><a href='../skills/Skill-SSBC-Small-Sample-Conformal.html'>Skill-SSBC-Small-Sample-Conformal</a></li><li><a href='../skills/Skill-TRACE-Delayed-CVR.html'>Skill-TRACE-Delayed-CVR</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-SSBC-Small-Sample-Conformal.html'>Skill-SSBC-Small-Sample-Conformal</a></li><li><a href='../skills/Skill-TRACE-Delayed-CVR.html'>Skill-TRACE-Delayed-CVR</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

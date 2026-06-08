@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-MAS-Resource-Scheduling</nav>
 <h1>MAS Resource Scheduling — OS 调度原语驱动的多智能体资源管理</h1>
-<p class="muted">Skill-MAS-Resource-Scheduling · 10-MAS · status=stable</p>
+<p class="muted">Skill-MAS-Resource-Scheduling · 10-MAS</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 12 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：大促期间并发选品扫描 MAS（HiveMind）</p>
+    <p>问题背景**：11 个并发 Agent 共享同一限速 API，未经协调时失败率 27%。HiveMind 作为</p>
     <h2>2. 核心算法逻辑</h2>
     <p>MAS 生产化最常见的失败不来自 Agent 逻辑，而来自资源竞争：多个 Agent 并行调用同一个限速 API，导致连接重置、HTTP 502、上下文泄漏、Zombie Agent 挂起。这些问题在操作系统领域早已有成熟解法——HiveMind 和 AgentRM 把 OS 调度理论直接搬到 MAS 层。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>critical: 合规预筛 Agent（阻塞后续流程）</li><li>normal:   竞品分析 Agent、利润计算 Agent</li><li>background: 趋势预测 Agent（可延迟）</li><li>失败率：35% → 2%（仅偶发网络抖动）</li><li>总耗时：略增（排队延迟），但所有 Agent 都成功完成</li><li>合规预筛 Agent 零等待（critical 优先队列）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：双 11 大促前，需要同时启动 20 个选品扫描 Agent 评估候选 SKU。所有 Agent 共享同一个 GPT-4o API 配额（TPM 限制），历史上每次大促前都有 30-40% 的 Agent 因 429 错误失败，需要人工重跑。</p><p>业务背景：AIM-RM 库存 MAS 每天运行 500+ 次库存决策，运营反馈&quot;有时候任务卡住不动&quot;（Zombie Agent）。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>12 万元</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：7</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：7 · 路径：未检测到</p>
+    <pre class='code-preview'><code>import time
+import threading
+import queue
+from collections import deque
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, List, Optional
+from enum import Enum
+
+
+class Priority(Enum):
+    CRITICAL = 0
+    NORMAL = 1
+    BACKGROUND = 2
+
+
+class CircuitState(Enum):
+    CLOSED = &quot;closed&quot;
+    OPEN = &quot;open&quot;
+    HALF_OPEN = &quot;half_open&quot;
+
+
+@dataclass
+class AgentTask:
+    task_id: str
+    agent_fn: Callable
+    priority: Priority = Priority.NORMAL
+    budget_tokens: int = 4000
+    deadline_seconds: float = 60.0
+    created_at: float = field(default_factory=time.time)
+    mlfq_level: int = 0
+
+
+@dataclass
+class ContextLayer:
+    session: Dict[str, Any] = field(default_factory=dict)
+    task: Dict[str, Any] = field(default_factory=dict)
+    agent: Dict[str, Any] = field(default_factory=dict)
+
+    def clear_task(self):
+        self.task.clear()
+
+    def clear_agent(self):
+        self.agent.clear()
+
+
+class CircuitBreaker:
+    def __init__(self, failure_threshold: int = 5, cooldown: float = 30.0):
+        self.failure_threshold = failure_threshold
+        self.cooldown = cooldown
+        self.state = CircuitState.CLOSED
+        self.failure_count = 0
+        self.last_failure_time = 0.0
+
+    def record_success(self):
+        self.failure_count = 0
+        self.state = CircuitState.CLOSED
+
+    def record_failure(self):
+        self.failure_count += 1
+        self.last_failure_time = time.time()</code></pre>
     <h2>8. 论文来源</h2><ul><li>2603.13110</li><li>2604.17111</li><li>2605.06110</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MAS-Resource-Scheduling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Agent-Production-Engineering]]</span></li><li><span class='muted'>MAS-Orchestrator]]</span></li><li><a href='../skills/Skill-Agent-Production-Engineering.html'>Skill-Agent-Production-Engineering</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Agent-SLO-Manager]]</span></li><li><span class='muted'>Cost-Aware-Agent-Scheduling]]</span></li><li><a href='../skills/Skill-Agent-SLO-Manager.html'>Skill-Agent-SLO-Manager</a></li><li><a href='../skills/Skill-Cost-Aware-Agent-Scheduling.html'>Skill-Cost-Aware-Agent-Scheduling</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>MAS-Testing-Verification]]</span></li><li><span class='muted'>ParaManager-Parallel-Orchestration]]</span></li><li><a href='../skills/Skill-MAS-Testing-Verification.html'>Skill-MAS-Testing-Verification</a></li><li><a href='../skills/Skill-ParaManager-Parallel-Orchestration.html'>Skill-ParaManager-Parallel-Orchestration</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

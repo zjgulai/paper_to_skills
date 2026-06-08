@@ -9,45 +9,68 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-Tree-of-Thoughts-Planning</nav>
 <h1>Tree of Thoughts — 树搜索式任务规划</h1>
-<p class="muted">Skill-Tree-of-Thoughts-Planning · 10-MAS · status=stable</p>
+<p class="muted">Skill-Tree-of-Thoughts-Planning · 10-MAS</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：VOC 标签体系设计策略搜索</p>
+    <p>Tree of Thoughts (ToT)</p>
     <h2>2. 核心算法逻辑</h2>
     <p>Tree of Thoughts (ToT) 将 LLM 的推理过程从线性链式思维（ChainofThought）扩展为树状搜索。核心洞察：人类解决复杂问题时会探索多条路径、评估中间进展、在死胡同回溯——LLM 也应该具备这种&quot;深思熟虑&quot;的能力。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>现有标签体系（v3.9 字典 602 个 tag）</li><li>设计约束（如&quot;层级不超过 3 层&quot;、&quot;标签数在 500-800 之间&quot;）</li><li>系统性地探索标签体系设计空间，避免局部最优</li><li>量化评估不同设计策略的预期效果</li><li>设计决策有据可依，减少试错成本</li><li>评估指标（准确率、覆盖率、一致性）</li><li>属性识别准确率: 91.2%</li><li>情感确认准确率: 88.7%</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>设计一个新的 VOC 标签体系时，面临多个设计决策（层级深度、粒度、覆盖范围、与现有体系兼容性）。每个决策影响后续决策，形成决策树。传统方式是人工逐一决策，容易陷入局部最优。</p><p>- 现有标签体系（v3.9 字典 602 个 tag） - 评论样本数据 - 设计约束（如&quot;层级不超过 3 层&quot;、&quot;标签数在 500-800 之间&quot;）</p><p>业务价值： - 系统性地探索标签体系设计空间，避免局部最优 - 量化评估不同设计策略的预期效果 - 设计决策有据可依，减少试错成本</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：低，纯 LLM 推理，无需训练数据</li><li>技术门槛：中高，需要理解搜索算法和 LLM 评估机制</li><li>工程复杂度：中高，搜索空间管理和成本控制是关键</li><li>维护成本：低，Prompt 调整即可适应新场景</li><li>**核心差异化**：探索式推理是超越 CoT 的关键能力</li><li>**技术前沿**：NeurIPS 2023 高引论文，Game of 24 上 4%→74% 的震撼提升</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <pre class='code-preview'><code>cd paper2skills-code/mas/tot_planning
+python tot_planner.py</code></pre>
     <h2>8. 论文来源</h2><ul><li>2305.10601</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Tree-of-Thoughts-Planning" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Chain-of-Thought</span></li><li><span class='muted'>LLM Prompt Engineering</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Beam Search</span></li><li><span class='muted'>Monte Carlo Tree Search (MCTS)</span></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>CAMEL</span></li><li><span class='muted'>MetaGPT</span></li><li><span class='muted'>ReAct</span></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-ReAct-Reasoning-Acting.html'>Skill-ReAct-Reasoning-Acting</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

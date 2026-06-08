@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-LTV-Prediction-ZILN</nav>
 <h1>LTV预测 - 零膨胀对数正态模型 (ZILN)</h1>
-<p class="muted">Skill-LTV-Prediction-ZILN · 06-增长模型 · status=unknown</p>
+<p class="muted">Skill-LTV-Prediction-ZILN · 06-增长模型</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 100-200 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：吸奶器新客 LTV 预测</p>
+    <p>零膨胀**（大量用户只购买一次）和</p>
     <h2>2. 核心算法逻辑</h2>
     <p>LTV (Customer Lifetime Value, 客户生命周期价值) 预测是增长模型的核心能力。传统回归方法难以处理 LTV 分布的两个典型特征：零膨胀（大量用户只购买一次）和长尾分布（少数高价值用户贡献大部分收入）。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>用户画像：年龄、是否新手妈妈、收入水平、地域</li><li>首购行为：购买产品 SKU、客单价、是否使用优惠券</li><li>行为特征：注册到首购间隔、浏览页面数、加购次数</li><li>渠道特征：获客渠道、广告素材、落地页类型</li><li>标签：历史 LTV（6 个月/12 个月）、是否复购</li><li>数据量：建议至少 5,000+ 有完整 LTV 历史的用户</li><li>**LTV 点估计**：每个新客的预测生命周期价值</li><li>**流失概率**：该用户成为&quot;一次性购买者&quot;的概率</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题： 我们通过 Facebook/TikTok 广告获取了大量北美新客，但并非所有新客都有长期价值。部分用户只购买一次基础款吸奶器就流失了，而另一部分会复购配件、升级高端款，LTV 可达初购金额的 3-5 倍。我们需要在首次购买时就预测用户的 LTV，以决策是否值得继续投放广告维护关系。</p><p>数据要求： - 用户画像：年龄、是否新手妈妈、收入水平、地域 - 首购行为：购买产品 SKU、客单价、是否使用优惠券 - 行为特征：注册到首购间隔、浏览页面数、加购次数 - 渠道特征：获客渠道、广告素材、落地页类型 - 标签：历史 LTV（6 个月/12 个月）、是否复购 - 数据量：建议至少 5,000+ 有完整 LTV 历史的用户</p><p>预期产出： - LTV 点估计：每个新客的预测生命周期价值 - 流失概率：该用户成为&quot;一次性购买者&quot;的概率 - 价值分层： - 高 LTV 潜力（Top 20%）：重点运营，推送会员计划 - 中 LTV 潜力（中间 50%）：标准运营，定期触达 - 低 LTV 潜力（Bottom 30%）：降低维护成本</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：需要 6-12 个月的用户行为数据</li><li>技术门槛：中等，需理解概率分布和神经网络</li><li>工程复杂度：中，PyTorch 实现直观</li><li>维护成本：中，需定期重新训练模型</li><li>业务价值极高：LTV 是增长模型的核心指标</li><li>方法成熟：Google Research 开源，业界广泛验证</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：2</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+LTV预测 - 零膨胀对数正态模型 (ZILN)
+用于母婴出海电商新客价值预测和会员等级划分
+基于 Google Research 的 ZILN 实现
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class ZILNModel(nn.Module):
+    &quot;&quot;&quot;
+    Zero-Inflated Lognormal 神经网络模型
+    &quot;&quot;&quot;
+
+    def __init__(self, input_dim, hidden_dims=[128, 64, 32], dropout_rate=0.2):
+        &quot;&quot;&quot;
+        初始化 ZILN 模型
+
+        Args:
+            input_dim: 输入特征维度
+            hidden_dims: 隐藏层维度列表
+            dropout_rate: Dropout 率
+        &quot;&quot;&quot;
+        super(ZILNModel, self).__init__()
+
+        # 构建共享网络层
+        layers = []
+        prev_dim = input_dim
+        for hidden_dim in hidden_dims:
+            layers.extend([
+                nn.Linear(prev_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Dropout(dropout_rate)
+            ])
+            prev_dim = hidden_dim
+
+        self.shared_layers = nn.Sequential(*layers)
+
+        # 三个输出头
+        # 1. 流失概率 (churn probability)
+        self.churn_head = nn.Linear(prev_dim, 1)
+
+        # 2. 对数均值 (mu)
+        self.mu_head = nn.Linear(prev_dim, 1)
+
+        # 3. 对数标准差 (sigma) - 使用 softplus 保证正值
+        self.sigma_head = nn.Linear(prev_dim, 1)
+
+    def forward(self, x):
+        &quot;&quot;&quot;
+        前向传播
+</code></pre>
     <h2>8. 论文来源</h2><ul><li>1912.07753</li><li>2411.15944</li><li>2601.13013</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LTV-Prediction-ZILN" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>机器学习基础</span></li><li><span class='muted'>概率分布</span></li><li><span class='muted'>用户增长分析</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>HT-GNN (超图神经网络)</span></li><li><span class='muted'>不确定性估计</span></li><li><span class='muted'>动态 LTV 预测</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><span class='muted'>优惠券优化</span></li><li><span class='muted'>冷启动推荐</span></li><li><span class='muted'>智能归因 (Causal Forest)</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

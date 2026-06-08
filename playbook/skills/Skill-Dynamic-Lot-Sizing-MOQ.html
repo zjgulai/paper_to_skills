@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Dynamic-Lot-Sizing-MOQ</nav>
 <h1>Efficient Algorithms for the Joint Replenishment Problem with Minimum Order Quantities</h1>
-<p class="muted">Skill-Dynamic-Lot-Sizing-MOQ · 04-供应链 · status=stable</p>
+<p class="muted">Skill-Dynamic-Lot-Sizing-MOQ · 04-供应链</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 3×$800 - $1,200 = $1,200/批次，年节省约 $8,000</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景 A：MOQ=500，1000件降12%，3月需求700件</p>
+    <p>All-Units Discount Q-jump (s,S) 策略</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心思想：供应商的 MOQ（最低起订量）和价格阶梯（allunits discount）把补货决策从&quot;按需订货&quot;变成了一个权衡题——少订安全但单价高，多订便宜但压库存。Qjump (s,S) 策略给出了在随机需求+allunits折扣下的最优解：当库存触发订货点 s 时，根据「凑量判据」决定是按实际需求量订还是直接跳到折扣门槛 Q。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>独立运费：每 SKU $800/次；联合运费：一票 $1,200</li><li>三 SKU 月需求：A=200件@$35，B=150件@$28，C=80件@$42</li><li>联合最优间隔 T* = 1.8 个月（每 1.8 月联合下一次单）</li><li>节省：3×$800 - $1,200 = $1,200/批次，年节省约 $8,000</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>场景 A：MOQ=500，1000件降12%，3月需求700件</p><p>场景 B：三个 SKU 联合订货决策（合并运费 vs 分批）</p><p>- 独立运费：每 SKU $800/次；联合运费：一票 $1,200 - 三 SKU 月需求：A=200件@$35，B=150件@$28，C=80件@$42 - 联合最优间隔 T* = 1.8 个月（每 1.8 月联合下一次单） - 节省：3×$800 - $1,200 = $1,200/批次，年节省约 $8,000</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：</li><li>母婴场景典型案例（MOQ=500，3月需求700件）：方案C vs 方案B 节省 ¥6,681 = $930/次</li><li>10 个 SKU × 年均 4 次采购决策 = 40 次 = **年节省约 $37,200**</li><li>三 SKU 联合订货：年节省运费约 $8,000-$12,000</li><li>**实施难度**：⭐⭐☆☆☆（2/5）— 纯数学计算，无需机器学习</li><li>**优先级评分**：⭐⭐⭐⭐⭐（5/5）— 每次采购都需要，ROI 直接可量化</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：6</p>
-    <p>代码路径：paper2skills-code/supply_chain/dynamic_lot_sizing_moq</p>
+    <p class="muted">代码块数量：6 · 路径：paper2skills-code/supply_chain/dynamic_lot_sizing_moq</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Skill-Dynamic-Lot-Sizing-MOQ
+基于 EJOR 2018 Q-jump (s,S) (All-Units Discount) +
+    EJOR 2022 JRP with MOQ (Chugh et al.) +
+    Wagner-Whitin DP (经典，1958)
+母婴跨境 DTC 供应商 MOQ/价格阶梯下的动态批量决策
+&quot;&quot;&quot;
+
+import numpy as np
+from dataclasses import dataclass
+from scipy import stats
+
+
+@dataclass
+class LotSizingParams:
+    sku_id: str
+    demand_mean: float
+    demand_std: float
+    unit_price_normal: float
+    unit_price_discount: float
+    discount_moq: int
+    min_order_qty: int
+    holding_cost_rate: float = 0.20
+    fixed_order_cost: float = 800.0
+    stockout_cost_per_unit: float = 15.0
+    discount_factor_per_period: float = 0.97
+
+    @property
+    def holding_cost_per_unit_per_period(self):
+        return self.unit_price_normal * self.holding_cost_rate / 4
+
+
+def should_jump_to_discount(params: LotSizingParams) -&gt; tuple[bool, dict]:
+    &quot;&quot;&quot;
+    EJOR 2018 凑量判据：h + p&#x27; &gt;= α·p → 不值得凑量
+    返回 (should_jump, 计算细节)
+    &quot;&quot;&quot;
+    h  = params.holding_cost_per_unit_per_period
+    p_prime = params.unit_price_discount
+    alpha   = params.discount_factor_per_period
+    p       = params.unit_price_normal
+
+    lhs = h + p_prime
+    rhs = alpha * p
+    should_jump = lhs &lt; rhs
+
+    return should_jump, {
+        &quot;h&quot;: round(h, 4),
+        &quot;p_prime&quot;: p_prime,
+        &quot;alpha_times_p&quot;: round(rhs, 4),
+        &quot;lhs&quot;: round(lhs, 4),
+        &quot;verdict&quot;: &quot;凑量有利 ✅&quot; if should_jump else &quot;不值得凑量 ❌&quot;
+    }
+
+
+def breakeven_demand(params: LotSizingParams) -&gt; float:
+    &quot;&quot;&quot;
+    计算凑量盈亏平衡需求量：方案B（凑至折扣MOQ）vs 方案C（多次按小MOQ订）。
+    &quot;&quot;&quot;
+    Q  = params.discount_moq</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Dynamic-Lot-Sizing-MOQ" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html'>Skill-Multi-Channel-Inventory-Pooling</a></li><li><a href='../skills/Skill-Multi-SKU-Procurement-Budget-Allocation.html'>Skill-Multi-SKU-Procurement-Budget-Allocation</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html'>Skill-Multi-Channel-Inventory-Pooling</a></li><li><a href='../skills/Skill-Multi-SKU-Procurement-Budget-Allocation.html'>Skill-Multi-SKU-Procurement-Budget-Allocation</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html'>Skill-Multi-Channel-Inventory-Pooling</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

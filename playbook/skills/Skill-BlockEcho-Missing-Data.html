@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-BlockEcho-Missing-Data</nav>
 <h1>块缺失数据补全 - 整段流量数据丢失时的恢复</h1>
-<p class="muted">Skill-BlockEcho-Missing-Data · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-BlockEcho-Missing-Data · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：TikTok Pixel 故障导致3天广告数据丢失</p>
+    <p>块缺失（Block-wise Missing）的独特挑战</p>
     <h2>2. 核心算法逻辑</h2>
     <p>块缺失（Blockwise Missing）的独特挑战：当一整段时间（如连续3天）或一个完整维度（如某渠道所有数据）缺失时，传统插值方法（线性插值、KNN、MICE）依赖&quot;相邻元素&quot;做预测，在块缺失场景下这些邻居全部不存在，方法直接失效。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>无法评估那3天的广告效果，素材打分异常</li><li>缺失数据导致 ROAS 计算偏低，影响下月预算审批</li><li>桑基图中&quot;TikTok 广告&quot;整个时间段断裂，渠道归因失真</li><li>**MF 全局模式**：不同素材的长期表现趋势（用长程依赖恢复缺失列）</li><li>**GAN 局部分布**：第1-9天和第13-30天的数据分布特征（非线性模式）</li><li>**双判别器约束**：确保补全数据符合真实广告转化的统计规律</li><li>`(日期, 广告素材/受众包)` 的日级转化率矩阵</li><li>缺失块前后至少各有 5-7 天有效数据</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：TikTok Pixel 追踪代码因版本更新故障，导致连续3天的广告点击/转化数据完全丢失（块缺失）。数据维度：`(日期×广告素材×受众包)` 的转化率矩阵，30天中有3天（第10-12天）整块缺失。</p><p>运营团队面临困境： - 无法评估那3天的广告效果，素材打分异常 - 缺失数据导致 ROAS 计算偏低，影响下月预算审批 - 桑基图中&quot;TikTok 广告&quot;整个时间段断裂，渠道归因失真</p><p>传统方法的失败：线性插值需要知道第10-12天的某些相邻值，但整块为空；均值填充忽略了大促期间的流量峰值特征；MICE 依赖变量间相关性但整块缺失无局部参照。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+BlockEcho: 块缺失数据补全 - GAN + Matrix Factorization 联合框架
+论文: IJCAI 2024 - BlockEcho: Retaining Long-Range Dependencies for Imputing Block-Wise Missing Data
+arXiv: 2402.18800
+应用: 母婴出海广告数据整段丢失恢复（TikTok Pixel 故障 / Facebook 账户暂停等场景）
+
+依赖: torch&gt;=1.8, numpy, pandas, sklearn
+&quot;&quot;&quot;
+
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from typing import Tuple, Optional, Dict, List
+from sklearn.metrics import mean_squared_error
+import warnings
+warnings.filterwarnings(&quot;ignore&quot;)
+
+
+# ─────────────────────────────────────────────────────────────
+# 1. 矩阵补全层（MCL）：低秩乘积 + 非线性变换
+# ─────────────────────────────────────────────────────────────
+
+class MatrixCompletionLayer(nn.Module):
+    &quot;&quot;&quot;
+    MCL: U @ V_T + FCN 非线性变换
+    保留低秩约束（矩阵乘积），同时引入非线性（FCN）
+    &quot;&quot;&quot;
+    def __init__(self, n_rows: int, n_cols: int, rank: int):
+        super().__init__()
+        self.V = nn.Parameter(torch.randn(n_cols, rank) * 0.1)  # 列嵌入矩阵
+        self.fc_nonlinear = nn.Sequential(
+            nn.Linear(n_cols, n_cols * 2),
+            nn.ReLU(),
+            nn.Linear(n_cols * 2, n_cols),
+        )
+
+    def forward(self, U: torch.Tensor) -&gt; torch.Tensor:
+        &quot;&quot;&quot;
+        Args:
+            U: (batch, rank) 行嵌入矩阵（由生成器输出）
+        Returns:
+            X_hat: (batch, n_cols) 补全后的矩阵行
+        &quot;&quot;&quot;
+        X_linear = U @ self.V.T           # (batch, n_cols) 低秩乘积
+        X_hat = self.fc_nonlinear(X_linear)  # 非线性变换
+        return X_hat
+
+
+# ─────────────────────────────────────────────────────────────
+# 2. 生成器 G：输入缺失矩阵 → 输出行嵌入 U
+# ─────────────────────────────────────────────────────────────
+
+class Generator(nn.Module):
+    &quot;&quot;&quot;
+    生成器：(X̃, M, Z) → U（行嵌入矩阵）
+    X̃: 零填充矩阵（缺失位置填0）
+    M: 观测掩码（1=已知, 0=缺失）
+    Z: 噪声向量
+    &quot;&quot;&quot;</code></pre>
     <h2>8. 论文来源</h2><ul><li>2402.18800</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-BlockEcho-Missing-Data" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-STAMImputer-SpatioTemporal.html'>Skill-STAMImputer-SpatioTemporal</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-STAMImputer-SpatioTemporal.html'>Skill-STAMImputer-SpatioTemporal</a></li><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

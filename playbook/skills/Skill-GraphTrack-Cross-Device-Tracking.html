@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-GraphTrack-Cross-Device-Tracking</nav>
 <h1>图基跨设备追踪 - 无监督IP-Domain图谱用户拼接</h1>
-<p class="muted">Skill-GraphTrack-Cross-Device-Tracking · 13-广告分析 · status=stable</p>
+<p class="muted">Skill-GraphTrack-Cross-Device-Tracking · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 600-1200 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：TikTok种草+独立站拔草的跨端追踪</p>
+    <p>异构图上的节点相似度计算**：把设备的 IP 访问记录构建成「IP-Device 二部图」，把域名访问记录构建成「Domain-Device 二部图」，然后用</p>
     <h2>2. 核心算法逻辑</h2>
     <p>跨设备追踪的本质是：在没有用户级关联ID的情况下，用行为相似性判断&quot;两台设备属于同一个人&quot;。GraphTrack 将这一问题建模为异构图上的节点相似度计算：把设备的 IP 访问记录构建成「IPDevice 二部图」，把域名访问记录构建成「DomainDevice 二部图」，然后用随机游走重启（RWwR / Personalized PageRank）在图上扩散相似度信号，最终输出设备对的匹配分数。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>设备对匹配分数矩阵：`match_score(TikTok设备, 独立站设备) &gt; 0.6` → 判定为同一用户</li><li>跨端归因链路：TikTok 曝光设备 → 独立站转化设备 的用户级关联表</li><li>恢复 TikTok 真实 ROAS（行业数据：Last-Click 让 TikTok 低估 **700 倍**）</li><li>中型品牌月 TikTok 广告 50 万元，若 ROAS 从 0.2 修正至 1.5，避免错误停投损失 **600 万元/年**</li><li>为 PVM 归因窗口统一 Skill 提供设备级用户拼接前置能力</li><li>跨平台用户拼接表：Amazon 用户ID ↔ Shopify 用户ID 的概率关联矩阵</li><li>复购用户识别：Amazon 上购买过 → 独立站再次购买的跨端复购率</li><li>跨平台复购率提升：识别高价值跨端用户后推送个性化复购券，**LTV 提升 20-35%**</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：母婴用户在 TikTok 看到吸奶器短视频种草，切换到 Safari 搜索品牌名进独立站下单。现有追踪完全断裂——TikTok 报表显示零转化，独立站显示&quot;直接访问&quot;来源。需要无监督匹配这两个设备的浏览记录，恢复 TikTok 的真实转化贡献。</p><p>| 字段 | 类型 | 示例 | |------|------|------| | `device_id` | str | &quot;device_TikTok_iPhone_A001&quot; / &quot;device_Safari_Mac_B001&quot; | | `ip_address` | str | &quot;192.168.1.10&quot;（家庭 WiFi，两设备共享） | | `domain` | str | &quot;momcozy.com&quot;, &quot;tiktok.com&quot;, &quot;google.com&quot; | | `visit_count` | int | 3（该设备访问该IP/域名的次数） | | `timestamp_range`</p><p>预期产出： - 设备对匹配分数矩阵：`match_score(TikTok设备, 独立站设备) &gt; 0.6` → 判定为同一用户 - 跨端归因链路：TikTok 曝光设备 → 独立站转化设备 的用户级关联表</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>600-1200 万元</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+GraphTrack: 无监督图基跨设备追踪
+论文: arXiv:2203.06833 (AsiaCCS 2022)
+Binghui Wang et al.
+
+核心算法:
+1. 构建 IP-Device 二部图 + Domain-Device 二部图
+2. 用 Personalized PageRank (Random Walk with Restart) 计算设备间相似度
+3. 双图融合 + 对称匹配 → 输出设备对匹配分数
+4. 无监督：无需任何标注设备对
+
+依赖: pip install numpy scipy networkx pandas
+&quot;&quot;&quot;
+from __future__ import annotations
+
+import numpy as np
+import pandas as pd
+import networkx as nx
+from dataclasses import dataclass, field
+from typing import Dict, List, Tuple, Optional
+from scipy import sparse
+
+
+# ─────────────────────────────────────────────
+# 数据结构
+# ─────────────────────────────────────────────
+
+@dataclass
+class BrowsingRecord:
+    &quot;&quot;&quot;设备浏览记录（IP 或 Domain 维度均通用）&quot;&quot;&quot;
+    device_id: str
+    feature: str       # IP 地址 或 域名
+    visit_count: int = 1
+
+
+# ─────────────────────────────────────────────
+# 图构建
+# ─────────────────────────────────────────────
+
+class DeviceGraph:
+    &quot;&quot;&quot;
+    构建 Device-Feature 二部图（Feature = IP 或 Domain）
+    节点分两类: device_* 和 feature_*
+    边权重 = 访问次数（频率加权）
+    &quot;&quot;&quot;
+
+    def __init__(self, records: List[BrowsingRecord]):
+        self.G = nx.Graph()
+        self.device_nodes: List[str] = []
+        self.feature_nodes: List[str] = []
+        self._build(records)
+
+    def _build(self, records: List[BrowsingRecord]):
+        device_set = set()
+        feature_set = set()
+
+        for r in records:
+            d_node = f&quot;device::{r.device_id}&quot;
+            f_node = f&quot;feature::{r.feature}&quot;
+            device_set.add(d_node)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2203.06833</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-GraphTrack-Cross-Device-Tracking" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-HGNN-Cross-Device-Matching.html'>Skill-HGNN-Cross-Device-Matching</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><span class='muted'>相关</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-HGNN-Cross-Device-Matching.html'>Skill-HGNN-Cross-Device-Matching</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><span class='muted'>相关</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><span class='muted'>相关</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

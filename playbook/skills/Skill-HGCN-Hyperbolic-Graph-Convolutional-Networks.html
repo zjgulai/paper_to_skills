@@ -9,45 +9,68 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks</nav>
 <h1>HGCN — 双曲图卷积网络</h1>
-<p class="muted">Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：产品品类层次树嵌入</p>
+    <p>HGCN (Hyperbolic Graph Convolutional Networks)</p>
     <h2>2. 核心算法逻辑</h2>
     <p>HGCN (Hyperbolic Graph Convolutional Networks) 解决传统 GNN 在欧氏空间中无法有效编码层次结构的问题。核心洞察：树状/层次化图结构（如品类树、组织架构）在欧氏空间中存在根本性的容量限制，而双曲空间天然适合表示层次关系。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>品类层次树：节点=品类/产品，边=父子关系</li><li>产品属性特征：价格带、适用人群、功能特性</li><li>用户交互数据：浏览、购买、收藏</li><li>同品类推荐: 吸奶器 → 储奶袋 (双曲距离近)</li><li>跨品类推荐: 吸奶器 → 推车 (双曲距离远，不推荐)</li><li>层次推断: 新品自动定位到正确的品类分支</li><li>品类推荐准确率提升 20-30%</li><li>新品上架自动分类准确率 &gt; 90%</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>母婴电商的产品品类天然是层次树状结构（母婴 &gt; 喂养 &gt; 吸奶器 &gt; [品牌A, B, C]）。传统欧氏嵌入无法保持层次距离，导致跨层级推荐不准确。</p><p>- 品类层次树：节点=品类/产品，边=父子关系 - 产品属性特征：价格带、适用人群、功能特性 - 用户交互数据：浏览、购买、收藏</p><p>业务价值： - 品类推荐准确率提升 20-30% - 新品上架自动分类准确率 &gt; 90% - 跨品类关联规则发现（如&quot;买了吸奶器的用户也买了温奶器&quot;）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：中，需要层次化图结构数据</li><li>技术门槛：高，需理解双曲几何和黎曼优化</li><li>工程复杂度：中高，数值稳定性需要特别关注</li><li>维护成本：中，层次结构变化需要重新训练</li><li>**业务价值高**：品类层次是电商核心数据结构</li><li>**技术独特性**：双曲几何是层次表示的 SOTA 方法</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：5</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：5 · 路径：未检测到</p>
+    <pre class='code-preview'><code>cd paper2skills-code/knowledge_graph/hgcn_hierarchy
+python hgcn_model.py</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>GNN 基础</span></li><li><span class='muted'>HGT</span></li><li><span class='muted'>微分几何基础</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Lorentz 模型</span></li><li><span class='muted'>层次聚类</span></li><li><span class='muted'>混合空间嵌入</span></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>HGT</span></li><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-HGT-Heterogeneous-Graph-Transformer.html'>Skill-HGT-Heterogeneous-Graph-Transformer</a></li><li><a href='../skills/Skill-KG-Augmented-Recommendation-CoLaKG.html'>Skill-KG-Augmented-Recommendation-CoLaKG</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li><li><span class='muted'>推荐系统</span></li><li><span class='muted'>知识图谱构建</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

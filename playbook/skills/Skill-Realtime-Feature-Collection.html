@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Realtime-Feature-Collection</nav>
 <h1>Realtime Feature Collection — 流式特征采集与在线特征仓库：推荐系统实时个性化的数据基础设施</h1>
-<p class="muted">Skill-Realtime-Feature-Collection · 22-数据采集工程 · status=stable</p>
+<p class="muted">Skill-Realtime-Feature-Collection · 22-数据采集工程</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 100 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：实时个性化推荐——&quot;刚买奶瓶立刻推奶嘴&quot;</p>
+    <p>Inference-Time Feature Injection</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：特征时效性悖论</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>更新：user_recent_categories（最近 30min 购买品类）</li><li>更新：user_purchase_sequence（最近 5 次购买序列）</li><li>更新：user_brand_affinity_realtime（实时品牌偏好）</li><li>读取实时特征（&lt; 1ms）</li><li>融合批次长期偏好特征</li><li>特征延迟：24h → 10s（提升 8640x）</li><li>关联品类 CTR：+18-25%（购买后即时关联推荐）</li><li>平均客单价：+12-18%（更准确的连带购买引导）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：用户在母婴跨境平台刚完成奶瓶购买，当前推荐系统继续推送同品类奶瓶（特征延迟 24h）。如果能在 1 分钟内感知该购买行为，应立即切换推荐关联品类（奶嘴、奶瓶刷、消毒锅）。</p><p>| 特征名 | 类型 | 窗口 | 更新频率 | 存储 | |------|------|------|---------|------| | `user_last_purchase_category` | 字符串 | 最近 1 次 | 实时 | Redis STRING | | `user_recent_categories_30m` | 列表 | 最近 30 分钟 | 实时 | Redis LIST | | `user_purchase_count_1d` | 整数 | 今日累计 | 实时 | Redis INCR | | `user_brand_clicks_7d` | 字典 | 7 日</p><p>业务背景：某款婴儿睡袋在小红书突然爆红，但批处理特征仓库需要次日才能更新商品热度分。如果能实时采集多源行为信号（站内收藏、外部搜索词、竞品 listing 评分飙升），可以在 30 分钟内将该商品推荐给目标用户群。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>100 万元</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：10</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：10 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+实时特征采集与在线特征仓库
+整合：
+  - 流式特征计算（模拟 Kafka Consumer + Flink-style 窗口）
+  - 在线特征仓库（模拟 Redis，含 TTL 管理）
+  - 推理时特征注入（Inference-Time Feature Injection）
+  - 特征时效性衰减模型
+
+论文来源：
+  2512.14734 (Tubi inference-time injection)
+  2501.08591 (OpenMLDB unified feature computation)
+  2409.00400 (bilibili batch query consistency)
+&quot;&quot;&quot;
+
+import time
+import math
+import queue
+import threading
+import random
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
+from collections import defaultdict, deque
+
+
+# ──────────────────────────────────────────────────────────
+# 数据结构
+# ──────────────────────────────────────────────────────────
+
+@dataclass
+class UserEvent:
+    &quot;&quot;&quot;用户行为事件（Kafka 消息格式）&quot;&quot;&quot;
+    user_id: str
+    event_type: str        # &quot;view&quot; | &quot;add_to_cart&quot; | &quot;purchase&quot; | &quot;share&quot;
+    item_id: str
+    category: str
+    price: float
+    brand: str
+    timestamp: float = field(default_factory=time.time)
+
+
+@dataclass
+class FeatureVector:
+    &quot;&quot;&quot;特征向量，含时效性元数据&quot;&quot;&quot;
+    user_id: str
+    features: Dict[str, Any]
+    created_at: float = field(default_factory=time.time)
+    source: str = &quot;batch&quot;   # &quot;batch&quot; | &quot;realtime&quot; | &quot;merged&quot;
+
+    def age_seconds(self) -&gt; float:
+        return time.time() - self.created_at
+
+
+# ──────────────────────────────────────────────────────────
+# Mock Redis（在线特征仓库）
+# ──────────────────────────────────────────────────────────
+
+class MockRedis:
+    &quot;&quot;&quot;
+    模拟 Redis 在线特征仓库
+    支持 STRING / LIST / HASH / TTL</code></pre>
     <h2>8. 论文来源</h2><ul><li>2409.00400</li><li>2501.08591</li><li>2512.14734</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Realtime-Feature-Collection" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><span class='muted'>LLM-Focused-Web-Crawling]]</span></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-LLM-Focused-Web-Crawling.html'>Skill-LLM-Focused-Web-Crawling</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Cold-Start-Product-Recommendation]]</span></li><li><span class='muted'>Data-Drift-Detection]]</span></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Cold-Start-Product-Recommendation]]</span></li><li><span class='muted'>Matrix-Factorization]]</span></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
