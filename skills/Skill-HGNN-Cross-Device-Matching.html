@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-HGNN-Cross-Device-Matching</nav>
 <h1>层次图神经网络跨设备用户匹配 - 无ID的跨端行为拼接</h1>
-<p class="muted">Skill-HGNN-Cross-Device-Matching · 13-广告分析 · status=stable</p>
+<p class="muted">Skill-HGNN-Cross-Device-Matching · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 ⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：手机看广告+电脑下单的用户拼接</p>
+    <p>细粒度节点（Fine Node）$f_i$</p>
     <h2>2. 核心算法逻辑</h2>
     <p>将每台设备的 URL 访问序列 $\mathcal{S}_v = \{s_1, s_2, \ldots, s_n\}$ 构建为层次异构图：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>**最小要求**：每设备至少 20 条匿名 URL 日志（时间跨度 2-4 周）</li><li>**数据来源**：独立站服务端日志（不依赖第三方 Cookie），通过 IP + User-Agent 初步聚类生成 device_id</li><li>**隐私合规**：URL 仅保留 domain+path 前两级，不含查询参数中的个人信息</li><li>设备对匹配概率矩阵（score &gt; 0.5 判定为同一用户）</li><li>识别率：在 CIKM 数据集基准上 F1=0.51，实际品牌数据集（URL 重叠度更高）预估可达 0.55-0.65</li><li>每 1000 个设备对中，预计正确识别 300-450 个跨端用户关联</li><li>恢复 **30-50% 断裂的跨设备转化链路**，还原真实广告 ROAS</li><li>将&quot;Instagram 曝光→PC 下单&quot;路径量化，避免错误砍除上漏斗预算（月预算 $10,000 品牌可避免 $15,000+ 年度损失）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：母婴 DTC 站在 Instagram 投广告，用户在手机看到广告、到电脑搜索品牌词下单。设备级日志显示&quot;手机曝光零转化&quot;&quot;电脑无广告来源&quot;——Sankey 归因图中跨设备链路断裂，平台报告 ROAS 严重失真。需要识别&quot;这两台设备属于同一用户&quot;，恢复真实跨端转化路径。</p><p>| 字段 | 类型 | 示例 | |------|------|------| | `device_id` | str | `&quot;mob_a3f9c2&quot;` / `&quot;pc_b71e44&quot;` | | `url_sequence` | List[str] | `[&quot;instagram.com/reel/xxx&quot;, &quot;google.com/search?q=品牌&quot;, &quot;brand.com/product/abc&quot;]` | | `timestamp_sequence` | List[datetime] | `[2025-03-01 10:15, 2025-03-01 10:16, ...]` | | `d</p><p>- 最小要求：每设备至少 20 条匿名 URL 日志（时间跨度 2-4 周） - 数据来源：独立站服务端日志（不依赖第三方 Cookie），通过 IP + User-Agent 初步聚类生成 device_id - 隐私合规：URL 仅保留 domain+path 前两级，不含查询参数中的个人信息</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>⭐⭐⭐⭐☆</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：2</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+HGNN Cross-Device Matching — 完整实现
+arXiv:2304.03215 (NVIDIA, 2023)
+
+依赖: torch&gt;=2.0, torch_geometric&gt;=2.4, numpy, scikit-learn
+&quot;&quot;&quot;
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch_geometric.data import HeteroData, Batch
+from torch_geometric.nn import MessagePassing, HeteroConv
+import numpy as np
+from typing import List, Tuple, Dict, Optional
+from sklearn.metrics import f1_score, precision_score, recall_score
+
+
+# ============================================================
+# 1. 层次图构建
+# ============================================================
+
+def build_hierarchical_graph(
+    url_sequence: List[int],
+    K: int = 6,
+    url_embed_dim: int = 64,
+    url_vocab_size: int = 10000,
+) -&gt; HeteroData:
+    &quot;&quot;&quot;
+    将 URL 访问序列转换为层次异构图（Fine + Coarse 节点）。
+    
+    Args:
+        url_sequence: URL ID 列表（已编码为整数）
+        K:            每 K 个连续 URL 分配一个 coarse 节点
+        url_embed_dim: URL embedding 维度
+        url_vocab_size: URL 词表大小
+    
+    Returns:
+        HeteroData，包含 fine 节点、coarse 节点及其连边
+    &quot;&quot;&quot;
+    data = HeteroData()
+    
+    # --- Fine 节点 ---
+    # 去重 URL，保留首次出现顺序
+    unique_urls = list(dict.fromkeys(url_sequence))
+    url_to_idx = {url: i for i, url in enumerate(unique_urls)}
+    n_fine = len(unique_urls)
+    
+    # Fine 节点特征：URL ID embedding（训练时替换为 Doc2vec/TF-IDF 向量）
+    fine_node_ids = torch.tensor(unique_urls, dtype=torch.long)  # 用于 embedding lookup
+    data[&#x27;fine&#x27;].x = fine_node_ids
+    data[&#x27;fine&#x27;].num_nodes = n_fine
+    
+    # Fine → Fine 有向边（相邻 URL 对，含自环）
+    src, dst = [], []
+    for i in range(len(url_sequence) - 1):
+        s = url_to_idx[url_sequence[i]]
+        d = url_to_idx[url_sequence[i + 1]]
+        src.append(s)
+        dst.append(d)
+    </code></pre>
     <h2>8. 论文来源</h2><ul><li>2304.03215</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-HGNN-Cross-Device-Matching" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-GraphTrack-Cross-Device-Tracking.html'>Skill-GraphTrack-Cross-Device-Tracking</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-GraphTrack-Cross-Device-Tracking.html'>Skill-GraphTrack-Cross-Device-Tracking</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

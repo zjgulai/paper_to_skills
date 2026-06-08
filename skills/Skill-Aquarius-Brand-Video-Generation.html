@@ -9,45 +9,112 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/20-ai视频生成.html">20-AI视频生成</a> / Skill-Aquarius-Brand-Video-Generation</nav>
 <h1>Aquarius — Brand Video Generation（品牌营销视频生成）</h1>
-<p class="muted">Skill-Aquarius-Brand-Video-Generation · 20-AI视频生成 · status=unknown</p>
+<p class="muted">Skill-Aquarius-Brand-Video-Generation · 20-AI视频生成</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 80-150 万元</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：多市场品牌视频的千人千面生产</p>
+    <p>Single-DiT (2B)</p>
     <h2>2. 核心算法逻辑</h2>
     <p>工业级营销视频生成系统——不是&quot;能生成视频就行&quot;，而是面向&quot;千人千面&quot;品牌营销场景的完整管线：图生视频、文生视频(Avatar)、视频修复、个性化、分布式数据管线。两种 DiT 架构适配不同场景。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>品牌主视觉素材（Logo、产品图、品牌色板）</li><li>各市场本地化参数（模特形象、语言、节日元素）</li><li>Aquarius Avatar 模式按市场切换代言人形象</li><li>12 条品牌视频批量生成，保持品牌视觉一致性</li><li>每条 GPU 成本约 $3-5（vs 实拍 $4,000+）</li><li>视频个性化：老用户/新用户/高价值用户分别推送不同版本的品牌视频</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：母婴品牌需要在美/德/英/日 4 个市场投放品牌视频广告——每个市场需要不同模特、不同语言字幕、不同节日主题（美国感恩节/德国圣诞节/日本新年）。传统拍摄：4 市场 × 3 版本 = 12 条视频，$50,000+。</p><p>数据要求： - 品牌主视觉素材（Logo、产品图、品牌色板） - 各市场本地化参数（模特形象、语言、节日元素） - Aquarius Avatar 模式按市场切换代言人形象</p><p>预期产出： - 12 条品牌视频批量生成，保持品牌视觉一致性 - 每条 GPU 成本约 $3-5（vs 实拍 $4,000+） - 视频个性化：老用户/新用户/高价值用户分别推送不同版本的品牌视频</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>80-150 万元</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：2</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;Aquarius Brand Video Pipeline — 多市场品牌视频生产&quot;&quot;&quot;
+
+import numpy as np
+from typing import Dict, List
+from dataclasses import dataclass
+
+@dataclass
+class MarketConfig:
+    market: str; avatar_style: str; festival_theme: str
+    language: str; aspect_ratio: str = &quot;9:16&quot;
+
+class AquariusBrandPipeline:
+    &quot;&quot;&quot;品牌视频批量生产调度器&quot;&quot;&quot;
+    
+    def __init__(self, model_size: str = &quot;2B&quot;):
+        self.model_size = model_size
+    
+    def generate_campaign(self, brand_assets: Dict, markets: List[MarketConfig],
+                          base_prompt: str) -&gt; List[Dict]:
+        &quot;&quot;&quot;多市场品牌 Campaign 批量生成&quot;&quot;&quot;
+        results = []
+        for mkt in markets:
+            localized_prompt = (
+                f&quot;{base_prompt}, {mkt.avatar_style} model, &quot;
+                f&quot;{mkt.festival_theme} theme, {mkt.language} text overlay, &quot;
+                f&quot;{mkt.aspect_ratio} aspect ratio&quot;
+            )
+            gpu_cost = 3.0 if self.model_size == &quot;2B&quot; else 8.0
+            results.append({
+                &quot;market&quot;: mkt.market, &quot;prompt&quot;: localized_prompt,
+                &quot;estimated_gpu_cost&quot;: f&quot;${gpu_cost:.0f}&quot;,
+            })
+        total = sum(float(r[&quot;estimated_gpu_cost&quot;].replace(&quot;$&quot;,&quot;&quot;)) for r in results)
+        return {&quot;videos&quot;: results, &quot;total_cost&quot;: f&quot;${total:.0f}&quot;,
+                &quot;vs_traditional&quot;: f&quot;${len(markets)*4000:,}&quot;, &quot;saving_pct&quot;: f&quot;{(1-total/(len(markets)*4000)):.0%}&quot;}
+
+if __name__ == &#x27;__main__&#x27;:
+    markets = [
+        MarketConfig(&quot;US&quot;, &quot;Caucasian mom&quot;, &quot;Thanksgiving&quot;, &quot;EN&quot;),
+        MarketConfig(&quot;DE&quot;, &quot;European mom&quot;, &quot;Christmas&quot;, &quot;DE&quot;),
+        MarketConfig(&quot;JP&quot;, &quot;Asian mom&quot;, &quot;New Year&quot;, &quot;JA&quot;),
+    ]
+    pipe = AquariusBrandPipeline(&quot;2B&quot;)
+    result = pipe.generate_campaign({&quot;logo&quot;: &quot;brand.png&quot;}, markets, &quot;breast pump product showcase&quot;)
+    print(f&quot;4市场×3版本: GPU ${result[&#x27;total_cost&#x27;]} vs 实拍 ${result[&#x27;vs_traditional&#x27;]} (省{result[&#x27;saving_pct&#x27;]})&quot;)
+    print(&quot;[✓] Aquarius Brand Video 测试通过&quot;)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2505.10584</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Aquarius-Brand-Video-Generation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-BrandFusion-Multi-Agent.html'>Skill-BrandFusion-Multi-Agent</a></li><li><a href='../skills/Skill-Geo-Level-Marketing-Effectiveness.html'>Skill-Geo-Level-Marketing-Effectiveness</a></li><li><a href='../skills/Skill-Phantom-Product-Showcase-I2V.html'>Skill-Phantom-Product-Showcase-I2V</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-BrandFusion-Multi-Agent.html'>Skill-BrandFusion-Multi-Agent</a></li><li><a href='../skills/Skill-Geo-Level-Marketing-Effectiveness.html'>Skill-Geo-Level-Marketing-Effectiveness</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Geo-Level-Marketing-Effectiveness.html'>Skill-Geo-Level-Marketing-Effectiveness</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

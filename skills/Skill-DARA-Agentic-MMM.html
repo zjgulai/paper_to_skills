@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-DARA-Agentic-MMM</nav>
 <h1>DARA Agentic MMM — LLM Agent 驱动的营销组合建模：双阶段自动调参与智能归因</h1>
-<p class="muted">Skill-DARA-Agentic-MMM · 15-营销投放分析 · status=stable</p>
+<p class="muted">Skill-DARA-Agentic-MMM · 15-营销投放分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 30-60 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：婴儿辅食品牌多渠道广告归因（Amazon + Meta + TikTok）</p>
+    <p>DARA（Dual-phase Adaptive Reasoning and Allocation）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统 Marketing Mix Modeling（MMM）存在根本性瓶颈：大量人工调参。数据科学家需要手动尝试 adstock（广告滞留）半衰期、saturation（饱和度）参数、季节性先验，一轮完整建模周期通常需要 28 周。</p>
-    <h2>3. 输入</h2><ul><li>**时序长度**：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li>**渠道数**：2-8 个（超过 8 个建议分组）</li><li>**数据粒度**：周级；日级数据需先聚合</li><li>**外部变量**（可选）：节假日指标、竞争对手促销标记</li></ul>
-    <h2>4. 输出</h2><ul><li>**时序长度**：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li>**渠道数**：2-8 个（超过 8 个建议分组）</li><li>**数据粒度**：周级；日级数据需先聚合</li><li>**外部变量**（可选）：节假日指标、竞争对手促销标记</li></ul>
-    <h2>5. 业务场景</h2><ul><li>周级渠道消耗数据：`{week, channel, spend, impressions}`</li><li>对应期间销售额/转化量：`{week, revenue, units_sold}`</li><li>外部控制变量：`{week, seasonality_index, competitor_spend_estimate}`</li><li>参数优化准确率提升 **22-31%**（vs 人工调参基线）</li><li>TikTok 预算重配后整体 ROAS 提升 **+0.4x**（$2.1 → $2.5 per dollar）</li><li>建模周期从 **6 周压缩至 4 小时**</li><li>单次大促额外 GMV：+$12-18 万美元</li><li>广告浪费成本节省：-$2-3 万美元</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：某母婴辅食品牌在美国市场同时投放 Amazon Ads、Meta（FB+IG）、TikTok，月均广告预算 $15 万美元，但各渠道的 adstock 效应差异显著（TikTok 内容影响力可持续 2-4 周，Amazon 关键词效果衰减快）。传统 MMM 用统一的 $\lambda=0.5$ 导致 TikTok 效果被严重低估。</p><p>数据要求： - 周级渠道消耗数据：`{week, channel, spend, impressions}` - 对应期间销售额/转化量：`{week, revenue, units_sold}` - 外部控制变量：`{week, seasonality_index, competitor_spend_estimate}`</p><p>量化 ROI： - 参数优化准确率提升 22-31%（vs 人工调参基线） - TikTok 预算重配后整体 ROAS 提升 +0.4x（$2.1 → $2.5 per dollar） - 建模周期从 6 周压缩至 4 小时</p>
+    <h2>4. 输入数据要求</h2><ul><li>**时序长度**：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li>**渠道数**：2-8 个（超过 8 个建议分组）</li><li>**数据粒度**：周级；日级数据需先聚合</li><li>**外部变量**（可选）：节假日指标、竞争对手促销标记</li></ul>
+    <h2>5. 输出结果</h2><ul><li>**时序长度**：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li>**渠道数**：2-8 个（超过 8 个建议分组）</li><li>**数据粒度**：周级；日级数据需先聚合</li><li>**外部变量**（可选）：节假日指标、竞争对手促销标记</li></ul>
+    <h2>6. 业务价值 / ROI</h2><p>30-60 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：6</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：6 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+DARA Agentic MMM
+整合 DARA 双阶段架构 + Agentic Bayesian 参数优化 + 自动洞察生成
+论文：DARA (arXiv:2601.14711) + MMM 4.0 (Applied Marketing Analytics 2025)
+&quot;&quot;&quot;
+
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+from scipy.optimize import minimize
+from scipy.stats import norm
+
+
+# ── 1. MMM 核心变换 ──────────────────────────────────────────────────────────
+
+def geometric_adstock(spend: np.ndarray, decay: float, max_lag: int = 8) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    Geometric Adstock 变换：x_t_star = x_t + λ * x_{t-1}_star
+    decay: 衰减系数 λ ∈ [0, 1]
+    &quot;&quot;&quot;
+    result = np.zeros_like(spend, dtype=float)
+    for t in range(len(spend)):
+        result[t] = spend[t]
+        for lag in range(1, min(t + 1, max_lag + 1)):
+            result[t] += (decay ** lag) * spend[t - lag]
+    return result
+
+
+def hill_saturation(x: np.ndarray, alpha: float, K: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    Hill 函数饱和变换：f(x) = x^alpha / (x^alpha + K^alpha)
+    alpha: 曲线斜率（越大S形越明显）
+    K: 半饱和点（达到最大效果50%时的投入量）
+    &quot;&quot;&quot;
+    x_safe = np.maximum(x, 1e-10)
+    return (x_safe ** alpha) / (x_safe ** alpha + K ** alpha)
+
+
+@dataclass
+class ChannelParams:
+    &quot;&quot;&quot;单渠道 MMM 参数&quot;&quot;&quot;
+    name: str
+    decay: float = 0.5      # adstock 衰减系数
+    alpha: float = 2.0      # Hill 饱和斜率
+    K: float = 5000.0       # 半饱和点（预算单位）
+    coef: float = 1.0       # 渠道系数（待估计）
+
+
+class MMMModel:
+    &quot;&quot;&quot;
+    核心 MMM 模型
+    Sales = baseline + Σ channel_coef * saturation(adstock(spend)) + ε
+    &quot;&quot;&quot;
+
+    def __init__(self, channel_params: List[ChannelParams]):
+        self.channel_params = {p.name: p for p in channel_params}
+
+    def transform_channel(self, spend: np.ndarray, params: ChannelParams) -&gt; np.ndarray:
+        &quot;&quot;&quot;adstock → saturation 双重变换&quot;&quot;&quot;
+        adstocked = geometric_adstock(spend, params.decay)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2601.14711</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-DARA-Agentic-MMM" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Marketing-Mix-Modeling]]</span></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>CDA-Cookieless-Attribution]]</span></li><li><span class='muted'>Identity-Fragmentation-Debiasing]]</span></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li><li><a href='../skills/Skill-Identity-Fragmentation-Debiasing.html'>Skill-Identity-Fragmentation-Debiasing</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Multi-Objective-Budget-Allocation]]</span></li><li><span class='muted'>ROAS-Budget-Optimization]]</span></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

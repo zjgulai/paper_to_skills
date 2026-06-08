@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-HyDE-Hypothetical-Document</nav>
 <h1>HyDE - 假设文档嵌入查询扩展</h1>
-<p class="muted">Skill-HyDE-Hypothetical-Document · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-HyDE-Hypothetical-Document · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>案例一：跨语言产品安全查询</p>
+    <p>HyDE（Hypothetical Document Embeddings）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>HyDE（Hypothetical Document Embeddings） 的洞察极其简单却有效：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>&quot;宝宝三个月可以用什么奶嘴&quot; → 文档关键词：&quot;0-6月龄 标准流量型&quot;</li><li>&quot;奶粉哪个不容易过敏&quot; → 文档关键词：&quot;低敏水解配方 适度水解乳清蛋白&quot;</li><li>&quot;双胞胎用的吸奶器&quot; → 文档关键词：&quot;双边电动吸奶器 同步吸乳&quot;</li><li>对每个查询生成专业导购口吻的假设回答</li><li>混合策略：$\lambda=0.3$ 融合原始查询和假设文档 embedding</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：中国消费者在海外购物平台用中文口语提问（&quot;这个奶瓶能放微波炉加热吗&quot;），需要检索英文产品说明书中的专业表述（&quot;Microwave sterilization: Polypropylene (PP) materials are rated for microwave use up to 120°C for 5 minutes maximum&quot;）。直接用中文 embedding 检索英文文档，因语言差异召回率仅 38%。</p><p>HyDE 方案： 1. 中文查询 → LLM 生成英文假设答案：&quot;Microwave heating for PP baby bottles is safe under specific conditions...&quot; 2. 用英文假设文档 embedding 检索英文产品手册 3. 检索结果翻译返回用户</p><p>量化 ROI： | 指标 | 无 HyDE | 有 HyDE | 提升 | |---|---|---|---| | 跨语言检索召回率 | 38% | 71% | +87% | | MRR@10 | 0.31 | 0.58 | +87% | | 用户找到正确信息率 | 41% | 76% | +85% | | 退货（错误操作导致）| 3.8% | 1.9% | -50% |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：5</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：5 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+HyDE - 假设文档嵌入查询扩展
+arXiv: 2212.10496 (HyDE, CMU, 2022)
+
+实现要点：
+1. LLM 生成假设文档（mock）
+2. 用假设文档 embedding 替代查询 embedding 检索
+3. 支持多假设文档平均（HyDE-Multi）
+4. 支持查询-假设文档混合权重
+
+运行环境：Python 3.9+，无需外部 API（全 mock）
+&quot;&quot;&quot;
+
+import ast
+import math
+import random
+from typing import Dict, List, Optional, Tuple
+
+
+# ─────────────────────────────────────────────
+# 数据结构
+# ─────────────────────────────────────────────
+
+class Document:
+    &quot;&quot;&quot;检索文档&quot;&quot;&quot;
+    def __init__(self, doc_id: str, text: str, metadata: Optional[Dict] = None):
+        self.doc_id = doc_id
+        self.text = text
+        self.metadata = metadata or {}
+        self.embedding: Optional[List[float]] = None
+
+
+# ─────────────────────────────────────────────
+# Mock 工具函数
+# ─────────────────────────────────────────────
+
+def mock_embed(text: str, dim: int = 32) -&gt; List[float]:
+    &quot;&quot;&quot;
+    Mock embedding：deterministic，基于文本内容
+
+    关键设计：专业词汇相似的文本会产生相近 embedding，
+    模拟 HyDE &quot;假设文档与真实文档措辞相近&quot; 的效果
+    &quot;&quot;&quot;
+    random.seed(hash(text) % (2 ** 31))
+    base = [random.gauss(0, 1) for _ in range(dim)]
+
+    # 注入领域信号：包含相同关键词的文本 embedding 更接近
+    professional_keywords = [
+        &quot;月龄&quot;, &quot;婴儿&quot;, &quot;配方&quot;, &quot;BPA&quot;, &quot;FDA&quot;, &quot;CE认证&quot;,
+        &quot;polypropylene&quot;, &quot;BPA-free&quot;, &quot;infant&quot;, &quot;formula&quot;,
+        &quot;microwave&quot;, &quot;sterilization&quot;, &quot;0-6&quot;, &quot;newborn&quot;,
+        &quot;双边&quot;, &quot;水解&quot;, &quot;低敏&quot;,
+    ]
+    for keyword in professional_keywords:
+        if keyword.lower() in text.lower():
+            random.seed(hash(keyword) % (2 ** 31))
+            signal = [random.gauss(0, 0.3) for _ in range(dim)]
+            base = [b + s for b, s in zip(base, signal)]
+
+    norm = math.sqrt(sum(v * v for v in base)) + 1e-9</code></pre>
     <h2>8. 论文来源</h2><ul><li>2212.10496</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-HyDE-Hypothetical-Document" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Embedding-Fundamentals.html'>Skill-Embedding-Fundamentals</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-RAG-Reranking-CrossEncoder.html'>Skill-RAG-Reranking-CrossEncoder</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-RAPTOR-Hierarchical-RAG.html'>Skill-RAPTOR-Hierarchical-RAG</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

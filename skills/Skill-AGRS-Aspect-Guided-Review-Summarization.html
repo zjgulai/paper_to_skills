@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-AGRS-Aspect-Guided-Review-Summarization</nav>
 <h1>AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline</h1>
-<p class="muted">Skill-AGRS-Aspect-Guided-Review-Summarization · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-AGRS-Aspect-Guided-Review-Summarization · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 1.5 万/月</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一:Momcozy 紫外线消毒器双平台季度摘要</p>
+    <p>结构化**:**ABSA 提取 aspect-sentiment</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统 LLM 摘要&quot;无约束自由生成&quot;产生幻觉(摘要包含评论中不存在的属性). AGRS 把摘要任务结构化:ABSA 提取 aspectsentiment → canonical 归一化 → 代表性评论加权采样 → 结构化 prompt 引导 LLM 生成. 100% 基于真实评论,根本规避幻觉. 4 阶段 pipeline 端到端可扩展到百万产品.</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>**业务问题**:Momcozy 在 Amazon US/DE 同时销售紫外线消毒器,每季度 1-2 万条评论,人工汇总需要 2-3 个产品经理 × 1 周;管理层季度复盘和供应链/产品团队迭代输入严重滞后</li><li>**数据要求**:Amazon Review API 季度评论数据(评论文本 + 评分 + 市场标记)</li><li>**AGRS 配置**:</li><li>ABSA 提取每条评论的 ≤5 个 aspect-sentiment 对(如 `disinfection_effect:positive`, `noise_level:negative`)</li><li>Consolidate 同义 aspect(`UV_sanitize` → `disinfection_effect`)</li><li>每产品 Top 5 aspects × 加权采样 200 条评论 → LLM 生成 300-500 字摘要</li><li>输出 JSON: `{product_id, market, top_aspects, summary, source_review_count}`</li><li>**业务价值**:</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>- 业务问题:Momcozy 在 Amazon US/DE 同时销售紫外线消毒器,每季度 1-2 万条评论,人工汇总需要 2-3 个产品经理 × 1 周;管理层季度复盘和供应链/产品团队迭代输入严重滞后 - 数据要求:Amazon Review API 季度评论数据(评论文本 + 评分 + 市场标记) - AGRS 配置: - ABSA 提取每条评论的 ≤5 个 aspect-sentiment 对(如 `disinfection_effect:positive`, `noise_level:negative`) - Consolidate 同义 aspect(`UV_sanitize` → </p><p>- 业务问题:Momcozy 新品暖奶器 Amazon US 上市,第一个月评论量从 0 增长到 200+,运营需要每周捕捉用户反馈热点,但等不到攒够样本量做月度报告(Anker 案例:新品 8 周内的反馈直接决定改款决策) - 数据要求:实时评论增量 + 阈值触发器 - AGRS 配置: - 评论累计达 10 条 → 自动触发首轮 pipeline - 增长 ≥10% 时自动刷新摘要(避免低噪声重算) - 每周生成一次 aspect-guided 摘要,推送飞书运营群 - 业务价值: - 早期负面信号识别提速:从月度 → 周度,差评归因前置 3 周 - 早期反馈带动 R&amp;D 改款:单款新品因</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>节省人工:2 人月 × 1.5 万/月 = **3 万/季度 × 4 = 12 万/年/品类**</li><li>决策提速 2-4 周:管理层决策提前 → 库存/广告优化决策提前 → 净增 **150-300 万/年**</li><li>合计:**单品类 162-312 万/年**</li><li>早期负面信号识别提速 3 周:避免大批量召回单款节省 **50-100 万**</li><li>年化 20 款新品:**1000-2000 万元/年潜力**(取保守估算 30%-50% 兑现率 = 300-1000 万)</li><li>易处:Wayfair 开源 HuggingFace 数据集可直接训练/验证</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+AGRS Aspect-Guided Review Summarization 最小骨架
+论文 arXiv:2509.26103 (Wayfair, 2025)
+完整实现见 paper2skills-code/nlp_voc/agrs_review_summarization/model.py (305 行)
+HuggingFace 数据集: leBoytsov/review-summaries-68dab02e7b6a5bc8e29e81fa
+&quot;&quot;&quot;
+from __future__ import annotations
+from collections import Counter, defaultdict
+from dataclasses import dataclass, field
+from typing import Dict, List
+import random
+
+
+@dataclass
+class Review:
+    text: str
+    review_id: str = &quot;&quot;
+    rating: int = 5
+    market: str = &quot;&quot;
+
+
+@dataclass
+class AspectSentiment:
+    aspect: str
+    sentiment: str
+    review_id: str = &quot;&quot;
+
+
+def extract_aspects(reviews: List[Review], max_per_review: int = 5) -&gt; List[AspectSentiment]:
+    &quot;&quot;&quot;阶段 1: ABSA 提取(生产替换为 LLM 调用 with structured prompt)&quot;&quot;&quot;
+    aspect_kw = {
+        &quot;disinfection_effect&quot;: [&quot;uv&quot;, &quot;sanitize&quot;, &quot;disinfect&quot;, &quot;kill germ&quot;],
+        &quot;noise_level&quot;: [&quot;noise&quot;, &quot;loud&quot;, &quot;quiet&quot;, &quot;silent&quot;],
+        &quot;ease_of_use&quot;: [&quot;easy&quot;, &quot;simple&quot;, &quot;intuitive&quot;, &quot;user friendly&quot;],
+        &quot;build_quality&quot;: [&quot;sturdy&quot;, &quot;flimsy&quot;, &quot;broken&quot;, &quot;durable&quot;],
+        &quot;value_for_money&quot;: [&quot;price&quot;, &quot;value&quot;, &quot;worth&quot;, &quot;expensive&quot;],
+    }
+    positive_kw = {&quot;great&quot;, &quot;love&quot;, &quot;amazing&quot;, &quot;easy&quot;, &quot;quiet&quot;, &quot;sturdy&quot;, &quot;worth&quot;}
+    negative_kw = {&quot;bad&quot;, &quot;broken&quot;, &quot;loud&quot;, &quot;flimsy&quot;, &quot;expensive&quot;, &quot;noisy&quot;}
+
+    results = []
+    for r in reviews:
+        text_low = r.text.lower()
+        for aspect, kws in aspect_kw.items():
+            if any(kw in text_low for kw in kws):
+                pos = any(w in text_low for w in positive_kw)
+                neg = any(w in text_low for w in negative_kw)
+                sent = &quot;mixed&quot; if (pos and neg) else (&quot;positive&quot; if pos else &quot;negative&quot; if neg else &quot;neutral&quot;)
+                results.append(AspectSentiment(aspect=aspect, sentiment=sent, review_id=r.review_id))
+    return results
+
+
+def consolidate_aspects(aspects: List[AspectSentiment], freq_threshold: int = 30) -&gt; List[AspectSentiment]:
+    &quot;&quot;&quot;阶段 2: 归一化&quot;&quot;&quot;
+    canonical_map = {
+        &quot;uv_sanitize&quot;: &quot;disinfection_effect&quot;,
+        &quot;noise&quot;: &quot;noise_level&quot;,
+        &quot;easy_to_clean&quot;: &quot;cleaning_convenience&quot;,
+    }
+    consolidated = []</code></pre>
     <h2>8. 论文来源</h2><ul><li>2509.26103</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-AGRS-Aspect-Guided-Review-Summarization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Multilingual-NER-Universal-v2.html'>Skill-Multilingual-NER-Universal-v2</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li><li><a href='../skills/Skill-StaR-Review-Statement-Ranking.html'>Skill-StaR-Review-Statement-Ranking</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Argos-Agentic-Anomaly-Detection.html'>Skill-Argos-Agentic-Anomaly-Detection</a></li><li><a href='../skills/Skill-Customer-Journey-Decision-Tree.html'>Skill-Customer-Journey-Decision-Tree</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

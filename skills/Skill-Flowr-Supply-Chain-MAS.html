@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-Flowr-Supply-Chain-MAS</nav>
 <h1>Flowr — 零售供应链多 Agent 端到端自动化</h1>
-<p class="muted">Skill-Flowr-Supply-Chain-MAS · 10-MAS · status=stable</p>
+<p class="muted">Skill-Flowr-Supply-Chain-MAS · 10-MAS</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 91 万元</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：母婴跨境多 Agent 补货链路（WFA 直接对应）</p>
+    <p>人工密集型零售供应链操作**系统性地分解为 6 个专业化 AI Agent 联盟，由中央 Reasoning LLM 协调编排，供应链经理通过 MCP（Model Context Protocol）接口实施人工监督（HITL）。核心洞察是：</p>
     <h2>2. 核心算法逻辑</h2>
     <p>Flowr 将人工密集型零售供应链操作系统性地分解为 6 个专业化 AI Agent 联盟，由中央 Reasoning LLM 协调编排，供应链经理通过 MCP（Model Context Protocol）接口实施人工监督（HITL）。核心洞察是：供应链决策具有天然的功能模块化特征，不同子任务所需的专业知识和数据源存在边界清晰的分工，因此适合由专业化 LLM（而非单一通用模型）各司其职，再由 Reasoning LLM 统一协调。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>销售历史：SKU × 日期 × 渠道，过去 12 个月，≥80% 数据完整率</li><li>库存快照：每日实时同步（FBA/海外仓/在途 三库区）</li><li>运输时效：历史货代记录（含清关延误标记）</li><li>每日自动生成补货建议单（含置信区间）</li><li>断货风险预警（提前 14 天，命中率目标 ≥ 85%）</li><li>供应商确认函模板（自动生成，人工审核后发送）</li><li>断货率从 12% → 5%（行业基准），按单 SKU 日均 GMV 3,000 元、年断货天数减少 25 天，500 SKU 计：**年增 GMV 约 3,750 万元**</li><li>补货计划人工工时从每日 6 人·时 → 1 人·时（人工复核），节省 5 人·时/日，年节省 **约 91 万元人工成本**</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：母婴品牌在亚马逊/独立站同时运营，SKU 达 500+，跨境仓（海外仓 + 国内直发）补货涉及 DHL/UPS 运输周期（15-30 天）、海关清关（3-7 天）、Amazon FBA 入仓（1-5 天），任何一环延误都导致断货（Lost Buy Box，单 SKU 日损失 2,000-8,000 元）。</p><p>| Flowr Agent | 母婴对应角色 | 专属数据域 | |------------|------------|-----------| | Demand Forecasting | 销量预测 Agent（含节假日/季节/营销）| Amazon API 销售历史、促销日历 | | Inventory Monitoring | 库存状态 Agent（FBA + 海外仓 + 在途）| FBA Inventory Report、WMS 系统 | | Procurement &amp; Ordering | 采购下单 Agent（MOQ/阶梯价格优化）| ERP 采购历史、供应商价格表 | | Sup</p><p>数据要求： - 销售历史：SKU × 日期 × 渠道，过去 12 个月，≥80% 数据完整率 - 库存快照：每日实时同步（FBA/海外仓/在途 三库区） - 运输时效：历史货代记录（含清关延误标记）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**易**：框架已有模板（本 Skill 提供完整代码骨架），6 个 Agent 边界清晰，可分阶段上线</li><li>**中**：需对接 Amazon API、WMS、ERP 等数据源（通常 2-4 周集成工期）</li><li>**难**：专业化 LLM 微调需要供应链领域语料（可用 RAG 替代降低门槛）</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Flowr Supply Chain MAS — 多 Agent 供应链协作框架（母婴出海版）
+arXiv:2604.05987 | Python 3.14+ | 仅标准库，无需额外安装
+&quot;&quot;&quot;
+from __future__ import annotations
+import json
+import random
+from dataclasses import dataclass, field
+from datetime import date, timedelta
+from typing import Any
+
+
+# ── 数据结构 ──────────────────────────────────────────────────────────────────
+
+@dataclass
+class SKU:
+    sku_id: str
+    name: str
+    current_stock: int        # 件
+    daily_sales_avg: float    # 件/日
+    lead_time_days: int       # 补货提前期（天）
+    moq: int                  # 最小起订量
+    unit_cost: float          # 元/件
+
+
+@dataclass
+class AgentResult:
+    agent: str
+    status: str               # &quot;ok&quot; | &quot;warning&quot; | &quot;error&quot;
+    data: dict[str, Any]
+    message: str = &quot;&quot;
+
+
+@dataclass
+class HITLGate:
+    &quot;&quot;&quot;人工监督门控记录&quot;&quot;&quot;
+    gate_id: str
+    agent: str
+    decision_summary: str
+    approved: bool = False
+    approver: str = &quot;&quot;
+
+
+# ── 6 个专业化 Agent ─────────────────────────────────────────────────────────
+
+class DemandForecastingAgent:
+    &quot;&quot;&quot;需求预测 Agent — 基于移动平均 + 季节因子（生产环境可替换为 TFT/Prophet）&quot;&quot;&quot;
+
+    def run(self, sku: SKU, horizon_days: int = 30, seasonality: float = 1.0) -&gt; AgentResult:
+        forecast_daily = sku.daily_sales_avg * seasonality
+        forecast_total = round(forecast_daily * horizon_days)
+        ci_lower = round(forecast_total * 0.8)
+        ci_upper = round(forecast_total * 1.25)
+        return AgentResult(
+            agent=&quot;DemandForecasting&quot;,
+            status=&quot;ok&quot;,
+            data={
+                &quot;horizon_days&quot;: horizon_days,
+                &quot;forecast_total&quot;: forecast_total,
+                &quot;ci_lower&quot;: ci_lower,</code></pre>
     <h2>8. 论文来源</h2><ul><li>2307.03595</li><li>2310.17168</li><li>2604.05987</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Flowr-Supply-Chain-MAS" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-Multi-Echelon-Inventory.html'>Skill-Multi-Echelon-Inventory</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><a href='../skills/Skill-Skill-Registry-Dynamic-Loading.html'>Skill-Skill-Registry-Dynamic-Loading</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

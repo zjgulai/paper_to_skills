@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Traffic-Source-Analysis</nav>
 <h1>电商流量来源全维度分析 - 设备/浏览器/来源的转化率诊断</h1>
-<p class="muted">Skill-Traffic-Source-Analysis · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-Traffic-Source-Analysis · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 10 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：桑基图流量来源质量分层</p>
+    <p>同样的流量，为何不同渠道/设备/浏览器的转化率差异如此悬殊？</p>
     <h2>2. 核心算法逻辑</h2>
     <p>论文对电商平台进行全维度交叉分析，系统回答一个核心问题：同样的流量，为何不同渠道/设备/浏览器的转化率差异如此悬殊？</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>TikTok 流量 CVR 仅 0.68%，比 Google Ads 低 4.5×，直接指导预算重分配</li><li>Referral 渠道高退出率（72%）说明引荐页内容与落地页严重不匹配，优先修复</li><li>桑基图每个来源节点从&quot;灰色&quot;变为&quot;有颜色的质量标注&quot;，运营决策速度提升 3×</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：母婴独立站每天有来自 Google Ads / Facebook / TikTok / Direct / Referral 的流量。桑基图展示各来源→落地页→结账的流量流转，但每个来源分支只有流量数，没有质量分。需要为每个来源节点标注&quot;流量质量综合分&quot;，让运营一眼看出哪个渠道的钱花得值。</p><p>| 字段 | 类型 | 示例 | |------|------|------| | `session_id` | string | `&quot;sess_20260101_u001&quot;` | | `traffic_source` | string | `&quot;google_cpc&quot;/&quot;facebook_paid&quot;/&quot;tiktok_paid&quot;/&quot;direct&quot;/&quot;referral&quot;/&quot;email&quot;/&quot;organic&quot;` | | `device_type` | string | `&quot;mobile&quot;/&quot;desktop&quot;/&quot;tablet&quot;` | | `browser` | string | `&quot;chrome&quot;/&quot;s</p><p>预期产出：流量来源质量分层表 + 桑基图 JSON 增强版</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>10 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Traffic Source Analysis — 电商流量来源全维度转化诊断
+arXiv:2403.16115 &quot;From Clicks to Conversions&quot;
+
+功能：
+  1. 数据清洗与来源标准化
+  2. 设备/浏览器/来源/漏斗四维交叉分析
+  3. 流量质量综合评分（CVR + ExitRate + AvgDuration）
+  4. 异常来源检测（Z-score）
+  5. 移动端 vs 桌面端对比诊断
+  6. 输出桑基图 JSON（含质量分着色）
+
+依赖: pip install pandas numpy scipy
+&quot;&quot;&quot;
+
+import json
+import warnings
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
+import pandas as pd
+from scipy import stats
+
+warnings.filterwarnings(&quot;ignore&quot;)
+
+
+# ─────────────────────────────────────────────
+# 1. 流量来源标准分类
+# ─────────────────────────────────────────────
+
+SOURCE_CATEGORIES = {
+    # Paid
+    &quot;google_cpc&quot;: &quot;paid_search&quot;,
+    &quot;google_shopping&quot;: &quot;paid_search&quot;,
+    &quot;bing_cpc&quot;: &quot;paid_search&quot;,
+    &quot;facebook_paid&quot;: &quot;paid_social&quot;,
+    &quot;instagram_paid&quot;: &quot;paid_social&quot;,
+    &quot;tiktok_paid&quot;: &quot;paid_social&quot;,
+    &quot;pinterest_paid&quot;: &quot;paid_social&quot;,
+    # Organic
+    &quot;google_organic&quot;: &quot;organic_search&quot;,
+    &quot;bing_organic&quot;: &quot;organic_search&quot;,
+    # Social Organic
+    &quot;facebook_organic&quot;: &quot;organic_social&quot;,
+    &quot;instagram_organic&quot;: &quot;organic_social&quot;,
+    &quot;tiktok_organic&quot;: &quot;organic_social&quot;,
+    &quot;pinterest_organic&quot;: &quot;organic_social&quot;,
+    # Direct
+    &quot;direct&quot;: &quot;direct&quot;,
+    # Email
+    &quot;email&quot;: &quot;email&quot;,
+    &quot;klaviyo&quot;: &quot;email&quot;,
+    # Referral / Affiliate
+    &quot;referral&quot;: &quot;referral&quot;,
+    &quot;affiliate&quot;: &quot;affiliate&quot;,
+    &quot;blog_referral&quot;: &quot;referral&quot;,
+}
+
+DEVICE_CATEGORIES = {&quot;mobile&quot;, &quot;tablet&quot;, &quot;desktop&quot;}
+</code></pre>
     <h2>8. 论文来源</h2><ul><li>2403.16115</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Traffic-Source-Analysis" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-NonItem-Page-Path-Modeling.html'>Skill-NonItem-Page-Path-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-STAMImputer-SpatioTemporal.html'>Skill-STAMImputer-SpatioTemporal</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li><li><span class='muted'>相关技能</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-NonItem-Page-Path-Modeling.html'>Skill-NonItem-Page-Path-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-STAMImputer-SpatioTemporal.html'>Skill-STAMImputer-SpatioTemporal</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><span class='muted'>相关技能</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-STAMImputer-SpatioTemporal.html'>Skill-STAMImputer-SpatioTemporal</a></li><li><a href='../skills/Skill-Sparse-Matrix-Completion.html'>Skill-Sparse-Matrix-Completion</a></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

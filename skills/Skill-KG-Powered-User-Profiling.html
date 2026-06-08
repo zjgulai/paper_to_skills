@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-KG-Powered-User-Profiling</nav>
 <h1>KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐</h1>
-<p class="muted">Skill-KG-Powered-User-Profiling · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-KG-Powered-User-Profiling · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 跨品类推荐 CTR 提升 18%，用户 LTV 增加，冷启动转化率提升</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景 1：跨品类母婴推荐（有机认证标签传播）</p>
+    <p>KG-Powered User Profiling</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统协同过滤仅依赖 useritem 矩阵，缺乏对产品语义的理解，导致跨品类推荐能力弱。KGPowered User Profiling 通过异构图融合将产品知识图谱（属性/认证/成分/适用年龄段）与用户行为图（购买/浏览/评价）结合，构建知识增强的用户偏好向量。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：用户历史购买了有机奶粉，如何推荐有机辅食/有机婴儿护肤？</p><p>效果：跨越奶粉→辅食→婴儿护肤的品类边界，CTR 提升 18%，用户 LTV 增加。</p><p>业务背景：WF-D 选品阶段，发现用户购买了竞品 X 但未购买我方同类产品，通过 KG 分析竞品属性关联，找到用户未购买但知识关联强的品类。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**跨域**：Skill-User-Funnel-Analysis</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+KG-Powered User Profiling — 知识图谱驱动的用户画像
+Python 标准库实现，无第三方依赖
+&quot;&quot;&quot;
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional
+import math
+import heapq
+
+
+# ─────────────────────────────────────────────
+# 数据结构
+# ─────────────────────────────────────────────
+
+@dataclass
+class ProductKGNode:
+    &quot;&quot;&quot;产品知识图谱节点&quot;&quot;&quot;
+    product_id: str
+    name: str
+    category: str                          # 一级品类，如 &quot;奶粉&quot;
+    sub_category: str = &quot;&quot;                 # 二级品类，如 &quot;有机奶粉&quot;
+    attributes: dict[str, str] = field(default_factory=dict)       # 如 {&quot;成分&quot;: &quot;DHA&quot;, &quot;适用月龄&quot;: &quot;0-6&quot;}
+    certifications: list[str] = field(default_factory=list)        # 如 [&quot;EU有机认证&quot;, &quot;FDA认证&quot;]
+    tags: list[str] = field(default_factory=list)                   # 如 [&quot;有机&quot;, &quot;益生菌&quot;]
+    price_tier: str = &quot;mid&quot;                # low/mid/high
+
+
+@dataclass
+class UserAction:
+    &quot;&quot;&quot;用户行为记录&quot;&quot;&quot;
+    user_id: str
+    product_id: str
+    action_type: str      # purchase/view/review
+    timestamp: float      # Unix timestamp
+    score: float = 1.0    # 评分（review时有效）
+
+
+# ─────────────────────────────────────────────
+# 用户 KG 画像构建器
+# ─────────────────────────────────────────────
+
+class UserKGProfiler:
+    &quot;&quot;&quot;从行为历史推断用户知识偏好向量&quot;&quot;&quot;
+
+    # 行为类型基础权重
+    ACTION_WEIGHTS = {
+        &quot;purchase&quot;: 3.0,
+        &quot;review&quot;: 2.0,
+        &quot;view&quot;: 0.5,
+    }
+
+    def __init__(
+        self,
+        kg_nodes: list[ProductKGNode],
+        decay_factor: float = 0.9,
+        max_age_days: float = 180.0,
+    ):
+        &quot;&quot;&quot;
+        Args:</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-KG-Powered-User-Profiling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-HGT-Heterogeneous-Graph-Transformer.html'>Skill-HGT-Heterogeneous-Graph-Transformer</a></li><li><a href='../skills/Skill-KG-Augmented-Recommendation-CoLaKG.html'>Skill-KG-Augmented-Recommendation-CoLaKG</a></li><li><a href='../skills/Skill-User-Profile-Long-Memory.html'>Skill-User-Profile-Long-Memory</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-CausalRAG-Causal-Graph-Retrieval.html'>Skill-CausalRAG-Causal-Graph-Retrieval</a></li><li><a href='../skills/Skill-Hierarchical-Product-KG-Construction.html'>Skill-Hierarchical-Product-KG-Construction</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li><li><a href='../skills/Skill-Personalized-Promotion-Targeting.html'>Skill-Personalized-Promotion-Targeting</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

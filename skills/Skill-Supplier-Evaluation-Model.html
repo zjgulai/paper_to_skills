@@ -9,45 +9,88 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-Supplier-Evaluation-Model</nav>
 <h1>Supplier Evaluation Model（供应商评估模型）</h1>
-<p class="muted">Skill-Supplier-Evaluation-Model · 06-增长模型 · status=unknown</p>
+<p class="muted">Skill-Supplier-Evaluation-Model · 06-增长模型</p>
 <div class="tag-row"><span class='tag'>pricing</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 15-25 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>3 个吸奶器 OEM 供应商评估：厂商 A（质量高但价高交期长）、厂商 B（性价比最优）、厂商 C（价格最低但质量风险）。TOPSIS 综合评分：B  A  C。选择厂商 B 作为主供应商，厂商 A 作为高端线备选。</p>
+    <p>多准则决策（MCDM）——TOPSIS 方法评估供应商。综合质量、价格、交期、合规、沟通五个维度。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>多准则决策（MCDM）——TOPSIS 方法评估供应商。综合质量、价格、交期、合规、沟通五个维度。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>3 个吸奶器 OEM 供应商评估：厂商 A（质量高但价高交期长）、厂商 B（性价比最优）、厂商 C（价格最低但质量风险）。TOPSIS 综合评分：B &gt; A &gt; C。选择厂商 B 作为主供应商，厂商 A 作为高端线备选。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：避免供应商踩坑（一次失败选品损失 $10-30K）；年化 **15-25 万元**</li><li>**难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐☆☆</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;Supplier Evaluation — TOPSIS&quot;&quot;&quot;
+
+import numpy as np
+
+def topsis(matrix: np.ndarray, weights: np.ndarray, benefits: list):
+    &quot;&quot;&quot;benefits: True=越高越好, False=越低越好&quot;&quot;&quot;
+    norm = matrix / np.sqrt((matrix**2).sum(axis=0))
+    weighted = norm * weights
+    ideal = np.array([weighted[:,i].max() if b else weighted[:,i].min() for i,b in enumerate(benefits)])
+    anti_ideal = np.array([weighted[:,i].min() if b else weighted[:,i].max() for i,b in enumerate(benefits)])
+    d_pos = np.sqrt(((weighted - ideal)**2).sum(axis=1))
+    d_neg = np.sqrt(((weighted - anti_ideal)**2).sum(axis=1))
+    return d_neg / (d_pos + d_neg)
+
+# test: 3 suppliers × 5 criteria (quality,price,lead_time,compliance,communication)
+m = np.array([[85, 120, 30, 90, 80], [75, 100, 20, 85, 70], [65, 85, 15, 70, 60]])
+# higher better for quality, compliance, comm; lower for price, lead_time
+scores = topsis(m, [0.30,0.25,0.15,0.20,0.10], [True,False,False,True,True])
+for i, s in enumerate(scores):
+    print(f&quot;  Supplier {chr(65+i)}: {s:.3f}&quot;)
+print(f&quot;Best: Supplier {chr(65+np.argmax(scores))}&quot;)
+print(&quot;[✓] Supplier Evaluation 测试通过&quot;)</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Supplier-Evaluation-Model" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Skill-Amazon-ToS-Compliance-Guardrail</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
     <h3>延伸技能</h3><p class='muted'>暂无</p>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Skill-Amazon-ToS-Compliance-Guardrail</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

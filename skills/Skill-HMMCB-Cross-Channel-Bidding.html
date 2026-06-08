@@ -9,45 +9,84 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-HMMCB-Cross-Channel-Bidding</nav>
 <h1>HMMCB — 跨渠道广告竞价 MARL：CPC 约束下最大化总点击（美团真实 A/B）</h1>
-<p class="muted">Skill-HMMCB-Cross-Channel-Bidding · 13-广告分析 · status=stable</p>
+<p class="muted">Skill-HMMCB-Cross-Channel-Bidding · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 500 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：母婴 DTC 品牌三渠道联投</p>
+    <p>Top-level Agent（预算分配）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>HMMCB 的核心洞察：跨渠道广告竞价是一个两层嵌套决策问题——上层决定「把钱分给哪个渠道」，下层决定「每个渠道出多少价」。单一智能体无法同时优化两个时间尺度和约束维度。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>每月广告预算 50 万，需满足整体 CPC ≤ 8 元的广告主约束</li><li>三个渠道竞价节奏不同（Google 实时竞价 &lt; 0.1s、Meta CPM 买量、TikTok 竞价+内容分）</li><li>运营团队手动调预算，每周一次，无法响应促销季/节假日的流量峰谷</li><li>各渠道历史出价记录、曝光量、点击量、成本（≥ 3 个月）</li><li>渠道级别的 CPC、CTR、转化率时序数据（按小时/天）</li><li>广告主设定的预算上限和 CPC 约束参数</li><li>同预算下总点击量提升 15–25%</li><li>CPC 严格满足 ≤ 8 元约束（相比手动调整偶发超标）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>母婴 DTC 品牌（如储奶袋/吸奶器）同时在 Google Ads（搜索意图强）、Meta（品牌认知+再营销）、TikTok Shop（内容种草+购买）三个渠道投放。 - 每月广告预算 50 万，需满足整体 CPC ≤ 8 元的广告主约束 - 三个渠道竞价节奏不同（Google 实时竞价 &lt; 0.1s、Meta CPM 买量、TikTok 竞价+内容分） - 运营团队手动调预算，每周一次，无法响应促销季/节假日的流量峰谷</p><p>数据要求 - 各渠道历史出价记录、曝光量、点击量、成本（≥ 3 个月） - 渠道级别的 CPC、CTR、转化率时序数据（按小时/天） - 广告主设定的预算上限和 CPC 约束参数</p><p>HMMCB 运作方式 1. Top-level：每日/每小时根据三渠道实时状态和 CPC 约束，扩散模型生成最优预算分配 $[b_G, b_M, b_T]$ 2. Bottom-level：三个独立渠道智能体，在分配预算约束下实时竞价（Google 调整 tCPC / Meta 调整出价上限 / TikTok 调整竞价系数） 3. 约束保证：Top-level 的条件扩散采样天然保证 $\sum_i b_i \cdot \text{CPC}_i \leq \text{Budget}_{\text{total}} \cdot \text{CPC}_{\text{target}}$</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>CPC 降低：**10–20%**（同渠道出价更精准）</li><li>同预算总点击提升：**15–25%**（预算分配优化）</li><li>母婴 DTC 品牌年广告投入 500 万，优化增效约 **75–125 万/年**</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code># 快速使用示例
+from hmmcb_cross_channel.model import HMMCBSystem, ChannelState
+
+# 初始化三渠道系统
+channels = [
+    ChannelState(&quot;google&quot;, budget_remaining=200000, cpc_target=8.0,
+                 historical_ctr=0.045, bid_history=[6.5, 7.0, 7.2]),
+    ChannelState(&quot;meta&quot;,   budget_remaining=180000, cpc_target=8.0,
+                 historical_ctr=0.028, bid_history=[5.0, 5.5, 6.0]),
+    ChannelState(&quot;tiktok&quot;, budget_remaining=120000, cpc_target=8.0,
+                 historical_ctr=0.015, bid_history=[]),  # 新渠道，无历史
+]
+
+system = HMMCBSystem(channels, total_budget=500000, global_cpc_target=8.0)
+results = system.run_bidding_cycle(steps=10)
+
+# 验证：CPC 约束满足 + TikTok 迁移效果 + 总点击超过均匀基线
+system.validate_results(results)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2412.19064</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-HMMCB-Cross-Channel-Bidding" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>AIGP-LLM-Dynamic-Pricing]] — 定价与竞价联动</span></li><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Multi-Agent-Debate.html'>Skill-Multi-Agent-Debate</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

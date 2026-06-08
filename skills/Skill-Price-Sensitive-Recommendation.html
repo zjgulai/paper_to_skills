@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Price-Sensitive-Recommendation</nav>
 <h1>Price-Sensitive Recommendation — 价格感知推荐：弹性感知的个性化定价与排序融合</h1>
-<p class="muted">Skill-Price-Sensitive-Recommendation · 05-推荐系统 · status=stable</p>
+<p class="muted">Skill-Price-Sensitive-Recommendation · 05-推荐系统</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：Amazon 母婴大促期间的价格感知个性化推送</p>
+    <p>Price-Sensitive Recommendation</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统推荐系统只关注用户与商品的&quot;相关性&quot;，完全忽视价格因素；而传统定价系统只优化利润或销量，不考虑用户个性化偏好。PriceSensitive Recommendation 的核心思想是将个体价格弹性注入推荐排序决策：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><ul><li>`final_score`：价格效用 + MF 锚定 + 促销增益的综合分</li><li>`segment_label`：用户弹性分层（`low/medium/high_elastic`），可用于前端展示逻辑差异化</li></ul>
-    <h2>5. 业务场景</h2><ul><li>价格效用变化：无价格刺激，相关性分数主导</li><li>预计转化率：原本就会买 → 保留全价利润</li><li>消毒器 + 消毒液套装推荐（用折扣品带动高利润附属品）</li><li>预计连带购买率：+23%</li><li>推送时机：折扣上线后立即触达</li><li>价格感知增益 Δ_ui 最大（β_ui &gt; 1.5）</li><li>预计新增转化（原本不会购买）：+35%</li><li>来源流量：Google Ads（品牌词搜索）→ 低弹性信号</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：Prime Day / Black Friday 母婴类目促销期间，某品牌对婴儿消毒器打折30%（$59.99→$41.99）。但促销推送策略是&quot;给所有收藏过该商品的用户群发&quot;，导致原本会全价购买的用户（低弹性）也被打折吸引，削减利润；而真正需要折扣激励才会购买的用户（高弹性）反而没被精准触达。</p><p>Price-Sensitive Recommendation 应用：</p><p>业务背景：AIM DTC 独立站（婴儿消毒设备）同时销售$49（基础款）、$79（升级款）、$129（旗舰款）三个价位产品。当前首页推荐对所有用户展示相同顺序，无法区分价格敏感度不同的访客。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><ul><li>`final_score`：价格效用 + MF 锚定 + 促销增益的综合分</li><li>`segment_label`：用户弹性分层（`low/medium/high_elastic`），可用于前端展示逻辑差异化</li></ul>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Price-Sensitive Recommendation: 价格感知个性化推荐
+整合 MF 相关分 + 用户价格弹性估计 + 价格效用函数 + IPW 去偏
+完全使用 mock 数据，无需真实 API
+&quot;&quot;&quot;
+
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+
+
+# ── 数据结构 ──────────────────────────────────────────────────────────────────
+
+@dataclass
+class PriceHistory:
+    &quot;&quot;&quot;商品历史价格数据&quot;&quot;&quot;
+    product_id: str
+    prices: List[float]              # 历史价格序列
+    sales_volumes: List[float]       # 对应销量
+    reference_price: float = 0.0    # 参考价（类目均价）
+
+    def __post_init__(self):
+        if self.reference_price == 0.0 and self.prices:
+            self.reference_price = float(np.mean(self.prices))
+
+
+@dataclass
+class PricedProduct:
+    &quot;&quot;&quot;带价格信息的商品&quot;&quot;&quot;
+    product_id: str
+    name: str
+    current_price: float
+    original_price: float       # 原价（促销时 &lt; original_price）
+    category: str
+    reference_price: float = 0.0
+
+    @property
+    def is_on_sale(self) -&gt; bool:
+        return self.current_price &lt; self.original_price * 0.97
+
+    @property
+    def discount_rate(self) -&gt; float:
+        if self.original_price &lt;= 0:
+            return 0.0
+        return max(0.0, 1.0 - self.current_price / self.original_price)
+
+
+@dataclass
+class UserPriceProfile:
+    &quot;&quot;&quot;用户价格弹性画像&quot;&quot;&quot;
+    user_id: str
+    global_beta: float = 1.0         # 全局价格敏感系数 β_u
+    category_betas: Dict[str, float] = field(default_factory=dict)
+    purchase_price_history: List[float] = field(default_factory=list)  # 历史购买价格
+
+    def get_beta(self, category: str) -&gt; float:
+        &quot;&quot;&quot;获取特定品类的价格弹性&quot;&quot;&quot;
+        return self.category_betas.get(category, self.global_beta)
+
+    def elasticity_segment(self) -&gt; str:</code></pre>
     <h2>8. 论文来源</h2><ul><li>2403.07571</li><li>2408.11589</li><li>2501.09223</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Price-Sensitive-Recommendation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>Dynamic-Pricing-Elasticity]]</span></li><li><span class='muted'>Matrix-Factorization]]</span></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Diversity-Reranking-SMMR]]</span></li><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>CAGED-Debiased-Recommendation]]</span></li><li><span class='muted'>Skill-CAGED-Debiased-Recommendation</span></li><li><a href='../skills/Skill-UCB-LDP-Dynamic-Pricing.html'>Skill-UCB-LDP-Dynamic-Pricing</a></li><li><span class='muted'>UCB-LDP-Dynamic-Pricing]]</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

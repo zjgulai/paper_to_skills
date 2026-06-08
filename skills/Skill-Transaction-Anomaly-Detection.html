@@ -9,45 +9,83 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/19-风控反欺诈.html">19-风控反欺诈</a> / Skill-Transaction-Anomaly-Detection</nav>
 <h1>Transaction Anomaly Detection（异常交易检测）</h1>
-<p class="muted">Skill-Transaction-Anomaly-Detection · 19-风控反欺诈 · status=unknown</p>
+<p class="muted">Skill-Transaction-Anomaly-Detection · 19-风控反欺诈</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 3-8 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>同一个 IP（印尼）在 10 分钟内下了 5 单吸奶器，收货地址美国不同州，使用 5 张不同信用卡。$z$score 4.8 → 触发高风险预警，自动 hold 订单等待人工审核。拦截盗刷订单 $5000。</p>
+    <p>Isolation Forest + 动态阈值检测异常交易模式。特征：订单金额、支付方式、IP 国家 vs 收货国家、下单到支付间隔、同一 IP 下单频率、地址变更次数。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>Isolation Forest + 动态阈值检测异常交易模式。特征：订单金额、支付方式、IP 国家 vs 收货国家、下单到支付间隔、同一 IP 下单频率、地址变更次数。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>同一个 IP（印尼）在 10 分钟内下了 5 单吸奶器，收货地址美国不同州，使用 5 张不同信用卡。$z$-score 4.8 → 触发高风险预警，自动 hold 订单等待人工审核。拦截盗刷订单 $5000。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：3-8 万元 | **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐☆☆</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>import numpy as np
+from sklearn.ensemble import IsolationForest
+
+def transaction_anomaly_score(features, window_history):
+    &quot;&quot;&quot;z-score anomaly detection with rolling baseline&quot;&quot;&quot;
+    mu, sigma = window_history.mean(axis=0), window_history.std(axis=0) + 1e-6
+    z_scores = np.abs((features - mu) / sigma)
+    max_z = z_scores.max(axis=1)
+    return {&#x27;z_scores&#x27;: max_z, &#x27;high_risk&#x27;: max_z &gt; 3.5}
+
+# test
+hist = np.random.randn(500, 6) * 0.5
+curr = np.array([[3.0, 4.2, -2.8, 3.5, 0.1, 4.5]])  # anomalous
+r = transaction_anomaly_score(curr, hist)
+print(f&quot;z-score: {r[&#x27;z_scores&#x27;][0]:.1f}, high_risk: {r[&#x27;high_risk&#x27;][0]}&quot;)
+assert r[&#x27;high_risk&#x27;][0]
+print(&quot;[✓] Transaction Anomaly 测试通过&quot;)</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Transaction-Anomaly-Detection" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Click-Fraud-Detection.html'>Skill-Click-Fraud-Detection</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-FraudSquad-LLM-Review-Detection.html'>Skill-FraudSquad-LLM-Review-Detection</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Review-Fraud-Detection.html'>Skill-Review-Fraud-Detection</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
     <h3>延伸技能</h3><p class='muted'>暂无</p>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Click-Fraud-Detection.html'>Skill-Click-Fraud-Detection</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-FraudSquad-LLM-Review-Detection.html'>Skill-FraudSquad-LLM-Review-Detection</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Review-Fraud-Detection.html'>Skill-Review-Fraud-Detection</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

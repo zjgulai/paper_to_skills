@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Amazon-ToS-Compliance-Guardrail</nav>
 <h1>Amazon ToS Compliance Guardrail（亚马逊合规护栏）</h1>
-<p class="muted">Skill-Amazon-ToS-Compliance-Guardrail · 13-广告分析 · status=unknown</p>
+<p class="muted">Skill-Amazon-ToS-Compliance-Guardrail · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 5-10 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：吸奶器 Listing 文案自动合规审查</p>
+    <p>SAFE-AGENT-L 三层架构</p>
     <h2>2. 核心算法逻辑</h2>
     <p>LLM 在生成商品文案、广告文案、客服回复时可能无意间违反平台规则（医疗声明、安全认证、受限品类）。Compliance Guardrail 在 LLM 输出端建立三层过滤——从确定性规则匹配到风险评分到人工升级——确保所有面向亚马逊的内容合规。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>Amazon ToS 结构化规则库：医疗声明（禁止）、安全认证（需有证才能声明）、对比广告（按辖区不同）</li><li>EVADE-Bench 风格的多规则 prompt 模板</li><li>合规扫描报告：原文案 3 处违规（医疗声明 × 1 / 无证认证声明 × 1 / 保证性用语 × 1）</li><li>自动修正建议：将&quot;clinically proven&quot;替换为&quot;designed for comfort&quot;、&quot;FDA approved&quot;替换为&quot;meets safety standards&quot;</li><li>风险分级：该 listing 综合风险分 0.72 → 强制覆盖（不送人工）</li><li>每次违规 listing 被下架损失 $2,000-5,000（下架期间销量损失 + 恢复时间）</li><li>20 个 SKU × 年均 3 次 listing 更新 = 60 次审查 → 预计拦截 15 次违规</li><li>年化止损 **$30,000-75,000**，加上账号健康分保护的无形价值</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：运营用 ChatGPT 生成吸奶器 listing 文案，但 LLM 可能产出违规声明——&quot;clinically proven to increase milk supply&quot;&quot;FDA approved design&quot;&quot;guaranteed results in 7 days&quot;——这些在 Amazon 上都是红线。</p><p>数据要求： - Amazon ToS 结构化规则库：医疗声明（禁止）、安全认证（需有证才能声明）、对比广告（按辖区不同） - EVADE-Bench 风格的多规则 prompt 模板</p><p>预期产出： - 合规扫描报告：原文案 3 处违规（医疗声明 × 1 / 无证认证声明 × 1 / 保证性用语 × 1） - 自动修正建议：将&quot;clinically proven&quot;替换为&quot;designed for comfort&quot;、&quot;FDA approved&quot;替换为&quot;meets safety standards&quot; - 风险分级：该 listing 综合风险分 0.72 → 强制覆盖（不送人工）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：拦截违规 listing 下架（$2,000-5,000/次 × 15 次/年）+ 账号健康保护；年化止损 **5-10 万美元** + 无形风险规避</li><li>**实施难度**：⭐⭐☆☆☆（2 星）— 基于规则的初版可快速上线，ML 风险分类器需要训练数据</li><li>**优先级评分**：⭐⭐⭐⭐⭐（5 星）— 极高紧迫度（合规），账号安全是业务的底线</li><li>**评估依据**：SAFE-AGENT-L 三层框架直接可落地，EVADE-Bench 提供 26 个 LLM 的电商合规评测基线</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：2</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Amazon ToS Compliance Guardrail — 三层合规过滤器
+基于 SAFE-AGENT-L 框架
+&quot;&quot;&quot;
+
+import re
+from typing import List, Dict, Tuple, Optional
+from dataclasses import dataclass
+
+
+@dataclass
+class ComplianceResult:
+    risk_score: float
+    violations: List[Dict]
+    action: str  # &quot;pass&quot; | &quot;override&quot; | &quot;escalate&quot; | &quot;fallback&quot;
+    safe_text: Optional[str] = None
+
+
+class ToSComplianceGuardrail:
+    &quot;&quot;&quot;亚马逊 ToS 合规护栏&quot;&quot;&quot;
+    
+    # 高危关键词 + 正则规则（母婴品类）
+    FORBIDDEN_PATTERNS = [
+        (r&#x27;(?i)FDA\s*approved&#x27;, &#x27;medical_certification&#x27;, 0.9),
+        (r&#x27;(?i)clinically\s*proven&#x27;, &#x27;medical_claim&#x27;, 0.9),
+        (r&#x27;(?i)guaranteed\s*(result|effect|outcome)&#x27;, &#x27;guarantee_claim&#x27;, 0.85),
+        (r&#x27;(?i)(treat|cure|heal|prevent)\s+\w+\s+(disease|condition)&#x27;, &#x27;medical_treatment&#x27;, 0.95),
+        (r&#x27;(?i)(increase|boost)\s+(milk|breast\s*milk)\s*(supply|production)&#x27;, &#x27;medical_efficacy&#x27;, 0.8),
+        (r&#x27;(?i)safe\s+for\s+(premature|newborn|infant)&#x27;, &#x27;safety_claim&#x27;, 0.85),
+        (r&#x27;(?i)#1\s+(rated|selling|recommended)&#x27;, &#x27;unsubstantiated_ranking&#x27;, 0.7),
+        (r&#x27;(?i)(free|100%|no)\s+(risk|side\s*effect)&#x27;, &#x27;absolute_claim&#x27;, 0.85),
+    ]
+    
+    # 安全替换模板
+    SAFE_TEMPLATES = {
+        &#x27;medical_claim&#x27;: &#x27;[已移除医疗声明] 产品设计注重舒适性和易用性。&#x27;,
+        &#x27;medical_certification&#x27;: &#x27;产品已通过相关安全标准检测。&#x27;,
+        &#x27;medical_efficacy&#x27;: &#x27;产品设计旨在提供舒适的吸乳体验。&#x27;,
+        &#x27;medical_treatment&#x27;: &#x27;[已移除治疗声明] 如有健康问题请咨询医生。&#x27;,
+        &#x27;safety_claim&#x27;: &#x27;产品按照安全标准制造。具体使用请遵循说明书。&#x27;,
+        &#x27;guarantee_claim&#x27;: &#x27;我们致力于提供优质产品和服务。&#x27;,
+        &#x27;absolute_claim&#x27;: &#x27;我们提供满意的客户体验。&#x27;,
+    }
+    
+    def __init__(self, low_risk: float = 0.3, high_risk: float = 0.7):
+        self.low_risk = low_risk
+        self.high_risk = high_risk
+    
+    def scan_text(self, text: str) -&gt; ComplianceResult:
+        &quot;&quot;&quot;
+        扫描文本，返回合规评估结果
+        &quot;&quot;&quot;
+        violations = []
+        max_risk = 0.0
+        override_text = text
+        
+        for pattern, category, base_risk in self.FORBIDDEN_PATTERNS:
+            matches = re.finditer(pattern, text)
+            for match in matches:
+                # 上下文加权：句子越长越可能是复杂声明 → 风险微增</code></pre>
     <h2>8. 论文来源</h2><ul><li>2505.17654</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Amazon-ToS-Compliance-Guardrail" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Skill-DialIn-LLM-Case-Intent-Clustering</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-Negative-Keyword-Safe-Guard.html'>Skill-Negative-Keyword-Safe-Guard</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li><li><span class='muted'>相关</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Skill-DialIn-LLM-Case-Intent-Clustering</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-Negative-Keyword-Safe-Guard.html'>Skill-Negative-Keyword-Safe-Guard</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li><li><span class='muted'>相关</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Skill-DialIn-LLM-Case-Intent-Clustering</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li><li><span class='muted'>相关</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Marketing-Mix-Modeling</nav>
 <h1>Marketing Mix Modeling (MMM) for Macro Budget Allocation</h1>
-<p class="muted">Skill-Marketing-Mix-Modeling · 15-营销投放分析 · status=stable</p>
+<p class="muted">Skill-Marketing-Mix-Modeling · 15-营销投放分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：年度预算重新规划</p>
+    <p>**：品牌每个月在不同渠道（Facebook、Google、TikTok、KOL、线下）投入数百万广告费</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：品牌每个月在不同渠道（Facebook、Google、TikTok、KOL、线下）投入数百万广告费。如何量化每个渠道对销售额的真实增量贡献？如何预测下个月预算调整后的销售表现？</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>Facebook: 240万 → 220万（维持，接近饱和）</li><li>Google: 180万 → 150万（削减，主要是收割效应）</li><li>TikTok: 90万 → 150万（大幅加码，增量空间大）</li><li>KOL合作: 60万 → 80万（加码）</li><li>线下展会: 30万 → 0（砍掉）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：Momcozy 2024年广告总投入600万，分布在：Facebook 240万、Google 180万、TikTok 90万、KOL合作 60万、线下展会 30万。年底复盘发现销售额增长但不知道各渠道真实贡献，2025年预算怎么分配？</p><p>| 渠道 | 2024投入 | MMM估算贡献 | 增量ROAS | 饱和状态 | |------|---------|------------|---------|---------| | Facebook | 240万 | 35% | 2.8 | 接近饱和 | | Google | 180万 | 22% | 2.2 | 已饱和（多为收割） | | TikTok | 90万 | 18% | 3.5 | 远未饱和 | | KOL合作 | 60万 | 15% | 4.0 | 中度饱和 | | 线下展会 | 30万 | 5% | 1.2 | 低效 |</p><p>关键发现： 1. Google的22%贡献中，约60%实际来自Facebook/TikTok的品牌曝光带来的品牌词搜索 2. TikTok虽投入最少，但边际ROAS最高，增量效应最强 3. 线下展会投入产出比低，建议削减</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：预算重新分配后整体销售额提升15-25%，年增收百万级</li><li>**难度**：⭐⭐⭐⭐☆（4/5）— 时间序列处理+贝叶斯推断，概念门槛较高</li><li>**优先级**：⭐⭐⭐⭐⭐（5/5）— 品牌级预算决策的核心工具</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Marketing Mix Modeling (MMM) — 营销组合模型
+支持：Adstock衰减、Hill饱和、Bayesian回归、预算优化
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy.optimize import minimize
+
+
+class AdstockTransformer:
+    &quot;&quot;&quot;Adstock衰减转换&quot;&quot;&quot;
+
+    def __init__(self, decay_rate=0.5):
+        self.decay_rate = decay_rate
+
+    def transform(self, spend_series):
+        &quot;&quot;&quot;对单渠道花费序列做Adstock转换&quot;&quot;&quot;
+        adstock = np.zeros(len(spend_series))
+        adstock[0] = spend_series[0]
+        for t in range(1, len(spend_series)):
+            adstock[t] = spend_series[t] + self.decay_rate * adstock[t-1]
+        return adstock
+
+
+class HillSaturation:
+    &quot;&quot;&quot;Hill饱和函数&quot;&quot;&quot;
+
+    def __init__(self, K=0.5, eta=2.0):
+        self.K = K  # 半饱和点
+        self.eta = eta  # 形状参数
+
+    def transform(self, x):
+        &quot;&quot;&quot;Hill转换&quot;&quot;&quot;
+        return x ** self.eta / (x ** self.eta + self.K ** self.eta)
+
+
+class SimpleMMM:
+    &quot;&quot;&quot;简化版营销组合模型&quot;&quot;&quot;
+
+    def __init__(self):
+        self.coef = {}  # 渠道系数
+        self.adstock_params = {}  # 各渠道衰减率
+        self.hill_params = {}  # 各渠道饱和参数
+        self.base_sales = 0
+        self.seasonality_coef = {}
+
+    def _apply_transforms(self, spend_df, channels):
+        &quot;&quot;&quot;应用Adstock和Hill转换&quot;&quot;&quot;
+        transformed = pd.DataFrame(index=spend_df.index)
+        for ch in channels:
+            # Adstock
+            adstock = AdstockTransformer(
+                decay=self.adstock_params.get(ch, 0.5)
+            ).transform(spend_df[ch].values)
+            # Hill饱和
+            hill = HillSaturation(
+                K=self.hill_params.get(ch, {}).get(&#x27;K&#x27;, spend_df[ch].median()),
+                eta=self.hill_params.get(ch, {}).get(&#x27;eta&#x27;, 2.0)
+            )</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Marketing-Mix-Modeling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Promotion-Effectiveness.html'>Skill-Promotion-Effectiveness</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

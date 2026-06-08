@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/03-时间序列.html">03-时间序列</a> / Skill-EventCast-LLM-Event-Forecasting</nav>
 <h1>EventCast — LLM 事件感知需求预测：大促/节假日场景 MAE-57%</h1>
-<p class="muted">Skill-EventCast-LLM-Event-Forecasting · 03-时间序列 · status=stable</p>
+<p class="muted">Skill-EventCast-LLM-Event-Forecasting · 03-时间序列</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 100 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：618/双11 奶粉大促需求预测</p>
+    <p>核心思想**：传统时序模型（ARIMA、Prophet、TFT）在大促/节假日期间严重失效，原因是</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心思想：传统时序模型（ARIMA、Prophet、TFT）在大促/节假日期间严重失效，原因是分布偏移——大促期的需求量级、峰值形态与日常完全不同，历史模式无法外推。EventCast 的解法是：让 LLM 做语义推理（不做数值预测），将运营事件转化为结构化特征，再喂给专门的预测模型。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>大促期间（活动前 3 天 + 活动中 + 活动后 2 天）逐日需求预测</li><li>P10/P50/P90 预测区间（用于安全库存计算）</li><li>事件贡献度分解（促销提升量 vs 直播提升量 vs 平台流量提升量）</li><li>各节假日期间分市场需求涨幅预测（如&quot;母亲节期间加州吸奶器需求 +180%，德州 +120%&quot;）</li><li>提前 14 天的备货建议量（考虑海运时效）</li><li>节假日事件特征权重（LLM 推理的可解释性输出）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：某母婴品牌618大促备货奶粉 SKU（如 A2 奶粉 900g），需提前 7 天向供应商下 PO。传统 Prophet 模型因无法感知&quot;满 300 减 100 + 直播预告 + 平台流量加持&quot;，备货量误差高达 40%，导致要么断货要么积压。</p><p>数据要求： | 类型 | 字段 | 说明 | |------|------|------| | 历史数值 | daily_sales, price, stock_level | 过去 90 天销量/价格/库存 | | 促销事件 | promo_type, discount_rate, start_date, duration | 内部运营日历 | | 直播事件 | host_name, expected_viewers, time_slot | 直播排期表 | | 平台事件 | platform_flow_bonus, category_rank | Amazon/Tmall 活动数据 |</p><p>预期产出： - 大促期间（活动前 3 天 + 活动中 + 活动后 2 天）逐日需求预测 - P10/P50/P90 预测区间（用于安全库存计算） - 事件贡献度分解（促销提升量 vs 直播提升量 vs 平台流量提升量）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>100 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+EventCast: LLM 事件感知需求预测
+论文: arXiv 2602.07695 | 2026-02
+场景: 618/双11 大促备货 + 跨境节假日需求预测
+&quot;&quot;&quot;
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+import numpy as np
+from datetime import date, timedelta
+from enum import Enum
+
+
+class EventType(Enum):
+    PROMOTION = &quot;promotion&quot;
+    HOLIDAY = &quot;holiday&quot;
+    LIVESTREAM = &quot;livestream&quot;
+    PLATFORM_CAMPAIGN = &quot;platform_campaign&quot;
+
+
+@dataclass
+class BusinessEvent:
+    &quot;&quot;&quot;业务事件（LLM 推理的输入单元）&quot;&quot;&quot;
+    event_type: EventType
+    date: date
+    description: str
+    affected_regions: List[str]
+    expected_lift: float           # 预期需求提升倍数（如 2.5 = 提升 150%）
+    discount_rate: float = 0.0     # 折扣率（0.0-1.0）
+    duration_days: int = 1
+    confidence: float = 0.8        # 预期估计置信度
+
+
+class EventKnowledgeBase:
+    &quot;&quot;&quot;事件知识库：存储和查询促销/节假日事件&quot;&quot;&quot;
+
+    def __init__(self):
+        self._events: List[BusinessEvent] = []
+
+    def add_event(self, event: BusinessEvent) -&gt; None:
+        self._events.append(event)
+
+    def query_events(
+        self,
+        start_date: date,
+        end_date: date,
+        regions: Optional[List[str]] = None,
+        event_types: Optional[List[EventType]] = None,
+    ) -&gt; List[BusinessEvent]:
+        &quot;&quot;&quot;查询指定日期范围和地区的事件&quot;&quot;&quot;
+        results = []
+        for evt in self._events:
+            evt_end = evt.date + timedelta(days=evt.duration_days - 1)
+            if not (evt.date &lt;= end_date and evt_end &gt;= start_date):
+                continue
+            if regions and not any(r in evt.affected_regions for r in regions):
+                continue
+            if event_types and evt.event_type not in event_types:
+                continue
+            results.append(evt)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2602.07695</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-EventCast-LLM-Event-Forecasting" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-Agentic-Workflow-Compilation.html'>Skill-Agentic-Workflow-Compilation</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html'>Skill-Bass-Diffusion-New-Product-Forecasting</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html'>Skill-Hierarchical-Demand-Forecasting-Reconciliation</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Prophet-Forecasting.html'>Skill-Prophet-Forecasting</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><a href='../skills/Skill-Time-Series-Forecasting.html'>Skill-Time-Series-Forecasting</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>延伸</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-Agentic-Workflow-Compilation.html'>Skill-Agentic-Workflow-Compilation</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html'>Skill-Bass-Diffusion-New-Product-Forecasting</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>关联</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-Agentic-Workflow-Compilation.html'>Skill-Agentic-Workflow-Compilation</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html'>Skill-Bass-Diffusion-New-Product-Forecasting</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

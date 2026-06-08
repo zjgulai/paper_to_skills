@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Hierarchical-Search-Intent-Classification</nav>
 <h1>电商搜索层次化意图分类 - 母婴跨境广告自动词分类</h1>
-<p class="muted">Skill-Hierarchical-Search-Intent-Classification · 13-广告分析 · status=stable</p>
+<p class="muted">Skill-Hierarchical-Search-Intent-Classification · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 800-1000 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一:月龄敏感词分类(直接套用层次化意图)</p>
+    <p>自动词拉取质量**&quot;——母婴搜索词意图复杂(月龄敏感/信息查询/购买意图),错分会导致广告全链路失效. 本论文用</p>
     <h2>2. 核心算法逻辑</h2>
     <p>WFB 广告优化的核心是&quot;自动词拉取质量&quot;——母婴搜索词意图复杂(月龄敏感/信息查询/购买意图),错分会导致广告全链路失效. 本论文用两层意图分类:① Label Hierarchy(标签图 GCN + 注意力)让 finegrained 子类感知父类约束;② Instance Hierarchy(对比学习负对)区分同父类不同子类的查询;③ Neighborhoodaware Sampling(自训练)解决少数类(敏感词 0.05%0.</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>**业务问题**:Momcozy 跑 Amazon SP 广告时,自动词包含 &quot;baby bottle 0-3 months&quot; 和 &quot;baby bottle 4-6 months&quot;,传统分类器混淆为同一 aspect,导致**0-3 月广告投到 4-6 月用户**(月龄不匹配 → CTR 高但转化率极低,ACOS 飙到 60%+)</li><li>**数据要求**:历史搜索词 + 转化标签 + 月龄标注(可借 Amazon ESCI 数据训练 + 母婴垂类微调)</li><li>**层次配置**:</li><li>对比学习:同 Feeding 父类的 0-3M / 4-6M 互为强负对,模型自动学到月龄边界</li><li>**业务价值**:</li><li>月龄错配广告降低 70-80% → CTR 不变但转化率 +25-40%</li><li>ACOS 从 60% 降至 25-30% (健康值) = 月广告预算 200 万 × 35% 效率提升 = **70 万/月**</li><li>年化:**800-1000 万元**</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>- 业务问题:Momcozy 跑 Amazon SP 广告时,自动词包含 &quot;baby bottle 0-3 months&quot; 和 &quot;baby bottle 4-6 months&quot;,传统分类器混淆为同一 aspect,导致0-3 月广告投到 4-6 月用户(月龄不匹配 → CTR 高但转化率极低,ACOS 飙到 60%+) - 数据要求:历史搜索词 + 转化标签 + 月龄标注(可借 Amazon ESCI 数据训练 + 母婴垂类微调) - 层次配置: - 对比学习:同 Feeding 父类的 0-3M / 4-6M 互为强负对,模型自动学到月龄边界 - 业务价值: - 月龄错配广告降低 70-80</p><p>- 业务问题:Momcozy 不区分 &quot;when to introduce solid food&quot; (信息查询,低购买意图) 和 &quot;buy Hipp organic stage 1&quot; (购买意图),前者烧广告费但不转化. 母婴用户决策周期长,信息查询占 60-70% - 数据要求:同上 + 意图分类标注 - 层次配置: - 对 Informational 查询触发科普内容广告(低 CPC,品牌曝光) - 对 Transactional 查询触发品牌关键词竞价(高 bid,直接转化) - 业务价值: - ROAS 提升 3-10%(论文 implied 范围) - 信息查询低 CPC 广告反哺品</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>易处:Amazon ESCI 数据集 130K 查询 + 260 万标注对**完全公开**</li><li>易处:bert-base / esci-products-v3 可作骨干模型</li><li>难处:**Amazon 论文未开源**,Label Hierarchy GCN + 对比学习需自行实现</li><li>难处:母婴垂类标签树需业务专家初始化</li><li>难处:Neighborhood-aware Sampling 需大量无标注查询</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+层次化电商搜索意图分类 - 母婴出海版骨架
+论文 arXiv:2403.06021 (Amazon, WWW 2024)
+Amazon ESCI 数据集开源: github.com/amazon-science/esci-data
+依赖: pip install torch transformers
+&quot;&quot;&quot;
+from __future__ import annotations
+from typing import Dict, List, Tuple
+
+
+LABEL_TREE = {
+    &quot;informational&quot;: [&quot;how_to&quot;, &quot;comparison&quot;, &quot;safety_concern&quot;],
+    &quot;transactional&quot;: [&quot;specific_product&quot;, &quot;browse_category&quot;],
+    &quot;age_specific&quot;: [&quot;0_3m&quot;, &quot;4_6m&quot;, &quot;7_12m&quot;, &quot;1_3y&quot;],
+}
+ALL_CHILDREN: List[str] = [c for children in LABEL_TREE.values() for c in children]
+CHILD2PARENT: Dict[str, str] = {c: p for p, children in LABEL_TREE.items() for c in children}
+
+
+def rule_based_classify(query: str) -&gt; Tuple[str, str]:
+    &quot;&quot;&quot;规则版分类器(生产替换为 BERT + Label Hierarchy GCN)&quot;&quot;&quot;
+    q = query.lower()
+
+    if any(kw in q for kw in [&quot;newborn&quot;, &quot;0-3 month&quot;, &quot;0 to 3 month&quot;]):
+        child = &quot;0_3m&quot;
+    elif any(kw in q for kw in [&quot;4-6 month&quot;, &quot;stage 1&quot;, &quot;first solid&quot;]):
+        child = &quot;4_6m&quot;
+    elif any(kw in q for kw in [&quot;7-12 month&quot;, &quot;stage 2&quot;]):
+        child = &quot;7_12m&quot;
+    elif any(kw in q for kw in [&quot;1-3 year&quot;, &quot;toddler&quot;, &quot;stage 3&quot;]):
+        child = &quot;1_3y&quot;
+    elif any(kw in q for kw in [&quot;how to&quot;, &quot;when to&quot;, &quot;how long&quot;]):
+        child = &quot;how_to&quot;
+    elif any(kw in q for kw in [&quot;vs&quot;, &quot;versus&quot;, &quot;compare&quot;]):
+        child = &quot;comparison&quot;
+    elif any(kw in q for kw in [&quot;safe&quot;, &quot;safety&quot;, &quot;allergic&quot;]):
+        child = &quot;safety_concern&quot;
+    elif any(kw in q for kw in [&quot;buy &quot;, &quot;purchase &quot;, &quot;order &quot;]):
+        child = &quot;specific_product&quot;
+    else:
+        child = &quot;browse_category&quot;
+
+    parent = CHILD2PARENT[child]
+    return parent, child
+
+
+def hierarchical_loss_components(
+    child_pred_correct: int,
+    parent_pred_correct: int,
+    total_samples: int,
+    lam: float = 1.0,
+) -&gt; Dict:
+    &quot;&quot;&quot;层次分类损失成分(简化版,不用 torch 跑通)&quot;&quot;&quot;
+    child_acc = child_pred_correct / total_samples
+    parent_acc = parent_pred_correct / total_samples
+    loss_child = -child_acc
+    loss_parent = -parent_acc
+    total_loss = loss_child + lam * loss_parent
+    return {&quot;child_acc&quot;: child_acc, &quot;parent_acc&quot;: parent_acc, &quot;total_loss&quot;: total_loss}
+</code></pre>
     <h2>8. 论文来源</h2><ul><li>2403.06021</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Hierarchical-Search-Intent-Classification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Multilingual-NER-Universal-v2.html'>Skill-Multilingual-NER-Universal-v2</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

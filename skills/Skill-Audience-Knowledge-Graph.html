@@ -9,45 +9,92 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Audience-Knowledge-Graph</nav>
 <h1>Audience Knowledge Graph（广告受众知识图谱）</h1>
-<p class="muted">Skill-Audience-Knowledge-Graph · 08-知识图谱 · status=unknown</p>
+<p class="muted">Skill-Audience-Knowledge-Graph · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 20-35 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>种子受众：过去 90 天买过 S1 吸奶器的 5000 人。KG 扩展后找到 12000 人（+140%），其中精准匹配（购买过互补品+同类浏览）8000 人，模糊扩展 4000 人。FB Lookalike 基于扩展受众的 ROAS 从 2.1 提升到 3.4。</p>
+    <p>用知识图谱技术构建广告受众画像图——不是简单的标签列表，而是实体关系图：用户→购买→产品→属于→品类→适合→年龄段。基于 KG 的受众定向比关键词匹配精准 35 倍。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>用知识图谱技术构建广告受众画像图——不是简单的标签列表，而是实体关系图：用户→购买→产品→属于→品类→适合→年龄段。基于 KG 的受众定向比关键词匹配精准 35 倍。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>种子受众：过去 90 天买过 S1 吸奶器的 5000 人。KG 扩展后找到 12000 人（+140%），其中精准匹配（购买过互补品+同类浏览）8000 人，模糊扩展 4000 人。FB Lookalike 基于扩展受众的 ROAS 从 2.1 提升到 3.4。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：20-35 万元 | **难度**：⭐⭐⭐☆☆ | **优先级**：⭐⭐⭐☆☆</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;Audience KG — 图扩展受众&quot;&quot;&quot;
+
+from collections import deque
+
+def kg_audience_expand(seed_users, kg_edges, max_hops=2, min_weight=0.5):
+    &quot;&quot;&quot;kg_edges: {(entity1,entity2): weight}&quot;&quot;&quot;
+    expanded = set()
+    queue = deque([(u, 0) for u in seed_users])
+    visited = set()
+    while queue:
+        node, hops = queue.popleft()
+        if hops &gt; max_hops or node in visited:
+            continue
+        visited.add(node)
+        expanded.add(node)
+        for (src, dst), w in kg_edges.items():
+            if src == node and w &gt;= min_weight and dst not in visited:
+                queue.append((dst, hops+1))
+    return {&#x27;expanded&#x27;: len(expanded), &#x27;lift&#x27;: len(expanded)/len(seed_users)}
+
+# test
+seed = set(range(5000))
+edges = {(i, i+2000): 0.7 for i in range(10000)} 
+r = kg_audience_expand(seed, edges)
+print(f&quot;扩展因子: {r[&#x27;lift&#x27;]:.1f}x&quot;)
+print(&quot;[✓] Audience KG 测试通过&quot;)</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Audience-Knowledge-Graph" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-CABB-Cross-Category-Attribution.html'>Skill-CABB-Cross-Category-Attribution</a></li><li><span class='muted'>Skill-CoLaKG-KG-Augmented-Recommendation</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-GNN-Foundations.html'>Skill-GNN-Foundations</a></li><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-Hierarchical-Product-KG-Construction.html'>Skill-Hierarchical-Product-KG-Construction</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
     <h3>延伸技能</h3><p class='muted'>暂无</p>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-CABB-Cross-Category-Attribution.html'>Skill-CABB-Cross-Category-Attribution</a></li><li><span class='muted'>Skill-CoLaKG-KG-Augmented-Recommendation</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-GNN-Foundations.html'>Skill-GNN-Foundations</a></li><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

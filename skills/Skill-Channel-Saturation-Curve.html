@@ -9,45 +9,108 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Channel-Saturation-Curve</nav>
 <h1>Channel Saturation Curve（渠道饱和曲线建模）</h1>
-<p class="muted">Skill-Channel-Saturation-Curve · 15-营销投放分析 · status=unknown</p>
+<p class="muted">Skill-Channel-Saturation-Curve · 15-营销投放分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 18-25 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：Facebook 吸奶器广告的饱和点判断</p>
+    <p>广告预算不是线性回报——每多投 $1，边际回报递减。渠道饱和曲线量化&quot;这个渠道再投多少钱就没增量了&quot;，避免过度投放。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>广告预算不是线性回报——每多投 $1，边际回报递减。渠道饱和曲线量化&quot;这个渠道再投多少钱就没增量了&quot;，避免过度投放。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>拟合 Hill 曲线：$\beta=4.2, K=6.2\text{万}, \alpha=1.8$</li><li>半饱和点 $62,000/月，边际回报 &lt;1 的临界点 $85,000/月</li><li>**建议**：FB 月预算上限 $75,000-$80,000，超出部分分配给 TikTok</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：Facebook 月预算从 $5 万加到 $8 万后，ROAS 从 3.2 掉到 2.1。继续加到 $10 万 ROI 可能变负。需要找到饱和点。</p><p>数据要求：6 个月不同预算水平下的 ROAS 数据（来自历史 A/B 或渐进加预算实验）</p><p>预期产出： - 拟合 Hill 曲线：$\beta=4.2, K=6.2\text{万}, \alpha=1.8$ - 半饱和点 $62,000/月，边际回报 &lt;1 的临界点 $85,000/月 - 建议：FB 月预算上限 $75,000-$80,000，超出部分分配给 TikTok</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：避免过度投放 $15-20K/月；年化 **18-25 万元**</li><li>**实施难度**：⭐⭐☆☆☆（2 星）— 曲线拟合简单</li><li>**优先级评分**：⭐⭐⭐⭐☆（4 星）— MMM 的自然延伸</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;Channel Saturation Curve — Hill 函数拟合 + 边际分析&quot;&quot;&quot;
+
+import numpy as np
+from scipy.optimize import curve_fit
+
+
+def hill_function(x, beta, K, alpha):
+    &quot;&quot;&quot;Hill 饱和函数&quot;&quot;&quot;
+    return beta * (x**alpha) / (K**alpha + x**alpha)
+
+
+def fit_saturation_curve(spend: np.ndarray, roas: np.ndarray):
+    &quot;&quot;&quot;拟合渠道饱和曲线&quot;&quot;&quot;
+    popt, _ = curve_fit(hill_function, spend, roas, 
+                        p0=[max(roas), np.median(spend), 1.5],
+                        bounds=([0, 0, 0.5], [100, max(spend)*3, 5]))
+    return popt  # (beta, K, alpha)
+
+
+def find_saturation_point(beta, K, alpha, min_roi=1.0):
+    &quot;&quot;&quot;找边际ROI=min_roi的饱和点&quot;&quot;&quot;
+    for x in np.linspace(K*0.1, K*3, 1000):
+        mr = beta * alpha * K**alpha * x**(alpha-1) / (K**alpha + x**alpha)**2
+        if mr &lt; min_roi:
+            return x
+    return K * 2
+
+
+if __name__ == &#x27;__main__&#x27;:
+    np.random.seed(42)
+    # 模拟: beta=4, K=60, alpha=1.8
+    spend = np.array([10, 20, 30, 50, 70, 90, 110, 130]) * 1000
+    true_roas = hill_function(spend, 4.0, 60000, 1.8)
+    roas = true_roas + np.random.normal(0, 0.15, len(spend))
+    
+    beta, K, alpha = fit_saturation_curve(spend, roas)
+    sat_point = find_saturation_point(beta, K, alpha)
+    
+    print(f&quot;Hill: β={beta:.2f}, K=${K:,.0f}, α={alpha:.2f}&quot;)
+    print(f&quot;半饱和点: ${K:,.0f}/月&quot;)
+    print(f&quot;饱和点(MR&lt;1): ${sat_point:,.0f}/月&quot;)
+    print(f&quot;\n[✓] Channel Saturation 测试通过&quot;)</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Channel-Saturation-Curve" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Competitive-Response-Modeling.html'>Skill-Competitive-Response-Modeling</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-Geo-Level-Marketing-Effectiveness.html'>Skill-Geo-Level-Marketing-Effectiveness</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li></ul>
     <h3>延伸技能</h3><p class='muted'>暂无</p>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Competitive-Response-Modeling.html'>Skill-Competitive-Response-Modeling</a></li><li><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html'>Skill-DS-DGA-GCN-Fake-Review-Group</a></li><li><a href='../skills/Skill-Geo-Level-Marketing-Effectiveness.html'>Skill-Geo-Level-Marketing-Effectiveness</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

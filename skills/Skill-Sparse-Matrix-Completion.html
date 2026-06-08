@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Sparse-Matrix-Completion</nav>
 <h1>超稀疏矩阵补全 - 每行仅2-5个观测值的页面转移矩阵恢复</h1>
-<p class="muted">Skill-Sparse-Matrix-Completion · 14-用户分析 · status=stable</p>
+<p class="muted">Skill-Sparse-Matrix-Completion · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 高</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：桑基图转移矩阵补全</p>
+    <p>Hájek-GD的核心洞察**：不直接补全M（n×d原始矩阵，n=用户数，d=页面类型数），而是估计其</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统矩阵补全（如 SoftImpute、ALS）假设&quot;大部分条目可观测&quot;，但电商session的页面转移矩阵天然稀疏——每个用户session只有35次页面跳转，导致采样概率 p = C/d（C≈25, d=页面类型数），绝大多数转移对从未被同一用户触发。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>桑基图有大量断线，视觉上路径&quot;碎片化&quot;</li><li>无法识别低频但高价值路径（如 REVIEW→CART 的内容驱动购买）</li><li>运营团队误判&quot;某路径无效&quot;，放弃有潜力的优化方向</li><li>session 级页面浏览序列，含 page_from→page_to 计数</li><li>每个 session 至少包含 2 种不同页面类型（C≥2）</li><li>用户数 n≥500（典型独立站月活）</li><li>发现隐藏的&quot;小众但有价值&quot;流量路径（如内容→购买短路径）</li><li>精准识别用户在哪个页面流失（漏斗的真实形状）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：母婴独立站有10种页面类型（HOME/SEARCH/CAT/PDP/CART/CHECKOUT/PAY/REVIEW/BLOG/SUPPORT），理论上有 10×10=100 个可能的转移组合。但实际数据中，大量转移组合从未被观测到（如 BLOG→PAY、SUPPORT→CHECKOUT）。问题是：这些转移真的不存在，还是样本太少没被捕捉到？</p><p>当前做法&quot;观测为零就当零&quot;会导致： - 桑基图有大量断线，视觉上路径&quot;碎片化&quot; - 无法识别低频但高价值路径（如 REVIEW→CART 的内容驱动购买） - 运营团队误判&quot;某路径无效&quot;，放弃有潜力的优化方向</p><p>Hájek-GD 方案：在每行只有 3-5 个观测时仍能恢复完整矩阵，为桑基图提供&quot;数据支撑的合理估计&quot;而非&quot;观测为零就当零&quot;。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>高</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：6</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：6 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Hájek-GD 超稀疏矩阵补全 - 完整实现
+论文: One-Sided Matrix Completion from Ultra-Sparse Samples (arXiv:2601.12213)
+应用: 母婴电商页面转移矩阵补全，支撑桑基图绘制
+
+依赖: numpy, scipy, sklearn, pandas
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy.sparse import csr_matrix
+from sklearn.metrics import mean_squared_error
+from typing import Optional, Tuple, Dict, List
+import warnings
+
+
+# ─────────────────────────────────────────────────────────────
+# 1. Hájek 估计器：从稀疏观测构建无偏二阶矩矩阵
+# ─────────────────────────────────────────────────────────────
+
+def compute_hajek_estimator(
+    M_hat: np.ndarray,
+    I: np.ndarray,
+) -&gt; Tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;
+    计算 Hájek 估计器 T̂ = M̂⊤M̂ / (I⊤I)（逐元素除法）
+
+    Args:
+        M_hat: (n, d) 稀疏观测矩阵，未观测位置为 0
+        I:     (n, d) 二值掩码矩阵，观测到为 1，未观测为 0
+
+    Returns:
+        T_hat: (d, d) Hájek 估计的二阶矩矩阵（仅 Omega 集合内有效）
+        Omega: (d, d) 布尔矩阵，True 表示该条目在 Omega 中（被至少一对共同观测）
+    &quot;&quot;&quot;
+    # 计算 M̂⊤M̂：分子（各对页面的加权共现）
+    numerator = M_hat.T @ M_hat  # (d, d)
+
+    # 计算 I⊤I：分母（各对页面的共观测次数）
+    denominator = I.T @ I  # (d, d)
+
+    # Omega: 分母 &gt; 0 的位置（至少有一次共观测）
+    Omega = denominator &gt; 0
+
+    # Hájek 估计器：逐元素除法，Omega 外置 0
+    T_hat = np.zeros((M_hat.shape[1], M_hat.shape[1]))
+    T_hat[Omega] = numerator[Omega] / denominator[Omega]
+
+    return T_hat, Omega
+
+
+def compute_horvitz_thompson_estimator(
+    M_hat: np.ndarray,
+    I: np.ndarray,
+    p: float,
+) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    Horvitz-Thompson 估计器（对比基线）：用真实采样概率 p 归一化
+
+    Args:</code></pre>
     <h2>8. 论文来源</h2><ul><li>2601.12213</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Sparse-Matrix-Completion" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-BlockEcho-Missing-Data.html'>Skill-BlockEcho-Missing-Data</a></li><li><a href='../skills/Skill-Consumer-Complaint-Recall-Prediction.html'>Skill-Consumer-Complaint-Recall-Prediction</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-GraphDeepAR-Demand-Forecasting.html'>Skill-GraphDeepAR-Demand-Forecasting</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-Model-Evaluation-Metrics.html'>Skill-Model-Evaluation-Metrics</a></li><li><a href='../skills/Skill-Utimac-Uncertainty-Completion.html'>Skill-Utimac-Uncertainty-Completion</a></li><li><span class='muted'>关联</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-BlockEcho-Missing-Data.html'>Skill-BlockEcho-Missing-Data</a></li><li><a href='../skills/Skill-Consumer-Complaint-Recall-Prediction.html'>Skill-Consumer-Complaint-Recall-Prediction</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-GraphDeepAR-Demand-Forecasting.html'>Skill-GraphDeepAR-Demand-Forecasting</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-Utimac-Uncertainty-Completion.html'>Skill-Utimac-Uncertainty-Completion</a></li><li><span class='muted'>关联</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Consumer-Complaint-Recall-Prediction.html'>Skill-Consumer-Complaint-Recall-Prediction</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-GraphDeepAR-Demand-Forecasting.html'>Skill-GraphDeepAR-Demand-Forecasting</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><span class='muted'>关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

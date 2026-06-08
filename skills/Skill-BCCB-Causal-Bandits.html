@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/02-a_b实验.html">02-A_B实验</a> / Skill-BCCB-Causal-Bandits</nav>
 <h1>预算约束因果Bandit - 新渠道从Day1开始的转化率估计</h1>
-<p class="muted">Skill-BCCB-Causal-Bandits · 02-A_B实验 · status=stable</p>
+<p class="muted">Skill-BCCB-Causal-Bandits · 02-A_B实验</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 ⭐⭐⭐⭐⭐</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：Pinterest新渠道的Day1转化估计</p>
+    <p>BCCB（Budget-Constrained Causal Bandits）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统Uplift模型遵循两阶段离线流程——先收集历史数据估计异质性处理效应（HTE），再求解预算约束优化问题。这在数据丰富时效果良好，但在冷启动场景（新渠道、新市场、新用户群）中完全失效。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>每日更新的渠道 CVR 点估计 + 90% 置信区间</li><li>预算消耗速度报告（pace vs. plan）</li><li>CATE 分层报告：哪些用户群对 Pinterest 广告响应最好</li><li>Day 1-7：CATE 估计（宽置信区间，但比&quot;什么都没有&quot;好）</li><li>Day 7-14：CATE 估计收紧，开始出现显著的用户群分层</li><li>Day 14+：稳定的个体化处理策略，逼近离线方法性能</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：刚在Pinterest上开了母婴用品广告，花了 $300，曝光 2000 次，只有 2 个转化。传统归因模型因为数据太少完全无法运作——但营销团队需要知道&quot;Pinterest 的 CVR 大概是多少&quot;来决定要不要加预算。</p><p>BCCB 从第一个用户起就在线学习转化率，每来一个用户都更新估计，第二天就能给出有统计意义的 CVR 置信区间。</p><p>数据要求： | 字段 | 说明 | 格式 | |------|------|------| | user_id | 用户唯一标识 | string | | user_features | 设备、地区、行为特征 | array[float] | | is_treated | 是否被展示广告（0/1） | binary | | converted | 是否发生转化（0/1） | binary | | timestamp | 事件时间 | datetime | | cost | 单次曝光成本 | float |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**当前状态**：每个新渠道测试期 14 天，日均预算 $300，总投入 $4,200/渠道</li><li>**BCCB 后**：2 天即可获得初步决策信号，无效渠道提前 12 天停投</li><li>**每年节省**：若测试 10 个渠道，每次平均止损 $3,000，年节省 **$30,000**</li><li>**转化提升**：在预算不变前提下，BCCB 优先处理高响应用户，转化提升预期 15-25%</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Budget-Constrained Causal Bandits (BCCB) 完整实现
+母婴出海场景：新渠道/新市场冷启动转化率估计
+
+论文：arXiv:2604.26169 (2025)
+数据集：Criteo Uplift Dataset 风格
+
+包含：
+- Causal Bandit 环境模拟
+- BCCB 算法：CATE估计 + Thompson Sampling + 预算约束
+- Baseline 对比：离线两阶段Uplift、Greedy HTE、Budgeted TS
+- 数据效率对比图
+- 方差分析（多次运行）
+- 渠道CVR每日更新估计 + 置信区间
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy import stats
+from typing import Dict, List, Tuple, Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. 数据环境：Criteo Uplift 风格的母婴广告数据
+# ─────────────────────────────────────────────────────────────────────────────
+
+class MaternalAdEnvironment:
+    &quot;&quot;&quot;
+    母婴广告因果Bandit环境
+    模拟Criteo Uplift Dataset结构：用户特征 + 处理分配 + 转化结果
+    &quot;&quot;&quot;
+
+    def __init__(
+        self,
+        n_features: int = 12,
+        true_base_rate: float = 0.03,
+        true_ate: float = 0.015,
+        heterogeneity: float = 0.5,
+        cost_per_impression: float = 0.15,  # 每次曝光成本（美元）
+        random_seed: int = 42,
+    ):
+        &quot;&quot;&quot;
+        Args:
+            n_features: 用户特征维度（设备/地区/行为等）
+            true_base_rate: 自然转化率（未看广告）
+            true_ate: 平均处理效应（广告带来的转化提升）
+            heterogeneity: 异质性强度（0=均匀效应, 1=高度异质）
+            cost_per_impression: 单次曝光成本（美元）
+        &quot;&quot;&quot;
+        self.n_features = n_features
+        self.true_base_rate = true_base_rate
+        self.true_ate = true_ate
+        self.heterogeneity = heterogeneity
+        self.cost_per_impression = cost_per_impression
+        self.rng = np.random.RandomState(random_seed)
+
+        # 真实的CATE权重向量（实际中未知）
+        self.true_cate_weights = self.rng.randn(n_features) * heterogeneity</code></pre>
     <h2>8. 论文来源</h2><ul><li>2604.26169</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-BCCB-Causal-Bandits" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Conformal-ROI-Prediction.html'>Skill-Conformal-ROI-Prediction</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Multi-Armed-Bandit.html'>Skill-Multi-Armed-Bandit</a></li><li><a href='../skills/Skill-SSBC-Small-Sample-Conformal.html'>Skill-SSBC-Small-Sample-Conformal</a></li><li><a href='../skills/Skill-STATE-Robust-Variance-Reduction.html'>Skill-STATE-Robust-Variance-Reduction</a></li><li><a href='../skills/Skill-Thompson-Sampling-MAB.html'>Skill-Thompson-Sampling-MAB</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Conformal-ROI-Prediction.html'>Skill-Conformal-ROI-Prediction</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-SSBC-Small-Sample-Conformal.html'>Skill-SSBC-Small-Sample-Conformal</a></li><li><a href='../skills/Skill-STATE-Robust-Variance-Reduction.html'>Skill-STATE-Robust-Variance-Reduction</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Conformal-ROI-Prediction.html'>Skill-Conformal-ROI-Prediction</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-STATE-Robust-Variance-Reduction.html'>Skill-STATE-Robust-Variance-Reduction</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

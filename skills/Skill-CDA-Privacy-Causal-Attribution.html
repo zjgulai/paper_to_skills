@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-CDA-Privacy-Causal-Attribution</nav>
 <h1>CDA — 隐私保护因果渠道归因：无用户数据的多触点归因</h1>
-<p class="muted">Skill-CDA-Privacy-Causal-Attribution · 15-营销投放分析 · status=stable</p>
+<p class="muted">Skill-CDA-Privacy-Causal-Attribution · 15-营销投放分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：Google + Meta + TikTok 三渠道 GDPR 合规归因</p>
+    <p>GDPR/CCPA 时代的根本问题</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统 MTA 在隐私时代的失效</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>Google 直接归因权重：42%（ROAS 计算基准）</li><li>Meta 归因权重：35%（含 TikTok 引流的间接效应）</li><li>TikTok 归因权重：23%（较 Last-Click 低估已修正）</li><li>分析大促前 2 周 vs 大促期的 CATE 变化</li><li>结论：大促期 TikTok 曝光对转化的直接效应提升 2.3x（种草效果放大）</li><li>Meta 对 Google 的中介效应在大促期减弱（用户直接搜索，不再需要 Meta 再触达）</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景： 母婴 DTC 品牌在欧洲市场同时投放 Google、Meta、TikTok 三渠道。GDPR 合规要求下，无法使用用户级 cookie 追踪，传统 MTA 完全失效。</p><p>产出： - Google 直接归因权重：42%（ROAS 计算基准） - Meta 归因权重：35%（含 TikTok 引流的间接效应） - TikTok 归因权重：23%（较 Last-Click 低估已修正）</p><p>业务背景： 618 大促期间 Google/Meta/TikTok 三渠道同时加大投入，传统 Last-Click 把所有转化归给最后点击渠道（通常是品牌词搜索），严重低估 TikTok 的种草效应。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+CDA — 因果驱动归因（隐私保护多渠道归因）
+论文：Causal-driven attribution (CDA): Estimating channel influence without user-level data
+arXiv：2512.21211 | 2024年12月
+&quot;&quot;&quot;
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional
+import math
+import statistics
+from collections import defaultdict
+
+
+# ──────────────────────────────────────────────
+# 数据类
+# ──────────────────────────────────────────────
+
+@dataclass
+class ChannelTimeSeries:
+    &quot;&quot;&quot;单渠道时序数据&quot;&quot;&quot;
+    channel_name: str
+    daily_impressions: list[float]  # 每日曝光量
+    daily_conversions: list[float]  # 每日转化量（汇总，非用户级）
+
+    def __post_init__(self):
+        assert len(self.daily_impressions) == len(self.daily_conversions), \
+            &quot;曝光量和转化量时序长度必须一致&quot;
+
+    @property
+    def n_days(self) -&gt; int:
+        return len(self.daily_impressions)
+
+    def impression_rate(self) -&gt; list[float]:
+        &quot;&quot;&quot;归一化曝光率&quot;&quot;&quot;
+        max_imp = max(self.daily_impressions) or 1.0
+        return [x / max_imp for x in self.daily_impressions]
+
+
+@dataclass
+class CausalDAG:
+    &quot;&quot;&quot;因果有向无环图&quot;&quot;&quot;
+    channels: list[str]
+    edges: list[tuple[str, str, int]]  # (from_channel, to_channel, lag_days)
+    edge_weights: dict[tuple[str, str], float] = field(default_factory=dict)
+
+    def get_parents(self, channel: str) -&gt; list[tuple[str, int]]:
+        &quot;&quot;&quot;获取某渠道的所有父节点（直接因果来源）&quot;&quot;&quot;
+        return [(src, lag) for src, dst, lag in self.edges if dst == channel]
+
+    def get_children(self, channel: str) -&gt; list[tuple[str, int]]:
+        &quot;&quot;&quot;获取某渠道的所有子节点（直接因果影响）&quot;&quot;&quot;
+        return [(dst, lag) for src, dst, lag in self.edges if src == channel]
+
+
+# ──────────────────────────────────────────────
+# 简化版 PCMCI 因果发现
+# ──────────────────────────────────────────────
+
+class PCMCICausalDiscovery:</code></pre>
     <h2>8. 论文来源</h2><ul><li>2512.21211</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CDA-Privacy-Causal-Attribution" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Causal-Discovery-PC-Algorithm.html'>Skill-Causal-Discovery-PC-Algorithm</a></li><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-CABB-Cross-Category-Attribution.html'>Skill-CABB-Cross-Category-Attribution</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-Guardrailed-Uplift-Targeting.html'>Skill-Guardrailed-Uplift-Targeting</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li><li><span class='muted'>跨域关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

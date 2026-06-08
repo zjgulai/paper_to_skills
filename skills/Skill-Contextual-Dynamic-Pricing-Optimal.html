@@ -9,45 +9,87 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/17-价格优化.html">17-价格优化</a> / Skill-Contextual-Dynamic-Pricing-Optimal</nav>
 <h1>Contextual Dynamic Pricing — 最优上下文定价：O(√dT) Regret + LDP 隐私保护</h1>
-<p class="muted">Skill-Contextual-Dynamic-Pricing-Optimal · 17-价格优化 · status=stable</p>
+<p class="muted">Skill-Contextual-Dynamic-Pricing-Optimal · 17-价格优化</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：母婴奶粉跨用户群差异化定价</p>
+    <p>价格本身即决策**。无法直接观测估值，只能从 $\{0, 1\}$ 反馈中反向推断参数 $\theta^*$，构成</p>
     <h2>2. 核心算法逻辑</h2>
     <p>上下文定价（Contextual Dynamic Pricing）将传统 MAB 定价问题扩展为依赖上下文的序贯决策。买家的潜在估值（valuation）被建模为：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：不同用户群（海外华人/本地消费者/新生儿家庭）对同款婴幼儿奶粉的购买意愿差异显著。传统定价对所有用户一刀切，损失大量利润空间。</p><p>| 特征类别 | 特征维度（示例） | |---------|----------------| | 用户上下文 | 婴儿月龄段（0-6/6-12/12-24个月）、历史复购频次、首购/复购标签、平台来源 | | 商品上下文 | 规格（900g/1.8kg）、段数（1/2/3段）、有机认证标志、季节性需求指数 | | 市场上下文 | 竞品近7日均价、平台大促距离天数、当地育儿论坛热度指数 |</p><p>算法应用：每个用户下单前，构建 $X_t \in \mathbb{R}^{15}$，UCB-based 定价器给出个性化报价。关键优势：在不知道用户真实 WTP（支付意愿）的情况下，通过序贯购买/放弃信号反向学习，300-500轮后收敛速度比 A/B 测试快 60%。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code># 快速使用示例
+from paper2skills_code.pricing.contextual_dynamic_pricing import (
+    PricingContext,
+    OptimalContextualPricer,
+    simulate_pricing_trial,
+)
+
+# 构建上下文
+ctx = PricingContext(
+    product_features=[0.8, 1.0, 0.5],   # 规格/认证/竞争力
+    user_features=[0.3, 0.7, 1.0],       # 月龄段/复购频次/平台权重
+    market_features=[0.6, 0.2],          # 竞品价格指数/大促距离
+)
+
+pricer = OptimalContextualPricer(context_dim=8, price_range=(50.0, 200.0))
+price = pricer.propose_price(ctx)        # 上下文感知报价
+pricer.observe_outcome(purchased=True)   # 二值反馈学习
+
+# 批量模拟
+results = simulate_pricing_trial(n_rounds=1000)
+print(f&quot;累积 Regret: {results[&#x27;cumulative_regret&#x27;]:.2f}&quot;)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2406.02424</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Contextual-Dynamic-Pricing-Optimal" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Multi-Armed-Bandit.html'>Skill-Multi-Armed-Bandit</a></li><li><a href='../skills/Skill-Thompson-Sampling-MAB.html'>Skill-Thompson-Sampling-MAB</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Multi-Armed-Bandit.html'>Skill-Multi-Armed-Bandit</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/09-dataagent-llm.html">09-DataAgent-LLM</a> / Skill-Data-Collection-Agent-Pipeline</nav>
 <h1>Data Collection Agent Pipeline — LLM Agent 自动化多源数据采集 Pipeline</h1>
-<p class="muted">Skill-Data-Collection-Agent-Pipeline · 09-DataAgent-LLM · status=stable</p>
+<p class="muted">Skill-Data-Collection-Agent-Pipeline · 09-DataAgent-LLM</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：婴儿安全座椅竞品全链路数据采集 Agent</p>
+    <p>传统数据采集依赖人工编写爬虫脚本，每个数据源需要单独维护</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统数据采集依赖人工编写爬虫脚本，每个数据源需要单独维护。当数据源频繁变更（电商平台 DOM 更新、API 版本迭代、反爬策略升级）时，维护成本极高。LLM Agent 数据采集 Pipeline 解决的核心问题是：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>人工耗时：3 人 × 2 天 = 48 人时</li><li>Agent 耗时：2 小时 14 分（含重试），运营监督 30 分钟</li><li>**效率提升：约 20 倍**，数据新鲜度从&quot;周更&quot;提升至&quot;日更&quot;</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：选品团队需要每周采集 Amazon US/UK/DE 三站点婴儿安全座椅品类 Top 200 SKU 的完整竞品数据（价格、评分、评论数、主图、A+页面关键词），以往需要 3 名数据专员耗时 2 天完成。</p><p>量化对比： - 人工耗时：3 人 × 2 天 = 48 人时 - Agent 耗时：2 小时 14 分（含重试），运营监督 30 分钟 - 效率提升：约 20 倍，数据新鲜度从&quot;周更&quot;提升至&quot;日更&quot;</p><p>业务背景：产品团队需要汇聚 Amazon + Walmart + BabyList + Reddit 四平台的母乳泵用户评论，构建 VOC（Voice of Customer）数据库，每月手工整理耗时约 40 小时。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+LLM Agent 自动化数据采集 Pipeline
+整合 ReAct 规划执行 + 多源融合 + 实体对齐去重
+arXiv 参考: 2403.08299 (WebVoyager: LLM Web Agent),
+           2404.11584 (AgentBench),
+           2502.09986 (DataHarvester: LLM-Driven Multi-Source Collection)
+&quot;&quot;&quot;
+
+import time
+import json
+import hashlib
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Callable
+from enum import Enum
+
+
+# ── 数据结构 ─────────────────────────────────────────────────────────────
+
+class ActionType(Enum):
+    FETCH_URL = &quot;fetch_url&quot;
+    PARSE_HTML = &quot;parse_html&quot;
+    CALL_API = &quot;call_api&quot;
+    EXTRACT_STRUCTURED = &quot;extract_structured&quot;
+    DEDUP_AND_MERGE = &quot;dedup_and_merge&quot;
+    DONE = &quot;done&quot;
+
+
+@dataclass
+class Action:
+    action_type: ActionType
+    params: Dict[str, Any]
+
+
+@dataclass
+class Observation:
+    success: bool
+    data: Any
+    error: Optional[str] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class CollectedRecord:
+    source: str
+    entity_id: str       # 原始 ID（如 ASIN）
+    fields: Dict[str, Any]
+    embedding: Optional[np.ndarray] = None  # 用于实体对齐
+
+    def fingerprint(self) -&gt; str:
+        &quot;&quot;&quot;基于核心字段的内容指纹，用于去重&quot;&quot;&quot;
+        key_fields = {k: v for k, v in self.fields.items()
+                      if k in [&quot;title&quot;, &quot;brand&quot;, &quot;price&quot;, &quot;asin&quot;, &quot;sku&quot;]}
+        return hashlib.md5(json.dumps(key_fields, sort_keys=True).encode()).hexdigest()
+
+
+# ── 模拟工具函数（生产中替换为真实实现）────────────────────────────────────
+
+def mock_fetch_url(url: str) -&gt; Observation:
+    &quot;&quot;&quot;模拟 HTTP 请求，生产中替换为 httpx/playwright&quot;&quot;&quot;</code></pre>
     <h2>8. 论文来源</h2><ul><li>2210.03629</li><li>2308.03688</li><li>2401.13919</li><li>2403.08299</li><li>2404.11584</li><li>2502.09986</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Data-Collection-Agent-Pipeline" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>LLM-Focused-Web-Crawling]]</span></li><li><span class='muted'>SQL-Agent-Text-to-SQL]]</span></li><li><a href='../skills/Skill-LLM-Focused-Web-Crawling.html'>Skill-LLM-Focused-Web-Crawling</a></li><li><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html'>Skill-SQL-Agent-Text-to-SQL</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>DeepAnalyze-Autonomous-Data-Science-Agent]]</span></li><li><a href='../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html'>Skill-DeepAnalyze-Autonomous-Data-Science-Agent</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Document-Intelligence-Parsing]]</span></li><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><a href='../skills/Skill-Document-Intelligence-Parsing.html'>Skill-Document-Intelligence-Parsing</a></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

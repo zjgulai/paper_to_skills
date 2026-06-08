@@ -9,45 +9,68 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Agentic-Memory-Management</nav>
 <h1>AgeMem — 统一 LTM+STM 管理的 Agentic Memory</h1>
-<p class="muted">Skill-Agentic-Memory-Management · 16-智能体工程 · status=stable</p>
+<p class="muted">Skill-Agentic-Memory-Management · 16-智能体工程</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 STM Filter + Summary 让对话 context 维持紧凑</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一:母婴用户 03 岁全生命周期 LTM/STM 协同管理</p>
+    <p>AgeMem(Agentic Memory)</p>
     <h2>2. 核心算法逻辑</h2>
     <p>AgeMem(Agentic Memory) 颠覆了传统 LTM/STM 分离架构,把记忆管理整合到 Agent 的 policy 本身。现有方法把 LTM 与 STM 当作两个独立模块,要么用 triggerbased 启发式,要么外挂 Memory Manager,导致:</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>哪些信息(过敏原、品牌偏好、宝宝月龄、产品满意度) 该存进 LTM</li><li>哪些 context 该用 Filter 剔除(广告导流、闲聊)</li><li>哪些 LTM 该 Update(月龄随时间增长) / Delete(过期偏好)</li><li>用户 4 年内全部对话历史 + 商品互动 + 客服记录</li><li>HotpotQA 风格的&quot;上下文 + 干扰 + 任务&quot;训练对</li><li>Ground-truth memory 标注(用于 RL 训 memory quality reward)</li><li>用户体验:跨 session 偏好继承,无需用户重复说明</li><li>LTV 提升:精准的全周期推荐,复购率预期 +20-30%</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>母婴用户从孕期到 3 岁的完整生命周期,跨越 4 年、可能数百次交互。传统系统要么用 RAG(STM 一直膨胀)要么固定 trigger(每月强制总结),都不够精准。需要 Agent 自主决定:</p><p>- 哪些信息(过敏原、品牌偏好、宝宝月龄、产品满意度) 该存进 LTM - 哪些 context 该用 Filter 剔除(广告导流、闲聊) - 哪些 LTM 该 Update(月龄随时间增长) / Delete(过期偏好)</p><p>- 用户 4 年内全部对话历史 + 商品互动 + 客服记录 - HotpotQA 风格的&quot;上下文 + 干扰 + 任务&quot;训练对 - Ground-truth memory 标注(用于 RL 训 memory quality reward)</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求:高,需要 HotpotQA 风格的标注训练集 5000+</li><li>技术门槛:高,Step-wise GRPO + 三阶段 progressive RL 需要 RL 经验</li><li>工程复杂度:高,需要部署 RL 训练管道 + LLM judge 评估</li><li>维护成本:中,RL 训练后 policy 可以长期复用</li><li>**业务价值极高**:与跨境母婴长周期场景高度契合</li><li>**小模型友好**:论文 Qwen2.5-7B / Qwen3-4B 都能用,显著降成本</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>cd paper2skills-code/llm_agent_engineering/agentic_memory
+python agemem.py</code></pre>
     <h2>8. 论文来源</h2><ul><li>2402.03300</li><li>2504.19413</li><li>2601.01885</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Agentic-Memory-Management" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>(ACON)</span></li><li><span class='muted'>(SoK)</span></li><li><span class='muted'>02-A_B实验</span></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-Skill-Lifecycle-Design.html'>Skill-Skill-Lifecycle-Design</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>(Focus)</span></li><li><span class='muted'>(MemAct)</span></li><li><span class='muted'>(Shopping Companion)</span></li><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-Long-Term-Preference-Memory.html'>Skill-Long-Term-Preference-Memory</a></li><li><a href='../skills/Skill-Memory-as-Action.html'>Skill-Memory-as-Action</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>05-推荐系统</span></li><li><span class='muted'>07-NLP-VOC 自动打标签</span></li><li><span class='muted'>08-知识图谱</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

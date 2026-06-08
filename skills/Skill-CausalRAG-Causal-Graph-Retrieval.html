@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-CausalRAG-Causal-Graph-Retrieval</nav>
 <h1>CausalRAG — 因果图增强检索：语义相似 + 因果链路双轨 RAG</h1>
-<p class="muted">Skill-CausalRAG-Causal-Graph-Retrieval · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-CausalRAG-Causal-Graph-Retrieval · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：母婴合规知识库智能问答</p>
+    <p>问题一：文本分块破坏上下文连贯性</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统 RAG 的两个核心问题</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>合规文档库（FDA/CPSC/EPA 法规文本）</li><li>历史召回案例（CPSC 召回数据库）</li><li>根因分析报告（因果路径可视化）</li><li>合规清单自动生成（从&quot;避免条件&quot;节点提取）</li><li>风险等级评估（基于历史召回频率）</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题： 运营团队需要查询&quot;婴儿配方奶粉 FDA 21 CFR 107 是什么？违规会导致什么召回？召回会触发哪些业务影响？&quot;这类需要完整因果链的问题。</p><p>传统 RAG 的缺陷： 语义检索会分别返回&quot;21 CFR 107 法规文本&quot;、&quot;召回案例&quot;、&quot;业务损失报告&quot;三段不相关的文本块，LLM 需要自行推理它们的因果连接，容易出错或遗漏。</p><p>CausalRAG 的优势： 构建因果图后，图中已存在显式路径： 检索时沿该路径抽取所有相关节点，LLM 获得完整因果上下文，生成连贯且准确的答案。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+CausalRAG — 因果图增强检索
+论文：CausalRAG: Integrating Causal Graphs into Retrieval-Augmented Generation
+arXiv：2503.19878 | ACL Findings 2025
+&quot;&quot;&quot;
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional
+import re
+import math
+from collections import defaultdict, deque
+
+
+# ──────────────────────────────────────────────
+# 数据类
+# ──────────────────────────────────────────────
+
+@dataclass
+class CausalTriple:
+    &quot;&quot;&quot;因果三元组&quot;&quot;&quot;
+    cause: str
+    relation: str  # leads_to / causes / triggers / results_in
+    effect: str
+    source_doc: str
+    confidence: float = 1.0
+
+    def __repr__(self) -&gt; str:
+        return f&quot;[{self.cause}] --{self.relation}--&gt; [{self.effect}] (doc={self.source_doc})&quot;
+
+
+@dataclass
+class Document:
+    &quot;&quot;&quot;文档片段&quot;&quot;&quot;
+    doc_id: str
+    content: str
+    metadata: dict = field(default_factory=dict)
+
+
+# ──────────────────────────────────────────────
+# 因果知识图谱
+# ──────────────────────────────────────────────
+
+class CausalKnowledgeGraph:
+    &quot;&quot;&quot;有向因果图：存储因果三元组，支持前向/后向链路遍历&quot;&quot;&quot;
+
+    CAUSAL_PATTERNS = [
+        (r&quot;(.+?)\s+(?:leads? to|lead to)\s+(.+)&quot;, &quot;leads_to&quot;),
+        (r&quot;(.+?)\s+(?:causes?|cause)\s+(.+)&quot;, &quot;causes&quot;),
+        (r&quot;(.+?)\s+(?:triggers?|trigger)\s+(.+)&quot;, &quot;triggers&quot;),
+        (r&quot;(.+?)\s+(?:results? in|result in)\s+(.+)&quot;, &quot;results_in&quot;),
+        (r&quot;(?:due to|because of)\s+(.+?),\s+(.+)&quot;, &quot;caused_by&quot;),
+        (r&quot;(.+?)\s+(?:导致|引起|触发)\s+(.+)&quot;, &quot;leads_to&quot;),
+        (r&quot;(.+?)\s+(?:造成|引发)\s+(.+)&quot;, &quot;causes&quot;),
+    ]
+
+    def __init__(self):
+        # 邻接表：cause -&gt; [(relation, effect, triple)]
+        self._forward: dict[str, list[tuple[str, str, CausalTriple]]] = defaultdict(list)
+        # 反向邻接表：effect -&gt; [(relation, cause, triple)]</code></pre>
     <h2>8. 论文来源</h2><ul><li>2503.19878</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CausalRAG-Causal-Graph-Retrieval" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Causal-Discovery-PC-Algorithm.html'>Skill-Causal-Discovery-PC-Algorithm</a></li><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Helicase-Supply-Chain-KG-MAS.html'>Skill-Helicase-Supply-Chain-KG-MAS</a></li><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AgentTrace-Causal-RCA.html'>Skill-AgentTrace-Causal-RCA</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><span class='muted'>跨域关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

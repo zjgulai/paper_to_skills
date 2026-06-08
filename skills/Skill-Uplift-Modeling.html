@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-Uplift-Modeling</nav>
 <h1>Uplift Modeling (元学习框架)</h1>
-<p class="muted">Skill-Uplift-Modeling · 01-因果推断 · status=unknown</p>
+<p class="muted">Skill-Uplift-Modeling · 01-因果推断</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：吸奶器Facebook广告投放归因优化</p>
+    <p>是：识别哪些用户最有可能因为某个干预（如促销、广告）而产生正向行为</p>
     <h2>2. 核心算法逻辑</h2>
     <p>Uplift Modeling（提升建模）解决的核心问题是：识别哪些用户最有可能因为某个干预（如促销、广告）而产生正向行为。与传统的响应预测模型不同，uplift model 预测的是&quot;干预带来的增量效果&quot;，而非&quot;干预后的绝对结果&quot;。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>用户特征：年龄、性别、国家（美国/加拿大/英国/德国）、设备类型、浏览行为（浏览页数、浏览时长）、加购行为、购买历史、是否孕妈/新手妈妈等</li><li>实验数据：Facebook A/B 测试数据或历史渐进式投放数据</li><li>标签：广告曝光、点击、是否购买吸奶器</li><li>数据量：建议至少 10,000 条样本（干预组和对照组各 5,000+）</li><li>每个用户的 uplift score：预测该用户看到吸奶器广告后的增量购买概率</li><li>用户分群：高 uplift（广告敏感）/ 中 uplift / 低 uplift（自然转化）/ 负 uplift（看了广告反而降低购买意愿）</li><li>高 uplif：重点投放，预算倾斜</li><li>负 uplift：减少投放或排除</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题： 我们销售吸奶器到北美/欧洲市场，在 Facebook/Instagram 投放广告。传统方法是预测转化概率，但高转化概率用户可能本身就是高购买意愿用户，广告只是&quot;锦上添花&quot;。我们需要找到广告&quot;增量转化&quot;的用户——即如果不投广告就不会购买，但投了广告就会购买的用户。</p><p>数据要求： - 用户特征：年龄、性别、国家（美国/加拿大/英国/德国）、设备类型、浏览行为（浏览页数、浏览时长）、加购行为、购买历史、是否孕妈/新手妈妈等 - 实验数据：Facebook A/B 测试数据或历史渐进式投放数据 - 标签：广告曝光、点击、是否购买吸奶器 - 数据量：建议至少 10,000 条样本（干预组和对照组各 5,000+）</p><p>预期产出： - 每个用户的 uplift score：预测该用户看到吸奶器广告后的增量购买概率 - 用户分群：高 uplift（广告敏感）/ 中 uplift / 低 uplift（自然转化）/ 负 uplift（看了广告反而降低购买意愿） - 投放策略： - 高 uplif：重点投放，预算倾斜 - 负 uplift：减少投放或排除 - 低 uplift：自然转化，不依赖广告</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：需要 A/B 测试数据或准实验数据</li><li>技术门槛：中等，需要理解因果推断基本概念</li><li>工程复杂度：低，模型训练和预测均为标准 ML 流程</li><li>维护成本：低，模型可定期更新</li><li>业务价值高：直接关联广告投放和促销成本优化</li><li>见效快：1-2 周可完成 POC，1 个月可上线</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Uplift Modeling - 元学习框架实现
+用于吸奶器出海电商广告投放归因和促销效果评估
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.linear_model import LogisticRegression
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ==================== 吸奶器业务配置 ====================
+
+# 目标产品：吸奶器（Breast Pump）
+PRODUCT_CATEGORY = &quot;吸奶器&quot;
+TARGET_MARKETS = [&quot;美国&quot;, &quot;加拿大&quot;, &quot;英国&quot;, &quot;德国&quot;, &quot;澳洲&quot;]
+PRODUCT_PRICE_RANGE = (80, 150)  # 客单价范围（美元）
+
+
+class UpliftModel:
+    &quot;&quot;&quot;Uplift Modeling 元学习框架&quot;&quot;&quot;
+
+    def __init__(self, method=&#x27;xlearner&#x27;):
+        &quot;&quot;&quot;
+        初始化 Uplift Model
+
+        Args:
+            method: &#x27;tlearner&#x27;, &#x27;slearner&#x27;, 或 &#x27;xlearner&#x27;
+        &quot;&quot;&quot;
+        self.method = method
+        self.model_treatment = None
+        self.model_control = None
+        self.model_uplift = None
+        self.propensity_model = None
+        self.is_fitted = False
+
+    def fit(self, X, treatment, outcome):
+        &quot;&quot;&quot;
+        训练 Uplift Model
+
+        Args:
+            X: 特征矩阵 (DataFrame 或 np.array)
+            treatment: 干预标志 (1=干预组, 0=对照组)
+            outcome: 结果变量 (0/1 二分类或连续值)
+        &quot;&quot;&quot;
+        X = self._preprocess(X)
+        treatment = np.array(treatment)
+        outcome = np.array(outcome)
+
+        if self.method == &#x27;tlearner&#x27;:
+            self._fit_tlearner(X, treatment, outcome)
+        elif self.method == &#x27;slearner&#x27;:
+            self._fit_slearner(X, treatment, outcome)
+        elif self.method == &#x27;xlearner&#x27;:
+            self._fit_xlearner(X, treatment, outcome)
+
+        self.is_fitted = True</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Uplift-Modeling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>倾向评分分析</span></li><li><span class='muted'>基础统计推断</span></li><li><span class='muted'>机器学习基础</span></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>A/B 实验设计</span></li><li><span class='muted'>Doubly Robust Estimation</span></li><li><span class='muted'>因果森林 (Causal Forest)</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AB-Test-Result-Interpretation.html'>Skill-AB-Test-Result-Interpretation</a></li><li><a href='../skills/Skill-BCCB-Causal-Bandits.html'>Skill-BCCB-Causal-Bandits</a></li><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-PIE-Experimental-MTA.html'>Skill-PIE-Experimental-MTA</a></li><li><a href='../skills/Skill-Uplift-Churn-Prediction.html'>Skill-Uplift-Churn-Prediction</a></li><li><span class='muted'>促销效果评估</span></li><li><span class='muted'>可组合（延伸）</span></li><li><span class='muted'>广告投放归因</span></li><li><span class='muted'>用户生命周期价值 (LTV)</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

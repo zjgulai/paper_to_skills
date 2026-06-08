@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Safety-Stock-Replenishment</nav>
 <h1>Safety Stock and Replenishment Strategy</h1>
-<p class="muted">Skill-Safety-Stock-Replenishment · 04-供应链 · status=stable</p>
+<p class="muted">Skill-Safety-Stock-Replenishment · 04-供应链</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>供应链与补货</span><span class='tag'>WF-A 智能补货</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 20-40万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景1：奶粉SKU的安全库存计算</p>
+    <p>**：需求预测告诉你&quot;预计卖多少&quot;，安全库存告诉你&quot;为了防止意外，应该多备多少&quot;</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：需求预测告诉你&quot;预计卖多少&quot;，安全库存告诉你&quot;为了防止意外，应该多备多少&quot;。补货策略告诉你&quot;什么时候下单、下多少&quot;。三者构成供应链决策的完整链条。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>平均周需求：200罐</li><li>周需求标准差：40罐</li><li>Lead time：6周</li><li>目标服务水平：95%（Z=1.65）</li><li>年需求量：10,400罐</li><li>每次订货成本：$500（运费+报关）</li><li>单位年持有成本：$2.4/罐（仓储+资金占用）</li><li>当库存降到1,362罐时，下单2,083罐</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：Momcozy 销售某品牌3段奶粉，供应商在德国，海运 lead time 6周。需要确定： - 安全库存多少罐？ - 再订货点多少罐？ - 每次补货多少罐？</p><p>参数： - 平均周需求：200罐 - 周需求标准差：40罐 - Lead time：6周 - 目标服务水平：95%（Z=1.65） - 年需求量：10,400罐 - 每次订货成本：$500（运费+报关） - 单位年持有成本：$2.4/罐（仓储+资金占用）</p><p>计算： 1. 安全库存：$SS = 1.65 \cdot 40 \cdot \sqrt{6} = 162$ 罐 2. 再订货点：$ROP = 200 \cdot 6 + 162 = 1,362$ 罐 3. 经济订货量：$EOQ = \sqrt{2 \cdot 10400 \cdot 500 / 2.4} = 2,083$ 罐</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：缺货率降低+库存周转提升，年节省成本20-40万</li><li>**难度**：⭐⭐☆☆☆（2/5）— 公式计算，实现简单</li><li>**优先级**：⭐⭐⭐⭐⭐（5/5）— 供应链最核心的日常决策工具</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Safety Stock and Replenishment Strategy — 安全库存与补货策略
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy import stats
+
+
+def calculate_safety_stock(demand_std, lead_time, service_level=0.95):
+    &quot;&quot;&quot;
+    计算安全库存
+
+    Args:
+        demand_std: 需求标准差（单位时间）
+        lead_time: 提前期（单位时间）
+        service_level: 目标服务水平
+    &quot;&quot;&quot;
+    z = stats.norm.ppf(service_level)
+    sigma_ltd = demand_std * np.sqrt(lead_time)
+    ss = z * sigma_ltd
+    return ss
+
+
+def calculate_rop(avg_demand, lead_time, safety_stock):
+    &quot;&quot;&quot;计算再订货点&quot;&quot;&quot;
+    return avg_demand * lead_time + safety_stock
+
+
+def calculate_eoq(annual_demand, order_cost, holding_cost_per_unit):
+    &quot;&quot;&quot;计算经济订货量&quot;&quot;&quot;
+    return int(np.sqrt(2 * annual_demand * order_cost / holding_cost_per_unit))
+
+
+def calculate_inventory_metrics(avg_demand, demand_std, lead_time,
+                                 order_cost, holding_cost, unit_cost,
+                                 service_level=0.95):
+    &quot;&quot;&quot;
+    计算完整库存指标
+
+    Returns:
+        dict with safety_stock, rop, eoq, avg_inventory, turns, stockout_prob
+    &quot;&quot;&quot;
+    annual_demand = avg_demand * 52
+    ss = calculate_safety_stock(demand_std, lead_time, service_level)
+    rop = calculate_rop(avg_demand, lead_time, ss)
+    eoq = calculate_eoq(annual_demand, order_cost, holding_cost)
+
+    # 平均库存 = 周期库存/2 + 安全库存
+    avg_inventory = eoq / 2 + ss
+
+    # 库存周转率
+    inventory_value = avg_inventory * unit_cost
+    turns = (annual_demand * unit_cost) / inventory_value if inventory_value &gt; 0 else 0
+
+    # 年总成本
+    annual_ordering_cost = (annual_demand / eoq) * order_cost
+    annual_holding_cost = avg_inventory * holding_cost
+    total_cost = annual_ordering_cost + annual_holding_cost
+</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Safety-Stock-Replenishment" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Two-Echelon-Inventory-DRL.html'>Skill-Two-Echelon-Inventory-DRL</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-FSDA-DRL.html'>Skill-FSDA-DRL</a></li><li><a href='../skills/Skill-Monodense-单品价格弹性估计.html'>Skill-Monodense-单品价格弹性估计</a></li><li><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html'>Skill-Multi-Channel-Inventory-Pooling</a></li><li><a href='../skills/Skill-Multilevel_FLP.html'>Skill-Multilevel_FLP</a></li><li><a href='../skills/Skill-PPO_swap.html'>Skill-PPO_swap</a></li><li><span class='muted'>可组合（延伸）</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

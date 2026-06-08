@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Hybrid-Search-BM25-Vector</nav>
 <h1>稀疏+稠密混合检索 — BM25 与向量检索融合</h1>
-<p class="muted">Skill-Hybrid-Search-BM25-Vector · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-Hybrid-Search-BM25-Vector · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 35 万</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：母婴 SKU 精确匹配 + 语义模糊搜索融合</p>
+    <p>Hybrid RRF** |</p>
     <h2>2. 核心算法逻辑</h2>
     <p>单一检索方式存在固有短板：BM25 擅长精确关键词匹配（SKU 编号、品牌名、型号），但无法理解语义；向量检索擅长语义模糊匹配，但对精确词汇（如&quot;B07X4X5GXD&quot;）敏感度低。混合检索将两路融合，在母婴电商场景中相比单一检索 Recall@10 提升 1525%（arXiv:2210.11773, 2022）。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>综合 Recall@10 提升 15-22%（相比最优单路）</li><li>搜索零结果率下降 45%</li><li>年化营收增量约 **¥35 万**（基于搜索转化率提升 2.5%，月 GMV 200 万）</li><li>中英混合查询准确率：BM25 48% → 向量 71% → **混合 85%**</li><li>FAQ 自动匹配率（无需转人工）：从 62% 提升到 **79%**</li><li>年化节省客服人力成本约 **¥22 万**（月均 4000 工单 × 17% 减少量）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题： 母婴出海电商的搜索场景高度两极化：部分用户输入精确型号（&quot;Spectra S1 Plus&quot;、&quot;B07X4X5GXD&quot;），纯向量检索因 OOV 问题召回率低；另一部分用户输入模糊语义查询（&quot;适合背奶妈妈的静音吸奶器&quot;），纯 BM25 只能匹配字面词汇，无法理解意图。单一检索方式覆盖不了全场景。</p><p>解决方案： 双路并行检索后 RRF 融合。BM25 负责精确 SKU/型号匹配，Dense 负责语义意图理解，RRF 自动将两路排名融合输出最终结果。</p><p>业务价值： - 综合 Recall@10 提升 15-22%（相比最优单路） - 搜索零结果率下降 45% - 年化营收增量约 ¥35 万（基于搜索转化率提升 2.5%，月 GMV 200 万）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>35 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：3</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+稀疏+稠密混合检索系统（BM25 + Vector + RRF）
+基于 arXiv:2210.11773 和 arXiv:2009.10056
+
+功能：
+1. BM25 稀疏检索（TF-IDF 改进版）
+2. 向量稠密检索（Mock Bi-encoder）
+3. RRF 倒数排名融合
+4. 加权 RRF 变体
+5. 母婴商品搜索演示 + 3 测试用例
+
+Author: paper2skills
+Date: 2026-06-06
+&quot;&quot;&quot;
+
+import math
+import re
+import ast
+from typing import List, Dict, Tuple, Optional
+from dataclasses import dataclass, field
+from collections import defaultdict
+
+
+# ============================================================
+# 数据模型
+# ============================================================
+
+@dataclass
+class Document:
+    &quot;&quot;&quot;检索文档&quot;&quot;&quot;
+    doc_id: str
+    text: str
+    title: str = &quot;&quot;
+    metadata: Dict = field(default_factory=dict)
+
+    def full_text(self) -&gt; str:
+        return f&quot;{self.title} {self.text}&quot;.strip()
+
+
+@dataclass
+class SearchResult:
+    &quot;&quot;&quot;检索结果&quot;&quot;&quot;
+    doc_id: str
+    score: float
+    rank: int
+    source: str  # &quot;bm25&quot; / &quot;dense&quot; / &quot;hybrid&quot;
+    document: Optional[Document] = None
+
+
+# ============================================================
+# BM25 稀疏检索器
+# ============================================================
+
+class BM25Retriever:
+    &quot;&quot;&quot;
+    BM25 稀疏检索器
+    
+    BM25(d, Q) = Σ IDF(q_i) * f(q_i,d)*(k1+1) / (f(q_i,d) + k1*(1-b+b*|d|/avgdl))
+    &quot;&quot;&quot;
+</code></pre>
     <h2>8. 论文来源</h2><ul><li>2009.10056</li><li>2210.11773</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Hybrid-Search-BM25-Vector" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Embedding-Fundamentals.html'>Skill-Embedding-Fundamentals</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-RAG-Reranking-CrossEncoder.html'>Skill-RAG-Reranking-CrossEncoder</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li><li><a href='../skills/Skill-Semantic-Chunking-Strategy.html'>Skill-Semantic-Chunking-Strategy</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

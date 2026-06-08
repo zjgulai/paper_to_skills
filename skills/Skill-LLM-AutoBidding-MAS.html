@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-LLM-AutoBidding-MAS</nav>
 <h1>LLM AutoBidding MAS — 大语言模型驱动的层次化自动竞价系统</h1>
-<p class="muted">Skill-LLM-AutoBidding-MAS · 10-MAS · status=stable</p>
+<p class="muted">Skill-LLM-AutoBidding-MAS · 10-MAS</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>传统自动竞价系统（如 Amazon 自动广告）基于规则或简单 ML 模型，有两个核心局限：</p>
+    <p>诊断**：用单一 LLM 直接生成竞价出价，会产生&quot;竞价幻觉&quot;——LLM 对价格的量化感知不准确，输出如 `$15.00`（实际均值 $0.80）的离谱出价</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统自动竞价系统（如 Amazon 自动广告）基于规则或简单 ML 模型，有两个核心局限：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：母婴品牌在 Amazon US 上线新 SKU（婴儿护臀膏），历史广告数据仅 3 天（150 次点击，8 次购买）。需要设定关键词竞价，但数据太少无法训练传统 ML 模型。</p><p>业务背景：Prime Day 大促期间，关键词 CPC 飙升 2-3×，需要实时调整竞价策略（每 30 分钟一次），防止预算超支同时维持可见度。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：5</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：5 · 路径：未检测到</p>
+    <pre class='code-preview'><code>from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
+import random
+
+
+@dataclass
+class BiddingContext:
+    keyword: str
+    current_bid: float
+    market_avg_cpc: float
+    budget_remaining: float
+    budget_total: float
+    target_acos: float
+    current_acos: float
+    current_roas: float
+    history_clicks: int
+    history_conversions: int
+    time_remaining_hours: float = 24.0
+
+
+@dataclass
+class BiddingDecision:
+    keyword: str
+    recommended_bid: float
+    reasoning: str
+    intent: str
+    confidence: float
+    within_budget: bool
+
+
+class DARAReasonerAgent:
+    &quot;&quot;&quot;
+    DARA Reasoner：基于竞价情景生成推理链（策略方向）
+    少样本友好：历史数据越少，正则化越强
+    &quot;&quot;&quot;
+
+    def __init__(self, min_history_for_confidence: int = 50):
+        self.min_history = min_history_for_confidence
+
+    def reason(self, ctx: BiddingContext) -&gt; Tuple[str, float]:
+        data_confidence = min(1.0, ctx.history_clicks / self.min_history)
+        acos_gap = ctx.current_acos - ctx.target_acos
+
+        if acos_gap &gt; 0.1:
+            direction = &quot;reduce&quot;
+            magnitude = min(0.2, acos_gap)
+            reasoning = (
+                f&quot;ACOS {ctx.current_acos:.1%} 远超目标 {ctx.target_acos:.1%}，&quot;
+                f&quot;需降价 {magnitude:.0%}。&quot;
+                f&quot;{&#x27;数据充足，可信度高。&#x27; if data_confidence &gt; 0.7 else &#x27;数据稀缺，保守调整。&#x27;}&quot;
+            )
+        elif acos_gap &gt; 0:
+            direction = &quot;slight_reduce&quot;
+            magnitude = 0.05
+            reasoning = f&quot;ACOS 略高，微降 {magnitude:.0%}维持竞争力。&quot;
+        elif ctx.budget_remaining / ctx.budget_total &lt; 0.3:
+            direction = &quot;reduce&quot;
+            magnitude = 0.1
+            reasoning = f&quot;预算剩余不足 30%，降价保存预算。&quot;
+        else:</code></pre>
     <h2>8. 论文来源</h2><ul><li>2601.14711</li><li>2603.05134</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LLM-AutoBidding-MAS" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>MAS-Orchestrator]]</span></li><li><span class='muted'>ROAS-Budget-Optimization]]</span></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>Ad-Attribution-Modeling]]</span></li><li><span class='muted'>AgenticPay-Procurement-Negotiation]]</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-AgenticPay-Procurement-Negotiation.html'>Skill-AgenticPay-Procurement-Negotiation</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>DARA-Agentic-MMM]]</span></li><li><span class='muted'>MAS-Consensus-Mechanism]]</span></li><li><span class='muted'>Multi-Agent-Debate]]</span></li><li><a href='../skills/Skill-DARA-Agentic-MMM.html'>Skill-DARA-Agentic-MMM</a></li><li><a href='../skills/Skill-MAS-Consensus-Mechanism.html'>Skill-MAS-Consensus-Mechanism</a></li><li><a href='../skills/Skill-Multi-Agent-Debate.html'>Skill-Multi-Agent-Debate</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

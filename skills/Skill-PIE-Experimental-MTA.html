@@ -9,45 +9,118 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-PIE-Experimental-MTA</nav>
 <h1>PIE 实验增量预测多触点归因 - Amazon MTA 框架落地</h1>
-<p class="muted">Skill-PIE-Experimental-MTA · 13-广告分析 · status=stable</p>
+<p class="muted">Skill-PIE-Experimental-MTA · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 200 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：品牌全渠道预算沙盘核准（WFB 核心诉求）</p>
+    <p>用 RCT 作宏观锚点，用 ML 做微观分配，再用校准公式强制对齐</p>
     <h2>2. 核心算法逻辑</h2>
     <p>广告归因的根本悖论：精度 vs 可信度。纯 RCT 实验（停投对照）可以给出无偏的渠道因果增量，但只能看总盘，无法下钻到每一条 Campaign 甚至每一次点击；纯 ML 多触点归因（Shapley / Attention）能细化到触点级别，但平台总是把广告优先投给&quot;本来就要买&quot;的高意图用户，模型捡到的全是&quot;选择偏差&quot;，转化贡献被系统性高估。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>**业务问题**：Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop。投手根据 Last-Click 数据削减 Facebook/TikTok 预算，老板看不到真实因果增量，**高管层（要 RCT）与执行层（要触点）两套数据永远对不上账**，每季度预算分配争论消耗 3-5 天。</li><li>**数据要求**：</li><li>RCT 数据：三渠道分别跑 4 周 Geo-holdout（2500+ 实验单元/渠道）</li><li>触点数据：用户旅程记录（journey_id、channel、timestamp、converted），日均 5000+ 条转化路径</li><li>**预期产出**：</li><li>各渠道 PIE 归因份额（如 Google 59%、Facebook 27%、TikTok 14%）</li><li>替代 Last-Click 的 `roas_pie` 指标，直接写入广告平台报表</li><li>月度预算分配建议表（含 delta 与 action 列）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>- 业务问题：Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop。投手根据 Last-Click 数据削减 Facebook/TikTok 预算，老板看不到真实因果增量，高管层（要 RCT）与执行层（要触点）两套数据永远对不上账，每季度预算分配争论消耗 3-5 天。 - 数据要求： - RCT 数据：三渠道分别跑 4 周 Geo-holdout（2500+ 实验单元/渠道） - 触点数据：用户旅程记录（journey_id、channel、timestamp、converted），日均 5000+ 条转化路径 - 预</p><p>- 业务问题：Apple ATT 导致 Facebook 归因窗口数据缺失率 60%+，ML 模型在数据断点处随机输出，归因报告失真度高达 40%，导致 Facebook 预算被错误削减 30%，实际 ROAS 反而下降。 - 数据要求： - RCT &quot;总盘&quot;锚点：即使触点数据残缺，RCT 仍能给出渠道增量真实值（宏观约束） - 残缺触点数据：允许 journey 内某些触点无 channel 标记（映射到 `unknown`） - 预期产出： - 即使 ML 因数据断点产生偏差，PIE 校准会将所有渠道的总量强制对齐 RCT 增量，防止灾难性偏离 - 输出&quot;ATT 容忍归因报告&quot;：各渠道 P</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>中型品牌月广告费 200 万 × ROAS 提升 10-15%（归因偏差修正）= **20-30 万/月 × 12 = 240-360 万/年**</li><li>决策时间从 3-5 天 → 0.5 天，运营人力节省约 **20 万/年**</li><li>避免 Facebook 被错误削减 30% 导致的 ROAS 损失 = **100-200 万/年**</li><li>**易处**：PIE 框架逻辑清晰，校准公式简洁，本 Skill 提供完整可运行代码</li><li>**易处**：RCT 实验设计（Geo-holdout）母婴品牌通常已有实践经验</li><li>**难处**：需要整合三平台触点日志（ETL 工程量），大品牌可能涉及数据合规与隐私</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+PIE MTA 三步校准 - 最小可运行示例
+依赖: numpy, pandas, scipy
+&quot;&quot;&quot;
+from paper2skills_code.advertising.amazon_mta_pie_2025.model import (
+    PIEAttributionPipeline,
+    simulate_rct_experiment,
+    TouchpointMLEstimator,
+    PIECalibrator,
+)
+
+CHANNELS = [&#x27;google_search&#x27;, &#x27;facebook&#x27;, &#x27;tiktok&#x27;]
+
+# ---- Step 1: 每季度跑一次 RCT 实验 ----
+rct_results = simulate_rct_experiment(
+    channels=CHANNELS,
+    n_treated=5000,
+    n_control=5000,
+    true_incrementality={&#x27;google_search&#x27;: 0.035, &#x27;facebook&#x27;: 0.018, &#x27;tiktok&#x27;: 0.012},
+    seed=42,
+)
+# 输出：{&#x27;google_search&#x27;: {&#x27;rct_incrementality&#x27;: 0.037, &#x27;ci_lower&#x27;: ..., &#x27;ci_upper&#x27;: ...}, ...}
+
+# ---- Step 2: ML 对每日触点路径打分 ----
+estimator = TouchpointMLEstimator(channels=CHANNELS, seed=42)
+touchpoint_df = estimator.generate_touchpoint_data(n_journeys=10000)
+scored_df = estimator.fit_predict(touchpoint_df)
+# scored_df 新增列：ml_prob（无偏）、ml_prob_biased（有偏，待校准）
+
+# ---- Step 3: PIE 校准 ----
+calibrator = PIECalibrator()
+report = calibrator.calibrate(scored_df, rct_results, CHANNELS)
+print(report[[&#x27;channel&#x27;, &#x27;ml_share_biased&#x27;, &#x27;rct_share&#x27;, &#x27;pie_share&#x27;, &#x27;scaling_factor&#x27;]])
+# channel         ml_share_biased  rct_share  pie_share  scaling_factor
+# google_search          0.4138     0.5918     0.5918          1.4300
+# facebook               0.3444     0.2722     0.2722          0.7901
+# tiktok                 0.2417     0.1361     0.1361          0.5630
+
+# ---- 预算建议 ----
+current_budget = {&#x27;google_search&#x27;: 10000, &#x27;facebook&#x27;: 3000, &#x27;tiktok&#x27;: 2000}
+rec = calibrator.budget_recommendation(current_budget, total_budget=15000)
+print(rec[[&#x27;channel&#x27;, &#x27;current_budget&#x27;, &#x27;pie_weight&#x27;, &#x27;recommended_budget&#x27;, &#x27;action&#x27;]])
+# channel         current_budget  pie_weight  recommended_budget  action
+# google_search            10000      0.5917              8876.0      削减
+# facebook                  3000      0.2722              4083.0      增加
+# tiktok                    2000      0.1361              2041.0      持平
+
+# ---- 一行快速调用（Pipeline 封装） ----
+pipeline = PIEAttributionPipeline(channels=CHANNELS, n_journeys=10000, seed=42)
+pipeline.run_rct_experiment()
+pipeline.score_touchpoints()
+final_report = pipeline.calibrate()</code></pre>
     <h2>8. 论文来源</h2><ul><li>2508.08209</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-PIE-Experimental-MTA" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>Uplift-Modeling</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

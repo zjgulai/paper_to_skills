@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-KG-Data-Fusion-Pipeline</nav>
 <h1>KG Data Fusion Pipeline — 多源采集数据驱动的知识图谱自动构建：竞品属性图谱融合</h1>
-<p class="muted">Skill-KG-Data-Fusion-Pipeline · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-KG-Data-Fusion-Pipeline · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 4.5 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：婴儿奶瓶品类竞品属性图谱自动构建</p>
+    <p>母婴跨境电商竞品分析需要整合来自 Amazon、Walmart、品牌官网、用户评论等多源异构数据，构建统一的产品属性知识图谱</p>
     <h2>2. 核心算法逻辑</h2>
     <p>母婴跨境电商竞品分析需要整合来自 Amazon、Walmart、品牌官网、用户评论等多源异构数据，构建统一的产品属性知识图谱。核心挑战有三：</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：选品团队需要对婴儿奶瓶品类建立竞品知识图谱，覆盖 200+ SKU 的品牌、材质、容量、适用月龄、价格、评分等属性，以及产品间的兼容关系（哪些奶嘴可以与哪些奶瓶配合使用），以往依赖人工录入，每月更新需 3 天。</p><p>量化 ROI：节省数据录入人力 18 天/年（约 4.5 万元），图谱查询赋能选品决策，竞品对标报告生成时间从 4 小时降至 20 分钟。</p><p>业务背景：母乳泵主机与配件（奶嘴、法兰、储奶袋）的兼容关系复杂，用户购买主机后常因买错配件退货，退货率约 8%。构建兼容性知识图谱后可支撑&quot;购买了 X 的用户还需要 Y（且兼容）&quot;的推荐。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>4.5 万元</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：5</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：5 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+多源采集数据融合构建知识图谱 Pipeline
+整合实体抽取 + 对齐去重 + 冲突解决 + 图谱存储
+arXiv 参考: 2404.09596 (KGConstruct: LLM-driven KG construction),
+           2401.11903 (UniKGQA: Unified KG Question Answering),
+           2502.14051 (Multi-Source KG Fusion for E-commerce)
+&quot;&quot;&quot;
+
+import json
+import hashlib
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple, Set
+from collections import defaultdict
+import numpy as np
+
+
+# ── 本体与数据结构 ──────────────────────────────────────────────────────────
+
+# 母婴产品领域本体
+BABY_PRODUCT_ONTOLOGY = {
+    &quot;entity_types&quot;: [&quot;Product&quot;, &quot;Brand&quot;, &quot;Category&quot;, &quot;Feature&quot;, &quot;Material&quot;],
+    &quot;relation_types&quot;: [
+        &quot;belongs_to&quot;, &quot;made_by&quot;, &quot;has_feature&quot;, &quot;made_of&quot;,
+        &quot;competes_with&quot;, &quot;compatible_with&quot;, &quot;suitable_for_age&quot;,
+    ],
+    &quot;attribute_types&quot;: {
+        &quot;Product&quot;: [&quot;price&quot;, &quot;rating&quot;, &quot;review_count&quot;, &quot;capacity_ml&quot;,
+                    &quot;min_age_months&quot;, &quot;max_age_months&quot;, &quot;asin&quot;, &quot;title&quot;],
+        &quot;Brand&quot;: [&quot;country_of_origin&quot;, &quot;founded_year&quot;],
+        &quot;Feature&quot;: [&quot;feature_description&quot;],
+    }
+}
+
+
+@dataclass
+class Entity:
+    entity_id: str
+    entity_type: str    # Product, Brand, Category, Feature
+    name: str
+    attributes: Dict[str, Any] = field(default_factory=dict)
+    source: str = &quot;&quot;
+    source_weight: float = 1.0
+
+    def to_dict(self) -&gt; Dict:
+        return {
+            &quot;id&quot;: self.entity_id,
+            &quot;type&quot;: self.entity_type,
+            &quot;name&quot;: self.name,
+            &quot;attributes&quot;: self.attributes,
+            &quot;source&quot;: self.source,
+        }
+
+
+@dataclass
+class Triple:
+    head: str       # entity_id
+    relation: str   # 关系类型
+    tail: str       # entity_id 或 属性值
+    confidence: float = 1.0
+    source: str = &quot;&quot;</code></pre>
     <h2>8. 论文来源</h2><ul><li>2112.09380</li><li>2401.11903</li><li>2404.09596</li><li>2502.14051</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-KG-Data-Fusion-Pipeline" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><span class='muted'>KG-Auto-Construction-Agent-Driven]]</span></li><li><span class='muted'>LLM-Focused-Web-Crawling]]</span></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-LLM-Focused-Web-Crawling.html'>Skill-LLM-Focused-Web-Crawling</a></li></ul>
     <h3>延伸技能</h3><ul><li><span class='muted'>HGT-Heterogeneous-Graph-Transformer]]</span></li><li><a href='../skills/Skill-HGT-Heterogeneous-Graph-Transformer.html'>Skill-HGT-Heterogeneous-Graph-Transformer</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Document-Intelligence-Parsing]]</span></li><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><a href='../skills/Skill-Document-Intelligence-Parsing.html'>Skill-Document-Intelligence-Parsing</a></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

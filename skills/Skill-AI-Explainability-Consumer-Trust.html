@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/11-ai人文.html">11-AI人文</a> / Skill-AI-Explainability-Consumer-Trust</nav>
 <h1>AI Explainability for Consumer Trust — AI 推荐可解释性：消费者信任构建</h1>
-<p class="muted">Skill-AI-Explainability-Consumer-Trust · 11-AI人文 · status=stable</p>
+<p class="muted">Skill-AI-Explainability-Consumer-Trust · 11-AI人文</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：奶粉推荐解释（提升信任度和转化率）</p>
+    <p>为什么&quot;黑盒推荐&quot;损害消费者信任</p>
     <h2>2. 核心算法逻辑</h2>
     <p>为什么&quot;黑盒推荐&quot;损害消费者信任</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>**业务问题**：推荐系统推荐了某款奶粉，但转化率只有 8%，用户反馈&quot;不知道为什么推荐这款，不敢买&quot;。</li><li>**系统处理**：提取 Top-3 特征贡献度，生成消费者友好解释：</li><li>**业务价值**：添加解释后转化率从 8% 提升至 18%（+10pp），退货率降低 23%（用户确认符合需求才购买）</li><li>**业务问题**：WF-D 选品 Agent 推荐进入某品类，团队需要理解推荐依据，而不是盲目执行 Agent 决策。</li><li>**系统处理**：Agent 为每个选品推荐输出可解释报告：</li><li>**业务价值**：团队决策效率提升（不需要反复追问 Agent 依据），对 AI 推荐的接受率从 45% 提升至 78%</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>场景一：奶粉推荐解释（提升信任度和转化率）</p><p>- 业务问题：推荐系统推荐了某款奶粉，但转化率只有 8%，用户反馈&quot;不知道为什么推荐这款，不敢买&quot;。 - 系统处理：提取 Top-3 特征贡献度，生成消费者友好解释： - 业务价值：添加解释后转化率从 8% 提升至 18%（+10pp），退货率降低 23%（用户确认符合需求才购买）</p><p>场景二：WF-D 选品决策透明化（Agent 推荐报告）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**转化率提升**：推荐附加解释后转化率提升 8-12%（高风险品类效果更显著）</li><li>**退货率降低**：23%（用户确认需求匹配才购买，减少冲动购买后退货）</li><li>**Agent 决策接受率**：45% → 78%（可解释报告提升团队对 AI 决策的信任）</li><li>**实施难度**：⭐⭐☆☆☆（无需复杂模型，规则映射即可快速上线）</li><li>**优先级**：⭐⭐⭐⭐☆</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：5</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：5 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Skill-AI-Explainability-Consumer-Trust
+AI 推荐可解释性：LIME 思想的消费者友好实现
+基于 XAI + 消费者信任 2024-2025 研究
+纯 Python 标准库，Python 3.14 兼容，无第三方依赖
+&quot;&quot;&quot;
+from __future__ import annotations
+import math
+from dataclasses import dataclass, field
+from typing import Any, Optional
+
+
+@dataclass
+class FeatureContribution:
+    feature_name: str
+    contribution_score: float
+    raw_value: Any
+    description: str = &quot;&quot;
+
+    def __str__(self) -&gt; str:
+        sign = &quot;+&quot; if self.contribution_score &gt; 0 else &quot;&quot;
+        return f&quot;  {self.feature_name}: {sign}{self.contribution_score:.3f} → {self.description}&quot;
+
+
+CONSUMER_FEATURE_MAP: dict[str, dict[str, str]] = {
+    &quot;age_match&quot;: {
+        &quot;high&quot;: &quot;适合您宝宝的月龄&quot;,
+        &quot;medium&quot;: &quot;月龄基本匹配&quot;,
+        &quot;low&quot;: &quot;月龄匹配度较低&quot;,
+    },
+    &quot;hmo_content&quot;: {
+        &quot;yes&quot;: &quot;含有 HMO 益生元（接近母乳配方）&quot;,
+        &quot;no&quot;: &quot;不含 HMO 成分&quot;,
+    },
+    &quot;brand_trust&quot;: {
+        &quot;high&quot;: &quot;您之前购买过同品牌产品&quot;,
+        &quot;medium&quot;: &quot;口碑良好的品牌&quot;,
+        &quot;low&quot;: &quot;新品牌，暂无购买记录&quot;,
+    },
+    &quot;price_tier&quot;: {
+        &quot;premium&quot;: &quot;高端品质定位&quot;,
+        &quot;mid&quot;: &quot;性价比均衡&quot;,
+        &quot;budget&quot;: &quot;经济实惠选择&quot;,
+    },
+    &quot;safety_cert&quot;: {
+        &quot;passed&quot;: &quot;通过权威安全认证&quot;,
+        &quot;pending&quot;: &quot;认证进行中&quot;,
+    },
+    &quot;rating&quot;: {
+        &quot;high&quot;: &quot;用户评价 4.5 分以上&quot;,
+        &quot;medium&quot;: &quot;用户评价 4.0-4.5 分&quot;,
+        &quot;low&quot;: &quot;用户评价低于 4.0 分&quot;,
+    },
+    &quot;market_gap&quot;: {
+        &quot;high&quot;: &quot;市场空缺度高（竞争机会大）&quot;,
+        &quot;medium&quot;: &quot;市场有一定空缺&quot;,
+        &quot;low&quot;: &quot;市场已较为饱和&quot;,
+    },
+    &quot;compliance_risk&quot;: {
+        &quot;low&quot;: &quot;合规风险低（认证成本可控）&quot;,</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-AI-Explainability-Consumer-Trust" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AI-Humanities-Healing-Cards.html'>Skill-AI-Humanities-Healing-Cards</a></li><li><a href='../skills/Skill-Counterfactual-Recommendation-DCE.html'>Skill-Counterfactual-Recommendation-DCE</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>相关</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-Counterfactual-Recommendation-DCE.html'>Skill-Counterfactual-Recommendation-DCE</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li><li><span class='muted'>相关</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Counterfactual-Recommendation-DCE.html'>Skill-Counterfactual-Recommendation-DCE</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li><li><span class='muted'>相关</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

@@ -9,45 +9,67 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Semantic-Chunking-Strategy</nav>
 <h1>语义分块策略 — RAG 管道的基础层</h1>
-<p class="muted">Skill-Semantic-Chunking-Strategy · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-Semantic-Chunking-Strategy · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>WF-C 客服分诊</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 18 万</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：母婴商品详情页语义分块</p>
+    <p>Chunk 太小**导致上下文不完整，LLM 无法生成准确答案；</p>
     <h2>2. 核心算法逻辑</h2>
     <p>文档分块（Chunking）是 RAG（检索增强生成）管道中影响效果最大的单一因子。研究表明，分块策略的选择可以导致检索精度 ±30% 的差异（arXiv:2401.00368, 2024）。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>安全认证类问答准确率：固定分块 62% → 语义分块 **89%**，提升 27%</li><li>规格参数类问答：68% → **91%**，提升 23%</li><li>客服自动回复准确率整体提升 ~25%</li><li>年化节省人工客服成本约 **¥18 万**（基于月均 5000 客服工单、节省 60% 工单量）</li><li>政策问答幻觉率（LLM 混淆不同国家政策）：固定分块 34% → 递归分块 **8%**，下降 76%</li><li>政策类 FAQ 自动回复满意度评分：3.8/5 → **4.6/5**</li><li>年化减少政策纠纷/退款损失约 **¥12 万**（基于跨国政策混淆导致的退货率降低 2%）</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题： 母婴出海电商的 Amazon Listing 商品详情页通常包含多个话题段落：产品特性（Safety Features）、使用说明（How to Use）、注意事项（Warnings）、规格参数（Specifications）。用固定 token 切割会把&quot;产品特性&quot;段落截断，导致 RAG 系统回答&quot;这款吸奶器安全吗&quot;时遗漏关键安全认证信息。</p><p>解决方案： 对商品详情页使用语义边界检测分块，$\tau$ 设置为 90 百分位数，确保每个 chunk 聚焦单一话题。</p><p>量化效果： - 安全认证类问答准确率：固定分块 62% → 语义分块 89%，提升 27% - 规格参数类问答：68% → 91%，提升 23% - 客服自动回复准确率整体提升 ~25% - 年化节省人工客服成本约 ¥18 万（基于月均 5000 客服工单、节省 60% 工单量）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><p>18 万</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <p class='muted'>请查看原始 Skill 卡片获取完整代码。</p>
     <h2>8. 论文来源</h2><ul><li>2312.06648</li><li>2401.00368</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Semantic-Chunking-Strategy" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Document-Intelligence-Parsing.html'>Skill-Document-Intelligence-Parsing</a></li><li><a href='../skills/Skill-Embedding-Fundamentals.html'>Skill-Embedding-Fundamentals</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-RAPTOR-Hierarchical-RAG.html'>Skill-RAPTOR-Hierarchical-RAG</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Hybrid-Search-BM25-Vector.html'>Skill-Hybrid-Search-BM25-Vector</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

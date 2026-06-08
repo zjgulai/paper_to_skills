@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/12-ml基础.html">12-ML基础</a> / Skill-Cross-Validation-Strategies</nav>
 <h1>Cross-Validation Strategies（交叉验证策略）</h1>
-<p class="muted">Skill-Cross-Validation-Strategies · 12-ML基础 · status=unknown</p>
+<p class="muted">Skill-Cross-Validation-Strategies · 12-ML基础</p>
 <div class="tag-row"><span class='tag'>forecasting</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-A 智能补货</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 3-5 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：吸奶器销量预测模型的时序验证</p>
+    <p>Stratified K-Fold</p>
     <h2>2. 核心算法逻辑</h2>
     <p>交叉验证解决&quot;模型在未知数据上表现如何&quot;的问题——不是依赖一次 train/test split 的&quot;运气&quot;，而是通过多次切分平均来获得稳健的泛化能力估计。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：我们用过去 24 个月数据训练 Prophet 预测下月销量。用随机 K-Fold 会导致&quot;用 12 月数据预测 6 月销量&quot;的荒谬情况——模型看到了未来信息。</p><p>数据要求：24 个月 × 30 SKU 的日销量数据，需按月份做 TimeSeries Split</p><p>预期产出：正确的时序 CV 评估——3 折滚动验证（每次用前 18 个月训、后 3 个月验），MAPE 稳定在 15-20%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：正确的 CV 策略可避免数据泄漏导致的模型虚高评估。母婴场景下，一次错误的模型选型导致上线后表现差，营销预算浪费 3-5 万/次。年化避免损失 **30-80 万元**。</li><li>**实施难度**：⭐⭐☆☆☆（2 星）— scikit-learn 原生支持，仅需理解业务数据特征后选择对应策略</li><li>**优先级评分**：⭐⭐⭐⭐☆（4 星）— 所有模型的正确评估前提，ML 基础层第二核心</li><li>**评估依据**：Model Evaluation 教你&quot;看什么指标&quot;，Cross Validation 教你&quot;怎么看才对&quot;。二者互补。不平衡数据 + 时序数据场景在母婴电商中极为常见（流失率 5%、月度/季度周期性），必须掌握对应 CV 策略</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Cross-Validation Strategies Toolkit
+适用场景：模型稳健评估、时序验证、分组数据防泄漏
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import (
+    KFold, StratifiedKFold, TimeSeriesSplit, GroupKFold,
+    cross_val_score, cross_validate
+)
+from sklearn.metrics import make_scorer, roc_auc_score
+from sklearn.ensemble import RandomForestClassifier
+from typing import Dict, List, Tuple, Optional
+from dataclasses import dataclass
+
+
+@dataclass
+class CVResult:
+    &quot;&quot;&quot;交叉验证结果&quot;&quot;&quot;
+    strategy: str
+    fold_scores: List[float]
+    
+    @property
+    def mean(self) -&gt; float:
+        return np.mean(self.fold_scores)
+    
+    @property
+    def std(self) -&gt; float:
+        return np.std(self.fold_scores)
+    
+    @property
+    def ci95(self) -&gt; Tuple[float, float]:
+        se = self.std / np.sqrt(len(self.fold_scores))
+        return (self.mean - 1.96 * se, self.mean + 1.96 * se)
+    
+    def summary(self) -&gt; str:
+        return f&quot;{self.strategy}: {self.mean:.4f} ± {self.std:.4f} [95%CI: {self.ci95[0]:.4f}, {self.ci95[1]:.4f}]&quot;
+
+
+def select_cv_strategy(
+    X: np.ndarray,
+    y: np.ndarray,
+    problem_type: str = &#x27;classification&#x27;,
+    groups: Optional[np.ndarray] = None,
+    is_time_series: bool = False,
+    n_splits: int = 5
+) -&gt; object:
+    &quot;&quot;&quot;
+    根据数据特征自动选择交叉验证策略
+    
+    Args:
+        X: 特征矩阵
+        y: 标签
+        problem_type: &#x27;classification&#x27; | &#x27;regression&#x27;
+        groups: 分组标签（如 user_id），用于 GroupKFold
+        is_time_series: 是否为时序数据
+        n_splits: 折数
+    &quot;&quot;&quot;
+    if is_time_series:</code></pre>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Validation-Strategies" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Ensemble-Methods.html'>Skill-Ensemble-Methods</a></li><li><a href='../skills/Skill-Hyperparameter-Optimization.html'>Skill-Hyperparameter-Optimization</a></li><li><a href='../skills/Skill-Imbalanced-Data-Handling.html'>Skill-Imbalanced-Data-Handling</a></li><li><a href='../skills/Skill-Model-Evaluation-Metrics.html'>Skill-Model-Evaluation-Metrics</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Time-Series-Forecasting.html'>Skill-Time-Series-Forecasting</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Ensemble-Methods.html'>Skill-Ensemble-Methods</a></li><li><a href='../skills/Skill-Hyperparameter-Optimization.html'>Skill-Hyperparameter-Optimization</a></li><li><a href='../skills/Skill-Imbalanced-Data-Handling.html'>Skill-Imbalanced-Data-Handling</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Time-Series-Forecasting.html'>Skill-Time-Series-Forecasting</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Ensemble-Methods.html'>Skill-Ensemble-Methods</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Time-Series-Forecasting.html'>Skill-Time-Series-Forecasting</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

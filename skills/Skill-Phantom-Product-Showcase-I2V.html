@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/20-ai视频生成.html">20-AI视频生成</a> / Skill-Phantom-Product-Showcase-I2V</nav>
 <h1>Phantom — Product Showcase I2V（商品主体一致性视频生成）</h1>
-<p class="muted">Skill-Phantom-Product-Showcase-I2V · 20-AI视频生成 · status=unknown</p>
+<p class="muted">Skill-Phantom-Product-Showcase-I2V · 20-AI视频生成</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：Amazon Listing 主图 → 动态展示视频</p>
+    <p>MMDiT 架构 + 跨模态对齐</p>
     <h2>2. 核心算法逻辑</h2>
     <p>输入 13 张商品参考图，生成商品保持外观一致性的动态展示视频——商品 Logo、纹理、颜色在视频全程不畸变。这解决了通用 I2V 模型的致命伤：生成视频时商品外观逐渐漂移（&quot;copypaste&quot;信息泄露问题）。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>商品白底主图 1 张（Amazon 主图规格：2000×2000px 白底）</li><li>可选：2-3 张多角度图（侧面/背面/使用场景）提升多视角效果</li><li>文本描述：&quot;smooth 360 rotation of product on white background, studio lighting&quot;</li><li>5 秒产品旋转展示视频，商品纹理/Logo 全程不失真</li><li>批量化：50 SKU × 5 秒 = 250 秒视频内容，总 GPU 成本约 $5</li><li>支持多角度输入时自动生成平滑视角切换</li><li>转化率提升：有视频 listing +20-30% CVR → 月 GMV $50 万 → 月增 $10-15 万</li><li>拍摄成本节省：50 SKU × $500/SKU = $25,000 一次性节省</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题： Amazon 允许在主图位上传视频，有视频的 listing 转化率比纯图片高 20-30%。但母婴品类找专业视频拍摄成本高（$500-1500/SKU），且 50+ SKU 的产品线不可能一一拍摄。</p><p>数据要求： - 商品白底主图 1 张（Amazon 主图规格：2000×2000px 白底） - 可选：2-3 张多角度图（侧面/背面/使用场景）提升多视角效果 - 文本描述：&quot;smooth 360 rotation of product on white background, studio lighting&quot;</p><p>预期产出： - 5 秒产品旋转展示视频，商品纹理/Logo 全程不失真 - 批量化：50 SKU × 5 秒 = 250 秒视频内容，总 GPU 成本约 $5 - 支持多角度输入时自动生成平滑视角切换</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：</li><li>转化率提升：视频覆盖率 10%→90% → CVR +20-25% → 月 GMV $50 万 → 月增 $10-15 万</li><li>拍摄成本节省：50 SKU × $500 = $25,000 一次性</li><li>年化总 ROI：**150-250 万元**</li><li>**实施难度**：⭐⭐⭐☆☆（3 星）— Phantom 1.3B 仅需 8GB VRAM，Apache 2.0 可商用</li><li>**优先级评分**：⭐⭐⭐⭐⭐（5 星）— 直接提升 listing 转化率，是所有 SKU 的通用能力</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Phantom — Product Showcase I2V Pipeline
+基于 Phantom (arXiv:2502.11079) 的推理封装
+
+依赖: pip install diffusers transformers accelerate
+模型: HuggingFace Phantom-Wan-1.3B / Phantom-Wan-14B (Apache 2.0)
+&quot;&quot;&quot;
+
+import torch
+import numpy as np
+from PIL import Image
+from typing import List, Dict, Optional
+from dataclasses import dataclass, field
+
+
+@dataclass
+class ShowcaseConfig:
+    &quot;&quot;&quot;商品展示视频配置&quot;&quot;&quot;
+    product_images: List[str]         # 商品参考图（1-3 张）
+    output_duration_sec: int = 5      # 视频时长
+    fps: int = 16                     # 帧率
+    motion_prompt: str = &quot;&quot;           # 动作描述
+    guidance_scale: float = 5.0       # Phantom 推荐 5.0
+    model_size: str = &quot;1.3B&quot;          # &quot;1.3B&quot; or &quot;14B&quot;
+
+
+class PhantomProductShowcase:
+    &quot;&quot;&quot;
+    Phantom 商品展示视频生成管线
+    
+    模型加载（首次运行自动下载）:
+    from diffusers import PhantomPipeline
+    pipe = PhantomPipeline.from_pretrained(&quot;Phantom-video/Phantom-Wan-1.3B&quot;)
+    &quot;&quot;&quot;
+    
+    SUPPORTED_SIZES = {
+        &quot;1.3B&quot;: {&quot;vram&quot;: &quot;8GB&quot;, &quot;model_id&quot;: &quot;Phantom-video/Phantom-Wan-1.3B&quot;},
+        &quot;14B&quot;: {&quot;vram&quot;: &quot;24GB&quot;, &quot;model_id&quot;: &quot;Phantom-video/Phantom-Wan-14B&quot;},
+    }
+    
+    def __init__(self, model_size: str = &quot;1.3B&quot;):
+        if model_size not in self.SUPPORTED_SIZES:
+            raise ValueError(f&quot;Unsupported size: {model_size}&quot;)
+        self.model_size = model_size
+        self.model_id = self.SUPPORTED_SIZES[model_size][&quot;model_id&quot;]
+        self.device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;
+    
+    def generate_showcase(
+        self,
+        config: ShowcaseConfig,
+        num_inference_steps: int = 50,
+    ) -&gt; Dict:
+        &quot;&quot;&quot;
+        生成商品展示视频
+        
+        Args:
+            config: 展示配置
+            num_inference_steps: 去噪步数
+        
+        Returns:</code></pre>
     <h2>8. 论文来源</h2><ul><li>2502.11079</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Phantom-Product-Showcase-I2V" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html'>Skill-Aquarius-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Brand-Video-Generation.html'>Skill-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-DAWN-Talking-Head-Review.html'>Skill-DAWN-Talking-Head-Review</a></li><li><a href='../skills/Skill-E-Commerce-Video-Benchmark.html'>Skill-E-Commerce-Video-Benchmark</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html'>Skill-Aquarius-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Brand-Video-Generation.html'>Skill-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-DAWN-Talking-Head-Review.html'>Skill-DAWN-Talking-Head-Review</a></li><li><a href='../skills/Skill-E-Commerce-Video-Benchmark.html'>Skill-E-Commerce-Video-Benchmark</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html'>Skill-Aquarius-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-DAWN-Talking-Head-Review.html'>Skill-DAWN-Talking-Head-Review</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>跨域关联</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

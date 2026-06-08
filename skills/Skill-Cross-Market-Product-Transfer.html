@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-Cross-Market-Product-Transfer</nav>
 <h1>Cross-Market Product Transfer（跨市场产品适配性预测）</h1>
-<p class="muted">Skill-Cross-Market-Product-Transfer · 06-增长模型 · status=unknown</p>
+<p class="muted">Skill-Cross-Market-Product-Transfer · 06-增长模型</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 30-60 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景：京东爆款吸奶器 → 判断在 Amazon US/DE/UK 的潜力</p>
+    <p>一个在国内卖爆的母婴品，在海外市场能火吗？</p>
     <h2>2. 核心算法逻辑</h2>
     <p>一个在国内卖爆的母婴品，在海外市场能火吗？ Bert4XMR 将产品表示分解为两个独立组件：市场偏差（market embedding）和通用语义（item embedding）。训练时学习&quot;同一产品在不同市场的表示应接近&quot;，推理时用目标市场的 market embedding 修正预测，同时防止负迁移——避免把中国市场的偏好（如&quot;坐月子&quot;文化）错误迁移到欧美市场。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>Source domain：京东/天猫该品类 6 个月交互数据（用户-商品-购买矩阵）</li><li>Target domain：Amazon US/DE/UK 同品类竞品数据（用于 market embedding 训练）</li><li>产品特征：价格、材质、功能标签、年龄段、认证</li><li>三市场适配性评分：US 0.82 / DE 0.71 / UK 0.78</li><li>市场偏差分析：DE 偏低因为德国市场对&quot;Medela 兼容性&quot;偏好强（我们的产品不兼容）→ 决定 DE 市场暂缓</li><li>US/UK 优先上线，预计月销 300-500 台</li><li>避免 1 次失败选品：节省 $5,000-15,000</li><li>加速决策：从&quot;试销 3 个月看数据&quot;变为&quot;模型预判+小批量验证&quot;</li></ul>
-    <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题： 一款吸奶器在京东月销 5000+ 台（¥399），需要判断是否引入 Amazon US（$59.99）、Amazon DE（€54.99）、Amazon UK（£49.99）。传统做法：凭经验或小批量试销，失败一条 listing 损失 $5,000-15,000（备货+物流+广告）。</p><p>数据要求： - Source domain：京东/天猫该品类 6 个月交互数据（用户-商品-购买矩阵） - Target domain：Amazon US/DE/UK 同品类竞品数据（用于 market embedding 训练） - 产品特征：价格、材质、功能标签、年龄段、认证</p><p>预期产出： - 三市场适配性评分：US 0.82 / DE 0.71 / UK 0.78 - 市场偏差分析：DE 偏低因为德国市场对&quot;Medela 兼容性&quot;偏好强（我们的产品不兼容）→ 决定 DE 市场暂缓 - US/UK 优先上线，预计月销 300-500 台</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：</li><li>减少失败选品：每次避免 $5,000-15,000 损失，月均 2-3 次决策</li><li>加速爆品复制：从&quot;试销 3 个月&quot;→&quot;模型预判 10 分钟 + 小批量验证 2 周&quot;</li><li>年化 ROI：**30-60 万元**</li><li>**实施难度**：⭐⭐⭐☆☆（3 星）— Bert4XMR 开源可部署，需收集各市场交互数据</li><li>**优先级评分**：⭐⭐⭐⭐⭐（5 星）— 直接解决&quot;国内爆款→海外能不能卖&quot;这一最高频选品问题</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Bert4XMR — Cross-Market Product Transfer Pipeline
+基于 Bert4XMR (arXiv:2305.15145) 的简化实现
+
+依赖: pip install torch transformers
+模型: github.com/huzhengfly/Bert4XMR
+&quot;&quot;&quot;
+
+import numpy as np
+from typing import Dict, List, Tuple
+from dataclasses import dataclass
+
+
+@dataclass
+class MarketProfile:
+    &quot;&quot;&quot;市场画像&quot;&quot;&quot;
+    name: str                    # US / DE / UK / JP
+    embedding: np.ndarray        # market bias vector (d,)
+    top_preference_keywords: List[str]  # 该市场偏好关键词
+    data_sparsity: float         # 数据稀疏度 0-1
+
+
+class CrossMarketTransfer:
+    &quot;&quot;&quot;
+    跨市场产品适配性预测
+    
+    简化实现：用 market embedding + item embedding 的余弦相似度作为适配性分数
+    生产环境加载 Bert4XMR 预训练模型
+    &quot;&quot;&quot;
+    
+    def __init__(self, item_embedding_dim: int = 128, market_embedding_dim: int = 32):
+        self.item_dim = item_embedding_dim
+        self.market_dim = market_embedding_dim
+        self.markets: Dict[str, MarketProfile] = {}
+    
+    def register_market(self, name: str, keywords: List[str], 
+                        sparsity: float = 0.0) -&gt; None:
+        &quot;&quot;&quot;注册目标市场&quot;&quot;&quot;
+        embedding = np.random.randn(self.market_dim) * 0.1
+        embedding = embedding / np.linalg.norm(embedding)
+        self.markets[name] = MarketProfile(
+            name=name, embedding=embedding,
+            top_preference_keywords=keywords,
+            data_sparsity=sparsity,
+        )
+    
+    def encode_product(self, features: Dict) -&gt; np.ndarray:
+        &quot;&quot;&quot;
+        产品通用编码
+        
+        features: {category, material, age_range, certifications, price_tier, ...}
+        &quot;&quot;&quot;
+        # 简化：将特征哈希为 item embedding（生产环境用 Bert4XMR encoder）
+        feature_str = f&quot;{features.get(&#x27;category&#x27;,&#x27;&#x27;)}|{features.get(&#x27;material&#x27;,&#x27;&#x27;)}|&quot;
+        feature_str += f&quot;{features.get(&#x27;age_range&#x27;,&#x27;&#x27;)}|{features.get(&#x27;certifications&#x27;,&#x27;&#x27;)}&quot;
+        np.random.seed(hash(feature_str) % (2**31))
+        emb = np.random.randn(self.item_dim) * 0.1
+        return emb / np.linalg.norm(emb)
+    
+    def predict_market_fit(</code></pre>
     <h2>8. 论文来源</h2><ul><li>2305.15145</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Market-Product-Transfer" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Cross-Border-Cold-Start-Forecast.html'>Skill-Cross-Border-Cold-Start-Forecast</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Review-Pain-Point-Mining.html'>Skill-Review-Pain-Point-Mining</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Cold-Start-Forecast.html'>Skill-Cross-Border-Cold-Start-Forecast</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-Review-Pain-Point-Mining.html'>Skill-Review-Pain-Point-Mining</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

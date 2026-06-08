@@ -9,45 +9,104 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Identity-Fragmentation-Debiasing</nav>
 <h1>Identity Fragmentation Debiasing（身份碎片化纠偏）</h1>
-<p class="muted">Skill-Identity-Fragmentation-Debiasing · 13-广告分析 · status=unknown</p>
+<p class="muted">Skill-Identity-Fragmentation-Debiasing · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>广告与投放</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景 1：Instagram 投流 + 独立站下单的跨端 ROI 矫正</p>
+    <p>核心思想**：用户在多设备间切换（手机看广告、电脑下单）导致底层 Cookie/IDFA 无法跨端串联，同一真实用户被拆分为多个&quot;碎片化身份&quot;。这使得广告平台看到的 ROAS 严重失真——有的记录&quot;只有曝光没有购买&quot;，有的记录&quot;只有购买没有广告&quot;。算法通过</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心思想：用户在多设备间切换（手机看广告、电脑下单）导致底层 Cookie/IDFA 无法跨端串联，同一真实用户被拆分为多个&quot;碎片化身份&quot;。这使得广告平台看到的 ROAS 严重失真——有的记录&quot;只有曝光没有购买&quot;，有的记录&quot;只有购买没有广告&quot;。算法通过 Stratified Aggregation（分层聚合） 在 Cohort 层面重建真实曝光与购买的对应关系，无需跨设备图谱，还原因果 ROI。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>字段：`user_id（或邮箱哈希/手机号哈希）| device_id | cohort（地区+时段） | exposed | converted`</li><li>数据源：Instagram Ads API（曝光数据）+ Shopify 后台（订单数据，含 UTM 来源）</li><li>如无 user\_id 关联能力，则退化为 Cohort 层面的聚合统计（不需要用户级关联）</li><li>朴素设备级 ATE：≈ 0.016（严重低估）</li><li>Stratified Aggregation 纠偏后 ATE：≈ 0.055-0.065（接近真实效果）</li><li>纠偏后 ROI 从 0.28 提升至 0.80+，揭示 Instagram 渠道被严重低估</li><li>阻止错误砍预算决策，月预算 $10,000 的品牌每年避免 $20,000+ 的渠道调整损失</li><li>可量化跨端流量的真实变现贡献，输出各渠道的真实增量 ROI</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务问题：女装独立站通过 Instagram（手机端）大量投放信息流广告。后台报表显示广告 CVR 极低（曝光了但转化接近 0），财务部门准备砍掉 Instagram 预算。真实情况是：高活跃用户在手机看到广告后，习惯切换到电脑上完成购买——这部分转化在设备级日志中被完全&quot;断链&quot;，无法归因到 Instagram。</p><p>数据要求： - 字段：`user_id（或邮箱哈希/手机号哈希）| device_id | cohort（地区+时段） | exposed | converted` - 数据源：Instagram Ads API（曝光数据）+ Shopify 后台（订单数据，含 UTM 来源） - 如无 user\_id 关联能力，则退化为 Cohort 层面的聚合统计（不需要用户级关联）</p><p>预期产出： - 朴素设备级 ATE：≈ 0.016（严重低估） - Stratified Aggregation 纠偏后 ATE：≈ 0.055-0.065（接近真实效果） - 纠偏后 ROI 从 0.28 提升至 0.80+，揭示 Instagram 渠道被严重低估</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：1</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <pre class='code-preview'><code>from model import (
+    simulate_cross_device_logs,
+    naive_roi_estimate,
+    StratifiedAggregationDebiaser,
+    bias_decomposition_report,
+)
+
+# 1. 加载数据（或使用模拟数据）
+df = simulate_cross_device_logs(
+    n_true_users=3000,
+    fragmentation_rate=0.40,  # 40% 用户跨设备碎片化
+    ad_lift=0.06,              # 真实广告提升效果 6pp（仅模拟用）
+    seed=2024,
+)
+# df = pd.read_csv(&quot;cross_device_log.csv&quot;)  # 真实数据替换
+
+# 2. 朴素估计（展示有偏结果）
+naive = naive_roi_estimate(df, ad_spend=10000.0)
+print(f&quot;朴素 ATE: {naive[&#x27;naive_lift&#x27;]:.4f}  朴素 ROI: {naive[&#x27;naive_roi&#x27;]:.3f}&quot;)
+# 朴素 ATE: 0.0164   朴素 ROI: 0.279  ← 严重低估（碎片化失真）
+
+# 3. Stratified Aggregation 纠偏
+debiaser = StratifiedAggregationDebiaser(cohort_col=&quot;cohort&quot;, min_cohort_size=20)
+debiaser.fit(df)  # 关键：内部自动按 user_id 聚合，恢复真实曝光/购买状态
+corrected = debiaser.corrected_roi(ad_spend=10000.0, revenue_per_conversion=50.0)
+print(f&quot;纠偏 ATE: {corrected[&#x27;corrected_ate&#x27;]:.4f}  纠偏 ROI: {corrected[&#x27;corrected_roi&#x27;]:.3f}&quot;)
+# 纠偏 ATE: 0.0548   纠偏 ROI: 0.821  ← 接近真实效果
+
+# 4. Cohort 级别报告
+cohort_df = debiaser.cohort_report()
+print(cohort_df)
+# cohort  n_users  n_exposed  n_control  cvr_exposed  cvr_control    ate  ci_lower  ci_upper
+# C05      629        355        274        0.2901       0.1460   0.1442    0.0811    0.2072
+# ...
+
+# 5. 对比汇总
+bias_df = bias_decomposition_report(naive, corrected, true_lift=0.06)
+print(bias_df)</code></pre>
     <h2>8. 论文来源</h2><ul><li>2008.12849</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Identity-Fragmentation-Debiasing" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Identity Fragmentation + CDA</span></li><li><span class='muted'>Identity Fragmentation + DARA Agentic MMM</span></li><li><span class='muted'>Identity Fragmentation + DML</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-GraphTrack-Cross-Device-Tracking.html'>Skill-GraphTrack-Cross-Device-Tracking</a></li><li><a href='../skills/Skill-HGNN-Cross-Device-Matching.html'>Skill-HGNN-Cross-Device-Matching</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

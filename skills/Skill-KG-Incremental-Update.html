@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-KG-Incremental-Update</nav>
 <h1>知识图谱增量更新（KG Incremental Update）</h1>
-<p class="muted">Skill-KG-Incremental-Update · 08-知识图谱 · status=stable</p>
+<p class="muted">Skill-KG-Incremental-Update · 08-知识图谱</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>案例一：价格实时同步——秒级更新 KG 中的促销价格节点</p>
+    <p>增量更新（Incremental Update）</p>
     <h2>2. 核心算法逻辑</h2>
     <p>电商知识图谱的数据不是静态的——新品上架、价格调整、用户评论新增、竞品关系变化，每天都有大量三元组需要更新。若每次变更都触发全量 KG 重建，计算成本极高（百万节点 KG 重建需 48 小时）。增量更新（Incremental Update） 只处理变更的局部子图，将更新耗时压缩至秒级到分钟级。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>KG 价格准确率从 83% 提升至 99.2%（+16pp）</li><li>客服因报价问题的退款率下降 34%，节省 ¥28,000/月</li><li>Prime Day 当天 KGQA 响应延迟 &lt; 200ms（全量重建方案需离线等待）</li><li>新品 KG 融合时间：8h → 12min（-97.5%）</li><li>上架成功率：从 68% 提升至 96%（减少因 KG 缺失关系导致的推荐错误）</li><li>每周节省工程师等待时间：4h × 5 人 = 20 人时</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：亚马逊 Prime Day 期间，价格每 10 分钟可能变化。KG 中的价格三元组若不实时更新，KGQA 给出的&quot;最低价&quot;查询结果会错误，客服机器人报价失准，导致客诉。</p><p>时间衰减应用：历史价格三元组不硬删除，设 $\lambda=0.3/\text{天}$，查询时权重衰减后自动退化。</p><p>量化 ROI： - KG 价格准确率从 83% 提升至 99.2%（+16pp） - 客服因报价问题的退款率下降 34%，节省 ¥28,000/月 - Prime Day 当天 KGQA 响应延迟 &lt; 200ms（全量重建方案需离线等待）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><ul><li>服务器成本：12 vs 0.8 CPU·h × ¥0.5/h = 节省 ¥5.6/天 → **¥2,044/年**</li><li>价格准确率提升减少客诉退款：¥28,000/月 → **¥336,000/年**</li><li>工程师等待时间节省：20 人时/周 × ¥150/h → **¥156,000/年**</li><li>**合计年化 ROI ≈ ¥494,000**</li></ul>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：4</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+知识图谱增量更新系统（KG Incremental Update）
+基于 arXiv:2405.12232, arXiv:2312.14557 等 2024/2025 年方法
+
+功能：
+1. 变更检测（Change Detection）
+2. 影响传播分析（Impact Propagation）
+3. 局部子图更新（Local Subgraph Update）
+4. 一致性验证（Consistency Verification）
+
+Author: paper2skills
+Date: 2026-06-06
+&quot;&quot;&quot;
+
+import hashlib
+import math
+import time
+from typing import (
+    List, Dict, Tuple, Optional, Set, Iterator
+)
+from dataclasses import dataclass, field
+from collections import defaultdict, deque
+from enum import Enum
+
+
+# ============================================================
+# 数据模型
+# ============================================================
+
+class ChangeType(Enum):
+    INSERT = &quot;INSERT&quot;
+    DELETE = &quot;DELETE&quot;
+    UPDATE = &quot;UPDATE&quot;
+
+
+@dataclass
+class TemporalTriple:
+    &quot;&quot;&quot;时序 KG 三元组：(h, r, t, τ)&quot;&quot;&quot;
+    head: str
+    relation: str
+    tail: str
+    timestamp: float                     # Unix 时间戳
+    valid_start: float = 0.0
+    valid_end: float = float(&#x27;inf&#x27;)      # inf = 无限期有效
+    metadata: Dict[str, str] = field(default_factory=dict)
+
+    def triple_id(self) -&gt; str:
+        key = f&quot;{self.head}|{self.relation}|{self.tail}&quot;
+        return hashlib.md5(key.encode()).hexdigest()[:12]
+
+    def is_valid_at(self, t: float) -&gt; bool:
+        return self.valid_start &lt;= t &lt; self.valid_end
+
+    def temporal_weight(self, current_time: float, decay_lambda: float = 0.1) -&gt; float:
+        &quot;&quot;&quot;时间衰减权重 w(τ) = exp(-λ(T - τ))&quot;&quot;&quot;
+        age_days = (current_time - self.timestamp) / 86400.0
+        return math.exp(-decay_lambda * age_days)
+
+
+@dataclass</code></pre>
     <h2>8. 论文来源</h2><ul><li>2312.14557</li><li>2405.12232</li><li>2408.07765</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-KG-Incremental-Update" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><ul><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-Web-Page-Change-Detection.html'>Skill-Web-Page-Change-Detection</a></li></ul>
     <h3>延伸技能</h3><ul><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li></ul>
     <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Realtime-Feature-Collection.html'>Skill-Realtime-Feature-Collection</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>

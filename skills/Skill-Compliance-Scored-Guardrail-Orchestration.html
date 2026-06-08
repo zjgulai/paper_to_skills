@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Compliance-Scored Guardrail Orchestration — 合规评分 Best-of-N 守护编排 · paper2skills Playbook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
+    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+  </header>
+  <div id="search-results" class="search-results hidden"></div>
+  <main class="layout">
+    <aside class="sidebar">
+      <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
+      <a href="../domains/index.html">按领域</a>
+      <a href="../topics/index.html">按主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../graph/overview.html">Skills Graph</a>
+      <a href="../skills/index.html">全部 Skills</a>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/21-合规决策.html">21-合规决策</a> / Skill-Compliance-Scored-Guardrail-Orchestration</nav>
+<h1>Compliance-Scored Guardrail Orchestration — 合规评分 Best-of-N 守护编排</h1>
+<p class="muted">Skill-Compliance-Scored-Guardrail-Orchestration · 21-合规决策</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="two-col">
+  <section>
+    <h2>1. 解决的问题</h2>
+    <p>核心思想：把 LLM 自动生成的合规风险控制从“生成后人工看一眼”升级为同步的加权评分系统。系统并行生成多个候选输出，对每个候选运行 PII、内容安全、schema、领域规则和证据引用检查，计算合规得分；一旦最佳候选超过阈值就提前返回，否则进入人工复核。</p>
+    <h2>2. 核心算法逻辑</h2>
+    <p>核心思想：把 LLM 自动生成的合规风险控制从“生成后人工看一眼”升级为同步的加权评分系统。系统并行生成多个候选输出，对每个候选运行 PII、内容安全、schema、领域规则和证据引用检查，计算合规得分；一旦最佳候选超过阈值就提前返回，否则进入人工复核。</p>
+    <h2>3. 业务应用场景</h2>
+    <p>场景 A：Listing 合规文案自动发布门控</p><p>- 业务问题：AI 自动生成 Amazon/TikTok Shop Listing 时，容易写出“guaranteed safe”“no certification needed”等违规承诺，也可能泄露供应商联系人或测试报告中的 PII。 - 数据要求：候选 Listing 文案、目标市场、品类、供应商测试报告摘要、图片 OCR 文本、平台政策规则。 - 预期产出： - `compliance_score`，如 0.92。 - 命中规则：PII、schema、CPSC/FDA/EU GPSR 规则、证据引用。 - 决策：`accepted` / `human_review_required`。</p><p>场景 B：召回/认证行动摘要的人工复核路由</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：以每日 300 条 AI 生成 Listing/客服/合规摘要计算，若 70% 达到自动通过阈值、每条节省 4 分钟人工初筛，则每月节省约 840 小时；按 $25/hour 估算，约 $21,000/月。</li><li>**风险降低**：PII、违规承诺、缺证据引用从人工抽检变成每次输出必检，适合高风险品类和多市场上架。</li><li>**实施难度**：⭐⭐⭐☆☆。标准库版本可立即落地；生产版需要接入 OCR、DLP、moderation 和 trace。</li><li>**优先级评分**：⭐⭐⭐⭐☆。当前合规域已有规则类 Skill，但缺少一个统一的“生成输出门控 + 审计元数据”编排层。</li><li>**评估依据**：论文公开 readout 报告 5 次候选尝试、20 秒预算、91% compliance；业务侧收益主要来自减少人工初筛和减少违规输出，而非直接复用论文中的 payments win-rate。</li></ul>
+    <h2>7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：paper2skills-code/compliance/compliance_scored_guardrail_orchestration</p>
+    <pre class='code-preview'><code>from paper2skills_code.compliance.compliance_scored_guardrail_orchestration import (
+    ComplianceScoredGuardrailOrchestrator,
+    baby_compliance_guardrails,
+)
+
+orchestrator = ComplianceScoredGuardrailOrchestrator(
+    baby_compliance_guardrails(),
+    threshold=0.88,
+)
+
+result = orchestrator.select_best([
+    {
+        &quot;title&quot;: &quot;Listing draft&quot;,
+        &quot;body&quot;: &quot;Based on evidence, route the US launch through CPSC safety review.&quot;,
+        &quot;evidence_summary&quot;: &quot;Supplier provided battery report and US/EU target-market plan.&quot;,
+        &quot;recommended_action&quot;: &quot;human_review_before_publish&quot;,
+    }
+])
+
+print(result.as_dict())</code></pre>
+    <h2>8. 论文来源</h2><ul><li>2606.01513</li></ul>
+  </section>
+  <aside class="relation-panel">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Compliance-Scored-Guardrail-Orchestration" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Agent-Safety-Guardrails]]</span></li><li><span class='muted'>Amazon-ToS-Compliance-Guardrail]]</span></li><li><a href='../skills/Skill-Agent-Safety-Guardrails.html'>Skill-Agent-Safety-Guardrails</a></li><li><a href='../skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Skill-Amazon-ToS-Compliance-Guardrail</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>- 多模态证据 OCR guardrail</span></li><li><span class='muted'>Reviewer calibration</span></li><li><span class='muted'>配置版本治理</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Category-Compliance-Prescan]]</span></li><li><span class='muted'>Product-Safety-Testing-Requirements]]</span></li><li><span class='muted'>Regulatory-Change-Monitoring]]</span></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Product-Safety-Testing-Requirements.html'>Skill-Product-Safety-Testing-Requirements</a></li><li><a href='../skills/Skill-Regulatory-Change-Monitoring.html'>Skill-Regulatory-Change-Monitoring</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+</body>
+</html>

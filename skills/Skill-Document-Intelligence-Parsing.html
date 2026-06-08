@@ -9,45 +9,126 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html">paper2skills Playbook</a>
+    <nav class="topnav">
+      <a href="../index.html">首页</a>
+      <a href="../domains/index.html">领域</a>
+      <a href="../topics/index.html">主题</a>
+      <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
+      <a href="../graph/overview.html">图谱</a>
+      <a href="../skills/index.html">全部</a>
+    </nav>
     <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
   </header>
   <div id="search-results" class="search-results hidden"></div>
   <main class="layout">
     <aside class="sidebar">
       <a href="../index.html">总览</a>
+      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
       <a href="../domains/index.html">按领域</a>
       <a href="../topics/index.html">按主题</a>
       <a href="../workflows/index.html">工作流</a>
+      <a href="../playbooks/index.html">场景手册</a>
       <a href="../graph/overview.html">Skills Graph</a>
       <a href="../skills/index.html">全部 Skills</a>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Document-Intelligence-Parsing</nav>
 <h1>Document Intelligence Parsing — LLM 驱动的文档智能解析：图文统一 OCR、跨页表格恢复、布局感知推理</h1>
-<p class="muted">Skill-Document-Intelligence-Parsing · 22-数据采集工程 · status=stable</p>
+<p class="muted">Skill-Document-Intelligence-Parsing · 22-数据采集工程</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>场景一：供应商报价单批量解析（WFA 采购流水线）</p>
+    <p>核心创新**：传统 OCR 只输出纯文本，遇到图表/流程图/SVG 就跳过或输出乱码。dots.mocr 将文档中</p>
     <h2>2. 核心算法逻辑</h2>
     <p>供应商发来的报价单是 PDF，工厂产能表是 Excel 截图，海关 HS 编码文件是扫描件——这些&quot;已有但不可用&quot;的数据是母婴跨境电商最大的数据孤岛。传统 OCR（Tesseract）只能识别文字，无法理解表格结构、跨页截断、图文混排。</p>
-    <h2>3. 输入</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>4. 输出</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
-    <h2>5. 业务场景</h2><ul><li>dots.mocr 从合规 PDF 中提取检测项目表格</li><li>Qianfan-OCR 正确识别化学品限制值表格（多层表头：物质名 / 测试方法 / 限制值 / 检测值 / 结论）</li><li>自动对比 REACH 法规阈值 → 生成合规预检报告</li><li>时间：人工 2h/份 → 自动化 5min/份</li></ul>
+    <h2>3. 业务应用场景</h2>
+    <p>业务背景：每季度收到 15-20 家供应商的 PDF 报价单，每份 5-30 页，包含 SKU 表格（商品名/规格/MOQ/阶梯价格/交期）。目前人工录入需要 3-4 天，错误率约 8%。</p><p>业务背景：新品进入欧盟市场前需要检查 CE 声明、REACH 合规报告（通常为 PDF 扫描件），判断是否满足合规要求。</p><p>应用效果： - dots.mocr 从合规 PDF 中提取检测项目表格 - Qianfan-OCR 正确识别化学品限制值表格（多层表头：物质名 / 测试方法 / 限制值 / 检测值 / 结论） - 自动对比 REACH 法规阈值 → 生成合规预检报告 - 时间：人工 2h/份 → 自动化 5min/份</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2>6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2>7. 代码模板</h2>
-    <p>代码块数量：5</p>
-    <p>代码路径：未检测到独立代码路径</p>
+    <p class="muted">代码块数量：5 · 路径：未检测到</p>
+    <pre class='code-preview'><code>&quot;&quot;&quot;
+Document Intelligence Parsing
+整合 dots.mocr (图文统一) + Qianfan-OCR (布局推理) + MinerU-Popo (跨页表格)
+
+论文来源:
+  dots.mocr:    arXiv:2603.13032
+  Qianfan-OCR:  arXiv:2603.13398
+  MinerU-Popo:  arXiv:2605.24973
+&quot;&quot;&quot;
+
+import json
+import re
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
+from enum import Enum
+
+
+class DocumentElementType(Enum):
+    TEXT = &quot;text&quot;
+    TABLE = &quot;table&quot;
+    FIGURE = &quot;figure&quot;
+    TITLE = &quot;title&quot;
+    LIST = &quot;list&quot;
+
+
+@dataclass
+class TableCell:
+    value: str
+    row_span: int = 1
+    col_span: int = 1
+    is_header: bool = False
+
+
+@dataclass
+class ParsedTable:
+    headers: List[List[str]]
+    rows: List[List[str]]
+    caption: str = &quot;&quot;
+    page_start: int = 0
+    page_end: int = 0
+    is_truncated: bool = False
+
+    def to_dicts(self) -&gt; List[Dict[str, str]]:
+        if not self.headers or not self.rows:
+            return []
+        flat_headers = self.headers[-1] if len(self.headers) &gt; 1 else self.headers[0]
+        return [
+            {flat_headers[i]: row[i] for i in range(min(len(flat_headers), len(row)))}
+            for row in self.rows
+        ]
+
+
+@dataclass
+class ParsedFigure:
+    figure_type: str
+    caption: str
+    extracted_data: Dict[str, Any] = field(default_factory=dict)
+    certifications: List[str] = field(default_factory=list)
+
+</code></pre>
     <h2>8. 论文来源</h2><ul><li>2603.13032</li><li>2603.13398</li><li>2605.24973</li></ul>
   </section>
   <aside class="relation-panel">
     <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Document-Intelligence-Parsing" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
     <h3>前置技能</h3><p class='muted'>暂无</p>
     <h3>延伸技能</h3><ul><li><span class='muted'>Dynamic-Lot-Sizing-MOQ]]</span></li><li><span class='muted'>Multi-SKU-Procurement-Budget-Allocation]]</span></li><li><span class='muted'>Procurement-Email-Extraction]]</span></li><li><a href='../skills/Skill-Dynamic-Lot-Sizing-MOQ.html'>Skill-Dynamic-Lot-Sizing-MOQ</a></li><li><a href='../skills/Skill-Multi-SKU-Procurement-Budget-Allocation.html'>Skill-Multi-SKU-Procurement-Budget-Allocation</a></li><li><a href='../skills/Skill-Procurement-Email-Extraction.html'>Skill-Procurement-Email-Extraction</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><span class='muted'>Supplier-Capacity-Planning]]</span></li></ul>
     <h3>可组合技能</h3><ul><li><span class='muted'>Cross-Org-Agent-Protocol]]</span></li><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><span class='muted'>MAS-Dynamic-KG-Collaboration]]</span></li><li><a href='../skills/Skill-Cross-Org-Agent-Protocol.html'>Skill-Cross-Org-Agent-Protocol</a></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-MAS-Dynamic-KG-Collaboration.html'>Skill-MAS-Dynamic-KG-Collaboration</a></li></ul>
   </aside>
-</div></section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
