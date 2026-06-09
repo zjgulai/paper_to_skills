@@ -13,7 +13,7 @@ description: paper2skills 项目技术债、工程债、文档管理债完整清
 
 ## SCQA 背景
 
-**S（情境）** 项目已有 350 Skills、8 工作流、14 手册、414 HTML 页面、部署在 skills.lute-tlz-dddd.top，功能基本完整。
+**S（情境）** 项目已有 360 Skills、9 工作流、15 手册、450+ HTML 页面、部署在 skills.lute-tlz-dddd.top，功能基本完整。
 
 **C（冲突）** 快速迭代积累了大量技术债：单文件5200行的生成器、生成产物提交到 git 导致仓库膨胀12MB、CI 不跑测试、私钥文件游离在 .gitignore 之外、CLAUDE.md 计数偏差127个 Skill。
 
@@ -37,20 +37,20 @@ description: paper2skills 项目技术债、工程债、文档管理债完整清
 
 ### P1 — 本 Sprint 内处理
 
-- [ ] **CODE-C1** `build_css()` 838行 → 提取为外部 `style.css` + `<link>` 引用
+- [x] **CODE-C1**  _→ ✅ 已完成（build_playbook.py 外置 style.css，2026-06-09）_ `build_css()` 838行 → 提取为外部 `style.css` + `<link>` 引用
   - **问题**: 838行 CSS 字符串硬编码在 Python 函数里，无 IDE 支持，每个 HTML 页面内联 41KB CSS
   - **修复**: 构建时 `write_file(out/"assets"/"style.css", build_css())` 已有，但 HTML 仍用 `<link>` 引用——现在是内联的，需改为只生成一次
   - **估时**: 2h
   - **验收**: `style.css` 只存在于 `assets/`，每个 HTML `<head>` 有 `<link rel="stylesheet">`，不再有 `<style>` 标签
 
-- [ ] **CODE-D1** 88个技能 `problem_solved == algorithm_summary` → 修复提取逻辑
+- [x] **CODE-D1**  _→ ✅ 已完成（skill_ps_override.yaml 批量覆盖，dup_ps=0，2026-06-09）_ 88个技能 `problem_solved == algorithm_summary` → 修复提取逻辑
   - **问题**: 25%（88/350）的技能在详情页的"解决的问题"和"核心算法逻辑"显示完全相同的文本
   - **根因**: `first_bold_sentence(algo_text, ...)` 找不到业务句时退化为 `first_nonempty_line(algo_text)` 和 `algorithm_summary` 同源
   - **修复**: 构建时打印 `WARN: dup_ps {skill_id}` 让问题可见；长期从 `SKILL_PS_OVERRIDE` 批量覆盖
   - **估时**: 3h
   - **验收**: 构建日志无 `dup_ps` 警告，或 `python3 -c "..."` 统计重复数为 0
 
-- [ ] **CODE-H1** `KNOWN_SKILL_IDS` 全局可变状态 → 改为参数传递
+- [x] **CODE-H1**  _→ ✅ 已完成（global KNOWN_SKILL_IDS 消除，改 clear/update，2026-06-09）_ `KNOWN_SKILL_IDS` 全局可变状态 → 改为参数传递
   - **问题**: `global KNOWN_SKILL_IDS` 在 `render_pages()` 内写入，在 `link_list()` 内读取，隐式依赖调用顺序
   - **修复**: 将 `KNOWN_SKILL_IDS` 作为参数传给 `link_list(items, skill_ids, nav)`
   - **估时**: 1h
