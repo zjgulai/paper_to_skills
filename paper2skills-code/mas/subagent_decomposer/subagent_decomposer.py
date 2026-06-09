@@ -350,7 +350,7 @@ def demonstrate_decomposition_patterns():
     print("分解模式对比")
     print("=" * 70)
 
-    print("""
+    print(r"""
     横向分解 (Parallel):
       适用: 数据量大、按维度可独立处理
       例: 8 个品类分别分析
