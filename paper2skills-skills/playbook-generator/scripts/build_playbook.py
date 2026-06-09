@@ -3150,10 +3150,10 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
       <span class="brand-icon">P</span>
       <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
     </a>
-    <button class="topbar-ai-btn" id="sb-ai-open" title="与知识库对话">
+    <a class="topbar-ai-btn" href="{nav}chat.html" title="AI 知识库对话">
       <span class="topbar-ai-icon">✦</span>
       <span class="topbar-ai-text">知识库问答</span>
-    </button>
+    </a>
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="{nav}ai-roadmap.html" class="topbar-cta{'  active' if active_nav == 'roadmap' else ''}">AI 路线图 →</a>
@@ -3166,6 +3166,7 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
       <div class="sb-top">
         {sidebar_section('主导航', 
           sidebar_link('index.html', '总览', 'index', '⊞') +
+          sidebar_link('chat.html', 'AI 知识库对话', 'chat', '✦') +
           sidebar_link('playbooks/index.html', '场景手册', 'playbooks', '◧') +
           sidebar_link('agents.html', '智能体广场', 'agents', '◈') +
           sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap', '◉')
@@ -4088,8 +4089,9 @@ p:last-child { margin-bottom: 0; }
   border: 1.5px solid rgba(194,91,110,.3);
   border-radius: var(--r-full);
   background: rgba(194,91,110,.06);
-  color: var(--accent); cursor: pointer;
+  color: var(--accent);
   font-family: var(--font); font-size: 13px; font-weight: 600;
+  text-decoration: none;
   transition: background var(--t), border-color var(--t), transform var(--t), box-shadow var(--t);
   white-space: nowrap; flex-shrink: 0;
 }
@@ -4098,6 +4100,7 @@ p:last-child { margin-bottom: 0; }
   border-color: var(--accent);
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(194,91,110,.15);
+  text-decoration: none;
 }
 .topbar-ai-btn.active {
   background: var(--accent); color: #fff;
@@ -5146,6 +5149,410 @@ tr:hover td { background: var(--bg); }
 }
 """.strip()
 
+def render_chat_page(nav: str = "") -> str:
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI 知识库对话 · paper2skills</title>
+  <link rel="stylesheet" href="{nav}assets/style.css">
+  <style>
+    body {{ overflow: hidden; }}
+    .chat-layout {{
+      display: flex; height: 100vh; flex-direction: column;
+    }}
+    .chat-topbar {{
+      display: flex; align-items: center; gap: 0;
+      height: var(--topbar-height); flex-shrink: 0;
+      padding: 0 20px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border-bottom: 1px solid var(--nav-border);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+    }}
+    .chat-back {{
+      display: flex; align-items: center; gap: 6px;
+      color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 500;
+      padding: 6px 10px; border-radius: var(--r-md);
+      transition: background var(--t);
+      flex-shrink: 0;
+    }}
+    .chat-back:hover {{ background: var(--accent-light); text-decoration: none; }}
+    .chat-title-area {{
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      gap: 10px;
+    }}
+    .chat-title-icon {{
+      font-size: 20px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }}
+    .chat-title-text {{
+      font-size: 15px; font-weight: 650; letter-spacing: -.02em; color: var(--ink);
+    }}
+    .chat-title-sub {{
+      font-size: 11.5px; color: var(--muted); font-weight: 400;
+      padding: 3px 9px; background: var(--panel-2); border-radius: var(--r-full);
+      border: 1px solid var(--line);
+    }}
+    .chat-ctrl {{
+      flex-shrink: 0; display: flex; align-items: center; gap: 10px;
+    }}
+    .web-search-toggle {{
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12.5px; color: var(--muted); cursor: pointer;
+      padding: 5px 10px; border-radius: var(--r-full);
+      border: 1.5px solid var(--line); background: var(--panel);
+      transition: all var(--t); user-select: none;
+    }}
+    .web-search-toggle.on {{
+      color: var(--accent); border-color: var(--accent);
+      background: var(--accent-light); font-weight: 600;
+    }}
+    .web-search-toggle-icon {{ font-size: 14px; }}
+    .chat-body {{
+      flex: 1; display: flex; flex-direction: column;
+      max-width: 760px; width: 100%; margin: 0 auto;
+      padding: 0 16px; overflow: hidden;
+    }}
+    .chat-messages {{
+      flex: 1; overflow-y: auto; padding: 28px 0 12px;
+      display: flex; flex-direction: column; gap: 20px;
+    }}
+    .chat-messages::-webkit-scrollbar {{ width: 4px; }}
+    .chat-messages::-webkit-scrollbar-thumb {{ background: var(--line-strong); border-radius: 4px; }}
+    .cmsg {{ display: flex; gap: 12px; align-items: flex-start; }}
+    .cmsg-user {{ flex-direction: row-reverse; }}
+    .cmsg-avatar {{
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; margin-top: 2px;
+    }}
+    .cmsg-user .cmsg-avatar {{
+      background: var(--panel-3); color: var(--muted); font-size: 11px;
+    }}
+    .cmsg-body {{ flex: 1; min-width: 0; }}
+    .cmsg-name {{
+      font-size: 11px; font-weight: 600; letter-spacing: .02em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+    }}
+    .cmsg-user .cmsg-name {{ text-align: right; }}
+    .cmsg-bubble {{
+      display: inline-block; max-width: 100%;
+      padding: 12px 16px; border-radius: 4px 18px 18px 18px;
+      background: var(--panel); border: 1px solid var(--line);
+      font-size: 14.5px; line-height: 1.72; color: var(--ink);
+      box-shadow: var(--shadow-xs);
+    }}
+    .cmsg-user .cmsg-bubble {{
+      background: var(--accent); color: #fff; border-color: transparent;
+      border-radius: 18px 4px 18px 18px; box-shadow: none;
+    }}
+    .cmsg-bubble strong {{ font-weight: 700; }}
+    .cmsg-bubble code {{
+      background: rgba(0,0,0,.06); padding: 2px 6px;
+      border-radius: 5px; font-size: 13px; font-family: 'SF Mono', 'Menlo', monospace;
+    }}
+    .cmsg-bubble br {{ margin: 0; }}
+    .cmsg-web-badge {{
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; color: var(--muted); margin-bottom: 6px;
+      padding: 2px 8px; background: var(--panel-2); border-radius: var(--r-full);
+      border: 1px solid var(--line);
+    }}
+    .cmsg-typing .cmsg-bubble::after {{
+      content: ''; display: inline-block; width: 40px; height: 10px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Ccircle cx='5' cy='5' r='3' fill='%2386868b'%3E%3Canimate attributeName='opacity' values='1;0.2;1' dur='1s' begin='0s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='20' cy='5' r='3' fill='%2386868b'%3E%3Canimate attributeName='opacity' values='1;0.2;1' dur='1s' begin='0.2s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='35' cy='5' r='3' fill='%2386868b'%3E%3Canimate attributeName='opacity' values='1;0.2;1' dur='1s' begin='0.4s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E") no-repeat center;
+      vertical-align: middle; margin-left: 4px;
+    }}
+    .chat-welcome {{
+      text-align: center; padding: 40px 20px 20px; color: var(--muted);
+    }}
+    .chat-welcome-icon {{
+      font-size: 48px; display: block; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }}
+    .chat-welcome h2 {{
+      font-size: 22px; font-weight: 700; letter-spacing: -.03em; color: var(--ink);
+      margin: 0 0 8px; border: none; padding: 0;
+    }}
+    .chat-welcome p {{ font-size: 14.5px; color: var(--muted); margin: 0 0 24px; }}
+    .chat-suggestions {{
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 8px;
+    }}
+    .chat-sug-btn {{
+      padding: 8px 16px; border-radius: var(--r-full);
+      border: 1.5px solid var(--line); background: var(--panel);
+      font-size: 13px; color: var(--ink-2); cursor: pointer; font-family: var(--font);
+      transition: border-color var(--t), background var(--t), color var(--t);
+    }}
+    .chat-sug-btn:hover {{
+      border-color: var(--accent); color: var(--accent); background: var(--accent-light);
+    }}
+    .chat-input-area {{
+      flex-shrink: 0; padding: 12px 0 20px;
+      border-top: 1px solid var(--line);
+    }}
+    .chat-input-wrap {{
+      display: flex; align-items: flex-end; gap: 10px;
+      background: var(--panel); border: 1.5px solid var(--line);
+      border-radius: 18px; padding: 10px 12px 10px 16px;
+      transition: border-color var(--t), box-shadow var(--t);
+    }}
+    .chat-input-wrap:focus-within {{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(194,91,110,.10);
+    }}
+    .chat-textarea {{
+      flex: 1; border: none; outline: none; resize: none;
+      font-family: var(--font); font-size: 14.5px; line-height: 1.6;
+      color: var(--ink); background: transparent;
+      min-height: 24px; max-height: 160px;
+      overflow-y: auto;
+    }}
+    .chat-textarea::placeholder {{ color: var(--muted); }}
+    .chat-send-btn {{
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 16px;
+      transition: background var(--t), transform var(--t);
+    }}
+    .chat-send-btn:hover {{ background: var(--accent-dark); transform: scale(1.06); }}
+    .chat-send-btn:disabled {{ opacity: 0.45; cursor: not-allowed; transform: none; }}
+    .chat-hint {{
+      text-align: center; font-size: 11.5px; color: var(--muted);
+      margin-top: 8px;
+    }}
+    @media (max-width: 600px) {{
+      .chat-title-sub {{ display: none; }}
+      .chat-body {{ padding: 0 12px; }}
+    }}
+  </style>
+</head>
+<body>
+  <div class="chat-layout">
+    <header class="chat-topbar">
+      <a class="chat-back" href="{nav}index.html">← 返回</a>
+      <div class="chat-title-area">
+        <span class="chat-title-icon">✦</span>
+        <span class="chat-title-text">AI 知识库对话</span>
+        <span class="chat-title-sub">360 Skills · DeepSeek V3</span>
+      </div>
+      <div class="chat-ctrl">
+        <button class="web-search-toggle" id="web-search-toggle" title="开启后将结合实时网络信息回答">
+          <span class="web-search-toggle-icon">🌐</span>
+          <span id="web-search-label">联网搜索</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="chat-body">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-welcome" id="chat-welcome">
+          <span class="chat-welcome-icon">✦</span>
+          <h2>paper2skills 知识库助手</h2>
+          <p>基于 360 个从顶会论文萃取的跨境电商 AI 决策技能，为你提供专业问答</p>
+          <div class="chat-suggestions">
+            <button class="chat-sug-btn">如何提升广告 ROI？</button>
+            <button class="chat-sug-btn">大促备货如何预测需求？</button>
+            <button class="chat-sug-btn">供应链 AI 有哪些关键技能？</button>
+            <button class="chat-sug-btn">KOL 投放效果怎么归因？</button>
+            <button class="chat-sug-btn">如何预防封号和合规风险？</button>
+            <button class="chat-sug-btn">用户流失预警方法有哪些？</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="chat-input-wrap">
+          <textarea class="chat-textarea" id="chat-input"
+            placeholder="问我关于跨境电商 AI 决策技能的任何问题…"
+            rows="1" autocomplete="off"></textarea>
+          <button class="chat-send-btn" id="chat-send" title="发送 (Enter)">↑</button>
+        </div>
+        <p class="chat-hint">Enter 发送 · Shift+Enter 换行 · 开启联网搜索可获取最新信息</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="{nav}assets/playbook-data.js"></script>
+  <script src="{nav}assets/chat-page.js"></script>
+</body>
+</html>"""
+
+
+def build_chat_page_js() -> str:
+    return r"""
+(function () {
+  const msgsEl   = document.getElementById('chat-messages');
+  const welcome  = document.getElementById('chat-welcome');
+  const textarea = document.getElementById('chat-input');
+  const sendBtn  = document.getElementById('chat-send');
+  const webToggle= document.getElementById('web-search-toggle');
+  const webLabel = document.getElementById('web-search-label');
+
+  let webSearchOn = false;
+  let history = [];
+
+  webToggle.addEventListener('click', () => {
+    webSearchOn = !webSearchOn;
+    webToggle.classList.toggle('on', webSearchOn);
+    webLabel.textContent = webSearchOn ? '已开启联网' : '联网搜索';
+  });
+
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 160) + 'px';
+  });
+  textarea.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+  });
+  sendBtn.addEventListener('click', doSend);
+
+  document.querySelectorAll('.chat-sug-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      textarea.value = btn.textContent.trim();
+      textarea.dispatchEvent(new Event('input'));
+      doSend();
+    });
+  });
+
+  function md(text) {
+    return text
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.+?)\*\*/gs,'<strong>$1</strong>')
+      .replace(/\*([^*\n]+)\*/g,'<em>$1</em>')
+      .replace(/`([^`\n]+)`/g,'<code>$1</code>')
+      .replace(/^#{1,3}\s+(.+)$/gm,'<strong style="font-size:15px">$1</strong>')
+      .replace(/^[-•]\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">• $1</span>')
+      .replace(/^\d+\.\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">$&</span>')
+      .replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');
+  }
+
+  function addMsg(text, role, webBadge) {
+    if (welcome) welcome.style.display = 'none';
+    const row = document.createElement('div');
+    row.className = 'cmsg cmsg-' + role;
+    const avatar = document.createElement('div');
+    avatar.className = 'cmsg-avatar';
+    avatar.textContent = role === 'bot' ? '\u2726' : 'U';
+    const body = document.createElement('div');
+    body.className = 'cmsg-body';
+    const name = document.createElement('div');
+    name.className = 'cmsg-name';
+    name.textContent = role === 'bot' ? 'AI 助手' : '你';
+    body.appendChild(name);
+    if (webBadge) {
+      const badge = document.createElement('div');
+      badge.className = 'cmsg-web-badge';
+      badge.innerHTML = '🌐 联网搜索';
+      body.appendChild(badge);
+    }
+    const bubble = document.createElement('div');
+    bubble.className = 'cmsg-bubble';
+    if (role === 'bot') { bubble.innerHTML = md(text); }
+    else { bubble.textContent = text; }
+    body.appendChild(bubble);
+    row.appendChild(avatar);
+    row.appendChild(body);
+    msgsEl.appendChild(row);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    return { row, bubble };
+  }
+
+  function addTyping() {
+    if (welcome) welcome.style.display = 'none';
+    const row = document.createElement('div');
+    row.className = 'cmsg cmsg-bot cmsg-typing';
+    const avatar = document.createElement('div');
+    avatar.className = 'cmsg-avatar';
+    avatar.textContent = '\u2726';
+    const body = document.createElement('div');
+    body.className = 'cmsg-body';
+    const name = document.createElement('div');
+    name.className = 'cmsg-name';
+    name.textContent = 'AI 助手';
+    const bubble = document.createElement('div');
+    bubble.className = 'cmsg-bubble';
+    body.appendChild(name);
+    body.appendChild(bubble);
+    row.appendChild(avatar);
+    row.appendChild(body);
+    msgsEl.appendChild(row);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    return row;
+  }
+
+  function buildContext() {
+    const DATA = window.PLAYBOOK_DATA || {};
+    return (DATA.skills || []).slice(0, 80).map(s =>
+      s.skill_id + ': ' + (s.problem_solved || s.algorithm_summary || '').slice(0, 140)
+    ).join('\n');
+  }
+
+  async function doSend() {
+    const text = textarea.value.trim();
+    if (!text || sendBtn.disabled) return;
+    textarea.value = '';
+    textarea.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+
+    const typing = addTyping();
+    const ctx = buildContext();
+    const systemPrompt = `你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策技能。知识库收录了360个从顶会论文（NeurIPS/KDD/ICML/WWW）萃取的可落地业务技能，涵盖供应链优化、广告归因、用户分析、KOL投放、合规决策、智能体工程等领域。请用清晰、结构化的中文回答，优先引用知识库中的具体Skill，给出可操作建议。当前时间：${new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'})}。`;
+
+    const messages = [
+      { role: 'system', content: systemPrompt + '\n\n知识库摘要（前80条Skill）：\n' + ctx },
+      ...history.slice(-6)
+    ];
+
+    try {
+      const body = {
+        model: 'deepseek-chat',
+        messages,
+        max_tokens: 1200,
+        temperature: 0.6,
+        stream: false
+      };
+      if (webSearchOn) {
+        body.tools = [{ type: 'function', function: { name: 'web_search', description: 'Search the web for current information', parameters: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] } } }];
+        body.tool_choice = 'auto';
+      }
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      const choice = data?.choices?.[0];
+      let answer = choice?.message?.content?.trim();
+      if (!answer && choice?.finish_reason === 'tool_calls') {
+        answer = '（已触发联网搜索，DeepSeek 正在整合结果…）\n\n' + (choice?.message?.tool_calls?.[0]?.function?.arguments || '');
+      }
+      answer = answer || '抱歉，暂时无法获取回答，请稍后重试。';
+      typing.remove();
+      addMsg(answer, 'bot', webSearchOn);
+      history.push({ role: 'assistant', content: answer });
+    } catch (e) {
+      typing.remove();
+      addMsg('网络请求失败，请检查连接后重试。', 'bot');
+    } finally {
+      sendBtn.disabled = false;
+      textarea.focus();
+    }
+  }
+})();
+"""
+
+
 def build_ai_chat_js() -> str:
     return r"""
 (function () {
@@ -5244,11 +5651,10 @@ def build_ai_chat_js() -> str:
     const userPrompt = `知识库摘要（前80条 Skill）：\n${ctx}\n\n用户问题：${text}`;
 
     try {
-      const res = await fetch('https://api.deepseek.com/chat/completions', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer sk-aae11f4438f943b9bf32a233620437bd'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           model: 'deepseek-chat',
@@ -5403,6 +5809,8 @@ def render_pages(
     write_file(out / "assets" / "graph.js",   build_graph_js())
     write_file(out / "assets" / "ego-graph.js", build_ego_graph_js())
     write_file(out / "assets" / "ai-chat.js", build_ai_chat_js())
+    write_file(out / "assets" / "chat-page.js", build_chat_page_js())
+    write_file(out / "chat.html", render_chat_page())
 
     # ── Index (Phase 3C) ──
     write_file(out / "index.html", html_page(
