@@ -427,8 +427,6 @@ class PlaybookSkill:
     domain_key: str
     domain_dir: str
     path: str
-    status: str = "unknown"
-    topic: str = ""
     algorithm_summary: str = ""
     problem_solved: str = ""
     business_scenarios: list[str] = field(default_factory=list)
@@ -791,8 +789,6 @@ def build_skills(root: Path, vault: Path, graph: SkillsGraph) -> list[PlaybookSk
             domain_key=domain_key,
             domain_dir=domain_dir,
             path=rel_path,
-            status=fm.get("status", "unknown"),
-            topic=fm.get("topic", ""),
             algorithm_summary=first_nonempty_line(algo_text, first_nonempty_line(body, skill_id)),
             problem_solved=_clean_problem_solved(
                 first_bold_sentence(algo_text, first_nonempty_line(scenario_text, "")),
