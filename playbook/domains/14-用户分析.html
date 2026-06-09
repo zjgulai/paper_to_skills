@@ -47,7 +47,7 @@
     <section class="content"><h1>14-用户分析</h1><p>Funnel, cohort, clickstream, trajectory, traffic source</p><div class='cards'><article class="card skill-card">
   <h3><a href="../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html">AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>传统 LLM 摘要&quot;无约束自由生成&quot;产生幻觉(摘要包含评论中不存在的属性). AGRS 把摘要任务结构化:ABSA 提取 aspect-sentiment → canonical 归一化 → 代表性评论加权采样 → 结构化 prompt 引导 LLM 生成. 100% 基于真实评论,根本规避幻觉. 4 阶段 pipeline 端到端可扩展到百万产品.</p>
+  <p>业务问题:Momcozy 在 Amazon US/DE 同时销售紫外线消毒器,每季度 1-2 万条评论,人工汇总需要 2-3 个产品经理 × 1 周;管理层季度复盘和供应链/产品团队迭代输入严重滞后 - 数据要求:Amazon Review API 季度评论数据(评论文本 + 评分 + 市场标记) - AGRS 配置: - ABSA 提取每条评论的 ≤5 个 aspect-sentiment 对(如 `disinfection_effe</p>
   <div class="card-badges"><span class='roi-badge'>1.5 万/月</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -59,13 +59,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Cohort-Retention-Analysis.html">Cohort Retention Analysis for User Lifecycle</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>核心问题：新用户来了之后，第7天还剩多少？第30天呢？第90天呢？不同月份来的用户，留存曲线一样吗？Cohort分析把用户按&quot;首次活跃时间&quot;分组，追踪每组的留存轨迹。</p>
+  <p>业务问题：Momcozy 2025年1月新注册用户10,000人，D7留存15%，D30留存5%</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-GPLR-Persona-Generation.html">GPLR 用户人群标签生成 - 购买行为到可解释 Persona 的低成本桥接</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>用户购买行为包含丰富的人群信号，但直接为百万用户调用 LLM 标注成本极高。GPLR 解决这个矛盾：用少量 LLM 标注 + 图结构传播覆盖全量用户。三步流程：① Diversity-Uncertainty（DU）采样选出最有代表性的&quot;原型用户&quot;做 LLM 标注；② LLM 基于购买历史为原型用户赋予 Persona 标签；③ 在用户-产品交互图上随机游走，将标签从有标注用户传播至全量未标注用户。</p>
+  <p>业务问题：Momcozy 在 Amazon US 有 10 万+ 活跃用户，现有 RFM 分群只能区分&quot;高消费/低消费&quot;，营销团队无法针对&quot;出差妈妈&quot;&quot;新手妈妈&quot;制定差异化素材；人工打标既慢又贵 - 数据要求：Amazon 订单数据（`user_id`, `product_id`, `purchase_date`）+ 预定义 Persona 集合（如：职场背奶妈妈 / 全职新手妈妈 / 出差旅行妈妈 / 静音敏感型 / 价格敏感型） -</p>
   <div class="card-badges"><span class='roi-badge'>10 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -119,19 +119,19 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Session-Intent-Shift.html">Session意图漂移建模 - 跨会话用户购买意图变化检测</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>现有电商推荐系统多依赖商品标题、价格等表层属性推断用户意图，且只关注单次购买或单会话内的短期偏好变化。SessionIntentBench 的核心创新在于：提出意图树（Intention Tree）概念，通过跨会话建模用户意图的时序演化，构建大规模多模态意图基准。</p>
+  <p>业务问题：桑基图展示了页面间流量（如&quot;首页→分类页→PDP→加购→支付&quot;），但缺少&quot;为什么用户走这条路&quot;的语义信息</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Shopping-Companion-Agent.html">Shopping Companion — 跨会话偏好记忆购物助手（4B≈GPT-5，Lazada真实数据）</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>传统推荐系统的致命缺陷：每次会话从零开始——用户上周告诉导购&quot;我要有机配方奶&quot;，下次进来又要重新解释，累计咨询成本极高，转化率低。Shopping Companion 的创新在于构建跨会话长期偏好记忆，将用户偏好结构化存储，Agent 可在后续会话中直接调用，像&quot;私人导购&quot;一样记住每位用户的长期喜好。</p>
+  <p>业务痛点：用户上月购买 Stage 1 奶粉（0-6月龄），宝宝即将 6 个月，需要升阶</p>
   <div class="card-badges"><span class='roi-badge'>10万</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Sparse-Matrix-Completion.html">超稀疏矩阵补全 - 每行仅2-5个观测值的页面转移矩阵恢复</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>传统矩阵补全（如 SoftImpute、ALS）假设&quot;大部分条目可观测&quot;，但电商session的页面转移矩阵天然稀疏——每个用户session只有3-5次页面跳转，导致采样概率 `p = C/d`（C≈2-5, d=页面类型数），绝大多数转移对从未被同一用户触发。</p>
+  <p>业务问题：母婴独立站有10种页面类型（HOME/SEARCH/CAT/PDP/CART/CHECKOUT/PAY/REVIEW/BLOG/SUPPORT），理论上有 10×10=100 个可能的转移组合</p>
   <div class="card-badges"><span class='roi-badge'>高</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
@@ -143,7 +143,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-TRACE-Clickstream-Embedding.html">TRACE 跨会话点击流用户嵌入</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>传统序列推荐模型只看单会话内的商品点击序列，TRACE 的创新在于：把整个用户的多会话页面浏览历史（包括首页、搜索页、详情页、购物车、结账等各类页面，跨越数天甚至数周）打包成一条有序序列，送入轻量级 Transformer Encoder 学习全局用户状态嵌入。</p>
+  <p>业务问题： 母婴出海跨境独立站（如婴儿推车、有机奶粉、儿童安全座椅品类）面临典型问题：用户决策周期长（备孕→孕期→育儿长达数年），单次会话转化率极低（通常 &lt;1%），但通过多次访问才能判断哪些用户真正处于购买决策阶段</p>
   <div class="card-badges"><span class='roi-badge'>10 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
@@ -173,7 +173,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Utimac-Uncertainty-Completion.html">不确定性感知矩阵补全 - 补全值带置信区间的页面转移矩阵恢复</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>Utimac 的核心洞察是：不直接补全矩阵条目，而是推断数据生成过程的参数（Estimate the Process, Not the Entries）。</p>
+  <p>业务问题：跨境电商平台（如独立站）的用户行为分析依赖页面转移矩阵——HOME 页流向哪里</p>
   <div class="card-badges"><span class='roi-badge'>5-20 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>广告与投放</span></div>
 </article></div></section>

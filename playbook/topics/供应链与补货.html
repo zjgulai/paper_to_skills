@@ -47,19 +47,19 @@
     <section class="content"><h1>供应链与补货</h1><div class='cards'><article class="card skill-card">
   <h3><a href="../skills/Skill-Causal-Attribution-Bridge.html">Causal Attribution Bridge（因果归因桥梁）</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>传统广告归因是相关性的（&quot;点了广告→买了&quot;），因果归因是反事实的（&quot;如果没有这个广告→还会买吗&quot;）。核心：用增量因果效应替代 naive 归因比例。</p>
+  <p>TikTok 内容归因：naive 归因给 45%，因果 ITE 只有 32%——因为 13% 的&quot;内容驱动购买&quot;实际上是用户本身的品类偏好驱动的</p>
   <div class="card-badges"><span class='roi-badge'>10-20 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Causal-Discovery-PC-Algorithm.html">Causal Discovery with PC Algorithm</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>核心思想：从纯观测数据（无干预、无实验）中自动发现变量间的因果结构。PC 算法通过系统的条件独立性检验，逐步剔除无关边、识别 v-structures、传播方向约束，最终输出一个有向无环图（DAG）或部分定向图（CPDAG）。</p>
+  <p>业务问题：Momcozy 美国站想理解广告 spend、竞品 price、季节 index、促销活动、KOL 合作这 5 个因素如何因果影响周销量</p>
   <div class="card-badges"><span class='roi-badge'>首年投入约 5 万元，避免 1-2 次重大错误决策即可收回成</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Conformal-Risk-Assessment.html">Conformal Risk Assessment — 共形预测业务风险量化：覆盖率保证的区间估计</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>共形预测的核心保证：共形预测（Conformal Prediction, CP）在无需分布假设的条件下，为任意黑盒预测模型提供覆盖率理论保证。对于置信水平 1-α（如 90%），输出的预测区间 `[lower, upper]` 在有限样本下满足：`P(y ∈ [lower, upper]) ≥ 1-α`。这一保证来自数据可交换性（exchangeability），而非 Gaussian 分布假设。</p>
+  <p>但预测误差未被显式量化，导致高估时积压、低估时缺货，实测缺货率 8%</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -71,7 +71,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AB-Experimental-Design.html">Skill: A/B 实验设计基础</a></h3>
   <p class="muted">02-A_B实验</p>
-  <p>A/B 测试的统计严谨性建立在样本量规划、功效保证和方差控制三大支柱上。本技能基于 Zhou et al. (2023) 的系统性综述，将学术界的最佳实践封装为可直接调用的 Python 工具包，解决电商实验中最常见的四类问题</p>
+  <p>Momcozy 在 Amazon 详情页测试新版主图，基线转化率 2.5%，期望通过改版实现 10% 相对提升（即达到 2.75%）</p>
   <div class="card-badges"></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -119,7 +119,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Forecast-Driven-Inventory.html">Forecast-Driven Inventory（预测驱动库存优化）</a></h3>
   <p class="muted">03-时间序列</p>
-  <p>打通需求预测和库存决策——不是先预测再独立决策，而是将预测不确定性直接编码为库存策略参数。核心：服务水平优化——给定预测分布 $N(\hat{\mu}, \hat{\sigma})$，安全库存 $SS = z_\alpha \cdot \hat{\sigma} \cdot \sqrt{LT}$，其中 $z_\alpha$ 由缺货成本 vs 持有成本决定。</p>
+  <p>吸奶器月需求预测 1200±200，提前期 30 天，缺货成本 $25/件，持有成本 $3/件</p>
   <div class="card-badges"><span class='roi-badge'>8-12 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>供应链与补货</span></div>
 </article><article class="card skill-card">
@@ -155,7 +155,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Temporal-Fusion-Transformer.html">Skill: Temporal Fusion Transformer (TFT)</a></h3>
   <p class="muted">03-时间序列</p>
-  <p>核心思想：TFT 是一种专为多水平时间序列预测设计的深度学习架构，能够同时处理静态特征（如产品类别）、时变已知特征（如节假日）和时变未知特征（如历史销量），并提供可解释的预测结果。</p>
+  <p>业务问题：预测数百个 SKU 未来 7-30 天销量，考虑节假日、促销和季节性</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span></div>
 </article><article class="card skill-card">
@@ -191,7 +191,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Inventory-Health-Aging-Attribution.html">Business Metric-Aware Forecasting for Inventory Management</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：库存健康诊断不是&quot;某个 SKU 库存多少&quot;，而是回答三个问题：① 这批货还能动吗（FSN分级）？② 过多还是过少（Over/Under stock 三态）？③ 为什么和计划不一样（供应计划方差归因到4类根因）。同时严格区分「预测准确率（Forecast Accuracy）」和「计划准确率（Plan Accuracy）」——两者可以完全脱钩。</p>
+  <p>业务问题：618 大促结束后，某 SKU 实际期末库存比计划低 800 件，导致大促期间断货 3 天</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
@@ -239,7 +239,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-New-Product-Inventory-Coldstart.html">Pre-launch new product demand forecasting using Bass model with ML</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：新品上市前无历史销量，但不是无信息——相似 SKU 的历史数据、产品属性特征、Bass 扩散参数估计三条路径可以构建新品的需求先验分布。上市后用贝叶斯更新快速收敛，并通过「探索加成」（首批量刻意多订一点以加速学习）避免因首批订少而永久缺乏数据的陷阱。</p>
+  <p>场景 A：新款 UV-C 密闭消毒器上市首批备货（强相似 SKU 存在）</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -257,7 +257,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Promotion-Demand-Decomposition.html">Demand Forecasting During Grand Promotion for Online Retailing (JD.com)</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：把任意一个 SKU 的历史销量分解为两个互相独立的信号——「基线需求」（正常销售节奏）和「促销 lift」（大促拉动的额外需求）——分别建模、分别备货，并专门处理大促结束后需求虚高的「Post-Promotion Elevation（PPE）」问题，避免系统在大促后 3 个月内持续过量备货。</p>
+  <p>场景 A：Momcozy 618 大促备货拆解（5 月初下单，lead time 6 周）</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -269,13 +269,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Supplier-Capacity-Planning.html">Multi-objective multi-site supplier selection and order splitting</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：当旺季需求（如双11前 8,000 件/月）超过工厂单月产能（5,000 件），需要解决三个问题：① 提前多久开始生产（提前期排程）？② 多供应商时如何分单（Pareto 前沿）？③ 产能完全满足不了时，哪个 SKU 优先（优先级排序）？</p>
+  <p>业务问题：吸奶器工厂月产能 5,000 件，8-10 月三个月需求分别为 6,500/8,000/4,000 件，总缺口 3,500 件</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html">Supply Chain Causal SCM — 数据驱动供应链根因归因：DAG + DoWhy GCM</a></h3>
   <p class="muted">04-供应链</p>
-  <p>为什么传统归因不够：瀑布式逻辑（&quot;缺货→往上查库存→往上查采购&quot;）本质上是相关性分析，无法区分&quot;A 导致 B&quot;与&quot;C 同时导致 A 和 B&quot;。实际供应链中，多因素常常通过间接路径（中介变量）影响结果——比如&quot;需求预测误差→战术产能调整→Capped Out Hours（COH）&quot;，传统归因会错误地把间接效应归给直接可见的变量。</p>
+  <p>业务问题：母婴奶粉 SKU 出现缺货（库存降至 0），损失 GMV 约 8 万元/周</p>
   <div class="card-badges"><span class='roi-badge'>5-10 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span></div>
 </article><article class="card skill-card">
@@ -305,13 +305,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-MAS-Collaborative-Recommendation.html">MAS Collaborative Recommendation — 多智能体协同个性化推荐：LLM Agent 异构协作框架</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>传统推荐系统是单一模型的端到端优化，难以整合多维用户意图（价格敏感、品牌偏好、安全认证关注）。MAS Collaborative Recommendation 将推荐任务分解为多个专业化 LLM Agent 的协作问题</p>
+  <p>业务背景：跨境母婴电商选品需要同时考虑：① 当前趋势（TikTok热词）② 安全认证（FDA/CE）③ 价格竞争力 ④ 用户历史偏好</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Marketing-Driven-Recommendation.html">Marketing-Driven Recommendation — 营销活动驱动的推荐系统：Promotion-Aware 个性化协同优化</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>传统推荐系统的目标是最大化用户相关性（CTR/CVR），营销系统的目标是最大化 GMV 和促销 ROI。这两个目标通常分开优化，导致推荐了用户喜欢但不需要促销的商品（浪费预算），或促销了高利润商品但对用户不相关（浪费曝光）。</p>
+  <p>业务背景：母婴品类 Amazon Prime Day 期间，运营团队准备了 200 个参与促销的 SKU（折扣率 15%-50%），需要对不同用户展示「最可能因折扣购买」的商品组合，而非单纯推热销榜</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -377,7 +377,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Guardrailed-CATE-NBA.html">Guardrailed CATE-NBA</a></h3>
   <p class="muted">06-增长模型</p>
-  <p>光算出每个用户的增量效应（CATE）还不够——真实业务有预算上限、有高净值用户保护、有每天不能无限制打扰用户的体验红线。Guardrailed CATE-NBA 打通了&quot;预测→决策&quot;的最后一公里：三层漏斗把因果估算的结果直接转化为带约束的最优行动名单。</p>
+  <p>业务问题 数据库里 80 万 90 天未下单的沉默用户，运营想全量发 50 元满减券激活，但财务要求总促销预算不超过 1 万美元，且担心本来明天就要下单的老客&quot;白吃&quot;优惠</p>
   <div class="card-badges"><span class='roi-badge'>10 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -431,7 +431,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-GNN-Foundations.html">GNN Foundations（图神经网络基础）</a></h3>
   <p class="muted">08-知识图谱</p>
-  <p>GNN 三大基础架构的统一入门：GCN（图卷积，邻居特征加权平均 $\mathbf{h}_v^{(l+1)} = \sigma(\mathbf{W}^{(l)} \sum_{u \in N(v)} \frac{\mathbf{h}_u^{(l)}}{\sqrt{d_v d_u}})$）→ GAT（加注意力权重）→ GraphSAGE（归纳式采样聚合，适合大规模图）。</p>
+  <p>GCN 学习节点嵌入→发现&quot;硅胶法兰&quot;和&quot;乳头霜&quot;在嵌入空间接近（同一用户群购买），但传统协同过滤未能捕获——因为这两个产品没有共同购买者但有相似的购买者画像</p>
   <div class="card-badges"><span class='roi-badge'>补充 KG 推荐基础能力，隐性</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -455,7 +455,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Argos-Agentic-Anomaly-Detection.html">Argos — Agentic时序异常检测</a></h3>
   <p class="muted">09-DataAgent-LLM</p>
-  <p>Argos 解决的核心矛盾是：LLM能生成异常检测规则，但无法同时保证可解释性、可复现性和准确率。</p>
+  <p>背景：母婴品牌在Amazon US、Amazon EU、Shopify、SHEIN四平台销售，需要监控每日销量、广告ROI、退货率等指标异常</p>
   <div class="card-badges"><span class='roi-badge'>5-10万</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -503,7 +503,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-Production-Engineering.html">Agent Production Engineering（Agent 生产化工程）</a></h3>
   <p class="muted">10-MAS</p>
-  <p>连接 MAS 算法层（AutoGen/ReAct/编排）和智能体工程层（MCP/Context/Skill管理），把&quot;能跑的 Agent demo&quot;变成&quot;生产可用的 Agent 系统&quot;。核心模式：算法→协议→基础设施。</p>
+  <p>WF-A 智能补货 Agent：算法层用 MAS-Orchestrator 编排，工程层通过 MCP Server 暴露库存查询/补货下单工具，Context Compression 降低每次调用的 token 成本（$0.15→$0.04/次）</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -521,7 +521,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AutoGen-Multi-Agent-Conversation.html">AutoGen — 多智能体对话编排框架</a></h3>
   <p class="muted">10-MAS</p>
-  <p>AutoGen 是一个通用的多智能体对话框架，核心洞察：将复杂的 LLM 应用开发简化为多 agent 之间的对话编排。不同于传统的单 agent 链式调用，AutoGen 允许多个具备不同能力的 agent 通过自然语言对话协作完成复杂任务。</p>
+  <p>母婴出海平台每天处理数万条评论，需要多维度分析（实体抽取、情感分析、异常检测、报告生成）</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -533,7 +533,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Dynamic-DAG-Orchestration.html">Dynamic DAG Orchestration — 运行时动态调整工作流 DAG</a></h3>
   <p class="muted">10-MAS</p>
-  <p>静态 DAG 的局限：传统工作流引擎（Airflow、Prefect 等）要求在运行前确定完整的 DAG 拓扑。一旦启动，节点集合与依赖边均固定，无法根据中间执行结果裁剪冗余分支或插入新必要节点。当业务逻辑含有&quot;发现 A 就不需要 B&quot;或&quot;发现 C 就需要新增 D&quot;的条件语义时，静态 DAG 只能用 stub 节点 + 空操作变通，徒增图复杂度。</p>
+  <p>问题：选品流水线包含市场评估 → 深度竞品分析 → 毛利测算 → 合规检查 → 输出报告共 5 个串行节点</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -557,7 +557,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Helicase-Supply-Chain-KG-MAS.html">Helicase — 不确定性感知供应链知识图谱：多 Agent 自主构建</a></h3>
   <p class="muted">10-MAS</p>
-  <p>Helicase 是一个自主多 Agent LLM 系统，将高层供应链查询（如&quot;某奶粉品牌的原料来源&quot;）分解为可执行调查计划，通过专业 Agent 协作增量构建带不确定性标注的知识图谱。名字来源于生物学的螺旋酶——螺旋式展开 DNA，隐喻系统通过迭代循环逐层揭示知识。</p>
+  <p>业务问题：母婴品牌（奶粉/辅食）需追踪&quot;原料→供应商→工厂→认证机构&quot;多跳关系，人工调研一家供应商需 3-5 天，百家供应商无法覆盖</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -575,7 +575,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-MAS-Dynamic-Trust.html">MAS Dynamic Trust — 多智能体动态信任图：抵御 Sleeper Agent 与历史感知可信聚合</a></h3>
   <p class="muted">10-MAS</p>
-  <p>MAS 中 Agent 之间传递消息，但消息的可信度并不相同——某个 Agent 可能已被攻击者控制（Sleeper Agent），在积累足够信任后才触发恶意行为。动态信任管理解决的问题是：在没有可信第三方的情况下，每个 Agent 如何评估其他 Agent 发来消息的可信度，并据此决定接受或拒绝。</p>
+  <p>若某个市场行情 Agent 被错误数据污染（如竞品恶意干扰），所有下游决策将偏差</p>
   <div class="card-badges"><span class='roi-badge'>5-30 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -593,7 +593,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-MAS-Testing-Verification.html">MAS Testing &amp; Verification — 多智能体系统测试验证：覆盖制导 Fuzzing + 跨框架可观测性</a></h3>
   <p class="muted">10-MAS</p>
-  <p>MAS 的失败模式与单体软件完全不同：Agent 之间的交互是非确定性的，工具调用可能失败，Agent 可能陷入死循环，而这些问题用传统单元测试根本无法发现。MAS 专用测试体系需要解决三个独特问题</p>
+  <p>业务背景：选品扫描工作流由 5 个 Agent 串行协作（品类趋势 Agent → 竞品分析 Agent → 合规预筛 Agent → 利润计算 Agent → 综合评分 Agent）</p>
   <div class="card-badges"></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -647,13 +647,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Cross-Validation-Strategies.html">Cross-Validation Strategies（交叉验证策略）</a></h3>
   <p class="muted">12-ML基础</p>
-  <p>交叉验证解决&quot;模型在未知数据上表现如何&quot;的问题——不是依赖一次 train/test split 的&quot;运气&quot;，而是通过多次切分平均来获得稳健的泛化能力估计。</p>
+  <p>业务问题：我们用过去 24 个月数据训练 Prophet 预测下月销量</p>
   <div class="card-badges"><span class='roi-badge'>3-5 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>forecasting</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Data-Drift-Detection.html">Skill-Data-Drift-Detection</a></h3>
   <p class="muted">12-ML基础</p>
-  <p>核心思想：生产 ML 模型上线后，输入数据的分布会随时间偏移（用户行为变化、季节性、竞品冲击），导致模型悄然失效。数据漂移检测通过持续监控特征分布（统计漂移）和预测误差（性能漂移）两条并行轨道，在模型失效前触发告警和重训——区别于异常检测，漂移检测关注的是系统性、持续性的分布偏移，而非偶发性异常点。</p>
+  <p>业务问题：baby sterilizer 需求预测模型（TFT）上线 6 个月后，MAPE 从 12% 悄悄涨到 28%，直到库存积压才被发现，损失约 $8,000 滞销成本</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -665,7 +665,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Model-Evaluation-Metrics.html">Model Evaluation Metrics（模型评估体系）</a></h3>
   <p class="muted">12-ML基础</p>
-  <p>模型评估体系解决&quot;模型到底好不好&quot;这个问题——不是凭感觉，而是用标准化的量化指标从多个维度衡量模型表现。这是所有预测建模的基础能力，也是 ML 工程中模型选型、A/B 测试结果判读、生产监控的必备技能。</p>
+  <p>业务问题： 我们训练了 3 个流失预测模型（XGBoost / LightGBM / Logistic Regression），需要决定用哪个模型上线到 WF-A 智能补货系统，触发对高风险用户的挽留优惠券</p>
   <div class="card-badges"><span class='roi-badge'>5-8 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -695,13 +695,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html">AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>传统 LLM 摘要&quot;无约束自由生成&quot;产生幻觉(摘要包含评论中不存在的属性). AGRS 把摘要任务结构化:ABSA 提取 aspect-sentiment → canonical 归一化 → 代表性评论加权采样 → 结构化 prompt 引导 LLM 生成. 100% 基于真实评论,根本规避幻觉. 4 阶段 pipeline 端到端可扩展到百万产品.</p>
+  <p>业务问题:Momcozy 在 Amazon US/DE 同时销售紫外线消毒器,每季度 1-2 万条评论,人工汇总需要 2-3 个产品经理 × 1 周;管理层季度复盘和供应链/产品团队迭代输入严重滞后 - 数据要求:Amazon Review API 季度评论数据(评论文本 + 评分 + 市场标记) - AGRS 配置: - ABSA 提取每条评论的 ≤5 个 aspect-sentiment 对(如 `disinfection_effe</p>
   <div class="card-badges"><span class='roi-badge'>1.5 万/月</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-TRACE-Clickstream-Embedding.html">TRACE 跨会话点击流用户嵌入</a></h3>
   <p class="muted">14-用户分析</p>
-  <p>传统序列推荐模型只看单会话内的商品点击序列，TRACE 的创新在于：把整个用户的多会话页面浏览历史（包括首页、搜索页、详情页、购物车、结账等各类页面，跨越数天甚至数周）打包成一条有序序列，送入轻量级 Transformer Encoder 学习全局用户状态嵌入。</p>
+  <p>业务问题： 母婴出海跨境独立站（如婴儿推车、有机奶粉、儿童安全座椅品类）面临典型问题：用户决策周期长（备孕→孕期→育儿长达数年），单次会话转化率极低（通常 &lt;1%），但通过多次访问才能判断哪些用户真正处于购买决策阶段</p>
   <div class="card-badges"><span class='roi-badge'>10 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
@@ -731,13 +731,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-ATLAS-Gradient-Free-Continual.html">ATLAS — 梯度无关持续学习：Teacher-Student 双架构在线适应</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>传统持续学习依赖反向传播更新模型权重，存在三个根本缺陷：必须离线批量训练（无法在服务中实时更新）、灾难性遗忘（新任务覆盖旧能力）、部署 Agent 无法自改（推理阶段参数冻结）。ATLAS 的突破在于：将&quot;学习&quot;从参数空间迁移到系统编排层，通过持久学习记忆（Persistent Learning Memory, PLM）存储经验蒸馏后的指导性知识，无需触碰模型权重。</p>
+  <p>痛点：婴儿奶粉旺季/淡季需求波动大，固定规则备货导致缺货或积压，重新微调模型成本高</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-Error-Budget.html">Agent Error Budget — 双向错误预算：自主权随可靠性动态调整</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>传统 SRE 错误预算是单向消耗品：违反 SLO 就消耗预算，预算耗尽就停止发布，恢复后窗口重置。Agent 双向错误预算在此基础上引入自主权预算（Autonomy Budget）：好行为可以赢回预算，自主权随可靠性动态升降。</p>
+  <p>新版选品算法（支持竞品价格实时对比）渐进发布：① Canary 5% → 监控 48h → Task SLI ≥99.9% + Judgment SLI ≥92% → Gate 通过 → ② 扩量 20% → 监控 72h → Gate 通过 → ③ 全量 100%</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -755,7 +755,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AgentTrace-Causal-RCA.html">AgentTrace — 因果图根因分析：0.12s 定位多 Agent 故障</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>AgentTrace 的核心洞察是：多 Agent 系统（MAS）的故障传播是确定性的因果链，而非需要 LLM 进行语义推理的模糊问题。</p>
+  <p>业务问题：WF-A 智能补货工作流由 3 个 Agent 串联（需求预测 Agent → 采购决策 Agent → PO 下单 Agent）</p>
   <div class="card-badges"><span class='roi-badge'>5-20 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -767,7 +767,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Atomix-Transactional-Tool-Calls.html">Atomix — Agent 工具调用事务性：故障注入成功率 0-7% → 37-57%</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Atomix 为 Agent 工具调用引入事务语义，解决多步 Agent 工作流在故障（网络抖动、服务超时、LLM 幻觉）下产生的中间态污染问题。无事务保护时，30% 故障注入场景的成功率仅 0-7%；Atomix Tx-Full 模式将其提升至 37-57%，媲美快照回滚（CR）。</p>
+  <p>业务问题：补货 Agent 三步工作流：① 需求预测（调用预测 API）→ ② 安全库存计算（调用库存 API）→ ③ PO 生成（调用 ERP 下单 API）</p>
   <div class="card-badges"><span class='roi-badge'>10万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -797,7 +797,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-DAG-Task-Decomposition-Planning.html">TDP — DAG 任务解耦规划：82% Token 节省 + 错误隔离</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>传统 LLM Agent 在执行复杂任务时，把所有历史消息塞入 context window（&quot;full history&quot; 模式），导致两个问题</p>
+  <p>业务场景：Amazon FBA 补货决策，需要综合需求预测、安全库存、MOQ 约束三路计算</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
@@ -809,7 +809,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Long-Term-Preference-Memory.html">Shopping Companion — 记忆增强的长期偏好购物 Agent</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Shopping Companion 解决两个长期被忽视的问题:(1) 缺少能评估跨 session 偏好记忆的端到端购物 benchmark;(2) 现有方法把&quot;偏好识别&quot;和&quot;购物执行&quot;当作独立模块,没有端到端联合优化。它把购物 Agent 形式化为 POMDP,并提出两阶段统一框架 + 双奖励 RL 训练。</p>
+  <p>母婴用户的生命周期天然就是&quot;长周期&quot;:怀孕 9 个月 + 0-3 岁宝宝 = 接近 4 年的购物窗口</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -821,13 +821,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-ReliabilityBench-Agent-Reliability.html">ReliabilityBench — Agent 生产可靠性三维评估：pass@1 高估 20-40%</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>ReliabilityBench 是首个系统性评估 LLM Agent 在生产级压力条件下可靠性的基准框架（arXiv 2601.06112，2026年1月）。它的核心贡献是把单维&quot;能不能完成任务&quot;扩展为三维 R(k, ε, λ) 可靠性曲面</p>
+  <p>母婴跨境供应链 MAS（Multi-Agent System）在 staging 环境测试通过率达 95%，运营团队想上线，但历史经验表明生产环境与测试差距很大</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-SLM-Tool-Calling-Optimization.html">SLM Tool Calling 成本优化 — 350M 参数击败 LLM</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>AWS 2026 年的实证研究证明：通过领域特定 SFT，仅 350M 参数的小型语言模型 (SLM) 可以在 tool calling 任务上超越 175B+ 参数的 LLM。核心洞察是参数效率 &gt; 参数规模——通用 LLM 的绝大多数参数被优化用于通用语言理解而非 tool manipulation，导致&quot;参数稀释&quot;。</p>
+  <p>跨境母婴客服每天处理 10k+ 工单，其中 80% 是简单查询（物流追踪、退换货、尺码咨询），只需 1-2 个 tool call 即可解决</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -845,7 +845,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Tool-Auto-Discovery.html">Tool Auto Discovery — Agent 工具自动发现：OpenAPI + MCP Schema 自注册</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>当 Agent 系统规模膨胀至 100+ 工具时，手动注册成为瓶颈：每次新 API 上线都需要开发者手工编写 ToolDefinition、更新路由表、验证参数类型——一个典型企业集成需要 2 个工作日。</p>
+  <p>ROI：接入时间从 2 天→30 分钟，节省 90%+ 开发成本</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -881,13 +881,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AR-Logistics-Visualization.html">AR Logistics Visualization — 增强现实包裹可视化追踪：跨境物流透明化与客服AI视频答复</a></h3>
   <p class="muted">18-物流履约</p>
-  <p>跨境母婴电商的物流追踪长期依赖纯文本状态更新（&quot;已揽收&quot;、&quot;在途中&quot;、&quot;清关中&quot;），消费者对包裹实际位置和预期到达时间高度不确定，导致客服咨询量激增。AR Logistics Visualization 将三个技术栈融合</p>
+  <p>业务背景：某母婴品牌黑五期间发货 12,000 件婴儿推车至美国，FBA 舱容紧张，部分走 FBM 直邮，预计清关延误率 23%</p>
   <div class="card-badges"><span class='roi-badge'>12.7 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Cross-Border-Logistics-Routing.html">Cross-Border Logistics Routing（跨境物流路径优化）</a></h3>
   <p class="muted">18-物流履约</p>
-  <p>跨境物流的核心是多式联运路径优化——海陆空铁四种运输方式在不同路段的成本/时效组合中找最优。最短路径 Dijkstra 扩展为多目标（成本、时效、碳排放）Pareto 最优路径。</p>
+  <p>旺季（Q4）缺货成本 $5000/天→空运；淡季持有成本低→海运</p>
   <div class="card-badges"><span class='roi-badge'>30-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -917,7 +917,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Returns-Reverse-Logistics.html">Returns Reverse Logistics（退货逆向物流）</a></h3>
   <p class="muted">18-物流履约</p>
-  <p>预测退货概率 + 优化退货处理路径。退货概率用 XGBoost 建模（产品类别、价格、用户历史退货率、配送时长），退货处理用规则+成本优化——退货到 FBA vs 第三方仓 vs 弃置。</p>
+  <p>预测模型识别高风险订单（新用户+特大号法兰+延迟配送=退货率 22%），提前触发&quot;确认尺寸&quot;邮件，退货率降至 15%</p>
   <div class="card-badges"><span class='roi-badge'>6-10 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -929,7 +929,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Identity-Fraud-Detection.html">Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证</a></h3>
   <p class="muted">19-风控反欺诈</p>
-  <p>核心思想：三维欺诈信号融合检测账号欺诈——设备指纹相似度（识别同一设备多账号）+ 行为序列异常（购买/浏览模式偏差）+ 账号关联网络社区（图社区发现）。三维信号通过加权融合输出欺诈概率，任一维度异常均触发预警。</p>
+  <p>业务问题：某婴儿推车 Listing 在 48 小时内收到 12 条五星评论，怀疑是刷单行为</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -947,13 +947,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Virbo-Multilingual-Avatar-UGC.html">Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</a></h3>
   <p class="muted">20-AI视频生成</p>
-  <p>完整多语言短视频生成系统：角色图像 → 空间变形+特征解码器 → 对口型 talking avatar → 多语言 TTS（百余语言）→ 特效渲染。</p>
+  <p>月省 $3,000-5,000，年化 35-60 万元</p>
   <div class="card-badges"><span class='roi-badge'>35-60 万元</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Consumer-Complaint-Recall-Prediction.html">Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测</a></h3>
   <p class="muted">21-合规决策</p>
-  <p>核心思想：从 CPSC/NHTSA 非结构化消费者投诉文本出发，通过半参数主题模型（Hierarchical Dirichlet Process Pitman-Yor, HDPYP）自动提取缺陷主题，预测产品召回发生概率和召回组件类别。与传统 XGBoost/RF 相比，预测准确率提升约 14%（p&lt;0.05），提前约 1 年预警召回事件。</p>
+  <p>业务问题：在 Amazon 选品婴儿推车时，如何提前识别某款车型即将遭遇 CPSC 强制召回</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -983,13 +983,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Synthetic-Data-Ecommerce.html">Synthetic Data for E-commerce — 电商合成数据生成：解决新品冷启动与长尾数据稀缺</a></h3>
   <p class="muted">22-数据采集工程</p>
-  <p>论文：SIGIR&#x27;26 [2602.23620] + ICML&#x27;26 [2602.07298] + SCALR [2606.00282]</p>
+  <p>母婴跨境电商应用：新品上市无历史数据时生成高质量合成数据，驱动冷启动推荐和库存预测</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Web-Page-Change-Detection.html">Web Page Change Detection — 网页变化检测：VLM 视觉差异识别与 DOM 原子性保护</a></h3>
   <p class="muted">22-数据采集工程</p>
-  <p>论文：DiffSpot [2605.29615] + DOM Atomicity [2603.00476]</p>
+  <p>母婴跨境电商应用：仅在竞品价格/库存/图片发生变化时触发全量抓取，减少 70% 无效爬取</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
 </article></div></section>

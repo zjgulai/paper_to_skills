@@ -55,7 +55,7 @@
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>用户购买行为包含丰富的人群信号，但直接为百万用户调用 LLM 标注成本极高。GPLR 解决这个矛盾：用少量 LLM 标注 + 图结构传播覆盖全量用户。三步流程：① Diversity-Uncertainty（DU）采样选出最有代表性的&quot;原型用户&quot;做 LLM 标注；② LLM 基于购买历史为原型用户赋予 Persona 标签；③ 在用户-产品交互图上随机游走，将标签从有标注用户传播至全量未标注用户。</p>
+    <p>业务问题：Momcozy 在 Amazon US 有 10 万+ 活跃用户，现有 RFM 分群只能区分&quot;高消费/低消费&quot;，营销团队无法针对&quot;出差妈妈&quot;&quot;新手妈妈&quot;制定差异化素材；人工打标既慢又贵 - 数据要求：Amazon 订单数据（`user_id`, `product_id`, `purchase_date`）+ 预定义 Persona 集合（如：职场背奶妈妈 / 全职新手妈妈 / 出差旅行妈妈 / 静音敏感型 / 价格敏感型） -</p>
     <h2>2. 核心算法逻辑</h2>
     <p>用户购买行为包含丰富的人群信号，但直接为百万用户调用 LLM 标注成本极高。GPLR 解决这个矛盾：用少量 LLM 标注 + 图结构传播覆盖全量用户。三步流程：① DiversityUncertainty（DU）采样选出最有代表性的&quot;原型用户&quot;做 LLM 标注；② LLM 基于购买历史为原型用户赋予 Persona 标签；③ 在用户产品交互图上随机游走，将标签从有标注用户传播至全量未标注用户。</p>
     <h2>3. 业务应用场景</h2>

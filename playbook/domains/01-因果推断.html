@@ -47,7 +47,7 @@
     <section class="content"><h1>01-因果推断</h1><p>Causal inference, uplift modeling, DiD, IV</p><div class='cards'><article class="card skill-card">
   <h3><a href="../skills/Skill-Causal-Attribution-Bridge.html">Causal Attribution Bridge（因果归因桥梁）</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>传统广告归因是相关性的（&quot;点了广告→买了&quot;），因果归因是反事实的（&quot;如果没有这个广告→还会买吗&quot;）。核心：用增量因果效应替代 naive 归因比例。</p>
+  <p>TikTok 内容归因：naive 归因给 45%，因果 ITE 只有 32%——因为 13% 的&quot;内容驱动购买&quot;实际上是用户本身的品类偏好驱动的</p>
   <div class="card-badges"><span class='roi-badge'>10-20 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span></div>
 </article><article class="card skill-card">
@@ -59,25 +59,25 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Causal-Discovery-PC-Algorithm.html">Causal Discovery with PC Algorithm</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>核心思想：从纯观测数据（无干预、无实验）中自动发现变量间的因果结构。PC 算法通过系统的条件独立性检验，逐步剔除无关边、识别 v-structures、传播方向约束，最终输出一个有向无环图（DAG）或部分定向图（CPDAG）。</p>
+  <p>业务问题：Momcozy 美国站想理解广告 spend、竞品 price、季节 index、促销活动、KOL 合作这 5 个因素如何因果影响周销量</p>
   <div class="card-badges"><span class='roi-badge'>首年投入约 5 万元，避免 1-2 次重大错误决策即可收回成</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-ClusterSC-Synthetic-Control.html">ClusterSC - 聚类合成控制法</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>合成控制法（Synthetic Control, SC）通过为目标单元&quot;合成&quot;一个反事实来估计因果效应，是评估地区级/城市级无法做 A/B 的大型干预（如区域广告投放、城市政策）的黄金标准。</p>
+  <p>业务问题：母婴品牌在黑五期间，仅对美国加州投放 50 万美元 TikTok 联动广告</p>
   <div class="card-badges"><span class='roi-badge'>0 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Conformal-ROI-Prediction.html">共形预测ROI区间估计 - 小样本下的可信转化贡献量化</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>rDRP（robust Direct ROI Prediction）在标准 DRP (Direct ROI Prediction, AAAI 2023) 基础上，用共形预测 + MC Dropout 做 ROI 区间估计，再通过启发式校准将区间信息融回点估计。</p>
+  <p>业务问题：桑基图显示 &quot;Google Ads → 首页 → 搜索 → PDP → 支付&quot; 这条路径贡献了 35% 的转化</p>
   <div class="card-badges"><span class='roi-badge'>5-15 万/月</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag topic'>广告与投放</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Conformal-Risk-Assessment.html">Conformal Risk Assessment — 共形预测业务风险量化：覆盖率保证的区间估计</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>共形预测的核心保证：共形预测（Conformal Prediction, CP）在无需分布假设的条件下，为任意黑盒预测模型提供覆盖率理论保证。对于置信水平 1-α（如 90%），输出的预测区间 `[lower, upper]` 在有限样本下满足：`P(y ∈ [lower, upper]) ≥ 1-α`。这一保证来自数据可交换性（exchangeability），而非 Gaussian 分布假设。</p>
+  <p>但预测误差未被显式量化，导致高估时积压、低估时缺货，实测缺货率 8%</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
@@ -89,13 +89,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-DiD-Difference-in-Differences.html">Difference-in-Differences (DiD) for Causal Effect Estimation</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>核心思想：利用处理组和对照组在政策/干预前后的变化差异来估计因果效应。基本逻辑是：如果没有干预，处理组的趋势应该与对照组平行（平行趋势假设）。干预后的实际差异减去趋势差异，就是干预的净效应。</p>
+  <p>业务问题：2025年美国对中国产婴儿推车加征25%关税</p>
   <div class="card-badges"><span class='roi-badge'>50万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-EPICSCORE-Uncertainty.html">认知不确定性共形评分 - 数据稀疏区域自适应区间加宽</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>标准共形预测对所有数据点使用统一的非一致性分数，无法区分&quot;数据多的区域&quot;和&quot;数据少的区域&quot;。根本原因：传统共形分数只捕捉偶然不确定性（aleatoric uncertainty，数据本身的随机性），对认知不确定性（epistemic uncertainty，训练数据不足导致的模型无知）视而不见——在数据稀疏区域仍然给出窄区间，形成虚假的高置信度。</p>
+  <p>桑基图中每条边代表一条用户路径转化，观测量差异极大</p>
   <div class="card-badges"></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span></div>
 </article><article class="card skill-card">
@@ -125,7 +125,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-SSBC-Small-Sample-Conformal.html">小样本Beta修正共形预测 - 50个样本也能保证覆盖</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>标准 Split Conformal Prediction 的覆盖保证是&quot;期望意义&quot;的——跨多次校准集随机抽取，平均覆盖率为 `1-α`，但单次校准的覆盖率可能远低于目标值。实验表明：当校准集 n=50 时，目标覆盖率 90% 的标准共形预测，实际违约率高达 ~40%（即 40% 的概率实际覆盖 &lt; 90%）。</p>
+  <p>业务问题：日本市场刚上线，只收集了50条带标签的转化数据做校准</p>
   <div class="card-badges"><span class='roi-badge'>5-20 万/月</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag topic'>知识图谱与RAG</span></div>
 </article><article class="card skill-card">

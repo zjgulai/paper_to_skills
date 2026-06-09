@@ -2,85 +2,88 @@ id: wf-d
 name: WF-D 选品扫描
 description: 从市场信号采集到选品可行性综合评分的端到端选品决策链。
 target_users:
-  - 选品运营
-  - 市场洞察分析师
-  - 业务负责人
+- 选品运营
+- 市场洞察分析师
+- 业务负责人
 entry_question: 你正在评估哪类选品机会？
-
 steps:
-  - id: step-1
-    name: 市场信号采集
-    question: 目标品类的数据来源？
-    branches:
-      - condition: 公开平台数据（Amazon BSR / Google Trends）
-        skills:
-          - id: Skill-Market-Signal-Realtime-Collection
-            role: 实时市场信号多源采集
-          - id: Skill-Category-Trend-Forecasting
-            role: 品类趋势生命周期判断
-          - id: Skill-Price-Signal-Collection
-            role: 竞品价格信号实时监控
-      - condition: 竞品深度情报
-        skills:
-          - id: Skill-Competitor-Product-Intelligence
-            role: 竞品产品特征深度分析
-          - id: Skill-Competitive-Price-Monitoring
-            role: 竞品定价策略监控
-          - id: Skill-Competitive-Response-Modeling
-            role: 竞品响应行为建模
-
-  - id: step-2
-    name: 市场规模评估
-    question: 需要量化市场空间吗？
+- id: step-1
+  name: 市场信号采集
+  question: 目标品类的数据来源？
+  branches:
+  - condition: 公开平台数据（Amazon BSR / Google Trends）
     skills:
-      - id: Skill-Market-Size-Estimation
-        role: TAM/SAM/SOM 双路径估算 + Monte Carlo 置信区间
-      - id: Skill-New-Product-Opportunity-Mining
-        role: 新品机会挖掘与评分
-      - id: Skill-Product-Opportunity-Scoring
-        role: 选品机会综合评分模型
-
-  - id: step-3
-    name: 用户需求验证
-    question: 如何验证用户真实需求？
-    branches:
-      - condition: 评论 / VOC 驱动
-        skills:
-          - id: Skill-Review-Pain-Point-Mining
-            role: 竞品评论痛点挖掘
-          - id: Skill-AGRS-Aspect-Guided-Review-Summarization
-            role: 产品维度痛点提炼
-      - condition: 跨市场适配性验证
-        skills:
-          - id: Skill-Cross-Market-Product-Transfer
-            role: 跨市场产品适配性预测（避免负迁移）
-          - id: Skill-Cultural-Adaptation-Agent
-            role: 文化差异适配性评估
-
-  - id: step-4
-    name: 知识图谱辅助决策
-    question: 需要结构化的选品知识库支撑吗？
+    - id: Skill-Market-Signal-Realtime-Collection
+      role: 实时市场信号多源采集
+    - id: Skill-Category-Trend-Forecasting
+      role: 品类趋势生命周期判断
+    - id: Skill-Price-Signal-Collection
+      role: 竞品价格信号实时监控
+  - condition: 竞品深度情报
     skills:
-      - id: Skill-Hierarchical-Product-KG-Construction
-        role: 层次化产品知识图谱构建
-      - id: Skill-KG-Powered-User-Profiling
-        role: KG 驱动的目标用户画像
-      - id: Skill-GraphRAG-Knowledge-Enhanced-Retrieval
-        role: GraphRAG 检索增强选品分析
-
-  - id: step-5
-    name: 合规与风险预扫描
-    question: 目标市场有特殊合规要求吗？
+    - id: Skill-Competitor-Product-Intelligence
+      role: 竞品产品特征深度分析
+    - id: Skill-Competitive-Price-Monitoring
+      role: 竞品定价策略监控
+    - id: Skill-Competitive-Response-Modeling
+      role: 竞品响应行为建模
+- id: step-2
+  name: 市场规模评估
+  question: 需要量化市场空间吗？
+  skills:
+  - id: Skill-Market-Size-Estimation
+    role: TAM/SAM/SOM 双路径估算 + Monte Carlo 置信区间
+  - id: Skill-New-Product-Opportunity-Mining
+    role: 新品机会挖掘与评分
+  - id: Skill-Product-Opportunity-Scoring
+    role: 选品机会综合评分模型
+- id: step-3
+  name: 用户需求验证
+  question: 如何验证用户真实需求？
+  branches:
+  - condition: 评论 / VOC 驱动
     skills:
-      - id: Skill-Category-Compliance-Prescan
-        role: 品类合规预扫描（FDA/CE/ASTM）
-      - id: Skill-Cross-Border-Compliance-Framework
-        role: 跨境合规框架评估
-      - id: Skill-Product-Safety-Testing-Requirements
-        role: 产品安全测试要求清单
-
+    - id: Skill-Review-Pain-Point-Mining
+      role: 竞品评论痛点挖掘
+    - id: Skill-AGRS-Aspect-Guided-Review-Summarization
+      role: 产品维度痛点提炼
+  - condition: 跨市场适配性验证
+    skills:
+    - id: Skill-Cross-Market-Product-Transfer
+      role: 跨市场产品适配性预测（避免负迁移）
+    - id: Skill-Cultural-Adaptation-Agent
+      role: 文化差异适配性评估
+- id: step-4
+  name: 知识图谱辅助决策
+  question: 需要结构化的选品知识库支撑吗？
+  skills:
+  - id: Skill-Hierarchical-Product-KG-Construction
+    role: 层次化产品知识图谱构建
+  - id: Skill-KG-Powered-User-Profiling
+    role: KG 驱动的目标用户画像
+  - id: Skill-GraphRAG-Knowledge-Enhanced-Retrieval
+    role: GraphRAG 检索增强选品分析
+- id: step-5
+  name: 合规与风险预扫描
+  question: 目标市场有特殊合规要求吗？
+  skills:
+  - id: Skill-Category-Compliance-Prescan
+    role: 品类合规预扫描（FDA/CE/ASTM）
+  - id: Skill-Cross-Border-Compliance-Framework
+    role: 跨境合规框架评估
+  - id: Skill-Product-Safety-Testing-Requirements
+    role: 产品安全测试要求清单
+- id: step-measure
+  name: 选品决策追踪
+  question: 通过评分筛选的选品上架后，实际表现是否符合预期？
+  context: 新品上架 30/90/180 天对比预测值与实际值，持续校准评分模型
+  skills:
+  - id: Skill-Bass-Diffusion-New-Product-Forecasting
+    role: 对比 Bass 模型预测曲线与实际销售曲线，校准参数
+  - id: Skill-DiD-Difference-in-Differences
+    role: 验证选品决策对 GMV 的真实因果贡献
 outcomes:
-  - 选品误判率降低 22% → 9%（市场下限过滤）
-  - 从信号采集到评分输出全流程 < 30 分钟
-  - 跨市场适配性预测避免错误扩张决策
-  - 合规风险提前识别，降低上架后召回风险
+- 选品误判率降低 22% → 9%（市场下限过滤）
+- 从信号采集到评分输出全流程 < 30 分钟
+- 跨市场适配性预测避免错误扩张决策
+- 合规风险提前识别，降低上架后召回风险

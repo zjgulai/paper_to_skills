@@ -65,7 +65,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Inventory-Health-Aging-Attribution.html">Business Metric-Aware Forecasting for Inventory Management</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：库存健康诊断不是&quot;某个 SKU 库存多少&quot;，而是回答三个问题：① 这批货还能动吗（FSN分级）？② 过多还是过少（Over/Under stock 三态）？③ 为什么和计划不一样（供应计划方差归因到4类根因）。同时严格区分「预测准确率（Forecast Accuracy）」和「计划准确率（Plan Accuracy）」——两者可以完全脱钩。</p>
+  <p>业务问题：618 大促结束后，某 SKU 实际期末库存比计划低 800 件，导致大促期间断货 3 天</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
@@ -113,7 +113,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-New-Product-Inventory-Coldstart.html">Pre-launch new product demand forecasting using Bass model with ML</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：新品上市前无历史销量，但不是无信息——相似 SKU 的历史数据、产品属性特征、Bass 扩散参数估计三条路径可以构建新品的需求先验分布。上市后用贝叶斯更新快速收敛，并通过「探索加成」（首批量刻意多订一点以加速学习）避免因首批订少而永久缺乏数据的陷阱。</p>
+  <p>场景 A：新款 UV-C 密闭消毒器上市首批备货（强相似 SKU 存在）</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
@@ -131,7 +131,7 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Promotion-Demand-Decomposition.html">Demand Forecasting During Grand Promotion for Online Retailing (JD.com)</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：把任意一个 SKU 的历史销量分解为两个互相独立的信号——「基线需求」（正常销售节奏）和「促销 lift」（大促拉动的额外需求）——分别建模、分别备货，并专门处理大促结束后需求虚高的「Post-Promotion Elevation（PPE）」问题，避免系统在大促后 3 个月内持续过量备货。</p>
+  <p>场景 A：Momcozy 618 大促备货拆解（5 月初下单，lead time 6 周）</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
@@ -143,13 +143,13 @@
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Supplier-Capacity-Planning.html">Multi-objective multi-site supplier selection and order splitting</a></h3>
   <p class="muted">04-供应链</p>
-  <p>核心思想：当旺季需求（如双11前 8,000 件/月）超过工厂单月产能（5,000 件），需要解决三个问题：① 提前多久开始生产（提前期排程）？② 多供应商时如何分单（Pareto 前沿）？③ 产能完全满足不了时，哪个 SKU 优先（优先级排序）？</p>
+  <p>业务问题：吸奶器工厂月产能 5,000 件，8-10 月三个月需求分别为 6,500/8,000/4,000 件，总缺口 3,500 件</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html">Supply Chain Causal SCM — 数据驱动供应链根因归因：DAG + DoWhy GCM</a></h3>
   <p class="muted">04-供应链</p>
-  <p>为什么传统归因不够：瀑布式逻辑（&quot;缺货→往上查库存→往上查采购&quot;）本质上是相关性分析，无法区分&quot;A 导致 B&quot;与&quot;C 同时导致 A 和 B&quot;。实际供应链中，多因素常常通过间接路径（中介变量）影响结果——比如&quot;需求预测误差→战术产能调整→Capped Out Hours（COH）&quot;，传统归因会错误地把间接效应归给直接可见的变量。</p>
+  <p>业务问题：母婴奶粉 SKU 出现缺货（库存降至 0），损失 GMV 约 8 万元/周</p>
   <div class="card-badges"><span class='roi-badge'>5-10 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span></div>
 </article><article class="card skill-card">

@@ -2,81 +2,85 @@ id: wf-f
 name: WF-F 动态定价
 description: 从竞品价格监控到自动调价执行的端到端定价决策链，覆盖价格信号采集、弹性估算、调价策略和效果验证四个阶段。
 target_users:
-  - 定价负责人
-  - 运营负责人
-  - 财务负责人
+- 定价负责人
+- 运营负责人
+- 财务负责人
 entry_question: 你当前面临的最紧迫定价问题是什么？
-
 steps:
-  - id: step-1
-    name: 价格信号监控
-    question: 竞品价格监控的频率和紧迫程度？
-    context: 母婴品类竞品调价快，Buy Box 竞争激烈，响应延迟每 30 分钟损失约 $1,600 GMV
-    branches:
-      - condition: 实时监控（Buy Box 竞争激烈，竞品频繁调价）
-        skills:
-          - id: Skill-Price-Signal-Collection
-            role: 多平台价格信号实时采集，Buy Box 获得率 41%→79%（ROI 73.2万）
-          - id: Skill-Competitive-Price-Monitoring
-            role: 竞品定价策略实时追踪，量化"不跟降损失多少"
-        next: step-2
-      - condition: 日频/周频监控（品类稳定，竞争节奏慢）
-        skills:
-          - id: Skill-Competitive-Response-Modeling
-            role: 竞品价格响应行为建模，预判竞品调价策略
-        next: step-2
-
-  - id: step-2
-    name: 价格弹性估算
-    question: 是否了解本品的价格弹性？
-    context: 不同用户群体对价格的敏感度差异可达 2-3 倍，精准分群才能做到差异化定价
-    branches:
-      - condition: 需要估算价格弹性（不知道降价多少能多卖多少）
-        skills:
-          - id: Skill-Dynamic-Pricing-Elasticity
-            role: 需求价格弹性估算 + 最优价格公式 P*=ε/(ε+1)·MC，利润率 +8-12%
-          - id: Skill-DML-Cohort-Causal-Effect
-            role: 分群弹性差异：不同用户群价格敏感度可达 2.3 倍，精准差异化定价（ROI 1500-2500万）
-        next: step-3
-      - condition: 多市场价格协调（US/EU/JP 价差管理）
-        skills:
-          - id: Skill-Cross-Border-Price-Harmonization
-            role: 跨境多市场价格协调，防止套利和违反 Amazon 最低价政策
-        next: step-3
-
-  - id: step-3
-    name: 调价策略执行
-    question: 调价目标和场景？
-    context: 不同场景需要不同的调价策略：日常防御性跟价 vs 大促进攻性折扣 vs 清仓处置 vs Bundle 提升 AOV
-    branches:
-      - condition: 日常动态定价（AI 自动执行）
-        skills:
-          - id: Skill-AIGP-LLM-Dynamic-Pricing
-            role: LLM 跨周期 GMV 对齐定价，A/B 实测 GMV +13%（ROI 1321万）
-          - id: Skill-Contextual-Dynamic-Pricing-Optimal
-            role: 上下文感知在线定价优化，O(√dT) 遗憾上界
-      - condition: 大促 / 清仓 Markdown 策略
-        skills:
-          - id: Skill-Markdown-Optimization
-            role: 积压库存 Markdown 最优化，清仓多回收 15-40%（ROI 20-50万）
-          - id: Skill-Channel-Saturation-Curve
-            role: 渠道饱和曲线，判断大促期广告是否继续投
-      - condition: Bundle / 组合定价
-        skills:
-          - id: Skill-Bundle-Pricing-Strategy
-            role: 吸奶器+配件 Bundle 定价，AOV 提升 +$6-8（ROI 10-15万）
-
-  - id: step-4
-    name: 定价效果验证
-    question: 如何确认调价是否真的有效？
+- id: step-1
+  name: 价格信号监控
+  question: 竞品价格监控的频率和紧迫程度？
+  context: 母婴品类竞品调价快，Buy Box 竞争激烈，响应延迟每 30 分钟损失约 $1,600 GMV
+  branches:
+  - condition: 实时监控（Buy Box 竞争激烈，竞品频繁调价）
     skills:
-      - id: Skill-DiD-Difference-in-Differences
-        role: 差分法验证调价净效应，区分调价效果与季节波动
-      - id: Skill-Identified-Bayesian-MMM
-        role: 贝叶斯 MMM 分离价格效应与广告效应，避免两者混淆（ROI 1000万）
-
+    - id: Skill-Price-Signal-Collection
+      role: 多平台价格信号实时采集，Buy Box 获得率 41%→79%（ROI 73.2万）
+    - id: Skill-Competitive-Price-Monitoring
+      role: 竞品定价策略实时追踪，量化"不跟降损失多少"
+    next: step-2
+  - condition: 日频/周频监控（品类稳定，竞争节奏慢）
+    skills:
+    - id: Skill-Competitive-Response-Modeling
+      role: 竞品价格响应行为建模，预判竞品调价策略
+    next: step-2
+- id: step-2
+  name: 价格弹性估算
+  question: 是否了解本品的价格弹性？
+  context: 不同用户群体对价格的敏感度差异可达 2-3 倍，精准分群才能做到差异化定价
+  branches:
+  - condition: 需要估算价格弹性（不知道降价多少能多卖多少）
+    skills:
+    - id: Skill-Dynamic-Pricing-Elasticity
+      role: 需求价格弹性估算 + 最优价格公式 P*=ε/(ε+1)·MC，利润率 +8-12%
+    - id: Skill-DML-Cohort-Causal-Effect
+      role: 分群弹性差异：不同用户群价格敏感度可达 2.3 倍，精准差异化定价（ROI 1500-2500万）
+    next: step-3
+  - condition: 多市场价格协调（US/EU/JP 价差管理）
+    skills:
+    - id: Skill-Cross-Border-Price-Harmonization
+      role: 跨境多市场价格协调，防止套利和违反 Amazon 最低价政策
+    next: step-3
+- id: step-3
+  name: 调价策略执行
+  question: 调价目标和场景？
+  context: 不同场景需要不同的调价策略：日常防御性跟价 vs 大促进攻性折扣 vs 清仓处置 vs Bundle 提升 AOV
+  branches:
+  - condition: 日常动态定价（AI 自动执行）
+    skills:
+    - id: Skill-AIGP-LLM-Dynamic-Pricing
+      role: LLM 跨周期 GMV 对齐定价，A/B 实测 GMV +13%（ROI 1321万）
+    - id: Skill-Contextual-Dynamic-Pricing-Optimal
+      role: 上下文感知在线定价优化，O(√dT) 遗憾上界
+  - condition: 大促 / 清仓 Markdown 策略
+    skills:
+    - id: Skill-Markdown-Optimization
+      role: 积压库存 Markdown 最优化，清仓多回收 15-40%（ROI 20-50万）
+    - id: Skill-Channel-Saturation-Curve
+      role: 渠道饱和曲线，判断大促期广告是否继续投
+  - condition: Bundle / 组合定价
+    skills:
+    - id: Skill-Bundle-Pricing-Strategy
+      role: 吸奶器+配件 Bundle 定价，AOV 提升 +$6-8（ROI 10-15万）
+- id: step-4
+  name: 定价效果验证
+  question: 如何确认调价是否真的有效？
+  skills:
+  - id: Skill-DiD-Difference-in-Differences
+    role: 差分法验证调价净效应，区分调价效果与季节波动
+  - id: Skill-Identified-Bayesian-MMM
+    role: 贝叶斯 MMM 分离价格效应与广告效应，避免两者混淆（ROI 1000万）
+- id: step-measure
+  name: 定价效果验证
+  question: 调价后，如何确认 GMV 和利润率同步改善？
+  context: 每次调价后7天追踪 BSR/转化率/毛利率三角，验证定价决策质量
+  skills:
+  - id: Skill-DiD-Difference-in-Differences
+    role: 差分法验证调价净效应，区分真实改善与季节波动
+  - id: Skill-Argos-Agentic-Anomaly-Detection
+    role: 实时监控调价后的异常波动（BSR 骤跌/转化率崩溃）
 outcomes:
-  - Buy Box 赢得率从 41% 提升到 79%，响应延迟从 47 分钟降至 18 分钟
-  - LLM 动态定价 A/B 实测 GMV +13%（真实实验数据，非模型预测）
-  - 大促折扣决策有数据支撑，清仓效率提升，资金回收速度 +15-40%
-  - 跨市场定价协调，品牌价格体系不被套利破坏
+- Buy Box 赢得率从 41% 提升到 79%，响应延迟从 47 分钟降至 18 分钟
+- LLM 动态定价 A/B 实测 GMV +13%（真实实验数据，非模型预测）
+- 大促折扣决策有数据支撑，清仓效率提升，资金回收速度 +15-40%
+- 跨市场定价协调，品牌价格体系不被套利破坏
