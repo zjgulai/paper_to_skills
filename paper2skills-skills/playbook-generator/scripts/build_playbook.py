@@ -3125,20 +3125,20 @@ def render_workflow_page(wf_def: dict[str, Any], skill_lookup: dict[str, "Playbo
 # ---------------------------------------------------------------------------
 
 def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str:
-    def nav_link(href: str, label: str, key: str = "") -> str:
+    def sidebar_link(href: str, label: str, key: str = "", icon: str = "") -> str:
         active = ' aria-current="page" class="active"' if key and key == active_nav else ""
-        return f'<a href="{nav}{href}"{active}>{label}</a>'
+        icon_html = f'<span class="sbl-icon">{icon}</span>' if icon else ""
+        return f'<a href="{nav}{href}"{active}>{icon_html}<span class="sbl-text">{label}</span></a>'
 
-    def sidebar_link(href: str, label: str, key: str = "") -> str:
-        active = ' aria-current="page" class="active"' if key and key == active_nav else ""
-        return f'<a href="{nav}{href}"{active}>{label}</a>'
+    def sidebar_section(label: str, links: str) -> str:
+        return f'<div class="sb-section"><p class="sb-label">{label}</p><div class="sb-links">{links}</div></div>'
 
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{html.escape(title)} · paper2skills Playbook</title>
+  <title>{html.escape(title)} · paper2skills</title>
   <link rel="stylesheet" href="{nav}assets/style.css">
 </head>
 <body>
@@ -3146,53 +3146,79 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
     <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <a class="brand" href="{nav}index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
-    <nav class="topnav" id="topnav">
-      {nav_link('index.html', '首页', 'index')}
-      {nav_link('playbooks/index.html', '场景手册', 'playbooks')}
-      {nav_link('agents.html', '智能体广场', 'agents')}
-      {nav_link('workflows/index.html', '工作流', 'workflows')}
-      {nav_link('domains/index.html', '领域', 'domains')}
-      {nav_link('graph/overview.html', '图谱', 'graph')}
-      <a href="{nav}ai-roadmap.html" class="nav-highlight{'  active' if active_nav == 'roadmap' else ''}">AI 路线图</a>
-    </nav>
+    <a class="brand" href="{nav}index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
     <div class="topbar-right">
-      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="{nav}ai-roadmap.html" class="topbar-cta{'  active' if active_nav == 'roadmap' else ''}">AI 路线图 →</a>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
   <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-section">
-        {sidebar_link('index.html', '总览', 'index')}
-        {sidebar_link('playbooks/index.html', '场景手册', 'playbooks')}
-        {sidebar_link('agents.html', '智能体广场', 'agents')}
-        {sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap')}
+      <div class="sb-top">
+        {sidebar_section('主导航', 
+          sidebar_link('index.html', '总览', 'index', '⊞') +
+          sidebar_link('playbooks/index.html', '场景手册', 'playbooks', '◧') +
+          sidebar_link('agents.html', '智能体广场', 'agents', '◈') +
+          sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap', '◉')
+        )}
+        {sidebar_section('知识图谱',
+          sidebar_link('domains/index.html', '按领域浏览', 'domains', '◫') +
+          sidebar_link('topics/index.html', '按主题浏览', 'topics', '◪') +
+          sidebar_link('workflows/index.html', '业务工作流', 'workflows', '◳') +
+          sidebar_link('graph/overview.html', '技能关系图谱', 'graph', '◉') +
+          sidebar_link('skills/index.html', '全部 Skills', 'skills', '≡')
+        )}
       </div>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-section">
-        {sidebar_link('domains/index.html', '按领域', 'domains')}
-        {sidebar_link('topics/index.html', '按主题', 'topics')}
-        {sidebar_link('workflows/index.html', '工作流', 'workflows')}
-        {sidebar_link('graph/overview.html', 'Skills Graph', 'graph')}
-        {sidebar_link('skills/index.html', '全部 Skills', 'skills')}
+      <div class="sb-bottom">
+        <button class="sb-ai-btn" id="sb-ai-open" title="与知识库对话">
+          <span class="sb-ai-icon">✦</span>
+          <span class="sb-ai-text">AI 对话助手</span>
+          <span class="sb-ai-badge">Beta</span>
+        </button>
       </div>
     </aside>
     <section class="content">{body}</section>
   </main>
+
+  <!-- AI Chat Panel -->
+  <div class="ai-panel" id="ai-panel" role="dialog" aria-modal="true" aria-label="AI 对话助手">
+    <div class="ai-panel-header">
+      <div class="ai-panel-title">
+        <span class="ai-panel-icon">✦</span>
+        <span>AI 对话助手</span>
+        <span class="ai-panel-sub">基于 paper2skills 知识库</span>
+      </div>
+      <button class="ai-panel-close" id="ai-panel-close" aria-label="关闭">✕</button>
+    </div>
+    <div class="ai-messages" id="ai-messages">
+      <div class="ai-msg ai-msg-bot">
+        <div class="ai-msg-avatar">✦</div>
+        <div class="ai-msg-bubble">你好！我是基于 paper2skills 知识库的 AI 助手，可以回答关于业务决策技能、跨境电商运营、算法应用等问题。</div>
+      </div>
+    </div>
+    <div class="ai-input-row">
+      <input class="ai-input" id="ai-input" placeholder="问我关于跨境电商的 AI 决策技能…" autocomplete="off">
+      <button class="ai-send-btn" id="ai-send">发送</button>
+    </div>
+  </div>
+  <div class="ai-overlay" id="ai-overlay"></div>
+
   <script src="{nav}assets/playbook-data.js"></script>
   <script src="{nav}assets/search.js"></script>
+  <script src="{nav}assets/ai-chat.js"></script>
   <script>
-  // Hamburger menu
   const hbtn = document.getElementById('hamburger');
-  const tnav = document.getElementById('topnav');
   const overlay = document.getElementById('mobile-overlay');
   const sidebar = document.getElementById('sidebar');
   function toggleMenu(open) {{
     hbtn.setAttribute('aria-expanded', open);
     hbtn.classList.toggle('open', open);
-    tnav.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
     overlay.classList.toggle('show', open);
     document.body.style.overflow = open ? 'hidden' : '';
   }}
@@ -3977,128 +4003,334 @@ body {
   color: var(--ink);
   font-family: var(--font);
   font-size: 15px;
-  line-height: 1.65;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0;
 }
-a { color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 img { max-width: 100%; }
 strong { font-weight: 600; }
+p { margin: 0 0 14px; }
+p:last-child { margin-bottom: 0; }
 
-/* ── Top Bar — clean Apple style ── */
+/* ── Top Bar — minimalist brand bar ── */
 .topbar {
   position: sticky; top: 0; z-index: 200;
-  display: flex; align-items: center; gap: 0;
+  display: flex; align-items: center;
   height: var(--topbar-height);
-  padding: 0 28px;
-  background: var(--nav-bg);
+  padding: 0 24px 0 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   border-bottom: 1px solid var(--nav-border);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.05);
 }
 .brand {
-  color: var(--ink); text-decoration: none;
-  font-weight: 700; font-size: 15.5px;
-  letter-spacing: -.03em; white-space: nowrap;
-  flex-shrink: 0; margin-right: 32px;
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--ink);
+  flex-shrink: 0;
+  padding: 0 24px;
+  height: 100%;
+  border-right: 1px solid var(--nav-border);
 }
-.brand-sub { color: var(--muted); font-weight: 400; font-size: 13px; letter-spacing: 0; }
-.topnav {
-  display: flex; gap: 2px; align-items: center; flex: 1;
+.brand:hover { text-decoration: none; }
+.brand-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  color: #fff; font-weight: 800; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; letter-spacing: -.02em;
 }
-.topnav a {
-  color: var(--nav-text); text-decoration: none;
-  font-size: 13px; font-weight: 500;
-  padding: 6px 11px; border-radius: var(--r-md);
-  transition: background var(--t), color var(--t);
-  white-space: nowrap;
+.brand-name {
+  font-weight: 700; font-size: 14.5px; letter-spacing: -.025em;
+  color: var(--ink); line-height: 1;
 }
-.topnav a:hover { background: rgba(0,0,0,0.04); color: var(--nav-text-hover); }
-.topnav a.active, .topnav a[aria-current="page"] {
-  background: var(--accent-light);
-  color: var(--accent); font-weight: 600;
+.brand-tag {
+  display: block; font-size: 10px; font-weight: 500;
+  color: var(--muted); letter-spacing: .04em;
+  text-transform: uppercase; margin-top: 2px;
 }
-.nav-highlight { color: var(--accent) !important; font-weight: 700 !important; }
-.nav-highlight:hover { background: var(--accent-light) !important; }
-.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.topbar-right {
+  margin-left: auto; display: flex; align-items: center; gap: 12px;
+}
 #global-search {
-  width: min(340px, 32vw); padding: 7px 16px;
+  width: min(320px, 28vw); padding: 7px 16px 7px 36px;
   border-radius: var(--r-full);
   border: 1.5px solid var(--line);
   background: var(--panel-2);
   color: var(--ink); font-size: 13px;
   font-family: var(--font);
   transition: border-color var(--t), background var(--t), box-shadow var(--t);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 12px center;
 }
 #global-search::placeholder { color: var(--muted); }
 #global-search:hover { border-color: var(--line-strong); background: var(--panel); }
 #global-search:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--panel);
-  box-shadow: 0 0 0 3px rgba(194,91,110,.12);
+  outline: none; border-color: var(--accent); background: var(--panel);
+  box-shadow: 0 0 0 3px rgba(194,91,110,.10);
 }
+.topbar-cta {
+  display: inline-flex; align-items: center;
+  padding: 7px 16px; border-radius: var(--r-full);
+  background: var(--accent); color: #fff !important;
+  font-size: 13px; font-weight: 600; letter-spacing: -.01em;
+  text-decoration: none !important;
+  transition: background var(--t), box-shadow var(--t), transform var(--t);
+  white-space: nowrap; flex-shrink: 0;
+}
+.topbar-cta:hover { background: var(--accent-dark); box-shadow: var(--shadow-accent); transform: translateY(-1px); }
+.topbar-cta.active { background: var(--accent-dark); }
 
 /* ── Hamburger ── */
 .hamburger {
   display: none; flex-direction: column; justify-content: center;
-  gap: 5px; width: 36px; height: 36px; padding: 6px;
-  background: none; border: none; cursor: pointer;
-  border-radius: var(--r-sm); flex-shrink: 0; margin-right: 10px;
+  gap: 5px; width: 40px; height: var(--topbar-height); padding: 0 10px;
+  background: none; border: none; border-right: 1px solid var(--nav-border);
+  cursor: pointer; flex-shrink: 0;
 }
 .hamburger span {
-  display: block; height: 2px; background: var(--muted);
+  display: block; height: 1.5px; background: var(--muted);
   border-radius: 2px; transition: transform var(--t), opacity var(--t);
 }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 .hamburger:hover span { background: var(--ink); }
 
 /* ── Layout ── */
-.layout { display: grid; grid-template-columns: 216px 1fr; min-height: calc(100vh - var(--topbar-height)); }
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - var(--topbar-height));
+}
+
+/* ── Sidebar — premium left nav ── */
 .sidebar {
-  padding: 20px 12px 40px;
-  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
   background: var(--panel);
+  border-right: 1px solid var(--line);
   position: sticky; top: var(--topbar-height);
-  height: calc(100vh - var(--topbar-height)); overflow-y: auto;
+  height: calc(100vh - var(--topbar-height));
+  overflow-y: auto; overflow-x: hidden;
 }
-.sidebar-section { display: flex; flex-direction: column; gap: 2px; }
-.sidebar-divider { height: 1px; background: var(--line); margin: 10px 6px; }
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+
+/* Sidebar top (nav items) */
+.sb-top { flex: 1; padding: 16px 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+
+/* Sidebar section group */
+.sb-section { margin-bottom: 4px; }
+.sb-label {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 6px 10px 4px; margin: 0; user-select: none;
+}
+.sb-links { display: flex; flex-direction: column; gap: 1px; }
+
+/* Sidebar link */
 .sidebar a {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 9px;
   color: var(--ink-2); text-decoration: none;
-  padding: 7px 10px; border-radius: var(--r-md);
-  font-size: 13px; font-weight: 500;
+  padding: 8px 10px; border-radius: var(--r-lg);
+  font-size: 13.5px; font-weight: 450;
+  line-height: 1.3;
   transition: background var(--t), color var(--t);
+  position: relative;
 }
-.sidebar a:hover { background: rgba(0,0,0,0.04); color: var(--ink); }
+.sidebar a:hover {
+  background: var(--panel-2); color: var(--ink);
+  text-decoration: none;
+}
 .sidebar a.active, .sidebar a[aria-current="page"] {
   background: var(--accent-light);
-  color: var(--accent); font-weight: 600;
-  border-right: 3px solid var(--accent);
+  color: var(--accent);
+  font-weight: 600;
 }
-.content { padding: 32px 40px; max-width: 1360px; overflow-x: hidden; }
+.sidebar a.active::before, .sidebar a[aria-current="page"]::before {
+  content: '';
+  position: absolute; left: 0; top: 4px; bottom: 4px;
+  width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--accent);
+}
+.sbl-icon {
+  width: 20px; height: 20px; border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; flex-shrink: 0; opacity: 0.5;
+  transition: opacity var(--t);
+}
+.sidebar a:hover .sbl-icon, .sidebar a.active .sbl-icon, .sidebar a[aria-current="page"] .sbl-icon {
+  opacity: 1;
+}
+.sbl-text { flex: 1; }
+
+/* Sidebar bottom — AI Chat */
+.sb-bottom {
+  padding: 12px 10px;
+  border-top: 1px solid var(--line);
+}
+.sb-ai-btn {
+  display: flex; align-items: center; gap: 9px;
+  width: 100%; padding: 10px 12px;
+  background: linear-gradient(135deg, rgba(194,91,110,.08) 0%, rgba(194,91,110,.04) 100%);
+  border: 1px solid rgba(194,91,110,.2);
+  border-radius: var(--r-lg); cursor: pointer;
+  font-family: var(--font); color: var(--accent);
+  transition: background var(--t), border-color var(--t), transform var(--t);
+}
+.sb-ai-btn:hover {
+  background: rgba(194,91,110,.12); border-color: rgba(194,91,110,.35);
+  transform: translateY(-1px);
+}
+.sb-ai-icon {
+  font-size: 16px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.sb-ai-text { font-size: 13px; font-weight: 600; flex: 1; text-align: left; }
+.sb-ai-badge {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .05em;
+  background: var(--accent); color: #fff;
+  padding: 2px 6px; border-radius: var(--r-full);
+}
+
+/* ── Content area ── */
+.content { padding: 36px 44px; max-width: 1400px; overflow-x: hidden; }
 .mobile-nav-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(29,29,27,.45); backdrop-filter: blur(4px); z-index: 190;
+  background: rgba(29,29,27,.5); backdrop-filter: blur(4px); z-index: 190;
 }
 .mobile-nav-overlay.show { display: block; }
 
-/* ── Typography — Apple 4-level scale ── */
+/* ── Typography — 4-level Apple scale ── */
 .content h1 {
-  font-size: 28px; font-weight: 700; letter-spacing: -.04em;
-  line-height: 1.1; margin: 0 0 10px; color: var(--ink);
+  font-size: 30px; font-weight: 700; letter-spacing: -.04em;
+  line-height: 1.1; margin: 0 0 12px; color: var(--ink);
 }
 .content h2 {
-  font-size: 20px; font-weight: 600; letter-spacing: -.02em;
-  margin: 32px 0 14px; color: var(--ink); line-height: 1.3;
+  font-size: 21px; font-weight: 650; letter-spacing: -.025em;
+  margin: 36px 0 14px; color: var(--ink); line-height: 1.25;
+  border-bottom: 1px solid var(--line); padding-bottom: 10px;
 }
-.content h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; color: var(--ink); line-height: 1.3; }
-.content h4 { font-size: 13.5px; font-weight: 600; margin: 16px 0 6px; }
-.lead { font-size: 15px; color: var(--muted); margin: 0 0 22px; line-height: 1.7; }
+.content h2:first-child { margin-top: 0; }
+.content h3 {
+  font-size: 16px; font-weight: 600; letter-spacing: -.01em;
+  margin: 24px 0 8px; color: var(--ink); line-height: 1.3;
+}
+.content h4 {
+  font-size: 13.5px; font-weight: 600; letter-spacing: 0;
+  margin: 18px 0 6px; color: var(--ink-2);
+}
+.lead {
+  font-size: 15.5px; color: var(--muted); margin: 0 0 24px;
+  line-height: 1.75; letter-spacing: -.005em;
+}
 .muted { color: var(--muted); }
+.section-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted);
+  margin: 0 0 8px; display: block;
+}
+
+/* ── AI Chat Panel ── */
+.ai-panel {
+  position: fixed; right: 0; top: var(--topbar-height); bottom: 0;
+  width: 400px; max-width: 92vw;
+  background: var(--panel);
+  border-left: 1px solid var(--line);
+  box-shadow: -8px 0 32px rgba(0,0,0,0.12);
+  display: flex; flex-direction: column;
+  z-index: 300; transform: translateX(100%);
+  transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ai-panel.open { transform: translateX(0); }
+.ai-overlay {
+  display: none; position: fixed; inset: 0; z-index: 299;
+  background: rgba(29,29,27,.3); backdrop-filter: blur(2px);
+}
+.ai-overlay.show { display: block; }
+.ai-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--line);
+  background: var(--panel); flex-shrink: 0;
+}
+.ai-panel-title {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 600; color: var(--ink);
+}
+.ai-panel-icon {
+  font-size: 18px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.ai-panel-sub { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+.ai-panel-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--panel-2); border: 1px solid var(--line);
+  cursor: pointer; font-size: 13px; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--t), color var(--t);
+}
+.ai-panel-close:hover { background: var(--line); color: var(--ink); }
+.ai-messages {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.ai-messages::-webkit-scrollbar { width: 3px; }
+.ai-messages::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+.ai-msg { display: flex; gap: 10px; align-items: flex-start; }
+.ai-msg-bot { }
+.ai-msg-user { flex-direction: row-reverse; }
+.ai-msg-avatar {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+.ai-msg-user .ai-msg-avatar { background: var(--panel-3); color: var(--muted); }
+.ai-msg-bubble {
+  max-width: 80%; padding: 10px 14px;
+  border-radius: 14px; font-size: 13.5px; line-height: 1.6;
+}
+.ai-msg-bot .ai-msg-bubble {
+  background: var(--panel-2); color: var(--ink);
+  border-radius: 4px 14px 14px 14px;
+}
+.ai-msg-user .ai-msg-bubble {
+  background: var(--accent); color: #fff;
+  border-radius: 14px 4px 14px 14px;
+}
+.ai-msg-typing .ai-msg-bubble::after {
+  content: '●●●'; animation: typing 1.2s infinite;
+  letter-spacing: 4px; font-size: 8px; opacity: 0.6;
+}
+@keyframes typing { 0%,100%{opacity:.3} 50%{opacity:1} }
+.ai-input-row {
+  display: flex; gap: 8px; padding: 16px 20px;
+  border-top: 1px solid var(--line); flex-shrink: 0;
+  background: var(--panel);
+}
+.ai-input {
+  flex: 1; padding: 10px 14px; border-radius: var(--r-full);
+  border: 1.5px solid var(--line); background: var(--panel-2);
+  font-size: 13.5px; font-family: var(--font); color: var(--ink);
+  transition: border-color var(--t);
+}
+.ai-input:focus { outline: none; border-color: var(--accent); background: var(--panel); }
+.ai-input::placeholder { color: var(--muted); }
+.ai-send-btn {
+  padding: 10px 18px; border-radius: var(--r-full);
+  background: var(--accent); color: #fff; border: none;
+  font-size: 13px; font-weight: 600; font-family: var(--font);
+  cursor: pointer; transition: background var(--t), transform var(--t);
+  white-space: nowrap;
+}
+.ai-send-btn:hover { background: var(--accent-dark); transform: scale(1.02); }
+.ai-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 /* ── Hero / Tabs ── */
 .hero { margin-bottom: 8px; }
@@ -4772,23 +5004,22 @@ tr:hover td { background: var(--bg); }
   .content { padding: 24px 28px; }
   .two-col { grid-template-columns: 1fr 300px; }
 }
-@media (max-width: 768px) {
-  .hamburger { display: flex; }
-  .topnav {
-    position: fixed; top: var(--topbar-height); left: 0; right: 0; bottom: 0;
-    background: var(--panel); flex-direction: column;
-    padding: 16px; gap: 4px; z-index: 195;
-    transform: translateX(-100%); transition: transform var(--t-slow);
-    overflow-y: auto; border-right: 1px solid var(--line);
-    max-width: 280px; box-shadow: var(--shadow-lg);
-  }
-  .topnav.open { transform: translateX(0); }
-  .topnav a { font-size: 14.5px; padding: 11px 14px; color: var(--ink-2); }
-  #global-search { width: 120px; }
+@media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }
-  .sidebar { display: none; position: fixed; top: var(--topbar-height); left: 0; width: 260px; height: calc(100vh - var(--topbar-height)); z-index: 195; transform: translateX(-100%); transition: transform var(--t-slow); }
+  .hamburger { display: flex; }
+  .sidebar {
+    display: none; position: fixed;
+    top: var(--topbar-height); left: 0;
+    width: 260px; height: calc(100vh - var(--topbar-height));
+    z-index: 195; transform: translateX(-100%);
+    transition: transform var(--t-slow);
+    box-shadow: var(--shadow-lg);
+  }
   .sidebar.open { display: flex; flex-direction: column; transform: translateX(0); }
-  .content { padding: 18px 16px; }
+  #global-search { width: 160px; }
+  .content { padding: 20px 18px; }
+}
+@media (max-width: 768px) {
   .two-col { grid-template-columns: 1fr; }
   .relation-panel { position: static; }
   .ceo-entry { grid-template-columns: 1fr; }
@@ -4799,7 +5030,7 @@ tr:hover td { background: var(--bg); }
   .calc-result-num { font-size: 40px; }
   .agent-grid { grid-template-columns: 1fr; }
   .agent-modal { max-height: 96vh; }
-  .brand-sub { display: none; }
+  .ai-panel { width: 100%; max-width: 100%; }
 }
 @media (max-width: 480px) {
   .content h1 { font-size: 22px; }
@@ -4906,6 +5137,113 @@ tr:hover td { background: var(--bg); }
   .rm-phase-header{flex-wrap:wrap}
 }
 """.strip()
+
+def build_ai_chat_js() -> str:
+    return r"""
+(function () {
+  const panel   = document.getElementById('ai-panel');
+  const overlay = document.getElementById('ai-overlay');
+  const openBtn = document.getElementById('sb-ai-open');
+  const closeBtn= document.getElementById('ai-panel-close');
+  const input   = document.getElementById('ai-input');
+  const sendBtn = document.getElementById('ai-send');
+  const msgs    = document.getElementById('ai-messages');
+
+  if (!panel || !openBtn) return;
+
+  function openPanel() {
+    panel.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => input && input.focus(), 300);
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openPanel);
+  closeBtn && closeBtn.addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+  function addMsg(text, role) {
+    const row = document.createElement('div');
+    row.className = 'ai-msg ai-msg-' + role;
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-msg-avatar';
+    avatar.textContent = role === 'bot' ? '\u2726' : 'U';
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg-bubble';
+    bubble.textContent = text;
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    msgs.appendChild(row);
+    msgs.scrollTop = msgs.scrollHeight;
+    return row;
+  }
+
+  function addTyping() {
+    const row = document.createElement('div');
+    row.className = 'ai-msg ai-msg-bot ai-msg-typing';
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-msg-avatar';
+    avatar.textContent = '\u2726';
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg-bubble';
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    msgs.appendChild(row);
+    msgs.scrollTop = msgs.scrollHeight;
+    return row;
+  }
+
+  function buildContext() {
+    const DATA = window.PLAYBOOK_DATA || {};
+    const skills = (DATA.skills || []).slice(0, 80);
+    return skills.map(s =>
+      s.skill_id + ': ' + (s.problem_solved || s.algorithm_summary || '').slice(0, 120)
+    ).join('\n');
+  }
+
+  async function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    sendBtn.disabled = true;
+    addMsg(text, 'user');
+    const typing = addTyping();
+
+    const ctx = buildContext();
+    const prompt = `你是 paper2skills 知识库的 AI 助手，专注于母婴跨境电商的 AI 决策技能。以下是知识库摘要：\n\n${ctx}\n\n用户问题：${text}\n\n请用简洁专业的中文回答，结合知识库内容，给出具体可操作的建议。`;
+
+    try {
+      const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDummy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      });
+      const data = await res.json();
+      const answer = data?.candidates?.[0]?.content?.parts?.[0]?.text || '抱歉，暂时无法获取回答，请稍后再试。';
+      typing.remove();
+      addMsg(answer, 'bot');
+    } catch (e) {
+      typing.remove();
+      addMsg('网络错误，请检查连接后重试。如需配置 AI 功能，请联系管理员设置 API Key。', 'bot');
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  sendBtn && sendBtn.addEventListener('click', sendMessage);
+  input && input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+})();
+"""
+
 
 def build_search_js() -> str:
     return r"""
@@ -5027,6 +5365,7 @@ def render_pages(
     write_file(out / "assets" / "search.js",  build_search_js())
     write_file(out / "assets" / "graph.js",   build_graph_js())
     write_file(out / "assets" / "ego-graph.js", build_ego_graph_js())
+    write_file(out / "assets" / "ai-chat.js", build_ai_chat_js())
 
     # ── Index (Phase 3C) ──
     write_file(out / "index.html", html_page(
