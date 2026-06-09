@@ -45,82 +45,6 @@
       </div>
     </aside>
     <section class="content">
-<style>
-.rm-hero{text-align:center;padding:60px 40px 40px;max-width:860px;margin:0 auto}
-.rm-hero-eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
-.rm-hero-title{font-size:36px;font-weight:800;line-height:1.2;margin:0 0 16px;color:#0f172a}
-.rm-hero-sub{font-size:18px;color:#475569;margin:0 0 28px}
-.rm-hero-cta{display:flex;gap:12px;justify-content:center;margin-bottom:14px}
-.rm-hero-note{font-size:12px;color:var(--muted)}
-.rm-btn-primary{padding:12px 28px;background:#2563eb;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
-.rm-btn-primary:hover{background:#1d4ed8}
-.rm-btn-sec{padding:12px 28px;background:#f1f5f9;color:#334155;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block}
-
-.rm-summary-bar{display:flex;align-items:center;justify-content:center;gap:0;background:#0f172a;color:#fff;padding:24px 40px;margin:0 -36px;flex-wrap:wrap;gap:8px}
-.rm-summary-item{text-align:center;padding:0 24px}
-.rm-summary-num{display:block;font-size:28px;font-weight:800;color:#60a5fa}
-.rm-summary-label{font-size:12px;color:#94a3b8}
-.rm-summary-sep{font-size:24px;color:#334155;padding:0 8px}
-
-.rm-roles-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0;padding:0}
-.rm-role{display:flex;gap:16px;align-items:flex-start;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:20px}
-.rm-role-icon{font-size:32px;flex-shrink:0}
-.rm-role strong{display:block;font-size:15px;margin-bottom:4px}
-.rm-role p{margin:0 0 8px;font-size:13px;color:#64748b}
-.rm-role-roi{font-size:13px;font-weight:700;color:#2563eb;background:#eff6ff;padding:3px 10px;border-radius:999px}
-
-.rm-phases{display:flex;flex-direction:column;gap:24px;margin:32px 0}
-.rm-phase{border-radius:16px;overflow:hidden;border:1px solid #e2e8f0}
-.rm-phase-header{display:flex;align-items:flex-start;gap:20px;padding:24px 28px;background:var(--phase-bg);border-bottom:1px solid #e2e8f0}
-.rm-phase-badge{width:72px;height:72px;border-radius:50%;background:var(--phase-color);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;text-align:center;line-height:1.2}
-.rm-phase-meta{flex:1}
-.rm-phase-period{font-size:12px;font-weight:600;color:var(--phase-color);text-transform:uppercase;letter-spacing:.06em}
-.rm-phase-theme{margin:4px 0;font-size:22px;font-weight:800}
-.rm-phase-tagline{margin:0;font-size:14px;color:#64748b}
-.rm-phase-roi{text-align:right;flex-shrink:0}
-.rm-phase-roi-label{display:block;font-size:11px;color:#94a3b8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
-.rm-phase-roi strong{font-size:18px;font-weight:800;color:var(--phase-color)}
-
-.rm-items{display:flex;flex-direction:column;gap:0}
-.rm-item{display:flex;gap:20px;padding:24px 28px;border-bottom:1px solid #f1f5f9}
-.rm-item:last-child{border-bottom:none}
-.rm-item-icon{font-size:28px;flex-shrink:0;width:40px;text-align:center;margin-top:2px}
-.rm-item-body{flex:1}
-.rm-item-title{margin:0 0 12px;font-size:16px;font-weight:700}
-.rm-story{background:#fefce8;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:#78350f;margin-bottom:8px}
-.rm-story-label,.rm-result-label{font-weight:700;margin-right:6px}
-.rm-result{background:#f0fdf4;border-left:3px solid #10b981;padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:#14532d;margin-bottom:8px}
-.rm-roi-line{font-size:13px;margin-bottom:8px;color:#374151}
-.rm-chips{display:flex;flex-wrap:wrap;gap:6px}
-.rm-chip{font-size:11px;background:#eff6ff;color:#1e40af;padding:3px 10px;border-radius:999px;text-decoration:none;border:1px solid #bfdbfe}
-.rm-chip:hover{background:#dbeafe}
-
-.rm-footer{display:grid;grid-template-columns:1fr 340px;gap:40px;margin-top:40px;padding:36px;background:#0f172a;border-radius:16px;color:#e2e8f0}
-.rm-footer h3{margin:0 0 10px;font-size:18px;color:#fff}
-.rm-footer p{font-size:14px;color:#94a3b8;margin:0 0 16px}
-.rm-footer-links{display:flex;flex-direction:column;gap:8px}
-.rm-footer-links a{color:#60a5fa;text-decoration:none;font-size:14px}
-.rm-footer-links a:hover{text-decoration:underline}
-.rm-footer-right{display:flex;flex-direction:column;justify-content:space-between}
-.rm-footer-cta{text-align:center;background:#1e293b;border-radius:12px;padding:24px;margin-bottom:16px}
-.rm-footer-cta p{color:#94a3b8;font-size:13px;margin-bottom:12px}
-.rm-footer-note{font-size:11px;color:#475569;line-height:1.6}
-
-@media print {
-  .topbar,.sidebar,.rm-hero-cta,.rm-footer-cta button{display:none!important}
-  body{background:#fff}
-  .content{padding:0!important;max-width:100%!important}
-  .rm-summary-bar{margin:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .rm-phase,.rm-footer{break-inside:avoid}
-  .rm-phases{gap:16px}
-  @page{margin:20mm 15mm;size:A4}
-}
-@media(max-width:900px){
-  .rm-roles-bar{grid-template-columns:1fr}
-  .rm-footer{grid-template-columns:1fr}
-  .rm-phase-header{flex-wrap:wrap}
-}
-</style>
 <div class="rm-scqa">
   <div class="rm-scqa-s"><span class="rm-scqa-label">现状</span>2025年，母婴跨境出海品牌平均每月仍有 3 名运营人员全职处理重复性决策——手工对账、等待提数、人工盯价，每天消耗 72 小时以上的宝贵人力。</div>
   <div class="rm-scqa-c"><span class="rm-scqa-label">冲突</span>而先行品牌已在用 AI 将这些成本清零——AgentRouter 年节省 1,900 万元运营成本，AIGP 定价 A/B 实测 GMV +13%。一旦错过这个窗口，差距将在 18-24 个月内变得不可追赶。</div>
@@ -133,7 +57,7 @@
   <div class="rm-hero-cta">
     <button class="rm-btn-primary" onclick="window.print()">下载 PDF</button>
     <a class="rm-btn-sec" href="playbooks/index.html">查看场景手册 →</a>
-    <a class="rm-btn-sec" href="https://calendly.com" target="_blank" rel="noopener" style="background:#9c5455;color:#fff;border:none">预约 Demo</a>
+    <a class="rm-btn-sec" href="mailto:skills@lute-tlz-dddd.top?subject=预约Demo-AI能力路线图" style="background:#9c5455;color:#fff;border:none">预约 Demo</a>
   </div>
   <p class="rm-hero-note">所有 ROI 数字来源于真实 A/B 实验或匿名客户案例，非模型预测 | 与 Northbeam / Jungle Scout / 纯咨询公司的核心差异：我们给你的是「决策算法」，不是「数据报表」</p>
 </div>
@@ -415,10 +339,10 @@
     <div class="rm-footer-cta">
       <p>获取 PDF + 预约 30 分钟 ROI 测算</p>
       <button class="rm-btn-primary" onclick="window.print()" style="margin-bottom:10px">下载 PDF</button>
-      <form class="rm-lead-form" action="https://formspree.io/f/xpwzgkjd" method="POST" target="_blank">
+      <form class="rm-lead-form" action="mailto:skills@lute-tlz-dddd.top" method="GET">
         <input type="email" name="email" placeholder="your@company.com" required style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #334155;background:#1e293b;color:#f1f5f9;font-size:13px;margin-bottom:8px;box-sizing:border-box">
-        <input type="hidden" name="source" value="ai-roadmap-whitepaper">
-        <button type="submit" style="width:100%;padding:8px;background:#9c5455;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">获取定制 ROI 测算</button>
+        <input type="hidden" name="subject" value="paper2skills ROI测算申请">
+        <button type="submit" style="width:100%;padding:8px;background:#9c5455;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">获取定制 ROI 测算（邮件联系）</button>
       </form>
     </div>
     <p class="rm-footer-note">
