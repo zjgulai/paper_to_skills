@@ -8,30 +8,41 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-D 选品扫描</nav>
@@ -41,11 +52,11 @@
   <div><strong>适用角色</strong><span class='tag'>选品运营</span><span class='tag'>市场洞察分析师</span><span class='tag'>业务负责人</span></div>
   <div class="wf-entry-question"><strong>入口问题：</strong>你正在评估哪类选品机会？</div>
 </div>
-<div class="wf-outcomes"><h3>预期收益</h3><ul><li>✅ 选品误判率降低 22% → 9%（市场下限过滤）</li><li>✅ 从信号采集到评分输出全流程 &lt; 30 分钟</li><li>✅ 跨市场适配性预测避免错误扩张决策</li><li>✅ 合规风险提前识别，降低上架后召回风险</li></ul></div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 选品误判率降低 22% → 9%（市场下限过滤）</li><li>[OK] 从信号采集到评分输出全流程 &lt; 30 分钟</li><li>[OK] 跨市场适配性预测避免错误扩张决策</li><li>[OK] 合规风险提前识别，降低上架后召回风险</li></ul></div>
 <div class="wf-tree">
   <div class="wf-step" style="--depth:0">
   <div class="wf-step-name">市场信号采集</div>
-  <div class="wf-question">❓ 目标品类的数据来源？</div>
+  <div class="wf-question">目标品类的数据来源？</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
       <summary class="wf-condition">公开平台数据（Amazon BSR / Google Trends）</summary>
@@ -66,7 +77,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">市场规模评估</div>
-  <div class="wf-question">❓ 需要量化市场空间吗？</div>
+  <div class="wf-question">需要量化市场空间吗？</div>
   <div class="wf-branch-skills">
     <a class="wf-skill-chip" href="../skills/Skill-Market-Size-Estimation.html"><span class="chip-name">Skill-Market-Size-Estimation</span><span class="chip-role">TAM/SAM/SOM 双路径估算 + Monte Carlo 置信区间</span></a>
     <a class="wf-skill-chip" href="../skills/Skill-New-Product-Opportunity-Mining.html"><span class="chip-name">New Product Opportunity Mining (新品机会挖掘模型)</span><span class="chip-role">新品机会挖掘与评分</span></a>
@@ -74,7 +85,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">用户需求验证</div>
-  <div class="wf-question">❓ 如何验证用户真实需求？</div>
+  <div class="wf-question">如何验证用户真实需求？</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
       <summary class="wf-condition">评论 / VOC 驱动</summary>
@@ -93,7 +104,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">知识图谱辅助决策</div>
-  <div class="wf-question">❓ 需要结构化的选品知识库支撑吗？</div>
+  <div class="wf-question">需要结构化的选品知识库支撑吗？</div>
   <div class="wf-branch-skills">
     <a class="wf-skill-chip" href="../skills/Skill-Hierarchical-Product-KG-Construction.html"><span class="chip-name">层级商品知识图谱自动构建（图片→KG）</span><span class="chip-role">层次化产品知识图谱构建</span></a>
     <a class="wf-skill-chip" href="../skills/Skill-KG-Powered-User-Profiling.html"><span class="chip-name">KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐</span><span class="chip-role">KG 驱动的目标用户画像</span></a>
@@ -101,7 +112,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">合规与风险预扫描</div>
-  <div class="wf-question">❓ 目标市场有特殊合规要求吗？</div>
+  <div class="wf-question">目标市场有特殊合规要求吗？</div>
   <div class="wf-branch-skills">
     <a class="wf-skill-chip" href="../skills/Skill-Category-Compliance-Prescan.html"><span class="chip-name">Skill-Category-Compliance-Prescan</span><span class="chip-role">品类合规预扫描（FDA/CE/ASTM）</span></a>
     <a class="wf-skill-chip" href="../skills/Skill-Cross-Border-Compliance-Framework.html"><span class="chip-name">Cross-Border Compliance Framework — 跨境电商多辖区合规自动映射</span><span class="chip-role">跨境合规框架评估</span></a>
@@ -113,5 +124,21 @@
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-TRACE-Delayed-CVR</nav>
 <h1>轨迹条件延迟转化建模 - 不等归因窗口即可实时更新CVR</h1>
 <p class="muted">Skill-TRACE-Delayed-CVR · 13-广告分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>TRACE 的创新——Follow the TRACE（跟踪轨迹）</p>
+    <p>给未揭示样本强行打硬标签：未转化样本强标为负样本，引入严重偏差</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统延迟反馈方法面临&quot;准确性 vs 新鲜度&quot;两难：</p>
     <h2>3. 业务应用场景</h2>
     <p>业务问题：今天 Google Ads 带来了 5000 次点击，但用户可能 14 天后才下单。现在的桑基图显示&quot;今天 0 转化&quot;——严重低估了 Google Ads 的价值，导致预算削减决策失误。</p><p>TRACE 的解法：不等 14 天，利用点击后的行为轨迹（浏览时长、加购、收藏、搜索同类商品、查看发货政策）实时更新转化概率，给出&quot;当前估计转化数&quot;而非&quot;已确认转化数&quot;。</p><p>| 时间点 | 传统方法 | TRACE | |--------|----------|-------| | 点击后 10分钟 | CVR = 0（未转化） | CVR = 3.2%（有加购行为） | | 点击后 2小时 | CVR = 0（未转化） | CVR = 8.7%（加购+收藏+再次浏览） | | 第14天 | CVR = 6.5%（确认） | CVR = 6.8%（已接近真实） |</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>当前痛点：Google Ads CVR 被低估约 40%（14 天窗口内仅确认 30% 的最终转化）</li><li>TRACE 改善：CVR 估计误差从 40% 降至 ~5%（基于 Criteo/Taobao 实验推断）</li><li>预算决策改善：提前 10-13 天识别高效渠道，减少无效投放约 15-20%</li><li>**年化节省/增益**：假设 Google Ads 月均消耗 50 万，改善 15% = **约 90 万/年**</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li>当前痛点：Google Ads CVR 被低估约 40%（14 天窗口内仅确认 30% 的最终转化）</li><li>TRACE 改善：CVR 估计误差从 40% 降至 ~5%（基于 Criteo/Taobao 实验推断）</li><li>预算决策改善：提前 10-13 天识别高效渠道，减少无效投放约 15-20%</li><li><strong>年化节省/增益</strong>：假设 Google Ads 月均消耗 50 万，改善 15% = <strong>约 90 万/年</strong></li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：4 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ class FeedbackTrajectoryBuilder:
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

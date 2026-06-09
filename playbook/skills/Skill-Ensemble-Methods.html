@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/12-ml基础.html">12-ML基础</a> / Skill-Ensemble-Methods</nav>
 <h1>Ensemble Methods（集成学习方法）</h1>
 <p class="muted">Skill-Ensemble-Methods · 12-ML基础</p>
-<div class="tag-row"><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 40-80 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="tag-row"><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-H 复购增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>40-80 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 数据工程师<span class='biz-ctx-secondary'> · 运营负责人 · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>选品评分 · 差评预测 · 用户流失预警 · 广告出价预测</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想用机器学习解决业务问题，但不知道该选什么模型；模型上线后效果越来越差不知道为什么</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>选对算法工具减少 50% 试错时间，模型上线后可监控可解释，数据团队和业务团队建立共同语言</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道该用什么模型</span><span class='biz-pain-tag'>模型准确率不稳定</span><span class='biz-pain-tag'>业务不相信模型结果</span><span class='biz-pain-tag'>模型黑盒说不清为什么这么预测</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>代表：Random Forest</p>
+    <p>单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78</p>
     <h2>2. 核心算法逻辑</h2>
     <p>三个臭皮匠胜过诸葛亮——将多个弱学习器组合成强学习器，通过&quot;群体智慧&quot;降低偏差（Boosting）或方差（Bagging），获得比任何单一模型更好的预测性能。</p>
     <h2>3. 业务应用场景</h2>
     <p>业务问题：单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78。希望进一步提升到 0.85+ 以提升挽留策略精度。</p><p>数据要求：100K 用户特征 + 流失标签。第一层：XGBoost + LightGBM + CatBoost + Random Forest，第二层：Logistic Regression</p><p>预期产出：Stacking 集成后 AUC=0.86（+0.04），Recall 在相同 Precision 下提升 5pp。相比单一最优模型可多识别 75 个流失用户/月</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：Stacking 在流失/广告场景可提升 AUC 3-5pp，对应月增收 $40,000-50,000。实施成本低（仅代码集成，无需新数据/新系统）。年化贡献 **40-80 万元**。</li><li>**实施难度**：⭐⭐⭐☆☆（3 星）— 需要理解 Bagging/Boosting/Stacking 的区别和适用场景</li><li>**优先级评分**：⭐⭐⭐⭐☆（4 星）— XGBoost/LightGBM 是 Kaggle 和工业界的事实标准，所有预测模型几乎都会用到</li><li>**评估依据**：ML 基础层的高阶技能。学会了可以让已有模型无痛提升 3-5% 性能</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：Stacking 在流失/广告场景可提升 AUC 3-5pp，对应月增收 $40,000-50,000。实施成本低（仅代码集成，无需新数据/新系统）。年化贡献 <strong>40-80 万元</strong>。</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（3 星）— 需要理解 Bagging/Boosting/Stacking 的区别和适用场景</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（4 星）— XGBoost/LightGBM 是 Kaggle 和工业界的事实标准，所有预测模型几乎都会用到</li><li><strong>评估依据</strong>：ML 基础层的高阶技能。学会了可以让已有模型无痛提升 3-5% 性能</li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ def stacking_cv(
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

@@ -8,304 +8,331 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content"><h1>16-智能体工程</h1><p>Agent Skills/Tools, Context, MCP/A2A, Safety/Fault/Cost</p><div class='cards'><article class="card skill-card">
   <h3><a href="../skills/Skill-ATLAS-Gradient-Free-Continual.html">ATLAS — 梯度无关持续学习：Teacher-Student 双架构在线适应</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>必须离线批量训练**（无法在服务中实时更新）、</p>
+  <p>传统持续学习依赖反向传播更新模型权重，存在三个根本缺陷：必须离线批量训练（无法在服务中实时更新）、灾难性遗忘（新任务覆盖旧能力）、部署 Agent 无法自改（推理阶段参数冻结）。ATLAS 的突破在于：将&quot;学习&quot;从参数空间迁移到系统编排层，通过持久学习记忆（Persistent Learning Memory, PLM）存储经验蒸馏后的指导性知识，无需触碰模型权重。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Active-Context-Pruning.html">仿生粘菌主动上下文剪枝 — Focus Agent 自主压缩架构</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Focus** 借鉴 **Physarum polycephalum</p>
+  <p>Focus 借鉴 Physarum polycephalum(多头绒泡菌,俗称粘菌)的探索-收缩策略,把 LLM agent 从被动 &quot;append-only&quot; 模式升级为主动 &quot;explore → compress → withdraw&quot; 模式</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AgeMem-Unified-Agent-Memory.html">AgeMem — LTM+STM 统一 Agent 记忆：RL 自适应管理跨会话知识</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>AgeMem** 是首个将 LTM（长期记忆）和 STM（短期记忆）</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>AgeMem 是首个将 LTM（长期记忆）和 STM（短期记忆）统一到 Agent Policy 的端到端框架。传统方案把两种记忆当作独立模块，由外置 Memory Manager 或启发式 trigger 决策，导致组合效果差、部署成本高（需要额外 expert LLM）。AgeMem 的突破在于：记忆操作本身就是 action，由同一个 LLM policy 通过 RL 学习&quot;何时调什么&quot;。</p>
+  <div class="card-badges"><span class='roi-badge'>10 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-Error-Budget.html">Agent Error Budget — 双向错误预算：自主权随可靠性动态调整</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>单向消耗品**：违反 SLO 就消耗预算，预算耗尽就停止发布，恢复后窗口重置。Agent 双向错误预算在此基础上引入</p>
+  <p>传统 SRE 错误预算是单向消耗品：违反 SLO 就消耗预算，预算耗尽就停止发布，恢复后窗口重置。Agent 双向错误预算在此基础上引入自主权预算（Autonomy Budget）：好行为可以赢回预算，自主权随可靠性动态升降。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-Fault-Tolerance.html">Agent Fault Tolerance（Agent 容错回退）</a></h3>
   <p class="muted">16-智能体工程</p>
   <p>Agent 执行可能因 API 超时、LLM 输出格式错误、工具返回异常而失败。容错机制：(1) Retry with exponential backoff（$t_{retry} = \min(t_{base} \cdot 2^n, t_{max})$）；(2) Fallback 策略——LLM 失败切备选模型，工具失败用简化版；(3) Circuit Breaker——连续失败 N 次后停止尝试，避免雪崩。</p>
-  <div class="card-badges"><span class='roi-badge'>💰 5-15 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <div class="card-badges"><span class='roi-badge'>5-15 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-Payment-Security-Red-Team.html">Whispers of Wealth — Agent 支付协议安全红队：Branded/Vault Whisper 攻击</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>间接 Prompt Injection</p>
-  <div class="card-badges"><span class='roi-badge'>💰 5000 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>WF-D 选品扫描工作流中，AI 导购 Agent 根据母婴产品描述为用户推荐商品</p>
+  <div class="card-badges"><span class='roi-badge'>5000 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-SLO-Manager.html">Agent SLO Manager — 三层 SLI 体系：服务/任务/判断质量</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>服务层 SLI（Service SLI，目标 99.5%）</p>
+  <p>传统 pass@1 仅衡量&quot;至少一次成功&quot;，无法反映 Agent 在生产环境的持续可靠性。Agent 可靠性需要三层 SLI 互补</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-Safety-Guardrails.html">Agent Safety Guardrails（Agent 安全对抗护栏）</a></h3>
   <p class="muted">16-智能体工程</p>
   <p>LLM Agent 面临 Prompt Injection、Jailbreak、工具误用等安全风险。三层防护：(1) 输入过滤——检测注入模式；(2) 工具调用前置验证——参数白名单+范围检查；(3) 输出审计——敏感信息脱敏。</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10-30 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <div class="card-badges"><span class='roi-badge'>10-30 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agent-Stage-Evaluation.html">EComStage — 电商 Agent 三阶段(Perception/Planning/Action)双向 Benchmark</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>EComStage** 解决现有 e-commerce benchmark 只看&quot;最终任务是否成功&quot;的盲点。它把 LLM Agent 的推理过程分解为三阶段评估,并首次</p>
+  <p>EComStage 解决现有 e-commerce benchmark 只看&quot;最终任务是否成功&quot;的盲点。它把 LLM Agent 的推理过程分解为三阶段评估,并首次同时覆盖 customer-oriented 和 merchant-oriented 两类视角</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AgentTrace-Causal-RCA.html">AgentTrace — 因果图根因分析：0.12s 定位多 Agent 故障</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>根因定位**：在构建好的 DAG 上执行</p>
-  <div class="card-badges"><span class='roi-badge'>💰 5-20 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>AgentTrace 的核心洞察是：多 Agent 系统（MAS）的故障传播是确定性的因果链，而非需要 LLM 进行语义推理的模糊问题。</p>
+  <div class="card-badges"><span class='roi-badge'>5-20 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AgentTrust-Runtime-Safety-Interception.html">AgentTrust — 运行时安全拦截：95% 准确率，&lt; 1ms，MCP 集成</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>为什么基础设施沙箱不足**：容器/seccomp 工作在系统调用层，</p>
-  <div class="card-badges"><span class='roi-badge'>💰 20-60 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>为什么基础设施沙箱不足：容器/seccomp 工作在系统调用层，不理解语义。例如 `rm -rf /tmp/orders/` 在文件系统层完全合法，但在补货 Agent 上下文中是灾难性操作。AgentTrust 在工具调用层工作，理解&quot;操作意图&quot;而非仅检查&quot;操作权限&quot;。</p>
+  <div class="card-badges"><span class='roi-badge'>20-60 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agentic-Memory-Management.html">AgeMem — 统一 LTM+STM 管理的 Agentic Memory</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>AgeMem(Agentic Memory)</p>
-  <div class="card-badges"><span class='roi-badge'>💰 STM Filter + Summary 让对话 context 维持紧凑</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
+  <p>AgeMem(Agentic Memory) 颠覆了传统 LTM/STM 分离架构,把记忆管理整合到 Agent 的 policy 本身。现有方法把 LTM 与 STM 当作两个独立模块,要么用 trigger-based 启发式,要么外挂 Memory Manager,导致</p>
+  <div class="card-badges"><span class='roi-badge'>STM Filter + Summary 让对话 context 维持紧凑</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Agentic-Workflow-Compilation.html">Subterranean Agent — 将工作流 SOP 编译进 LLM 权重</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Orchestrator** 逐步调用 LLM 完成多步 SOP：每一步都需要独立的 API 调用、上下文窗口填充、token 计费。</p>
-  <div class="card-badges"><span class='roi-badge'>💰 $150/天 → 约 $0.5–1.2/天（按 128–462× 节省比例）</span></div>
+  <p>每日需要上架数百个 SKU，每个 SKU 经过「标题优化→图片描述生成→合规检查→关键词填写」4 步 SOP，当前用 LangGraph 编排，frontier 模型成本约 $0.15/SKU × 1000 SKU = $150/天</p>
+  <div class="card-badges"><span class='roi-badge'>$150/天 → 约 $0.5–1.2/天（按 128–462× 节省比例）</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Atomix-Transactional-Tool-Calls.html">Atomix — Agent 工具调用事务性：故障注入成功率 0-7% → 37-57%</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Atomix** 为 Agent 工具调用引入</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>Atomix 为 Agent 工具调用引入事务语义，解决多步 Agent 工作流在故障（网络抖动、服务超时、LLM 幻觉）下产生的中间态污染问题。无事务保护时，30% 故障注入场景的成功率仅 0-7%；Atomix Tx-Full 模式将其提升至 37-57%，媲美快照回滚（CR）。</p>
+  <div class="card-badges"><span class='roi-badge'>10万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Auto-Skill-Synthesis.html">SkillForge — 领域特定自演化 Agent Skill 萃取与优化</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Domain-Contextualized Skill Creator(初始化)</p>
-  <div class="card-badges"><span class='roi-badge'>💰 bad case 自动诊断省去人工质检 30%-50% 工时</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
+  <p>母婴出海跨境客服 1 单可能涉及 10+ 国家、5+ 平台(Shopify/Amazon/TikTok Shop/独立站)、30+ 产品类目,人工写 SOP 速度跟不上业务扩张</p>
+  <div class="card-badges"><span class='roi-badge'>bad case 自动诊断省去人工质检 30%-50% 工时</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-AutoSkill-Lifelong-Learning.html">AutoSkill — 经验驱动终身学习：Skill 自进化版本管理</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>RAG 的局限**：被动检索，只能复用已显式存入的知识，无法从对话轨迹中自动归纳模式；</p>
+  <p>RAG 的局限：被动检索，只能复用已显式存入的知识，无法从对话轨迹中自动归纳模式；Fine-tuning 的局限：参数固化后无法增量更新，每次新能力都需全量重训，知识以黑盒形式埋在权重里，不可审计不可编辑。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-CASCADE-Deployment-Time-Learning.html">CASCADE — 案例推理部署时学习：Contextual Bandit 无参数自适应</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>部署时学习（Deployment-Time Learning, DTL）</p>
+  <p>部署时学习（Deployment-Time Learning, DTL） 是 CASCADE 提出的第三个 LLM 生命周期阶段：预训练（Pre-training）→ 微调（Fine-tuning）→ 部署时学习。现有方案只在前两个阶段学习，部署后模型冻结，无法从实际使用中积累经验。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-CapSeal-Agent-Secret-Mediation.html">CapSeal — Agent 秘密中介：能力封装取代直接密钥暴露</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Prompt Injection 攻击</p>
+  <p>传统方式将 API Key 存入环境变量或配置文件，Agent 运行时直接读取。Prompt Injection 攻击可诱导 Agent 将密钥外泄。CapSeal 彻底切断 Agent 与明文密钥的直接联系。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-CausalFlow-Agent-Failure-Repair.html">CausalFlow — LLM Agent 因果调试：失败轨迹 → 最小反事实修复</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>执行轨迹建模为步骤依赖链</p>
+  <p>CausalFlow 将 Agent 的一次执行视为有序步骤序列</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Co-Evolutionary-Skill-Verification.html">Skill 自动演化与验证 — EvoSkills 双 LLM 协同优化</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>EvoSkills** 解决 LLM Agent</p>
+  <p>EvoSkills 解决 LLM Agent 多文件 Skill 包自动生成的两个根本挑战</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Context-Compression.html">ACON — Agent 长上下文压缩与 NL 准则优化</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>ACON(Agent Context Optimization)</p>
-  <div class="card-badges"><span class='roi-badge'>💰 90% 成本, 性能接近 GPT-5</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
+  <p>跨境母婴客服 1 次对话经常 10-30+ 轮,Agent 在执行 RCA(Root Cause Analysis)、生成回复、生成报告时需要历史完整对话 + 多次 API 返回(订单详情、物流数据、产品规格)</p>
+  <div class="card-badges"><span class='roi-badge'>90% 成本, 性能接近 GPT-5</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Cost-Aware-Agent-Scheduling.html">Cost-Aware Agent Scheduling（成本感知调度）</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>不是所有 Agent 任务都需要 GPT4——简单分类任务用 SLM（Small LM），复杂推理用 LLM。成本感知调度根据任务复杂度动态路由到最优模型。</p>
+  <p>不是所有 Agent 任务都需要 GPT-4——简单分类任务用 SLM（Small LM），复杂推理用 LLM。成本感知调度根据任务复杂度动态路由到最优模型。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Cultural-Adaptation-Agent.html">Cultural Adaptation Agent — 跨文化适应：母婴跨境的本地化 AI 策略</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>文化适配**：同一款婴儿奶粉，美国妈妈关注&quot;科学配方/AAP认证&quot;，德国妈妈关注&quot;有机/欧盟标准&quot;，日本妈妈关注&quot;安心品质/无添加&quot;——这些差异不是语言问题，而是</p>
+  <p>语言翻译是跨境电商的最低门槛，真正影响转化的是文化适配：同一款婴儿奶粉，美国妈妈关注&quot;科学配方/AAP认证&quot;，德国妈妈关注&quot;有机/欧盟标准&quot;，日本妈妈关注&quot;安心品质/无添加&quot;——这些差异不是语言问题，而是深层文化价值观差异。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-DAG-Task-Decomposition-Planning.html">TDP — DAG 任务解耦规划：82% Token 节省 + 错误隔离</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>传统 LLM Agent 在执行复杂任务时，把所有历史消息塞入 context window（&quot;full history&quot; 模式），导致两个问题：</p>
+  <p>传统 LLM Agent 在执行复杂任务时，把所有历史消息塞入 context window（&quot;full history&quot; 模式），导致两个问题</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-KLong-Long-Horizon-Agent-Training.html">KLong — 超长时域 Agent 训练：轨迹分割 SFT + 渐进 RL</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>训练 LLM Agent 执行超长时域任务（50+ 步）面临两大瓶颈：</p>
+  <p>训练 LLM Agent 执行超长时域任务（50+ 步）面临两大瓶颈</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-LDP-Identity-Aware-Protocol.html">LDP — 身份感知 Agent 通信协议：模型级路由 + 37% Token 节省</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Google A2A 和 Anthropic MCP 这两大主流 Agent 通信协议存在共同缺陷：不暴露模型级属性</p>
+  <p>Google A2A 和 Anthropic MCP 这两大主流 Agent 通信协议存在共同缺陷：不暴露模型级属性。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-LMM-Searcher-Multimodal-Context.html">LMM-Searcher — 长链多模态 Agent：UID 占位符按需加载图片</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>LMM-Searcher** 解决长链多模态 Agent 的</p>
+  <p>LMM-Searcher 解决长链多模态 Agent 的上下文爆炸问题：在 100 轮搜索会话中，若每张图片直接嵌入为 base64（约 1,000-3,000 tokens），50 张图片就会占用 50,000-150,000 tokens，远超实用预算。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Long-Term-Preference-Memory.html">Shopping Companion — 记忆增强的长期偏好购物 Agent</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Shopping Companion</p>
+  <p>Shopping Companion 解决两个长期被忽视的问题:(1) 缺少能评估跨 session 偏好记忆的端到端购物 benchmark;(2) 现有方法把&quot;偏好识别&quot;和&quot;购物执行&quot;当作独立模块,没有端到端联合优化。它把购物 Agent 形式化为 POMDP,并提出两阶段统一框架 + 双奖励 RL 训练。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-MCP-A2A-Protocol-Stack.html">MCP + A2A 双协议栈 — Orchestrated Multi-Agent 企业架构</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>The Orchestration of Multi-Agent Systems</p>
+  <p>The Orchestration of Multi-Agent Systems 把 LLM Agent 系统的演化分三阶段:单 Agent → 松耦合多 Agent → orchestrated 多 Agent。论文的核心贡献是把&quot;orchestration&quot;形式化为四层架构 + 两类协议</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-MCP-Tool-Use-Benchmark.html">MCP Tool Use 评估基准 — TFS/TEFS 双指标与干扰测试</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>MCPAgentBench** (北京大学 + ZTE, 2026) 是首个专注于</p>
+  <p>MCPAgentBench (北京大学 + ZTE, 2026) 是首个专注于工具选择与执行效率的 MCP 评估基准。现有基准 (MCP-Universe, MCP-RADAR) 主要测正确性，忽略了一个关键问题：模型能完成任务，但效率极低 —— 该并行时串行、该串行时并行、传过多参数、反复试错。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-MUZZLE-Web-Agent-Red-Teaming.html">MUZZLE — Web Agent 间接 Prompt Injection 红队框架</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>间接 Prompt Injection（IPI）</p>
+  <p>间接 Prompt Injection（IPI） 的核心机制：攻击者无法直接访问 Agent 的系统提示，但可通过控制 Agent 抓取的外部内容（商品描述、用户评论、网页正文）向 Agent 上下文注入恶意指令，使 Agent 偏离原始任务目标执行攻击者意图。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Memory-as-Action.html">Memory-as-Action — RL 内嵌式记忆操作策略 (DCPO 训练)</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Trajectory Fracture</p>
+  <p>MemAct(Memory-as-Action) 把&quot;记忆管理&quot;从外部启发式控制器(sliding window / 外部 summarizer)升级为 agent policy 内嵌的可学习 action</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐⭐</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Open-Source-Tool-Use-Model.html">开源 Tool Use 基座模型选型 — Hermes 4 混合推理家族</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Hermes 4** 是 Nous Research 发布的开源权重混合推理模型家族,核心贡献是证明</p>
+  <p>Hermes 4 是 Nous Research 发布的开源权重混合推理模型家族,核心贡献是证明开源模型可以通过系统性后训练(pipeline)达到接近闭源前沿模型的 tool use 和推理能力。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Orchestration-Trace-RL.html">编排轨迹驱动的强化学习 — MAS RL 三维设计框架</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>协调团队(coordinated teams)</p>
+  <p>随着 LLM agent 从单 agent 工具调用进化为协调团队(coordinated teams),RL 的优化对象不再是个体 action,而是编排轨迹(orchestration trace) —— 一个包含 spawn(生成)、delegate(委派)、communicate(通信)、aggregate(聚合)、stop(停止)决策的时序交互图。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐⭐</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Progent-Privilege-Control.html">Progent — 最小权限 Agent 框架：SMT 验证 + 单调约束性</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>最小权限原则在 Agent 中的实现</p>
-  <div class="card-badges"><span class='roi-badge'>💰 30-80 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>最小权限原则在 Agent 中的实现：传统应用最小权限通过 OS/IAM 静态配置实现，但 LLM Agent 的工具调用集合在运行时动态变化，需要动态感知策略。Progent 用符号规则表示权限策略：`{tool: &quot;purchase_order.create&quot;, constraints: {&quot;amount&quot;: {&quot;max&quot;: 1000}}}`，支持在任务执行中实时评估。</p>
+  <div class="card-badges"><span class='roi-badge'>30-80 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-ReliabilityBench-Agent-Reliability.html">ReliabilityBench — Agent 生产可靠性三维评估：pass@1 高估 20-40%</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>ReliabilityBench</p>
+  <p>ReliabilityBench 是首个系统性评估 LLM Agent 在生产级压力条件下可靠性的基准框架（arXiv 2601.06112，2026年1月）。它的核心贡献是把单维&quot;能不能完成任务&quot;扩展为三维 R(k, ε, λ) 可靠性曲面</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-SLM-Tool-Calling-Optimization.html">SLM Tool Calling 成本优化 — 350M 参数击败 LLM</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>AWS 2026 年的实证研究</p>
+  <p>AWS 2026 年的实证研究证明：通过领域特定 SFT，仅 350M 参数的小型语言模型 (SLM) 可以在 tool calling 任务上超越 175B+ 参数的 LLM。核心洞察是参数效率 &gt; 参数规模——通用 LLM 的绝大多数参数被优化用于通用语言理解而非 tool manipulation，导致&quot;参数稀释&quot;。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Sandlock-Agent-Execution-Sandbox.html">Sandlock — 轻量 Agent 沙箱：5ms 启动，HTTP ACL，可逆文件系统</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>为什么容器/microVM 不适合短命令 Agent</p>
-  <div class="card-badges"><span class='roi-badge'>💰 20-50 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>为什么容器/microVM 不适合短命令 Agent：Docker 容器启动需 500ms-2s，microVM（Firecracker）需 125ms+，对于每次工具调用仅数十毫秒的 Agent 来说开销过大。Sandlock 通过 Rust 实现，启动延迟 5ms，专为短命令高频执行设计，Redis 集成零额外开销。</p>
+  <div class="card-badges"><span class='roi-badge'>20-50 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Skill-Lifecycle-Design.html">SoK Agentic Skills — Agent Skill 全生命周期与方法论底座</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>SoK Agentic Skills</p>
+  <p>SoK Agentic Skills(Systematization of Knowledge)是 Agent Skill 领域第一篇综合 survey,把分散在 Voyager / CodeAct / Reflexion / Claude Skills / GPT Store / MCP 等系统中的&quot;Skill 概念&quot;统一为一个理论框架。它解决三个根本问题</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Task-Adaptive-Topology.html">任务自适应拓扑路由 — AdaptOrch 动态多智能体编排</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>AdaptOrch** 针对 LLM 能力收敛趋势(2026 年前沿模型 MMLU/HumanEval 差距 &lt;5%)提出一个关键洞察:当个体模型能力趋同时,</p>
+  <p>AdaptOrch 针对 LLM 能力收敛趋势(2026 年前沿模型 MMLU/HumanEval 差距 &lt;5%)提出一个关键洞察:当个体模型能力趋同时,编排拓扑(拓扑选择) 的方差贡献远超 模型选择 的贡献,成为系统性能的主变量。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Tool-Auto-Discovery.html">Tool Auto Discovery — Agent 工具自动发现：OpenAPI + MCP Schema 自注册</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>Tool Auto Discovery</p>
+  <p>当 Agent 系统规模膨胀至 100+ 工具时，手动注册成为瓶颈：每次新 API 上线都需要开发者手工编写 ToolDefinition、更新路由表、验证参数类型——一个典型企业集成需要 2 个工作日。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Tool-Call-Decision-Framework.html">Tool Call Decision Framework — 必要性/效用/可负担性三维工具调用决策</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>过度调用**（把可推理的问题交给工具），也会</p>
+  <p>LLM 工具调用存在系统性错位：模型既会过度调用（把可推理的问题交给工具），也会遗漏调用（低估工具对复杂查询的价值）。根本原因在于模型自感知与任务实际需求之间存在认知盲区——模型过度自信于自身知识覆盖，却对边界外的未知盲区无感知。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Tool-Description-Audit.html">MCP Tool 描述质量审核 — 六维 Smell 扫描与动态路由</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>97.1% 的 MCP tool 描述至少含有一个 smell</p>
+  <p>Queen&#x27;s University 2026 年的大规模实证研究揭示：97.1% 的 MCP tool 描述至少含有一个 smell，这些描述缺陷直接导致 FM 选错工具、传错参数或产生不必要的交互步骤。论文提出六维评分 rubric + 动态组件路由，在提升 agent 准确率 (+5.85pp) 的同时控制 token 开销 (+67.46% steps 的 trade-off)。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-VLM-Ecommerce-Adaptation.html">VLM E-commerce Adaptation — 大规模视觉语言模型电商适配</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>同款多图**（同一产品的主图/侧面图/背面图/细节图共享同一 listing，模型需跨图聚合）、</p>
-  <div class="card-badges"><span class='roi-badge'>💰 1.6 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>通用 VLM（如 GPT-4V、LLaVA 等）在电商场景表现欠佳，根本原因是三大领域偏差：同款多图（同一产品的主图/侧面图/背面图/细节图共享同一 listing，模型需跨图聚合）、属性中心化（电商问答 90% 是围绕结构化属性如&quot;材质/尺寸/颜色&quot;，与图片描述类任务截然不同）、噪声图片（用户上传的低质量/遮挡/非标图占比极高）。</p>
+  <div class="card-badges"><span class='roi-badge'>1.6 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-XSkill-Multimodal-Self-Improvement.html">XSkill — 多模态 Agent 双流自进化：经验+技能协同积累</a></h3>
   <p class="muted">16-智能体工程</p>
-  <p>XSkill** 解决的是 AI Agent 的&quot;每次从零开始&quot;问题——传统 Agent 缺乏跨任务的知识积累机制，执行 100 次类似任务的性能与第 1 次几乎相同。XSkill 通过</p>
-  <div class="card-badges"><span class='roi-badge'>💰 5-10 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>XSkill 解决的是 AI Agent 的&quot;每次从零开始&quot;问题——传统 Agent 缺乏跨任务的知识积累机制，执行 100 次类似任务的性能与第 1 次几乎相同。XSkill 通过双流架构实现持续自进化</p>
+  <div class="card-badges"><span class='roi-badge'>5-10 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>视觉内容生成</span></div>
 </article></div></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

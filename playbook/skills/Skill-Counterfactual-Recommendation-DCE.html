@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Counterfactual-Recommendation-DCE</nav>
 <h1>反事实推荐 - 双重校准估计器（DCE）</h1>
 <p class="muted">Skill-Counterfactual-Recommendation-DCE · 05-推荐系统</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 200-400 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-F 动态定价</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>200-400 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>MNAR（Missing Not At Random）选择偏差</p>
+    <p>是 MNAR（Missing Not At Random）选择偏差:用户只对系统曝光过的商品产生反馈,而曝光本身受热度/历史 CTR 影响,导致推荐模型陷入&quot;自我强化&quot;循环。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>电商推荐系统的核心痛点是 MNAR（Missing Not At Random）选择偏差:用户只对系统曝光过的商品产生反馈,而曝光本身受热度/历史 CTR 影响,导致推荐模型陷入&quot;自我强化&quot;循环。DCE 用双重校准同时校准倾向分(propensity)与插补误差(imputation),即插即用与所有 DR 变体兼容。</p>
     <h2>3. 业务应用场景</h2>
     <p>- 业务问题:Shopee 印尼站某德国奶粉因历史曝光高 CTR 数据被高估,推荐模型持续压制澳洲/新西兰品牌的同质量 SKU。新妈妈点击不到优质冷门品牌,小品牌冷启动失败率 80%+。 - 数据要求:用户行为日志(曝光/点击/购买) + 商品特征(品牌/价格/认证) - 预期产出:DCE-DR 模型给出的去偏 CTR 预测,新品牌召回率提升 - 业务价值:小品牌冷启动 ROI 提升 30-50%,平台 SKU 多样性扩大,小品牌入驻意愿↑;按印尼站月 GMV 5000 万元计,长尾品牌 GMV 增量约 200-400 万元/月</p><p>- 业务问题:母婴电商的核心特征是月龄驱动的时间窗口需求(0-6月奶粉1段, 6-12月辅食),用户在&quot;错误时期&quot;未购买 ≠ 无需求,但模型把&quot;未购&quot;当作&quot;不喜欢&quot;。 - 数据要求:用户行为日志 + 宝宝月龄 + 商品适用月龄属性 - 预期产出:对每个用户做&quot;如果在正确月龄推送,购买概率是多少&quot;的反事实预测,前置 1-2 月推送 - 业务价值:前置触达转化率提升 25-40%,以美亚母婴专区 100 万月活计,GMV 增量约 80-150 万元/月</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>长尾品牌 GMV 增量:200-400 万元/月(以印尼站 5000 万 GMV 计)</li><li>模型部署成本:GPU 训练 ~2 万元/月 + 工程 1 人月</li><li>**ROI ≈ 100-200 倍/月**</li><li>前置触达 GMV 增量:80-150 万元/月(美亚母婴专区 100 万月活)</li><li>**年化收益:1000-1800 万元**</li><li>易处:有官方 PyTorch 开源代码可直接复用</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li>长尾品牌 GMV 增量:200-400 万元/月(以印尼站 5000 万 GMV 计)</li><li>模型部署成本:GPU 训练 ~2 万元/月 + 工程 1 人月</li><li><strong>ROI ≈ 100-200 倍/月</strong></li><li>前置触达 GMV 增量:80-150 万元/月(美亚母婴专区 100 万月活)</li><li><strong>年化收益:1000-1800 万元</strong></li><li>易处:有官方 PyTorch 开源代码可直接复用</li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ def main() -&gt; None:
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

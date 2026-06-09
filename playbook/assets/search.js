@@ -35,7 +35,7 @@
       `<a class="result" href="${rootPrefix()}skills/${s.skill_id}.html">` +
       `<strong>${esc(s.title)}</strong>` +
       `<br><span>${esc(s.domain_dir)}` +
-      `${s.roi_figure ? ' · 💰 ' + esc(s.roi_figure) : ''}` +
+      `${s.roi_figure ? ' · ' + esc(s.roi_figure) : ''}` +
       `${s.difficulty ? ' · ' + esc(s.difficulty) : ''}</span></a>`
     ).join('') || '<p class="muted" style="padding:12px">无结果</p>';
     box.classList.remove('hidden');

@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/03-时间序列.html">03-时间序列</a> / Skill-Time-Series-Anomaly-Detection</nav>
 <h1>Time Series Anomaly Detection for E-Commerce Monitoring</h1>
 <p class="muted">Skill-Time-Series-Anomaly-Detection · 03-时间序列</p>
 <div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag'>其他</span></div>
+
 <div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人 / 采购负责人<span class='biz-ctx-secondary'> · 运营负责人 · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多市场多仓</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>大促前备货总是不是多了就是少了；新品上线第一个月断货，再补又积压；年底预算不知道各月目标怎么定</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>提前 4-8 周准确预判各 SKU 需求峰值，库存积压减少 30%，断货率降低 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>备货总是压货或断货</span><span class='biz-pain-tag'>旺季淡季波动太大预测不准</span><span class='biz-pain-tag'>补货周期 30 天但预测只看 7 天</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>**：母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动</p>
+    <p>母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动。如何区分&quot;正常波动&quot;和&quot;真实异常&quot;？异常检测的本质是：建立正常行为的概率模型，将低概率事件标记为异常。</p>
     <h2>3. 业务应用场景</h2>
     <p>业务问题：Momcozy 的日订单量通常在500-800单之间波动。某天订单量突然降到200单——是系统Bug、支付通道故障、还是正常的市场波动？</p><p>检测流程： 1. 数据预处理：取过去90天日订单量 2. STL分解：分离趋势、季节性（周内模式）、残差 3. 残差异常检测：残差超过3倍标准差标记为异常 4. 上下文校验：检查当天是否为节假日、是否有已知促销活动 5. 多指标交叉验证：同时检查转化率、客单价是否同步异常</p><p>预期产出： - 异常检测：订单量残差 = -4.2σ → 标记为异常 - 根因定位：转化率正常，但支付成功率从98%降到72% → 支付通道故障 - 告警延迟：&lt;30分钟（实时检测）</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：只需要单变量时序数据</li><li>技术门槛：低，STL和Isolation Forest都有现成实现</li><li>主要挑战：调参（阈值设定）和减少误报</li><li>**刚需监控能力**：任何数据驱动业务都需要异常检测</li><li>**实施成本低**：现成算法，1周内可上线</li><li>**高杠杆**：30分钟发现故障 vs 4小时发现，差异巨大</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：只需要单变量时序数据</li><li>技术门槛：低，STL和Isolation Forest都有现成实现</li><li>主要挑战：调参（阈值设定）和减少误报</li><li><strong>刚需监控能力</strong>：任何数据驱动业务都需要异常检测</li><li><strong>实施成本低</strong>：现成算法，1周内可上线</li><li><strong>高杠杆</strong>：30分钟发现故障 vs 4小时发现，差异巨大</li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ class STLAnomalyDetector:
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

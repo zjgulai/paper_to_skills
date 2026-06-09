@@ -1,0 +1,89 @@
+id: wf-g
+name: WF-G Listing 内容优化
+description: 从竞品对标分析到多模态内容生产再到 A/B 测试迭代的 Listing 全链路优化工作流，覆盖文案、主图、视频、多语言本地化四条内容线。
+target_users:
+  - 内容运营
+  - 品牌运营
+  - 运营负责人
+entry_question: 你的 Listing 当前最大的转化瓶颈在哪里？
+
+steps:
+  - id: step-1
+    name: 竞品内容基准分析
+    question: 是否已系统分析竞品 Listing 的内容策略？
+    context: 母婴品类竞品改款快，头部卖家每季度迭代 Listing，靠眼睛看已无法跟上竞争节奏
+    branches:
+      - condition: 需要竞品对标（老品优化/新品上架前）
+        skills:
+          - id: Skill-Competitor-Product-Intelligence
+            role: 竞品产品特征深度分析，识别差异化卖点
+          - id: Skill-Review-Pain-Point-Mining
+            role: 竞品差评痛点挖掘，找到"市场缺什么"（ROI 50-100万）
+          - id: Skill-StaR-Review-Statement-Ranking
+            role: 竞品核心声明重要性排序，找最影响购买决策的改进点（ROI 80-150万/年）
+        next: step-2
+      - condition: 新品首次上架（无历史数据）
+        skills:
+          - id: Skill-New-Product-Opportunity-Mining
+            role: 新品差异化定位点发现（ROI 500万）
+          - id: Skill-Cultural-Adaptation-Agent
+            role: 目标市场文化差异适配评估
+        next: step-2
+
+  - id: step-2
+    name: 文案与标题创作
+    question: 目标市场语言范围？
+    context: 欧美/日本市场文化差异导致同一功能描述效果相差 25-35%，"直接翻译"通常失败
+    branches:
+      - condition: 多语言市场（US + EU/JP/中东）
+        skills:
+          - id: Skill-Multilingual-NER-Universal-v2
+            role: 22 种语言命名实体识别，多语言内容质量保证
+          - id: Skill-Cultural-Data-Collection
+            role: 跨文化消费差异量化，指导本地化重写（ROI 280万）
+          - id: Skill-AI-Brand-Storytelling
+            role: 不同文化语境下的品牌故事创作
+        next: step-3
+      - condition: 单市场精细优化（US Amazon）
+        skills:
+          - id: Skill-GPLR-Persona-Generation
+            role: 目标买家画像驱动的 Listing 语气和卖点生成
+          - id: Skill-PersonaBot-RAG-Profiling
+            role: RAG 增强用户画像，Listing 文案精准适配购买动机
+        next: step-3
+
+  - id: step-3
+    name: 视觉与视频内容
+    question: 需要哪类内容资产？
+    context: Amazon 视频主图平均提升转化率 15-25%，A+ Content 提升 5-10%，是高性价比改版动作
+    branches:
+      - condition: 主图 / A+ Content（图片类）
+        skills:
+          - id: Skill-Phantom-Product-Showcase-I2V
+            role: 商品主体一致性视频/图片生成（ROI 50万）
+          - id: Skill-Aquarius-Brand-Video-Generation
+            role: 品牌营销主图/视频批量生成（ROI 80-150万）
+      - condition: 视频主图 / TikTok 带货素材
+        skills:
+          - id: Skill-AnchorCrafter-Virtual-Anchor-Demo
+            role: 虚拟主播带货视频，替代真人拍摄（ROI 50-100万）
+          - id: Skill-DAWN-Talking-Head-Review
+            role: AI 口播 Review 视频，多语言批量生产（ROI 30-60万）
+
+  - id: step-4
+    name: A/B 测试与效果验证
+    question: 如何验证 Listing 改版的真实效果？
+    context: 没有实验设计的 Listing 改版，无法区分效果是改动导致的还是流量波动，决策依赖运气
+    skills:
+      - id: Skill-AB-Experimental-Design
+        role: Listing A/B 实验正确设计（样本量 / 运行时长 / 指标选择）
+      - id: Skill-STATE-Robust-Variance-Reduction
+        role: GMV 重尾指标方差缩减 70%，加速实验结论（ROI 30-60万）
+      - id: Skill-Creative-Fatigue-Detection
+        role: 主图/视频素材疲劳自动检测，及时轮换防止 CTR 衰减
+
+outcomes:
+  - 主图 CTR 提升 20-35%，视频主图 CVR 提升 15-25%
+  - 多语言 Listing 准备周期从 2 周缩短至 3 天，本地化质量提升
+  - A/B 实验置信度 ≥95%，好改动快速全量，坏改动及时止损
+  - 竞品痛点转化为产品卖点，新品上架差异化定位清晰

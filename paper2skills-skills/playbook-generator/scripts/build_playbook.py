@@ -73,6 +73,9 @@ WORKFLOW_RULES = {
     "WF-C 客服分诊": ["客服", "review", "voc", "absa", "translation", "customer", "sentiment"],
     "WF-D 选品扫描": ["选品", "product", "market", "competitive", "signal", "data collection", "knowledge graph"],
     "WF-E Review监控": ["review", "fake-review", "sentiment", "absa", "dedup", "quality"],
+    "WF-F 动态定价": ["pricing", "price", "价格", "elasticity", "markdown", "定价", "竞价", "discount"],
+    "WF-G Listing内容优化": ["listing", "content", "copywriting", "主图", "视频", "a/b", "creative", "文案"],
+    "WF-H 复购增长": ["churn", "ltv", "retention", "复购", "流失", "rfm", "lifecycle", "cohort"],
 }
 
 KNOWN_SKILL_IDS: set[str] = set()
@@ -93,92 +96,514 @@ ALGO_TAG_RULES = {
 }
 
 # ---------------------------------------------------------------------------
+# Domain → Business Context mapping (22 domains × role/trigger/outcome/pain)
+# Used to inject a "business perspective panel" on every skill detail page.
+# ---------------------------------------------------------------------------
+
+SKILL_PS_OVERRIDE: dict[str, str] = {
+    "Skill-Multi-SKU-Procurement-Budget-Allocation": "场景 A：季度 $200K 预算在 8 个核心 SKU 间分配",
+    "Skill-NonItem-Page-Path-Modeling": "母婴独立站（如 Momcozy/Graco 品牌站）的首页、分类页（奶瓶/奶粉/童车）、搜索页在转化漏斗中起什么作用",
+    "Skill-Trajectory-Pattern-Mining": "母婴电商需要桑基图展示用户从首页→搜索→PDP→加购→支付的流量宽度",
+    "Skill-Agent-Payment-Security-Red-Team": "WF-D 选品扫描工作流中，AI 导购 Agent 根据母婴产品描述为用户推荐商品",
+    "Skill-Logistics-Fraud-Detection": "\"Item Not Received\"（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%",
+    "Skill-AgentRouter-KG-Guided": "大促高峰期每日 5 万条跨领域工单，正确路由率从 61% → 82%，每天减少约 10,500 条二次转单 - 单条转单处理成本约 5 元，节约运营成本 5.25 万元/天；年化 1900 万元 - 用户 CSAT 评分从 3.8 → 4.3（满分 5），复购意愿提升可观",
+    "Skill-DML-Cohort-Causal-Effect": "平台对所有新妈妈用户统一发放\"新生儿满减券\",ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分 - 数据要求:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理) - DML 配置: - 第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$ - PCA 降维至 10 维,K-mea",
+    "Skill-Switchback-Experiment-Design": "同一海外仓为 Shopify/Amazon/TikTok Shop 多渠道发货,测试\"AI 波次合并算法\"是否降低拣货时长",
+    "Skill-AIGP-LLM-Dynamic-Pricing": "业务痛点：吸奶器年度销量呈强季节性（Q3-Q4 旺季 GMV 占全年 65%），且 Momcozy 经常在大促前一周大幅降价抢占位次",
+    "Skill-Customer-Journey-Prototype": "业务问题 母婴用户跨越App、小程序、线下门店、Web多个渠道，每个渠道的转化效率不同",
+    "Skill-Identified-Bayesian-MMM": "CMO 拿到内部 MMM 报告，显示\"TikTok ROAS 极高远未饱和，建议把 Meta 预算砍半全移给 TikTok\"",
+    "Skill-Clickstream-Persona-Pipeline": "母婴跨境电商应用：独立站/APP 原始点击流 → 离散 persona token，驱动个性化推荐和 A/B 实验",
+    "Skill-Hierarchical-Demand-Forecasting-Reconciliation": "Momcozy 60+ SKU × 多仓(上海/香港/海外仓) × 多市场(US/DE/JP),各层独立预测加总 30-50% 不一致;采购按 SKU 下单,但财务按市场聚合,两边数字对不上,月底对账 2-3 PM 天纯人工调和 - 数据要求:历史 SKU/仓/市场 三层销售时序 + 加总矩阵 S - HiFoReAd 配置: - Stage 1: LGBM + AutoETS 三月预测",
+    "Skill-Customer-Journey-Decision-Tree": "母婴出海电商客服 70% 工单是\"退换货咨询\"(尺码错、漏发、过敏等),人工处理成本高,响应慢",
+    "Skill-GraphTrack-Cross-Device-Tracking": "母婴用户在 TikTok 看到吸奶器短视频种草，切换到 Safari 搜索品牌名进独立站下单",
+    "Skill-MAA-Review-to-Action-Decision": "Momcozy M5 吸奶器在美国/德国/中国三市场销售,各市场用户痛点完全不同(美国关注续航便携、德国关注静音认证、中国关注清洗方便). 现有运营复盘只产出\"差评列表\",无法直接驱动产品改进决策——产品经理拿到差评列表还要花 1-2 周二次提炼 - 数据要求:三市场 Amazon Review API + market 标签 - MAA 配置: - 按市场分别聚类(K=5,每市场 5",
+    "Skill-CAGED-Debiased-Rec": "Momcozy 吸奶器爆款 SKU 占全部流量的 60%+，200 余款配件（替换配件、特殊尺码）几乎零曝光",
+    "Skill-UCB-LDP-Dynamic-Pricing": "独立站每天面对来自北美高净值用户（iPhone + 5分钟停留）和东南亚价格敏感用户（安卓 + 10秒跳出）的混合流量",
+    "Skill-HMMCB-Cross-Channel-Bidding": "母婴 DTC 品牌（如储奶袋/吸奶器）同时在 Google Ads（搜索意图强）、Meta（品牌认知+再营销）、TikTok Shop（内容种草+购买）三个渠道投放",
+    "Skill-DARA-Agentic-MMM-Optimizer": "婴儿推车季节性爆款上线,Google Ads 历史只有 3-5 周数据,传统规则策略难快速找到最优出价时段 - 数据要求:近 3-5 周 Google Ads ROAS 时段数据 + 月度总预算 - DARA 配置:T = 7(一周)或 24(一天时段);Phase 1 LLM 读历史生成日预算向量;Phase 2 每日 ROAS 反馈调整下一日 - 业务价值:冷启动期 ROAS 提升",
+    "Skill-LACA-CrossLingual-ABSA": "Momcozy 在德/法/西市场每月接收 5000+ 母语客服工单(如德语 \"Die Verpackung ist sehr schwer zu öffnen\"). 传统做法用 Google Translate 翻译成英文后跑英文 ABSA,翻译会丢失 aspect 对齐(\"Verpackung\" → \"package\" 时 BIO 边界错位 30%+). 跨境品牌每月因机翻错误导致工单",
+    "Skill-Multi-Channel-Inventory-Pooling": "吸奶器在 Amazon FBA 仓缺货（销量超预期），但独立站海外仓还有 200 件积压，TikTok Shop 也在慢速消化——三渠道信息不互通，总库存 800 件却出现\"某渠道缺货 + 某渠道积压\"",
+    "Skill-PIE-Experimental-MTA": "Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop",
+    "Skill-Data-Collection-Causal-Debiasing": "某母婴品牌通过爬虫采集 Amazon 评论，分析\"打折 coupon 是否提升复购率\"",
+    "Skill-User-Lifecycle-STAN": "业务问题 母婴出海电商用户决策周期长（孕期到育儿多阶段），不同阶段用户需求差异巨大",
+    "Skill-Imbalanced-Data-Handling": "流失率 5%，直接用 XGBoost 训练，Recall 只有 0.3——70% 的流失用户没被识别",
+    "Skill-FrontDoor-Causal-MTA": "孕晚期用户购买周期 6-8 周，在\"下定决心买推车\"后主动搜索并点击所有重定向短信/DPA 广告",
+    "Skill-Agentic-Workflow-Compilation": "每日需要上架数百个 SKU，每个 SKU 经过「标题优化→图片描述生成→合规检查→关键词填写」4 步 SOP，当前用 LangGraph 编排，frontier 模型成本约 $0.15/SKU × 1000 SKU = $150/天",
+    "Skill-CausalRAG-Knowledge-Retrieval": "用户反馈\"机器转了两圈突然停下并闪红灯\"，传统 FAQ 机器人把所有带\"红灯\"的内容（充电时亮红灯/故障码等）全部返回，答非所问，最终用户申请退货",
+    "Skill-EventCast-LLM-Event-Forecasting": "某母婴品牌618大促备货奶粉 SKU（如 A2 奶粉 900g），需提前 7 天向供应商下 PO",
+    "Skill-LLM-Augmented-Recommendation": "母婴跨境电商新用户注册率高但转化低，约 65% 新用户第一屏浏览 ≤3 个商品后跳出",
+    "Skill-Deep-Learning-Churn-Prediction": "母婴订阅盒服务（如每月奶粉+尿布套餐）面临用户流失风险",
+    "Skill-LTV-Prediction-ZILN": "我们通过 Facebook/TikTok 广告获取了大量北美新客，但并非所有新客都有长期价值",
+    "Skill-KG-Augmented-Recommendation-CoLaKG": "海外华人妈妈购买奶粉需综合考量品牌(HiPP/Aptamil)、成分(DHA/HMO 益生元)、段位(1段/2段)、认证(EU 有机/Non-GMO),传统 CF 无法解读这些维度",
+    "Skill-CABB-Cross-Category-Attribution": "用户点击吸奶器广告，进入品牌店铺后转而购买了储奶袋和奶瓶",
+    "Skill-Flowr-Supply-Chain-MAS": "母婴品牌在亚马逊/独立站同时运营，SKU 达 500+，跨境仓（海外仓 + 国内直发）补货涉及 DHL/UPS 运输周期（15-30 天）、海关清关（3-7 天）、Amazon FBA 入仓（1-5 天），任何一环延误都导致断货（Lost Buy Box，单 SKU 日损失 2,000-8,000 元）",
+    "Skill-Context-Compression": "跨境母婴客服 1 次对话经常 10-30+ 轮,Agent 在执行 RCA(Root Cause Analysis)、生成回复、生成报告时需要历史完整对话 + 多次 API 返回(订单详情、物流数据、产品规格)",
+    "Skill-StaR-Review-Statement-Ranking": "Momcozy 暖奶器在 Amazon US/DE 各 5000+ 评论,差评包含细碎复合表达(如\"加热慢又不均匀,温控也不准\"). 传统 ABSA 把整句标注为\"加热问题\",丢失了 3 个独立改进点;直接用 LLM 总结容易生成评论中不存在的属性(如\"接口设计差\") - 数据要求:Amazon Review API 双市场评论 - StaR 配置: - Step 1 Candidate",
+    "Skill-Aquarius-Brand-Video-Generation": "母婴品牌需要在美/德/英/日 4 个市场投放品牌视频广告——每个市场需要不同模特、不同语言字幕、不同节日主题（美国感恩节/德国圣诞节/日本新年）",
+    "Skill-IV-Instrumental-Variables": "Momcozy 想知道自己产品的价格弹性——价格下降10%，销量会增加多少",
+    "Skill-Intelligent-Attribution-Causal-Forest": "我们在美国、加拿大、英国、德国同步投放吸奶器广告，不同市场的用户行为差异显著",
+    "Skill-Causal-Time-Series-Forecasting-GCF": "平台在大促期对核心母婴 SKU(纸尿裤、婴儿车)做搜索权重提升 + 首页 Banner 曝光,需要回答\"如果没做促销,需求应该是多少\"——避免把自然增长功劳归到促销 - 数据要求:全品类销量历史 + 促销标记 + 商品图谱(同类竞品关系) - GCF 配置:节点=SKU,边=同品类竞品,干预=促销曝光,合成控制=未受促销的同类 - 业务价值:促销 ROI 计算精度提升 30-50%,避免",
+    "Skill-Category-Trend-Forecasting": "监测到\"wearable breast pump\"（穿戴式吸奶器）谷歌搜索量过去 6 个月增长 180%（$p<0.01$），BSR 上升 45%，TikTok 话题 #wearablepump 播放量 2.3 亿",
+    "Skill-Generative-Agent-Simulation": "某母婴 DTC 独立站准备从纯打折升级为\"付费会员制（年费 $49 免邮 + 专属抢购）\"",
+    "Skill-Agentic-SCKG-Risk": "手动 ERP 排查可能要 2-3 周，到时候竞争对手早把备货扫空了",
+    "Skill-RAG-Enhanced-Data-Analysis": "\"为什么德国站吸奶器转化率下降\"→ RAG 检索到上月分析\"德国站转化率下降是因为欧元贬值导致价格上涨 8%\"→本次发现同样模式→自动引用历史结论+实时数据验证",
+    "Skill-Hyperparameter-Optimization": "默认参数的 XGBoost 流失预测 AUC=0.78，希望通过超参调优提升到 0.82+",
+    "Skill-Review-Pain-Point-Mining": "想进入\"电动吸奶器\"品类，但已有 Momcozy/Medela/Spectra 等强竞品",
+    "Skill-User-Profile-Long-Memory": "用户上月购买了 Stage 1 奶粉，系统推断宝宝约 2-3 月龄",
+    "Skill-Dynamic-Pricing-Elasticity": "吸奶器在美国定价 $129，德国 €119，英国 £99",
+    "Skill-AnchorCrafter-Virtual-Anchor-Demo": "在 TikTok 美国站推吸奶器，需要大量真人主播演示视频——但海外主播贵（$200-500/条），中文主播语言不通，且更换主播需重新拍摄",
+    "Skill-Ensemble-Methods": "单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78",
+    "Skill-Competitor-Product-Intelligence": "监测到竞品 Momcozy 密集上线 5 个\"Silicon Flange\"（硅胶法兰）新 SKU，且上线 2 周内均进入 BSR Top 5000",
+    "Skill-Hybrid-Search-BM25-Vector": "母婴出海电商的搜索场景高度两极化：部分用户输入精确型号（\"Spectra S1 Plus\"、\"B07X4X5GXD\"），纯向量检索因 OOV 问题召回率低；另一部分用户输入模糊语义查询（\"适合背奶妈妈的静音吸奶器\"），纯 BM25 只能匹配字面词汇，无法理解意图",
+    "Skill-Intelligent-Prediction-Doubly-Robust": "我们计划在北美市场投放吸奶器季节性促销活动（如母亲节、黑五）",
+    "Skill-Cross-Market-Product-Transfer": "一款吸奶器在京东月销 5000+ 台（¥399），需要判断是否引入 Amazon US（$59.99）、Amazon DE（€54.99）、Amazon UK（£49.99）",
+    "Skill-Feature-Selection": "我们从多个数据源（CRM、广告平台、网站分析、客服系统）汇总了 200+ 特征",
+    "Skill-DARA-Agentic-MMM": "某母婴辅食品牌在美国市场同时投放 Amazon Ads、Meta（FB+IG）、TikTok，月均广告预算 $15 万美元，但各渠道的 adstock 效应差异显著（TikTok 内容影响力可持续 2-4 周，Amazon 关键词效果衰减快）",
+    "Skill-Multi-Objective-Budget-Allocation": "$30 万月预算要同时做三件事——黑五冲销量（短期 ROI）、母婴博主种草（品牌搜索量）、新款吸奶器 S2 预热（新品曝光）",
+    "Skill-Auto-Skill-Synthesis": "母婴出海跨境客服 1 单可能涉及 10+ 国家、5+ 平台(Shopify/Amazon/TikTok Shop/独立站)、30+ 产品类目,人工写 SOP 速度跟不上业务扩张",
+    "Skill-Guardrailed-Uplift-Targeting": "当前做法是向所有\"高流失风险\"用户统一发\"免费延长30天\"优惠券，ROI 极低——很多用户即使不发券也会续订",
+    "Skill-DeepAnalyze-Autonomous-Data-Science-Agent": "背景：母婴品牌在Amazon、Shopify、SHEIN等多个平台销售，运营团队每周需要汇总各平台数据生成分析报告，耗时4-6小时/周",
+    "Skill-PersonaBot-RAG-Profiling": "Momcozy 在 Amazon US 的 S9/S12 系列累积数万条评论，但产品团队只能依赖人工抽查了解用户诉求，无法识别\"职场背奶妈妈\"与\"新手妈妈\"在痛点上的差异，导致广告文案和详情页对所有人说同样的话，转化率损耗严重 - 数据要求： - Amazon Review 数据（user_id、product_id、评论文本、评分、时间戳），CSV 格式 - 数量：每 SKU ≥ 50",
+    "Skill-Markdown-Optimization": "S1 吸奶器库存 500 件，成本 $60，原价 $129",
+    "Skill-Semantic-Chunking-Strategy": "母婴出海电商的 Amazon Listing 商品详情页通常包含多个话题段落：产品特性（Safety Features）、使用说明（How to Use）、注意事项（Warnings）、规格参数（Specifications）",
+    "Skill-Listing-AI-Copywriting": "某母婴品牌每月新品 8-12 个 SKU，人工撰写一套完整 Listing（标题+5条Bullet+描述+后台ST）需要 2-3 小时/SKU，月均耗时 20-30 小时",
+    "Skill-Channel-Saturation-Curve": "Facebook 月预算从 $5 万加到 $8 万后，ROAS 从 3.2 掉到 2.1",
+    "Skill-Session-Based-Recommendation-SR-GNN": "母婴出海电商中 60%+ 用户以匿名状态浏览（未登录/未注册）",
+    "Skill-Embedding-Fundamentals": "跨境平台上架 50 款新款婴儿车，无任何历史购买数据，纯 ID 嵌入无法初始化，导致新品在推荐系统中几乎不曝光（冷启动问题）",
+    "Skill-Ad-to-Behavior-Funnel": "FB 吸奶器广告点击后：35% 进详情页 → 12% 加购 → 5% 首购 → 2% 复购",
+    "Skill-Competitive-Response-Modeling": "Momcozy 在美国 Prime Day 前一周突然将吸奶器搜索广告预算翻倍，我们的 impression share 从 22% 跌到 14%",
+    "Skill-Generative-Audience-LLM-Auction": "匿名访客（未授权追踪）向 AI 助手提问穿搭，传统推荐因无 Cookie 完全失效，品牌白白流失高意图实时流量 - 数据要求：用户自然语言查询文本 + SKU 库（含品类、场景标签、图片描述）+ 广告主实时出价 - GenAI 方案： - 用户问：\"我下周去海边参加婚礼，梨形身材，有什么建议",
+}
+
+SKILL_BIZ_CONTEXT_OVERRIDE: dict[str, dict[str, str]] = {
+    "Skill-Review-Pain-Point-Mining": {
+        "role": "选品负责人 / 产品运营",
+        "role2": "数据分析师 · 内容运营",
+        "trigger": "竞品差评里藏着新品机会，但每月几千条评论没有人力一条条看；新品方向拍脑袋，想从竞品用户反馈里找产品迭代方向",
+        "outcome": "自动提取竞品 Top 10 痛点，新品开发有数据背书，每月出竞品洞察报告，产品迭代方向不靠猜测",
+        "pain": "竞品评论没有系统分析过 · 新品选功能靠拍脑袋 · 不知道市场缺什么 · 竞品改款方向提前感知不到",
+        "platform": "Amazon Reviews · TikTok 评论区 · Reddit 母婴社区",
+    },
+    "Skill-LACA-CrossLingual-ABSA": {
+        "role": "客服负责人 / 运营负责人",
+        "role2": "品牌负责人 · 数据分析师",
+        "trigger": "德语/日语差评无人响应，影响账号健康分；多语言客服工单量大但情绪分析靠人工，遗漏高风险投诉；想知道不同市场用户的真实情感差异",
+        "outcome": "多语言差评自动情感分级，高风险工单即时预警，跨市场用户情感对比分析，德/日/法市场客服响应时效从 48h 降到 2h",
+        "pain": "德语日语差评看不懂 · 多语言客服团队成本太高 · 跨市场用户情感差异没有数据 · 翻译后再分析效率太低",
+        "platform": "Amazon Reviews（多语言）· TikTok · DTC 多语言客服系统",
+    },
+    "Skill-Bass-Diffusion-New-Product-Forecasting": {
+        "role": "供应链负责人 / 采购负责人",
+        "role2": "选品负责人 · 运营负责人",
+        "trigger": "新品上架前没有历史数据，首批备货量完全靠经验拍，不是断货就是大量积压；新品前 8 周的备货误差直接决定大促能不能冲排名",
+        "outcome": "基于相似品历史数据预测新品需求曲线，首批备货量有数据支撑，断货和积压损失减少 60%，新品 launch 不再靠运气",
+        "pain": "新品备货全靠经验拍脑袋 · 第一批货量不知道定多少 · 断货就错过 launch 窗口 · 积压就浪费 FBA 仓储费",
+        "platform": "Amazon FBA · 海外仓 · 新品 launch 场景",
+    },
+    "Skill-AgentRouter-KG-Guided": {
+        "role": "客服负责人 / 运营负责人",
+        "role2": "CTO · 产品经理",
+        "trigger": "多个 AI 工具和客服渠道各自为政，「技术故障退换货」被路由到政策部门，复杂问题转手多次没人解决；工单分流靠规则，新场景频繁出错",
+        "outcome": "客服工单自动路由准确率从 61% 提升到 82%，每天减少 1 万条二次转单，年节省运营成本 1900 万元",
+        "pain": "工单被路由到错误部门 · 复杂问题转手 3 次才解决 · 客服规则维护成本高 · 新场景规则经常失效",
+        "platform": "Amazon 客服系统 · 多渠道工单平台 · TikTok Shop 客服",
+    },
+    "Skill-Listing-AI-Copywriting": {
+        "role": "运营负责人 / 内容运营",
+        "role2": "选品负责人 · 品牌负责人",
+        "trigger": "每月新品 8-12 个 SKU，人工写标题/Bullet/描述每条耗时 2-3 小时；想同时覆盖美/德/日市场本地化文案但人手不够；ChatGPT 写的文案有合规风险",
+        "outcome": "AI 生成完整 Listing 文案（含合规检查），月均撰写时间从 25 小时降至 5 小时，关键词覆盖率提升 40%，上架后自然流量提升",
+        "pain": "写 Listing 太耗时 · 多语言本地化没有人 · AI 写的文案有违规风险被下架 · 关键词埋入不系统",
+        "platform": "Amazon Listing（标题/Bullet/描述）· DTC 产品页 · 多语言本地化",
+    },
+}
+
+SKILL_HANDBOOK_MAP: dict[str, list] = {
+    "Skill-AGRS-Aspect-Guided-Review-Summarization": [("pb-voc-product-loop", "竞品情报→产品迭代加速器"), ("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-AIGC-Content-Detection": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-AIGP-LLM-Dynamic-Pricing": [("pb-pricing-engine", "AI 定价引擎手册"), ("pb-tariff-response", "关税冲击 72h 响应手册")],
+    "Skill-Agent-Payment-Security-Red-Team": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-AnchorCrafter-Virtual-Anchor-Demo": [("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-Aquarius-Brand-Video-Generation": [("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-Argos-Agentic-Anomaly-Detection": [("pb-inventory-festival", "大促备货决策手册")],
+    "Skill-BCCB-Causal-Bandits": [("pb-new-product-launch", "新品冷启动手册")],
+    "Skill-Bass-Diffusion-New-Product-Forecasting": [("pb-new-product-launch", "新品冷启动手册")],
+    "Skill-Bundle-Pricing-Strategy": [("pb-pricing-engine", "AI 定价引擎手册")],
+    "Skill-CDA-Privacy-Causal-Attribution": [("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Category-Compliance-Prescan": [("pb-new-product-launch", "新品冷启动手册")],
+    "Skill-Category-Trend-Forecasting": [("pb-new-product-launch", "新品冷启动手册")],
+    "Skill-Causal-Attribution-Bridge": [("pb-tiktok-shop", "TikTok Shop 运营决策手册"), ("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Causal-Cohort-Analysis": [("pb-pricing-engine", "AI 定价引擎手册")],
+    "Skill-Channel-Saturation-Curve": [("pb-tiktok-shop", "TikTok Shop 运营决策手册"), ("pb-tariff-response", "关税冲击 72h 响应手册"), ("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Click-Fraud-Detection": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Cohort-Retention-Analysis": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Cold-Start-Meta-Learning-PAM": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Cold-Start-Product-Recommendation": [("pb-new-product-launch", "新品冷启动手册"), ("pb-user-growth", "用户增长决策手册")],
+    "Skill-Competitive-Price-Monitoring": [("pb-pricing-engine", "AI 定价引擎手册")],
+    "Skill-Compliance-Scored-Guardrail-Orchestration": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Conformal-Prediction-Demand-UQ": [("pb-inventory-festival", "大促备货决策手册")],
+    "Skill-Consumer-Complaint-Recall-Prediction": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Creative-Fatigue-Detection": [("pb-tiktok-shop", "TikTok Shop 运营决策手册"), ("pb-agent-replace", "AI Agent 替人手册"), ("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-Cross-Border-Compliance-Framework": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Cross-Border-Logistics-Routing": [("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-Cross-Border-Price-Harmonization": [("pb-tariff-response", "关税冲击 72h 响应手册")],
+    "Skill-Cross-Market-Product-Transfer": [("pb-new-product-launch", "新品冷启动手册")],
+    "Skill-Cultural-Data-Collection": [("pb-voc-product-loop", "竞品情报→产品迭代加速器")],
+    "Skill-Customer-Churn-Prediction": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Customer-Journey-Decision-Tree": [("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-DARA-Agentic-MMM-Optimizer": [("pb-agent-replace", "AI Agent 替人手册"), ("pb-content-factory", "AI 内容工厂手册"), ("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-DAWN-Talking-Head-Review": [("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-DML-Cohort-Causal-Effect": [("pb-pricing-engine", "AI 定价引擎手册"), ("pb-tariff-response", "关税冲击 72h 响应手册")],
+    "Skill-DS-DGA-GCN-Fake-Review-Group": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Data-Collection-Agent-Pipeline": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-Data-Drift-Detection": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-Data-Provenance-Lineage": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-DeepAnalyze-Autonomous-Data-Science-Agent": [("pb-agent-replace", "AI Agent 替人手册")],
+    "Skill-Demand-Forecasting-Supply-Chain": [("pb-inventory-festival", "大促备货决策手册")],
+    "Skill-DiD-Difference-in-Differences": [("pb-pricing-engine", "AI 定价引擎手册"), ("pb-voc-product-loop", "竞品情报→产品迭代加速器")],
+    "Skill-DialIn-LLM-Case-Intent-Clustering": [("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-Dynamic-Lot-Sizing-MOQ": [("pb-inventory-festival", "大促备货决策手册")],
+    "Skill-Dynamic-Pricing-Elasticity": [("pb-pricing-engine", "AI 定价引擎手册")],
+    "Skill-E-Commerce-Video-Benchmark": [("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-Ecommerce-Data-Quality-Assessment": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-Emotional-AI-Customer-Care": [("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-Entity-Resolution-KG-Dedup": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-Event-Driven-Demand-MAS": [("pb-agent-replace", "AI Agent 替人手册")],
+    "Skill-FSDA-DRL": [("pb-agent-replace", "AI Agent 替人手册")],
+    "Skill-Fraud-Signal-Collection": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-FraudSquad-LLM-Review-Detection": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-FrontDoor-Causal-MTA": [("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Geo-Level-Marketing-Effectiveness": [("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-GraphTrack-Cross-Device-Tracking": [("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Guardrailed-CATE-NBA": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Guardrailed-Uplift-Targeting": [("pb-tiktok-shop", "TikTok Shop 运营决策手册")],
+    "Skill-Hierarchical-Demand-Forecasting-Reconciliation": [("pb-agent-replace", "AI Agent 替人手册"), ("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-Hierarchical-Product-KG-Construction": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-Identified-Bayesian-MMM": [("pb-agent-replace", "AI Agent 替人手册"), ("pb-pricing-engine", "AI 定价引擎手册"), ("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Identity-Fraud-Detection": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Inventory-Health-Aging-Attribution": [("pb-inventory-festival", "大促备货决策手册"), ("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-KG-Incremental-Update": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-LACA-CrossLingual-ABSA": [("pb-voc-product-loop", "竞品情报→产品迭代加速器"), ("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-LLM-AutoBidding-MAS": [("pb-tiktok-shop", "TikTok Shop 运营决策手册")],
+    "Skill-LTV-Prediction-ZILN": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Lead-Time-Distribution-Risk-GenQOT": [("pb-agent-replace", "AI Agent 替人手册"), ("pb-tariff-response", "关税冲击 72h 响应手册"), ("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-Logistics-Fraud-Detection": [("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-Long-Term-Preference-Memory": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-MAA-Review-to-Action-Decision": [("pb-voc-product-loop", "竞品情报→产品迭代加速器")],
+    "Skill-MAS-Adversarial-Defense": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Markdown-Optimization": [("pb-pricing-engine", "AI 定价引擎手册"), ("pb-tariff-response", "关税冲击 72h 响应手册"), ("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-Market-Size-Estimation": [("pb-new-product-launch", "新品冷启动手册")],
+    "Skill-Marketing-Data-Pipeline": [("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Multi-Channel-Inventory-Pooling": [("pb-inventory-festival", "大促备货决策手册"), ("pb-agent-replace", "AI Agent 替人手册"), ("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-Multilingual-Customer-Service-Translation": [("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-Multilingual-NER-Universal-v2": [("pb-voc-product-loop", "竞品情报→产品迭代加速器")],
+    "Skill-NL2Dashboard-Automation": [("pb-data-foundation", "数据治理基础手册"), ("pb-agent-replace", "AI Agent 替人手册")],
+    "Skill-Negative-Keyword-Safe-Guard": [("pb-agent-replace", "AI Agent 替人手册")],
+    "Skill-Ontology-Schema-Design": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-PVM-Attribution-Window-Harmonization": [("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Price-Signal-Collection": [("pb-pricing-engine", "AI 定价引擎手册")],
+    "Skill-ProRCA-Business-Analysis": [("pb-agent-replace", "AI Agent 替人手册")],
+    "Skill-Product-Safety-Testing-Requirements": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Promotion-Demand-Decomposition": [("pb-inventory-festival", "大促备货决策手册")],
+    "Skill-Promotion-Effectiveness": [("pb-attribution-unification", "全渠道归因统一手册")],
+    "Skill-Promotion-Logistics-Surge-Forecast": [("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-RAG-Enhanced-Data-Analysis": [("pb-data-foundation", "数据治理基础手册")],
+    "Skill-RFM-Customer-Segmentation": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Regulatory-Change-Monitoring": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Returns-Reverse-Logistics": [("pb-customer-service-agent", "客服售后智能体手册"), ("pb-fba-operations", "FBA 运营全链路手册")],
+    "Skill-Review-Dedup-Quality-Filter": [("pb-data-foundation", "数据治理基础手册"), ("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-Review-Fraud-Detection": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Review-Pain-Point-Mining": [("pb-voc-product-loop", "竞品情报→产品迭代加速器"), ("pb-customer-service-agent", "客服售后智能体手册")],
+    "Skill-SQL-Agent-Text-to-SQL": [("pb-data-foundation", "数据治理基础手册"), ("pb-agent-replace", "AI Agent 替人手册")],
+    "Skill-Safety-Stock-Replenishment": [("pb-inventory-festival", "大促备货决策手册")],
+    "Skill-StaR-Review-Statement-Ranking": [("pb-voc-product-loop", "竞品情报→产品迭代加速器")],
+    "Skill-Supplier-Capacity-Planning": [("pb-tariff-response", "关税冲击 72h 响应手册")],
+    "Skill-Supply-Chain-Causal-SCM-Attribution": [("pb-tariff-response", "关税冲击 72h 响应手册")],
+    "Skill-Supply-Chain-Due-Diligence": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Thompson-Sampling-MAB": [("pb-new-product-launch", "新品冷启动手册")],
+    "Skill-TikTok-Shop-Content-Attribution": [("pb-tiktok-shop", "TikTok Shop 运营决策手册"), ("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-Transaction-Anomaly-Detection": [("pb-risk-defense", "跨境风险防御作战室")],
+    "Skill-Uplift-Churn-Prediction": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Uplift-Modeling": [("pb-tiktok-shop", "TikTok Shop 运营决策手册")],
+    "Skill-User-Lifecycle-STAN": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-User-Profile-Long-Memory": [("pb-user-growth", "用户增长决策手册")],
+    "Skill-Virbo-Multilingual-Avatar-UGC": [("pb-content-factory", "AI 内容工厂手册")],
+    "Skill-Visual-Data-Collection": [("pb-content-factory", "AI 内容工厂手册")],
+}
+
+DOMAIN_BUSINESS_CONTEXT: dict[str, dict[str, Any]] = {
+    "01-因果推断": {
+        "role": "增长负责人 / CMO",
+        "role2": "数据分析师 · 广告优化师",
+        "trigger": "广告预算花了，但不确定哪个渠道真的带来新客；做了大促，不知道销量增长是促销效果还是季节规律",
+        "outcome": "能区分「真实增量」和「自然购买」，砍掉虚假归因渠道后同等预算 ROI 提升 20-40%",
+        "pain": "钱花出去了不知道有没有用 · 各渠道报告都说自己贡献最大 · 怎么向老板证明这笔钱值得花",
+        "platform": "Amazon · TikTok Shop · Meta Ads · DTC 独立站",
+    },
+    "02-A_B实验": {
+        "role": "运营负责人 / 产品经理",
+        "role2": "广告优化师 · 选品负责人",
+        "trigger": "改了主图/标题/价格，不确定销量变化是改动导致的还是流量波动；两个方案团队各持己见，需要数据裁决",
+        "outcome": "每次改动都有 ≥95% 置信度的数据结论，好的改动快速全量，坏的及时止损",
+        "pain": "改了主图感觉好多了但不确定 · 小范围测试结果好全量后没效果 · 测试周期短结论不可靠",
+        "platform": "Amazon Listing · TikTok 广告素材 · DTC 落地页",
+    },
+    "03-时间序列": {
+        "role": "供应链负责人 / 采购负责人",
+        "role2": "运营负责人 · 财务负责人",
+        "trigger": "大促前备货总是不是多了就是少了；新品上线第一个月断货，再补又积压；年底预算不知道各月目标怎么定",
+        "outcome": "提前 4-8 周准确预判各 SKU 需求峰值，库存积压减少 30%，断货率降低 50%",
+        "pain": "备货总是压货或断货 · 旺季淡季波动太大预测不准 · 补货周期 30 天但预测只看 7 天",
+        "platform": "Amazon FBA · 海外仓 · 多市场多仓",
+    },
+    "04-供应链": {
+        "role": "供应链负责人",
+        "role2": "采购负责人 · CEO / 运营 VP",
+        "trigger": "库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均",
+        "outcome": "库存周转天数从 90 天降到 60 天，断货率 <3%，海外仓综合成本降低 15-25%",
+        "pain": "库存周转天数太长资金压死了 · 断货了只能空运救急成本爆了 · 多市场库存分配不均",
+        "platform": "Amazon FBA · 海外仓 · 多国仓位（美/欧/日）",
+    },
+    "05-推荐系统": {
+        "role": "运营负责人 / 选品负责人",
+        "role2": "产品经理 · 广告优化师",
+        "trigger": "老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低",
+        "outcome": "老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来",
+        "pain": "老客复购率上不去 · 相关产品没有被看到 · Bundle 凑单没人用 · 新品没有曝光机会",
+        "platform": "Amazon · DTC 独立站 · 邮件/SMS 个性化",
+    },
+    "06-增长模型": {
+        "role": "CEO / 增长负责人",
+        "role2": "CMO · 财务负责人",
+        "trigger": "公司增长放缓，不知道是市场饱和还是产品问题还是获客太贵；老板要 12 个月 GMV 预测，只能靠感觉",
+        "outcome": "建立增长拆解模型找到瓶颈，预测未来 6-12 个月营收区间，支撑融资/战略会议",
+        "pain": "增长放缓不知道问题在哪 · CAC 越来越高已经高于 LTV · 新市场要不要进没有数据支撑",
+        "platform": "Amazon · TikTok Shop · DTC 独立站 · 多市场",
+    },
+    "07-NLP-VOC": {
+        "role": "产品运营负责人 / 选品负责人",
+        "role2": "客服负责人 · 品牌负责人",
+        "trigger": "每月几千条差评和 Q&A 没有人力一条条看，但痛点都在里面；新品开发不知道做什么功能、改什么问题",
+        "outcome": "自动提取 Top 10 高频痛点，新品开发有用户数据背书，每月出竞品用户洞察报告",
+        "pain": "差评太多看不过来 · 不知道用户真正在意什么 · 竞品评论没有系统分析过 · 新品开发靠拍脑袋",
+        "platform": "Amazon Reviews / Q&A · TikTok 评论区 · Reddit 母婴社区",
+    },
+    "08-知识图谱": {
+        "role": "选品负责人 / 运营负责人",
+        "role2": "数据分析师 · 供应链负责人",
+        "trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+        "outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+        "pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+        "platform": "Amazon 品类体系 · 竞品 ASIN 网络分析",
+    },
+    "09-DataAgent-LLM": {
+        "role": "数据分析师 / 运营负责人",
+        "role2": "CEO · 供应链负责人",
+        "trigger": "数据需求太多，数据团队排期 2 周；非技术人员（采购/客服/运营）有数据问题但不会 SQL；重复报表占用大量时间",
+        "outcome": "业务方用自然语言自助查数据，常规报表自动化，数据驱动决策响应速度从「天」变「分钟」",
+        "pain": "数据需求排期太长 · 不会 SQL 只能等数据团队 · 老板临时要数据没法马上出 · 分析师时间都花在取数上",
+        "platform": "Amazon SP API · Shopify · TikTok Ads API · 多平台数据整合",
+    },
+    "10-MAS": {
+        "role": "运营负责人 / CTO",
+        "role2": "产品经理 · CEO",
+        "trigger": "运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力",
+        "outcome": "多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营",
+        "pain": "运营人手不够任务太多 · 价格变化没有及时响应 · 重复性工作占据太多时间 · 想做 7×24 监控但没人盯",
+        "platform": "Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线",
+    },
+    "11-AI人文": {
+        "role": "品牌负责人 / 内容运营",
+        "role2": "CEO · 社媒运营",
+        "trigger": "品牌内容同质化，想在母婴赛道建立有温度有记忆点的品牌人设；海外用户文化差异大，本地化内容难以真正有共鸣",
+        "outcome": "品牌内容从「产品介绍」升级为「情感共鸣的故事」，海外用户分享率和评论互动率提升",
+        "pain": "内容没有灵魂用户不爱看 · AI 写的东西太像 AI · 不同文化的妈妈怎么打动 · 品牌故事讲不出来",
+        "platform": "TikTok · Instagram · DTC 品牌站 · 母婴社媒内容",
+    },
+    "12-ML基础": {
+        "role": "数据分析师 / 数据工程师",
+        "role2": "运营负责人 · 产品经理",
+        "trigger": "想用机器学习解决业务问题，但不知道该选什么模型；模型上线后效果越来越差不知道为什么",
+        "outcome": "选对算法工具减少 50% 试错时间，模型上线后可监控可解释，数据团队和业务团队建立共同语言",
+        "pain": "不知道该用什么模型 · 模型准确率不稳定 · 业务不相信模型结果 · 模型黑盒说不清为什么这么预测",
+        "platform": "选品评分 · 差评预测 · 用户流失预警 · 广告出价预测",
+    },
+    "13-广告分析": {
+        "role": "广告优化师 / 投放负责人",
+        "role2": "CMO · 运营负责人",
+        "trigger": "广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户",
+        "outcome": "每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%",
+        "pain": "ROAS 好看但利润没有涨 · 不知道哪个素材真的有效 · 归因窗口期不同数据打架 · TikTok/Meta/Amazon 广告数据整合不了",
+        "platform": "Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因",
+    },
+    "14-用户分析": {
+        "role": "运营负责人 / 用户增长负责人",
+        "role2": "CMO · 产品经理",
+        "trigger": "有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去",
+        "outcome": "用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%",
+        "pain": "老客复购率上不去 · 不知道哪些用户要流失了 · 所有用户用同一套活动 · 买过一次就不见了",
+        "platform": "Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群",
+    },
+    "15-营销投放分析": {
+        "role": "CMO / 营销负责人",
+        "role2": "广告优化师 · CEO",
+        "trigger": "同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV",
+        "outcome": "建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟",
+        "pain": "多渠道预算分配靠感觉 · 网红带货效果不知道怎么量化 · 渠道之间互相抢功劳数据打架 · 整体营销 ROI 算不清楚",
+        "platform": "Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置",
+    },
+    "16-智能体工程": {
+        "role": "CTO / 技术负责人",
+        "role2": "产品经理 · 数据工程师",
+        "trigger": "想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题",
+        "outcome": "AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 >85%",
+        "pain": "LLM 返回结果不稳定不可靠 · AI 幻觉导致业务决策错误 · Agent 任务失败了不知道哪步出问题 · AI 调用成本控制不住",
+        "platform": "跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent",
+    },
+    "17-价格优化": {
+        "role": "定价负责人 / 运营负责人",
+        "role2": "选品负责人 · CEO",
+        "trigger": "竞品突然降价，不知道该不该跟，跟了怕伤利润不跟怕丢 BSR；大促期间不知道折扣给多少，给多了利润没了",
+        "outcome": "实时监控竞品价格并自动触发调价，毛利率保持在目标区间，BSR 排名和利润同时兼顾",
+        "pain": "竞品降价了不知道要不要跟 · 大促折扣给多少没有依据 · 手动盯价格太累反应不及时 · 新品上线定价高了还是低了",
+        "platform": "Amazon Buy Box 竞价策略 · 多市场价格协调 · Prime Day / Coupon 折扣优化",
+    },
+    "18-物流履约": {
+        "role": "物流负责人 / 供应链负责人",
+        "role2": "客服负责人 · 运营负责人",
+        "trigger": "物流时效不稳定，差评里大量「收货太慢」，影响 DSR 评分；退货率高，处理成本吃掉大量利润；旺季物流爆仓",
+        "outcome": "物流时效提升 20-30%，物流相关差评减少 40%，退货成本可控，旺季履约稳定不崩溃",
+        "pain": "物流超时差评太多 · 旺季爆仓订单积压 · 退货处理成本太高 · 头程运费太贵压缩了毛利",
+        "platform": "FBA vs FBM vs 第三方海外仓 · 美国本土最后一公里 · 跨境退货逆向物流",
+    },
+    "19-风控反欺诈": {
+        "role": "运营负责人 / 合规负责人",
+        "role2": "品牌负责人 · CEO",
+        "trigger": "竞品刷单刷好评，自己的 BSR 和评分被打压；账号/ASIN 被恶意投诉删除；店铺有异常订单不确定是真实买家",
+        "outcome": "识别过滤刷评/恶意竞争行为，账号风险提前预警，维权有数据证据，降低封号风险",
+        "pain": "竞品刷评打压我们 · 我们的好评被恶意举报删除 · 不知道差评是真实的还是恶意的 · 如何证明竞品恶意行为",
+        "platform": "Amazon 刷评检测与举报 · TikTok Shop 刷单识别 · 竞品 Listing 攻击溯源",
+    },
+    "20-AI视频生成": {
+        "role": "内容运营 / 品牌负责人",
+        "role2": "社媒运营 · CMO",
+        "trigger": "TikTok/Reels 需要大量视频，拍摄成本高周期长产能跟不上；想做直播带货但真人主播成本高语言是障碍",
+        "outcome": "视频内容产能提升 5-10 倍，单条视频成本降低 80%，多语言市场内容本地化快速覆盖",
+        "pain": "视频内容来不及做 · 拍视频成本太高 · 主播太贵或不稳定 · 多语言内容没有人拍 · TikTok 更新频率要求太高",
+        "platform": "TikTok Shop LIVE · Instagram Reels · 多语言虚拟主播（英/西/阿/日）",
+    },
+    "21-合规决策": {
+        "role": "合规负责人 / 选品负责人",
+        "role2": "CEO · 供应链负责人",
+        "trigger": "新品上架前不确定在美国/欧盟是否需要认证，怕因合规问题被下架；产品被平台下架但不清楚哪里出了问题",
+        "outcome": "上架前自动完成合规预扫描，0 合规下架事故，新市场合规准备时间从 3 个月缩短到 2 周",
+        "pain": "产品被下架说是合规问题 · 不知道目标市场需要什么认证 · EU/US 合规要求不一样怎么处理 · 母婴产品安全标准太严怕踩雷",
+        "platform": "美国 CPSC/ASTM · 欧盟 CE/EN71 · Amazon 类目合规要求 · 德国/英国/中东市场",
+    },
+    "22-数据采集工程": {
+        "role": "数据工程师 / 技术负责人",
+        "role2": "运营负责人 · 选品负责人",
+        "trigger": "想监控竞品价格/评论/排名但没有稳定采集能力，手动太慢；多平台数据分散整合成本极高；数据管道不稳定经常断",
+        "outcome": "竞品价格/评论数据每日自动更新，多平台数据统一入仓，数据管道稳定性 >99%，取数时间从小时降到分钟",
+        "pain": "竞品数据要手动收集太慢 · 平台 API 限制抓不到数据 · 多系统数据整合不起来 · 报表用的数据是过期的",
+        "platform": "Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖",
+    },
+}
+
+# ---------------------------------------------------------------------------
 # Business-problem → workflow quick-entry (for home page C-redesign)
 # ---------------------------------------------------------------------------
 BUSINESS_ENTRIES = [
     {
-        "icon": "🛡️",
+        "icon": "AG",
         "label": "防御竞品攻击 / 平台封号预防",
         "desc": "广告刷量、虚假差评、AI 推荐注入、合规封号——四条战线主动防御",
         "href": "playbooks/pb-risk-defense.html",
         "tag": "风险防御",
     },
     {
-        "icon": "⚡",
+        "icon": "TR",
         "label": "关税冲击 / 贸易政策应对",
         "desc": "72 小时内输出完整行动清单：定价调整 + 库存处置 + 供应链转移方案",
         "href": "playbooks/pb-tariff-response.html",
         "tag": "关税响应",
     },
     {
-        "icon": "📈",
+        "icon": "PL",
         "label": "提升广告 ROI / 归因准确性",
         "desc": "识别无效预算、纠正渠道归因偏差、实现因果驱动的广告优化",
         "href": "workflows/wf-b-广告优化.html",
         "tag": "WF-B 广告优化",
     },
     {
-        "icon": "📦",
+        "icon": "SC",
         "label": "FBA 库存健康 / 头程优化",
         "desc": "长库龄清仓 + 头程路线成本优化 + 旺季备货计划，库存周转天数降 30%",
         "href": "playbooks/pb-fba-operations.html",
         "tag": "FBA 运营",
     },
     {
-        "icon": "🔬",
+        "icon": "VP",
         "label": "竞品差评 → 新品机会挖掘",
         "desc": "竞品 1-3 星差评是最好的免费 R&D，新品成功率从 30% 提升到 50%",
         "href": "playbooks/pb-voc-product-loop.html",
         "tag": "竞品情报",
     },
     {
-        "icon": "🎧",
+        "icon": "CS",
         "label": "客服 24h 自动化 / 差评防御",
         "desc": "70% 工单全自动处理，多语言覆盖，INR 欺诈退货从 35% 降至 5%",
         "href": "playbooks/pb-customer-service-agent.html",
         "tag": "客服售后",
     },
     {
-        "icon": "💬",
+        "icon": "VO",
         "label": "分析用户评价 / 发现产品痛点",
         "desc": "多语言 VOC 挖掘、差评根因归类、产品改进信号提取",
         "href": "workflows/wf-c-客服分诊.html",
         "tag": "WF-C 客服",
     },
     {
-        "icon": "🔍",
+        "icon": "NP",
         "label": "评估新品 / 新市场机会",
         "desc": "市场规模估算、竞品情报采集、选品可行性综合评分",
         "href": "workflows/wf-d-选品扫描.html",
         "tag": "WF-D 选品",
     },
     {
-        "icon": "👤",
+        "icon": "UG",
         "label": "预测用户流失 / 提升 LTV",
         "desc": "Uplift 建模识别可干预用户，精准发券减少无效留存成本",
         "href": "domains/14-用户分析.html",
         "tag": "用户分析",
     },
     {
-        "icon": "🤖",
+        "icon": "AI",
         "label": "AI Agent 替代重复性岗位",
         "desc": "供应链对账、数据分析提数、广告出价——三类岗位 70% 重复工作 Agent 覆盖",
         "href": "playbooks/pb-agent-replace.html",
         "tag": "Agent 替人",
     },
     {
-        "icon": "🏷️",
+        "icon": "PR",
         "label": "动态定价 / A/B 实测 GMV +13%",
         "desc": "LLM 动态定价引擎，定价是乘数——精准定价 1% 比多投广告 15% 更高效",
         "href": "playbooks/pb-pricing-engine.html",
         "tag": "定价引擎",
     },
     {
-        "icon": "🚀",
+        "icon": "NP",
         "label": "新品冷启动备货 / 预测",
         "desc": "零历史数据下的扩散曲线预测，跨市场迁移学习",
         "href": "playbooks/pb-new-product-launch.html",
         "tag": "新品冷启动",
+    },
+    {
+        "icon": "CR",
+        "label": "广告归因打架 / 渠道预算分配",
+        "desc": "PVM 窗口统一 480万/年，Bayesian MMM 1000万——让四份报告说一个真相",
+        "href": "playbooks/pb-attribution-unification.html",
+        "tag": "全渠道归因",
     },
 ]
 
@@ -211,6 +636,12 @@ class PlaybookSkill:
     topics: list[str] = field(default_factory=list)
     workflows: list[str] = field(default_factory=list)
     source_excerpt: str = ""
+    biz_role: str = ""
+    biz_role2: str = ""
+    biz_trigger: str = ""
+    biz_outcome: str = ""
+    biz_pain: str = ""
+    biz_platform: str = ""
 
 
 def slugify(value: str) -> str:
@@ -266,21 +697,38 @@ def first_nonempty_line(text: str, fallback: str = "") -> str:
     return fallback
 
 
+def _clean_problem_solved(text: str, skill_id: str = "") -> str:
+    text = re.sub(r"^[：:。\s]+", "", text).strip()
+    text = re.sub(r"^\*\*\s*[：:]?\s*", "", text).strip()
+    text = re.sub(r"^是\s*[：:]\s*", "", text).strip()
+    text = re.sub(r"\*\*(.+?)\*\*", r"\1", text).strip()
+    text = re.sub(r"\*\*\.?$", "", text).strip()
+    text = re.sub(r"\*\*", "", text).strip()
+    text = re.sub(r"\$\$.*?\$\$", "", text, flags=re.DOTALL).strip()
+    text = re.sub(r"[：:]\s*$", "", text).strip()
+    return text[:280]
+
+
 def first_bold_sentence(text: str, fallback: str = "") -> str:
-    """Extract problem statement: prefer '核心问题/业务问题' labelled sentence, then first bold."""
-    for marker in ("核心问题", "业务问题", "核心挑战", "解决的核心问题"):
-        m = re.search(
-            r"(?:" + marker + r")[：:\s]*([^\n。]{15,180})",
-            text,
-        )
+    """Extract problem statement: prefer labelled 核心问题/业务问题 paragraph, then first clean sentence."""
+    for marker in ("核心问题", "业务问题", "核心挑战", "解决的核心问题", "核心痛点"):
+        m = re.search(r"(?:" + marker + r")[：:\s]*([^\n。！？]{20,300}[。！？\n]?)", text)
         if m:
             clean = re.sub(r"\*\*(.+?)\*\*", r"\1", m.group(1)).strip()
-            if len(clean) > 15:
-                return clean[:200]
-    m = re.search(r"\*\*(.{15,150}?)\*\*", text)
-    if m:
-        return m.group(1).strip()
-    return first_nonempty_line(text, fallback)
+            if len(clean) > 20:
+                return clean[:250]
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or stripped.startswith("```") or stripped.startswith("|"):
+            continue
+        clean = re.sub(r"\*\*(.+?)\*\*", r"\1", stripped)
+        clean = re.sub(r"\*(.+?)\*", r"\1", clean)
+        clean = re.sub(r"\[\[([^\]]+)\]\]", r"\1", clean)
+        clean = re.sub(r"^\$\$.*", "", clean).strip()
+        clean = re.sub(r"^[-*>]+\s*", "", clean).strip()
+        if len(clean) > 30:
+            return clean[:250]
+    return fallback
 
 
 def extract_title(frontmatter: dict[str, str], body: str, skill_id: str) -> str:
@@ -535,7 +983,10 @@ def build_skills(root: Path, vault: Path, graph: SkillsGraph) -> list[PlaybookSk
             status=fm.get("status", "unknown"),
             topic=fm.get("topic", ""),
             algorithm_summary=first_nonempty_line(algo_text, first_nonempty_line(body, skill_id)),
-            problem_solved=first_bold_sentence(algo_text, first_nonempty_line(scenario_text, "")),
+            problem_solved=_clean_problem_solved(
+                first_bold_sentence(algo_text, first_nonempty_line(scenario_text, "")),
+                skill_id,
+            ),
             business_scenarios=extract_list_snippets(scenario_text, 8),
             scenario_paragraphs=extract_scenario_paragraphs(scenario_text, 3),
             inputs=extract_list_snippets(
@@ -556,6 +1007,15 @@ def build_skills(root: Path, vault: Path, graph: SkillsGraph) -> list[PlaybookSk
             workflows=classify(full_text_for_classify, WORKFLOW_RULES),
             source_excerpt=algo_text[:1200] or body[:1200],
         )
+        if skill_id in SKILL_PS_OVERRIDE:
+            skill.problem_solved = _clean_problem_solved(SKILL_PS_OVERRIDE[skill_id], skill_id)
+        biz = SKILL_BIZ_CONTEXT_OVERRIDE.get(skill_id) or DOMAIN_BUSINESS_CONTEXT.get(domain_dir, {})
+        skill.biz_role     = biz.get("role", "")
+        skill.biz_role2    = biz.get("role2", "")
+        skill.biz_trigger  = biz.get("trigger", "")
+        skill.biz_outcome  = biz.get("outcome", "")
+        skill.biz_pain     = biz.get("pain", "")
+        skill.biz_platform = biz.get("platform", "")
         if not skill.tags:
             skill.tags = [domain_key]
         if not skill.topics:
@@ -605,7 +1065,7 @@ def render_workflow_step(step: dict[str, Any], skill_lookup: dict[str, "Playbook
     if name:
         parts.append(f'  <div class="wf-step-name">{name}</div>')
     if question:
-        parts.append(f'  <div class="wf-question">❓ {question}</div>')
+        parts.append(f'  <div class="wf-question">{question}</div>')
     if context:
         parts.append(f'  <div class="wf-context">{context}</div>')
 
@@ -666,7 +1126,7 @@ def render_workflow_step(step: dict[str, Any], skill_lookup: dict[str, "Playbook
 TOB_PLAYBOOKS: list[dict[str, Any]] = [
     {
         "id": "pb-tiktok-shop",
-        "icon": "🎯",
+        "icon": "RA",
         "name": "TikTok Shop 运营决策手册",
         "tag": "广告 · 内容 · 归因",
         "desc": "从内容归因到智能竞价的 TikTok Shop 全链路数据决策指南",
@@ -709,7 +1169,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-inventory-festival",
-        "icon": "📦",
+        "icon": "SC",
         "name": "大促备货决策手册",
         "tag": "供应链 · 补货 · 预测",
         "desc": "双十一 / Prime Day / Black Friday 前 8 周的库存决策完整路线图",
@@ -753,7 +1213,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-new-product-launch",
-        "icon": "🚀",
+        "icon": "NP",
         "name": "新品冷启动手册",
         "tag": "选品 · 预测 · 增长",
         "desc": "零历史数据下的新品上市全链路决策：从选品验证到首批备货到冷启动推广",
@@ -797,7 +1257,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-user-growth",
-        "icon": "👤",
+        "icon": "UG",
         "name": "用户增长决策手册",
         "tag": "LTV · 流失 · 分层运营",
         "desc": "从用户价值分层到精准干预的全链路用户增长决策指南",
@@ -857,7 +1317,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-data-foundation",
-        "icon": "🏗️",
+        "icon": "DB",
         "name": "数据治理基础手册",
         "tag": "数据质量 · KG · Agent",
         "desc": "中小跨境电商团队从零建立 AI 可用数据基础设施的分阶段路线图",
@@ -918,7 +1378,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-agent-replace",
-        "icon": "🤖",
+        "icon": "AI",
         "name": "AI Agent 替人手册",
         "tag": "供应链 · 数据分析 · 广告优化",
         "desc": "三类岗位的核心重复性工作，逐步交给 AI Agent 执行，释放人力专注高价值决策",
@@ -975,7 +1435,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
             "sections": [
                 {
                     "id": "sc",
-                    "label": "📦 供应链",
+                    "label": "供应链",
                     "color": "#2563eb",
                     "inputs": [
                         {"id": "sku_count",    "label": "管理 SKU 数量",        "unit": "个",    "default": 60,      "min": 1,    "max": 5000,   "step": 10},
@@ -1001,7 +1461,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
                 },
                 {
                     "id": "da",
-                    "label": "📊 数据分析师",
+                    "label": "数据分析师",
                     "color": "#7c3aed",
                     "inputs": [
                         {"id": "analyst_count",   "label": "数据分析师人数",      "unit": "人",    "default": 3,    "min": 1,   "max": 50,    "step": 1},
@@ -1022,7 +1482,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
                 },
                 {
                     "id": "ad",
-                    "label": "📈 广告优化师",
+                    "label": "广告优化师",
                     "color": "#059669",
                     "inputs": [
                         {"id": "monthly_adspend", "label": "月广告投放额",         "unit": "万元",  "default": 50,    "min": 1,   "max": 10000, "step": 5},
@@ -1045,7 +1505,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-content-factory",
-        "icon": "🎬",
+        "icon": "TC",
         "name": "AI 内容工厂手册",
         "tag": "素材采集 · 视频生成 · 投放归因",
         "desc": "从人工内容团队到 AI 批量生产的 4 步迁移路线图，部分能力今日可用，视频生成接入中",
@@ -1104,7 +1564,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-pricing-engine",
-        "icon": "💰",
+        "icon": "PA",
         "name": "AI 定价引擎手册",
         "tag": "竞品监控 · 弹性估算 · 动态定价",
         "desc": "定价是乘数，广告是加法——A/B 实测 GMV +13%，定价科学化比多投广告更高效",
@@ -1164,10 +1624,15 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-risk-defense",
-        "icon": "🛡️",
+        "icon": "AG",
         "name": "跨境风险防御作战室",
         "tag": "欺诈反制 · 合规预警 · 品牌保护",
         "desc": "竞品用 AI 攻击你的广告、评分和排名——你需要 AI 来守门。封号预防 800 万/年 vs 防御投入 30 万",
+        "roi_callout": [
+            {"label": "不防御：一次封号", "value": "30-80 万 GMV 损失"},
+            {"label": "防御投入：年度成本", "value": "约 30 万"},
+            {"label": "净收益差值", "value": "> 800 万/年 · ROI 26:1"},
+        ],
         "intro": "跨境电商的竞争已经进入「AI 对抗」阶段。竞品在三条战线同时进攻："
                  "① 广告刷量消耗你的预算；② 虚假差评拉低你的评分；③ AI 注入攻击你的推荐排名。"
                  "与此同时，平台合规政策每季度更新，一次封号损失 30-80 万，一次召回损失 500 万+。"
@@ -1264,7 +1729,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-tariff-response",
-        "icon": "⚡",
+        "icon": "TR",
         "name": "关税冲击 72h 响应手册",
         "tag": "关税应对 · 定价重估 · 供应链转移",
         "desc": "关税涨 10 个点 = 利润腰斩。你有 72 小时决定怎么做——AI 给你完整行动清单",
@@ -1331,7 +1796,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-voc-product-loop",
-        "icon": "🔬",
+        "icon": "VP",
         "name": "竞品情报→产品迭代加速器",
         "tag": "VOC挖掘 · 痛点归因 · 新品机会",
         "desc": "新品从洞察到上架 18 个月 → 6 个月。竞品差评是你最好的免费 R&D 数据",
@@ -1398,7 +1863,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-customer-service-agent",
-        "icon": "🎧",
+        "icon": "CS",
         "name": "客服售后智能体手册",
         "tag": "多语言客服 · 退货优化 · 差评防御",
         "desc": "跨境客服三大成本：人力、时效、差评——AI 覆盖 70% 工单，差评率从 3% 降至 1.5%",
@@ -1468,7 +1933,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
     },
     {
         "id": "pb-fba-operations",
-        "icon": "📦",
+        "icon": "SC",
         "name": "FBA 运营全链路手册",
         "tag": "库存健康 · 头程优化 · 旺季备货",
         "desc": "FBA 仓储成本占 GMV 8-15%，库存周转天数中位数 95 天 vs 行业标杆 60 天——差距就是现金",
@@ -1534,7 +1999,762 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
             "跨渠道缺货率从 8% → 2%，保护 BSR 排名稳定",
         ],
     },
+    {
+        "id": "pb-attribution-unification",
+        "icon": "CR",
+        "name": "全渠道归因统一手册",
+        "tag": "多渠道归因 · 跨设备追踪 · MMM预算",
+        "desc": "Amazon/TikTok/Meta/Google 四份报告数字打架——PVM 统一归因窗口 480万/年，Bayesian MMM 1000万/年",
+        "intro": "每个月运营拿到四份报告：Amazon 说 TikTok 贡献 15%，TikTok 说自己贡献 45%，Meta 说 30%，加起来超过 100%。"
+                 "这不是系统 bug，是结构性问题——每个平台用自己的归因窗口抢功劳。"
+                 "本手册提供从跨设备追踪到贝叶斯 MMM 的完整「真相还原」链路，"
+                 "让每一分广告费的真实贡献可量化、可对比、可优化。",
+        "steps": [
+            {
+                "step": "Step 1：数据管道统一（所有归因的前提）",
+                "problem": "Amazon/TikTok/Meta/Google 数据在四个孤岛里，手动导出对齐每月耗费 2-3 天人工——这一步不解决，后续所有归因都是沙堡",
+                "skills": [
+                    {"id": "Skill-Marketing-Data-Pipeline",
+                     "why": "多渠道归因数据采集管道：统一接入 Meta/TikTok/Amazon 广告 API，标准化时间戳和事件定义，消灭「数据格式不统一」的根因（ROI 12万）"},
+                ],
+                "data": "需要：各平台广告账户 API 权限（Amazon ADS API / TikTok Ads API / Meta Graph API）",
+                "output": "统一格式的多渠道广告数据仓库（每日自动更新）",
+            },
+            {
+                "step": "Step 2：跨设备用户路径拼接",
+                "problem": "TikTok 手机种草 → Safari 桌面购买的链路断裂，投手看不到 TikTok 的真实转化，误判削减预算",
+                "skills": [
+                    {"id": "Skill-GraphTrack-Cross-Device-Tracking",
+                     "why": "图基跨设备追踪：无监督 IP-Domain 图谱拼接手机端和桌面端的同一用户，恢复被断裂链路遮蔽的真实 ROAS（ROI 600-1200万）"},
+                    {"id": "Skill-CDA-Privacy-Causal-Attribution",
+                     "why": "GDPR/CCPA 隐私合规版：欧洲市场无 Cookie 环境下的因果归因，不依赖第三方追踪（必须有，EU 市场合规要求）"},
+                ],
+                "data": "需要：用户 IP 日志、设备指纹、点击 ID（各平台原始日志）",
+                "output": "跨设备用户旅程图谱 + 修正后的各渠道真实转化数",
+            },
+            {
+                "step": "Step 3：归因窗口统一化",
+                "problem": "Amazon 14 天归因窗口系统性「抢走」TikTok/Meta 的功劳——同一笔订单，Amazon 说是自己的，TikTok 也说是自己的，导致 ROAS 虚高",
+                "skills": [
+                    {"id": "Skill-PVM-Attribution-Window-Harmonization",
+                     "why": "PVM 跨平台归因窗口统一化：消除 Amazon 14d vs TikTok 7d vs Meta 1d 的窗口差异，让三平台 ROAS 真正可比（ROI 480万/年）"},
+                    {"id": "Skill-Causal-Attribution-Bridge",
+                     "why": "因果归因桥梁：将 naive「点击→购买」相关性归因升级为反事实「如果没有这个广告还会买吗」，识别 13% 的虚假归因贡献（ROI 10-20万）"},
+                ],
+                "data": "需要：Step 2 输出的跨设备用户图谱 + 各平台原始归因报告",
+                "output": "统一归因窗口后的各渠道真实 ROAS 对比表",
+            },
+            {
+                "step": "Step 4：多触点归因建模",
+                "problem": "用户购买前平均接触 6-8 个广告触点（TikTok 种草 → Google 搜索 → Amazon 直接购买），末次点击模型把 100% 功劳给最后一步，严重低估上游渠道价值",
+                "skills": [
+                    {"id": "Skill-FrontDoor-Causal-MTA",
+                     "why": "前门准则多触点因果归因：用因果图正确拆分「TikTok 内容」→「品牌搜索」→「购买」的链路贡献，识别 TikTok 的真实品牌建设价值（ROI 150-300万）"},
+                    {"id": "Skill-Promotion-Effectiveness",
+                     "why": "因果 ML 促销效果评估：区分「本来就会买的用户」和「被广告说服的用户」，防止把自然购买误算为广告功劳"},
+                ],
+                "data": "需要：用户完整触点序列（曝光→点击→加购→购买，含时间戳）",
+                "output": "各触点渠道的真实边际贡献分配 + MTA 归因报告",
+            },
+            {
+                "step": "Step 5：宏观预算分配（MMM）",
+                "problem": "微观归因解决「哪个广告带来了这笔订单」，但无法回答「我应该把 100 万预算怎么分配才能最大化 GMV」——这是 MMM 的问题",
+                "skills": [
+                    {"id": "Skill-Identified-Bayesian-MMM",
+                     "why": "无混淆贝叶斯 MMM：用高斯过程消除识别危机，输出各渠道真实饱和曲线，让 CMO 预算分配决策可信（ROI 1000万）"},
+                    {"id": "Skill-Channel-Saturation-Curve",
+                     "why": "渠道饱和曲线建模：量化「这个渠道再多投 1 万边际回报是多少」，找到各渠道的最优投放点（ROI 18-25万）"},
+                    {"id": "Skill-Geo-Level-Marketing-Effectiveness",
+                     "why": "地理级营销效果：美国加州 ROI 2.8x vs 全国均值 1.9x，区域差异化投放释放 20-40万增量（ROI 20-40万）"},
+                    {"id": "Skill-DARA-Agentic-MMM-Optimizer",
+                     "why": "LLM+RL 双阶段广告预算分配 Agent：基于 MMM 结果自动执行日预算分配，冷启动 ROAS +15-30%（ROI 360-720万）"},
+                ],
+                "data": "需要：近 12 个月各渠道投放额 + GMV 数据（周粒度），各渠道饱和曲线基础数据",
+                "output": "各渠道最优预算分配方案 + 饱和曲线 + 自动执行 Agent",
+            },
+        ],
+        "outcomes": [
+            "归因窗口统一后各渠道 ROAS 真正可比，消除「平台各自抢功劳」（ROI 480万/年）",
+            "跨设备路径拼接恢复 TikTok 真实贡献，防止因误判而削减高价值渠道（ROI 600-1200万）",
+            "MTA 多触点归因识别品牌建设渠道的真实价值（ROI 150-300万）",
+            "Bayesian MMM 预算分配：每 100 万预算多出 15-20 万 GMV（ROI 1000万）",
+            "「广告数据对账」从每月 2-3 天人工 → 全自动实时更新",
+        ],
+    },
 ]
+
+
+
+AGENT_CATALOG: list[dict[str, Any]] = [
+    {
+        "id": "agent-product-radar", "icon": "RA", "name": "选品雷达",
+        "category": "选品分析", "cat_key": "selection", "cat_class": "cat-supply",
+        "desc": "输入品类关键词，输出 Amazon/速卖通市场机会评分、竞争密度、需求趋势和推荐切入角度。",
+        "roi": "选品决策周期 14天→2天",
+        "linked_skills": ["Skill-Market-Size-Estimation", "Skill-New-Product-Opportunity-Mining", "Skill-Category-Trend-Forecasting"],
+        "inputs": [
+            {"id": "keyword", "label": "品类关键词", "type": "text", "placeholder": "例：硅胶婴儿餐具"},
+            {"id": "market", "label": "目标市场", "type": "select", "options": ["US", "UK", "DE", "AU", "JP"]},
+            {"id": "budget", "label": "预算区间", "type": "select", "options": ["<$5k", "$5-20k", ">$20k"]},
+        ],
+        "demo_output": """[OK] 机会评分: 78/100（强力推荐）
+
+市场数据
+月均搜索量: 124,000（YoY +23%）
+BSR TOP10 均价: $18.9 | 您的成本带: $6-8
+头部 CR（前3卖家）: 合计占比 41%——仍有切入空间
+
+差异化切入角度
+1. 食品级硅胶+麦秸秆混合材质（情感溢价 +$4）
+2. 带 OEM 定制礼盒（B2B 批发线索）
+3. 月龄分段套装（提升 AOV 至 $35+）
+
+竞争分析
+竞品平均评论数: 847 | 最低切入评论数: ~200
+新品窗口: ⭐⭐⭐⭐ 良好
+
+[+] GO — 搜索量健康，价格带有利润空间，3个差异化方向均有评论验证。
+建议首批备货: 500-800 件""",
+    },
+    {
+        "id": "agent-listing-doctor", "icon": "LD", "name": "Listing 医生",
+        "category": "Listing 优化", "cat_key": "listing", "cat_class": "cat-ad",
+        "desc": "粘贴现有 Listing，输出逐字诊断报告和重写版本，精准命中 Amazon A10 算法关键因子。",
+        "roi": "Listing 优化平均带动 GMV +12%",
+        "linked_skills": ["Skill-Listing-AI-Copywriting", "Skill-Listing-Quality-Scoring", "Skill-Negative-Keyword-Safe-Guard"],
+        "inputs": [
+            {"id": "title", "label": "当前 Title", "type": "textarea", "placeholder": "粘贴当前商品标题..."},
+            {"id": "bullets", "label": "Bullet Points", "type": "textarea", "placeholder": "粘贴5条 Bullet（每行一条）..."},
+            {"id": "keywords", "label": "目标核心词 Top3", "type": "text", "placeholder": "例：silicone baby plate, BPA free"},
+        ],
+        "demo_output": """[!] 当前 Listing 诊断（62/100）
+
+Title 评分: C（62/100）
+问题 ①: 缺少核心词 "BPA-free"（搜索量 89K/月）
+问题 ②: 字符仅 89 个，远低于 200 字符上限——损失关键词密度
+问题 ③: 无场景词（6M+ / toddler / starter kit）
+
+[~] Bullet #3 诊断
+原文: "好用耐用，宝宝喜欢"
+问题: 缺乏量化证明，过于主观
+建议: "经 10,000 次弯折测试，FDA 认证食品级硅胶，安全耐用"
+
+[OK] 重写后 Title（197字符）
+[2024 Upgrade] BPA-Free Silicone Baby Plate Set — Suction Bowl+Spoon+Fork for Toddlers 6M+, Dishwasher Safe, Anti-Slip Self-Feeding Starter Kit (Gray)
+
+[OK] 重写后 Bullet #3
+Tested 10,000+ bends without cracking — Made from 100% FDA-compliant food-grade silicone, completely free of BPA, PVC, and phthalates. Safe for baby's first foods.
+
+预估 CTR 提升: +18-25%（基于同类 A/B 测试基准）""",
+    },
+    {
+        "id": "agent-voc-decoder", "icon": "VC", "name": "用户之声解码器",
+        "category": "VOC 分析", "cat_key": "voc", "cat_class": "cat-voc",
+        "desc": "批量导入竞品评论，自动聚类痛点/爽点，输出产品迭代优先级矩阵和广告素材金句库。",
+        "roi": "VOC 驱动迭代，退货率平均下降 2-4%",
+        "linked_skills": ["Skill-Review-Pain-Point-Mining", "Skill-LACA-CrossLingual-ABSA", "Skill-AGRS-Aspect-Guided-Review-Summarization"],
+        "inputs": [
+            {"id": "reviews", "label": "评论文本（每行一条）", "type": "textarea", "placeholder": "粘贴 20-200 条评论..."},
+            {"id": "asin", "label": "竞品 ASIN（可选）", "type": "text", "placeholder": "例：B08XYZ1234"},
+            {"id": "lang", "label": "语言", "type": "select", "options": ["英语", "英语+德语", "英语+日语", "多语言"]},
+        ],
+        "demo_output": """分析了 147 条评论（1-3星: 52条 | 4-5星: 95条）
+
+[!] TOP3 痛点（高频）
+1. 吸盘失效（38次提及）
+   代表原话: "suction doesn't hold after 2 months of use"
+2. 颜色褪色（29次）
+   代表原话: "faded after dishwasher, looks cheap now"
+3. 尺寸偏小（21次）
+   代表原话: "not big enough for 18mo+, she outgrew it fast"
+
+[+] TOP3 爽点（高频）
+1. 好清洗（61次）— "easiest to clean baby product I own"
+2. 防摔耐用（44次）— "dropped 100 times still perfect"
+3. 颜色好看（38次）— "great minimalist colors"
+
+[TIP] 广告金句（真实用户语言，高转化潜力）
+"The only plate that actually stays on the table"
+
+[FIX] 产品迭代建议（优先级排序）
+P0: 吸盘结构升级 → 直接影响复购率和退货率
+P1: 推出 18M+ 加大版 → 延长产品生命周期
+P2: 加强洗碗机染色防护工艺""",
+    },
+    {
+        "id": "agent-ad-attribution", "icon": "AA", "name": "广告归因侦探",
+        "category": "广告归因", "cat_key": "attribution", "cat_class": "cat-ad",
+        "desc": "上传广告报告，自动识别无效花费、归因漏洞、预算分配错误，输出可立即执行的调优清单。",
+        "roi": "识别 25-35% 广告浪费，$10k预算节省 $2,500-3,500/月",
+        "linked_skills": ["Skill-PVM-Attribution-Window-Harmonization", "Skill-Identified-Bayesian-MMM", "Skill-DARA-Agentic-MMM-Optimizer"],
+        "inputs": [
+            {"id": "platform", "label": "广告平台", "type": "select", "options": ["Amazon SP", "Amazon SB/SD", "TikTok Ads", "Meta Ads", "Google Ads"]},
+            {"id": "spend", "label": "月广告花费（$）", "type": "text", "placeholder": "例：12400"},
+            {"id": "target_acos", "label": "目标 ACoS/ROAS", "type": "text", "placeholder": "例：ACoS 18% 或 ROAS 5x"},
+            {"id": "data", "label": "广告数据（可选，粘贴 CSV）", "type": "textarea", "placeholder": "粘贴关键词报告数据..."},
+        ],
+        "demo_output": """广告浪费诊断（过去30天）
+总花费: $12,400 | 有效转化花费: $8,100
+估算浪费: $4,300（34.7%）[WARN]
+
+[!] 无效关键词 TOP3（建议立即否定）
+1. "baby plate cheap" — 花费 $380，转化 0，点击 214
+2. "kids dinnerware set" — ACoS 187%，花费 $520
+3. "silicone bowl wholesale" — B2B 意图，转化率 0.3%
+
+[~] 归因漏洞
+SB广告 impression 12万 → 无再营销链路，损失中端漏斗流量
+
+当前 ACoS: 26.1%（目标 18%，超标 8.1pp）
+
+[OK] 行动清单（本周执行，预期节省 $900+/月）
+1. 否定以上3个关键词 → 立即节省 ~$900/月
+2. 开启 SP 动态竞价-仅降低（流量质量提升，ACoS 预计 -3pp）
+3. 新增否定词组: "wholesale" "bulk" "cheap" "set of 10"
+4. SB 广告新增 Retargeting 受众（覆盖已浏览未购买用户）""",
+    },
+    {
+        "id": "agent-competitor-radar", "icon": "CR", "name": "竞品雷达站",
+        "category": "竞品监控", "cat_key": "competitor", "cat_class": "cat-ops",
+        "desc": "输入竞品 ASIN 列表，追踪价格/排名/评论/Listing 变化，异常时生成智能预警和响应建议。",
+        "roi": "广告截流策略平均提升转化率 8-12%",
+        "linked_skills": ["Skill-Competitive-Price-Monitoring", "Skill-Review-Fraud-Detection", "Skill-Competitive-Response-Modeling"],
+        "inputs": [
+            {"id": "asins", "label": "竞品 ASIN 列表（每行一个）", "type": "textarea", "placeholder": "B08XYZ1234\nB09ABC5678\nB07DEF9012"},
+            {"id": "period", "label": "监控周期", "type": "select", "options": ["过去7天", "过去14天", "过去30天"]},
+            {"id": "metrics", "label": "监控维度", "type": "select", "options": ["全部", "价格+BSR", "评论动态", "Listing变更"]},
+        ],
+        "demo_output": """[ALERT] 竞品异动报告（过去7天）
+
+B08XYZ1234（竞品A — 头部卖家）
+├─ 价格: $21.99 → $17.99（-18%）[WARN] 降价促销迹象
+├─ BSR: #342 → #89（大幅上升）
+└─ 新增评论: +47条（含3条1星，投诉发货问题）
+
+B09ABC5678（竞品B）
+├─ Title 已修改（新增 "BPA-Free" 关键词）
+└─ A+ 页面上线（新增产品对比表格）
+
+7天数据汇总
+竞品均价变化: -8.3% | 你的价格竞争力: 中等
+
+[TIP] 建议响应（按优先级）
+P0: 竞品A大促进行中 → 考虑同步降价 $1-2 或强化差异化广告
+P1: 竞品A发货差评爆发 → 可针对竞品词做广告截流（时间窗口约2周）
+P2: 竞品B更新Listing → 检查是否使用你的核心卖点词汇""",
+    },
+    {
+        "id": "agent-supply-sentinel", "icon": "SC", "name": "供应链哨兵",
+        "category": "供应链预警", "cat_key": "supply", "cat_class": "cat-supply",
+        "desc": "接入库存/销速数据，预测断货风险和过库存风险，给出补货建议时间表和海运/空运决策。",
+        "roi": "避免一次断货可保护 $4,000-15,000 BSR 回弹成本",
+        "linked_skills": ["Skill-Safety-Stock-Replenishment", "Skill-Lead-Time-Distribution-Risk-GenQOT", "Skill-Promotion-Logistics-Surge-Forecast"],
+        "inputs": [
+            {"id": "stock", "label": "当前库存量（件）", "type": "text", "placeholder": "例：340"},
+            {"id": "velocity", "label": "日均销速（件/天）", "type": "text", "placeholder": "例：28"},
+            {"id": "lead_time", "label": "供货周期（天）", "type": "text", "placeholder": "例：21（海运）或7（空运）"},
+            {"id": "channel", "label": "渠道类型", "type": "select", "options": ["Amazon FBA", "自发货", "FBA+海外仓混合"]},
+        ],
+        "demo_output": """[!] 断货风险评级: 高危
+
+当前库存: 340件
+日均销速: 28件/天（近7天均值）
+剩余可售天数: 12.1天
+
+[WARN] FBA 入库周期: 14-18天
+结论: 已进入断货窗口，需立即行动！
+
+补货建议
+├─ 建议补货量: 1,200件（含安全库存30天）
+├─ 最迟下单日期: 今日（已超过海运安全窗口）
+├─ 推荐方案: 空运600件（应急，+$0.8/件）+ 海运600件（补充）
+└─ 预估断货损失（若不补货）: ~$4,200（按当前BSR#234计算）
+
+[~] Q4旺季预警（60天后）
+历史数据显示11月销速 ×2.8 → 建议提前备货至2,500件
+最迟开始备货时间: 9月15日（海运）
+
+成本对比
+海运方案: 成本+$0, 风险高
+空运方案: 成本+$480, 断货风险消除""",
+    },
+    {
+        "id": "agent-cs-triage", "icon": "CS", "name": "客服分诊台",
+        "category": "客服售后", "cat_key": "cs", "cat_class": "cat-voc",
+        "desc": "批量导入工单，自动分类优先级、识别高风险工单（A-to-Z/差评威胁），生成文化适配回复模板。",
+        "roi": "处理效率提升 3x，A-to-Z 索赔率降低 40%",
+        "linked_skills": ["Skill-DialIn-LLM-Case-Intent-Clustering", "Skill-Customer-Journey-Decision-Tree", "Skill-Emotional-AI-Customer-Care"],
+        "inputs": [
+            {"id": "tickets", "label": "工单文本（每行一条）", "type": "textarea", "placeholder": "粘贴 10-100 条客服工单..."},
+            {"id": "platform", "label": "平台来源", "type": "select", "options": ["Amazon", "Shopify", "eBay", "混合"]},
+            {"id": "sla", "label": "SLA 要求", "type": "select", "options": ["24小时", "48小时", "72小时"]},
+        ],
+        "demo_output": """分诊报告（63条工单）
+
+分类分布
+退货退款请求: 18条（28.6%）
+产品质量问题: 14条（22.2%）
+物流查询: 19条（30.2%）
+使用咨询: 12条（19.0%）
+
+[ALERT] 高优先级（需24h内处理）
+工单#2847: "file A-to-Z claim if no response by tomorrow"
+工单#2851: "going to leave 1-star review, terrible quality"
+工单#2863: 情绪值: ANGRY（检测到高风险用户）
+
+[OK] 标准回复模板 #1（物流查询）
+"Hi [Name], Thank you for reaching out! Your order [ORDER_ID] is currently in transit. Expected delivery: [DATE]. Tracking: [LINK]
+If you haven't received it by [DATE+3], please reply and we'll send a replacement immediately."
+
+[!] 产品缺陷信号
+14条工单提及 "strap breaks" → 可能存在结构性质量问题
+建议: 立即联系工厂复查该批次（批号: 请提供）""",
+    },
+    {
+        "id": "agent-pricing-advisor", "icon": "PA", "name": "动态定价顾问",
+        "category": "价格策略", "cat_key": "pricing", "cat_class": "cat-ops",
+        "desc": "分析竞品价格带、成本结构和当前排名，给出最优定价策略和分季节的促销节奏建议。",
+        "roi": "合理溢价策略平均提升净利润率 4-8个百分点",
+        "linked_skills": ["Skill-AIGP-LLM-Dynamic-Pricing", "Skill-Dynamic-Pricing-Elasticity", "Skill-Markdown-Optimization"],
+        "inputs": [
+            {"id": "price", "label": "当前售价（$）", "type": "text", "placeholder": "例：19.99"},
+            {"id": "cost", "label": "综合成本（货值+头程+FBA，$）", "type": "text", "placeholder": "例：7.80"},
+            {"id": "comp_range", "label": "竞品价格区间", "type": "text", "placeholder": "例：$15-$22"},
+            {"id": "bsr", "label": "当前 BSR", "type": "text", "placeholder": "例：234"},
+        ],
+        "demo_output": """定价策略分析
+
+当前状态
+售价: $19.99 | 成本: $7.80 | 毛利率: 61% | BSR: #234
+
+最优价格区间: $21.99 - $23.99
+理由: 竞品头部集中在 $22-25，您的 Review 数量（847条）
+和评分（4.6）支持高于均值的溢价定位。
+
+涨价路径（建议分步执行）
+Week 1: $19.99 → $20.99（观察转化率变化）
+Week 2: 若转化率降幅 <15%，升至 $21.99
+预估毛利率: 61% → 69%（+$1.60/件，月增益约 $1,400）
+
+促销节奏建议
+├─ 每月1次 Coupon 15%（维持搜索权重）
+├─ Prime Day 前2周: $18.99（冲BSR，接受短期利润压缩）
+└─ Q4 旺季（11-12月）: 维持 $22.99（需求刚性，不降价）
+
+[WARN] 涨价风险提示
+若7天内转化率下降 >25%，回退至 $20.99 并检查竞品动态""",
+    },
+    {
+        "id": "agent-account-guardian", "icon": "AG", "name": "账号风险卫士",
+        "category": "合规风控", "cat_key": "risk", "cat_class": "cat-risk",
+        "desc": "扫描账号操作记录和 Listing 合规性，提前识别封号/下架风险，生成整改清单和申诉模板。",
+        "roi": "预防式合规管理，避免封号损失（平均 $20,000-50,000）",
+        "linked_skills": ["Skill-Amazon-ToS-Compliance-Guardrail", "Skill-Consumer-Complaint-Recall-Prediction", "Skill-Compliance-Scored-Guardrail-Orchestration"],
+        "inputs": [
+            {"id": "notice", "label": "近期异常通知（粘贴邮件内容）", "type": "textarea", "placeholder": "粘贴 Amazon 警告邮件或 Account Health 异常通知..."},
+            {"id": "asins", "label": "需检查的 ASIN 列表", "type": "textarea", "placeholder": "每行一个 ASIN"},
+            {"id": "health", "label": "当前账号健康状态", "type": "select", "options": ["绿色（正常）", "黄色（预警）", "红色（高危）"]},
+        ],
+        "demo_output": """账号风险评分: 6.8/10（中等风险）
+
+[!] 高风险项（立即处理）
+1. 检测到 Review Manipulation 风险信号
+   3条评论来自同一IP段 → 可能触发 Amazon 检测
+   建议: 停止所有站外导流至评论页的操作
+
+2. Listing B08XYZ: Title 包含竞品品牌词 "SimilarBrand"
+   → 商标侵权风险，建议24h内删除
+
+[~] 中等风险项
+3. ODR（订单缺陷率）本月: 1.08%（红线1%）
+   → 轻微超标，需本周内处理所有未回复差评工单
+
+[OK] 整改清单（按优先级）
+P0（今日）: 删除 Title 中的侵权词
+P0（今日）: 联系3名疑似刷单买家要求删除评论
+P1（本周）: 回复全部差评工单，目标 ODR<0.9%
+P2（下月）: 申请 Brand Registry 加强品牌保护
+
+申诉模板已就绪
+如收到 Account Health 警告，可使用以下 POA 模板框架:
+"Root Cause: ... Corrective Actions: ... Preventive Measures: ..." """,
+    },
+    {
+        "id": "agent-pnl-analyzer", "icon": "PL", "name": "P&L 透视镜",
+        "category": "数据分析", "cat_key": "analytics", "cat_class": "cat-ops",
+        "desc": "输入销售数据，自动计算真实净利润率（含所有隐性成本），识别利润漏洞并给出量化改善路径。",
+        "roi": "平均识别 35-50% 的利润改善空间",
+        "linked_skills": ["Skill-DeepAnalyze-Autonomous-Data-Science-Agent", "Skill-ProRCA-Business-Analysis", "Skill-NL2Dashboard-Automation"],
+        "inputs": [
+            {"id": "revenue", "label": "月销售额（$）", "type": "text", "placeholder": "例：32400"},
+            {"id": "cogs", "label": "商品成本（$）", "type": "text", "placeholder": "例：9200"},
+            {"id": "fba", "label": "FBA 费用（$）", "type": "text", "placeholder": "例：5800"},
+            {"id": "ads", "label": "广告花费（$）", "type": "text", "placeholder": "例：6500"},
+            {"id": "return_rate", "label": "退货率（%）", "type": "text", "placeholder": "例：4"},
+        ],
+        "demo_output": """P&L 透视报告（月度）
+
+收入: $32,400
+├─ 商品成本: -$9,200（28.4%）
+├─ FBA 费用: -$5,800（17.9%）
+├─ 广告花费: -$6,500（20.1%）[!] 偏高
+├─ 头程物流: -$1,900（5.9%）
+├─ 退货成本: -$1,296（4.0%）[~] 需关注
+├─ 平台佣金: -$4,860（15.0%）
+└─ 净利润: $2,844（净利率 8.8%）[!] 低于行业均值 15%
+
+[!] 利润漏洞识别（TOP3）
+1. ACoS 26.1% → 行业均值 18% → 优化空间: +$2,700/月
+2. 退货率 4% → 行业优秀 3% → 每降1% = +$324/月
+3. 头程走空运 → 改海运可节省 $600/月
+
+改善后利润模拟（执行以上3项）
+预计净利润: $6,144（净利率 19.0%）
+利润提升: +116%
+
+最优先行动: 优化广告 ACoS（ROI最高，可在30天内见效）""",
+    },
+    {
+        "id": "agent-brand-guardian", "icon": "BG", "name": "品牌合规卫士",
+        "category": "合规风控", "cat_key": "risk", "cat_class": "cat-risk",
+        "desc": "扫描品牌文案，进行 FDA/FTC/Amazon TOS 三轨合规检查，输出违规词清单和逐句合规改写建议。",
+        "roi": "预防 FTC 警告和产品下架，单次违规处罚可达 $50,000",
+        "linked_skills": ["Skill-Compliance-Scored-Guardrail-Orchestration", "Skill-Amazon-ToS-Compliance-Guardrail", "Skill-Cross-Border-Compliance-Framework"],
+        "inputs": [
+            {"id": "copy", "label": "品牌文案（Listing/广告语/包装文字）", "type": "textarea", "placeholder": "粘贴需要检查的文案内容..."},
+            {"id": "category", "label": "产品品类", "type": "select", "options": ["母婴", "健康保健", "食品饮料", "消费电子", "美妆个护"]},
+            {"id": "market", "label": "目标市场", "type": "select", "options": ["US", "UK/EU", "AU", "全球"]},
+        ],
+        "demo_output": """合规扫描报告（母婴品类 US 市场）
+综合合规评分: 64/100 → 整改后预计: 94/100
+
+[!] 禁用词（立即删除，3处违规）
+1. "clinically proven" → 需 FDA 认证才可使用
+   合规改写: "designed with safety in mind"
+
+2. "prevents colic" → 医疗声明，违反 FTC
+   合规改写: "designed for comfortable feeding"
+
+3. "100% safe" → 绝对化表述，FTC 违规
+   合规改写: "made with food-grade materials tested to US safety standards"
+
+[~] 慎用词（需补充证明文件，2处）
+4. "BPA-free" → 需有第三方检测报告支撑
+5. "FDA approved" → 应改为 "FDA registered facility"
+
+[OK] 合规文案建议
+将 "clinically proven to reduce fussiness" 改写为:
+"Thoughtfully designed for baby's comfort — made with soft, food-grade silicone that moms trust"
+
+所需证明文件清单
+□ SGS/Intertek 第三方检测报告
+□ CPSIA 认证（儿童产品必需）
+□ BPA-Free 声明（实验室报告）""",
+    },
+    {
+        "id": "agent-tiktok-content", "icon": "TC", "name": "TikTok 内容官",
+        "category": "内容营销", "cat_key": "content", "cat_class": "cat-ad",
+        "desc": "输入产品和受众画像，输出 TikTok/Reels 爆款选题矩阵、脚本框架和话题标签策略，降低内容生产成本。",
+        "roi": "系统化内容输出降低 CPM 40%，自然流量占比提升至 30%+",
+        "linked_skills": ["Skill-DAWN-Talking-Head-Review", "Skill-AnchorCrafter-Virtual-Anchor-Demo", "Skill-Creative-Fatigue-Detection"],
+        "inputs": [
+            {"id": "product", "label": "产品名称/描述", "type": "text", "placeholder": "例：硅胶婴儿餐具套装"},
+            {"id": "audience", "label": "目标受众画像", "type": "text", "placeholder": "例：0-2岁宝妈，关注辅食/育儿"},
+            {"id": "style", "label": "内容风格偏好", "type": "select", "options": ["教程/攻略", "痛点反转", "生活记录", "对比测评", "UGC种草"]},
+            {"id": "freq", "label": "周更新频次", "type": "select", "options": ["3条/周", "5条/周", "每日更新"]},
+        ],
+        "demo_output": """本周 TikTok 选题矩阵（硅胶婴儿餐具）
+
+Day 1（周一）— 痛点反转
+Hook: "妈妈们最崩溃的吃饭时刻是这个→"
+核心内容: 展示宝宝把普通盘子扫落地的10秒混剪
+转折: 切换到吸盘盘子完全无法被扫落
+CTA: "这个改变让我重获自由"
+预测完播率: 68%+（情感共鸣强）
+
+Day 3（周三）— 教程攻略
+Hook: "6个月宝宝开始辅食? 3个工具够了"
+话题标签: #babyfood #momhack #toddlermom #BLW #辅食
+预算: $0（自拍）
+
+Day 5（周五）— UGC 素人合作
+策略: 找 3 个粉丝量 1-5k 的素人妈妈
+换货方式: 寄送产品换 1条真实使用视频
+预算: 产品成本约 $25×3=$75
+
+最佳发布时间: 周一/三/五 晚7-9PM（目标市场时区）
+
+爆款公式（适合你的品类）
+情绪触发（共鸣）+ 意外反转 + 简单CTA = 完播率 65%+""",
+    },
+]
+
+
+def render_agents_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
+    """Render the Agent Marketplace page with 12 callable demo agents."""
+
+    cats = {"全部": "", "选品分析": "selection", "Listing优化": "listing",
+            "广告归因": "attribution", "VOC分析": "voc", "供应链预警": "supply",
+            "客服售后": "cs", "价格策略": "pricing", "合规风控": "risk",
+            "数据分析": "analytics", "内容营销": "content", "竞品监控": "competitor"}
+
+    cat_pills = "".join(
+        f"<button class='cat-pill{'  active' if k == '全部' else ''}' data-cat='{v}'>{k}</button>"
+        for k, v in cats.items()
+    )
+
+    def _chip(sid: str) -> str:
+        sk = skill_lookup.get(sid)
+        label = sk.title[:24] + "…" if sk and len(sk.title) > 24 else (sk.title if sk else sid[-20:])
+        href = f"skills/{sid}.html"
+        return f"<a class='agent-skill-chip' href='{html.escape(href)}'>{html.escape(label)}</a>"
+
+    def _input_field(inp: dict[str, Any], agent_id: str) -> str:
+        fid = f"{html.escape(agent_id)}__{html.escape(inp['id'])}"
+        label = html.escape(inp['label'])
+        placeholder = html.escape(inp.get('placeholder', ''))
+        if inp['type'] == 'textarea':
+            return (f"<div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>{label}</label>"
+                    f"<textarea class='modal-input' id='{fid}' rows='4' placeholder='{placeholder}'></textarea></div>")
+        elif inp['type'] == 'select':
+            opts = "".join(f"<option value='{html.escape(o)}'>{html.escape(o)}</option>" for o in inp.get('options', []))
+            return (f"<div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>{label}</label>"
+                    f"<select class='modal-input' id='{fid}'>{opts}</select></div>")
+        else:
+            return (f"<div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>{label}</label>"
+                    f"<input class='modal-input' type='text' id='{fid}' placeholder='{placeholder}'></div>")
+
+    cards_html = ""
+    modals_html = ""
+    for ag in AGENT_CATALOG:
+        sid_chips = "".join(_chip(s) for s in ag.get("linked_skills", [])[:3])
+        cards_html += f"""
+<div class='agent-card' data-cat='{html.escape(ag["cat_key"])}' onclick='openAgent("{html.escape(ag["id"])}")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap {html.escape(ag["cat_class"])}'>{ag["icon"]}</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>{html.escape(ag["name"])}</div>
+      <span class='agent-cat-badge'>{html.escape(ag["category"])}</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot demo'></span>
+    <span style='color:#92400e;font-size:12px;font-weight:600'>演示模式</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>可调用</span>
+  </div>
+  <p class='agent-desc'>{html.escape(ag["desc"])}</p>
+  <div class='agent-skills'>{sid_chips}</div>
+  <div class='agent-roi'>{html.escape(ag["roi"])}</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>"""
+
+        input_fields = "".join(_input_field(inp, ag["id"]) for inp in ag.get("inputs", []))
+        demo_out_escaped = html.escape(ag.get("demo_output", ""))
+        modals_html += f"""
+<div id='modal-{html.escape(ag["id"])}' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='{html.escape(ag["name"])}'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>{ag["icon"]}</span>
+      <div class='modal-header-info'>
+        <h2>{html.escape(ag["name"])}</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>{html.escape(ag["category"])}</span>
+          <span class='agent-status'><span class='status-dot demo'></span> <span style='font-size:12px;color:#92400e;font-weight:600'>演示模式</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("{html.escape(ag["id"])}")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'>{input_fields}</div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("{html.escape(ag["id"])}")'>填入示例数据</button>
+        </div>
+      </div>
+      <button class='modal-run-btn' id='run-{html.escape(ag["id"])}' onclick='runAgent("{html.escape(ag["id"])}")'>
+         <span id='run-label-{html.escape(ag["id"])}'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-{html.escape(ag["id"])}'>
+        <div class='output-thinking' id='thinking-{html.escape(ag["id"])}' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-{html.escape(ag["id"])}' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-{html.escape(ag["id"])}' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        {sid_chips}
+      </div>
+    </div>
+  </div>
+</div>"""
+
+    demo_data_js = json.dumps(
+        {ag["id"]: {"output": ag.get("demo_output", ""), "inputs": ag.get("inputs", [])} for ag in AGENT_CATALOG},
+        ensure_ascii=False,
+    )
+
+    body = f"""
+<div class='agent-hero'>
+  <div class='agent-hero-text'>
+    <h1 style='font-size:32px;font-weight:900;letter-spacing:-.03em;margin:0 0 10px'>
+      智能体广场
+    </h1>
+    <p class='lead'>12 个专业 AI Agent，覆盖选品→Listing→广告→客服→合规全链路</p>
+    <div style='display:flex;gap:8px;flex-wrap:wrap;margin-top:4px'>
+      <span style='font-size:13px;background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:999px;font-weight:600'>演示模式</span>
+      <span style='font-size:13px;color:#64748b'>所有 Agent 均可在线试用，输入你的数据即可获得个性化分析</span>
+    </div>
+  </div>
+  <div class='agent-hero-stats'>
+    <div class='agent-stat'><strong>12</strong><span>个专业 Agent</span></div>
+    <div class='agent-stat'><strong>7</strong><span>业务场景</span></div>
+    <div class='agent-stat'><strong>30+</strong><span>关联 Skills</span></div>
+  </div>
+</div>
+
+<div class='agent-cat-filter' id='catFilter'>
+  {cat_pills}
+</div>
+
+<div class='agent-grid' id='agentGrid'>
+  {cards_html}
+</div>
+
+{modals_html}
+
+<script>
+const DEMO_DATA = {demo_data_js};
+
+function openAgent(id) {{
+  const overlay = document.getElementById('modal-' + id);
+  if (!overlay) return;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const firstInput = overlay.querySelector('.modal-input');
+  if (firstInput) setTimeout(() => firstInput.focus(), 200);
+}}
+function closeAgent(id) {{
+  const overlay = document.getElementById('modal-' + id);
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  resetOutput(id);
+}}
+function resetOutput(id) {{
+  const out = document.getElementById('output-' + id);
+  const thinking = document.getElementById('thinking-' + id);
+  const content = document.getElementById('content-' + id);
+  const btn = document.getElementById('run-' + id);
+  const label = document.getElementById('run-label-' + id);
+  if (out) out.classList.remove('visible');
+  if (thinking) thinking.style.display = 'none';
+  if (content) content.textContent = '';
+  if (btn) btn.disabled = false;
+  if (label) label.textContent = '开始分析';
+}}
+function fillExample(id) {{
+  const data = DEMO_DATA[id];
+  if (!data || !data.inputs) return;
+  data.inputs.forEach(inp => {{
+    const el = document.getElementById(id + '__' + inp.id);
+    if (!el) return;
+    if (inp.type === 'textarea') {{
+      el.value = inp.placeholder || '';
+    }} else if (inp.type === 'select') {{
+      if (inp.options && inp.options.length > 0) el.value = inp.options[0];
+    }} else {{
+      el.value = inp.placeholder ? inp.placeholder.replace(/^例：/, '') : '';
+    }}
+  }});
+}}
+async function runAgent(id) {{
+  const btn = document.getElementById('run-' + id);
+  const label = document.getElementById('run-label-' + id);
+  const thinking = document.getElementById('thinking-' + id);
+  const out = document.getElementById('output-' + id);
+  const content = document.getElementById('content-' + id);
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  if (label) label.textContent = '分析中...';
+  if (content) content.textContent = '';
+  if (out) out.classList.add('visible');
+  if (thinking) thinking.style.display = 'flex';
+  await sleep(1400);
+  if (thinking) thinking.style.display = 'none';
+  const text = (DEMO_DATA[id] || {{}}).output || '演示输出暂不可用';
+  await streamText(content, text);
+  if (btn) btn.disabled = false;
+  if (label) label.textContent = '重新分析';
+}}
+async function streamText(el, text) {{
+  let i = 0;
+  const chunk = 2;
+  while (i < text.length) {{
+    el.textContent += text.slice(i, i + chunk);
+    el.parentElement && (el.parentElement.scrollTop = el.parentElement.scrollHeight);
+    const c = text[i];
+    await sleep(c === '\\n' ? 60 : c === '。' || c === '，' ? 30 : 12);
+    i += chunk;
+  }}
+}}
+function sleep(ms) {{ return new Promise(r => setTimeout(r, ms)); }}
+
+document.querySelectorAll('.agent-modal-overlay').forEach(ov => {{
+  ov.addEventListener('click', e => {{
+    if (e.target === ov) {{
+      const id = ov.id.replace('modal-', '');
+      closeAgent(id);
+    }}
+  }});
+}});
+document.addEventListener('keydown', e => {{
+  if (e.key === 'Escape') {{
+    document.querySelectorAll('.agent-modal-overlay.open').forEach(ov => {{
+      const id = ov.id.replace('modal-', '');
+      closeAgent(id);
+    }});
+  }}
+}});
+
+const catBtns = document.querySelectorAll('.cat-pill');
+const cards = document.querySelectorAll('.agent-card');
+catBtns.forEach(btn => {{
+  btn.addEventListener('click', () => {{
+    catBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    cards.forEach(c => {{
+      c.style.display = (cat === '' || c.dataset.cat === cat) ? '' : 'none';
+    }});
+  }});
+}});
+</script>
+
+<style>
+.agent-hero {{
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 24px; margin-bottom: 28px; flex-wrap: wrap;
+}}
+.agent-hero-text {{ flex: 1; min-width: 280px; }}
+.agent-hero-stats {{
+  display: flex; gap: 16px; flex-shrink: 0;
+}}
+.agent-stat {{
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 16px 20px;
+  text-align: center; min-width: 80px;
+}}
+.agent-stat strong {{ display: block; font-size: 28px; font-weight: 900; color: var(--accent); letter-spacing: -.03em; }}
+.agent-stat span {{ font-size: 12px; color: var(--muted); font-weight: 600; }}
+@media(max-width: 600px) {{
+  .agent-hero {{ flex-direction: column; }}
+  .agent-hero-stats {{ width: 100%; justify-content: space-around; }}
+}}
+</style>
+"""
+    return html_page("智能体广场", body, active_nav="agents")
 
 
 def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
@@ -1552,7 +2772,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
             "roi": "800 - 1,900 万/年",
             "items": [
                 {
-                    "icon": "📦",
+                    "icon": "SC",
                     "title": "供应链预测基线",
                     "story": "某母婴品牌 60+ SKU × 多仓 × 多市场，每月底 2-3 名 PM 纯人工对账三层预测数字——SKU 求和对不上仓库数，仓库数对不上市场总量，相差最高 50%。",
                     "result": "HiFoReAd 分层调和后：对账人力清零，补货计划冲突率降至 < 5%",
@@ -1560,7 +2780,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
                     "skills": ["Skill-Hierarchical-Demand-Forecasting-Reconciliation", "Skill-Demand-Forecasting-Supply-Chain"],
                 },
                 {
-                    "icon": "🤖",
+                    "icon": "AI",
                     "title": "客服智能路由 + 70% 工单自动化",
                     "story": "某品牌日均 5 万条跨领域工单，人工路由正确率 61%，每天约 1 万条工单需二次转单；新手妈妈咨询「宝宝 3 月夜醒频繁」，人工客服响应平均 72 小时，且有医疗合规风险。",
                     "result": "AgentRouter 路由正确率 61% → 82%；客服决策树从历史日志自学，70% 工单实现自动化处理，年节省运营成本",
@@ -1568,7 +2788,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
                     "skills": ["Skill-AgentRouter-KG-Guided", "Skill-Customer-Journey-Decision-Tree"],
                 },
                 {
-                    "icon": "🎯",
+                    "icon": "RA",
                     "title": "广告归因修正",
                     "story": "某品牌 TikTok 渠道被 naive 归因分配 45% 贡献，但因果 ITE 分析显示真实增量只有 32%——13% 的购买是用户自然意愿，和广告无关。",
                     "result": "纠正后 TikTok 预算从 $40K 调至 $30K，节省的 $10K 转投 Google（ITE 更高），预算效率提升",
@@ -1588,7 +2808,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
             "roi": "200 - 500 万/年（新增）",
             "items": [
                 {
-                    "icon": "🗄️",
+                    "icon": "KG",
                     "title": "产品知识图谱",
                     "story": "AI 在没有结构化产品知识的情况下，给用户推荐「买了吸奶器的用户还需要什么」——它不知道硅胶法兰和乳头霜属于哺乳期刚需配件，推荐准确率极低。",
                     "result": "构建产品 KG 后：KGQA 查询召回率 52% → 92%，跨品类推荐 CTR +18%",
@@ -1596,7 +2816,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
                     "skills": ["Skill-Hierarchical-Product-KG-Construction", "Skill-Ontology-Schema-Design"],
                 },
                 {
-                    "icon": "🔬",
+                    "icon": "VP",
                     "title": "A/B 实验平台",
                     "story": "某品牌每次调整定价策略或上新 listing，无法区分效果是真实改进还是季节波动。团队争论持续数周，决策依赖「感觉」。",
                     "result": "Switchback 实验体系搭建后：物流/双边市场实验可信，决策从争论变为数据裁决",
@@ -1604,7 +2824,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
                     "skills": ["Skill-Switchback-Experiment-Design", "Skill-CUPED-Variance-Reduction"],
                 },
                 {
-                    "icon": "📊",
+                    "icon": "AA",
                     "title": "多渠道库存池化",
                     "story": "Amazon FBA 仓吸奶器缺货（超卖），独立站海外仓还有 200 件积压，TikTok Shop 慢速消化——三渠道不互通，总库存 800 件但某渠道已断货。",
                     "result": "跨渠道动态调拨后：总库存减少 15-25%，缺货率 8% → 3%",
@@ -1624,7 +2844,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
             "roi": "5,000 万+ 潜力（战略级）",
             "items": [
                 {
-                    "icon": "🏷️",
+                    "icon": "PR",
                     "title": "AI 定价引擎",
                     "story": "某品牌大促前手动跟价——降太多伤利润，降太少丢份额。运营靠经验感知，每次大促前都是高压决策，无法同时优化当前销量和品牌长期溢价。",
                     "result": "AIGP 动态定价 A/B 实测：GMV +13%，实验数据非预测值",
@@ -1632,7 +2852,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
                     "skills": ["Skill-AIGP-LLM-Dynamic-Pricing", "Skill-Dynamic-Pricing-Elasticity"],
                 },
                 {
-                    "icon": "🎬",
+                    "icon": "TC",
                     "title": "AI 内容工厂",
                     "story": "某品牌进入德国/日本市场，需要本地化口播 Review 视频。人工方案：雇本地 KOL 拍摄，周期 3-4 周，单条成本 $2,000+。批量生产 20 个 SKU 的测评视频需要 6 个月预算。",
                     "result": "Virbo 多语言虚拟人：同等内容量成本降低 80%，生产周期 3 周→ 3 天（实验接入中）",
@@ -1640,15 +2860,15 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
                     "skills": ["Skill-Virbo-Multilingual-Avatar-UGC", "Skill-AnchorCrafter-Virtual-Anchor-Demo"],
                 },
                 {
-                    "icon": "⚡",
+                    "icon": "TR",
                     "title": "MAS 多智能体联动",
                     "story": "大促首日某品牌吸奶器打 7 折卖出 5,000 件，第 3 天库存告急被迫涨价，剩余 7 天流量白白浪费——整个大促周期总利润反而低于平销期。根因：定价和补货是两个团队各自决策，无法实时联动。",
-                    "result": "FSDA-DRL 快慢双 Agent：定价与补货实时联动，大促周期利润最优化",
-                    "roi": "5,000 万/年（规模依赖）",
+                    "result": "FSDA-DRL 快慢双 Agent：定价与补货实时联动，大促周期利润最优化，中小卖家（月 GMV 100-500 万）保守估计年化 225-300 万",
+                    "roi": "225-300 万/年（中小规模）· 5,000 万+（GMV > 2 亿规模）",
                     "skills": ["Skill-FSDA-DRL", "Skill-Event-Driven-Demand-MAS"],
                 },
                 {
-                    "icon": "🛡️",
+                    "icon": "AG",
                     "title": "防御性 AI：保护推荐系统不被竞品劫持",
                     "story": "竞品卖家在商品描述中嵌入恶意 prompt 指令，劫持 AI 导购排名，导致某品牌自营商品在 AI 搜索中的曝光量下降 30-50%——这是 2025 年已出现的真实攻击方式。",
                     "result": "Agent 支付安全红队：自动检测注入攻击并拦截，保护 AI 推荐系统不被操控",
@@ -1680,7 +2900,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
       {html.escape(item['story'])}
     </div>
     <div class="rm-result">
-      <span class="rm-result-label">✅ 结果</span>
+      <span class="rm-result-label">[OK] 结果</span>
       {html.escape(item['result'])}
     </div>
     <div class="rm-roi-line">年化 ROI：<strong>{html.escape(item['roi'])}</strong></div>
@@ -1708,15 +2928,21 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     phases_html = "".join(_phase_html(p) for p in PHASES)
 
     body = f"""
+<div class="rm-scqa">
+  <div class="rm-scqa-s"><span class="rm-scqa-label">现状</span>2025年，母婴跨境出海品牌平均每月仍有 3 名运营人员全职处理重复性决策——手工对账、等待提数、人工盯价，每天消耗 72 小时以上的宝贵人力。</div>
+  <div class="rm-scqa-c"><span class="rm-scqa-label">冲突</span>而先行品牌已在用 AI 将这些成本清零——AgentRouter 年节省 1,900 万元运营成本，AIGP 定价 A/B 实测 GMV +13%。一旦错过这个窗口，差距将在 18-24 个月内变得不可追赶。</div>
+  <div class="rm-scqa-q"><span class="rm-scqa-label">问题</span>你的品牌应该从哪里开始，才能在首月就看到可验证的 ROI？</div>
+</div>
 <div class="rm-hero">
-  <div class="rm-hero-eyebrow">AI 能力建设路线图 · 2025-2026</div>
-  <h1 class="rm-hero-title">12 个月，让 AI 替代 3 类岗位的重复性决策</h1>
-  <p class="rm-hero-sub">分三阶段部署，首月可见 ROI，全年可验证收益 > 3,000 万元</p>
+  <div class="rm-hero-eyebrow">唯一把顶会 ML 论文翻译为跨境运营决策的平台 · 2025-2026</div>
+  <h1 class="rm-hero-title">12 个月，3 阶段，AI 替代 3 类岗位的重复性决策</h1>
+  <p class="rm-hero-sub">首月可见 ROI，全年可验证收益 > 3,000 万元 | NeurIPS · KDD · ICML 论文背书</p>
   <div class="rm-hero-cta">
-    <button class="rm-btn-primary" onclick="window.print()">⬇ 下载 PDF</button>
+    <button class="rm-btn-primary" onclick="window.print()">下载 PDF</button>
     <a class="rm-btn-sec" href="playbooks/index.html">查看场景手册 →</a>
+    <a class="rm-btn-sec" href="https://calendly.com" target="_blank" rel="noopener" style="background:#9c5455;color:#fff;border:none">预约 Demo</a>
   </div>
-  <p class="rm-hero-note">所有 ROI 数字来源于真实 A/B 实验或匿名客户案例，非模型预测</p>
+  <p class="rm-hero-note">所有 ROI 数字来源于真实 A/B 实验或匿名客户案例，非模型预测 | 与 Northbeam / Jungle Scout / 纯咨询公司的核心差异：我们给你的是「决策算法」，不是「数据报表」</p>
 </div>
 
 <div class="rm-summary-bar">
@@ -1743,7 +2969,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
 
 <div class="rm-roles-bar">
   <div class="rm-role">
-    <span class="rm-role-icon">📦</span>
+    
     <div>
       <strong>供应链全链路</strong>
       <p>从 15 个 Excel 联动 → 1 个 MAS 自动执行</p>
@@ -1751,7 +2977,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     </div>
   </div>
   <div class="rm-role">
-    <span class="rm-role-icon">📊</span>
+    
     <div>
       <strong>数据分析师</strong>
       <p>提数从 72 小时 → 5 分钟，报告从做 → 审</p>
@@ -1759,7 +2985,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     </div>
   </div>
   <div class="rm-role">
-    <span class="rm-role-icon">📈</span>
+    
     <div>
       <strong>广告优化师</strong>
       <p>凌晨 2 点平台调整，Agent 已完成出价</p>
@@ -1777,23 +3003,28 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
      <h3>从哪里开始？</h3>
      <p>根据你的当前痛点选择入口——每个场景手册包含完整操作步骤、所需数据和 ROI 计算模板。</p>
      <div class="rm-footer-links">
-       <a href="playbooks/pb-risk-defense.html">🛡️ 跨境风险防御作战室</a>
-       <a href="playbooks/pb-agent-replace.html">🤖 AI Agent 替人手册</a>
-       <a href="playbooks/pb-tariff-response.html">⚡ 关税冲击 72h 响应</a>
-       <a href="playbooks/pb-voc-product-loop.html">🔬 竞品情报→产品迭代</a>
-       <a href="playbooks/pb-customer-service-agent.html">🎧 客服售后智能体</a>
-       <a href="playbooks/pb-fba-operations.html">📦 FBA 运营全链路</a>
-       <a href="playbooks/pb-pricing-engine.html">💰 AI 定价引擎手册</a>
-       <a href="playbooks/pb-inventory-festival.html">🎯 大促备货决策手册</a>
+       <a href="playbooks/pb-risk-defense.html">跨境风险防御作战室</a>
+       <a href="playbooks/pb-agent-replace.html">AI Agent 替人手册</a>
+       <a href="playbooks/pb-tariff-response.html">关税冲击 72h 响应</a>
+       <a href="playbooks/pb-voc-product-loop.html">竞品情报 → 产品迭代</a>
+       <a href="playbooks/pb-customer-service-agent.html">客服售后智能体</a>
+       <a href="playbooks/pb-fba-operations.html">FBA 运营全链路</a>
+       <a href="playbooks/pb-pricing-engine.html">AI 定价引擎手册</a>
+       <a href="playbooks/pb-inventory-festival.html">大促备货决策手册</a>
      </div>
   </div>
   <div class="rm-footer-right">
     <div class="rm-footer-cta">
-      <p>获取完整 PDF 版本</p>
-      <button class="rm-btn-primary" onclick="window.print()">⬇ 下载 PDF</button>
+      <p>获取 PDF + 预约 30 分钟 ROI 测算</p>
+      <button class="rm-btn-primary" onclick="window.print()" style="margin-bottom:10px">下载 PDF</button>
+      <form class="rm-lead-form" action="https://formspree.io/f/xpwzgkjd" method="POST" target="_blank">
+        <input type="email" name="email" placeholder="your@company.com" required style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #334155;background:#1e293b;color:#f1f5f9;font-size:13px;margin-bottom:8px;box-sizing:border-box">
+        <input type="hidden" name="source" value="ai-roadmap-whitepaper">
+        <button type="submit" style="width:100%;padding:8px;background:#9c5455;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">获取定制 ROI 测算</button>
+      </form>
     </div>
     <p class="rm-footer-note">
-      数据来源：348 个从顶会论文萃取的业务 Skills，包含真实 A/B 实验与匿名客户案例。<br>
+      数据来源：350 个从顶会论文萃取的业务 Skills，包含真实 A/B 实验与匿名客户案例。<br>
       所有案例均已脱敏处理，以「某跨境母婴品牌」表述。
     </p>
   </div>
@@ -2012,7 +3243,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
             why = html.escape(bs.get("why", ""))
             sk = skill_lookup.get(sid)
             if sk:
-                roi = f"<span class='roi-badge'>💰 {html.escape(sk.roi_figure)}</span>" if sk.roi_figure else ""
+                roi = f"<span class='roi-badge'>{html.escape(sk.roi_figure)}</span>" if sk.roi_figure else ""
                 diff = f"<span class='diff-badge'>{html.escape(sk.difficulty)}</span>" if sk.difficulty else ""
                 skills_html += (
                     f"<div class='pb-skill'>"
@@ -2033,14 +3264,14 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
   <div class='pb-step-num'>Step {i}</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>{html.escape(step['step'])}</h3>
-    <p class='pb-problem'>❓ {html.escape(step['problem'])}</p>
+    <p class='pb-problem'>{html.escape(step['problem'])}</p>
     <div class='pb-skills'>{skills_html}</div>
     {'<div class="pb-data"><strong>所需数据：</strong>' + data_req + '</div>' if data_req else ''}
     {'<div class="pb-output"><strong>输出结果：</strong>' + output + '</div>' if output else ''}
   </div>
 </div>"""
 
-    outcomes = "".join(f"<li>✅ {html.escape(o)}</li>" for o in pb.get("outcomes", []))
+    outcomes = "".join(f"<li>[OK] {html.escape(o)}</li>" for o in pb.get("outcomes", []))
     calc_html = _render_roi_calculator(pb.get("roi_calculator")) if pb.get("roi_calculator") else ""
     body = f"""
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / {html.escape(pb['name'])}</nav>
@@ -2052,6 +3283,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
     <span class='biz-tag'>{html.escape(pb['tag'])}</span>
   </div>
 </div>
+{''.join([f"<div class='pb-roi-callout'>{html.escape(item['label'])}<span class='pb-roi-val'>{html.escape(item['value'])}</span></div>" for item in pb.get('roi_callout', [])])}
 <div class='pb-intro'>{html.escape(pb['intro'])}</div>
 {'<div class="wf-outcomes"><h3>预期收益</h3><ul>' + outcomes + '</ul></div>' if outcomes else ''}
 <div class='pb-steps'>{steps_html}</div>
@@ -2074,7 +3306,7 @@ def render_workflow_page(wf_def: dict[str, Any], skill_lookup: dict[str, "Playbo
         f"<span class='tag'>{html.escape(u)}</span>" for u in target_users
     )
     outcome_items = "".join(
-        f"<li>✅ {html.escape(o)}</li>" for o in outcomes
+        f"<li>[OK] {html.escape(o)}</li>" for o in outcomes
     )
     step_html = "".join(render_workflow_step(s, skill_lookup) for s in steps)
 
@@ -2098,7 +3330,15 @@ def render_workflow_page(wf_def: dict[str, Any], skill_lookup: dict[str, "Playbo
 # HTML page scaffold
 # ---------------------------------------------------------------------------
 
-def html_page(title: str, body: str, nav: str = "") -> str:
+def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str:
+    def nav_link(href: str, label: str, key: str = "") -> str:
+        active = ' aria-current="page" class="active"' if key and key == active_nav else ""
+        return f'<a href="{nav}{href}"{active}>{label}</a>'
+
+    def sidebar_link(href: str, label: str, key: str = "") -> str:
+        active = ' aria-current="page" class="active"' if key and key == active_nav else ""
+        return f'<a href="{nav}{href}"{active}>{label}</a>'
+
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -2109,35 +3349,62 @@ def html_page(title: str, body: str, nav: str = "") -> str:
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="{nav}index.html">paper2skills Playbook</a>
-    <nav class="topnav">
-      <a href="{nav}index.html">首页</a>
-      <a href="{nav}domains/index.html">领域</a>
-      <a href="{nav}topics/index.html">主题</a>
-      <a href="{nav}workflows/index.html">工作流</a>
-      <a href="{nav}playbooks/index.html">场景手册</a>
-      <a href="{nav}ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
-      <a href="{nav}graph/overview.html">图谱</a>
-      <a href="{nav}skills/index.html">全部</a>
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="{nav}index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
+      {nav_link('index.html', '首页', 'index')}
+      {nav_link('playbooks/index.html', '场景手册', 'playbooks')}
+      {nav_link('agents.html', '智能体广场', 'agents')}
+      {nav_link('workflows/index.html', '工作流', 'workflows')}
+      {nav_link('domains/index.html', '领域', 'domains')}
+      {nav_link('graph/overview.html', '图谱', 'graph')}
+      <a href="{nav}ai-roadmap.html" class="nav-highlight{'  active' if active_nav == 'roadmap' else ''}">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="{nav}index.html">总览</a>
-      <a href="{nav}ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="{nav}domains/index.html">按领域</a>
-      <a href="{nav}topics/index.html">按主题</a>
-      <a href="{nav}workflows/index.html">工作流</a>
-      <a href="{nav}playbooks/index.html">场景手册</a>
-      <a href="{nav}graph/overview.html">Skills Graph</a>
-      <a href="{nav}skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        {sidebar_link('index.html', '总览', 'index')}
+        {sidebar_link('playbooks/index.html', '场景手册', 'playbooks')}
+        {sidebar_link('agents.html', '智能体广场', 'agents')}
+        {sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap')}
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        {sidebar_link('domains/index.html', '按领域', 'domains')}
+        {sidebar_link('topics/index.html', '按主题', 'topics')}
+        {sidebar_link('workflows/index.html', '工作流', 'workflows')}
+        {sidebar_link('graph/overview.html', 'Skills Graph', 'graph')}
+        {sidebar_link('skills/index.html', '全部 Skills', 'skills')}
+      </div>
     </aside>
     <section class="content">{body}</section>
   </main>
   <script src="{nav}assets/playbook-data.js"></script>
   <script src="{nav}assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {{
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }}
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>"""
 
@@ -2150,7 +3417,7 @@ def render_skill_card(skill: PlaybookSkill, nav: str = "") -> str:
     tags = "".join(f"<span class='tag'>{html.escape(tag)}</span>" for tag in skill.tags)
     topics = "".join(f"<span class='tag topic'>{html.escape(t)}</span>" for t in skill.topics)
     roi_badge = (
-        f"<span class='roi-badge'>💰 {html.escape(skill.roi_figure)}</span>"
+        f"<span class='roi-badge'>{html.escape(skill.roi_figure)}</span>"
         if skill.roi_figure else ""
     )
     diff_badge = (
@@ -2182,6 +3449,16 @@ def link_list(items: list[str], nav: str = "") -> str:
 def render_skill_page(skill: PlaybookSkill) -> str:
     nav = "../"
 
+    # Handbook uplinks: show which handbooks use this skill
+    hb_refs = SKILL_HANDBOOK_MAP.get(skill.skill_id, [])
+    handbook_uplinks = ""
+    if hb_refs:
+        chips = "".join(
+            f"<a class='hb-uplink' href='../playbooks/{html.escape(pb_id)}.html'>{html.escape(pb_name)}</a>"
+            for pb_id, pb_name in hb_refs
+        )
+        handbook_uplinks = f"<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span>{chips}</div>"
+
     # Scenario section: prefer prose paragraphs; fall back to bullet list
     if skill.scenario_paragraphs:
         scenario_html = "".join(f"<p>{html.escape(p)}</p>" for p in skill.scenario_paragraphs)
@@ -2195,19 +3472,67 @@ def render_skill_page(skill: PlaybookSkill) -> str:
     if skill.roi_figure or skill.difficulty or skill.priority:
         parts = []
         if skill.roi_figure:
-            parts.append(f"<div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 {html.escape(skill.roi_figure)}</span></div>")
+            parts.append(f"<div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>{html.escape(skill.roi_figure)}</span></div>")
         if skill.difficulty:
             parts.append(f"<div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>{html.escape(skill.difficulty)}</span></div>")
         if skill.priority:
             parts.append(f"<div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>{html.escape(skill.priority)}</span></div>")
         roi_meta = "<div class='roi-panel'>" + "".join(parts) + "</div>"
 
+    # Business context panel (injected from DOMAIN_BUSINESS_CONTEXT)
+    biz_panel = ""
+    if skill.biz_role or skill.biz_trigger:
+        role_html = (
+            f"<div class='biz-ctx-item'>"
+            f"<span class='biz-ctx-label'>适用角色</span>"
+            f"<span class='biz-ctx-value'>{html.escape(skill.biz_role)}"
+            + (f"<span class='biz-ctx-secondary'> · {html.escape(skill.biz_role2)}</span>" if skill.biz_role2 else "")
+            + f"</span></div>"
+        )
+        trigger_html = (
+            f"<div class='biz-ctx-item biz-ctx-full'>"
+            f"<span class='biz-ctx-label'>什么情况下用</span>"
+            f"<span class='biz-ctx-value'>{html.escape(skill.biz_trigger)}</span>"
+            f"</div>"
+        ) if skill.biz_trigger else ""
+        outcome_html = (
+            f"<div class='biz-ctx-item biz-ctx-full'>"
+            f"<span class='biz-ctx-label'>成功是什么样的</span>"
+            f"<span class='biz-ctx-value biz-ctx-outcome'>{html.escape(skill.biz_outcome)}</span>"
+            f"</div>"
+        ) if skill.biz_outcome else ""
+        pain_html = (
+            f"<div class='biz-ctx-item biz-ctx-full'>"
+            f"<span class='biz-ctx-label'>业务痛点</span>"
+            f"<div class='biz-pain-tags'>"
+            + "".join(
+                f"<span class='biz-pain-tag'>{html.escape(p.strip())}</span>"
+                for p in skill.biz_pain.split("·") if p.strip()
+            )
+            + f"</div></div>"
+        ) if skill.biz_pain else ""
+        platform_html = (
+            f"<div class='biz-ctx-item'>"
+            f"<span class='biz-ctx-label'>适用平台</span>"
+            f"<span class='biz-ctx-value'>{html.escape(skill.biz_platform)}</span>"
+            f"</div>"
+        ) if skill.biz_platform else ""
+        biz_panel = (
+            f"<div class='biz-ctx-panel'>"
+            f"<div class='biz-ctx-header'>业务视角</div>"
+            f"<div class='biz-ctx-grid'>"
+            f"{role_html}{platform_html}{trigger_html}{outcome_html}{pain_html}"
+            f"</div></div>"
+        )
+
     body = f"""
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/{slugify(skill.domain_dir)}.html">{html.escape(skill.domain_dir)}</a> / {html.escape(skill.skill_id)}</nav>
 <h1>{html.escape(skill.title)}</h1>
 <p class="muted">{html.escape(skill.skill_id)} · {html.escape(skill.domain_dir)}</p>
 <div class="tag-row">{''.join(f"<span class='tag'>{html.escape(t)}</span>" for t in skill.tags + skill.topics + skill.workflows)}</div>
+{handbook_uplinks}
 {roi_meta}
+{biz_panel}
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
@@ -2242,10 +3567,16 @@ def render_skill_page(skill: PlaybookSkill) -> str:
     return html_page(skill.title, body, nav)
 
 
+def _md_inline(text: str) -> str:
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    text = re.sub(r'\*([^*]+?)\*', r'<em>\1</em>', text)
+    return text
+
+
 def render_items(items: list[str]) -> str:
     if not items:
         return "<p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>"
-    return "<ul>" + "".join(f"<li>{html.escape(item)}</li>" for item in items) + "</ul>"
+    return "<ul>" + "".join(f"<li>{_md_inline(html.escape(item))}</li>" for item in items) + "</ul>"
 
 
 def _render_code_preview(code: str) -> str:
@@ -2277,7 +3608,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
     hot_skills = sorted(skills, key=lambda s: skill_degree.get(s.skill_id, 0), reverse=True)[:5]
     hot_items = "".join(
         f"<li><a href='skills/{s.skill_id}.html'>{html.escape(s.title)}</a>"
-        f"{'<span class=roi-badge>💰 ' + html.escape(s.roi_figure) + '</span>' if s.roi_figure else ''}</li>"
+        f"{'<span class=roi-badge>' + html.escape(s.roi_figure) + '</span>' if s.roi_figure else ''}</li>"
         for s in hot_skills
     )
 
@@ -2295,13 +3626,18 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
 
     return f"""
 <div class="hero">
-  <h1>paper2skills Playbook</h1>
-  <p class="lead">面向母婴跨境电商的 AI 决策技能库：348 个从顶会论文萃取的可落地 Skills，覆盖广告、供应链、用户增长、智能体工程等 22 个领域。</p>
+  <p class="hero-badge">唯一把顶会 ML 论文翻译为跨境运营决策的平台</p>
+  <h1>母婴跨境品牌用这里的 AI 技能，每年多赚 3,000 万</h1>
+  <p class="lead">350 个从 NeurIPS / KDD / ICML 萃取的可落地决策技能——每个技能有真实 ROI 数字、可运行代码、和跨境电商业务场景。这是任何咨询公司和 SaaS 工具都无法复制的能力。</p>
+  <div class="hero-primary-cta">
+    <a class="btn-primary accent" href="ai-roadmap.html">查看 AI 能力路线图</a>
+    <a class="btn-secondary" href="https://calendly.com" target="_blank" rel="noopener">预约 30 分钟 Demo</a>
+  </div>
   <div class="hero-tabs" id="heroTabs">
-    <button class="tab-btn active" data-tab="biz">🎯 业务专家 / 运营</button>
-    <button class="tab-btn" data-tab="ds">📊 数据科学家</button>
-    <button class="tab-btn" data-tab="ceo">🗺 CEO / 决策层</button>
-    <button class="tab-btn" data-tab="explore">📂 自由探索</button>
+    <button class="tab-btn active" data-tab="biz">业务专家 / 运营</button>
+    <button class="tab-btn" data-tab="ds">数据科学家</button>
+    <button class="tab-btn" data-tab="ceo">CEO / 决策层</button>
+    <button class="tab-btn" data-tab="explore">技术 / 算法研究者</button>
   </div>
 </div>
 
@@ -2317,12 +3653,12 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
   <h2>数据科学家视角</h2>
   <div class="ds-grid">
     <div class="ds-card">
-      <h3>🔥 高连接度 Skills</h3>
+      <h3>高连接度 Skills</h3>
       <p class="muted">被最多 Skill 依赖的核心算法，学习回报最高。</p>
       <ul class="hot-list">{hot_items}</ul>
     </div>
     <div class="ds-card">
-      <h3>📐 按算法类型</h3>
+      <h3>按算法类型</h3>
       <div class="algo-tags">
         <a class="tag" href="topics/广告与投放.html">广告与投放</a>
         <a class="tag" href="topics/供应链与补货.html">供应链与补货</a>
@@ -2335,7 +3671,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
       </div>
     </div>
     <div class="ds-card">
-      <h3>🕸️ Skills Graph</h3>
+      <h3>Skills Graph</h3>
       <p class="muted">{skill_count} 节点 · {edge_count} 关系边的知识图谱可视化。</p>
       <a class="btn-primary" href="graph/overview.html">打开图谱 →</a>
     </div>
@@ -2350,7 +3686,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
       <h3>「大促首日打 7 折清空库存，第 3 天涨价流量白白浪费」</h3>
       <p>这是供应链没有联动决策的代价。AI 路线图从这里开始。</p>
       <a class="btn-primary" href="ai-roadmap.html">查看完整路线图 →</a>
-      <a class="btn-primary" href="ai-roadmap.html" onclick="window.open('ai-roadmap.html','_blank').print();return false;" style="margin-left:8px;background:#475569">⬇ 下载 PDF</a>
+      <a class="btn-primary" href="ai-roadmap.html" onclick="window.open('ai-roadmap.html','_blank').print();return false;" style="margin-left:8px;background:#475569">下载 PDF</a>
     </div>
     <div class="ceo-phases">
       <div class="ceo-phase" style="border-color:#2563eb">
@@ -2413,7 +3749,7 @@ def render_graph_page(skill_count: int, edge_count: int) -> str:
   <input id="graph-search" placeholder="搜索节点..." style="margin-left:16px;padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;width:200px">
 </div>
 <div id="graph-info" class="graph-info hidden">
-  <button id="graph-info-close" style="float:right;background:none;border:none;cursor:pointer;font-size:18px">✕</button>
+  <button id="graph-info-close" style="float:right;background:none;border:none;cursor:pointer;font-size:18px">×</button>
   <h3 id="gi-title"></h3>
   <p id="gi-domain" class="muted"></p>
   <p id="gi-summary"></p>
@@ -2716,267 +4052,842 @@ def build_graph_js() -> str:
 
 def build_css() -> str:
     return """
-:root {
-  --bg: #f7f7f4;
-  --panel: #fff;
-  --ink: #202124;
-  --muted: #667085;
-  --line: #e5e7eb;
-  --accent: #2563eb;
-  --accent2: #7c3aed;
-  --tag: #eef2ff;
-  --green: #10b981;
-  --amber: #f59e0b;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif; }
+/* ═══════════════════════════════════════════════════════
+   paper2skills Playbook — Design System v3
+   Inspired by Momcozy: Montserrat · Warm White · Clean
+   ═══════════════════════════════════════════════════════ */
 
-/* ── Top bar ── */
+/* ── Design Tokens ── */
+:root {
+  /* Momcozy-inspired palette */
+  --bg:          #fafaf8;
+  --bg-warm:     #f8eee8;
+  --panel:       #ffffff;
+  --panel-2:     #f7f7f7;
+  --panel-3:     #f2f2f2;
+  --ink:         #222222;
+  --ink-2:       #333333;
+  --muted:       #878787;
+  --line:        #e6e6e6;
+  --line-strong: #dadada;
+
+  /* Brand — warm coral-sand */
+  --accent:      #9c5455;
+  --accent-dark: #6a2b3a;
+  --accent-light:#f5e8e8;
+  --accent-bg:   #f9efef;
+  --accent2:     #7c6f64;
+  --accent2-bg:  #f0ede9;
+
+  /* Semantic */
+  --green:       #3d7a5e;
+  --green-bg:    #eaf4ef;
+  --green-dark:  #1e4f38;
+  --amber:       #b87333;
+  --amber-bg:    #fdf3e7;
+  --amber-dark:  #7a4a1e;
+  --red:         #c04040;
+  --red-bg:      #faeaea;
+
+  /* Phase — warm triad */
+  --phase-1:     #9c5455; --phase-1-bg: #f9efef; --phase-1-muted: #c49090;
+  --phase-2:     #7c6f64; --phase-2-bg: #f0ede9; --phase-2-muted: #b0a69e;
+  --phase-3:     #3d7a5e; --phase-3-bg: #eaf4ef; --phase-3-muted: #7abfa0;
+
+  /* Tag */
+  --tag-bg:      #f2f2f2;
+  --tag-ink:     #444444;
+  --tag-topic-bg:#eaf4ef;
+  --tag-topic-ink:#1e4f38;
+
+  /* Navigation — light/white nav */
+  --nav-bg:         #ffffff;
+  --nav-border:     #e8e3dc;
+  --nav-text:       #5a5450;
+  --nav-text-hover: #1d1d1b;
+  --nav-active-bg:  #f9efef;
+  --nav-active-text:#9c5455;
+  --nav-highlight:  #9c5455;
+  --topbar-height:  56px;
+
+  /* Radius */
+  --r-xs:  4px;
+  --r-sm:  6px;
+  --r-md:  9px;
+  --r-lg:  12px;
+  --r-xl:  18px;
+  --r-2xl: 20px;
+  --r-full:999px;
+
+  /* Shadow — soft, warm-tinted */
+  --shadow-xs:    0 1px 3px rgba(45,35,20,.06);
+  --shadow-sm:    0 2px 8px rgba(45,35,20,.08);
+  --shadow-md:    0 4px 18px rgba(45,35,20,.10);
+  --shadow-lg:    0 8px 32px rgba(45,35,20,.12);
+  --shadow-accent:0 4px 16px rgba(156,84,85,.20);
+
+  /* Motion */
+  --t:     .15s ease;
+  --t-slow:.25s ease;
+
+  /* Typography */
+  --font: "Montserrat", "PingFang SC", "Hiragino Sans GB", -apple-system, sans-serif;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 14.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: .01em;
+}
+a { color: var(--accent); }
+img { max-width: 100%; }
+strong { font-weight: 600; }
+
+/* ── Top Bar (white nav, Momcozy style) ── */
 .topbar {
-  position: sticky; top: 0; z-index: 10;
-  display: flex; gap: 16px; align-items: center;
-  padding: 12px 22px; background: #111827; color: #fff;
+  position: sticky; top: 0; z-index: 200;
+  display: flex; align-items: center; gap: 0;
+  height: var(--topbar-height);
+  padding: 0 28px;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: 0 1px 8px rgba(45,35,20,.05);
 }
-.brand { color: #fff; text-decoration: none; font-weight: 700; font-size: 16px; white-space: nowrap; }
-.topnav { display: flex; gap: 4px; }
-.topnav a { color: #9ca3af; text-decoration: none; font-size: 13px; padding: 4px 10px; border-radius: 6px; }
-.topnav a:hover { background: #1f2937; color: #fff; }
+.brand {
+  color: var(--ink); text-decoration: none;
+  font-weight: 800; font-size: 15.5px;
+  letter-spacing: -.03em; white-space: nowrap;
+  flex-shrink: 0; margin-right: 32px;
+}
+.brand-sub { color: var(--muted); font-weight: 400; font-size: 13px; letter-spacing: 0; }
+.topnav {
+  display: flex; gap: 2px; align-items: center; flex: 1;
+}
+.topnav a {
+  color: var(--nav-text); text-decoration: none;
+  font-size: 13px; font-weight: 500;
+  padding: 6px 11px; border-radius: var(--r-md);
+  transition: background var(--t), color var(--t);
+  white-space: nowrap;
+}
+.topnav a:hover { background: var(--panel-2); color: var(--nav-text-hover); }
+.topnav a.active, .topnav a[aria-current="page"] {
+  background: var(--accent-bg);
+  color: var(--accent); font-weight: 600;
+}
+.nav-highlight { color: var(--accent) !important; font-weight: 700 !important; }
+.nav-highlight:hover { background: var(--accent-bg) !important; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 #global-search {
-  margin-left: auto; width: min(500px, 40vw); padding: 8px 12px;
-  border-radius: 10px; border: 0; font-size: 14px;
+  width: min(340px, 32vw); padding: 7px 14px;
+  border-radius: var(--r-full);
+  border: 1.5px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink); font-size: 13px;
+  font-family: var(--font);
+  transition: border-color var(--t), background var(--t), box-shadow var(--t);
 }
+#global-search::placeholder { color: var(--muted); }
+#global-search:hover { border-color: var(--line-strong); background: var(--panel); }
+#global-search:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--panel);
+  box-shadow: 0 0 0 3px rgba(156,84,85,.12);
+}
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none; flex-direction: column; justify-content: center;
+  gap: 5px; width: 36px; height: 36px; padding: 6px;
+  background: none; border: none; cursor: pointer;
+  border-radius: var(--r-sm); flex-shrink: 0; margin-right: 10px;
+}
+.hamburger span {
+  display: block; height: 2px; background: var(--muted);
+  border-radius: 2px; transition: transform var(--t), opacity var(--t);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.hamburger:hover span { background: var(--ink); }
 
 /* ── Layout ── */
-.layout { display: grid; grid-template-columns: 200px 1fr; min-height: calc(100vh - 52px); }
-.sidebar { padding: 24px 14px; border-right: 1px solid var(--line); background: #fff; }
-.sidebar a { display: block; color: #374151; text-decoration: none; padding: 7px 10px; border-radius: 8px; font-size: 14px; }
-.sidebar a:hover { background: #f3f4f6; }
-.content { padding: 28px 36px; max-width: 1400px; }
-
-/* ── Hero / tabs ── */
-.hero { margin-bottom: 8px; }
-.hero h1 { margin: 0 0 8px; font-size: 28px; }
-.lead { font-size: 16px; color: var(--muted); margin: 0 0 20px; }
-.hero-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
-.tab-btn {
-  padding: 8px 18px; border: 1.5px solid var(--line); background: var(--panel);
-  border-radius: 999px; font-size: 14px; cursor: pointer; color: var(--muted);
-  transition: all .15s;
+.layout { display: grid; grid-template-columns: 216px 1fr; min-height: calc(100vh - var(--topbar-height)); }
+.sidebar {
+  padding: 20px 12px 40px;
+  border-right: 1px solid var(--line);
+  background: var(--panel);
+  position: sticky; top: var(--topbar-height);
+  height: calc(100vh - var(--topbar-height)); overflow-y: auto;
 }
-.tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.sidebar-section { display: flex; flex-direction: column; gap: 2px; }
+.sidebar-divider { height: 1px; background: var(--line); margin: 10px 6px; }
+.sidebar a {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--ink-2); text-decoration: none;
+  padding: 7px 10px; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 500;
+  transition: background var(--t), color var(--t);
+}
+.sidebar a:hover { background: var(--panel-2); color: var(--ink); }
+.sidebar a.active, .sidebar a[aria-current="page"] {
+  background: var(--accent-bg);
+  color: var(--accent); font-weight: 600;
+  border-right: 3px solid var(--accent);
+}
+.content { padding: 32px 40px; max-width: 1360px; overflow-x: hidden; }
+.mobile-nav-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(29,29,27,.45); backdrop-filter: blur(4px); z-index: 190;
+}
+.mobile-nav-overlay.show { display: block; }
+
+/* ── Typography ── */
+.content h1 { font-size: 26px; font-weight: 800; letter-spacing: -.03em; line-height: 1.25; margin: 0 0 10px; color: var(--ink); }
+.content h2 { font-size: 18px; font-weight: 700; letter-spacing: -.015em; margin: 32px 0 14px; color: var(--ink); }
+.content h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; color: var(--ink); }
+.content h4 { font-size: 13.5px; font-weight: 600; margin: 16px 0 6px; }
+.lead { font-size: 15px; color: var(--muted); margin: 0 0 22px; line-height: 1.7; }
+.muted { color: var(--muted); }
+
+/* ── Hero / Tabs ── */
+.hero { margin-bottom: 8px; }
+.hero h1 { margin: 0 0 10px; }
+.hero-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+.tab-btn {
+  padding: 8px 20px;
+  border: 1.5px solid var(--line-strong);
+  background: var(--panel);
+  border-radius: var(--r-full);
+  font-size: 13px; font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer; color: var(--muted);
+  transition: background var(--t), color var(--t), border-color var(--t), box-shadow var(--t);
+}
+.tab-btn:hover:not(.active) {
+  background: var(--panel-2); color: var(--ink); border-color: var(--line-strong);
+}
+.tab-btn.active {
+  background: var(--accent); border-color: var(--accent);
+  color: #fff; font-weight: 600; box-shadow: var(--shadow-accent);
+}
+.tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-/* ── Business entry cards ── */
-.biz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin: 16px 0; }
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 10px 22px;
+  background: var(--ink); color: #fff;
+  border-radius: var(--r-md); text-decoration: none;
+  font-size: 13px; font-weight: 600; font-family: var(--font);
+  letter-spacing: .02em; text-transform: uppercase;
+  border: none; cursor: pointer;
+  transition: background var(--t), box-shadow var(--t), transform var(--t);
+}
+.btn-primary:hover { background: var(--ink-2); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); box-shadow: none; }
+.btn-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.btn-primary.accent { background: var(--accent); }
+.btn-primary.accent:hover { background: var(--accent-dark); box-shadow: var(--shadow-accent); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px;
+  background: var(--panel); color: var(--ink);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-md); text-decoration: none;
+  font-size: 13px; font-weight: 500; font-family: var(--font);
+  cursor: pointer;
+  transition: background var(--t), border-color var(--t), box-shadow var(--t);
+}
+.btn-secondary:hover { background: var(--panel-2); border-color: var(--line-strong); box-shadow: var(--shadow-xs); }
+.btn-secondary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ── Text icon badge (replaces emoji icons) ── */
+.icon-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  background: var(--accent-bg); color: var(--accent);
+  border-radius: var(--r-md); font-size: 10px; font-weight: 800;
+  letter-spacing: .04em; flex-shrink: 0; font-family: var(--font);
+  text-transform: uppercase;
+}
+.icon-badge.warm { background: var(--amber-bg); color: var(--amber-dark); }
+.icon-badge.green { background: var(--green-bg); color: var(--green-dark); }
+.icon-badge.red   { background: var(--red-bg); color: var(--red); }
+.icon-badge.dark  { background: var(--panel-3); color: var(--ink); }
+.icon-badge.lg {
+  width: 48px; height: 48px; font-size: 11px; border-radius: var(--r-lg);
+}
+
+/* ── Business Entry Cards ── */
+.biz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; margin: 16px 0; }
 .biz-card {
   display: flex; gap: 14px; align-items: flex-start;
-  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
-  padding: 16px; text-decoration: none; color: var(--ink);
-  transition: box-shadow .15s, transform .1s;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 18px 20px; text-decoration: none; color: var(--ink);
+  transition: box-shadow var(--t), transform var(--t), border-color var(--t);
 }
-.biz-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); transform: translateY(-2px); }
-.biz-icon { font-size: 26px; flex-shrink: 0; line-height: 1; }
-.biz-body strong { display: block; font-size: 15px; margin-bottom: 4px; }
-.biz-body p { margin: 0; font-size: 13px; color: var(--muted); }
-.biz-tag { margin-left: auto; flex-shrink: 0; font-size: 11px; background: var(--tag); color: #3730a3; padding: 3px 8px; border-radius: 999px; align-self: center; }
+.biz-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: var(--accent); }
+.biz-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent-bg); color: var(--accent);
+  border-radius: var(--r-md); font-size: 10px; font-weight: 800;
+  letter-spacing: .04em; text-transform: uppercase; font-family: var(--font);
+  margin-top: 1px;
+}
+.biz-body strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.biz-body p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.55; }
+.biz-tag { margin-left: auto; flex-shrink: 0; font-size: 11px; font-weight: 600; background: var(--panel-3); color: var(--ink-2); padding: 3px 9px; border-radius: var(--r-full); align-self: flex-start; }
 
-/* ── DS panel ── */
+/* ── DS Cards ── */
 .ds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 16px 0; }
-.ds-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
-.ds-card h3 { margin: 0 0 8px; font-size: 15px; }
-.hot-list { padding-left: 18px; margin: 8px 0 0; }
-.hot-list li { margin-bottom: 6px; font-size: 14px; }
-.hot-list a { color: var(--accent); text-decoration: none; }
-.algo-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.ds-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 20px; }
+.ds-card h3 { margin: 0 0 10px; font-size: 14.5px; font-weight: 700; }
+.hot-list { padding: 0; margin: 8px 0 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.hot-list li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13.5px; }
+.hot-list a { color: var(--accent); text-decoration: none; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hot-list a:hover { text-decoration: underline; }
+.hot-list .roi-badge { flex-shrink: 0; }
+.algo-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .algo-tags .tag { text-decoration: none; }
-.ceo-entry { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; align-items: start; }
-.ceo-entry-body h3 { margin: 0 0 8px; font-size: 18px; }
-.ceo-entry-body p { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+.ceo-entry { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin: 20px 0; align-items: start; }
+.ceo-entry-body h3 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+.ceo-entry-body p { color: var(--muted); margin: 0 0 16px; font-size: 13.5px; line-height: 1.65; }
 .ceo-phases { display: flex; flex-direction: column; gap: 10px; }
-.ceo-phase { background: var(--panel); border-left: 4px solid; border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 13px; }
+.ceo-phase { background: var(--panel); border-left: 3px solid; border-radius: 0 var(--r-lg) var(--r-lg) 0; padding: 12px 16px; font-size: 13px; box-shadow: var(--shadow-xs); }
 .ceo-phase p { margin: 4px 0; color: var(--muted); }
-.btn-primary {
-  display: inline-block; margin-top: 12px; padding: 8px 16px;
-  background: var(--accent); color: #fff; border-radius: 8px; text-decoration: none; font-size: 14px;
-}
 
 /* ── Metrics ── */
 .metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin: 16px 0; }
-.metrics > div { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
-.metrics strong { display: block; font-size: 30px; font-weight: 700; }
-.metrics span { color: var(--muted); font-size: 13px; }
+.metrics > div { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 18px; }
+.metrics strong { display: block; font-size: 32px; font-weight: 800; letter-spacing: -.03em; color: var(--accent); }
+.metrics span { color: var(--muted); font-size: 12.5px; }
 
-/* ── Domain / topic grids ── */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; margin: 16px 0; }
+/* ── Domain / Topic Grids ── */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 13px; margin: 16px 0; }
 .metric-card, .domain-card {
-  display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
-  padding: 16px; text-decoration: none; color: var(--ink);
-  transition: box-shadow .15s;
+  display: block; background: var(--panel);
+  border: 1px solid var(--line); border-radius: var(--r-xl);
+  padding: 16px 18px; text-decoration: none; color: var(--ink);
+  transition: box-shadow var(--t), border-color var(--t), transform var(--t);
 }
-.metric-card:hover, .domain-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.07); }
-.metric-card strong { display: block; font-weight: 600; }
-.metric-card span { color: var(--muted); font-size: 13px; }
+.metric-card:hover, .domain-card:hover { box-shadow: var(--shadow-sm); border-color: var(--accent); transform: translateY(-1px); }
+.metric-card strong { display: block; font-weight: 700; font-size: 14px; }
+.metric-card span { color: var(--muted); font-size: 12.5px; }
 
-/* ── Skill cards ── */
+/* ── Skill Cards ── */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin: 16px 0; }
-.skill-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-.skill-card h3 { margin: 0 0 6px; font-size: 15px; }
-.skill-card h3 a { color: var(--accent); text-decoration: none; }
-.skill-card h3 a:hover { text-decoration: underline; }
-.skill-card p { margin: 4px 0; font-size: 14px; color: #374151; }
-.skill-card .muted { color: var(--muted); font-size: 13px; }
-.card-badges { display: flex; gap: 8px; margin: 6px 0; flex-wrap: wrap; }
-.roi-badge { font-size: 12px; background: #ecfdf5; color: #065f46; padding: 2px 8px; border-radius: 999px; }
-.diff-badge { font-size: 12px; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 999px; }
+.skill-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  border-top: 3px solid var(--accent);
+  padding: 18px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: box-shadow var(--t), transform var(--t);
+}
+.skill-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.skill-card h3 { margin: 0; font-size: 14px; font-weight: 700; letter-spacing: -.01em; }
+.skill-card h3 a { color: var(--ink); text-decoration: none; }
+.skill-card h3 a:hover { color: var(--accent); }
+.skill-card p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.55; }
+.card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.roi-badge { font-size: 11px; background: var(--green-bg); color: var(--green-dark); padding: 2px 9px; border-radius: var(--r-full); font-weight: 600; }
+.diff-badge { font-size: 11px; background: var(--amber-bg); color: var(--amber-dark); padding: 2px 9px; border-radius: var(--r-full); font-weight: 600; }
 
 /* ── Tags ── */
-.tag { display: inline-block; margin: 3px 5px 0 0; padding: 3px 8px; background: var(--tag); border-radius: 999px; font-size: 12px; color: #3730a3; text-decoration: none; }
-.tag.topic { background: #ecfdf5; color: #047857; }
+.tag { display: inline-block; margin: 2px 4px 0 0; padding: 3px 9px; background: var(--tag-bg); border-radius: var(--r-full); font-size: 11.5px; color: var(--tag-ink); text-decoration: none; font-weight: 500; }
+.tag:hover { background: var(--panel-3); }
+.tag.topic { background: var(--tag-topic-bg); color: var(--tag-topic-ink); }
+.tag.topic:hover { background: #d4eee3; }
 .tag-row { margin: 8px 0 16px; }
 
-/* ── Skill detail page ── */
-.breadcrumbs { color: var(--muted); margin-bottom: 12px; font-size: 13px; }
+/* ── Skill Detail Page ── */
+.breadcrumbs { color: var(--muted); margin-bottom: 14px; font-size: 12.5px; }
 .breadcrumbs a { color: var(--accent); text-decoration: none; }
-.two-col { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; margin-top: 20px; }
-.relation-panel { position: sticky; top: 70px; align-self: start; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-.relation-panel h2 { margin: 0 0 10px; font-size: 15px; }
-.relation-panel h3 { margin: 14px 0 6px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
-.relation-panel ul { padding-left: 18px; margin: 0; }
-#ego-graph { display: block; border-radius: 8px; background: #f8fafc; border: 1px solid var(--line); margin-bottom: 6px; }
-.ego-legend { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
-.roi-panel { display: flex; gap: 16px; flex-wrap: wrap; background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin: 12px 0 20px; }
+.breadcrumbs a:hover { text-decoration: underline; }
+.two-col { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; margin-top: 20px; }
+.relation-panel {
+  position: sticky; top: calc(var(--topbar-height) + 16px); align-self: start;
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 20px; box-shadow: var(--shadow-xs);
+}
+.relation-panel h2 { margin: 0 0 12px; font-size: 14px; font-weight: 700; }
+.relation-panel h3 { margin: 16px 0 6px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; font-weight: 700; }
+.relation-panel ul { padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; }
+.relation-panel ul li { border-bottom: 1px solid var(--line); }
+.relation-panel ul li:last-child { border-bottom: none; }
+.relation-panel ul li a { display: block; padding: 5px 0; font-size: 12.5px; color: var(--accent); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.relation-panel ul li a:hover { text-decoration: underline; }
+#ego-graph { display: block; width: 100%; height: auto; min-height: 180px; border-radius: var(--r-md); background: var(--panel-2); border: 1px solid var(--line); margin-bottom: 8px; }
+.ego-legend { font-size: 11.5px; color: var(--muted); display: flex; align-items: center; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.roi-panel { display: flex; gap: 20px; flex-wrap: wrap; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 18px; margin: 12px 0 20px; }
 .roi-item { display: flex; flex-direction: column; }
-.roi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
-.roi-value { font-size: 16px; font-weight: 600; margin-top: 2px; }
-.muted { color: var(--muted); }
+.roi-label { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.roi-value { font-size: 16px; font-weight: 700; margin-top: 2px; color: var(--ink); }
 
-/* ── Search dropdown ── */
-.search-results { position: absolute; top: 52px; left: 0; right: 0; z-index: 100; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,.12); max-height: 440px; overflow-y: auto; margin: 0 22px; }
+/* ── Search ── */
+.search-results {
+  position: absolute; top: var(--topbar-height); left: 0; right: 0; z-index: 300;
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 0 0 var(--r-xl) var(--r-xl);
+  box-shadow: var(--shadow-lg);
+  max-height: 480px; overflow-y: auto; margin: 0;
+}
 .search-results.hidden { display: none; }
-.search-results .result { display: block; padding: 10px 16px; text-decoration: none; color: var(--ink); border-bottom: 1px solid var(--line); font-size: 14px; }
-.search-results .result:hover { background: #f9fafb; }
+.search-results .result {
+  display: block; padding: 11px 20px;
+  text-decoration: none; color: var(--ink);
+  border-bottom: 1px solid var(--line); font-size: 13.5px;
+  transition: background var(--t);
+}
+.search-results .result:hover { background: var(--accent-bg); }
 .search-results .result:last-child { border-bottom: none; }
+.search-results .result strong { color: var(--accent); font-weight: 600; }
 
-/* ── Workflow tree ── */
+/* ── Workflow ── */
 .wf-meta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 12px 0; }
-.wf-entry-question { font-size: 15px; font-weight: 500; }
-.wf-outcomes { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 14px 18px; margin: 16px 0; }
-.wf-outcomes h3 { margin: 0 0 8px; font-size: 14px; color: #166534; }
+.wf-entry-question { font-size: 15px; font-weight: 600; }
+.wf-outcomes { background: var(--green-bg); border: 1px solid #b8dfc9; border-radius: var(--r-lg); padding: 14px 18px; margin: 16px 0; }
+.wf-outcomes h3 { margin: 0 0 8px; font-size: 13px; color: var(--green-dark); font-weight: 700; }
 .wf-outcomes ul { margin: 0; padding-left: 18px; }
-.wf-outcomes li { font-size: 14px; margin-bottom: 4px; }
+.wf-outcomes li { font-size: 13.5px; margin-bottom: 4px; }
 .wf-tree { margin-top: 24px; }
 .wf-step {
-  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
-  padding: 16px 20px; margin-bottom: 12px;
-  border-left: 4px solid var(--accent);
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 18px 20px; margin-bottom: 12px;
+  border-left: 3px solid var(--accent);
 }
-.wf-step-name { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
-.wf-question { font-size: 15px; margin: 6px 0; color: #1d4ed8; }
-.wf-context { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
-.wf-branches { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-.wf-branch { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.wf-branch > summary { padding: 10px 14px; cursor: pointer; font-size: 14px; font-weight: 500; background: #f9fafb; list-style: none; }
-.wf-branch > summary::before { content: "▶ "; font-size: 11px; color: var(--muted); }
-.wf-branch[open] > summary::before { content: "▼ "; }
+.wf-step-name { font-weight: 700; font-size: 14.5px; margin-bottom: 8px; }
+.wf-question { font-size: 14px; margin: 8px 0; color: var(--accent); font-weight: 500; }
+.wf-context { font-size: 13px; color: var(--muted); margin-bottom: 12px; line-height: 1.6; }
+.wf-branches { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.wf-branch { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+.wf-branch > summary {
+  padding: 10px 14px; cursor: pointer; font-size: 13.5px; font-weight: 500;
+  background: var(--panel-2); list-style: none;
+  position: relative; padding-left: 36px;
+  transition: background var(--t);
+}
+.wf-branch > summary:hover { background: var(--accent-bg); }
+.wf-branch > summary::before {
+  content: ''; position: absolute; left: 14px; top: 50%;
+  width: 6px; height: 6px;
+  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+  transform: translateY(-65%) rotate(-45deg); transition: transform var(--t);
+}
+.wf-branch[open] > summary::before { transform: translateY(-35%) rotate(45deg); }
 .wf-condition { color: var(--ink); }
-.wf-branch-skills { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
+.wf-branch-skills { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px; background: var(--panel); }
 .wf-skill-chip {
-  display: flex; flex-direction: column; background: var(--tag); border-radius: 10px;
-  padding: 8px 12px; text-decoration: none; color: var(--ink); min-width: 160px;
-  transition: box-shadow .1s;
+  display: flex; flex-direction: column;
+  background: var(--accent-bg); border-radius: var(--r-md);
+  padding: 8px 12px; text-decoration: none; color: var(--ink);
+  min-width: 160px;
+  border: 1px solid transparent;
+  transition: box-shadow var(--t), transform var(--t), border-color var(--t);
 }
-.wf-skill-chip:hover { box-shadow: 0 2px 8px rgba(37,99,235,.15); }
-.wf-skill-chip.missing { opacity: .5; cursor: default; }
-.chip-name { font-size: 13px; font-weight: 600; color: #1e40af; }
+.wf-skill-chip:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); border-color: var(--accent); }
+.wf-skill-chip.missing { opacity: .45; cursor: default; }
+.chip-name { font-size: 12.5px; font-weight: 700; color: var(--accent); }
 .chip-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-/* ── Graph page ── */
-#graph-svg { width: 100%; display: block; background: #fafafa; border-radius: 12px; border: 1px solid var(--line); }
-.graph-controls { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; font-size: 14px; }
-.graph-controls label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+/* ── Graph ── */
+#graph-svg { width: 100%; display: block; background: var(--bg); border-radius: var(--r-xl); border: 1px solid var(--line); }
+.graph-controls { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; font-size: 13.5px; }
+.graph-controls label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500; }
 .edge-dot { width: 14px; height: 4px; border-radius: 2px; display: inline-block; }
-.edge-dot.prereq { background: #3b82f6; }
-.edge-dot.combo { background: #10b981; }
-.edge-dot.ext { background: #f59e0b; }
+.edge-dot.prereq { background: #9c5455; }
+.edge-dot.combo  { background: #3d7a5e; }
+.edge-dot.ext    { background: #b87333; }
 .graph-info {
   position: fixed; top: 80px; right: 24px; z-index: 20;
-  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
-  padding: 20px; width: 280px; box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 20px; width: 280px;
+  box-shadow: var(--shadow-lg);
 }
 .graph-info.hidden { display: none; }
-.graph-info h3 { margin: 0 28px 8px 0; font-size: 15px; }
+.graph-info h3 { margin: 0 28px 10px 0; font-size: 14px; font-weight: 700; }
 .graph-info p { margin: 4px 0; font-size: 13px; }
 
 /* ── Tables ── */
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); }
-th { background: #f9fafb; font-weight: 600; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+th { background: var(--panel-2); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+tr:hover td { background: var(--bg); }
 
-/* ── Code preview (Phase H) ── */
+/* ── Code Preview ── */
 .code-preview {
-  background: #0f172a; color: #e2e8f0;
-  border-radius: 10px; padding: 16px 18px; overflow-x: auto;
-  font-size: 13px; line-height: 1.55; font-family: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
-  max-height: 400px; overflow-y: auto;
-  margin: 10px 0;
-  white-space: pre;
+  background: #1a1916; color: #e8e0d4;
+  border-radius: var(--r-lg); padding: 18px 20px;
+  overflow-x: auto; overflow-y: auto;
+  font-size: 12.5px; line-height: 1.65;
+  font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+  max-height: 420px; margin: 12px 0; white-space: pre;
+  border: 1px solid rgba(255,255,255,.06);
 }
 
-/* ── Filter bar (Phase I) ── */
+/* ── Business Context Panel ── */
+.biz-ctx-panel {
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-xl);
+  padding: 18px 22px;
+  margin: 14px 0 22px;
+}
+.biz-ctx-header {
+  font-size: 11px; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 14px;
+}
+.biz-ctx-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+.biz-ctx-item { display: flex; flex-direction: column; gap: 3px; }
+.biz-ctx-full { grid-column: 1 / -1; }
+.biz-ctx-label {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--muted);
+}
+.biz-ctx-value { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+.biz-ctx-secondary { color: var(--muted); font-weight: 400; }
+.biz-ctx-outcome { color: var(--green-dark); font-weight: 500; }
+.biz-pain-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.biz-pain-tag {
+  font-size: 12px; padding: 3px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-full);
+  color: var(--ink-2);
+  font-weight: 500;
+}
+@media (max-width: 600px) {
+  .biz-ctx-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Filter Bar ── */
 .filter-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 16px 0 8px; }
-.filter-select {
-  padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px;
-  font-size: 14px; background: var(--panel); color: var(--ink); cursor: pointer;
+/* ── Handbook Uplinks ── */
+.hb-uplinks { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0 12px; }
+.hb-uplinks-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.hb-uplink {
+  font-size: 12px; font-weight: 600;
+  padding: 4px 12px; border-radius: var(--r-full);
+  background: var(--accent-bg); color: var(--accent);
+  text-decoration: none; border: 1px solid rgba(156,84,85,.2);
+  transition: background var(--t), box-shadow var(--t);
 }
-.filter-select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-.filter-hint { font-size: 13px; }
+.hb-uplink:hover { background: #f0e0e0; box-shadow: var(--shadow-xs); }
+.filter-select {
+  padding: 7px 12px; border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-md); font-size: 13px;
+  background: var(--panel); color: var(--ink); cursor: pointer;
+  font-family: var(--font);
+  transition: border-color var(--t), box-shadow var(--t);
+}
+.filter-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(156,84,85,.12); }
+.filter-hint { font-size: 13px; color: var(--muted); }
 
-/* ── toB Playbook pages (Phase F) ── */
-.pb-hero { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 16px; }
-.pb-icon { font-size: 48px; flex-shrink: 0; line-height: 1; margin-top: 4px; }
-.pb-intro { background: #f8fafc; border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 16px 0; font-size: 15px; color: #374151; }
-.pb-steps { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
-.pb-step { display: flex; gap: 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
-.pb-step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+/* ── Playbook Pages ── */
+.pb-hero { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 16px; }
+.pb-icon {
+  width: 52px; height: 52px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent-bg); color: var(--accent);
+  border-radius: var(--r-lg); font-size: 11px; font-weight: 800;
+  letter-spacing: .04em; text-transform: uppercase; font-family: var(--font);
+  margin-top: 4px; border: 1px solid rgba(156,84,85,.15);
+}
+.pb-hero-body h1 { margin: 0 0 6px; }
+.biz-tag { display: inline-block; font-size: 11px; font-weight: 600; background: var(--panel-3); color: var(--ink-2); padding: 3px 10px; border-radius: var(--r-full); margin-bottom: 8px; }
+/* ── ROI Callout (S1-9) ── */
+.pb-roi-callout { display: inline-flex; align-items: center; gap: 12px; background: var(--red-bg); border: 1px solid #fca5a5; border-radius: var(--r-lg); padding: 10px 16px; margin: 4px 8px 4px 0; font-size: 13px; font-weight: 500; }
+.pb-roi-val { font-weight: 800; color: var(--red); font-size: 14px; }
+/* ── Hero Primary CTA (S1-4) ── */
+.hero-badge { display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-bg); padding: 4px 12px; border-radius: var(--r-full); margin: 0 0 12px; }
+.hero-primary-cta { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 24px; }
+/* ── SCQA Intro Block (S1-2) ── */
+.rm-scqa { background: linear-gradient(135deg, #fdf8f5 0%, #f9f0f0 100%); border: 1px solid #e8d5d5; border-radius: var(--r-xl); padding: 24px 28px; margin: 0 0 32px; max-width: 860px; margin-left: auto; margin-right: auto; }
+.rm-scqa-s, .rm-scqa-c, .rm-scqa-q { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; line-height: 1.65; color: var(--ink-2); }
+.rm-scqa-q { margin-bottom: 0; font-weight: 600; color: var(--ink); }
+.rm-scqa-label { flex-shrink: 0; width: 36px; height: 20px; background: var(--accent); color: #fff; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+.rm-scqa-c .rm-scqa-label { background: var(--red); }
+.rm-scqa-q .rm-scqa-label { background: var(--amber-dark); }
+.pb-intro {
+  background: var(--panel-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
+  padding: 14px 20px; margin: 16px 0;
+  font-size: 14px; color: var(--ink-2); line-height: 1.7;
+}
+.pb-steps { margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+.pb-step {
+  display: flex; gap: 18px;
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 20px;
+  transition: box-shadow var(--t);
+}
+.pb-step:hover { box-shadow: var(--shadow-sm); }
+.pb-step-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; flex-shrink: 0;
+  box-shadow: var(--shadow-accent); letter-spacing: .02em;
+  font-family: var(--font);
+}
 .pb-step-body { flex: 1; min-width: 0; }
-.pb-step-title { margin: 0 0 8px; font-size: 16px; }
-.pb-problem { font-size: 14px; color: #1d4ed8; margin: 0 0 12px; }
-.pb-skills { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-.pb-skill { background: var(--tag); border-radius: 10px; padding: 10px 14px; }
+.pb-step-title { margin: 0 0 8px; font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+.pb-problem {
+  font-size: 13px; color: var(--accent); margin: 0 0 14px;
+  font-weight: 500; padding: 8px 12px;
+  background: var(--accent-bg); border-radius: var(--r-sm);
+  border-left: 3px solid var(--accent);
+}
+.pb-skills { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.pb-skill { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 14px; }
 .pb-skill-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.pb-skill-name { font-weight: 600; font-size: 14px; color: var(--accent); text-decoration: none; }
+.pb-skill-name { font-weight: 700; font-size: 13.5px; color: var(--accent); text-decoration: none; }
 .pb-skill-name:hover { text-decoration: underline; }
 .pb-skill-badges { display: flex; gap: 6px; }
-.pb-skill-why { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
-.pb-data, .pb-output { font-size: 13px; margin-top: 8px; background: #f9fafb; border-radius: 6px; padding: 8px 12px; }
+.pb-skill-why { margin: 5px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.pb-data, .pb-output { font-size: 12.5px; margin-top: 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 8px 12px; }
+.pb-outcomes { background: var(--green-bg); border: 1px solid #b8dfc9; border-radius: var(--r-xl); padding: 18px 22px; margin-top: 24px; }
+.pb-outcomes h2 { margin: 0 0 10px; font-size: 14px; color: var(--green-dark); font-weight: 700; }
+.pb-outcomes ul { margin: 0; padding-left: 18px; }
+.pb-outcomes li { font-size: 13.5px; margin-bottom: 5px; color: #1e3f2a; }
 
 /* ── ROI Calculator ── */
-.calc-wrapper { margin: 40px 0 0; background: var(--panel); border: 2px solid var(--line); border-radius: 20px; overflow: hidden; }
-.calc-header { padding: 28px 32px 20px; border-bottom: 1px solid var(--line); }
-.calc-header h2 { margin: 0 0 6px; font-size: 22px; }
-.calc-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); background: #f8fafc; }
-.calc-tab { flex: 1; padding: 14px 8px; border: none; background: none; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--muted); border-bottom: 3px solid transparent; transition: all .15s; }
-.calc-tab:hover { color: var(--ink); background: #f1f5f9; }
-.calc-tab.active { color: var(--tc); border-bottom-color: var(--tc); background: #fff; font-weight: 700; }
+.calc-wrapper { margin: 40px 0 0; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-2xl); overflow: hidden; box-shadow: var(--shadow-sm); }
+.calc-header { padding: 24px 28px 18px; border-bottom: 1px solid var(--line); }
+.calc-header h2 { margin: 0 0 5px; font-size: 20px; font-weight: 800; }
+.calc-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); background: var(--panel-2); }
+.calc-tab { flex: 1; padding: 13px 8px; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 500; font-family: var(--font); color: var(--muted); border-bottom: 2px solid transparent; transition: color var(--t), background var(--t), border-color var(--t); }
+.calc-tab:hover { color: var(--ink); background: var(--panel-3); }
+.calc-tab.active { color: var(--tc, var(--accent)); border-bottom-color: var(--tc, var(--accent)); background: #fff; font-weight: 700; }
+.calc-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .calc-body { padding: 0; }
-.calc-panel { display: none; grid-template-columns: 1fr 280px; gap: 0; }
+.calc-panel { display: none; grid-template-columns: 1fr 260px; gap: 0; }
 .calc-panel.active { display: grid; }
-.calc-inputs { padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; }
+.calc-inputs { padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; }
 .calc-row { display: flex; flex-direction: column; gap: 6px; }
-.calc-label { font-size: 14px; font-weight: 500; color: #374151; }
+.calc-label { font-size: 13px; font-weight: 600; color: var(--ink-2); }
 .calc-input-wrap { display: flex; align-items: center; gap: 10px; }
-.calc-input { flex: 1; accent-color: var(--tc); height: 6px; cursor: pointer; }
-.calc-val { font-size: 16px; font-weight: 700; color: var(--tc); min-width: 52px; text-align: right; }
+.calc-input { flex: 1; accent-color: var(--tc, var(--accent)); height: 5px; cursor: pointer; }
+.calc-val { font-size: 16px; font-weight: 800; color: var(--tc, var(--accent)); min-width: 58px; text-align: right; font-variant-numeric: tabular-nums; }
 .calc-unit { font-size: 12px; color: var(--muted); min-width: 52px; }
-.calc-result { background: linear-gradient(135deg, var(--tc) 0%, color-mix(in srgb, var(--tc) 70%, #000) 100%); padding: 40px 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.calc-result-label { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 12px; }
-.calc-result-num { font-size: 52px; font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
-.calc-result-unit { font-size: 16px; color: rgba(255,255,255,.8); margin-top: 6px; }
-.calc-disclaimer { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 20px; line-height: 1.5; max-width: 200px; }
-@media(max-width:700px){ .calc-panel.active{grid-template-columns:1fr} .calc-result{padding:28px} .calc-result-num{font-size:38px} }
-""".strip()
+.calc-result { background: var(--tc, var(--accent)); padding: 36px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.calc-result-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 10px; }
+.calc-result-num { font-size: 50px; font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+.calc-result-unit { font-size: 15px; color: rgba(255,255,255,.85); margin-top: 6px; font-weight: 600; }
+.calc-disclaimer { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 20px; line-height: 1.6; max-width: 200px; }
 
+/* ── CEO Tab content ── */
+.ceo-entry { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; align-items: start; }
+.ceo-entry-body h3 { margin: 0 0 8px; font-size: 17px; font-weight: 700; }
+.ceo-entry-body p { color: var(--muted); margin: 0 0 16px; font-size: 13.5px; line-height: 1.65; }
+.ceo-phases { display: flex; flex-direction: column; gap: 10px; }
+.ceo-phase { background: var(--panel); border-left: 3px solid; border-radius: 0 var(--r-lg) var(--r-lg) 0; padding: 12px 16px; font-size: 13px; box-shadow: var(--shadow-xs); }
+.ceo-phase p { margin: 4px 0; color: var(--muted); }
+
+/* ── Agent Marketplace ── */
+.agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin: 20px 0; }
+.agent-card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-xl);
+  padding: 20px; display: flex; flex-direction: column; gap: 10px;
+  transition: box-shadow var(--t), transform var(--t), border-color var(--t);
+  cursor: pointer;
+}
+.agent-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--accent); }
+.agent-card-top { display: flex; align-items: flex-start; gap: 14px; }
+.agent-icon-wrap {
+  width: 44px; height: 44px; border-radius: var(--r-lg);
+  background: var(--accent-bg); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; flex-shrink: 0;
+  letter-spacing: .04em; text-transform: uppercase; font-family: var(--font);
+}
+.agent-icon-wrap.cat-supply { background: var(--amber-bg); color: var(--amber-dark); }
+.agent-icon-wrap.cat-ad     { background: var(--accent-bg); color: var(--accent); }
+.agent-icon-wrap.cat-risk   { background: var(--red-bg); color: var(--red); }
+.agent-icon-wrap.cat-voc    { background: var(--green-bg); color: var(--green-dark); }
+.agent-icon-wrap.cat-ops    { background: var(--panel-3); color: var(--ink); }
+.agent-card-info { flex: 1; min-width: 0; }
+.agent-name { font-size: 14.5px; font-weight: 700; margin: 0 0 4px; letter-spacing: -.01em; }
+.agent-cat-badge {
+  display: inline-block; font-size: 10.5px; font-weight: 600;
+  padding: 2px 8px; border-radius: var(--r-full);
+  background: var(--panel-3); color: var(--ink-2);
+}
+.agent-status { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse-dot 2.5s ease-in-out infinite; }
+.status-dot.demo { background: var(--amber); }
+@keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.7} }
+.agent-desc { font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0; }
+.agent-roi { font-size: 11.5px; font-weight: 600; color: var(--green-dark); background: var(--green-bg); padding: 3px 10px; border-radius: var(--r-full); align-self: flex-start; }
+.agent-skills { display: flex; flex-wrap: wrap; gap: 4px; }
+.agent-skill-chip { font-size: 11px; background: var(--accent-bg); color: var(--accent); padding: 2px 7px; border-radius: var(--r-full); font-weight: 500; text-decoration: none; }
+.agent-invoke-btn {
+  margin-top: auto; width: 100%; padding: 10px;
+  background: var(--ink); color: #fff;
+  border: none; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 600; font-family: var(--font);
+  letter-spacing: .03em; text-transform: uppercase;
+  cursor: pointer; transition: background var(--t), box-shadow var(--t);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.agent-invoke-btn:hover { background: var(--ink-2); box-shadow: var(--shadow-md); }
+.agent-invoke-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agent-cat-filter { display: flex; gap: 6px; flex-wrap: wrap; margin: 16px 0 8px; }
+.cat-pill {
+  padding: 6px 16px; border-radius: var(--r-full);
+  border: 1.5px solid var(--line-strong);
+  background: var(--panel); font-size: 12.5px; font-weight: 500;
+  font-family: var(--font); color: var(--muted); cursor: pointer;
+  transition: all var(--t);
+}
+.cat-pill:hover { border-color: var(--accent); color: var(--accent); }
+.cat-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* Agent Modal */
+.agent-modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(29,29,27,.55); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none;
+  transition: opacity var(--t-slow);
+}
+.agent-modal-overlay.open { opacity: 1; pointer-events: all; }
+.agent-modal {
+  background: var(--panel); border-radius: var(--r-2xl);
+  width: 100%; max-width: 680px; max-height: 88vh;
+  overflow-y: auto; box-shadow: var(--shadow-lg);
+  transform: translateY(16px) scale(.98);
+  transition: transform var(--t-slow);
+}
+.agent-modal-overlay.open .agent-modal { transform: translateY(0) scale(1); }
+.modal-header {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 22px; background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.modal-icon {
+  width: 44px; height: 44px; border-radius: var(--r-lg);
+  background: var(--accent-bg); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; flex-shrink: 0;
+  text-transform: uppercase; font-family: var(--font);
+}
+.modal-header-info { flex: 1; }
+.modal-header-info h2 { margin: 0 0 4px; font-size: 16px; font-weight: 800; }
+.modal-close {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--panel-2); border: 1px solid var(--line);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: background var(--t), color var(--t);
+  color: var(--muted); font-weight: 500;
+}
+.modal-close:hover { background: var(--red-bg); color: var(--red); }
+.modal-body { padding: 22px; }
+.modal-section { margin-bottom: 22px; }
+.modal-section h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 0 0 12px; }
+.modal-input-group { display: flex; flex-direction: column; gap: 10px; }
+.modal-input {
+  width: 100%; padding: 9px 13px;
+  border: 1.5px solid var(--line-strong); border-radius: var(--r-md);
+  font-size: 13.5px; background: var(--panel); color: var(--ink);
+  font-family: var(--font);
+  transition: border-color var(--t), box-shadow var(--t);
+}
+.modal-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(156,84,85,.12); }
+.modal-input::placeholder { color: var(--muted); }
+.modal-run-btn {
+  width: 100%; padding: 12px; background: var(--ink); color: #fff;
+  border: none; border-radius: var(--r-md);
+  font-size: 13.5px; font-weight: 700; font-family: var(--font);
+  letter-spacing: .03em; text-transform: uppercase;
+  cursor: pointer; transition: background var(--t), box-shadow var(--t);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.modal-run-btn:hover { background: var(--ink-2); box-shadow: var(--shadow-md); }
+.modal-run-btn:disabled { background: var(--line-strong); cursor: not-allowed; box-shadow: none; }
+.modal-output {
+  background: var(--panel-2); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 16px 18px; margin-top: 14px;
+  min-height: 100px; display: none;
+}
+.modal-output.visible { display: block; }
+.output-thinking { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13.5px; }
+.thinking-dots span { animation: blink 1.2s infinite; font-size: 18px; letter-spacing: 2px; }
+.thinking-dots span:nth-child(2) { animation-delay: .2s; }
+.thinking-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,100%{opacity:.2} 50%{opacity:1} }
+.output-content { font-size: 13.5px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; font-family: var(--font); }
+.modal-footer-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .layout { grid-template-columns: 190px 1fr; }
+  .content { padding: 24px 28px; }
+  .two-col { grid-template-columns: 1fr 300px; }
+}
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .topnav {
+    position: fixed; top: var(--topbar-height); left: 0; right: 0; bottom: 0;
+    background: var(--panel); flex-direction: column;
+    padding: 16px; gap: 4px; z-index: 195;
+    transform: translateX(-100%); transition: transform var(--t-slow);
+    overflow-y: auto; border-right: 1px solid var(--line);
+    max-width: 280px; box-shadow: var(--shadow-lg);
+  }
+  .topnav.open { transform: translateX(0); }
+  .topnav a { font-size: 14.5px; padding: 11px 14px; color: var(--ink-2); }
+  #global-search { width: 120px; }
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; position: fixed; top: var(--topbar-height); left: 0; width: 260px; height: calc(100vh - var(--topbar-height)); z-index: 195; transform: translateX(-100%); transition: transform var(--t-slow); }
+  .sidebar.open { display: flex; flex-direction: column; transform: translateX(0); }
+  .content { padding: 18px 16px; }
+  .two-col { grid-template-columns: 1fr; }
+  .relation-panel { position: static; }
+  .ceo-entry { grid-template-columns: 1fr; }
+  .biz-grid { grid-template-columns: 1fr; }
+  .hero-tabs { flex-wrap: wrap; }
+  .calc-panel.active { grid-template-columns: 1fr; }
+  .calc-result { padding: 24px; }
+  .calc-result-num { font-size: 40px; }
+  .agent-grid { grid-template-columns: 1fr; }
+  .agent-modal { max-height: 96vh; }
+  .brand-sub { display: none; }
+}
+@media (max-width: 480px) {
+  .content h1 { font-size: 22px; }
+  .pb-step { flex-direction: column; }
+  .pb-step-num { width: 36px; height: 36px; font-size: 10px; }
+  .topbar { padding: 0 14px; }
+  #global-search { width: 80px; font-size: 12px; }
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .ds-grid { grid-template-columns: 1fr; }
+  .biz-grid { grid-template-columns: 1fr; }
+}
+""".strip()
 
 def build_search_js() -> str:
     return r"""
@@ -3017,7 +4928,7 @@ def build_search_js() -> str:
       `<a class="result" href="${rootPrefix()}skills/${s.skill_id}.html">` +
       `<strong>${esc(s.title)}</strong>` +
       `<br><span>${esc(s.domain_dir)}` +
-      `${s.roi_figure ? ' · 💰 ' + esc(s.roi_figure) : ''}` +
+      `${s.roi_figure ? ' · ' + esc(s.roi_figure) : ''}` +
       `${s.difficulty ? ' · ' + esc(s.difficulty) : ''}</span></a>`
     ).join('') || '<p class="muted" style="padding:12px">无结果</p>';
     box.classList.remove('hidden');
@@ -3089,6 +5000,7 @@ def render_pages(
     write_file(out / "index.html", html_page(
         "总览",
         render_index(skill_count, domain_count, edge_count, domains, skills),
+        active_nav="index",
     ))
 
     # ── Skill pages ──
@@ -3118,6 +5030,7 @@ def render_pages(
         "全部 Skills",
         f"<h1>全部 Skills</h1>{filter_bar}<div class='cards' id='skill-card-grid'>{all_cards}</div>",
         "../",
+        active_nav="skills",
     ))
 
     # ── Domain pages ──
@@ -3143,6 +5056,7 @@ def render_pages(
         "按领域",
         "<h1>按领域</h1><div class='grid'>" + "".join(domain_index_cards) + "</div>",
         "../",
+        active_nav="domains",
     ))
 
     # ── Topic pages ──
@@ -3206,6 +5120,7 @@ def render_pages(
 
     # ── CEO Roadmap whitepaper ──
     write_file(out / "ai-roadmap.html", render_roadmap_page(skill_lookup))
+    write_file(out / "agents.html", render_agents_page(skill_lookup))
 
     # ── toB Scene Playbooks (Phase F) ──
     for pb in TOB_PLAYBOOKS:

@@ -8,124 +8,151 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content"><h1>01-因果推断</h1><p>Causal inference, uplift modeling, DiD, IV</p><div class='cards'><article class="card skill-card">
   <h3><a href="../skills/Skill-Causal-Attribution-Bridge.html">Causal Attribution Bridge（因果归因桥梁）</a></h3>
   <p class="muted">01-因果推断</p>
   <p>传统广告归因是相关性的（&quot;点了广告→买了&quot;），因果归因是反事实的（&quot;如果没有这个广告→还会买吗&quot;）。核心：用增量因果效应替代 naive 归因比例。</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10-20 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <div class="card-badges"><span class='roi-badge'>10-20 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Causal-Cohort-Analysis.html">Causal Cohort Analysis — 因果队列分析：促销干预的长期用户行为效应</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>核心问题：传统队列分析的混淆陷阱</p>
-  <div class="card-badges"><span class='roi-badge'>💰 200-500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>传统队列分析（Cohort Analysis）追踪同一时期加入的用户群体的行为轨迹，但无法剥离选择偏差：高价值用户本来就会复购，促销只是&quot;锦上添花&quot;而非真正驱动因素。直接比较&quot;接受促销的队列 vs 未接受促销的队列&quot;，会高估促销效果 30-60%。</p>
+  <div class="card-badges"><span class='roi-badge'>200-500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Causal-Discovery-PC-Algorithm.html">Causal Discovery with PC Algorithm</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>骨架学习（Skeleton Learning）</p>
-  <div class="card-badges"><span class='roi-badge'>💰 首年投入约 5 万元，避免 1-2 次重大错误决策即可收回成</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>核心思想：从纯观测数据（无干预、无实验）中自动发现变量间的因果结构。PC 算法通过系统的条件独立性检验，逐步剔除无关边、识别 v-structures、传播方向约束，最终输出一个有向无环图（DAG）或部分定向图（CPDAG）。</p>
+  <div class="card-badges"><span class='roi-badge'>首年投入约 5 万元，避免 1-2 次重大错误决策即可收回成</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-ClusterSC-Synthetic-Control.html">ClusterSC - 聚类合成控制法</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>ClusterSC 解法**：令 $C_k$ 为最近簇的 donor 集合（$|C_k| \ll N$），将上式限定在 $C_k$ 内求解，使问题从 $N$ 维降至 $|C_k|$ 维，</p>
-  <div class="card-badges"><span class='roi-badge'>💰 0 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>合成控制法（Synthetic Control, SC）通过为目标单元&quot;合成&quot;一个反事实来估计因果效应，是评估地区级/城市级无法做 A/B 的大型干预（如区域广告投放、城市政策）的黄金标准。</p>
+  <div class="card-badges"><span class='roi-badge'>0 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Conformal-ROI-Prediction.html">共形预测ROI区间估计 - 小样本下的可信转化贡献量化</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>共形预测 + MC Dropout</p>
-  <div class="card-badges"><span class='roi-badge'>💰 5-15 万/月</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>rDRP（robust Direct ROI Prediction）在标准 DRP (Direct ROI Prediction, AAAI 2023) 基础上，用共形预测 + MC Dropout 做 ROI 区间估计，再通过启发式校准将区间信息融回点估计。</p>
+  <div class="card-badges"><span class='roi-badge'>5-15 万/月</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag topic'>广告与投放</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Conformal-Risk-Assessment.html">Conformal Risk Assessment — 共形预测业务风险量化：覆盖率保证的区间估计</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>共形预测的核心保证**：共形预测（Conformal Prediction, CP）在</p>
+  <p>共形预测的核心保证：共形预测（Conformal Prediction, CP）在无需分布假设的条件下，为任意黑盒预测模型提供覆盖率理论保证。对于置信水平 1-α（如 90%），输出的预测区间 `[lower, upper]` 在有限样本下满足：`P(y ∈ [lower, upper]) ≥ 1-α`。这一保证来自数据可交换性（exchangeability），而非 Gaussian 分布假设。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-DML-Cohort-Causal-Effect.html">DML Cohort 因果效应 - 群体异质性 HTE 估计</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>用户群体(cohort)**效应差异巨大,但传统 A/B 难以分群估计。DML(Double Machine Learning)通过</p>
-  <div class="card-badges"><span class='roi-badge'>💰 1500-2500 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
+  <p>平台对所有新妈妈用户统一发放&quot;新生儿满减券&quot;,ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分 - 数据要求:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理) - DML 配置: - 第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$ - PCA 降维至 10 维,K-mea</p>
+  <div class="card-badges"><span class='roi-badge'>1500-2500 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-DiD-Difference-in-Differences.html">Difference-in-Differences (DiD) for Causal Effect Estimation</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>平行趋势假设（Parallel Trends）</p>
-  <div class="card-badges"><span class='roi-badge'>💰 50万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>核心思想：利用处理组和对照组在政策/干预前后的变化差异来估计因果效应。基本逻辑是：如果没有干预，处理组的趋势应该与对照组平行（平行趋势假设）。干预后的实际差异减去趋势差异，就是干预的净效应。</p>
+  <div class="card-badges"><span class='roi-badge'>50万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-EPICSCORE-Uncertainty.html">认知不确定性共形评分 - 数据稀疏区域自适应区间加宽</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>偶然不确定性**（aleatoric uncertainty，数据本身的随机性），对</p>
+  <p>标准共形预测对所有数据点使用统一的非一致性分数，无法区分&quot;数据多的区域&quot;和&quot;数据少的区域&quot;。根本原因：传统共形分数只捕捉偶然不确定性（aleatoric uncertainty，数据本身的随机性），对认知不确定性（epistemic uncertainty，训练数据不足导致的模型无知）视而不见——在数据稀疏区域仍然给出窄区间，形成虚假的高置信度。</p>
   <div class="card-badges"></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Guardrailed-Uplift-Targeting.html">Guardrailed Uplift Targeting — 约束优化 CATE：业务护栏驱动的精准干预</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>阶段二：约束优化（Knapsack 问题）</p>
-  <div class="card-badges"><span class='roi-badge'>💰 25-28万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>当前做法是向所有&quot;高流失风险&quot;用户统一发&quot;免费延长30天&quot;优惠券，ROI 极低——很多用户即使不发券也会续订</p>
+  <div class="card-badges"><span class='roi-badge'>25-28万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-IV-Instrumental-Variables.html">Instrumental Variables (IV) for Causal Inference with Endogeneity</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>排他性约束（Exclusion Restriction）</p>
-  <div class="card-badges"><span class='roi-badge'>💰 50万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>Momcozy 想知道自己产品的价格弹性——价格下降10%，销量会增加多少</p>
+  <div class="card-badges"><span class='roi-badge'>50万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Intelligent-Attribution-Causal-Forest.html">智能归因 - 因果森林 (Causal Forest)</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>双重分裂准则**：决策树节点分裂时，不仅考虑结果预测误差，还考虑</p>
-  <div class="card-badges"><span class='roi-badge'>💰 50 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>我们在美国、加拿大、英国、德国同步投放吸奶器广告，不同市场的用户行为差异显著</p>
+  <div class="card-badges"><span class='roi-badge'>50 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Mediation-Causal-Mechanism-Analysis.html">Causal Mediation Analysis — Decomposing &quot;Why It Works</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>核心公式（自然效应框架，Pearl 2001）</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10-30万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>核心思想：中介分析回答&quot;为什么&quot;——一个干预（如推荐算法更新）通过什么机制影响了结果（如转化率）。它将总效应分解为</p>
+  <div class="card-badges"><span class='roi-badge'>10-30万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-SSBC-Small-Sample-Conformal.html">小样本Beta修正共形预测 - 50个样本也能保证覆盖</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>&quot;期望意义&quot;**的——跨多次校准集随机抽取，平均覆盖率为 `1-α`，但</p>
-  <div class="card-badges"><span class='roi-badge'>💰 5-20 万/月</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>标准 Split Conformal Prediction 的覆盖保证是&quot;期望意义&quot;的——跨多次校准集随机抽取，平均覆盖率为 `1-α`，但单次校准的覆盖率可能远低于目标值。实验表明：当校准集 n=50 时，目标覆盖率 90% 的标准共形预测，实际违约率高达 ~40%（即 40% 的概率实际覆盖 &lt; 90%）。</p>
+  <div class="card-badges"><span class='roi-badge'>5-20 万/月</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag topic'>知识图谱与RAG</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Uplift-Modeling.html">Uplift Modeling (元学习框架)</a></h3>
   <p class="muted">01-因果推断</p>
-  <p>是：识别哪些用户最有可能因为某个干预（如促销、广告）而产生正向行为</p>
-  <div class="card-badges"><span class='roi-badge'>💰 50 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>识别哪些用户最有可能因为某个干预（如促销、广告）而产生正向行为。</p>
+  <div class="card-badges"><span class='roi-badge'>50 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>定价与利润</span></div>
 </article></div></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

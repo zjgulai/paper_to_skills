@@ -1,0 +1,77 @@
+id: wf-h
+name: WF-H 复购增长
+description: 从用户价值分层到精准干预再到 LTV 提升的端到端用户复购决策链，覆盖用户分层、流失预警、干预策略和 Review 激活四个阶段。
+target_users:
+  - 用户增长负责人
+  - 运营负责人
+  - CMO
+entry_question: 你的复购率和用户留存当前最大挑战是什么？
+
+steps:
+  - id: step-1
+    name: 用户价值分层
+    question: 是否已建立系统的用户分层体系？
+    context: 母婴用户生命周期明确（备孕→孕期→婴儿期→幼儿期），不同阶段需求差异巨大，统一运营会造成大量资源浪费
+    skills:
+      - id: Skill-RFM-Customer-Segmentation
+        role: R/F/M 三维分层把用户分成 8 类（冠军→流失→沉睡），每类对应不同运营策略
+      - id: Skill-LTV-Prediction-ZILN
+        role: 零膨胀对数正态 LTV 预测，识别高潜力用户优先投入资源
+      - id: Skill-User-Lifecycle-STAN
+        role: 时空注意力模型判断用户当前所在生命周期阶段（备孕/婴儿期/幼儿期）
+
+  - id: step-2
+    name: 流失预警与识别
+    question: 如何识别即将流失的用户？
+    context: 母婴用户的自然流失率高（孩子大了就不需要了），关键是区分"自然毕业"和"可干预流失"
+    branches:
+      - condition: 个体级精准流失预测（精准发券干预）
+        skills:
+          - id: Skill-Uplift-Churn-Prediction
+            role: Uplift 流失建模：识别"可说服者"，避免对必然流失/必然留存用户浪费资源
+          - id: Skill-Customer-Churn-Prediction
+            role: 深度学习流失预测，捕捉复杂行为序列模式
+        next: step-3
+      - condition: 群体级流失分析（制定策略方向）
+        skills:
+          - id: Skill-Cohort-Retention-Analysis
+            role: 队列留存分析，找到复购黄金时间窗口（如首单后 14 天是关键节点）
+          - id: Skill-User-Funnel-Analysis
+            role: 购买漏斗分析，定位最大流失节点
+        next: step-3
+
+  - id: step-3
+    name: 精准干预策略
+    question: 选择干预方式？
+    context: 干预不是越多越好——对错误用户干预会适得其反，"不要打扰者（Sleeping Dogs）"被优惠券刺激反而加速离开
+    branches:
+      - condition: 发券/促销干预（节省预算最大化复购）
+        skills:
+          - id: Skill-Guardrailed-CATE-NBA
+            role: 预算护栏约束下的最优行动决策，自动输出最优干预名单（ROI 25-28万/月）
+          - id: Skill-Personalized-Promotion-Targeting
+            role: 个性化促销定向，识别对哪种优惠响应最强的用户（ROI 300-600万）
+      - condition: 内容/推荐干预（提升连带购买）
+        skills:
+          - id: Skill-LLM-Augmented-Recommendation
+            role: LLM 驱动个性化推荐，理解用户自然语言表达的偏好（ROI 100万）
+          - id: Skill-Long-Term-Preference-Memory
+            role: 跨会话长期偏好记忆，精准复购触达
+
+  - id: step-4
+    name: Review 获取与品牌口碑激活
+    question: 如何在正确时机触达用户获取真实评论？
+    context: 评论数量和评分是 Amazon 排名的核心因素，主动在最佳时机请求评论可将 Review 获取率提升 30%+
+    skills:
+      - id: Skill-Session-Intent-Shift
+        role: 用户意图转变检测，识别满意度高适合请求评论的时机
+      - id: Skill-Emotional-AI-Customer-Care
+        role: 情感感知的主动触达，在正确情绪状态下发送 Review 邀请
+      - id: Skill-MAA-Review-to-Action-Decision
+        role: 评论→产品改进决策链，让每条 Review 都变成产品迭代信号（ROI 510-920万/年）
+
+outcomes:
+  - 可干预流失用户识别精准率 +25%，优惠券 ROI 提升 3-5x
+  - 老客复购率提升 10-15%，LTV 增加
+  - Review 获取率提升 30%（瞄准最优触达时机），评分质量更真实
+  - 年化节省无效促销成本 25-50 万元（不再给"必然留存"用户发无谓优惠券）

@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/02-a_b实验.html">02-A_B实验</a> / Skill-Power-Analysis-Sample-Size</nav>
 <h1>Power Analysis and Sample Size Calculation for A/B Testing</h1>
 <p class="muted">Skill-Power-Analysis-Sample-Size · 02-A_B实验</p>
-<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>其他</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 10万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐☆☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐☆☆☆☆</span></div></div>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>其他</span><span class='tag'>WF-G Listing内容优化</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐☆☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐☆☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 产品经理<span class='biz-ctx-secondary'> · 广告优化师 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Listing · TikTok 广告素材 · DTC 落地页</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>改了主图/标题/价格，不确定销量变化是改动导致的还是流量波动；两个方案团队各持己见，需要数据裁决</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每次改动都有 ≥95% 置信度的数据结论，好的改动快速全量，坏的及时止损</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>改了主图感觉好多了但不确定</span><span class='biz-pain-tag'>小范围测试结果好全量后没效果</span><span class='biz-pain-tag'>测试周期短结论不可靠</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>**：A/B测试需要多少样本才能检测出真实的效应？样本太少——检验力不足，假阴性率高（漏掉真实有效的改动）；样本太多——浪费流量和时间，拖慢迭代速度</p>
+    <p>A/B测试需要多少样本才能检测出真实的效应？</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：A/B测试需要多少样本才能检测出真实的效应？样本太少——检验力不足，假阴性率高（漏掉真实有效的改动）；样本太多——浪费流量和时间，拖慢迭代速度。</p>
     <h2>3. 业务应用场景</h2>
     <p>业务问题：产品团队想测试新版首页布局对转化率的影响。预期转化率从2.0%提升到2.2%（相对提升10%），需要多少样本？实验要跑多久？</p><p>计算流程： 1. 确定参数： - 基准转化率 $p = 0.02$ - MDE = 0.002（绝对提升0.2个百分点） - $\alpha = 0.05$（双侧） - 功效 = 0.80 2. 计算样本量： - 每组需要约 39,000 用户 - 两组共 78,000 用户 3. 计算实验时长： - 日均活跃用户（DAU）= 50,000 - 实验分流50% → 每天进入实验 25,000 人 - 所需天数 = 78,000 / 25,000 ≈ 3.1 天</p><p>决策输出： - 实验设计：50/50分流，跑4天（含1天缓冲） - 若4天后结果不显著，不要急于下结论&quot;无效&quot;——可能是MDE设得太小</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：只需要历史数据的基准值和标准差</li><li>技术门槛：极低，公式直接计算</li><li>主要挑战：与业务方沟通MDE的设定（需要平衡统计严谨性和业务实际）</li><li>**所有A/B测试的前提**：没有功效分析的A/B测试是不完整的</li><li>**实施成本极低**：公式计算，1天完成</li><li>**避免巨大浪费**：90%的实验失败源于样本量不足，而非改动无效</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li>数据要求：只需要历史数据的基准值和标准差</li><li>技术门槛：极低，公式直接计算</li><li>主要挑战：与业务方沟通MDE的设定（需要平衡统计严谨性和业务实际）</li><li><strong>所有A/B测试的前提</strong>：没有功效分析的A/B测试是不完整的</li><li><strong>实施成本极低</strong>：公式计算，1天完成</li><li><strong>避免巨大浪费</strong>：90%的实验失败源于样本量不足，而非改动无效</li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ def calculate_mde(n, sigma, alpha=0.05, power=0.8):
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

@@ -8,30 +8,41 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-C 客服分诊</nav>
@@ -41,11 +52,11 @@
   <div><strong>适用角色</strong><span class='tag'>客服运营负责人</span><span class='tag'>NLP / 用户洞察工程师</span><span class='tag'>产品经理</span></div>
   <div class="wf-entry-question"><strong>入口问题：</strong>你的客服核心挑战是什么？</div>
 </div>
-<div class="wf-outcomes"><h3>预期收益</h3><ul><li>✅ 客服首次响应解决率从 60% 提升至 85%</li><li>✅ 多语言 VOC 覆盖从 25% → 100%</li><li>✅ 工单正确路由率从 61% → 82%，年化节省 1900 万元</li><li>✅ 客服人力成本节省 30-40%</li></ul></div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 客服首次响应解决率从 60% 提升至 85%</li><li>[OK] 多语言 VOC 覆盖从 25% → 100%</li><li>[OK] 工单正确路由率从 61% → 82%，年化节省 1900 万元</li><li>[OK] 客服人力成本节省 30-40%</li></ul></div>
 <div class="wf-tree">
   <div class="wf-step" style="--depth:0">
   <div class="wf-step-name">评论与工单采集</div>
-  <div class="wf-question">❓ 数据来源是什么？</div>
+  <div class="wf-question">数据来源是什么？</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
       <summary class="wf-condition">Amazon / 电商平台评论</summary>
@@ -66,7 +77,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">情感与根因分析</div>
-  <div class="wf-question">❓ 需要哪个粒度的分析？</div>
+  <div class="wf-question">需要哪个粒度的分析？</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
       <summary class="wf-condition">产品维度（功能/质量/价格）情感</summary>
@@ -85,7 +96,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">智能分诊与路由</div>
-  <div class="wf-question">❓ 工单量级与复杂度？</div>
+  <div class="wf-question">工单量级与复杂度？</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
       <summary class="wf-condition">高频标准化工单（退换货 / 物流查询）</summary>
@@ -104,7 +115,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">VOC 洞察沉淀</div>
-  <div class="wf-question">❓ 如何将洞察转化为产品改进信号？</div>
+  <div class="wf-question">如何将洞察转化为产品改进信号？</div>
   <div class="wf-branch-skills">
     <a class="wf-skill-chip" href="../skills/Skill-MAA-Review-to-Action-Decision.html"><span class="chip-name">MAA 多 Agent 行动建议 - 从评论到产品改进决策链</span><span class="chip-role">评论→行动决策转化框架</span></a>
     <a class="wf-skill-chip" href="../skills/Skill-Consumer-Complaint-Recall-Prediction.html"><span class="chip-name">Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测</span><span class="chip-role">消费者投诉召回风险预测</span></a>
@@ -115,5 +126,21 @@
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

@@ -8,50 +8,62 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 用户增长决策手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>👤</span>
+  <span class='pb-icon'>UG</span>
   <div>
     <h1>用户增长决策手册</h1>
     <p class='lead'>从用户价值分层到精准干预的全链路用户增长决策指南</p>
     <span class='biz-tag'>LTV · 流失 · 分层运营</span>
   </div>
 </div>
+
 <div class='pb-intro'>母婴跨境用户运营的核心矛盾：大多数营销动作（发券、触达）对「无论如何都会复购」的用户是纯浪费，对「无论如何都不会复购」的用户是无效投入。真正的增长在于找准「可被干预改变」的那 10-20%。</div>
-<div class="wf-outcomes"><h3>预期收益</h3><ul><li>✅ 可说服用户识别精准率 +25%，优惠券 ROI 提升 3-5x</li><li>✅ 复购率提升 10-15%，LTV 增加</li><li>✅ 新用户首单转化率提升 15-20%</li><li>✅ 年化节省无效促销成本 25-50 万元</li></ul></div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 可说服用户识别精准率 +25%，优惠券 ROI 提升 3-5x</li><li>[OK] 复购率提升 10-15%，LTV 增加</li><li>[OK] 新用户首单转化率提升 15-20%</li><li>[OK] 年化节省无效促销成本 25-50 万元</li></ul></div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 1 — 用户价值分层</h3>
-    <p class='pb-problem'>❓ 谁是你的高价值用户？谁即将流失？谁从未真正激活？</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-RFM-Customer-Segmentation.html' class='pb-skill-name'>RFM Customer Segmentation for Targeted Marketing</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 用 R/F/M 三维把用户分成 8 类（冠军→流失→沉睡），每类对应不同运营策略</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-LTV-Prediction-ZILN.html' class='pb-skill-name'>LTV预测 - 零膨胀对数正态模型 (ZILN)</a><div class='pb-skill-badges'><span class='roi-badge'>💰 100-200 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 零膨胀对数正态模型预测用户生命周期价值，识别潜力高价值用户</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-User-Lifecycle-STAN.html' class='pb-skill-name'>STAN 用户生命周期自适应建模</a><div class='pb-skill-badges'><span class='roi-badge'>💰 176万元</span></div></div><p class='pb-skill-why'>→ 时空注意力网络建模用户生命周期阶段（新客→成熟→衰退），判断当前阶段</p></div></div>
+    <p class='pb-problem'>谁是你的高价值用户？谁即将流失？谁从未真正激活？</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-RFM-Customer-Segmentation.html' class='pb-skill-name'>RFM Customer Segmentation for Targeted Marketing</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 用 R/F/M 三维把用户分成 8 类（冠军→流失→沉睡），每类对应不同运营策略</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-LTV-Prediction-ZILN.html' class='pb-skill-name'>LTV预测 - 零膨胀对数正态模型 (ZILN)</a><div class='pb-skill-badges'><span class='roi-badge'>100-200 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 零膨胀对数正态模型预测用户生命周期价值，识别潜力高价值用户</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-User-Lifecycle-STAN.html' class='pb-skill-name'>STAN 用户生命周期自适应建模</a><div class='pb-skill-badges'><span class='roi-badge'>176万元</span></div></div><p class='pb-skill-why'>→ 时空注意力网络建模用户生命周期阶段（新客→成熟→衰退），判断当前阶段</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：用户历史订单（近 1 年）、注册时间、品类购买记录</div>
     <div class="pb-output"><strong>输出结果：</strong>用户价值分层标签 + 各层用户规模与贡献占比</div>
   </div>
@@ -60,8 +72,8 @@
   <div class='pb-step-num'>Step 2</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 2 — 流失预警与精准干预</h3>
-    <p class='pb-problem'>❓ 哪些用户会流失？发券对谁真正有效？</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Uplift-Churn-Prediction.html' class='pb-skill-name'>Uplift Modeling for Churn Prediction</a><div class='pb-skill-badges'><span class='roi-badge'>💰 6万元</span></div></div><p class='pb-skill-why'>→ Uplift 流失预测：识别「可说服者」，避免对必然流失和必然留存的用户浪费资源</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Guardrailed-CATE-NBA.html' class='pb-skill-name'>Guardrailed CATE-NBA</a><div class='pb-skill-badges'><span class='roi-badge'>💰 10 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 带预算护栏的最优行动决策：在预算约束下输出最优干预名单</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Customer-Churn-Prediction.html' class='pb-skill-name'>Customer Churn Prediction (用户流失预测)</a><div class='pb-skill-badges'><span class='roi-badge'>💰 1.5-3 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 深度学习流失预测，捕捉复杂的行为序列模式</p></div></div>
+    <p class='pb-problem'>哪些用户会流失？发券对谁真正有效？</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Uplift-Churn-Prediction.html' class='pb-skill-name'>Uplift Modeling for Churn Prediction</a><div class='pb-skill-badges'><span class='roi-badge'>6万元</span></div></div><p class='pb-skill-why'>→ Uplift 流失预测：识别「可说服者」，避免对必然流失和必然留存的用户浪费资源</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Guardrailed-CATE-NBA.html' class='pb-skill-name'>Guardrailed CATE-NBA</a><div class='pb-skill-badges'><span class='roi-badge'>10 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 带预算护栏的最优行动决策：在预算约束下输出最优干预名单</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Customer-Churn-Prediction.html' class='pb-skill-name'>Customer Churn Prediction (用户流失预测)</a><div class='pb-skill-badges'><span class='roi-badge'>1.5-3 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 深度学习流失预测，捕捉复杂的行为序列模式</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：历史 A/B 干预数据（发/未发券对照）或 RCT 数据，≥ 5000 用户</div>
     <div class="pb-output"><strong>输出结果：</strong>可干预用户名单（按 CATE 排序）+ 干预方式推荐（券面值/文案/渠道）</div>
   </div>
@@ -70,8 +82,8 @@
   <div class='pb-step-num'>Step 3</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 3 — 复购周期与 LTV 提升</h3>
-    <p class='pb-problem'>❓ 如何在正确的时机触达用户，提升复购率？</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cohort-Retention-Analysis.html' class='pb-skill-name'>Cohort Retention Analysis for User Lifecycle</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 队列留存分析，找出复购的关键时间窗口（如首单后 14 天是黄金窗口）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Long-Term-Preference-Memory.html' class='pb-skill-name'>Shopping Companion — 记忆增强的长期偏好购物 Agent</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 长期偏好记忆模型，捕捉用户跨品类的兴趣演变</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-User-Profile-Long-Memory.html' class='pb-skill-name'>User Profile Long Memory — 跨会话用户画像：育儿阶段感知与偏好记忆</a><div class='pb-skill-badges'><span class='roi-badge'>💰 50 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 用户长记忆画像，支持个性化触达内容生成</p></div></div>
+    <p class='pb-problem'>如何在正确的时机触达用户，提升复购率？</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cohort-Retention-Analysis.html' class='pb-skill-name'>Cohort Retention Analysis for User Lifecycle</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 队列留存分析，找出复购的关键时间窗口（如首单后 14 天是黄金窗口）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Long-Term-Preference-Memory.html' class='pb-skill-name'>Shopping Companion — 记忆增强的长期偏好购物 Agent</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 长期偏好记忆模型，捕捉用户跨品类的兴趣演变</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-User-Profile-Long-Memory.html' class='pb-skill-name'>User Profile Long Memory — 跨会话用户画像：育儿阶段感知与偏好记忆</a><div class='pb-skill-badges'><span class='roi-badge'>50 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 用户长记忆画像，支持个性化触达内容生成</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：用户行为序列（浏览/加购/购买）、触达记录与响应结果</div>
     <div class="pb-output"><strong>输出结果：</strong>个人化复购提醒时机 + 触达内容模板</div>
   </div>
@@ -80,7 +92,7 @@
   <div class='pb-step-num'>Step 4</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 4 — 新用户冷启动推荐</h3>
-    <p class='pb-problem'>❓ 新用户没有历史数据，如何实现个性化推荐？</p>
+    <p class='pb-problem'>新用户没有历史数据，如何实现个性化推荐？</p>
     <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cold-Start-Product-Recommendation.html' class='pb-skill-name'>Cold-Start Product Recommendation (冷启动商品推荐)</a><div class='pb-skill-badges'></div></div><p class='pb-skill-why'>→ LLM 模拟新用户行为，生成合成交互数据填补冷启动空白</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html' class='pb-skill-name'>Popularity-Aware Meta-Learning for Cold-Start Recommendation</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 元学习框架，用少量交互数据快速适配新用户偏好</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：注册信息、首次浏览 session 行为（即使只有 3-5 次点击）</div>
     <div class="pb-output"><strong>输出结果：</strong>新用户首屏个性化推荐列表</div>
@@ -91,5 +103,21 @@
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

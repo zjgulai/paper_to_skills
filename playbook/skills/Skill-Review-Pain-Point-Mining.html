@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Review-Pain-Point-Mining</nav>
 <h1>Review Pain-Point Mining（竞品差评痛点挖掘）</h1>
 <p class="muted">Skill-Review-Pain-Point-Mining · 14-用户分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 50-100 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50-100 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 产品运营<span class='biz-ctx-secondary'> · 数据分析师 · 内容运营</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Reviews · TikTok 评论区 · Reddit 母婴社区</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>竞品差评里藏着新品机会，但每月几千条评论没有人力一条条看；新品方向拍脑袋，想从竞品用户反馈里找产品迭代方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>自动提取竞品 Top 10 痛点，新品开发有数据背书，每月出竞品洞察报告，产品迭代方向不靠猜测</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品评论没有系统分析过</span><span class='biz-pain-tag'>新品选功能靠拍脑袋</span><span class='biz-pain-tag'>不知道市场缺什么</span><span class='biz-pain-tag'>竞品改款方向提前感知不到</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>不满因子归因** — **核心创新</p>
+    <p>想进入&quot;电动吸奶器&quot;品类，但已有 Momcozy/Medela/Spectra 等强竞品</p>
     <h2>2. 核心算法逻辑</h2>
     <p>竞品的差评就是新品的机会——从竞品评论中自动提取「用户不满意什么」，这些未被满足的需求点就是你新品应该攻克的方向。Painsight 用无监督框架自动完成&quot;情感分析 + 主题抽取 + 不满因子归因&quot;，无需人工标注即可扩展到任何新品类。</p>
     <h2>3. 业务应用场景</h2>
     <p>业务问题： 想进入&quot;电动吸奶器&quot;品类，但已有 Momcozy/Medela/Spectra 等强竞品。与其凭感觉做&quot;更好的吸奶器&quot;，不如从竞品差评中精确找到&quot;用户在骂什么&quot;——然后针对性地做差异化产品。</p><p>数据要求： - Amazon US &quot;electric breast pump&quot; 品类下 Top 20 竞品 × 各 200+ 条评论 - Painsight 无监督运行，无需标注</p><p>预期产出： - 痛点雷达图（Top 5）： 1. 漏液/倒流（提及 23%，情感强度 0.85）→ 设计防倒流阀 2. 噪音大（提及 18%，情感强度 0.72）→ 静音电机 &lt;40dB 3. 配件不兼容（提及 15%，情感强度 0.68）→ 兼容 Medela/Spectra 法兰 4. 清洗困难（提及 12%，情感强度 0.60）→ 全可拆卸+洗碗机安全 5. 吸力不足（提及 10%，情感强度 0.78）→ 医院级吸力 &gt;300mmHg</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：</li><li>产品成功率提升：30%→60%+（基于精准痛点定位）</li><li>单品差异化溢价：$500K→$800K+（解决真实痛点带来溢价空间）</li><li>年化 ROI：**50-100 万元**</li><li>**实施难度**：⭐⭐☆☆☆（2 星）— Painsight 无监督开源，无需标注数据，即装即用</li><li>**优先级评分**：⭐⭐⭐⭐⭐（5 星）— &quot;数据驱动选品&quot;从概念变为可执行工具</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>产品成功率提升：30%→60%+（基于精准痛点定位）</li><li>单品差异化溢价：$500K→$800K+（解决真实痛点带来溢价空间）</li><li>年化 ROI：<strong>50-100 万元</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（2 星）— Painsight 无监督开源，无需标注数据，即装即用</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（5 星）— &quot;数据驱动选品&quot;从概念变为可执行工具</li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ class PainSightMiner:
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

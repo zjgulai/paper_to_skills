@@ -8,50 +8,62 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / AI 内容工厂手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>🎬</span>
+  <span class='pb-icon'>TC</span>
   <div>
     <h1>AI 内容工厂手册</h1>
     <p class='lead'>从人工内容团队到 AI 批量生产的 4 步迁移路线图，部分能力今日可用，视频生成接入中</p>
     <span class='biz-tag'>素材采集 · 视频生成 · 投放归因</span>
   </div>
 </div>
+
 <div class='pb-intro'>内容工厂的核心矛盾：进入多语言市场需要本地化内容，但人工拍摄成本高（单条 $2000+）、周期长（3-4周）、无法批量。本手册提供分步落地路径——今天可用的部分立刻带来 ROI，实验阶段的部分提供未来路线图。</div>
-<div class="wf-outcomes"><h3>预期收益</h3><ul><li>✅ Step 1+3+4 今天就能带来 ROI，Step 2 是未来的乘数</li><li>✅ 本地化视频成本降低 80%，生产周期 3 周 → 3 天（Step 2 接入后）</li><li>✅ 内容创作从「靠感觉迭代」升级为「数据驱动选题」</li><li>✅ 素材库规模 10x，多语言市场同步覆盖</li></ul></div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] Step 1+3+4 今天就能带来 ROI，Step 2 是未来的乘数</li><li>[OK] 本地化视频成本降低 80%，生产周期 3 周 → 3 天（Step 2 接入后）</li><li>[OK] 内容创作从「靠感觉迭代」升级为「数据驱动选题」</li><li>[OK] 素材库规模 10x，多语言市场同步覆盖</li></ul></div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 1 【今日可用】素材智能采集</h3>
-    <p class='pb-problem'>❓ 内容创作前需要竞品素材、用户 VOC、爆品视频——人工采集耗时且遗漏率高</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Visual-Data-Collection.html' class='pb-skill-name'>Visual Data Collection — 电商图文视频数据采集与 AI 视频生成素材库构建</a><div class='pb-skill-badges'><span class='roi-badge'>💰 380 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 电商图文视频批量采集，为 AI 生成构建原材料库（ROI 380万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Dedup-Quality-Filter.html' class='pb-skill-name'>Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</a><div class='pb-skill-badges'><span class='roi-badge'>💰 10-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 多平台评论去重净化，提取高质量用户 VOC 作为内容脚本素材（ROI 10-50万）</p></div></div>
+    <p class='pb-problem'>内容创作前需要竞品素材、用户 VOC、爆品视频——人工采集耗时且遗漏率高</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Visual-Data-Collection.html' class='pb-skill-name'>Visual Data Collection — 电商图文视频数据采集与 AI 视频生成素材库构建</a><div class='pb-skill-badges'><span class='roi-badge'>380 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 电商图文视频批量采集，为 AI 生成构建原材料库（ROI 380万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Dedup-Quality-Filter.html' class='pb-skill-name'>Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</a><div class='pb-skill-badges'><span class='roi-badge'>10-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 多平台评论去重净化，提取高质量用户 VOC 作为内容脚本素材（ROI 10-50万）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：目标平台账号、竞品 ASIN/URL 列表</div>
     <div class="pb-output"><strong>输出结果：</strong>结构化素材库（图/视频/UGC 评论）</div>
   </div>
@@ -60,8 +72,8 @@
   <div class='pb-step-num'>Step 2</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 2 【实验接入中】AI 批量内容生成</h3>
-    <p class='pb-problem'>❓ 进入德/日/韩市场需要本地化视频，人工方案成本 $2000+/条、周期 3-4 周</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html' class='pb-skill-name'>AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 50-100 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 虚拟主播带货视频生成，HOI 交互保持商品真实感（ROI 50-100万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DAWN-Talking-Head-Review.html' class='pb-skill-name'>DAWN — Talking-Head Review Video（AI口播Review视频）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 30-60 万元</span></div></div><p class='pb-skill-why'>→ AI 口播 Review 视频，批量生成不同语言/形象的真人测评风格（ROI 30-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Virbo-Multilingual-Avatar-UGC.html' class='pb-skill-name'>Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 35-60 万元</span></div></div><p class='pb-skill-why'>→ 多语言虚拟人 UGC 批量生产，100+ 语言 TTS + 对口型（ROI 35-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html' class='pb-skill-name'>Aquarius — Brand Video Generation（品牌营销视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 80-150 万元</span></div></div><p class='pb-skill-why'>→ 品牌营销视频生成，2B 参数模型，多主题批量（ROI 80-150万）— 实验接入中</p></div></div>
+    <p class='pb-problem'>进入德/日/韩市场需要本地化视频，人工方案成本 $2000+/条、周期 3-4 周</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html' class='pb-skill-name'>AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>50-100 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 虚拟主播带货视频生成，HOI 交互保持商品真实感（ROI 50-100万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DAWN-Talking-Head-Review.html' class='pb-skill-name'>DAWN — Talking-Head Review Video（AI口播Review视频）</a><div class='pb-skill-badges'><span class='roi-badge'>30-60 万元</span></div></div><p class='pb-skill-why'>→ AI 口播 Review 视频，批量生成不同语言/形象的真人测评风格（ROI 30-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Virbo-Multilingual-Avatar-UGC.html' class='pb-skill-name'>Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</a><div class='pb-skill-badges'><span class='roi-badge'>35-60 万元</span></div></div><p class='pb-skill-why'>→ 多语言虚拟人 UGC 批量生产，100+ 语言 TTS + 对口型（ROI 35-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html' class='pb-skill-name'>Aquarius — Brand Video Generation（品牌营销视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>80-150 万元</span></div></div><p class='pb-skill-why'>→ 品牌营销视频生成，2B 参数模型，多主题批量（ROI 80-150万）— 实验接入中</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：品牌素材包（Logo/色调/产品图）、脚本模板、目标语言列表</div>
     <div class="pb-output"><strong>输出结果：</strong>批量本地化营销视频（预计 Q3 完整上线）</div>
   </div>
@@ -70,7 +82,7 @@
   <div class='pb-step-num'>Step 3</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 3 【今日可用】内容质量评估</h3>
-    <p class='pb-problem'>❓ AI 生成视频质量参差不齐，商品保真度和品牌一致性无客观评分标准</p>
+    <p class='pb-problem'>AI 生成视频质量参差不齐，商品保真度和品牌一致性无客观评分标准</p>
     <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-E-Commerce-Video-Benchmark.html' class='pb-skill-name'>E-Commerce Video Benchmark（电商视频质量评估基准）</a><div class='pb-skill-badges'></div></div><p class='pb-skill-why'>→ 电商域专用 Benchmark，PCF/LTP/MN 三维度量化评估，驱动工具选型与质检 SOP</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Creative-Fatigue-Detection.html' class='pb-skill-name'>Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 素材疲劳生命周期监测，生存分析识别 CTR/CVR 衰减，触发素材更新信号</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：已生成视频文件、历史广告表现数据</div>
     <div class="pb-output"><strong>输出结果：</strong>视频质量评分报告 + 素材更换优先级</div>
@@ -80,8 +92,8 @@
   <div class='pb-step-num'>Step 4</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 4 【今日可用】投放归因闭环</h3>
-    <p class='pb-problem'>❓ 不知道哪类内容真正带来了转化，内容创作无数据反馈，靠感觉迭代</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html' class='pb-skill-name'>TikTok Shop Content Attribution — 短视频带货兴趣图谱归因</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ TikTok Shop 短视频带货因果归因：识别哪类内容元素效率最高，指导下期制作</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html' class='pb-skill-name'>DARA - LLM+RL 双阶段广告预算分配 Agent</a><div class='pb-skill-badges'><span class='roi-badge'>💰 360-720 万元</span><span class='diff-badge'>⭐⭐⭐⭐⭐</span></div></div><p class='pb-skill-why'>→ 内容分发预算自动分配到最优渠道/时段（ROI 360-720万）</p></div></div>
+    <p class='pb-problem'>不知道哪类内容真正带来了转化，内容创作无数据反馈，靠感觉迭代</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html' class='pb-skill-name'>TikTok Shop Content Attribution — 短视频带货兴趣图谱归因</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ TikTok Shop 短视频带货因果归因：识别哪类内容元素效率最高，指导下期制作</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html' class='pb-skill-name'>DARA - LLM+RL 双阶段广告预算分配 Agent</a><div class='pb-skill-badges'><span class='roi-badge'>360-720 万元</span><span class='diff-badge'>⭐⭐⭐⭐⭐</span></div></div><p class='pb-skill-why'>→ 内容分发预算自动分配到最优渠道/时段（ROI 360-720万）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：TikTok 广告数据 API、用户行为序列（曝光→点击→转化）</div>
     <div class="pb-output"><strong>输出结果：</strong>内容效果归因报告 + 下期制作方向 + 渠道预算自动分配</div>
   </div>
@@ -91,5 +103,21 @@
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

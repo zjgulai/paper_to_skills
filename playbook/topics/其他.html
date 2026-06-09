@@ -8,58 +8,85 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content"><h1>其他</h1><div class='cards'><article class="card skill-card">
   <h3><a href="../skills/Skill-AB-Test-Result-Interpretation.html">A/B Test Result Interpretation and Practical Significance</a></h3>
   <p class="muted">02-A_B实验</p>
-  <p>**：Power Analysis告诉你&quot;测多少&quot;，实验跑完后，如何正确解读结果？很多团队会犯这些错误：</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10万</span><span class='diff-badge'>⭐☆☆☆☆</span></div>
+  <p>Power Analysis告诉你&quot;测多少&quot;，实验跑完后，如何正确解读结果？</p>
+  <div class="card-badges"><span class='roi-badge'>10万</span><span class='diff-badge'>⭐☆☆☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag topic'>其他</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-CUPED-Variance-Reduction.html">CUPED Variance Reduction（方差缩减）</a></h3>
   <p class="muted">02-A_B实验</p>
-  <p>CUPED (Controlledexperiment Using PreExperiment Data) 用实验前数据作为协变量，减少实验组间方差，使同样的样本量能检测到更小的效应量。核心公式：$Y_{cuped} = \bar{Y}  \theta(\bar{X}  \mu_X)$，其中 $X$ 是实验前同一用户的指标值，$\theta = \text{Cov}(Y,X)/\text{Var}(X)$。方差缩减率 $\approx </p>
-  <div class="card-badges"><span class='roi-badge'>💰 加速实验迭代，隐性价值</span></div>
+  <p>CUPED (Controlled-experiment Using Pre-Experiment Data) 用实验前数据作为协变量，减少实验组间方差，使同样的样本量能检测到更小的效应量。核心公式：$Y_{cuped} = \bar{Y} - \theta(\bar{X} - \mu_X)$，其中 $X$ 是实验前同一用户的指标值，$\theta = \text{Cov}(Y,X)/\text{Var}(X)$。方差缩减率 $\approx 1 - \rho^2_{Y,X}$。若实验前购买金额</p>
+  <div class="card-badges"><span class='roi-badge'>加速实验迭代，隐性价值</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag topic'>其他</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Power-Analysis-Sample-Size.html">Power Analysis and Sample Size Calculation for A/B Testing</a></h3>
   <p class="muted">02-A_B实验</p>
-  <p>**：A/B测试需要多少样本才能检测出真实的效应？样本太少——检验力不足，假阴性率高（漏掉真实有效的改动）；样本太多——浪费流量和时间，拖慢迭代速度</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10万</span><span class='diff-badge'>⭐☆☆☆☆</span></div>
+  <p>A/B测试需要多少样本才能检测出真实的效应？</p>
+  <div class="card-badges"><span class='roi-badge'>10万</span><span class='diff-badge'>⭐☆☆☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag topic'>其他</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Time-Series-Anomaly-Detection.html">Time Series Anomaly Detection for E-Commerce Monitoring</a></h3>
   <p class="muted">03-时间序列</p>
-  <p>**：母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动</p>
+  <p>母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag topic'>其他</span></div>
 </article></div></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

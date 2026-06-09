@@ -8,47 +8,60 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/18-物流履约.html">18-物流履约</a> / Skill-Logistics-Fraud-Detection</nav>
 <h1>Logistics Fraud Detection — 物流链路欺诈检测：虚假收货、刷单物流与地址篡改的识别与拦截</h1>
 <p class="muted">Skill-Logistics-Fraud-Detection · 18-物流履约</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>fraud_detection</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 月均 -$3,200</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>月均 -$3,200</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>物流负责人 / 供应链负责人<span class='biz-ctx-secondary'> · 客服负责人 · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>FBA vs FBM vs 第三方海外仓 · 美国本土最后一公里 · 跨境退货逆向物流</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>物流时效不稳定，差评里大量「收货太慢」，影响 DSR 评分；退货率高，处理成本吃掉大量利润；旺季物流爆仓</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>物流时效提升 20-30%，物流相关差评减少 40%，退货成本可控，旺季履约稳定不崩溃</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>物流超时差评太多</span><span class='biz-pain-tag'>旺季爆仓订单积压</span><span class='biz-pain-tag'>退货处理成本太高</span><span class='biz-pain-tag'>头程运费太贵压缩了毛利</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>时序性**（需要跟踪包裹生命周期）和</p>
+    <p>&quot;Item Not Received&quot;（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统风控系统关注交易环节（支付欺诈、账号盗用），但物流链路中存在独特的欺诈模式，具有时序性（需要跟踪包裹生命周期）和图结构性（欺诈团伙共用地址/设备/收货网络）。物流欺诈检测的核心是：利用物流轨迹的时空异常、收货地址网络的拓扑特征和用户行为的序列模式，在包裹签收前后拦截欺诈行为。</p>
     <h2>3. 业务应用场景</h2>
     <p>业务背景：&quot;Item Not Received&quot;（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%。欺诈者购买高价母婴商品（婴儿奶粉、高端推车），物流显示已签收后声称未收到，申请 PayPal/Stripe 拒付（Chargeback）。每次 Chargeback 除退款外还有 $15-25 的处理手续费，且影响支付通道评分。</p><p>LogisticsFD + AddressNet 应用：</p><p>量化 ROI：月均 800 笔高风险订单，原 INR 率 4.2%（约 33 笔），客单价 $150， 每笔 Chargeback 成本 $150 + $20 手续费；减少 57% 后：月节省约 $6,600</p>
-    <h2>4. 输入数据要求</h2><ul><li>**严格模式**（大促期间高风险）：`RISK_THRESHOLD_HIGH = 0.55`</li><li>**宽松模式**（新市场冷启动）：`RISK_THRESHOLD_HIGH = 0.75`</li><li>建议每月用标注数据重新校准阈值，避免 False Positive 影响正常买家体验</li></ul>
-    <h2>5. 输出结果</h2><ul><li>**严格模式**（大促期间高风险）：`RISK_THRESHOLD_HIGH = 0.55`</li><li>**宽松模式**（新市场冷启动）：`RISK_THRESHOLD_HIGH = 0.75`</li><li>建议每月用标注数据重新校准阈值，避免 False Positive 影响正常买家体验</li></ul>
+    <h2>4. 输入数据要求</h2><ul><li><strong>严格模式</strong>（大促期间高风险）：`RISK_THRESHOLD_HIGH = 0.55`</li><li><strong>宽松模式</strong>（新市场冷启动）：`RISK_THRESHOLD_HIGH = 0.75`</li><li>建议每月用标注数据重新校准阈值，避免 False Positive 影响正常买家体验</li></ul>
+    <h2>5. 输出结果</h2><ul><li><strong>严格模式</strong>（大促期间高风险）：`RISK_THRESHOLD_HIGH = 0.55`</li><li><strong>宽松模式</strong>（新市场冷启动）：`RISK_THRESHOLD_HIGH = 0.75`</li><li>建议每月用标注数据重新校准阈值，避免 False Positive 影响正常买家体验</li></ul>
     <h2>6. 业务价值 / ROI</h2><p>月均 -$3,200</p>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：3 · 路径：未检测到</p>
@@ -132,5 +145,21 @@ class TrajectoryAnomalyDetector:
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

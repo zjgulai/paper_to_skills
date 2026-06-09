@@ -8,30 +8,41 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-B 广告优化</nav>
@@ -41,11 +52,11 @@
   <div><strong>适用角色</strong><span class='tag'>数据科学家</span><span class='tag'>广告投放运营</span><span class='tag'>增长负责人</span></div>
   <div class="wf-entry-question"><strong>入口问题：</strong>你当前最迫切的广告优化目标是什么？</div>
 </div>
-<div class="wf-outcomes"><h3>预期收益</h3><ul><li>✅ 归因准确率提升 30-40%，消除渠道预算错配</li><li>✅ 无效预算节约 10-20 万元/年（纠正归因偏差）</li><li>✅ 可说服用户定向精准率提升，优惠券成本节省 25-28 万/月</li><li>✅ 实时竞价系统响应延迟 &lt; 50ms，CTR 提升 15-25%</li></ul></div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 归因准确率提升 30-40%，消除渠道预算错配</li><li>[OK] 无效预算节约 10-20 万元/年（纠正归因偏差）</li><li>[OK] 可说服用户定向精准率提升，优惠券成本节省 25-28 万/月</li><li>[OK] 实时竞价系统响应延迟 &lt; 50ms，CTR 提升 15-25%</li></ul></div>
 <div class="wf-tree">
   <div class="wf-step" style="--depth:0">
   <div class="wf-step-name">归因诊断</div>
-  <div class="wf-question">❓ 你的渠道归因可信吗？</div>
+  <div class="wf-question">你的渠道归因可信吗？</div>
   <div class="wf-context">判断现有归因是否存在混淆偏差，是否需要因果化处理</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
@@ -74,7 +85,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">人群精准化</div>
-  <div class="wf-question">❓ 是否需要区分不同人群的广告响应差异？</div>
+  <div class="wf-question">是否需要区分不同人群的广告响应差异？</div>
   <div class="wf-context">识别&quot;可说服者&quot;，避免对无效人群浪费预算</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
@@ -95,7 +106,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">预算分配与竞价</div>
-  <div class="wf-question">❓ 是否需要自动化预算分配或实时竞价？</div>
+  <div class="wf-question">是否需要自动化预算分配或实时竞价？</div>
   <div class="wf-context">将前两步的因果洞察转化为可执行的预算决策</div>
   <div class="wf-branches">
     <details class="wf-branch" open>
@@ -117,7 +128,7 @@
   </div>
 </div><div class="wf-step" style="--depth:0">
   <div class="wf-step-name">创意疲劳监控</div>
-  <div class="wf-question">❓ 广告创意是否出现效果衰减？</div>
+  <div class="wf-question">广告创意是否出现效果衰减？</div>
   <div class="wf-branch-skills">
     <a class="wf-skill-chip" href="../skills/Skill-Creative-Fatigue-Detection.html"><span class="chip-name">Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</span><span class="chip-role">检测创意疲劳拐点，触发轮换策略</span></a>
     <a class="wf-skill-chip" href="../skills/Skill-Channel-Saturation-Curve.html"><span class="chip-name">Channel Saturation Curve（渠道饱和曲线建模）</span><span class="chip-role">渠道饱和曲线建模，识别边际收益递减点</span></a>
@@ -128,5 +139,21 @@
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>
