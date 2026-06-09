@@ -179,6 +179,13 @@ jobs:
           print(f'✅ {html_count} HTML pages generated')
           "
 
+      - name: Upload playbook artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playbook-dist
+          path: playbook/
+          retention-days: 1
+
   deploy:
     name: Deploy to skills.lute-tlz-dddd.top
     needs: build
@@ -186,16 +193,11 @@ jobs:
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
 
     steps:
-      - uses: actions/checkout@v4
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
       - name: Download built playbook
-        uses: actions/checkout@v4
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+        uses: actions/download-artifact@v4
         with:
-          ref: main
+          name: playbook-dist
+          path: playbook/
 
       - name: Deploy via rsync
         uses: burnett01/rsync-deployments@7.0.1
