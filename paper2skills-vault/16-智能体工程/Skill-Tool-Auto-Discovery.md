@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Tool Auto Discovery — Agent 工具自动发现：OpenAPI + MCP Schema 自注册

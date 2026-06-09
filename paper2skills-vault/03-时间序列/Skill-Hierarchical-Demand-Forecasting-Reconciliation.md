@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2412.14718 (Walmart, BigData 2024)
+roadmap_phase: phase1
 ---
 
 # Skill: HiFoReAd — 多层时序预测调和(Walmart 实战层级一致性)

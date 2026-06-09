@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Dynamic DAG Orchestration — 运行时动态调整工作流 DAG

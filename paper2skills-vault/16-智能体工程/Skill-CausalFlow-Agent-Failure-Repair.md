@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: CausalFlow — LLM Agent 因果调试：失败轨迹 → 最小反事实修复

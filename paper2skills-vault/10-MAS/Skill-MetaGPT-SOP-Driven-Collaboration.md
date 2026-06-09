@@ -8,6 +8,7 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: MetaGPT — SOP 驱动的多智能体协作框架

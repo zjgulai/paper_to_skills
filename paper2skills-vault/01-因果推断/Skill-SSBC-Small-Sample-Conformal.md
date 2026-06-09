@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2509.15349 (2025)
+roadmap_phase: phase1
 ---
 
 # Skill: SSBC Small Sample Conformal — 小样本共形预测精确覆盖保证

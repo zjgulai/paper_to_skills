@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2604.26169 (2025)
+roadmap_phase: phase1
 ---
 
 # Skill: BCCB Causal Bandits — 预算约束因果Bandit冷启动归因

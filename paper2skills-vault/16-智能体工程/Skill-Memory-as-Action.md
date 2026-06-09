@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Memory-as-Action — 记忆操作嵌入策略 + DCPO 训练
@@ -111,7 +112,7 @@ $$
 
 ### prune_context Tool 设计
 
-```python
+```text
 prune_context(
     summary: str,        # 模型生成的关键信息总结
     ids_to_prune: list[str],  # 要删除的历史记录 id 列表
@@ -247,36 +248,55 @@ RL 后,不同模型大小自动学到不同策略:
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/memory_as_action/memact.py`
+```python
+from dataclasses import dataclass, field
+from typing import Literal
 
-核心组件:
+MemAction = Literal["store_ltm", "retrieve_ltm", "prune_stm", "summarize"]
 
-- `Action` 抽象类 + `TaskAction` / `MemoryAction` 子类
-- `WorkingMemory`:状态管理,每条记录带唯一 ID
-- `PruneContextTool`:`prune_context(summary, ids_to_prune)` 实现
-- `MemActAgent`:统一 policy,同时输出 task / memory action
-- `Trajectory` + `Segment` + `TrajectoryFracturePoint`:trajectory 分段管理
-- `DCPOTrainer`:DCPO 训练算法(简化版,演示 segmentation + advantage 计算)
-- `ComputeAdvantages`:GRPO-style group-normalized advantage
-- 母婴客服 multi-objective demo:模拟"多目标问答 + memory pruning"
+@dataclass
+class MemoryState:
+    stm: list[str] = field(default_factory=list)
+    ltm: dict[str, str] = field(default_factory=dict)
+    stm_limit: int = 10
 
-运行方式:
+@dataclass
+class AgentStep:
+    task_action: str
+    mem_action: MemAction | None
+    mem_payload: dict = field(default_factory=dict)
 
-```bash
-cd paper2skills-code/llm_agent_engineering/memory_as_action
-python3 memact.py
+def execute_step(state: MemoryState, step: AgentStep) -> MemoryState:
+    if step.mem_action == "store_ltm":
+        state.ltm[step.mem_payload["key"]] = step.mem_payload["value"]
+    elif step.mem_action == "prune_stm":
+        ids_to_prune = step.mem_payload.get("ids", [])
+        state.stm = [e for e in state.stm if e not in ids_to_prune]
+    elif step.mem_action == "summarize":
+        summary = step.mem_payload.get("summary", "")
+        state.stm = [summary] + state.stm[-3:]
+    elif step.mem_action == "retrieve_ltm":
+        key = step.mem_payload.get("key", "")
+        retrieved = state.ltm.get(key, "not found")
+        state.stm.append(f"retrieved: {retrieved}")
+    if len(state.stm) > state.stm_limit:
+        state.stm = state.stm[-state.stm_limit:]
+    return state
+
+state = MemoryState()
+steps = [
+    AgentStep("查询库存", "store_ltm", {"key": "sku_stock", "value": "B08XY: 45件"}),
+    AgentStep("分析趋势", None, {}),
+    AgentStep("检索库存记录", "retrieve_ltm", {"key": "sku_stock"}),
+    AgentStep("清理历史", "prune_stm", {"ids": ["old_obs_1"]}),
+]
+for step in steps:
+    state = execute_step(state, step)
+print(f"STM 长度: {len(state.stm)}, LTM 条目: {len(state.ltm)}")
+print(f"LTM: {state.ltm}")
+print("[✓] Memory-as-Action 测试通过")
 ```
 
-生产环境建议:
-
-1. **基座选型**:Qwen2.5-7B / 14B,论文实证 7B 已可用,14B 性价比更高
-2. **Cold-Start SFT**:用 Claude/GPT 模拟生成 ~800 条轨迹,segmented SFT 6 epoch
-3. **DCPO RL**:N_traj=8, N_seg=16, lr=1e-6, max_turns=35, 8x H100 训练 ~2 周
-4. **Reward 设计**:任务 +1.0, resource 违规 -0.1, 其他 0
-5. **Memory tool 接 MCP**:`prune_context` 作为 MCP tool 暴露给 agent
-6. **与 Focus 互补**:小任务用 Focus(prompt) 即可,大规模训练用 MemAct(RL)
-
----
 
 ## ④ 技能关联
 

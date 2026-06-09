@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # G²CP — 图结构 MAS 通信协议：消除级联幻觉

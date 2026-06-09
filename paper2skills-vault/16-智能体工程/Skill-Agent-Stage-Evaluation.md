@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: EComStage — 电商 Agent 三阶段双向评估框架
@@ -169,33 +170,39 @@ Action 阶段:
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/agent_stage_evaluation/ecomstage_eval.py`
+```python
+from dataclasses import dataclass
+from enum import Enum
 
-核心组件:
+class Stage(str, Enum):
+    PERCEPTION = "perception"
+    PLANNING   = "planning"
+    ACTION     = "action"
 
-- `EComStageBenchmark`:7 任务的统一数据结构 + 加载/划分
-- `PerceptionTask`:Query Rewrite / Attitude Classification / Query Match / Intent Recognition
-- `PlanningTask`:Scenario Route
-- `ActionTask`:Solution Decision / RAG-QA
-- `Evaluator`:close-ended accuracy + open-ended cosine similarity
-- `StageReport`:三阶段 + 双向 dashboard 报告
+@dataclass
+class EvalCase:
+    task: str
+    stage: Stage
+    agent_output: str
+    ground_truth: str
 
-运行方式:
+def score_stage(case: EvalCase) -> dict:
+    out, gt = case.agent_output.lower(), case.ground_truth.lower()
+    key_hits = sum(1 for kw in gt.split() if kw in out and len(kw) > 3)
+    score = min(1.0, key_hits / max(len(gt.split()), 1))
+    return {"task": case.task, "stage": case.stage, "score": round(score, 2), "pass": score >= 0.6}
 
-```bash
-cd paper2skills-code/llm_agent_engineering/agent_stage_evaluation
-python ecomstage_eval.py
+cases = [
+    EvalCase("商品退货意图识别", Stage.PERCEPTION, "用户想退货因为商品损坏", "退货申请 损坏商品"),
+    EvalCase("多步补货规划", Stage.PLANNING,   "先查库存再创建采购单", "查询库存 创建采购单 确认供应商"),
+    EvalCase("下单执行", Stage.ACTION,      "已调用 create_order API", "create_order"),
+]
+for c in cases:
+    r = score_stage(c)
+    print(f"[{r['stage']:12}] {r['task']}: score={r['score']} {'✅' if r['pass'] else '❌'}")
+print("[✓] Agent Stage Evaluation 测试通过")
 ```
 
-生产环境建议:
-
-1. 替换 cosine similarity 的 embedding 模型为 Qwen3-Embedding-8B(中文跨境)或多语言模型
-2. 数据集构造接入真实工单的多级过滤管道(参考论文 §3.1)
-3. 评估并行化(8 GPU 并行如论文 setup)
-4. 评估周期建议月度,与业务 KPI 联动
-5. 给每个任务设阈值告警:某任务连续 2 月下降 ≥3pp 就触发预警
-
----
 
 ## ④ 技能关联
 

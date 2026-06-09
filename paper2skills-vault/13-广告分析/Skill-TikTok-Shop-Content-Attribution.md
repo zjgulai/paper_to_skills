@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: TikTok Shop Content Attribution — 短视频带货兴趣图谱归因

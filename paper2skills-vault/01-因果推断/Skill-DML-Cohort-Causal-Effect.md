@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2409.02332 ECML PKDD 2023
+roadmap_phase: phase1
 ---
 
 # Skill: DML Cohort Causal Effect — 群体异质性 HTE 估计

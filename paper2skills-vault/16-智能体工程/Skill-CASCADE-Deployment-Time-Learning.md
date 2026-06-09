@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: CASCADE — 案例推理部署时学习：Contextual Bandit 无参数自适应

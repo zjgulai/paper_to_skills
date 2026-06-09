@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2304.03215 (NVIDIA)
+roadmap_phase: phase1
 ---
 
 # Skill: HGNN Cross-Device Matching — 层次GNN跨设备用户匹配

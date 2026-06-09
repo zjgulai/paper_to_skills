@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: AgenticPay — LLM 多 Agent 采购谈判：自主完成价格与 MOQ 协商

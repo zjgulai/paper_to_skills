@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2511.22918 (NeurIPS 2025)
+roadmap_phase: phase1
 ---
 
 # Skill: PVM 跨平台广告归因窗口统一化(Last-Click 偏误修正)

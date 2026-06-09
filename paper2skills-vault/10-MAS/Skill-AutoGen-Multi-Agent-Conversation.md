@@ -8,6 +8,7 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: AutoGen — 多智能体对话编排框架

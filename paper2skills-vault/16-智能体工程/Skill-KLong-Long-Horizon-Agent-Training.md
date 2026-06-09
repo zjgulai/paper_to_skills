@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: KLong — 超长时域 Agent 训练：轨迹分割 SFT + 渐进 RL

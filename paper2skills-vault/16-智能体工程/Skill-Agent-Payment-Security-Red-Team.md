@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Whispers of Wealth — Agent 支付协议安全红队：Branded/Vault Whisper 攻击

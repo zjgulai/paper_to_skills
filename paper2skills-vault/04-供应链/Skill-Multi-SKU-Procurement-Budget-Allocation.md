@@ -13,6 +13,7 @@ papers:
     title: "Constructing decision rules for multiproduct newsvendors"
     venue: "EJOR Vol.315, 2024"
     role: 战略优先级加权（差异化 cᵤᵢ）+ 替代率建模
+roadmap_phase: phase1
 ---
 
 # Skill-Multi-SKU-Procurement-Budget-Allocation

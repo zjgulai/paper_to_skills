@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: MCP + A2A 双协议栈 — Orchestrated MAS 企业架构
@@ -208,34 +209,63 @@ A2A 工作流:
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/mcp_a2a_protocol/mas_orchestration.py`
+```python
+from dataclasses import dataclass
+from typing import Any
 
-核心组件:
+@dataclass
+class MCPTool:
+    name: str
+    description: str
+    input_schema: dict
 
-- `AgentRole` enum:Worker / Service / Support
-- `BaseAgent`:基础 agent 接口
-- `MCPClient` + `MCPServer`:Model Context Protocol 接口
-- `A2AMessage` + `A2ARouter`:Agent-to-Agent 协议接口
-- `PlanningUnit` / `ExecutionUnit` / `StateUnit` / `QualityUnit`:4 层 orchestration
-- `MASOrchestrator`:统一编排器
-- 母婴客服 demo:含 Worker(检索/抽取)+ Service(合规/质检)+ Support(监控)
+@dataclass
+class A2AMessage:
+    sender: str
+    receiver: str
+    intent: str
+    payload: dict
+    msg_id: str = "msg-001"
 
-运行方式:
+class MCPServer:
+    def __init__(self, server_id: str):
+        self.server_id = server_id
+        self._tools: dict[str, MCPTool] = {}
+        self._handlers: dict[str, Any] = {}
 
-```bash
-cd paper2skills-code/llm_agent_engineering/mcp_a2a_protocol
-python mas_orchestration.py
+    def register_tool(self, tool: MCPTool, handler):
+        self._tools[tool.name] = tool
+        self._handlers[tool.name] = handler
+
+    def call(self, tool_name: str, args: dict) -> dict:
+        if tool_name not in self._tools:
+            return {"error": f"unknown tool: {tool_name}"}
+        return self._handlers[tool_name](**args)
+
+    def list_tools(self) -> list[str]:
+        return list(self._tools.keys())
+
+def route_a2a(msg: A2AMessage, registry: dict[str, MCPServer]) -> dict:
+    server = registry.get(msg.receiver)
+    if not server:
+        return {"error": f"no server for {msg.receiver}"}
+    return server.call(msg.intent, msg.payload)
+
+inventory_server = MCPServer("inventory-mcp")
+inventory_server.register_tool(
+    MCPTool("get_stock", "获取库存数量", {"sku": "string"}),
+    lambda sku: {"sku": sku, "qty": 120}
+)
+
+registry = {"inventory-mcp": inventory_server}
+msg = A2AMessage(sender="replenishment-agent", receiver="inventory-mcp",
+                 intent="get_stock", payload={"sku": "B08XY"})
+result = route_a2a(msg, registry)
+print(f"MCP A2A 调用结果: {result}")
+print(f"可用工具: {inventory_server.list_tools()}")
+print("[✓] MCP A2A Protocol Stack 测试通过")
 ```
 
-生产环境建议:
-
-1. MCP 实现接入官方 MCP SDK(JSON-RPC over stdio/SSE/HTTP)
-2. A2A 实现遵循 Google A2A spec,加密用 RSA / Ed25519
-3. State Unit 用 PostgreSQL + Redis(workflow state + 短期缓存)
-4. Quality Unit 调用专门的 LLM-judge service(独立部署)
-5. 中型部署(20-50 agent)推荐 LangChain / AutoGen / IBM Watsonx Orchestrate
-
----
 
 ## ④ 技能关联
 

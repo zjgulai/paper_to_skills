@@ -327,6 +327,41 @@ def write_candidate_queue(document: dict[str, Any], output: Path) -> None:
     output.write_text(json.dumps(document, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def carry_forward_candidate_search(document: dict[str, Any], existing_document: dict[str, Any]) -> dict[str, Any]:
+    carry_fields = (
+        "paper_search",
+        "decision",
+        "workflow_status",
+        "verification_status",
+        "skill_id",
+        "arxiv_id",
+        "paper_url",
+        "selected_paper",
+        "selected_outputs",
+        "review_notes",
+    )
+    existing_by_topic = {
+        item.get("topic_id"): item
+        for item in existing_document.get("candidates", [])
+        if item.get("topic_id")
+    }
+    for candidate in document.get("candidates", []):
+        topic_id = candidate.get("topic_id")
+        existing = existing_by_topic.get(topic_id)
+        if not existing:
+            continue
+        for field in carry_fields:
+            if field in existing:
+                candidate[field] = existing[field]
+    if "summary" in document:
+        candidates = document.get("candidates", [])
+        document["summary"]["pending"] = sum(1 for item in candidates if item.get("decision") == "pending")
+        document["summary"]["selected"] = sum(1 for item in candidates if item.get("decision") == "selected")
+        document["summary"]["already_exists"] = sum(1 for item in candidates if item.get("decision") == "already_exists")
+        document["summary"]["external_migrated"] = sum(1 for item in candidates if item.get("decision") == "external_migrated")
+    return document
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build paper2skills paper candidate queue")
     parser.add_argument("--root", type=Path, default=None)
@@ -338,6 +373,12 @@ def main() -> int:
     project_root = project_root_from(args.root)
     document = build_candidate_queue(project_root, limit=args.limit)
     output = args.output or (project_root / DEFAULT_QUEUE_PATH)
+    if output.exists():
+        try:
+            existing_document = json.loads(output.read_text(encoding="utf-8"))
+            document = carry_forward_candidate_search(document, existing_document)
+        except json.JSONDecodeError:
+            pass
     print(json.dumps(document["summary"], ensure_ascii=False, indent=2))
     if args.dry_run:
         print(json.dumps(document["candidates"][:5], ensure_ascii=False, indent=2))

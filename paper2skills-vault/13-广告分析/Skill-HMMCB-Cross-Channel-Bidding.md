@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: HMMCB — 跨渠道广告竞价层次化多智能体 Meta-RL

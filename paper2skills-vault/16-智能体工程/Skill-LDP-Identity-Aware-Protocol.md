@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: LDP — 身份感知 Agent 通信协议：模型级路由 + 37% Token 节省

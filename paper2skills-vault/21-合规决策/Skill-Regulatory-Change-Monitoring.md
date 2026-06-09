@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Regulatory Change Monitoring — 法规变更自动监控：受影响品类实时映射

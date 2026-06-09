@@ -8,6 +8,7 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill: CAMEL — 角色扮演式自主协作多 Agent 框架

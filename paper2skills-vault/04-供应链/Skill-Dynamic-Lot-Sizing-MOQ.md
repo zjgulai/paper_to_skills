@@ -13,6 +13,7 @@ papers:
     title: "Efficient Algorithms for the Joint Replenishment Problem with Minimum Order Quantities"
     venue: "EJOR Vol.300, 2022 (Chugh et al.)"
     role: 多SKU联合订货+MOQ，合并运费闭合解
+roadmap_phase: phase1
 ---
 
 # Skill-Dynamic-Lot-Sizing-MOQ

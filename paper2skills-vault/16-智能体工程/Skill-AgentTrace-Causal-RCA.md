@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # AgentTrace — 因果图根因分析：0.12s 定位多 Agent 故障

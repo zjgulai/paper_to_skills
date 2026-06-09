@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: AgeMem — LTM+STM 统一 Agent 记忆：RL 自适应管理跨会话知识

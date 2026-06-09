@@ -64,6 +64,45 @@ def test_candidate_queue_resolves_aliases_before_marking_pending():
     assert queue["summary"]["pending"] == 0
 
 
+def test_candidate_queue_rebuild_carries_forward_search_audit_by_topic_id():
+    from paper2skills_common.candidates import carry_forward_candidate_search
+
+    rebuilt = {
+        "candidates": [
+            {"topic_id": "GAP-P2-001-DOMAIN-REVIEW", "decision": "pending"},
+            {"topic_id": "GAP-P2-999-REMOVED", "decision": "pending"},
+        ]
+    }
+    existing = {
+        "candidates": [
+            {
+                "topic_id": "GAP-P2-001-DOMAIN-REVIEW",
+                "decision": "selected",
+                "workflow_status": "verified",
+                "verification_status": "verified",
+                "skill_id": "Skill-Compliance-Scored-Guardrail-Orchestration",
+                "paper_search": {"last_run_id": "previous-run"},
+                "selected_outputs": {"skill_path": "paper2skills-vault/21-合规决策/example.md"},
+            },
+            {
+                "topic_id": "OLD-GAP",
+                "decision": "pending",
+                "paper_search": {"last_run_id": "old-run"},
+            },
+        ]
+    }
+
+    merged = carry_forward_candidate_search(rebuilt, existing)
+
+    by_topic = {candidate["topic_id"]: candidate for candidate in merged["candidates"]}
+    assert by_topic["GAP-P2-001-DOMAIN-REVIEW"]["paper_search"]["last_run_id"] == "previous-run"
+    assert by_topic["GAP-P2-001-DOMAIN-REVIEW"]["decision"] == "selected"
+    assert by_topic["GAP-P2-001-DOMAIN-REVIEW"]["workflow_status"] == "verified"
+    assert by_topic["GAP-P2-001-DOMAIN-REVIEW"]["skill_id"] == "Skill-Compliance-Scored-Guardrail-Orchestration"
+    assert by_topic["GAP-P2-001-DOMAIN-REVIEW"]["selected_outputs"]["skill_path"].endswith("example.md")
+    assert "paper_search" not in by_topic["GAP-P2-999-REMOVED"]
+
+
 def test_extraction_bundle_manifest_requires_known_state_and_verification_status():
     from paper2skills_common.extraction import (
         ALLOWED_STATUS_TRANSITIONS,
@@ -137,3 +176,125 @@ def test_workflow_dry_run_chains_stages_without_writing_run_file(tmp_path):
     ]
     assert result["summary"]["candidate_count"] >= 1
     assert list(tmp_path.glob("*.json")) == []
+
+
+def test_code_template_preflight_detects_missing_optional_dependency(tmp_path):
+    conftest_path = ROOT / "paper2skills-code" / "conftest.py"
+    spec = importlib.util.spec_from_file_location("paper2skills_code_conftest", conftest_path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    (tmp_path / "model.py").write_text(
+        "import definitely_missing_optional_dep\n",
+        encoding="utf-8",
+    )
+    test_path = tmp_path / "test_model.py"
+    test_path.write_text("from .model import Something\n", encoding="utf-8")
+
+    missing = module.missing_optional_dependencies_for_test_path(
+        test_path,
+        optional_modules=("definitely_missing_optional_dep",),
+    )
+
+    assert missing == ["definitely_missing_optional_dep"]
+
+
+def test_paper_search_scores_candidate_matches_and_preserves_audit_fields():
+    from paper2skills_common.paper_search import build_arxiv_query, enrich_queue_with_search, rank_papers_for_candidate
+
+    candidate = {
+        "topic_id": "GAP-P2-005-MISSING-BRIDGE",
+        "domain": "recommendation",
+        "gap_type": "missing_bridge",
+        "keywords": "recommendation advertising cross-domain ecommerce",
+        "decision": "pending",
+    }
+    papers = [
+        {
+            "arxiv_id": "2601.00001",
+            "title": "Cross-Domain Recommendation and Advertising Optimization for E-Commerce",
+            "abstract": "We present a practical benchmark, experiments, ablation, and implementation for recommendation advertising in ecommerce.",
+            "published": "2026-01-04T00:00:00Z",
+            "url": "https://arxiv.org/abs/2601.00001",
+        },
+        {
+            "arxiv_id": "2401.00002",
+            "title": "A Survey of Abstract Optimization",
+            "abstract": "This survey reviews unrelated theory without experiments.",
+            "published": "2024-01-04T00:00:00Z",
+            "url": "https://arxiv.org/abs/2401.00002",
+        },
+    ]
+
+    ranked = rank_papers_for_candidate(candidate, papers)
+    query = build_arxiv_query(candidate)
+    queue = {"candidates": [candidate.copy()]}
+    run = {
+        "run_id": "test-run",
+        "results": [{"topic_id": candidate["topic_id"], "papers": ranked, "search_query": query}],
+    }
+    enriched = enrich_queue_with_search(queue, run)
+
+    assert "all:recommendation" in query
+    assert ranked[0]["arxiv_id"] == "2601.00001"
+    assert ranked[0]["search_score"] > ranked[1]["search_score"]
+    assert ranked[0]["recommendation"] == "candidate"
+    assert enriched["candidates"][0]["decision"] == "pending"
+    assert enriched["candidates"][0]["paper_search"]["last_run_id"] == "test-run"
+    assert enriched["candidates"][0]["paper_search"]["top_papers"][0]["arxiv_id"] == "2601.00001"
+
+    weak_bridge = {
+        "topic_id": "GAP-P2-003-MISSING-BRIDGE",
+        "domain": "logistics",
+        "gap_type": "missing_bridge",
+        "keywords": "logistics visual_content cross-domain ecommerce",
+        "gap_ref": {"domain_a": "logistics", "domain_b": "visual_content"},
+        "decision": "pending",
+    }
+    weak_ranked = rank_papers_for_candidate(
+        weak_bridge,
+        [
+            {
+                "arxiv_id": "2601.00003",
+                "title": "Foundation Models for Medical Images",
+                "abstract": "We present visual content benchmarks and implementation details for image understanding.",
+                "published": "2026-01-04T00:00:00Z",
+                "url": "https://arxiv.org/abs/2601.00003",
+            }
+        ],
+    )
+
+    assert weak_ranked[0]["recommendation"] != "candidate"
+
+    preserved = enrich_queue_with_search(
+        {
+            "candidates": [
+                {
+                    **candidate,
+                    "paper_search": {
+                        "last_run_id": "previous-run",
+                        "top_papers": [{"arxiv_id": "2601.00001", "title": "Preserved Paper"}],
+                    },
+                }
+            ]
+        },
+        {
+            "run_id": "failed-run",
+            "source": "arxiv",
+            "results": [
+                {
+                    "topic_id": candidate["topic_id"],
+                    "search_query": query,
+                    "attempted_queries": [query],
+                    "error": "URLError: timeout",
+                    "papers": [],
+                }
+            ],
+        },
+    )
+
+    preserved_search = preserved["candidates"][0]["paper_search"]
+    assert preserved_search["last_successful_run_id"] == "previous-run"
+    assert preserved_search["last_error_run_id"] == "failed-run"
+    assert preserved_search["top_papers"][0]["arxiv_id"] == "2601.00001"

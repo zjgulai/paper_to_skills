@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: 编排轨迹驱动的 RL — MAS 三维设计框架与 Kimi PARL 实践
@@ -223,35 +224,68 @@ r_orch = r_perf + λ₁·r_parallel + λ₂·r_finish
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/orchestration_trace_rl/mas_rl_trace.py`
+```python
+from dataclasses import dataclass, field
+from typing import Literal
 
-核心组件:
+OrchestrateAction = Literal["spawn", "delegate", "communicate", "aggregate", "stop"]
 
-- `OrchestrationEvent` / `OrchestrationTrace`: 编排轨迹数据结构
-- `RewardFamily`: 8 个奖励家族枚举 + 组合器
-- `CreditUnit`: 8 个信度层级枚举
-- `OrchestratorDecision`: 5 个子决策(O1-O5)
-- `KimiPARLReward`: Kimi PARL 三 reward 项实现 + 退火 schedule
-- `TraceAnalyzer`: trace 分析与可视化
-- 母婴客服 demo: 模拟工单处理的 orchestration trace + reward 计算
+@dataclass
+class AgentNode:
+    agent_id: str
+    role: str
+    status: str = "idle"
 
-运行方式:
+@dataclass
+class OrchestrationStep:
+    action: OrchestrateAction
+    source: str
+    target: str
+    payload: str = ""
 
-```bash
-cd paper2skills-code/llm_agent_engineering/orchestration_trace_rl
-python3 mas_rl_trace.py
+@dataclass
+class OrchestrationTrace:
+    task_id: str
+    steps: list[OrchestrationStep] = field(default_factory=list)
+    agents: dict[str, AgentNode] = field(default_factory=dict)
+
+def compute_team_reward(trace: OrchestrationTrace, outcome: dict) -> float:
+    task_success = outcome.get("success", False)
+    efficiency_penalty = max(0, len(trace.steps) - 5) * 0.05
+    communication_cost = sum(0.02 for s in trace.steps if s.action == "communicate")
+    base = 1.0 if task_success else 0.0
+    return round(base - efficiency_penalty - communication_cost, 3)
+
+def assign_credit(trace: OrchestrationTrace, team_reward: float) -> dict[str, float]:
+    contributions: dict[str, int] = {}
+    for step in trace.steps:
+        contributions[step.source] = contributions.get(step.source, 0) + 1
+    total = sum(contributions.values()) or 1
+    return {agent: round(team_reward * cnt / total, 3)
+            for agent, cnt in contributions.items()}
+
+trace = OrchestrationTrace("补货任务")
+trace.agents = {
+    "orchestrator": AgentNode("orchestrator", "coordinator"),
+    "forecast-agent": AgentNode("forecast-agent", "predictor"),
+    "po-agent": AgentNode("po-agent", "executor"),
+}
+trace.steps = [
+    OrchestrationStep("spawn", "orchestrator", "forecast-agent", "预测需求"),
+    OrchestrationStep("spawn", "orchestrator", "po-agent", "创建采购单"),
+    OrchestrationStep("delegate", "orchestrator", "forecast-agent", "运行预测"),
+    OrchestrationStep("communicate", "forecast-agent", "po-agent", "预测结果: 需补货 200 件"),
+    OrchestrationStep("aggregate", "orchestrator", "orchestrator", "汇总结果"),
+    OrchestrationStep("stop", "orchestrator", "orchestrator", "任务完成"),
+]
+reward = compute_team_reward(trace, {"success": True})
+credit = assign_credit(trace, reward)
+print(f"团队奖励: {reward}")
+for agent, c in credit.items():
+    print(f"  {agent}: {c}")
+print("[✓] Orchestration Trace RL 测试通过")
 ```
 
-生产环境建议:
-
-1. **Trace 记录**: 每次 MAS 执行记录完整 orchestration trace(JSON 格式)
-2. **Reward 组合**: 从 R1(shared outcome)开始,逐步加入 R7(orchestration)
-3. **退火策略**: 参考 Kimi PARL,辅助 reward 训练中期退火到 0
-4. **Credit 分配**: 先实现 team + agent 级,再逐步加入 orchestrator/message 级
-5. **O5 stop**: 当前研究空白,可用固定步数上限 + 边际收益启发式替代
-6. **评估**: 使用论文提出的 JSON schema 做可重放的 trace 审计
-
----
 
 ## ④ 技能关联
 

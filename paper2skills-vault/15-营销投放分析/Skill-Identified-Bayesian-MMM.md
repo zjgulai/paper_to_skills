@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2408.07678 沃顿商学院/伦敦商学院 2024
+roadmap_phase: phase2
 ---
 
 # Skill: Identified Bayesian MMM — 基于高斯过程的无混淆贝叶斯营销归因

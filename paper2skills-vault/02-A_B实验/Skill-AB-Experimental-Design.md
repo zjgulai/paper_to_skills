@@ -3,6 +3,7 @@ name: AB-Experimental-Design
 description: 基于 Zhou et al. (2023) 的 A/B 实验设计基础工具包，覆盖连续/二分类指标样本量计算、相对提升 Delta method、统计功效与 MDE 回验、分层随机分配及 CUPED 方差缩减，为跨境电商业务实验提供严谨统计支撑。
 paper: "Zhou et al. (2023). All about Sample-Size Calculations for A/B Testing. CIKM."
 area: 02-A_B实验
+roadmap_phase: phase1
 ---
 
 # Skill: A/B 实验设计基础

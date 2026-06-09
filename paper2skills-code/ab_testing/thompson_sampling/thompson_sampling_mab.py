@@ -43,6 +43,10 @@ class BernoulliThompsonSampling:
         samples = np.random.beta(self.alpha, self.beta)
         return int(np.argmax(samples))
 
+    def select_arm(self) -> int:
+        """Backward-compatible alias used by older bandit service templates."""
+        return self.select_action()
+
     def update(self, action: int, reward: float):
         """
         更新后验分布

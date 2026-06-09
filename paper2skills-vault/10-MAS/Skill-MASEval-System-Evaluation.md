@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # MASEval — 系统级 MAS 评估：Framework 影响与模型影响同等重要

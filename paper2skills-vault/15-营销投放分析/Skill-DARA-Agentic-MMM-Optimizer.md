@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2601.14711 WWW 2026
+roadmap_phase: phase2
 ---
 
 # Skill: DARA — LLM+RL 双阶段广告预算分配 Agent

@@ -8,6 +8,7 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill: Tree of Thoughts — 树搜索式任务规划

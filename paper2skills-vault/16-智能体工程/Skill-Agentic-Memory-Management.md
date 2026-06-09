@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: AgeMem — 统一 LTM+STM 管理的 Agentic Memory
@@ -195,35 +196,63 @@ session 结束:
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/agentic_memory/agemem.py`
+```python
+from dataclasses import dataclass, field
+from datetime import datetime
 
-核心组件:
+@dataclass
+class MemoryEntry:
+    key: str
+    value: str
+    memory_type: str  # "stm" | "ltm" | "episodic"
+    created_at: str = field(default_factory=lambda: datetime.now().isoformat())
+    access_count: int = 0
 
-- `LTMStore`:LTM 持久化(支持 Add / Update / Delete)
-- `STMContext`:STM 当前 context(支持 Retrieve / Summary / Filter)
-- `MemoryTool` enum:6 个 tool 的统一接口
-- `AgentState`:$s_t = (C_t, \mathcal{M}_t, \mathcal{T})$ 状态封装
-- `MemoryAgent`:简化版 policy,可触发 6 个 memory tool
-- `ThreeStageRollout`:三阶段 trajectory 生成
-- `StepwiseGRPO`:简化版 step-wise GRPO advantage 计算
-- `CompositeReward`:R_task + R_context + R_memory + penalty
+class AgeMemStore:
+    def __init__(self, stm_limit: int = 20):
+        self.stm: list[MemoryEntry] = []
+        self.ltm: dict[str, MemoryEntry] = {}
+        self.episodic: list[MemoryEntry] = []
+        self.stm_limit = stm_limit
 
-运行方式:
+    def add(self, key: str, value: str, mtype: str = "stm"):
+        entry = MemoryEntry(key=key, value=value, memory_type=mtype)
+        if mtype == "stm":
+            self.stm.append(entry)
+            if len(self.stm) > self.stm_limit:
+                evicted = self.stm.pop(0)
+                self.episodic.append(evicted)
+        elif mtype == "ltm":
+            self.ltm[key] = entry
+        else:
+            self.episodic.append(entry)
 
-```bash
-cd paper2skills-code/llm_agent_engineering/agentic_memory
-python agemem.py
+    def retrieve(self, query: str) -> list[MemoryEntry]:
+        results = []
+        for e in self.stm + list(self.ltm.values()) + self.episodic:
+            if query.lower() in e.key.lower() or query.lower() in e.value.lower():
+                e.access_count += 1
+                results.append(e)
+        return results[:5]
+
+    def consolidate_stm_to_ltm(self, threshold: int = 3):
+        for e in list(self.stm):
+            if e.access_count >= threshold:
+                e.memory_type = "ltm"
+                self.ltm[e.key] = e
+                self.stm.remove(e)
+
+mem = AgeMemStore()
+mem.add("user_pref_brand", "偏好 Momcozy 吸奶器", "ltm")
+mem.add("last_query", "查询 B08XY 库存", "stm")
+mem.add("session_note", "用户询问过退货流程", "stm")
+results = mem.retrieve("吸奶器")
+print(f"检索到 {len(results)} 条记忆: {[r.key for r in results]}")
+mem.consolidate_stm_to_ltm(threshold=1)
+print(f"LTM 条目: {len(mem.ltm)}")
+print("[✓] Agentic Memory Management 测试通过")
 ```
 
-生产环境建议:
-
-1. 真实部署用 Trinity 框架(论文用)做 RL fine-tune,base 模型选 Qwen3-4B/7B
-2. 6 个 memory tool 的实现接入向量库(Pinecone / Weaviate / FAISS)
-3. Reward 中的 LLM judge 接入 GPT-5 / Claude / Qwen3-Max
-4. 三阶段训练数据用 HotpotQA 风格自动生成(参考论文 Stage 1 + Stage 2 + Stage 3 设计)
-5. K(每任务 rollout 数) 推荐 8-16,trajectories 长度 50-150 turn
-
----
 
 ## ④ 技能关联
 

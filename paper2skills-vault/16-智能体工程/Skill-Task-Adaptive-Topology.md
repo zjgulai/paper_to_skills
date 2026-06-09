@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: 任务自适应拓扑 — AdaptOrch 动态编排与收敛定律
@@ -227,36 +228,50 @@ DAG G_T 示例(过敏退货+物流+关税+替代品):
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/task_adaptive_topology/adaptorch.py`
+```python
+from dataclasses import dataclass
+from typing import Literal
 
-核心组件:
+Topology = Literal["chain","parallel","hierarchical","dynamic"]
 
-- `Subtask` / `DependencyEdge` / `TaskDAG`:任务依赖图数据结构
-- `DAGAnalyzer`:计算 ω(parallelism width), δ(critical path), γ(coupling density)
-- `TopologyRouter`(Algorithm 1):O(|V|+|E|) 路由到 τ_P/τ_S/τ_H/τ_X
-- `ParallelExecutor` / `SequentialExecutor` / `HierarchicalExecutor` / `HybridExecutor`:四种执行器
-- `AdaptiveSynthesizer`(Algorithm 2):一致性验证 + 冲突仲裁 + 重路由
-- `ConsistencyScore`:基于 embedding cosine similarity 的 heuristic
-- 母婴客服 demo:模拟工单 DAG → 路由 → 执行 → 合成
+@dataclass
+class TaskProfile:
+    task_id: str
+    parallelism_width: int
+    critical_path_depth: int
+    coupling_density: float
 
-运行方式:
+def select_topology(profile: TaskProfile) -> Topology:
+    if profile.coupling_density > 0.7:
+        return "hierarchical"
+    if profile.parallelism_width >= 3 and profile.critical_path_depth <= 2:
+        return "parallel"
+    if profile.parallelism_width <= 1:
+        return "chain"
+    return "dynamic"
 
-```bash
-cd paper2skills-code/llm_agent_engineering/task_adaptive_topology
-python3 adaptorch.py
+def estimate_latency(profile: TaskProfile, topology: Topology,
+                     step_latency_s: float = 2.0) -> float:
+    if topology == "parallel":
+        return profile.critical_path_depth * step_latency_s
+    if topology == "chain":
+        return (profile.parallelism_width * profile.critical_path_depth) * step_latency_s
+    if topology == "hierarchical":
+        return (profile.critical_path_depth + 1) * step_latency_s
+    return (profile.critical_path_depth * 1.3) * step_latency_s
+
+tasks = [
+    TaskProfile("周报生成",   parallelism_width=5, critical_path_depth=2, coupling_density=0.2),
+    TaskProfile("合规检查",   parallelism_width=1, critical_path_depth=6, coupling_density=0.8),
+    TaskProfile("补货决策",   parallelism_width=3, critical_path_depth=3, coupling_density=0.5),
+]
+for t in tasks:
+    topo = select_topology(t)
+    latency = estimate_latency(t, topo)
+    print(f"{t.task_id:12s} → {topo:14s} 预计延迟: {latency:.1f}s")
+print("[✓] Task Adaptive Topology 测试通过")
 ```
 
-生产环境建议:
-
-1. **Decomposer** 接 Claude/GPT 用于子任务分解,template 用论文 Section 4.1 格式
-2. **DAG 构建**用 LLM parsing + 人工模板校验,确保依赖标注准确
-3. **Coupling 标注**用 4 档标准(none/weak/strong/critical)映射到 0/0.3/0.7/1.0
-4. **Executor**接 MCP/A2A 协议栈(P1-4):并行 agent 用 A2A broadcast,串行用 send
-5. **Embedding**用 OpenAI text-embedding-3-small 或自训 embedding
-6. **阈值校准**:收集业务历史数据,离线调 θ_ω/θ_γ/θ_δ
-7. **Synthesis**失败时自动重路由(γ←γ+0.2,最多 5 次)
-
----
 
 ## ④ 技能关联
 

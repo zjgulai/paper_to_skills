@@ -5,6 +5,7 @@ topic: roas-optimization
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+roadmap_phase: phase1
 ---
 
 # Skill Card: ROAS Optimization & Budget Allocation

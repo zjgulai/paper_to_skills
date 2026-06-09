@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2512.10551 & 2509.18874 (2025-09/2025-12)
+roadmap_phase: phase2
 ---
 
 # Skill: Generative Audience & LLM-Auction — 无 Cookie 生成式受众定向与原生广告拍卖

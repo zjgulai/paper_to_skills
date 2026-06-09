@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: CDA — 隐私保护因果渠道归因：无用户数据的多触点归因

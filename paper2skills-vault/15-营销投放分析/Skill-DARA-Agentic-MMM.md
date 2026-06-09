@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: DARA Agentic MMM — LLM Agent 驱动的营销组合建模

@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Negative Keyword Safe Guard — 负关键词安全守卫

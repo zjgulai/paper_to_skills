@@ -8,6 +8,7 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill: Skill Registry — 技能注册表与动态发现

@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2310.17168 (Amazon, 2024)
+roadmap_phase: phase1
 ---
 
 # Skill: Gen-QOT — 随机提前期分布建模与动态安全库存

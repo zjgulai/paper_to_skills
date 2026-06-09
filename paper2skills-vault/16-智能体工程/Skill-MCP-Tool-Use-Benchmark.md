@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: MCP Tool Use 评估基准 — TFS/TEFS 双指标与干扰测试
@@ -212,36 +213,55 @@ After (上线后):
 
 ## ③ 代码模板
 
-代码位置: `paper2skills-code/llm_agent_engineering/mcp_tool_use_benchmark/mcp_agent_bench.py`
+```python
+from dataclasses import dataclass
 
-核心组件:
+@dataclass
+class ToolCallTrace:
+    task_id: str
+    expected_tools: list[str]
+    actual_tools: list[str]
+    expected_steps: int
+    actual_steps: int
+    success: bool
 
-- `Task`: MCPAgentBench 任务定义 (domain + complexity + distractors)
-- `ToolInvocation`: 单次 tool 调用记录
-- `GoldenSolution`: 标准答案 (tool sequence + order)
-- `TFSEvaluator`: TFS 计算 (set match)
-- `TEFSEvaluator`: TEFS 计算 (set + order match)
-- `DistractorGenerator`: 干扰工具生成
-- `BenchmarkRunner`: 完整评估流程
-- 母婴客服场景 demo
+def compute_tfs(traces: list[ToolCallTrace]) -> float:
+    return sum(1 for t in traces if t.success) / len(traces)
 
-运行方式:
+def compute_tefs(traces: list[ToolCallTrace]) -> float:
+    efficient = sum(
+        1 for t in traces
+        if t.success and t.actual_steps <= t.expected_steps * 1.5
+        and set(t.actual_tools) == set(t.expected_tools)
+    )
+    return efficient / len(traces)
 
-```bash
-cd paper2skills-code/llm_agent_engineering/mcp_tool_use_benchmark
-python3 mcp_agent_bench.py
+def audit_tool_selection(trace: ToolCallTrace) -> dict:
+    missing = set(trace.expected_tools) - set(trace.actual_tools)
+    extra   = set(trace.actual_tools) - set(trace.expected_tools)
+    return {
+        "task": trace.task_id,
+        "missing_tools": list(missing),
+        "extra_tools":   list(extra),
+        "step_overhead": trace.actual_steps - trace.expected_steps,
+    }
+
+traces = [
+    ToolCallTrace("补货决策", ["inventory_api","demand_forecast","create_po"],
+                  ["inventory_api","demand_forecast","create_po"], 3, 4, True),
+    ToolCallTrace("价格监控", ["price_api","competitor_api"],
+                  ["price_api","inventory_api","competitor_api"], 2, 5, True),
+    ToolCallTrace("广告报告", ["ads_api"], ["ads_api","unknown_tool"], 1, 3, False),
+]
+print(f"TFS  (完成率):   {compute_tfs(traces):.2%}")
+print(f"TEFS (效率完成): {compute_tefs(traces):.2%}")
+for t in traces:
+    audit = audit_tool_selection(t)
+    if audit["missing_tools"] or audit["extra_tools"] or audit["step_overhead"] > 0:
+        print(f"  [{t.task_id}] 多余工具={audit['extra_tools']} 步骤冗余={audit['step_overhead']}")
+print("[✓] MCP Tool Use Benchmark 测试通过")
 ```
 
-生产环境建议:
-
-1. **测试集构建**: 从业务历史提取真实任务，人工标注 golden solution
-2. **Distractor 选择**: 功能相似度 > 0.6 但不适用的 tools
-3. **评估频率**: 新模型上线前、季度模型选型时
-4. **指标阈值**: TFS ≥ 70%, TEFS/TFS ratio ≥ 0.75
-5. **沙箱隔离**: 使用 mock 函数避免调用真实 API
-6. **结果追踪**: 建立 model × task type 的性能矩阵，长期追踪
-
----
 
 ## ④ 技能关联
 

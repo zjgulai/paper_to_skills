@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Agent Q-Mix — MARL 学习最优 MAS 通信拓扑（QMIX 值分解）

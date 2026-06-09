@@ -8,6 +8,7 @@ created: 2026-06-04
 updated: 2026-06-04
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: MAS Dynamic KG Collaboration — 多智能体动态知识图谱协同

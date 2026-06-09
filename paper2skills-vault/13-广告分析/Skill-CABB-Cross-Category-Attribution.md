@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2507.15113 (2025)
+roadmap_phase: phase1
 ---
 
 # Skill: CABB Cross-Category Attribution — Click A Buy B 跨品类归因去偏

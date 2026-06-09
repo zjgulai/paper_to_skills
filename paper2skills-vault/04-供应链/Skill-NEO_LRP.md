@@ -5,6 +5,7 @@ arXiv: 2412.05665
 domain: 04-供应链
 status: verified
 code: paper2skills-code/04-供应链/location_routing_2024/model.py
+roadmap_phase: phase1
 ---
 
 # Skill Card: NEO-LRP（Neural Embedded Optimization for Location-Routing）

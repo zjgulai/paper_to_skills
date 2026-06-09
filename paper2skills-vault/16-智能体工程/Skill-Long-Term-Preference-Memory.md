@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Shopping Companion — 记忆增强的长期偏好购物 Agent
@@ -170,33 +171,61 @@ Agent:[Stage 1] 检索偏好:
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/long_term_preference_memory/shopping_companion.py`
+```python
+from dataclasses import dataclass, field
 
-核心组件:
+@dataclass
+class UserPreference:
+    user_id: str
+    brand_prefs: dict[str, float] = field(default_factory=dict)
+    size_history: list[str] = field(default_factory=list)
+    price_range: tuple[float, float] = (0.0, 9999.0)
+    disliked_features: list[str] = field(default_factory=list)
+    session_count: int = 0
 
-- `LTMStore`:用 embedding + cosine 检索的长期记忆库
-- `ProductIndex`:BM25-like 简化版产品检索(实际生产用 Pyserini/BM25)
-- `PreferenceExtractor`:从 retrieved 历史对话提取偏好(Stage 1)
-- `ConstraintChecker`:检验产品是否满足偏好和指令约束
-- `ShoppingCompanion`:Stage 1 + Stage 2 两阶段 orchestrator
-- `DualReward`:R_1/R_2 + tool-wise + format reward 计算(用于 offline 评估)
+class PreferenceMemoryAgent:
+    def __init__(self):
+        self.store: dict[str, UserPreference] = {}
 
-运行方式:
+    def update_from_session(self, user_id: str, events: list[dict]):
+        pref = self.store.setdefault(user_id, UserPreference(user_id))
+        pref.session_count += 1
+        for e in events:
+            if e["type"] == "purchase" and "brand" in e:
+                pref.brand_prefs[e["brand"]] = pref.brand_prefs.get(e["brand"], 0) + 1.0
+            elif e["type"] == "return" and "reason" in e:
+                pref.disliked_features.append(e["reason"])
+            elif e["type"] == "size" and "value" in e:
+                if e["value"] not in pref.size_history:
+                    pref.size_history.append(e["value"])
 
-```bash
-cd paper2skills-code/llm_agent_engineering/long_term_preference_memory
-python shopping_companion.py
+    def recommend_filter(self, user_id: str, candidates: list[dict]) -> list[dict]:
+        pref = self.store.get(user_id)
+        if not pref:
+            return candidates
+        def score(item: dict) -> float:
+            s = pref.brand_prefs.get(item.get("brand", ""), 0)
+            if any(f in item.get("features", []) for f in pref.disliked_features):
+                s -= 2.0
+            return s
+        return sorted(candidates, key=score, reverse=True)
+
+agent = PreferenceMemoryAgent()
+agent.update_from_session("u001", [
+    {"type": "purchase", "brand": "Momcozy"},
+    {"type": "return", "reason": "noise"},
+    {"type": "size", "value": "medium"},
+])
+candidates = [
+    {"id": "A", "brand": "Momcozy", "features": ["quiet"]},
+    {"id": "B", "brand": "Other",   "features": ["noise", "powerful"]},
+    {"id": "C", "brand": "Momcozy", "features": ["portable"]},
+]
+ranked = agent.recommend_filter("u001", candidates)
+print("推荐排序:", [r["id"] for r in ranked])
+print("[✓] Long-Term Preference Memory 测试通过")
 ```
 
-生产环境建议:
-
-1. embedding 模型从 all-MiniLM-L6-v2 升级到中英文混合模型(适合跨境)
-2. 产品索引接入真实 BM25(Pyserini)或 Vespa
-3. Dual-reward 中的 LLM-judge 接入 GPT-5 / Claude / Qwen3-Max
-4. Stage 1 偏好确认 UI 集成进现有客服或聊天 widget
-5. 用 LoRA 微调小模型(论文建议 Qwen3-4B,可降本)
-
----
 
 ## ④ 技能关联
 

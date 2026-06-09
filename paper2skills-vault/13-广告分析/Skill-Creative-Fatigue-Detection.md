@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Creative Fatigue Detection — 广告素材疲劳检测

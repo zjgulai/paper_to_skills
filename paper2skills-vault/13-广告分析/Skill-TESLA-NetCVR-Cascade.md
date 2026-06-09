@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2601.19965 (Taobao, 2025)
+roadmap_phase: phase1
 ---
 
 # Skill: TESLA NetCVR Cascade — 级联延迟净转化率预测

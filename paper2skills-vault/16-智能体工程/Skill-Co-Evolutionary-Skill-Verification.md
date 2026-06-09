@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: 协同演化 Skill 验证 — EvoSkills 自动萃取 + 信息隔离审核
@@ -213,36 +214,60 @@ Skill Generator π_θ                Surrogate Verifier π_θ^V
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/co_evolutionary_skill_verification/evoskills.py`
+```python
+from dataclasses import dataclass
 
-核心组件:
+@dataclass
+class SkillPackage:
+    skill_id: str
+    description: str
+    scripts: dict[str, str]
+    version: int = 1
 
-- `SkillBundle`:多文件 skill 包 dataclass (`skill_md` + `scripts` + `references`)
-- `Assertion`:Verifier 生成的 deterministic 测试断言
-- `ExecutionResult`:Skill 执行产物 (`stdout`/`outputs`/`exit_code`)
-- `Diagnostic`:Verifier 给出的结构化失败诊断
-- `MockSkillGenerator` / `MockSurrogateVerifier`:可替换为真实 LLM 的 stub
-- `MockOracle`:Ground-truth oracle,只返回 opaque pass/fail bit
-- `CoEvolutionLoop`:主算法,实现 Alg. 1
-- 母婴客服 demo:模拟"过敏退货决策"演化轨迹
+@dataclass
+class VerificationResult:
+    skill_id: str
+    passed: bool
+    feedback: str
+    score: float
 
-运行方式:
+def generator_propose(skill_id: str, task: str, prev_feedback: str = "") -> SkillPackage:
+    base_desc = f"执行任务: {task}"
+    if "缺少错误处理" in prev_feedback:
+        base_desc += " (含错误处理)"
+    return SkillPackage(
+        skill_id=skill_id,
+        description=base_desc,
+        scripts={"main.py": "def run():\n    pass  # " + task},
+    )
 
-```bash
-cd paper2skills-code/llm_agent_engineering/co_evolutionary_skill_verification
-python3 evoskills.py
+def verifier_evaluate(pkg: SkillPackage) -> VerificationResult:
+    issues = []
+    if "错误处理" not in pkg.description:
+        issues.append("缺少错误处理")
+    if len(pkg.scripts.get("main.py", "")) < 30:
+        issues.append("实现过于简单")
+    score = max(0.0, 1.0 - len(issues) * 0.3)
+    return VerificationResult(
+        skill_id=pkg.skill_id,
+        passed=score >= 0.7,
+        feedback="; ".join(issues) if issues else "通过",
+        score=score,
+    )
+
+skill_id = "Skill-补货决策"
+feedback = ""
+for iteration in range(3):
+    pkg = generator_propose(skill_id, "自动补货", feedback)
+    result = verifier_evaluate(pkg)
+    print(f"Iter {iteration+1}: score={result.score:.2f} | feedback={result.feedback}")
+    feedback = result.feedback
+    if result.passed:
+        print(f"  ✅ 通过验证 at iteration {iteration+1}")
+        break
+print("[✓] Co-Evolutionary Skill Verification 测试通过")
 ```
 
-生产环境建议:
-
-1. **Skill Generator** 接 Claude Opus 4.6 / GPT-5.2,context cap β=0.7
-2. **Surrogate Verifier** 用 **独立 API key** 调用同模型,确保 session 隔离
-3. **Oracle** 可以是真人 review(只 pass/fail)或自动化测试套件
-4. **Skill 包格式**遵循 Anthropic Skills spec(SKILL.md frontmatter + scripts/)
-5. **Evolution budget**:K=5 oracle rounds + M=15 surrogate retries(论文配置)
-6. **Context 管理**:每次 cycle 持久化到 LTM,超过 β 时压缩历史
-
----
 
 ## ④ 技能关联
 

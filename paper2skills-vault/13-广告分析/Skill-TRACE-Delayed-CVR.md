@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2604.23197 (2025)
+roadmap_phase: phase1
 ---
 
 # Skill: TRACE Delayed CVR — 轨迹条件延迟转化率预测

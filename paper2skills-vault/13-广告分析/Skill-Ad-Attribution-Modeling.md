@@ -5,6 +5,7 @@ topic: ad-attribution
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+roadmap_phase: phase1
 ---
 
 # Skill Card: Ad Attribution Modeling

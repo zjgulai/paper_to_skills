@@ -17,6 +17,7 @@ papers:
     title: "Pre-launch new product demand forecasting using Bass model with ML"
     venue: "Technological Forecasting & Social Change, 2014"
     role: Bass p/q参数的ML预估（无历史数据时的fallback）
+roadmap_phase: phase1
 ---
 
 # Skill-New-Product-Inventory-Coldstart

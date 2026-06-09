@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2508.08209 (Amazon Ads, 2025)
+roadmap_phase: phase1
 ---
 
 # Skill: PIE 实验增量预测归因框架（RCT × ML 双层校准 MTA）

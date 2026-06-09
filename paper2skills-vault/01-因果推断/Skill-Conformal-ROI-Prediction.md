@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2407.01065
+roadmap_phase: phase1
 ---
 
 # Skill: Conformal ROI Prediction — 共形预测驱动的ROI区间估计

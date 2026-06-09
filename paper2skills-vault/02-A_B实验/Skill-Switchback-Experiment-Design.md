@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2406.06768
+roadmap_phase: phase1
 ---
 
 # Skill: Switchback Experiment Design — 数据驱动的双边市场实验

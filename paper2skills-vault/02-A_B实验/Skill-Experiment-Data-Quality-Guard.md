@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Experiment Data Quality Guard — A/B 实验数据采集质量保障

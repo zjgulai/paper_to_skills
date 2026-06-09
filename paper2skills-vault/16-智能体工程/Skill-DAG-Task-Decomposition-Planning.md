@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # TDP — DAG 任务解耦规划：82% Token 节省 + 错误隔离

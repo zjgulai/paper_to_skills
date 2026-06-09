@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2307.03595 (Amazon, 2023) + arXiv:2406.16221 (UIUC+Amazon, 2024)
+roadmap_phase: phase2
 ---
 
 # Skill: 新品冷启动需求预测 — Bass 扩散 + GEANN 相似品迁移

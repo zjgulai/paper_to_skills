@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2503.21629
+roadmap_phase: phase1
 ---
 
 # Skill: ClusterSC — 聚类合成控制法

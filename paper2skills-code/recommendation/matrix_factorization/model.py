@@ -10,9 +10,9 @@ import warnings
 
 
 class MatrixFactorization:
-    def __init__(self, n_factors=50, n_epochs=20, lr=0.005, reg=0.02):
+    def __init__(self, n_factors=50, n_epochs=20, lr=0.005, reg=0.02, n_iterations=None):
         self.n_factors = n_factors
-        self.n_epochs = n_epochs
+        self.n_epochs = n_epochs if n_iterations is None else n_iterations
         self.lr = lr
         self.reg = reg
 
@@ -41,6 +41,9 @@ class MatrixFactorization:
         scores = self.mu + self.b_u[user_id] + self.b_i + np.dot(self.P[user_id], self.Q.T)
         top_items = np.argsort(scores)[::-1][:n_items]
         return [(i, scores[i]) for i in top_items]
+
+    def predict(self, user_id, item_id):
+        return float(self.mu + self.b_u[user_id] + self.b_i[item_id] + np.dot(self.P[user_id], self.Q[item_id]))
 
     def get_similar_items(self, item_id, n=5):
         item_vector = self.Q[item_id]

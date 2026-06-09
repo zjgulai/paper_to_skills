@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Conformal Risk Assessment — 共形预测业务风险量化：覆盖率保证的区间估计

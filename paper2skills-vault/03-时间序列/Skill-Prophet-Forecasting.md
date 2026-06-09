@@ -5,6 +5,7 @@ topic: prophet-forecasting
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+roadmap_phase: phase1
 ---
 
 # Skill Card: Prophet Forecasting

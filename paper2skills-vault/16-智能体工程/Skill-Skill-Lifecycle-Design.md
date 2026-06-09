@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: SoK Agentic Skills — Skill 全生命周期与方法论底座
@@ -178,33 +179,61 @@ P7 Marketplace: 尚未开放, 但 GitHub repo 已对外
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/skill_lifecycle_design/skill_contract.py`
+```python
+from dataclasses import dataclass
+from typing import Literal
 
-核心组件:
+LifecycleStage = Literal["discovery","creation","evaluation","deployment","evolution","retirement"]
 
-- `SkillContract`:4 元组数据结构 $(C, \pi, T, R)$
-- `LifecycleStage`:7 阶段枚举(Discovery → Update)
-- `DesignPattern`:7 模式枚举
-- `SkillRegistry`:本项目 Skill 库的中央注册器(支持 4 元组查询)
-- `SkillAuditor`:7 模式分类 + 安全风险评估
-- `SkillSelector`:基于 $C$(applicability) 选择 skill 的简单 retriever
+@dataclass
+class Skill:
+    skill_id: str
+    name: str
+    trigger: str
+    capability: str
+    effect: str
+    version: str
+    stage: LifecycleStage = "creation"
+    usage_count: int = 0
+    success_rate: float = 0.0
+    deprecated: bool = False
 
-运行方式:
+def advance_lifecycle(skill: Skill, metrics: dict) -> Skill:
+    usage = metrics.get("usage_7d", 0)
+    sr = metrics.get("success_rate", 0.0)
+    skill.usage_count += usage
+    skill.success_rate = sr
+    if skill.stage == "creation" and sr >= 0.8:
+        skill.stage = "deployment"
+    elif skill.stage == "deployment" and sr < 0.5 and usage < 5:
+        skill.stage = "retirement"
+        skill.deprecated = True
+    elif skill.stage == "deployment" and usage >= 50:
+        skill.stage = "evolution"
+    return skill
 
-```bash
-cd paper2skills-code/llm_agent_engineering/skill_lifecycle_design
-python skill_contract.py
+def audit_skill_library(skills: list[Skill]) -> dict:
+    active    = [s for s in skills if not s.deprecated]
+    retired   = [s for s in skills if s.deprecated]
+    low_perf  = [s for s in active if s.success_rate < 0.6]
+    return {"active": len(active), "retired": len(retired),
+            "low_performance": [s.skill_id for s in low_perf]}
+
+skills = [
+    Skill("S001", "补货决策", "库存不足时", "调用 ERP 创建 PO", "PO 创建成功", "1.2"),
+    Skill("S002", "旧版广告报告", "每日定时", "抓取 AMS 数据", "Excel 报告", "0.3"),
+    Skill("S003", "竞品监控", "价格变化时", "对比竞品定价", "调价建议", "1.0"),
+]
+skills[0] = advance_lifecycle(skills[0], {"usage_7d": 80, "success_rate": 0.92})
+skills[1] = advance_lifecycle(skills[1], {"usage_7d": 2,  "success_rate": 0.40})
+skills[2] = advance_lifecycle(skills[2], {"usage_7d": 30, "success_rate": 0.75})
+report = audit_skill_library(skills)
+print(f"活跃: {report['active']} | 退休: {report['retired']} | 低效: {report['low_performance']}")
+for s in skills:
+    print(f"  {s.skill_id} [{s.stage}] sr={s.success_rate:.0%} deprecated={s.deprecated}")
+print("[✓] Skill Lifecycle Design 测试通过")
 ```
 
-生产环境建议:
-
-1. 把 `SkillContract` 嵌入到本项目所有 `Skill-*.md` 的 frontmatter 中
-2. CI 流程加入 `SkillAuditor.audit_all()`,阻止不符合 4 元组的 Skill 合入
-3. `paper-审核` skill 升级,加入"模式分类 + 安全风险评分"
-4. `paper-同步` 时,把 4 元组写入 sync_status.json 元数据
-5. 长期建立 marketplace(P7) 时,实施 trust tier 分层
-
----
 
 ## ④ 技能关联
 

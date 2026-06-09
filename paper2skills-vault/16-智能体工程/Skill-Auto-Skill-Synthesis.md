@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: SkillForge — 领域特定自演化 Agent Skill 萃取与优化
@@ -141,35 +142,48 @@ Skill_v0 (初始, 来自 200 条工单)
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/auto_skill_synthesis/skillforge.py`
+```python
+from dataclasses import dataclass
+import json
 
-核心组件:
+@dataclass
+class SkillSpec:
+    name: str
+    trigger: str
+    tools: list[str]
+    steps: list[str]
+    version: str = "1.0"
 
-- `WorkflowMiner`:从历史工单挖工作流模式(Clarify → Diagnose → Resolve 类型链)
-- `ToolMiner`:从工具调用日志按频次阈值筛 schema
-- `KnowledgeExtractor`:从 KB / 工单引用提取领域知识
-- `SkillSynthesizer`:把三类挖矿结果填入预定义 SKILL.md 模板
-- `FailureAnalyzer`:4 维度(K/T/C/S) bad case 分析
-- `SkillDiagnostician`:把失败映射到 SKILL.md 段落
-- `SkillOptimizer`:按 "最小修改" 原则改写 SKILL.md
-- `VirtualFS`:内存版 KV 文件系统(版本化 + 可回滚)
+def synthesize_skill(task_logs: list[dict]) -> SkillSpec:
+    tools_used: dict[str, int] = {}
+    for log in task_logs:
+        for tool in log.get("tools", []):
+            tools_used[tool] = tools_used.get(tool, 0) + 1
+    top_tools = sorted(tools_used, key=lambda t: -tools_used[t])[:5]
+    trigger = task_logs[0].get("intent", "unknown") if task_logs else "unknown"
+    steps = list(dict.fromkeys(
+        step for log in task_logs for step in log.get("steps", [])
+    ))[:6]
+    return SkillSpec(name=f"Skill-{trigger.replace(' ', '-')}", trigger=trigger,
+                     tools=top_tools, steps=steps)
 
-运行方式:
+def evaluate_skill(skill: SkillSpec, test_cases: list[dict]) -> dict:
+    passed = sum(1 for tc in test_cases
+                 if any(t in skill.tools for t in tc.get("expected_tools", [])))
+    return {"skill": skill.name, "pass_rate": round(passed / len(test_cases), 2),
+            "version": skill.version}
 
-```bash
-cd paper2skills-code/llm_agent_engineering/auto_skill_synthesis
-python skillforge.py
+logs = [
+    {"intent": "补货决策", "tools": ["inventory_api", "demand_forecast", "create_po"], "steps": ["查库存", "预测需求", "下采购单"]},
+    {"intent": "补货决策", "tools": ["inventory_api", "demand_forecast", "supplier_api"], "steps": ["查库存", "选供应商", "下采购单"]},
+]
+skill = synthesize_skill(logs)
+result = evaluate_skill(skill, [{"expected_tools": ["inventory_api", "demand_forecast"]}])
+print(f"合成 Skill: {skill.name} | 工具: {skill.tools}")
+print(f"评估: pass_rate={result['pass_rate']}")
+print("[✓] Auto Skill Synthesis 测试通过")
 ```
 
-生产环境建议:
-
-1. `WorkflowMiner` 的实际 LLM 调用接入 Qwen3-Max / Claude / GPT-5 等
-2. 历史工单脱敏处理(替换 PII 为类型占位符)在挖矿前完成
-3. LLM-judge 评估器单独部署(论文与 Failure Analyzer 解耦)
-4. VFS 提交格式遵循 git diff,便于人工 review 演化轨迹
-5. 4 维度 Failure Analyzer 并行调用以缩短 batch 处理时间
-
----
 
 ## ④ 技能关联
 

@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2403.06021 (Amazon, WWW 2024)
+roadmap_phase: phase1
 ---
 
 # Skill: 层次化电商搜索意图分类(母婴月龄敏感词 + 购买意图二层)

@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # SDOF — 状态机约束 MAS 编排：屏蔽非法操作，任务完成率 86.5%

@@ -3,15 +3,15 @@ from .model import CausalForestAttribution, generate_multimarket_data
 
 
 def test_causal_forest_smoke():
-    df = generate_multimarket_data(n_samples=400)
-    assert df is not None
-    assert len(df) > 0
+    X, treatment, outcome, market = generate_multimarket_data(n_samples=400)
+    assert X is not None
+    assert len(X) > 0
+    assert len(treatment) == len(outcome) == len(market) == len(X)
 
     model = CausalForestAttribution()
-    feature_cols = [c for c in df.columns if c not in ('treatment', 'outcome', 'market')]
-    model.fit(df[feature_cols].values, df['treatment'].values, df['outcome'].values)
-    preds = model.predict(df[feature_cols].values)
-    assert len(preds) == len(df)
+    model.fit(X.values, treatment, outcome)
+    preds = model.predict(X.values)
+    assert len(preds) == len(X)
 
 
 if __name__ == "__main__":

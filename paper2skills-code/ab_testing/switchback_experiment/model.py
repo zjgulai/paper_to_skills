@@ -35,10 +35,11 @@ def generate_switchback_assignment(cfg: SwitchbackConfig, seed: int = 42) -> np.
 
 
 def ht_estimator(outcomes: np.ndarray, W: np.ndarray, p: float = 0.5) -> Dict[str, float]:
-    treated = outcomes[W == 1] / p
-    control = outcomes[W == 0] / (1 - p)
-    gate_hat = float(treated.mean() - control.mean())
-    se = float(np.sqrt(np.var(treated) / max(len(treated), 1) + np.var(control) / max(len(control), 1)))
+    outcomes = np.asarray(outcomes)
+    W = np.asarray(W)
+    scores = W * outcomes / p - (1 - W) * outcomes / (1 - p)
+    gate_hat = float(scores.mean())
+    se = float(scores.std(ddof=1) / np.sqrt(max(len(scores), 1)))
     return {"GATE": gate_hat, "SE": se, "CI_low": gate_hat - 1.96 * se, "CI_high": gate_hat + 1.96 * se}
 
 

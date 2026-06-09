@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2510.18155 (ICEBE 2025)
+roadmap_phase: phase2
 ---
 
 # Skill: 生成式智能体营销沙盒仿真 — LLM Multi-Agent Consumer Behavior Simulation

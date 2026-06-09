@@ -8,6 +8,7 @@ created: 2026-06-04
 updated: 2026-06-04
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Cross-Org Agent Protocol — 跨组织 Agent 协调协议

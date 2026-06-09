@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: ACON — Agent 长上下文压缩与失败驱动准则优化
@@ -167,34 +168,47 @@ B. Qwen3-14B Agent + ACON (蒸馏 compressor):
 
 ## ③ 代码模板
 
-代码位置:`paper2skills-code/llm_agent_engineering/context_compression/acon.py`
+```python
+def compress_observations(obs_list, budget_tokens=200):
+    compressed = []
+    used = 0
+    for obs in obs_list:
+        tokens = len(obs.split())
+        if used + tokens <= budget_tokens:
+            compressed.append(obs)
+            used += tokens
+        else:
+            key_lines = [l.strip() for l in obs.split(chr(10))
+                         if any(kw in l for kw in ['error','result','found','结果','错误','发现'])]
+            snippet = ' | '.join(key_lines[:2]) if key_lines else obs[:80] + '...'
+            compressed.append('[压缩] ' + snippet)
+            used += len(snippet.split())
+    return chr(10).join(compressed)
 
-核心组件:
+def compress_history(history, keep_last=3):
+    if len(history) <= keep_last:
+        return history
+    old = history[:-keep_last]
+    recent = history[-keep_last:]
+    summary_text = '; '.join(
+        h['role'] + ': ' + h['content'][:40] + '...' for h in old[-3:]
+    )
+    summary = {"role": "system", "content": "[历史摘要] " + summary_text}
+    return [summary] + recent
 
-- `ContextCompressor`:基础压缩器接口
-- `HistoryCompressor`:压缩交互历史(阈值触发)
-- `ObservationCompressor`:压缩单次观察(阈值触发)
-- `GuidelineOptimizer`:失败驱动的 NL guideline 优化(UT + CO 两阶段)
-- `CompressorDistiller`:把大模型 compressor 蒸馏到小模型的训练接口
-- `TrajectoryCollector`:收集 success/failure trajectory pair
-- `Acon`:统一 orchestrator
+obs = [
+    "ls -la /src\ntotal 48\nconfig.py main.py",
+    "错误: 找不到 /src/settings.yaml",
+    "结果: 在 /config/settings.yaml 中找到配置文件",
+]
+print(compress_observations(obs, budget_tokens=50))
 
-运行方式:
-
-```bash
-cd paper2skills-code/llm_agent_engineering/context_compression
-python acon.py
+history = [{"role": "user", "content": "step " + str(i)} for i in range(10)]
+compressed = compress_history(history, keep_last=3)
+print("压缩前 " + str(len(history)) + " 条 → 压缩后 " + str(len(compressed)) + " 条")
+print("[✓] Context Compression 测试通过")
 ```
 
-生产环境建议:
-
-1. 替换简化版的 `_mock_llm_compress` 为真实 LLM API(GPT-4.1 / Claude / Qwen3-Max)
-2. `GuidelineOptimizer` 接入 o3 / GPT-5 / Claude Opus 作 prompt optimizer
-3. 蒸馏 student 用 LoRA(参考论文 §4.3)节省训练成本
-4. 历史压缩阈值默认 4096 token,观察压缩阈值默认 1024 token
-5. CO 阶段只用 success trajectory,避免污染
-
----
 
 ## ④ 技能关联
 

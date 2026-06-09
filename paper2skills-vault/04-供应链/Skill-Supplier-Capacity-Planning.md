@@ -17,6 +17,7 @@ papers:
     title: "Multi-objective multi-site supplier selection and order splitting"
     venue: "JIMO Vol.20, 2024"
     role: Multi-Sourcing Pareto前沿（主供+备供分单比例）
+roadmap_phase: phase1
 ---
 
 # Skill-Supplier-Capacity-Planning

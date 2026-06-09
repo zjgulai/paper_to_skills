@@ -8,6 +8,7 @@ created: 2026-04-28
 updated: 2026-04-28
 owner: self
 source: ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Causal Discovery with PC Algorithm

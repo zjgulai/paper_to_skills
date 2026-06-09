@@ -17,6 +17,7 @@ papers:
     title: "Demand Forecasting During Grand Promotion for Online Retailing (JD.com)"
     venue: "SSRN 2024"
     role: 中国电商大促场景验证（618/双11，DWT+Bayesian LASSO）
+roadmap_phase: phase1
 ---
 
 # Skill-Promotion-Demand-Decomposition

@@ -5,6 +5,7 @@ topic: promotion-effectiveness
 created: 2026-05-15
 updated: 2026-05-15
 status: stable
+roadmap_phase: phase2
 ---
 
 # Skill Card: Promotion Effectiveness Evaluation

@@ -25,6 +25,7 @@ papers:
     title: "Business Metric-Aware Forecasting for Inventory Management"
     venue: "arXiv 2023 (Google Research)"
     role: Forecast Accuracy ≠ Plan Accuracy的严格证明，TC目标函数
+roadmap_phase: phase1
 ---
 
 # Skill-Inventory-Health-Aging-Attribution

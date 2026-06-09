@@ -8,6 +8,7 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: MCP Tool 描述质量审核 — 六维 Smell 扫描与动态路由
@@ -200,34 +201,54 @@ Full 模式:
 
 ## ③ 代码模板
 
-代码位置: `paper2skills-code/llm_agent_engineering/tool_description_audit/mcp_smell_scanner.py`
+```python
+from dataclasses import dataclass
 
-核心组件:
+@dataclass
+class ToolDescription:
+    tool_name: str
+    purpose: str = ""
+    parameters: str = ""
+    constraints: str = ""
+    examples: str = ""
+    side_effects: str = ""
+    output_format: str = ""
 
-- `ToolDescription`: MCP tool 描述六组件模型
-- `ScoringRubric`: 5-point Likert 六维评分
-- `SmellScanner`: 扫描 tool 描述，输出 smell 报告
-- `DescriptionAugmentor`: 基于规则/LLM 的描述增强
-- `ToolDescriptionRouter`: 运行时动态选择描述版本
-- 母婴客服 tool 审核 demo
+COMPONENT_WEIGHTS = {
+    "purpose": 0.25, "parameters": 0.25, "constraints": 0.15,
+    "examples": 0.15, "side_effects": 0.10, "output_format": 0.10,
+}
 
-运行方式:
+def score_description(desc: ToolDescription) -> dict:
+    component_scores = {
+        "purpose":      min(1.0, len(desc.purpose) / 50),
+        "parameters":   min(1.0, len(desc.parameters) / 80),
+        "constraints":  min(1.0, len(desc.constraints) / 40),
+        "examples":     min(1.0, len(desc.examples) / 60),
+        "side_effects": min(1.0, len(desc.side_effects) / 30),
+        "output_format":min(1.0, len(desc.output_format) / 30),
+    }
+    total = sum(component_scores[c] * COMPONENT_WEIGHTS[c] for c in component_scores)
+    smells = [c for c, s in component_scores.items() if s < 0.3]
+    return {"tool": desc.tool_name, "score": round(total, 3),
+            "smells": smells, "grade": "A" if total >= 0.8 else "B" if total >= 0.6 else "C"}
 
-```bash
-cd paper2skills-code/llm_agent_engineering/tool_description_audit
-python3 mcp_smell_scanner.py
+tools = [
+    ToolDescription("create_purchase_order",
+        purpose="根据需求预测创建 ERP 采购订单，触发供应商备货",
+        parameters="sku: str, quantity: int, supplier_id: str, delivery_date: str",
+        constraints="quantity 必须 >= MOQ；delivery_date 不能早于今天 +14 天",
+        examples="create_purchase_order(sku='B08XY', quantity=500, supplier_id='S01', delivery_date='2026-07-01')",
+        side_effects="写入 ERP 数据库，触发供应商邮件通知",
+        output_format="{'order_id': str, 'status': 'created'|'failed', 'eta': str}"),
+    ToolDescription("get_data", purpose="获取数据"),
+]
+for t in tools:
+    r = score_description(t)
+    print(f"{r['tool']}: score={r['score']} grade={r['grade']} smells={r['smells']}")
+print("[✓] Tool Description Audit 测试通过")
 ```
 
-生产环境建议:
-
-1. **扫描频率**: 每次 MCP server 更新后自动扫描
-2. **评分一致性**: 用多个 FM 交叉评分，取 median
-3. **增强策略**: 优先修复 P0/P1，P2 可逐步迭代
-4. **路由监控**: 记录每模式成功率，自动调优
-5. **回归测试**: 增强后必须跑 A/B 测试验证
-6. **Token 预算**: 设置每请求最大 token，超出时降级 Compact
-
----
 
 ## ④ 技能关联
 

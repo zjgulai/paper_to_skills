@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2502.06995 (2025)
+roadmap_phase: phase1
 ---
 
 # Skill: EPICSCORE Uncertainty Quantification — 认知不确定性共形评分

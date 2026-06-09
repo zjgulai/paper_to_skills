@@ -5,6 +5,7 @@ topic: marketing-mix-modeling
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+roadmap_phase: phase2
 ---
 
 # Skill Card: Marketing Mix Modeling (MMM)

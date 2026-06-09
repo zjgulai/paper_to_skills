@@ -76,6 +76,7 @@ WORKFLOW_RULES = {
     "WF-F 动态定价": ["pricing", "price", "价格", "elasticity", "markdown", "定价", "竞价", "discount"],
     "WF-G Listing内容优化": ["listing", "content", "copywriting", "主图", "视频", "a/b", "creative", "文案"],
     "WF-H 复购增长": ["churn", "ltv", "retention", "复购", "流失", "rfm", "lifecycle", "cohort"],
+    "WF-I 智能体工程": ["agent", "智能体", "mas", "mcp", "llm agent", "workflow", "tool use", "safety guard", "监控", "部署"],
 }
 
 KNOWN_SKILL_IDS: set[str] = set()
@@ -304,6 +305,14 @@ DOMAIN_BUSINESS_CONTEXT: dict[str, dict[str, Any]] = {
         "pain": "竞品数据要手动收集太慢 · 平台 API 限制抓不到数据 · 多系统数据整合不起来 · 报表用的数据是过期的",
         "platform": "Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖",
     },
+    "23-运营财务": {
+        "role": "CFO / 财务负责人",
+        "role2": "CEO · 运营负责人",
+        "trigger": "月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累",
+        "outcome": "SKU 级 P&L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划",
+        "pain": "FBA 费用算不清楚 · 现金流紧张不知道哪里漏了 · 哪个 SKU 真正赚钱看不见 · 财务数据滞后一个月才出来",
+        "platform": "Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统",
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -323,6 +332,13 @@ BUSINESS_ENTRIES = [
         "desc": "72 小时内输出完整行动清单：定价调整 + 库存处置 + 供应链转移方案",
         "href": "playbooks/pb-tariff-response.html",
         "tag": "关税响应",
+    },
+    {
+        "icon": "CL",
+        "label": "上架合规 / 关税编码优化",
+        "desc": "新品上架前合规预扫描 + HTS 关税编码精准分类 + 封号风险防御三合一",
+        "href": "playbooks/pb-compliance.html",
+        "tag": "合规手册",
     },
     {
         "icon": "PL",
@@ -1177,8 +1193,7 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
         "name": "AI Agent 替人手册",
         "tag": "供应链 · 数据分析 · 广告优化",
         "desc": "三类岗位的核心重复性工作，逐步交给 AI Agent 执行，释放人力专注高价值决策",
-        "intro": "AI 替代的不是岗位，是岗位里的「重复性决策」——每天都要做、做法固定、但规模超出人力上限的那部分。"
-                 "本手册从供应链出发，提供三条独立的替代路径，每条路径都可以单独落地。",
+        "intro": "AI 替代的不是岗位，是岗位里的「重复性决策」——每天都要做、做法固定、但规模超出人力上限的那部分。今天的现状是：供应链负责人每月花 2-3 天纯人工对账三层 Excel（SKU→仓库→市场），数据分析师 80% 时间在取数而非分析，客服团队因无法覆盖德语/日语工单导致旺季 Buy Box 丢失 35%。这三条业务线加起来消耗了 5-8 名运营人员的大量精力，但仍然有盲区、有滞后、有错误。本手册从供应链出发，提供三条独立的替代路径，每条路径都可以单独落地，合计年化 ROI 可达 2000 万+。",
         "steps": [
             {
                 "step": "Chapter 1：供应链全链路 Agent（主角）",
@@ -1579,6 +1594,93 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
             "供应链转移决策有数据支撑：不靠直觉，知道转移到哪里、什么时候、成本差多少",
             "关税冲击期间广告预算不盲目暂停，基于饱和曲线做有依据的调整",
             "一次关税冲击响应提速 = 保护 3-6 个月 BSR 排名稳定",
+        ],
+    },
+    {
+        "id": "pb-compliance",
+        "icon": "CL",
+        "name": "跨境合规全链路手册",
+        "tag": "产品合规 · HTS 关税编码 · 封号防御",
+        "desc": "新品上架前合规预扫描 + HTS 关税编码节税 + Amazon 申诉策略三合一。合规失误一次 = 损失 30-500 万",
+        "roi_callout": [
+            {"label": "HTS 编码优化节税", "value": "年均 20-200 万元"},
+            {"label": "封号损失（不防御）", "value": "30-80 万 GMV/次"},
+            {"label": "主动召回 vs 被动召回", "value": "成本差 10 倍"},
+        ],
+        "intro": "跨境母婴品牌面临三类「隐形合规炸弹」：① 产品认证缺失导致 Amazon 强制下架（一次损失 30-80 万 GMV）；② HTS 关税编码错误导致多缴 7.5-25% 关税（年均损失 20-200 万）；③ Listing 被封号后不知道如何写 POA 申诉（恢复周期从 2 周拖到 2 个月）。这三类风险有一个共同特点：大多数团队在事后才意识到——因为没有系统性的事前排查机制。本手册从选品阶段就建立合规防线，让你在 listing 上线前发现问题，而不是等平台下架通知。",
+        "steps": [
+            {
+                "step": "Step 1：新品上架前合规预扫描（T-4 周）",
+                "problem": "不知道新品在目标市场是否需要特定认证——等 listing 上线被 Amazon 要求补文件，已浪费 2-4 周窗口期",
+                "skills": [
+                    {"id": "Skill-Category-Compliance-Prescan",
+                     "why": "上架前自动扫描目标市场合规要求，识别 FDA/CPSC/CE/FCC 认证门控，提前安排实验室测试（节省 2-4 周窗口期）"},
+                    {"id": "Skill-Cross-Border-Compliance-Framework",
+                     "why": "US + EU + UK 三维合规矩阵自动映射，新市场进入合规核查从 3 个月压缩到 2 周"},
+                    {"id": "Skill-Product-Safety-Testing-Requirements",
+                     "why": "品类 × 市场安全测试需求自动生成：哪个实验室 + 多少费用 + 多长周期，选品阶段前置合规成本估算"},
+                ],
+                "data": "需要：产品品类、目标销售市场、产品材质/功能描述",
+                "output": "合规门控清单（BLOCKING / MANDATORY / LABELING 三级）+ 认证机构推荐 + 时间轴估算",
+            },
+            {
+                "step": "Step 2：CPSC 儿童产品强制认证（美国市场）",
+                "problem": "母婴产品需要 CPSC 强制第三方认证（3PTC），不通过不得在美销售——但大多数卖家不清楚具体哪些产品需要哪些认证",
+                "skills": [
+                    {"id": "Skill-CPSC-Children-Product-Safety",
+                     "why": "ASTM F963/16 CFR 法规映射 + 认证实验室推荐（SGS/BV/Intertek/UL）+ CPC 证书申请流程（ROI：保护 30-80 万 GMV）"},
+                ],
+                "data": "需要：产品品类（玩具/婴儿床/服装/汽车座椅等）、是否含电子组件",
+                "output": "CPC/GCC 证书需求确认 + 实验室对接清单 + 预算估算（$500-3000 + 3-6 周周期）",
+            },
+            {
+                "step": "Step 3：HTS 关税编码精准分类（节税合规双赢）",
+                "problem": "同一件产品因 HTS 编码不同，税率可能相差 0%-25%——大多数卖家沿用报关行默认编码，每年多缴数十万关税",
+                "skills": [
+                    {"id": "Skill-HTS-Tariff-Classification",
+                     "why": "AI 驱动的 HTS 精准分类：识别节税机会（吸奶器 0% vs 3%，睡袋 0% vs 17.5%）+ Section 301 排除申请指导 + CBP Binding Ruling 路径"},
+                ],
+                "data": "需要：全 SKU 产品描述、材质、功能、原产地",
+                "output": "SKU 级 HTS 编码建议 + 关税率对比 + 年化节税估算 + 行动优先级排序",
+            },
+            {
+                "step": "Step 4：Listing 文案合规审查（AI 写稿防违规声明）",
+                "problem": "ChatGPT 生成的 Listing 文案容易出现违规声明（如「治疗/预防疾病」类措辞），被 Amazon 算法扫描后下架",
+                "skills": [
+                    {"id": "Skill-Compliance-Scored-Guardrail-Orchestration",
+                     "why": "AI 生成 Listing 文案的合规门控（Best-of-N 评分）：自动检测违规声明、医疗类措辞、夸大功效表述，防止 ChatGPT 写出被 Amazon 下架的内容"},
+                ],
+                "data": "需要：产品 Listing 文案草稿（标题/Bullet/Description）",
+                "output": "合规评分矩阵 + 违规措辞定位 + 合规替换建议",
+            },
+            {
+                "step": "Step 5：法规动态监控（合规状态持续维护）",
+                "problem": "平台政策每季度更新，FDA/CPSC/EU GPS 法规每年都有修订——人工跟踪平均滞后 90 天，一次漏网 = 批量下架",
+                "skills": [
+                    {"id": "Skill-Regulatory-Change-Monitoring",
+                     "why": "监管机构法规更新自动映射到受影响 SKU，提前 90 天预警，Amazon 政策变更 24h 内推送相关 listing 影响评估"},
+                ],
+                "data": "需要：全部在售 SKU 信息、当前认证文件状态",
+                "output": "法规变更预警 + 受影响 SKU 清单 + 更新行动计划",
+            },
+            {
+                "step": "Step 6：Amazon 账号申诉策略（封号后快速恢复）",
+                "problem": "Listing 或账号被封后，多数卖家写的 POA 申诉成功率只有 20-30%——不是问题没解决，而是 POA 写法不对",
+                "skills": [
+                    {"id": "Skill-Amazon-Account-Appeal-Strategy",
+                     "why": "POA 三段式结构（根因/纠正/预防）+ 按封号类型的差异化策略（ODR/ASIN 违规/知识产权/Review 操纵）+ 升级路径（案例 ID → Executive Relations）"},
+                ],
+                "data": "需要：Amazon 封号通知邮件、受影响 ASIN、封号日期",
+                "output": "结构化 POA 草稿 + 证明文件清单 + 申诉提交路径 + 预计恢复时间",
+            },
+        ],
+        "outcomes": [
+            "新品上架前合规扫描：0 因合规被强制下架（vs 平均每季度 1-2 次被动处理）",
+            "HTS 编码优化：年均节税 20-200 万元（视 SKU 数量和进口额）",
+            "合规文案审查：AI 生成内容违规率从 15% → < 2%",
+            "法规变更响应从滞后 90 天 → 提前 90 天预警",
+            "POA 申诉成功率从 20-30%（模板）→ 65-80%（结构化策略）",
+            "封号恢复周期从 2-4 周 → 3-7 天",
         ],
     },
     {
@@ -2758,10 +2860,11 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
      <h3>从哪里开始？</h3>
      <p>根据你的当前痛点选择入口——每个场景手册包含完整操作步骤、所需数据和 ROI 计算模板。</p>
      <div class="rm-footer-links">
-       <a href="playbooks/pb-risk-defense.html">跨境风险防御作战室</a>
-       <a href="playbooks/pb-agent-replace.html">AI Agent 替人手册</a>
-       <a href="playbooks/pb-tariff-response.html">关税冲击 72h 响应</a>
-       <a href="playbooks/pb-voc-product-loop.html">竞品情报 → 产品迭代</a>
+        <a href="playbooks/pb-risk-defense.html">跨境风险防御作战室</a>
+        <a href="playbooks/pb-agent-replace.html">AI Agent 替人手册</a>
+        <a href="playbooks/pb-tariff-response.html">关税冲击 72h 响应</a>
+        <a href="playbooks/pb-compliance.html">跨境合规全链路</a>
+        <a href="playbooks/pb-voc-product-loop.html">竞品情报 → 产品迭代</a>
        <a href="playbooks/pb-customer-service-agent.html">客服售后智能体</a>
        <a href="playbooks/pb-fba-operations.html">FBA 运营全链路</a>
        <a href="playbooks/pb-pricing-engine.html">AI 定价引擎手册</a>
@@ -2950,6 +3053,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
 
     outcomes = "".join(f"<li>[OK] {html.escape(o)}</li>" for o in pb.get("outcomes", []))
     calc_html = _render_roi_calculator(pb.get("roi_calculator")) if pb.get("roi_calculator") else ""
+    pb_name_safe = pb['name'].replace(' ', '%20').replace('&', '%26')
     body = f"""
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / {html.escape(pb['name'])}</nav>
 <div class='pb-hero'>
@@ -2965,6 +3069,23 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
 {'<div class="wf-outcomes"><h3>预期收益</h3><ul>' + outcomes + '</ul></div>' if outcomes else ''}
 <div class='pb-steps'>{steps_html}</div>
 {calc_html}
+<div class='pb-lead-capture'>
+  <div class='pb-lead-inner'>
+    <div class='pb-lead-text'>
+      <h3>想了解这套方案如何落地你的业务？</h3>
+      <p>预约 30 分钟免费 ROI 测算 — 基于你的 SKU 数量、广告预算和当前痛点，给出定制化收益估算。</p>
+      <ul class='pb-lead-bullets'>
+        <li>✓ 结合你的实际数据，不是通用模板</li>
+        <li>✓ 明确哪 1-2 个 Skill 优先落地 ROI 最高</li>
+        <li>✓ 30 分钟，结束后你有一份行动清单</li>
+      </ul>
+    </div>
+    <div class='pb-lead-action'>
+      <a href='mailto:skills@lute-tlz-dddd.top?subject=预约ROI测算-{pb_name_safe}&body=手册:{pb_name_safe}%0A公司规模:%0A主要痛点:%0A当前月GMV:' class='pb-lead-btn'>预约 30 分钟 ROI 测算 →</a>
+      <p class='pb-lead-note'>发送邮件后 24h 内回复确认时间</p>
+    </div>
+  </div>
+</div>
 """
     return html_page(pb["name"], body, nav)
 
@@ -3110,13 +3231,14 @@ def render_skill_card(skill: PlaybookSkill, nav: str = "") -> str:
 </article>"""
 
 
-def link_list(items: list[str], nav: str = "") -> str:
+def link_list(items: list[str], nav: str = "", skill_ids: set[str] | None = None) -> str:
     if not items:
         return "<p class='muted'>暂无</p>"
+    _ids = skill_ids if skill_ids is not None else KNOWN_SKILL_IDS
     rows = []
     for item in items:
         escaped = html.escape(item)
-        if item in KNOWN_SKILL_IDS:
+        if item in _ids:
             rows.append(f"<li><a href='{skill_url(item, nav)}'>{escaped}</a></li>")
         else:
             rows.append(f"<li><span class='muted'>{escaped}</span></li>")
@@ -4337,6 +4459,26 @@ tr:hover td { background: var(--bg); }
   font-size: 14px; color: var(--ink-2); line-height: 1.7;
 }
 .pb-steps { margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+.pb-lead-capture {
+  margin-top: 40px; padding: 32px; border-radius: var(--r-xl);
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2340 100%);
+  border: 1px solid #2563eb44;
+}
+.pb-lead-inner { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
+.pb-lead-text { flex: 1; min-width: 240px; }
+.pb-lead-text h3 { color: #f1f5f9; font-size: 18px; margin: 0 0 10px; }
+.pb-lead-text p { color: #94a3b8; font-size: 14px; margin: 0 0 12px; }
+.pb-lead-bullets { color: #94a3b8; font-size: 13px; padding-left: 0; list-style: none; margin: 0; }
+.pb-lead-bullets li { margin-bottom: 6px; }
+.pb-lead-action { flex-shrink: 0; text-align: center; }
+.pb-lead-btn {
+  display: inline-block; padding: 14px 28px;
+  background: #2563eb; color: #fff; border-radius: 10px;
+  font-weight: 700; font-size: 15px; text-decoration: none;
+  transition: background 0.2s;
+}
+.pb-lead-btn:hover { background: #1d4ed8; }
+.pb-lead-note { color: #64748b; font-size: 12px; margin-top: 10px; }
 .pb-step {
   display: flex; gap: 18px;
   background: var(--panel); border: 1px solid var(--line);
@@ -4760,8 +4902,9 @@ def render_pages(
     graph: SkillsGraph,
     wf_defs: dict[str, Any],
 ) -> dict[str, Any]:
-    global KNOWN_SKILL_IDS
-    KNOWN_SKILL_IDS = {skill.skill_id for skill in skills}
+    known_skill_ids: set[str] = {skill.skill_id for skill in skills}
+    KNOWN_SKILL_IDS.clear()
+    KNOWN_SKILL_IDS.update(known_skill_ids)
     if out.exists():
         shutil.rmtree(out)
     (out / "assets").mkdir(parents=True)

@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: AAAI 2025 (Amazon)
+roadmap_phase: phase1
 ---
 
 # Skill: Causal Time Series Forecasting — GCF 图因果预测反事实需求

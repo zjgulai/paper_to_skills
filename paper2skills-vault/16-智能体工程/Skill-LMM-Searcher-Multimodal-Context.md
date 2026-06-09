@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: LMM-Searcher — 长链多模态 Agent 上下文管理（UID 占位符 + 按需加载）
