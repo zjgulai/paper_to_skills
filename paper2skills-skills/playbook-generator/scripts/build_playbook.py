@@ -3556,7 +3556,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
 # Skills Graph D3 page (Phase 3D)
 # ---------------------------------------------------------------------------
 
-def render_graph_page(skill_count: int, edge_count: int) -> str:
+def render_graph_page(skill_count: int, edge_count: int, build_ts: str = "") -> str:
     body = f"""
 <h1>Skills Graph</h1>
 <p class="muted">节点 {skill_count} · 边 {edge_count}　　点击节点查看详情，悬停高亮邻居，滚轮缩放。</p>
@@ -3575,7 +3575,7 @@ def render_graph_page(skill_count: int, edge_count: int) -> str:
 </div>
 <svg id="graph-svg"></svg>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="../assets/graph.js" defer></script>
+<script src="../assets/graph.js?v={build_ts}"></script>
 """
     return html_page("Skills Graph", body, "../")
 
@@ -3706,6 +3706,7 @@ def build_ego_graph_js() -> str:
 def build_graph_js() -> str:
     """Return the D3 force graph JS bundle."""
     return r"""
+document.addEventListener('DOMContentLoaded', function () {
 (function () {
   const DATA = window.PLAYBOOK_DATA || {};
   const skills = DATA.skills || [];
@@ -3864,6 +3865,7 @@ def build_graph_js() -> str:
     updateEdgeVisibility();
   });
 })();
+});
 """
 
 
@@ -5065,7 +5067,7 @@ def render_pages(
     ))
 
     # ── Skills Graph (Phase 3D: D3 visualisation) ──
-    write_file(out / "graph" / "overview.html", render_graph_page(skill_count, edge_count))
+    write_file(out / "graph" / "overview.html", render_graph_page(skill_count, edge_count, data["generated_at"].replace("-", "").replace(":", "").replace("T", "")))
 
     # ── CEO Roadmap whitepaper ──
     write_file(out / "ai-roadmap.html", render_roadmap_page(skill_lookup))
