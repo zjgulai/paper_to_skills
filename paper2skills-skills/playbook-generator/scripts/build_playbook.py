@@ -3412,11 +3412,13 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
         f"<div class='biz-card-header'>"
         f"<span class='biz-icon'>{e['icon']}</span>"
         f"<div class='biz-body'>"
+        f"<div class='biz-card-meta'>"
         f"<strong>{html.escape(e['label'])}</strong>"
-        f"</div>"
         f"<span class='biz-tag'>{html.escape(e['tag'])}</span>"
         f"</div>"
-        f"<p style='margin:0;font-size:13px;color:var(--muted);line-height:1.6'>{html.escape(e['desc'])}</p>"
+        f"<p>{html.escape(e['desc'])}</p>"
+        f"</div>"
+        f"</div>"
         f"</a>"
         for e in BUSINESS_ENTRIES
     )
@@ -4172,10 +4174,10 @@ strong { font-weight: 600; }
 /* ── Business Entry Cards — Apple card layout ── */
 .biz-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  margin: 16px 0;
-  align-items: start;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+  align-items: stretch;
 }
 .biz-card {
   display: flex;
@@ -4183,25 +4185,21 @@ strong { font-weight: 600; }
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 20px;
-  padding: 20px 22px;
+  padding: 24px;
   text-decoration: none; color: var(--ink);
   box-shadow: var(--shadow-md);
   transition: transform var(--t-card), box-shadow var(--t-card), border-color var(--t-card);
-  height: auto;
-  min-height: 0;
 }
 .biz-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
   border-color: var(--accent);
 }
-/* Card header: icon + tag row — tag stays top-right regardless of title length */
 .biz-card-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
-  min-height: 48px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .biz-icon {
   width: 44px; height: 44px; flex-shrink: 0;
@@ -4210,27 +4208,35 @@ strong { font-weight: 600; }
   border-radius: var(--r-md); font-size: 10px; font-weight: 700;
   letter-spacing: .04em; text-transform: uppercase; font-family: var(--font);
 }
-.biz-body { flex: 1; min-width: 0; }
+.biz-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.biz-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .biz-body strong {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-size: 14.5px; font-weight: 600;
-  letter-spacing: -.01em; line-height: 1.35;
-  margin-bottom: 6px; color: var(--ink);
+  display: block;
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -.01em; line-height: 1.4;
+  color: var(--ink);
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 .biz-body p {
-  margin: 0; font-size: 13px;
-  color: var(--muted); line-height: 1.6;
+  margin: 10px 0 0; font-size: 13.5px;
+  color: var(--muted); line-height: 1.65;
+  flex: 1;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 .biz-tag {
   flex-shrink: 0;
-  margin-left: auto;
-  align-self: flex-start;
   font-size: 11px; font-weight: 600;
   background: var(--panel-3); color: var(--ink-2);
-  padding: 3px 9px; border-radius: var(--r-full);
+  padding: 3px 10px; border-radius: var(--r-full);
+  white-space: nowrap;
 }
 
 /* ── DS Cards ── */
@@ -5156,10 +5162,17 @@ def render_pages(
         )
     tob_index_cards = "".join(
         f"<a class='biz-card' href='{pb['id']}.html'>"
+        f"<div class='biz-card-header'>"
         f"<span class='biz-icon'>{pb['icon']}</span>"
-        f"<div class='biz-body'><strong>{html.escape(pb['name'])}</strong>"
-        f"<p>{html.escape(pb['desc'])}</p></div>"
-        f"<span class='biz-tag'>{html.escape(pb['tag'])}</span></a>"
+        f"<div class='biz-body'>"
+        f"<div class='biz-card-meta'>"
+        f"<strong>{html.escape(pb['name'])}</strong>"
+        f"<span class='biz-tag'>{html.escape(pb['tag'])}</span>"
+        f"</div>"
+        f"<p>{html.escape(pb['desc'])}</p>"
+        f"</div>"
+        f"</div>"
+        f"</a>"
         for pb in TOB_PLAYBOOKS
     )
     write_file(out / "playbooks" / "index.html", html_page(
