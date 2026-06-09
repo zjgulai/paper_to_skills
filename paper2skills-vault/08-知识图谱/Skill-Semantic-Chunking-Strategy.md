@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: 语义分块策略 — RAG 管道的基础层

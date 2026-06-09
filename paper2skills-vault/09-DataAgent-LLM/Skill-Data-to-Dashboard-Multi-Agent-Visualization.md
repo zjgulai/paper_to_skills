@@ -10,6 +10,7 @@ created: 2026-04-26
 updated: 2026-04-26
 paper: arXiv:2505.23695
 source: ai
+roadmap_phase: phase2
 ---
 
 # Data-to-Dashboard — 多Agent智能可视化生成

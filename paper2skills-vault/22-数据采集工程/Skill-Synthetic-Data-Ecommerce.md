@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Synthetic Data for E-commerce — 电商合成数据生成：解决新品冷启动与长尾数据稀缺

@@ -5,6 +5,7 @@ topic: kgqa
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+roadmap_phase: phase2
 ---
 
 # Skill Card: Knowledge Graph Question Answering (KGQA)

@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Procurement Email Extraction — 采购邮件结构化提取：合同条款解析与 MILP 合规验证

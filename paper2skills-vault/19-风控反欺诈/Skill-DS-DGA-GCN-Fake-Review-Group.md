@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: DS-DGA-GCN — 动态图假评论群组检测

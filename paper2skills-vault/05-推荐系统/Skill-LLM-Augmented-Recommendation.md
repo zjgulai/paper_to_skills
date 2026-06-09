@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: LLM Augmented Recommendation — LLM 增强个性化推荐

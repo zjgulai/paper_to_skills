@@ -5,6 +5,7 @@ topic: multilingual-ner
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+roadmap_phase: phase2
 ---
 
 # Skill Card: Multilingual NER (Universal NER v2)

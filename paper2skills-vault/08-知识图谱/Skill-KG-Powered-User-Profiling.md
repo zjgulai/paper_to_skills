@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill: KG-Powered User Profiling — 知识图谱驱动的用户画像

@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Realtime Feature Collection — 流式特征采集与在线特征仓库

@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: Multimodal RAG — 图文混合多模态检索增强生成

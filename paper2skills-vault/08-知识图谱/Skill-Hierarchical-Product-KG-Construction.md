@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2410.21237
+roadmap_phase: phase2
 ---
 
 # Skill: Hierarchical Product KG Construction — 图片驱动的层级商品知识图谱自动构建

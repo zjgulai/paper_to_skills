@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Visual Data Collection — 多模态视觉数据采集与素材库构建

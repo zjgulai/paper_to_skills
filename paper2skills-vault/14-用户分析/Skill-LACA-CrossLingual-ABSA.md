@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2508.09515 (ACL 2025)
+roadmap_phase: phase2
 ---
 
 # Skill: LACA — 跨语言 ABSA(LLM 数据增强多语种情感分析)

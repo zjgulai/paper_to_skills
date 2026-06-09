@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2410.12229 SIGIR 2025
+roadmap_phase: phase2
 ---
 
 # Skill: CoLaKG — LLM 增强的知识图谱推荐

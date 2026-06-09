@@ -8,6 +8,7 @@ created: 2026-04-27
 updated: 2026-04-27
 owner: self
 source: ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: Session-Based Recommendation with SR-GNN

@@ -8,6 +8,7 @@ created: 2026-05-15
 updated: 2026-05-15
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # AI技术概念 × 疗愈哲理金句卡片库

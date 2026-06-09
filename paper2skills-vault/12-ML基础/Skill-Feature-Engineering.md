@@ -5,6 +5,7 @@ topic: feature-engineering
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+roadmap_phase: phase1
 ---
 
 # Skill Card: Feature Engineering

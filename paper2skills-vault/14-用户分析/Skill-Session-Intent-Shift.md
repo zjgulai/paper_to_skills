@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2507.20185 (2025)
+roadmap_phase: phase2
 ---
 
 # Skill: Session Intent Shift Modeling — 跨会话用户意图漂移检测

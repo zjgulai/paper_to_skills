@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: IJCAI 2025
+roadmap_phase: phase2
 ---
 
 # Skill: STAMImputer — 时空注意力混合专家（MoE）高缺失率流量矩阵恢复

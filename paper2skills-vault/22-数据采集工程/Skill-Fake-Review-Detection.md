@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Fake Review Detection — 假评论检测：图神经网络+LLM 可解释欺诈识别

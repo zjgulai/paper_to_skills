@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2504.06270 (2025)
+roadmap_phase: phase2
 ---
 
 # Skill Card: CSDM — 扩散模型冷启动CTR预测

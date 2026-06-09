@@ -10,6 +10,7 @@ created: 2026-04-26
 updated: 2026-04-26
 paper: arXiv:2102.07831
 source: ai
+roadmap_phase: phase2
 ---
 
 # NeuralNDCG — 可微分排序优化与Learning to Rank

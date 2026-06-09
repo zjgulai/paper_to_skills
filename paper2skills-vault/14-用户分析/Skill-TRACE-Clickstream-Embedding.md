@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2409.12972
+roadmap_phase: phase2
 ---
 
 # Skill: TRACE — 跨多会话点击流用户嵌入 (Transformer-based Clickstream User Embedding)

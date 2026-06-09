@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2504.17304
+roadmap_phase: phase2
 ---
 
 # Skill: GPLR — 用户人群标签生成(LLM + 随机游走低成本 Persona 推断)

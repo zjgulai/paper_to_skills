@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Web Page Change Detection — 网页变化检测：VLM 视觉差异识别与 DOM 原子性保护

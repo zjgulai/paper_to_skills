@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2510.04502
+roadmap_phase: phase2
 ---
 
 # Skill: CAGED — 因果图聚合权重估计器破解 GNN 流行度偏差

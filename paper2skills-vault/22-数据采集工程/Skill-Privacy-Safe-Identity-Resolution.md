@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Privacy-Safe Identity Resolution — 隐私合规跨平台 ID 解析：多方对齐与差分隐私

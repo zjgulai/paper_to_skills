@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: CausalRAG — 因果图增强检索：语义相似 + 因果链路双轨 RAG

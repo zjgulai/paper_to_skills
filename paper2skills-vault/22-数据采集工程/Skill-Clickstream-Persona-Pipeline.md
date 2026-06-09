@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Clickstream Persona Pipeline — 点击流用户画像：VQ-VAE 离散 Persona + 多层行为 KG

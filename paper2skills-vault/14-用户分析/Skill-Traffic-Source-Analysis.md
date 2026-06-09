@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2403.16115
+roadmap_phase: phase2
 ---
 
 # Skill: Traffic Source Analysis — 电商流量来源全维度转化诊断

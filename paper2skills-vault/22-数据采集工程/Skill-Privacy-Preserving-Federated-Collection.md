@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Privacy-Preserving Federated Collection — 隐私保护联邦采集：差分隐私预算与联邦推荐

@@ -8,6 +8,7 @@ created: 2026-06-01
 updated: 2026-06-01
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: User Profile Long Memory — 跨会话用户画像积累

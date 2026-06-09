@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2601.12213 (Trans. Mach. Learn. Res. 2026)
+roadmap_phase: phase2
 ---
 
 # Skill: Sparse Matrix Completion — 超稀疏矩阵补全恢复完整页面转移矩阵

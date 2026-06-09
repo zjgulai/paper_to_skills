@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Adaptive Crawl Scheduling — 自适应爬取调度：Sleeping Bandit + 神经质量优先级

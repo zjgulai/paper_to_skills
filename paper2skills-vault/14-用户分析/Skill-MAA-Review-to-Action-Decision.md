@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2601.12024
+roadmap_phase: phase2
 ---
 
 # Skill: MAA — 多 Agent 评论到行动建议(规范性决策链路)

@@ -8,6 +8,7 @@ created: 2026-05-01
 updated: 2026-05-01
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: AI Agent 驱动的电商知识图谱自动构建

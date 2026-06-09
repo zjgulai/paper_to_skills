@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2408.15953
+roadmap_phase: phase2
 ---
 
 # Skill: Non-Item Page Path Modeling — 导航页转化贡献建模

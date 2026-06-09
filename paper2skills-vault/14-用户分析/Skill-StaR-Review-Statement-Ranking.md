@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2604.03724
+roadmap_phase: phase2
 ---
 
 # Skill: StaR — 观点语句排序(排序而非生成,根本性消除幻觉)

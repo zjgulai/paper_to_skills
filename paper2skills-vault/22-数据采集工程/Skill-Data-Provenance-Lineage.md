@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: Data Provenance & Lineage — 数据血缘追踪：LLM 训练数据溯源与 AI 法规合规

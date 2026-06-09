@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: 综合 ConvLab / Reward-based Dialog Policy / LLM-as-Policy 方向
+roadmap_phase: phase2
 ---
 
 # Skill: Customer Journey Decision Tree — 客服对话决策树自学

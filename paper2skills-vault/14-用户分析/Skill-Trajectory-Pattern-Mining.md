@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: PLOS One 2025 (DOI: 10.1371/journal.pone.0320772)
+roadmap_phase: phase2
 ---
 
 # Skill: Trajectory Pattern Mining — 用户行为轨迹模式挖掘与变阶马尔可夫预测

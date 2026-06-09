@@ -8,6 +8,7 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: HGCN — 双曲图卷积网络

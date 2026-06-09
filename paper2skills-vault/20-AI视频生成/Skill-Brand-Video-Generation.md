@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Brand Video Generation — AI品牌视频生成

@@ -17,7 +17,12 @@ BASE_DIR = Path(os.environ.get("PAPER2SKILLS_ROOT") or Path(__file__).resolve().
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from paper2skills_common.candidates import DEFAULT_QUEUE_PATH, build_candidate_queue, write_candidate_queue
+from paper2skills_common.candidates import (
+    DEFAULT_QUEUE_PATH,
+    build_candidate_queue,
+    carry_forward_candidate_search,
+    write_candidate_queue,
+)
 
 
 def _load_graph_analyzer():
@@ -48,6 +53,12 @@ def main() -> int:
 
     graph_gaps = build_graph_gaps(args.graph_limit)
     document = build_candidate_queue(BASE_DIR, graph_gaps=graph_gaps, limit=args.limit)
+    if args.output.exists():
+        try:
+            existing_document = json.loads(args.output.read_text(encoding="utf-8"))
+            document = carry_forward_candidate_search(document, existing_document)
+        except json.JSONDecodeError:
+            pass
     print(json.dumps(document["summary"], ensure_ascii=False, indent=2))
 
     if args.dry_run:

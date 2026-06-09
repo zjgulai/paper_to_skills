@@ -10,6 +10,7 @@ created: 2026-04-26
 updated: 2026-04-26
 paper: arXiv:2510.16872
 source: ai
+roadmap_phase: phase2
 ---
 
 # DeepAnalyze — 自主数据科学Agent

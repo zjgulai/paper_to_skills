@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2509.26103
+roadmap_phase: phase2
 ---
 
 # Skill: AGRS — 属性引导评论摘要(零幻觉,大规模产品级摘要)

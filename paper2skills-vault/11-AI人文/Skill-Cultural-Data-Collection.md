@@ -8,6 +8,7 @@ created: 2026-06-06
 updated: 2026-06-06
 owner: self
 source: human+ai
+roadmap_phase: phase3
 ---
 
 # Skill Card: Cultural Data Collection — 跨文化 UGC 采集与消费文化分析

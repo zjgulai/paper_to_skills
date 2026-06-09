@@ -9,6 +9,7 @@ updated: 2026-05-19
 owner: self
 source: human+ai
 paper: arXiv:2505.17156
+roadmap_phase: phase2
 ---
 
 # Skill: PersonaBot — LLM+RAG 客户画像生成（从评论到结构化用户画像）

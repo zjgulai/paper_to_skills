@@ -9,6 +9,7 @@ updated: 2026-05-20
 owner: self
 source: human+ai
 paper: arXiv:2605.02225 (2025)
+roadmap_phase: phase2
 ---
 
 # Skill: Utimac Uncertainty-Aware Completion — 带置信区间的矩阵补全

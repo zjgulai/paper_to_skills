@@ -8,6 +8,7 @@ created: 2026-05-01
 updated: 2026-05-01
 owner: self
 source: human+ai
+roadmap_phase: phase2
 ---
 
 # Skill Card: 面向电商的稠密检索与语义排序

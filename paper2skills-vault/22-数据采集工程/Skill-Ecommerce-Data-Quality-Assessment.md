@@ -8,6 +8,7 @@ created: 2026-06-05
 updated: 2026-06-05
 owner: self
 source: human+ai
+roadmap_phase: phase1
 ---
 
 # Skill Card: E-commerce Data Quality Assessment — 电商数据质量评估：错误检测与缺失模态补全

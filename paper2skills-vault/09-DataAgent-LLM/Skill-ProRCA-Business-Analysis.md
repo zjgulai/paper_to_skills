@@ -10,6 +10,7 @@ created: 2026-05-19
 updated: 2026-05-19
 paper: arXiv:2503.01475
 source: ai
+roadmap_phase: phase2
 ---
 
 # ProRCA — 因果图路径溯源根因分析

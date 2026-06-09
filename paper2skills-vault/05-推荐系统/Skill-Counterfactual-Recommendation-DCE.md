@@ -9,6 +9,7 @@ updated: 2026-05-17
 owner: self
 source: human+ai
 paper: arXiv:2403.00817
+roadmap_phase: phase2
 ---
 
 # Skill: Counterfactual Recommendation — 双重校准估计器（DCE）破解 MNAR 选择偏差
