@@ -3575,7 +3575,7 @@ def render_graph_page(skill_count: int, edge_count: int) -> str:
 </div>
 <svg id="graph-svg"></svg>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="../assets/graph.js"></script>
+<script src="../assets/graph.js" defer></script>
 """
     return html_page("Skills Graph", body, "../")
 
@@ -3727,7 +3727,10 @@ def build_graph_js() -> str:
     if (!raw) { document.getElementById('graph-svg').insertAdjacentHTML('beforebegin', '<p class="muted">无法加载图谱数据。</p>'); return; }
 
     const nodes = raw.nodes.map(n => ({ ...n }));
-    const links = raw.links.map(l => ({ ...l }));
+    const nodeIdSet = new Set(nodes.map(n => n.id));
+    const links = raw.links
+      .map(l => ({ ...l }))
+      .filter(l => nodeIdSet.has(l.source) && nodeIdSet.has(l.target));
 
     // Domain colour palette (Tableau-10 extended)
     const domains = [...new Set(nodes.map(n => n.domain))].sort();
@@ -4919,9 +4922,22 @@ def render_pages(
     write_file(out / "assets" / "playbook-data.json", json.dumps(data, ensure_ascii=False, indent=2))
     write_file(out / "assets" / "playbook-data.js",  "window.PLAYBOOK_DATA = " + json.dumps(data, ensure_ascii=False) + ";")
 
+    _skill_title_map = {s.skill_id: s.title for s in skills}
+    graph_node_ids = {n.id for n in graph.nodes.values()}
     graph_json = {
-        "nodes": [{"id": n.id, "domain": n.domain, "title": n.id} for n in graph.nodes.values()],
-        "links": [{"source": e.source, "target": e.target, "type": e.edge_type} for e in graph.edges],
+        "nodes": [
+            {
+                "id": n.id,
+                "domain": n.domain,
+                "title": _skill_title_map.get(n.id, n.id),
+            }
+            for n in graph.nodes.values()
+        ],
+        "links": [
+            {"source": e.source, "target": e.target, "type": e.edge_type}
+            for e in graph.edges
+            if e.source in graph_node_ids and e.target in graph_node_ids
+        ],
     }
     write_file(out / "assets" / "graph-data.json", json.dumps(graph_json, ensure_ascii=False, indent=2))
     write_file(out / "assets" / "style.css",  build_css())
