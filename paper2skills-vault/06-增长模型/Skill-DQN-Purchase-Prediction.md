@@ -119,14 +119,14 @@ python3 model.py
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-User-Lifecycle-STAN**: 生命周期阶段作为特征输入
-- **Skill-Customer-Churn-Prediction**: 用户行为序列处理基础
-- **Skill-Time-Series-Forecasting**: 时序建模基础
+- [[Skill-User-Lifecycle-STAN]]: 生命周期阶段作为特征输入
+- [[Skill-Customer-Churn-Prediction]]: 用户行为序列处理基础
+- [[Skill-Time-Series-Forecasting]]: 时序建模基础
 
 ### 延伸技能
-- **Skill-Multi-Armed-Bandit**: 将预测概率用于动态定价/优惠券策略
-- **Skill-Causal-Uplift-Modeling**: 评估干预的真实因果效应（预测vs实际）
-- **Skill-Recommendation-System**: 高概率用户精准推荐
+- [[Skill-Multi-Armed-Bandit]]: 将预测概率用于动态定价/优惠券策略
+- [[Skill-Causal-Uplift-Modeling]]: 评估干预的真实因果效应（预测vs实际）
+- [[Skill-Matrix-Factorization]]: 高概率用户精准推荐
 
 ### 三技能联动（AIPL-VOC标签体系闭环）
 

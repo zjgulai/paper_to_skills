@@ -15,7 +15,7 @@ from sklearn.linear_model import LogisticRegression, Ridge
 from sklearn.metrics import roc_auc_score, r2_score
 from typing import Dict, Optional, Tuple, Union
 import warnings
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')  # disabled 2026-05-17: prefer local catch_warnings; un-comment if demo noise is excessive
 
 
 class DoublyRobustEstimator:

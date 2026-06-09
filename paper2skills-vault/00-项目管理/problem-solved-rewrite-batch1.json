@@ -1,0 +1,434 @@
+[
+  {
+    "skill_id": "Skill-Multi-SKU-Procurement-Budget-Allocation",
+    "old_ps": "核心思想：季度采购预算有限时，不能对每个 SKU 独立做 Newsvendor 决策——预算约束把所有 SKU 耦合成一个联合优化问题。Knapsack Ord",
+    "new_ps": "场景 A：季度 $200K 预算在 8 个核心 SKU 间分配",
+    "roi": "$60,000-$100,000（4 个季度）"
+  },
+  {
+    "skill_id": "Skill-NonItem-Page-Path-Modeling",
+    "old_ps": "传统序列推荐系统只捕获「商品交互」（PDP 页面点击），忽略了用户在商品页之间穿插访问的非商品页——如首页、搜索结果页、分类页（Category Listing",
+    "new_ps": "业务问题：母婴独立站（如 Momcozy/Graco 品牌站）的首页、分类页（奶瓶/奶粉/童车）、搜索页在转化漏斗中起什么作用",
+    "roi": "5000 万"
+  },
+  {
+    "skill_id": "Skill-Trajectory-Pattern-Mining",
+    "old_ps": "三步法闭环：① 改进 DBSCAN 密度聚类识别典型轨迹模式（用 LCS 相似度替代欧氏距离）；② 频繁子轨迹挖掘（FP-Tree 变体，支持度阈值筛选高频页面",
+    "new_ps": "业务问题：母婴电商需要桑基图展示用户从首页→搜索→PDP→加购→支付的流量宽度",
+    "roi": "5000 万"
+  },
+  {
+    "skill_id": "Skill-Agent-Payment-Security-Red-Team",
+    "old_ps": "论文针对 Google Agent Payment Protocol（AP2）实施红队测试，揭示了两类间接 Prompt Injection攻击机制",
+    "new_ps": "业务问题：WF-D 选品扫描工作流中，AI 导购 Agent 根据母婴产品描述为用户推荐商品",
+    "roi": "5000 万"
+  },
+  {
+    "skill_id": "Skill-Logistics-Fraud-Detection",
+    "old_ps": "传统风控系统关注交易环节（支付欺诈、账号盗用），但物流链路中存在独特的欺诈模式，具有时序性（需要跟踪包裹生命周期）和图结构性（欺诈团伙共用地址/设备/收货网络）",
+    "new_ps": "业务背景：\"Item Not Received\"（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%",
+    "roi": "月均 -$3,200"
+  },
+  {
+    "skill_id": "Skill-AgentRouter-KG-Guided",
+    "old_ps": "AgentRouter 解决多智能体系统（MAS）中最头疼的调度问题：当一个复杂查询进来时，如何决定把任务交给哪个 Agent？传统路由依赖 LLM-as-ju",
+    "new_ps": "大促高峰期每日 5 万条跨领域工单，正确路由率从 61% → 82%，每天减少约 10,500 条二次转单 - 单条转单处理成本约 5 元，节约运营成本 5.25 万元/天；年化 1900 万元 - 用户 CSAT 评分从 3.8 → 4.3（满分 5），复购意愿提升可观",
+    "roi": "1900 万元"
+  },
+  {
+    "skill_id": "Skill-DML-Cohort-Causal-Effect",
+    "old_ps": "电商场景中\"促销/拉新/订阅\"等干预对不同用户群体(cohort)效应差异巨大,但传统 A/B 难以分群估计。DML(Double Machine Learni",
+    "new_ps": "业务问题:平台对所有新妈妈用户统一发放\"新生儿满减券\",ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分 - 数据要求:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理) - DML 配置: - 第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$ - PCA 降维至 10 维,K-mea",
+    "roi": "1500-2500 万元"
+  },
+  {
+    "skill_id": "Skill-Switchback-Experiment-Design",
+    "old_ps": "在传统 A/B 难以适用的双边市场(物流仓配、动态定价、平台撮合)场景下,Switchback 实验通过对单一聚合单元随时间反复切换处理/控制状态来估计因果效应",
+    "new_ps": "业务问题:同一海外仓为 Shopify/Amazon/TikTok Shop 多渠道发货,测试\"AI 波次合并算法\"是否降低拣货时长",
+    "roi": "1500 万/年"
+  },
+  {
+    "skill_id": "Skill-AIGP-LLM-Dynamic-Pricing",
+    "old_ps": "传统 RL 定价只优化短期收益（当日 GMV / 点击转化），忽视了跨周期的用户粘性损耗：盲目降价快速促单，但破坏品牌溢价 → 用户形成\"等降价\"心理锚点 → ",
+    "new_ps": "业务痛点：吸奶器年度销量呈强季节性（Q3-Q4 旺季 GMV 占全年 65%），且 Momcozy 经常在大促前一周大幅降价抢占位次",
+    "roi": "1,321 万元"
+  },
+  {
+    "skill_id": "Skill-Customer-Journey-Prototype",
+    "old_ps": "客户旅程是跨渠道、多触点的序列数据，传统分析方法难以量化。本方法通过三步法实现旅程分析：1) 定义序列距离识别代表性原型；2) 基于原型距离预测购买概率；3) ",
+    "new_ps": "业务问题 母婴用户跨越App、小程序、线下门店、Web多个渠道，每个渠道的转化效率不同",
+    "roi": "1000万"
+  },
+  {
+    "skill_id": "Skill-Identified-Bayesian-MMM",
+    "old_ps": "传统开源 MMM（Robyn / Meridian）在仅有平稳投放数据时，会陷入一个数学死结：非线性饱和效应（spend 越多边际回报越低） 与 时变效应（节假",
+    "new_ps": "业务问题：CMO 拿到内部 MMM 报告，显示\"TikTok ROAS 极高远未饱和，建议把 Meta 预算砍半全移给 TikTok\"",
+    "roi": "1000 万元"
+  },
+  {
+    "skill_id": "Skill-Clickstream-Persona-Pipeline",
+    "old_ps": "论文：SimPersona [2605.14205] + BIP [2604.22762]",
+    "new_ps": "母婴跨境电商应用：独立站/APP 原始点击流 → 离散 persona token，驱动个性化推荐和 A/B 实验",
+    "roi": "837 万"
+  },
+  {
+    "skill_id": "Skill-Hierarchical-Demand-Forecasting-Reconciliation",
+    "old_ps": "母婴跨境补货场景下,各 SKU/仓/市场层独立预测后,加总不一致(SKU 求和 ≠ 仓库 ≠ 总量),导致采购计划矛盾、财务对账打架. HiFoReAd 用多阶",
+    "new_ps": "业务问题:Momcozy 60+ SKU × 多仓(上海/香港/海外仓) × 多市场(US/DE/JP),各层独立预测加总 30-50% 不一致;采购按 SKU 下单,但财务按市场聚合,两边数字对不上,月底对账 2-3 PM 天纯人工调和 - 数据要求:历史 SKU/仓/市场 三层销售时序 + 加总矩阵 S - HiFoReAd 配置: - Stage 1: LGBM + AutoETS 三月预测",
+    "roi": "800-1500 万元"
+  },
+  {
+    "skill_id": "Skill-Customer-Journey-Decision-Tree",
+    "old_ps": "从历史客服对话日志中归纳出可执行的决策树策略,而非手工编写规则。三步骤:对话状态聚类(将历史多轮对话聚类为典型 dialog state) → 策略树归纳(用决",
+    "new_ps": "业务问题:母婴出海电商客服 70% 工单是\"退换货咨询\"(尺码错、漏发、过敏等),人工处理成本高,响应慢",
+    "roi": "600 万元"
+  },
+  {
+    "skill_id": "Skill-GraphTrack-Cross-Device-Tracking",
+    "old_ps": "跨设备追踪的本质是：在没有用户级关联ID的情况下，用行为相似性判断\"两台设备属于同一个人\"。GraphTrack 将这一问题建模为异构图上的节点相似度计算：把设",
+    "new_ps": "业务问题：母婴用户在 TikTok 看到吸奶器短视频种草，切换到 Safari 搜索品牌名进独立站下单",
+    "roi": "600-1200 万元"
+  },
+  {
+    "skill_id": "Skill-MAA-Review-to-Action-Decision",
+    "old_ps": "传统评论分析停留在\"描述性\"层面(情感/属性). MAA 将其升级为\"规范性决策链路\":评论 → 问题 → 建议 → 评估 → 排序. 通过 5 个 Agent",
+    "new_ps": "业务问题:Momcozy M5 吸奶器在美国/德国/中国三市场销售,各市场用户痛点完全不同(美国关注续航便携、德国关注静音认证、中国关注清洗方便). 现有运营复盘只产出\"差评列表\",无法直接驱动产品改进决策——产品经理拿到差评列表还要花 1-2 周二次提炼 - 数据要求:三市场 Amazon Review API + market 标签 - MAA 配置: - 按市场分别聚类(K=5,每市场 5 ",
+    "roi": "510-920 万元/年"
+  },
+  {
+    "skill_id": "Skill-CAGED-Debiased-Rec",
+    "old_ps": "GNN 推荐系统（如 LightGCN）在图上做邻居聚合时，边权重天然由度数平方根决定。热门商品度数高，信息在传播时被反复放大，形成\"回声室效应\"——推荐系统拼",
+    "new_ps": "业务问题： Momcozy 吸奶器爆款 SKU 占全部流量的 60%+，200 余款配件（替换配件、特殊尺码）几乎零曝光",
+    "roi": "500 万元"
+  },
+  {
+    "skill_id": "Skill-UCB-LDP-Dynamic-Pricing",
+    "old_ps": "在电商动态定价中，用户真实的保留价格（Valuation，即\"最多愿意出多少钱\"）是不可观测的——你唯一能看到的是在展示价格 $p$ 下用户是否购买（Binar",
+    "new_ps": "业务问题：独立站每天面对来自北美高净值用户（iPhone + 5分钟停留）和东南亚价格敏感用户（安卓 + 10秒跳出）的混合流量",
+    "roi": "500万"
+  },
+  {
+    "skill_id": "Skill-HMMCB-Cross-Channel-Bidding",
+    "old_ps": "HMMCB 的核心洞察：跨渠道广告竞价是一个两层嵌套决策问题——上层决定「把钱分给哪个渠道」，下层决定「每个渠道出多少价」。单一智能体无法同时优化两个时间尺度和",
+    "new_ps": "母婴 DTC 品牌（如储奶袋/吸奶器）同时在 Google Ads（搜索意图强）、Meta（品牌认知+再营销）、TikTok Shop（内容种草+购买）三个渠道投放",
+    "roi": "500 万"
+  },
+  {
+    "skill_id": "Skill-DARA-Agentic-MMM-Optimizer",
+    "old_ps": "固定总预算下,广告主需在 T 个时段/渠道间分配预算 $b_1, \\ldots, b_T$ 最大化总回报。DARA 双阶段架构:Phase 1 Few-shot",
+    "new_ps": "业务问题:婴儿推车季节性爆款上线,Google Ads 历史只有 3-5 周数据,传统规则策略难快速找到最优出价时段 - 数据要求:近 3-5 周 Google Ads ROAS 时段数据 + 月度总预算 - DARA 配置:T = 7(一周)或 24(一天时段);Phase 1 LLM 读历史生成日预算向量;Phase 2 每日 ROAS 反馈调整下一日 - 业务价值:冷启动期 ROAS 提升 ",
+    "roi": "360-720 万元"
+  },
+  {
+    "skill_id": "Skill-LACA-CrossLingual-ABSA",
+    "old_ps": "跨语言 ABSA 痛点:目标语言(德/法/西/日)无标注数据,翻译方法会丢失 aspect 词对齐. LACA 用逆向去噪思路:① 用英文标注模型对目标语言文本",
+    "new_ps": "业务问题:Momcozy 在德/法/西市场每月接收 5000+ 母语客服工单(如德语 \"Die Verpackung ist sehr schwer zu öffnen\"). 传统做法用 Google Translate 翻译成英文后跑英文 ABSA,翻译会丢失 aspect 对齐(\"Verpackung\" → \"package\" 时 BIO 边界错位 30%+). 跨境品牌每月因机翻错误导致工单",
+    "roi": "300-600 万元"
+  },
+  {
+    "skill_id": "Skill-Multi-Channel-Inventory-Pooling",
+    "old_ps": "多个销售渠道（Amazon / 独立站 / TikTok Shop）独立备货会造成总库存冗余——A 渠道缺货的同时 B 渠道积压。库存池化通过调拨中心（tran",
+    "new_ps": "业务问题：吸奶器在 Amazon FBA 仓缺货（销量超预期），但独立站海外仓还有 200 件积压，TikTok Shop 也在慢速消化——三渠道信息不互通，总库存 800 件却出现\"某渠道缺货 + 某渠道积压\"",
+    "roi": "200-400 万元"
+  },
+  {
+    "skill_id": "Skill-PIE-Experimental-MTA",
+    "old_ps": "广告归因的根本悖论：精度 vs 可信度。纯 RCT 实验（停投对照）可以给出无偏的渠道因果增量，但只能看总盘，无法下钻到每一条 Campaign 甚至每一次点击",
+    "new_ps": "业务问题：Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop",
+    "roi": "200 万"
+  },
+  {
+    "skill_id": "Skill-Data-Collection-Causal-Debiasing",
+    "old_ps": "跨境电商数据采集面临一个根本性困境：你能采到的数据，恰恰不是随机样本。Amazon 评论爬虫只能采集到购买且写了评论的买家（约 2-5% 购买者），而这批人的特",
+    "new_ps": "业务背景：某母婴品牌通过爬虫采集 Amazon 评论，分析\"打折 coupon 是否提升复购率\"",
+    "roi": "180 万"
+  },
+  {
+    "skill_id": "Skill-User-Lifecycle-STAN",
+    "old_ps": "用户在不同生命周期阶段对推荐任务有不同偏好。新用户需要探索，成熟用户需要精准推荐。STAN通过识别用户当前生命周期阶段，自适应调整多任务学习权重，实现\"千人千面",
+    "new_ps": "业务问题 母婴出海电商用户决策周期长（孕期到育儿多阶段），不同阶段用户需求差异巨大",
+    "roi": "176万元"
+  },
+  {
+    "skill_id": "Skill-Imbalanced-Data-Handling",
+    "old_ps": "解决\"少数类样本太少，模型学不到东西\"的问题。在母婴电商中，流失（5%）、欺诈（<1%）、高价值转化（3%）都是典型不平衡场景。常规模型在不平衡数据上会偏向多数",
+    "new_ps": "业务问题：流失率 5%，直接用 XGBoost 训练，Recall 只有 0.3——70% 的流失用户没被识别",
+    "roi": "150-300 万元"
+  },
+  {
+    "skill_id": "Skill-FrontDoor-Causal-MTA",
+    "old_ps": "多触点归因的致命缺陷：广告数据中存在一个隐身幽灵——未观测混淆因子 U（用户内心的强烈购买意愿）。这个幽灵同时导致用户\"疯狂点击各种重定向广告（触点 T）\"并且",
+    "new_ps": "业务问题：孕晚期用户购买周期 6-8 周，在\"下定决心买推车\"后主动搜索并点击所有重定向短信/DPA 广告",
+    "roi": "150-300 万元"
+  },
+  {
+    "skill_id": "Skill-Agentic-Workflow-Compilation",
+    "old_ps": "传统 LangGraph/CrewAI 等框架在运行时通过 Orchestrator 逐步调用 LLM 完成多步 SOP：每一步都需要独立的 API 调用、上下",
+    "new_ps": "业务问题：每日需要上架数百个 SKU，每个 SKU 经过「标题优化→图片描述生成→合规检查→关键词填写」4 步 SOP，当前用 LangGraph 编排，frontier 模型成本约 $0.15/SKU × 1000 SKU = $150/天",
+    "roi": "$150/天 → 约 $0.5–1.2/天（按 128–462× 节省比例）"
+  },
+  {
+    "skill_id": "Skill-CausalRAG-Knowledge-Retrieval",
+    "old_ps": "传统 RAG 和 GraphRAG 的召回逻辑都基于\"语义相似度\"，本质是在问「谁和我长得像？」而非「谁是我的根因？」。当用户问\"为什么机器突然停了\"时，向量检",
+    "new_ps": "业务问题： 用户反馈\"机器转了两圈突然停下并闪红灯\"，传统 FAQ 机器人把所有带\"红灯\"的内容（充电时亮红灯/故障码等）全部返回，答非所问，最终用户申请退货",
+    "roi": "120-200 万元"
+  },
+  {
+    "skill_id": "Skill-EventCast-LLM-Event-Forecasting",
+    "old_ps": "核心思想：传统时序模型（ARIMA、Prophet、TFT）在大促/节假日期间严重失效，原因是分布偏移——大促期的需求量级、峰值形态与日常完全不同，历史模式无法",
+    "new_ps": "业务问题：某母婴品牌618大促备货奶粉 SKU（如 A2 奶粉 900g），需提前 7 天向供应商下 PO",
+    "roi": "100 万"
+  },
+  {
+    "skill_id": "Skill-LLM-Augmented-Recommendation",
+    "old_ps": "传统推荐系统（Matrix Factorization、深度 CTR 模型）将用户行为编码为稠密向量，擅长捕捉行为规律，但无法理解用户用自然语言表达的复杂意图（",
+    "new_ps": "业务背景：母婴跨境电商新用户注册率高但转化低，约 65% 新用户第一屏浏览 ≤3 个商品后跳出",
+    "roi": "100万"
+  },
+  {
+    "skill_id": "Skill-Deep-Learning-Churn-Prediction",
+    "old_ps": "核心思想：利用深度神经网络（DNN）自动学习用户行为特征表示，预测客户在特定时间窗口内停止购买/使用服务的可能性。相比传统机器学习方法，深度学习能自动捕获非线性",
+    "new_ps": "业务问题： 母婴订阅盒服务（如每月奶粉+尿布套餐）面临用户流失风险",
+    "roi": "100 万"
+  },
+  {
+    "skill_id": "Skill-LTV-Prediction-ZILN",
+    "old_ps": "LTV (Customer Lifetime Value, 客户生命周期价值) 预测是增长模型的核心能力。传统回归方法难以处理 LTV 分布的两个典型特征：零膨",
+    "new_ps": "业务问题： 我们通过 Facebook/TikTok 广告获取了大量北美新客，但并非所有新客都有长期价值",
+    "roi": "100-200 万"
+  },
+  {
+    "skill_id": "Skill-KG-Augmented-Recommendation-CoLaKG",
+    "old_ps": "传统 KG 推荐(KGAT/KGIN)把 KG 结构硬编码为 embedding,缺失语义理解。CoLaKG 用 LLM 读懂 KG:对每个 item 提取局部",
+    "new_ps": "业务问题:海外华人妈妈购买奶粉需综合考量品牌(HiPP/Aptamil)、成分(DHA/HMO 益生元)、段位(1段/2段)、认证(EU 有机/Non-GMO),传统 CF 无法解读这些维度",
+    "roi": "100-200 万元"
+  },
+  {
+    "skill_id": "Skill-CABB-Cross-Category-Attribution",
+    "old_ps": "电商广告平台大量 Session 存在 CABB（Click A, Buy B） 现象——用户点击了商品 A 的广告，但最终购买的是商品 B。传统的 Last-",
+    "new_ps": "业务问题：用户点击吸奶器广告，进入品牌店铺后转而购买了储奶袋和奶瓶",
+    "roi": "100 万元"
+  },
+  {
+    "skill_id": "Skill-Flowr-Supply-Chain-MAS",
+    "old_ps": "Flowr 将人工密集型零售供应链操作系统性地分解为 6 个专业化 AI Agent 联盟，由中央 Reasoning LLM 协调编排，供应链经理通过 MCP",
+    "new_ps": "业务问题：母婴品牌在亚马逊/独立站同时运营，SKU 达 500+，跨境仓（海外仓 + 国内直发）补货涉及 DHL/UPS 运输周期（15-30 天）、海关清关（3-7 天）、Amazon FBA 入仓（1-5 天），任何一环延误都导致断货（Lost Buy Box，单 SKU 日损失 2,000-8,000 元）",
+    "roi": "91 万元"
+  },
+  {
+    "skill_id": "Skill-Context-Compression",
+    "old_ps": "ACON(Agent Context Optimization) 解决长 horizon LLM Agent 的核心瓶颈:上下文随交互无界增长。Agent 在每",
+    "new_ps": "跨境母婴客服 1 次对话经常 10-30+ 轮,Agent 在执行 RCA(Root Cause Analysis)、生成回复、生成报告时需要历史完整对话 + 多次 API 返回(订单详情、物流数据、产品规格)",
+    "roi": "90% 成本, 性能接近 GPT-5"
+  },
+  {
+    "skill_id": "Skill-StaR-Review-Statement-Ranking",
+    "old_ps": "传统可解释推荐让 LLM 生成自由文本解释,有 3 大问题:① 幻觉(生成评论中不存在的属性)、② 难以评估(自由文本只能用主观打分)、③ 粒度不可控. Sta",
+    "new_ps": "业务问题:Momcozy 暖奶器在 Amazon US/DE 各 5000+ 评论,差评包含细碎复合表达(如\"加热慢又不均匀,温控也不准\"). 传统 ABSA 把整句标注为\"加热问题\",丢失了 3 个独立改进点;直接用 LLM 总结容易生成评论中不存在的属性(如\"接口设计差\") - 数据要求:Amazon Review API 双市场评论 - StaR 配置: - Step 1 Candidate",
+    "roi": "80-150 万/年"
+  },
+  {
+    "skill_id": "Skill-Aquarius-Brand-Video-Generation",
+    "old_ps": "工业级营销视频生成系统——不是\"能生成视频就行\"，而是面向\"千人千面\"品牌营销场景的完整管线：图生视频、文生视频(Avatar)、视频修复、个性化、分布式数据管",
+    "new_ps": "业务问题：母婴品牌需要在美/德/英/日 4 个市场投放品牌视频广告——每个市场需要不同模特、不同语言字幕、不同节日主题（美国感恩节/德国圣诞节/日本新年）",
+    "roi": "80-150 万元"
+  },
+  {
+    "skill_id": "Skill-IV-Instrumental-Variables",
+    "old_ps": "核心思想：当解释变量（如价格）与误差项相关时（内生性），直接回归会产生偏误。工具变量法是找一个\"只通过影响解释变量来影响结果\"的外生变量（工具变量），用它的变异",
+    "new_ps": "业务问题：Momcozy 想知道自己产品的价格弹性——价格下降10%，销量会增加多少",
+    "roi": "50万"
+  },
+  {
+    "skill_id": "Skill-Intelligent-Attribution-Causal-Forest",
+    "old_ps": "Causal Forest（因果森林）是 Uplift Modeling 的进阶方法，通过随机森林的集成学习框架直接估计异质性处理效应（CATE）。与传统 Up",
+    "new_ps": "业务问题： 我们在美国、加拿大、英国、德国同步投放吸奶器广告，不同市场的用户行为差异显著",
+    "roi": "50 万"
+  },
+  {
+    "skill_id": "Skill-Causal-Time-Series-Forecasting-GCF",
+    "old_ps": "电商场景中,商品因配送延迟、缺货、Banner 压制等干预导致需求被\"压制\",真实需求 $Y(0)$(无干预反事实)永远不可观测。GCF 用 RGCN + Di",
+    "new_ps": "业务问题:平台在大促期对核心母婴 SKU(纸尿裤、婴儿车)做搜索权重提升 + 首页 Banner 曝光,需要回答\"如果没做促销,需求应该是多少\"——避免把自然增长功劳归到促销 - 数据要求:全品类销量历史 + 促销标记 + 商品图谱(同类竞品关系) - GCF 配置:节点=SKU,边=同品类竞品,干预=促销曝光,合成控制=未受促销的同类 - 业务价值:促销 ROI 计算精度提升 30-50%,避免",
+    "roi": "50-100 万元"
+  },
+  {
+    "skill_id": "Skill-Category-Trend-Forecasting",
+    "old_ps": "品类趋势预测不是 point forecast，而是识别正在上升/下降的品类需求信号——Google Trends 搜索量、Amazon Best Seller",
+    "new_ps": "监测到\"wearable breast pump\"（穿戴式吸奶器）谷歌搜索量过去 6 个月增长 180%（$p<0.01$），BSR 上升 45%，TikTok 话题 #wearablepump 播放量 2.3 亿",
+    "roi": "50-100 万元"
+  },
+  {
+    "skill_id": "Skill-Generative-Agent-Simulation",
+    "old_ps": "在产品发售前或营销活动上线前，传统方法（规则 ABM 或事后统计）无法捕捉真实人类社会的复杂性——冲动消费、品牌偏好、朋友间口碑传播。本 Skill 将斯坦福生",
+    "new_ps": "业务问题：某母婴 DTC 独立站准备从纯打折升级为\"付费会员制（年费 $49 免邮 + 专属抢购）\"",
+    "roi": "50-200 万元"
+  },
+  {
+    "skill_id": "Skill-Agentic-SCKG-Risk",
+    "old_ps": "Agentic SCKG Risk Analyzer 解决出海品牌面临的生死级挑战：当全球某处发生黑天鹅事件（罢工/地震/制裁），你的旗舰产品会在多少天后断供？",
+    "new_ps": "手动 ERP 排查可能要 2-3 周，到时候竞争对手早把备货扫空了",
+    "roi": "50-200 万元"
+  },
+  {
+    "skill_id": "Skill-RAG-Enhanced-Data-Analysis",
+    "old_ps": "将 RAG 与数据分析 Agent 结合——数据分析问题检索相关知识库文档（历史分析报告、业务指标定义、分析方法模板），增强分析准确性和一致性。Query → ",
+    "new_ps": "\"为什么德国站吸奶器转化率下降\"→ RAG 检索到上月分析\"德国站转化率下降是因为欧元贬值导致价格上涨 8%\"→本次发现同样模式→自动引用历史结论+实时数据验证",
+    "roi": "减少重复分析 50%，节省分析人力"
+  },
+  {
+    "skill_id": "Skill-Hyperparameter-Optimization",
+    "old_ps": "模型有一堆\"旋钮\"（超参），拧对了性能飞跃，拧错了白费算力。 超参调优系统化地搜索最优超参组合，而非手动试错。",
+    "new_ps": "业务问题：默认参数的 XGBoost 流失预测 AUC=0.78，希望通过超参调优提升到 0.82+",
+    "roi": "50-100 万元"
+  },
+  {
+    "skill_id": "Skill-Review-Pain-Point-Mining",
+    "old_ps": "竞品的差评就是新品的机会——从竞品评论中自动提取「用户不满意什么」，这些未被满足的需求点就是你新品应该攻克的方向。Painsight 用无监督框架自动完成\"情感",
+    "new_ps": "业务问题： 想进入\"电动吸奶器\"品类，但已有 Momcozy/Medela/Spectra 等强竞品",
+    "roi": "50-100 万元"
+  },
+  {
+    "skill_id": "Skill-User-Profile-Long-Memory",
+    "old_ps": "传统电商推荐的痛点：每次会话独立，用户偏好从零识别——上月的购买行为、表达过的品牌偏好、当下育儿阶段的隐含需求全部丢失。用户画像长期记忆（User Profil",
+    "new_ps": "业务问题：用户上月购买了 Stage 1 奶粉，系统推断宝宝约 2-3 月龄",
+    "roi": "50 万"
+  },
+  {
+    "skill_id": "Skill-Dynamic-Pricing-Elasticity",
+    "old_ps": "价格不是固定数字，而是杠杆——通过估计每个 SKU/市场/时段的需求价格弹性，找到利润最大化的动态定价策略。核心公式：最优价格 $P^* = \\frac{\\ep",
+    "new_ps": "业务问题：吸奶器在美国定价 $129，德国 €119，英国 £99",
+    "roi": "50 万"
+  },
+  {
+    "skill_id": "Skill-AnchorCrafter-Virtual-Anchor-Demo",
+    "old_ps": "输入一张真人参考图 + 一张商品图 + 动作序列，生成虚拟主播手持商品自然交互的短视频——就像真人主播在 TikTok 上展示产品一样。核心技术是人物-商品交互",
+    "new_ps": "业务问题： 在 TikTok 美国站推吸奶器，需要大量真人主播演示视频——但海外主播贵（$200-500/条），中文主播语言不通，且更换主播需重新拍摄",
+    "roi": "50-100 万元"
+  },
+  {
+    "skill_id": "Skill-Ensemble-Methods",
+    "old_ps": "三个臭皮匠胜过诸葛亮——将多个弱学习器组合成强学习器，通过\"群体智慧\"降低偏差（Boosting）或方差（Bagging），获得比任何单一模型更好的预测性能。",
+    "new_ps": "业务问题：单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78",
+    "roi": "40-80 万元"
+  },
+  {
+    "skill_id": "Skill-Competitor-Product-Intelligence",
+    "old_ps": "监测竞品 SKU 的新增/下架/价格变动/评价变化，构建竞品选品雷达。核心是异常检测 + 趋势归类——区分\"竞品战略性上新\"（值得跟进）和\"无效上新\"（SKU ",
+    "new_ps": "监测到竞品 Momcozy 密集上线 5 个\"Silicon Flange\"（硅胶法兰）新 SKU，且上线 2 周内均进入 BSR Top 5000",
+    "roi": "35-70 万元"
+  },
+  {
+    "skill_id": "Skill-Hybrid-Search-BM25-Vector",
+    "old_ps": "单一检索方式存在固有短板：BM25 擅长精确关键词匹配（SKU 编号、品牌名、型号），但无法理解语义；向量检索擅长语义模糊匹配，但对精确词汇（如\"B07X4X5",
+    "new_ps": "业务问题： 母婴出海电商的搜索场景高度两极化：部分用户输入精确型号（\"Spectra S1 Plus\"、\"B07X4X5GXD\"），纯向量检索因 OOV 问题召回率低；另一部分用户输入模糊语义查询（\"适合背奶妈妈的静音吸奶器\"），纯 BM25 只能匹配字面词汇，无法理解意图",
+    "roi": "35 万"
+  },
+  {
+    "skill_id": "Skill-Intelligent-Prediction-Doubly-Robust",
+    "old_ps": "Doubly Robust Estimation（双重稳健估计）是一种鲁棒的因果推断方法，它结合了倾向评分（Propensity Score）和结果回归（Out",
+    "new_ps": "业务问题： 我们计划在北美市场投放吸奶器季节性促销活动（如母亲节、黑五）",
+    "roi": "30-50 万"
+  },
+  {
+    "skill_id": "Skill-Cross-Market-Product-Transfer",
+    "old_ps": "一个在国内卖爆的母婴品，在海外市场能火吗？ Bert4XMR 将产品表示分解为两个独立组件：市场偏差（market embedding）和通用语义（item e",
+    "new_ps": "业务问题： 一款吸奶器在京东月销 5000+ 台（¥399），需要判断是否引入 Amazon US（$59.99）、Amazon DE（€54.99）、Amazon UK（£49.99）",
+    "roi": "30-60 万元"
+  },
+  {
+    "skill_id": "Skill-Feature-Selection",
+    "old_ps": "少即是多——从大量特征中筛选出真正有用的子集，提升模型性能、降低过拟合风险、减少训练/推理成本、增强可解释性。",
+    "new_ps": "业务问题：我们从多个数据源（CRM、广告平台、网站分析、客服系统）汇总了 200+ 特征",
+    "roi": "30-60 万元"
+  },
+  {
+    "skill_id": "Skill-DARA-Agentic-MMM",
+    "old_ps": "传统 Marketing Mix Modeling（MMM）存在根本性瓶颈：大量人工调参。数据科学家需要手动尝试 adstock（广告滞留）半衰期、satura",
+    "new_ps": "业务背景：某母婴辅食品牌在美国市场同时投放 Amazon Ads、Meta（FB+IG）、TikTok，月均广告预算 $15 万美元，但各渠道的 adstock 效应差异显著（TikTok 内容影响力可持续 2-4 周，Amazon 关键词效果衰减快）",
+    "roi": "30-60 万"
+  },
+  {
+    "skill_id": "Skill-Multi-Objective-Budget-Allocation",
+    "old_ps": "广告预算分配不能只看 ROI——需要同时平衡\"短期销售\"\"品牌建设\"\"新品推广\"三个目标。多目标优化（Pareto 最优）找到三个目标之间的最佳 trade-o",
+    "new_ps": "业务问题：$30 万月预算要同时做三件事——黑五冲销量（短期 ROI）、母婴博主种草（品牌搜索量）、新款吸奶器 S2 预热（新品曝光）",
+    "roi": "30-50 万元"
+  },
+  {
+    "skill_id": "Skill-Auto-Skill-Synthesis",
+    "old_ps": "SkillForge 解决企业级 Agent Skill 的两大难题:(1) 通用 Skill 创建器缺少领域基础,产出的初始 Skill 与真实任务对不齐;(",
+    "new_ps": "母婴出海跨境客服 1 单可能涉及 10+ 国家、5+ 平台(Shopify/Amazon/TikTok Shop/独立站)、30+ 产品类目,人工写 SOP 速度跟不上业务扩张",
+    "roi": "bad case 自动诊断省去人工质检 30%-50% 工时"
+  },
+  {
+    "skill_id": "Skill-Guardrailed-Uplift-Targeting",
+    "old_ps": "核心思想：不是问\"谁会流失\"，而是问\"谁会因为我的干预而改变行为\"——并且在预算和收入保护约束下，只精准打击这批人。",
+    "new_ps": "当前做法是向所有\"高流失风险\"用户统一发\"免费延长30天\"优惠券，ROI 极低——很多用户即使不发券也会续订",
+    "roi": "25-28万"
+  },
+  {
+    "skill_id": "Skill-DeepAnalyze-Autonomous-Data-Science-Agent",
+    "old_ps": "DeepAnalyze 的核心思想是让LLM像人类数据科学家一样工作——不是按预定义工作流执行固定步骤，而是自主决定下一步该做什么。",
+    "new_ps": "背景：母婴品牌在Amazon、Shopify、SHEIN等多个平台销售，运营团队每周需要汇总各平台数据生成分析报告，耗时4-6小时/周",
+    "roi": "20万"
+  },
+  {
+    "skill_id": "Skill-PersonaBot-RAG-Profiling",
+    "old_ps": "传统用户画像依赖人工访谈或问卷，周期长（数周）、主观性强、难以规模化更新。PersonaBot 的核心创新是：把 RAG（检索增强生成）与 LLM 结合，将原始",
+    "new_ps": "业务问题：Momcozy 在 Amazon US 的 S9/S12 系列累积数万条评论，但产品团队只能依赖人工抽查了解用户诉求，无法识别\"职场背奶妈妈\"与\"新手妈妈\"在痛点上的差异，导致广告文案和详情页对所有人说同样的话，转化率损耗严重 - 数据要求： - Amazon Review 数据（user_id、product_id、评论文本、评分、时间戳），CSV 格式 - 数量：每 SKU ≥ 50",
+    "roi": "20-40 万元"
+  },
+  {
+    "skill_id": "Skill-Markdown-Optimization",
+    "old_ps": "清仓不是\"打最低折卖完就行\"，而是在库存生命周期内最大化总回收价值——太早打高折扣损失利润，太晚打低折扣剩库存。核心是找到每条折扣曲线上的最优折扣路径。",
+    "new_ps": "业务问题：S1 吸奶器库存 500 件，成本 $60，原价 $129",
+    "roi": "20-50 万元"
+  },
+  {
+    "skill_id": "Skill-Semantic-Chunking-Strategy",
+    "old_ps": "文档分块（Chunking）是 RAG（检索增强生成）管道中影响效果最大的单一因子。研究表明，分块策略的选择可以导致检索精度 ±30% 的差异（arXiv:24",
+    "new_ps": "业务问题： 母婴出海电商的 Amazon Listing 商品详情页通常包含多个话题段落：产品特性（Safety Features）、使用说明（How to Use）、注意事项（Warnings）、规格参数（Specifications）",
+    "roi": "18 万"
+  },
+  {
+    "skill_id": "Skill-Listing-AI-Copywriting",
+    "old_ps": "核心思想：给定商品属性（品类/材质/功能/目标用户），自动生成符合 Amazon 格式要求的完整 Listing 文案，同时通过归因梯度反向指出「改哪个词能提升",
+    "new_ps": "某母婴品牌每月新品 8-12 个 SKU，人工撰写一套完整 Listing（标题+5条Bullet+描述+后台ST）需要 2-3 小时/SKU，月均耗时 20-30 小时",
+    "roi": "18-192 万元"
+  },
+  {
+    "skill_id": "Skill-Channel-Saturation-Curve",
+    "old_ps": "广告预算不是线性回报——每多投 $1，边际回报递减。渠道饱和曲线量化\"这个渠道再投多少钱就没增量了\"，避免过度投放。",
+    "new_ps": "业务问题：Facebook 月预算从 $5 万加到 $8 万后，ROAS 从 3.2 掉到 2.1",
+    "roi": "18-25 万元"
+  },
+  {
+    "skill_id": "Skill-Session-Based-Recommendation-SR-GNN",
+    "old_ps": "核心思想：将用户匿名浏览 session 中的商品交互序列建模为图结构，用图神经网络（GNN）捕捉商品间的复杂转移关系，取代传统 RNN 只能建模线性顺序的局限",
+    "new_ps": "业务问题：母婴出海电商中 60%+ 用户以匿名状态浏览（未登录/未注册）",
+    "roi": "首年投入约 15 万，预期年增量 GMV 约 1440 万，"
+  },
+  {
+    "skill_id": "Skill-Embedding-Fundamentals",
+    "old_ps": "嵌入（Embedding）解决的本质问题是：如何将高维稀疏的离散实体（用户 ID、商品 ID、类目）映射为低维稠密连续向量，使得语义相近的实体在向量空间中距离相",
+    "new_ps": "业务背景：跨境平台上架 50 款新款婴儿车，无任何历史购买数据，纯 ID 嵌入无法初始化，导致新品在推荐系统中几乎不曝光（冷启动问题）",
+    "roi": "15-50 万元"
+  },
+  {
+    "skill_id": "Skill-Ad-to-Behavior-Funnel",
+    "old_ps": "连接广告投放和用户行为分析——把广告点击后的用户行为（页面浏览、加购、购买、复购）建模为带广告触点的增强漏斗。马尔可夫链建模各广告触点→行为状态的转移概率。",
+    "new_ps": "FB 吸奶器广告点击后：35% 进详情页 → 12% 加购 → 5% 首购 → 2% 复购",
+    "roi": "15-25 万元"
+  },
+  {
+    "skill_id": "Skill-Competitive-Response-Modeling",
+    "old_ps": "竞品投放会劫持我们的广告效果（尤其是同一品类的搜索广告）。竞争响应建模量化\"竞品加投 $X 导致我们损失多少\"，并设计最优反制策略。",
+    "new_ps": "Momcozy 在美国 Prime Day 前一周突然将吸奶器搜索广告预算翻倍，我们的 impression share 从 22% 跌到 14%",
+    "roi": "15-30 万元"
+  },
+  {
+    "skill_id": "Skill-Generative-Audience-LLM-Auction",
+    "old_ps": "传统精准广告的灵魂是 Cookie + Lookalike：先用第三方 Cookie 追踪用户跨站行为，再用 ID 图谱做 Lookalike 扩量。ATT 政",
+    "new_ps": "业务问题：匿名访客（未授权追踪）向 AI 助手提问穿搭，传统推荐因无 Cookie 完全失效，品牌白白流失高意图实时流量 - 数据要求：用户自然语言查询文本 + SKU 库（含品类、场景标签、图片描述）+ 广告主实时出价 - GenAI 方案： - 用户问：\"我下周去海边参加婚礼，梨形身材，有什么建议",
+    "roi": "15 万"
+  }
+]

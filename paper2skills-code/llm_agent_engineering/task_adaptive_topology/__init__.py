@@ -1,0 +1,38 @@
+"""AdaptOrch: Task-adaptive multi-agent orchestration topology routing."""
+from .adaptorch import (
+    AdaptOrch,
+    AdaptiveSynthesizer,
+    ConsistencyScore,
+    DAGAnalyzer,
+    DAGProperties,
+    DependencyEdge,
+    ExecutionResult,
+    HierarchicalExecutor,
+    HybridExecutor,
+    ParallelExecutor,
+    RouterThresholds,
+    SequentialExecutor,
+    Subtask,
+    TaskDAG,
+    Topology,
+    TopologyRouter,
+)
+
+__all__ = [
+    "AdaptOrch",
+    "AdaptiveSynthesizer",
+    "ConsistencyScore",
+    "DAGAnalyzer",
+    "DAGProperties",
+    "DependencyEdge",
+    "ExecutionResult",
+    "HierarchicalExecutor",
+    "HybridExecutor",
+    "ParallelExecutor",
+    "RouterThresholds",
+    "SequentialExecutor",
+    "Subtask",
+    "TaskDAG",
+    "Topology",
+    "TopologyRouter",
+]

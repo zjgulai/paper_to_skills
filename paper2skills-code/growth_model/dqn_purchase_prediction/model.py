@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from collections import deque, defaultdict
 import random
 import warnings
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')  # disabled 2026-05-17: prefer local catch_warnings; un-comment if demo noise is excessive
 
 
 @dataclass

@@ -25,7 +25,7 @@
 2. 设定权重（算法25%、应用25%、代码25%、关联10%、价值15%）
 3. 设定通过标准：总分≥7分且各维度≥最低要求
 4. 增强审核流程，新增计算总分步骤和问题库记录
-5. 新建审核问题库文件 `/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/审核问题库.md`
+5. 新建审核问题库文件 `/Users/lute/project/paper_to_skills/paper2skills-vault/07-资源库/审核问题库.md`
 6. 优化触发关键词
 
 ### 测试验证

@@ -3,11 +3,12 @@ name: Monodense-单品价格弹性估计
 description: 基于 Walmart 提出的 Monodense 深度神经网络，无需对照实验即可从大规模交易数据中学习单品价格弹性，为动态定价和促销决策提供量化依据。
 paper: arXiv:2603.29261
 area: 04-供应链
+roadmap_phase: phase1
 ---
 
 # Skill: Monodense 单品价格弹性估计
 
-## 一、算法原理
+## ① 算法原理
 
 ### 核心思想
 
@@ -65,7 +66,7 @@ $$
 
 ---
 
-## 二、业务应用
+## ② 母婴出海应用案例
 
 ### 场景 1: Momcozy 跨境电商单品动态定价
 
@@ -92,7 +93,7 @@ Momcozy 在 Amazon、Wayfair 等渠道销售吸奶器、温奶器、背带等母
 
 ---
 
-## 三、代码模板
+## ③ 代码模板
 
 ### 文件结构
 
@@ -163,7 +164,7 @@ category
 
 ---
 
-## 五、业务价值评估
+## ⑤ 商业价值评估
 
 ### 价值量化
 - **直接增收**：精准的低弹性 SKU 提价策略可提升毛利率 3-8%
@@ -194,3 +195,16 @@ category
 | Double Machine Learning | 36.1% | 0.43 |
 
 Monodense-DLM 在需求预测精度和弹性估计一致性上均显著优于传统 ML 方法。
+
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 弹性估计需要价格、销量、促销等特征工程
+
+### 延伸技能
+- [Skill-ROAS-Budget-Optimization](../13-广告分析/[[Skill-ROAS-Budget-Optimization]].md) — 弹性 + 广告 ROI 形成定价-投放联合优化
+- [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — 弹性是促销效果分析的微观基础
+
+### 可组合
+- [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — 弹性是 MMM 的关键输入参数

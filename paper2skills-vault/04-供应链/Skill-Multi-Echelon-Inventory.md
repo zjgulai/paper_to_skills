@@ -376,6 +376,9 @@ if __name__ == '__main__':
 
 ---
 
+
+- **可组合**：[[Skill-Demand-Forecasting-Supply-Chain]] / [[Skill-Safety-Stock-Replenishment]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

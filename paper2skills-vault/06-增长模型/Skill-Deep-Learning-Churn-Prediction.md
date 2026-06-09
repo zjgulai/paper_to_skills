@@ -88,24 +88,17 @@ python churn_model.py
 
 ---
 
+
 ## ④ 技能关联
 
-**前置技能**：
-- **RFM 分析**: 经典的客户价值分层方法，提供基础特征
-- **分类模型评估**: 理解 AUC、Precision、Recall、F1 等指标
-- **类别不平衡处理**: 过采样（SMOTE）/欠采样/代价敏感学习
+### 前置技能
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 深度流失预测高度依赖特征工程
 
-**延伸技能**：
-- **生存分析**: 预测用户留存时间（而不仅是二分类）
-- **Uplift Modeling**: 预测干预效果，识别"可挽留"用户
-- **Look-alike**: 基于高价值流失用户找相似新客
+### 延伸技能
+- [Skill-Uplift-Churn-Prediction](../06-增长模型/[[Skill-Uplift-Churn-Prediction]].md) — 从预测谁会流失升级到预测干预谁能挽留
 
-**可组合技能**：
-- **个性化推荐**: 对高风险用户推荐高转化商品挽留
-- **动态定价**: 对流失风险用户发放定向优惠券
-- **A/B 测试**: 验证不同挽留策略效果
-
----
+### 可组合
+- [Skill-DQN-Purchase-Prediction](../06-增长模型/[[Skill-DQN-Purchase-Prediction]].md) — 流失预测 + 购买预测形成完整生命周期决策
 
 ## ⑤ 商业价值评估
 

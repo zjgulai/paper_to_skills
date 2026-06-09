@@ -29,14 +29,14 @@ version: 0.1.0
 
 本地存储路径：
 ```
-/Users/pray/project/paper_to_skills/paper2skills-vault/[领域]/Skill-[算法名称].md
+/Users/lute/project/paper_to_skills/paper2skills-vault/[领域]/Skill-[算法名称].md
 ```
 
 ### 2. GitHub 代码仓库
 
 代码存储路径：
 ```
-/Users/pray/project/paper_to_skills/paper2skills-code/[领域]/[算法]/
+/Users/lute/project/paper_to_skills/paper2skills-code/[领域]/[算法]/
 ├── __init__.py
 ├── model.py
 └── example.py
@@ -45,9 +45,9 @@ version: 0.1.0
 ### 3. 飞书/Notion（可选）
 
 需要配置：
-- 飞书 Webhook URL（配置到 `/Users/pray/.paper2skills/feishu_webhook`）
-- Notion API Key（配置到 `/Users/pray/.paper2skills/notion_api_key`）
-- 数据库 ID（配置到 `/Users/pray/.paper2skills/notion_db_id`）
+- 飞书 Webhook URL（配置到 `/Users/lute/.paper2skills/feishu_webhook`）
+- Notion API Key（配置到 `/Users/lute/.paper2skills/notion_api_key`）
+- 数据库 ID（配置到 `/Users/lute/.paper2skills/notion_db_id`）
 
 ## 同步流程
 
@@ -57,13 +57,13 @@ version: 0.1.0
 
 ```bash
 # 基本用法：同步到 vault 和 github
-python /Users/pray/project/paper_to_skills/paper2skills-skills/paper-同步/scripts/sync.py --skill Skill-Uplift-Modeling.md --target vault,github
+python /Users/lute/project/paper_to_skills/paper2skills-skills/paper-同步/scripts/sync.py --skill Skill-Uplift-Modeling.md --target vault,github
 
 # 查看同步状态
-python /Users/pray/project/paper_to_skills/paper2skills-skills/paper-同步/scripts/sync.py --skill Skill-Uplift-Modeling.md --status
+python /Users/lute/project/paper_to_skills/paper2skills-skills/paper-同步/scripts/sync.py --skill Skill-Uplift-Modeling.md --status
 
 # 查看所有同步状态
-python /Users/pray/project/paper_to_skills/paper2skills-skills/paper-同步/scripts/sync.py --status
+python /Users/lute/project/paper_to_skills/paper2skills-skills/paper-同步/scripts/sync.py --status
 ```
 
 ### 同步状态追踪
@@ -71,7 +71,7 @@ python /Users/pray/project/paper_to_skills/paper2skills-skills/paper-同步/scri
 同步后，更新同步状态记录：
 
 ```
-状态记录路径：`/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/sync_status.json`
+状态记录路径：`/Users/lute/project/paper_to_skills/paper2skills-vault/07-资源库/sync_status.json`
 ```
 
 状态记录格式：

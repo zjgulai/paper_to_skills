@@ -111,14 +111,14 @@ python3 model.py
 ## ④ 技能关联
 
 ### 前置技能
-- **Skill-User-Lifecycle-STAN**: 生命周期阶段识别，可与原型检测结合
-- **Skill-Time-Series-Forecasting**: 时序数据处理能力
-- **Skill-Customer-Churn-Prediction**: 流失预测基础
+- [[Skill-User-Lifecycle-STAN]]: 生命周期阶段识别，可与原型检测结合
+- [[Skill-Time-Series-Forecasting]]: 时序数据处理能力
+- [[Skill-Customer-Churn-Prediction]]: 流失预测基础
 
 ### 延伸技能
-- **Skill-Causal-Uplift-Modeling**: 评估反事实干预的真实因果效应
-- **Skill-Multi-Armed-Bandit**: 基于原型分群的动态策略优化
-- **Skill-Recommendation-System**: 将反事实建议转化为推荐策略
+- [[Skill-Causal-Uplift-Modeling]]: 评估反事实干预的真实因果效应
+- [[Skill-Multi-Armed-Bandit]]: 基于原型分群的动态策略优化
+- [[Skill-Matrix-Factorization]]: 将反事实建议转化为推荐策略
 
 ### 可组合技能
 | 组合技能 | 组合效果 | 应用场景 |

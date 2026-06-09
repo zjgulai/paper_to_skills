@@ -153,7 +153,7 @@ version: 0.1.0
 
 ### Step 7: 记录问题到问题库（可选）
 
-如果发现常见问题模式，记录到 `/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/审核问题库.md`，供后续审核参考。
+如果发现常见问题模式，记录到 `/Users/lute/project/paper_to_skills/paper2skills-vault/07-资源库/审核问题库.md`，供后续审核参考。
 
 ## 注意事项
 

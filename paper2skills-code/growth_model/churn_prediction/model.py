@@ -1,142 +1,113 @@
 """
-Customer Churn Prediction
-用于母婴出海电商用户流失预测
+Customer Churn Prediction — 客户流失预测
+paper2skills-code: 06-增长模型 | 母婴出海跨境电商
 """
-
-import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.metrics import roc_auc_score, f1_score
-import warnings
-warnings.filterwarnings('ignore')
+from __future__ import annotations
+import math, random
+from dataclasses import dataclass
 
 
-class ChurnPredictor:
-    def __init__(self, model_type='gradient_boosting'):
-        self.model_type = model_type
-        self.model = None
-        self.scaler = StandardScaler()
-        self.feature_names = None
-        self.is_fitted = False
-
-    def _create_features(self, df):
-        """创建特征"""
-        features = pd.DataFrame()
-
-        features['days_since_registration'] = (pd.Timestamp.now() - df['register_date']).dt.days
-        features['days_since_last_purchase'] = (pd.Timestamp.now() - df['last_purchase_date']).dt.days
-        features['total_purchase_count'] = df['purchase_count']
-        features['total_purchase_amount'] = df['purchase_amount']
-        features['avg_purchase_amount'] = df['purchase_amount'] / df['purchase_count'].clip(lower=1)
-
-        features['browse_count_7d'] = df['browse_count_7d']
-        features['browse_count_30d'] = df['browse_count_30d']
-        features['browse_count_90d'] = df['browse_count_90d']
-        features['cart_add_count'] = df['cart_add_count']
-        features['wishlist_count'] = df['wishlist_count']
-
-        features['active_days_30d'] = df['active_days_30d']
-        features['active_days_90d'] = df['active_days_90d']
-        features['purchase_frequency_30d'] = df['purchase_count_30d']
-        features['purchase_frequency_90d'] = df['purchase_count_90d']
-
-        features['browse_to_purchase_ratio'] = df['purchase_count'] / df['browse_count_90d'].clip(lower=1)
-        features['recency_frequency'] = (1 / (features['days_since_last_purchase'] + 1)) * df['purchase_count_90d']
-
-        return features
-
-    def fit(self, df, target):
-        X = self._create_features(df)
-        self.feature_names = X.columns.tolist()
-        X = X.fillna(0)
-        X_scaled = self.scaler.fit_transform(X)
-
-        if self.model_type == 'logistic':
-            self.model = LogisticRegression(max_iter=1000)
-        elif self.model_type == 'random_forest':
-            self.model = RandomForestClassifier(n_estimators=100, random_state=42)
-        else:
-            self.model = GradientBoostingClassifier(n_estimators=100, random_state=42)
-
-        self.model.fit(X_scaled, target)
-        self.is_fitted = True
-        return self
-
-    def predict(self, df):
-        if not self.is_fitted:
-            raise ValueError("Model must be fitted first")
-        X = self._create_features(df).fillna(0)
-        X_scaled = self.scaler.transform(X)
-        return self.model.predict_proba(X_scaled)[:, 1]
-
-    def predict_churn_risk(self, df):
-        probs = self.predict(df)
-        risk_levels = []
-        for p in probs:
-            if p >= 0.7: risk_levels.append('极高')
-            elif p >= 0.5: risk_levels.append('高')
-            elif p >= 0.3: risk_levels.append('中')
-            elif p >= 0.15: risk_levels.append('低')
-            else: risk_levels.append('极低')
-        return risk_levels, probs
+@dataclass
+class CustomerFeatures:
+    customer_id: str
+    days_since_last_order: int
+    total_orders: int
+    avg_order_value: float
+    baby_age_months: int     # 婴儿月龄（母婴关键特征）
+    review_given: bool
+    coupon_used_pct: float   # 优惠券使用率
+    has_subscription: bool
 
 
-def generate_sample_data(n_users=5000):
-    np.random.seed(42)
-    data = {
-        'user_id': range(1, n_users + 1),
-        'register_date': pd.date_range('2023-01-01', periods=n_users, freq='h'),
-        'last_purchase_date': pd.date_range('2024-01-01', periods=n_users, freq='h') - pd.Timedelta(days=np.random.randint(0, 90, n_users)),
-        'purchase_count': np.random.poisson(3, n_users),
-        'purchase_amount': np.random.exponential(500, n_users),
-        'browse_count_7d': np.random.poisson(10, n_users),
-        'browse_count_30d': np.random.poisson(30, n_users),
-        'browse_count_90d': np.random.poisson(80, n_users),
-        'cart_add_count': np.random.poisson(2, n_users),
-        'wishlist_count': np.random.poisson(1, n_users),
-        'active_days_30d': np.random.poisson(5, n_users),
-        'active_days_90d': np.random.poisson(15, n_users),
-        'purchase_count_30d': np.random.poisson(1, n_users),
-        'purchase_count_90d': np.random.poisson(3, n_users),
+@dataclass
+class ChurnPrediction:
+    customer_id: str
+    churn_probability: float
+    risk_level: str     # LOW / MEDIUM / HIGH / CRITICAL
+    top_risk_factors: list[str]
+    recommended_action: str
+    estimated_ltv_at_risk: float
+
+
+class LogisticChurnModel:
+    """逻辑回归流失预测（简化版，生产替换为 XGBoost/LightGBM）"""
+
+    WEIGHTS = {
+        "days_since_last_order": 0.04,
+        "total_orders": -0.08,
+        "avg_order_value": -0.002,
+        "baby_age_months": 0.015,
+        "review_given": -0.3,
+        "coupon_used_pct": 0.2,
+        "has_subscription": -0.5,
     }
-    df = pd.DataFrame(data)
-    churn_prob = 0.3 * (df['active_days_30d'] < 2).astype(int) + 0.3 * (df['purchase_count_30d'] == 0).astype(int) + 0.2 * (df['browse_count_30d'] < 5).astype(int) + 0.2 * np.random.random(n_users)
-    target = (np.random.random(n_users) < np.clip(churn_prob, 0, 1)).astype(int)
-    return df, target
+    INTERCEPT = -1.5
+
+    def predict_proba(self, features: CustomerFeatures) -> float:
+        logit = self.INTERCEPT
+        logit += features.days_since_last_order * self.WEIGHTS["days_since_last_order"]
+        logit += features.total_orders * self.WEIGHTS["total_orders"]
+        logit += features.avg_order_value * self.WEIGHTS["avg_order_value"]
+        logit += features.baby_age_months * self.WEIGHTS["baby_age_months"]
+        logit += (1.0 if features.review_given else 0.0) * self.WEIGHTS["review_given"]
+        logit += features.coupon_used_pct * self.WEIGHTS["coupon_used_pct"]
+        logit += (1.0 if features.has_subscription else 0.0) * self.WEIGHTS["has_subscription"]
+        return 1 / (1 + math.exp(-logit))
+
+    def explain(self, features: CustomerFeatures) -> list[str]:
+        factors = []
+        if features.days_since_last_order > 60:
+            factors.append(f"距上次购买 {features.days_since_last_order} 天（过长）")
+        if features.baby_age_months > 36:
+            factors.append(f"宝宝月龄 {features.baby_age_months} 月（需求可能减少）")
+        if not features.has_subscription:
+            factors.append("未开通订阅（复购粘性低）")
+        if features.total_orders < 3:
+            factors.append(f"累计仅 {features.total_orders} 单（客户生命周期短）")
+        return factors
 
 
-def main():
-    print("=" * 60)
-    print("Customer Churn Prediction 测试")
-    print("=" * 60)
-
-    print("\n[1] 生成模拟数据...")
-    df, target = generate_sample_data(5000)
-    print(f"   用户数: {len(df)}, 流失率: {target.mean()*100:.1f}%")
-
-    print("\n[2] 训练模型...")
-    X_train, X_test, y_train, y_test = train_test_split(df, target, test_size=0.2, random_state=42)
-    predictor = ChurnPredictor('gradient_boosting')
-    predictor.fit(X_train, y_train)
-
-    print("\n[3] 预测评估...")
-    probs = predictor.predict(X_test)
-    auc = roc_auc_score(y_test, probs)
-    print(f"   AUC: {auc:.4f}")
-
-    print("\n[4] 风险分层...")
-    risks, _ = predictor.predict_churn_risk(X_test)
-    for level in ['极高', '高', '中', '低', '极低']:
-        count = sum([r == level for r in risks])
-        print(f"   {level}: {count} ({count/len(risks)*100:.1f}%)")
-
-    print("\n" + "=" * 60)
-    print("测试完成!")
-    return predictor
+class ChurnInterventionEngine:
+    """干预策略引擎"""
+    def recommend(self, prob: float, features: CustomerFeatures) -> str:
+        if prob < 0.3:
+            return "维持现状：正常运营"
+        elif prob < 0.5:
+            return "轻度干预：发送个性化邮件 + 小额优惠券 (¥10)"
+        elif prob < 0.7:
+            return "中度干预：专属客服回访 + 推荐适龄新品 + ¥30 优惠"
+        else:
+            return "重度干预：高价值客服专员跟进 + ¥50 留存券 + 免费样品"
 
 
-if __name__ == '__main__':
-    main()
+def run_churn_demo():
+    random.seed(42)
+    customers = [
+        CustomerFeatures("C001", 10, 15, 350, 8, True, 0.2, True),
+        CustomerFeatures("C002", 75, 2, 120, 42, False, 0.8, False),
+        CustomerFeatures("C003", 45, 5, 280, 18, True, 0.5, False),
+        CustomerFeatures("C004", 120, 1, 89, 60, False, 0.9, False),
+    ]
+
+    model = LogisticChurnModel()
+    intervention = ChurnInterventionEngine()
+
+    print("=== 客户流失预测（母婴跨境店铺）===")
+    for c in customers:
+        prob = model.predict_proba(c)
+        factors = model.explain(c)
+        action = intervention.recommend(prob, c)
+        risk = "CRITICAL" if prob > 0.7 else "HIGH" if prob > 0.5 else "MEDIUM" if prob > 0.3 else "LOW"
+        ltv_risk = prob * c.avg_order_value * 12
+
+        print(f"客户: {c.customer_id} | 流失概率: {prob:.1%} [{risk}]")
+        if factors:
+            print(f"  风险因素: {'; '.join(factors[:2])}")
+        print(f"  LTV 风险: ¥{ltv_risk:,.0f}/年")
+        print(f"  建议动作: {action}")
+
+    print("✅ 流失预测演示完成")
+
+
+if __name__ == "__main__":
+    run_churn_demo()

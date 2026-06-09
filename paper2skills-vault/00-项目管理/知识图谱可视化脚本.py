@@ -289,7 +289,7 @@ def main():
 
     # 构建图谱
     print("正在构建知识图谱...")
-    vault_path = '/Users/pray/project/paper_to_skills/paper2skills-vault'
+    vault_path = str(Path(__file__).resolve().parents[2] / "paper2skills-vault")
     graph = SkillsGraph(vault_path)
     graph.build_graph()
     print(f"构建完成: {len(graph.nodes)} 个节点, {len(graph.edges)} 条边")

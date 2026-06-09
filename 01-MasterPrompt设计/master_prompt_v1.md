@@ -1,5 +1,15 @@
 # paper2skills Master Prompt 方案（修订版）
 
+> ⚠️ **本文件已归档（status: archived）**
+>
+> 此为 Master Prompt 的 v1 设计稿。当前生效版本以以下路径为唯一信息源：
+>
+> **[`paper2skills-vault/07-资源库/MasterPrompt.md`](../paper2skills-vault/07-资源库/MasterPrompt.md)**
+>
+> 任何 prompt 修改请在生效版本上进行，本文件仅作历史追溯。
+
+---
+
 ## 一、设计原则
 
 - **角色定位**：业务型数据科学家，强调决策工具而非学术研究
