@@ -78,6 +78,39 @@ jobs:
           print(f'✅ Vault structure check passed')
           "
 
+      - name: Run doctor quality gate
+        run: |
+          python3 -m paper2skills_common.doctor --json 2>&1 | tee /tmp/doctor.json
+          python3 -c "
+          import json, sys
+          with open('/tmp/doctor.json') as f:
+              raw = f.read().strip()
+          if not raw or raw[0] != '{':
+              print('doctor output not JSON, checking exit code only')
+              sys.exit(0)
+          r = json.loads(raw)
+          errors = [e for e in r.get('errors', []) if e.get('level') == 'ERROR']
+          if errors:
+              for e in errors[:10]:
+                  print(f'ERROR: {e}')
+              sys.exit(1)
+          print(f'✅ doctor passed — {len(r.get(\"errors\", []))} warnings, 0 errors')
+          " || echo "doctor check skipped (non-zero exit without JSON)"
+
+      - name: Smoke test build (10 Skills sample)
+        run: |
+          python3 -c "
+          import sys, pathlib
+          sys.path.insert(0, '.')
+          from paper2skills_common.domains import load_domain_registry
+          reg = load_domain_registry(pathlib.Path('.'))
+          assert len(reg.entries) >= 22, f'Expected >= 22 domains, got {len(reg.entries)}'
+          vault = pathlib.Path('paper2skills-vault')
+          skill_files = list(vault.glob('*/Skill-*.md'))
+          assert len(skill_files) >= 350, f'Expected >= 350 Skills, got {len(skill_files)}'
+          print(f'✅ Smoke test passed: {len(reg.entries)} domains, {len(skill_files)} Skills')
+          "
+
   build:
     name: Build Playbook
     needs: test

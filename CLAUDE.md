@@ -38,6 +38,8 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │   ├── 19-风控反欺诈/          # Fake review detection, transaction anomaly, click fraud
 │   ├── 20-AI视频生成/          # Virtual anchor demo, product showcase I2V, brand video, UGC
 │   ├── 21-合规决策/            # Category compliance prescan, regulatory risk, compliance-as-moat
+│   ├── 22-数据采集工程/         # Document intelligence, web crawling, identity resolution, federated collection
+│   ├── 23-运营财务/             # FBA fee intelligence, P&L attribution, cash flow forecasting
 │   ├── 07-资源库/            # Master Prompt, keywords, sync status
 │   └── papers/               # Downloaded papers by domain
 └── paper2skills-code/       # Python code templates
