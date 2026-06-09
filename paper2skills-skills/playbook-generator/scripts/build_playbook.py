@@ -51,7 +51,7 @@ SECTION_KEYS: dict[str, list[str]] = {
     "code":      ["代码模板", "完整可运行"],
     "guide":     ["使用指南"],
     "value":     ["商业价值", "业务价值", "量化 roi", "量化roi"],
-    "relations": ["skill relations", "技能关联", "技能关系", "技能关系"],
+    "relations": ["skill relations", "技能关联", "技能关系", "4. 技能关系", "四、技能关联"],
 }
 
 TOPIC_RULES = {
@@ -635,7 +635,6 @@ class PlaybookSkill:
     tags: list[str] = field(default_factory=list)
     topics: list[str] = field(default_factory=list)
     workflows: list[str] = field(default_factory=list)
-    source_excerpt: str = ""
     biz_role: str = ""
     biz_role2: str = ""
     biz_trigger: str = ""
@@ -1005,7 +1004,6 @@ def build_skills(root: Path, vault: Path, graph: SkillsGraph) -> list[PlaybookSk
             tags=classify(full_text_for_classify, ALGO_TAG_RULES),
             topics=classify(full_text_for_classify, TOPIC_RULES),
             workflows=classify(full_text_for_classify, WORKFLOW_RULES),
-            source_excerpt=algo_text[:1200] or body[:1200],
         )
         if skill_id in SKILL_PS_OVERRIDE:
             skill.problem_solved = _clean_problem_solved(SKILL_PS_OVERRIDE[skill_id], skill_id)
@@ -1048,8 +1046,9 @@ def load_workflow_defs(root: Path) -> dict[str, Any]:
             data = yaml.safe_load(yf.read_text(encoding="utf-8"))
             if isinstance(data, dict) and "id" in data:
                 defs[data["id"]] = data
-        except Exception:
-            pass
+        except Exception as e:
+            import sys
+            print(f"WARN: failed to load workflow YAML {yf.name}: {e}", file=sys.stderr)
     return defs
 
 
@@ -2940,7 +2939,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
   <div class="rm-hero-cta">
     <button class="rm-btn-primary" onclick="window.print()">下载 PDF</button>
     <a class="rm-btn-sec" href="playbooks/index.html">查看场景手册 →</a>
-    <a class="rm-btn-sec" href="https://calendly.com" target="_blank" rel="noopener" style="background:#9c5455;color:#fff;border:none">预约 Demo</a>
+    <a class="rm-btn-sec" href="mailto:skills@lute-tlz-dddd.top?subject=预约Demo-AI能力路线图" style="background:#9c5455;color:#fff;border:none">预约 Demo</a>
   </div>
   <p class="rm-hero-note">所有 ROI 数字来源于真实 A/B 实验或匿名客户案例，非模型预测 | 与 Northbeam / Jungle Scout / 纯咨询公司的核心差异：我们给你的是「决策算法」，不是「数据报表」</p>
 </div>
@@ -3017,10 +3016,10 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     <div class="rm-footer-cta">
       <p>获取 PDF + 预约 30 分钟 ROI 测算</p>
       <button class="rm-btn-primary" onclick="window.print()" style="margin-bottom:10px">下载 PDF</button>
-      <form class="rm-lead-form" action="https://formspree.io/f/xpwzgkjd" method="POST" target="_blank">
+      <form class="rm-lead-form" action="mailto:skills@lute-tlz-dddd.top" method="GET">
         <input type="email" name="email" placeholder="your@company.com" required style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #334155;background:#1e293b;color:#f1f5f9;font-size:13px;margin-bottom:8px;box-sizing:border-box">
-        <input type="hidden" name="source" value="ai-roadmap-whitepaper">
-        <button type="submit" style="width:100%;padding:8px;background:#9c5455;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">获取定制 ROI 测算</button>
+        <input type="hidden" name="subject" value="paper2skills ROI测算申请">
+        <button type="submit" style="width:100%;padding:8px;background:#9c5455;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">获取定制 ROI 测算（邮件联系）</button>
       </form>
     </div>
     <p class="rm-footer-note">
@@ -3631,7 +3630,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
   <p class="lead">350 个从 NeurIPS / KDD / ICML 萃取的可落地决策技能——每个技能有真实 ROI 数字、可运行代码、和跨境电商业务场景。这是任何咨询公司和 SaaS 工具都无法复制的能力。</p>
   <div class="hero-primary-cta">
     <a class="btn-primary accent" href="ai-roadmap.html">查看 AI 能力路线图</a>
-    <a class="btn-secondary" href="https://calendly.com" target="_blank" rel="noopener">预约 30 分钟 Demo</a>
+    <a class="btn-secondary" href="mailto:skills@lute-tlz-dddd.top?subject=预约Demo-paper2skills" >预约 30 分钟 Demo</a>
   </div>
   <div class="hero-tabs" id="heroTabs">
     <button class="tab-btn active" data-tab="biz">业务专家 / 运营</button>

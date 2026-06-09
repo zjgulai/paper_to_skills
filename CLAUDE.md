@@ -92,6 +92,21 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 
 ## Workflow Commands
 
+### Local Playbook Preview
+
+```bash
+# 1. 重新生成 playbook
+python3 paper2skills-skills/playbook-generator/scripts/build_playbook.py \
+  --root . --vault paper2skills-vault --out playbook
+
+# 2. 启动本地预览服务器（D3 图谱需要 HTTP 协议）
+python3 -m http.server 8080 --directory playbook
+# 访问: http://localhost:8080
+# 注意: D3 ego-graph 和 graph-data.json XHR 在 file:// 协议下不可用
+```
+
+
+
 ### Run Complete Workflow
 
 Use the `paper-workflow` skill to run the complete pipeline:
@@ -207,18 +222,18 @@ python -m pytest model.py -v
 
 | English Directory | Chinese Directory | Domain | Skill 数 | Code Dir Status |
 |-------------------|-------------------|--------|---------|-----------------|
-| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling, DiD, IV | 12 | ✅ |
-| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits, sequential testing | 11 | ✅ |
-| `time_series` | `03-时间序列` | Demand forecasting, conformal prediction, LLM forecasting | 12 | ✅ |
-| `supply_chain` | `04-供应链` | **18 Skills**: 供应计划全链路（需求预测→促销拆解→预算分配→MOQ批量→产能排产→新品冷启动→健康诊断）+ 库存优化 + 设施选址 | 18 | ✅ |
-| `recommendation` | `05-推荐系统` | Recommendation systems, cold start, diversity reranking | 11 | ✅ |
+| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling, DiD, IV | 15 | ✅ |
+| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits, sequential testing | 13 | ✅ |
+| `time_series` | `03-时间序列` | Demand forecasting, conformal prediction, LLM forecasting | 15 | ✅ |
+| `supply_chain` | `04-供应链` | 供应计划全链路（需求预测→促销拆解→预算分配→MOQ批量→产能排产→新品冷启动→健康诊断）+ 库存优化 + 设施选址 | 19 | ✅ |
+| `recommendation` | `05-推荐系统` | Recommendation systems, cold start, diversity reranking | 16 | ✅ |
 | `growth_model` | `06-增长模型` | Churn, LTV, RFM, market size estimation, PLC stage | 22 | ✅ |
 | `nlp_voc` | ~~07-NLP-VOC~~ | 已迁至 `../ai_nlp_voc/`,本仓库保留代码模板 | — | 📦 |
-| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, GNN, KG construction, KGQA | 16 | ✅ |
-| `data_agent_llm` | `09-DataAgent-LLM` | DataAgent, LLM-powered data analysis, NL2Dashboard | 10 | ✅ |
-| `mas` | `10-MAS` | Multi-agent systems, planning, orchestration | 13 | ✅ |
-| `ai_humanities` | `11-AI人文` | AI × Humanities: cross-modal transfer, LoRA | 1 | ⬜ |
-| `ml_fundamentals` | `12-ML基础` | Feature engineering, model evaluation, drift detection, performance monitor | 9 | ✅ |
+| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, GNN, KG construction, KGQA | 28 | ✅ |
+| `data_agent_llm` | `09-DataAgent-LLM` | DataAgent, LLM-powered data analysis, NL2Dashboard | 12 | ✅ |
+| `mas` | `10-MAS` | Multi-agent systems, planning, orchestration | 35 | ✅ |
+| `ai_humanities` | `11-AI人文` | AI × Humanities: cross-modal transfer, LoRA | 7 | ⬜ |
+| `ml_fundamentals` | `12-ML基础` | Feature engineering, model evaluation, drift detection, performance monitor | 11 | ✅ |
 | `advertising` | `13-广告分析` | Ad attribution, ROAS, Listing quality, cross-device, delayed CVR | 19 | ✅ |
 | `user_analytics` | `14-用户分析` | Funnel, cohort, clickstream, trajectory, traffic source | 18 | ⬜ |
 | `marketing` | `15-营销投放分析` | MMM, promotion effectiveness, causal ML, channel saturation | 9 | ⬜ |
