@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Identified-Bayesian-MMM</nav>
 <h1>Identified Bayesian MMM — 基于高斯过程的无混淆贝叶斯营销归因</h1>
 <p class="muted">Skill-Identified-Bayesian-MMM · 15-营销投放分析</p>
 <div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 1000 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-pricing-engine.html'>AI 定价引擎手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>1000 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>非线性饱和效应（spend 越多边际回报越低）</p>
+    <p>CMO 拿到内部 MMM 报告，显示&quot;TikTok ROAS 极高远未饱和，建议把 Meta 预算砍半全移给 TikTok&quot;</p>
     <h2>2. 核心算法逻辑</h2>
     <p>传统开源 MMM（Robyn / Meridian）在仅有平稳投放数据时，会陷入一个数学死结：非线性饱和效应（spend 越多边际回报越低） 与 时变效应（节假日转化本就更好） 在数学上&quot;观测等价&quot;——两个完全不同的数据生成过程可以产生完全相同的观测值。这意味着模型给出的 ROAS 可能是系统性偏差的，据此做的预算决策会踩坑。</p>
     <h2>3. 业务应用场景</h2>
     <p>- 业务问题：CMO 拿到内部 MMM 报告，显示&quot;TikTok ROAS 极高远未饱和，建议把 Meta 预算砍半全移给 TikTok&quot;。过去半年 TikTok 均匀花出，数据平稳，但心里极没底——不知道高 ROAS 究竟是因为渠道牛还是碰上了旺季。 - 数据要求： - 90 天以上的日级三渠道（Google / Meta / TikTok）spend + conversions 数据 - 每渠道至少一次关停或超投实验记录（期间、倍率、实测提升比） - 操作路径： 1. `mmm.diagnose()` 输出诊断报告，TikTok 被标为 HIGH RISK，附实验处方 2. 按处方在德州区</p><p>- 业务问题：品牌方希望在 618 前确认 Google Shopping 当前是否还有边际 ROAS 空间，还是已经深度饱和，不该再加仓。 - 数据要求： - 近 60 天 Google 日级 spend + 转化数据 - 过去 2–3 次周末/节促期间的超投记录（自然发生的预算脉冲也算） - 操作路径： 1. 仅用 Google 渠道数据初始化 `IdentifiedBayesianMMM` 2. 若历史峰谷比 ≥ 2×，直接 `fit()` 即可；若平稳则补充一次测试性周末超投 3. 调用 `gp.predict(spend_query)` 绘制完整饱和曲线，`gp.marginal_r</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI 预估**：</li><li>实验成本：2 天局部区域（约 5% 流量）的停投损失，约 **0.5–2 万元**</li><li>保护价值：避免年度预算误分配，中型品牌（年广告 1000 万元）潜在年化收益 **100–500 万元**</li><li>投入产出比：保守估算 **50–250 倍**</li><li>**实施难度**：⭐⭐☆☆☆（2/5）</li><li>数学部分已封装，业务侧主要难点在于推动团队执行关停实验（需跨部门协调）</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>实验成本：2 天局部区域（约 5% 流量）的停投损失，约 <strong>0.5–2 万元</strong></li><li>保护价值：避免年度预算误分配，中型品牌（年广告 1000 万元）潜在年化收益 <strong>100–500 万元</strong></li><li>投入产出比：保守估算 <strong>50–250 倍</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（2/5）</li><li>数学部分已封装，业务侧主要难点在于推动团队执行关停实验（需跨部门协调）</li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ mmm.add_shock(ExperimentalShock(
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

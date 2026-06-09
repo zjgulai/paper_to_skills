@@ -8,50 +8,62 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 跨境风险防御作战室</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>🛡️</span>
+  <span class='pb-icon'>AG</span>
   <div>
     <h1>跨境风险防御作战室</h1>
     <p class='lead'>竞品用 AI 攻击你的广告、评分和排名——你需要 AI 来守门。封号预防 800 万/年 vs 防御投入 30 万</p>
     <span class='biz-tag'>欺诈反制 · 合规预警 · 品牌保护</span>
   </div>
 </div>
+<div class='pb-roi-callout'>不防御：一次封号<span class='pb-roi-val'>30-80 万 GMV 损失</span></div><div class='pb-roi-callout'>防御投入：年度成本<span class='pb-roi-val'>约 30 万</span></div><div class='pb-roi-callout'>净收益差值<span class='pb-roi-val'>&gt; 800 万/年 · ROI 26:1</span></div>
 <div class='pb-intro'>跨境电商的竞争已经进入「AI 对抗」阶段。竞品在三条战线同时进攻：① 广告刷量消耗你的预算；② 虚假差评拉低你的评分；③ AI 注入攻击你的推荐排名。与此同时，平台合规政策每季度更新，一次封号损失 30-80 万，一次召回损失 500 万+。本手册提供从欺诈信号采集到合规预警的完整防御体系。</div>
-<div class="wf-outcomes"><h3>预期收益</h3><ul><li>✅ 广告 IVT 从 8% 降至 2%，月均挽回 6-15 万</li><li>✅ 竞品刷评攻击检测率 &gt; 90%，Listing 评分保护</li><li>✅ 合规检查从滞后 90 天→实时预警，封号风险降低 70%</li><li>✅ 主动召回比被动召回节省 80% 成本，一次预防 = 500 万保障</li><li>✅ AI 推荐注入攻击防御：保护自然流量不被操控</li></ul></div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 广告 IVT 从 8% 降至 2%，月均挽回 6-15 万</li><li>[OK] 竞品刷评攻击检测率 &gt; 90%，Listing 评分保护</li><li>[OK] 合规检查从滞后 90 天→实时预警，封号风险降低 70%</li><li>[OK] 主动召回比被动召回节省 80% 成本，一次预防 = 500 万保障</li><li>[OK] AI 推荐注入攻击防御：保护自然流量不被操控</li></ul></div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 1：欺诈信号采集与基线建立</h3>
-    <p class='pb-problem'>❓ 不知道自己正在被攻击——竞品刷评、广告 IVT、刷单行为悄无声息地侵蚀 ROI，发现时已损失数周</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Fraud-Signal-Collection.html' class='pb-skill-name'>Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 48 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 主动采集刷单行为、虚假评论、异常流量信号，建立欺诈监控基线，同时向平台举报竞品（ROI 48万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Transaction-Anomaly-Detection.html' class='pb-skill-name'>Transaction Anomaly Detection（异常交易检测）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 3-8 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ Isolation Forest 检测异常交易模式（订单金额/IP/支付方式异常组合），拦截盗刷订单（ROI 3-8万/月）</p></div></div>
+    <p class='pb-problem'>不知道自己正在被攻击——竞品刷评、广告 IVT、刷单行为悄无声息地侵蚀 ROI，发现时已损失数周</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Fraud-Signal-Collection.html' class='pb-skill-name'>Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</a><div class='pb-skill-badges'><span class='roi-badge'>48 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 主动采集刷单行为、虚假评论、异常流量信号，建立欺诈监控基线，同时向平台举报竞品（ROI 48万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Transaction-Anomaly-Detection.html' class='pb-skill-name'>Transaction Anomaly Detection（异常交易检测）</a><div class='pb-skill-badges'><span class='roi-badge'>3-8 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ Isolation Forest 检测异常交易模式（订单金额/IP/支付方式异常组合），拦截盗刷订单（ROI 3-8万/月）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：订单流水、广告点击日志、评论数据（近 90 天）</div>
     <div class="pb-output"><strong>输出结果：</strong>欺诈信号基线报告 + 异常事件告警规则</div>
   </div>
@@ -60,8 +72,8 @@
   <div class='pb-step-num'>Step 2</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 2：广告 IVT 实时过滤</h3>
-    <p class='pb-problem'>❓ 月广告 30 万，8% 是无效点击 = 2.4 万/月浪费。Bot 点击、竞品恶意点击无法靠平台自动过滤完全解决</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Click-Fraud-Detection.html' class='pb-skill-name'>Click Fraud Detection（广告刷量检测）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 6-15 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 时序异常 + 行为模式识别 IVT 攻击，向 FB/Google 申请退款，月均挽回 6-15 万</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Identity-Fraud-Detection.html' class='pb-skill-name'>Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 设备+行为+网络三重验证账号欺诈，识别刷单账号防止 Amazon 卖家账户关联封号</p></div></div>
+    <p class='pb-problem'>月广告 30 万，8% 是无效点击 = 2.4 万/月浪费。Bot 点击、竞品恶意点击无法靠平台自动过滤完全解决</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Click-Fraud-Detection.html' class='pb-skill-name'>Click Fraud Detection（广告刷量检测）</a><div class='pb-skill-badges'><span class='roi-badge'>6-15 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 时序异常 + 行为模式识别 IVT 攻击，向 FB/Google 申请退款，月均挽回 6-15 万</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Identity-Fraud-Detection.html' class='pb-skill-name'>Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 设备+行为+网络三重验证账号欺诈，识别刷单账号防止 Amazon 卖家账户关联封号</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：广告平台 API（点击日志、IP、设备指纹）</div>
     <div class="pb-output"><strong>输出结果：</strong>IVT 过滤规则 + 月度退款申请报告</div>
   </div>
@@ -70,8 +82,8 @@
   <div class='pb-step-num'>Step 3</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 3：Listing 评论生态保护</h3>
-    <p class='pb-problem'>❓ 新品上架 6 小时内被刷评团伙集中攻击；或竞品 ChatGPT 批量生成高质量虚假好评拉高自己</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Fraud-Detection.html' class='pb-skill-name'>Review Fraud Detection（虚假评论检测）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 5-15 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 评论者-产品-评分关系图检测刷评团伙，向 Amazon 举报并保护自身 listing（ROI 5-15万/月）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html' class='pb-skill-name'>DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 动态图 GCN 检测冷启动新品上架 6 小时内的刷评冲击，防止新品评分被操控</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FraudSquad-LLM-Review-Detection.html' class='pb-skill-name'>FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换器</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ LM 嵌入 + 门控图变换器检测 ChatGPT 生成的高质量虚假好评（2025 年最新攻击方式）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AIGC-Content-Detection.html' class='pb-skill-name'>AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 鉴别 AI 生成内容，保护自身 Review 生态可信度，防止 VOC 分析被污染</p></div></div>
+    <p class='pb-problem'>新品上架 6 小时内被刷评团伙集中攻击；或竞品 ChatGPT 批量生成高质量虚假好评拉高自己</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Fraud-Detection.html' class='pb-skill-name'>Review Fraud Detection（虚假评论检测）</a><div class='pb-skill-badges'><span class='roi-badge'>5-15 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 评论者-产品-评分关系图检测刷评团伙，向 Amazon 举报并保护自身 listing（ROI 5-15万/月）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html' class='pb-skill-name'>DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 动态图 GCN 检测冷启动新品上架 6 小时内的刷评冲击，防止新品评分被操控</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FraudSquad-LLM-Review-Detection.html' class='pb-skill-name'>FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换器</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ LM 嵌入 + 门控图变换器检测 ChatGPT 生成的高质量虚假好评（2025 年最新攻击方式）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AIGC-Content-Detection.html' class='pb-skill-name'>AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 鉴别 AI 生成内容，保护自身 Review 生态可信度，防止 VOC 分析被污染</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：Listing 评论历史、评论者行为序列</div>
     <div class="pb-output"><strong>输出结果：</strong>刷评团伙举报名单 + 评论质量评分 + 告警规则</div>
   </div>
@@ -80,8 +92,8 @@
   <div class='pb-step-num'>Step 4</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 4：AI 推荐排名防御</h3>
-    <p class='pb-problem'>❓ 竞品在商品描述中嵌入恶意 Prompt 指令，劫持 AI 导购排名，某品牌自营商品曝光量下降 30-50%（2025 年真实攻击）</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Agent-Payment-Security-Red-Team.html' class='pb-skill-name'>Whispers of Wealth — Agent 支付协议安全红队：Branded/Vault Whisper 攻击</a><div class='pb-skill-badges'><span class='roi-badge'>💰 5000 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 检测 Prompt 注入攻击，保护 AI 推荐系统不被竞品操控（防御价值 &gt; 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-MAS-Adversarial-Defense.html' class='pb-skill-name'>MAS Adversarial Defense — 多智能体系统攻防：群体合谋检测、规划时攻击防御、路由感知注入</a><div class='pb-skill-badges'><span class='roi-badge'>💰 5-10 万/月</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 多智能体对抗防御，应对竞品协同攻击（多个假账号+多个被操控 listing 联合操作）</p></div></div>
+    <p class='pb-problem'>竞品在商品描述中嵌入恶意 Prompt 指令，劫持 AI 导购排名，某品牌自营商品曝光量下降 30-50%（2025 年真实攻击）</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Agent-Payment-Security-Red-Team.html' class='pb-skill-name'>Whispers of Wealth — Agent 支付协议安全红队：Branded/Vault Whisper 攻击</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 检测 Prompt 注入攻击，保护 AI 推荐系统不被竞品操控（防御价值 &gt; 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-MAS-Adversarial-Defense.html' class='pb-skill-name'>MAS Adversarial Defense — 多智能体系统攻防：群体合谋检测、规划时攻击防御、路由感知注入</a><div class='pb-skill-badges'><span class='roi-badge'>5-10 万/月</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 多智能体对抗防御，应对竞品协同攻击（多个假账号+多个被操控 listing 联合操作）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：竞品 ASIN 列表、自身 AI 搜索排名监控数据</div>
     <div class="pb-output"><strong>输出结果：</strong>注入攻击检测告警 + 竞品操控行为报告</div>
   </div>
@@ -90,7 +102,7 @@
   <div class='pb-step-num'>Step 5</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 5：合规预警与封号防御</h3>
-    <p class='pb-problem'>❓ 平台政策每季度更新，人工合规检查平均滞后 90 天，一次封号损失 30-80 万 GMV + BSR 排名恢复 2-6 周</p>
+    <p class='pb-problem'>平台政策每季度更新，人工合规检查平均滞后 90 天，一次封号损失 30-80 万 GMV + BSR 排名恢复 2-6 周</p>
     <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Regulatory-Change-Monitoring.html' class='pb-skill-name'>Regulatory Change Monitoring — 法规变更自动监控：受影响品类实时映射</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 监管机构（FDA/CPSC/EU GPS）法规更新自动映射到受影响 SKU，提前 90 天预警</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cross-Border-Compliance-Framework.html' class='pb-skill-name'>Cross-Border Compliance Framework — 跨境电商多辖区合规自动映射</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ US+EU+UK 三维合规矩阵自动映射，新市场进入合规核查从 3 个月压缩到 2 周</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Product-Safety-Testing-Requirements.html' class='pb-skill-name'>Product Safety Testing Requirements — 产品安全测试需求：品类×市场映射</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 品类×市场安全测试需求自动生成，选品阶段前置合规成本估算，避免选错品</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Compliance-Scored-Guardrail-Orchestration.html' class='pb-skill-name'>Compliance-Scored Guardrail Orchestration — 合规评分 Best-of-N 守护编排</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ AI 生成 Listing 文案的合规门控（Best-of-N 评分），防止 ChatGPT 写出违规声明被 Amazon 下架</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：全部在售 SKU 信息、目标销售市场列表</div>
     <div class="pb-output"><strong>输出结果：</strong>合规风险评分矩阵 + 高风险 SKU 预警 + Listing 文案合规检测</div>
@@ -100,7 +112,7 @@
   <div class='pb-step-num'>Step 6</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 6：召回风险预测与供应链尽调</h3>
-    <p class='pb-problem'>❓ 被动等到消费者集中投诉才发现产品安全问题，主动召回 vs 被动召回成本相差 10 倍</p>
+    <p class='pb-problem'>被动等到消费者集中投诉才发现产品安全问题，主动召回 vs 被动召回成本相差 10 倍</p>
     <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Consumer-Complaint-Recall-Prediction.html' class='pb-skill-name'>Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 投诉信号驱动的召回风险预测，提前 12 个月预警，主动召回比被动召回节省 80% 成本</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Supply-Chain-Due-Diligence.html' class='pb-skill-name'>Supply Chain Due Diligence — 供应链合规尽职调查：劳工+环境+产品三维</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 供应商劳工+环境+产品三维合规评估（德国供应链法 LkSG2023），满足欧洲 B2B 买家准入要求</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：客服工单历史、产品投诉数据、供应商信息</div>
     <div class="pb-output"><strong>输出结果：</strong>召回风险评分 + 供应商合规评级报告</div>
@@ -111,5 +123,21 @@
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

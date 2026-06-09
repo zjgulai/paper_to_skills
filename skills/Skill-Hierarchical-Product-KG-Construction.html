@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Hierarchical-Product-KG-Construction</nav>
 <h1>层级商品知识图谱自动构建（图片→KG）</h1>
 <p class="muted">Skill-Hierarchical-Product-KG-Construction · 08-知识图谱</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>knowledge_graph</span><span class='tag'>visual_generation</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-D 选品扫描</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 0 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>knowledge_graph</span><span class='tag'>visual_generation</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>0 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>Schema 先行 → VLM 多轮萃取 → LLM 约束推理 → 层级扩展 → 程序化去重</p>
+    <p>零样本下用商品图片自动构建跨语种属性知识图谱:Schema 先行 → VLM 多轮萃取 → LLM 约束推理 → 层级扩展 → 程序化去重。建库成本与 SKU 数量线性解耦,无需人工标注模板。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>零样本下用商品图片自动构建跨语种属性知识图谱:Schema 先行 → VLM 多轮萃取 → LLM 约束推理 → 层级扩展 → 程序化去重。建库成本与 SKU 数量线性解耦,无需人工标注模板。</p>
     <h2>3. 业务应用场景</h2>
     <p>- 业务问题:出海卖家上架 1 万件母婴新品到 Amazon US,需逐 SKU 填写品类路径(`Baby &gt; Feeding &gt; Baby Formula &gt; Infant Formula 0-6m`)、净重(g)、包装材质、适用月龄等 10+ 个强制属性。人工填写需 2-3 人月,且因中英描述不一致导致 listing 违规下架风险。 - 数据要求:仅需厂商提供的商品主图(JPG/PNG ≥ 448×448)和可选的中文描述 - 预期产出:对每件 SKU 自动输出 Amazon Flat File 兼容 JSON,含完整品类路径 + 物理属性 + 适用人群 - 业务价值:1 万 SKU 的</p><p>- 业务问题:某母婴出海选品平台需对马来西亚/印尼市场 5 万件 SKU 建可检索属性图谱。商品多为中国制造,只有中文描述+图片,但目标市场用 Bahasa/英文搜索。传统做法需要 3 套语种各建一遍图谱。 - 数据要求:商品主图(语言无关)+ 顶层品类配置文件(英文/中文/Bahasa 三语对照表) - 预期产出:统一的层级 KG,中间节点天然可挂载多语种别名(`安抚奶嘴 / pacifier / dot bayi`),支持任意语种检索 - 业务价值:单一图谱多语种复用,建图成本从 30 人月降到 5 GPU 天;因多语种检索召回率提升 25-40%,选品平台 GMV 增量可量化为单月 30</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>节省 listing 准备人力:1 万 SKU × 3 人月 × 月薪 1.5 万 = **45 万元/年/卖家**</li><li>减少违规下架损失:违规率 5-8% → 0.5%,按平均 GMV 100 万元/月计 = **节省 50-80 万元/年**</li><li>总收益:**单卖家年增 95-125 万元**,投入 GPU 推理成本约 2-5 万元</li><li>**ROI ≈ 30-60 倍**</li><li>多语种建图复用:30 人月 → 5 GPU 天 = 节省人工成本 **~100 万元**</li><li>多语种检索召回提升 25-40%:中型平台月 GMV 5000 万 × 0.5%(召回提升的转化贡献) = **月增 25 万元**</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li>节省 listing 准备人力:1 万 SKU × 3 人月 × 月薪 1.5 万 = <strong>45 万元/年/卖家</strong></li><li>减少违规下架损失:违规率 5-8% → 0.5%,按平均 GMV 100 万元/月计 = <strong>节省 50-80 万元/年</strong></li><li>总收益:<strong>单卖家年增 95-125 万元</strong>,投入 GPU 推理成本约 2-5 万元</li><li><strong>ROI ≈ 30-60 倍</strong></li><li>多语种建图复用:30 人月 → 5 GPU 天 = 节省人工成本 <strong>~100 万元</strong></li><li>多语种检索召回提升 25-40%:中型平台月 GMV 5000 万 × 0.5%(召回提升的转化贡献) = <strong>月增 25 万元</strong></li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ def _mock_vlm_extract(image_path: str, schema: Dict[str, object]) -&gt; str:
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

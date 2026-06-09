@@ -8,50 +8,62 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / AI Agent 替人手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>🤖</span>
+  <span class='pb-icon'>AI</span>
   <div>
     <h1>AI Agent 替人手册</h1>
     <p class='lead'>三类岗位的核心重复性工作，逐步交给 AI Agent 执行，释放人力专注高价值决策</p>
     <span class='biz-tag'>供应链 · 数据分析 · 广告优化</span>
   </div>
 </div>
+
 <div class='pb-intro'>AI 替代的不是岗位，是岗位里的「重复性决策」——每天都要做、做法固定、但规模超出人力上限的那部分。本手册从供应链出发，提供三条独立的替代路径，每条路径都可以单独落地。</div>
-<div class="wf-outcomes"><h3>预期收益</h3><ul><li>✅ 供应链人工对账工作量从 2-3 天/月 → 接近零</li><li>✅ 数据分析提数响应从 2-3 天 → 5 分钟</li><li>✅ 广告无关消耗从 18% → 3.2%，冷启动 ROAS +15-30%</li><li>✅ 三类岗位重复性工作 Agent 覆盖率 &gt; 70%，人力聚焦高价值决策</li></ul></div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 供应链人工对账工作量从 2-3 天/月 → 接近零</li><li>[OK] 数据分析提数响应从 2-3 天 → 5 分钟</li><li>[OK] 广告无关消耗从 18% → 3.2%，冷启动 ROAS +15-30%</li><li>[OK] 三类岗位重复性工作 Agent 覆盖率 &gt; 70%，人力聚焦高价值决策</li></ul></div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Chapter 1：供应链全链路 Agent（主角）</h3>
-    <p class='pb-problem'>❓ 15 个 Excel 联动地狱：SKU×仓库×市场三层预测加总不一致，月底 2-3 天纯人工对账；大促定价和补货是两个团队各自决策，无法实时联动</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html' class='pb-skill-name'>HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</a><div class='pb-skill-badges'><span class='roi-badge'>💰 800-1500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 分层预测调和，数学保证 SKU→仓库→市场三层一致，月底对账人力清零（ROI 800-1500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Event-Driven-Demand-MAS.html' class='pb-skill-name'>Event-Driven Demand MAS — 事件感知补货 MAS：大促/季节自动触发</a><div class='pb-skill-badges'><span class='roi-badge'>💰 5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 事件感知补货 MAS：大促信号触发自动备货，告别「排期跑批已来不及」（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FSDA-DRL.html' class='pb-skill-name'>FSDA-DRL 快慢双智能体动态定价与补货联合优化</a><div class='pb-skill-badges'><span class='roi-badge'>💰 5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 快慢双 Agent 联动定价与补货：大促全周期利润最优，替代供应链+运营协调会（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html' class='pb-skill-name'>Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</a><div class='pb-skill-badges'><span class='roi-badge'>💰 200-500 万/年</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 海运延误动态安全库存：苏伊士/巴拿马运河异常时自动预警并提前采购（ROI 200-500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html' class='pb-skill-name'>Multi-Channel Inventory Pooling（多渠道库存池化）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 200-400 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨渠道动态调拨：Amazon缺货+独立站积压同时存在时自动平衡（ROI 200-400万）</p></div></div>
+    <p class='pb-problem'>15 个 Excel 联动地狱：SKU×仓库×市场三层预测加总不一致，月底 2-3 天纯人工对账；大促定价和补货是两个团队各自决策，无法实时联动</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html' class='pb-skill-name'>HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</a><div class='pb-skill-badges'><span class='roi-badge'>800-1500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 分层预测调和，数学保证 SKU→仓库→市场三层一致，月底对账人力清零（ROI 800-1500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Event-Driven-Demand-MAS.html' class='pb-skill-name'>Event-Driven Demand MAS — 事件感知补货 MAS：大促/季节自动触发</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 事件感知补货 MAS：大促信号触发自动备货，告别「排期跑批已来不及」（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FSDA-DRL.html' class='pb-skill-name'>FSDA-DRL 快慢双智能体动态定价与补货联合优化</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 快慢双 Agent 联动定价与补货：大促全周期利润最优，替代供应链+运营协调会（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html' class='pb-skill-name'>Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</a><div class='pb-skill-badges'><span class='roi-badge'>200-500 万/年</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 海运延误动态安全库存：苏伊士/巴拿马运河异常时自动预警并提前采购（ROI 200-500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html' class='pb-skill-name'>Multi-Channel Inventory Pooling（多渠道库存池化）</a><div class='pb-skill-badges'><span class='roi-badge'>200-400 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨渠道动态调拨：Amazon缺货+独立站积压同时存在时自动平衡（ROI 200-400万）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：60天+销售历史、多仓库存快照、大促日历、供应商交货记录</div>
     <div class="pb-output"><strong>输出结果：</strong>自动化补货计划 + 大促定价策略 + 海运风险预警 + 跨渠道调拨指令</div>
   </div>
@@ -60,8 +72,8 @@
   <div class='pb-step-num'>Step 2</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Chapter 2：数据分析师 Agent</h3>
-    <p class='pb-problem'>❓ 提数需求排期 2-3 天，分析师 80% 时间在取数不在分析；GMV 异常时人工排查根因需要 1-2 小时，节假日无人监控</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html' class='pb-skill-name'>Text-to-SQL Agent for Natural Language Data Query</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 自然语言→SQL：业务同学直接用中文查数据库，消灭 BI 提数排期</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-NL2Dashboard-Automation.html' class='pb-skill-name'>NL2Dashboard Automation（自然语言→仪表盘）</a><div class='pb-skill-badges'><span class='roi-badge'>💰 节省 BI 开发人力</span></div></div><p class='pb-skill-why'>→ 自然语言→仪表盘自动生成，运营自助分析，节省 BI 开发人力</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html' class='pb-skill-name'>DeepAnalyze — 自主数据科学Agent</a><div class='pb-skill-badges'><span class='roi-badge'>💰 20万</span></div></div><p class='pb-skill-why'>→ 自主数据科学 Agent：多平台数据周报 4-6 小时人工 → 5 分钟 Agent 自动生成（ROI 20万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-ProRCA-Business-Analysis.html' class='pb-skill-name'>ProRCA — 因果图路径溯源根因分析</a><div class='pb-skill-badges'><span class='roi-badge'>💰 100 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 因果图根因分析：GMV 暴跌 1-2 小时人工排查 → 0.5 秒锁定根因路径（ROI 100万）</p></div></div>
+    <p class='pb-problem'>提数需求排期 2-3 天，分析师 80% 时间在取数不在分析；GMV 异常时人工排查根因需要 1-2 小时，节假日无人监控</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html' class='pb-skill-name'>Text-to-SQL Agent for Natural Language Data Query</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 自然语言→SQL：业务同学直接用中文查数据库，消灭 BI 提数排期</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-NL2Dashboard-Automation.html' class='pb-skill-name'>NL2Dashboard Automation（自然语言→仪表盘）</a><div class='pb-skill-badges'><span class='roi-badge'>节省 BI 开发人力</span></div></div><p class='pb-skill-why'>→ 自然语言→仪表盘自动生成，运营自助分析，节省 BI 开发人力</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html' class='pb-skill-name'>DeepAnalyze — 自主数据科学Agent</a><div class='pb-skill-badges'><span class='roi-badge'>20万</span></div></div><p class='pb-skill-why'>→ 自主数据科学 Agent：多平台数据周报 4-6 小时人工 → 5 分钟 Agent 自动生成（ROI 20万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-ProRCA-Business-Analysis.html' class='pb-skill-name'>ProRCA — 因果图路径溯源根因分析</a><div class='pb-skill-badges'><span class='roi-badge'>100 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 因果图根因分析：GMV 暴跌 1-2 小时人工排查 → 0.5 秒锁定根因路径（ROI 100万）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：数据仓库连接权限、历史报表模板、异常阈值定义</div>
     <div class="pb-output"><strong>输出结果：</strong>自助查询接口 + 自动周报 + 实时异常根因诊断</div>
   </div>
@@ -70,8 +82,8 @@
   <div class='pb-step-num'>Step 3</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Chapter 3：广告优化师 Agent</h3>
-    <p class='pb-problem'>❓ 人工出价精度上限是工作时长：凌晨 2 点平台出新流量包，人在睡觉；新品冷启动 3-5 周无数据，靠经验猜测出价</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Negative-Keyword-Safe-Guard.html' class='pb-skill-name'>Negative Keyword Safe Guard — 贝叶斯小样本负关键词安全过滤</a><div class='pb-skill-badges'><span class='roi-badge'>💰 $432（18% → 3.2%无关消耗）</span><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 贝叶斯小样本负关键词过滤：无关消耗从 18% → 3.2%，自动替代人工整词/否词</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Creative-Fatigue-Detection.html' class='pb-skill-name'>Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 广告素材疲劳检测：CTR/CVR 持续衰减时自动触发素材更新信号，替代人工监控</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html' class='pb-skill-name'>DARA - LLM+RL 双阶段广告预算分配 Agent</a><div class='pb-skill-badges'><span class='roi-badge'>💰 360-720 万元</span><span class='diff-badge'>⭐⭐⭐⭐⭐</span></div></div><p class='pb-skill-why'>→ LLM+RL 双阶段广告预算分配：自动日预算分配，冷启动 ROAS 提升 15-30%（ROI 360-720万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Identified-Bayesian-MMM.html' class='pb-skill-name'>Identified Bayesian MMM — 基于高斯过程的无混淆贝叶斯营销归因</a><div class='pb-skill-badges'><span class='roi-badge'>💰 1000 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 贝叶斯 MMM 归因：告诉你广告钱真正浪费在哪里，1000万 ROI</p></div></div>
+    <p class='pb-problem'>人工出价精度上限是工作时长：凌晨 2 点平台出新流量包，人在睡觉；新品冷启动 3-5 周无数据，靠经验猜测出价</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Negative-Keyword-Safe-Guard.html' class='pb-skill-name'>Negative Keyword Safe Guard — 贝叶斯小样本负关键词安全过滤</a><div class='pb-skill-badges'><span class='roi-badge'>$432（18% → 3.2%无关消耗）</span><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 贝叶斯小样本负关键词过滤：无关消耗从 18% → 3.2%，自动替代人工整词/否词</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Creative-Fatigue-Detection.html' class='pb-skill-name'>Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 广告素材疲劳检测：CTR/CVR 持续衰减时自动触发素材更新信号，替代人工监控</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html' class='pb-skill-name'>DARA - LLM+RL 双阶段广告预算分配 Agent</a><div class='pb-skill-badges'><span class='roi-badge'>360-720 万元</span><span class='diff-badge'>⭐⭐⭐⭐⭐</span></div></div><p class='pb-skill-why'>→ LLM+RL 双阶段广告预算分配：自动日预算分配，冷启动 ROAS 提升 15-30%（ROI 360-720万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Identified-Bayesian-MMM.html' class='pb-skill-name'>Identified Bayesian MMM — 基于高斯过程的无混淆贝叶斯营销归因</a><div class='pb-skill-badges'><span class='roi-badge'>1000 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 贝叶斯 MMM 归因：告诉你广告钱真正浪费在哪里，1000万 ROI</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：各平台广告 API 数据、历史出价记录、素材表现数据</div>
     <div class="pb-output"><strong>输出结果：</strong>自动出价策略 + 素材更换信号 + 预算分配建议 + 归因报告</div>
   </div>
@@ -82,7 +94,7 @@
     <h2>计算你的 ROI</h2>
     <p class='muted'>填入你的业务数字，实时看 AI Agent 的年化收益估算</p>
   </div>
-  <div class='calc-tabs'><button class='calc-tab active' data-sec='sc' style='--tc:#2563eb'>📦 供应链</button><button class='calc-tab' data-sec='da' style='--tc:#7c3aed'>📊 数据分析师</button><button class='calc-tab' data-sec='ad' style='--tc:#059669'>📈 广告优化师</button></div>
+  <div class='calc-tabs'><button class='calc-tab active' data-sec='sc' style='--tc:#2563eb'>供应链</button><button class='calc-tab' data-sec='da' style='--tc:#7c3aed'>数据分析师</button><button class='calc-tab' data-sec='ad' style='--tc:#059669'>广告优化师</button></div>
   <div class='calc-body'><div class='calc-panel active' id='panel_sc' data-sec='sc' style='--tc:#2563eb'><div class='calc-inputs'>
 <div class='calc-row'>
   <label class='calc-label' for='sc_sku_count'>管理 SKU 数量</label>
@@ -329,5 +341,21 @@
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

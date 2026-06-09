@@ -8,48 +8,61 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/02-a_b实验.html">02-A_B实验</a> / Skill-STATE-Robust-Variance-Reduction</nav>
 <h1>STATE — 重尾指标鲁棒 A/B 方差减少：Student-t 回归调整（-70% 方差）</h1>
 <p class="muted">Skill-STATE-Robust-Variance-Reduction · 02-A_B实验</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>💰 30-60 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-60 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 产品经理<span class='biz-ctx-secondary'> · 广告优化师 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Listing · TikTok 广告素材 · DTC 落地页</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>改了主图/标题/价格，不确定销量变化是改动导致的还是流量波动；两个方案团队各持己见，需要数据裁决</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每次改动都有 ≥95% 置信度的数据结论，好的改动快速全量，坏的及时止损</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>改了主图感觉好多了但不确定</span><span class='biz-pain-tag'>小范围测试结果好全量后没效果</span><span class='biz-pain-tag'>测试周期短结论不可靠</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2>1. 解决的问题</h2>
-    <p>**：电商 GMV / 订单量等指标天然重尾——极少数大客户的超大订单把方差撑得很高</p>
+    <p>电商 GMV / 订单量等指标天然重尾——极少数大客户的超大订单把方差撑得很高。</p>
     <h2>2. 核心算法逻辑</h2>
     <p>核心问题：电商 GMV / 订单量等指标天然重尾——极少数大客户的超大订单把方差撑得很高。CUPED 假设残差服从高斯分布，重尾数据下高斯假设失效，方差缩减效率大打折扣；CUPAC/MLRATE 用机器学习拟合协变量改进了均值预测，但同样没处理残差的非高斯性。</p>
     <h2>3. 业务应用场景</h2>
     <p>场景一：母婴新品 Listing AB 测试（GMV 重尾问题）</p><p>- 业务问题：新品奶粉上架后测试两种 Listing 方案（主图 A vs 主图 B），以 GMV 作为主指标。少数大客户（批量采购/月子中心）产生 10-50 倍于普通用户的订单，使 GMV 方差极高。传统 CUPED 需跑 3 周才显著； - 数据要求：实验期 GMV（$Y$）+ 实验前 14 天 GMV/浏览/加购等协变量（$X$），用户级别数据 - STATE 做法：以 XGBoost 拟合 $\hat{Y} = f(X)$，残差 $\varepsilon$ 用 EM 估 t 分布参数（典型 $\hat{\nu} \approx 3.5$），得到方差缩减后的调整指标 - 预期产出：方差</p><p>场景二：WF-B 广告竞价策略测试（点击/订单量重尾）</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2>6. 业务价值 / ROI</h2><ul><li>**ROI**：实验时长减半（3 周→1.5 周），母婴电商每实验节省 1.5 周迭代时间；年化可多跑 ~17 轮实验，隐性价值 **30-60 万元**（每轮实验加速决策带来的优化收益）</li><li>**实施难度**：⭐⭐⭐☆☆（需理解 EM 算法，但有成熟代码模板）</li><li>**优先级**：⭐⭐⭐⭐⭐（重尾指标是电商 A/B 实验的普遍痛点，直接缩短实验周期）</li><li>**评估依据**：美团真实数据验证 70.5%/80.7% 方差减少；母婴 GMV 指标天然重尾（大客户聚合效应），效果复现概率高</li></ul>
+    <h2>6. 业务价值 / ROI</h2><ul><li><strong>ROI</strong>：实验时长减半（3 周→1.5 周），母婴电商每实验节省 1.5 周迭代时间；年化可多跑 ~17 轮实验，隐性价值 <strong>30-60 万元</strong>（每轮实验加速决策带来的优化收益）</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需理解 EM 算法，但有成熟代码模板）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（重尾指标是电商 A/B 实验的普遍痛点，直接缩短实验周期）</li><li><strong>评估依据</strong>：美团真实数据验证 70.5%/80.7% 方差减少；母婴 GMV 指标天然重尾（大客户聚合效应），效果复现概率高</li></ul>
     <h2>7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：未检测到</p>
     <pre class='code-preview'><code>&quot;&quot;&quot;
@@ -132,5 +145,21 @@ class ATEResult:
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>

@@ -8,130 +8,157 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">paper2skills Playbook</a>
-    <nav class="topnav">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">paper2skills<span class="brand-sub"> Playbook</span></a>
+    <nav class="topnav" id="topnav">
       <a href="../index.html">首页</a>
+      <a href="../playbooks/index.html">场景手册</a>
+      <a href="../agents.html">智能体广场</a>
+      <a href="../workflows/index.html">工作流</a>
       <a href="../domains/index.html">领域</a>
-      <a href="../topics/index.html">主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../ai-roadmap.html" style="color:#f59e0b;font-weight:700">🗺 AI 路线图</a>
       <a href="../graph/overview.html">图谱</a>
-      <a href="../skills/index.html">全部</a>
+      <a href="../ai-roadmap.html" class="nav-highlight">AI 路线图</a>
     </nav>
-    <input id="global-search" placeholder="搜索 Skill / 场景 / 算法..." autocomplete="off">
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索 Skill / 场景..." autocomplete="off" role="search" aria-label="搜索">
+    </div>
   </header>
-  <div id="search-results" class="search-results hidden"></div>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
-    <aside class="sidebar">
-      <a href="../index.html">总览</a>
-      <a href="../ai-roadmap.html">🗺 AI 能力路线图</a>
-      <a href="../domains/index.html">按领域</a>
-      <a href="../topics/index.html">按主题</a>
-      <a href="../workflows/index.html">工作流</a>
-      <a href="../playbooks/index.html">场景手册</a>
-      <a href="../graph/overview.html">Skills Graph</a>
-      <a href="../skills/index.html">全部 Skills</a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <a href="../index.html">总览</a>
+        <a href="../playbooks/index.html">场景手册</a>
+        <a href="../agents.html">智能体广场</a>
+        <a href="../ai-roadmap.html">AI 能力路线图</a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <a href="../domains/index.html">按领域</a>
+        <a href="../topics/index.html">按主题</a>
+        <a href="../workflows/index.html">工作流</a>
+        <a href="../graph/overview.html">Skills Graph</a>
+        <a href="../skills/index.html">全部 Skills</a>
+      </div>
     </aside>
     <section class="content"><h1>05-推荐系统</h1><p>Recommendation systems, cold start, diversity reranking</p><div class='cards'><article class="card skill-card">
   <h3><a href="../skills/Skill-Ad-Aware-Recommendation.html">Ad-Aware Recommendation — 广告感知协同排序：有机推荐与赞助商品的联合优化</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>广告排序（Sponsored Ranking）</p>
+  <p>传统电商推荐系统中，广告排序（Sponsored Ranking） 和 有机推荐（Organic Recommendation） 是两个完全独立的系统，分别优化 CTR/ROAS 和个性化相关性，导致用户体验分裂——同一用户可能在广告位看到高竞价但低相关商品，在有机推荐区看到高相关但低转化意图商品。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag topic'>广告与投放</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-CAGED-Debiased-Rec.html">因果图聚合权重去偏推荐 - CAGED</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>观测数据的交互似然分布**，带着流行度偏差的&quot;指纹&quot;。解法不是修改损失函数或丢弃边，而是直接</p>
-  <div class="card-badges"><span class='roi-badge'>💰 500 万元</span></div>
+  <p>Momcozy 吸奶器爆款 SKU 占全部流量的 60%+，200 余款配件（替换配件、特殊尺码）几乎零曝光</p>
+  <div class="card-badges"><span class='roi-badge'>500 万元</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-CSDM-Diffusion-ColdStart.html">扩散模型冷启动CTR - 新品零交互时的转化潜力预热</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>Embedding &amp; MLP</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10万</span></div>
+  <p>传统推荐系统采用 Embedding &amp; MLP 范式：每个商品 ID 对应一个向量，该向量通过用户历史交互数据学习。新品没有历史交互 → Embedding 全为随机噪声 → CTR 预测失效，这就是冷启动问题。</p>
+  <div class="card-badges"><span class='roi-badge'>10万</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span><span class='tag topic'>视觉内容生成</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Cold-Start-Meta-Learning-PAM.html">Popularity-Aware Meta-Learning for Cold-Start Recommendation</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>**：母婴品类SKU迭代快（奶粉按月龄分段、辅食按月添加），新品上架无历史交互数据，传统协同过滤无法推荐</p>
+  <p>母婴品类SKU迭代快（奶粉按月龄分段、辅食按月添加），新品上架无历史交互数据，传统协同过滤无法推荐。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Counterfactual-Recommendation-DCE.html">反事实推荐 - 双重校准估计器（DCE）</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>MNAR（Missing Not At Random）选择偏差</p>
-  <div class="card-badges"><span class='roi-badge'>💰 200-400 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>是 MNAR（Missing Not At Random）选择偏差:用户只对系统曝光过的商品产生反馈,而曝光本身受热度/历史 CTR 影响,导致推荐模型陷入&quot;自我强化&quot;循环。</p>
+  <div class="card-badges"><span class='roi-badge'>200-400 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Deep-Learning-Recommendation-HI.html">Deep Learning Recommendation with Heterogeneous Inference</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>正向交互**（用户点击、购买）来建模，忽略了</p>
+  <p>传统协同过滤只利用正向交互（用户点击、购买）来建模，忽略了负向信号（用户不点击、跳过）的价值。Heterogeneous Inference (HI) 通过同时建模两种推理模式</p>
   <div class="card-badges"></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Diversity-Reranking-SMMR.html">Diversity-Aware Reranking with SMMR</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>**：传统推荐系统追求相关性最大化，导致结果高度同质化——用户搜&quot;婴儿奶粉&quot;，首页全是同一品牌同一段位</p>
+  <p>传统推荐系统追求相关性最大化，导致结果高度同质化——用户搜&quot;婴儿奶粉&quot;，首页全是同一品牌同一段位。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Explainable-Recommendation.html">Explainable Recommendation for Business Trust</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>**：黑盒推荐系统给用户推了&quot;吸奶器&quot;，用户会问&quot;为什么给我推这个？&quot;如果无法解释，用户不信任、不点击、甚至反感</p>
+  <p>黑盒推荐系统给用户推了&quot;吸奶器&quot;，用户会问&quot;为什么给我推这个？</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-LLM-Augmented-Recommendation.html">LLM Augmented Recommendation — 大语言模型增强个性化推荐：自然语言驱动的跨域用户意图理解</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>LLM 增强推荐**的核心思路是：</p>
-  <div class="card-badges"><span class='roi-badge'>💰 100万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>母婴跨境电商新用户注册率高但转化低，约 65% 新用户第一屏浏览 ≤3 个商品后跳出</p>
+  <div class="card-badges"><span class='roi-badge'>100万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-MAS-Collaborative-Recommendation.html">MAS Collaborative Recommendation — 多智能体协同个性化推荐：LLM Agent 异构协作框架</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>MAS Collaborative Recommendation</p>
+  <p>传统推荐系统是单一模型的端到端优化，难以整合多维用户意图（价格敏感、品牌偏好、安全认证关注）。MAS Collaborative Recommendation 将推荐任务分解为多个专业化 LLM Agent 的协作问题</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>知识图谱与RAG</span><span class='tag topic'>MAS与智能体工程</span><span class='tag topic'>定价与利润</span><span class='tag topic'>风控与合规</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Marketing-Driven-Recommendation.html">Marketing-Driven Recommendation — 营销活动驱动的推荐系统：Promotion-Aware 个性化协同优化</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>推荐了用户喜欢但不需要促销的商品</p>
+  <p>传统推荐系统的目标是最大化用户相关性（CTR/CVR），营销系统的目标是最大化 GMV 和促销 ROI。这两个目标通常分开优化，导致推荐了用户喜欢但不需要促销的商品（浪费预算），或促销了高利润商品但对用户不相关（浪费曝光）。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐⭐☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>数据采集与治理</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Matrix-Factorization.html">Matrix Factorization for Recommendation (矩阵分解推荐)</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>是：根据用户历史行为，预测用户对未交互商品的兴趣程度</p>
-  <div class="card-badges"><span class='roi-badge'>💰 5-20 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
+  <p>根据用户历史行为，预测用户对未交互商品的兴趣程度。</p>
+  <div class="card-badges"><span class='roi-badge'>5-20 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-NeuralNDCG-Learning-to-Rank.html">NeuralNDCG — 可微分排序优化与Learning to Rank</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>是排序评估指标与训练损失函数之间的不匹配</p>
-  <div class="card-badges"><span class='roi-badge'>💰 10万</span></div>
+  <p>是排序评估指标与训练损失函数之间的不匹配。</p>
+  <div class="card-badges"><span class='roi-badge'>10万</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>供应链与补货</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Price-Sensitive-Recommendation.html">Price-Sensitive Recommendation — 价格感知推荐：弹性感知的个性化定价与排序融合</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>Price-Sensitive Recommendation</p>
+  <p>传统推荐系统只关注用户与商品的&quot;相关性&quot;，完全忽视价格因素；而传统定价系统只优化利润或销量，不考虑用户个性化偏好。Price-Sensitive Recommendation 的核心思想是将个体价格弹性注入推荐排序决策</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐☆☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>广告与投放</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Semantic-ID-Retrieval-RPG.html">Semantic ID Retrieval for Recommendation (RPG)</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>**：传统推荐系统用无序的one-hot ID或量化向量表示商品，丢失了语义信息</p>
+  <p>传统推荐系统用无序的one-hot ID或量化向量表示商品，丢失了语义信息。</p>
   <div class="card-badges"><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag topic'>客服与VOC</span><span class='tag topic'>推荐与搜索</span></div>
 </article><article class="card skill-card">
   <h3><a href="../skills/Skill-Session-Based-Recommendation-SR-GNN.html">Session-Based Recommendation with SR-GNN</a></h3>
   <p class="muted">05-推荐系统</p>
-  <p>核心思想：将用户匿名浏览 session 中的商品交互序列建模为图结构，用图神经网络（GNN）捕捉商品间的复杂转移关系，取代传统 RNN 只能建模线性顺序的局限。每个 session 被表示为&quot;全局长期偏好&quot;与&quot;当前 session 兴趣&quot;的注意力加权组合，预测用户下一个最可能点击的商品。</p>
-  <div class="card-badges"><span class='roi-badge'>💰 首年投入约 15 万，预期年增量 GMV 约 1440 万，</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
+  <p>母婴出海电商中 60%+ 用户以匿名状态浏览（未登录/未注册）</p>
+  <div class="card-badges"><span class='roi-badge'>首年投入约 15 万，预期年增量 GMV 约 1440 万，</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div>
   <div><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag topic'>推荐与搜索</span><span class='tag topic'>定价与利润</span></div>
 </article></div></section>
   </main>
   <script src="../assets/playbook-data.js"></script>
   <script src="../assets/search.js"></script>
+  <script>
+  // Hamburger menu
+  const hbtn = document.getElementById('hamburger');
+  const tnav = document.getElementById('topnav');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    tnav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
 </body>
 </html>
