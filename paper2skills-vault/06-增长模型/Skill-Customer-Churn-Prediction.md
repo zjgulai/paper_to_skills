@@ -356,3 +356,29 @@ def main():
 
 if __name__ == '__main__':
     predictor = main()
+
+## ④ 技能关联
+
+- **延伸技能**：
+- [[Skill-Uplift-Churn-Prediction]] — Uplift + Churn 联合建模，识别可说服的流失用户
+- [[Skill-Deep-Learning-Churn-Prediction]] — 深度学习流失预测，捕捉非线性行为特征
+
+- **可组合**：[[Skill-RFM-Customer-Segmentation]] / [[Skill-LTV-Prediction-ZILN]]
+
+
+- **可组合（延伸）**：[[Skill-Negative-Keyword-Safe-Guard]] / [[Skill-Creative-Fatigue-Detection]] / [[Skill-DQN-Purchase-Prediction]] / [[Skill-UCB-LDP-Dynamic-Pricing]]
+- **被以下 Skill 使用**：[[Skill-Guardrailed-Uplift-Targeting]] / [[Skill-User-Funnel-Analysis]] / [[Skill-Last-Mile-Delivery-Prediction]] / [[Skill-Feature-Engineering]] / [[Skill-Customer-Journey-Prototype]]
+- **跨域关联**：[[Skill-Counterfactual-Recommendation-DCE]]
+- **相关技能**：[[Skill-Generative-Agent-Simulation]]
+- **相关技能**：[[Skill-User-Lifecycle-STAN]]
+- **跨域关联**：[[Skill-DARA-Agentic-MMM-Optimizer]]
+- **关联**：[[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]
+- **关联**：[[Skill-Multimodal-Table-Understanding]]
+- **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+- **相关**：[[Skill-Guardrailed-CATE-NBA]]
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：Churn 预测模型命中率提升 15-20%，每月减少 50-100 名高价值客户流失，按客单价 ¥300 计，月均保留价值 ¥1.5-3 万
+- **实施难度**：⭐⭐☆☆☆（2星，标准 ML 分类问题）
+- **优先级评分**：⭐⭐⭐⭐⭐（5星，直接影响 LTV 和 ROI）

@@ -1,8 +1,49 @@
 # paper2skills Skill 关联图谱
 
-**版本**: v2.7
-**更新日期**: 2026-04-26
-**覆盖技能数**: 48 个已萃取同步技能
+**版本**: v3.1(增量更新 2026-05-19)
+**更新日期**: 2026-05-19
+**覆盖技能数**: **130 个**已萃取同步技能
+
+---
+
+## v3.1 最新状态(2026-05-19)
+
+> 由 `skills_graph_analyzer.py --analyze` 自动产出
+
+| 维度 | v2.8 (2026-04-29) | v3.0 (2026-05-17) | v3.1 (2026-05-19) |
+|---|---|---|---|
+| 节点数 | 52 | 107 | **130** |
+| 边数 | ~250 | 581 | **734** |
+| 领域数 | 14 | 15 + 16-智能体工程 | **15 + 16-智能体工程** |
+| HIGH 缺口 | 19 | 1(CausalRAG) | **1(CausalRAG)** |
+| 总缺口 | 156 | 89 | **87** |
+| 新增 Skill | — | 19 个 | +23 个(Sprint 3 迭代) |
+
+### v3.1 关键变更
+
+- **解析器升级**：`skills_graph_analyzer.py` 现在同时支持 `### 标题` 和 `**bold** 平铺` 两种技能关联格式，以及 Obsidian `[[WikiLink]]` 语法
+- **新增别名**：`skill-aliases.json` 补充 `Skill-MAB-Thompson-Sampling`、`Skill-Customer-LTV-Prediction`、`Skill-Dial-In-LLM` 系列路径变体映射
+- **14 个原孤岛 Skill 全部接入图谱**：`Skill-TimeCMA-LLM-Forecasting`、`Skill-CAGED-Debiased-Rec`、`Skill-Identified-Bayesian-MMM`、`Skill-UCB-LDP-Dynamic-Pricing`、`Skill-Guardrailed-CATE-NBA`、`Skill-Generative-Agent-Simulation`、`Skill-FrontDoor-Causal-MTA`、`Skill-Identity-Fragmentation-Debiasing`、`Skill-AgentRouter-KG-Guided`、`Skill-Agentic-SCKG-Risk`、`Skill-ProRCA-Business-Analysis`、`Skill-NEO_LRP`、`Skill-Multilevel_FLP`、`Skill-Generative-Audience-LLM-Auction`
+
+### 核心基础技能 (高被依赖数，v3.1)
+
+| 排名 | 技能 | 被依赖数 |
+|-----|------|---------|
+| 1 | Skill-Feature-Engineering | 16 |
+| 2 | Skill-ROAS-Budget-Optimization | 9 |
+| 3 | Skill-Demand-Forecasting-Supply-Chain | 9 |
+| 4 | AutoGen (→ Skill-AutoGen-Multi-Agent-Conversation) | 9 |
+| 5 | Skill-Matrix-Factorization | 8 |
+
+详见 [`paper2skills-skills/paper-skills-graph/skills_graph_report.md`](../../paper2skills-skills/paper-skills-graph/skills_graph_report.md).
+
+---
+
+## v2.8 历史快照(归档,2026-04-29)
+
+**版本**: v2.8
+**更新日期**: 2026-04-29
+**覆盖技能数**: 52 个已萃取同步技能
 
 ---
 
@@ -16,8 +57,8 @@
 | 04-供应链 | 4 | Demand Forecasting, Multi-Echelon Inventory, Two-Echelon Inventory DRL, Monodense价格弹性, TJAP跨市场定价 |
 | 05-推荐系统 | 3 | Matrix Factorization, Deep Learning Recommendation (HI), NeuralNDCG Learning to Rank |
 | 06-增长模型 | 9 | Churn Prediction, New Product Opportunity Mining, Cold Start Recommendation, LTV Prediction, Deep Learning Churn Prediction, User Lifecycle STAN, Customer Journey Prototype, DQN Purchase Prediction, Uplift Churn Prediction |
-| 07-NLP-VOC | 23 | 大规模ABSA, BERT-MoE ABSA, CSK情感聚类, NPS驱动因素分析, AIPL-VOC生命周期标签, CrossLingual情感迁移, REVISION无点击意图, Spiral of Silence沉默挖掘, TopicImpact观点单元, PERSONABOT RAG画像, SoMeR多视角表示, GPLR人群标签, Kano需求分类, iReFeed优先级排序, TSCAN上下文Uplift, OfflineRL触达时机, MAA行动建议, StaR观点排序, AGRS评论摘要, TJAP跨市场定价, **AdaNEN流式分类** |
-| 08-知识图谱 | 2 | Knowledge Graph for Skills Management, GraphRAG Knowledge Enhanced Retrieval |
+| 07-NLP-VOC | 32 | 大规模ABSA, BERT-MoE ABSA, CSK情感聚类, NPS驱动因素分析, AIPL-VOC生命周期标签, CrossLingual情感迁移, REVISION无点击意图, Spiral of Silence沉默挖掘, TopicImpact观点单元, PERSONABOT RAG画像, SoMeR多视角表示, GPLR人群标签, Kano需求分类, iReFeed优先级排序, TSCAN上下文Uplift, OfflineRL触达时机, MAA行动建议, StaR观点排序, AGRS评论摘要, TJAP跨市场定价, AdaNEN流式分类, AutoTag自进化标签, ActiveLearning标注, ALCHEmist弱监督, OpenWorld增量学习, ReviewQuality评分, VOC统一萃取引擎, VOC语义蓝图, 产品属性图谱, 客服对话决策图, 行为意图树, 跨语言语义对齐, MAS消费者行为仿真, MAS多智能体VOC数据分析, MARL多智能体动态定价, MAS多目标推荐 |
+| 08-知识图谱 | 4 | Knowledge Graph for Skills Management, GraphRAG Knowledge Enhanced Retrieval, KG Auto Construction Agent-Driven, Dense Retrieval Ecommerce Semantic Search |
 | 09-DataAgent-LLM | 3 | DeepAnalyze 自主数据科学Agent, Argos Agentic异常检测, Data-to-Dashboard 多Agent可视化 |
 
 ---
@@ -166,6 +207,37 @@
     │    TSCAN     │◄────►│  OfflineRL   │      │              │
     │ 上下文Uplift  │      │ 触达时机优化  │      │              │
     └──────────────┘      └──────────────┘      └──────────────┘
+
+【MAS多智能体系统层】(NEW — 4技能闭环)
+    ┌──────────────┐
+    │  P2 VOC数据  │
+    │  分析师(27A) │
+    │  主题/模式   │
+    └──────┬───────┘
+           │ 需求主题/痛点模式
+           ▼
+    ┌──────────────┐      ┌──────────────┐
+    │  P3 MARL     │◄────►│  P4 多目标   │
+    │  动态定价    │价格   │  推荐        │
+    │  MADDPG/QMIX │      │ AWRQ-Mixer   │
+    └──────┬───────┘      └──────┬───────┘
+           │                    │ 推荐策略
+           │ 定价策略           │
+           ▼                    ▼
+    ┌─────────────────────────────────────┐
+    │      P1 消费者行为仿真              │
+    │  虚拟Agent市场 → 策略预演与验证     │
+    │  输出: cannibalization/增量/忠诚    │
+    └─────────────────────────────────────┘
+           │
+           └────────────► 回传洞察 → 优化P2/P3/P4
+
+    上游衔接: PERSONABOT画像 → Agent初始画像
+             Monodense弹性  → MARL环境参数
+             DQN购买预测    → ConversionAgent打分
+    下游衔接: P4 → 首页/购物车/邮件推荐
+             P3 → TJAP跨市场定价实时调整
+             P1 → 大促前策略A/B仿真筛选
 ```
 
 ---
@@ -263,6 +335,7 @@ REVISION (无点击意图挖掘)
 | 5 | **MAA 行动建议生成** | VOC 输出端枢纽 | 5 |
 | 6 | **SoMeR 多视角表示** | 用户画像基座 | 5 |
 | 7 | **DeepAnalyze** | 数据智能分析中枢 | 5 |
+| 8 | **P4 MAS多目标推荐** | 策略输出枢纽 | 4 |
 
 ### 跨领域组合推荐
 
@@ -296,6 +369,12 @@ REVISION (无点击意图挖掘)
 | VOC洞察可视化 | TopicImpact | Data-to-Dashboard | 话题提取 + 可视化呈现 | 产品复盘报告 |
 | 预测趋势可视化 | Demand Forecasting | Data-to-Dashboard | 预测结果 + 趋势图表 | 需求预测仪表板 |
 | 搜索意图→排序 | REVISION | NeuralNDCG | 意图识别 + 排序优化 | 智能搜索结果排序 |
+| MAS分析→定价 | P2 VOC分析师 | P3 MARL定价 | 需求主题→弹性修正 | 大促全链路决策 |
+| 定价→推荐联动 | P3 MARL定价 | P4 多目标推荐 | 实时价格→利润排序 | 利润最大化推荐 |
+| 推荐→仿真验证 | P4 多目标推荐 | P1 行为仿真 | 推荐策略→预演验证 | 推荐策略迭代 |
+| VOC→定价驱动 | P2 VOC分析师 | P3 MARL定价 | 需求洞察→动态调价 | 需求驱动定价 |
+| MAS全链路闭环 | P2+P3+P4+P1 | — | 分析→决策→执行→验证 | 大促自动化决策 |
+| 仿真→产品决策 | P1 行为仿真 | Kano | 市场响应→需求验证 | 产品改进优先级验证 |
 
 ---
 
@@ -307,10 +386,10 @@ REVISION (无点击意图挖掘)
 | 02-A/B实验 | ████░░░░ | ████████ | ████░░░░ | **4** |
 | 03-时间序列 | ██░░░░░░ | ████░░░░ | ████░░░░ | 3 |
 | 04-供应链 | ████░░░░ | ████████ | ██████░░ | 4 |
-| 05-推荐系统 | ████████ | ████████ | ███████░ | **7** |
+| 05-推荐系统 | ██████░░ | ███████░ | ██████░░ | **5** |
 | 06-增长模型 | ██░░░░░░ | ████░░░░ | ████░░░░ | 3 |
 | 07-NLP-VOC | ██░░░░░░ | ██░░░░░░ | ██░░░░░░ | 2 |
-| 08-知识图谱 | ████████ | ████████ | ████████ | 6 |
+| 08-知识图谱 | ██████░░ | ████████ | ███████░ | 5 |
 | 09-DataAgent-LLM | ████░░░░ | ████████ | ████░░░░ | 4 |
 
 **高密度缺口领域**: 02-A/B实验、05-推荐系统、08-知识图谱  
@@ -323,10 +402,11 @@ REVISION (无点击意图挖掘)
 ## 优先级萃取清单
 
 ### P0: 修复已标记但未完成的技能
-- [ ] **iReFeed 需求优先级排序** (arXiv:2603.28677)
-  - 状态: VOC桥接图谱标记为"已萃取"，但实际无 skill card、无代码
-  - 缺口: Kano → 产品路线图的必经断点
-  - 预期产出: `Skill-iReFeed-需求优先级排序.md`
+- [x] **iReFeed 需求优先级排序** (arXiv:2603.28677) ✅ 已验证
+  - 状态: skill card 完整 + 代码已落地 + 测试通过
+  - 文件: `Skill-iReFeed-需求优先级排序.md`
+  - 代码: `paper2skills-code/nlp_voc/irefeed_priority_ranking/model.py`
+  - 缺口: Kano → 产品路线图断点已修复
 
 ### P1: 补全商业闭环核心缺口（已更新）
 - [x] **DeepAnalyze 自主数据科学Agent** (09-DataAgent-LLM)
@@ -350,9 +430,34 @@ REVISION (无点击意图挖掘)
   - 状态: 已完成 (`Skill-Data-to-Dashboard-Multi-Agent-Visualization.md`)
   - 覆盖: 两阶段多Agent架构（Data-to-Insight + Insight-to-Chart），Tree-of-Thoughts 可视化选择
   - 关联: DeepAnalyze 分析结果 → 自动可视化仪表板
-- [ ] **序列推荐 Session-based Recommendation** (05-推荐系统)
-- [ ] **LLM 驱动个性化文案生成** (07-NLP-VOC 营销策略层)
-- [ ] **多目标推荐 Multi-Task Learning** (05-推荐系统)
+- [x] **序列推荐 Session-based Recommendation** (05-推荐系统) ✅ 已完成 (SR-GNN)
+- [x] **LLM 驱动个性化文案生成** (07-NLP-VOC 营销策略层) ✅ 已完成
+- [x] **多目标推荐 Multi-Objective Recommendation** (05-推荐系统 / 07-NLP-VOC)
+  - 状态: 已完成 (`Skill-MAS-Multi-Objective-Recommendation.md`)
+  - 覆盖: AWRQ-Mixer多Agent协调，CTR/CVR/利润/多样性四目标平衡
+  - 关联: DQN购买预测 → ConversionAgent; PERSONABOT画像 → 匹配打分
+- [x] **MARL多智能体动态定价** (04-供应链 / 07-NLP-VOC)
+  - 状态: 已完成 (`Skill-MAS-MARL-Dynamic-Pricing.md`)
+  - 覆盖: MADDPG/MADQN/QMIX多Agent竞争定价，5策略对比仿真
+  - 关联: Monodense弹性 → MARL环境; TJAP → 实时调价执行
+- [x] **MAS消费者行为仿真** (07-NLP-VOC)
+  - 状态: 已完成 (`Skill-MAS-Consumer-Behavior-Simulation.md`)
+  - 覆盖: 虚拟消费者Agent市场仿真，促销效果预演
+  - 关联: PERSONABOT画像 → Agent初始化; P3/P4 → 策略验证
+- [x] **MAS多智能体VOC数据分析** (07-NLP-VOC)
+  - 状态: 已完成 (`Skill-MAS-VOC-Data-Analyst.md`)
+  - 覆盖: 27-Agent定性分析管道，主题/编码/模式/洞察/验证/报告
+  - 关联: VOC语义蓝图 → Agent输入; Kano/iReFeed → 下游决策
+- [x] **KG Auto Construction Agent-Driven** (08-知识图谱)
+  - 状态: 已完成 (`Skill-KG-Auto-Construction-Agent-Driven.md`)
+  - 覆盖: 三阶段Agent驱动框架（本体创建→精炼→填充），从电商产品描述自动构建KG
+  - 关联: VOC语义蓝图/产品属性图谱 → 数据源; GraphRAG → 下游应用
+  - 实验: 291商品97%成功率，97.1%属性覆盖率
+- [x] **Dense Retrieval Ecommerce Semantic Search** (08-知识图谱)
+  - 状态: 已完成 (`Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md`)
+  - 覆盖: 四阶段语义搜索（查询解析→稠密检索→约束过滤→交叉编码器重排序）
+  - 关联: GraphRAG → 检索加速层; KG Auto Construction → 结构化过滤; VOC语义蓝图 → 语义理解层
+  - 场景: 母婴商品语义搜索、GraphRAG加速、跨语言检索
 
 ---
 
@@ -370,8 +475,14 @@ REVISION (无点击意图挖掘)
 
 ### Phase 3: 中期扩展（1-2月）
 7. ~~探索 **Data-to-Dashboard**，将 DeepAnalyze 分析结果自动转化为管理层可视化仪表板~~ ✅ 已完成
-8. 探索 **序列推荐** 和 **文案生成**，提升转化率
-9. 引入 **客服对话分析** 技能，扩展 VOC 数据源
+8. ~~探索 **序列推荐** 和 **文案生成**，提升转化率~~ ✅ 已完成
+9. ~~引入 **客服对话分析** 技能，扩展 VOC 数据源~~ ✅ 已完成
+10. ~~引入 **MAS多智能体系统** 4技能，建立分析→决策→执行→验证闭环~~ ✅ 已完成
+
+### Phase 4: 深度整合（持续）
+11. MAS规则基线升级为LLM/MARL生产版本
+12. 建立P2→P3→P4→P1自动化闭环流水线
+13. 跨技能A/B测试框架验证联动效果
 
 ---
 

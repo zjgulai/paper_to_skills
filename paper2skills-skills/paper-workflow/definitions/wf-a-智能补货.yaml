@@ -1,0 +1,103 @@
+id: wf-a
+name: WF-A 智能补货
+description: 从需求预测到多级库存决策的端到端补货优化链，覆盖预测、库存健康诊断、补货策略和履约保障四个阶段。
+target_users:
+- 供应链数据科学家
+- 采购/库存运营
+- 供应链负责人
+entry_question: 你目前面临的核心库存问题是什么？
+steps:
+- id: step-1
+  name: 需求预测
+  question: 是否有足够的历史销售数据？
+  context: 选择适合数据量和业务特性的预测方法
+  branches:
+  - condition: 有 1 年以上历史数据 + 促销日历
+    skills:
+    - id: Skill-Demand-Forecasting-Supply-Chain
+      role: 供应链专用需求预测（含促销分解）
+    - id: Skill-Temporal-Fusion-Transformer
+      role: TFT 多变量时序预测，处理促销/竞品
+    - id: Skill-GraphDeepAR-Demand-Forecasting
+      role: 图神经网络建模 SKU 间关联需求
+  - condition: 新品 / 冷启动（< 8 周数据）
+    skills:
+    - id: Skill-Bass-Diffusion-New-Product-Forecasting
+      role: Bass 扩散模型 + 相似品迁移
+    - id: Skill-Cross-Border-Cold-Start-Forecast
+      role: 跨境冷启动多源信号融合预测
+    - id: Skill-New-Product-Inventory-Coldstart
+      role: 新品冷启动库存策略
+  - condition: 大促 / 事件驱动需求突增
+    skills:
+    - id: Skill-EventCast-LLM-Event-Forecasting
+      role: LLM 事件感知需求预测
+    - id: Skill-Promotion-Logistics-Surge-Forecast
+      role: 大促物流峰值预测
+- id: step-2
+  name: 库存健康诊断
+  question: 当前库存状态是否健康？
+  context: 诊断积压/短缺根因，为补货策略提供依据
+  skills:
+  - id: Skill-Inventory-Health-Aging-Attribution
+    role: FSN 分级 + 积压根因四类归因
+  - id: Skill-Conformal-Prediction-Demand-UQ
+    role: 不确定性量化，生成需求置信区间
+  - id: Skill-Hierarchical-Demand-Forecasting-Reconciliation
+    role: 多层级预测协调（SKU → 品类 → 总量）
+- id: step-3
+  name: 补货策略
+  question: 你的供应链是单级还是多级仓网？
+  branches:
+  - condition: 单仓 / 直发模式
+    skills:
+    - id: Skill-Safety-Stock-Replenishment
+      role: 安全库存 + 再订购点计算
+    - id: Skill-Forecast-Driven-Inventory
+      role: 预测驱动的动态库存策略
+    - id: Skill-Dynamic-Lot-Sizing-MOQ
+      role: 最小起订量约束下的动态批量
+  - condition: 多仓 / 海外仓网络
+    skills:
+    - id: Skill-Multi-Channel-Inventory-Pooling
+      role: 跨渠道库存池化动态调拨
+    - id: Skill-Multi-Echelon-Inventory
+      role: 多级库存联合优化
+    - id: Skill-Two-Echelon-Inventory-DRL
+      role: 深度强化学习两级库存优化
+- id: step-4
+  name: 供应商与履约
+  question: 供应商交期不稳定是否影响库存决策？
+  branches:
+  - condition: 需要优化供应商选择和交期
+    skills:
+    - id: Skill-Supplier-Lead-Time-Buffer
+      role: 交期缓冲时间动态估计
+    - id: Skill-Lead-Time-Distribution-Risk-GenQOT
+      role: 交期分布风险量化
+    - id: Skill-Supplier-Evaluation-Model
+      role: 供应商综合评估模型
+  - condition: 需要优化最后一公里履约
+    skills:
+    - id: Skill-Delivery-Promise-Optimization
+      role: 到货时效承诺优化
+    - id: Skill-Last-Mile-Delivery-Prediction
+      role: 末端配送时效预测
+    - id: Skill-Cross-Border-Logistics-Routing
+      role: 跨境物流路径优化
+- id: step-measure
+  name: 效果度量与补货复盘
+  question: 本次补货计划执行后，如何判断预测精度是否提升？
+  context: 每次大促/旺季后做预测准确性复盘，持续优化下一次备货参数
+  skills:
+  - id: Skill-Argos-Agentic-Anomaly-Detection
+    role: 实时监控补货后库存水位/销速变化，异常立即告警
+  - id: Skill-Inventory-Health-Aging-Attribution
+    role: 补货后7/14/30天健康度追踪，识别过量或不足
+  - id: Skill-DiD-Difference-in-Differences
+    role: 量化本次预测优化带来的真实改善效果（对比上期）
+outcomes:
+- 需求预测 MAPE 降低 20-35%，减少人工拍脑袋备货
+- 库存积压降低 15-25%，库存周转天数缩短 7-15 天
+- 断货率从 8% 降至 3%，减少丢单损失
+- 年化节省库存持有成本 50-200 万元（规模依赖）

@@ -8,12 +8,7 @@ venv/
 env/
 ENV/
 *.egg-info/
-dist/
 build/
-
-# Data
-*.csv
-*.pdf
 
 # IDE
 .vscode/
@@ -25,5 +20,33 @@ build/
 .DS_Store
 Thumbs.db
 
-# Claude
+# Claude / OpenCode
 .claude/
+.sisyphus/
+.kiro/
+
+# 全局 dist/build
+dist/
+
+# Data 大文件类（保留 .csv 在 fixtures 目录里的覆盖规则可后加）
+*.csv
+
+# MAS runtime artifacts
+.mas/
+*.bak
+
+# Test artifacts
+.pytest_cache/
+
+# Secrets / environment
+.env
+.env.*
+*.secret
+
+# SSH private keys
+*.pem
+*.key
+
+# 构建产物（通过 gh-pages 分支或服务器部署，不提交到 main）
+# playbook/ 已通过 gh-pages 分支和服务器部署
+playbook/

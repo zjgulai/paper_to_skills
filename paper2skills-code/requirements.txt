@@ -1,26 +1,35 @@
 # paper2skills-code dependencies
+# Python >= 3.14  (tested: 3.14.5)
+# 使用 venv 安装：
+#   python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
 
 # Core
-numpy>=1.21.0
-pandas>=1.3.0
-scipy>=1.7.0
-scikit-learn>=1.0.0
+numpy>=2.0.0
+pandas>=2.0.0
+scipy>=1.13.0
+scikit-learn>=1.6.0
 
 # Visualization
-matplotlib>=3.4.0
-seaborn>=0.11.0
+matplotlib>=3.9.0
+seaborn>=0.13.0
 
 # Time Series
-statsmodels>=0.13.0
+statsmodels>=0.14.0
 prophet>=1.1.0
 
-# Deep Learning (optional)
-torch>=1.10.0
-tensorflow>=2.6.0
+# Deep Learning (optional — comment out if not needed)
+torch>=2.0.0
+# tensorflow>=2.16.0  # 暂无 Python 3.14 官方 wheel，按需启用
 
 # Causal Inference
-causalml>=0.12.0
-econml>=0.1.0
+causalml>=0.16.0
+econml>=0.15.0
 
-# A/B Testing
-scipy>=1.7.0
+# Imbalanced learning
+imbalanced-learn>=0.12.0
+
+# Sync script
+requests>=2.28.0
+
+# LLM API (optional — only needed for non-simulate mode)
+openai>=1.0.0

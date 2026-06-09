@@ -37,12 +37,12 @@ version: 0.1.0
 ### Step 2: 下载并保存论文PDF
 
 1. 从 arXiv 下载原始 PDF
-2. 保存到 `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
+2. 保存到 `/Users/lute/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
 3. 如果 PDF 不存在，跳过此步骤继续
 
 ### Step 3: 应用 Master Prompt
 
-使用 `/Users/pray/project/paper_to_skills/paper2skills-vault/07-资源库/MasterPrompt.md` 中的 Master Prompt 生成 Skill 卡片。
+使用 `/Users/lute/project/paper_to_skills/paper2skills-vault/07-资源库/MasterPrompt.md` 中的 Master Prompt 生成 Skill 卡片。
 
 ### Step 4: 生成代码模板
 
@@ -79,7 +79,7 @@ version: 0.1.0
 #### 5.4 运行代码验证
 
 ```bash
-cd /Users/pray/project/paper_to_skills/paper2skills-code/[领域]/[算法]/
+cd /Users/lute/project/paper_to_skills/paper2skills-code/[领域]/[算法]/
 python -m pytest model.py -v
 ```
 
@@ -118,12 +118,12 @@ python -m pytest model.py -v
 
 保存到相应目录：
 
-- 原始论文PDF: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
-- 阅读笔记: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/notes.md`
-- 萃取结果: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/extract.md`
-- Skill 卡片: `/Users/pray/project/paper_to_skills/paper2skills-vault/[领域]/Skill-[算法名称].md`
-- 代码模板: `/Users/pray/project/paper_to_skills/paper2skills-code/[领域]/[算法]/model.py`
-- 验证报告: `/Users/pray/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/verification_report.md`
+- 原始论文PDF: `/Users/lute/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/paper.pdf`
+- 阅读笔记: `/Users/lute/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/notes.md`
+- 萃取结果: `/Users/lute/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/extract.md`
+- Skill 卡片: `/Users/lute/project/paper_to_skills/paper2skills-vault/[领域]/Skill-[算法名称].md`
+- 代码模板: `/Users/lute/project/paper_to_skills/paper2skills-code/[领域]/[算法]/model.py`
+- 验证报告: `/Users/lute/project/paper_to_skills/paper2skills-vault/papers/[领域]/[论文ID]/verification_report.md`
 
 ## Master Prompt 要点
 

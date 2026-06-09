@@ -584,6 +584,11 @@ if __name__ == '__main__':
 
 ---
 
+
+- **可组合**：[[Skill-RFM-Customer-Segmentation]]
+
+- **可组合**：[[Skill-Customer-Churn-Prediction]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

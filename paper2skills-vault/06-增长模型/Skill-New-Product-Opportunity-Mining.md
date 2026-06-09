@@ -682,3 +682,15 @@ if __name__ == '__main__':
 - **SSFF: Investigating LLM Predictive Capabilities for Startup Success through a Multi-Agent Framework with Enhanced Explainability and Performance**, arXiv:2405.19456, 2024
 - 框架创新：LLM + Random Forest + 18维度评估 + Founder-Idea Fit Network
 - 核心指标：77%预测准确率（GPT-4o + 1400样本）
+
+
+## ④ 技能关联
+
+### 前置技能
+- [Skill-RFM-Customer-Segmentation](../06-增长模型/[[Skill-RFM-Customer-Segmentation]].md) — 新品机会挖掘需要先识别目标客群
+
+### 延伸技能
+- [Skill-Cold-Start-Product-Recommendation](../05-推荐系统/[[Skill-Cold-Start-Product-Recommendation]].md) — 新品上线后接冷启动推荐
+
+### 可组合
+- [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/[[Skill-Knowledge-Graph-for-Skills-Management]].md) — 用 KG 在已有品类上发现机会缺口

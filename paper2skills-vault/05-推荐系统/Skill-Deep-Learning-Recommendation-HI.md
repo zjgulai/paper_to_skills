@@ -264,6 +264,9 @@ if __name__ == "__main__":
 
 ---
 
+
+- **可组合**：[[Skill-Matrix-Factorization]] / [[Skill-Session-Based-Recommendation-SR-GNN]]
+
 ## ⑤ 商业价值评估
 
 ### ROI预估

@@ -20,7 +20,7 @@
 
 ### 2. 同步状态追踪 (SKILL.md:66-89)
 - **改动**：
-  - 记录路径：`/Users/pray/project/paper2skills-vault/07-资源库/sync_status.json`
+  - 记录路径：`/Users/lute/project/paper2skills-vault/07-资源库/sync_status.json`
   - 状态记录格式（JSON）
   - 命令行查看状态示例
 - **原因**：用户无法查看同步状态

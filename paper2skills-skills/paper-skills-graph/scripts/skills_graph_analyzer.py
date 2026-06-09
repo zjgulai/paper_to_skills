@@ -14,10 +14,37 @@ import os
 import re
 import json
 import argparse
+import sys
 from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List, Set, Tuple, Optional
 from dataclasses import dataclass, field
+
+
+BASE_DIR = Path(os.environ.get("PAPER2SKILLS_ROOT") or Path(__file__).resolve().parents[3])
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from paper2skills_common.domains import load_domain_registry
+
+
+PRIORITY_SORT = {"P0": 0, "P1": 1, "P2": 2}
+
+BRIDGE_FOCUS_PAIRS = {
+    tuple(sorted(pair))
+    for pair in [
+        ("causal_inference", "recommendation"),
+        ("knowledge_graph", "data_agent_llm"),
+        ("llm_agent_engineering", "marketing"),
+        ("time_series", "supply_chain"),
+        ("causal_inference", "advertising"),
+        ("mas", "llm_agent_engineering"),
+        ("advertising", "compliance"),
+        ("data_agent_llm", "compliance"),
+        ("mas", "compliance"),
+        ("growth_model", "compliance"),
+    ]
+}
 
 
 @dataclass
@@ -48,14 +75,13 @@ class SkillsGraph:
         self.vault_path = Path(vault_path)
         self.nodes: Dict[str, SkillNode] = {}
         self.edges: List[SkillEdge] = []
+        self.aliases: Dict[str, str] = self._load_aliases()
+        root = self.vault_path.parent
+        registry = load_domain_registry(root)
         self.domain_mapping = {
-            '01-因果推断': 'causal_inference',
-            '02-A_B实验': 'ab_testing',
-            '03-时间序列': 'time_series',
-            '04-供应链': 'supply_chain',
-            '05-推荐系统': 'recommendation',
-            '06-增长模型': 'growth_model',
-            '07-NLP-VOC': 'nlp_voc',
+            entry.vault_dir: entry.key
+            for entry in registry.entries
+            if (self.vault_path / entry.vault_dir).exists()
         }
 
     def parse_skill_file(self, file_path: Path) -> Optional[SkillNode]:
@@ -73,8 +99,8 @@ class SkillsGraph:
                 break
 
         # 提取难度和业务价值（从星级评分）
-        difficulty = self._extract_star_rating(content, '实施难度')
-        business_value = self._extract_star_rating(content, '业务价值|商业价值|优先级')
+        difficulty = self._extract_star_rating(content, '(?:实施难度|难度)')
+        business_value = self._extract_star_rating(content, '(?:业务价值|商业价值|优先级)')
 
         # 提取技能关系
         prerequisites = self._extract_section_items(content, '前置技能')
@@ -92,16 +118,51 @@ class SkillsGraph:
         )
 
     def _extract_star_rating(self, content: str, pattern: str) -> int:
-        """提取星级评分 (⭐)"""
-        matches = re.findall(rf'{pattern}.*?([⭐]{{1,5}})', content)
+        """提取星级评分 (⭐)，兼容多种格式"""
+        # 支持: 实施难度 / 难度 / 业务价值 / 商业价值 / 优先级
+        # 格式: - **难度**：⭐⭐⭐ | 难度：⭐⭐⭐ | | 实施难度 | ⭐⭐⭐ |
+        matches = re.findall(rf'{pattern}[^⭐\n]*([⭐]{{1,5}})', content, re.DOTALL)
         if matches:
             return matches[0].count('⭐')
         return 0
 
+    def _extract_subsection_content(self, section_content: str, section_name: str) -> Optional[str]:
+        """提取子部分内容，支持 ### 标题和 **bold** 平铺两种格式，兼容短标签"""
+        # 生成短标签变体：前置技能 → 前置, 延伸技能 → 延伸, 可组合技能 → 可组合|组合
+        short_names = {
+            '前置技能': ['前置技能', '前置'],
+            '延伸技能': ['延伸技能', '延伸'],
+            '可组合技能': ['可组合技能', '可组合', '组合'],
+        }
+        names = short_names.get(section_name, [section_name])
+        name_alt = '|'.join(re.escape(n) for n in names)
+        name_alt_stop = '|'.join(re.escape(n) for n in ['前置技能','前置','延伸技能','延伸','可组合技能','可组合','组合'])
+
+        # 格式 1：### 标题（标准格式）
+        for name in names:
+            subsection_pattern = rf'### {re.escape(name)}.*?(?=###|\n## |\Z)'
+            subsection_match = re.search(subsection_pattern, section_content, re.DOTALL)
+            if subsection_match:
+                return subsection_match.group(0)
+
+        # 格式 2：**bold** 平铺格式（兼容 **前置技能** 和 **前置**）
+        bold_pattern = rf'\*\*(?:{name_alt})[^*]*\*\*[：:]?.*?(?=\n\*\*(?:{name_alt_stop})[^*]*\*\*|\n## |\Z)'
+        bold_match = re.search(bold_pattern, section_content, re.DOTALL)
+        if bold_match:
+            return bold_match.group(0)
+
+        # 格式 3：列表项内嵌 **bold**（带缩进）
+        list_bold_pattern = rf'(?:^|\n)[-\s]*\*\*(?:{name_alt})[^*]*\*\*.*?(?=\n[-\s]*\*\*(?:{name_alt_stop})[^*]*\*\*|\n## |\Z)'
+        list_bold_match = re.search(list_bold_pattern, section_content, re.DOTALL)
+        if list_bold_match:
+            return list_bold_match.group(0)
+
+        return None
+
     def _extract_section_items(self, content: str, section_name: str) -> List[str]:
-        """提取特定部分的列表项"""
+        """提取特定部分的列表项，兼容 ### 和 **bold** 两种格式"""
         # 找到技能关联部分 - 匹配直到下一个 ## 开头的标题或文件结束
-        section_pattern = r'## [④4]\.?\s*技能关联.*?(?=\n## |\Z)'
+        section_pattern = r'## (?:(?:[④4]\.?\s*技能关联)|(?:⑥\s*Skill Relations)|(?:Skill\s+Relations)).*?(?=\n## |\Z)'
         section_match = re.search(section_pattern, content, re.DOTALL)
 
         if not section_match:
@@ -109,47 +170,68 @@ class SkillsGraph:
 
         section_content = section_match.group(0)
 
-        # 在部分内查找特定子部分
-        subsection_pattern = rf'### {section_name}.*?(?=###|\n## |\Z)'
-        subsection_match = re.search(subsection_pattern, section_content, re.DOTALL)
+        # 提取子部分内容（支持两种格式）
+        subsection_content = self._extract_subsection_content(section_content, section_name)
 
-        if not subsection_match:
+        if not subsection_content:
             return []
 
-        subsection_content = subsection_match.group(0)
-
-        # 提取列表项 - 匹配多种格式
         items = []
 
-        # 格式 1: - **技能名**：描述
+        # Obsidian WikiLink: [[Skill-xxx]] 或 [[Skill-xxx|展示名]]
+        pattern_wikilink = r'\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]'
+        for match in re.finditer(pattern_wikilink, subsection_content):
+            candidate = match.group(1).strip()
+            if candidate.startswith('Skill-') and len(candidate) < 100 and candidate not in items:
+                items.append(candidate)
+
+        # 标准 Markdown 链接: [display](href.md)
+        pattern_link = r'[-*]\s*\[([^\]]+?)\]\(([^)]*?)\)'
+        for match in re.finditer(pattern_link, subsection_content):
+            display = match.group(1).strip()
+            href = match.group(2).strip()
+            candidate = ""
+            if href:
+                fname = href.rsplit('/', 1)[-1]
+                if fname.startswith('Skill-') and fname.endswith('.md'):
+                    candidate = fname[:-3]
+            if not candidate and display.startswith('Skill-'):
+                candidate = display
+            if not candidate:
+                candidate = display
+            if candidate and len(candidate) < 100 and candidate not in items:
+                items.append(candidate)
+
+        # 章节标题噪声词过滤（避免把 '前置技能' '延伸技能' '可组合' 等当作 skill 引用）
+        _SECTION_HEADER_NOISE = frozenset(['前置技能', '延伸技能', '可组合技能', '可组合', '技能关联',
+                                           'prerequisites', 'extensions', 'combinable'])
+
         pattern1 = r'[-*]\s*\*\*([^*]+?)\*\*\s*[:：]'
         for match in re.finditer(pattern1, subsection_content):
             item = match.group(1).strip()
-            if item and len(item) < 100:  # 过滤过长的文本
+            if item and len(item) < 100 and item not in items and item not in _SECTION_HEADER_NOISE:
                 items.append(item)
 
-        # 格式 2: - **技能名** (无冒号描述)
         pattern2 = r'[-*]\s*\*\*([^*]+?)\*\*\s*$'
         for match in re.finditer(pattern2, subsection_content, re.MULTILINE):
             item = match.group(1).strip()
-            if item and len(item) < 100 and item not in items:
+            if item and len(item) < 100 and item not in items and item not in _SECTION_HEADER_NOISE:
                 items.append(item)
 
-        # 格式 3: - 技能名：描述 (无加粗)
-        pattern3 = r'[-*]\s*([^\n*]+?)\s*[:：]\s*'
+        pattern3 = r'[-*]\s*([^\n*\[]+?)\s*[:：]\s*'
         for match in re.finditer(pattern3, subsection_content):
             item = match.group(1).strip()
-            # 过滤掉纯描述性文字
-            if item and len(item) < 50 and not item.startswith('http') and item not in items:
+            if item and len(item) < 50 and not item.startswith('http') and item not in items and item not in _SECTION_HEADER_NOISE:
                 items.append(item)
 
         return items
 
     def build_graph(self):
         """构建完整图谱"""
-        # 扫描所有 Skill 文件
-        skill_files = list(self.vault_path.glob('*/Skill-*.md'))
-        skill_files.extend(self.vault_path.glob('*/Skill-*/**/*.md'))
+        # 递归扫描所有 Skill 文件,跳过非技能卡片目录
+        excluded = {'papers', '07-资源库', '00-项目管理'}
+        all_md = self.vault_path.rglob('Skill-*.md')
+        skill_files = [f for f in all_md if not (excluded & set(f.parts))]
 
         print(f"发现 {len(skill_files)} 个 Skill 文件")
 
@@ -190,6 +272,12 @@ class SkillsGraph:
                 self.edges.append(SkillEdge(
                     source=node.id,
                     target=combo,
+                    edge_type='combinable',
+                    weight=0.6
+                ))
+                self.edges.append(SkillEdge(
+                    source=combo,
+                    target=node.id,
                     edge_type='combinable',
                     weight=0.6
                 ))
@@ -259,32 +347,124 @@ class SkillsGraph:
 
     def _normalize_skill_name(self, text: str) -> str:
         """规范化 skill 名称用于匹配"""
-        # 移除 Skill- 前缀（如果存在）
         text = re.sub(r'^Skill-', '', text, flags=re.IGNORECASE)
-        # 转换为小写
         text = text.lower()
-        # 统一连字符和空格
         text = text.replace('-', ' ')
-        # 移除多余空格
         text = ' '.join(text.split())
         return text
 
+    def _load_aliases(self) -> Dict[str, str]:
+        alias_file = self.vault_path / "07-资源库" / "skill-aliases.json"
+        if not alias_file.exists():
+            return {}
+        try:
+            with open(alias_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            return data.get("aliases", {}) if isinstance(data, dict) else {}
+        except Exception:
+            return {}
+
+    def _resolve_alias(self, name: str) -> str:
+        if not self.aliases:
+            return name
+        if name in self.aliases:
+            target = self.aliases[name]
+            if target in ("__MIGRATED_TO_AI_NLP_VOC__", "__GENUINE_GAP__"):
+                return target
+            return target
+        norm_in = self._normalize_skill_name(name)
+        for alias_key, alias_target in self.aliases.items():
+            if self._normalize_skill_name(alias_key) == norm_in:
+                if alias_target in ("__MIGRATED_TO_AI_NLP_VOC__", "__GENUINE_GAP__"):
+                    return alias_target
+                return alias_target
+        return name
+
     def _skill_exists(self, skill_name: str, all_skill_ids: Set[str]) -> bool:
-        """检查 skill 是否存在（支持模糊匹配）"""
-        normalized_input = self._normalize_skill_name(skill_name)
+        """检查 skill 是否存在（支持别名映射 + 模糊匹配）"""
+        resolved = self._resolve_alias(skill_name)
+        if resolved == "__MIGRATED_TO_AI_NLP_VOC__":
+            return True
+        if resolved == "__GENUINE_GAP__":
+            return False
+
+        normalized_input = self._normalize_skill_name(resolved)
 
         for skill_id in all_skill_ids:
             normalized_id = self._normalize_skill_name(skill_id)
-            # 完全匹配或包含匹配
             if normalized_input == normalized_id:
                 return True
-            # 如果输入包含在 skill_id 中，或 skill_id 包含输入
             if normalized_input in normalized_id or normalized_id in normalized_input:
                 return True
 
         return False
 
-    def find_knowledge_gaps(self) -> List[Dict]:
+    def _gap_score(self, gap: Dict) -> int:
+        priority_score = {"P0": 100, "P1": 72, "P2": 44}.get(gap.get("priority"), 20)
+        if gap["type"] in {"missing_prerequisite", "isolated_skill"}:
+            return priority_score + 20
+        if gap["type"] == "missing_bridge":
+            return priority_score + (10 if gap.get("focus_pair") else 0)
+        if gap["type"] == "thin_domain":
+            return priority_score + 6
+        if gap["type"] == "domain_review":
+            return priority_score + 2
+        if gap["type"] == "missing_extension":
+            node = self.nodes.get(gap.get("skill", ""))
+            return priority_score + ((node.business_value if node else 0) * 4)
+        return priority_score
+
+    def _finalize_gaps(self, gaps: List[Dict]) -> List[Dict]:
+        finalized = []
+        sorted_gaps = sorted(
+            gaps,
+            key=lambda gap: (PRIORITY_SORT.get(gap.get("priority"), 9), -self._gap_score(gap), gap.get("description", "")),
+        )
+        counters = defaultdict(int)
+        for gap in sorted_gaps:
+            priority = gap.get("priority", "P2")
+            counters[priority] += 1
+            gap["score"] = self._gap_score(gap)
+            gap["topic_id"] = f"GAP-{priority}-{counters[priority]:03d}-{gap['type']}"
+            finalized.append(gap)
+        return finalized
+
+    def _missing_bridge_gaps(self, bridge_limit: int = 30) -> List[Dict]:
+        domain_counts = defaultdict(int)
+        for node in self.nodes.values():
+            domain_counts[node.domain] += 1
+
+        domain_connections = self._analyze_domain_connections()
+        bridge_gaps = []
+        for domain_a, domain_b in self._get_domain_pairs():
+            pair_key = tuple(sorted([domain_a, domain_b]))
+            if domain_connections.get(pair_key, []):
+                continue
+            focus_pair = pair_key in BRIDGE_FOCUS_PAIRS
+            priority = "P1" if focus_pair else "P2"
+            bridge_gaps.append({
+                "type": "missing_bridge",
+                "domain_a": domain_a,
+                "domain_b": domain_b,
+                "priority": priority,
+                "focus_pair": focus_pair,
+                "domain_a_nodes": domain_counts[domain_a],
+                "domain_b_nodes": domain_counts[domain_b],
+                "description": f"{domain_a} 与 {domain_b} 之间缺少桥梁连接",
+            })
+
+        bridge_gaps.sort(
+            key=lambda gap: (
+                PRIORITY_SORT[gap["priority"]],
+                -int(gap["focus_pair"]),
+                -(gap["domain_a_nodes"] + gap["domain_b_nodes"]),
+                gap["domain_a"],
+                gap["domain_b"],
+            )
+        )
+        return bridge_gaps[:bridge_limit]
+
+    def find_knowledge_gaps(self, bridge_limit: int = 30) -> List[Dict]:
         """发现知识缺口"""
         gaps = []
 
@@ -298,7 +478,7 @@ class SkillsGraph:
                         'type': 'missing_prerequisite',
                         'source_skill': edge.source,
                         'missing_skill': edge.target,
-                        'priority': 'high',
+                        'priority': 'P0',
                         'description': f"{edge.source} 依赖的 {edge.target} 尚未建立"
                     })
 
@@ -312,7 +492,8 @@ class SkillsGraph:
                     'type': 'missing_extension',
                     'skill': node_id,
                     'domain': node.domain,
-                    'priority': 'high',
+                    'priority': 'P2',
+                    'business_value': node.business_value,
                     'description': f"高价值技能 {node_id} 缺少延伸方向"
                 })
 
@@ -327,23 +508,42 @@ class SkillsGraph:
                 gaps.append({
                     'type': 'isolated_skill',
                     'skill': node_id,
-                    'priority': 'medium',
+                    'domain': self.nodes[node_id].domain,
+                    'priority': 'P0',
                     'description': f"{node_id} 是孤立技能，无关联"
                 })
 
-        # 4. 领域间桥梁缺口
-        domain_connections = self._analyze_domain_connections()
-        for domain_a, domain_b in self._get_domain_pairs():
-            if not domain_connections.get((domain_a, domain_b), []):
+        # 4. 薄弱领域：新增领域即使已有连接，也应进入候选队列做覆盖补强
+        domain_counts = defaultdict(int)
+        for node in self.nodes.values():
+            domain_counts[node.domain] += 1
+        for domain in self.domain_mapping.values():
+            if 0 < domain_counts[domain] <= 2:
                 gaps.append({
-                    'type': 'missing_bridge',
-                    'domain_a': domain_a,
-                    'domain_b': domain_b,
-                    'priority': 'medium',
-                    'description': f"{domain_a} 与 {domain_b} 之间缺少桥梁连接"
+                    'type': 'thin_domain',
+                    'domain': domain,
+                    'priority': 'P2',
+                    'skill_count': domain_counts[domain],
+                    'description': f"{domain} 当前只有 {domain_counts[domain]} 个 Skill，建议补强基础覆盖"
                 })
 
-        return sorted(gaps, key=lambda x: {'high': 0, 'medium': 1, 'low': 2}[x['priority']])
+        # 5. 新增治理领域健康检查：即使当前无断链，也要确保进入增量选题链路
+        if "compliance" in self.domain_mapping.values() and not any(
+            gap.get("domain") == "compliance" or "compliance" in {gap.get("domain_a"), gap.get("domain_b")}
+            for gap in gaps
+        ):
+            gaps.append({
+                'type': 'domain_review',
+                'domain': 'compliance',
+                'priority': 'P2',
+                'skill_count': domain_counts['compliance'],
+                'description': f"compliance 已纳入图谱健康检查，当前 {domain_counts['compliance']} 个 Skill，无 P0/P1 断链"
+            })
+
+        # 6. 领域间桥梁缺口：只输出排序后的可行动缺口，避免全领域笛卡尔积噪声
+        gaps.extend(self._missing_bridge_gaps(bridge_limit=bridge_limit))
+
+        return self._finalize_gaps(gaps)
 
     def _analyze_domain_connections(self) -> Dict[Tuple[str, str], List[str]]:
         """分析领域间的连接"""
@@ -377,7 +577,8 @@ class SkillsGraph:
         for gap in gaps:
             if gap['type'] == 'missing_prerequisite':
                 recommendations.append({
-                    'priority': 'P0',
+                    'priority': gap['priority'],
+                    'topic_id': gap.get('topic_id'),
                     'topic': f"基础: {gap['missing_skill']}",
                     'type': '前置技能填补',
                     'gap_match': gap['source_skill'],
@@ -389,7 +590,8 @@ class SkillsGraph:
                 skill = gap['skill']
                 domain = gap['domain']
                 recommendations.append({
-                    'priority': 'P0',
+                    'priority': gap['priority'],
+                    'topic_id': gap.get('topic_id'),
                     'topic': f"延伸: {skill} 的高级应用",
                     'type': '技能延伸拓展',
                     'gap_match': skill,
@@ -399,12 +601,37 @@ class SkillsGraph:
 
             elif gap['type'] == 'missing_bridge':
                 recommendations.append({
-                    'priority': 'P1',
+                    'priority': gap['priority'],
+                    'topic_id': gap.get('topic_id'),
                     'topic': f"跨领域: {gap['domain_a']} + {gap['domain_b']}",
                     'type': '跨领域融合',
                     'gap_match': f"{gap['domain_a']}-{gap['domain_b']}",
                     'search_keywords': f"{gap['domain_a']} {gap['domain_b']} cross-domain",
                     'rationale': f"连接两个领域，创造新的应用场景"
+                })
+
+            elif gap['type'] == 'thin_domain':
+                domain = gap['domain']
+                recommendations.append({
+                    'priority': gap['priority'],
+                    'topic_id': gap.get('topic_id'),
+                    'topic': f"领域补强: {domain}",
+                    'type': '薄弱领域补强',
+                    'gap_match': domain,
+                    'search_keywords': f"{domain} ecommerce applied machine learning",
+                    'rationale': f"{domain} 当前 Skill 数量偏少，需要补基础覆盖"
+                })
+
+            elif gap['type'] == 'domain_review':
+                domain = gap['domain']
+                recommendations.append({
+                    'priority': gap['priority'],
+                    'topic_id': gap.get('topic_id'),
+                    'topic': f"领域健康复核: {domain}",
+                    'type': '新增领域健康检查',
+                    'gap_match': domain,
+                    'search_keywords': f"{domain} ecommerce compliance guardrail evaluation",
+                    'rationale': f"{domain} 已参与图谱质量门，继续监控后续论文机会"
                 })
 
         return recommendations
@@ -426,8 +653,7 @@ class SkillsGraph:
             'time_series': 'uncertainty quantification transformer',
             'supply_chain': 'multi-echelon reinforcement learning',
             'recommendation': 'causal debiased LLM',
-            'growth_model': 'churn LTV segmentation',
-            'nlp_voc': 'sentiment aspect LLM'
+            'growth_model': 'churn LTV segmentation'
         }
 
         related = domain_keywords.get(domain, 'advanced applications')
@@ -485,8 +711,10 @@ class SkillsGraph:
 ### 🔴 高优先级缺口
 
 """
-        high_gaps = [g for g in gaps if g['priority'] == 'high']
-        for i, gap in enumerate(high_gaps[:5], 1):
+        p0_gaps = [g for g in gaps if g['priority'] == 'P0']
+        p1_gaps = [g for g in gaps if g['priority'] == 'P1']
+        p2_gaps = [g for g in gaps if g['priority'] == 'P2']
+        for i, gap in enumerate(p0_gaps[:5], 1):
             report += f"""#### 缺口 {i}: {gap['type']}
 - **描述**: {gap['description']}
 """
@@ -500,18 +728,18 @@ class SkillsGraph:
         report += f"""
 ## 4. 推荐选题列表
 
-| 优先级 | 选题 | 类型 | 搜索关键词 |
-|-------|------|------|-----------|
+| Topic ID | 优先级 | 选题 | 类型 | 搜索关键词 |
+|---|-------|------|------|-----------|
 """
         for rec in recommendations[:10]:
-            report += f"| {rec['priority']} | {rec['topic']} | {rec['type']} | `{rec['search_keywords']}` |\n"
+            report += f"| {rec.get('topic_id', '')} | {rec['priority']} | {rec['topic']} | {rec['type']} | `{rec['search_keywords']}` |\n"
 
         report += f"""
 ## 5. 行动建议
 
-1. **立即行动**: 优先填补 {len(high_gaps)} 个高优先级缺口
-2. **本周计划**: 基于延伸缺口搜索 3-5 篇候选论文
-3. **本月目标**: 建立跨领域桥梁，完成 1 个跨领域 skill
+1. **立即行动**: 优先填补 {len(p0_gaps)} 个 P0 断链/孤立缺口
+2. **本周计划**: 基于 {len(p1_gaps)} 个 P1 桥梁缺口搜索 3-5 篇候选论文
+3. **本月目标**: 从 {len(p2_gaps)} 个 P2 可选增强中选择少量高 ROI 延伸
 """
 
         return report
@@ -551,8 +779,9 @@ def main():
     parser.add_argument('--skill', type=str, help='分析特定技能')
     parser.add_argument('--gaps', action='store_true', help='仅显示知识缺口')
     parser.add_argument('--export', type=str, help='导出图谱 JSON 文件路径')
+    _default_vault = os.environ.get("PAPER2SKILLS_ROOT") or str(BASE_DIR)
     parser.add_argument('--vault', type=str,
-                        default='/Users/pray/project/paper_to_skills/paper2skills-vault',
+                        default=str(Path(_default_vault) / 'paper2skills-vault'),
                         help='Vault 路径')
 
     args = parser.parse_args()
@@ -590,7 +819,7 @@ def main():
         gaps = graph.find_knowledge_gaps()
         print(f"\n=== 发现 {len(gaps)} 个知识缺口 ===\n")
         for gap in gaps:
-            print(f"[{gap['priority'].upper()}] {gap['type']}")
+            print(f"[{gap['priority'].upper()}] {gap['topic_id']} {gap['type']} score={gap['score']}")
             print(f"  {gap['description']}\n")
 
     if args.export:

@@ -379,3 +379,24 @@ def main():
 
 if __name__ == '__main__':
     bandit = main()
+
+## ④ 技能关联
+
+- **延伸技能**：
+- [[Skill-Thompson-Sampling-MAB]] — Thompson Sampling 的贝叶斯最优化版本
+- [[Skill-BCCB-Causal-Bandits]] — 因果 Bandit，加入干预效果估计
+- [[Skill-AB-Experimental-Design]] — 从固定流量测试升级到自适应分配
+
+- **可组合**：[[Skill-AB-Experimental-Design]] / [[Skill-Power-Analysis-Sample-Size]]
+- **跨域关联**：[[Skill-Cold-Start-Meta-Learning-PAM]]
+- **相关技能**：[[Skill-Network-Effect-Experiments]]
+- **相关技能**：[[Skill-CUPED-Variance-Reduction]]
+- **关联**：[[Skill-GraphDeepAR-Demand-Forecasting]]
+- **相关**：[[Skill-DQN-Purchase-Prediction]]
+- **相关**：[[Skill-Customer-Journey-Prototype]]
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：相比 A/B 测试，MAB 可减少 20-40% 流量损耗，在探索阶段累计多转化 5-15%
+- **实施难度**：⭐⭐☆☆☆（2星，标准 MAB 算法，有成熟库）
+- **优先级评分**：⭐⭐⭐⭐☆（4星，适合高频迭代的广告/价格测试）

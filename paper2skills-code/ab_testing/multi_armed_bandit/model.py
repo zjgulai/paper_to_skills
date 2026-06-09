@@ -7,7 +7,7 @@ import numpy as np
 import random
 from typing import Dict, List
 import warnings
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')  # disabled 2026-05-17: prefer local catch_warnings; un-comment if demo noise is excessive
 
 
 class MultiArmedBandit:
