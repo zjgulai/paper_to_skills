@@ -3150,6 +3150,10 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
       <span class="brand-icon">P</span>
       <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
     </a>
+    <button class="topbar-ai-btn" id="sb-ai-open" title="与知识库对话">
+      <span class="topbar-ai-icon">✦</span>
+      <span class="topbar-ai-text">知识库问答</span>
+    </button>
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="{nav}ai-roadmap.html" class="topbar-cta{'  active' if active_nav == 'roadmap' else ''}">AI 路线图 →</a>
@@ -3174,35 +3178,28 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
           sidebar_link('skills/index.html', '全部 Skills', 'skills', '≡')
         )}
       </div>
-      <div class="sb-bottom">
-        <button class="sb-ai-btn" id="sb-ai-open" title="与知识库对话">
-          <span class="sb-ai-icon">✦</span>
-          <span class="sb-ai-text">AI 对话助手</span>
-          <span class="sb-ai-badge">Beta</span>
-        </button>
-      </div>
     </aside>
     <section class="content">{body}</section>
   </main>
 
   <!-- AI Chat Panel -->
-  <div class="ai-panel" id="ai-panel" role="dialog" aria-modal="true" aria-label="AI 对话助手">
+  <div class="ai-panel" id="ai-panel" role="dialog" aria-modal="true" aria-label="知识库问答">
     <div class="ai-panel-header">
       <div class="ai-panel-title">
         <span class="ai-panel-icon">✦</span>
-        <span>AI 对话助手</span>
-        <span class="ai-panel-sub">基于 paper2skills 知识库</span>
+        <span>知识库问答</span>
+        <span class="ai-panel-sub">基于 360 个 paper2skills 技能 · DeepSeek V3</span>
       </div>
       <button class="ai-panel-close" id="ai-panel-close" aria-label="关闭">✕</button>
     </div>
     <div class="ai-messages" id="ai-messages">
       <div class="ai-msg ai-msg-bot">
         <div class="ai-msg-avatar">✦</div>
-        <div class="ai-msg-bubble">你好！我是基于 paper2skills 知识库的 AI 助手，可以回答关于业务决策技能、跨境电商运营、算法应用等问题。</div>
+        <div class="ai-msg-bubble">你好！我是基于 paper2skills 知识库的 AI 问答助手。<br><br>知识库收录了 360 个从顶会论文萃取的跨境电商决策技能，涵盖供应链、广告归因、用户分析、合规决策等领域。<br><br>你可以问我：<br>• 如何优化广告 ROI？<br>• 怎么预测大促备货量？<br>• 有哪些 KOL 归因的方法？</div>
       </div>
     </div>
     <div class="ai-input-row">
-      <input class="ai-input" id="ai-input" placeholder="问我关于跨境电商的 AI 决策技能…" autocomplete="off">
+      <input class="ai-input" id="ai-input" placeholder="问我关于跨境电商 AI 决策技能的问题…" autocomplete="off">
       <button class="ai-send-btn" id="ai-send">发送</button>
     </div>
   </div>
@@ -4084,6 +4081,31 @@ p:last-child { margin-bottom: 0; }
 .topbar-cta:hover { background: var(--accent-dark); box-shadow: var(--shadow-accent); transform: translateY(-1px); }
 .topbar-cta.active { background: var(--accent-dark); }
 
+/* ── Topbar AI Button ── */
+.topbar-ai-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; margin-left: 12px;
+  border: 1.5px solid rgba(194,91,110,.3);
+  border-radius: var(--r-full);
+  background: rgba(194,91,110,.06);
+  color: var(--accent); cursor: pointer;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  transition: background var(--t), border-color var(--t), transform var(--t), box-shadow var(--t);
+  white-space: nowrap; flex-shrink: 0;
+}
+.topbar-ai-btn:hover {
+  background: rgba(194,91,110,.12);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(194,91,110,.15);
+}
+.topbar-ai-btn.active {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
+.topbar-ai-icon { font-size: 14px; line-height: 1; }
+.topbar-ai-text { line-height: 1; }
+
 /* ── Hamburger ── */
 .hamburger {
   display: none; flex-direction: column; justify-content: center;
@@ -4173,30 +4195,6 @@ p:last-child { margin-bottom: 0; }
   padding: 12px 10px;
   border-top: 1px solid var(--line);
 }
-.sb-ai-btn {
-  display: flex; align-items: center; gap: 9px;
-  width: 100%; padding: 10px 12px;
-  background: linear-gradient(135deg, rgba(194,91,110,.08) 0%, rgba(194,91,110,.04) 100%);
-  border: 1px solid rgba(194,91,110,.2);
-  border-radius: var(--r-lg); cursor: pointer;
-  font-family: var(--font); color: var(--accent);
-  transition: background var(--t), border-color var(--t), transform var(--t);
-}
-.sb-ai-btn:hover {
-  background: rgba(194,91,110,.12); border-color: rgba(194,91,110,.35);
-  transform: translateY(-1px);
-}
-.sb-ai-icon {
-  font-size: 16px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.sb-ai-text { font-size: 13px; font-weight: 600; flex: 1; text-align: left; }
-.sb-ai-badge {
-  font-size: 9.5px; font-weight: 700; letter-spacing: .05em;
-  background: var(--accent); color: #fff;
-  padding: 2px 6px; border-radius: var(--r-full);
-}
 
 /* ── Content area ── */
 .content { padding: 36px 44px; max-width: 1400px; overflow-x: hidden; }
@@ -4236,27 +4234,36 @@ p:last-child { margin-bottom: 0; }
   margin: 0 0 8px; display: block;
 }
 
-/* ── AI Chat Panel ── */
-.ai-panel {
-  position: fixed; right: 0; top: var(--topbar-height); bottom: 0;
-  width: 400px; max-width: 92vw;
-  background: var(--panel);
-  border-left: 1px solid var(--line);
-  box-shadow: -8px 0 32px rgba(0,0,0,0.12);
-  display: flex; flex-direction: column;
-  z-index: 300; transform: translateX(100%);
-  transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.ai-panel.open { transform: translateX(0); }
+/* ── AI Chat Panel — drops down from topbar, centered ── */
 .ai-overlay {
   display: none; position: fixed; inset: 0; z-index: 299;
-  background: rgba(29,29,27,.3); backdrop-filter: blur(2px);
+  background: rgba(29,29,27,.25); backdrop-filter: blur(3px);
 }
 .ai-overlay.show { display: block; }
+.ai-panel {
+  position: fixed;
+  top: calc(var(--topbar-height) + 8px);
+  left: 50%; transform: translateX(-50%) translateY(-12px);
+  width: min(600px, 92vw);
+  max-height: calc(100vh - var(--topbar-height) - 32px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  display: flex; flex-direction: column;
+  z-index: 300;
+  opacity: 0; pointer-events: none;
+  transition: transform .25s cubic-bezier(0.34,1.56,0.64,1), opacity .2s ease;
+}
+.ai-panel.open {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1; pointer-events: auto;
+}
 .ai-panel-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 20px; border-bottom: 1px solid var(--line);
   background: var(--panel); flex-shrink: 0;
+  border-radius: 20px 20px 0 0;
 }
 .ai-panel-title {
   display: flex; align-items: center; gap: 8px;
@@ -4279,11 +4286,11 @@ p:last-child { margin-bottom: 0; }
 .ai-messages {
   flex: 1; overflow-y: auto; padding: 20px;
   display: flex; flex-direction: column; gap: 16px;
+  min-height: 200px; max-height: 420px;
 }
 .ai-messages::-webkit-scrollbar { width: 3px; }
 .ai-messages::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
 .ai-msg { display: flex; gap: 10px; align-items: flex-start; }
-.ai-msg-bot { }
 .ai-msg-user { flex-direction: row-reverse; }
 .ai-msg-avatar {
   width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
@@ -4294,11 +4301,12 @@ p:last-child { margin-bottom: 0; }
 .ai-msg-user .ai-msg-avatar { background: var(--panel-3); color: var(--muted); }
 .ai-msg-bubble {
   max-width: 80%; padding: 10px 14px;
-  border-radius: 14px; font-size: 13.5px; line-height: 1.6;
+  border-radius: 14px; font-size: 13.5px; line-height: 1.65;
 }
 .ai-msg-bot .ai-msg-bubble {
   background: var(--panel-2); color: var(--ink);
   border-radius: 4px 14px 14px 14px;
+  white-space: pre-wrap; word-break: keep-all;
 }
 .ai-msg-user .ai-msg-bubble {
   background: var(--accent); color: #fff;
@@ -4310,9 +4318,9 @@ p:last-child { margin-bottom: 0; }
 }
 @keyframes typing { 0%,100%{opacity:.3} 50%{opacity:1} }
 .ai-input-row {
-  display: flex; gap: 8px; padding: 16px 20px;
+  display: flex; gap: 8px; padding: 14px 16px;
   border-top: 1px solid var(--line); flex-shrink: 0;
-  background: var(--panel);
+  background: var(--panel); border-radius: 0 0 20px 20px;
 }
 .ai-input {
   flex: 1; padding: 10px 14px; border-radius: var(--r-full);
@@ -5168,6 +5176,18 @@ def build_ai_chat_js() -> str:
   overlay.addEventListener('click', closePanel);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 
+  function md(text) {
+    return text
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g,'<em>$1</em>')
+      .replace(/`([^`]+)`/g,'<code style="background:rgba(0,0,0,.06);padding:1px 5px;border-radius:4px;font-size:12.5px;font-family:monospace">$1</code>')
+      .replace(/^#{1,3}\s+(.+)$/gm,'<strong>$1</strong>')
+      .replace(/^[-•]\s+(.+)$/gm,'<span style="display:block;margin:3px 0;padding-left:12px">• $1</span>')
+      .replace(/^\d+\.\s+(.+)$/gm,'<span style="display:block;margin:3px 0">$&</span>')
+      .replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+  }
+
   function addMsg(text, role) {
     const row = document.createElement('div');
     row.className = 'ai-msg ai-msg-' + role;
@@ -5176,7 +5196,11 @@ def build_ai_chat_js() -> str:
     avatar.textContent = role === 'bot' ? '\u2726' : 'U';
     const bubble = document.createElement('div');
     bubble.className = 'ai-msg-bubble';
-    bubble.textContent = text;
+    if (role === 'bot') {
+      bubble.innerHTML = md(text);
+    } else {
+      bubble.textContent = text;
+    }
     row.appendChild(avatar);
     row.appendChild(bubble);
     msgs.appendChild(row);
@@ -5216,21 +5240,34 @@ def build_ai_chat_js() -> str:
     const typing = addTyping();
 
     const ctx = buildContext();
-    const prompt = `你是 paper2skills 知识库的 AI 助手，专注于母婴跨境电商的 AI 决策技能。以下是知识库摘要：\n\n${ctx}\n\n用户问题：${text}\n\n请用简洁专业的中文回答，结合知识库内容，给出具体可操作的建议。`;
+    const systemPrompt = '你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商的 AI 决策技能。知识库包含从顶会学术论文（NeurIPS/KDD/ICML）萃取的 360 个可落地业务技能，覆盖供应链、广告优化、用户分析、合规决策等领域。请用简洁专业的中文回答，优先结合知识库内容给出具体可操作建议，并在合适时推荐相关 Skill。';
+    const userPrompt = `知识库摘要（前80条 Skill）：\n${ctx}\n\n用户问题：${text}`;
 
     try {
-      const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDummy', {
+      const res = await fetch('https://api.deepseek.com/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer sk-aae11f4438f943b9bf32a233620437bd'
+        },
+        body: JSON.stringify({
+          model: 'deepseek-chat',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user',   content: userPrompt }
+          ],
+          max_tokens: 800,
+          temperature: 0.6,
+          stream: false
+        })
       });
       const data = await res.json();
-      const answer = data?.candidates?.[0]?.content?.parts?.[0]?.text || '抱歉，暂时无法获取回答，请稍后再试。';
+      const answer = data?.choices?.[0]?.message?.content?.trim() || '抱歉，暂时无法获取回答，请稍后重试。';
       typing.remove();
       addMsg(answer, 'bot');
     } catch (e) {
       typing.remove();
-      addMsg('网络错误，请检查连接后重试。如需配置 AI 功能，请联系管理员设置 API Key。', 'bot');
+      addMsg('网络请求失败，请检查网络连接后重试。', 'bot');
     } finally {
       sendBtn.disabled = false;
       input.focus();
