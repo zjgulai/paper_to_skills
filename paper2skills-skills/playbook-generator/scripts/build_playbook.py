@@ -3150,10 +3150,6 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
       <span class="brand-icon">P</span>
       <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
     </a>
-    <a class="topbar-ai-btn" href="{nav}chat.html" title="AI 知识库对话">
-      <span class="topbar-ai-icon">✦</span>
-      <span class="topbar-ai-text">知识库问答</span>
-    </a>
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="{nav}ai-roadmap.html" class="topbar-cta{'  active' if active_nav == 'roadmap' else ''}">AI 路线图 →</a>
@@ -5297,21 +5293,22 @@ def render_chat_page(nav: str = "") -> str:
       padding: 3px 9px; background: var(--panel-2); border-radius: var(--r-full);
       border: 1px solid var(--line);
     }}
-    .chat-ctrl {{
-      flex-shrink: 0; display: flex; align-items: center; gap: 10px;
-    }}
+    .chat-ctrl {{ flex-shrink: 0; display: flex; align-items: center; gap: 10px; }}
     .web-search-toggle {{
-      display: flex; align-items: center; gap: 7px;
-      font-size: 12.5px; color: var(--muted); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--muted); cursor: pointer;
       padding: 5px 10px; border-radius: var(--r-full);
-      border: 1.5px solid var(--line); background: var(--panel);
-      transition: all var(--t); user-select: none;
+      border: 1.5px solid var(--line); background: transparent;
+      transition: all var(--t); user-select: none; flex-shrink: 0;
+      font-family: var(--font); white-space: nowrap;
     }}
     .web-search-toggle.on {{
       color: var(--accent); border-color: var(--accent);
       background: var(--accent-light); font-weight: 600;
     }}
-    .web-search-toggle-icon {{ font-size: 14px; }}
+    .web-search-toggle:hover {{ border-color: var(--line-strong); color: var(--ink); }}
+    .web-search-toggle.on:hover {{ border-color: var(--accent-dark); }}
+    .web-search-toggle-icon {{ font-size: 13px; line-height: 1; }}
     .chat-body {{
       flex: 1; display: flex; flex-direction: column;
       max-width: 760px; width: 100%; margin: 0 auto;
@@ -5394,18 +5391,21 @@ def render_chat_page(nav: str = "") -> str:
       border-color: var(--accent); color: var(--accent); background: var(--accent-light);
     }}
     .chat-input-area {{
-      flex-shrink: 0; padding: 12px 0 20px;
+      flex-shrink: 0; padding: 10px 0 18px;
       border-top: 1px solid var(--line);
     }}
     .chat-input-wrap {{
-      display: flex; align-items: flex-end; gap: 10px;
+      display: flex; align-items: flex-end; gap: 8px;
       background: var(--panel); border: 1.5px solid var(--line);
-      border-radius: 18px; padding: 10px 12px 10px 16px;
+      border-radius: 18px; padding: 8px 10px 8px 12px;
       transition: border-color var(--t), box-shadow var(--t);
     }}
     .chat-input-wrap:focus-within {{
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(194,91,110,.10);
+    }}
+    .chat-input-wrap .web-search-toggle {{
+      align-self: flex-end; margin-bottom: 1px;
     }}
     .chat-textarea {{
       flex: 1; border: none; outline: none; resize: none;
@@ -5443,12 +5443,6 @@ def render_chat_page(nav: str = "") -> str:
         <span class="chat-title-text">AI 知识库对话</span>
         <span class="chat-title-sub">360 Skills · DeepSeek V3</span>
       </div>
-      <div class="chat-ctrl">
-        <button class="web-search-toggle" id="web-search-toggle" title="开启后将结合实时网络信息回答">
-          <span class="web-search-toggle-icon">🌐</span>
-          <span id="web-search-label">联网搜索</span>
-        </button>
-      </div>
     </header>
 
     <div class="chat-body">
@@ -5470,12 +5464,16 @@ def render_chat_page(nav: str = "") -> str:
 
       <div class="chat-input-area">
         <div class="chat-input-wrap">
+          <button class="web-search-toggle" id="web-search-toggle" title="开启联网搜索">
+            <span class="web-search-toggle-icon">🌐</span>
+            <span id="web-search-label">联网</span>
+          </button>
           <textarea class="chat-textarea" id="chat-input"
             placeholder="问我关于跨境电商 AI 决策技能的任何问题…"
             rows="1" autocomplete="off"></textarea>
           <button class="chat-send-btn" id="chat-send" title="发送 (Enter)">↑</button>
         </div>
-        <p class="chat-hint">Enter 发送 · Shift+Enter 换行 · 开启联网搜索可获取最新信息</p>
+        <p class="chat-hint">Enter 发送 · Shift+Enter 换行</p>
       </div>
     </div>
   </div>
