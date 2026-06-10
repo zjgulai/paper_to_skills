@@ -3215,7 +3215,9 @@ def render_skill_card(skill: PlaybookSkill, nav: str = "") -> str:
     )
     footer_html = f"<div class='sc-footer'>{roi_html}{diff_html}</div>" if (roi_html or diff_html) else ""
     desc = html.escape(skill.problem_solved or skill.algorithm_summary)
-    return f"""<a class="card skill-card" href="{skill_url(skill.skill_id, nav)}">
+    data_domain = html.escape(skill.domain_dir)
+    data_diff   = html.escape(skill.difficulty or "")
+    return f"""<a class="card skill-card" href="{skill_url(skill.skill_id, nav)}" data-domain="{data_domain}" data-diff="{data_diff}">
   <div class="sc-domain">{html.escape(skill.domain_dir)}</div>
   <h3 class="sc-title">{html.escape(skill.title)}</h3>
   <p class="sc-desc">{desc}</p>
@@ -5653,8 +5655,35 @@ def render_pages(
     <option value="⭐⭐⭐⭐☆">⭐⭐⭐⭐ 较难</option>
     <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐ 专家</option>
   </select>
-  <span class="filter-hint muted">过滤结合搜索框使用</span>
-</div>"""
+  <span class="filter-hint muted" id="filter-count"></span>
+</div>
+<script>
+(function(){{
+  function applyCardFilters(){{
+    var domSel  = document.getElementById('filter-domain');
+    var diffSel = document.getElementById('filter-diff');
+    var dom  = domSel  ? domSel.value  : '';
+    var diff = diffSel ? diffSel.value : '';
+    var cards = document.querySelectorAll('#skill-card-grid .skill-card');
+    var shown = 0;
+    cards.forEach(function(c){{
+      var matchDom  = !dom  || c.dataset.domain === dom;
+      var matchDiff = !diff || c.dataset.diff   === diff;
+      var visible = matchDom && matchDiff;
+      c.style.display = visible ? '' : 'none';
+      if(visible) shown++;
+    }});
+    var hint = document.getElementById('filter-count');
+    if(hint){{
+      hint.textContent = (dom||diff) ? ('\u663e\u793a '+shown+' / '+cards.length+' \u4e2a') : '';
+    }}
+  }}
+  ['filter-domain','filter-diff'].forEach(function(id){{
+    var el = document.getElementById(id);
+    if(el) el.addEventListener('change', applyCardFilters);
+  }});
+}})();
+</script>"""
     write_file(out / "skills" / "index.html", html_page(
         "全部 Skills",
         f"<h1>全部 Skills</h1>{filter_bar}<div class='cards' id='skill-card-grid'>{all_cards}</div>",
