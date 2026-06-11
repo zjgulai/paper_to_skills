@@ -14,11 +14,11 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 
 | Metric | Value |
 |--------|-------|
-| Skill pages | **398** |
+| Skill pages | **401** |
 | Domains | **22** |
-| Graph edges | **6,618** |
-| Agent pages | **12** callable agents |
-| New pages | **agent-report.html** |
+| Graph edges | **6,698** |
+| Agent pages | **12** callable agents (local compute engines) |
+| New pages | **agent-report.html** (24 seed reports, Agent filter) |
 
 ## Project Structure
 
@@ -53,8 +53,8 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │   ├── 15-营销投放分析/            # MMM, promotion effectiveness (17 skills)
 │   ├── 16-智能体工程/              # LLM Agent Engineering (45 skills)
 │   ├── 17-价格优化/               # Dynamic pricing (10 skills)
-│   ├── 18-物流履约/               # Cross-border logistics (8 skills)
-│   ├── 19-风控反欺诈/             # Fraud detection (9 skills)
+│   ├── 18-物流履约/               # Cross-border logistics (9 skills)
+│   ├── 19-风控反欺诈/             # Fraud detection (10 skills)
 │   ├── 20-AI视频生成/             # Virtual anchor, brand video (10 skills)
 │   ├── 21-合规决策/               # Compliance decisions (10 skills)
 │   ├── 22-数据采集工程/            # Data collection & quality (16 skills)
@@ -213,14 +213,16 @@ Skills must meet these criteria (enforced by `paper-审核`):
 | English Directory | Chinese Directory | Domain | Skills |
 |-------------------|-------------------|--------|--------|
 | `causal_inference` | `01-因果推断` | Causal inference, uplift modeling | 15 |
-| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits | 13 |
+| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits | 14 |
 | `time_series` | `03-时间序列` | Demand forecasting | 15 |
 | `supply_chain` | `04-供应链` | Inventory optimization | 32 |
 | `recommendation` | `05-推荐系统` | Recommendation systems | 16 |
 | `growth_model` | `06-增长模型` | Churn prediction, LTV | 29 |
-| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs | 28 |
+| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs | 29 |
 | `mas` | `10-MAS` | Multi-agent systems | 35 |
-| `llm_agent_engineering` | `16-智能体工程` | LLM Agent Engineering | 45 |
+| `llm_agent_engineering` | `16-智能体工程` | LLM Agent Engineering | 46 |
+| `logistics` | `18-物流履约` | Cross-border logistics | 9 |
+| `risk_fraud` | `19-风控反欺诈` | Fraud detection | 10 |
 
 ## Dependencies
 
