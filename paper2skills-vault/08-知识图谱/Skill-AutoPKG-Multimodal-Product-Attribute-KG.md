@@ -488,8 +488,8 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 - **前置（prerequisite）**：[[Skill-KG-Auto-Construction-Agent-Driven]]（通用知识图谱自动构建基础框架）
-- **前置（prerequisite）**：[[Skill-E-commerce-Data-Quality-Assessment]]（数据质量评估：AutoPKG输入质量直接影响WKE）
-- **延伸（extends）**：[[Skill-Product-Knowledge-Graph-Query]]（图谱构建完成后的查询检索）
+- **前置（prerequisite）**：[[Skill-Ecommerce-Data-Quality-Assessment]]（数据质量评估：AutoPKG输入质量直接影响WKE）
+- **延伸（extends）**：[[Skill-KGQA-Question-Answering]]（图谱构建完成后的查询检索）
 - **可组合（combinable）**：[[Skill-Review-Pain-Point-Mining]]（组合场景：用AutoPKG结构化产品属性，再用Painsight挖掘各属性维度的差评热度，精准定位"高差评属性"，直接指导选品改进方向）
 - **可组合（combinable）**：[[Skill-Ad-Aware-Recommendation]]（组合场景：AutoPKG的属性图谱作为商品特征，增强广告感知推荐系统的商品侧表示质量）
 - **可组合（combinable）**：[[Skill-Demand-Forecasting-Supply-Chain]]（组合场景：以PKG属性"适用月龄"为分层维度，对不同月龄段做差异化需求预测）
