@@ -125,6 +125,8 @@ print(result.recommendation)
 ### 可组合技能
 - [[Skill-ATLAS-Gradient-Free-Continual]]：持续学习驱动的实验策略演化
 - [[Skill-Listing-Quality-Scoring]]：Listing 质量评分与实验目标对齐
+- [[Skill-MAS-Scale-Management]]：（跨域桥梁 02↔10）用 Contextual Bandit 动态调度 MAS 中多个 Agent 策略，AgenticAB 负责设计实验，MAS-Scale 负责在大规模 Agent 间分配流量
+- [[Skill-CAR-Agent-Causal-Shapley]]：（跨域桥梁 02↔16）AgenticAB 发现哪个方案赢了，CAR 负责找到 Agent 决策链路中是哪一步导致了差异
 
 ---
 

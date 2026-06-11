@@ -511,6 +511,7 @@ if __name__ == "__main__":
 - [[Skill-Model-Performance-Monitor]] — 线上实时监控，与 R(k,ε,λ) 离线评估互补
 - [[Skill-Orchestration-Trace-RL]] — 编排优化，提升通过基准的 Agent 策略质量
 - [[Skill-SDOF-State-Constrained-Orchestration]] — 状态约束编排，减少故障场景下的状态污染
+- [[Skill-Agentic-AB-Testing]] — （跨域桥梁 16↔02）ReliabilityBench 评出哪个 Agent 更可靠，AgenticAB 提供严格的 A/B 实验框架来统计验证这种可靠性差异是否显著
 
 ---
 
