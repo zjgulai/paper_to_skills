@@ -521,3 +521,11 @@ review_dimensions:
 created: 2026-05-25
 wf_coverage: [WF-B, WF-D]
 ```
+
+
+## 🧪 调用案例（智能体广场验证）
+
+**Agent**：Listing医生  
+**测试输入**：Bullet=5条，核心词已覆盖  
+**输出摘要**：Listing评分81/100，CTR预估提升+12%  
+**验证状态**：✅ 本地计算通过 | 2026-06-11

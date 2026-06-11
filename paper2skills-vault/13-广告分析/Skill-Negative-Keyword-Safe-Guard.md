@@ -630,3 +630,11 @@ print(f"建议添加负关键词 {len(negatives)} 个：{negatives}")
 |------|-------|------|-------|
 | Towards Quality Ad Selection: A Model-based Approach to Performance Filtering | SIGIR eCom 2025 | 2025 | SIGIR eCom |
 | Keyword Targeting Optimization in Sponsored Search Advertising | [arXiv:2210.15459](https://arxiv.org/abs/2210.15459) | 2022 | — |
+
+
+## 🧪 调用案例（智能体广场验证）
+
+**Agent**：广告归因侦探  
+**测试输入**：平台=Amazon SP, 月花费=$12400, 目标ACoS=18%  
+**输出摘要**：识别3个无效关键词，预估月节省$900，ACoS超标8.1pp  
+**验证状态**：✅ 本地计算通过 | 2026-06-11

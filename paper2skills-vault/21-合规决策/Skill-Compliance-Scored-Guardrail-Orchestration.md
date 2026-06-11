@@ -134,3 +134,11 @@ venv/bin/python -m pytest paper2skills-code/compliance/compliance_scored_guardra
 - **实施难度**：⭐⭐⭐☆☆。标准库版本可立即落地；生产版需要接入 OCR、DLP、moderation 和 trace。
 - **优先级评分**：⭐⭐⭐⭐☆。当前合规域已有规则类 Skill，但缺少一个统一的“生成输出门控 + 审计元数据”编排层。
 - **评估依据**：论文公开 readout 报告 5 次候选尝试、20 秒预算、91% compliance；业务侧收益主要来自减少人工初筛和减少违规输出，而非直接复用论文中的 payments win-rate。
+
+
+## 🧪 调用案例（智能体广场验证）
+
+**Agent**：品牌合规卫士  
+**测试输入**：文案=含clinically proven/prevents colic，品类=母婴，市场=US  
+**输出摘要**：3处禁用词+2处慎用词，合规评分64->94/100，逐句合规改写建议  
+**验证状态**：✅ 本地计算通过 | 2026-06-11

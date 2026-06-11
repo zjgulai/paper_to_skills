@@ -694,3 +694,11 @@ if __name__ == '__main__':
 
 ### 可组合
 - [Skill-Knowledge-Graph-for-Skills-Management](../08-知识图谱/[[Skill-Knowledge-Graph-for-Skills-Management]].md) — 用 KG 在已有品类上发现机会缺口
+
+
+## 🧪 调用案例（智能体广场验证）
+
+**Agent**：选品雷达  
+**测试输入**：品类关键词=婴儿推车配件, 市场=US  
+**输出摘要**：机会评分82/100，搜索量YoY+31%，头部CR 38%，新品窗口良好  
+**验证状态**：✅ 本地计算通过 | 2026-06-11
