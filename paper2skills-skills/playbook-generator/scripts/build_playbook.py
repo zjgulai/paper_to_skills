@@ -3642,13 +3642,23 @@ Hook: "这一刻终于解放了 — 关于硅胶婴儿餐具套装"
 <script>
 const AGENT_NAMES = {agent_names_js};
 const SEED_REPORTS = {seed_reports_js};
+const SEED_VERSION = 'v20260611-r2';
 
 function loadReports() {{
   try {{
-    const stored = localStorage.getItem('agentReports');
-    if (stored) return JSON.parse(stored);
-    localStorage.setItem('agentReports', JSON.stringify(SEED_REPORTS));
-    return SEED_REPORTS;
+    const seeded = localStorage.getItem('agentReportsSeeded');
+    let stored = [];
+    try {{ stored = JSON.parse(localStorage.getItem('agentReports') || '[]'); }} catch(e) {{ stored = []; }}
+    if (!Array.isArray(stored)) stored = [];
+    if (seeded !== SEED_VERSION) {{
+      const userIds = new Set(stored.map(r => r.ts + r.id));
+      const fresh = SEED_REPORTS.filter(s => !userIds.has(s.ts + s.id));
+      const merged = [...stored, ...fresh];
+      localStorage.setItem('agentReports', JSON.stringify(merged));
+      localStorage.setItem('agentReportsSeeded', SEED_VERSION);
+      return merged;
+    }}
+    return stored.length > 0 ? stored : SEED_REPORTS;
   }} catch(e) {{ return SEED_REPORTS; }}
 }}
 
