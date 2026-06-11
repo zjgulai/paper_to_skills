@@ -3240,6 +3240,369 @@ def render_agent_report_page() -> str:
         {ag["id"]: ag["name"] for ag in AGENT_CATALOG},
         ensure_ascii=False,
     )
+
+    seed_reports = [
+        {
+            "id": "agent-supply-sentinel",
+            "name": "供应链哨兵",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"当前库存量（件）": "340", "日均销速（件/天）": "28", "供货周期（天）": "21", "渠道类型": "Amazon FBA"},
+            "result": """[供应链哨兵] 实时计算结果
+
+━━ 库存状态 ━━
+当前库存: 340 件
+日均销速: 28 件/天（您输入）
+剩余可售天数: 12.1 天
+风险等级: 🔴 高危
+
+━━ 供货周期分析（Amazon FBA）━━
+您的供货周期: 21 天
+安全库存天数目标: 30 天
+[WARN] 已进入断货窗口，需立即行动！
+
+━━ 补货建议 ━━
+├─ 建议补货量: 1,428 件（21天周期 + 30天安全库存）
+├─ 推荐方案: 空运 714 件（应急）+ 海运 714 件（补充）
+├─ 空运额外成本: +$571
+└─ 不补货预估断货损失: $8,400（12天断货 × 28件/天 × $25 BSR成本）
+
+━━ Q4 旺季预警 ━━
+历史旺季销速倍数: ×2.8
+Q4 建议备货量: 4,704 件
+最迟启动时间: 旺季前 35 天
+
+[!] 结论: 需立即行动！""",
+        },
+        {
+            "id": "agent-pricing-advisor",
+            "name": "动态定价顾问",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"当前售价（$）": "19.99", "综合成本（$）": "7.80", "竞品价格区间": "$15-$22", "当前 BSR": "234"},
+            "result": """[动态定价顾问] 实时分析结果
+
+━━ 当前状态 ━━
+售价: $19.99 | 成本: $7.80 | 毛利率: 61.0% | BSR: #234（Top 500（良好））
+
+━━ 竞品价格带分析 ━━
+竞品区间: $15-$22 | 中位价: $18.50
+您的定价相对竞品: 处于合理区间
+
+━━ 最优定价建议 ━━
+推荐区间: $20.99 - $21.56
+理由: 竞品中位 $18.50，BSR Top 500（良好） 支持适当溢价
+预期毛利率提升: 61.0% → 62.8%（+1.8pp）
+月均增益估算: +$26（约 26 单/月 × $1.00 差价）
+
+━━ 分步涨价路径 ━━
+Week 1: $19.99 → $20.99（观察转化率变化）
+Week 2: 若转化率降幅 <15%，升至 $20.99
+Week 3+: 稳定后评估是否继续到 $21.56
+
+━━ 促销节奏建议 ━━
+├─ 每月1次 Coupon 10-15%（建议 $17.59）
+├─ Prime Day 前2周: $18.99（冲BSR）
+└─ Q4 旺季: $21.09（需求刚性，不主动降价）
+
+[WARN] 监控阈值: 若7天内转化率下降 >20%，立即回退至 $20.99""",
+        },
+        {
+            "id": "agent-pnl-analyzer",
+            "name": "P&L 透视镜",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"月销售额（$）": "32400", "商品成本（$）": "9200", "FBA 费用（$）": "5800", "广告花费（$）": "6500", "退货率（%）": "4"},
+            "result": """[P&L 透视镜] 实时财务分析
+
+━━ 收支明细 ━━
+收入: $32,400
+├─ 商品成本:  -$9,200（28.4%）
+├─ FBA 费用:  -$5,800（17.9%）
+├─ 广告花费:  -$6,500（20.1%）[!] 偏高
+├─ 平台佣金:  -$4,860（15.0%）
+├─ 头程物流:  -$1,912（5.9% 估算）
+├─ 退货成本:  -$518（4.0% × 40%）
+└─ 净利润:   +$3,610（净利率 11.1%）[~] 接近行业均值
+
+━━ 利润漏洞识别（TOP3，按优化空间排序）━━
+1. 广告花费占比 20.1% → 行业均值 18% → 优化空间: +$682/月
+2. 退货率 4.0% → 行业优秀 3% → 每降1% = +$130/月
+3. 头程物流优化（海运替代）→ 节省 +$612/月
+
+━━ 改善后利润模拟 ━━
+执行以上3项优化后:
+预计净利润: $5,024（净利率 15.5%）
+利润提升: +39%（+$1,414/月）
+
+[>] 最优先行动: 广告花费占比 20.1% → 行业均值 18% → 优化空间（ROI最高，可在30天内见效）""",
+        },
+        {
+            "id": "agent-ad-attribution",
+            "name": "广告归因侦探",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"广告平台": "Amazon SP", "月广告花费（$）": "12400", "目标 ACoS/ROAS": "ACoS 18%"},
+            "result": """[广告归因侦探] 实时诊断（Amazon SP）
+
+━━ 花费概览 ━━
+月广告花费: $12,400
+目标 ACoS: 18%
+估算当前 ACoS: 23.0% [!] 超标 5.0pp
+估算无效花费: $2,696（21.7%）
+
+━━ 优化行动清单（执行后预期节省）━━
+1. 否定低效关键词（高展现零转化） → 节省 $1,213/月
+2. 开启 SP 动态竞价-仅降低         → 节省 $372/月（ACoS -1.5pp）
+3. 新增否定词组（wholesale/cheap/bulk）→ 节省 $186/月
+──────────────────────────────
+预计月节省合计: $1,771 → 年化: $21,252
+
+━━ 归因漏洞检查 ━━
+[OK] 归因窗口配置正常（建议7天点击 + 1天浏览）
+[!] ACoS 超过25%，建议检查广告组与关键词相关性，SB 广告建议增加 Retargeting 受众
+
+[>] 首要行动: 立即暂停 ACoS > 36% 的关键词，预计7天内 ACoS 下降 5.0pp""",
+        },
+        {
+            "id": "agent-competitor-radar",
+            "name": "竞品雷达站",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"竞品 ASIN 列表（每行一个）": "B08XYZ1234\nB09ABC5678\nB07DEF9012", "监控周期": "过去7天", "监控维度": "全部"},
+            "result": """[竞品雷达站] 过去7天监控报告（全部）
+
+监控对象: 3 个 ASIN | 周期: 7 天 | 维度: 全部
+
+━━ 逐品分析 ━━
+B08XYZ1234（竞品1）
+├─ 价格变化: [WARN] 大幅降价 -18%
+├─ BSR 变化: 上升 253 名 [WARN]
+└─ 新增评论: +47条（7天）[注意] 增速较快
+
+B09ABC5678（竞品2）
+├─ 价格变化: 小幅降价 -5%
+├─ BSR 变化: 下降 45 名
+└─ 新增评论: +15条（7天）
+
+B07DEF9012（竞品3）
+├─ 价格变化: 稳定 0%
+├─ BSR 变化: 下降 34 名
+└─ 新增评论: +11条（7天）
+
+━━ 预警汇总 ━━
+[!] [B08XYZ1234] 大幅降价-18%，建议密切关注
+
+━━ 建议响应 ━━
+P0: 重点关注 B08XYZ1234 的价格动态
+P1: 若竞品出现大量差评，可针对竞品词做广告截流（时间窗口约 2 周）
+P2: 每月检查竞品 Listing 变更，防止关键卖点被模仿""",
+        },
+        {
+            "id": "agent-listing-doctor",
+            "name": "Listing 医生",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"当前 Title": "硅胶婴儿餐具套装 宝宝辅食碗 防摔防滑", "Bullet Points": "食品级材质\n好清洗\n颜色多样\n适合宝宝使用\n轻便携带", "目标核心词 Top3": "silicone baby plate, BPA free, toddler"},
+            "result": """[Listing 医生] 实时诊断
+
+━━ 综合评分 ━━
+当前 Listing 评分: 48/100（[!] 较差，急需改进）
+
+━━ Title 分析（20 字符）━━
+字符数评估: [!] 过短，严重损失关键词密度
+关键词覆盖: [!] 缺失: "silicone baby plate", "BPA free", "toddler"
+
+━━ Bullet Points 分析（5 条）━━
+[OK] 条数充足
+
+━━ 问题清单 ━━
+1. 标题字符仅 20 个，建议 150-200 字符，当前损失关键词密度
+2. 标题缺少核心词: "silicone baby plate" "BPA free" "toddler"，建议加入标题前60字符
+3. 部分 Bullet 过短（<20字符），缺乏量化证明和场景描述
+
+━━ 重写建议 ━━
+[参考重写] SILICONE BABY PLATE - 硅胶婴儿餐具套装 宝宝辅食碗 防摔防滑 | silicone baby plate | BPA free | toddler — Premium Quality
+
+预估优化后 CTR 提升: +25-35%""",
+        },
+        {
+            "id": "agent-voc-decoder",
+            "name": "用户之声解码器",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"评论文本（每行一条）": "suction doesn't work after 2 months\ncolors fade in dishwasher\nlove how easy to clean\nbest plate ever\nsuction breaks after few uses\namazing quality very durable\nnot big enough for 18 months\ngreat minimalist design\nleaked after first use\neasiest to clean", "竞品 ASIN（可选）": "B08XYZ1234", "语言": "英语"},
+            "result": """[用户之声解码器] 实时分析 (10条输入)
+
+━━ 评论概览 ━━
+输入评论数: 10 条
+负面信号: 5 条（50%）
+正面信号: 5 条（50%）
+
+━━ TOP 痛点（高频）━━
+1. 质量问题（4次提及）
+   "suction doesn't work after 2 months"
+2. 尺寸/规格（1次提及）
+   "not big enough for 18 months"
+
+━━ TOP 爽点（高频）━━
+1. 易用性（1次提及）
+   "love how easy to clean"
+2. 质量耐用（2次提及）
+   "amazing quality very durable"
+3. 外观设计（1次提及）
+   "great minimalist design"
+
+━━ 产品迭代建议 ━━
+P0: 改善「质量问题」→ 直接影响复购率
+P1: 改善「尺寸/规格」→ 延长产品生命周期
+
+[英语] 数据来源：用户输入""",
+        },
+        {
+            "id": "agent-cs-triage",
+            "name": "客服分诊台",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"工单文本（每行一条）": "Where is my order? tracking shows nothing\nI want a refund, product is broken\nHow do I clean this?\nWhere is my package?\nFile a-to-z claim if no response\nProduct defect, want money back\nDelivery says arrived but nothing here\nThis is terrible quality, returning it\nTracking not updated in 5 days", "平台来源": "Amazon", "SLA 要求": "24小时"},
+            "result": """[客服分诊台] 实时分析（Amazon | SLA 24小时）
+
+━━ 工单分类分布（共 9 条）━━
+退货退款请求: 3 条（33.3%）
+产品质量问题: 2 条（22.2%）
+物流查询:     3 条（33.3%）
+使用咨询:     1 条（11.1%）
+
+━━ 高优先级预警（需 24小时 内处理）━━
+[ALERT] 工单1: "File a-to-z claim if no response"
+
+━━ 标准回复模板（物流查询）━━
+"Hi [Name], thank you for reaching out!
+Your order is currently in transit. Expected delivery: [DATE].
+If not received by [DATE+3], reply and we will send a replacement immediately."
+
+━━ 产品缺陷信号 ━━
+[!] 2条工单涉及产品质量 → 可能存在批次性问题，建议联系工厂复查""",
+        },
+        {
+            "id": "agent-account-guardian",
+            "name": "账号风险卫士",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"近期异常通知": "Warning: Your account has been flagged for review of product listing policy violations.", "需检查的 ASIN 列表": "B08XYZ1234\nB09ABC5678", "当前账号健康状态": "黄色（预警）"},
+            "result": """[账号风险卫士] 实时风险评估
+
+━━ 综合风险评分 ━━
+风险评分: 8.0/10（高风险，需立即处理）
+账号状态: 黄色（预警）
+[!] 检测到警告通知，风险分上升 +1.5
+
+━━ 通知内容摘要 ━━
+> Warning: Your account has been flagged for review of product listing policy viola
+
+━━ ASIN 合规检查（2 个）━━
+B08XYZ1234: [~] 建议检查 Title 中是否含竞品品牌词、绝对化表述
+B09ABC5678: [~] 建议检查 Title 中是否含竞品品牌词、绝对化表述
+
+━━ 整改清单 ━━
+P0（今日）: 检查并删除 Listing 中的侵权词/医疗声明
+P0（今日）: 处理所有未回复差评工单（ODR 目标 <0.9%）
+P1（本周）: 提交 POA（行动计划）
+
+━━ POA 申诉框架（如需）━━
+"Root Cause: [问题根因]
+Corrective Actions: [已执行的改正措施]
+Preventive Measures: [预防措施和未来计划]" """,
+        },
+        {
+            "id": "agent-brand-guardian",
+            "name": "品牌合规卫士",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"品牌文案": "Clinically proven to prevent colic. 100% safe for babies. FDA approved materials. BPA-free and non-toxic.", "产品品类": "母婴", "目标市场": "US"},
+            "result": """[品牌合规卫士] 扫描报告（母婴 | US 市场）
+
+━━ 综合评分 ━━
+当前合规评分: 25/100 → 整改后预计: 77/100
+
+━━ 禁用词（5处违规）━━
+1. "clinically proven" → FDA - 需临床认证
+   合规改写: "designed with safety in mind..."
+2. "prevents" → FTC - 绝对化预防声明
+   合规改写: "designed for..."
+3. "100% safe" → FTC - 绝对化表述
+   合规改写: "made with food-grade materials..."
+4. "fda approved" → FDA - 批准措辞限制
+   合规改写: "FDA registered facility..."
+5. "cures" (colic) → FDA - 医疗声明
+   合规改写: "supports..."
+
+━━ 慎用词（2处需证明文件）━━
+6. "bpa-free" → 需第三方检测报告支撑
+7. "non-toxic" → 需 CPSIA/EN71 认证文件
+
+━━ 所需证明文件清单 ━━
+□ SGS/Intertek 第三方安全检测报告
+□ CPSIA 儿童产品认证（US必需）
+□ EN71/CE 认证（EU市场）
+□ BPA-Free 声明（实验室报告）""",
+        },
+        {
+            "id": "agent-product-radar",
+            "name": "选品雷达",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"品类关键词": "硅胶婴儿餐具", "目标市场": "US", "预算区间": "$5-20k"},
+            "result": """[选品雷达] 实时分析
+
+━━ 机会评分 ━━
+品类: "硅胶婴儿餐具" | 市场: 美国 | 预算: $5-20k
+综合评分: 83/100 [+] 强力推荐
+
+━━ 市场数据（基于关键词特征估算）━━
+月均搜索量: 116,000（YoY +20%）
+BSR TOP10 均价: $19.9 | 您的成本带: $6-9
+头部集中度（前3卖家）: 44% [OK] 仍有切入空间
+
+━━ 差异化切入角度 ━━
+1. 材质/工艺升级（食品级/环保材料 → 情感溢价 +$4）
+2. 套装/组合策略（提升 AOV 至 $36+）
+3. 月龄/场景分段（精准细分需求）
+
+━━ 竞争分析 ━━
+新品切入评论门槛: ~200 条
+新品窗口: ⭐⭐⭐⭐ 良好
+
+━━ 建议 ━━
+[+] 强力推荐 — 搜索量健康，价格带有利润空间
+建议首批备货: 500-900 件（$5-20k 预算匹配）""",
+        },
+        {
+            "id": "agent-tiktok-content",
+            "name": "TikTok 内容官",
+            "ts": "2026-06-11 00:16",
+            "inputs": {"产品名称/描述": "硅胶婴儿餐具套装", "目标受众画像": "0-2岁宝妈，关注辅食育儿", "内容风格偏好": "痛点反转", "周更新频次": "3条/周"},
+            "result": """[TikTok 内容官] 本周选题矩阵
+
+━━ 创作策略 ━━
+产品: 硅胶婴儿餐具套装
+目标受众: 0-2岁宝妈，关注辅食育儿
+内容风格: 痛点反转 | 更新频次: 3条/周
+
+━━ 内容日历（3 条/周）━━
+Day 1（周一）— 痛点反转
+Hook: "妈妈们最崩溃的吃饭时刻是这个 — 关于硅胶婴儿餐具套装"
+话题: #babymom #toddlermom #momhack #硅胶婴儿餐具套装
+
+Day 2（周二）— 痛点反转
+Hook: "Before/After 对比 — 关于硅胶婴儿餐具套装"
+话题: #babymom #toddlermom #momhack #硅胶婴儿餐具套装
+
+Day 3（周三）— 痛点反转
+Hook: "这一刻终于解放了 — 关于硅胶婴儿餐具套装"
+话题: #babymom #toddlermom #momhack #硅胶婴儿餐具套装
+
+━━ 爆款公式 ━━
+情绪触发（共鸣）+ 意外反转 + 简单CTA = 完播率 65%+
+
+━━ 发布建议 ━━
+最佳时间: 晚9-11PM（宝宝入睡后）
+话题标签: #babymom #toddlermom #momhack #babyfood #parenting
+预算建议: $75-150/周（寄送产品换视频）""",
+        },
+    ]
+
+    seed_reports_js = json.dumps(seed_reports, ensure_ascii=False)
+
     body = f"""
 <div style='max-width:900px;margin:0 auto'>
 <div style='display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px'>
@@ -3265,9 +3628,15 @@ def render_agent_report_page() -> str:
 
 <script>
 const AGENT_NAMES = {agent_names_js};
+const SEED_REPORTS = {seed_reports_js};
 
 function loadReports() {{
-  try {{ return JSON.parse(localStorage.getItem('agentReports') || '[]'); }} catch(e) {{ return []; }}
+  try {{
+    const stored = localStorage.getItem('agentReports');
+    if (stored) return JSON.parse(stored);
+    localStorage.setItem('agentReports', JSON.stringify(SEED_REPORTS));
+    return SEED_REPORTS;
+  }} catch(e) {{ return SEED_REPORTS; }}
 }}
 
 function renderReports() {{
