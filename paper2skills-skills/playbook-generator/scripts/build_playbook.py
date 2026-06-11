@@ -5593,6 +5593,7 @@ def render_pages(
     domain_count = len({s.domain_dir for s in skills})
 
     # Data assets
+    build_ts = datetime.now().strftime("%Y%m%d%H%M%S")
     data = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "stats": {"skill_count": skill_count, "domain_count": domain_count, "edge_count": edge_count},
@@ -5810,6 +5811,21 @@ def render_pages(
     ))
 
     write_file(out / "README.md", "# paper2skills Playbook\n\n打开 `index.html` 浏览。\n")
+
+    for html_file in out.rglob("*.html"):
+        try:
+            content = html_file.read_text(encoding="utf-8")
+            new_content = content.replace(
+                'playbook-data.js"',
+                f'playbook-data.js?v={build_ts}"'
+            ).replace(
+                "playbook-data.js'",
+                f"playbook-data.js?v={build_ts}'"
+            )
+            if new_content != content:
+                html_file.write_text(new_content, encoding="utf-8")
+        except Exception:
+            pass
     report = {
         "skill_pages": skill_count,
         "domains": domain_count,
