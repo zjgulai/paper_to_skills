@@ -3727,9 +3727,12 @@ function clearReports() {{
 function exportReports() {{
   const reports = loadReports();
   if (reports.length === 0) {{ alert('暂无报告可导出'); return; }}
+  const sep = '\\n' + Array(60).fill('─').join('') + '\\n';
   const lines = reports.map(r =>
-    `=== ${{r.name}} | ${{r.ts}} ===\n输入: ${{JSON.stringify(r.inputs)}}\n\n${{r.result}}\n`
-  ).join('\n' + '─'.repeat(60) + '\n');
+    '=== ' + r.name + ' | ' + r.ts + ' ===\\n' +
+    '输入: ' + JSON.stringify(r.inputs) + '\\n\\n' +
+    r.result + '\\n'
+  ).join(sep);
   const blob = new Blob([lines], {{type:'text/plain;charset=utf-8'}});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
