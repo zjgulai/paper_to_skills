@@ -627,6 +627,7 @@ if __name__ == "__main__":
 | **ReviewQuality-Scoring** | 输入过滤 | 低质量 VOC 在进入萃取前被过滤 |
 | **TaxoAdapt-MultidimensionalTaxonomy** | 标签管理 | 多维标签空间的树状管理 |
 | **AIPL-VOC-Lifecycle-Tags** | AIPL 分类 | AIPL 7 节点阶段分类基础 |
+| [[Skill-InstructUIE-Unified-Information-Extraction]] | prerequisite | 统一 IE 框架是多标签萃取的前置基础能力 |
 
 ### 4.2 后置技能
 
@@ -635,6 +636,11 @@ if __name__ == "__main__":
 | **NPS-Driver-Analysis** | 输出 | Proxy NPS 驱动因素归因分析 |
 | **Kano-Mapper** | 输出 | 标签主题 → Kano 需求分类 |
 | **GPLR-Persona-Generation** | 互补 | 原子画像标签 → 营销人群包 |
+| [[Skill-Semantic-Blueprint-Compiler]] | extends | 本 Skill 的 AIPL 标签 + 画像输出作为语义蓝图编译器的输入信号 |
+
+### 4.3 可组合技能
+
+- [[Skill-BERT-SRL-Event-Frame-Extraction]] — 组合场景：SRL 事件框架提取可识别评论中的动作-主体-客体结构，与本 Skill 的关键词匹配互补，覆盖表达复杂的长评论
 
 ### 4.3 技能联动流程
 
