@@ -4537,6 +4537,14 @@ def render_skill_page(skill: PlaybookSkill) -> str:
 
     body = f"""
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/{slugify(skill.domain_dir)}.html">{html.escape(skill.domain_dir)}</a> / {html.escape(skill.skill_id)}</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
 <h1>{html.escape(skill.title)}</h1>
 <p class="muted">{html.escape(skill.skill_id)} · {html.escape(skill.domain_dir)}</p>
 <div class="tag-row">{''.join(f"<span class='tag'>{html.escape(t)}</span>" for t in skill.tags + skill.topics + skill.workflows)}</div>
@@ -4545,21 +4553,21 @@ def render_skill_page(skill: PlaybookSkill) -> str:
 {biz_panel}
 <div class="two-col">
   <section>
-    <h2>1. 解决的问题</h2>
+    <h2 id="s-problem">1. 解决的问题</h2>
     <p>{html.escape(skill.problem_solved or skill.algorithm_summary)}</p>
-    <h2>2. 核心算法逻辑</h2>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
     <p>{html.escape(skill.algorithm_summary)}</p>
-    <h2>3. 业务应用场景</h2>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
     {scenario_html}
     <h2>4. 输入数据要求</h2>{render_items(skill.inputs) if skill.inputs else "<p class='muted'>请查看原始代码模板获取输入规格。</p>"}
     <h2>5. 输出结果</h2>{render_items(skill.outputs) if skill.outputs else "<p class='muted'>请查看原始代码模板获取输出规格。</p>"}
-    <h2>6. 业务价值 / ROI</h2>{render_items(skill.roi) if skill.roi else ("<p>" + html.escape(skill.roi_figure) + "</p>" if skill.roi_figure else "<p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>")}
-    <h2>7. 代码模板</h2>
+    <h2 id="s-value">6. 业务价值 / ROI</h2>{render_items(skill.roi) if skill.roi else ("<p>" + html.escape(skill.roi_figure) + "</p>" if skill.roi_figure else "<p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>")}
+    <h2 id="s-code">7. 代码模板</h2>
     <p class="muted">代码块数量：{skill.code_blocks} · 路径：{html.escape(skill.code_path or '未检测到')}</p>
     {_render_code_preview(skill.code_preview)}
     <h2>8. 论文来源</h2>{render_items(skill.papers)}
   </section>
-  <aside class="relation-panel">
+  <aside class="relation-panel" id="s-relations">
     <h2>Skill Relations</h2>
     <svg id="ego-graph" data-skill="{html.escape(skill.skill_id)}" width="280" height="220"></svg>
     <div id="ego-legend" class="ego-legend">
@@ -4574,6 +4582,23 @@ def render_skill_page(skill: PlaybookSkill) -> str:
 </div>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {{
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {{
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {{
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }}, 2000);
+  }}).catch(function() {{
+    btn.textContent = '复制失败';
+    setTimeout(function() {{ btn.textContent = '复制'; }}, 1500);
+  }});
+}}
+</script>
 {agent_cases_html}"""
     return html_page(skill.title, body, nav)
 
@@ -4594,7 +4619,12 @@ def _render_code_preview(code: str) -> str:
     if not code:
         return "<p class='muted'>请查看原始 Skill 卡片获取完整代码。</p>"
     escaped = html.escape(code)
-    return f"<pre class='code-preview'><code>{escaped}</code></pre>"
+    return (
+        "<div class='code-wrap'>"
+        "<button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button>"
+        f"<pre class='code-preview'><code>{escaped}</code></pre>"
+        "</div>"
+    )
 
 
 def write_file(path: Path, content: str) -> None:
@@ -5112,7 +5142,7 @@ def build_css() -> str:
   /* Text — Apple standard */
   --ink:         #1d1d1f;
   --ink-2:       #3d3d3f;
-  --muted:       #86868b;
+  --muted:       #6e6e73;
 
   /* Borders */
   --line:        #EDE6DF;
@@ -5263,7 +5293,7 @@ p:last-child { margin-bottom: 0; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: 12px center;
 }
-#global-search::placeholder { color: var(--muted); }
+#global-search::placeholder { color: var(--ink-2); opacity: .55; }
 #global-search:hover { border-color: var(--line-strong); background: var(--panel); }
 #global-search:focus {
   outline: none; border-color: var(--accent); background: var(--panel);
@@ -5414,7 +5444,7 @@ p:last-child { margin-bottom: 0; }
 .section-head p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
 
 /* ── Hero / Tabs ── */
-.hero { margin-bottom: 8px; }
+.hero { margin-bottom: 8px; padding-top: 4px; }
 .hero h1 { margin: 0 0 10px; }
 .hero-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
 .tab-btn {
@@ -5846,14 +5876,41 @@ th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--li
 th { background: var(--panel-2); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
 tr:hover td { background: var(--bg); }
 
+/* ── Skill TOC (内锚点目录) ── */
+.skill-toc {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 20px;
+}
+.skill-toc a {
+  padding: 4px 11px; border-radius: var(--r-full);
+  font-size: 12px; font-weight: 600;
+  background: var(--panel-2); color: var(--ink-2);
+  border: 1px solid var(--line);
+  text-decoration: none; transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+.skill-toc a:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent-light); }
+
 /* ── Code Preview ── */
+.code-wrap { position: relative; margin: 12px 0; }
+.copy-btn {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  padding: 4px 10px; border-radius: var(--r-sm);
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.12); color: #e8e0d4;
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  transition: background .15s, opacity .15s;
+  letter-spacing: .04em;
+}
+.copy-btn:hover { background: rgba(255,255,255,.22); }
+.copy-btn.copied { color: #6ee7b7; border-color: #6ee7b7; }
 .code-preview {
   background: #1a1916; color: #e8e0d4;
   border-radius: var(--r-lg); padding: 18px 20px;
   overflow-x: auto; overflow-y: auto;
   font-size: 12.5px; line-height: 1.65;
   font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
-  max-height: 420px; margin: 12px 0; white-space: pre;
+  max-height: 420px; margin: 0; white-space: pre;
   border: 1px solid rgba(255,255,255,.06);
 }
 
