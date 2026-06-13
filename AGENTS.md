@@ -10,15 +10,16 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 
 **Live Playbook**: https://skills.lute-tlz-dddd.top
 
-## Current State (2026-06-11)
+## Current State (2026-06-12)
 
 | Metric | Value |
 |--------|-------|
-| Skill pages | **401** |
-| Domains | **22** |
-| Graph edges | **6,698** |
+| Skill pages | **446** |
+| Domains | **23** |
+| Graph edges | **7,760** |
 | Agent pages | **12** callable agents (local compute engines) |
 | New pages | **agent-report.html** (24 seed reports, Agent filter) |
+| ps_override entries | **292** |
 
 ## Project Structure
 
@@ -37,28 +38,29 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │               ├── skill_biz_context_override.yaml
 │               └── skill_handbook_map.yaml    # Agent→Playbook mapping
 ├── paper2skills-vault/          # Knowledge base (Obsidian-compatible)
-│   ├── 01-因果推断/              # Causal inference skills
-│   ├── 02-A_B实验/               # A/B testing skills
-│   ├── 03-时间序列/              # Time series skills
-│   ├── 04-供应链/                # Supply chain skills (32 skills)
-│   ├── 05-推荐系统/              # Recommendation system skills
+│   ├── 01-因果推断/              # Causal inference skills (16 skills)
+│   ├── 02-A_B实验/               # A/B testing skills (15 skills)
+│   ├── 03-时间序列/              # Time series skills (15 skills)
+│   ├── 04-供应链/                # Supply chain skills (33 skills)
+│   ├── 05-推荐系统/              # Recommendation system skills (16 skills)
 │   ├── 06-增长模型/              # Growth model skills (29 skills)
-│   ├── 08-知识图谱/              # Knowledge graph / GNN skills (28 skills)
-│   ├── 09-DataAgent-LLM/         # DataAgent & LLM-powered analytics
+│   ├── 07-NLP-VOC/               # NLP / Voice of Customer (8 skills)
+│   ├── 08-知识图谱/              # Knowledge graph / GNN skills (33 skills)
+│   ├── 09-DataAgent-LLM/         # DataAgent & LLM-powered analytics (13 skills)
 │   ├── 10-MAS/                   # Multi-Agent System skills (35 skills)
-│   ├── 11-AI人文/                 # AI × Humanities
-│   ├── 12-ML基础/                 # Machine learning fundamentals
-│   ├── 13-广告分析/               # Ad attribution, ROAS (24 skills)
-│   ├── 14-用户分析/               # Funnel, cohort, RFM (26 skills)
-│   ├── 15-营销投放分析/            # MMM, promotion effectiveness (17 skills)
-│   ├── 16-智能体工程/              # LLM Agent Engineering (45 skills)
-│   ├── 17-价格优化/               # Dynamic pricing (10 skills)
+│   ├── 11-AI人文/                 # AI × Humanities (10 skills)
+│   ├── 12-ML基础/                 # Machine learning fundamentals (11 skills)
+│   ├── 13-广告分析/               # Ad attribution, ROAS (29 skills)
+│   ├── 14-用户分析/               # Funnel, cohort, RFM (27 skills)
+│   ├── 15-营销投放分析/            # MMM, promotion effectiveness (22 skills)
+│   ├── 16-智能体工程/              # LLM Agent Engineering (46 skills)
+│   ├── 17-价格优化/               # Dynamic pricing (11 skills)
 │   ├── 18-物流履约/               # Cross-border logistics (9 skills)
 │   ├── 19-风控反欺诈/             # Fraud detection (10 skills)
-│   ├── 20-AI视频生成/             # Virtual anchor, brand video (10 skills)
+│   ├── 20-AI视频生成/             # Virtual anchor, brand video (15 skills)
 │   ├── 21-合规决策/               # Compliance decisions (10 skills)
 │   ├── 22-数据采集工程/            # Data collection & quality (16 skills)
-│   ├── 23-运营财务/               # FBA finance, P&L (8 skills)
+│   ├── 23-运营财务/               # FBA finance, P&L (17 skills)
 │   ├── 07-资源库/                 # Master Prompt, keywords, sync status
 │   └── papers/                   # Downloaded papers by domain
 └── paper2skills-code/           # Python code templates
@@ -212,17 +214,29 @@ Skills must meet these criteria (enforced by `paper-审核`):
 
 | English Directory | Chinese Directory | Domain | Skills |
 |-------------------|-------------------|--------|--------|
-| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling | 15 |
-| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits | 14 |
+| `causal_inference` | `01-因果推断` | Causal inference, uplift modeling | 16 |
+| `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits | 15 |
 | `time_series` | `03-时间序列` | Demand forecasting | 15 |
-| `supply_chain` | `04-供应链` | Inventory optimization | 32 |
+| `supply_chain` | `04-供应链` | Inventory optimization | 33 |
 | `recommendation` | `05-推荐系统` | Recommendation systems | 16 |
 | `growth_model` | `06-增长模型` | Churn prediction, LTV | 29 |
-| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs | 29 |
+| `nlp_voc` | `07-NLP-VOC` | NLP / Voice of Customer | 8 |
+| `knowledge_graph` | `08-知识图谱` | Heterogeneous graphs, multimodal search | 33 |
+| `data_agent_llm` | `09-DataAgent-LLM` | DataAgent & LLM analytics | 13 |
 | `mas` | `10-MAS` | Multi-agent systems | 35 |
+| `ai_humanities` | `11-AI人文` | AI ethics, AIGC authenticity, cross-cultural | 10 |
+| `ml_fundamentals` | `12-ML基础` | Machine learning fundamentals | 11 |
+| `advertising` | `13-广告分析` | Ad attribution, ROAS | 29 |
+| `user_analytics` | `14-用户分析` | Funnel, cohort, RFM | 27 |
+| `marketing` | `15-营销投放分析` | MMM, promotion effectiveness | 22 |
 | `llm_agent_engineering` | `16-智能体工程` | LLM Agent Engineering | 46 |
+| `pricing` | `17-价格优化` | Dynamic pricing | 11 |
 | `logistics` | `18-物流履约` | Cross-border logistics | 9 |
 | `risk_fraud` | `19-风控反欺诈` | Fraud detection | 10 |
+| `visual_content` | `20-AI视频生成` | Virtual anchor, brand video | 15 |
+| `compliance` | `21-合规决策` | Compliance decisions | 10 |
+| `data_collection` | `22-数据采集工程` | Data collection & quality | 16 |
+| `operations_finance` | `23-运营财务` | FBA finance, P&L, tariff | 17 |
 
 ## Dependencies
 
