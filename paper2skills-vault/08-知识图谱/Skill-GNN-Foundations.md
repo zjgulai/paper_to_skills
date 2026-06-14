@@ -43,7 +43,7 @@ print("[✓] GNN Foundations 测试通过")
 
 ## ④ 技能关联
 
-- **前置**：[[Skill-HGT-Heterogeneous-Graph-Transformer]] | [[Skill-HGCN-Hyperbolic-Graph]]
+- **前置**：[[Skill-HGT-Heterogeneous-Graph-Transformer]] | [[Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks]]
 - **组合**：[[Skill-Audience-Knowledge-Graph]]
 
 ---

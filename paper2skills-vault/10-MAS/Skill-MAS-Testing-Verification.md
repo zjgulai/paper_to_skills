@@ -558,3 +558,12 @@ if __name__ == "__main__":
     test_maestro_aggregate_stats()
     test_end_to_end_pipeline()
     print("\n✅ All tests passed")
+
+
+## ④ 技能关联
+
+- **前置（prerequisite）**：[[Skill-MAS-Orchestrator]]（理解多智能体编排框架后再测试验证）
+- **前置（prerequisite）**：[[Skill-AutoGen-Multi-Agent-Conversation]]（了解 AutoGen 对话框架的基本结构）
+- **延伸（extends）**：[[Skill-Compliance-Scored-Guardrail-Orchestration]]（测试验证结果驱动合规护栏策略）
+- **延伸（extends）**：[[Skill-MAS-Resource-Scheduling]]（Agent 测试后的资源调度优化）
+- **可组合（combinable）**：[[Skill-ReliabilityBench-Agent-Reliability]]（组合：可靠性基准测试 + 测试验证框架覆盖 Agent 质量全面评估）

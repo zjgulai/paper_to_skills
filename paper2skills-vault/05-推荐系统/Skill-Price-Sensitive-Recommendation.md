@@ -714,4 +714,4 @@ if __name__ == "__main__":
 
 ### 可组合技能
 - [[Skill-UCB-LDP-Dynamic-Pricing]]：用 UCB 动态探索最优价格区间，与本 Skill 的弹性估计互相迭代优化（推荐感知定价 × 定价感知推荐双向闭环）
-- [[Skill-CAGED-Debiased-Recommendation]]：CAGED 因果去偏框架与本 Skill 的 IPW 去偏互补，解决价格曝光与兴趣曝光的双重偏差
+- [[Skill-Counterfactual-Recommendation-DCE]]：CAGED 因果去偏框架与本 Skill 的 IPW 去偏互补，解决价格曝光与兴趣曝光的双重偏差

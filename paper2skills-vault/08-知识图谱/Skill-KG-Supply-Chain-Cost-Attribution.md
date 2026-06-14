@@ -269,8 +269,8 @@ if __name__ == "__main__":
 
 ## ④ 技能关联
 
-- **前置（prerequisite）**：[[Skill-Supply-Chain-Network-Design]]、[[Skill-FBA-Fee-Intelligence]]
-- **延伸（extends）**：[[Skill-Causal-Supply-Chain-Attribution]]、[[Skill-FBA-Cost-Forecast-Adjustment]]
+- **前置（prerequisite）**：[[Skill-Multi-Echelon-Inventory]]、[[Skill-FBA-Fee-Intelligence]]
+- **延伸（extends）**：[[Skill-Causal-Attribution-Bridge]]、[[Skill-FBA-Cost-Forecast-Adjustment]]
 - **可组合（combinable）**：[[Skill-SKU-Level-PL-Dashboard]]（组合场景：SKU 级 P&L 拆解后对成本异动自动触发图谱归因，定位到具体环节）、[[Skill-PL-Attribution-Analysis]]（供应链成本归因结果作为 P&L 归因的投入端）
 
 ## ⑤ 商业价值评估

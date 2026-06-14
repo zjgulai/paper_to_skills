@@ -196,6 +196,12 @@ python bert_srl_model.py
 
 ---
 
+- **前置（prerequisite）**：[[Skill-NLP-Text-Classification]]（NLP文本分类基础）
+- **前置（prerequisite）**：[[Skill-VOC-Aspect-Sentiment-Extraction]]（方面情感分析和事件框架提取共用底层NLP能力）
+- **延伸（extends）**：[[Skill-Semantic-Blueprint-Compiler]]（SRL事件帧→语义蓝图编译的上游输入）
+- **延伸（extends）**：[[Skill-InstructUIE-Unified-Information-Extraction]]（统一信息提取将SRL能力泛化到任意域）
+- **可组合（combinable）**：[[Skill-Reddit-Community-Signal-Mining]]（组合：SRL提取Reddit讨论中的事件结构→识别竞品事件信号）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

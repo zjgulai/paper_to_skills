@@ -415,7 +415,7 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-AI-Consumer-Wellbeing-Ethics]]
 - **可组合（combinable）**：
   - [[Skill-VOC-Aspect-Sentiment-Extraction]] — 组合场景：先过滤虚假评论，再对真实评论做情感分析，保证 VOC 数据质量
-  - [[Skill-Anomaly-Detection]] — 组合场景：用统计异常检测模型作为多模态模型的一级预过滤，降低推理成本
+  - [[Skill-Transaction-Anomaly-Detection]] — 组合场景：用统计异常检测模型作为多模态模型的一级预过滤，降低推理成本
 
 ## ⑤ 商业价值评估
 

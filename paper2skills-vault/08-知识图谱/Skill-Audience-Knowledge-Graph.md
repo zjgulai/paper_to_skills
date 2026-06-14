@@ -57,7 +57,7 @@ print("[✓] Audience KG 测试通过")
 ## ④ 技能关联
 
 - **前置**：[[Skill-Hierarchical-Product-KG-Construction]] (08) | [[Skill-ROAS-Budget-Optimization]] (13)
-- **组合**：[[Skill-CoLaKG-KG-Augmented-Recommendation]] (08) | [[Skill-CABB-Cross-Category-Attribution]] (13)
+- **组合**：[[Skill-KG-Augmented-Recommendation-CoLaKG]] (08) | [[Skill-CABB-Cross-Category-Attribution]] (13)
 
 ---
 - **相关技能**：[[Skill-GNN-Foundations]]

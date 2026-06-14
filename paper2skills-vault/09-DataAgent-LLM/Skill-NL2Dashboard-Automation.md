@@ -45,7 +45,7 @@ print("[✓] NL2Dashboard 测试通过")
 
 ## ④ 技能关联
 
-- **前置**：[[Skill-RAG-Enhanced-Data-Analysis]] | [[Skill-Data-to-Dashboard]]
+- **前置**：[[Skill-RAG-Enhanced-Data-Analysis]] | [[Skill-Data-to-Dashboard-Multi-Agent-Visualization]]
 - **组合**：[[Skill-SQL-Agent-Text-to-SQL]]
 
 ---

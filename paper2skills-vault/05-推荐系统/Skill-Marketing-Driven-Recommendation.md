@@ -718,7 +718,7 @@ if __name__ == "__main__":
 
 ### 可组合技能
 - [[Skill-DARA-Agentic-MMM]]：自主 MMM Agent ↔ 实时营销信号 → 推荐系统动态 λ 调整，实现营销预算自动分配
-- [[Skill-Promotion-Effectiveness-Attribution]]：促销效果归因 ↔ 与推荐系统的 PRME 模型相互验证，精确拆解促销增量
+- [[Skill-Promotion-Demand-Decomposition]]：促销效果归因 ↔ 与推荐系统的 PRME 模型相互验证，精确拆解促销增量
 
 ---
 

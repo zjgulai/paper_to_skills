@@ -630,7 +630,7 @@ if __name__ == "__main__":
 
 ### 延伸技能（同批萃取）
 
-- [[Skill-G2CP-Graph-Grounded-MAS-Protocol]]：图结构增强的 MAS 协议，与 LDP 结构化通信形成对比
+- [[Skill-MCP-A2A-Protocol-Stack]]：图结构增强的 MAS 协议，与 LDP 结构化通信形成对比
 - [[Skill-Agent-QMix-Topology-Learning]]：动态拓扑学习，可与 LDP 智能路由结合
 
 ### 可组合技能

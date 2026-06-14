@@ -841,8 +841,8 @@ result = pipeline.generate(
 ## ⑥ Skill Relations
 
 ### 前置技能（Prerequisites）
-- [[Skill-DiT-Architecture-Fundamentals]]：DiT（Diffusion Transformer）基础架构 → BrandFusion/Aquarius/DreamActor-H1 均基于 DiT
-- [[Skill-LoRA-Finetuning]]：轻量微调 → BrandFusion 离线阶段新品牌适配的核心技术
+- [[Skill-Aquarius-Brand-Video-Generation]]：DiT（Diffusion Transformer）基础架构 → BrandFusion/Aquarius/DreamActor-H1 均基于 DiT
+- [[Skill-ML-Model-Serving-Optimization]]：轻量微调 → BrandFusion 离线阶段新品牌适配的核心技术
 
 ### 延伸技能（Extends）
 - [[Skill-Aquarius-Brand-Video-Generation]]：本 Skill 是 Aquarius 的前置基础层，Aquarius Skill 聚焦工程落地细节

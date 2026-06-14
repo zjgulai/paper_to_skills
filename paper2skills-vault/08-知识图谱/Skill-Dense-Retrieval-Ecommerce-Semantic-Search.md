@@ -760,6 +760,12 @@ if __name__ == '__main__':
 
 ---
 
+- **前置（prerequisite）**：[[Skill-Embedding-Fundamentals]]（BERT/向量编码基础）
+- **前置（prerequisite）**：[[Skill-Hybrid-Search-BM25-Vector]]（混合搜索（稀疏+稠密）基础）
+- **延伸（extends）**：[[Skill-Long-Tail-Search-Embedding-SEO]]（稠密检索驱动长尾关键词 SEO 优化）
+- **延伸（extends）**：[[Skill-RAG-Reranking-CrossEncoder]]（检索后重排序进一步提升精度）
+- **可组合（combinable）**：[[Skill-LLM-Session-Personalization-Cache]]（组合：稠密检索找候选 + 会话意图缓存个性化重排）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

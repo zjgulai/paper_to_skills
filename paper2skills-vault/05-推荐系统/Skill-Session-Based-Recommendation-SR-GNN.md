@@ -257,6 +257,12 @@ def collate_fn(batch):
 
 ---
 
+- **前置（prerequisite）**：[[Skill-Matrix-Factorization]]（理解商品 embedding 基本概念）
+- **前置（prerequisite）**：[[Skill-Embedding-Fundamentals]]（向量表示和嵌入空间理解）
+- **延伸（extends）**：[[Skill-LLM-Session-Personalization-Cache]]（LLM增强的会话推荐升级版）
+- **延伸（extends）**：[[Skill-NeuralNDCG-Learning-to-Rank]]（SR-GNN 召回后 NeuralNDCG 精排）
+- **可组合（combinable）**：[[Skill-Long-Tail-Search-Embedding-SEO]]（组合：会话意图识别 + 长尾词嵌入搜索覆盖更多用户需求）
+
 ## ⑤ 商业价值评估
 
 - **ROI预估**:

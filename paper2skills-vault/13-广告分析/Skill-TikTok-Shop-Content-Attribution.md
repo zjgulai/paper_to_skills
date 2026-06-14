@@ -818,7 +818,7 @@ ELEMENT_PROMPTS = {
 - [[Skill-Ad-Attribution-Modeling]]：广告归因基础建模 → 本 Skill 在此基础上扩展至兴趣图谱和内容元素层
 
 ### 延伸技能（Extends）
-- [[Skill-PVM-Attribution-Window-Unification]]：归因窗口统一 → 本 Skill 的自适应归因窗口（MICE）是其 TikTok 专项延伸
+- [[Skill-PVM-Attribution-Window-Harmonization]]：归因窗口统一 → 本 Skill 的自适应归因窗口（MICE）是其 TikTok 专项延伸
 
 ### 可组合技能（Combinable）
 - [[Skill-Brand-Video-Generation]]：品牌视频生成 ↔ 帧级元素归因结论直接指导 AI 生视频的内容结构（哪类帧放什么位置）

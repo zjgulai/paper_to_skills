@@ -525,8 +525,8 @@ if __name__ == '__main__':
 
 ## ④ 技能关联
 
-- **前置（prerequisite）**：[[Skill-GNN-Fraud-Detection]]（图神经网络欺诈检测基础）
-- **延伸（extends）**：[[Skill-Real-Time-Fraud-Scoring]]（实时流式评分部署）
+- **前置（prerequisite）**：[[Skill-PromoGuardian-Promotion-Fraud-GNN]]（图神经网络欺诈检测基础）
+- **延伸（extends）**：[[Skill-Transaction-Anomaly-Detection]]（实时流式评分部署）
 - **可组合（combinable）**：[[Skill-ROAS-Budget-Optimization]]（过滤 IVT 后重新计算真实 ROAS，优化预算分配策略）
 - **可组合（combinable）**：[[Skill-Ad-Attribution-Modeling]]（剔除欺诈点击后重跑归因模型，提升多触点归因准确性）
 

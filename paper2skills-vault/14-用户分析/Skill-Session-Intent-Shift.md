@@ -768,7 +768,7 @@ if __name__ == "__main__":
 
 - **前置技能**：[[Skill-TRACE-Clickstream-Embedding]] | [[Skill-Trajectory-Pattern-Mining]]
 - **延伸技能**：[[Skill-PersonaBot-RAG-Profiling]]
-- **可组合技能**：[[Skill-RFM-User-Segmentation]] | [[Skill-Cohort-Retention-Analysis]]
+- **可组合技能**：[[Skill-RFM-Customer-Segmentation]] | [[Skill-Cohort-Retention-Analysis]]
 
 ## ⑤ 商业价值评估
 

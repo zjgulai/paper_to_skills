@@ -89,7 +89,7 @@ precondition（HITL → ORDER）：
 
 **前置技能**（需先掌握）：
 - [[Skill-MAS-Orchestrator]]：MAS 基础编排模式
-- [[Skill-Skill-Skill-Registry-Dynamic-Loading]]：技能注册与动态加载
+- [[Skill-Agent-Registry-Discovery]]：技能注册与动态加载
 - （假设）[[Skill-Agent-Safety-Guardrails]]：Agent 安全护栏基础
 
 **延伸技能**（同批萃取，可直接组合）：

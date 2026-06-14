@@ -423,7 +423,7 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 - **前置（prerequisite）**：[[Skill-VOC-Aspect-Sentiment-Extraction]]（方面级情感分析基础；DINER 是其因果增强版）| [[Skill-Uplift-Modeling]]（因果推断框架基础）
-- **延伸（extends）**：[[Skill-Counterfactual-Evaluation]]（反事实推理方法论；TDE 是其 NLP 特化应用）
+- **延伸（extends）**：[[Skill-DiD-Difference-in-Differences]]（反事实推理方法论；TDE 是其 NLP 特化应用）
 - **可组合（combinable）**：[[Skill-AGRS-Aspect-Guided-Review-Summarization]]（因果去偏后的情感结果再用 AGRS 汇总，避免因偏置导致摘要失真；先 DINER 去偏 → 再 AGRS 汇总）
 
 ---

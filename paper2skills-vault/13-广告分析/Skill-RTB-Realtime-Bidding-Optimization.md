@@ -480,7 +480,7 @@ if __name__ == "__main__":
 ## ④ 技能关联
 
 - **前置（prerequisite）**：[[Skill-ROAS-Budget-Optimization]]（预算分配基础）、[[Skill-Ad-Attribution-Modeling]]（归因模型为 RTB 提供 CVR/LTV 预估）
-- **延伸（extends）**：[[Skill-Multi-Channel-Budget-Pacing]]（跨渠道预算节奏控制）
+- **延伸（extends）**：[[Skill-ROAS-Budget-Optimization]]（跨渠道预算节奏控制）
 - **可组合（combinable）**：
   - [[Skill-Ad-Spend-Time-Series-Attribution]]（时序归因 + RTB 可优化分时出价曲线）
   - [[Skill-Ad-Fraud-IVT-Detection]]（过滤无效流量后再进行 RTB 出价，避免对僵尸流量无效竞价）

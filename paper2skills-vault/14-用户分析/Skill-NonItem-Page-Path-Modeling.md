@@ -810,7 +810,7 @@ if __name__ == "__main__":
 
 - **前置技能**：[[Skill-User-Funnel-Analysis]] | [[Skill-TRACE-Clickstream-Embedding]]
 - **延伸技能**：[[Skill-Traffic-Source-Analysis]]
-- **可组合技能**：[[Skill-Recommendation-Diversity-Reranking]]
+- **可组合技能**：[[Skill-Diversity-Reranking-SMMR]]
 - **相关技能**：[[Skill-Session-Intent-Shift]]
 
 ## ⑤ 商业价值评估

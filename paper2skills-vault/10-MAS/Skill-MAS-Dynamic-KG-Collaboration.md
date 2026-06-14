@@ -366,7 +366,7 @@ class MAGEKnowledgeBase:
 ### 前置技能（三侧前置）
 - [[Skill-Helicase-Supply-Chain-KG-MAS]]：静态 KG 构建 → 本 Skill 是其动态化演进
 - [[Skill-Graph-Grounded-MAS-Protocol]]：图通信协议 → 动态 KG 需要图通信基础
-- [[Skill-GraphRAG-Knowledge-Enhanced]]：08-知识图谱，RAG 检索 → 动态 KG 的检索层
+- [[Skill-Multimodal-RAG]]：08-知识图谱，RAG 检索 → 动态 KG 的检索层
 
 ### 延伸技能
 - [[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]：记忆应用到库存 → 动态 KG 的具体业务实例

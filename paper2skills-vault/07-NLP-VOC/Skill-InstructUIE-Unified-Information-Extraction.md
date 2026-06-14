@@ -220,6 +220,12 @@ python instructuie_model.py
 
 ---
 
+- **前置（prerequisite）**：[[Skill-NLP-Text-Classification]]（NLP 分类基础）
+- **前置（prerequisite）**：[[Skill-VOC-Aspect-Sentiment-Extraction]]（方面情感分析是信息提取的基础子任务）
+- **延伸（extends）**：[[Skill-LLM-Review-Structured-Extraction]]（指令微调信息提取→LLM结构化提取进阶）
+- **延伸（extends）**：[[Skill-KG-Auto-Construction-Agent-Driven]]（统一信息提取结果驱动知识图谱自动构建）
+- **可组合（combinable）**：[[Skill-VOC-Supply-Chain-Signal-Bridge]]（组合：统一信息提取识别评论中的供应链信号实体）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

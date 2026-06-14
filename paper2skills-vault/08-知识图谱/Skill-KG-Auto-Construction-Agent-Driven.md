@@ -756,6 +756,12 @@ if __name__ == '__main__':
 
 ---
 
+- **前置（prerequisite）**：[[Skill-KG-Data-Fusion-Pipeline]]（知识图谱数据融合管道基础）
+- **前置（prerequisite）**：[[Skill-Multilingual-NER-Universal-v2]]（命名实体识别是自动构建的基础）
+- **延伸（extends）**：[[Skill-KG-Incremental-Update]]（自动构建后的增量更新机制）
+- **延伸（extends）**：[[Skill-VOC-Supply-Chain-Signal-Bridge]]（从用户评论自动构建供应链信号知识图谱）
+- **可组合（combinable）**：[[Skill-LLM-Review-Structured-Extraction]]（组合：LLM结构化提取评论→自动驱动知识图谱构建）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

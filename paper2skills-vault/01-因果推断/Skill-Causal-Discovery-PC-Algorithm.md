@@ -108,6 +108,12 @@ source: ai
 
 ---
 
+- **前置（prerequisite）**：[[Skill-AB-Experimental-Design]]（理解实验设计与观测数据区别）
+- **前置（prerequisite）**：[[Skill-Uplift-Modeling]]（理解因果效应估计基本概念）
+- **延伸（extends）**：[[Skill-Intelligent-Attribution-Causal-Forest]]（发现因果结构后用 Causal Forest 估计具体效应大小）
+- **延伸（extends）**：[[Skill-DiD-Difference-in-Differences]]（双重差分作为 PC 算法发现因果结构后的效应验证方法）
+- **可组合（combinable）**：[[Skill-Marketing-Mix-Modeling]]（组合：PC 算法识别渠道间因果结构，MMM 估计各渠道贡献）
+
 ## ⑤ 商业价值评估
 
 - **ROI预估**：

@@ -176,6 +176,12 @@ python hgt_model.py
 
 ---
 
+- **前置（prerequisite）**：[[Skill-GNN-Foundations]]（图神经网络消息传递基础）
+- **前置（prerequisite）**：[[Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks]]（异构图卷积基础）
+- **延伸（extends）**：[[Skill-KG-Powered-User-Profiling]]（HGT 学习的异构图表示驱动用户画像）
+- **延伸（extends）**：[[Skill-Hierarchical-Product-KG-Construction]]（商品知识图谱构建后用 HGT 学习表示）
+- **可组合（combinable）**：[[Skill-MAS-Collaborative-Recommendation]]（组合：HGT 学习异构商品-用户图 + MAS 多智能体协作推荐）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

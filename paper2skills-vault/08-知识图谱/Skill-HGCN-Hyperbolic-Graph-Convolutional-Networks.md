@@ -177,6 +177,12 @@ python hgcn_model.py
 
 ---
 
+- **前置（prerequisite）**：[[Skill-GNN-Foundations]]（图神经网络消息传递基础）
+- **前置（prerequisite）**：[[Skill-Embedding-Fundamentals]]（向量嵌入空间基础）
+- **延伸（extends）**：[[Skill-HGT-Heterogeneous-Graph-Transformer]]（异构图变换器是 HGCN 的注意力机制升级版）
+- **延伸（extends）**：[[Skill-Hierarchical-Product-KG-Construction]]（超球面嵌入编码品类层次结构）
+- **可组合（combinable）**：[[Skill-MAS-Collaborative-Recommendation]]（组合：HGCN 学习品类层次表示 + MAS 协作推荐多目标优化）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

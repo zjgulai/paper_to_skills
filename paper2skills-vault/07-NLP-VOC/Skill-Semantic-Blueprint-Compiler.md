@@ -189,6 +189,12 @@ python blueprint_compiler.py
 
 ---
 
+- **前置（prerequisite）**：[[Skill-VOC-Aspect-Sentiment-Extraction]]（方面情感分析是语义蓝图的输入层）
+- **前置（prerequisite）**：[[Skill-BERT-SRL-Event-Frame-Extraction]]（SRL事件框架提取是蓝图语义化的基础）
+- **延伸（extends）**：[[Skill-AGRS-Aspect-Guided-Review-Summarization]]（语义蓝图编译后的结构化摘要生成）
+- **延伸（extends）**：[[Skill-VOC-Supply-Chain-Signal-Bridge]]（语义蓝图中的缺货/需求信号传递给供应链）
+- **可组合（combinable）**：[[Skill-NL2Dashboard-Automation]]（组合：语义蓝图提取结构化数据→NL2Dashboard自动可视化）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估
