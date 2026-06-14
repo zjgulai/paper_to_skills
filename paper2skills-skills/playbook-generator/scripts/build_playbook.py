@@ -2652,7 +2652,7 @@ def render_agents_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
         ensure_ascii=False,
     )
 
-    body = f"""
+    body = rf"""
 <div class='agent-hero'>
   <div class='agent-hero-text'>
     <h1 style='font-size:32px;font-weight:900;letter-spacing:-.03em;margin:0 0 10px'>
