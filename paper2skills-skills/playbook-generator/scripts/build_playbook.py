@@ -2077,6 +2077,66 @@ TOB_PLAYBOOKS: list[dict[str, Any]] = [
             "现金流提前 6 周预警，减少紧急融资利差成本 15-40 万元/年",
         ],
     },
+    {
+        "id": "pb-dtc-growth",
+        "icon": "DG",
+        "name": "DTC 独立站增长手册",
+        "tag": "获客归因 · 千人千面 · 成交转化",
+        "desc": "从多触点获客归因到个性化推荐再到成交 Agent 的独立站增长全链路",
+        "intro": "DTC 独立站运营的核心困境：TikTok ROAS 看起来亏损，Google ROAS 看起来盈利——于是砍掉 TikTok 后整体流量暴跌，因为 TikTok 是 Google 搜索的上游触发器。独立站有别于亚马逊的核心挑战是「全链路归因 + 个性化体验 + 成交转化」三个环节缺一不可，而这三个环节在大多数品牌中都是孤立运转的。本手册将它们打通，从用户看到第一个广告到最终付款，每一步都有数据驱动的决策支撑。",
+        "steps": [
+            {
+                "step": "Step 1 — 多触点获客归因（知道真正的流量来源）",
+                "problem": "Last-Click 归因把所有功劳给了最后一步，导致预算错误分配——切掉上漏斗渠道后整个增长体系崩塌",
+                "skills": [
+                    {"id": "Skill-DTC-Customer-Acquisition-Attribution", "why": "Shapley 多触点归因揭示 TikTok/Google/Email 各自的真实贡献，避免「砍上漏斗」的致命错误"},
+                    {"id": "Skill-KOL-ROI-Causal-Attribution", "why": "KOL 带货归因：PSM+DiD 区分「因 KOL 才购买」和「本来就会买」，避免 KOL 预算浪费"},
+                    {"id": "Skill-Channel-Saturation-Curve", "why": "每个渠道都有边际效益递减拐点，饱和曲线告诉你什么时候该停止加投"},
+                ],
+                "data": "需要：UTM 埋点数据 + Shopify 订单（用户级触点路径）+ 各渠道广告花费",
+                "output": "各渠道真实 ROAS（Shapley 归因）+ 最优预算分配建议 + 「切掉某渠道」的影响模拟",
+            },
+            {
+                "step": "Step 2 — 千人千面个性化（不同用户看到不同首页）",
+                "problem": "所有用户看到相同首页和搜索结果，哺乳妈妈和奶爸看到的商品排序一样，首页 CTR 仅 2.3%",
+                "skills": [
+                    {"id": "Skill-LLM-Session-Personalization-Cache", "why": "三层意图缓存（长期偏好+近期行为+当前session）驱动实时千人千面，CTR 从 2.3% 提升到 4-5%"},
+                    {"id": "Skill-VOC-Driven-Recommendation-Signal", "why": "用户历史评论的方面偏好（静音/便携/价格）注入推荐，CVR 提升 8-15%"},
+                    {"id": "Skill-Long-Tail-Search-Embedding-SEO", "why": "独立站搜索个性化：相同关键词对不同用户返回个性化排序结果"},
+                ],
+                "data": "需要：用户行为埋点（浏览/加购/购买）+ 历史评论 + Redis 缓存基础设施",
+                "output": "千人千面首页配置 + 个性化搜索排名 + A/B 实验对比（个性化 vs 统一）",
+            },
+            {
+                "step": "Step 3 — 成交转化（从「感兴趣」到「付款」）",
+                "problem": "大量用户进入购物车但未付款；客服收到「能便宜点吗」统一回「最低价」导致成交率只有 12%",
+                "skills": [
+                    {"id": "Skill-LLM-Negotiation-Conversion-Agent", "why": "WhatsApp/客服 Agent 推断买家支付意愿，分层让步策略将成交率从 12% 提升到 22-28%"},
+                    {"id": "Skill-Causal-Uplift-Modeling", "why": "识别「可说服者」——哪些用户给一张 coupon 就会付款，哪些本来就会买白给折扣"},
+                    {"id": "Skill-Price-Elasticity-Estimation", "why": "弹性高的 SKU 打折促成交，弹性低的 SKU 不必让利——精准决策而非经验拍板"},
+                ],
+                "data": "需要：历史询价/成交对话数据 + A/B 优惠券实验数据 + SKU 价格-销量历史",
+                "output": "成交 Agent 配置 + Uplift 目标用户名单 + 各 SKU 弹性系数 + 月度成交率报告",
+            },
+            {
+                "step": "Step 4 — 用户生命周期经营（从首单到复购）",
+                "problem": "首单获客成本 $40，但大多数用户只买一次——不知道哪些用户还「活着」，哪些已经真正流失",
+                "skills": [
+                    {"id": "Skill-LTV-Prediction-BTYD", "why": "BG/NBD 给出每位用户的「仍活跃概率」，区分沉睡高价值用户和真正流失用户，精准激活"},
+                    {"id": "Skill-Cohort-Retention-Analysis", "why": "找到独立站复购的关键时间窗口（如首单后 14 天），在正确时机触达"},
+                    {"id": "Skill-Cross-Cultural-VOC-Alignment", "why": "多市场用户的评论反馈经过文化校准后才能真正对比——德国 4.2 星 ≈ 美国 4.7 星"},
+                ],
+                "data": "需要：用户历史订单（24 个月）+ 触达记录 + 多语言评论",
+                "output": "用户价值分层（CLV/P_alive）+ 复购触达时机 + 跨市场产品改进优先级",
+            },
+        ],
+        "outcomes": [
+            "多触点归因后预算重分配：真实 ROAS 提升 20-40%，月增利润 ¥5-20 万",
+            "千人千面首页 CTR 从 2.3% 提升到 4-5%：月增 UV 转化 +50-80%",
+            "成交 Agent 私域成交率从 12% → 22-28%：年化 GMV 增益 ¥50-150 万",
+            "CLV 驱动复购激活：营销 ROI 提升 2-3x，年化节省无效促销 ¥15-40 万",
+        ],
+    },
 ]
 
 
