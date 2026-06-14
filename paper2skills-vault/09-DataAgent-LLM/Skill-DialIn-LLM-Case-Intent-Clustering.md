@@ -3,7 +3,8 @@ title: Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: customer-service-intent-clustering
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self

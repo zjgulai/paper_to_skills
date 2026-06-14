@@ -1,5 +1,6 @@
 # Skill-Category-Compliance-Prescan
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

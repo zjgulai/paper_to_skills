@@ -3,7 +3,8 @@ title: MAA 多 Agent 行动建议 - 从评论到产品改进决策链
 doc_type: knowledge
 module: 14-用户分析
 topic: review-to-action-multi-agent
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self

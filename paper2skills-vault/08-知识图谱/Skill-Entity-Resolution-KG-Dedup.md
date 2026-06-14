@@ -3,7 +3,8 @@ title: KG 实体消歧与去重（Entity Resolution & Deduplication）
 doc_type: knowledge
 module: 08-知识图谱
 topic: entity-resolution-kg-deduplication
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

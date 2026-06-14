@@ -1,5 +1,6 @@
 # Skill Card: 智能归因 - 因果森林 (Causal Forest)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

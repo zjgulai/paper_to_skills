@@ -3,7 +3,8 @@ title: Visual Data Collection — 电商图文视频数据采集与 AI 视频生
 doc_type: knowledge
 module: 20-AI视频生成
 topic: visual-data-collection-multimodal
-status: stable
+
+roadmap_phase: phase3
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

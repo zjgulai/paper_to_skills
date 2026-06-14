@@ -1,5 +1,6 @@
 # Skill: Temporal Fusion Transformer (TFT)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

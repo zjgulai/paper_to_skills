@@ -3,7 +3,8 @@ title: AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline
 doc_type: knowledge
 module: 14-用户分析
 topic: aspect-guided-review-summarization
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self

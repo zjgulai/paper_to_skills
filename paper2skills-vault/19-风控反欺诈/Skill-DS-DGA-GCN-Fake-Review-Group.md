@@ -3,7 +3,8 @@ title: DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评
 doc_type: knowledge
 module: 19-风控反欺诈
 topic: ds-dga-gcn-fake-reviewer-group-detection
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

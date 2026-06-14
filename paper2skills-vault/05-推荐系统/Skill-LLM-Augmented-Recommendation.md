@@ -3,7 +3,8 @@ title: LLM Augmented Recommendation — 大语言模型增强个性化推荐：�
 doc_type: knowledge
 module: 05-推荐系统
 topic: llm-augmented-recommendation
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

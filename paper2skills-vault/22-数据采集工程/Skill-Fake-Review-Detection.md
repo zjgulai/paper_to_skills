@@ -3,7 +3,8 @@ title: Fake Review Detection — 假评论检测：图神经网络+LLM 可解释
 doc_type: knowledge
 module: 22-数据采集工程
 topic: fake-review-detection
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-05
 updated: 2026-06-05
 owner: self

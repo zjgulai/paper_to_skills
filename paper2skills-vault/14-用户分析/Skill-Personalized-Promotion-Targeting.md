@@ -3,7 +3,8 @@ title: Personalized Promotion Targeting — 个性化促销定向：用户响应
 doc_type: knowledge
 module: 14-用户分析
 topic: personalized-promotion-targeting-heterogeneous
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

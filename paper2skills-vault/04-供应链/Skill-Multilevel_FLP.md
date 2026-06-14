@@ -2,6 +2,7 @@
 
 > **论文来源**: arXiv: 2406.07382 | Multilevel Facility Location Optimization: A Novel Integer Programming Formulation and Approaches to Heuristic Solutions (2024-06, Last revised 2025-04)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

@@ -1,5 +1,6 @@
 # Skill Card: Multi-Echelon Inventory Optimization (多阶库存优化)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

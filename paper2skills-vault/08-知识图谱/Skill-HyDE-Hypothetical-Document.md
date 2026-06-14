@@ -3,7 +3,8 @@ title: HyDE - 假设文档嵌入查询扩展
 doc_type: knowledge
 module: 08-知识图谱
 topic: hyde-hypothetical-document-embedding-query-expansion
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

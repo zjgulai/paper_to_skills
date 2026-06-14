@@ -5,6 +5,7 @@
 > **代码**: ✅ [github.com/Hanbo-Cheng/DAWN-pytorch](https://github.com/Hanbo-Cheng/DAWN-pytorch)  
 > **领域**: 20-AI视频生成 | **场景**: 电商UGC (review/测评/开箱)
 
+roadmap_phase: phase3
 ---
 
 ## ① 算法原理

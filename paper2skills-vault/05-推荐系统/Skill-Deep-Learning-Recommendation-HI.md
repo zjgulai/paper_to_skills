@@ -1,5 +1,6 @@
 # Skill Card: Deep Learning Recommendation with Heterogeneous Inference
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

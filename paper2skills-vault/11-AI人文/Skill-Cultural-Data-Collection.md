@@ -3,7 +3,8 @@ title: Cultural Data Collection — 跨文化 UGC 采集与母婴消费文化差
 doc_type: knowledge
 module: 11-AI人文
 topic: cultural-ugc-data-collection
-status: stable
+
+roadmap_phase: phase3
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

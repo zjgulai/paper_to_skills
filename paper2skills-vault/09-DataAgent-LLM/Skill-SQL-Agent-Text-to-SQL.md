@@ -2,7 +2,8 @@
 title: Text-to-SQL Agent for Natural Language Data Query
 module: 09-DataAgent-LLM
 topic: text-to-sql
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

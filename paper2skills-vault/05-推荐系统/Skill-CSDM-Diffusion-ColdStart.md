@@ -3,7 +3,8 @@ title: 扩散模型冷启动CTR - 新品零交互时的转化潜力预热
 doc_type: knowledge
 module: 05-推荐系统
 topic: diffusion-cold-start-ctr
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-20
 updated: 2026-05-20
 owner: self

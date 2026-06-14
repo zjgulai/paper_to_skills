@@ -1,5 +1,6 @@
 # Skill Card: Ensemble Methods（集成学习方法）
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

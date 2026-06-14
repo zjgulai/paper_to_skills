@@ -3,7 +3,8 @@ title: Web Page Change Detection — 网页变化检测：VLM 视觉差异识别
 doc_type: knowledge
 module: 22-数据采集工程
 topic: web-page-change-detection
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-05
 updated: 2026-06-05
 owner: self

@@ -7,6 +7,7 @@
 **作者**: Aditi Madhusudan Jain  
 **适用领域**: 购买意图预测、AIPL的P阶段量化、实时转化评分
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

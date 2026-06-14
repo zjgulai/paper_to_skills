@@ -1,5 +1,6 @@
 # Skill-Listing-Quality-Scoring
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

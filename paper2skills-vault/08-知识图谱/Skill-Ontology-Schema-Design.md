@@ -3,7 +3,8 @@ title: 领域 Ontology 与图谱 Schema 设计
 doc_type: knowledge
 module: 08-知识图谱
 topic: ontology-schema-design
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

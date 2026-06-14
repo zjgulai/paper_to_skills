@@ -1,5 +1,6 @@
 # Skill Card: Time Series Forecasting (时间序列预测)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

@@ -3,7 +3,8 @@ title: Supply Chain ML Feature Engineering — 供应链 ML 特征工程：时�
 doc_type: knowledge
 module: 12-ML基础
 topic: supply-chain-ml-feature-engineering
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

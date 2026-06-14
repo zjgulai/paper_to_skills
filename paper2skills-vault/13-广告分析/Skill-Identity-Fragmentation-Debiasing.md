@@ -4,6 +4,7 @@
 > **代码模板**: `paper2skills-code/13-广告分析/identity_fragmentation_2021/model.py`  
 > **关联领域**: 广告分析 · 因果推断 · 跨设备归因
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

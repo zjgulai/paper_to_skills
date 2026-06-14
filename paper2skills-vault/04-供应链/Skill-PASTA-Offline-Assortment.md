@@ -3,6 +3,7 @@
 > 论文来源: arXiv 2510.01693 | PASTA: A Unified Framework for Offline Assortment Learning
 > 领域: 04-供应链 / 05-推荐系统
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

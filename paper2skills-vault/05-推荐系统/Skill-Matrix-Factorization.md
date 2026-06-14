@@ -1,5 +1,6 @@
 # Skill Card: Matrix Factorization for Recommendation (矩阵分解推荐)
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

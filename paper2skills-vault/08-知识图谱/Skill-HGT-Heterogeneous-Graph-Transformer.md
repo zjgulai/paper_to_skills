@@ -1,5 +1,6 @@
 # Skill Card: HGT — 异构图 Transformer 表示学习
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

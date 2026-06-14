@@ -168,6 +168,7 @@ domain: 06-增长模型
 tags: [动态定价, Contextual Bandit, UCB, 分层数据划分, 回归预言机, Minimax优化]
 paper: "arXiv:2406.17184"
 code: "paper2skills-code/06-增长模型/dynamic_pricing_2025/model.py"
-status: verified
+
+roadmap_phase: phase2
 verified_at: 2026-05-19
 ```

@@ -2,7 +2,8 @@
 title: Feature Engineering for E-Commerce Machine Learning
 module: 12-ML基础
 topic: feature-engineering
-status: stable
+
+roadmap_phase: phase1
 created: 2026-05-15
 updated: 2026-05-15
 ---

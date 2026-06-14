@@ -2,7 +2,8 @@
 title: Knowledge Graph Question Answering (KGQA)
 module: 08-知识图谱
 topic: kgqa
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

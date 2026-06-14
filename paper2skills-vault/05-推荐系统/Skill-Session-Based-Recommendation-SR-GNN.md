@@ -3,7 +3,8 @@ title: Session-Based Recommendation with SR-GNN
 doc_type: knowledge
 module: 05-推荐系统
 topic: session-based-recommendation
-status: stable
+
+roadmap_phase: phase2
 created: 2026-04-27
 updated: 2026-04-27
 owner: self

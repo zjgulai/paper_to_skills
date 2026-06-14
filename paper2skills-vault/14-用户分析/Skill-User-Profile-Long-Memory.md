@@ -3,7 +3,8 @@ title: User Profile Long Memory — 跨会话用户画像：育儿阶段感知�
 doc_type: knowledge
 module: 14-用户分析
 topic: user-profile-long-memory-personalization
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

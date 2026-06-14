@@ -1,5 +1,6 @@
 # Skill Card: Customer Churn Prediction (用户流失预测)
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

@@ -1,5 +1,6 @@
 # Skill: Deep Learning for Customer Churn Prediction
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

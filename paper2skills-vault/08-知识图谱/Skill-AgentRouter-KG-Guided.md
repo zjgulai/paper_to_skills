@@ -1,5 +1,6 @@
 # Skill Card: AgentRouter — 知识图谱引导的多智能体路由器
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

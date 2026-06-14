@@ -1,5 +1,6 @@
 # Skill Card: Knowledge Graph for Skills Management（知识图谱驱动的技能管理）
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

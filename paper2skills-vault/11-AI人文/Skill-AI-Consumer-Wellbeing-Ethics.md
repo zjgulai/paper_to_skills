@@ -3,7 +3,8 @@ title: AI Consumer Wellbeing Ethics — 消费者福祉与 AI 伦理：母婴场
 doc_type: knowledge
 module: 11-AI人文
 topic: ai-consumer-wellbeing-ethics-baby-ecommerce
-status: stable
+
+roadmap_phase: phase3
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

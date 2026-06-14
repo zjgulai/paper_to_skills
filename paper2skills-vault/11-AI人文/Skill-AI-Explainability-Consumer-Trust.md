@@ -3,7 +3,8 @@ title: AI Explainability for Consumer Trust — AI 推荐可解释性：消费�
 doc_type: knowledge
 module: 11-AI人文
 topic: ai-explainability-consumer-trust-recommendation
-status: stable
+
+roadmap_phase: phase3
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

@@ -3,7 +3,8 @@ title: KG Data Fusion Pipeline — 多源采集数据驱动的知识图谱自动
 doc_type: knowledge
 module: 08-知识图谱
 topic: kg-multi-source-data-fusion-construction
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

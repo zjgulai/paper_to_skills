@@ -3,7 +3,8 @@ title: Delivery Promise Optimization — 时效承诺优化：转化率与准时
 doc_type: knowledge
 module: 18-物流履约
 topic: delivery-promise-time-optimization
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

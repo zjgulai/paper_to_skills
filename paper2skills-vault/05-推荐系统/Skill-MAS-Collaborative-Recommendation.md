@@ -3,7 +3,8 @@ title: MAS Collaborative Recommendation — 多智能体协同个性化推荐：
 doc_type: knowledge
 module: 05-推荐系统
 topic: multi-agent-collaborative-recommendation-llm
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

@@ -1,5 +1,6 @@
 # Skill Card: Multi-Armed Bandit (多臂老虎机)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

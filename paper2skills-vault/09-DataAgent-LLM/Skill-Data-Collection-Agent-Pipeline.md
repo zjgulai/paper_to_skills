@@ -3,7 +3,8 @@ title: Data Collection Agent Pipeline — LLM Agent 自动化多源数据采集 
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: llm-agent-data-collection-pipeline
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

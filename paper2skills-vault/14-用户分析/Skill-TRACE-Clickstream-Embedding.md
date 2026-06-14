@@ -3,7 +3,8 @@ title: TRACE 跨会话点击流用户嵌入
 doc_type: knowledge
 module: 14-用户分析
 topic: clickstream-user-embedding
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-20
 updated: 2026-05-20
 owner: self

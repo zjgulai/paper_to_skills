@@ -3,7 +3,8 @@ title: Emotional AI Customer Care — 情感感知客服：高压场景的同理
 doc_type: knowledge
 module: 11-AI人文
 topic: emotional-ai-customer-care-empathy
-status: stable
+
+roadmap_phase: phase3
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

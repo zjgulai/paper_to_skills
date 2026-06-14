@@ -2,7 +2,8 @@
 title: Multilingual Named Entity Recognition (Universal NER v2)
 module: 08-知识图谱
 topic: multilingual-ner
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

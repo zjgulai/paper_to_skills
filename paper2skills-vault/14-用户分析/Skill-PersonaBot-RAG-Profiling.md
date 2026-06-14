@@ -3,7 +3,8 @@ title: PersonaBot RAG画像生成 - LLM+RAG驱动的客户画像落地工具
 doc_type: knowledge
 module: 14-用户分析
 topic: persona-generation-rag-llm
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-19
 updated: 2026-05-19
 owner: self

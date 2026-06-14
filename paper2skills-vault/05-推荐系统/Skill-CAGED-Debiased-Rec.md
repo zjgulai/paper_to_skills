@@ -3,7 +3,8 @@ title: 因果图聚合权重去偏推荐 - CAGED
 doc_type: knowledge
 module: 05-推荐系统
 topic: popularity-debiasing-gnn
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-19
 updated: 2026-05-19
 owner: self

@@ -3,7 +3,8 @@ title: Ad-Aware Recommendation — 广告感知协同排序：有机推荐与赞
 doc_type: knowledge
 module: 05-推荐系统
 topic: advertising-aware-recommendation-sponsored-ranking
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

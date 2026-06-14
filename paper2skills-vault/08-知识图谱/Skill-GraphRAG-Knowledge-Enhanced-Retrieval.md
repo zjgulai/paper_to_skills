@@ -1,5 +1,6 @@
 # Skill Card: GraphRAG - 知识图谱增强检索生成
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

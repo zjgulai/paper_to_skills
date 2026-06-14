@@ -3,7 +3,8 @@ title: BERT-SRL + 事件框架 — 语义角色标注与事件抽取
 doc_type: knowledge
 module: 07-NLP-VOC
 topic: bert-srl-event-frame-extraction
-status: stable
+
+roadmap_phase: phase1
 created: 2026-05-10
 updated: 2026-05-10
 owner: self

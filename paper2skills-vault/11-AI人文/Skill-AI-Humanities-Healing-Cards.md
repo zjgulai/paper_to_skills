@@ -3,7 +3,8 @@ title: AI技术概念 × 疗愈哲理金句卡片库
 doc_type: knowledge
 module: ai-humanities
 topic: healing-quotes
-status: stable
+
+roadmap_phase: phase3
 created: 2026-05-15
 updated: 2026-05-15
 owner: self

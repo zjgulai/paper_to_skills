@@ -2,7 +2,8 @@
 title: Popularity-Aware Meta-Learning for Cold-Start Recommendation
 module: 05-推荐系统
 topic: cold-start-meta-learning
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

@@ -3,7 +3,8 @@ title: LACA 跨语言 ABSA - LLM 数据增强多语种情感分析
 doc_type: knowledge
 module: 14-用户分析
 topic: cross-lingual-absa
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self

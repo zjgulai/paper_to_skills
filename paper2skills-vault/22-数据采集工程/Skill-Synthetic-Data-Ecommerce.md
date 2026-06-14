@@ -3,7 +3,8 @@ title: Synthetic Data for E-commerce — 电商合成数据生成：解决新品
 doc_type: knowledge
 module: 22-数据采集工程
 topic: synthetic-data-ecommerce
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-05
 updated: 2026-06-05
 owner: self

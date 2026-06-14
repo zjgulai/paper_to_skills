@@ -3,7 +3,8 @@ title: RAPTOR - 递归抽象树型分层检索
 doc_type: knowledge
 module: 08-知识图谱
 topic: raptor-hierarchical-rag-long-document
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

@@ -1,5 +1,6 @@
 # Skill Card: 智能预测 - 双重稳健估计 (Doubly Robust Estimation)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

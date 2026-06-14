@@ -3,7 +3,8 @@ title: AR Logistics Visualization — 增强现实包裹可视化追踪：跨境
 doc_type: knowledge
 module: 18-物流履约
 topic: ar-logistics-visualization-tracking
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

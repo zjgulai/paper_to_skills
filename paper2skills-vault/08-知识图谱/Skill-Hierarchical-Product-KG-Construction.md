@@ -3,7 +3,8 @@ title: 层级商品知识图谱自动构建（图片→KG）
 doc_type: knowledge
 module: 08-知识图谱
 topic: hierarchical-product-kg-construction
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self

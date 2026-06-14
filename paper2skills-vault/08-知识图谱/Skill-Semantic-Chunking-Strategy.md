@@ -3,7 +3,8 @@ title: 语义分块策略 — RAG 管道的基础层
 doc_type: knowledge
 module: 08-知识图谱
 topic: semantic-chunking-strategy
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

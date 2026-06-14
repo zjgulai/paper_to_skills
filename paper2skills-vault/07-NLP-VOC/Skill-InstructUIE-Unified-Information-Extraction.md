@@ -1,5 +1,6 @@
 # Skill: InstructUIE — 统一信息抽取框架
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

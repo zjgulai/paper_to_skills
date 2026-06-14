@@ -1,5 +1,6 @@
 # Skill Card: Uplift Modeling (元学习框架)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

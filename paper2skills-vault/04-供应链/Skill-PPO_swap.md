@@ -1,5 +1,6 @@
 # Skill Card: PPO-swap（图上设施选址强化学习）
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

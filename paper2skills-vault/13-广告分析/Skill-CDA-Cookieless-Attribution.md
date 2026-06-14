@@ -4,6 +4,7 @@
 > **代码模板**: `paper2skills-code/13-广告分析/cda_attribution_2025/model.py`  
 > **关联领域**: 因果推断 · 广告分析 · Cookieless 归因
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

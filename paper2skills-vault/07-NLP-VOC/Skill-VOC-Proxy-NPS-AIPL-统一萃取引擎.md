@@ -8,6 +8,7 @@
 - **数据规模**: 376 标签种子 + 55 原子画像标签 + AIPL 7 节点
 - **代码位置**: `paper2skills-code/nlp_voc/proxy_nps_aipl_workflow/`
 
+roadmap_phase: phase1
 ---
 
 ## 1. 算法原理

@@ -4,6 +4,7 @@
 > **辅论文**: Optimistic-Robust Omnichannel Inventories (arXiv:2310.12183, IBM Research 2023)  
 > **领域**: 04-供应链 | **服务工作流**: WF-A (P7)
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

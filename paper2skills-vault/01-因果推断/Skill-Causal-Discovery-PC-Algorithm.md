@@ -3,7 +3,8 @@ title: Causal Discovery with PC Algorithm
 doc_type: knowledge
 module: 01-因果推断
 topic: causal-discovery
-status: stable
+
+roadmap_phase: phase1
 created: 2026-04-28
 updated: 2026-04-28
 owner: self

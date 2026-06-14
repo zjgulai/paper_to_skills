@@ -3,7 +3,8 @@ title: 检索后精排 — Cross-Encoder Reranking
 doc_type: knowledge
 module: 08-知识图谱
 topic: rag-reranking-cross-encoder
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

@@ -1,5 +1,6 @@
 # Skill Card: Cold-Start Product Recommendation (冷启动商品推荐)
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

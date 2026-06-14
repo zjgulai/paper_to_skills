@@ -3,7 +3,8 @@ title: 非商品页路径建模 - 导航页在用户旅程中的转化贡献
 doc_type: knowledge
 module: 14-用户分析
 topic: non-item-page-path-modeling
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-20
 updated: 2026-05-20
 owner: self

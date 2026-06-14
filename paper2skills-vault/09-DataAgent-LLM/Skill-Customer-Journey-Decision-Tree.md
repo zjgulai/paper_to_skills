@@ -3,7 +3,8 @@ title: 客服对话决策树 - 从日志中自学策略
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: customer-journey-decision-tree
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self

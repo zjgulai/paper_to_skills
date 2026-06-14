@@ -2,7 +2,8 @@
 title: User Funnel and Behavior Path Analysis
 module: 14-用户分析
 topic: funnel-analysis
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

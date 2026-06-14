@@ -3,7 +3,8 @@ title: Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网
 doc_type: knowledge
 module: 19-风控反欺诈
 topic: identity-fraud-detection-multi-dimensional
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

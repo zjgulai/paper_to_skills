@@ -5,6 +5,7 @@
 > **代码**: ✅ [github.com/Phantom-video/Phantom](https://github.com/Phantom-video/Phantom) | Apache 2.0 | 1.3B/14B  
 > **领域**: 20-AI视频生成 | **场景**: 商品上架（Amazon 主图→动态视频 / TikTok 橱窗）
 
+roadmap_phase: phase3
 ---
 
 ## ① 算法原理

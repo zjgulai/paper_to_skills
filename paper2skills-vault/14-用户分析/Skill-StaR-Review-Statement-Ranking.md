@@ -3,7 +3,8 @@ title: StaR 观点语句排序 - 排序而非生成的可解释评论分析
 doc_type: knowledge
 module: 14-用户分析
 topic: review-statement-ranking
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self

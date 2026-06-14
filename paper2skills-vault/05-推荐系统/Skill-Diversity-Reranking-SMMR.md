@@ -2,7 +2,8 @@
 title: Diversity-Aware Reranking with SMMR
 module: 05-推荐系统
 topic: diversity-reranking
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

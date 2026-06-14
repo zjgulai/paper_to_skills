@@ -3,7 +3,8 @@ title: Embedding Fundamentals — 嵌入表示学习基础：从 ID 映射到多
 doc_type: knowledge
 module: 12-ML基础
 topic: embedding-representation-learning-fundamentals
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

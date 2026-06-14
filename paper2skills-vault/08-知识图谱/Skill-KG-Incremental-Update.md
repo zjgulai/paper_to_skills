@@ -3,7 +3,8 @@ title: 知识图谱增量更新（KG Incremental Update）
 doc_type: knowledge
 module: 08-知识图谱
 topic: knowledge-graph-incremental-update
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

@@ -3,7 +3,8 @@ title: Clickstream Persona Pipeline — 点击流用户画像：VQ-VAE 离散 Pe
 doc_type: knowledge
 module: 22-数据采集工程
 topic: clickstream-persona-pipeline
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-05
 updated: 2026-06-05
 owner: self

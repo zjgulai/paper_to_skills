@@ -3,7 +3,8 @@ title: Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚
 doc_type: knowledge
 module: 19-风控反欺诈
 topic: fraud-signal-data-collection
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

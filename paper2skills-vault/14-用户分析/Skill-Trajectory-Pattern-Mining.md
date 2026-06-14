@@ -3,7 +3,8 @@ title: 用户行为轨迹模式挖掘与预测 - 变阶马尔可夫模型
 doc_type: knowledge
 module: 14-用户分析
 topic: trajectory-pattern-mining
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-20
 updated: 2026-05-20
 owner: self

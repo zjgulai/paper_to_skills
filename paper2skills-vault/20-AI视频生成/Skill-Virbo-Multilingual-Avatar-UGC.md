@@ -4,6 +4,7 @@
 > **arXiv**: [2403.11700](https://arxiv.org/abs/2403.11700) | 万兴科技 Wondershare | 2024  
 > **代码**: ⚠️ 商业产品 [virbo.wondershare.com](https://virbo.wondershare.com) | **领域**: 20-AI视频生成 | **场景**: 电商UGC
 
+roadmap_phase: phase3
 ---
 
 ## ① 算法原理

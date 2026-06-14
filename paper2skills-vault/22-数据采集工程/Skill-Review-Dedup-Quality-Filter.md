@@ -3,7 +3,8 @@ title: Review Dedup & Quality Filter — 多平台评论在线去重与质量排
 doc_type: knowledge
 module: 22-数据采集工程
 topic: review-dedup-quality-filter
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-05
 updated: 2026-06-05
 owner: self

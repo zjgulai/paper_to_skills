@@ -3,7 +3,8 @@ title: Schema-Guided Generation — 语义蓝图编译器
 doc_type: knowledge
 module: 07-NLP-VOC
 topic: semantic-blueprint-compiler
-status: stable
+
+roadmap_phase: phase1
 created: 2026-05-10
 updated: 2026-05-10
 owner: self

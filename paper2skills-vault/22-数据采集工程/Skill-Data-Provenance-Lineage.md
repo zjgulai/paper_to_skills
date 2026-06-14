@@ -3,7 +3,8 @@ title: Data Provenance & Lineage — 数据血缘追踪：LLM 训练数据溯源
 doc_type: knowledge
 module: 22-数据采集工程
 topic: data-provenance-lineage
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-05
 updated: 2026-06-05
 owner: self

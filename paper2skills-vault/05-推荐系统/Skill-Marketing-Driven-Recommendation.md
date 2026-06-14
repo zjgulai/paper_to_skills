@@ -3,7 +3,8 @@ title: Marketing-Driven Recommendation — 营销活动驱动的推荐系统：P
 doc_type: knowledge
 module: 05-推荐系统
 topic: marketing-driven-recommendation
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

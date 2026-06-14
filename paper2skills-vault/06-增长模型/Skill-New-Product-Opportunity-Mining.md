@@ -217,7 +217,8 @@ class ProductOpportunityMiner:
         执行维度：
         9. development_speed: 开发速度 [Fast/Medium/Slow]
         10. team_expertise: 团队专业度 [High/Medium/Low]
-        11. funding_status: 资金充足度 [Sufficient/Adequate/Limited]
+        11. funding_
+roadmap_phase: phase2 [Sufficient/Adequate/Limited]
         12. supply_chain: 供应链稳定性 [Stable/Moderate/Unstable]
 
         时机维度：

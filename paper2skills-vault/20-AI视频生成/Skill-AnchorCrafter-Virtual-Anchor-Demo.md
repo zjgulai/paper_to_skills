@@ -5,6 +5,7 @@
 > **代码**: ✅ [github.com/cangcz/AnchorCrafter](https://github.com/cangcz/AnchorCrafter) | HuggingFace Demo  
 > **领域**: 20-AI视频生成 | **场景**: 商品上架 + 品牌推广 + 电商UGC
 
+roadmap_phase: phase3
 ---
 
 ## ① 算法原理

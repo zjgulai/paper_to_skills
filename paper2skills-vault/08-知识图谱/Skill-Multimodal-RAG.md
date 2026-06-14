@@ -3,7 +3,8 @@ title: Multimodal RAG - 图文混合多模态检索增强生成
 doc_type: knowledge
 module: 08-知识图谱
 topic: multimodal-rag-image-text-retrieval-ecommerce
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

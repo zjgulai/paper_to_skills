@@ -3,7 +3,8 @@ title: Session意图漂移建模 - 跨会话用户购买意图变化检测
 doc_type: knowledge
 module: 14-用户分析
 topic: session-intent-shift
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-20
 updated: 2026-05-20
 owner: self

@@ -3,7 +3,8 @@ title: AI Agent 驱动的电商知识图谱自动构建
 doc_type: knowledge
 module: 08-知识图谱
 topic: knowledge-graph-auto-construction
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-01
 updated: 2026-05-01
 owner: self

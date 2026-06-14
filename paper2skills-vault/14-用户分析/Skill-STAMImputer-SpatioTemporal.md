@@ -3,7 +3,8 @@ title: 时空注意力混合专家补全 - 高缺失率下的多维流量恢复
 doc_type: knowledge
 module: 14-用户分析
 topic: spatiotemporal-imputation
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-20
 updated: 2026-05-20
 owner: self

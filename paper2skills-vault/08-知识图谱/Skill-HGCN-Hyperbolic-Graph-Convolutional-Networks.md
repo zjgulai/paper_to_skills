@@ -3,7 +3,8 @@ title: HGCN — 双曲图卷积网络
 doc_type: knowledge
 module: 08-知识图谱
 topic: hgcn-hyperbolic-graph-convolutional-networks
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-10
 updated: 2026-05-10
 owner: self

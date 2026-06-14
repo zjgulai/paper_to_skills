@@ -5,6 +5,7 @@
 > **代码**: 🔄 数据管线即将开源 (Aquarius-Datapipe/Aquarius-Raydata)  
 > **领域**: 20-AI视频生成 | **场景**: 品牌推广
 
+roadmap_phase: phase3
 ---
 
 ## ① 算法原理

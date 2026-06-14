@@ -149,7 +149,8 @@ class ModelHealthReport:
     model_id: str
     model_type: str
     check_date: str
-    health_status: ModelHealth
+    health_
+roadmap_phase: phase1
     metric_windows: list[PerformanceWindow]
     prediction_dist_csi: Optional[float]
     shadow_result: Optional[ShadowComparisonResult]

@@ -3,7 +3,8 @@ title: Multilingual Customer Service Translation — 多语言客服自动翻译
 doc_type: knowledge
 module: 14-用户分析
 topic: multilingual-customer-service-emotion-preserving-translation
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06
 owner: self

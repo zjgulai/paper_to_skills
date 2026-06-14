@@ -3,7 +3,8 @@ title: Shopping Companion — 跨会话偏好记忆购物助手（4B≈GPT-5，L
 doc_type: knowledge
 module: 14-用户分析
 topic: shopping-companion-preference-memory-agent
-status: stable
+
+roadmap_phase: phase2
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

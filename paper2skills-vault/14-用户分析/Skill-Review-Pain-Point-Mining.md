@@ -5,6 +5,7 @@
 > **代码**: ✅ [github.com/yukyunglee/Painsight](https://github.com/yukyunglee/Painsight) | 无监督，无需人工标注  
 > **领域**: 14-用户分析 | **场景**: WF-D 选品扫描 — 市场缺口挖掘
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

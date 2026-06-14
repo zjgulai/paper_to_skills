@@ -3,7 +3,8 @@ title: FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换
 doc_type: knowledge
 module: 19-风控反欺诈
 topic: fraudsquad-llm-review-detection
-status: stable
+
+roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self

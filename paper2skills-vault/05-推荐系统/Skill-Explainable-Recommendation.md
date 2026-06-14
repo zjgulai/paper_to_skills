@@ -3,7 +3,8 @@ title: Explainable Recommendation for Business Trust
 doc_type: knowledge
 module: 05-推荐系统
 topic: explainable-recommendation
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

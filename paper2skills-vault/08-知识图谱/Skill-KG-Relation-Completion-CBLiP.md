@@ -2,7 +2,8 @@
 title: Knowledge Graph Relation Completion with CBLiP
 module: 08-知识图谱
 topic: kg-relation-completion
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 ---

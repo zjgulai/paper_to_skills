@@ -4,6 +4,7 @@
 > **辅论文**: EVADE-Bench: Evasive Content Detection in E-Commerce (arXiv:2505.17654, 2025)  
 > **领域**: 13-广告分析（跨 WF-C + WF-B） | **服务工作流**: WF-C + WF-B
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

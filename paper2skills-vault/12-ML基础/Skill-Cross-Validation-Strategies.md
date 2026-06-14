@@ -1,5 +1,6 @@
 # Skill Card: Cross-Validation Strategies（交叉验证策略）
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

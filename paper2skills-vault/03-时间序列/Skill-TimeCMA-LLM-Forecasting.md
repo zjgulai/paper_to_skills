@@ -1,5 +1,6 @@
 # Skill Card: TimeCMA - LLM-Empowered Multivariate Time Series Forecasting via Cross-Modality Alignment
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

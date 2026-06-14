@@ -1,5 +1,6 @@
 # Skill Card: Agentic SCKG Risk Analyzer — 供应链知识图谱智能风险分析框架
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理

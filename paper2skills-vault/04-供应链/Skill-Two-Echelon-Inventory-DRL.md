@@ -1,5 +1,6 @@
 # Skill Card: Deep RL for Two-Echelon Inventory Optimization
 
+roadmap_phase: phase1
 ---
 
 ## ① 算法原理

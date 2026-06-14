@@ -3,7 +3,8 @@ title: Root Cause Analysis Agent for Business Anomalies
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: root-cause-analysis
-status: stable
+
+roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 owner: self

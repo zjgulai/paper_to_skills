@@ -5,6 +5,7 @@
 > **代码**: ✅ [github.com/huzhengfly/Bert4XMR](https://github.com/huzhengfly/Bert4XMR) | 7 国 Amazon/eBay 数据  
 > **领域**: 06-增长模型 | **场景**: WF-D 选品扫描 — 跨市场选品
 
+roadmap_phase: phase2
 ---
 
 ## ① 算法原理
