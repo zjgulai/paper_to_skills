@@ -195,6 +195,15 @@ python bert_srl_model.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-NLP-Text-Classification]]
+- [[Skill-VOC-Aspect-Sentiment-Extraction]]
+- [[Skill-InstructUIE-Unified-Information-Extraction]]
+- [[Skill-AutoPKG-Multimodal-Product-Attribute-KG]]
+- [[Skill-Semantic-Blueprint-Compiler]]
+- [[Skill-Entity-Resolution-KG-Dedup]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

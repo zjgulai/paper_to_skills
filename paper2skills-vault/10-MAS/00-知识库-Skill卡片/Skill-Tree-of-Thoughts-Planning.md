@@ -194,6 +194,15 @@ python tot_planner.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-ReAct-Reasoning-Acting]]
+- [[Skill-Subagent-Decomposition]]
+- [[Skill-Multi-Agent-Debate]]
+- [[Skill-Reflexion-Self-Improvement]]
+- [[Skill-MAS-Orchestrator]]
+- [[Skill-CAMEL-Role-Playing-Agents]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

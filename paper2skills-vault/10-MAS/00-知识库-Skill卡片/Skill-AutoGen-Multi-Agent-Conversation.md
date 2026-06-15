@@ -177,6 +177,15 @@ python autogen_mas.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-MetaGPT-SOP-Driven-Collaboration]]
+- [[Skill-MAS-Orchestrator]]
+- [[Skill-CAMEL-Role-Playing-Agents]]
+- [[Skill-Subagent-Decomposition]]
+- [[Skill-Agent-Memory-Learning]]
+- [[Skill-Skill-Registry-Dynamic-Loading]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

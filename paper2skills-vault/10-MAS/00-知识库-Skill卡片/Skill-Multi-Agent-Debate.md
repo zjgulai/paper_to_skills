@@ -201,6 +201,15 @@ python debate_system.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-CAMEL-Role-Playing-Agents]]
+- [[Skill-Tree-of-Thoughts-Planning]]
+- [[Skill-MAS-Orchestrator]]
+- [[Skill-Reflexion-Self-Improvement]]
+- [[Skill-MetaGPT-SOP-Driven-Collaboration]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

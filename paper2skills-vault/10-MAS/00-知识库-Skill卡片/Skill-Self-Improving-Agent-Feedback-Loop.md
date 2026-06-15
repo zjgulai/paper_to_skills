@@ -195,6 +195,15 @@ python self_improving_agent.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-MetaGPT-SOP-Driven-Collaboration]]
+- [[Skill-Reflexion-Self-Improvement]]
+- [[Skill-Agent-Memory-Learning]]
+- [[Skill-Multi-Agent-Debate]]
+- [[Skill-MAS-Orchestrator]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

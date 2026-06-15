@@ -224,6 +224,15 @@ python subagent_decomposer.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-Skill-Registry-Dynamic-Loading]]
+- [[Skill-MAS-Orchestrator]]
+- [[Skill-Tree-of-Thoughts-Planning]]
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-ReAct-Reasoning-Acting]]
+- [[Skill-MetaGPT-SOP-Driven-Collaboration]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

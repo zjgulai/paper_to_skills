@@ -219,6 +219,15 @@ python instructuie_model.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-NLP-Text-Classification]]
+- [[Skill-VOC-Aspect-Sentiment-Extraction]]
+- [[Skill-AutoPKG-Multimodal-Product-Attribute-KG]]
+- [[Skill-LLM-Annotation-Weak-Supervision]]
+- [[Skill-Semantic-Blueprint-Compiler]]
+- [[Skill-BERT-SRL-Event-Frame-Extraction]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

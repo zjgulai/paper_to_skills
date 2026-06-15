@@ -206,6 +206,15 @@ python reflexion_agent.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-Self-Improving-Agent-Feedback-Loop]]
+- [[Skill-ReAct-Reasoning-Acting]]
+- [[Skill-Agent-Memory-Learning]]
+- [[Skill-Tree-of-Thoughts-Planning]]
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-Multi-Agent-Debate]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

@@ -192,6 +192,15 @@ python skill_registry.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-Semantic-Blueprint-Compiler]]
+- [[Skill-Subagent-Decomposition]]
+- [[Skill-MAS-Orchestrator]]
+- [[Skill-Agent-Memory-Learning]]
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-MetaGPT-SOP-Driven-Collaboration]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

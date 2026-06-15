@@ -202,6 +202,15 @@ python camel_agent.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-Multi-Agent-Debate]]
+- [[Skill-MAS-Orchestrator]]
+- [[Skill-ReAct-Reasoning-Acting]]
+- [[Skill-LLM-Negotiation-Conversion-Agent]]
+- [[Skill-MetaGPT-SOP-Driven-Collaboration]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

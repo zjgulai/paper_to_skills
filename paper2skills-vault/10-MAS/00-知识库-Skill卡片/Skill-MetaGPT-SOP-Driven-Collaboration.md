@@ -189,6 +189,15 @@ python metagent_sop.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-CAMEL-Role-Playing-Agents]]
+- [[Skill-MAS-Orchestrator]]
+- [[Skill-Subagent-Decomposition]]
+- [[Skill-Self-Improving-Agent-Feedback-Loop]]
+- [[Skill-Skill-Registry-Dynamic-Loading]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

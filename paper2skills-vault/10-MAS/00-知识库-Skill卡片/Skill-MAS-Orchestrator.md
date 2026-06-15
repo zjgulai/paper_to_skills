@@ -223,6 +223,15 @@ python orchestrator.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-Subagent-Decomposition]]
+- [[Skill-ReAct-Reasoning-Acting]]
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-Skill-Registry-Dynamic-Loading]]
+- [[Skill-Agent-Memory-Learning]]
+- [[Skill-Tree-of-Thoughts-Planning]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

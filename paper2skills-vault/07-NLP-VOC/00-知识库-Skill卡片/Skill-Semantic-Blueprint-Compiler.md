@@ -188,6 +188,15 @@ python blueprint_compiler.py
 
 ---
 
+
+### 图谱链接
+- [[Skill-InstructUIE-Unified-Information-Extraction]]
+- [[Skill-BERT-SRL-Event-Frame-Extraction]]
+- [[Skill-HGT-Heterogeneous-Graph-Transformer]]
+- [[Skill-LLM-Negotiation-Conversion-Agent]]
+- [[Skill-AutoGen-Multi-Agent-Conversation]]
+- [[Skill-Skill-Registry-Dynamic-Loading]]
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估
