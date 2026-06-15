@@ -1,0 +1,75 @@
+id: wf-k
+name: WF-K 全域风险防御
+description: 从账号健康监控到欺诈检测再到合规自动修复的跨境风险防御完整体系。
+target_users:
+- 跨境卖家风控负责人
+- 平台运营主管
+- 合规负责人
+entry_question: 当前最紧迫的风险类型是什么？
+steps:
+- id: step-1
+  name: 账号健康主动监控
+  question: 账号健康是否有预警信号？
+  context: 从被动等待 Amazon 警告到主动发现健康下滑趋势
+  branches:
+  - condition: 日常监控（无明显异常）
+    skills:
+    - id: Skill-Account-Health-Proactive-Monitor
+      role: 多维度账号健康早期预警，7-14 天提前发现趋势
+    - id: Skill-Anomaly-Detection-Foundation-Model
+      role: 时序异常检测，自动识别销量/退货率/ROAS异常
+  - condition: 已收到 Amazon 警告
+    skills:
+    - id: Skill-Amazon-Account-Appeal-Strategy
+      role: 账号申诉策略，提高撤销警告成功率
+    - id: Skill-Listing-Compliance-Auto-Repair
+      role: 违规 Listing 自动修复，30秒完成一条
+- id: step-2
+  name: 欺诈识别与拦截
+  question: 是否发现异常的用户行为或退货模式？
+  context: 识别刷评/刷退/竞品攻击等各类欺诈
+  branches:
+  - condition: 退货率异常高（>12%）
+    skills:
+    - id: Skill-Return-Fraud-Detection
+      role: 账号关联图谱识别团伙欺诈退货
+    - id: Skill-VOC-Returns-Cost-Driver
+      role: NLP分析退货原因，区分真实问题vs欺诈
+    - id: Skill-VOC-Fraud-Review-Detection
+      role: 虚假评论三层检测 + 申诉证据包生成
+  - condition: 评论数量异常或竞品差评
+    skills:
+    - id: Skill-DS-DGA-GCN-Fake-Review-Group
+      role: GNN 图谱识别刷评团伙
+    - id: Skill-FraudSquad-LLM-Review-Detection
+      role: LLM 判别虚假评论，F1 > 0.89
+  - condition: 广告异常点击（CTR 异常高/ROAS 骤降）
+    skills:
+    - id: Skill-Ad-Fraud-IVT-Detection
+      role: 无效流量检测，识别点击欺诈
+    - id: Skill-Click-Fraud-Detection
+      role: 点击欺诈实时拦截
+- id: step-3
+  name: 合规风险管理
+  question: 是否有 Listing 或产品面临合规风险？
+  context: 从合规扫描到自动修复的完整合规闭环
+  branches:
+  - condition: 新品上架前合规审查
+    skills:
+    - id: Skill-Regulatory-Graph-Compliance-Monitor
+      role: 合规知识图谱实时扫描，10秒识别复合违规
+    - id: Skill-Compliance-ML-Risk-Scoring
+      role: ML 批量风险评分，按优先级排序处理
+    - id: Skill-Category-Compliance-Prescan
+      role: 品类合规预扫描，发现 FDA/CPSC/FTC 风险
+  - condition: 存在违规 Listing 需要修复
+    skills:
+    - id: Skill-Listing-Compliance-Auto-Repair
+      role: LLM 自动修复，30秒替换违规词
+    - id: Skill-VOC-Compliance-Signal-Mining
+      role: 评论合规信号，实时监控召回风险
+outcomes:
+- 账号健康问题提前 7-14 天预警，充足时间响应
+- 欺诈退货识别率 70-85%，月节省 ¥3-15 万
+- 合规审查效率提升 10x，批量 Listing 修复从 3天 → 4小时
+- 虚假评论申诉成功率提升，保护 BSR 排名

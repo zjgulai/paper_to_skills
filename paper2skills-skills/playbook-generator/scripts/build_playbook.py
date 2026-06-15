@@ -85,6 +85,9 @@ WORKFLOW_RULES = {
     "WF-G Listing内容优化": ["listing", "content", "copywriting", "主图", "视频", "a/b", "creative", "文案"],
     "WF-H 复购增长": ["churn", "ltv", "retention", "复购", "流失", "rfm", "lifecycle", "cohort"],
     "WF-I 智能体工程": ["agent", "智能体", "mas", "mcp", "llm agent", "workflow", "tool use", "safety guard", "监控", "部署"],
+    "WF-J DTC 独立站增长": ["dtc", "独立站", "shopify", "acquisition", "federated", "intent", "conversion", "ltv", "personalization"],
+    "WF-K 全域风险防御": ["fraud", "account health", "appeal", "欺诈", "合规", "compliance", "violation", "anomaly", "risk"],
+    "WF-L 内容营销增长": ["kol", "content", "tiktok", "live commerce", "video", "creator", "内容", "直播", "短视频"],
 }
 
 KNOWN_SKILL_IDS: set[str] = set()
