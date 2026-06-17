@@ -236,7 +236,8 @@ Skills must meet these criteria (enforced by `paper-审核`):
 | `visual_content` | `20-AI视频生成` | Virtual anchor, brand video | 15 |
 | `compliance` | `21-合规决策` | Compliance decisions | 10 |
 | `data_collection` | `22-数据采集工程` | Data collection & quality | 16 |
-| `operations_finance` | `23-运营财务` | FBA finance, P&L, tariff | 17 |
+ | `operations_finance` | `23-运营财务` | FBA finance, P&L, tariff | 17 |
+ | `tag_engineering` | `24-标签工程` | Tag schema, ontology, Palantir-style action triggers | 8 | ✅ |
 
 ## Dependencies
 

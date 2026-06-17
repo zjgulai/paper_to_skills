@@ -316,6 +316,13 @@ DOMAIN_BUSINESS_CONTEXT: dict[str, dict[str, Any]] = {
         "pain": "竞品数据要手动收集太慢 · 平台 API 限制抓不到数据 · 多系统数据整合不起来 · 报表用的数据是过期的",
         "platform": "Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖",
     },
+    "24-标签工程": {
+        "role": "数据架构师 / 供应链数字化负责人",
+        "role2": "CTO · 数据工程师 · 供应链团队",
+        "trigger": "多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率<30%；想实现分析→行动自动闭环但不知从何下手",
+        "outcome": "统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发",
+        "pain": "多平台 SKU 编码混乱无法统一 · 合规标签手工维护遗漏频繁 · 预测模型有了但结果无法自动触发采购 · 标签打了但没有质量监控",
+    },
     "23-运营财务": {
         "role": "CFO / 财务负责人",
         "role2": "CEO · 运营负责人",
