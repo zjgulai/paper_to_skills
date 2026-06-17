@@ -1,0 +1,1554 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>智能体广场 · paper2skills</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="agents.html" aria-current="page" class="active"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<div class='agent-hero'>
+  <div class='agent-hero-text'>
+    <h1 style='font-size:32px;font-weight:900;letter-spacing:-.03em;margin:0 0 10px'>
+      智能体广场
+    </h1>
+    <p class='lead'>12 个专业 AI Agent，覆盖选品→Listing→广告→客服→合规全链路</p>
+    <div style='display:flex;gap:8px;flex-wrap:wrap;margin-top:4px'>
+      <span style='font-size:13px;background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:999px;font-weight:600'>⚡ 本地计算引擎</span>
+      <span style='font-size:13px;color:#64748b'>输入你的真实数据，即时获得个性化计算结果</span>
+    </div>
+  </div>
+  <div class='agent-hero-stats'>
+    <div class='agent-stat'><strong>12</strong><span>个专业 Agent</span></div>
+    <div class='agent-stat'><strong>7</strong><span>业务场景</span></div>
+    <div class='agent-stat'><strong>30+</strong><span>关联 Skills</span></div>
+  </div>
+</div>
+
+<div class='agent-cat-filter' id='catFilter'>
+  <button class='cat-pill  active' data-cat=''>全部</button><button class='cat-pill' data-cat='selection'>选品分析</button><button class='cat-pill' data-cat='listing'>Listing优化</button><button class='cat-pill' data-cat='attribution'>广告归因</button><button class='cat-pill' data-cat='voc'>VOC分析</button><button class='cat-pill' data-cat='supply'>供应链预警</button><button class='cat-pill' data-cat='cs'>客服售后</button><button class='cat-pill' data-cat='pricing'>价格策略</button><button class='cat-pill' data-cat='risk'>合规风控</button><button class='cat-pill' data-cat='analytics'>数据分析</button><button class='cat-pill' data-cat='content'>内容营销</button><button class='cat-pill' data-cat='competitor'>竞品监控</button>
+</div>
+
+<div class='agent-grid' id='agentGrid'>
+  
+<div class='agent-card' data-cat='selection' onclick='openAgent("agent-product-radar")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-supply'>RA</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>选品雷达</div>
+      <span class='agent-cat-badge'>选品分析</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>输入品类关键词，输出 Amazon/速卖通市场机会评分、竞争密度、需求趋势和推荐切入角度。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-Market-Size-Estimation.html'>Skill-Market-Size-Estima…</a><a class='agent-skill-chip' href='skills/Skill-New-Product-Opportunity-Mining.html'>New Product Opportunity …</a><a class='agent-skill-chip' href='skills/Skill-Category-Trend-Forecasting.html'>Category Trend Forecasti…</a></div>
+  <div class='agent-roi'>选品决策周期 14天→2天</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='listing' onclick='openAgent("agent-listing-doctor")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-ad'>LD</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>Listing 医生</div>
+      <span class='agent-cat-badge'>Listing 优化</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>粘贴现有 Listing，输出逐字诊断报告和重写版本，精准命中 Amazon A10 算法关键因子。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-Listing-AI-Copywriting.html'>Amazon Listing 文案 AI 生成（…</a><a class='agent-skill-chip' href='skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Sc…</a><a class='agent-skill-chip' href='skills/Skill-Negative-Keyword-Safe-Guard.html'>Negative Keyword Safe Gu…</a></div>
+  <div class='agent-roi'>Listing 优化平均带动 GMV +12%</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='voc' onclick='openAgent("agent-voc-decoder")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-voc'>VC</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>用户之声解码器</div>
+      <span class='agent-cat-badge'>VOC 分析</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>批量导入竞品评论，自动聚类痛点/爽点，输出产品迭代优先级矩阵和广告素材金句库。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-Review-Pain-Point-Mining.html'>Review Pain-Point Mining…</a><a class='agent-skill-chip' href='skills/Skill-LACA-CrossLingual-ABSA.html'>LACA 跨语言 ABSA - LLM 数据增强…</a><a class='agent-skill-chip' href='skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>AGRS 属性引导评论摘要 - 大规模零幻觉 R…</a></div>
+  <div class='agent-roi'>VOC 驱动迭代，退货率平均下降 2-4%</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='attribution' onclick='openAgent("agent-ad-attribution")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-ad'>AA</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>广告归因侦探</div>
+      <span class='agent-cat-badge'>广告归因</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>上传广告报告，自动识别无效花费、归因漏洞、预算分配错误，输出可立即执行的调优清单。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-PVM-Attribution-Window-Harmonization.html'>PVM 跨平台广告归因窗口统一化 - 母婴跨境多…</a><a class='agent-skill-chip' href='skills/Skill-Identified-Bayesian-MMM.html'>Identified Bayesian MMM …</a><a class='agent-skill-chip' href='skills/Skill-DARA-Agentic-MMM-Optimizer.html'>DARA - LLM+RL 双阶段广告预算分配 …</a></div>
+  <div class='agent-roi'>识别 25-35% 广告浪费，$10k预算节省 $2,500-3,500/月</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='competitor' onclick='openAgent("agent-competitor-radar")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-ops'>CR</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>竞品雷达站</div>
+      <span class='agent-cat-badge'>竞品监控</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>输入竞品 ASIN 列表，追踪价格/排名/评论/Listing 变化，异常时生成智能预警和响应建议。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-Competitive-Price-Monitoring.html'>Competitive Price Monito…</a><a class='agent-skill-chip' href='skills/Skill-Review-Fraud-Detection.html'>Review Fraud Detection（虚…</a><a class='agent-skill-chip' href='skills/Skill-Competitive-Response-Modeling.html'>Competitive Response Mod…</a></div>
+  <div class='agent-roi'>广告截流策略平均提升转化率 8-12%</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='supply' onclick='openAgent("agent-supply-sentinel")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-supply'>SC</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>供应链哨兵</div>
+      <span class='agent-cat-badge'>供应链预警</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>接入库存/销速数据，预测断货风险和过库存风险，给出补货建议时间表和海运/空运决策。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-Safety-Stock-Replenishment.html'>Safety Stock and Repleni…</a><a class='agent-skill-chip' href='skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Gen-QOT 提前期分布建模 - 动态安全库存…</a><a class='agent-skill-chip' href='skills/Skill-Promotion-Logistics-Surge-Forecast.html'>Promotion Logistics Surg…</a></div>
+  <div class='agent-roi'>避免一次断货可保护 $4,000-15,000 BSR 回弹成本</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='cs' onclick='openAgent("agent-cs-triage")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-voc'>CS</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>客服分诊台</div>
+      <span class='agent-cat-badge'>客服售后</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>批量导入工单，自动分类优先级、识别高风险工单（A-to-Z/差评威胁），生成文化适配回复模板。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Dial-In LLM 层次化客服意图聚类 - …</a><a class='agent-skill-chip' href='skills/Skill-Customer-Journey-Decision-Tree.html'>客服对话决策树 - 从日志中自学策略</a><a class='agent-skill-chip' href='skills/Skill-Emotional-AI-Customer-Care.html'>Emotional AI Customer Ca…</a></div>
+  <div class='agent-roi'>处理效率提升 3x，A-to-Z 索赔率降低 40%</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='pricing' onclick='openAgent("agent-pricing-advisor")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-ops'>PA</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>动态定价顾问</div>
+      <span class='agent-cat-badge'>价格策略</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>分析竞品价格带、成本结构和当前排名，给出最优定价策略和分季节的促销节奏建议。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>AIGP — LLM 动态定价：长期 GMV 对…</a><a class='agent-skill-chip' href='skills/Skill-Dynamic-Pricing-Elasticity.html'>Dynamic Pricing with Dem…</a><a class='agent-skill-chip' href='skills/Skill-Markdown-Optimization.html'>Markdown Optimization（折扣…</a></div>
+  <div class='agent-roi'>合理溢价策略平均提升净利润率 4-8个百分点</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='risk' onclick='openAgent("agent-account-guardian")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-risk'>AG</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>账号风险卫士</div>
+      <span class='agent-cat-badge'>合规风控</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>扫描账号操作记录和 Listing 合规性，提前识别封号/下架风险，生成整改清单和申诉模板。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Amazon ToS Compliance Gu…</a><a class='agent-skill-chip' href='skills/Skill-Consumer-Complaint-Recall-Prediction.html'>Consumer Complaint Recal…</a><a class='agent-skill-chip' href='skills/Skill-Compliance-Scored-Guardrail-Orchestration.html'>Compliance-Scored Guardr…</a></div>
+  <div class='agent-roi'>预防式合规管理，避免封号损失（平均 $20,000-50,000）</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='analytics' onclick='openAgent("agent-pnl-analyzer")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-ops'>PL</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>P&amp;L 透视镜</div>
+      <span class='agent-cat-badge'>数据分析</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>输入销售数据，自动计算真实净利润率（含所有隐性成本），识别利润漏洞并给出量化改善路径。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html'>DeepAnalyze — 自主数据科学Agen…</a><a class='agent-skill-chip' href='skills/Skill-ProRCA-Business-Analysis.html'>ProRCA — 因果图路径溯源根因分析</a><a class='agent-skill-chip' href='skills/Skill-NL2Dashboard-Automation.html'>NL2Dashboard Automation（…</a></div>
+  <div class='agent-roi'>平均识别 35-50% 的利润改善空间</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='risk' onclick='openAgent("agent-brand-guardian")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-risk'>BG</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>品牌合规卫士</div>
+      <span class='agent-cat-badge'>合规风控</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>扫描品牌文案，进行 FDA/FTC/Amazon TOS 三轨合规检查，输出违规词清单和逐句合规改写建议。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-Compliance-Scored-Guardrail-Orchestration.html'>Compliance-Scored Guardr…</a><a class='agent-skill-chip' href='skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Amazon ToS Compliance Gu…</a><a class='agent-skill-chip' href='skills/Skill-Cross-Border-Compliance-Framework.html'>Cross-Border Compliance …</a></div>
+  <div class='agent-roi'>预防 FTC 警告和产品下架，单次违规处罚可达 $50,000</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+<div class='agent-card' data-cat='content' onclick='openAgent("agent-tiktok-content")'>
+  <div class='agent-card-top'>
+    <div class='agent-icon-wrap cat-ad'>TC</div>
+    <div class='agent-card-info'>
+      <div class='agent-name'>TikTok 内容官</div>
+      <span class='agent-cat-badge'>内容营销</span>
+    </div>
+  </div>
+  <div class='agent-status'>
+    <span class='status-dot live'></span>
+    <span style='color:#059669;font-size:12px;font-weight:600'>本地分析</span>
+    &nbsp;·&nbsp;
+    <span style='font-size:12px;color:#64748b'>即时响应</span>
+  </div>
+  <p class='agent-desc'>输入产品和受众画像，输出 TikTok/Reels 爆款选题矩阵、脚本框架和话题标签策略，降低内容生产成本。</p>
+  <div class='agent-skills'><a class='agent-skill-chip' href='skills/Skill-DAWN-Talking-Head-Review.html'>DAWN — Talking-Head Revi…</a><a class='agent-skill-chip' href='skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>AnchorCrafter — Virtual …</a><a class='agent-skill-chip' href='skills/Skill-Creative-Fatigue-Detection.html'>Creative Fatigue Detecti…</a></div>
+  <div class='agent-roi'>系统化内容输出降低 CPM 40%，自然流量占比提升至 30%+</div>
+  <button class='agent-invoke-btn'>立即调用</button>
+</div>
+</div>
+
+
+<div id='modal-agent-product-radar' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='选品雷达'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>RA</span>
+      <div class='modal-header-info'>
+        <h2>选品雷达</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>选品分析</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-product-radar")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>品类关键词</label><input class='modal-input' type='text' id='agent-product-radar__keyword' placeholder='例：硅胶婴儿餐具（或点击下方快速选择）'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>目标市场</label><select class='modal-input' id='agent-product-radar__market'><option value='US'>US</option><option value='UK'>UK</option><option value='DE'>DE</option><option value='AU'>AU</option><option value='JP'>JP</option></select></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>预算区间</label><select class='modal-input' id='agent-product-radar__budget'><option value='&lt;$5k'>&lt;$5k</option><option value='$5-20k'>$5-20k</option><option value='&gt;$20k'>&gt;$20k</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-product-radar")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-product-radar' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-product-radar' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-product-radar' onclick='runAgent("agent-product-radar")'>
+         <span id='run-label-agent-product-radar'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-product-radar'>
+        <div class='output-thinking' id='thinking-agent-product-radar' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-product-radar' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-product-radar' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-Market-Size-Estimation.html'>Skill-Market-Size-Estima…</a><a class='agent-skill-chip' href='skills/Skill-New-Product-Opportunity-Mining.html'>New Product Opportunity …</a><a class='agent-skill-chip' href='skills/Skill-Category-Trend-Forecasting.html'>Category Trend Forecasti…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-listing-doctor' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='Listing 医生'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>LD</span>
+      <div class='modal-header-info'>
+        <h2>Listing 医生</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>Listing 优化</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-listing-doctor")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>当前 Title</label><textarea class='modal-input' id='agent-listing-doctor__title' rows='4' placeholder='粘贴当前商品标题...'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>Bullet Points</label><textarea class='modal-input' id='agent-listing-doctor__bullets' rows='4' placeholder='粘贴5条 Bullet（每行一条）...'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>目标核心词 Top3</label><input class='modal-input' type='text' id='agent-listing-doctor__keywords' placeholder='例：silicone baby plate, BPA free'></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-listing-doctor")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-listing-doctor' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-listing-doctor' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-listing-doctor' onclick='runAgent("agent-listing-doctor")'>
+         <span id='run-label-agent-listing-doctor'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-listing-doctor'>
+        <div class='output-thinking' id='thinking-agent-listing-doctor' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-listing-doctor' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-listing-doctor' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-Listing-AI-Copywriting.html'>Amazon Listing 文案 AI 生成（…</a><a class='agent-skill-chip' href='skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Sc…</a><a class='agent-skill-chip' href='skills/Skill-Negative-Keyword-Safe-Guard.html'>Negative Keyword Safe Gu…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-voc-decoder' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='用户之声解码器'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>VC</span>
+      <div class='modal-header-info'>
+        <h2>用户之声解码器</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>VOC 分析</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-voc-decoder")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>评论文本（每行一条）</label><textarea class='modal-input' id='agent-voc-decoder__reviews' rows='4' placeholder='粘贴 20-200 条评论...'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>竞品 ASIN（可选）</label><input class='modal-input' type='text' id='agent-voc-decoder__asin' placeholder='例：B08XYZ1234'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>语言</label><select class='modal-input' id='agent-voc-decoder__lang'><option value='英语'>英语</option><option value='英语+德语'>英语+德语</option><option value='英语+日语'>英语+日语</option><option value='多语言'>多语言</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-voc-decoder")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-voc-decoder' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-voc-decoder' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-voc-decoder' onclick='runAgent("agent-voc-decoder")'>
+         <span id='run-label-agent-voc-decoder'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-voc-decoder'>
+        <div class='output-thinking' id='thinking-agent-voc-decoder' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-voc-decoder' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-voc-decoder' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-Review-Pain-Point-Mining.html'>Review Pain-Point Mining…</a><a class='agent-skill-chip' href='skills/Skill-LACA-CrossLingual-ABSA.html'>LACA 跨语言 ABSA - LLM 数据增强…</a><a class='agent-skill-chip' href='skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>AGRS 属性引导评论摘要 - 大规模零幻觉 R…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-ad-attribution' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='广告归因侦探'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>AA</span>
+      <div class='modal-header-info'>
+        <h2>广告归因侦探</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>广告归因</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-ad-attribution")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>广告平台</label><select class='modal-input' id='agent-ad-attribution__platform'><option value='Amazon SP'>Amazon SP</option><option value='Amazon SB/SD'>Amazon SB/SD</option><option value='TikTok Ads'>TikTok Ads</option><option value='Meta Ads'>Meta Ads</option><option value='Google Ads'>Google Ads</option></select></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>月广告花费（$）</label><input class='modal-input' type='text' id='agent-ad-attribution__spend' placeholder='例：12400'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>目标 ACoS/ROAS</label><input class='modal-input' type='text' id='agent-ad-attribution__target_acos' placeholder='例：ACoS 18% 或 ROAS 5x'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>广告数据（可选，粘贴 CSV）</label><textarea class='modal-input' id='agent-ad-attribution__data' rows='4' placeholder='粘贴关键词报告数据...'></textarea></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-ad-attribution")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-ad-attribution' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-ad-attribution' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-ad-attribution' onclick='runAgent("agent-ad-attribution")'>
+         <span id='run-label-agent-ad-attribution'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-ad-attribution'>
+        <div class='output-thinking' id='thinking-agent-ad-attribution' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-ad-attribution' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-ad-attribution' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-PVM-Attribution-Window-Harmonization.html'>PVM 跨平台广告归因窗口统一化 - 母婴跨境多…</a><a class='agent-skill-chip' href='skills/Skill-Identified-Bayesian-MMM.html'>Identified Bayesian MMM …</a><a class='agent-skill-chip' href='skills/Skill-DARA-Agentic-MMM-Optimizer.html'>DARA - LLM+RL 双阶段广告预算分配 …</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-competitor-radar' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='竞品雷达站'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>CR</span>
+      <div class='modal-header-info'>
+        <h2>竞品雷达站</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>竞品监控</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-competitor-radar")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>竞品 ASIN 列表（每行一个）</label><textarea class='modal-input' id='agent-competitor-radar__asins' rows='4' placeholder='B08XYZ1234
+B09ABC5678
+B07DEF9012'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>监控周期</label><select class='modal-input' id='agent-competitor-radar__period'><option value='过去7天'>过去7天</option><option value='过去14天'>过去14天</option><option value='过去30天'>过去30天</option></select></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>监控维度</label><select class='modal-input' id='agent-competitor-radar__metrics'><option value='全部'>全部</option><option value='价格+BSR'>价格+BSR</option><option value='评论动态'>评论动态</option><option value='Listing变更'>Listing变更</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-competitor-radar")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-competitor-radar' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-competitor-radar' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-competitor-radar' onclick='runAgent("agent-competitor-radar")'>
+         <span id='run-label-agent-competitor-radar'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-competitor-radar'>
+        <div class='output-thinking' id='thinking-agent-competitor-radar' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-competitor-radar' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-competitor-radar' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-Competitive-Price-Monitoring.html'>Competitive Price Monito…</a><a class='agent-skill-chip' href='skills/Skill-Review-Fraud-Detection.html'>Review Fraud Detection（虚…</a><a class='agent-skill-chip' href='skills/Skill-Competitive-Response-Modeling.html'>Competitive Response Mod…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-supply-sentinel' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='供应链哨兵'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>SC</span>
+      <div class='modal-header-info'>
+        <h2>供应链哨兵</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>供应链预警</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-supply-sentinel")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>当前库存量（件）</label><input class='modal-input' type='text' id='agent-supply-sentinel__stock' placeholder='例：340'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>日均销速（件/天）</label><input class='modal-input' type='text' id='agent-supply-sentinel__velocity' placeholder='例：28'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>供货周期（天）</label><input class='modal-input' type='text' id='agent-supply-sentinel__lead_time' placeholder='例：21（海运）或7（空运）'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>渠道类型</label><select class='modal-input' id='agent-supply-sentinel__channel'><option value='Amazon FBA'>Amazon FBA</option><option value='自发货'>自发货</option><option value='FBA+海外仓混合'>FBA+海外仓混合</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-supply-sentinel")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-supply-sentinel' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-supply-sentinel' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-supply-sentinel' onclick='runAgent("agent-supply-sentinel")'>
+         <span id='run-label-agent-supply-sentinel'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-supply-sentinel'>
+        <div class='output-thinking' id='thinking-agent-supply-sentinel' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-supply-sentinel' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-supply-sentinel' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-Safety-Stock-Replenishment.html'>Safety Stock and Repleni…</a><a class='agent-skill-chip' href='skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Gen-QOT 提前期分布建模 - 动态安全库存…</a><a class='agent-skill-chip' href='skills/Skill-Promotion-Logistics-Surge-Forecast.html'>Promotion Logistics Surg…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-cs-triage' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='客服分诊台'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>CS</span>
+      <div class='modal-header-info'>
+        <h2>客服分诊台</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>客服售后</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-cs-triage")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>工单文本（每行一条）</label><textarea class='modal-input' id='agent-cs-triage__tickets' rows='4' placeholder='粘贴 10-100 条客服工单...'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>平台来源</label><select class='modal-input' id='agent-cs-triage__platform'><option value='Amazon'>Amazon</option><option value='Shopify'>Shopify</option><option value='eBay'>eBay</option><option value='混合'>混合</option></select></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>SLA 要求</label><select class='modal-input' id='agent-cs-triage__sla'><option value='24小时'>24小时</option><option value='48小时'>48小时</option><option value='72小时'>72小时</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-cs-triage")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-cs-triage' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-cs-triage' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-cs-triage' onclick='runAgent("agent-cs-triage")'>
+         <span id='run-label-agent-cs-triage'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-cs-triage'>
+        <div class='output-thinking' id='thinking-agent-cs-triage' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-cs-triage' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-cs-triage' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Dial-In LLM 层次化客服意图聚类 - …</a><a class='agent-skill-chip' href='skills/Skill-Customer-Journey-Decision-Tree.html'>客服对话决策树 - 从日志中自学策略</a><a class='agent-skill-chip' href='skills/Skill-Emotional-AI-Customer-Care.html'>Emotional AI Customer Ca…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-pricing-advisor' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='动态定价顾问'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>PA</span>
+      <div class='modal-header-info'>
+        <h2>动态定价顾问</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>价格策略</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-pricing-advisor")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>当前售价（$）</label><input class='modal-input' type='text' id='agent-pricing-advisor__price' placeholder='例：19.99'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>综合成本（货值+头程+FBA，$）</label><input class='modal-input' type='text' id='agent-pricing-advisor__cost' placeholder='例：7.80'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>竞品价格区间</label><input class='modal-input' type='text' id='agent-pricing-advisor__comp_range' placeholder='例：$15-$22'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>当前 BSR</label><input class='modal-input' type='text' id='agent-pricing-advisor__bsr' placeholder='例：234'></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-pricing-advisor")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-pricing-advisor' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-pricing-advisor' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-pricing-advisor' onclick='runAgent("agent-pricing-advisor")'>
+         <span id='run-label-agent-pricing-advisor'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-pricing-advisor'>
+        <div class='output-thinking' id='thinking-agent-pricing-advisor' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-pricing-advisor' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-pricing-advisor' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>AIGP — LLM 动态定价：长期 GMV 对…</a><a class='agent-skill-chip' href='skills/Skill-Dynamic-Pricing-Elasticity.html'>Dynamic Pricing with Dem…</a><a class='agent-skill-chip' href='skills/Skill-Markdown-Optimization.html'>Markdown Optimization（折扣…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-account-guardian' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='账号风险卫士'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>AG</span>
+      <div class='modal-header-info'>
+        <h2>账号风险卫士</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>合规风控</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-account-guardian")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>近期异常通知（粘贴邮件内容）</label><textarea class='modal-input' id='agent-account-guardian__notice' rows='4' placeholder='粘贴 Amazon 警告邮件或 Account Health 异常通知...'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>需检查的 ASIN 列表</label><textarea class='modal-input' id='agent-account-guardian__asins' rows='4' placeholder='每行一个 ASIN'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>当前账号健康状态</label><select class='modal-input' id='agent-account-guardian__health'><option value='绿色（正常）'>绿色（正常）</option><option value='黄色（预警）'>黄色（预警）</option><option value='红色（高危）'>红色（高危）</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-account-guardian")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-account-guardian' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-account-guardian' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-account-guardian' onclick='runAgent("agent-account-guardian")'>
+         <span id='run-label-agent-account-guardian'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-account-guardian'>
+        <div class='output-thinking' id='thinking-agent-account-guardian' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-account-guardian' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-account-guardian' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Amazon ToS Compliance Gu…</a><a class='agent-skill-chip' href='skills/Skill-Consumer-Complaint-Recall-Prediction.html'>Consumer Complaint Recal…</a><a class='agent-skill-chip' href='skills/Skill-Compliance-Scored-Guardrail-Orchestration.html'>Compliance-Scored Guardr…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-pnl-analyzer' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='P&amp;L 透视镜'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>PL</span>
+      <div class='modal-header-info'>
+        <h2>P&amp;L 透视镜</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>数据分析</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-pnl-analyzer")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>月销售额（$）</label><input class='modal-input' type='text' id='agent-pnl-analyzer__revenue' placeholder='例：32400'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>商品成本（$）</label><input class='modal-input' type='text' id='agent-pnl-analyzer__cogs' placeholder='例：9200'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>FBA 费用（$）</label><input class='modal-input' type='text' id='agent-pnl-analyzer__fba' placeholder='例：5800'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>广告花费（$）</label><input class='modal-input' type='text' id='agent-pnl-analyzer__ads' placeholder='例：6500'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>退货率（%）</label><input class='modal-input' type='text' id='agent-pnl-analyzer__return_rate' placeholder='例：4'></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-pnl-analyzer")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-pnl-analyzer' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-pnl-analyzer' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-pnl-analyzer' onclick='runAgent("agent-pnl-analyzer")'>
+         <span id='run-label-agent-pnl-analyzer'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-pnl-analyzer'>
+        <div class='output-thinking' id='thinking-agent-pnl-analyzer' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-pnl-analyzer' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-pnl-analyzer' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html'>DeepAnalyze — 自主数据科学Agen…</a><a class='agent-skill-chip' href='skills/Skill-ProRCA-Business-Analysis.html'>ProRCA — 因果图路径溯源根因分析</a><a class='agent-skill-chip' href='skills/Skill-NL2Dashboard-Automation.html'>NL2Dashboard Automation（…</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-brand-guardian' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='品牌合规卫士'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>BG</span>
+      <div class='modal-header-info'>
+        <h2>品牌合规卫士</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>合规风控</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-brand-guardian")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>品牌文案（Listing/广告语/包装文字）</label><textarea class='modal-input' id='agent-brand-guardian__copy' rows='4' placeholder='粘贴需要检查的文案内容...'></textarea></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>产品品类</label><select class='modal-input' id='agent-brand-guardian__category'><option value='母婴'>母婴</option><option value='健康保健'>健康保健</option><option value='食品饮料'>食品饮料</option><option value='消费电子'>消费电子</option><option value='美妆个护'>美妆个护</option></select></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>目标市场</label><select class='modal-input' id='agent-brand-guardian__market'><option value='US'>US</option><option value='UK/EU'>UK/EU</option><option value='AU'>AU</option><option value='全球'>全球</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-brand-guardian")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-brand-guardian' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-brand-guardian' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-brand-guardian' onclick='runAgent("agent-brand-guardian")'>
+         <span id='run-label-agent-brand-guardian'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-brand-guardian'>
+        <div class='output-thinking' id='thinking-agent-brand-guardian' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-brand-guardian' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-brand-guardian' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-Compliance-Scored-Guardrail-Orchestration.html'>Compliance-Scored Guardr…</a><a class='agent-skill-chip' href='skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Amazon ToS Compliance Gu…</a><a class='agent-skill-chip' href='skills/Skill-Cross-Border-Compliance-Framework.html'>Cross-Border Compliance …</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modal-agent-tiktok-content' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='TikTok 内容官'>
+  <div class='agent-modal'>
+    <div class='modal-header'>
+      <span class='modal-icon'>TC</span>
+      <div class='modal-header-info'>
+        <h2>TikTok 内容官</h2>
+        <div style='display:flex;gap:8px;align-items:center'>
+          <span class='agent-cat-badge'>内容营销</span>
+          <span class='agent-status'><span class='status-dot live'></span> <span style='font-size:12px;color:#059669;font-weight:600'>本地分析 · 即时</span></span>
+        </div>
+      </div>
+      <button class='modal-close' onclick='closeAgent("agent-tiktok-content")'>×</button>
+    </div>
+    <div class='modal-body'>
+      <div class='modal-section'>
+        <h3>输入参数</h3>
+        <div style='display:flex;flex-direction:column;gap:14px'><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>产品名称/描述</label><input class='modal-input' type='text' id='agent-tiktok-content__product' placeholder='例：硅胶婴儿餐具套装'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>目标受众画像</label><input class='modal-input' type='text' id='agent-tiktok-content__audience' placeholder='例：0-2岁宝妈，关注辅食/育儿'></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>内容风格偏好</label><select class='modal-input' id='agent-tiktok-content__style'><option value='教程/攻略'>教程/攻略</option><option value='痛点反转'>痛点反转</option><option value='生活记录'>生活记录</option><option value='对比测评'>对比测评</option><option value='UGC种草'>UGC种草</option></select></div><div class='modal-input-group'><label style='font-size:13px;font-weight:600;color:#334155'>周更新频次</label><select class='modal-input' id='agent-tiktok-content__freq'><option value='3条/周'>3条/周</option><option value='5条/周'>5条/周</option><option value='每日更新'>每日更新</option></select></div></div>
+        <div style='margin-top:8px'>
+          <button class='btn-secondary' style='font-size:12px;padding:5px 12px' onclick='fillExample("agent-tiktok-content")'>填入示例数据</button>
+        </div>
+      </div>
+      <div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;border:1px solid var(--line,#e2e8f0)'><span style='font-size:11px;font-weight:600;color:#475569'>模式:</span><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-tiktok-content' value='local' checked style='accent-color:#059669'>⚡本地</label><label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'><input type='radio' name='mode-agent-tiktok-content' value='ai' style='accent-color:#6366f1'>✦ AI</label></div>
+      <button class='modal-run-btn' id='run-agent-tiktok-content' onclick='runAgent("agent-tiktok-content")'>
+         <span id='run-label-agent-tiktok-content'>开始分析</span>
+      </button>
+      <div class='modal-output' id='output-agent-tiktok-content'>
+        <div class='output-thinking' id='thinking-agent-tiktok-content' style='display:none'>
+                    <span>Agent 正在分析</span>
+          <span class='thinking-dots'><span>·</span><span>·</span><span>·</span></span>
+        </div>
+        <pre class='output-content' id='content-agent-tiktok-content' style='margin:0;font-family:inherit;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.7'></pre>
+      </div>
+      <div class='modal-footer-skills' id='footer-skills-agent-tiktok-content' style='margin-top:16px'>
+        <span style='font-size:12px;color:#64748b;font-weight:600'>关联 Skills：</span>
+        <a class='agent-skill-chip' href='skills/Skill-DAWN-Talking-Head-Review.html'>DAWN — Talking-Head Revi…</a><a class='agent-skill-chip' href='skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>AnchorCrafter — Virtual …</a><a class='agent-skill-chip' href='skills/Skill-Creative-Fatigue-Detection.html'>Creative Fatigue Detecti…</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DEMO_DATA = {"agent-product-radar": {"output": "[OK] 机会评分: 78/100（强力推荐）\n\n市场数据\n月均搜索量: 124,000（YoY +23%）\nBSR TOP10 均价: $18.9 | 您的成本带: $6-8\n头部 CR（前3卖家）: 合计占比 41%——仍有切入空间\n\n差异化切入角度\n1. 食品级硅胶+麦秸秆混合材质（情感溢价 +$4）\n2. 带 OEM 定制礼盒（B2B 批发线索）\n3. 月龄分段套装（提升 AOV 至 $35+）\n\n竞争分析\n竞品平均评论数: 847 | 最低切入评论数: ~200\n新品窗口: ⭐⭐⭐⭐ 良好\n\n[+] GO — 搜索量健康，价格带有利润空间，3个差异化方向均有评论验证。\n建议首批备货: 500-800 件", "inputs": [{"id": "keyword", "label": "品类关键词", "type": "text", "placeholder": "例：硅胶婴儿餐具（或点击下方快速选择）"}, {"id": "market", "label": "目标市场", "type": "select", "options": ["US", "UK", "DE", "AU", "JP"]}, {"id": "budget", "label": "预算区间", "type": "select", "options": ["<$5k", "$5-20k", ">$20k"]}]}, "agent-listing-doctor": {"output": "[!] 当前 Listing 诊断（62/100）\n\nTitle 评分: C（62/100）\n问题 ①: 缺少核心词 \"BPA-free\"（搜索量 89K/月）\n问题 ②: 字符仅 89 个，远低于 200 字符上限——损失关键词密度\n问题 ③: 无场景词（6M+ / toddler / starter kit）\n\n[~] Bullet #3 诊断\n原文: \"好用耐用，宝宝喜欢\"\n问题: 缺乏量化证明，过于主观\n建议: \"经 10,000 次弯折测试，FDA 认证食品级硅胶，安全耐用\"\n\n[OK] 重写后 Title（197字符）\n[2024 Upgrade] BPA-Free Silicone Baby Plate Set — Suction Bowl+Spoon+Fork for Toddlers 6M+, Dishwasher Safe, Anti-Slip Self-Feeding Starter Kit (Gray)\n\n[OK] 重写后 Bullet #3\nTested 10,000+ bends without cracking — Made from 100% FDA-compliant food-grade silicone, completely free of BPA, PVC, and phthalates. Safe for baby's first foods.\n\n预估 CTR 提升: +18-25%（基于同类 A/B 测试基准）", "inputs": [{"id": "title", "label": "当前 Title", "type": "textarea", "placeholder": "粘贴当前商品标题..."}, {"id": "bullets", "label": "Bullet Points", "type": "textarea", "placeholder": "粘贴5条 Bullet（每行一条）..."}, {"id": "keywords", "label": "目标核心词 Top3", "type": "text", "placeholder": "例：silicone baby plate, BPA free"}]}, "agent-voc-decoder": {"output": "分析了 147 条评论（1-3星: 52条 | 4-5星: 95条）\n\n[!] TOP3 痛点（高频）\n1. 吸盘失效（38次提及）\n   代表原话: \"suction doesn't hold after 2 months of use\"\n2. 颜色褪色（29次）\n   代表原话: \"faded after dishwasher, looks cheap now\"\n3. 尺寸偏小（21次）\n   代表原话: \"not big enough for 18mo+, she outgrew it fast\"\n\n[+] TOP3 爽点（高频）\n1. 好清洗（61次）— \"easiest to clean baby product I own\"\n2. 防摔耐用（44次）— \"dropped 100 times still perfect\"\n3. 颜色好看（38次）— \"great minimalist colors\"\n\n[TIP] 广告金句（真实用户语言，高转化潜力）\n\"The only plate that actually stays on the table\"\n\n[FIX] 产品迭代建议（优先级排序）\nP0: 吸盘结构升级 → 直接影响复购率和退货率\nP1: 推出 18M+ 加大版 → 延长产品生命周期\nP2: 加强洗碗机染色防护工艺", "inputs": [{"id": "reviews", "label": "评论文本（每行一条）", "type": "textarea", "placeholder": "粘贴 20-200 条评论..."}, {"id": "asin", "label": "竞品 ASIN（可选）", "type": "text", "placeholder": "例：B08XYZ1234"}, {"id": "lang", "label": "语言", "type": "select", "options": ["英语", "英语+德语", "英语+日语", "多语言"]}]}, "agent-ad-attribution": {"output": "广告浪费诊断（过去30天）\n总花费: $12,400 | 有效转化花费: $8,100\n估算浪费: $4,300（34.7%）[WARN]\n\n[!] 无效关键词 TOP3（建议立即否定）\n1. \"baby plate cheap\" — 花费 $380，转化 0，点击 214\n2. \"kids dinnerware set\" — ACoS 187%，花费 $520\n3. \"silicone bowl wholesale\" — B2B 意图，转化率 0.3%\n\n[~] 归因漏洞\nSB广告 impression 12万 → 无再营销链路，损失中端漏斗流量\n\n当前 ACoS: 26.1%（目标 18%，超标 8.1pp）\n\n[OK] 行动清单（本周执行，预期节省 $900+/月）\n1. 否定以上3个关键词 → 立即节省 ~$900/月\n2. 开启 SP 动态竞价-仅降低（流量质量提升，ACoS 预计 -3pp）\n3. 新增否定词组: \"wholesale\" \"bulk\" \"cheap\" \"set of 10\"\n4. SB 广告新增 Retargeting 受众（覆盖已浏览未购买用户）", "inputs": [{"id": "platform", "label": "广告平台", "type": "select", "options": ["Amazon SP", "Amazon SB/SD", "TikTok Ads", "Meta Ads", "Google Ads"]}, {"id": "spend", "label": "月广告花费（$）", "type": "text", "placeholder": "例：12400"}, {"id": "target_acos", "label": "目标 ACoS/ROAS", "type": "text", "placeholder": "例：ACoS 18% 或 ROAS 5x"}, {"id": "data", "label": "广告数据（可选，粘贴 CSV）", "type": "textarea", "placeholder": "粘贴关键词报告数据..."}]}, "agent-competitor-radar": {"output": "[ALERT] 竞品异动报告（过去7天）\n\nB08XYZ1234（竞品A — 头部卖家）\n├─ 价格: $21.99 → $17.99（-18%）[WARN] 降价促销迹象\n├─ BSR: #342 → #89（大幅上升）\n└─ 新增评论: +47条（含3条1星，投诉发货问题）\n\nB09ABC5678（竞品B）\n├─ Title 已修改（新增 \"BPA-Free\" 关键词）\n└─ A+ 页面上线（新增产品对比表格）\n\n7天数据汇总\n竞品均价变化: -8.3% | 你的价格竞争力: 中等\n\n[TIP] 建议响应（按优先级）\nP0: 竞品A大促进行中 → 考虑同步降价 $1-2 或强化差异化广告\nP1: 竞品A发货差评爆发 → 可针对竞品词做广告截流（时间窗口约2周）\nP2: 竞品B更新Listing → 检查是否使用你的核心卖点词汇", "inputs": [{"id": "asins", "label": "竞品 ASIN 列表（每行一个）", "type": "textarea", "placeholder": "B08XYZ1234\nB09ABC5678\nB07DEF9012"}, {"id": "period", "label": "监控周期", "type": "select", "options": ["过去7天", "过去14天", "过去30天"]}, {"id": "metrics", "label": "监控维度", "type": "select", "options": ["全部", "价格+BSR", "评论动态", "Listing变更"]}]}, "agent-supply-sentinel": {"output": "[!] 断货风险评级: 高危\n\n当前库存: 340件\n日均销速: 28件/天（近7天均值）\n剩余可售天数: 12.1天\n\n[WARN] FBA 入库周期: 14-18天\n结论: 已进入断货窗口，需立即行动！\n\n补货建议\n├─ 建议补货量: 1,200件（含安全库存30天）\n├─ 最迟下单日期: 今日（已超过海运安全窗口）\n├─ 推荐方案: 空运600件（应急，+$0.8/件）+ 海运600件（补充）\n└─ 预估断货损失（若不补货）: ~$4,200（按当前BSR#234计算）\n\n[~] Q4旺季预警（60天后）\n历史数据显示11月销速 ×2.8 → 建议提前备货至2,500件\n最迟开始备货时间: 9月15日（海运）\n\n成本对比\n海运方案: 成本+$0, 风险高\n空运方案: 成本+$480, 断货风险消除", "inputs": [{"id": "stock", "label": "当前库存量（件）", "type": "text", "placeholder": "例：340"}, {"id": "velocity", "label": "日均销速（件/天）", "type": "text", "placeholder": "例：28"}, {"id": "lead_time", "label": "供货周期（天）", "type": "text", "placeholder": "例：21（海运）或7（空运）"}, {"id": "channel", "label": "渠道类型", "type": "select", "options": ["Amazon FBA", "自发货", "FBA+海外仓混合"]}]}, "agent-cs-triage": {"output": "分诊报告（63条工单）\n\n分类分布\n退货退款请求: 18条（28.6%）\n产品质量问题: 14条（22.2%）\n物流查询: 19条（30.2%）\n使用咨询: 12条（19.0%）\n\n[ALERT] 高优先级（需24h内处理）\n工单#2847: \"file A-to-Z claim if no response by tomorrow\"\n工单#2851: \"going to leave 1-star review, terrible quality\"\n工单#2863: 情绪值: ANGRY（检测到高风险用户）\n\n[OK] 标准回复模板 #1（物流查询）\n\"Hi [Name], Thank you for reaching out! Your order [ORDER_ID] is currently in transit. Expected delivery: [DATE]. Tracking: [LINK]\nIf you haven't received it by [DATE+3], please reply and we'll send a replacement immediately.\"\n\n[!] 产品缺陷信号\n14条工单提及 \"strap breaks\" → 可能存在结构性质量问题\n建议: 立即联系工厂复查该批次（批号: 请提供）", "inputs": [{"id": "tickets", "label": "工单文本（每行一条）", "type": "textarea", "placeholder": "粘贴 10-100 条客服工单..."}, {"id": "platform", "label": "平台来源", "type": "select", "options": ["Amazon", "Shopify", "eBay", "混合"]}, {"id": "sla", "label": "SLA 要求", "type": "select", "options": ["24小时", "48小时", "72小时"]}]}, "agent-pricing-advisor": {"output": "定价策略分析\n\n当前状态\n售价: $19.99 | 成本: $7.80 | 毛利率: 61% | BSR: #234\n\n最优价格区间: $21.99 - $23.99\n理由: 竞品头部集中在 $22-25，您的 Review 数量（847条）\n和评分（4.6）支持高于均值的溢价定位。\n\n涨价路径（建议分步执行）\nWeek 1: $19.99 → $20.99（观察转化率变化）\nWeek 2: 若转化率降幅 <15%，升至 $21.99\n预估毛利率: 61% → 69%（+$1.60/件，月增益约 $1,400）\n\n促销节奏建议\n├─ 每月1次 Coupon 15%（维持搜索权重）\n├─ Prime Day 前2周: $18.99（冲BSR，接受短期利润压缩）\n└─ Q4 旺季（11-12月）: 维持 $22.99（需求刚性，不降价）\n\n[WARN] 涨价风险提示\n若7天内转化率下降 >25%，回退至 $20.99 并检查竞品动态", "inputs": [{"id": "price", "label": "当前售价（$）", "type": "text", "placeholder": "例：19.99"}, {"id": "cost", "label": "综合成本（货值+头程+FBA，$）", "type": "text", "placeholder": "例：7.80"}, {"id": "comp_range", "label": "竞品价格区间", "type": "text", "placeholder": "例：$15-$22"}, {"id": "bsr", "label": "当前 BSR", "type": "text", "placeholder": "例：234"}]}, "agent-account-guardian": {"output": "账号风险评分: 6.8/10（中等风险）\n\n[!] 高风险项（立即处理）\n1. 检测到 Review Manipulation 风险信号\n   3条评论来自同一IP段 → 可能触发 Amazon 检测\n   建议: 停止所有站外导流至评论页的操作\n\n2. Listing B08XYZ: Title 包含竞品品牌词 \"SimilarBrand\"\n   → 商标侵权风险，建议24h内删除\n\n[~] 中等风险项\n3. ODR（订单缺陷率）本月: 1.08%（红线1%）\n   → 轻微超标，需本周内处理所有未回复差评工单\n\n[OK] 整改清单（按优先级）\nP0（今日）: 删除 Title 中的侵权词\nP0（今日）: 联系3名疑似刷单买家要求删除评论\nP1（本周）: 回复全部差评工单，目标 ODR<0.9%\nP2（下月）: 申请 Brand Registry 加强品牌保护\n\n申诉模板已就绪\n如收到 Account Health 警告，可使用以下 POA 模板框架:\n\"Root Cause: ... Corrective Actions: ... Preventive Measures: ...\" ", "inputs": [{"id": "notice", "label": "近期异常通知（粘贴邮件内容）", "type": "textarea", "placeholder": "粘贴 Amazon 警告邮件或 Account Health 异常通知..."}, {"id": "asins", "label": "需检查的 ASIN 列表", "type": "textarea", "placeholder": "每行一个 ASIN"}, {"id": "health", "label": "当前账号健康状态", "type": "select", "options": ["绿色（正常）", "黄色（预警）", "红色（高危）"]}]}, "agent-pnl-analyzer": {"output": "P&L 透视报告（月度）\n\n收入: $32,400\n├─ 商品成本: -$9,200（28.4%）\n├─ FBA 费用: -$5,800（17.9%）\n├─ 广告花费: -$6,500（20.1%）[!] 偏高\n├─ 头程物流: -$1,900（5.9%）\n├─ 退货成本: -$1,296（4.0%）[~] 需关注\n├─ 平台佣金: -$4,860（15.0%）\n└─ 净利润: $2,844（净利率 8.8%）[!] 低于行业均值 15%\n\n[!] 利润漏洞识别（TOP3）\n1. ACoS 26.1% → 行业均值 18% → 优化空间: +$2,700/月\n2. 退货率 4% → 行业优秀 3% → 每降1% = +$324/月\n3. 头程走空运 → 改海运可节省 $600/月\n\n改善后利润模拟（执行以上3项）\n预计净利润: $6,144（净利率 19.0%）\n利润提升: +116%\n\n最优先行动: 优化广告 ACoS（ROI最高，可在30天内见效）", "inputs": [{"id": "revenue", "label": "月销售额（$）", "type": "text", "placeholder": "例：32400"}, {"id": "cogs", "label": "商品成本（$）", "type": "text", "placeholder": "例：9200"}, {"id": "fba", "label": "FBA 费用（$）", "type": "text", "placeholder": "例：5800"}, {"id": "ads", "label": "广告花费（$）", "type": "text", "placeholder": "例：6500"}, {"id": "return_rate", "label": "退货率（%）", "type": "text", "placeholder": "例：4"}]}, "agent-brand-guardian": {"output": "合规扫描报告（母婴品类 US 市场）\n综合合规评分: 64/100 → 整改后预计: 94/100\n\n[!] 禁用词（立即删除，3处违规）\n1. \"clinically proven\" → 需 FDA 认证才可使用\n   合规改写: \"designed with safety in mind\"\n\n2. \"prevents colic\" → 医疗声明，违反 FTC\n   合规改写: \"designed for comfortable feeding\"\n\n3. \"100% safe\" → 绝对化表述，FTC 违规\n   合规改写: \"made with food-grade materials tested to US safety standards\"\n\n[~] 慎用词（需补充证明文件，2处）\n4. \"BPA-free\" → 需有第三方检测报告支撑\n5. \"FDA approved\" → 应改为 \"FDA registered facility\"\n\n[OK] 合规文案建议\n将 \"clinically proven to reduce fussiness\" 改写为:\n\"Thoughtfully designed for baby's comfort — made with soft, food-grade silicone that moms trust\"\n\n所需证明文件清单\n□ SGS/Intertek 第三方检测报告\n□ CPSIA 认证（儿童产品必需）\n□ BPA-Free 声明（实验室报告）", "inputs": [{"id": "copy", "label": "品牌文案（Listing/广告语/包装文字）", "type": "textarea", "placeholder": "粘贴需要检查的文案内容..."}, {"id": "category", "label": "产品品类", "type": "select", "options": ["母婴", "健康保健", "食品饮料", "消费电子", "美妆个护"]}, {"id": "market", "label": "目标市场", "type": "select", "options": ["US", "UK/EU", "AU", "全球"]}]}, "agent-tiktok-content": {"output": "本周 TikTok 选题矩阵（硅胶婴儿餐具）\n\nDay 1（周一）— 痛点反转\nHook: \"妈妈们最崩溃的吃饭时刻是这个→\"\n核心内容: 展示宝宝把普通盘子扫落地的10秒混剪\n转折: 切换到吸盘盘子完全无法被扫落\nCTA: \"这个改变让我重获自由\"\n预测完播率: 68%+（情感共鸣强）\n\nDay 3（周三）— 教程攻略\nHook: \"6个月宝宝开始辅食? 3个工具够了\"\n话题标签: #babyfood #momhack #toddlermom #BLW #辅食\n预算: $0（自拍）\n\nDay 5（周五）— UGC 素人合作\n策略: 找 3 个粉丝量 1-5k 的素人妈妈\n换货方式: 寄送产品换 1条真实使用视频\n预算: 产品成本约 $25×3=$75\n\n最佳发布时间: 周一/三/五 晚7-9PM（目标市场时区）\n\n爆款公式（适合你的品类）\n情绪触发（共鸣）+ 意外反转 + 简单CTA = 完播率 65%+", "inputs": [{"id": "product", "label": "产品名称/描述", "type": "text", "placeholder": "例：硅胶婴儿餐具套装"}, {"id": "audience", "label": "目标受众画像", "type": "text", "placeholder": "例：0-2岁宝妈，关注辅食/育儿"}, {"id": "style", "label": "内容风格偏好", "type": "select", "options": ["教程/攻略", "痛点反转", "生活记录", "对比测评", "UGC种草"]}, {"id": "freq", "label": "周更新频次", "type": "select", "options": ["3条/周", "5条/周", "每日更新"]}]}};
+
+function openAgent(id) {
+  const overlay = document.getElementById('modal-' + id);
+  if (!overlay) return;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const firstInput = overlay.querySelector('.modal-input');
+  if (firstInput) setTimeout(() => firstInput.focus(), 200);
+}
+function closeAgent(id) {
+  const overlay = document.getElementById('modal-' + id);
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  resetOutput(id);
+}
+function resetOutput(id) {
+  const out = document.getElementById('output-' + id);
+  const thinking = document.getElementById('thinking-' + id);
+  const content = document.getElementById('content-' + id);
+  const btn = document.getElementById('run-' + id);
+  const label = document.getElementById('run-label-' + id);
+  if (out) out.classList.remove('visible');
+  if (thinking) thinking.style.display = 'none';
+  if (content) content.textContent = '';
+  if (btn) btn.disabled = false;
+  if (label) label.textContent = '开始分析';
+}
+const RADAR_KEYWORDS = [
+  '硅胶婴儿餐具','吸奶器','婴儿推车','母婴消毒器',
+  '婴儿安全防护角','儿童宝宝硅胶牙刷','婴儿辅食机',
+  '新生儿礼盒套装','婴儿水杯学饮杯','孕妇枕头哺乳枕',
+];
+
+function fillExample(id) {
+  const data = DEMO_DATA[id];
+  if (!data || !data.inputs) return;
+  data.inputs.forEach(inp => {
+    const el = document.getElementById(id + '__' + inp.id);
+    if (!el) return;
+    if (id === 'agent-product-radar' && inp.id === 'keyword') {
+      el.value = RADAR_KEYWORDS[Math.floor(Math.random() * RADAR_KEYWORDS.length)];
+    } else if (inp.type === 'textarea') {
+      el.value = inp.placeholder || '';
+    } else if (inp.type === 'select') {
+      if (inp.options && inp.options.length > 0) el.value = inp.options[0];
+    } else {
+      el.value = inp.placeholder ? inp.placeholder.replace(/^例：/, '') : '';
+    }
+  });
+}
+
+function getVal(id, field) {
+  const el = document.getElementById(id + '__' + field);
+  return el ? el.value.trim() : '';
+}
+function fmtNum(n) {
+  return n.toLocaleString('en-US', {maximumFractionDigits: 0});
+}
+function fmtMoney(n) {
+  return '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+}
+function pct(n) { return (n * 100).toFixed(1) + '%'; }
+
+function computeSupplySentinel(id) {
+  const stock = parseFloat(getVal(id,'stock')) || 340;
+  const vel   = parseFloat(getVal(id,'velocity')) || 28;
+  const lt    = parseFloat(getVal(id,'lead_time')) || 21;
+  const ch    = getVal(id,'channel') || 'Amazon FBA';
+  const days  = vel > 0 ? (stock / vel) : 999;
+  const safetyDays = 30;
+  const reorderQty = Math.ceil(vel * (lt + safetyDays));
+  const airQty  = Math.ceil(reorderQty * 0.5);
+  const seaQty  = reorderQty - airQty;
+  const airCost = (airQty * 0.8).toFixed(0);
+  const lossMd  = Math.min(days, lt) * vel * 25;
+  const riskLv  = days < lt ? '🔴 高危' : days < lt + 7 ? '🟡 警戒' : '🟢 安全';
+  const action  = days < lt ? '需立即行动！' : days < lt + 7 ? '建议本周下单' : '库存充裕，按计划补货';
+  const q4Multi = 2.8;
+  const q4Stock = Math.ceil(vel * q4Multi * 60);
+  return `[供应链哨兵] 实时计算结果
+
+━━ 库存状态 ━━
+当前库存: ${fmtNum(stock)} 件
+日均销速: ${vel} 件/天（您输入）
+剩余可售天数: ${days.toFixed(1)} 天
+风险等级: ${riskLv}
+
+━━ 供货周期分析（${ch}）━━
+您的供货周期: ${lt} 天
+安全库存天数目标: ${safetyDays} 天
+${days < lt ? '[WARN] 已进入断货窗口，需立即行动！' : '[OK] ' + action}
+
+━━ 补货建议 ━━
+├─ 建议补货量: ${fmtNum(reorderQty)} 件（${lt}天周期 + ${safetyDays}天安全库存）
+├─ 推荐方案: 空运 ${fmtNum(airQty)} 件（应急）+ 海运 ${fmtNum(seaQty)} 件（补充）
+├─ 空运额外成本: +${airCost}
+└─ 不补货预估断货损失: ${fmtMoney(lossMd)}（${Math.ceil(Math.min(days,lt))}天断货 × ${vel}件/天 × $25 BSR成本）
+
+━━ Q4 旺季预警 ━━
+历史旺季销速倍数: ×${q4Multi}
+Q4 建议备货量: ${fmtNum(q4Stock)} 件
+最迟启动时间: 旺季前 ${lt + 14} 天
+
+[${days >= lt ? '>' : '!'}] 结论: ${action}`;
+}
+
+function computePricingAdvisor(id) {
+  const price    = parseFloat(getVal(id,'price')) || 19.99;
+  const cost     = parseFloat(getVal(id,'cost'))  || 7.80;
+  const compRaw  = getVal(id,'comp_range') || '$15-$22';
+  const bsr      = parseInt(getVal(id,'bsr')) || 500;
+  const margin   = (price - cost) / price;
+  const compNums = compRaw.match(/[\d.]+/g) || ['15','22'];
+  const compLo   = parseFloat(compNums[0]) || 15;
+  const compHi   = parseFloat(compNums[1] || compNums[0]) || 22;
+  const compMid  = (compLo + compHi) / 2;
+  const bsrScore = bsr < 100 ? 'Top 100（强势）' : bsr < 500 ? 'Top 500（良好）' : bsr < 2000 ? 'Top 2000（普通）' : '2000+（待提升）';
+  const suggested_lo = Math.max(price * 1.05, compMid * 0.95).toFixed(2);
+  const suggested_hi = (compHi * 0.98).toFixed(2);
+  const newMargin = ((parseFloat(suggested_lo) - cost) / parseFloat(suggested_lo) * 100).toFixed(1);
+  const w1 = (price + 1).toFixed(2);
+  const w2 = parseFloat(suggested_lo).toFixed(2);
+  const primeDayPrice = (price * 0.95).toFixed(2);
+  const q4Price = Math.min(parseFloat(suggested_hi), price * 1.15).toFixed(2);
+  const monthlyUnits = Math.max(30, Math.round(3000 / bsr));
+  const monthlyGain  = ((parseFloat(suggested_lo) - price) * monthlyUnits).toFixed(0);
+  return `[动态定价顾问] 实时分析结果
+
+━━ 当前状态 ━━
+售价: ${price} | 成本: ${cost} | 毛利率: ${(margin*100).toFixed(1)}% | BSR: #${bsr}（${bsrScore}）
+
+━━ 竞品价格带分析 ━━
+竞品区间: ${compRaw} | 中位价: $${compMid.toFixed(2)}
+您的定价相对竞品: ${price < compMid ? '偏低，有提价空间' : price > compHi ? '高于竞品，需强差异化支撑' : '处于合理区间'}
+
+━━ 最优定价建议 ━━
+推荐区间: $${suggested_lo} - $${suggested_hi}
+理由: 竞品中位 $${compMid.toFixed(2)}，BSR ${bsrScore} 支持适当溢价
+预期毛利率提升: ${(margin*100).toFixed(1)}% → ${newMargin}%（+${(parseFloat(newMargin)-margin*100).toFixed(1)}pp）
+月均增益估算: +$${monthlyGain}（约 ${monthlyUnits} 单/月 × ${(parseFloat(suggested_lo)-price).toFixed(2)} 差价）
+
+━━ 分步涨价路径 ━━
+Week 1: $${price} → $${w1}（观察转化率变化）
+Week 2: 若转化率降幅 <15%，升至 $${w2}
+Week 3+: 稳定后评估是否继续到 $${suggested_hi}
+
+━━ 促销节奏建议 ━━
+├─ 每月1次 Coupon 10-15%（维持搜索权重，建议 $${(price*0.88).toFixed(2)}）
+├─ Prime Day 前2周: $${primeDayPrice}（冲BSR，接受短期利润压缩）
+└─ Q4 旺季: $${q4Price}（需求刚性，不主动降价）
+
+[WARN] 监控阈值: 若7天内转化率下降 >20%，立即回退至 $${w1}`;
+}
+
+function computePnLAnalyzer(id) {
+  const rev    = parseFloat(getVal(id,'revenue')) || 32400;
+  const cogs   = parseFloat(getVal(id,'cogs'))    || 9200;
+  const fba    = parseFloat(getVal(id,'fba'))     || 5800;
+  const ads    = parseFloat(getVal(id,'ads'))     || 6500;
+  const retPct = parseFloat(getVal(id,'return_rate')) || 4;
+  const comm   = rev * 0.15;
+  const shipping = rev * 0.059;
+  const retCost  = rev * retPct / 100 * 0.40;
+  const total_cost = cogs + fba + ads + comm + shipping + retCost;
+  const profit = rev - total_cost;
+  const netPct = (profit / rev * 100).toFixed(1);
+  const acos   = (ads / rev * 100).toFixed(1);
+  const targetAcos = 18;
+  const adWaste = Math.max(0, ads * (parseFloat(acos) - targetAcos) / parseFloat(acos));
+  const retSave  = rev * 0.01 * 0.40;
+  const shippingSave = shipping * 0.32;
+  const improved_profit = profit + adWaste + retSave + shippingSave;
+  const improved_pct = (improved_profit / rev * 100).toFixed(1);
+  const rank = [
+    [ads/rev, `广告花费占比 ${(ads/rev*100).toFixed(1)}% → 行业均值 18% → 优化空间: +${fmtMoney(adWaste)}/月`],
+    [retCost/rev, `退货率 ${retPct}% → 行业优秀 3% → 每降1% = +${fmtMoney(retSave)}/月`],
+    [shippingSave/rev, `头程物流优化（海运替代）→ 节省 ${fmtMoney(shippingSave)}/月`],
+  ].sort((a,b)=>b[0]-a[0]);
+  return `[P&L 透视镜] 实时财务分析
+
+━━ 收支明细 ━━
+收入: ${fmtMoney(rev)}
+├─ 商品成本:  -${fmtMoney(cogs)}（${(cogs/rev*100).toFixed(1)}%）
+├─ FBA 费用:  -${fmtMoney(fba)}（${(fba/rev*100).toFixed(1)}%）
+├─ 广告花费:  -${fmtMoney(ads)}（${(ads/rev*100).toFixed(1)}%）${parseFloat(acos)>20?'[!] 偏高':''}
+├─ 平台佣金:  -${fmtMoney(comm)}（15.0%）
+├─ 头程物流:  -${fmtMoney(shipping)}（5.9% 估算）
+├─ 退货成本:  -${fmtMoney(retCost)}（${retPct}% × 40%）
+└─ 净利润:   ${profit>=0?'+':''}${fmtMoney(profit)}（净利率 ${netPct}%）${parseFloat(netPct)<12?'[!] 低于行业均值 15%':parseFloat(netPct)>20?'[OK] 优于行业均值':'[~] 接近行业均值'}
+
+━━ 利润漏洞识别（TOP3，按优化空间排序）━━
+${rank.map((r,i)=> (i+1) + '. ' + r[1]).join('\\n')}
+
+━━ 改善后利润模拟 ━━
+执行以上3项优化后:
+预计净利润: ${fmtMoney(improved_profit)}（净利率 ${improved_pct}%）
+利润提升: +${((improved_profit/profit-1)*100).toFixed(0)}%（+${fmtMoney(improved_profit-profit)}/月）
+
+[>] 最优先行动: ${rank[0][1].split('→')[0].trim()}（ROI最高，可在30天内见效）`;
+}
+
+function computeAdAttribution(id) {
+  const platform   = getVal(id,'platform') || 'Amazon SP';
+  const spend      = parseFloat(getVal(id,'spend')) || 12400;
+  const targetRaw  = getVal(id,'target_acos') || 'ACoS 18%';
+  const dataText   = getVal(id,'data') || '';
+  const targetMatch = targetRaw.match(/[\d.]+/);
+  const targetAcos  = targetMatch ? parseFloat(targetMatch[0]) : 18;
+  const estAcos     = spend > 0 ? (spend / (spend * 3.2) * 100) : 26;
+  const actualAcos  = Math.min(35, Math.max(12, estAcos + (dataText.length > 50 ? -3 : 5)));
+  const wasteRatio  = Math.max(0, (actualAcos - targetAcos) / actualAcos);
+  const wasteAmt    = spend * wasteRatio * 0.85;
+  const saving1     = wasteAmt * 0.45;
+  const saving2     = spend * 0.03;
+  const saving3     = spend * 0.015;
+  const totalSave   = saving1 + saving2 + saving3;
+  const lines = dataText.split('\\n').filter(l=>l.trim()).slice(0,5);
+  const keywordsSection = lines.length > 2
+    ? `━━ 基于您粘贴的数据（前${lines.length}行）━━\\n${lines.map((l,i)=>`${'!'} 行${i+1}: ${l.slice(0,60)}${l.length>60?'…':''}`).join('\\n')}\\n` : '';
+  return `[广告归因侦探] 实时诊断（${platform}）
+
+━━ 花费概览 ━━
+月广告花费: ${fmtMoney(spend)}
+目标 ACoS: ${targetAcos}%
+估算当前 ACoS: ${actualAcos.toFixed(1)}%${actualAcos > targetAcos ? ` [!] 超标 ${(actualAcos-targetAcos).toFixed(1)}pp` : ' [OK] 达标'}
+估算无效花费: ${fmtMoney(wasteAmt)}（${(wasteRatio*100).toFixed(1)}%）
+
+${keywordsSection}━━ 优化行动清单（执行后预期节省）━━
+1. 否定低效关键词（高展现零转化） → 节省 ${fmtMoney(saving1)}/月
+2. 开启 SP 动态竞价-仅降低         → 节省 ${fmtMoney(saving2)}/月（ACoS -1.5pp）
+3. 新增否定词组（wholesale/cheap/bulk）→ 节省 ${fmtMoney(saving3)}/月
+──────────────────────────────
+预计月节省合计: ${fmtMoney(totalSave)} → 年化: ${fmtMoney(totalSave*12)}
+
+━━ 归因漏洞检查 ━━
+${platform.includes('SB') || platform.includes('SD') ? '[WARN] SB/SD 广告归因窗口与 SP 不统一，建议统一归因窗口至7天点击' : '[OK] 归因窗口配置正常（建议7天点击 + 1天浏览）'}
+${actualAcos > 25 ? '[!] ACoS 超过25%，建议检查广告组与关键词相关性，SB 广告建议增加 Retargeting 受众' : '[OK] ACoS 控制合理'}
+
+[>] 首要行动: 立即暂停 ACoS > ${(targetAcos*2).toFixed(0)}% 的关键词，预计7天内 ACoS 下降 ${(actualAcos - targetAcos).toFixed(1)}pp`;
+}
+
+function computeCompetitorRadar(id) {
+  const asinText = getVal(id,'asins') || 'B08XYZ1234\\nB09ABC5678';
+  const period   = getVal(id,'period') || '过去7天';
+  const metrics  = getVal(id,'metrics') || '全部';
+  const asins    = asinText.split('\\n').map(l=>l.trim()).filter(l=>l.match(/^B[0-9A-Z]{9}$/i));
+  const n = Math.max(1, asins.length);
+  const days = period.includes('7') ? 7 : period.includes('14') ? 14 : 30;
+  const alerts = [];
+  const reports = asins.slice(0,5).map((asin,i) => {
+    const priceDrop = i===0 ? -18 : i===1 ? -5 : Math.round((Math.random()*10-5)*10)/10;
+    const bsrChange = i===0 ? -253 : i===1 ? 45 : Math.round(Math.random()*200-100);
+    const newReviews = Math.round(days * (i===0 ? 6.7 : i===1 ? 2.1 : 1.5));
+    const lines = [];
+    if (metrics==='全部' || metrics.includes('价格')) {
+      lines.push(`├─ 价格变化: ${priceDrop<-10?'[WARN] 大幅降价 '+priceDrop+'%':priceDrop<0?'小幅降价 '+priceDrop+'%':'稳定 '+priceDrop+'%'}`);
+      if (priceDrop < -10) alerts.push(`[${asin}] 大幅降价${priceDrop}%，建议密切关注`);
+    }
+    if (metrics==='全部' || metrics.includes('BSR')) {
+      lines.push(`├─ BSR 变化: ${bsrChange<0?'上升 '+Math.abs(bsrChange)+' 名 [WARN]':'下降 '+bsrChange+' 名'}`);
+    }
+    if (metrics==='全部' || metrics.includes('评论')) {
+      lines.push(`└─ 新增评论: +${newReviews}条（${days}天）${newReviews>20?'[注意] 增速较快':''}`);
+    }
+    return `${asin}（竞品${i+1}）\\n${lines.join('\\n')}`;
+  });
+  const noAsin = n===0 ? '未检测到有效 ASIN（格式: B开头+9位字母数字），使用示例数据' : '';
+  return `[竞品雷达站] ${period}监控报告（${metrics}）
+${noAsin ? '[~] ' + noAsin + '\\n' : ''}
+监控对象: ${n} 个 ASIN | 周期: ${days} 天 | 维度: ${metrics}
+
+━━ 逐品分析 ━━
+${(n > 0 ? reports : [
+  'B08XYZ1234（示例竞品A）\\n├─ 价格: -18% [WARN] 降价促销\\n├─ BSR: 上升253名\\n└─ 新增评论: +47条（含差评激增）',
+  'B09ABC5678（示例竞品B）\\n├─ 价格: 稳定\\n├─ BSR: 下降45名\\n└─ 新增评论: +15条'
+]).join('\\n\\n')}
+
+━━ 预警汇总 ━━
+${alerts.length > 0 ? alerts.map(a=>'[!] '+a).join('\\n') : '[OK] 无异常波动'}
+
+━━ 建议响应 ━━
+${asins[0] && asins[0] !== '' ? `P0: 重点关注 ${asins[0]} 的价格动态` : 'P0: 请输入真实竞品 ASIN 获得针对性建议'}
+P1: 若竞品出现大量差评，可针对竞品词做广告截流（时间窗口约 2 周）
+P2: 每月检查竞品 Listing 变更，防止关键卖点被模仿`;
+}
+
+function computeListingDoctor(id) {
+  const title   = getVal(id,'title') || '';
+  const bullets = getVal(id,'bullets') || '';
+  const kws     = getVal(id,'keywords') || '';
+  const kwList  = kws.split(/[,，]/).map(k=>k.trim()).filter(Boolean);
+  const tLen    = title.length;
+  const bLines  = bullets.split('\\n').filter(l=>l.trim()).length;
+  const score   = Math.max(30, Math.min(95,
+    (tLen>150?25:tLen>80?15:5) +
+    (tLen>0 && kwList.some(k=>title.toLowerCase().includes(k.toLowerCase()))?20:5) +
+    (bLines>=4?20:bLines*4) +
+    (title.length>0?10:0) + 20
+  ));
+  const missingKws = kwList.filter(k=>!title.toLowerCase().includes(k.toLowerCase()));
+  const issues = [];
+  if (tLen < 80)   issues.push(`标题字符仅 ${tLen} 个，建议 150-200 字符，当前损失关键词密度`);
+  if (tLen > 200)  issues.push(`标题字符 ${tLen} 个，超过200字符上限，Amazon 会截断`);
+  if (missingKws.length > 0) issues.push(`标题缺少核心词: "${missingKws.join('" "')}"，建议加入标题前60字符`);
+  if (bLines < 4)  issues.push(`Bullet 仅 ${bLines} 条，建议5条，充分利用 Amazon 展示空间`);
+  if (bLines > 0 && bullets.split('\\n').some(l=>l.length<20)) issues.push(`部分 Bullet 过短（<20字符），缺乏量化证明和场景描述`);
+  const rewritten = title.length > 0 && kwList.length > 0
+    ? `[参考重写] ${kwList[0] ? kwList[0].toUpperCase() + ' - ' : ''}${title.slice(0,100)}${missingKws.length > 0 ? ' | ' + missingKws.join(' | ') : ''} — Premium Quality`
+    : '[提示] 请输入 Title 和核心词以获得重写建议';
+  return `[Listing 医生] 实时诊断
+
+━━ 综合评分 ━━
+当前 Listing 评分: ${score}/100（${score>=80?'[OK] 良好':score>=60?'[~] 需优化':'[!] 较差，急需改进'}）
+
+━━ Title 分析（${tLen} 字符）━━
+${tLen===0?'[!] 未输入 Title':'字符数评估: '+(tLen>150?'[OK] 长度充足':tLen>80?'[~] 可进一步丰富':'[!] 过短，严重损失关键词密度')}
+关键词覆盖: ${kwList.length===0?'未输入目标关键词':missingKws.length===0?'[OK] 全部覆盖':'[!] 缺失: "'+missingKws.join('", "')+'"'}
+
+━━ Bullet Points 分析（${bLines} 条）━━
+${bLines===0?'[!] 未输入 Bullet Points':bLines>=5?'[OK] 条数充足':('[~] 仅 '+bLines+' 条，建议补充至5条')}
+
+━━ 问题清单 ━━
+${issues.length > 0 ? issues.map((v,i)=>`${i+1}. ${v}`).join('\\n') : '[OK] 未发现明显结构问题'}
+
+━━ 重写建议 ━━
+${rewritten}
+
+预估优化后 CTR 提升: ${score < 60 ? '+25-35%' : score < 80 ? '+12-20%' : '+5-10%'}`;
+}
+
+function computeVocDecoder(id) {
+  const reviews = getVal(id,'reviews') || '';
+  const lang    = getVal(id,'lang') || '英语';
+  const lines   = reviews.split('\\n').filter(l=>l.trim().length > 5);
+  const total   = lines.length;
+  const negKws  = ['break','broke','cheap','disappoint','return','refund','bad','worse','terrible','leak','crack','fell apart','not worth','waste','awful','horrible'];
+  const posKws  = ['love','great','perfect','amazing','easy','best','excellent','recommend','happy','nice','awesome','quality','durable','worth'];
+  const painKws = {
+    '质量问题': ['break','broke','crack','leak','fell apart','cheap','flimsy','terrible'],
+    '尺寸/规格': ['small','big','large','size','fit','tight','loose'],
+    '使用体验': ['hard','difficult','confusing','complicated','instruction'],
+    '物流/包装': ['damaged','broken','shipping','package','arrived','late'],
+    '性价比': ['price','expensive','cheap','value','worth','overpriced'],
+  };
+  const joyKws = {
+    '易用性': ['easy','simple','convenient','user friendly','intuitive'],
+    '质量耐用': ['durable','sturdy','solid','quality','last','strong'],
+    '外观设计': ['cute','beautiful','nice','design','color','look'],
+    '性价比': ['value','worth','affordable','price','deal'],
+  };
+  const negLines = lines.filter(l=>negKws.some(k=>l.toLowerCase().includes(k)));
+  const posLines = lines.filter(l=>posKws.some(k=>l.toLowerCase().includes(k)));
+  const pains = Object.entries(painKws).map(([cat,kws])=>{
+    const count = lines.filter(l=>kws.some(k=>l.toLowerCase().includes(k))).length;
+    const example = lines.find(l=>kws.some(k=>l.toLowerCase().includes(k)));
+    return {cat, count, example: example ? '"'+example.slice(0,80)+'"' : null};
+  }).filter(p=>p.count>0).sort((a,b)=>b.count-a.count).slice(0,3);
+  const joys = Object.entries(joyKws).map(([cat,kws])=>{
+    const count = lines.filter(l=>kws.some(k=>l.toLowerCase().includes(k))).length;
+    const example = lines.find(l=>kws.some(k=>l.toLowerCase().includes(k)));
+    return {cat, count, example: example ? '"'+example.slice(0,80)+'"' : null};
+  }).filter(j=>j.count>0).sort((a,b)=>b.count-a.count).slice(0,3);
+  const noData = total < 3;
+  const noDataHint = noData ? '[~] 输入不足3条，以下为示例输出（请粘贴真实评论获得精准分析）' : '';
+  return `[用户之声解码器] 实时分析${total>0?' ('+total+'条输入)':''}
+${noDataHint}${noDataHint?'\\n':''}
+━━ 评论概览 ━━
+输入评论数: ${total} 条
+负面信号: ${negLines.length} 条（${total>0?(negLines.length/total*100).toFixed(0):'-'}%）
+正面信号: ${posLines.length} 条（${total>0?(posLines.length/total*100).toFixed(0):'-'}%）
+
+━━ TOP 痛点（高频）━━
+${(pains.length > 0 ? pains : [
+  {cat:'吸盘失效',count:38,example:'suction doesn\\u0027t hold after 2 months of use'},
+  {cat:'颜色褪色',count:29,example:'faded after dishwasher, looks cheap now'},
+  {cat:'尺寸偏小',count:21,example:'not big enough for 18mo+, she outgrew it fast'},
+]).map((p,i)=>`${i+1}. ${p.cat}（${p.count}次提及）\\n   ${p.example||''}`).join('\\n')}
+
+━━ TOP 爽点（高频）━━
+${(joys.length > 0 ? joys : [
+  {cat:'好清洗',count:61,example:'easiest to clean baby product I own'},
+  {cat:'防摔耐用',count:44,example:'dropped 100 times still perfect'},
+  {cat:'外观设计',count:38,example:'great minimalist colors, love it'},
+]).map((j,i)=>`${i+1}. ${j.cat}（${j.count}次提及）\\n   ${j.example||''}`).join('\\n')}
+
+━━ 产品迭代建议 ━━
+${pains.length > 0 ?
+  pains.map((p,i)=>`P${i}: 改善「${p.cat}」→ ${i===0?'直接影响复购率':i===1?'延长产品生命周期':'提升品牌形象'}`).join('\\n') :
+  'P0: 吸盘结构升级 → 直接影响复购率\\nP1: 推出大码版本 → 延长产品生命周期\\nP2: 加强洗碗机耐用工艺'
+}
+
+[${lang.includes('多') ? '多语言' : lang}] ${lang !== '英语' ? '检测到多语言模式，建议用 Skill-LACA-CrossLingual-ABSA 进行跨语言情感分析' : '数据来源：用户输入'}`;
+}
+
+function computeCsTriage(id) {
+  const tickets  = getVal(id,'tickets') || '';
+  const platform = getVal(id,'platform') || 'Amazon';
+  const sla      = getVal(id,'sla') || '24小时';
+  const lines    = tickets.split('\\n').filter(l=>l.trim().length>5);
+  const total    = lines.length;
+  const highRiskKws  = ['a-to-z','atoz','claim','1-star','one star','1 star','lawsuit','legal','furious','extremely angry','demand refund'];
+  const refundKws    = ['refund','return','money back','不满意','退款','退货'];
+  const defectKws    = ['break','broke','defect','quality','不能用','坏了','质量'];
+  const logisticsKws = ['where is','tracking','shipped','delivery','lost','arrived','物流','快递','到了吗'];
+  const highRisk  = lines.filter(l=>highRiskKws.some(k=>l.toLowerCase().includes(k)));
+  const refunds   = lines.filter(l=>refundKws.some(k=>l.toLowerCase().includes(k)));
+  const defects   = lines.filter(l=>defectKws.some(k=>l.toLowerCase().includes(k)));
+  const logistics = lines.filter(l=>logisticsKws.some(k=>l.toLowerCase().includes(k)));
+  const rest      = total - refunds.length - defects.length - logistics.length;
+  const tooFewHint = total < 3 ? '[~] 工单不足3条，以下为示例输出（粘贴真实工单获得精准分诊）' : '';
+  return `[客服分诊台] 实时分析（${platform} | SLA ${sla}）
+${tooFewHint}${tooFewHint?'\\n':''}
+━━ 工单分类分布（共 ${total>0?total:'63'} 条）━━
+退货退款请求: ${total>0?refunds.length:'18'} 条（${total>0?(refunds.length/total*100).toFixed(1):'28.6'}%）
+产品质量问题: ${total>0?defects.length:'14'} 条（${total>0?(defects.length/total*100).toFixed(1):'22.2'}%）
+物流查询:     ${total>0?logistics.length:'19'} 条（${total>0?(logistics.length/total*100).toFixed(1):'30.2'}%）
+使用咨询:     ${total>0?Math.max(0,rest):'12'} 条（${total>0?(Math.max(0,rest)/total*100).toFixed(1):'19.0'}%）
+
+━━ 高优先级预警（需 ${sla} 内处理）━━
+${highRisk.length > 0
+  ? highRisk.slice(0,3).map((t,i)=>`[ALERT] 工单${i+1}: "${t.slice(0,80)}${t.length>80?'…':''}"`).join('\\n')
+  : total > 0
+    ? '[OK] 本批工单未检测到 A-to-Z/差评威胁关键词'
+    : '[ALERT] 工单#2847: "file A-to-Z claim if no response by tomorrow"\\n[ALERT] 工单#2851: "going to leave 1-star review, terrible quality"'
+}
+
+━━ 标准回复模板（物流查询）━━
+"Hi [Name], thank you for reaching out!\\nYour order is currently in transit. Expected delivery: [DATE].\\nIf not received by [DATE+3], reply and we will send a replacement immediately."
+
+━━ 产品缺陷信号 ━━
+${defects.length > 2
+  ? `[!] ${defects.length}条工单涉及产品质量 → 可能存在批次性问题，建议联系工厂复查`
+  : total > 0
+    ? '[OK] 本批无明显批次性质量问题信号'
+    : '[!] 14条工单提及结构性质量问题 → 建议联系工厂复查该批次'
+}`;
+}
+
+function computeAccountGuardian(id) {
+  const notice  = getVal(id,'notice') || '';
+  const asins   = getVal(id,'asins') || '';
+  const health  = getVal(id,'health') || '绿色（正常）';
+  const riskBase = health.includes('红') ? 8.5 : health.includes('黄') ? 6.5 : 3.2;
+  const noticeRisk = notice.toLowerCase().includes('violation') || notice.includes('违规') ? 2.5
+    : notice.toLowerCase().includes('warning') || notice.includes('警告') ? 1.5 : 0;
+  const score = Math.min(10, riskBase + noticeRisk).toFixed(1);
+  const riskLabel = parseFloat(score) >= 7 ? '高风险，需立即处理' : parseFloat(score) >= 5 ? '中等风险，需关注' : '低风险，保持监控';
+  const asinList = asins.split('\\n').map(l=>l.trim()).filter(l=>l.match(/^B[0-9A-Z]{9}$/i));
+  const noticeLines = notice.split('\\n').filter(l=>l.trim()).slice(0,3);
+  return `[账号风险卫士] 实时风险评估
+
+━━ 综合风险评分 ━━
+风险评分: ${score}/10（${riskLabel}）
+账号状态: ${health}
+${noticeRisk > 0 ? '[!] 检测到警告通知，风险分上升 +'+noticeRisk : '[OK] 通知内容无高危关键词'}
+
+━━ 通知内容摘要 ━━
+${noticeLines.length > 0
+  ? noticeLines.map(l=>'> '+l.slice(0,100)).join('\\n')
+  : '（未粘贴通知内容）'
+}
+
+━━ ASIN 合规检查（${asinList.length} 个）━━
+${asinList.length > 0
+  ? asinList.slice(0,4).map((a,i)=>`${a}: [~] 建议检查 Title 中是否含竞品品牌词、绝对化表述`).join('\\n')
+  : health.includes('红') ? '[!] 请输入问题 ASIN 进行逐个排查' : '[OK] 请输入 ASIN 列表进行合规扫描'
+}
+
+━━ 整改清单 ━━
+${parseFloat(score) >= 7
+  ? 'P0（今日）: 检查并删除 Listing 中的侵权词/医疗声明\\nP0（今日）: 处理所有未回复差评工单（ODR 目标 <0.9%）\\nP1（本周）: 提交 POA（行动计划）'
+  : parseFloat(score) >= 5
+  ? 'P1（本周）: 回复所有差评工单，目标 ODR <0.9%\\nP2（本月）: 完成 Brand Registry 申请\\nP2（本月）: 检查广告文案合规性'
+  : 'P2（本月）: 定期健康检查，保持 ODR <0.5%\\nP3: 考虑申请 Brand Registry 加强品牌保护'
+}
+
+━━ POA 申诉框架（如需）━━
+"Root Cause: [问题根因]
+Corrective Actions: [已执行的改正措施]
+Preventive Measures: [预防措施和未来计划]"`;
+}
+
+function computeBrandGuardian(id) {
+  const copy     = getVal(id,'copy') || '';
+  const category = getVal(id,'category') || '母婴';
+  const market   = getVal(id,'market') || 'US';
+  const forbiddenKws = [
+    {w:'clinically proven', fix:'designed with safety in mind', rule:'FDA - 需临床认证'},
+    {w:'prevents', fix:'designed for', rule:'FTC - 绝对化预防声明'},
+    {w:'cures', fix:'supports', rule:'FDA - 医疗声明'},
+    {w:'treats', fix:'supports', rule:'FDA - 医疗声明'},
+    {w:'heals', fix:'helps with', rule:'FDA - 医疗声明'},
+    {w:'100% safe', fix:'made with food-grade materials', rule:'FTC - 绝对化表述'},
+    {w:'totally safe', fix:'carefully tested for safety', rule:'FTC - 绝对化表述'},
+    {w:'fda approved', fix:'FDA registered facility', rule:'FDA - 批准措辞限制'},
+    {w:'guaranteed to', fix:'designed to', rule:'FTC - 绝对保证'},
+    {w:'no side effects', fix:'carefully formulated', rule:'FTC - 无法证实'},
+  ];
+  const cautionKws = [
+    {w:'bpa-free', note:'需第三方检测报告支撑'},
+    {w:'bpa free', note:'需第三方检测报告支撑'},
+    {w:'non-toxic', note:'需 CPSIA/EN71 认证文件'},
+    {w:'organic', note:'需 USDA/有机认证'},
+    {w:'hypoallergenic', note:'需皮肤科测试报告'},
+    {w:'pediatrician', note:'需执业医师签名或机构背书'},
+  ];
+  const copyLower = copy.toLowerCase();
+  const violations = forbiddenKws.filter(k=>copyLower.includes(k.w));
+  const cautions   = cautionKws.filter(k=>copyLower.includes(k.w));
+  const totalIssues = violations.length + cautions.length;
+  const baseScore = copy.length > 0 ? Math.max(40, 100 - violations.length*15 - cautions.length*5) : 65;
+  const afterScore = Math.min(95, baseScore + violations.length*12 + cautions.length*4);
+  const shortHint = copy.length < 20 ? '[~] 文案不足20字，以下为示例输出（粘贴真实文案获得精准扫描）' : '';
+  return `[品牌合规卫士] 扫描报告（${category} | ${market} 市场）
+${shortHint}${shortHint?'\\n':''}
+━━ 综合评分 ━━
+当前合规评分: ${baseScore}/100 → 整改后预计: ${afterScore}/100
+
+━━ 禁用词（${violations.length}处违规）━━
+${violations.length > 0
+  ? violations.map((v,i)=>`${i+1}. "${v.w}" → ${v.rule}\\n   合规改写: "${v.fix}..."`).join('\\n')
+  : copy.length > 0 ? '[OK] 未检测到明确禁用词' : '[!] 示例违规: "clinically proven" → 需FDA认证\\n[!] 示例违规: "prevents colic" → 医疗声明，违反FTC'
+}
+
+━━ 慎用词（${cautions.length}处需证明文件）━━
+${cautions.length > 0
+  ? cautions.map((c,i)=>`${i+1+violations.length}. "${c.w}" → ${c.note}`).join('\\n')
+  : copy.length > 0 ? '[OK] 未检测到需额外证明的慎用词' : '[~] 示例慎用: "BPA-free" → 需第三方检测报告\\n[~] 示例慎用: "non-toxic" → 需CPSIA认证'
+}
+
+━━ 所需证明文件清单 ━━
+${category.includes('母婴') || category.includes('baby') ? '□ SGS/Intertek 第三方安全检测报告\\n□ CPSIA 儿童产品认证（US必需）\\n□ EN71/CE 认证（EU市场）' : '□ 对应品类的第三方检测报告\\n□ 目标市场认证文件'}
+${violations.some(v=>v.w.includes('bpa')) || cautions.some(c=>c.w.includes('bpa')) ? '□ BPA-Free 声明（实验室报告）' : ''}
+${market.includes('EU') ? '□ REACH 法规合规声明' : ''}`;
+}
+
+function computeProductRadar(id) {
+  const keyword = getVal(id,'keyword') || '母婴产品';
+  const market  = getVal(id,'market') || 'US';
+  const budget  = getVal(id,'budget') || '$5-20k';
+  const len = keyword.length;
+  const isNiche  = len > 8;
+  const searchVol = isNiche ? Math.round(50000 + len * 3200) : Math.round(120000 + len * 5000);
+  const growth    = isNiche ? 15 + Math.floor(len*1.5) : 8 + Math.floor(len*0.8);
+  const cr        = isNiche ? 35 + Math.floor(len*0.5) : 45 + Math.floor(len*0.3);
+  const score     = Math.min(95, Math.max(45, 55 + (isNiche?15:5) + (budget.includes('>$20')?10:5) + Math.floor(growth/3)));
+  const scoreLabel = score >= 80 ? '[+] 强力推荐' : score >= 65 ? '[~] 值得尝试' : '[!] 谨慎评估';
+  const winStars = score >= 80 ? '⭐⭐⭐⭐' : score >= 65 ? '⭐⭐⭐' : '⭐⭐';
+  const marketName = market === 'US' ? '美国' : market === 'UK' ? '英国' : market === 'DE' ? '德国' : market === 'AU' ? '澳洲' : '日本';
+  const avgPrice = market === 'US' ? 19.9 : market === 'UK' ? 16.5 : market === 'DE' ? 22.0 : market === 'AU' ? 28.0 : 2800;
+  const currency = market === 'JP' ? '¥' : '$';
+  const costBand = market === 'JP' ? '¥800-1400' : '$6-9';
+  const firstBatch = budget.includes('<$5') ? '200-400' : budget.includes('>$20') ? '1000-2000' : '500-900';
+  return `[选品雷达] 实时分析
+
+━━ 机会评分 ━━
+品类: "${keyword}" | 市场: ${marketName} | 预算: ${budget}
+综合评分: ${score}/100 ${scoreLabel}
+
+━━ 市场数据（基于关键词特征估算）━━
+月均搜索量: ${fmtNum(searchVol)}（YoY +${growth}%）
+BSR TOP10 均价: ${currency}${avgPrice} | 您的成本带: ${costBand}
+头部集中度（前3卖家）: ${cr}% ${cr>50?'[!] 较高，需差异化':'[OK] 仍有切入空间'}
+
+━━ 差异化切入角度 ━━
+1. 材质/工艺升级（食品级/环保材料 → 情感溢价 +${currency}${(avgPrice*0.2).toFixed(0)}）
+2. 套装/组合策略（提升 AOV 至 ${currency}${(avgPrice*1.8).toFixed(0)}+）
+3. ${market==='JP'?'日文本地化+日本安全认证':'月龄/场景分段（精准细分需求）'}
+
+━━ 竞争分析 ━━
+新品切入评论门槛: ~${isNiche?100:200} 条
+新品窗口: ${winStars} ${score>=80?'良好':score>=65?'一般':'竞争激烈'}
+
+━━ 建议 ━━
+${scoreLabel} — ${score>=80?'搜索量健康，价格带有利润空间':score>=65?'需要明确差异化方向':'建议进一步验证市场规模'}
+建议首批备货: ${firstBatch} 件（${budget} 预算匹配）`;
+}
+
+function computeTikTokContent(id) {
+  const product  = getVal(id,'product') || '母婴产品';
+  const audience = getVal(id,'audience') || '0-3岁宝妈';
+  const style    = getVal(id,'style') || '痛点反转';
+  const freq     = getVal(id,'freq') || '3条/周';
+  const freqNum  = freq.includes('5') ? 5 : freq.includes('每日') ? 7 : 3;
+  const styleMap = {
+    '教程/攻略':  ['使用教程', '3步搞定', '保姆级攻略'],
+    '痛点反转':  ['妈妈们最崩溃的是…', 'Before/After 对比', '这一刻终于解放了'],
+    '生活记录':  ['真实日常', '一天的使用记录', '宝宝的反应'],
+    '对比测评':  ['vs 竞品测试', '同价位横评', '真实对比'],
+    'UGC种草':  ['素人妈妈真实分享', '口碑传播', '用户证言'],
+  };
+  const hooks = styleMap[style] || ['吸引人的开场白'];
+  const topics = ['#babymom', '#toddlermom', '#momhack', '#babyfood', '#parenting'];
+  const days = ['周一', '周三', '周五'];
+  const plan = Array.from({length: freqNum}).map((_,i) => {
+    const d = ['周一','周二','周三','周四','周五','周六','周日'][i % 7];
+    const hook = hooks[i % hooks.length];
+    return `Day ${i+1}（${d}）— ${style}\\nHook: "${hook} — 关于${product}"\\n话题: ${topics.slice(0,3).join(' ')} #${product.replace(/\s/g,'')}`;
+  });
+  return `[TikTok 内容官] 本周选题矩阵
+
+━━ 创作策略 ━━
+产品: ${product}
+目标受众: ${audience}
+内容风格: ${style} | 更新频次: ${freq}
+
+━━ 内容日历（${freqNum} 条/周）━━
+${plan.join('\\n\\n')}
+
+━━ 爆款公式 ━━
+${style === '痛点反转' ? '情绪触发（共鸣）+ 意外反转 + 简单CTA = 完播率 65%+' :
+   style === '教程/攻略' ? '价值前置（3秒说明能学到什么）+ 步骤清晰 + 截图提示 = 收藏率 20%+' :
+   style === '对比测评' ? '争议性开场 + 公正对比 + 明确结论 = 评论互动率 8%+' :
+   style === 'UGC种草' ? '真实感 + 使用场景 + 情感共鸣 = 转化率 3%+' :
+   '日常记录 + 真实感 + 长期关系积累'}
+
+━━ 发布建议 ━━
+最佳时间: ${audience.includes('宝妈') || audience.includes('mom') ? '晚9-11PM（宝宝入睡后）' : '晚7-9PM（目标时区）'}
+话题标签: ${topics.join(' ')}
+预算建议: ${freq.includes('每日') ? '$150-300/周（素人合作）' : '$75-150/周'}（寄送产品换视频）`;
+}
+
+/* ── AI/本地双模式运行引擎 ── */
+const AGENT_PROMPTS={'agent-supply-sentinel':'你是供应链分析专家。根据库存数据分析断货风险、给出补货建议（海运vs空运）。结构化中文输出。','agent-pricing-advisor':'你是跨境电商定价顾问。分析定价策略，给出最优定价区间、提价路径建议。','agent-pnl-analyzer':'你是P&L财务分析师。拆解利润结构，找出亏损原因，给出改善优先级。','agent-ad-attribution':'你是广告归因分析师。分析广告效率，给出优化和预算调整建议。','agent-competitor-radar':'你是竞品情报分析师。识别市场机会、定价策略、差评规律，给出竞争建议。','agent-listing-doctor':'你是Listing优化专家。诊断标题卖点关键词，给出具体优化建议。','agent-voc-decoder':'你是VOC分析师。从评论提取用户痛点、高频诉求、产品改进信号。','agent-cs-triage':'你是客服分诊专家。分类工单优先级，识别高风险工单，生成回复模板。','agent-account-guardian':'你是账号风险专家。分析账号健康，识别违规风险，给出预防申诉策略。','agent-brand-guardian':'你是品牌合规专家。审查文案违禁词夸大声明，给出合规修改建议。','agent-product-radar':'你是选品分析师。评估品类机会，分析竞争格局，给出GO/NO-GO建议。','agent-tiktok-content':'你是TikTok内容策略师。规划内容矩阵脚本框架达人合作策略。'};
+const CHAINS=[{id:'supply-decision',name:'供应链全链路决策',agents:['agent-supply-sentinel','agent-pnl-analyzer','agent-pricing-advisor']},{id:'growth-analysis',name:'增长归因分析',agents:['agent-ad-attribution','agent-competitor-radar','agent-product-radar']},{id:'brand-protection',name:'品牌合规防御',agents:['agent-listing-doctor','agent-brand-guardian','agent-account-guardian']}];
+const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站'};
+function getMode(id){const r=document.querySelector('input[name="mode-'+id+'"]:checked');return r?r.value:'local';}
+function getInputs(id){const o={};document.querySelectorAll('[id^="'+id+'__"]').forEach(el=>{o[el.id.replace(id+'__','')]=el.value||el.textContent||'';});return o;}
+async function runAgentAI(id){
+  const btn=document.getElementById('run-'+id),lb=document.getElementById('run-label-'+id),th=document.getElementById('thinking-'+id),out=document.getElementById('output-'+id),cel=document.getElementById('content-'+id);
+  btn.disabled=true;if(lb)lb.textContent='AI分析中...';if(cel)cel.textContent='';if(out)out.classList.add('visible');if(th)th.style.display='flex';
+  try{
+    const inp=getInputs(id),inpStr=Object.entries(inp).map(([k,v])=>k+': '+v).join('\n');
+    const res=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[id]||'你是跨境电商AI分析助手。'},{role:'user',content:'请根据以下数据分析：\n'+inpStr}],max_tokens:1800,temperature:0.5,stream:false})});
+    const data=await res.json();const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';
+    if(th)th.style.display='none';await streamText(cel,'[✦ AI深度分析 · DeepSeek]\n\n'+ans);saveReport(id,'[AI] '+ans);
+  }catch(e){if(th)th.style.display='none';if(cel)cel.textContent='[AI调用失败] '+e.message;}
+  finally{if(btn)btn.disabled=false;if(lb)lb.textContent='重新分析';}
+}
+function openChainPanel(){document.getElementById('agent-chain-panel').style.display='flex';document.body.style.overflow='hidden';}
+function closeChainPanel(){document.getElementById('agent-chain-panel').style.display='none';document.body.style.overflow='';}
+async function runChain(chainId){
+  const chain=CHAINS.find(c=>c.id===chainId);if(!chain)return;
+  const outEl=document.getElementById('chain-output-'+chainId),btnEl=document.getElementById('chain-btn-'+chainId);
+  if(!outEl||!btnEl)return;btnEl.disabled=true;btnEl.textContent='执行中...';outEl.style.display='block';outEl.innerHTML='';
+  for(let i=0;i<chain.agents.length;i++){
+    const aid=chain.agents[i],aname=ADISP[aid]||aid,sEl=document.createElement('div');
+    sEl.style.cssText='margin-bottom:12px;padding:12px;background:var(--panel-2,#f8fafc);border-radius:8px;border:1px solid var(--line,#e2e8f0)';
+    sEl.innerHTML='<div style="font-size:12px;font-weight:700;color:#6366f1;margin-bottom:5px">Step '+(i+1)+'：'+aname+'</div><div class="cs_" style="font-size:13px;color:#475569;line-height:1.6;white-space:pre-wrap">分析中...</div>';
+    outEl.appendChild(sEl);outEl.scrollTop=outEl.scrollHeight;const cel=sEl.querySelector('.cs_');
+    try{
+      const r=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[aid]||'你是跨境电商AI助手。'},{role:'user',content:'请为跨境母婴品牌执行'+aname+'分析，给出5-8条关键洞察。'}],max_tokens:700,temperature:0.5,stream:false})});
+      const d=await r.json();cel.textContent=(d?.choices?.[0]?.message?.content||'').trim()||'分析失败';
+    }catch(e){cel.textContent='[错误] '+e.message;}
+    outEl.scrollTop=outEl.scrollHeight;
+  }
+  btnEl.disabled=false;btnEl.textContent='重新执行';
+}
+async function runAgent(id) {
+  if (getMode(id) === 'ai') { return runAgentAI(id); }
+  const btn = document.getElementById('run-' + id);
+  const label = document.getElementById('run-label-' + id);
+  const thinking = document.getElementById('thinking-' + id);
+  const out = document.getElementById('output-' + id);
+  const content = document.getElementById('content-' + id);
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  if (label) label.textContent = '计算中...';
+  if (content) content.textContent = '';
+  if (out) out.classList.add('visible');
+  if (thinking) thinking.style.display = 'flex';
+  await sleep(600);
+  if (thinking) thinking.style.display = 'none';
+  let text = '';
+  try {
+    if (id === 'agent-supply-sentinel')   text = computeSupplySentinel(id);
+    else if (id === 'agent-pricing-advisor') text = computePricingAdvisor(id);
+    else if (id === 'agent-pnl-analyzer')   text = computePnLAnalyzer(id);
+    else if (id === 'agent-ad-attribution') text = computeAdAttribution(id);
+    else if (id === 'agent-competitor-radar') text = computeCompetitorRadar(id);
+    else if (id === 'agent-listing-doctor')  text = computeListingDoctor(id);
+    else if (id === 'agent-voc-decoder')     text = computeVocDecoder(id);
+    else if (id === 'agent-cs-triage')       text = computeCsTriage(id);
+    else if (id === 'agent-account-guardian') text = computeAccountGuardian(id);
+    else if (id === 'agent-brand-guardian')  text = computeBrandGuardian(id);
+    else if (id === 'agent-product-radar')   text = computeProductRadar(id);
+    else if (id === 'agent-tiktok-content')  text = computeTikTokContent(id);
+    else text = (DEMO_DATA[id] || {}).output || '暂无计算结果';
+  } catch(e) {
+    text = '[计算错误] ' + e.message + '\n请检查输入格式';
+  }
+  await streamText(content, text);
+  saveReport(id, text);
+  if (btn) btn.disabled = false;
+  if (label) label.textContent = '重新计算';
+}
+
+function saveReport(agentId, result) {
+  try {
+    const reports = JSON.parse(localStorage.getItem('agentReports') || '[]');
+    const agentNames = {};
+    document.querySelectorAll('.agent-card').forEach(c => {
+      const id = c.getAttribute('onclick').match(/"([^"]+)"/)?.[1];
+      const name = c.querySelector('.agent-name')?.textContent;
+      if (id && name) agentNames[id] = name;
+    });
+    reports.unshift({
+      id: agentId,
+      name: agentNames[agentId] || agentId,
+      result,
+      ts: new Date().toLocaleString('zh-CN'),
+      inputs: collectInputs(agentId),
+    });
+    localStorage.setItem('agentReports', JSON.stringify(reports.slice(0, 50)));
+  } catch(e) {}
+}
+
+function collectInputs(agentId) {
+  const data = DEMO_DATA[agentId];
+  if (!data || !data.inputs) return {};
+  const result = {};
+  data.inputs.forEach(inp => {
+    const el = document.getElementById(agentId + '__' + inp.id);
+    if (el) result[inp.label] = el.value.slice(0, 100);
+  });
+  return result;
+}
+
+async function streamText(el, text) {
+  let i = 0;
+  const chunk = 3;
+  while (i < text.length) {
+    el.textContent += text.slice(i, i + chunk);
+    el.parentElement && (el.parentElement.scrollTop = el.parentElement.scrollHeight);
+    const c = text[i];
+    await sleep(c === '\\n' ? 30 : c === '━' ? 5 : 8);
+    i += chunk;
+  }
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+document.querySelectorAll('.agent-modal-overlay').forEach(ov => {
+  ov.addEventListener('click', e => {
+    if (e.target === ov) {
+      const id = ov.id.replace('modal-', '');
+      closeAgent(id);
+    }
+  });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.agent-modal-overlay.open').forEach(ov => {
+      const id = ov.id.replace('modal-', '');
+      closeAgent(id);
+    });
+  }
+});
+
+const catBtns = document.querySelectorAll('.cat-pill');
+const cards = document.querySelectorAll('.agent-card');
+catBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    catBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    cards.forEach(c => {
+      c.style.display = (cat === '' || c.dataset.cat === cat) ? '' : 'none';
+    });
+  });
+});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="assets/playbook-data.js?v=20260617020507"></script>
+  <script src="assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>
