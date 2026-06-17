@@ -2799,6 +2799,22 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
 
         data_req = html.escape(step.get("data", ""))
         output = html.escape(step.get("output", ""))
+        step_title_safe = html.escape(step['step']).replace("'", "\\'")
+        pb_name_safe_q = html.escape(pb['name']).replace("'", "\\'")
+        exec_btn = f"""<div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q={html.escape(step.get("step","").replace(" ","+")+"+在母婴跨境电商场景如何应用？")}' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+    </div>"""
         steps_html += f"""
 <div class='pb-step'>
   <div class='pb-step-num'>Step {i}</div>
@@ -2808,6 +2824,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
     <div class='pb-skills'>{skills_html}</div>
     {'<div class="pb-data"><strong>所需数据：</strong>' + data_req + '</div>' if data_req else ''}
     {'<div class="pb-output"><strong>输出结果：</strong>' + output + '</div>' if output else ''}
+    {exec_btn}
   </div>
 </div>"""
 
@@ -3393,27 +3410,233 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
 # ---------------------------------------------------------------------------
 
 def render_graph_page(skill_count: int, edge_count: int, build_ts: str = "") -> str:
-    body = f"""
-<h1>Skills Graph</h1>
-<p class="muted">节点 {skill_count} · 边 {edge_count}　　点击节点查看详情，悬停高亮邻居，滚轮缩放。</p>
-<div class="graph-controls">
-  <label><input type="checkbox" id="cb-prerequisite" checked> <span class="edge-dot prereq"></span> 前置 (prerequisite)</label>
-  <label><input type="checkbox" id="cb-combinable" checked> <span class="edge-dot combo"></span> 可组合 (combinable)</label>
-  <label><input type="checkbox" id="cb-extension"> <span class="edge-dot ext"></span> 延伸 (extension)</label>
-  <input id="graph-search" placeholder="搜索节点..." style="margin-left:16px;padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;width:200px">
-</div>
-<div id="graph-info" class="graph-info hidden">
-  <button id="graph-info-close" style="float:right;background:none;border:none;cursor:pointer;font-size:18px">×</button>
-  <h3 id="gi-title"></h3>
-  <p id="gi-domain" class="muted"></p>
-  <p id="gi-summary"></p>
-  <a id="gi-link" href="#" class="btn-primary" target="_self">查看详情 →</a>
-</div>
-<svg id="graph-svg"></svg>
-<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="../assets/graph.js?v={build_ts}"></script>
-"""
-    return html_page("Skills Graph", body, "../")
+    dc_js = '''{"supply_chain": "#0ea5e9", "mas": "#8b5cf6", "knowledge_graph": "#06b6d4", "llm_agent_engineering": "#ec4899", "advertising": "#f59e0b", "user_analytics": "#10b981", "tag_engineering": "#6366f1", "growth_model": "#ef4444", "marketing": "#f97316", "operations_finance": "#14b8a6", "recommendation": "#84cc16", "ab_testing": "#a855f7", "causal_inference": "#64748b", "time_series": "#22d3ee", "pricing": "#fb923c", "logistics": "#4ade80", "risk_fraud": "#f43f5e", "visual_content": "#c084fc", "compliance": "#fbbf24", "data_collection": "#38bdf8", "ml_fundamentals": "#94a3b8", "ai_humanities": "#e879f9", "nlp_voc": "#2dd4bf"}'''
+    dl_js = '''{"supply_chain": "供应链", "mas": "多智能体", "knowledge_graph": "知识图谱", "llm_agent_engineering": "LLM/Agent工程", "advertising": "广告分析", "user_analytics": "用户分析", "tag_engineering": "标签工程", "growth_model": "增长模型", "marketing": "营销投放", "operations_finance": "运营财务", "recommendation": "推荐系统", "ab_testing": "A/B实验", "causal_inference": "因果推断", "time_series": "时间序列", "pricing": "价格优化", "logistics": "物流履约", "risk_fraud": "风控反欺诈", "visual_content": "AI视频", "compliance": "合规决策", "data_collection": "数据采集", "ml_fundamentals": "ML基础", "ai_humanities": "AI人文", "nlp_voc": "NLP-VOC"}'''
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>技能关系图谱 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .graph-page{{display:flex;flex-direction:column;height:calc(100vh - var(--topbar-height,56px));overflow:hidden}}
+    .graph-toolbar{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 16px;background:var(--panel,#fff);border-bottom:1px solid var(--line,#e2e8f0);flex-shrink:0}}
+    .graph-toolbar input[type=text]{{padding:6px 12px;border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:13px;width:200px;font-family:inherit;outline:none}}
+    .graph-toolbar input[type=text]:focus{{border-color:var(--accent,#3b82f6)}}
+    .domain-pill{{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .15s;white-space:nowrap}}
+    .domain-pill.inactive{{opacity:.3}}
+    .graph-main{{flex:1;display:flex;overflow:hidden;position:relative}}
+    #graph-canvas{{flex:1;background:var(--panel-2,#f8fafc);cursor:grab}}
+    #graph-canvas:active{{cursor:grabbing}}
+    .graph-sidebar{{width:270px;flex-shrink:0;border-left:1px solid var(--line,#e2e8f0);background:var(--panel,#fff);overflow-y:auto;display:flex;flex-direction:column}}
+    .gsb-header{{padding:12px 14px;border-bottom:1px solid var(--line,#e2e8f0);font-size:13px;font-weight:700;color:var(--ink,#0f172a);flex-shrink:0}}
+    .gsb-body{{padding:12px 14px;flex:1}}
+    .gsb-empty{{color:var(--muted,#94a3b8);font-size:12.5px;text-align:center;padding:30px 0}}
+    .gsb-neighbor{{display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:6px;background:var(--panel-2,#f8fafc);border:1px solid var(--line,#e2e8f0);cursor:pointer;transition:all .15s;margin-top:4px}}
+    .gsb-neighbor:hover{{background:var(--accent-light,#eff6ff);border-color:var(--accent,#3b82f6)}}
+    .path-finder{{padding:10px 14px;border-top:1px solid var(--line,#e2e8f0)}}
+    .path-finder input{{width:100%;padding:5px 8px;border:1.5px solid var(--line,#e2e8f0);border-radius:7px;font-size:11.5px;font-family:inherit;margin-bottom:5px;box-sizing:border-box}}
+    .path-finder-btn{{width:100%;padding:6px;background:var(--accent,#3b82f6);color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer}}
+    .graph-stats{{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,.9);border:1px solid var(--line,#e2e8f0);border-radius:8px;padding:5px 10px;font-size:11px;color:var(--muted,#94a3b8);pointer-events:none;backdrop-filter:blur(4px)}}
+    .loading-overlay{{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--panel-2,#f8fafc);flex-direction:column;gap:12px;z-index:10}}
+    .loading-spinner{{width:34px;height:34px;border:3px solid var(--line,#e2e8f0);border-top-color:var(--accent,#3b82f6);border-radius:50%;animation:spin .8s linear infinite}}
+    @keyframes spin{{to{{transform:rotate(360deg)}}}}
+    @media(max-width:768px){{.graph-sidebar{{display:none}}}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a class="brand" href="../index.html"><span class="brand-icon">P</span><span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span></a>
+    <div class="topbar-right"><input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索"><a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a></div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <div class="graph-page">
+    <div class="graph-toolbar">
+      <input type="text" id="node-search" placeholder="🔍 搜索技能..." autocomplete="off">
+      <div id="domain-pills" style="display:flex;flex-wrap:wrap;gap:4px;flex:1"></div>
+      <button id="btn-reset" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">重置</button>
+      <button id="btn-focus-top" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">核心节点</button>
+    </div>
+    <div class="graph-main">
+      <svg id="graph-canvas"></svg>
+      <div class="loading-overlay" id="loading">
+        <div class="loading-spinner"></div>
+        <div style="font-size:13px;color:var(--muted)">加载 {skill_count} 个技能节点…</div>
+      </div>
+      <div class="graph-stats" id="graph-stats">节点 {skill_count} · 边 {edge_count}</div>
+      <div class="graph-sidebar">
+        <div class="gsb-header">📊 节点详情</div>
+        <div class="gsb-body" id="gsb-body"><div class="gsb-empty">点击图谱中的节点<br>查看详情和关联</div></div>
+        <div class="path-finder">
+          <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:7px">🗺 学习路径发现</div>
+          <input type="text" id="path-from" placeholder="起点 Skill ID...">
+          <input type="text" id="path-to" placeholder="终点 Skill ID...">
+          <button class="path-finder-btn" onclick="findPath()">找最短路径</button>
+          <div id="path-result" style="margin-top:7px;font-size:11px;color:var(--ink-2);line-height:1.7"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="../assets/playbook-data.js?v={build_ts}"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const DOMAIN_COLORS = {dc_js};
+  const DOMAIN_LABELS = {dl_js};
+  let allNodes=[],allLinks=[],simulation,svg,g,zoom,selectedNode=null;
+  let activeDomains=new Set(Object.keys(DOMAIN_COLORS));
+  async function init(){{
+    try{{
+      const resp=await fetch('../assets/graph-data.json');
+      const data=await resp.json();
+      allNodes=data.nodes; allLinks=data.links;
+      buildDomainPills(); buildGraph();
+      document.getElementById('loading').style.display='none';
+    }}catch(e){{document.getElementById('loading').innerHTML='<div style="color:#ef4444">加载失败: '+e.message+'</div>';}}
+  }}
+  function buildDomainPills(){{
+    const container=document.getElementById('domain-pills');
+    const dc={{}};allNodes.forEach(n=>{{dc[n.domain]=(dc[n.domain]||0)+1;}});
+    Object.entries(dc).sort((a,b)=>b[1]-a[1]).forEach(([domain,cnt])=>{{
+      const color=DOMAIN_COLORS[domain]||'#94a3b8',label=DOMAIN_LABELS[domain]||domain;
+      const pill=document.createElement('div');
+      pill.className='domain-pill';pill.style.background=color+'22';pill.style.borderColor=color;pill.style.color=color;
+      pill.innerHTML=`<span style="width:6px;height:6px;border-radius:50%;background:${{color}};flex-shrink:0"></span>${{label}} <span style="opacity:.6">${{cnt}}</span>`;
+      pill.onclick=()=>toggleDomain(domain,pill);pill.dataset.domain=domain;container.appendChild(pill);
+    }});
+  }}
+  function toggleDomain(domain,pill){{
+    if(activeDomains.has(domain)){{activeDomains.delete(domain);pill.classList.add('inactive');}}
+    else{{activeDomains.add(domain);pill.classList.remove('inactive');}}
+    if(!g)return;
+    g.selectAll('.node-group').style('display',d=>activeDomains.has(d.domain)?null:'none');
+    g.selectAll('.link').style('display',d=>{{
+      const s=allNodes.find(n=>n.id===(d.source.id||d.source)),t=allNodes.find(n=>n.id===(d.target.id||d.target));
+      return(s&&t&&activeDomains.has(s.domain)&&activeDomains.has(t.domain))?null:'none';
+    }});
+  }}
+  function buildGraph(){{
+    const svgEl=document.getElementById('graph-canvas');
+    const W=svgEl.clientWidth||window.innerWidth-270,H=svgEl.clientHeight||window.innerHeight-110;
+    svg=d3.select('#graph-canvas').attr('width',W).attr('height',H);
+    zoom=d3.zoom().scaleExtent([0.05,4]).on('zoom',e=>g.attr('transform',e.transform));
+    svg.call(zoom);g=svg.append('g');
+    const edgeColor={{prerequisite:'#94a3b8',combinable:'#3b82f6',extension:'#10b981'}};
+    const degree={{}};
+    allNodes.forEach(n=>{{degree[n.id]=0;}});
+    allLinks.forEach(l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;degree[s]=(degree[s]||0)+1;degree[t]=(degree[t]||0)+1;}});
+    const topN=200,topIds=new Set(Object.entries(degree).sort((a,b)=>b[1]-a[1]).slice(0,topN).map(([id])=>id));
+    const vNodes=allNodes.filter(n=>topIds.has(n.id));
+    const vSet=new Set(vNodes.map(n=>n.id));
+    const vLinks=allLinks.filter(l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;return vSet.has(s)&&vSet.has(t);}});
+    simulation=d3.forceSimulation(vNodes)
+      .force('link',d3.forceLink(vLinks).id(d=>d.id).distance(55).strength(0.4))
+      .force('charge',d3.forceManyBody().strength(-120).distanceMax(200))
+      .force('center',d3.forceCenter(W/2,H/2))
+      .force('collision',d3.forceCollide().radius(d=>nr(d,degree)+3))
+      .alphaDecay(0.02);
+    const link=g.append('g').selectAll('.link').data(vLinks).enter().append('line').attr('class','link')
+      .style('stroke',d=>edgeColor[d.type]||'#cbd5e1').style('stroke-width',d=>d.type==='prerequisite'?1.5:1)
+      .style('stroke-opacity',0.4).style('stroke-dasharray',d=>d.type==='extension'?'4,3':null);
+    const node=g.append('g').selectAll('.node-group').data(vNodes).enter().append('g').attr('class','node-group')
+      .style('cursor','pointer')
+      .call(d3.drag().on('start',(e,d)=>{{if(!e.active)simulation.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;}})
+                     .on('drag',(e,d)=>{{d.fx=e.x;d.fy=e.y;}})
+                     .on('end',(e,d)=>{{if(!e.active)simulation.alphaTarget(0);d.fx=null;d.fy=null;}}))
+      .on('click',(e,d)=>{{e.stopPropagation();selectNode(d,degree,link,node);}})
+      .on('mouseover',(e,d)=>highlightNb(d,link,node,true))
+      .on('mouseout',(e,d)=>{{if(selectedNode!==d)highlightNb(d,link,node,false);}});
+    node.append('circle').attr('r',d=>nr(d,degree)).style('fill',d=>DOMAIN_COLORS[d.domain]||'#94a3b8')
+      .style('fill-opacity',0.85).style('stroke','#fff').style('stroke-width',2);
+    node.append('text').text(d=>sl(d.title||d.id)).attr('dy',d=>nr(d,degree)+10)
+      .style('font-size',d=>degree[d.id]>30?'9px':'7.5px').style('text-anchor','middle').style('fill','#475569')
+      .style('pointer-events','none').style('paint-order','stroke').style('stroke','#f8fafc').style('stroke-width','3px');
+    simulation.on('tick',()=>{{
+      link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+      node.attr('transform',d=>`translate(${{d.x}},${{d.y}})`);
+    }});
+    svg.on('click',()=>deselectAll(link,node));
+    document.getElementById('graph-stats').textContent=`显示 ${{vNodes.length}} 节点 / ${{vLinks.length}} 边（全量 ${{allNodes.length}} / ${{allLinks.length}}）`;
+    document.getElementById('node-search').addEventListener('input',function(){{
+      const q=this.value.toLowerCase().trim();
+      if(!q){{node.style('opacity',1);link.style('opacity',0.4);return;}}
+      const m=new Set(vNodes.filter(n=>n.id.toLowerCase().includes(q)||(n.title||'').toLowerCase().includes(q)).map(n=>n.id));
+      node.style('opacity',d=>m.has(d.id)?1:0.1);
+      link.style('opacity',l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;return(m.has(s)&&m.has(t))?0.6:0.03;}});
+    }});
+    document.getElementById('btn-reset').onclick=()=>{{svg.transition().duration(600).call(zoom.transform,d3.zoomIdentity.translate(W/2,H/2).scale(1));node.style('opacity',1);link.style('opacity',0.4);document.getElementById('node-search').value='';}};
+    document.getElementById('btn-focus-top').onclick=()=>{{const t=new Set(Object.entries(degree).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([id])=>id));node.style('opacity',d=>t.has(d.id)?1:0.08);link.style('opacity',0.04);}};
+  }}
+  function nr(d,degree){{return Math.max(5,Math.min(22,4+Math.sqrt(degree[d.id]||0)*1.8));}}
+  function sl(t){{return(t||'').split(/[—-]/)[0].trim().slice(0,16);}}
+  function highlightNb(d,link,node,on){{
+    if(selectedNode)return;const nid=d.id;const c=new Set([nid]);
+    link.each(l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;if(s===nid)c.add(t);if(t===nid)c.add(s);}});
+    node.style('opacity',n=>on?(c.has(n.id)?1:0.15):1);
+    link.style('opacity',l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;return on?((s===nid||t===nid)?0.8:0.04):0.4;}});
+  }}
+  function selectNode(d,degree,link,node){{
+    selectedNode=d;const nid=d.id;const nb={{prerequisite:[],combinable:[],extension:[]}};const nids=new Set([nid]);
+    link.each(l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;if(s===nid||t===nid){{const o=s===nid?t:s;nids.add(o);nb[l.type]=nb[l.type]||[];nb[l.type].push({{id:o}});}}}});
+    node.style('opacity',n=>nids.has(n.id)?1:0.1).select('circle').style('stroke',n=>n.id===nid?'#fbbf24':'#fff').style('stroke-width',n=>n.id===nid?3:2);
+    link.style('opacity',l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;return(s===nid||t===nid)?0.9:0.04;}}).style('stroke-width',l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;return(s===nid||t===nid)?2.5:1;}});
+    renderSidebar(d,degree,nb);
+  }}
+  function deselectAll(link,node){{selectedNode=null;node.style('opacity',1).select('circle').style('stroke','#fff').style('stroke-width',2);link.style('opacity',0.4).style('stroke-width',d=>d.type==='prerequisite'?1.5:1);document.getElementById('gsb-body').innerHTML='<div class=\"gsb-empty\">点击图谱中的节点<br>查看详情和关联</div>';}}
+  function esc(s){{return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}}
+  function renderSidebar(d,degree,nb){{
+    const DATA=window.PLAYBOOK_DATA||{{}};const sk=(DATA.skills||[]).find(s=>s.skill_id===d.id)||{{}};
+    const color=DOMAIN_COLORS[d.domain]||'#94a3b8',label=DOMAIN_LABELS[d.domain]||d.domain;
+    let html=`<div style="font-size:13px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:7px">${{esc(d.title||d.id)}}</div>
+      <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:10.5px;font-weight:600;background:${{color}}22;color:${{color}};margin-bottom:8px">◉ ${{label}}</span>
+      <div style="font-size:10.5px;color:#94a3b8;margin-bottom:7px">连接度: ${{degree[d.id]||0}}</div>`;
+    if(sk.problem_solved)html+=`<div style="font-size:12px;color:#475569;line-height:1.6;margin-bottom:8px">${{esc(sk.problem_solved.slice(0,140))}}…</div>`;
+    if(sk.roi_figure)html+=`<div style="font-size:11.5px;color:#059669;font-weight:600;margin-bottom:8px">💰 ${{esc(sk.roi_figure)}}</div>`;
+    const tl={{prerequisite:'⬅ 前置',combinable:'🔗 组合',extension:'➡ 延伸'}};
+    const tc={{prerequisite:'#94a3b8',combinable:'#3b82f6',extension:'#10b981'}};
+    html+='<div>';
+    for(const[type,nbs]of Object.entries(nb)){{
+      if(!nbs.length)continue;
+      html+=`<div style="font-size:10.5px;color:#94a3b8;font-weight:600;margin:8px 0 3px">${{tl[type]||type}}</div>`;
+      nbs.slice(0,4).forEach(n=>{{
+        const nn=allNodes.find(x=>x.id===n.id)||{{title:n.id,domain:'unknown'}};
+        const nc=DOMAIN_COLORS[nn.domain]||'#94a3b8';
+        html+=`<div class="gsb-neighbor" onclick="focusById('${{esc(n.id)}}')"><div style="width:6px;height:6px;border-radius:50%;background:${{nc}};flex-shrink:0"></div><span style="font-size:11px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${{esc((nn.title||n.id).split('—')[0].trim().slice(0,30))}}</span></div>`;
+      }});
+    }}
+    html+='</div>';
+    html+=`<a href="../skills/${{d.id}}.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--accent,#3b82f6);color:#fff;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none;margin-top:10px">→ 查看完整详情</a>`;
+    document.getElementById('gsb-body').innerHTML=html;
+  }}
+  function findPath(){{
+    const fi=document.getElementById('path-from').value.trim(),ti=document.getElementById('path-to').value.trim(),rel=document.getElementById('path-result');
+    if(!fi||!ti){{rel.textContent='请输入起点和终点';return;}}
+    const adj={{}};allNodes.forEach(n=>{{adj[n.id]=[];}});
+    allLinks.forEach(l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;if(!adj[s])adj[s]=[];if(!adj[t])adj[t]=[];adj[s].push(t);adj[t].push(s);}});
+    const q=[[fi]],vis=new Set([fi]);let found=null;
+    while(q.length&&!found){{const p=q.shift();const c=p[p.length-1];if(c===ti){{found=p;break;}}if(p.length>8)continue;for(const nb of(adj[c]||[])){{if(!vis.has(nb)){{vis.add(nb);q.push([...p,nb]);}}}}}}
+    if(!found){{rel.textContent=`未找到路径（最多8跳）`;return;}}
+    const labels=found.map(id=>{{const n=allNodes.find(n=>n.id===id);return(n&&n.title?n.title.split('—')[0].trim().slice(0,18):id);}});
+    rel.innerHTML='<strong>最短路径（'+(found.length-1)+'步）：</strong><br>'+labels.map((l,i)=>`${{i+1}}. ${{esc(l)}}`).join('<br>');
+    if(g){{const ps=new Set(found);g.selectAll('.node-group').style('opacity',d=>ps.has(d.id)?1:0.08);g.selectAll('.link').style('opacity',l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;const ip=found.some((p,i)=>i<found.length-1&&((p===s&&found[i+1]===t)||(p===t&&found[i+1]===s)));return ip?1:0.03;}}).style('stroke-width',l=>{{const s=l.source.id||l.source,t=l.target.id||l.target;const ip=found.some((p,i)=>i<found.length-1&&((p===s&&found[i+1]===t)||(p===t&&found[i+1]===s)));return ip?3:1;}});}}
+  }}
+  function focusById(nid){{
+    const tn=allNodes.find(n=>n.id===nid);if(!tn||tn.x===undefined)return;
+    const svgEl=document.getElementById('graph-canvas');svg.transition().duration(500).call(zoom.transform,d3.zoomIdentity.translate(svgEl.clientWidth/2-tn.x,svgEl.clientHeight/2-tn.y).scale(1.5));
+  }}
+  window.findPath=findPath;window.focusById=focusById;
+  window.addEventListener('DOMContentLoaded',init);
+  </script>
+  <script>
+  const hbtn=document.getElementById('hamburger'),overlay=document.getElementById('mobile-overlay');
+  function toggleMenu(open){{hbtn.setAttribute('aria-expanded',open);hbtn.classList.toggle('open',open);overlay.classList.toggle('show',open);document.body.style.overflow=open?'hidden':'';}}
+  hbtn.addEventListener('click',()=>toggleMenu(hbtn.getAttribute('aria-expanded')!=='true'));overlay.addEventListener('click',()=>toggleMenu(false));
+  </script>
+</body>
+</html>"""
 
 
 def build_ego_graph_js() -> str:
@@ -5806,6 +6029,229 @@ def domain_dicts(root: Path) -> list[dict[str, Any]]:
     ]
 
 
+def _post_build_patch(out: "Path") -> None:
+    """Post-build patch: inject AI workbench features into generated static files."""
+    import re
+
+    # ── 1. agents.html: AI模式 + 链式调用 ──────────────────────────────────
+    agents_path = out / "agents.html"
+    if agents_path.exists():
+        agents_html = agents_path.read_text(encoding="utf-8")
+
+        # 插入模式切换控件（在每个 run 按钮前）
+        agent_ids = ['agent-supply-sentinel','agent-pricing-advisor','agent-pnl-analyzer',
+                     'agent-ad-attribution','agent-competitor-radar','agent-listing-doctor',
+                     'agent-voc-decoder','agent-cs-triage','agent-account-guardian',
+                     'agent-brand-guardian','agent-product-radar','agent-tiktok-content']
+        for aid in agent_ids:
+            old = f"<button class='modal-run-btn' id='run-{aid}' onclick='runAgent(\"{aid}\")'>"
+            new = (f"<div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;"
+                   f"padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;"
+                   f"border:1px solid var(--line,#e2e8f0)'>"
+                   f"<span style='font-size:11px;font-weight:600;color:#475569'>模式:</span>"
+                   f"<label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'>"
+                   f"<input type='radio' name='mode-{aid}' value='local' checked style='accent-color:#059669'>"
+                   f"⚡本地</label>"
+                   f"<label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'>"
+                   f"<input type='radio' name='mode-{aid}' value='ai' style='accent-color:#6366f1'>"
+                   f"✦ AI</label></div>\n"
+                   f"      <button class='modal-run-btn' id='run-{aid}' onclick='runAgent(\"{aid}\")'>"
+            )
+            if old in agents_html:
+                agents_html = agents_html.replace(old, new, 1)
+
+        # 注入 AI 运行引擎 + 链式调用（在 catBtns 之前）
+        AI_ENGINE = """const AGENT_PROMPTS={'agent-supply-sentinel':'你是供应链分析专家。根据库存数据分析断货风险、给出补货建议（海运vs空运）。结构化中文输出。','agent-pricing-advisor':'你是跨境电商定价顾问。分析定价策略，给出最优定价区间、提价路径建议。','agent-pnl-analyzer':'你是P&L财务分析师。拆解利润结构，找出亏损原因，给出改善优先级。','agent-ad-attribution':'你是广告归因分析师。分析广告效率，给出优化和预算调整建议。','agent-competitor-radar':'你是竞品情报分析师。识别市场机会、定价策略、差评规律，给出竞争建议。','agent-listing-doctor':'你是Listing优化专家。诊断标题卖点关键词，给出具体优化建议。','agent-voc-decoder':'你是VOC分析师。从评论提取用户痛点、高频诉求、产品改进信号。','agent-cs-triage':'你是客服分诊专家。分类工单优先级，识别高风险工单，生成回复模板。','agent-account-guardian':'你是账号风险专家。分析账号健康，识别违规风险，给出预防申诉策略。','agent-brand-guardian':'你是品牌合规专家。审查文案违禁词夸大声明，给出合规修改建议。','agent-product-radar':'你是选品分析师。评估品类机会，分析竞争格局，给出GO/NO-GO建议。','agent-tiktok-content':'你是TikTok内容策略师。规划内容矩阵脚本框架达人合作策略。'};
+const CHAINS=[{id:'supply-decision',name:'供应链全链路决策',agents:['agent-supply-sentinel','agent-pnl-analyzer','agent-pricing-advisor']},{id:'growth-analysis',name:'增长归因分析',agents:['agent-ad-attribution','agent-competitor-radar','agent-product-radar']},{id:'brand-protection',name:'品牌合规防御',agents:['agent-listing-doctor','agent-brand-guardian','agent-account-guardian']}];
+const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站'};
+function getMode(id){const r=document.querySelector('input[name="mode-'+id+'"]:checked');return r?r.value:'local';}
+function getInputs(id){const o={};document.querySelectorAll('[id^="'+id+'__"]').forEach(el=>{o[el.id.replace(id+'__','')]=el.value||el.textContent||'';});return o;}
+async function runAgentAI(id){
+  const btn=document.getElementById('run-'+id),lb=document.getElementById('run-label-'+id),th=document.getElementById('thinking-'+id),out=document.getElementById('output-'+id),cel=document.getElementById('content-'+id);
+  btn.disabled=true;if(lb)lb.textContent='AI分析中...';if(cel)cel.textContent='';if(out)out.classList.add('visible');if(th)th.style.display='flex';
+  try{
+    const inp=getInputs(id),inpStr=Object.entries(inp).map(([k,v])=>k+': '+v).join('\\n');
+    const res=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[id]||'你是跨境电商AI分析助手。'},{role:'user',content:'请根据以下数据分析：\\n'+inpStr}],max_tokens:1800,temperature:0.5,stream:false})});
+    const data=await res.json();const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';
+    if(th)th.style.display='none';await streamText(cel,'[✦ AI深度分析 · DeepSeek]\\n\\n'+ans);saveReport(id,'[AI] '+ans);
+  }catch(e){if(th)th.style.display='none';if(cel)cel.textContent='[AI调用失败] '+e.message;}
+  finally{if(btn)btn.disabled=false;if(lb)lb.textContent='重新分析';}
+}
+function openChainPanel(){document.getElementById('agent-chain-panel').style.display='flex';document.body.style.overflow='hidden';}
+function closeChainPanel(){document.getElementById('agent-chain-panel').style.display='none';document.body.style.overflow='';}
+async function runChain(chainId){
+  const chain=CHAINS.find(c=>c.id===chainId);if(!chain)return;
+  const outEl=document.getElementById('chain-output-'+chainId),btnEl=document.getElementById('chain-btn-'+chainId);
+  if(!outEl||!btnEl)return;btnEl.disabled=true;btnEl.textContent='执行中...';outEl.style.display='block';outEl.innerHTML='';
+  for(let i=0;i<chain.agents.length;i++){
+    const aid=chain.agents[i],aname=ADISP[aid]||aid,sEl=document.createElement('div');
+    sEl.style.cssText='margin-bottom:12px;padding:12px;background:var(--panel-2,#f8fafc);border-radius:8px;border:1px solid var(--line,#e2e8f0)';
+    sEl.innerHTML='<div style="font-size:12px;font-weight:700;color:#6366f1;margin-bottom:5px">Step '+(i+1)+'：'+aname+'</div><div class="cs_" style="font-size:13px;color:#475569;line-height:1.6;white-space:pre-wrap">分析中...</div>';
+    outEl.appendChild(sEl);outEl.scrollTop=outEl.scrollHeight;const cel=sEl.querySelector('.cs_');
+    try{
+      const r=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[aid]||'你是跨境电商AI助手。'},{role:'user',content:'请为跨境母婴品牌执行'+aname+'分析，给出5-8条关键洞察。'}],max_tokens:700,temperature:0.5,stream:false})});
+      const d=await r.json();cel.textContent=(d?.choices?.[0]?.message?.content||'').trim()||'分析失败';
+    }catch(e){cel.textContent='[错误] '+e.message;}
+    outEl.scrollTop=outEl.scrollHeight;
+  }
+  btnEl.disabled=false;btnEl.textContent='重新执行';
+}
+"""
+        CHAIN_BANNER = """<div style='margin:0 0 18px;padding:14px 18px;background:linear-gradient(135deg,#f0f4ff,#faf5ff);border:1px solid #c7d2fe;border-radius:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px'><div><div style='font-size:13px;font-weight:700;color:#3730a3'>⛓ Agent 链式调用</div><div style='font-size:11px;color:#6366f1;margin-top:2px'>多个 Agent 串联执行，形成完整决策链</div></div><button onclick='openChainPanel()' style='padding:7px 15px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer' onmouseover="this.style.background='#4f46e5'" onmouseout="this.style.background='#6366f1'">启动链式分析 →</button></div>
+<div id='agent-chain-panel' style='display:none;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto'><div style='background:#fff;border-radius:14px;width:100%;max-width:660px;box-shadow:0 20px 60px rgba(0,0,0,.15);overflow:hidden'><div style='padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between'><div><div style='font-size:16px;font-weight:800;color:#0f172a'>⛓ Agent 链式调用</div><div style='font-size:11.5px;color:#64748b;margin-top:2px'>选择链路，多 Agent 串联深度分析</div></div><button onclick='closeChainPanel()' style='background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8'>×</button></div><div style='padding:16px 20px;display:flex;flex-direction:column;gap:12px'><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>🔗 供应链全链路决策</span><div style='font-size:11px;color:#64748b;margin-top:1px'>供应链哨兵 → P&L透视镜 → 动态定价顾问</div></div><button id='chain-btn-supply-decision' onclick='runChain("supply-decision")' style='padding:6px 13px;background:#059669;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-supply-decision' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>📈 增长归因分析</span><div style='font-size:11px;color:#64748b;margin-top:1px'>广告归因侦探 → 竞品雷达站 → 选品雷达</div></div><button id='chain-btn-growth-analysis' onclick='runChain("growth-analysis")' style='padding:6px 13px;background:#2563eb;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-growth-analysis' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>🛡️ 品牌合规防御</span><div style='font-size:11px;color:#64748b;margin-top:1px'>Listing医生 → 品牌合规卫士 → 账号风险卫士</div></div><button id='chain-btn-brand-protection' onclick='runChain("brand-protection")' style='padding:6px 13px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-brand-protection' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><p style='font-size:11px;color:#94a3b8;text-align:center;margin:4px 0 0'>链式调用使用 AI 模式（DeepSeek），每步约5-10秒</p></div></div></div>
+"""
+        # 替换 runAgent 函数（括号计数法）
+        m = re.search(r'async function runAgent\(id\) \{', agents_html)
+        if m:
+            start = m.start()
+            bc = pos = 0
+            pos = start
+            func_end = None
+            while pos < len(agents_html):
+                if agents_html[pos] == '{': bc += 1
+                elif agents_html[pos] == '}':
+                    bc -= 1
+                    if bc == 0: func_end = pos; break
+                pos += 1
+            if func_end:
+                NEW_RUNAGENT = """async function runAgent(id) {
+  if (getMode(id) === 'ai') { return runAgentAI(id); }
+  const btn = document.getElementById('run-' + id);
+  const label = document.getElementById('run-label-' + id);
+  const thinking = document.getElementById('thinking-' + id);
+  const out = document.getElementById('output-' + id);
+  const content = document.getElementById('content-' + id);
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  if (label) label.textContent = '计算中...';
+  if (content) content.textContent = '';
+  if (out) out.classList.add('visible');
+  if (thinking) thinking.style.display = 'flex';
+  await sleep(600);
+  if (thinking) thinking.style.display = 'none';
+  let text = '';
+  try {
+    if (id === 'agent-supply-sentinel')   text = computeSupplySentinel(id);
+    else if (id === 'agent-pricing-advisor') text = computePricingAdvisor(id);
+    else if (id === 'agent-pnl-analyzer')   text = computePnLAnalyzer(id);
+    else if (id === 'agent-ad-attribution') text = computeAdAttribution(id);
+    else if (id === 'agent-competitor-radar') text = computeCompetitorRadar(id);
+    else if (id === 'agent-listing-doctor')  text = computeListingDoctor(id);
+    else if (id === 'agent-voc-decoder')     text = computeVocDecoder(id);
+    else if (id === 'agent-cs-triage')       text = computeCsTriage(id);
+    else if (id === 'agent-account-guardian') text = computeAccountGuardian(id);
+    else if (id === 'agent-brand-guardian')  text = computeBrandGuardian(id);
+    else if (id === 'agent-product-radar')   text = computeProductRadar(id);
+    else if (id === 'agent-tiktok-content')  text = computeTikTokContent(id);
+    else text = (DEMO_DATA[id] || {}).output || '暂无计算结果';
+  } catch(e) {
+    text = '[计算错误] ' + e.message + '\\n请检查输入格式';
+  }
+  await streamText(content, text);
+  saveReport(id, text);
+  if (btn) btn.disabled = false;
+  if (label) label.textContent = '重新计算';
+}"""
+                agents_html = agents_html[:start] + NEW_RUNAGENT + agents_html[func_end+1:]
+
+        # 注入 AI 引擎到 catBtns 前
+        if 'const catBtns' in agents_html and 'AGENT_PROMPTS' not in agents_html:
+            agents_html = agents_html.replace('const catBtns', AI_ENGINE + '\nconst catBtns', 1)
+
+        # 插入链式调用Banner到 agent-grid 前
+        grid_marker = "<div class='agent-grid' id='agentGrid'>"
+        if grid_marker in agents_html and 'agent-chain-panel' not in agents_html:
+            agents_html = agents_html.replace(grid_marker, CHAIN_BANNER + '\n' + grid_marker, 1)
+
+        agents_path.write_text(agents_html, encoding="utf-8")
+
+    # ── 2. chat-page.js: 客户端RAG + Skill卡片 + Agent跳转 ──────────────────
+    chat_js_path = out / "assets" / "chat-page.js"
+    if chat_js_path.exists():
+        RAG_JS = r"""(function () {
+  const msgsEl=document.getElementById('chat-messages'),welcome=document.getElementById('chat-welcome'),textarea=document.getElementById('chat-input'),sendBtn=document.getElementById('chat-send'),webToggle=document.getElementById('web-search-toggle'),webLabel=document.getElementById('web-search-label');
+  let webSearchOn=false,history=[];
+  webToggle.addEventListener('click',()=>{webSearchOn=!webSearchOn;webToggle.classList.toggle('on',webSearchOn);webLabel.textContent=webSearchOn?'已开启联网':'联网搜索';});
+  textarea.addEventListener('input',()=>{textarea.style.height='auto';textarea.style.height=Math.min(textarea.scrollHeight,160)+'px';});
+  textarea.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}});
+  sendBtn.addEventListener('click',doSend);
+  document.querySelectorAll('.chat-sug-btn').forEach(btn=>{btn.addEventListener('click',()=>{textarea.value=btn.textContent.trim();textarea.dispatchEvent(new Event('input'));doSend();});});
+  function md(text){return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.+?)\*\*/gs,'<strong>$1</strong>').replace(/\*([^*\n]+)\*/g,'<em>$1</em>').replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/^#{1,3}\s+(.+)$/gm,'<strong style="font-size:15px">$1</strong>').replace(/^[-•]\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">• $1</span>').replace(/^\d+\.\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">$&</span>').replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');}
+  const _idx=[];let _built=false;
+  function buildSkillIndex(){if(_built)return;const DATA=window.PLAYBOOK_DATA||{};(DATA.skills||[]).forEach(s=>{const t=[s.skill_id||'',s.title||'',s.problem_solved||'',s.algorithm_summary||'',s.biz_trigger||'',s.biz_outcome||'',(s.tags||[]).join(' '),(s.topics||[]).join(' ')].join(' ').toLowerCase();_idx.push({s,t});});_built=true;}
+  function searchSkills(query,k){k=k||8;buildSkillIndex();const words=query.toLowerCase().split(/\s+/).filter(w=>w.length>1);if(!words.length)return[];return _idx.map(item=>{let sc=0;words.forEach(w=>{const tf=item.t.split(w).length-1;if(tf>0)sc+=tf*(w.length>3?2:1);});return{skill:item.s,sc};}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,k).map(x=>x.skill);}
+  function buildRAGContext(query){const top=searchSkills(query,10);if(!top.length){return(window.PLAYBOOK_DATA&&window.PLAYBOOK_DATA.skills||[]).slice(0,60).map(s=>s.skill_id+': '+(s.problem_solved||s.algorithm_summary||'').slice(0,140)).join('\n');}return top.map(s=>{const p=[s.skill_id,s.title];if(s.problem_solved)p.push('解决: '+s.problem_solved.slice(0,120));if(s.biz_trigger)p.push('触发: '+s.biz_trigger.slice(0,100));if(s.roi_figure)p.push('ROI: '+s.roi_figure);return p.join(' | ');}).join('\n');}
+  function renderSkillCards(text){const DATA=window.PLAYBOOK_DATA||{};const map={};(DATA.skills||[]).forEach(s=>{map[s.skill_id]=s;});const found=[],seen={};[/\[\[?(Skill-[\w-]+)\]?\]/g,/\*\*(Skill-[\w-]+)\*\*/g].forEach(pat=>{let m;while((m=pat.exec(text))!==null){if(map[m[1]]&&!seen[m[1]]){seen[m[1]]=1;found.push(map[m[1]]);}}});if(!found.length)return'';const esc=t=>(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');const cards=found.map(s=>'<a href="skills/'+s.skill_id+'.html" target="_blank" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--panel-2,#f8fafc);border:1px solid var(--line,#e2e8f0);border-radius:8px;text-decoration:none;color:inherit;margin-top:6px;transition:box-shadow .15s" onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.08)\'" onmouseout="this.style.boxShadow=\'none\'">'+'<div style="flex-shrink:0;width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700">S</div>'+'<div style="min-width:0"><div style="font-size:12px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc((s.title||s.skill_id).slice(0,60))+'</div>'+'<div style="font-size:11.5px;color:#64748b;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+esc((s.problem_solved||s.biz_trigger||'').slice(0,90))+'</div>'+(s.roi_figure?'<span style="font-size:11px;color:#059669;font-weight:600;margin-top:4px;display:block">ROI: '+esc(s.roi_figure)+'</span>':'')+'</div></a>').join('');return'<div style="margin-top:10px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><div style="font-size:11.5px;color:#64748b;font-weight:600;margin-bottom:6px">📚 相关技能</div>'+cards+'</div>';}
+  const AKWS={'agent-supply-sentinel':['供应链','库存','断货','补货','DOS','海运'],'agent-pricing-advisor':['定价','价格','ACoS','竞品价','利润率'],'agent-pnl-analyzer':['P&L','利润','GMV','毛利','亏损'],'agent-ad-attribution':['广告','ROAS','归因','ACoS','投放'],'agent-listing-doctor':['Listing','标题','关键词','A+'],'agent-voc-decoder':['评论','VOC','用户反馈','差评'],'agent-cs-triage':['客服','工单','退款','投诉','A-to-Z'],'agent-account-guardian':['封号','账号','违规','风险'],'agent-brand-guardian':['合规','文案','广告法','违禁'],'agent-product-radar':['选品','蓝海','竞争','市场机会'],'agent-tiktok-content':['TikTok','短视频','内容','脚本'],'agent-competitor-radar':['竞品','竞争对手','ASIN','BSR']};
+  const ANAMES={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站'};
+  function detectAgents(text){const t=text.toLowerCase();return Object.keys(AKWS).filter(id=>AKWS[id].some(k=>t.indexOf(k.toLowerCase())>=0)).slice(0,3);}
+  function renderAgentBtns(ids){if(!ids.length)return'';const btns=ids.map(id=>'<a href="agents.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--accent-light,#eff6ff);border:1px solid var(--accent,#3b82f6);border-radius:20px;font-size:12px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none;transition:all .15s;white-space:nowrap" onmouseover="this.style.background=\'var(--accent,#3b82f6)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-light,#eff6ff)\';this.style.color=\'var(--accent,#3b82f6)\'">◈ '+(ANAMES[id]||id)+'</a>').join('');return'<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><span style="font-size:11.5px;color:#64748b;font-weight:600;align-self:center;margin-right:4px">⚡ 直接调用：</span>'+btns+'</div>';}
+  function addMsg(text,role,extras){extras=extras||{};if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-'+role;const av=document.createElement('div');av.className='cmsg-avatar';av.textContent=role==='bot'?'\u2726':'U';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent=role==='bot'?'AI 助手':'你';body.appendChild(nm);if(extras.webBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.innerHTML='🌐 联网搜索';body.appendChild(b);}if(extras.ragBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.style.cssText='background:#f0fdf4;color:#166534;border-color:#bbf7d0';b.innerHTML='📚 知识库检索 · '+extras.ragBadge+' 条相关技能';body.appendChild(b);}const bubble=document.createElement('div');bubble.className='cmsg-bubble';if(role==='bot'){bubble.innerHTML=md(text);const agIds=detectAgents(text),sc=renderSkillCards(text),ab=renderAgentBtns(agIds);if(sc||ab){const x=document.createElement('div');x.innerHTML=(sc||'')+(ab||'');bubble.appendChild(x);}}else{bubble.textContent=text;}body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return{row,bubble};}
+  function addTyping(){if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-bot cmsg-typing';const av=document.createElement('div');av.className='cmsg-avatar';av.textContent='\u2726';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent='AI 助手';const bubble=document.createElement('div');bubble.className='cmsg-bubble';body.appendChild(nm);body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return row;}
+  async function doSend(){const text=textarea.value.trim();if(!text||sendBtn.disabled)return;textarea.value='';textarea.style.height='auto';sendBtn.disabled=true;addMsg(text,'user');history.push({role:'user',content:text});const typing=addTyping();const ragSkills=searchSkills(text,10),ragCtx=buildRAGContext(text),ragCount=ragSkills.length;const sys='你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 708 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n当前时间：'+new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});const ctxMsg=ragCount>0?'\n\n【知识库相关技能（检索到'+ragCount+'条）】\n'+ragCtx:'\n\n【知识库摘要（前60条）】\n'+ragCtx;const messages=[{role:'system',content:sys+ctxMsg},...history.slice(-8)];try{const body={model:'deepseek-chat',messages,max_tokens:1500,temperature:0.55,stream:false};if(webSearchOn){body.tools=[{type:'function',function:{name:'web_search',description:'Search the web',parameters:{type:'object',properties:{query:{type:'string'}},required:['query']}}}];body.tool_choice='auto';}const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await res.json();const choice=data&&data.choices&&data.choices[0];let answer=(choice&&choice.message&&choice.message.content||'').trim();if(!answer&&choice&&choice.finish_reason==='tool_calls')answer='（联网搜索触发中…）\n\n'+((choice.message.tool_calls[0]&&choice.message.tool_calls[0].function.arguments)||'');answer=answer||'抱歉，暂时无法获取回答，请稍后重试。';typing.remove();addMsg(answer,'bot',{webBadge:webSearchOn,ragBadge:ragCount>0?ragCount:null});history.push({role:'assistant',content:answer});}catch(e){typing.remove();addMsg('网络请求失败，请检查连接后重试。','bot');}finally{sendBtn.disabled=false;textarea.focus();}}
+})();
+"""
+        chat_js_path.write_text(RAG_JS, encoding="utf-8")
+
+    # ── 3. agent-report.html: AI综合分析按钮 ────────────────────────────────
+    report_path = out / "agent-report.html"
+    if report_path.exists():
+        report_html = report_path.read_text(encoding="utf-8")
+        if 'aiSynthesizeReports' not in report_html:
+            OLD_EXPORT = "onclick='exportReports()'"
+            NEW_EXPORT = (
+                "onclick='exportReports()'"
+                " style='padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600'>"
+                "⬇ 导出全部</button>"
+                "  <button onclick='aiSynthesizeReports()' style='padding:8px 16px;border-radius:8px;border:1.5px solid #6366f1;background:#f0f4ff;color:#6366f1;cursor:pointer;font-size:13px;font-weight:600'>✦ AI 综合分析"
+            )
+            if OLD_EXPORT in report_html:
+                report_html = report_html.replace(
+                    "onclick='exportReports()'",
+                    "onclick='exportReports()' style='padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600'"
+                )
+            AI_SYNTH_FN = """function aiSynthesizeReports(){const reports=loadReports();if(!reports.length){alert('暂无报告，请先在智能体广场运行分析');return;}const recent=reports.slice(0,8);const st=recent.map((r,i)=>'【'+(i+1)+'. '+r.name+' | '+r.ts+'】\\n输入: '+JSON.stringify(r.inputs)+'\\n结果: '+r.result.slice(0,400)).join('\\n\\n---\\n\\n');const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;z-index:3000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px';overlay.innerHTML='<div style="background:#fff;border-radius:14px;width:100%;max-width:680px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)"><div style="padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:16px;font-weight:800;color:#0f172a">✦ AI 综合分析报告</div><div style="font-size:12px;color:#64748b;margin-top:2px">基于最近 '+recent.length+' 条 Agent 运行记录</div></div><button id="ai-synth-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8">×</button></div><div style="flex:1;overflow-y:auto;padding:16px 20px"><div id="ai-synth-output" style="font-size:13.5px;color:#374151;line-height:1.7;white-space:pre-wrap"><div style="color:#6366f1;font-weight:600">⏳ 正在综合分析 '+recent.length+' 条报告，请稍候…</div></div></div><div style="padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:8px"><button id="ai-synth-copy" style="padding:7px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">📋 复制</button></div></div>';document.body.appendChild(overlay);const outputEl=document.getElementById('ai-synth-output');document.getElementById('ai-synth-close').onclick=()=>overlay.remove();overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:'你是跨境电商AI数据分析师。请综合分析下面多个Agent的运行结果，给出：1.跨Agent综合洞察；2.最需优先处理的3个问题；3.具体可量化行动建议。结构化中文输出。'},{role:'user',content:'以下是近期Agent运行结果：\\n\\n'+st}],max_tokens:1500,temperature:0.45,stream:false})}).then(r=>r.json()).then(data=>{const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';outputEl.innerHTML=ans.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>').replace(/\\n\\n+/g,'<br><br>').replace(/\\n/g,'<br>');document.getElementById('ai-synth-copy').onclick=()=>{navigator.clipboard.writeText(ans).then(()=>{document.getElementById('ai-synth-copy').textContent='✓ 已复制';});};}).catch(e=>{outputEl.innerHTML='<span style="color:#ef4444">[AI调用失败] '+e.message+'</span>';});}\n"""
+            # 在 exportReports 函数后插入
+            if 'function exportReports' in report_html and 'aiSynthesizeReports' not in report_html:
+                # 找 exportReports 函数结束的位置（下一个 function 前）
+                idx = report_html.find('function exportReports')
+                next_fn = report_html.find('\nfunction ', idx + 100)
+                if next_fn > 0:
+                    report_html = report_html[:next_fn] + '\n' + AI_SYNTH_FN + report_html[next_fn:]
+            # 插入按钮（在导出按钮旁）
+            old_export_btn = ">⬇ 导出全部</button>"
+            if old_export_btn in report_html:
+                report_html = report_html.replace(
+                    old_export_btn,
+                    ">⬇ 导出全部</button>\n  <button onclick='aiSynthesizeReports()' style='padding:8px 16px;border-radius:8px;border:1.5px solid #6366f1;background:#f0f4ff;color:#6366f1;cursor:pointer;font-size:13px;font-weight:600'>✦ AI 综合分析</button>"
+                )
+            report_path.write_text(report_html, encoding="utf-8")
+
+    # ── 4. index.html: 快速行动区 ────────────────────────────────────────────
+    index_path = out / "index.html"
+    if index_path.exists():
+        index_html = index_path.read_text(encoding="utf-8")
+        if '分析报告台' not in index_html:
+            QUICK_ACTIONS = (
+                '\n  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center">'
+                '<a href="chat.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(99,102,241,.1);border:1.5px solid rgba(99,102,241,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#6366f1;text-decoration:none">✦ AI 知识库对话</a>'
+                '<a href="graph/overview.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(6,182,212,.1);border:1.5px solid rgba(6,182,212,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#0891b2;text-decoration:none">◉ 技能关系图谱</a>'
+                '<a href="playbooks/index.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(16,185,129,.1);border:1.5px solid rgba(16,185,129,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#059669;text-decoration:none">◧ 场景手册</a>'
+                '<a href="agent-report.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#d97706;text-decoration:none">◑ 分析报告台</a>'
+                '</div>'
+            )
+            HERO_CTA_END = '</div>\n  <div class="hero-tabs"'
+            ALT_CTA_END = '</div>\n<div class="hero-tabs"'
+            if HERO_CTA_END in index_html:
+                index_html = index_html.replace(HERO_CTA_END, QUICK_ACTIONS + HERO_CTA_END, 1)
+            elif ALT_CTA_END in index_html:
+                index_html = index_html.replace(ALT_CTA_END, QUICK_ACTIONS + ALT_CTA_END, 1)
+            # 替换 Demo 按钮为 Agent 工作台
+            index_html = index_html.replace('预约 30 分钟 Demo', '◈ 进入智能体工作台')
+            index_html = index_html.replace('mailto:skills@lute-tlz-dddd.top?subject=预约Demo-paper2skills', 'agents.html')
+            index_path.write_text(index_html, encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build paper2skills static Playbook")
     parser.add_argument("--root",  default=str(BASE_DIR))
@@ -5817,6 +6263,7 @@ def main() -> int:
     vault = (root / args.vault).resolve() if not Path(args.vault).is_absolute() else Path(args.vault)
     out   = (root / args.out).resolve()   if not Path(args.out).is_absolute()   else Path(args.out)
     report = build(root, vault, out)
+    _post_build_patch(out)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
