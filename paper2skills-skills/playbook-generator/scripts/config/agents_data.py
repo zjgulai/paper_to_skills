@@ -405,4 +405,324 @@ Day 5（周五）— UGC 素人合作
 爆款公式（适合你的品类）
 情绪触发（共鸣）+ 意外反转 + 简单CTA = 完播率 65%+""",
     },
+    {
+        "id": "agent-sku-tag-scanner", "icon": "TQ", "name": "SKU标签质量扫描器",
+        "category": "标签工程", "cat_key": "tag", "cat_class": "cat-supply",
+        "desc": "输入SKU列表和目标市场，扫描标签覆盖率/时效性/准确率，识别质量缺口并生成修复优先级清单。",
+        "roi": "标签质量提升后断货识别延迟 8h→15min",
+        "linked_skills": ["Skill-Tag-Quality-Coverage-KPI", "Skill-Tag-Schema-Engineering-Lifecycle", "Skill-Auto-Tagging-Pipeline-Rule-ML-LLM"],
+        "inputs": [
+            {"id": "sku_list", "label": "SKU列表（每行一个）", "type": "textarea", "placeholder": "SKU-001\nSKU-002\nSKU-003\n..."},
+            {"id": "tag_types", "label": "重点检查标签类型", "type": "select", "options": ["全部标签", "库存状态标签", "合规认证标签", "预测风险标签", "财务利润标签"]},
+            {"id": "market", "label": "目标市场", "type": "select", "options": ["US", "EU", "JP", "AU", "全球多市场"]},
+        ],
+        "demo_output": """[SKU标签质量扫描器] 分析结果
+
+━━ 扫描概览 ━━
+扫描SKU数: 50  目标市场: US
+检查标签维度: 库存状态 / 合规认证 / 预测风险 / 财务利润
+
+━━ 标签覆盖率报告 ━━
+stockout_risk（断货风险）: 98% ✅ (目标≥99%)
+compliance.fda_registered: 62% 🔴 (目标=100%)
+abc_class（ABC分类）: 100% ✅
+predicted_stockout_7d（7日断货预测）: 78% ⚠️ (目标≥95%)
+sku.margin_tier（利润层级）: 45% 🔴 (目标≥90%)
+
+━━ 时效性检查 ━━
+stockout_risk 超时（>4h未更新）: 3个SKU ⚠️
+predicted_stockout_7d 超时（>24h未更新）: 8个SKU 🔴
+
+━━ 质量缺口TOP5（修复优先级）━━
+1. 🔴 FDA认证标签缺失 — 19个SKU无合规标签
+   → 影响: 合规审查无法自动化，风险人工遗漏
+   → 修复: 从供应商档案自动传播认证标签（Tag传播算法）
+
+2. 🔴 利润标签覆盖不足 — 27个SKU无margin_tier
+   → 影响: AI无法识别亏损SKU，无法触发调价Action
+   → 修复: 接入FBA费用数据，运行P&L计算流水线
+
+3. ⚠️ 预测标签时效滞后 — 8个SKU 7日断货预测超期
+   → 影响: 断货预警不准，可能误报或漏报
+   → 修复: 检查预测调度任务是否正常运行
+
+4. ⚠️ 断货风险标签超时 — 3个SKU超过4h未更新
+   → 修复: 检查ERP数据源连接是否正常
+
+5. 📝 ABC分类全覆盖但月度更新已超期7天
+   → 修复: 触发下次月度重分类任务
+
+━━ 综合质量评分 ━━
+当前: 67/100  目标: ≥90/100
+主要扣分项: 合规标签缺失(-20) + 预测标签超时(-8) + 利润标签不足(-5)
+
+[!] 建议行动: 优先补充FDA/CE认证标签（1天内完成，接入供应商认证台账即可）""",
+    },
+    {
+        "id": "agent-compliance-matrix", "icon": "CM", "name": "多市场合规矩阵",
+        "category": "合规风控", "cat_key": "risk", "cat_class": "cat-ad",
+        "desc": "输入产品信息和目标市场，自动扫描US/EU/JP/AU合规要求缺口，生成上市准入评估和整改优先级。",
+        "roi": "新品上市合规扫描 2周→10分钟，防扣押损失5-15万/次",
+        "linked_skills": ["Skill-Multi-Market-Compliance-Matrix-Ontology", "Skill-EPR-Extended-Producer-Responsibility-Tag", "Skill-Regulatory-Change-Impact-Propagation"],
+        "inputs": [
+            {"id": "product_name", "label": "产品名称", "type": "text", "placeholder": "例：Momcozy S12 Pro 双边吸奶器"},
+            {"id": "product_type", "label": "产品类型", "type": "select", "options": ["母婴电子设备", "配方奶粉/食品", "婴儿洗护用品", "婴儿玩具", "其他母婴用品"]},
+            {"id": "target_markets", "label": "目标市场（多选）", "type": "text", "placeholder": "例：US, DE, FR, JP（逗号分隔）"},
+        ],
+        "demo_output": """[多市场合规矩阵] 扫描结果 — Momcozy S12 Pro 双边吸奶器
+
+━━ 合规矩阵概览 ━━
+目标市场: US / DE / FR / JP
+产品类型: 母婴电子设备
+
+市场     FCC   CE    RoHS  EPR注册  PSE   合规状态
+US       ✅    N/A   N/A   N/A     N/A   ✅ 可销售
+DE       N/A   ✅    ✅    ❌缺失   N/A   ⚠️ 有缺口
+FR       N/A   ✅    ✅    ❌缺失   N/A   ⚠️ 有缺口
+JP       N/A   N/A   N/A   N/A    ❌缺失 🔴 不可销售
+
+━━ 关键缺口详情 ━━
+
+🔴 [JP] PSE认证缺失（日本特定电器强制认证）
+   → 违规后果: 进口被拒，货物扣押
+   → 估算整改周期: 60-90天
+   → 整改机构: 日本电器安全与环境研究院（J-QAC）
+   → 费用预估: ¥15,000-30,000
+
+⚠️ [DE/FR] EPR包装注册未完成
+   → 违规后果: 最高罚款€100,000/SKU + 下架
+   → 截止日期: 2025年1月1日（已过期，立即处理）
+   → 整改周期: 7-14天（在线注册）
+   → 德国: 在 LUCID平台注册（₁ <lucid.verpackungsregister.org>）
+   → 法国: 在 CITEO平台注册
+
+━━ 上市准入评分 ━━
+US: 100/100 ✅ 可立即销售
+DE: 72/100  ⚠️ 需补EPR注册（预计14天完成）
+FR: 72/100  ⚠️ 需补EPR注册（预计14天完成）
+JP: 35/100  🔴 需PSE认证（预计60-90天）
+
+━━ 行动优先级 ━━
+P0（立即）: DE/FR EPR注册（成本低，影响大）
+P1（30天内）: 启动JP PSE认证申请流程
+P2（持续）: 监控EU REACH成分变化通知""",
+    },
+    {
+        "id": "agent-return-analyzer", "icon": "RT", "name": "退货根因分析师",
+        "category": "客服售后", "cat_key": "cs", "cat_class": "cat-voc",
+        "desc": "输入退货记录和评论数据，三层归因分析（客诉→运营原因→供应链根因），输出改善闭环行动方案。",
+        "roi": "根因修复后退货率降低40-60%，年化减少退货成本8万+",
+        "linked_skills": ["Skill-Return-Root-Cause-Attribution-Graph", "Skill-Returnformer-Returns-Prediction", "Skill-Cross-Border-Return-Rate-By-Country-KPI"],
+        "inputs": [
+            {"id": "return_data", "label": "退货记录（原因 + 数量，每行一条）", "type": "textarea", "placeholder": "到货破损, 23\n与描述不符, 45\n质量问题, 18\n改变主意, 12"},
+            {"id": "sku_id", "label": "SKU ID / 产品名称", "type": "text", "placeholder": "例：SKU-S12Pro 或 吸奶器旗舰款"},
+            {"id": "market", "label": "市场", "type": "select", "options": ["US", "DE", "UK", "JP", "全部市场"]},
+        ],
+        "demo_output": """[退货根因分析师] 三层归因报告 — SKU-S12Pro / DE市场
+
+━━ 退货概览 ━━
+总退货量: 98件  退货率: 14.2%（行业基准 DE市场: 10-18%）
+主要退货原因分布:
+
+━━ 第一层：表层原因 ━━
+1. 与描述不符  45件 (45.9%) ← 主要问题
+2. 到货破损    23件 (23.5%)
+3. 质量问题    18件 (18.4%)
+4. 改变主意    12件 (12.2%)
+
+━━ 第二层：运营原因归因 ━━
+「与描述不符」45件 → 归因分析:
+  ├─ 德文翻译质量差 (68%): 产品页面机器翻译，3处关键功能描述有误
+  ├─ 主图与实物不符 (22%): 展示图为旧款，实物已更新设计
+  └─ 使用说明不完整 (10%): 缺少德语操作视频
+
+「到货破损」23件 → 归因分析:
+  ├─ 包材防护不足 (70%): 内衬泡棉厚度3mm→2mm（供应商降本导致）
+  └─ 运输方式问题 (30%): DHL偏远区域处理粗糙
+
+━━ 第三层：根本原因 ━━
+🔴 根因1: 德文Listing本地化质量差（直接导致45%退货）
+   → 证据: 评论词云中高频出现"nicht wie beschrieben"（与描述不符）
+   → 行动: 找母语译者重写德文页面，预算€500，预计7天完成
+   → 预期效果: 退货率从14.2%降至9%（近DE基准线）
+
+🟡 根因2: 包材供应商降本导致防护下降（导致23%退货）
+   → 证据: 破损退货集中在2月后（与包材变更时间吻合）
+   → 行动: 恢复3mm泡棉标准，成本+¥0.3/件
+   → 预期效果: 破损退货降低60%
+
+━━ 改善ROI估算 ━━
+德文Listing优化: 投入€500 → 年化节省退货成本约€8,000
+包材恢复标准: 成本+¥0.3/件 → 年化节省破损退货约¥15,000
+
+[!] 结论: 优先修复德文Listing（ROI最高，1周内可完成）""",
+    },
+    {
+        "id": "agent-margin-calculator", "icon": "PL", "name": "SKU利润归因计算器",
+        "category": "数据分析", "cat_key": "analytics", "cat_class": "cat-ad",
+        "desc": "输入SKU销售和成本数据，生成全链路P&L瀑布图，识别利润漏点，给出可操作的提利行动建议。",
+        "roi": "发现亏损SKU后调价/优化，年化利润率提升3-8pp",
+        "linked_skills": ["Skill-SKU-Level-Margin-Attribution-Ontology", "Skill-Supply-Chain-Total-Cost-TCO-Model", "Skill-GMROI-Inventory-Investment-Efficiency"],
+        "inputs": [
+            {"id": "sku_id", "label": "SKU / 产品名称", "type": "text", "placeholder": "例：吸奶器S12 Pro"},
+            {"id": "gmv", "label": "月销售额（元）", "type": "text", "placeholder": "例：150000"},
+            {"id": "costs", "label": "成本明细（格式: 项目=金额，每行一条）", "type": "textarea", "placeholder": "采购成本=45000\nFBA费用=18000\n广告费用=22500\n退货成本=6000\n物流头程=9000"},
+        ],
+        "demo_output": """[SKU利润归因计算器] P&L 瀑布分析 — 吸奶器S12 Pro
+
+━━ 月度 P&L 瀑布 ━━
+GMV（销售收入）           ¥150,000  100.0%
+ └─ 平台佣金（12%）       -¥18,000   12.0%
+净销售额（NSV）           ¥132,000   88.0%
+ └─ 采购成本（COGS）      -¥45,000   30.0%
+毛利润                    ¥87,000    58.0%
+ └─ FBA/仓储费用          -¥18,000   12.0%
+ └─ 广告费用（ACoS 15%）  -¥22,500   15.0%
+ └─ 退货成本（4%）        -¥6,000     4.0%
+ └─ 头程物流              -¥9,000     6.0%
+产品贡献利润              ¥31,500    21.0% ✅
+
+━━ 成本结构诊断 ━━
+广告费率 15%：⚠️ 偏高（行业优秀: 10-12%）
+退货率导致成本 4%：⚠️ 中等（优化目标: <2.5%）
+FBA费率 12%：✅ 正常
+头程费率 6%：✅ 正常
+
+━━ 与同类产品对标 ━━
+当前净贡献率: 21%  行业P75: 25%  行业P90: 32%
+差距: -4pp（约¥6,000/月提升空间）
+
+━━ 提利行动建议 ━━
+🎯 P0 降广告ACoS: 15%→12%
+   → 操作: 暂停ROI<0.8的关键词，强化精准匹配
+   → 预期节省: ¥4,500/月  难度: ⭐⭐☆☆☆
+
+🎯 P1 降退货成本: 4%→2.5%
+   → 操作: 优化德文Listing（见退货分析报告）
+   → 预期节省: ¥2,250/月  难度: ⭐⭐☆☆☆
+
+🎯 P2 谈判FBA费优化 或 部分切换海外仓
+   → 适用SKU: 月销>300件的稳定品
+   → 预期节省: ¥1,800/月  难度: ⭐⭐⭐☆☆
+
+━━ 综合提利潜力 ━━
+可实现年化净利润提升: ¥102,600（≈ GMV的5.7%）""",
+    },
+    {
+        "id": "agent-geopolitical-risk", "icon": "GR", "name": "地缘风险评估仪",
+        "category": "合规风控", "cat_key": "risk", "cat_class": "cat-supply",
+        "desc": "输入供应商信息和物流路线，评估关税/港口/汇率/出口管制多维地缘风险，生成应急预案建议。",
+        "roi": "提前14天预警延误，避免空运附加费$8,000+/次",
+        "linked_skills": ["Skill-Geopolitical-Risk-Tag-Supply-Impact", "Skill-Black-Swan-Scenario-Simulation-Tag", "Skill-SC-Resilience-Hypergraph"],
+        "inputs": [
+            {"id": "supplier_country", "label": "供应商所在国家/地区", "type": "select", "options": ["中国大陆", "台湾", "越南", "印度", "马来西亚", "墨西哥", "其他"]},
+            {"id": "target_market", "label": "目标销售市场", "type": "select", "options": ["美国", "欧盟", "英国", "日本", "澳大利亚", "多市场"]},
+            {"id": "logistics_route", "label": "主要物流路线", "type": "text", "placeholder": "例：上海→洛杉矶（苏伊士运河）或 宁波→汉堡（红海航线）"},
+        ],
+        "demo_output": """[地缘风险评估仪] 风险评估报告
+
+━━ 风险概览 ━━
+供应商来源: 中国大陆  目标市场: 美国
+主要路线: 上海→洛杉矶（太平洋直航）
+综合地缘风险评分: 62/100（中等偏高）
+
+━━ 五维风险评估 ━━
+关税风险     🔴 HIGH (75/100)
+  现状: US对华进口关税已额外+7.5-25%（品类差异）
+  预警: 2025年贸易政策不确定性高，追加关税概率45%
+  应对: 评估越南/墨西哥供应商转移可行性
+
+港口/航运风险 🟡 MEDIUM (50/100)
+  现状: 太平洋航线相对稳定（苏伊士未影响此线路）
+  预警: 洛杉矶港口拥堵指数本月+15%，ETA延误概率约30%
+  应对: 提前备货窗口，考虑西雅图/温哥华备用港口
+
+汇率风险     🟡 MEDIUM (45/100)
+  现状: CNY/USD近3月波动率±2.8%
+  采购成本影响: 汇率每波动1% = 成本±¥0.5/件（以售价$59计）
+  应对: 锁定3个月远期汇率，降低不确定性
+
+出口管制风险  🟢 LOW (25/100)
+  现状: 吸奶器不在出口管制清单（非半导体/AI芯片类）
+  持续监控: 锂电池组件是否纳入新一轮管制
+
+供应商集中度  🔴 HIGH (80/100)
+  现状: 主要供应商（宁波精工）占采购额68%
+  风险: 单一供应商故障 = 全量断供
+  应对: 立即启动第二供应商开发（目标6个月内完成）
+
+━━ 最高风险情景模拟 ━━
+情景: 关税额外+15% + 洛杉矶港口罢工（概率15%，2025年Q3）
+影响估算: 利润率下降4-8pp + 延误2-4周
+应急预案:
+  → 提前3个月备货（当前情景下务必执行）
+  → 激活越南备用供应商（建议今年内完成认证）
+  → 评估墨西哥前置仓可行性（美国关税减免）
+
+[!] 结论: 关税和供应商集中度是最需立即行动的风险点""",
+    },
+    {
+        "id": "agent-epr-calculator", "icon": "EP", "name": "EPR合规费用测算",
+        "category": "合规风控", "cat_key": "risk", "cat_class": "cat-ad",
+        "desc": "输入产品包装信息，自动计算欧盟德/法/奥等市场EPR注册要求和年度费用，生成注册优先级清单。",
+        "roi": "EPR违规最高罚款€100,000/SKU，提前注册成本仅€200/SKU",
+        "linked_skills": ["Skill-EPR-Extended-Producer-Responsibility-Tag", "Skill-Multi-Market-Compliance-Matrix-Ontology", "Skill-Climate-ESG-Supply-Chain-Tag"],
+        "inputs": [
+            {"id": "product_name", "label": "产品名称", "type": "text", "placeholder": "例：吸奶器S12 Pro"},
+            {"id": "packaging_weight", "label": "包装总重量（克）", "type": "text", "placeholder": "例：480（含内衬+外箱+泡棉）"},
+            {"id": "packaging_material", "label": "主要包装材料", "type": "select", "options": ["纸板+泡棉", "纸板+塑料", "全纸板", "塑料为主", "混合材料"]},
+            {"id": "eu_markets", "label": "EU目标市场", "type": "text", "placeholder": "例：DE, FR, AT, NL（逗号分隔）"},
+            {"id": "annual_units", "label": "年销售量（件）", "type": "text", "placeholder": "例：5000"},
+        ],
+        "demo_output": """[EPR合规费用测算] 报告 — 吸奶器S12 Pro
+
+━━ 输入参数 ━━
+包装重量: 480g  材料: 纸板+泡棉
+EU目标市场: DE, FR, AT  年销量: 5,000件
+
+━━ EPR费率计算 ━━
+包装材料分解（估算）:
+  纸板外箱 280g × €0.30/kg = €0.084/件
+  泡棉内衬 120g × €0.90/kg = €0.108/件
+  封口带   80g × €1.20/kg  = €0.096/件
+单件EPR材料费: €0.288/件
+
+━━ 各市场年度EPR费用 ━━
+德国（LUCID注册）:
+  材料费: 5,000件 × €0.288 = €1,440
+  固定行政费: €200（年度注册费）
+  德国年度合计: €1,640
+
+法国（CITEO注册）:
+  材料费: 5,000件 × €0.240 = €1,200
+  固定行政费: €150
+  法国年度合计: €1,350
+
+奥地利（ARA注册）:
+  材料费: 5,000件 × €0.265 = €1,325
+  固定行政费: €100
+  奥地利年度合计: €1,425
+
+━━ 三市场EPR总费用 ━━
+年度合计: €4,415（约¥34,000）
+占EU市场GMV比例: 约1.1%（可接受）
+单件分摊: €0.88/件 → 建议纳入定价成本
+
+━━ 注册优先级 ━━
+🔴 P0 德国（LUCID）: 2023年起已强制，违规罚款最高€100,000/SKU
+   注册链接: lucid.verpackungsregister.org
+   预计完成: 7天  材料: 营业执照+产品清单+包装规格
+
+🔴 P0 法国（CITEO）: 2022年起已强制
+   注册链接: citeo.com/pro
+   预计完成: 10天
+
+🟡 P1 奥地利（ARA）: 建议在前两个完成后处理
+
+━━ EPR单件成本 vs 违规风险 ━━
+合规成本: €0.88/件  vs  违规风险: €100,000/SKU（5000件以上）
+结论: 立即注册，ROI无限大
+
+[!] 行动: 本周内启动德国LUCID注册（最高风险市场）""",
+    },
 ]

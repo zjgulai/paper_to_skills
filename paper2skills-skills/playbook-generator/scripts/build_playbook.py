@@ -960,7 +960,8 @@ def render_agents_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     cats = {"全部": "", "选品分析": "selection", "Listing优化": "listing",
             "广告归因": "attribution", "VOC分析": "voc", "供应链预警": "supply",
             "客服售后": "cs", "价格策略": "pricing", "合规风控": "risk",
-            "数据分析": "analytics", "内容营销": "content", "竞品监控": "competitor"}
+            "数据分析": "analytics", "内容营销": "content", "竞品监控": "competitor",
+            "标签工程": "tag"}
 
     cat_pills = "".join(
         f"<button class='cat-pill{'  active' if k == '全部' else ''}' data-cat='{v}'>{k}</button>"
@@ -2801,6 +2802,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
         output = html.escape(step.get("output", ""))
         step_title_safe = html.escape(step['step']).replace("'", "\\'")
         pb_name_safe_q = html.escape(pb['name']).replace("'", "\\'")
+        pb_id_safe = pb.get('id', 'unknown')
         exec_btn = f"""<div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
       <a href='../chat.html?q={html.escape(step.get("step","").replace(" ","+")+"+在母婴跨境电商场景如何应用？")}' target='_blank'
          style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
@@ -2814,7 +2816,34 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
          onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
         ◈ 调用 Agent 执行
       </a>
-    </div>"""
+      <button id='step-done-{pb_id_safe}-{i}'
+         onclick='markStepDone("{pb_id_safe}",{i},{len(pb.get("steps",[]))},this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){{
+      var k='pb_progress_{pb_id_safe}';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes({i})){{
+        var btn=document.getElementById('step-done-{pb_id_safe}-{i}');
+        if(btn){{btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}}
+      }}
+    }})();
+    function markStepDone(pbId,stepNum,totalSteps,btn){{
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){{done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){{
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }}
+    }}
+    </script>"""
         steps_html += f"""
 <div class='pb-step'>
   <div class='pb-step-num'>Step {i}</div>
@@ -5909,6 +5938,7 @@ def render_pages(
         icon = pb["icon"]
         biz_tag = html.escape(pb["tag"])
         desc = html.escape(pb["desc"])
+        total_steps = len(pb.get("steps", []))
         return (
             f"<a class='biz-card' href='{pb_id}.html' data-tag='{tag}'>"
             f"<div class='biz-card-header'>"
@@ -5919,9 +5949,18 @@ def render_pages(
             f"<span class='biz-tag'>{biz_tag}</span>"
             f"</div>"
             f"<p>{desc}</p>"
+            f"<div id='prog-{pb_id}' style='margin-top:6px;font-size:11px;color:#94a3b8'></div>"
             f"</div>"
             f"</div>"
             f"</a>"
+            f"<script>(function(){{"
+            f"var done=JSON.parse(localStorage.getItem('pb_progress_{pb_id}')||'[]');"
+            f"var el=document.getElementById('prog-{pb_id}');"
+            f"if(el&&done.length>0){{"
+            f"var pct=Math.round(done.length/{total_steps}*100);"
+            f"el.innerHTML='<div style=\"background:#e2e8f0;border-radius:4px;height:4px;overflow:hidden;margin-bottom:3px\"><div style=\"background:#059669;height:100%;width:'+pct+'%;transition:width .3s\"></div></div>'"
+            f"+'<span style=\"color:#059669;font-weight:600\">'+done.length+'/{total_steps} 步已完成</span>';}}"
+            f"}})();</script>"
         )
     tob_index_cards = "".join(_pb_card(pb) for pb in TOB_PLAYBOOKS)
     pb_search_bar = """<div style='margin:12px 0 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center'>
@@ -6061,9 +6100,15 @@ def _post_build_patch(out: "Path") -> None:
                 agents_html = agents_html.replace(old, new, 1)
 
         # 注入 AI 运行引擎 + 链式调用（在 catBtns 之前）
-        AI_ENGINE = """const AGENT_PROMPTS={'agent-supply-sentinel':'你是供应链分析专家。根据库存数据分析断货风险、给出补货建议（海运vs空运）。结构化中文输出。','agent-pricing-advisor':'你是跨境电商定价顾问。分析定价策略，给出最优定价区间、提价路径建议。','agent-pnl-analyzer':'你是P&L财务分析师。拆解利润结构，找出亏损原因，给出改善优先级。','agent-ad-attribution':'你是广告归因分析师。分析广告效率，给出优化和预算调整建议。','agent-competitor-radar':'你是竞品情报分析师。识别市场机会、定价策略、差评规律，给出竞争建议。','agent-listing-doctor':'你是Listing优化专家。诊断标题卖点关键词，给出具体优化建议。','agent-voc-decoder':'你是VOC分析师。从评论提取用户痛点、高频诉求、产品改进信号。','agent-cs-triage':'你是客服分诊专家。分类工单优先级，识别高风险工单，生成回复模板。','agent-account-guardian':'你是账号风险专家。分析账号健康，识别违规风险，给出预防申诉策略。','agent-brand-guardian':'你是品牌合规专家。审查文案违禁词夸大声明，给出合规修改建议。','agent-product-radar':'你是选品分析师。评估品类机会，分析竞争格局，给出GO/NO-GO建议。','agent-tiktok-content':'你是TikTok内容策略师。规划内容矩阵脚本框架达人合作策略。'};
+        AI_ENGINE = """const AGENT_PROMPTS={'agent-supply-sentinel':'你是供应链分析专家。根据库存数据分析断货风险、给出补货建议（海运vs空运）。结构化中文输出。','agent-pricing-advisor':'你是跨境电商定价顾问。分析定价策略，给出最优定价区间、提价路径建议。','agent-pnl-analyzer':'你是P&L财务分析师。拆解利润结构，找出亏损原因，给出改善优先级。','agent-ad-attribution':'你是广告归因分析师。分析广告效率，给出优化和预算调整建议。','agent-competitor-radar':'你是竞品情报分析师。识别市场机会、定价策略、差评规律，给出竞争建议。','agent-listing-doctor':'你是Listing优化专家。诊断标题卖点关键词，给出具体优化建议。','agent-voc-decoder':'你是VOC分析师。从评论提取用户痛点、高频诉求、产品改进信号。','agent-cs-triage':'你是客服分诊专家。分类工单优先级，识别高风险工单，生成回复模板。','agent-account-guardian':'你是账号风险专家。分析账号健康，识别违规风险，给出预防申诉策略。','agent-brand-guardian':'你是品牌合规专家。审查文案违禁词夸大声明，给出合规修改建议。','agent-product-radar':'你是选品分析师。评估品类机会，分析竞争格局，给出GO/NO-GO建议。','agent-tiktok-content':'你是TikTok内容策略师。规划内容矩阵脚本框架达人合作策略。',
+'agent-sku-tag-scanner':'你是标签工程质量专家。分析SKU标签覆盖率/时效/准确率，识别缺口，生成修复优先级清单和自动化打标建议。',
+'agent-compliance-matrix':'你是跨境合规专家。根据产品和目标市场，扫描US/EU/JP/AU合规缺口，给出认证清单和上市准入评分（0-100）。',
+'agent-return-analyzer':'你是退货根因分析专家。三层归因（表层→运营→供应链根因），量化改善ROI，给出优先级行动方案。',
+'agent-margin-calculator':'你是SKU利润归因专家。生成完整P&L瀑布图（GMV→净贡献），识别成本漏点，给出具体提利建议。',
+'agent-geopolitical-risk':'你是供应链地缘风险专家。评估关税/港口/汇率/出口管制/供应商集中度五维风险，给出量化评分和应急预案。',
+'agent-epr-calculator':'你是欧盟EPR合规专家。计算各市场EPR注册费用，给出注册优先级和操作步骤，帮助品牌在截止日前完成合规。'};
 const CHAINS=[{id:'supply-decision',name:'供应链全链路决策',agents:['agent-supply-sentinel','agent-pnl-analyzer','agent-pricing-advisor']},{id:'growth-analysis',name:'增长归因分析',agents:['agent-ad-attribution','agent-competitor-radar','agent-product-radar']},{id:'brand-protection',name:'品牌合规防御',agents:['agent-listing-doctor','agent-brand-guardian','agent-account-guardian']}];
-const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站'};
+const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站','agent-sku-tag-scanner':'SKU标签质量扫描器','agent-compliance-matrix':'多市场合规矩阵','agent-return-analyzer':'退货根因分析师','agent-margin-calculator':'SKU利润归因计算器','agent-geopolitical-risk':'地缘风险评估仪','agent-epr-calculator':'EPR合规费用测算'};
 function getMode(id){const r=document.querySelector('input[name="mode-'+id+'"]:checked');return r?r.value:'local';}
 function getInputs(id){const o={};document.querySelectorAll('[id^="'+id+'__"]').forEach(el=>{o[el.id.replace(id+'__','')]=el.value||el.textContent||'';});return o;}
 async function runAgentAI(id){
