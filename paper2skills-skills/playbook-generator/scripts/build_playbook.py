@@ -3130,6 +3130,37 @@ def render_skill_page(skill: PlaybookSkill) -> str:
         )
 
     agent_cases_html = ""
+
+    # ── Phase 8: 一键调用Agent入口（每个Skill页面注入） ──
+    from config.agents_data import AGENT_CATALOG as _AGENT_CATALOG
+    _skill_to_agents: dict[str, list[dict]] = {}
+    for _ag in _AGENT_CATALOG:
+        for _sid in _ag.get("linked_skills", []):
+            _skill_to_agents.setdefault(_sid, []).append({"id": _ag["id"], "name": _ag["name"]})
+    related_agents = _skill_to_agents.get(skill.skill_id, [])
+    agent_invoke_html = ""
+    if related_agents:
+        btns = "".join(
+            f"<a href='../agents.html' "
+            f"style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;"
+            f"background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;"
+            f"border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;"
+            f"transition:opacity .15s' onmouseover='this.style.opacity=\".85\"' onmouseout='this.style.opacity=\"1\"'>"
+            f"◈ {html.escape(ag['name'])}"
+            f"</a>"
+            for ag in related_agents[:3]
+        )
+        agent_invoke_html = (
+            f"<div style='margin:24px 0;padding:16px 18px;"
+            f"background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);"
+            f"border:1px solid #c7d2fe;border-radius:12px'>"
+            f"<div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>"
+            f"⚡ 可直接调用的 Agent</div>"
+            f"<div style='display:flex;flex-wrap:wrap;gap:8px'>{btns}</div>"
+            f"<div style='font-size:11px;color:#94a3b8;margin-top:8px'>"
+            f"Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div>"
+            f"</div>"
+        )
     try:
         candidate_paths = [
             Path(skill.path),
@@ -3231,6 +3262,7 @@ function copyCode(btn) {{
   }});
 }}
 </script>
+{agent_invoke_html}
 {agent_cases_html}"""
     return html_page(skill.title, body, nav)
 
@@ -5980,6 +6012,7 @@ def render_pages(
     style='padding:5px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>AI Agent</button>
   <button class='pb-tag-btn' data-tag='客服' onclick='pbFilter("客服")'
     style='padding:5px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>客服运营</button>
+  <a href='progress.html' style='margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:var(--accent-light,#eff6ff);border:1.5px solid var(--accent,#3b82f6);border-radius:8px;font-size:12.5px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none'>📊 进度看板</a>
 </div>
 <script>
 (function(){
@@ -6015,6 +6048,8 @@ def render_pages(
         f"<div class='biz-grid'>{tob_index_cards}</div>",
         "../",
     ))
+
+    write_file(out / "playbooks" / "progress.html", _render_playbook_progress_page(TOB_PLAYBOOKS))
 
     write_file(out / "README.md", "# paper2skills Playbook\n\n打开 `index.html` 浏览。\n")
 
@@ -6295,6 +6330,218 @@ async function runChain(chainId){
             index_html = index_html.replace('预约 30 分钟 Demo', '◈ 进入智能体工作台')
             index_html = index_html.replace('mailto:skills@lute-tlz-dddd.top?subject=预约Demo-paper2skills', 'agents.html')
             index_path.write_text(index_html, encoding="utf-8")
+
+    # ── 5. search.js: 语义增强版（预览卡片 + 颜色域标识 + 评分排序） ──────
+    search_js_path = out / "assets" / "search.js"
+    if search_js_path.exists():
+        search_js_path.write_text(r"""(function(){
+  var input=document.getElementById('global-search');
+  var box=document.getElementById('search-results');
+  if(!input||!box) return;
+  var skills=[];
+  function waitForData(cb){if(window.PLAYBOOK_DATA){skills=window.PLAYBOOK_DATA.skills||[];cb();return;}var t=setInterval(function(){if(window.PLAYBOOK_DATA){clearInterval(t);skills=window.PLAYBOOK_DATA.skills||[];cb();}},80);}
+  function rootPrefix(){var p=window.location.pathname;if(p.includes('/skills/')||p.includes('/domains/')||p.includes('/playbooks/')||p.includes('/topics/')||p.includes('/workflows/')||p.includes('/graph/'))return'../';return'';}
+  function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  var DCOLORS={'04-供应链':'#0ea5e9','10-MAS':'#8b5cf6','08-知识图谱':'#06b6d4','16-智能体工程':'#ec4899','13-广告分析':'#f59e0b','14-用户分析':'#10b981','24-标签工程':'#6366f1','06-增长模型':'#ef4444','15-营销投放分析':'#f97316','23-运营财务':'#14b8a6','05-推荐系统':'#84cc16','02-A_B实验':'#a855f7','01-因果推断':'#64748b','03-时间序列':'#22d3ee','17-价格优化':'#fb923c','18-物流履约':'#4ade80','19-风控反欺诈':'#f43f5e','20-AI视频生成':'#c084fc','21-合规决策':'#fbbf24','22-数据采集工程':'#38bdf8','12-ML基础':'#94a3b8','11-AI人文':'#e879f9','07-NLP-VOC':'#2dd4bf','09-DataAgent-LLM':'#f97316'};
+  function scoreSkill(s,q,words){var text=[s.skill_id,s.title,s.domain_dir,(s.tags||[]).join(' '),(s.topics||[]).join(' '),s.algorithm_summary,s.problem_solved,s.roi_figure,s.biz_trigger,s.biz_outcome].join(' ').toLowerCase();if(!text.includes(q))return 0;var sc=0;if((s.title||'').toLowerCase().includes(q))sc+=10;if((s.problem_solved||'').toLowerCase().includes(q))sc+=5;words.forEach(function(w){if(text.includes(w))sc+=1;});return sc;}
+  function applyFilters(list){var diff=(document.getElementById('filter-diff')||{}).value||'';var roi=(document.getElementById('filter-roi')||{}).value||'';var dom=(document.getElementById('filter-domain')||{}).value||'';return list.filter(function(s){if(dom&&s.domain_dir!==dom)return false;if(diff&&s.difficulty!==diff)return false;if(roi){var stars=(s.difficulty||'').split('\u2b50').length-1;if(roi==='easy'&&stars>2)return false;if(roi==='medium'&&(stars<3||stars>3))return false;if(roi==='hard'&&stars<4)return false;}return true;});}
+  function renderPreview(s,prefix){var color=DCOLORS[s.domain_dir]||'#94a3b8';var roi=s.roi_figure?'<span style="color:#059669;font-size:11px;font-weight:600;margin-top:2px;display:block">\ud83d\udcb0 '+esc(s.roi_figure)+'</span>':'';var diff=s.difficulty?'<span style="font-size:10px;color:#94a3b8">'+esc(s.difficulty)+'</span>':'';var problem=s.problem_solved?'<div style="font-size:11.5px;color:#475569;margin-top:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+esc((s.problem_solved||'').slice(0,100))+'</div>':'';return'<a class="result" href="'+prefix+'skills/'+s.skill_id+'.html" style="display:block;padding:10px 14px;border-bottom:1px solid var(--line,#e2e8f0);text-decoration:none"><div style="display:flex;align-items:flex-start;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:'+color+';flex-shrink:0;margin-top:5px"></div><div style="min-width:0;flex:1"><div style="font-size:13px;font-weight:700;color:var(--ink,#0f172a);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc((s.title||s.skill_id).slice(0,55))+'</div><div style="display:flex;align-items:center;gap:8px;margin-top:2px"><span style="font-size:10.5px;padding:1px 7px;border-radius:10px;background:'+color+'22;color:'+color+';font-weight:600">'+esc(s.domain_dir)+'</span>'+diff+'</div>'+problem+roi+'</div></div></a>';}
+  function doSearch(){var q=input.value.trim().toLowerCase();if(q.length<2){box.classList.add('hidden');box.innerHTML='';return;}var words=q.split(/\s+/).filter(function(w){return w.length>0;});var scored=skills.map(function(s){return{s:s,sc:scoreSkill(s,q,words)};}).filter(function(x){return x.sc>0;}).sort(function(a,b){return b.sc-a.sc;});var hits=applyFilters(scored.map(function(x){return x.s;})).slice(0,16);var prefix=rootPrefix();if(!hits.length){box.innerHTML='<p class="muted" style="padding:12px 14px;font-size:13px">\u672a\u627e\u5230\u300c'+esc(q)+'\u300d\u76f8\u5173\u6280\u80fd</p>';box.classList.remove('hidden');return;}box.innerHTML=hits.map(function(s){return renderPreview(s,prefix);}).join('')+(scored.length>16?'<div style="padding:8px 14px;font-size:11.5px;color:#94a3b8;text-align:center">\u663e\u793a\u524d16\u6761\uff0c\u516825\u670827'+scored.length+'\u6761\u5339\u914d</div>':'');box.classList.remove('hidden');}
+  waitForData(function(){input.addEventListener('input',doSearch);input.addEventListener('keydown',function(e){if(e.key==='Escape'){box.classList.add('hidden');input.blur();}if(e.key==='Enter'&&!box.classList.contains('hidden')){var first=box.querySelector('.result');if(first)window.location.href=first.href;}});document.addEventListener('click',function(e){if(!input.contains(e.target)&&!box.contains(e.target))box.classList.add('hidden');});['filter-diff','filter-roi','filter-domain'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',doSearch);});});
+})();
+""", encoding="utf-8")
+
+
+def _render_playbook_progress_page(playbooks: list) -> str:
+    pb_meta_json = json.dumps(
+        [{"id": pb["id"], "name": pb["name"], "total": len(pb.get("steps", []))}
+         for pb in playbooks],
+        ensure_ascii=False
+    )
+    pb_cards = ""
+    for pb in playbooks:
+        pb_id = pb["id"]
+        pb_name = html.escape(pb["name"])
+        pb_desc = html.escape(pb["desc"])
+        pb_icon = pb["icon"]
+        pb_tag = html.escape(pb.get("tag", ""))
+        total_steps = len(pb.get("steps", []))
+        step_items = "".join(
+            f"<div class='prog-step' data-pb='{pb_id}' data-step='{i+1}'>"
+            f"<span class='prog-step-num'>{i+1}</span>"
+            f"<span class='prog-step-title'>{html.escape(s.get('step',''))[:50]}</span>"
+            f"<span class='prog-step-status'>○</span>"
+            f"</div>"
+            for i, s in enumerate(pb.get("steps", []))
+        )
+        pb_cards += (
+            f"<div class='prog-card' id='prog-card-{pb_id}'>"
+            f"<div class='prog-card-header'>"
+            f"<span class='prog-icon'>{pb_icon}</span>"
+            f"<div class='prog-info'>"
+            f"<div class='prog-name'>{pb_name}</div>"
+            f"<div class='prog-tag'>{pb_tag}</div>"
+            f"</div>"
+            f"<div class='prog-pct' id='pct-{pb_id}'>0%</div>"
+            f"</div>"
+            f"<div class='prog-bar'><div class='prog-bar-fill' id='bar-{pb_id}' style='width:0'></div></div>"
+            f"<div class='prog-steps'>{step_items}</div>"
+            f"<div class='prog-actions'>"
+            f"<a href='{pb_id}.html' class='prog-btn-open'>继续 →</a>"
+            f"<button class='prog-btn-export' onclick='exportProgress(\"{pb_id}\",\"{pb_name}\")'>⬇ 导出报告</button>"
+            f"<button class='prog-btn-reset' onclick='resetProgress(\"{pb_id}\")'>重置</button>"
+            f"</div>"
+            f"</div>"
+        )
+
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>学习进度看板 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .prog-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;padding:16px 0}}
+    .prog-card{{background:var(--panel,#fff);border:1px solid var(--line,#e2e8f0);border-radius:12px;padding:16px 18px;transition:box-shadow .15s}}
+    .prog-card:hover{{box-shadow:0 4px 16px rgba(0,0,0,.08)}}
+    .prog-card-header{{display:flex;align-items:center;gap:12px;margin-bottom:10px}}
+    .prog-icon{{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;flex-shrink:0}}
+    .prog-name{{font-size:14px;font-weight:700;color:var(--ink,#0f172a)}}
+    .prog-tag{{font-size:11px;color:var(--muted,#94a3b8);margin-top:2px}}
+    .prog-pct{{margin-left:auto;font-size:15px;font-weight:800;color:#059669;flex-shrink:0}}
+    .prog-bar{{height:6px;background:var(--panel-2,#f1f5f9);border-radius:3px;overflow:hidden;margin-bottom:12px}}
+    .prog-bar-fill{{height:100%;background:linear-gradient(90deg,#059669,#10b981);border-radius:3px;transition:width .5s ease}}
+    .prog-steps{{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}}
+    .prog-step{{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;transition:background .15s}}
+    .prog-step.done{{background:#f0fdf4}}
+    .prog-step-num{{width:20px;height:20px;border-radius:50%;background:var(--panel-2,#f1f5f9);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted);flex-shrink:0}}
+    .prog-step.done .prog-step-num{{background:#059669;color:#fff}}
+    .prog-step-title{{font-size:12px;color:var(--ink-2,#475569);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+    .prog-step-status{{font-size:14px;flex-shrink:0;color:var(--muted,#94a3b8)}}
+    .prog-step.done .prog-step-status{{color:#059669}}
+    .prog-actions{{display:flex;gap:8px;flex-wrap:wrap}}
+    .prog-btn-open{{display:inline-flex;align-items:center;padding:6px 14px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}}
+    .prog-btn-open:hover{{background:var(--accent-dark,#2563eb)}}
+    .prog-btn-export,.prog-btn-reset{{padding:6px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569);transition:all .15s}}
+    .prog-btn-export:hover{{border-color:var(--accent,#3b82f6);color:var(--accent,#3b82f6)}}
+    .prog-btn-reset:hover{{border-color:#ef4444;color:#ef4444}}
+    .prog-summary{{display:flex;gap:16px;flex-wrap:wrap;padding:14px 16px;background:var(--panel-2,#f8fafc);border-radius:10px;margin-bottom:16px;border:1px solid var(--line,#e2e8f0)}}
+    .prog-sum-item{{text-align:center}}
+    .prog-sum-num{{font-size:22px;font-weight:800;color:var(--ink,#0f172a)}}
+    .prog-sum-label{{font-size:11px;color:var(--muted,#94a3b8);margin-top:2px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a class="brand" href="../index.html"><span class="brand-icon">P</span><span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span></a>
+    <div class="topbar-right"><input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索"><a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a></div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="index.html">场景手册</a> / 学习进度看板</nav>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+  <div><h1 style="margin:0 0 4px">📊 学习进度看板</h1><p class="muted" style="margin:0">{len(playbooks)} 本手册 · 步骤完成情况一目了然 · 支持导出 Markdown 报告</p></div>
+  <div style="display:flex;gap:8px">
+    <button onclick="exportAllProgress()" style="padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">⬇ 导出全部报告</button>
+    <a href="index.html" style="padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:13px;font-weight:600;color:var(--ink-2);text-decoration:none">← 返回手册列表</a>
+  </div>
+</div>
+<div class="prog-summary" id="overall-summary">
+  <div class="prog-sum-item"><div class="prog-sum-num" id="sum-total">{len(playbooks)}</div><div class="prog-sum-label">总手册数</div></div>
+  <div class="prog-sum-item"><div class="prog-sum-num" id="sum-started" style="color:#3b82f6">0</div><div class="prog-sum-label">已开始</div></div>
+  <div class="prog-sum-item"><div class="prog-sum-num" id="sum-completed" style="color:#059669">0</div><div class="prog-sum-label">已完成</div></div>
+  <div class="prog-sum-item"><div class="prog-sum-num" id="sum-steps" style="color:#8b5cf6">0</div><div class="prog-sum-label">完成步骤数</div></div>
+</div>
+<div class="prog-grid">{pb_cards}</div>
+<script>
+const PB_META = {pb_meta_json};
+function loadAllProgress() {{
+  let started=0,completed=0,totalSteps=0;
+  PB_META.forEach(pb => {{
+    const done = JSON.parse(localStorage.getItem('pb_progress_'+pb.id)||'[]');
+    const pct = pb.total>0 ? Math.round(done.length/pb.total*100) : 0;
+    const pctEl=document.getElementById('pct-'+pb.id);
+    const barEl=document.getElementById('bar-'+pb.id);
+    if(pctEl) pctEl.textContent=pct+'%';
+    if(pctEl) pctEl.style.color=pct>=100?'#059669':pct>0?'#3b82f6':'#94a3b8';
+    if(barEl) barEl.style.width=pct+'%';
+    document.querySelectorAll('.prog-step[data-pb="'+pb.id+'"]').forEach(step => {{
+      const stepNum = parseInt(step.dataset.step);
+      const isDone = done.includes(stepNum);
+      step.classList.toggle('done', isDone);
+      step.querySelector('.prog-step-status').textContent = isDone ? '✓' : '○';
+    }});
+    if(done.length>0) started++;
+    if(pct>=100) completed++;
+    totalSteps+=done.length;
+  }});
+  document.getElementById('sum-started').textContent=started;
+  document.getElementById('sum-completed').textContent=completed;
+  document.getElementById('sum-steps').textContent=totalSteps;
+}}
+function resetProgress(pbId) {{
+  if(!confirm('确认重置「'+pbId+'」的进度吗？')) return;
+  localStorage.removeItem('pb_progress_'+pbId);
+  loadAllProgress();
+}}
+function exportProgress(pbId, pbName) {{
+  const pb = PB_META.find(p=>p.id===pbId);
+  if(!pb) return;
+  const done = JSON.parse(localStorage.getItem('pb_progress_'+pbId)||'[]');
+  const pct = pb.total>0?Math.round(done.length/pb.total*100):0;
+  let md = '# '+pbName+' — 学习进度报告\\n\\n';
+  md += '> 导出时间: '+new Date().toLocaleString('zh-CN')+'\\n\\n';
+  md += '## 完成情况\\n\\n';
+  md += '- 完成步骤: '+done.length+'/'+pb.total+'\\n';
+  md += '- 完成率: '+pct+'%\\n\\n';
+  md += '## 已完成步骤\\n\\n';
+  done.forEach(s => {{ md += '- [x] Step '+s+'\\n'; }});
+  const undone = Array.from({{length:pb.total}},((_,i)=>i+1)).filter(s=>!done.includes(s));
+  if(undone.length) {{ md += '\\n## 待完成步骤\\n\\n'; undone.forEach(s=>{{md+='- [ ] Step '+s+'\\n';}}); }}
+  const blob = new Blob([md], {{type:'text/markdown;charset=utf-8'}});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = pbId+'-progress-'+new Date().toISOString().slice(0,10)+'.md';
+  a.click();
+}}
+function exportAllProgress() {{
+  let md = '# paper2skills 全部手册进度报告\\n\\n';
+  md += '> 导出时间: '+new Date().toLocaleString('zh-CN')+'\\n\\n';
+  md += '| 手册 | 完成率 | 步骤 |\\n|------|--------|------|\\n';
+  PB_META.forEach(pb => {{
+    const done = JSON.parse(localStorage.getItem('pb_progress_'+pb.id)||'[]');
+    const pct = pb.total>0?Math.round(done.length/pb.total*100):0;
+    md += '| '+pb.name+' | '+pct+'% | '+done.length+'/'+pb.total+' |\\n';
+  }});
+  const blob = new Blob([md], {{type:'text/markdown;charset=utf-8'}});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'playbook-progress-'+new Date().toISOString().slice(0,10)+'.md';
+  a.click();
+}}
+window.addEventListener('DOMContentLoaded', loadAllProgress);
+</script>
+    </section>
+  </main>
+  <script src="../assets/playbook-data.js"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn=document.getElementById('hamburger'),overlay=document.getElementById('mobile-overlay');
+  function toggleMenu(open){{hbtn.setAttribute('aria-expanded',open);hbtn.classList.toggle('open',open);overlay.classList.toggle('show',open);document.body.style.overflow=open?'hidden':'';}}
+  hbtn.addEventListener('click',()=>toggleMenu(hbtn.getAttribute('aria-expanded')!=='true'));overlay.addEventListener('click',()=>toggleMenu(false));
+  </script>
+</body>
+</html>"""
 
 
 def main() -> int:
