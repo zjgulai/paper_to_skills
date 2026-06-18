@@ -2375,6 +2375,309 @@ window.addEventListener('storage', () => renderReports());
     return html_page("智能体报告", body, active_nav="agent-report")
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 方案库 (Solutions)
+# ─────────────────────────────────────────────────────────────────────────────
+
+SOLUTIONS_CATALOG = [
+    {
+        "id": "sol-sc-tag-to-decision",
+        "title": "供应链标签工程 → 决策全链路架构",
+        "subtitle": "从 Palantir 本体论到母婴跨境电商可执行方案",
+        "category": "供应链 AI",
+        "tags": ["供应链", "标签工程", "Palantir", "决策自动化", "MCP"],
+        "icon": "SC",
+        "icon_color": "#0ea5e9",
+        "status": "published",
+        "updated": "2026-06-18",
+        "summary": "基于 Palantir 本体论四层架构，设计七层供应链 AI 决策系统。标签工程作为语义枢纽，打通从原始数据到自动执行决策的完整链路。含三大架构陷阱、分阶段实施路线图（MVP→12个月）、71个核心 Skill 索引。",
+        "roi_headline": "运营团队供应链日常工作减少 60%，异常响应从小时级→分钟级",
+        "phases": [
+            {"name": "Phase 0 地基", "duration": "1-4 周", "action": "SKU ID 统一 + 供应商本体", "roi": "必须投入，不可跳过"},
+            {"name": "Phase 1 MVP", "duration": "5-12 周", "action": "库存健康标签 + 补货自动触发", "roi": "补货延误 ↓30%"},
+            {"name": "Phase 2 扩展", "duration": "3-6 月", "action": "ML预测标签 + 因果分析 + Agent", "roi": "决策准确率 ↑40%"},
+            {"name": "Phase 3 智能化", "duration": "6-12 月", "action": "全自动 Action + 闭环学习", "roi": "运营工时 ↓60%"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "数据基础层", "desc": "Golden Record · OKB Graph · Feature Store · Event Sourcing"},
+            {"no": "L2", "name": "本体语义层", "desc": "ObjectTypes · LinkTypes · LLM自动构建 · Schema版本化"},
+            {"no": "L3", "name": "标签工程层", "desc": "静态标签 · 动态标签 · 预测标签 · 规则→ML→LLM→图传播"},
+            {"no": "L4", "name": "信号分析层", "desc": "KPI监控 · 因果DAG根因归因 · GCF隐性需求 · 置信区间"},
+            {"no": "L5", "name": "决策推理层", "desc": "What-if多情景 · MILP多目标规划 · 因果干预 · 置信门控"},
+            {"no": "L6", "name": "行动执行层", "desc": "全自动/半自动/人审三档 · MCP写回ERP/WMS · 多智能体共识"},
+            {"no": "L7", "name": "反馈学习层", "desc": "数字孪生 · 审计追踪 · 决策结果闭环标签更新"},
+        ],
+        "traps": [
+            {"no": "①", "title": "跳过实体 ID 统一直接上 ML", "desc": "ERP/FBA/供应商三套编码不统一，所有分析建在沙上。Phase 2 强制补做，额外 3-6 个月。"},
+            {"no": "②", "title": "标签设计成「结论」而非「信号」", "desc": "`needs_replenishment` 是决策输出不是输入。标签只存储可测量事实状态，决策逻辑在 L5 动态计算。"},
+            {"no": "③", "title": "Action 全自动化没有置信度门控", "desc": "置信度 55% 和 95% 的决策同等自动执行，一个错误 PO 锁定 10-50 万元资金。必须三档执行。"},
+        ],
+        "core_skills": [
+            "Skill-Graph-OKB-Design-SC", "Skill-Ontology-LLM-AutoBuild-SC",
+            "Skill-Tag-Schema-Engineering-Lifecycle", "Skill-Auto-Tagging-Pipeline-Rule-ML-LLM",
+            "Skill-Tag-Propagation-Supply-Chain", "Skill-SC-Causal-DAG-E2E-Attribution",
+            "Skill-GCF-Counterfactual-Unobserved-Demand", "Skill-SC-WhatIf-Scenario-Analysis-Engine",
+            "Skill-Supply-Chain-Ontology-Action-Trigger", "Skill-LLM-SC-MultiAgent-Consensus-Replenishment",
+            "Skill-SC-Agent-MCP-ERP-Integration", "Skill-SCPA-Autonomous-SC-Planning-Agent",
+            "Skill-SC-Digital-Twin-Sync-Architecture", "Skill-Decision-Confidence-Calibration-SC",
+        ],
+        "vault_doc": "07-资源库/SC-TagToDecision-Architecture.md",
+    },
+]
+
+
+def render_solutions_index() -> str:
+    """方案库首页：所有系统方案的卡片列表"""
+    cards_html = ""
+    for sol in SOLUTIONS_CATALOG:
+        tags_html = "".join(f'<span class="sol-tag">{t}</span>' for t in sol["tags"][:4])
+        phase_count = len(sol.get("phases", []))
+        skill_count = len(sol.get("core_skills", []))
+        cards_html += f"""
+<a class="sol-card" href="{sol['id']}.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:{sol['icon_color']}20;color:{sol['icon_color']};border:1.5px solid {sol['icon_color']}40">{sol['icon']}</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">{sol['category']}</span>
+      <span class="sol-updated">更新 {sol['updated']}</span>
+    </div>
+  </div>
+  <h3 class="sol-title">{sol['title']}</h3>
+  <p class="sol-subtitle">{sol['subtitle']}</p>
+  <p class="sol-summary">{sol['summary'][:120]}…</p>
+  <div class="sol-roi">{sol['roi_headline']}</div>
+  <div class="sol-footer">
+    <div class="sol-tags">{tags_html}</div>
+    <div class="sol-stats">
+      <span>📋 {phase_count} 阶段</span>
+      <span>⚡ {skill_count} Skills</span>
+    </div>
+  </div>
+</a>"""
+
+    body = f"""
+<div class="sol-hero">
+  <h1>方案库</h1>
+  <p class="muted">从 Palantir 方法论到可落地的 AI 决策系统方案，每个方案含完整架构设计、分阶段路线图、核心 Skill 索引</p>
+  <div class="sol-hero-stats">
+    <span><strong>{len(SOLUTIONS_CATALOG)}</strong> 个方案</span>
+    <span><strong>726</strong> 个 Skills 支撑</span>
+    <span><strong>24</strong> 个知识域覆盖</span>
+  </div>
+</div>
+
+<div class="sol-grid">
+{cards_html}
+</div>
+
+<div class="sol-coming-soon">
+  <h3>更多方案即将发布</h3>
+  <div class="sol-coming-grid">
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#8b5cf6">◆</span>
+      <strong>广告归因 → 预算智能分配</strong>
+      <p>从 PVM 统一到 Bayesian MMM 全渠道预算优化</p>
+    </div>
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#059669">◆</span>
+      <strong>用户 LTV → 精准留存干预</strong>
+      <p>Uplift 建模识别可干预用户，精准发券 ROI 优化</p>
+    </div>
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#d97706">◆</span>
+      <strong>选品决策 → 市场机会矩阵</strong>
+      <p>五维数据并行采集，GO/NO-GO 评分体系</p>
+    </div>
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#e11d48">◆</span>
+      <strong>AI Agent 替代重复性岗位</strong>
+      <p>供应链对账、数据提取、广告出价三类场景</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.sol-hero{{text-align:center;padding:40px 0 32px;border-bottom:1px solid var(--line,#e2e8f0);margin-bottom:32px}}
+.sol-hero h1{{font-size:28px;font-weight:700;margin:0 0 8px}}
+.sol-hero .muted{{max-width:560px;margin:0 auto 16px;color:#64748b;font-size:14px;line-height:1.6}}
+.sol-hero-stats{{display:flex;gap:24px;justify-content:center;flex-wrap:wrap}}
+.sol-hero-stats span{{font-size:13px;color:#64748b}}
+.sol-hero-stats strong{{color:#1e293b;font-size:18px;font-weight:700}}
+.sol-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin-bottom:40px}}
+.sol-card{{display:flex;flex-direction:column;gap:10px;padding:20px;background:var(--panel,#fff);border:1.5px solid var(--line,#e2e8f0);border-radius:12px;text-decoration:none;color:inherit;transition:all .2s;cursor:pointer}}
+.sol-card:hover{{border-color:var(--accent,#3b82f6);box-shadow:0 4px 16px rgba(59,130,246,.12);transform:translateY(-2px)}}
+.sol-card-header{{display:flex;align-items:center;gap:10px}}
+.sol-icon{{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}}
+.sol-card-meta{{display:flex;flex-direction:column;gap:2px}}
+.sol-category{{font-size:11px;font-weight:600;color:var(--accent,#3b82f6)}}
+.sol-updated{{font-size:11px;color:#94a3b8}}
+.sol-title{{font-size:15px;font-weight:700;color:#0f172a;margin:0;line-height:1.4}}
+.sol-subtitle{{font-size:12.5px;color:#64748b;margin:0;line-height:1.4}}
+.sol-summary{{font-size:12.5px;color:#475569;margin:0;line-height:1.5}}
+.sol-roi{{font-size:12px;font-weight:600;color:#059669;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:6px 10px}}
+.sol-footer{{display:flex;align-items:center;justify-content:space-between;margin-top:4px}}
+.sol-tags{{display:flex;gap:4px;flex-wrap:wrap}}
+.sol-tag{{font-size:11px;background:#f1f5f9;color:#64748b;padding:2px 7px;border-radius:4px}}
+.sol-stats{{display:flex;gap:8px;font-size:11px;color:#94a3b8}}
+.sol-coming-soon{{background:var(--panel-2,#f8fafc);border:1px dashed var(--line,#e2e8f0);border-radius:12px;padding:24px;margin-top:8px}}
+.sol-coming-soon h3{{font-size:15px;font-weight:600;color:#64748b;margin:0 0 16px;text-align:center}}
+.sol-coming-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}}
+.sol-coming-card{{background:var(--panel,#fff);border:1px solid var(--line,#e2e8f0);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px}}
+.sol-coming-icon{{font-size:18px}}
+.sol-coming-card strong{{font-size:13px;color:#334155}}
+.sol-coming-card p{{font-size:12px;color:#94a3b8;margin:0;line-height:1.4}}
+</style>
+"""
+    return html_page("方案库", body, active_nav="solutions")
+
+
+def render_solution_detail(sol: dict) -> str:
+    """方案详情页：完整架构 + 分层设计 + 实施路线图"""
+
+    # 七层架构
+    layers_html = ""
+    layer_colors = ["#6366f1","#8b5cf6","#0ea5e9","#06b6d4","#10b981","#f59e0b","#ef4444"]
+    for i, layer in enumerate(sol.get("layers", [])):
+        color = layer_colors[i % len(layer_colors)]
+        layers_html += f"""
+<div class="sd-layer">
+  <div class="sd-layer-no" style="background:{color}15;color:{color};border:1.5px solid {color}30">{layer['no']}</div>
+  <div class="sd-layer-body">
+    <strong>{layer['name']}</strong>
+    <span>{layer['desc']}</span>
+  </div>
+</div>"""
+
+    # 实施阶段
+    phases_html = ""
+    phase_colors = ["#64748b","#3b82f6","#8b5cf6","#059669"]
+    for i, phase in enumerate(sol.get("phases", [])):
+        color = phase_colors[i % len(phase_colors)]
+        phases_html += f"""
+<div class="sd-phase">
+  <div class="sd-phase-header" style="border-left:3px solid {color}">
+    <span class="sd-phase-name" style="color:{color}">{phase['name']}</span>
+    <span class="sd-phase-dur">{phase['duration']}</span>
+  </div>
+  <div class="sd-phase-action">{phase['action']}</div>
+  <div class="sd-phase-roi">{phase['roi']}</div>
+</div>"""
+
+    # 三大陷阱
+    traps_html = ""
+    for trap in sol.get("traps", []):
+        traps_html += f"""
+<div class="sd-trap">
+  <span class="sd-trap-no">{trap['no']}</span>
+  <div>
+    <strong>{trap['title']}</strong>
+    <p>{trap['desc']}</p>
+  </div>
+</div>"""
+
+    # 核心 Skills
+    skills_html = ""
+    for sid in sol.get("core_skills", []):
+        label = sid.replace("Skill-", "").replace("-", " ")[:36]
+        skills_html += f'<a class="sd-skill-chip" href="../skills/{sid}.html">{label}</a>'
+
+    body = f"""
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="index.html">方案库</a> / {sol['title']}</nav>
+
+<div class="sd-hero">
+  <div class="sd-hero-icon" style="background:{sol['icon_color']}15;color:{sol['icon_color']};border:2px solid {sol['icon_color']}30">{sol['icon']}</div>
+  <div>
+    <div class="sd-hero-meta"><span class="sd-category">{sol['category']}</span><span class="sd-updated">更新于 {sol['updated']}</span></div>
+    <h1>{sol['title']}</h1>
+    <p class="sd-subtitle">{sol['subtitle']}</p>
+  </div>
+</div>
+
+<div class="sd-roi-banner">
+  <span>📈</span> {sol['roi_headline']}
+</div>
+
+<p class="sd-summary">{sol['summary']}</p>
+
+<div class="sd-grid-2">
+  <div class="sd-section">
+    <h2>七层架构设计</h2>
+    <p class="sd-sec-desc">从原始数据到自动执行决策的完整分层</p>
+    <div class="sd-layers">
+{layers_html}
+    </div>
+  </div>
+
+  <div class="sd-section">
+    <h2>分阶段实施路线图</h2>
+    <p class="sd-sec-desc">MVP（3个月）→ 智能化（12个月）</p>
+    <div class="sd-phases">
+{phases_html}
+    </div>
+  </div>
+</div>
+
+<div class="sd-section sd-full">
+  <h2>⚠️ 三大架构陷阱</h2>
+  <p class="sd-sec-desc">最容易被忽视、代价最大的设计决策错误</p>
+  <div class="sd-traps">
+{traps_html}
+  </div>
+</div>
+
+<div class="sd-section sd-full">
+  <h2>⚡ 核心 Skill 索引（{len(sol.get('core_skills', []))} 个）</h2>
+  <p class="sd-sec-desc">本方案涉及的关键 Skills，点击查看详情</p>
+  <div class="sd-skills">
+{skills_html}
+  </div>
+  <div style="margin-top:12px">
+    <a href="../skills/index.html" style="font-size:13px;color:var(--accent,#3b82f6);text-decoration:none">查看全部 726 个 Skills →</a>
+  </div>
+</div>
+
+<style>
+.sd-hero{{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--line,#e2e8f0)}}
+.sd-hero-icon{{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}}
+.sd-hero-meta{{display:flex;align-items:center;gap:10px;margin-bottom:6px}}
+.sd-category{{font-size:12px;font-weight:600;color:var(--accent,#3b82f6);background:rgba(59,130,246,.08);padding:2px 8px;border-radius:4px}}
+.sd-updated{{font-size:12px;color:#94a3b8}}
+.sd-hero h1{{font-size:22px;font-weight:700;margin:0 0 4px;color:#0f172a}}
+.sd-subtitle{{font-size:13px;color:#64748b;margin:0}}
+.sd-roi-banner{{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1.5px solid #bbf7d0;border-radius:8px;padding:12px 16px;font-size:13px;font-weight:600;color:#065f46;display:flex;align-items:center;gap:8px;margin-bottom:16px}}
+.sd-summary{{font-size:13.5px;color:#475569;line-height:1.7;margin-bottom:24px}}
+.sd-grid-2{{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}}
+@media(max-width:768px){{.sd-grid-2{{grid-template-columns:1fr}}}}
+.sd-section{{background:var(--panel,#fff);border:1px solid var(--line,#e2e8f0);border-radius:10px;padding:20px}}
+.sd-section h2{{font-size:16px;font-weight:700;margin:0 0 4px;color:#0f172a}}
+.sd-sec-desc{{font-size:12px;color:#94a3b8;margin:0 0 14px}}
+.sd-full{{margin-top:0}}
+.sd-layers{{display:flex;flex-direction:column;gap:8px}}
+.sd-layer{{display:flex;align-items:center;gap:10px}}
+.sd-layer-no{{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}}
+.sd-layer-body{{display:flex;flex-direction:column;gap:1px}}
+.sd-layer-body strong{{font-size:12.5px;font-weight:600;color:#334155}}
+.sd-layer-body span{{font-size:11.5px;color:#94a3b8;line-height:1.4}}
+.sd-phases{{display:flex;flex-direction:column;gap:10px}}
+.sd-phase{{padding:10px 12px;background:var(--panel-2,#f8fafc);border-radius:8px}}
+.sd-phase-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}}
+.sd-phase-name{{font-size:12.5px;font-weight:700}}
+.sd-phase-dur{{font-size:11px;color:#94a3b8}}
+.sd-phase-action{{font-size:12px;color:#334155;margin-bottom:2px}}
+.sd-phase-roi{{font-size:11.5px;color:#059669;font-weight:600}}
+.sd-traps{{display:flex;flex-direction:column;gap:12px}}
+.sd-trap{{display:flex;gap:12px;padding:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px}}
+.sd-trap-no{{width:28px;height:28px;background:#f97316;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:2px}}
+.sd-trap strong{{font-size:13px;font-weight:600;color:#92400e;display:block;margin-bottom:3px}}
+.sd-trap p{{font-size:12.5px;color:#78350f;margin:0;line-height:1.5}}
+.sd-skills{{display:flex;flex-wrap:wrap;gap:6px}}
+.sd-skill-chip{{font-size:11.5px;background:rgba(99,102,241,.06);color:#4f46e5;border:1px solid rgba(99,102,241,.2);border-radius:6px;padding:4px 10px;text-decoration:none;transition:all .15s}}
+.sd-skill-chip:hover{{background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.4)}}
+</style>
+"""
+    return html_page(sol['title'], body, nav="../", active_nav="solutions")
+
+
 def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     """CEO-facing AI capability roadmap whitepaper. Designed for B2B sales, print-ready via @media print."""
 
@@ -2974,6 +3277,7 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
           sidebar_link('index.html', '总览', 'index', '⊞') +
           sidebar_link('chat.html', 'AI 知识库对话', 'chat', '✦') +
           sidebar_link('playbooks/index.html', '场景手册', 'playbooks', '◧') +
+          sidebar_link('solutions/index.html', '方案库', 'solutions', '◆') +
           sidebar_link('agents.html', '智能体广场', 'agents', '◈') +
           sidebar_link('agent-report.html', '智能体报告', 'agent-report', '◑') +
           sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap', '◉')
@@ -5956,6 +6260,9 @@ def render_pages(
     write_file(out / "ai-roadmap.html", render_roadmap_page(skill_lookup))
     write_file(out / "agents.html", render_agents_page(skill_lookup))
     write_file(out / "agent-report.html", render_agent_report_page())
+    write_file(out / "solutions" / "index.html", render_solutions_index())
+    for sol in SOLUTIONS_CATALOG:
+        write_file(out / "solutions" / f"{sol['id']}.html", render_solution_detail(sol))
 
     # ── toB Scene Playbooks (Phase F) ──
     for pb in TOB_PLAYBOOKS:
@@ -6460,7 +6767,7 @@ def _render_playbook_progress_page(playbooks: list) -> str:
   <main class="layout">
     <aside class="sidebar" id="sidebar">
       <div class="sb-top">
-        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-icon">◆</span><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
       </div>
     </aside>
