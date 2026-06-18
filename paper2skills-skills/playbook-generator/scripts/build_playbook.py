@@ -2528,7 +2528,7 @@ def render_solutions_index() -> str:
 .sol-coming-card p{{font-size:12px;color:#94a3b8;margin:0;line-height:1.4}}
 </style>
 """
-    return html_page("方案库", body, active_nav="solutions")
+    return html_page("方案库", body, nav="../", active_nav="solutions")
 
 
 def render_solution_detail(sol: dict) -> str:
