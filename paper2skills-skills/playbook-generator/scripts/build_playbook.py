@@ -2497,35 +2497,35 @@ def render_solutions_index() -> str:
 </div>
 
 <style>
-.sol-hero{{text-align:center;padding:40px 0 32px;border-bottom:1px solid var(--line,#e2e8f0);margin-bottom:32px}}
-.sol-hero h1{{font-size:28px;font-weight:700;margin:0 0 8px}}
-.sol-hero .muted{{max-width:560px;margin:0 auto 16px;color:#64748b;font-size:14px;line-height:1.6}}
-.sol-hero-stats{{display:flex;gap:24px;justify-content:center;flex-wrap:wrap}}
-.sol-hero-stats span{{font-size:13px;color:#64748b}}
-.sol-hero-stats strong{{color:#1e293b;font-size:18px;font-weight:700}}
-.sol-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin-bottom:40px}}
-.sol-card{{display:flex;flex-direction:column;gap:10px;padding:20px;background:var(--panel,#fff);border:1.5px solid var(--line,#e2e8f0);border-radius:12px;text-decoration:none;color:inherit;transition:all .2s;cursor:pointer}}
-.sol-card:hover{{border-color:var(--accent,#3b82f6);box-shadow:0 4px 16px rgba(59,130,246,.12);transform:translateY(-2px)}}
+.sol-hero{{text-align:center;padding:36px 0 28px;border-bottom:1px solid var(--line);margin-bottom:28px}}
+.sol-hero h1{{font-size:32px;font-weight:800;margin:0 0 8px;letter-spacing:-.04em;color:var(--ink)}}
+.sol-hero .muted{{max-width:520px;margin:0 auto 14px;color:var(--muted);font-size:13.5px;line-height:1.6}}
+.sol-hero-stats{{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}}
+.sol-hero-stats span{{font-size:12.5px;color:var(--muted)}}
+.sol-hero-stats strong{{color:var(--ink);font-size:20px;font-weight:800;letter-spacing:-.04em}}
+.sol-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:32px}}
+.sol-card{{display:flex;flex-direction:column;gap:10px;padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);text-decoration:none;color:inherit;transition:border-color var(--t-card),box-shadow var(--t-card),transform var(--t-card);cursor:pointer}}
+.sol-card:hover{{border-color:var(--line-strong);box-shadow:var(--shadow-md);transform:translateY(-2px)}}
 .sol-card-header{{display:flex;align-items:center;gap:10px}}
-.sol-icon{{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}}
+.sol-icon{{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}}
 .sol-card-meta{{display:flex;flex-direction:column;gap:2px}}
-.sol-category{{font-size:11px;font-weight:600;color:var(--accent,#3b82f6)}}
-.sol-updated{{font-size:11px;color:#94a3b8}}
-.sol-title{{font-size:15px;font-weight:700;color:#0f172a;margin:0;line-height:1.4}}
-.sol-subtitle{{font-size:12.5px;color:#64748b;margin:0;line-height:1.4}}
-.sol-summary{{font-size:12.5px;color:#475569;margin:0;line-height:1.5}}
-.sol-roi{{font-size:12px;font-weight:600;color:#059669;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:6px 10px}}
+.sol-category{{font-size:10.5px;font-weight:700;color:var(--accent);letter-spacing:.03em;text-transform:uppercase}}
+.sol-updated{{font-size:10.5px;color:var(--muted)}}
+.sol-title{{font-size:14.5px;font-weight:700;color:var(--ink);margin:0;line-height:1.35;letter-spacing:-.02em}}
+.sol-subtitle{{font-size:12.5px;color:var(--muted);margin:0;line-height:1.4}}
+.sol-summary{{font-size:12.5px;color:var(--ink-2);margin:0;line-height:1.55}}
+.sol-roi{{font-size:12px;font-weight:600;color:var(--green-dark);background:var(--green-bg);border:1px solid rgba(20,83,45,.12);border-radius:var(--r-xs);padding:5px 10px}}
 .sol-footer{{display:flex;align-items:center;justify-content:space-between;margin-top:4px}}
 .sol-tags{{display:flex;gap:4px;flex-wrap:wrap}}
-.sol-tag{{font-size:11px;background:#f1f5f9;color:#64748b;padding:2px 7px;border-radius:4px}}
-.sol-stats{{display:flex;gap:8px;font-size:11px;color:#94a3b8}}
-.sol-coming-soon{{background:var(--panel-2,#f8fafc);border:1px dashed var(--line,#e2e8f0);border-radius:12px;padding:24px;margin-top:8px}}
-.sol-coming-soon h3{{font-size:15px;font-weight:600;color:#64748b;margin:0 0 16px;text-align:center}}
-.sol-coming-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}}
-.sol-coming-card{{background:var(--panel,#fff);border:1px solid var(--line,#e2e8f0);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px}}
-.sol-coming-icon{{font-size:18px}}
-.sol-coming-card strong{{font-size:13px;color:#334155}}
-.sol-coming-card p{{font-size:12px;color:#94a3b8;margin:0;line-height:1.4}}
+.sol-tag{{font-size:10.5px;background:var(--panel-2);color:var(--ink-2);padding:2px 6px;border-radius:var(--r-xs);border:1px solid var(--line)}}
+.sol-stats{{display:flex;gap:8px;font-size:11px;color:var(--muted)}}
+.sol-coming-soon{{background:var(--panel);border:1px dashed var(--line-strong);border-radius:var(--r-lg);padding:22px;margin-top:6px}}
+.sol-coming-soon h3{{font-size:14px;font-weight:700;color:var(--muted);margin:0 0 14px;text-align:center;letter-spacing:-.01em}}
+.sol-coming-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}}
+.sol-coming-card{{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:4px}}
+.sol-coming-icon{{font-size:16px}}
+.sol-coming-card strong{{font-size:12.5px;color:var(--ink);font-weight:600;letter-spacing:-.01em}}
+.sol-coming-card p{{font-size:11.5px;color:var(--muted);margin:0;line-height:1.4}}
 </style>
 """
     return html_page("方案库", body, nav="../", active_nav="solutions")
@@ -2637,42 +2637,42 @@ def render_solution_detail(sol: dict) -> str:
 </div>
 
 <style>
-.sd-hero{{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--line,#e2e8f0)}}
-.sd-hero-icon{{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}}
-.sd-hero-meta{{display:flex;align-items:center;gap:10px;margin-bottom:6px}}
-.sd-category{{font-size:12px;font-weight:600;color:var(--accent,#3b82f6);background:rgba(59,130,246,.08);padding:2px 8px;border-radius:4px}}
-.sd-updated{{font-size:12px;color:#94a3b8}}
-.sd-hero h1{{font-size:22px;font-weight:700;margin:0 0 4px;color:#0f172a}}
-.sd-subtitle{{font-size:13px;color:#64748b;margin:0}}
-.sd-roi-banner{{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1.5px solid #bbf7d0;border-radius:8px;padding:12px 16px;font-size:13px;font-weight:600;color:#065f46;display:flex;align-items:center;gap:8px;margin-bottom:16px}}
-.sd-summary{{font-size:13.5px;color:#475569;line-height:1.7;margin-bottom:24px}}
-.sd-grid-2{{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}}
+.sd-hero{{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--line)}}
+.sd-hero-icon{{width:48px;height:48px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}}
+.sd-hero-meta{{display:flex;align-items:center;gap:10px;margin-bottom:5px}}
+.sd-category{{font-size:10.5px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 7px;border-radius:var(--r-xs);text-transform:uppercase;letter-spacing:.04em}}
+.sd-updated{{font-size:11px;color:var(--muted)}}
+.sd-hero h1{{font-size:20px;font-weight:800;margin:0 0 3px;color:var(--ink);letter-spacing:-.03em}}
+.sd-subtitle{{font-size:13px;color:var(--muted);margin:0}}
+.sd-roi-banner{{background:var(--green-bg);border:1px solid rgba(20,83,45,.12);border-radius:var(--r-md);padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--green-dark);display:flex;align-items:center;gap:8px;margin-bottom:14px}}
+.sd-summary{{font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:20px}}
+.sd-grid-2{{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}}
 @media(max-width:768px){{.sd-grid-2{{grid-template-columns:1fr}}}}
-.sd-section{{background:var(--panel,#fff);border:1px solid var(--line,#e2e8f0);border-radius:10px;padding:20px}}
-.sd-section h2{{font-size:16px;font-weight:700;margin:0 0 4px;color:#0f172a}}
-.sd-sec-desc{{font-size:12px;color:#94a3b8;margin:0 0 14px}}
+.sd-section{{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}}
+.sd-section h2{{font-size:15px;font-weight:700;margin:0 0 3px;color:var(--ink);letter-spacing:-.02em}}
+.sd-sec-desc{{font-size:11.5px;color:var(--muted);margin:0 0 12px}}
 .sd-full{{margin-top:0}}
 .sd-layers{{display:flex;flex-direction:column;gap:8px}}
 .sd-layer{{display:flex;align-items:center;gap:10px}}
-.sd-layer-no{{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}}
+.sd-layer-no{{width:32px;height:32px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}}
 .sd-layer-body{{display:flex;flex-direction:column;gap:1px}}
-.sd-layer-body strong{{font-size:12.5px;font-weight:600;color:#334155}}
-.sd-layer-body span{{font-size:11.5px;color:#94a3b8;line-height:1.4}}
-.sd-phases{{display:flex;flex-direction:column;gap:10px}}
-.sd-phase{{padding:10px 12px;background:var(--panel-2,#f8fafc);border-radius:8px}}
-.sd-phase-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}}
+.sd-layer-body strong{{font-size:12.5px;font-weight:600;color:var(--ink-2)}}
+.sd-layer-body span{{font-size:11.5px;color:var(--muted);line-height:1.4}}
+.sd-phases{{display:flex;flex-direction:column;gap:8px}}
+.sd-phase{{padding:10px 12px;background:var(--panel-2);border-radius:var(--r-md)}}
+.sd-phase-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}}
 .sd-phase-name{{font-size:12.5px;font-weight:700}}
-.sd-phase-dur{{font-size:11px;color:#94a3b8}}
-.sd-phase-action{{font-size:12px;color:#334155;margin-bottom:2px}}
-.sd-phase-roi{{font-size:11.5px;color:#059669;font-weight:600}}
-.sd-traps{{display:flex;flex-direction:column;gap:12px}}
-.sd-trap{{display:flex;gap:12px;padding:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px}}
-.sd-trap-no{{width:28px;height:28px;background:#f97316;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:2px}}
-.sd-trap strong{{font-size:13px;font-weight:600;color:#92400e;display:block;margin-bottom:3px}}
-.sd-trap p{{font-size:12.5px;color:#78350f;margin:0;line-height:1.5}}
-.sd-skills{{display:flex;flex-wrap:wrap;gap:6px}}
-.sd-skill-chip{{font-size:11.5px;background:rgba(99,102,241,.06);color:#4f46e5;border:1px solid rgba(99,102,241,.2);border-radius:6px;padding:4px 10px;text-decoration:none;transition:all .15s}}
-.sd-skill-chip:hover{{background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.4)}}
+.sd-phase-dur{{font-size:10.5px;color:var(--muted)}}
+.sd-phase-action{{font-size:12px;color:var(--ink-2);margin-bottom:2px}}
+.sd-phase-roi{{font-size:11px;color:var(--green-dark);font-weight:600}}
+.sd-traps{{display:flex;flex-direction:column;gap:10px}}
+.sd-trap{{display:flex;gap:10px;padding:12px;background:var(--amber-bg);border:1px solid rgba(217,119,6,.2);border-radius:var(--r-md)}}
+.sd-trap-no{{width:26px;height:26px;background:var(--amber);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}}
+.sd-trap strong{{font-size:13px;font-weight:600;color:var(--amber-dark);display:block;margin-bottom:3px}}
+.sd-trap p{{font-size:12px;color:var(--amber-dark);margin:0;line-height:1.5;opacity:.85}}
+.sd-skills{{display:flex;flex-wrap:wrap;gap:5px}}
+.sd-skill-chip{{font-size:11px;background:var(--panel-2);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--r-xs);padding:3px 8px;text-decoration:none;transition:border-color var(--t),color var(--t)}}
+.sd-skill-chip:hover{{border-color:var(--accent);color:var(--accent)}}
 </style>
 """
     return html_page(sol['title'], body, nav="../", active_nav="solutions")
