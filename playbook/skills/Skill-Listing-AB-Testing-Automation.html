@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Listing AB Testing Automation — LLM Agent 驱动的 Listing A/B 测试自动化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Listing-AB-Testing-Automation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Listing AB Testing Automation — LLM Agent 驱动的 Listing A/B 测试自动化</h1>
+<p class="muted">Skill-Listing-AB-Testing-Automation · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-150 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>主图/标题/Bullet 哪个版本更好需要 3 周真实流量测试，期间低效版本持续损耗转化——LLM Agent 模拟 500 个买家 persona 零流量预测最优版本，CTR+12.5%/CVR+8.3%，年化自然流量提升 60%+</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：传统 Listing A/B 测试需要真实流量（至少 5001000 次曝光），耗时 24 周，且测试期间低质版本会损耗转化率。AgentA/B 框架用 LLM Agent 模拟多样化买家 persona，在上线前就能预测哪个版本效果更好——1000 个 Agent 模拟相当于 24 周真实测试，全程零流量损耗。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景：吸奶器主图 A/B 测试（零流量预测）</p><p>- 业务问题：品牌有 3 个主图方案（白底/妈妈使用场景/医院推荐场景），传统测试需要拆分流量跑 3 周，期间低效版本损耗约 30% 转化。 - LLM Agent 测试流程： 1. 创建 500 个不同 persona 的 LLM Agent（新手妈妈/有经验妈妈/职场妈妈等） 2. 每个 Agent 分别&quot;看&quot;3 个版本的 Listing，输出购买意愿分（0-10）+ 理由 3. 按 persona 权重加权汇总，输出预测 CTR 和 CVR 4. 选出最优版本直接上线，节省 3 周测试时间 - 实测结果参考：论文2 在线 A/B 验证 CTR +12.5%、CVR +8.3%。 - 业务</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：年做 12 次测试，每次 CTR +5%，年化自然流量提升 60%+，对应 GMV 增量 30-150 万元</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（中等，需要 LLM API + persona 库构建）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（Listing 优化是最高频最直接的转化率提升手段）</li><li><strong>评估依据</strong>：arXiv 2504.09723（Amazon.com 案例验证）+ arXiv 2505.23809（在线 A/B：CTR +12.5%，CVR +8.3%）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass, field
+from typing import List, Dict
+import statistics
+
+@dataclass
+class BuyerPersona:
+    name: str
+    weight: float
+    priorities: List[str]
+    price_sensitivity: float
+
+@dataclass
+class ListingVariant:
+    variant_id: str
+    title: str
+    main_image_type: str
+    bullet_style: str
+    price: float
+
+def simulate_persona_score(persona: BuyerPersona, variant: ListingVariant) -&gt; float:
+    score = 5.0
+    if &quot;price&quot; in persona.priorities and variant.price &lt; 85:
+        score += 1.5 * persona.price_sensitivity
+    if &quot;quality&quot; in persona.priorities and &quot;award&quot; in variant.title.lower():
+        score += 1.2
+    if &quot;convenience&quot; in persona.priorities and variant.main_image_type == &quot;lifestyle&quot;:
+        score += 1.0
+    if &quot;medical&quot; in persona.priorities and &quot;hospital&quot; in variant.main_image_type:
+        score += 1.5
+    if variant.bullet_style == &quot;problem_solution&quot; and &quot;new_mom&quot; in persona.name:
+        score += 0.8
+    if variant.bullet_style == &quot;features&quot; and &quot;experienced&quot; in persona.name:
+        score += 0.5
+    return min(10.0, round(score + (hash(persona.name + variant.variant_id) % 10) * 0.1, 2))
+
+def run_ab_test(variants: List[ListingVariant],
+                personas: List[BuyerPersona],
+                n_simulations: int = 200) -&gt; List[Dict]:
+    results = []
+    for variant in variants:
+        scores = []
+        for persona in personas:
+            for _ in range(max(1, int(n_simulations * persona.weight))):
+                scores.append(simulate_persona_score(persona, variant))
+        mean_score = statistics.mean(scores)
+        predicted_ctr = min(0.20, mean_score / 10 * 0.15)
+        predicted_cvr = min(0.15, mean_score / 10 * 0.10)
+        results.append({&quot;variant_id&quot;: variant.variant_id,
+                         &quot;title_preview&quot;: variant.title[:40],
+                         &quot;main_image&quot;: variant.main_image_type,
+                         &quot;mean_score&quot;: round(mean_score, 2),
+                         &quot;predicted_ctr_pct&quot;: round(predicted_ctr * 100, 1),
+                         &quot;predicted_cvr_pct&quot;: round(predicted_cvr * 100, 1),
+                         &quot;predicted_revenue_index&quot;: round(predicted_ctr * predicted_cvr * 1000, 1)})
+    return sorted(results, key=lambda x: -x[&quot;predicted_revenue_index&quot;])
+
+personas = [
+    BuyerPersona(&quot;new_mom_first&quot;, 0.35, [&quot;quality&quot;,&quot;medical&quot;,&quot;convenience&quot;], 0.4),
+    BuyerPersona(&quot;experienced_mom&quot;, 0.25, [&quot;features&quot;,&quot;price&quot;], 0.7),
+    BuyerPersona(&quot;working_mom&quot;,    0.20, [&quot;convenience&quot;,&quot;price&quot;], 0.6),</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2504.09723</li><li>2505.23809</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Listing-AB-Testing-Automation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AutoQual-Review-Quality-Assessment.html'>Skill-AutoQual-Review-Quality-Assessment</a></li><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-Keyword-Competition-Scoring.html'>Skill-Keyword-Competition-Scoring</a></li><li><a href='../skills/Skill-Listing-AI-Copywriting.html'>Skill-Listing-AI-Copywriting</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-Listing-AI-Copywriting.html'>Skill-Listing-AI-Copywriting</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Listing-AI-Copywriting.html'>Skill-Listing-AI-Copywriting</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RTB Realtime Bidding Optimization — 生成式自动出价与多约束实时竞价优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-RTB-Realtime-Bidding-Optimization</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>RTB Realtime Bidding Optimization — 生成式自动出价与多约束实时竞价优化</h1>
+<p class="muted">Skill-RTB-Realtime-Bidding-Optimization · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-100 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴品牌 Amazon DSP/TikTok 广告按固定 CPA 出价，旺季预算提前耗尽或错过峰值时段——生成式 RTB 自动出价（Decision Transformer + Critics 投票）在预算约束下动态优化每次竞价，ROI 提升 3-5%，黑五大促 GMV 增量 15-20%，年化增量 GMV 30-100 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>实时竞价（RTB）本质是在预算和 CPA/ROAS 约束下的序贯决策问题：广告主每次曝光机会需要在毫秒内决定出多少价，以在整个投放周期内最大化 GMV/ROI。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴品牌年度最大促销节点，预算 10 万元，历史黑五预算经常在第 2 天提前耗尽，后 3 天完全缺席，错失 30-40% 的 GMV 机会。人工按小时调 eCPC 上限，响应太慢。</p><p>数据要求： - 历史竞价日志（出价、清算价、是否赢拍、转化结果）30 天 - 竞品 CPM 区间（来自 Amazon 广告报告） - 产品类目 CVR（转化率）历史曲线</p><p>RTB 自动出价逻辑： - 状态：(剩余预算 / 总预算, 已过时段 / 总时段, 当前 win rate, 当前 CPA) - Critics 投票：Critic-1 偏好 ROI，Critic-2 偏好预算均衡消耗，Critic-3 偏好 CPA ≤ 目标 - 输出：每次竞价的动态出价（比固定 CPA 出价灵活 30-50%）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>30-100 万元</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+RTB Realtime Bidding Optimization - 简化版实现
+基于 GAS (arXiv:2412.17018) + GAVE (arXiv:2504.14587) 核心思想
+实现：Critics 投票出价机制 + CPA/预算约束下的序贯决策
+只依赖 numpy，无需 torch/transformers
+&quot;&quot;&quot;
+
+import numpy as np
+
+
+# ───────── 环境模拟 ─────────
+class RTBEnvironment:
+    &quot;&quot;&quot;模拟 RTB 竞价市场环境&quot;&quot;&quot;
+
+    def __init__(self, n_slots=100, budget=1000.0, target_cpa=30.0, seed=42):
+        self.n_slots = n_slots
+        self.budget = budget
+        self.target_cpa = target_cpa
+        self.rng = np.random.default_rng(seed)
+
+    def sample_auction(self, t: int, scenario: str = &quot;normal&quot;):
+        &quot;&quot;&quot;
+        模拟一次拍卖机会
+        返回：(market_price, ad_value, cvr)
+        - market_price: 赢拍所需最低清算价（元/click，eCPC 口径）
+        - ad_value: 该流量预估 GMV（元，点击后转化价值）
+        - cvr: 该流量转化率（0-1）
+        量纲说明：market_price ~ 0.5-10 元/click，ad_value ~ 5-80 元，cvr ~ 1-25%
+        &quot;&quot;&quot;
+        # 黑五场景：峰值期流量质量更高，竞争更激烈
+        if scenario == &quot;blackfriday&quot;:
+            peak = 1.0 + 0.8 * np.sin(np.pi * t / self.n_slots)  # 曲线峰值
+            market_price = self.rng.lognormal(1.2, 0.5) * peak
+            ad_value = self.rng.lognormal(3.5, 0.4) * peak
+            cvr = np.clip(self.rng.beta(2, 8) * peak * 0.8, 0.01, 0.35)
+        else:
+            market_price = self.rng.lognormal(1.2, 0.5)   # 均值 ≈ 3.6 元/click
+            ad_value = self.rng.lognormal(3.2, 0.4)       # 均值 ≈ 26 元/GMV
+            cvr = np.clip(self.rng.beta(2, 8), 0.01, 0.25)  # 均值 ≈ 20%
+        return market_price, ad_value, cvr
+
+
+# ───────── Critics 出价评估 ─────────
+class BiddingCritic:
+    &quot;&quot;&quot;
+    三个偏好不同的 Critics，对候选出价投票
+    模拟 GAS 的 MCTS 风格多目标搜索
+    &quot;&quot;&quot;
+
+    @staticmethod
+    def roi_critic(bid: float, ad_value: float, cvr: float,
+                   remaining_budget: float, total_budget: float) -&gt; float:
+        &quot;&quot;&quot;Critic-1：偏好 ROI，出价不超过预估价值&quot;&quot;&quot;
+        expected_gmv = ad_value * cvr
+        if bid &lt;= 0:
+            return 0.0
+        roi = expected_gmv / bid
+        # 预算使用率惩罚（避免过于保守导致预算浪费）
+        budget_usage = 1.0 - remaining_budget / total_budget
+        budget_bonus = 0.2 * budget_usage  # 预算消耗越多，适度鼓励出价</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2412.17018</li><li>2504.14587</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-RTB-Realtime-Bidding-Optimization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Ad-Fraud-IVT-Detection.html'>Skill-Ad-Fraud-IVT-Detection</a></li><li><a href='../skills/Skill-Ad-Spend-Time-Series-Attribution.html'>Skill-Ad-Spend-Time-Series-Attribution</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Fraud-IVT-Detection.html'>Skill-Ad-Fraud-IVT-Detection</a></li><li><a href='../skills/Skill-Ad-Spend-Time-Series-Attribution.html'>Skill-Ad-Spend-Time-Series-Attribution</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Fraud-IVT-Detection.html'>Skill-Ad-Fraud-IVT-Detection</a></li><li><a href='../skills/Skill-Ad-Spend-Time-Series-Attribution.html'>Skill-Ad-Spend-Time-Series-Attribution</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+<div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>🧪 智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：广告归因侦探（agent-ad-attribution）</p>
+<p style='margin:4px 0'><strong>测试输入</strong>：platform=Amazon DSP, spend=50000, target_acos=25%, scenario=blackfriday</p>
+<p style='margin:4px 0'><strong>输出摘要</strong>：基于 GAS RTB 模型的黑五出价策略，预算均匀消耗率 95%，ROI 提升 +3.8%，CPA 达标率 96.2%，建议 Critics 权重调整为 ROI:CPA:Pacing = 0.45:0.30:0.25</p>
+<p style='margin:4px 0'><strong>验证状态</strong>：✅ 本地计算通过 | 2026-06-13</p><div style='margin-top:10px'><a href='../agents.html' style='font-size:12px;color:#059669;font-weight:600'>→ 前往智能体广场运行</a></div></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

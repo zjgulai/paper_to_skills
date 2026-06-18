@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Knowledge Graph for Skills Management（知识图谱驱动的技能管理） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Knowledge-Graph-for-Skills-Management</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Knowledge Graph for Skills Management（知识图谱驱动的技能管理）</h1>
+<p class="muted">Skill-Knowledge-Graph-for-Skills-Management · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>知识图谱（Knowledge Graph, KG） 是一种用图结构表示知识的方法，通过实体-关系-实体的三元组形式（如&quot;Uplift Modeling -应用于- 广告投放&quot;）将碎片化信息组织成可推理的知识网络。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>知识图谱（Knowledge Graph, KG） 是一种用图结构表示知识的方法，通过实体关系实体的三元组形式（如&quot;Uplift Modeling 应用于 广告投放&quot;）将碎片化信息组织成可推理的知识网络。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题： 数据科学团队新入职一名分析师，需要快速掌握&quot;母婴出海跨境电商&quot;相关技能。现有 20+ 个 Skill 卡片分散在不同领域，新人不知道学习路径如何规划，也不清楚哪些技能组合能解决实际业务问题。</p><p>数据要求： - 已有 Skill 卡片：20+ 个（涵盖因果推断、A/B实验、时间序列、推荐系统、增长模型、NLP等） - 技能元数据：每个技能的领域、难度、业务价值、前置技能、延伸技能 - 业务场景库：典型的母婴出海业务问题与对应技能组合的映射 - 用户画像：团队成员的技能掌握程度、岗位职责、学习偏好</p><p>预期产出： - 个性化学习路径：根据当前技能水平推荐最优学习顺序 - 技能组合推荐：针对具体业务问题推荐技能组合 - 问题&quot;如何优化吸奶器广告投放？&quot;→ 推荐 Uplift Modeling + 智能归因 - 问题&quot;如何预测新品销量？&quot;→ 推荐 TFT + 多层级库存优化 - 知识缺口诊断：识别团队技能短板并推荐补强方向</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>数据要求：需要整理现有 Skill 卡片的关系数据</li><li>技术门槛：中等，主要基于 NetworkX 和图算法</li><li>工程复杂度：中，需要设计图谱Schema和关系定义</li><li>维护成本：中，新技能加入时需要更新图谱</li><li><strong>战略价值高</strong>：是 paper2skills 体系的基础设施，支撑长期发展</li><li><strong>复利效应明显</strong>：投入一次，持续受益，随技能库增长价值递增</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <p class='muted'>请查看原始 Skill 卡片获取完整代码。</p>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Knowledge-Graph-for-Skills-Management" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Python网络分析</span></li><li><span class='muted'>图嵌入算法</span></li><li><span class='muted'>图论基础</span></li><li><span class='muted'>知识图谱基础</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>GraphRAG</span></li><li><span class='muted'>动态知识图谱</span></li><li><span class='muted'>图神经网络 (GNN)</span></li><li><span class='muted'>多模态知识图谱</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-HGT-Heterogeneous-Graph-Transformer.html'>Skill-HGT-Heterogeneous-Graph-Transformer</a></li><li><a href='../skills/Skill-KG-Augmented-Recommendation-CoLaKG.html'>Skill-KG-Augmented-Recommendation-CoLaKG</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li><li><span class='muted'>Skills Graph 分析</span></li><li><span class='muted'>个性化学习推荐</span></li><li><span class='muted'>智能问答系统</span></li><li><span class='muted'>论文选题推荐</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

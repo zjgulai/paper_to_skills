@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LDP — 身份感知 Agent 通信协议：模型级路由 + 37% Token 节省 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-LDP-Identity-Aware-Protocol</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>LDP — 身份感知 Agent 通信协议：模型级路由 + 37% Token 节省</h1>
+<p class="muted">Skill-LDP-Identity-Aware-Protocol · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Google A2A 和 Anthropic MCP 这两大主流 Agent 通信协议存在共同缺陷：不暴露模型级属性。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>Google A2A 和 Anthropic MCP 这两大主流 Agent 通信协议存在共同缺陷：不暴露模型级属性。Agent 只知道对方&quot;是一个 Agent&quot;，但不知道对方用的是 Claude Opus 还是 3B 小模型、推理能力如何、token 成本是多少。这导致：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>母婴出海 MAS 中，不同任务对模型能力要求差异巨大： - 策略型任务（市场分析、竞品洞察、合规策略制定）→ 需要 Claude Opus / GPT-4o 级别 - 执行型任务（文案改写、数据格式化、SKU 匹配）→ 3-7B 轻量模型即可</p><p>但因为缺乏身份感知，所有任务都路由到 Frontier 模型，成本浪费 80%+。</p><p>数据要求： - 历史任务记录（任务描述 + 实际所需模型质量） - 各 Agent 的 Identity Card 注册信息 - 任务复杂度评估函数（可用轻量分类器）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>数据要求：低，主要是 Agent 注册信息配置</li><li>技术门槛：低中，协议层增强，不改变 LLM 本身</li><li>工程复杂度：低中，可作为 MCP/A2A 之上的薄层插件（Rust 实现参考 JamJet runtime）</li><li>维护成本：低，Identity Card 按需更新</li><li><strong>立竿见影</strong>：token -37% 直接降低 API 成本，快速 ROI</li><li><strong>低侵入性</strong>：作为 MCP/A2A 上层薄层，不破坏现有系统</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+LDP — LLM Delegate Protocol 身份感知 Agent 通信协议
+论文: LDP: An Identity-Aware Protocol for Multi-Agent LLM Systems
+arXiv: 2603.08852 | 2026-03
+
+核心组件:
+- ModelIdentityCard: Agent 身份证（模型属性）
+- PayloadMode: 6 级 Payload 协商模式
+- LDPSession: 治理会话（持久上下文 + 信任域）
+- LDPRouter: 基于 Identity Card 的智能路由
+- LDPChannel: 带 Governed Session 缓存的通信通道
+&quot;&quot;&quot;
+
+from __future__ import annotations
+
+import hashlib
+import time
+import uuid
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any
+
+
+# ──────────────────────────────────────────
+# 1. 模型质量分级
+# ──────────────────────────────────────────
+
+class QualityTier(str, Enum):
+    &quot;&quot;&quot;模型质量分级：FRONTIER &gt; MID &gt; LIGHTWEIGHT&quot;&quot;&quot;
+    FRONTIER = &quot;frontier&quot;      # GPT-4o, Claude Opus, Gemini Ultra 级别
+    MID = &quot;mid&quot;                # GPT-3.5, Claude Haiku, Qwen-Plus 级别
+    LIGHTWEIGHT = &quot;lightweight&quot; # 3-7B 本地小模型
+
+
+class ReasoningProfile(str, Enum):
+    &quot;&quot;&quot;推理风格偏好&quot;&quot;&quot;
+    QUALITY_FIRST = &quot;quality_first&quot;    # 准确率优先，延迟可接受
+    BALANCED = &quot;balanced&quot;              # 质量与速度均衡
+    SPEED_OPTIMIZED = &quot;speed_optimized&quot; # 速度优先，轻量任务
+
+
+# ──────────────────────────────────────────
+# 2. Rich Identity Card — Agent 身份证
+# ──────────────────────────────────────────
+
+@dataclass
+class ModelIdentityCard:
+    &quot;&quot;&quot;
+    Agent 身份证：暴露模型级属性，解决 MCP/A2A 不透明问题。
+    每个 Agent 注册时携带此卡，供 Orchestrator 做智能路由。
+    &quot;&quot;&quot;
+    agent_id: str
+    model_id: str                          # 具体模型版本: &quot;claude-opus-4&quot;, &quot;qwen-7b&quot;
+    model_family: str                      # 模型族: &quot;claude&quot;, &quot;gpt&quot;, &quot;qwen&quot;, &quot;gemma&quot;
+    quality_tier: QualityTier
+    reasoning_profile: ReasoningProfile
+    cost_per_token: float                  # USD per 1K tokens
+    max_context_tokens: int                # 最大上下文长度
+    supported_modalities: list[str] = field(default_factory=lambda: [&quot;text&quot;])
+    trust_domain: str = &quot;default&quot;          # 所属信任域</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2603.08852</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LDP-Identity-Aware-Protocol" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Cost-Aware-Agent-Scheduling]]</span></li><li><span class='muted'>MCP-A2A-Protocol-Stack]]</span></li><li><a href='../skills/Skill-Cost-Aware-Agent-Scheduling.html'>Skill-Cost-Aware-Agent-Scheduling</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><a href='../skills/Skill-Tool-Call-Decision-Framework.html'>Skill-Tool-Call-Decision-Framework</a></li><li><span class='muted'>Tool-Call-Decision-Framework]]</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Agent-QMix-Topology-Learning]]</span></li><li><span class='muted'>MCP-A2A-Protocol-Stack]]</span></li><li><a href='../skills/Skill-Agent-QMix-Topology-Learning.html'>Skill-Agent-QMix-Topology-Learning</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Agentic-Workflow-Compilation]]</span></li><li><span class='muted'>ParaManager-Parallel-Orchestration]]</span></li><li><span class='muted'>SLM-Tool-Calling-Optimization]]</span></li><li><a href='../skills/Skill-Agentic-Workflow-Compilation.html'>Skill-Agentic-Workflow-Compilation</a></li><li><a href='../skills/Skill-ParaManager-Parallel-Orchestration.html'>Skill-ParaManager-Parallel-Orchestration</a></li><li><a href='../skills/Skill-SLM-Tool-Calling-Optimization.html'>Skill-SLM-Tool-Calling-Optimization</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

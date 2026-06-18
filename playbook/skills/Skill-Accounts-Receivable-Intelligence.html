@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Accounts Receivable Intelligence — 账期智能管理：跨境应收账款预测与催收优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-Accounts-Receivable-Intelligence</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Accounts Receivable Intelligence — 账期智能管理：跨境应收账款预测与催收优化</h1>
+<p class="muted">Skill-Accounts-Receivable-Intelligence · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>风控与合规</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>15-40 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>当跨境 B2B 账期交易导致应收账款逾期率高达 15% 时，ML 账期智能管理预测每笔回款概率和时间、提前锁定高风险账款主动催收，将逾期率降至 8%，显著改善现金流周期并减少坏账损失。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>手动账期管理 vs AI 智能管理：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务痛点：有 15 个 B2B 批发买家，约定 NET-30 账期，但实际平均回款 42 天，逾期率 15%。某些买家季节性地拖延（年末关账）。AI 系统提前识别高风险账款，给财务团队明确的行动清单。</p><p>业务价值： - 逾期率从 15% 降到 8%（每年少损失 7% 的应收账款） - 现金流改善（提前催收 → 加快回款） - 财务人员效率提升（只跟进高风险账款） - 年化 ROI：¥15-40 万（加快现金流 + 减少坏账）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：逾期率 15%→8%；现金流提前回笼；年化 ¥15-40 万</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要历史账款数据；XGBoost 训练约 2-3 周；催收自动化约 4 周）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（完全空白的 B2B 财务管理场景；填补 运营财务↔因果推断↔风控 弱连接）</li><li><strong>评估依据</strong>：B2B 电商账期逾期率行业均值 10-20%；AI 预测催收将逾期率降低 30-50% 已有金融行业验证</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：paper2skills-code/23-运营财务/accounts_receivable_intelligence</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Accounts Receivable Intelligence
+账期智能管理：逾期预测 + 差异化催收策略
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+
+
+@dataclass
+class Invoice:
+    invoice_id: str
+    buyer_id: str
+    amount_usd: float
+    issue_date: str
+    due_date: str
+    payment_terms_days: int = 30
+
+
+@dataclass
+class BuyerProfile:
+    buyer_id: str
+    name: str
+    historical_invoices: list   # [{&#x27;due_days&#x27;: 30, &#x27;actual_days&#x27;: 35, &#x27;amount&#x27;: 5000}]
+    region: str = &#x27;US&#x27;
+    relationship_years: float = 1.0
+
+
+def compute_buyer_risk_features(buyer: BuyerProfile) -&gt; dict:
+    &quot;&quot;&quot;从历史记录计算买家风险特征&quot;&quot;&quot;
+    if not buyer.historical_invoices:
+        return {&#x27;avg_delay&#x27;: 0, &#x27;delay_std&#x27;: 0, &#x27;on_time_rate&#x27;: 1.0,
+                &#x27;avg_amount&#x27;: 0, &#x27;trend&#x27;: 0}
+
+    delays = [inv[&#x27;actual_days&#x27;] - inv[&#x27;due_days&#x27;] for inv in buyer.historical_invoices]
+    on_time = sum(1 for d in delays if d &lt;= 2) / len(delays)  # ≤2天算准时
+
+    # 趋势：近3笔 vs 历史均值
+    recent = np.mean(delays[-3:]) if len(delays) &gt;= 3 else np.mean(delays)
+    overall = np.mean(delays)
+    trend = recent - overall  # 正=最近变差，负=最近改善
+
+    return {
+        &#x27;avg_delay&#x27;: round(float(np.mean(delays)), 1),
+        &#x27;delay_std&#x27;: round(float(np.std(delays)), 1),
+        &#x27;on_time_rate&#x27;: round(on_time, 3),
+        &#x27;avg_amount&#x27;: round(np.mean([inv[&#x27;amount&#x27;] for inv in buyer.historical_invoices]), 0),
+        &#x27;trend&#x27;: round(trend, 1),
+    }
+
+
+def predict_overdue_probability(invoice: Invoice, buyer: BuyerProfile) -&gt; dict:
+    &quot;&quot;&quot;预测账款逾期概率&quot;&quot;&quot;
+    features = compute_buyer_risk_features(buyer)
+
+    # 逾期风险因子（规则加权，生产用 XGBoost）
+    risk = 0.0
+
+    # 历史逾期率
+    if features[&#x27;on_time_rate&#x27;] &lt; 0.7:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.08234</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Accounts-Receivable-Intelligence" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-FX-Hedging-Strategy.html'>Skill-FX-Hedging-Strategy</a></li><li><a href='../skills/Skill-LLM-Negotiation-Conversion-Agent.html'>Skill-LLM-Negotiation-Conversion-Agent</a></li><li><a href='../skills/Skill-Multicurrency-FX-Hedging.html'>Skill-Multicurrency-FX-Hedging</a></li><li><a href='../skills/Skill-Supply-Chain-Finance-Risk-Modeling.html'>Skill-Supply-Chain-Finance-Risk-Modeling</a></li><li><a href='../skills/Skill-Transaction-Anomaly-Detection.html'>Skill-Transaction-Anomaly-Detection</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-FX-Hedging-Strategy.html'>Skill-FX-Hedging-Strategy</a></li><li><a href='../skills/Skill-LLM-Negotiation-Conversion-Agent.html'>Skill-LLM-Negotiation-Conversion-Agent</a></li><li><a href='../skills/Skill-Multicurrency-FX-Hedging.html'>Skill-Multicurrency-FX-Hedging</a></li><li><a href='../skills/Skill-Transaction-Anomaly-Detection.html'>Skill-Transaction-Anomaly-Detection</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-FX-Hedging-Strategy.html'>Skill-FX-Hedging-Strategy</a></li><li><a href='../skills/Skill-LLM-Negotiation-Conversion-Agent.html'>Skill-LLM-Negotiation-Conversion-Agent</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

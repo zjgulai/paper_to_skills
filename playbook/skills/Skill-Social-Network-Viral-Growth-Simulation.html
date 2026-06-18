@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>社交网络病毒式增长模拟与放大 — 跨境品牌UGC传播建模与爆发点预测 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-Social-Network-Viral-Growth-Simulation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>社交网络病毒式增长模拟与放大 — 跨境品牌UGC传播建模与爆发点预测</h1>
+<p class="muted">Skill-Social-Network-Viral-Growth-Simulation · 06-增长模型</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CEO / 增长负责人<span class='biz-ctx-secondary'> · CMO · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · DTC 独立站 · 多市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>公司增长放缓，不知道是市场饱和还是产品问题还是获客太贵；老板要 12 个月 GMV 预测，只能靠感觉</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立增长拆解模型找到瓶颈，预测未来 6-12 个月营收区间，支撑融资/战略会议</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>增长放缓不知道问题在哪</span><span class='biz-pain-tag'>CAC 越来越高已经高于 LTV</span><span class='biz-pain-tag'>新市场要不要进没有数据支撑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>内容爆发时机判断错误导致助推预算浪费——SEIR传播R₀实时估算+影响力最大化KOL选择，使内容平均传播量提升340%，CPM从$8降至$2.5</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：母婴品牌做TikTok/Ins海外内容时，普遍认为&quot;内容质量决定爆发&quot;。但病毒传播研究表明，内容质量只解释了爆发概率的约30%，网络结构（发布时间、初始节点的网络中心性）和种子用户策略解释了其余70%。换句话说：同样质量的内容，由正确的KOL在正确时间发布，传播效果可以差10倍。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：吸奶器TikTok内容病毒传播预测与助推</p><p>- 业务问题：某品牌每月制作20条TikTok内容，绝大多数播放量&lt;1万，偶尔有1-2条爆发到100万+，无法预测哪条会爆。助推时机不对（内容已过高峰再加量）导致预算浪费 - 数据要求：过去6个月TikTok内容数据（每小时播放/点赞/分享/评论）、内容元数据（标签/时长/类型）、KOL账号粉丝网络数据 - 算法应用： 1. 用历史数据训练内容β值预测模型（内容质量→传播率） 2. 每条新内容发布后3小时，实时估算R₀ 3. R₀&gt;1.5时自动触发助推预算（预留$2000助推基金） 4. 助推在传播加速度最大点（通常发布后6-12小时）投放 - 预期产出：正确的爆发检测+助推策略，使内容平均传</p><p>场景B：母婴KOL种子策略优化（影响力最大化）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月内容预算$1万的品牌，通过正确的助推时机检测（R₀&gt;1.5时投入Boost），平均内容ROI提升3倍（CPM从$8降至$2.5）；影响力最大化选KOL使相同预算触达量提升50%；系统建设成本$6万，12个月ROI≈300%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（SEIR模型Python实现简单；关键挑战是实时获取TikTok/Ins的每小时数据（API限制））</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（任何做社媒内容的母婴品牌均适用，内容放大效率是核心竞争力）</li><li><strong>适用规模</strong>：月内容条数&gt;10条且有付费放大预算的卖家</li><li><strong>数据依赖</strong>：历史内容分钟级数据（平台API）、KOL粉丝分布和互动率（第三方工具）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+社交网络病毒式增长模拟与放大系统
+功能：SEIR传播模拟 + R₀动态估算 + 影响力最大化 + 助推时机检测
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import List, Dict, Tuple, Optional
+from scipy.integrate import odeint
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class ContentProfile:
+    &quot;&quot;&quot;内容传播特征&quot;&quot;&quot;
+    content_id: str
+    content_type: str           # &#x27;tutorial&#x27;, &#x27;unboxing&#x27;, &#x27;review&#x27;, &#x27;ugc&#x27;, &#x27;brand&#x27;
+    emotional_trigger: float    # 情感强度 0-1
+    practical_value: float      # 实用价值 0-1
+    brand_visibility: float     # 品牌可见度 0-1（过高会降低传播）
+    creator_followers: int      # 创作者粉丝数
+    creator_engagement_rate: float  # 创作者互动率
+    post_hour: int              # 发布小时（0-23）
+    is_weekday: bool            # 是否工作日
+
+
+def estimate_beta(content: ContentProfile) -&gt; float:
+    &quot;&quot;&quot;
+    估算内容传播率β
+    基于内容特征预测
+    &quot;&quot;&quot;
+    # 基础传播率
+    beta = 0.05
+    
+    # 情感触发加成（最重要因子）
+    beta += content.emotional_trigger * 0.08
+    
+    # 实用价值加成
+    beta += content.practical_value * 0.04
+    
+    # 品牌过度曝光惩罚（品牌感太强，用户不愿分享）
+    if content.brand_visibility &gt; 0.7:
+        beta -= (content.brand_visibility - 0.7) * 0.06
+    
+    # 创作者影响力加成（互动率比粉丝数更重要）
+    er_bonus = min(content.creator_engagement_rate * 0.05, 0.03)
+    beta += er_bonus
+    
+    # 发布时间加成（美国东部时间晚8-10点 = 北京时间早8-10点）
+    prime_hours = {8, 9, 12, 13, 20, 21}
+    if content.post_hour in prime_hours:
+        beta += 0.02
+    
+    # 工作日/周末
+    if not content.is_weekday:
+        beta += 0.01
+    
+    return np.clip(beta, 0.02, 0.25)
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2403.08179</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Social-Network-Viral-Growth-Simulation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><span class='muted'>Skill-Churn-Prediction-Model</span></li><li><a href='../skills/Skill-Cross-Cultural-Marketing-Adaptation.html'>Skill-Cross-Cultural-Marketing-Adaptation</a></li><li><span class='muted'>Skill-Growth-Hacking-Experimentation</span></li><li><span class='muted'>Skill-New-Product-Launch-Prediction</span></li><li><span class='muted'>Skill-User-LTV-Prediction</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-Cross-Cultural-Marketing-Adaptation.html'>Skill-Cross-Cultural-Marketing-Adaptation</a></li><li><span class='muted'>Skill-Growth-Hacking-Experimentation</span></li><li><span class='muted'>Skill-New-Product-Launch-Prediction</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-Cross-Cultural-Marketing-Adaptation.html'>Skill-Cross-Cultural-Marketing-Adaptation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

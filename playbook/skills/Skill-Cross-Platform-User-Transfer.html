@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cross-Platform User Behavior Transfer — 跨平台用户行为迁移：亚马逊行为驱动独立站冷启动 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Cross-Platform-User-Transfer</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Cross-Platform User Behavior Transfer — 跨平台用户行为迁移：亚马逊行为驱动独立站冷启动</h1>
+<p class="muted">Skill-Cross-Platform-User-Transfer · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥10-30 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>DTC独立站刚上线用户没有行为历史只能展示热销榜推荐——将Amazon老买家的购买偏好迁移到独立站，第一天就能个性化推荐比热销榜CTR提升20-35%年化GMV增益10-30万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨平台冷启动问题：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：品牌独立站刚上线，第一周有 500 位用户注册（通过邮件邀请）。其中 80% 是之前 Amazon 的老买家。如果能把他们的 Amazon 购买历史迁移过来，推荐系统第一天就能运行，而不是展示千篇一律的热销榜。</p><p>数据要求： - Amazon 购买历史（通过亚马逊订单导出 API） - 用户邮件匹配（Amazon 邮件 = 独立站注册邮件）</p><p>预期产出： - 跨平台用户对齐率（多少 Amazon 用户可以匹配到独立站） - 迁移后的初始用户偏好向量 - 冷启动推荐 vs 热销榜的 CTR 对比（A/B 测试）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>独立站第一天就有个性化推荐（vs 等 3-6 个月）：早期 CVR 提升 20-35%</li><li>用户对齐率 60-80%：大多数 Amazon 老买家可以无缝迁移偏好</li><li>减少独立站建站初期的推荐冷启动损失</li><li><strong>年化综合 ROI：¥10-30 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（用户邮件匹配 1 周；偏好提取算法 2 周；Domain Adaptation 深度版约 4-6 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Cross-Platform User Behavior Transfer
+跨平台用户行为迁移：Amazon行为驱动独立站冷启动
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass, field
+from collections import defaultdict
+
+
+@dataclass
+class PlatformUser:
+    &quot;&quot;&quot;跨平台用户&quot;&quot;&quot;
+    email: str
+    amazon_purchases: list = field(default_factory=list)  # [(product_id, category, price, timestamp)]
+    dtc_interactions: list = field(default_factory=list)  # 独立站行为（通常为空）
+
+
+@dataclass
+class CategoryPreference:
+    &quot;&quot;&quot;用户品类偏好&quot;&quot;&quot;
+    category: str
+    affinity: float      # 0-1，偏好强度
+    recency: float       # 0-1，最近是否活跃
+    price_tier: str      # low/mid/high，价格档位偏好
+
+
+def extract_amazon_preferences(user: PlatformUser) -&gt; list[CategoryPreference]:
+    &quot;&quot;&quot;从 Amazon 购买历史提取品类偏好&quot;&quot;&quot;
+    cat_data = defaultdict(lambda: {&#x27;count&#x27;: 0, &#x27;total_price&#x27;: 0, &#x27;max_ts&#x27;: 0})
+
+    for product_id, category, price, timestamp in user.amazon_purchases:
+        cat_data[category][&#x27;count&#x27;] += 1
+        cat_data[category][&#x27;total_price&#x27;] += price
+        cat_data[category][&#x27;max_ts&#x27;] = max(cat_data[category][&#x27;max_ts&#x27;], timestamp)
+
+    max_count = max(d[&#x27;count&#x27;] for d in cat_data.values()) if cat_data else 1
+    max_ts = max(d[&#x27;max_ts&#x27;] for d in cat_data.values()) if cat_data else 1
+
+    preferences = []
+    for cat, data in cat_data.items():
+        affinity = data[&#x27;count&#x27;] / max_count
+        recency = data[&#x27;max_ts&#x27;] / max_ts if max_ts &gt; 0 else 0
+        avg_price = data[&#x27;total_price&#x27;] / data[&#x27;count&#x27;]
+        price_tier = &#x27;high&#x27; if avg_price &gt; 150 else (&#x27;mid&#x27; if avg_price &gt; 60 else &#x27;low&#x27;)
+
+        preferences.append(CategoryPreference(cat, affinity, recency, price_tier))
+
+    return sorted(preferences, key=lambda p: -p.affinity * p.recency)
+
+
+def transfer_to_dtc_profile(amazon_preferences: list[CategoryPreference],
+                             domain_shift_factor: float = 0.8) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    将 Amazon 偏好迁移为独立站初始用户嵌入
+    domain_shift_factor: 0-1，越低说明两平台差异越大
+    &quot;&quot;&quot;
+    # 将偏好编码为向量（简化版，生产用神经域适配）
+    categories = [&#x27;breast_pump&#x27;, &#x27;bottle&#x27;, &#x27;sterilizer&#x27;, &#x27;accessories&#x27;, &#x27;clothing&#x27;, &#x27;car_seat&#x27;]
+    cat_to_idx = {c: i for i, c in enumerate(categories)}
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.18234</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Platform-User-Transfer" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>DTC-Customer-Acquisition-Attribution]]（组合</span></li><li><span class='muted'>Federated-Cross-Seller-Recommendation]]（组合</span></li><li><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html'>Skill-DTC-Customer-Acquisition-Attribution</a></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>DTC-Customer-Acquisition-Attribution]]（组合</span></li><li><span class='muted'>Federated-Cross-Seller-Recommendation]]（组合</span></li><li><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html'>Skill-DTC-Customer-Acquisition-Attribution</a></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>DTC-Customer-Acquisition-Attribution]]（组合</span></li><li><span class='muted'>Federated-Cross-Seller-Recommendation]]（组合</span></li><li><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html'>Skill-DTC-Customer-Acquisition-Attribution</a></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

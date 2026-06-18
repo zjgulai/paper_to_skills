@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Video ROI Attribution — 短视频内容 GMV 归因与财务 ROI 量化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/20-ai视频生成.html">20-AI视频生成</a> / Skill-Video-ROI-Attribution</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Video ROI Attribution — 短视频内容 GMV 归因与财务 ROI 量化</h1>
+<p class="muted">Skill-Video-ROI-Attribution · 20-AI视频生成</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-content-factory.html'>AI 内容工厂手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10-30 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>内容运营 / 品牌负责人<span class='biz-ctx-secondary'> · 社媒运营 · CMO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>TikTok Shop LIVE · Instagram Reels · 多语言虚拟主播（英/西/阿/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>TikTok/Reels 需要大量视频，拍摄成本高周期长产能跟不上；想做直播带货但真人主播成本高语言是障碍</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>视频内容产能提升 5-10 倍，单条视频成本降低 80%，多语言市场内容本地化快速覆盖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>视频内容来不及做</span><span class='biz-pain-tag'>拍视频成本太高</span><span class='biz-pain-tag'>主播太贵或不稳定</span><span class='biz-pain-tag'>多语言内容没有人拍</span><span class='biz-pain-tag'>TikTok 更新频率要求太高</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>视频创作团队和 CFO 说不同语言——VEI 指数将完播率/互动率转化为归因 GMV 和净利润贡献，预算效率提升 40-60%，视频团队获得财务话语权</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>短视频创作团队和财务团队说不同的语言：创作团队看&quot;播放量、完播率、点赞数&quot;，财务团队看&quot;ROAS、GMV、毛利&quot;。这两套指标之间缺乏一个翻译层，导致视频预算决策凭感觉而非数据。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：运营团队每月制作 10-20 条 TikTok 视频，每条成本 $500-2000（包含制作 + 投放），但不知道哪些视频真正带来销售，预算分配凭感觉。</p><p>Video ROI Attribution 处理： 1. 拉取每条视频的参与度数据（完播率/互动率/点击率） 2. 计算 VEI 并与对应时间窗口的订单量对比 3. 按归因 GMV / 总成本排名，输出&quot;ROI 热力表&quot; 4. 高 ROI 素材类型作为下一轮制作的参考模板</p><p>示例发现：&quot;妈妈真实使用 60 秒完播&quot;型视频 VEI 0.72，归因 ROAS 6.2x；&quot;产品功能展示 30 秒&quot;型 VEI 0.41，ROAS 2.8x → 下轮预算向真实使用场景倾斜</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>停止低 ROI 素材：预算效率提升 40-60%，月省 $1,000-3,000 无效投放</li><li>高 ROI 素材类型复用：制作成本降低 30%（基于成功模板）</li><li>CFO 信任度提升：视频预算审批速度加快，年均多获批 ¥10-30 万预算</li><li><strong>年化综合 ROI</strong>：¥30-100 万</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（数据打通是主要工作量，算法本身简单，1 周接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Video ROI Attribution — 短视频 GMV 归因与财务 ROI 量化
+综合工业实践（Attribution Labs 2026）
+
+依赖: numpy, dataclasses (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+from typing import Optional
+import numpy as np
+from datetime import datetime, timedelta
+
+
+@dataclass
+class VideoMetrics:
+    &quot;&quot;&quot;单条视频的参与度指标&quot;&quot;&quot;
+    video_id: str
+    platform: str              # tiktok / youtube / instagram
+    title: str
+    publish_date: str
+    production_cost: float     # 制作成本（USD）
+    ad_spend: float            # 投放预算（USD）
+    # 参与度指标
+    views: int = 0
+    completion_rate: float = 0.0   # 完播率
+    engagement_rate: float = 0.0   # 互动率（点赞+评论+分享 / 播放）
+    click_through_rate: float = 0.0
+    search_lift: float = 0.0       # 视频发布后品牌词搜索提升率
+
+
+@dataclass
+class AttributionResult:
+    &quot;&quot;&quot;归因结果&quot;&quot;&quot;
+    video_id: str
+    attributed_gmv: float       # 归因 GMV
+    attributed_orders: int      # 归因订单数
+    vei_score: float            # 视频效能指数
+    roas: float                 # 广告支出回报
+    net_profit_contribution: float  # 净利润贡献（归因 GMV × 毛利率 - 成本）
+    roi_rank: int = 0
+
+
+class VideoROIAttributor:
+    &quot;&quot;&quot;
+    视频 ROI 归因计算器
+
+    支持三种归因模式：
+    - linear: 线性归因（平均分配）
+    - time_decay: 时间衰减（近期权重更高）
+    - vei_weighted: VEI 权重归因
+    &quot;&quot;&quot;
+
+    # VEI 各指标权重（基于 Attribution Labs 研究）
+    VEI_WEIGHTS = {
+        &quot;completion_rate&quot;: 0.35,
+        &quot;engagement_rate&quot;: 0.30,
+        &quot;click_through_rate&quot;: 0.25,
+        &quot;search_lift&quot;: 0.10,
+    }
+</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Video-ROI-Attribution" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Creative-Fatigue-Detection]]（组合场景</span></li><li><span class='muted'>FBA-Fee-Intelligence]]（组合场景</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Creative-Fatigue-Detection]]（组合场景</span></li><li><span class='muted'>FBA-Fee-Intelligence]]（组合场景</span></li><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Creative-Fatigue-Detection]]（组合场景</span></li><li><span class='muted'>FBA-Fee-Intelligence]]（组合场景</span></li><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

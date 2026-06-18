@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>退货欺诈检测标签引擎 — 识别假退货/滥用退货政策的行为模式与Tag自动标记 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Return-Fraud-Detection-Tag-Engine</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>退货欺诈检测标签引擎 — 识别假退货/滥用退货政策的行为模式与Tag自动标记</h1>
+<p class="muted">Skill-Return-Fraud-Detection-Tag-Engine · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-intelligence.html'>供应链全链路智能化手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>逆向物流面临&quot;退货欺诈占总退货3-8%无法识别&quot;——多维行为特征检测自动标记高风险退货，停止自动批准，年化减少欺诈损失2万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>退货欺诈（Return Fraud） 是电商卖家的隐性成本杀手。主要模式：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：欺诈退货通常占总退货量的3-8%，以年退货额50万元计算，每减少欺诈1% = 节省5,000元；暂停高风险退货自动批准，通过人工核查减少欺诈损失约2万元/年</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要客户历史行为数据，主要是特征工程）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（德国/美国退货欺诈问题日益严重，平台（Amazon）要求卖家自行管控）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+退货欺诈检测标签引擎
+功能：多维度行为特征提取 / 欺诈评分 / Tag生成 / 自动审核建议
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class ReturnRequest:
+    request_id: str
+    customer_id: str
+    sku_id: str
+    order_date: datetime
+    return_date: datetime
+    claimed_reason: str
+    return_weight_kg: float
+    original_weight_kg: float
+    order_value_usd: float
+    account_age_days: int
+    customer_return_count_30d: int
+    customer_complaint_count_30d: int
+    tags: dict = field(default_factory=dict)
+
+
+def compute_fraud_score(req: ReturnRequest) -&gt; dict:
+    signals = []
+    score = 0.0
+
+    # 信号1：高频退货
+    if req.customer_return_count_30d &gt;= 5:
+        score += 0.35
+        signals.append(f&quot;高频退货({req.customer_return_count_30d}次/30天)&quot;)
+    elif req.customer_return_count_30d &gt;= 3:
+        score += 0.20
+        signals.append(f&quot;频繁退货({req.customer_return_count_30d}次/30天)&quot;)
+
+    # 信号2：重量异常
+    weight_ratio = req.return_weight_kg / max(0.01, req.original_weight_kg)
+    if weight_ratio &lt; 0.75:
+        score += 0.30
+        signals.append(f&quot;重量异常({weight_ratio:.0%}，疑似空包)&quot;)
+    elif weight_ratio &lt; 0.90:
+        score += 0.15
+        signals.append(f&quot;重量偏低({weight_ratio:.0%})&quot;)
+
+    # 信号3：新账号+高价值退货
+    if req.account_age_days &lt; 30 and req.order_value_usd &gt; 100:
+        score += 0.25
+        signals.append(f&quot;新账号({req.account_age_days}天)+高价值(${req.order_value_usd:.0f})&quot;)
+
+    # 信号4：频繁投诉
+    if req.customer_complaint_count_30d &gt;= 3:
+        score += 0.15
+        signals.append(f&quot;投诉频繁({req.customer_complaint_count_30d}次/30天)&quot;)
+
+    # 信号5：使用周期末退货（季节性）</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2309.09823</li><li>2401.12834</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Return-Fraud-Detection-Tag-Engine" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Return-Rate-By-Country-KPI.html'>Skill-Cross-Border-Return-Rate-By-Country-KPI</a></li><li><a href='../skills/Skill-Return-Root-Cause-Attribution-Graph.html'>Skill-Return-Root-Cause-Attribution-Graph</a></li><li><a href='../skills/Skill-Returnformer-Returns-Prediction.html'>Skill-Returnformer-Returns-Prediction</a></li><li><a href='../skills/Skill-Reverse-Logistics-Disposition-Optimization.html'>Skill-Reverse-Logistics-Disposition-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Return-Rate-By-Country-KPI.html'>Skill-Cross-Border-Return-Rate-By-Country-KPI</a></li><li><a href='../skills/Skill-Return-Root-Cause-Attribution-Graph.html'>Skill-Return-Root-Cause-Attribution-Graph</a></li><li><a href='../skills/Skill-Reverse-Logistics-Disposition-Optimization.html'>Skill-Reverse-Logistics-Disposition-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Return-Rate-By-Country-KPI.html'>Skill-Cross-Border-Return-Rate-By-Country-KPI</a></li><li><a href='../skills/Skill-Reverse-Logistics-Disposition-Optimization.html'>Skill-Reverse-Logistics-Disposition-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

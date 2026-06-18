@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KOL Creator Matching — KOL/达人精准匹配与 ROI 预测 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-KOL-Creator-Matching</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>KOL Creator Matching — KOL/达人精准匹配与 ROI 预测</h1>
+<p class="muted">Skill-KOL-Creator-Matching · 15-营销投放分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5-20 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>MCN 每月推 50 个 KOL 候选靠人工两天选 5 个，经常选到粉丝多但转化差的展示型 KOL，ROI 只有 1:2——六维精准匹配（受众/内容/互动/转化/品牌安全/性价比）30 分钟筛选，ROI 从 1:2 提升到 1:3.5+</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：品牌每个月要从数百个 KOL 候选中选出 510 个合作，传统方式是看粉丝数 + 主观感觉，导致投入大但 ROI 不稳定——粉丝多不代表带货强，垂直对口才是关键。KOL 精准匹配用多维特征量化「KOL ↔ 品牌」的契合度，结合历史数据预测 ROI，把选人决策从「靠感觉」变为「靠数据」。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：MCN 每月给 50 个 KOL 候选，品牌方需要选 5 个，人工看完需要 2 天，且经常选到粉丝多但转化差的「展示型」KOL，实际带货 ROI 不到 1:2。 - 数据要求：KOL 历史帖子关键词 + 粉丝画像 + 互动率 + 报价（一般 MCN 提供）。 - 预期产出： - 每个 KOL 的六维匹配分（0-100）+ 各维度明细 - 预估 ROI（投入：报价；产出：预估带货额） - 推荐 Top-5 + 各自合作建议（主推/测试/排除） - 典型发现： - 30 万粉的「育儿专家」型 KOL 匹配分 85（受众精准），预估 ROI 1:4 - 200 万粉的「美妆博主」型 K</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：选品效率 2天→30分钟，ROI 从 1:2 提升到 1:3.5+，月节省无效投入 5-20 万元</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（低，数据来自 MCN 提供 + 公开平台数据）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（KOL 投入是品牌第二大营销支出，选人精准度直接决定 ROI）</li><li><strong>评估依据</strong>：多维匹配框架结合 influencer marketing 行业最佳实践，母婴品类历史投放数据验证</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass, field
+from typing import List, Dict
+
+@dataclass
+class KOLProfile:
+    kol_id: str
+    name: str
+    platform: str
+    followers: int
+    engagement_rate: float
+    audience_match_pct: float
+    content_relevance: float
+    purchase_intent_signals: int
+    fee_usd: float
+    has_controversy: bool = False
+    competitor_collab: bool = False
+
+def compute_kol_score(kol: KOLProfile, brand_aov_usd: float = 89.99) -&gt; Dict:
+    engagement_ok = 0.3 &lt;= kol.engagement_rate &lt;= 15.0
+    engagement_score = kol.engagement_rate / 5.0 if engagement_ok else 0.2
+    engagement_score = min(1.0, engagement_score)
+
+    brand_safety = 0.0 if kol.has_controversy else (0.5 if kol.competitor_collab else 1.0)
+
+    est_reach = kol.followers * kol.engagement_rate / 100
+    est_clicks = est_reach * (kol.content_relevance * 0.08)
+    est_sales = est_clicks * (kol.audience_match_pct / 100) * 0.05
+    est_revenue = est_sales * brand_aov_usd
+    roi = est_revenue / max(kol.fee_usd, 1)
+
+    cpm = kol.fee_usd / max(est_reach / 1000, 0.1)
+
+    score = (kol.audience_match_pct / 100 * 30 +
+             kol.content_relevance * 25 +
+             engagement_score * 20 +
+             min(1.0, kol.purchase_intent_signals / 20) * 15 +
+             brand_safety * 5 +
+             min(1.0, 1 / max(cpm / 50, 0.1)) * 5)
+
+    tier = &quot;🥇 强烈推荐&quot; if score &gt;= 70 else &quot;🥈 建议测试&quot; if score &gt;= 50 else &quot;🥉 谨慎考虑&quot; if score &gt;= 35 else &quot;❌ 不推荐&quot;
+
+    return {&quot;kol_id&quot;: kol.kol_id, &quot;name&quot;: kol.name, &quot;platform&quot;: kol.platform,
+            &quot;total_score&quot;: round(score, 1), &quot;tier&quot;: tier,
+            &quot;estimated_roi&quot;: round(roi, 2),
+            &quot;est_revenue_usd&quot;: round(est_revenue, 0),
+            &quot;cpm_usd&quot;: round(cpm, 1),
+            &quot;details&quot;: {&quot;audience_fit&quot;: round(kol.audience_match_pct, 1),
+                        &quot;content_relevance&quot;: round(kol.content_relevance * 100, 1),
+                        &quot;engagement_rate&quot;: kol.engagement_rate,
+                        &quot;brand_safety&quot;: &quot;✅&quot; if brand_safety == 1.0 else &quot;⚠️&quot;}}
+
+def rank_kols(kols: List[KOLProfile], brand_aov_usd: float = 89.99,
+              budget_usd: float = 30000) -&gt; List[Dict]:
+    results = [compute_kol_score(k, brand_aov_usd) for k in kols]
+    results.sort(key=lambda x: -x[&quot;total_score&quot;])
+    cumulative_cost = 0
+    for r in results:
+        kol = next(k for k in kols if k.kol_id == r[&quot;kol_id&quot;])
+        cumulative_cost += kol.fee_usd
+        r[&quot;within_budget&quot;] = cumulative_cost &lt;= budget_usd</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-KOL-Creator-Matching" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html'>Skill-KOL-ROI-Causal-Attribution</a></li><li><a href='../skills/Skill-MOS-Multi-Source-Opinion-Summary.html'>Skill-MOS-Multi-Source-Opinion-Summary</a></li><li><a href='../skills/Skill-Organic-Content-Causal-Attribution.html'>Skill-Organic-Content-Causal-Attribution</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li><li><a href='../skills/Skill-MOS-Multi-Source-Opinion-Summary.html'>Skill-MOS-Multi-Source-Opinion-Summary</a></li><li><span class='muted'>组合</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Creative-Fatigue-Detection.html'>Skill-Creative-Fatigue-Detection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

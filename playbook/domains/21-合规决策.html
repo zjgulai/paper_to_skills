@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>21-合规决策 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>21-合规决策</h1><p>新领域 (2026-05-25): Category compliance prescan, regulatory risk, compliance-as-moat</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 21-合规决策 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AI-Product-Safety-Certification.html" data-domain="21-合规决策" data-diff="⭐⭐⭐">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">AI Product Safety Certification — AI驱动产品安全认证自动化：从测试报告解析到合规路径规划</h3>
+  <p class="sc-desc">当母婴产品需要进入美国+欧盟+澳大利亚三个市场时，AI认证路径规划在5分钟内输出最低成本认证组合并识别可共享测试，将认证周期从8周压缩到4周、成本降低20-35%。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Amazon-Account-Appeal-Strategy.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Amazon 账号申诉策略（POA 行动计划）</h3>
+  <p class="sc-desc">吸奶器 Listing 被 Amazon 以知识产权为由强制下架，模板化 POA 申诉成功率仅 20-30%，每天断货损失超 3 万元——结构化三段式 POA（根因/纠正/预防）可将申诉成功率提升至 65-80%，恢复周期缩短至 3-7 天</p>
+  <div class='sc-footer'><span class='sc-roi'>1-3 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CPSC-Children-Product-Safety.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">CPSC 儿童产品安全合规（美国强制认证）</h3>
+  <p class="sc-desc">母婴新品上架美国 Amazon 时被要求提供 CPSC 合规文件，但不清楚需要哪些认证、找哪家实验室——CPSC 三层合规框架（法规识别→测试路径→证书管理）让合规准备从 3 个月压缩到 2-3 周</p>
+  <div class='sc-footer'><span class='sc-roi'>30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Category-Compliance-Prescan.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Skill-Category-Compliance-Prescan</h3>
+  <p class="sc-desc">业务问题：考虑推出 UV-C 密闭消毒器，但市面上已有 2 次大规模召回（2025-08 BigTree 33,000 台 / 2026-04 Uvlizer 21,000 台），不知道自己的产品设计是否踩了同样的雷，认证需要多少成本和时间</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Compliance-ML-Risk-Scoring.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Compliance ML Risk Scoring — 合规 ML 风险评分：用机器学习量化违规概率</h3>
+  <p class="sc-desc">35个SKU每月合规审查人力有限不知道应该先审查哪些——ML风险评分输出每个SKU的违规概率将人工审查效率提升3-5倍，主动发现新违规模式避损年化30-120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-120 万（以避损为主）</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Compliance-Scored-Guardrail-Orchestration.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Compliance-Scored Guardrail Orchestration — 合规评分 Best-of-N 守护编排</h3>
+  <p class="sc-desc">业务问题：AI 自动生成 Amazon/TikTok Shop Listing 时，容易写出“guaranteed safe”“no certification needed”等违规承诺，也可能泄露供应商联系人或测试报告中的 PII</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Consumer-Complaint-Recall-Prediction.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测</h3>
+  <p class="sc-desc">业务问题：在 Amazon 选品婴儿推车时，如何提前识别某款车型即将遭遇 CPSC 强制召回</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Border-Compliance-Framework.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Cross-Border Compliance Framework — 跨境电商多辖区合规自动映射</h3>
+  <p class="sc-desc">业务问题：同一款婴儿配方奶粉同时进入美国、欧盟、英国市场，三地法规差异大，如何自动生成各市场合规清单</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-HTS-Agentic-Tariff-Classification.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">HTS多Agent关税编码分类 — 共识验证+层级推理+不确定性感知的跨境清关自动化</h3>
+  <p class="sc-desc">30%的年度HS申报编码存在错误导致关税多缴或清关延误——多Agent共识+逐元素投票+层级推理将4位HTS准确率提升至75%+，人工工作量减少80%（2026 arXiv:2606.16987）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-HTS-Tariff-Classification.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">HTS 关税编码分类与优化（跨境电商关税合规）</h3>
+  <p class="sc-desc">吸奶器套装被默认归类为液体泵（关税 3%）而非呼吸治疗器具（0%），每年多付 15 万元关税——AI 驱动 HTS 精准分类识别节税机会，配合 CBP Binding Ruling 申请实现合规节税 20-200 万元/年</p>
+  <div class='sc-footer'><span class='sc-roi'>10-80 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Contract-Compliance-Review.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">LLM Contract Compliance Review — LLM 采购合同合规审查：跨境协议风险自动化识别</h3>
+  <p class="sc-desc">新供应商发来15页合同需要律师审查等5天成本1000美元且可能错过签约时机——LLM合同合规审查30分钟识别高风险条款（付款/IP/争议/保密），法律成本降低70%年化节省20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Listing-Compliance-Auto-Repair.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Listing Compliance Auto Repair — AI 驱动违规 Listing 自动修复</h3>
+  <p class="sc-desc">黑五前35个SKU需要合规修复人工每条需30分钟共需3-5天错过上架窗口——LLM驱动自动修复规则引擎30秒完成一条批量处理节省2-4天上架时机保护旺季GMV10-30万元并防止Amazon账号警告</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">平台政策变更自适应监控 — 跨境电商合规政策智能预警与快速响应</h3>
+  <p class="sc-desc">卖家因政策变更滞后被封号——语义变更检测+影响分级将政策响应时间从7天缩短至8小时，相当于每年避免一次封号损失（价值$10-30万）</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Product-Safety-Testing-Requirements.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Product Safety Testing Requirements — 产品安全测试需求：品类×市场映射</h3>
+  <p class="sc-desc">美国：CPSC 强制性标准（16 CFR）/ FDA 21 CFR / FCC</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Regulatory-Change-Auto-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Regulatory Change Auto-Monitor — 合规法规变更自动监控：实时追踪政策更新的预警系统</h3>
+  <p class="sc-desc">当欧盟 VAT 季更、Amazon ToS 月改、FDA 随时发布新指南时，手动监控极易漏报导致下架或罚款——AI 合规变更监控自动爬取官方公告并用 NLP 过滤有影响变更，24 小时内预警，将合规响应窗口从 2 周压缩到 1 天。</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Regulatory-Change-Monitoring.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Regulatory Change Monitoring — 法规变更自动监控：受影响品类实时映射</h3>
+  <p class="sc-desc">将监管机构发布的非结构化更新，自动映射到受影响产品品类，并生成优先级告警，驱动合规行动。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Regulatory-Graph-Compliance-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Regulatory Graph Compliance Monitor — 合规知识图谱+GenAI实时监控</h3>
+  <p class="sc-desc">吸奶器新品上架美国同时面对FDA/CPSC/FTC/Amazon四套规则人工检查需2-3天——合规知识图谱+GenAI实时扫描10秒内识别复合违规风险并给出修改建议，拦截违规上架避免下架损失年化30-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-200 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Due-Diligence.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Supply Chain Due Diligence — 供应链合规尽职调查：劳工+环境+产品三维</h3>
+  <p class="sc-desc">2023 年起德国《供应链尽职调查法》（LkSG）生效，要求年营业额 &gt;4.5 亿欧元的企业对整条供应链的合规负责。母婴出海品牌虽暂无直接法律义务，但头部零售商（Walmart/Target/亚马逊）已要求供应商提供 ESG 合规证明</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-VAT-GST-Compliance-Automation.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">VAT GST Compliance Automation — 跨境 VAT/GST 合规自动化：欧洲税务申报自动化</h3>
+  <p class="sc-desc">进入德国法国意大利三国VAT税率各不同商品分类也各异每月手工申报需10小时还容易出错——ML自动分类商品税率+自动计算申报，准确率提升到99.5%人工时间降低90%年化节省15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

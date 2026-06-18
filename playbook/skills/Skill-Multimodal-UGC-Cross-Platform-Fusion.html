@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>跨平台UGC多模态融合采集 — 图文视频评论统一信号采集与去噪 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Multimodal-UGC-Cross-Platform-Fusion</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>跨平台UGC多模态融合采集 — 图文视频评论统一信号采集与去噪</h1>
+<p class="muted">Skill-Multimodal-UGC-Cross-Platform-Fusion · 22-数据采集工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>500万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据工程师 / 技术负责人<span class='biz-ctx-secondary'> · 运营负责人 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想监控竞品价格/评论/排名但没有稳定采集能力，手动太慢；多平台数据分散整合成本极高；数据管道不稳定经常断</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>竞品价格/评论数据每日自动更新，多平台数据统一入仓，数据管道稳定性 &gt;99%，取数时间从小时降到分钟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品数据要手动收集太慢</span><span class='biz-pain-tag'>平台 API 限制抓不到数据</span><span class='biz-pain-tag'>多系统数据整合不起来</span><span class='biz-pain-tag'>报表用的数据是过期的</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>品牌质量问题在TikTok已爆发而Amazon评分仍正常——跨平台多模态UGC融合将质量预警提前6周，保护年销$500万SKU避免$50-80万评分下滑损失</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：母婴出海卖家最有价值的用户反馈不在Amazon评论里，而在TikTok视频评论区、Reddit育儿帖子和YouTube开箱视频的字幕中——这些渠道的信号比Amazon评论早出现24周，且更真实（无刷单污染）。问题是这些数据分散在46个平台，格式完全异构（文本/图片/视频/音频），无法统一处理。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某品牌吸奶器在Amazon 4.2星，但TikTok上出现大量&quot;3个月坏了&quot;的开箱视频，YouTube字幕中频繁提到&quot;motor noise&quot;——这些信号比Amazon评分下降早了6周，卖家未能及时响应，最终Amazon评分降至3.8，销量腰斩 - 数据要求：目标品牌ASIN列表、目标平台账号（TikTok/YouTube/Reddit关键词）、历史12个月竞品UGC数据 - 算法应用： 1. 建立统一采集管道，覆盖6个平台的品牌提及 2. CLIP多模态对齐：TikTok视频中的&quot;马达噪音演示&quot;与Amazon评论中的&quot;loud motor&quot;对齐到同一主题簇 3. 发现&quot;moto</p><p>场景B：新品市场信号实时采集（进入前决策）</p><p>- **业务问题**：评估一个新品类（婴儿辅食料理机）是否有市场机会，传统方式靠Jungle Scout/Helium10，但无法捕捉&quot;社交渠道的需求爆发信号&quot; - **算法应用**：多平台采集该品类UGC 3个月，发现Reddit妈妈群组讨论量月增180%、TikTok相关话题播放量2亿+，而Amazon竞品数量仍不多 → 判断为红利窗口期 - **预期产出**：新品市场验证周期从3个月压缩至2周，决策准确率提升40%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：跨平台早期预警可让品牌提前4-6周发现质量问题，对年销$500万SKU，避免评分下滑导致的销量损失约$50-80万，系统建设成本约$12万，ROI≈500%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（多平台爬虫维护成本高、平台反爬持续对抗，但核心算法成熟）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（品牌化运营必备，白牌卖家暂缓）</li><li><strong>适用规模</strong>：SKU数&gt;20且有品牌意识的中大型卖家</li><li><strong>数据依赖</strong>：各平台爬虫访问权限、品牌关键词/ASIN列表</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+跨平台UGC多模态融合采集系统
+功能：多源采集 + 统一Schema + 向量对齐 + 去重去噪 + 主题聚类
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+import hashlib
+import re
+from collections import defaultdict
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class UGCItem:
+    &quot;&quot;&quot;统一UGC数据结构&quot;&quot;&quot;
+    uid: str                    # 唯一ID
+    platform: str               # &#x27;amazon&#x27;, &#x27;tiktok&#x27;, &#x27;youtube&#x27;, &#x27;reddit&#x27;, &#x27;twitter&#x27;
+    content_type: str           # &#x27;review&#x27;, &#x27;video_comment&#x27;, &#x27;post&#x27;, &#x27;video_transcript&#x27;
+    text: str                   # 文本内容
+    timestamp: datetime
+    product_mention: str        # 提及的产品/品牌
+    rating: Optional[float] = None
+    media_urls: List[str] = field(default_factory=list)
+    engagement: int = 0         # 点赞/回复数
+
+
+def generate_mock_ugc_data(n_per_platform: int = 200, seed: int = 42) -&gt; List[UGCItem]:
+    &quot;&quot;&quot;生成模拟多平台UGC数据&quot;&quot;&quot;
+    np.random.seed(seed)
+    items = []
+    
+    platforms_config = {
+        &#x27;amazon&#x27;: {
+            &#x27;type&#x27;: &#x27;review&#x27;,
+            &#x27;templates&#x27;: [
+                &quot;This breast pump is amazing! Super quiet and comfortable. {adj}&quot;,
+                &quot;Motor noise is really loud after 3 months of use. {adj}&quot;,
+                &quot;Leaking issue after {n} weeks. Very disappointed. {adj}&quot;,
+                &quot;Great product for new moms. Easy to clean. {adj}&quot;,
+                &quot;Stopped working after {n} months. Quality issue. {adj}&quot;
+            ]
+        },
+        &#x27;tiktok&#x27;: {
+            &#x27;type&#x27;: &#x27;video_comment&#x27;,
+            &#x27;templates&#x27;: [
+                &quot;omg this breast pump saved my life as a working mom {adj}&quot;,
+                &quot;motor noise woke up my baby every time 😭 {adj}&quot;,
+                &quot;it started leaking after just {n} weeks!! sending back {adj}&quot;,
+                &quot;best pump ever 10/10 recommend for new moms {adj}&quot;,
+                &quot;the motor broke after {n} months so disappointed {adj}&quot;
+            ]
+        },
+        &#x27;reddit&#x27;: {
+            &#x27;type&#x27;: &#x27;post&#x27;,
+            &#x27;templates&#x27;: [
+                &quot;Has anyone had issues with the motor noise on this pump? Mine is really loud {adj}&quot;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.03421</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multimodal-UGC-Cross-Platform-Fusion" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Clickstream-Persona-Pipeline.html'>Skill-Clickstream-Persona-Pipeline</a></li><li><a href='../skills/Skill-Cross-Cultural-VOC-Alignment.html'>Skill-Cross-Cultural-VOC-Alignment</a></li><li><a href='../skills/Skill-Fake-Review-Detection.html'>Skill-Fake-Review-Detection</a></li><li><a href='../skills/Skill-LLM-Focused-Web-Crawling.html'>Skill-LLM-Focused-Web-Crawling</a></li><li><a href='../skills/Skill-Market-Signal-Realtime-Collection.html'>Skill-Market-Signal-Realtime-Collection</a></li><li><a href='../skills/Skill-Product-Attribute-Completion.html'>Skill-Product-Attribute-Completion</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Clickstream-Persona-Pipeline.html'>Skill-Clickstream-Persona-Pipeline</a></li><li><a href='../skills/Skill-Cross-Cultural-VOC-Alignment.html'>Skill-Cross-Cultural-VOC-Alignment</a></li><li><a href='../skills/Skill-Market-Signal-Realtime-Collection.html'>Skill-Market-Signal-Realtime-Collection</a></li><li><a href='../skills/Skill-Product-Attribute-Completion.html'>Skill-Product-Attribute-Completion</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Cultural-VOC-Alignment.html'>Skill-Cross-Cultural-VOC-Alignment</a></li><li><a href='../skills/Skill-Product-Attribute-Completion.html'>Skill-Product-Attribute-Completion</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Automated Causal Discovery — 自动化因果发现：从数据自动识别业务驱动因素 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-Automated-Causal-Discovery</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Automated Causal Discovery — 自动化因果发现：从数据自动识别业务驱动因素</h1>
+<p class="muted">Skill-Automated-Causal-Discovery · 01-因果推断</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥10-30 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>增长负责人 / CMO<span class='biz-ctx-secondary'> · 数据分析师 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · Meta Ads · DTC 独立站</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告预算花了，但不确定哪个渠道真的带来新客；做了大促，不知道销量增长是促销效果还是季节规律</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>能区分「真实增量」和「自然购买」，砍掉虚假归因渠道后同等预算 ROI 提升 20-40%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>钱花出去了不知道有没有用</span><span class='biz-pain-tag'>各渠道报告都说自己贡献最大</span><span class='biz-pain-tag'>怎么向老板证明这笔钱值得花</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营长期认为BSR排名是销量的原因努力刷排名但效果不稳定——NOTEARS自动因果发现揭示BSR是销量的结果而非原因，纠正错误认知后将资源聚焦真正的驱动因素（广告/价格）年化ROI提升10-30万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统因果分析 vs 因果发现：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：运营直觉认为&quot;ROAS 高→销量好&quot;，但数据分析显示 BSR 排名变化比 ROAS 变化更能预测未来销量。不知道哪些变量真正&quot;因果&quot;影响销量，哪些只是相关。</p><p>数据要求： - 多维度日度数据（180天）：销量/价格/广告花费/ROAS/BSR/评论数/评分/退货率/搜索量 - 建议 10-20 个业务指标</p><p>预期产出： - 因果 DAG：哪些变量因果影响销量（而非只是相关） - 关键发现：意外的因果路径（&quot;评论速度→BSR→销量&quot;中，BSR 是中介） - 建议干预点：最高效的提升销量的操作变量</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>纠正错误认知（BSR 不是销量原因，而是结果）：停止无效&quot;刷排名&quot;操作，节省 ¥5-20 万/年</li><li>发现意外因果路径（如评论速度→搜索权重→销量）：优化正确的驱动变量，ROI 提升 10-20%</li><li>自动化消除人工建模的先验假设偏差：分析质量提升，避免因错误模型导致的决策失误</li><li><strong>年化综合 ROI：¥10-30 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（causal-learn 库有成熟 PC/NOTEARS 实现；需要 2-6 个月历史数据；因果图解读需要领域专家配合；约 3-4 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Automated Causal Discovery
+自动化因果发现：从业务数据学习因果图结构
+简化版 NOTEARS / PC 算法
+生产环境: pip install causal-learn 或 cdt (Causal Discovery Toolbox)
+&quot;&quot;&quot;
+import numpy as np
+from itertools import combinations
+
+
+def generate_ecommerce_causal_data(n_days: int = 180, seed: int = 42) -&gt; tuple:
+    &quot;&quot;&quot;生成含已知因果结构的电商数据（用于验证）&quot;&quot;&quot;
+    np.random.seed(seed)
+    t = np.arange(n_days)
+
+    # 真实因果结构：
+    # season → ad_spend → sales
+    # price → sales
+    # sales → bsr (BSR是结果，不是原因)
+    # bsr → future_sales (排名影响下一期销量)
+
+    season = np.sin(2 * np.pi * t / 365) + np.random.normal(0, 0.1, n_days)
+    price = 100 - 5 * (t % 30 &lt; 5) + np.random.normal(0, 3, n_days)  # 月初促销
+    ad_spend = 500 + 200 * season + np.random.normal(0, 50, n_days)   # 季节性广告
+
+    # 销量受价格和广告驱动
+    sales = 80 - 0.5 * (price - 100) + 0.02 * ad_spend + np.random.normal(0, 5, n_days)
+    sales = np.maximum(0, sales)
+
+    # BSR 受销量驱动（结果变量）
+    bsr = 500 - 2 * sales + np.random.normal(0, 20, n_days)
+    bsr = np.maximum(1, bsr)
+
+    # 退货率弱相关于价格（高价→更多退货）
+    return_rate = 0.06 + 0.001 * (price - 100) + np.random.normal(0, 0.01, n_days)
+
+    data = np.column_stack([season, price, ad_spend, sales, bsr, return_rate])
+    var_names = [&#x27;season&#x27;, &#x27;price&#x27;, &#x27;ad_spend&#x27;, &#x27;sales&#x27;, &#x27;bsr&#x27;, &#x27;return_rate&#x27;]
+    return data, var_names
+
+
+def compute_partial_correlation(X: np.ndarray, i: int, j: int, S: list) -&gt; float:
+    &quot;&quot;&quot;计算控制变量 S 后 i 和 j 的偏相关系数&quot;&quot;&quot;
+    if not S:
+        corr_mat = np.corrcoef(X.T)
+        return corr_mat[i, j]
+    # 用残差法计算偏相关
+    cond_vars = list(S)
+    def residual(target, regressors):
+        X_reg = np.column_stack([X[:, r] for r in regressors] + [np.ones(len(X))])
+        beta = np.linalg.lstsq(X_reg, X[:, target], rcond=None)[0]
+        return X[:, target] - X_reg @ beta
+    ri = residual(i, cond_vars)
+    rj = residual(j, cond_vars)
+    return float(np.corrcoef(ri, rj)[0, 1])
+
+
+def pc_skeleton_discovery(data: np.ndarray, var_names: list,
+                           alpha: float = 0.05) -&gt; dict:
+    &quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.14691</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Automated-Causal-Discovery" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Data-Collection-Agent-Pipeline]]（组合</span></li><li><span class='muted'>NL2Dashboard-Automation]]（组合</span></li><li><a href='../skills/Skill-Causal-Attribution-Bridge.html'>Skill-Causal-Attribution-Bridge</a></li><li><a href='../skills/Skill-Causal-ML-Feature-Engineering.html'>Skill-Causal-ML-Feature-Engineering</a></li><li><a href='../skills/Skill-Causal-RL-Dynamic-Pricing.html'>Skill-Causal-RL-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Data-Collection-Agent-Pipeline.html'>Skill-Data-Collection-Agent-Pipeline</a></li><li><a href='../skills/Skill-DiD-Difference-in-Differences.html'>Skill-DiD-Difference-in-Differences</a></li><li><a href='../skills/Skill-NL2Dashboard-Automation.html'>Skill-NL2Dashboard-Automation</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Data-Collection-Agent-Pipeline]]（组合</span></li><li><span class='muted'>NL2Dashboard-Automation]]（组合</span></li><li><a href='../skills/Skill-Causal-Attribution-Bridge.html'>Skill-Causal-Attribution-Bridge</a></li><li><a href='../skills/Skill-Causal-RL-Dynamic-Pricing.html'>Skill-Causal-RL-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Data-Collection-Agent-Pipeline.html'>Skill-Data-Collection-Agent-Pipeline</a></li><li><a href='../skills/Skill-NL2Dashboard-Automation.html'>Skill-NL2Dashboard-Automation</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Data-Collection-Agent-Pipeline]]（组合</span></li><li><span class='muted'>NL2Dashboard-Automation]]（组合</span></li><li><a href='../skills/Skill-Data-Collection-Agent-Pipeline.html'>Skill-Data-Collection-Agent-Pipeline</a></li><li><a href='../skills/Skill-NL2Dashboard-Automation.html'>Skill-NL2Dashboard-Automation</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

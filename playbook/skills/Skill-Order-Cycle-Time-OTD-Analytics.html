@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>订单交付周期OTD全链路分解 — On-Time Delivery率/交付阶段拆解/延迟根因归因 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Order-Cycle-Time-OTD-Analytics</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>订单交付周期OTD全链路分解 — On-Time Delivery率/交付阶段拆解/延迟根因归因</h1>
+<p class="muted">Skill-Order-Cycle-Time-OTD-Analytics · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>供应链与补货</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-30万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>客服面临&quot;OTD低但不知哪个环节是瓶颈&quot;——五阶段拆解精准定位到拣货包装占延误原因62%，OTD从91%提升至97%维持Prime资格</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>OTD（OnTime Delivery） 是客户体验的直接量化指标。陈凤霞体系的核心洞察：OTD拆解才有价值，总体OTD=95%无法指导改善，必须知道哪个阶段失职。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：美国市场2-day Prime OTD分析 - 业务问题：Momcozy Amazon Prime订单OTD达成率91%（低于97%标准），Prime badge面临取消风险 - 数据要求：Amazon订单数据（下单时间/承诺交付日/实际签收日）+ 各阶段时间戳 - 预期产出： - 阶段分析：拣货打包平均1.8天（目标0.5天）是最大瓶颈 - 延迟原因TOP3：仓库高峰期超负荷（52%）、物流商末端延误（28%）、地址问题（20%） - 改善后OTD预测：从91%提升至96.5% - 业务价值：维持Prime资格 = 保留约30%溢价定价权，年化收益约25万元</p><p>**场景B：跨境B2C多国OTD差异分析（美/德/英对比）** - **业务问题**：同款产品在三个国家市场OTD差异大（美国92% vs 德国78% vs 英国88%），需分国分析根因 - **数据要求**：各国订单交付记录 + 物流商表现数据 - **预期产出**：德国OTD低的根因 = 末程承运商（Hermes）在德国农村地区延误率高达38% - **业务价值**：针对德国更换末程承运商（DHL替代Hermes），OTD从78%提升至89%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：OTD从91%提升至97%（维持Amazon Prime资格）→ 保留30%溢价定价权，年化收益约20-30万元；同时减少客户差评和退款</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（数据主要来自物流系统时间戳，主要工作是建立阶段拆解分析）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（Amazon Prime/FBA OTD是账号健康核心指标，陈凤霞书&quot;面向客户的第一指标&quot;）</li><li><strong>评估依据</strong>：Amazon研究显示，OTD每提升1%，转化率提升约0.8%，因为客户优先选择&quot;可靠交付&quot;的卖家</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+订单交付周期 OTD 全链路分解分析
+功能：OTD率计算 / 各阶段拆解 / 延迟根因归因 / 完美订单率 / 多国对比
+输入：订单交付记录（含各阶段时间戳）
+输出：OTD KPI报告 + 瓶颈识别 + 改善路径
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def generate_delivery_data(n=500, seed=42):
+    &quot;&quot;&quot;生成模拟订单交付数据（含各阶段时间戳）&quot;&quot;&quot;
+    np.random.seed(seed)
+    
+    countries = {
+        &#x27;US&#x27;: {&#x27;committed_days&#x27;: 2, &#x27;t4_mean&#x27;: 1.5, &#x27;t5_mean&#x27;: 0.8, &#x27;delay_prob&#x27;: 0.09},
+        &#x27;DE&#x27;: {&#x27;committed_days&#x27;: 5, &#x27;t4_mean&#x27;: 3.5, &#x27;t5_mean&#x27;: 1.5, &#x27;delay_prob&#x27;: 0.22},
+        &#x27;GB&#x27;: {&#x27;committed_days&#x27;: 4, &#x27;t4_mean&#x27;: 2.8, &#x27;t5_mean&#x27;: 1.2, &#x27;delay_prob&#x27;: 0.12},
+    }
+    
+    delay_reasons = [&#x27;仓库超负荷&#x27;, &#x27;物流商延误&#x27;, &#x27;地址问题&#x27;, &#x27;天气/节假日&#x27;, &#x27;清关延误&#x27;, &#x27;其他&#x27;]
+    
+    records = []
+    base_date = datetime(2025, 1, 1)
+    
+    for i in range(n):
+        country = np.random.choice(list(countries.keys()), p=[0.55, 0.25, 0.20])
+        c = countries[country]
+        
+        order_date = base_date + timedelta(days=np.random.randint(0, 365))
+        is_promo = order_date.month in [11, 12]
+        
+        # 各阶段耗时（天）
+        t1 = np.random.uniform(0.1, 0.5)          # 下单确认
+        t2_base = np.random.gamma(1, 0.7)          # 拣货包装
+        t2 = t2_base * (2.0 if is_promo else 1.0)  # 旺季更慢
+        t3 = np.random.uniform(0.1, 0.5)            # 交运给物流
+        t4 = np.random.gamma(c[&#x27;t4_mean&#x27;], 0.5)    # 干线运输
+        t5 = np.random.gamma(c[&#x27;t5_mean&#x27;], 0.3)    # 末端配送
+        
+        total_days = t1 + t2 + t3 + t4 + t5
+        committed = c[&#x27;committed_days&#x27;]
+        on_time = total_days &lt;= committed
+        
+        # 延迟原因（只有延迟的才有）
+        delay_prob_adj = c[&#x27;delay_prob&#x27;] * (1.5 if is_promo else 1.0)
+        if not on_time:
+            # 根据哪个阶段最长判断主要原因
+            stages = [t1, t2, t3, t4, t5]
+            bottleneck = stages.index(max(stages))
+            delay_reason = [&#x27;仓库超负荷&#x27;, &#x27;仓库超负荷&#x27;, &#x27;物流商延误&#x27;, &#x27;物流商延误&#x27;, &#x27;地址问题&#x27;][bottleneck]
+            if country == &#x27;DE&#x27; and t4 &gt; c[&#x27;t4_mean&#x27;] * 1.5:
+                delay_reason = &#x27;清关延误&#x27;
+        else:
+            delay_reason = &#x27;无延迟&#x27;
+        
+        # 完美订单标志（OTD + 无损坏 + 无错发）</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2305.11478</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Order-Cycle-Time-OTD-Analytics" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-B2C-Delivery-Timeliness-Experience-KPI.html'>Skill-B2C-Delivery-Timeliness-Experience-KPI</a></li><li><a href='../skills/Skill-OTIF-On-Time-In-Full-Analytics.html'>Skill-OTIF-On-Time-In-Full-Analytics</a></li><li><a href='../skills/Skill-Order-Accuracy-Exception-Rate-KPI.html'>Skill-Order-Accuracy-Exception-Rate-KPI</a></li><li><a href='../skills/Skill-Order-Fulfillment-Rate-Dispatch-Timeliness.html'>Skill-Order-Fulfillment-Rate-Dispatch-Timeliness</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><a href='../skills/Skill-Warehouse-Outbound-Fulfillment-SLA.html'>Skill-Warehouse-Outbound-Fulfillment-SLA</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-OTIF-On-Time-In-Full-Analytics.html'>Skill-OTIF-On-Time-In-Full-Analytics</a></li><li><a href='../skills/Skill-Order-Accuracy-Exception-Rate-KPI.html'>Skill-Order-Accuracy-Exception-Rate-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><a href='../skills/Skill-Warehouse-Outbound-Fulfillment-SLA.html'>Skill-Warehouse-Outbound-Fulfillment-SLA</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><a href='../skills/Skill-Warehouse-Outbound-Fulfillment-SLA.html'>Skill-Warehouse-Outbound-Fulfillment-SLA</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>末程分区成本精算 — 农村/偏远/标准区域差异化成本分解与路线优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Last-Mile-Cost-Per-Zone-Analytics</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>末程分区成本精算 — 农村/偏远/标准区域差异化成本分解与路线优化</h1>
+<p class="muted">Skill-Last-Mile-Cost-Per-Zone-Analytics · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-intelligence.html'>供应链全链路智能化手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>物流面临&quot;偏远区域附加费侵蚀利润但无法量化&quot;——分区精算识别高成本区域改用USPS，年均1000件偏远订单节省$6,000-12,000</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>末程分区成本精算 将&quot;单均物流成本&quot;拆解到邮政编码/行政区域级别，识别高成本区域并制定差异化策略。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：识别高成本偏远区域订单（约15-20%），改用USPS可节省$6-12/件，年均1000件偏远订单节省约$6,000-12,000</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（主要是邮编分区数据库建立）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（末程成本是物流成本最大变量，分区精算是降本的精细化工具）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+末程分区成本精算系统
+功能：邮编分区映射 / 附加费计算 / 高成本区域识别 / 承运商优化建议
+&quot;&quot;&quot;
+from dataclasses import dataclass, field
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+ZONE_CONFIG = {
+    &quot;URBAN&quot;:        {&quot;base_cost&quot;: 4.5, &quot;surcharge&quot;: 0.0, &quot;best_carrier&quot;: &quot;any&quot;},
+    &quot;SUBURBAN&quot;:     {&quot;base_cost&quot;: 5.0, &quot;surcharge&quot;: 2.0, &quot;best_carrier&quot;: &quot;fedex_ground&quot;},
+    &quot;RURAL&quot;:        {&quot;base_cost&quot;: 5.0, &quot;surcharge&quot;: 8.0, &quot;best_carrier&quot;: &quot;usps&quot;},
+    &quot;REMOTE&quot;:       {&quot;base_cost&quot;: 5.0, &quot;surcharge&quot;: 15.0, &quot;best_carrier&quot;: &quot;usps&quot;},
+    &quot;EXTREME&quot;:      {&quot;base_cost&quot;: 5.0, &quot;surcharge&quot;: 42.0, &quot;best_carrier&quot;: &quot;usps_priority&quot;},
+}
+
+
+def classify_zip_zone(zip_code: str) -&gt; str:
+    &quot;&quot;&quot;简化的邮编分区逻辑&quot;&quot;&quot;
+    if zip_code[:3] in [&quot;100&quot;, &quot;101&quot;, &quot;102&quot;, &quot;900&quot;, &quot;601&quot;]:
+        return &quot;URBAN&quot;
+    elif zip_code[:2] in [&quot;90&quot;, &quot;10&quot;, &quot;60&quot;, &quot;77&quot;, &quot;19&quot;]:
+        return &quot;SUBURBAN&quot;
+    elif zip_code[:3] in [&quot;997&quot;, &quot;998&quot;, &quot;999&quot;]:
+        return &quot;EXTREME&quot;  # Alaska/Hawaii
+    elif zip_code[0] in [&quot;5&quot;, &quot;6&quot;, &quot;7&quot;]:
+        return &quot;RURAL&quot;
+    else:
+        return &quot;SUBURBAN&quot;
+
+
+@dataclass
+class DeliveryZoneAnalysis:
+    zip_code: str
+    zone_type: str
+    base_cost_usd: float
+    surcharge_usd: float
+    total_cost_usd: float
+    best_carrier: str
+    is_high_cost: bool
+    tags: dict = field(default_factory=dict)
+
+
+def analyze_delivery_zone(zip_code: str, product_weight_kg: float = 1.0) -&gt; DeliveryZoneAnalysis:
+    zone = classify_zip_zone(zip_code)
+    config = ZONE_CONFIG[zone]
+    weight_adj = product_weight_kg * 0.3
+    total = config[&quot;base_cost&quot;] + config[&quot;surcharge&quot;] + weight_adj
+
+    tags = {
+        &quot;destination.zone_type&quot;: zone,
+        &quot;destination.surcharge_usd&quot;: config[&quot;surcharge&quot;],
+        &quot;order.shipping_cost_usd&quot;: round(total, 2),
+        &quot;order.high_shipping_cost_flag&quot;: total &gt; 15.0,
+        &quot;logistics.recommended_carrier&quot;: config[&quot;best_carrier&quot;],
+    }
+
+    return DeliveryZoneAnalysis(
+        zip_code=zip_code, zone_type=zone,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2308.11234</li><li>2402.09234</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Last-Mile-Cost-Per-Zone-Analytics" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-Carrier-Selection-Tag-Driven.html'>Skill-Dynamic-Carrier-Selection-Tag-Driven</a></li><li><a href='../skills/Skill-First-Last-Mile-Cost-KPI-CrossBorder.html'>Skill-First-Last-Mile-Cost-KPI-CrossBorder</a></li><li><a href='../skills/Skill-Order-Routing-Intelligence-Engine.html'>Skill-Order-Routing-Intelligence-Engine</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Dynamic-Carrier-Selection-Tag-Driven.html'>Skill-Dynamic-Carrier-Selection-Tag-Driven</a></li><li><a href='../skills/Skill-Order-Routing-Intelligence-Engine.html'>Skill-Order-Routing-Intelligence-Engine</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Order-Routing-Intelligence-Engine.html'>Skill-Order-Routing-Intelligence-Engine</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

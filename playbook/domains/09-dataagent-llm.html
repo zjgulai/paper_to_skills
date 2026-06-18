@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>09-DataAgent-LLM · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>09-DataAgent-LLM</h1><p>DataAgent, LLM-powered data analysis, NL2Dashboard</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 09-DataAgent-LLM 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Argos-Agentic-Anomaly-Detection.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Argos — Agentic时序异常检测</h3>
+  <p class="sc-desc">背景：母婴品牌在Amazon US、Amazon EU、Shopify、SHEIN四平台销售，需要监控每日销量、广告ROI、退货率等指标异常</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CS-Ticket-Intelligence.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">CS Ticket Intelligence — 客服工单智能分诊：自动分类路由与优先级排序</h3>
+  <p class="sc-desc">每天50条买家消息手动分类处理需3-4小时且容易遗漏高危差评工单——AI工单分诊1秒完成多维分类（类型/紧急度/情感/差评风险），响应时间8h→2h客服效率提升3-5倍年化节省15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Customer-Journey-Decision-Tree.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">客服对话决策树 - 从日志中自学策略</h3>
+  <p class="sc-desc">母婴出海电商客服 70% 工单是&quot;退换货咨询&quot;(尺码错、漏发、过敏等),人工处理成本高,响应慢</p>
+  <div class='sc-footer'><span class='sc-roi'>600 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Data-Collection-Agent-Pipeline.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Data Collection Agent Pipeline — LLM Agent 自动化多源数据采集 Pipeline</h3>
+  <p class="sc-desc">传统数据采集依赖人工编写爬虫脚本，每个数据源需要单独维护。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Data-to-Dashboard-Multi-Agent-Visualization.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Data-to-Dashboard — 多Agent智能可视化生成</h3>
+  <p class="sc-desc">Data-to-Dashboard 的核心思想是模拟商业分析师的工作流——不是让 LLM 直接生成图表，而是先理解数据背后的业务洞察，再基于洞察选择最合适的可视化表达方式。</p>
+  <div class='sc-footer'><span class='sc-roi'>8.6万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">DeepAnalyze — 自主数据科学Agent</h3>
+  <p class="sc-desc">背景：母婴品牌在Amazon、Shopify、SHEIN等多个平台销售，运营团队每周需要汇总各平台数据生成分析报告，耗时4-6小时/周</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树</h3>
+  <p class="sc-desc">WF-C 客服分诊的核心是&quot;意图细分&quot;——母婴 Case 复杂(退款/换货/咨询/投诉/物流/产品使用/安全升级),嵌入距离无法区分字面相似但意图截然不同的对话片段(如&quot;宝宝用了这个奶粉一直哭&quot; 可能是质量投诉或产品适配咨询). Dial-In LLM 用 LoRA 微调小型 LLM 作为聚类&quot;工具人&quot;(Qwen2.5-7B / ChatGLM3-6B):① 连贯性评估器 判断簇语义一致性 ② 意图命名器 生成&quot;动作-目标&quot;标签 ③ 迭代搜索自动发现最优簇数,无需预设 K.</p>
+  <div class='sc-footer'><span class='sc-roi'>200-400 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Annotation-Weak-Supervision.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">EvoPool — 进化式多智能体弱监督标注</h3>
+  <p class="sc-desc">母婴跨境卖家面临海量多语言评论与工单需标注的成本困境——EvoPool 进化式弱监督框架将 LLM 直接标注 10 万条的 10 万次 API 调用压缩为 50 次，标注速度提升 4500x，年化节省标注人力成本 80-150 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80-150 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Business-Intelligence-Reasoning.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM Business Intelligence Reasoning — LLM 商业智能推理：从数据到决策的 CoT 分析</h3>
+  <p class="sc-desc">运营每周一分析多维度数据准备汇报需要3-4小时，异常出现时根因分析需1-2天——LLM Chain-of-Thought推理将数据→假设→验证→建议自动化，周报分析15分钟完成年化节省人力20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Financial-Report-Analyst.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM Financial Report Analyst — 迭代精化 + 代码验证的智能财务报告解读</h3>
+  <p class="sc-desc">跨境母婴 CFO 面临 Amazon/TikTok/银行三平台账单手工汇总需 3 天——迭代精化 + Python 数值验证 Agent 将月度 P&amp;L 汇总压缩至 30 分钟，误差率从手工 5-10% 降至 &lt;2%，年化节省财务人力成本 10-30 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multimodal-Table-Understanding.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Multimodal Table Understanding Agent — 表格理解：规格对比/认证矩阵/价格表</h3>
+  <p class="sc-desc">挑战一：跨单元格推理（Cross-Cell Reasoning）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-NL2Dashboard-Automation.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">NL2Dashboard Automation（自然语言→仪表盘）</h3>
+  <p class="sc-desc">运营询问&quot;美德两国周销量对比加趋势线&quot;需等 BI 工程师排期 3-5 天——NL2Dashboard 将自然语言直接转为可视化图表，BI 需求响应从天级压缩到秒级，节省开发人力 15-25 万元/年</p>
+  <div class='sc-footer'><span class='sc-roi'>节省 BI 开发人力</span></div>
+</a><a class="card skill-card" href="../skills/Skill-ProRCA-Business-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">ProRCA — 因果图路径溯源根因分析</h3>
+  <p class="sc-desc">当 GMV 暴跌时，传统监控会同时弹出几百个警报——流量跌、加购跌、结账跌、支付跌……却不告诉你哪个是起因，哪个是被牵连的。</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RAG-Enhanced-Data-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">RAG-Enhanced Data Analysis（RAG 增强数据分析）</h3>
+  <p class="sc-desc">&quot;为什么德国站吸奶器转化率下降&quot;→ RAG 检索到上月分析&quot;德国站转化率下降是因为欧元贬值导致价格上涨 8%&quot;→本次发现同样模式→自动引用历史结论+实时数据验证</p>
+  <div class='sc-footer'><span class='sc-roi'>减少重复分析 50%，节省分析人力</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Root-Cause-Analysis-Agent.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Root Cause Analysis Agent for Business Anomalies</h3>
+  <p class="sc-desc">异常检测告诉你&quot;什么出问题了&quot;，但不告诉你&quot;为什么&quot;。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SQL-Agent-Text-to-SQL.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Text-to-SQL Agent for Natural Language Data Query</h3>
+  <p class="sc-desc">业务团队（运营、市场、产品）需要数据但不懂SQL。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>在架率多仓SKU矩阵计算 — 多仓×多SKU有货率精确口径与缺货金额加权 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-On-Shelf-Availability-SKU-Matrix</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>在架率多仓SKU矩阵计算 — 多仓×多SKU有货率精确口径与缺货金额加权</h1>
+<p class="muted">Skill-On-Shelf-Availability-SKU-Matrix · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>1万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>多仓运营面临&quot;虚报在架率掩盖分仓缺货&quot;——仓×SKU矩阵口径比单SKU口径严格2-5pp，A类爆品OSA提升至99%年化增量销售15万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>在架率（OnShelf Availability, OSA） 在多仓场景下不是简单的&quot;有没有货&quot;，而是一个 仓×SKU矩阵 的计算。陈凤霞书中给出了精确的矩阵口径，这是多数企业算错的核心原因。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：多仓母婴平台OSA矩阵监控 - 业务问题：品牌在京东/天猫/自建仓等20个仓运营500+ SKU，&quot;总体有货&quot;但部分区域缺货导致跨仓发货，时效变差 - 数据要求：每个仓×每个SKU的实时库存量 + 日均销量 - 预期产出： - 整体OSA = 94.2%（矩阵口径，单仓口径虚高98.5%） - A类爆品（30个SKU）在西部仓缺货最严重（OSA 87%） - 缺货金额率 = 2.1%（A类产品单价高，金额影响大） - 业务价值：针对性补货西部仓，A类产品OSA提升至98%，本地订单达成率提升6pp</p><p>**场景B：跨境FBA多国仓OSA监控** - **业务问题**：美国/德国/英国FBA三个市场同时运营，某SKU在德国FBA缺货但美国有货，是否跨国调拨？ - **数据要求**：各国FBA库存 + 日均销量 + 跨国调拨成本 - **预期产出**：德国FBA 5个SKU OSA = 0%（完全缺货），调拨成本 vs 空运补货成本对比 - **业务价值**：系统化多国OSA监控，提前7天预警，减少FBA断货事件50%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：多仓OSA从94%提升至97%（矩阵口径）≈ 减少缺货率3pp → 年化减少缺货销售损失约15-25万元（按日均GMV 5万估算）；A类爆品OSA每提升1pp约贡献年增量销售4-8万元</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（需要WMS库存数据 + 日销数据联动，主要是口径统一工作）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（陈凤霞书明确：矩阵口径是&quot;真实有货率&quot;，单SKU口径会系统性高估2-5pp）</li><li><strong>评估依据</strong>：京东研究：FDC满足率提升1pp可节省库存持有成本4451万元（规模效应），中小品牌同比例约10-30万元</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+在架率多仓SKU矩阵计算体系
+功能：多仓×SKU矩阵OSA / 金额加权缺货率 / DOS预警 / 分品类分析 / 补货优先级
+输入：各仓库各SKU的库存量 + 日均销量 + 单价
+输出：OSA矩阵报告 + 缺货预警 + 补货优先级列表
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def generate_multi_warehouse_inventory(n_skus=50, n_warehouses=12, seed=42):
+    &quot;&quot;&quot;生成多仓×多SKU库存数据&quot;&quot;&quot;
+    np.random.seed(seed)
+    
+    warehouses = [f&#x27;WH-{i:02d}&#x27; for i in range(1, n_warehouses + 1)]
+    warehouse_regions = {f&#x27;WH-{i:02d}&#x27;: region for i, region in enumerate(
+        [&#x27;华东&#x27;, &#x27;华东&#x27;, &#x27;华北&#x27;, &#x27;华北&#x27;, &#x27;华南&#x27;, &#x27;华南&#x27;, &#x27;华西&#x27;, &#x27;华西&#x27;,
+         &#x27;US-East&#x27;, &#x27;US-West&#x27;, &#x27;DE&#x27;, &#x27;GB&#x27;], 1)}
+    
+    abc_classes = np.random.choice([&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;, &#x27;E&#x27;],
+                                    size=n_skus, p=[0.06, 0.14, 0.30, 0.30, 0.20])
+    unit_prices = {&#x27;A&#x27;: 180, &#x27;B&#x27;: 120, &#x27;C&#x27;: 60, &#x27;D&#x27;: 25, &#x27;E&#x27;: 10}
+    base_daily_sales = {&#x27;A&#x27;: 25, &#x27;B&#x27;: 12, &#x27;C&#x27;: 5, &#x27;D&#x27;: 2, &#x27;E&#x27;: 0.5}
+    
+    records = []
+    for sku_idx in range(n_skus):
+        sku = f&#x27;SKU-{sku_idx+1:03d}&#x27;
+        abc = abc_classes[sku_idx]
+        price = unit_prices[abc] * np.random.uniform(0.7, 1.3)
+        daily_sales_base = base_daily_sales[abc] * np.random.uniform(0.5, 2.0)
+        
+        for wh in warehouses:
+            # 模拟缺货情况：A类缺货较少，CDE类缺货较多
+            oos_prob = {&#x27;A&#x27;: 0.03, &#x27;B&#x27;: 0.06, &#x27;C&#x27;: 0.10, &#x27;D&#x27;: 0.15, &#x27;E&#x27;: 0.20}[abc]
+            is_oos = np.random.random() &lt; oos_prob
+            
+            if is_oos:
+                inventory = 0
+            else:
+                # 库存量（DOS约10-40天）
+                inventory = int(daily_sales_base * np.random.uniform(10, 40) + np.random.randint(0, 50))
+            
+            # 仓库区域的日均销量（权重不同）
+            region_factor = {&#x27;华东&#x27;: 1.4, &#x27;华北&#x27;: 1.2, &#x27;华南&#x27;: 1.1,
+                             &#x27;华西&#x27;: 0.6, &#x27;US-East&#x27;: 1.0, &#x27;US-West&#x27;: 0.8,
+                             &#x27;DE&#x27;: 0.4, &#x27;GB&#x27;: 0.3}.get(warehouse_regions[wh], 1.0)
+            daily_sales = max(0.1, daily_sales_base * region_factor * np.random.uniform(0.7, 1.3))
+            
+            dos = inventory / daily_sales if daily_sales &gt; 0 else 999
+            
+            records.append({
+                &#x27;sku_id&#x27;: sku,
+                &#x27;warehouse&#x27;: wh,
+                &#x27;region&#x27;: warehouse_regions[wh],
+                &#x27;abc_class&#x27;: abc,
+                &#x27;unit_price&#x27;: round(price, 2),
+                &#x27;inventory&#x27;: inventory,
+                &#x27;daily_sales&#x27;: round(daily_sales, 2),</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2308.10293</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-On-Shelf-Availability-SKU-Matrix" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-FDC-RDC-Inventory-Allocation.html'>Skill-FDC-RDC-Inventory-Allocation</a></li><li><a href='../skills/Skill-Fill-Rate-OOS-Cost-Quantification.html'>Skill-Fill-Rate-OOS-Cost-Quantification</a></li><li><a href='../skills/Skill-Healthy-Inventory-Three-Layer-KPI.html'>Skill-Healthy-Inventory-Three-Layer-KPI</a></li><li><a href='../skills/Skill-Local-Order-Fulfillment-Rate-FDC.html'>Skill-Local-Order-Fulfillment-Rate-FDC</a></li><li><a href='../skills/Skill-Replenishment-Parameter-Calibration.html'>Skill-Replenishment-Parameter-Calibration</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-FDC-RDC-Inventory-Allocation.html'>Skill-FDC-RDC-Inventory-Allocation</a></li><li><a href='../skills/Skill-Healthy-Inventory-Three-Layer-KPI.html'>Skill-Healthy-Inventory-Three-Layer-KPI</a></li><li><a href='../skills/Skill-Local-Order-Fulfillment-Rate-FDC.html'>Skill-Local-Order-Fulfillment-Rate-FDC</a></li><li><a href='../skills/Skill-Replenishment-Parameter-Calibration.html'>Skill-Replenishment-Parameter-Calibration</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Local-Order-Fulfillment-Rate-FDC.html'>Skill-Local-Order-Fulfillment-Rate-FDC</a></li><li><a href='../skills/Skill-Replenishment-Parameter-Calibration.html'>Skill-Replenishment-Parameter-Calibration</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

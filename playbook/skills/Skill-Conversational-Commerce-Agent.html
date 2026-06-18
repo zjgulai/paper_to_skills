@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Conversational Commerce Agent — 对话式商务 Agent：LLM 驱动的购物引导与成交 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Conversational-Commerce-Agent</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Conversational Commerce Agent — 对话式商务 Agent：LLM 驱动的购物引导与成交</h1>
+<p class="muted">Skill-Conversational-Commerce-Agent · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥25-80 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>独立站用户bounce rate65%主因是不知道选哪款看了就走——LLM对话式导购3-5轮澄清需求后精准推荐，对话路径转化率15-25%远高于搜索路径3-5%年化增益25-80万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>被动搜索 vs 主动对话：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：独立站访客 bounce rate 65%（进来就走），主因是用户不知道哪款适合自己。加入对话式助手后，用户通过3-5轮对话明确需求，直接推荐最匹配的产品，显著降低选择困难。</p><p>数据要求： - 商品数据库（特征/规格/适用人群） - 常见用户问题 FAQ（训练 Agent 的知识库） - 历史对话数据（用于微调）</p><p>预期产出： - 对话式导购 Agent（可嵌入独立站） - 转化漏斗对比：对话路径 vs 搜索路径 - 对话质量指标：平均轮数/任务完成率/转化率</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>对话路径转化率 15-25%（vs 搜索 3-5%）：月增收 ¥5-20 万</li><li>bounce rate 降低 20-30%：更多访客完成购买</li><li>客服工作量减少（常见问题 Agent 自动回答）</li><li><strong>年化综合 ROI：¥25-80 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（规则状态机版 2 周；LLM API 版本约 4-6 周；需要产品知识库建立；约 3-6 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Conversational Commerce Agent
+对话式商务 Agent：LLM 驱动的购物引导
+（规则状态机版，生产替换为 LLM API）
+&quot;&quot;&quot;
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Optional
+
+
+class ConversationState(Enum):
+    START = &#x27;start&#x27;
+    CLARIFY_USE_CASE = &#x27;clarify_use_case&#x27;
+    CLARIFY_REQUIREMENTS = &#x27;clarify_requirements&#x27;
+    RECOMMEND = &#x27;recommend&#x27;
+    HANDLE_QUESTION = &#x27;handle_question&#x27;
+    CLOSING = &#x27;closing&#x27;
+
+
+@dataclass
+class UserRequirements:
+    &quot;&quot;&quot;用户需求（对话中逐步收集）&quot;&quot;&quot;
+    use_case: Optional[str] = None      # &#x27;self_use&#x27; / &#x27;gift&#x27;
+    frequency: Optional[str] = None    # &#x27;occasional&#x27; / &#x27;frequent&#x27;
+    key_need: Optional[str] = None     # &#x27;quiet&#x27; / &#x27;portable&#x27; / &#x27;hospital_grade&#x27;
+    budget: Optional[str] = None       # &#x27;low&#x27; / &#x27;mid&#x27; / &#x27;high&#x27;
+    scene: Optional[str] = None        # &#x27;home&#x27; / &#x27;office&#x27; / &#x27;travel&#x27;
+
+
+@dataclass
+class ConversationContext:
+    &quot;&quot;&quot;对话上下文&quot;&quot;&quot;
+    state: ConversationState = ConversationState.START
+    requirements: UserRequirements = field(default_factory=UserRequirements)
+    turns: int = 0
+    recommended_products: list = field(default_factory=list)
+
+
+# 商品数据库（简化）
+PRODUCT_DATABASE = {
+    &#x27;PUMP-001&#x27;: {
+        &#x27;name&#x27;: &#x27;UltraQuiet Double Pump&#x27;,
+        &#x27;price&#x27;: 149.99,
+        &#x27;noise_db&#x27;: 42,
+        &#x27;portable&#x27;: True,
+        &#x27;hospital_grade&#x27;: True,
+        &#x27;use_case&#x27;: [&#x27;frequent&#x27;, &#x27;office&#x27;, &#x27;travel&#x27;],
+        &#x27;pitch&#x27;: &quot;医院级静音吸奶器，44dB静音设计，USB充电可带上班&quot;,
+    },
+    &#x27;PUMP-002&#x27;: {
+        &#x27;name&#x27;: &#x27;Portable Wearable Pump&#x27;,
+        &#x27;price&#x27;: 89.99,
+        &#x27;noise_db&#x27;: 45,
+        &#x27;portable&#x27;: True,
+        &#x27;hospital_grade&#x27;: False,
+        &#x27;use_case&#x27;: [&#x27;occasional&#x27;, &#x27;travel&#x27;],
+        &#x27;pitch&#x27;: &quot;无线穿戴式，无需手持，完全解放双手&quot;,
+    },
+    &#x27;PUMP-003&#x27;: {
+        &#x27;name&#x27;: &#x27;Hospital Grade Pump Pro&#x27;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.09234</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Conversational-Commerce-Agent" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>LLM-Session-Personalization-Cache]]（组合</span></li><li><a href='../skills/Skill-Explainable-Recommendation.html'>Skill-Explainable-Recommendation</a></li><li><a href='../skills/Skill-LLM-Negotiation-Conversion-Agent.html'>Skill-LLM-Negotiation-Conversion-Agent</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Personalized-Search-Ranking.html'>Skill-Personalized-Search-Ranking</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>VOC-Aspect-Sentiment-Extraction]]（组合</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>LLM-Session-Personalization-Cache]]（组合</span></li><li><a href='../skills/Skill-Explainable-Recommendation.html'>Skill-Explainable-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Personalized-Search-Ranking.html'>Skill-Personalized-Search-Ranking</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>VOC-Aspect-Sentiment-Extraction]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>LLM-Session-Personalization-Cache]]（组合</span></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>VOC-Aspect-Sentiment-Extraction]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

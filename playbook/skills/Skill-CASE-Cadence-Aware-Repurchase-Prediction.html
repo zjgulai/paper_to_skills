@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CASE节奏感知补购预测 — 日历时序多尺度卷积+诱导集注意力的大规模次篮复购推荐 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-CASE-Cadence-Aware-Repurchase-Prediction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>CASE节奏感知补购预测 — 日历时序多尺度卷积+诱导集注意力的大规模次篮复购推荐</h1>
+<p class="muted">Skill-CASE-Cadence-Aware-Repurchase-Prediction · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>100万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴卖家3个月复购率仅22%因为补购提醒时机完全靠猜——CASE日历时序多尺度卷积学习每个SKU的个性化复购节奏，Top-5 Recall提升9.9%，复购率从22%提升至29%（2026 arXiv:2604.06718）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：大多数次篮预测模型把购买历史当作&quot;离散访问事件的序列&quot;，按购物车顺序建模。但对于复购品（纸尿裤、奶粉、洗手液），关键不是购买顺序，而是购买节奏——每个SKU都有独特的补购周期（日本品牌奶粉月均一罐，某品牌纸尿裤每28天一箱）。CASE将购买历史表示为日历时序信号而非序列索引，使模型能直接学习&quot;距上次购买N天→该商品补购概率&quot;的节奏模式。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：母婴跨境卖家的复购率远低于国内电商（3个月复购率约22% vs 国内35%），原因是没有节奏感知的补购提醒，买家在海外平台找不到自己之前买过的品牌，不得不重新搜索 - 数据要求：用户购买历史（订单ID/商品ID/下单时间），至少6个月历史 - CASE应用： 1. 对每位母婴用户，构建90天购买节奏信号 2. 识别高节奏商品（纸尿裤：28天周期，奶粉：30天） 3. 在用户购买后第25天推送精准补购提醒 4. Top-5 recall 比基线序列模型提升 +9.9% - 预期产出：3个月复购率从22%提升至约29%，客户LTV提升32% - 业务价值：每提升1%复购率 = 年GM</p><p>- **业务问题**：Prime Day后买家大量购买，但很多在3-6个月内没有再次复购，平台通知策略粗糙（发太早→忘记，发太晚→已在别处购买） - **CASE机制**：对每个SKU学习个性化最优提醒时机（而非固定的&quot;购买后30天&quot;），精准匹配每个用户的实际消耗速度 - **预期产出**：补购提醒转化率从4.2%提升至约8.5%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月GMV $100万的跨境母婴店，复购率从22%提升至29%，月均增量收入约$7万；年化$84万；系统建设约$3万，ROI&gt;2000%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要用户-商品-时间戳历史，模型相对轻量；生产扩展需注意诱导集注意力的K值调优）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（复购是母婴跨境最核心的增长杠杆，比获客便宜5-7倍）</li><li><strong>适用规模</strong>：有至少3个月购买历史的用户群，日均活跃用户&gt;1000即可受益</li><li><strong>数据依赖</strong>：用户ID + 商品ID + 购买时间戳（标准电商事件数据）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+CASE节奏感知次篮补购预测
+基于 arXiv:2604.06718 (2026)
+多尺度时序卷积 + 诱导集注意力，生产级复购预测
+&quot;&quot;&quot;
+import numpy as np
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def build_cadence_signal(purchase_dates, horizon_days=90):
+    &quot;&quot;&quot;
+    构建商品购买节奏信号（日历时序表示）
+    Args:
+        purchase_dates: 购买发生的天数列表（距今天数，负数=过去）
+        horizon_days: 历史窗口长度
+    Returns:
+        signal: shape (horizon_days,)，1表示该天有购买
+    &quot;&quot;&quot;
+    signal = np.zeros(horizon_days)
+    for d in purchase_dates:
+        idx = horizon_days + d  # d是负数（过去），转为正向索引
+        if 0 &lt;= idx &lt; horizon_days:
+            signal[idx] = 1.0
+    return signal
+
+
+def multiscale_temporal_conv(signal, scales=(7, 14, 30, 60)):
+    &quot;&quot;&quot;
+    多尺度时序卷积特征提取
+    Args:
+        signal: 购买节奏信号 (T,)
+        scales: 卷积尺度列表（对应周/双周/月/季节）
+    Returns:
+        features: (len(scales),) — 每个尺度的节奏强度
+    &quot;&quot;&quot;
+    features = []
+    T = len(signal)
+    for s in scales:
+        # 均值池化近似卷积（简化版）
+        kernel = np.ones(s) / s
+        if T &gt;= s:
+            conv = np.convolve(signal, kernel[::-1], mode=&#x27;valid&#x27;)
+            features.append(float(conv.max()))  # 最强节奏响应
+        else:
+            features.append(0.0)
+    return np.array(features)
+
+
+def induced_set_attention(item_features, n_inducing=4):
+    &quot;&quot;&quot;
+    诱导集注意力：建模商品间交叉依赖
+    简化版：用k-means诱导点聚合
+    Args:
+        item_features: (n_items, d_feat) — 每个商品的特征向量
+        n_inducing: 诱导点数量 K
+    Returns:
+        enhanced_features: (n_items, d_feat)
+    &quot;&quot;&quot;
+    from sklearn.cluster import KMeans</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.06718</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CASE-Cadence-Aware-Repurchase-Prediction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Skill-Cohort-Analysis</span></li><li><a href='../skills/Skill-Customer-Journey-Decision-Tree.html'>Skill-Customer-Journey-Decision-Tree</a></li><li><a href='../skills/Skill-Event-Driven-Demand-MAS.html'>Skill-Event-Driven-Demand-MAS</a></li><li><a href='../skills/Skill-Long-Term-Preference-Memory.html'>Skill-Long-Term-Preference-Memory</a></li><li><span class='muted'>Skill-Promotional-Demand-Planning</span></li><li><span class='muted'>Skill-User-LTV-Prediction</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Skill-Cohort-Analysis</span></li><li><a href='../skills/Skill-Customer-Journey-Decision-Tree.html'>Skill-Customer-Journey-Decision-Tree</a></li><li><a href='../skills/Skill-Event-Driven-Demand-MAS.html'>Skill-Event-Driven-Demand-MAS</a></li><li><span class='muted'>Skill-Promotional-Demand-Planning</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Event-Driven-Demand-MAS.html'>Skill-Event-Driven-Demand-MAS</a></li><li><span class='muted'>Skill-Promotional-Demand-Planning</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

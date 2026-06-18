@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>跨境关检务合规率KPI体系 — 清关时效/合规申报率/风险等级分类的全流程量化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-CrossBorder-Customs-Compliance-Rate-KPI</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>跨境关检务合规率KPI体系 — 清关时效/合规申报率/风险等级分类的全流程量化</h1>
+<p class="muted">Skill-CrossBorder-Customs-Compliance-Rate-KPI · 04-供应链</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>供应链与补货</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>UK认证完整率55%随时面临产品下架而团队不知优先级——关检务三维KPI（准入率/申报准确率/清关时效）+ 多市场合规风险评分，提前6周发现隐患避免损失月GMV$10万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>书籍核心洞察（陈凤霞）：关检务（关税+海关+检验检疫）KPI分三维——准入（能不能进入目标市场）、合规（按规定完成申报）、效率（清关速度）。书中特别指出：关检务是跨境电商供应链中&quot;非标准化程度最高&quot;的环节，且因国家和政策不同高度定制化，但KPI框架是通用的。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌同时运营US/UK/DE三个市场，合规团队人手少，不知道优先处理哪些合规问题 - KPI框架应用： 1. US市场：HS编码准确率98%（良好），清关一次通过率92%，CPSC认证完整率78%（⚠️） 2. UK市场：UKCA认证完整率55%（🔴危险，可能被下架） 3. DE市场：申报准确率95%，清关时效2.3天（良好） 4. 优先级：UK认证缺口（封号风险）&gt; US CPSC认证（合规风险）&gt; DE优化 - 预期产出：6周内UK认证完整率提升至90%，避免产品被迫下架损失</p><p>- **业务问题**：美国市场清关时效平均8.5天（行业优秀水平4天），大量货物卡在清关导致FBA缺货 - **KPI归因**：一次通过率只有78%（22%需要补充材料），主要原因：商品发票描述与申报HS编码不匹配（8543类电器描述用了&quot;medical device&quot;字眼触发查验） - **改善**：规范发票描述词典，申报准确率提升至99%，一次通过率提升至92%，清关时效降至4.8天</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：认证完整率从55%（UK市场）提升至90%，避免产品被迫下架损失（月GMV$10万损失）；清关时效从8天降至5天，每周额外发货机会；系统建设$2万，防损价值极高</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（数据来源：海关申报系统+物流商反馈+平台认证状态；关键是建立多市场合规状态的统一视图）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（跨境电商合规是生死线，一旦违规可能导致货物扣押或账号封禁，ROI无法量化但风险极高）</li><li><strong>适用规模</strong>：所有跨境电商卖家，特别是涉及婴儿安全品类（CPSC/UKCA/CE认证要求严格）的母婴品牌</li><li><strong>数据依赖</strong>：海关申报记录、认证有效期数据库、物流商清关状态反馈</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+跨境关检务合规率KPI体系
+基于《全链路管理》陈凤霞 关检务KPI框架
+准入/合规申报/清关效率三维量化
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from typing import Dict, List, Optional
+from dataclasses import dataclass, field
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class CustomsRecord:
+    &quot;&quot;&quot;关检务申报记录&quot;&quot;&quot;
+    record_id: str
+    sku_id: str
+    destination_market: str    # &#x27;US&#x27;, &#x27;UK&#x27;, &#x27;DE&#x27;, &#x27;AU&#x27;等
+    hs_code_declared: str
+    hs_code_correct: Optional[str]  # 正确的HS编码（如有纠正）
+    declared_value: float
+    actual_tariff_rate: float
+    declared_tariff_rate: float
+    clearance_days: float          # 实际清关天数
+    first_pass: bool               # 一次性通过（无需补充材料）
+    detained: bool                 # 是否被扣押
+    has_penalty: bool              # 是否被罚款
+    documents_complete: bool       # 申报文件完整
+    has_required_certs: bool       # 是否有目标市场认证
+
+
+class CustomsComplianceKPI:
+    &quot;&quot;&quot;关检务合规KPI计算&quot;&quot;&quot;
+
+    # 各市场清关时效基准（天）
+    CLEARANCE_BENCHMARKS = {
+        &#x27;US&#x27;: 4.0,
+        &#x27;UK&#x27;: 3.0,
+        &#x27;DE&#x27;: 2.5,
+        &#x27;AU&#x27;: 5.0,
+        &#x27;JP&#x27;: 3.5,
+    }
+
+    def compute_declaration_accuracy(self, records: List[CustomsRecord]) -&gt; Dict:
+        &quot;&quot;&quot;申报准确率&quot;&quot;&quot;
+        n = len(records)
+        hs_correct = sum(1 for r in records
+                          if not r.hs_code_correct or r.hs_code_declared == r.hs_code_correct)
+        docs_complete = sum(1 for r in records if r.documents_complete)
+        tariff_accurate = sum(1 for r in records
+                               if abs(r.actual_tariff_rate - r.declared_tariff_rate) &lt; 0.01)
+
+        return {
+            &#x27;total_declarations&#x27;: n,
+            &#x27;hs_accuracy&#x27;: hs_correct / max(n, 1),
+            &#x27;hs_accuracy_pct&#x27;: f&quot;{hs_correct/max(n,1):.1%}&quot;,
+            &#x27;hs_status&#x27;: &#x27;✅&#x27; if hs_correct / max(n, 1) &gt;= 0.97 else &#x27;🔴&#x27;,
+            &#x27;docs_completeness&#x27;: docs_complete / max(n, 1),
+            &#x27;docs_completeness_pct&#x27;: f&quot;{docs_complete/max(n,1):.1%}&quot;,</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CrossBorder-Customs-Compliance-Rate-KPI" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-HTS-Agentic-Tariff-Classification.html'>Skill-HTS-Agentic-Tariff-Classification</a></li><li><a href='../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html'>Skill-Platform-Policy-Change-Adaptive-Monitor</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html'>Skill-Platform-Policy-Change-Adaptive-Monitor</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html'>Skill-Platform-Policy-Change-Adaptive-Monitor</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

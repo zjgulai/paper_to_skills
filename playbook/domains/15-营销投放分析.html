@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>15-营销投放分析 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>15-营销投放分析</h1><p>MMM, promotion effectiveness, causal ML, channel saturation</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 15-营销投放分析 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Brand-Penetration-Modeling.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Brand Penetration Modeling — 品牌渗透率建模：Bass 扩散 × 跨市场品牌增长预测</h3>
+  <p class="sc-desc">品牌进入德国市场不知道应该备货多少第一年广告应该大投还是稳步——贝叶斯Bass扩散从美国迁移先验预测德国渗透曲线，备货决策准确度提升30-40%，年化减少备货失误10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CDA-Privacy-Causal-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">CDA — 隐私保护因果渠道归因：无用户数据的多触点归因</h3>
+  <p class="sc-desc">传统多触点归因（Multi-Touch Attribution, MTA）依赖用户级点击路径数据：追踪每个用户从广告曝光→点击→转化的完整旅程，才能判断各渠道贡献。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Channel-Saturation-Curve.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Channel Saturation Curve（渠道饱和曲线建模）</h3>
+  <p class="sc-desc">Facebook 月预算从 $5 万加到 $8 万后，ROAS 从 3.2 掉到 2.1</p>
+  <div class='sc-footer'><span class='sc-roi'>18-25 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Competitive-Response-Modeling.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Competitive Response Modeling（竞争响应建模）</h3>
+  <p class="sc-desc">Momcozy 在美国 Prime Day 前一周突然将吸奶器搜索广告预算翻倍，我们的 impression share 从 22% 跌到 14%</p>
+  <div class='sc-footer'><span class='sc-roi'>15-30 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Platform-Brand-Search-Volume.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Cross-Platform Brand Search Volume — 品牌搜索量作为营销效果领先指标</h3>
+  <p class="sc-desc">营销效果要等 7 天 ROAS 才知道——品牌搜索量作为领先指标在 24 小时内预示 GMV 变化，Bayesian Causal Impact 精确量化每次营销事件的增量搜索效应</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DARA-Agentic-MMM.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">DARA Agentic MMM — LLM Agent 驱动的营销组合建模：双阶段自动调参与智能归因</h3>
+  <p class="sc-desc">某母婴辅食品牌在美国市场同时投放 Amazon Ads、Meta（FB+IG）、TikTok，月均广告预算 $15 万美元，但各渠道的 adstock 效应差异显著（TikTok 内容影响力可持续 2-4 周，Amazon 关键词效果衰减快）</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DARA-Agentic-MMM-Optimizer.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">DARA - LLM+RL 双阶段广告预算分配 Agent</h3>
+  <p class="sc-desc">婴儿推车季节性爆款上线,Google Ads 历史只有 3-5 周数据,传统规则策略难快速找到最优出价时段 - 数据要求:近 3-5 周 Google Ads ROAS 时段数据 + 月度总预算 - DARA 配置:T = 7(一周)或 24(一天时段);Phase 1 LLM 读历史生成日预算向量;Phase 2 每日 ROAS 反馈调整下一日 - 业务价值:冷启动期 ROAS 提升</p>
+  <div class='sc-footer'><span class='sc-roi'>360-720 万元</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Email-Sequence-RL-Optimizer.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Email Sequence RL Optimizer — 邮件序列强化学习优化：自动发现最优营养序列</h3>
+  <p class="sc-desc">静态邮件规则对所有用户相同序列导致CTR仅8%高频用户被骚扰低频用户错失时机——强化学习为每个用户学习个性化发送策略，CTR提升到12-15%复购率提升35%年化GMV增益20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Facebook-Audience-Lookalike-Scaling.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Facebook Audience Lookalike Scaling — Meta 相似受众建模与 LTV 种子优化</h3>
+  <p class="sc-desc">用全量客户做 Lookalike 种子导致 ROAS 只有 2.1x——MetaHeac 高 LTV 种子优化将种子筛选至 P80 分位，ROAS 从 2.1x 提升到 3.8x，同等预算带来 81% 更多 GMV</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万/年</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-GEO-Generative-Engine-Optimization.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">GEO — 生成式引擎优化：让 AI 搜索引擎主动引用你的品牌内容</h3>
+  <p class="sc-desc">AI 搜索引擎取代 Google 成为跨境电商新入口——GEO 框架通过统计数据添加、引用来源、权威语气等 9 种干预策略将 AI 引用份额提升 37-40%，抢占 ChatGPT/Perplexity 的母婴产品推荐位</p>
+  <div class='sc-footer'><span class='sc-roi'>20-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Generative-Audience-LLM-Auction.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">GenAI Advertising — 无 Cookie 生成式受众定向 &amp; LLM 原生广告拍卖</h3>
+  <p class="sc-desc">匿名访客（未授权追踪）向 AI 助手提问穿搭，传统推荐因无 Cookie 完全失效，品牌白白流失高意图实时流量 - 数据要求：用户自然语言查询文本 + SKU 库（含品类、场景标签、图片描述）+ 广告主实时出价 - GenAI 方案： - 用户问：&quot;我下周去海边参加婚礼，梨形身材，有什么建议</p>
+  <div class='sc-footer'><span class='sc-roi'>15 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Geo-Level-Marketing-Effectiveness.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Geo-Level Marketing Effectiveness（地理级营销效果）</h3>
+  <p class="sc-desc">同一广告在美国加州和德国巴伐利亚的效果完全不同。Geo-level 分析用地理准实验（Geo Experiment）估计各区域的因果营销效果，避免全国平均掩盖的区域异质性。</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Identified-Bayesian-MMM.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Identified Bayesian MMM — 基于高斯过程的无混淆贝叶斯营销归因</h3>
+  <p class="sc-desc">CMO 拿到内部 MMM 报告，显示&quot;TikTok ROAS 极高远未饱和，建议把 Meta 预算砍半全移给 TikTok&quot;</p>
+  <div class='sc-footer'><span class='sc-roi'>1000 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Instagram-Reels-Commerce-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Instagram Reels Commerce Attribution — Reels 商品发现链路归因与转化量化</h3>
+  <p class="sc-desc">Instagram Reels 投入 $3000/月但 CFO 问不出 GMV 贡献——时间衰减多触点归因模型打通 Reels 商品标签→Amazon 购买的跨平台链路，将 ROAS 盲区变成可量化的 4.2x</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KOL-Creator-Matching.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">KOL Creator Matching — KOL/达人精准匹配与 ROI 预测</h3>
+  <p class="sc-desc">MCN 每月推 50 个 KOL 候选靠人工两天选 5 个，经常选到粉丝多但转化差的展示型 KOL，ROI 只有 1:2——六维精准匹配（受众/内容/互动/转化/品牌安全/性价比）30 分钟筛选，ROI 从 1:2 提升到 1:3.5+</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KOL-ROI-Causal-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">KOL ROI 因果归因（网红/达人投放效果的真实增量测算）</h3>
+  <p class="sc-desc">月 KOL 投放 30 万元，naive 归因显示 ROAS 3.5，但无法区分「因 KOL 才购买」和「本来就会买顺路点了链接」——PSM+DiD 因果归因将头部 KOL iROAS 从 4.2 修正为 1.8，将 30 万预算转向腰部 KOL 后年化增量 GMV 提升 44%</p>
+  <div class='sc-footer'><span class='sc-roi'>30 万/月</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MMM-Budget-PL-Alignment.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">MMM Budget PL Alignment — 营销预算分配与利润约束下的 ROI 优化</h3>
+  <p class="sc-desc">按 ROAS 分配预算的营销团队每月留下 26% 利润在桌上——Hindsight Regret 审计 + P&amp;L 约束优化将净利润提升 26%（Amazon-PPC 过度投入 → TikTok 高毛利渠道补强）</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Marketing-Data-Pipeline.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Marketing Data Pipeline — 营销归因多渠道数据采集管道</h3>
+  <p class="sc-desc">业务背景：某母婴 DTC 品牌月均广告支出 ¥85 万，分配在 Meta（40%）、TikTok（35%）、Amazon Sponsored（25%）</p>
+  <div class='sc-footer'><span class='sc-roi'>12 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Marketing-Mix-Modeling.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Marketing Mix Modeling (MMM) for Macro Budget Allocation</h3>
+  <p class="sc-desc">品牌每个月在不同渠道（Facebook、Google、TikTok、KOL、线下）投入数百万广告费。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Objective-Budget-Allocation.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Multi-Objective Budget Allocation（多目标预算分配）</h3>
+  <p class="sc-desc">$30 万月预算要同时做三件事——黑五冲销量（短期 ROI）、母婴博主种草（品牌搜索量）、新款吸奶器 S2 预热（新品曝光）</p>
+  <div class='sc-footer'><span class='sc-roi'>30-50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Organic-Content-Causal-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Organic Content Causal Attribution — 无用户数据的有机内容因果归因 (CDA)</h3>
+  <p class="sc-desc">每月 15 万 KOL 种草投入但不知道有没有带来 Amazon 品牌词搜索增长——CDA 框架仅用聚合曝光数据推断各渠道因果贡献（无需用户 ID），砍掉无效内容投入，年化节省 54 万元以上</p>
+  <div class='sc-footer'><span class='sc-roi'>15 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Post-Purchase-Email-Sequence-Optimizer.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Post-Purchase Email Sequence Optimizer（购后邮件序列优化）</h3>
+  <p class="sc-desc">核心思想：购后邮件序列（Post-Purchase Email Flow）是 DTC 品牌成本最低、ROI 最高的 LTV 工具。但大多数团队发送的是时间驱动的固定序列（下单后 D+3/D+7/D+30 自动发），而非行为驱动的个性化路径。基于强化学习的邮件序列优化，通过 Contextual Bandit 算法动态选择每个用户的最优触达时机、主题和内容组合。</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Promotion-Effectiveness.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Promotion Effectiveness Evaluation with Causal ML</h3>
+  <p class="sc-desc">促销活动期间销售额暴涨30%，这是促销的真实效果，还是&quot;本来就会买的用户&quot;恰好遇到了促销？</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Promotion-Logistics-Surge-Forecast.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">Promotion Logistics Surge Forecast — 大促物流爆仓预测：营销-履约联动容量规划</h3>
+  <p class="sc-desc">基于营销投放数据提前 3-7 天预测物流需求峰值，驱动仓储/运力的前置性扩容决策。</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RL-Dynamic-Promotion-Optimization.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">RL Dynamic Promotion Optimization — 强化学习动态促销优化：时机×力度×对象的联合决策</h3>
+  <p class="sc-desc">每月平摊$5000优惠券给2000用户其中80%用户根本不会因券而改变购买决策——强化学习联合优化促销时机折扣力度和目标人群，增量GMV提升20-35%退订率降低30%年化ROI提升20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RTB-Multi-Objective-Bidding.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">RTB Multi-Objective Bidding — 实时竞价多目标优化：广告出价的帕累托前沿策略</h3>
+  <p class="sc-desc">黑五期间单一ROAS目标限制出价导致曝光量不足错失旺季增长窗口——多目标帕累托优化在旺季自动切换到增长模式（最大化曝光/新客）淡季切换效率模式（最大化ROAS），年化GMV增益20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

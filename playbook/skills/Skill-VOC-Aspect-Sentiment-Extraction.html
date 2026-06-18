@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>InstructABSA — 指令微调驱动的方面级情感分析与评论解构 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/07-nlp-voc.html">07-NLP-VOC</a> / Skill-VOC-Aspect-Sentiment-Extraction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>InstructABSA — 指令微调驱动的方面级情感分析与评论解构</h1>
+<p class="muted">Skill-VOC-Aspect-Sentiment-Extraction · 07-NLP-VOC</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50-150 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>产品运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 客服负责人 · 品牌负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Reviews / Q&amp;A · TikTok 评论区 · Reddit 母婴社区</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>每月几千条差评和 Q&amp;A 没有人力一条条看，但痛点都在里面；新品开发不知道做什么功能、改什么问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>自动提取 Top 10 高频痛点，新品开发有用户数据背书，每月出竞品用户洞察报告</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>差评太多看不过来</span><span class='biz-pain-tag'>不知道用户真正在意什么</span><span class='biz-pain-tag'>竞品评论没有系统分析过</span><span class='biz-pain-tag'>新品开发靠拍脑袋</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴品类改版方向不明——InstructABSA 方面级情感分析将差评维度拆解从 2 周人工 → 2 小时自动完成，精准定位高差评方面（噪音/尺寸），避免错误改版投入 ¥5 万+ MOQ 成本</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统情感分析只给出&quot;正面/负面/中性&quot;三分类，但跨境电商运营需要的是更细粒度的答案：&quot;这条评论里，用户对哪个方面不满意，不满程度如何？&quot; 一条&quot;吸力好但噪音大，物流也慢&quot;的评论，从整体情感看是负面，但对&quot;吸力&quot;这个方面是正面——单一情感标签会抹掉这种业务关键信息。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴团队的吸奶器 SKU 在 Amazon 积累了 3,000 条评论，整体评分 3.8 星，但不清楚&quot;哪些具体问题在拖评分&quot;。靠人工阅读要花 2 周，且不同运营的判断标准不一。</p><p>InstructABSA 处理流程： 1. 对全量评论跑 ATSC（方面情感分类），提取 `(方面, 情感, 意见词)` 三元组 2. 统计各方面的差评占比和情感强度（负面词权重） 3. 输出&quot;方面-情感热力图&quot;：哪些方面差评最集中</p><p>| 方面 | 正面率 | 负面率 | Top 负面意见词 | |---|---|---|---| | 吸力 | 45% | 38% | &quot;too weak&quot;, &quot;not strong enough&quot; | | 噪音 | 22% | 65% | &quot;loud&quot;, &quot;noisy&quot;, &quot;not quiet&quot; | | 充电 | 71% | 15% | — | | 尺寸/重量 | 38% | 45% | &quot;too big&quot;, &quot;bulky&quot; |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>差评维度拆解决策加速：避免错误产品改版，每次节省 ¥50,000+（MOQ 生产改版成本）</li><li>客服工单自动路由：人工分类时间减少 60%，年化节省 ¥20,000-50,000</li><li>选品改版命中率提升：精准定位高差评方面，假设改版成功率从 40% → 65%，年化 GMV 增量 ¥50-150 万</li><li><strong>年化综合 ROI</strong>：¥100-200 万</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（规则版直接可用；生产版 InstructABSA 模型推理需 GPU 或调用 API）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+VOC Aspect Sentiment Extraction — 基于 InstructABSA 的方面级情感分析
+简化实现：规则+词典方法，生产环境替换为 InstructABSA 模型推理
+
+依赖: re, dataclasses (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+import re
+
+
+@dataclass
+class AspectSentimentTuple:
+    &quot;&quot;&quot;方面-意见-情感三元组&quot;&quot;&quot;
+    aspect: str
+    opinion: str
+    sentiment: str          # positive / negative / neutral
+    confidence: float = 1.0
+    raw_span: str = &quot;&quot;      # 原始文本片段
+
+
+@dataclass
+class ABSAResult:
+    &quot;&quot;&quot;单条评论的 ABSA 结果&quot;&quot;&quot;
+    review_id: str
+    text: str
+    tuples: list = field(default_factory=list)
+    overall_sentiment: str = &quot;neutral&quot;
+
+
+# ─── 领域词典（母婴吸奶器，可扩展） ───
+
+ASPECT_KEYWORDS = {
+    &quot;吸力&quot;:    [&quot;suction&quot;, &quot;suction power&quot;, &quot;pump strength&quot;, &quot;suction level&quot;, &quot;pumping power&quot;],
+    &quot;噪音&quot;:    [&quot;noise&quot;, &quot;sound&quot;, &quot;loud&quot;, &quot;quiet&quot;, &quot;silent&quot;, &quot;noisy&quot;, &quot;decibel&quot;],
+    &quot;充电&quot;:    [&quot;battery&quot;, &quot;charge&quot;, &quot;charging&quot;, &quot;USB&quot;, &quot;battery life&quot;, &quot;power&quot;],
+    &quot;尺寸重量&quot;: [&quot;size&quot;, &quot;bulky&quot;, &quot;heavy&quot;, &quot;weight&quot;, &quot;portable&quot;, &quot;compact&quot;, &quot;large&quot;, &quot;small&quot;],
+    &quot;舒适度&quot;:  [&quot;comfortable&quot;, &quot;comfort&quot;, &quot;pain&quot;, &quot;hurt&quot;, &quot;fit&quot;, &quot;flange&quot;, &quot;sore&quot;],
+    &quot;易用性&quot;:  [&quot;easy&quot;, &quot;simple&quot;, &quot;difficult&quot;, &quot;complicated&quot;, &quot;setup&quot;, &quot;assemble&quot;],
+    &quot;客服&quot;:    [&quot;customer service&quot;, &quot;support&quot;, &quot;response&quot;, &quot;refund&quot;, &quot;return&quot;, &quot;help&quot;],
+    &quot;物流&quot;:    [&quot;shipping&quot;, &quot;delivery&quot;, &quot;arrived&quot;, &quot;package&quot;, &quot;late&quot;, &quot;fast&quot;, &quot;slow&quot;],
+    &quot;价格&quot;:    [&quot;price&quot;, &quot;worth&quot;, &quot;value&quot;, &quot;expensive&quot;, &quot;cheap&quot;, &quot;affordable&quot;, &quot;cost&quot;],
+}
+
+POSITIVE_WORDS = {
+    &quot;excellent&quot;, &quot;great&quot;, &quot;good&quot;, &quot;amazing&quot;, &quot;wonderful&quot;, &quot;perfect&quot;, &quot;love&quot;,
+    &quot;quiet&quot;, &quot;strong&quot;, &quot;easy&quot;, &quot;comfortable&quot;, &quot;efficient&quot;, &quot;powerful&quot;, &quot;fast&quot;,
+    &quot;affordable&quot;, &quot;worth&quot;, &quot;recommend&quot;, &quot;happy&quot;, &quot;satisfied&quot;, &quot;awesome&quot;,
+}
+
+NEGATIVE_WORDS = {
+    &quot;bad&quot;, &quot;terrible&quot;, &quot;awful&quot;, &quot;poor&quot;, &quot;weak&quot;, &quot;loud&quot;, &quot;noisy&quot;, &quot;painful&quot;,
+    &quot;difficult&quot;, &quot;complicated&quot;, &quot;disappointing&quot;, &quot;slow&quot;, &quot;expensive&quot;, &quot;broken&quot;,
+    &quot;leaking&quot;, &quot;uncomfortable&quot;, &quot;useless&quot;, &quot;waste&quot;, &quot;regret&quot;, &quot;return&quot;,
+}
+
+NEGATION_WORDS = {&quot;not&quot;, &quot;no&quot;, &quot;never&quot;, &quot;n&#x27;t&quot;, &quot;dont&quot;, &quot;doesnt&quot;, &quot;wouldnt&quot;, &quot;cant&quot;, &quot;hardly&quot;}
+
+
+class RuleBasedABSA:</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-VOC-Aspect-Sentiment-Extraction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（组合场景</span></li><li><span class='muted'>Review-Pain-Point-Mining]]（组合场景</span></li><li><a href='../skills/Skill-BERT-SRL-Event-Frame-Extraction.html'>Skill-BERT-SRL-Event-Frame-Extraction</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-InstructUIE-Unified-Information-Extraction.html'>Skill-InstructUIE-Unified-Information-Extraction</a></li><li><a href='../skills/Skill-Review-Pain-Point-Mining.html'>Skill-Review-Pain-Point-Mining</a></li><li><a href='../skills/Skill-Semantic-Blueprint-Compiler.html'>Skill-Semantic-Blueprint-Compiler</a></li><li><a href='../skills/Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎.html'>Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（组合场景</span></li><li><span class='muted'>Review-Pain-Point-Mining]]（组合场景</span></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Review-Pain-Point-Mining.html'>Skill-Review-Pain-Point-Mining</a></li><li><a href='../skills/Skill-Semantic-Blueprint-Compiler.html'>Skill-Semantic-Blueprint-Compiler</a></li><li><a href='../skills/Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎.html'>Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（组合场景</span></li><li><span class='muted'>Review-Pain-Point-Mining]]（组合场景</span></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Review-Pain-Point-Mining.html'>Skill-Review-Pain-Point-Mining</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

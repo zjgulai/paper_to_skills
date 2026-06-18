@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CUPED Variance Reduction（方差缩减） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/02-a_b实验.html">02-A_B实验</a> / Skill-CUPED-Variance-Reduction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>CUPED Variance Reduction（方差缩减）</h1>
+<p class="muted">Skill-CUPED-Variance-Reduction · 02-A_B实验</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>其他</span><span class='tag'>WF-G Listing内容优化</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-new-product-launch.html'>新品冷启动手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>加速实验迭代，隐性价值</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 产品经理<span class='biz-ctx-secondary'> · 广告优化师 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Listing · TikTok 广告素材 · DTC 落地页</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>改了主图/标题/价格，不确定销量变化是改动导致的还是流量波动；两个方案团队各持己见，需要数据裁决</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每次改动都有 ≥95% 置信度的数据结论，好的改动快速全量，坏的及时止损</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>改了主图感觉好多了但不确定</span><span class='biz-pain-tag'>小范围测试结果好全量后没效果</span><span class='biz-pain-tag'>测试周期短结论不可靠</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>CUPED (Controlled-experiment Using Pre-Experiment Data) 用实验前数据作为协变量，减少实验组间方差，使同样的样本量能检测到更小的效应量。核心公式：$Y_{cuped} = \bar{Y} - \theta(\bar{X} - \mu_X)$，其中 $X$ 是实验前同一用户的指标值，$\theta = \text{Cov}(Y,X)/\text{Var}(X)$。方差缩减率 $\approx 1 - \rho^2_{Y,X}$。若实验前购买金额</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>CUPED (Controlledexperiment Using PreExperiment Data) 用实验前数据作为协变量，减少实验组间方差，使同样的样本量能检测到更小的效应量。核心公式：$Y_{cuped} = \bar{Y}  \theta(\bar{X}  \mu_X)$，其中 $X$ 是实验前同一用户的指标值，$\theta = \text{Cov}(Y,X)/\text{Var}(X)$。方差缩减率 $\approx </p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>A/B 测试吸奶器新详情页——实验前 14 天用户浏览时长作为协变量 $\rho=0.65$→方差缩减 42%→所需样本量从 10,000 降至 5,800。测试周期从 2 周缩短到 10 天。</p><p>年化：加速实验迭代，隐性价值 20-40 万元。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>加速实验迭代，隐性价值</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>import numpy as np
+
+def cuped_adjust(Y_treatment, Y_control, X_treatment, X_control):
+    theta = np.cov(np.concatenate([Y_treatment, Y_control]), 
+                   np.concatenate([X_treatment, X_control]))[0,1] / np.var(np.concatenate([X_treatment, X_control]))
+    Yt_adj = Y_treatment - theta * (X_treatment - np.mean(X_treatment))
+    Yc_adj = Y_control - theta * (X_control - np.mean(X_control))
+    var_reduction = 1 - np.var(Yt_adj - Yc_adj) / np.var(Y_treatment - Y_control)
+    return {&#x27;adj_diff&#x27;: np.mean(Yt_adj)-np.mean(Yc_adj), &#x27;var_reduction&#x27;: var_reduction}
+
+np.random.seed(42)
+X = np.random.normal(100,20,2000)
+Yt = X*0.7 + np.random.normal(105,8,1000)
+Yc = X*0.7 + np.random.normal(100,8,1000)
+r = cuped_adjust(Yt, Yc, X[:1000], X[1000:])
+print(f&quot;Variance reduction: {r[&#x27;var_reduction&#x27;]:.0%}&quot;)
+assert r[&#x27;var_reduction&#x27;] &gt; 0.3
+print(&quot;[✓] CUPED 测试通过&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CUPED-Variance-Reduction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-Multi-Armed-Bandit.html'>Skill-Multi-Armed-Bandit</a></li><li><a href='../skills/Skill-Network-Effect-Experiments.html'>Skill-Network-Effect-Experiments</a></li><li><a href='../skills/Skill-Sequential-AB-Testing.html'>Skill-Sequential-AB-Testing</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><p class='muted'>暂无</p>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Multi-Armed-Bandit.html'>Skill-Multi-Armed-Bandit</a></li><li><a href='../skills/Skill-Network-Effect-Experiments.html'>Skill-Network-Effect-Experiments</a></li><li><a href='../skills/Skill-Sequential-AB-Testing.html'>Skill-Sequential-AB-Testing</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

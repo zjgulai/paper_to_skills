@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>柔性供应链小单快返 — SHEIN模式敏捷采购与快速响应算法 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Flexible-Supply-Chain-Small-Batch-Agile</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>柔性供应链小单快返 — SHEIN模式敏捷采购与快速响应算法</h1>
+<p class="muted">Skill-Flexible-Supply-Chain-Small-Batch-Agile · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>300万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>大批量备货导致季度积压$8万而爆款缺货——Newsvendor最优小批量+Bayesian追单将积压从$8万降至$2万，爆款断货率从45%降至12%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>业务背景（陈凤霞实战经验）：书中以SHEIN为典型案例详述柔性供应链的四个维度：生产柔性（新品极简导入）、采购柔性（全球小批量采购）、交付柔性（三种供给模式组合）、系统柔性（数字化支撑）。核心逻辑是&quot;先小批量测试，验证需求后快速追单&quot;，将传统大批量备货模式改造为&quot;多品种小批量快响应&quot;。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某卖家每季度上新10款婴儿产品，传统模式每款首批500件，每季度有3-4款滞销（DOI&gt;120天），积压成本$8万；每季度有1-2款爆款，因担心滞销只备500件导致快速缺货 - 算法应用： 1. 计算每款新品的Cu/Co：吸奶器毛利率45% → Cu/Co=0.82 → 最优试销量 = F^{-1}(0.45) ≈ 历史需求P45分位数 2. 新品首批改为&quot;小批试销&quot;：每款150-200件（而非500件） 3. 与2家快反供应商签框架协议：确认需求后10天内追单，MOQ降至100件 4. 第1批15天销完80%以上 → 确认爆款 → 立即追单500件（10天到货） 5. 第1批1</p><p>- **业务问题**：婴儿防晒/驱蚊类强季节性品，每年5-8月旺季仅3个月，需求波动CV=1.3（高度不确定），传统备货常&quot;要么缺要么积压&quot; - **算法应用**：按单型（模式C）+快反采购：5月初小批试探，5月中旬看趋势决定是否大批追单，与本地快反供应商合作（7天交期）；旺季结束后零库存目标 - **预期产出**：季节性品类库存准确率从40%提升至70%，旺季末残余库存从$5万降至$1万</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：年销$300万的母婴卖家，传统大批量积压+缺货总损失约$11万/年；柔性快反降至$4.3万，年净节省$6.7万；系统+快反溢价成本$1.5万，ROI≈450%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（算法部分不难，难在与供应商谈判建立&quot;快反协议&quot;和培育快反供应商池）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（新品上新频率高（&gt;10款/季度）或季节性强的卖家强烈推荐）</li><li><strong>适用规模</strong>：季度上新&gt;5款新品或有季节性品类的卖家</li><li><strong>数据依赖</strong>：类似品历史销售数据、供应商MOQ/交期信息、成本结构（毛利/清仓折扣）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+柔性供应链小单快返算法系统
+功能：Newsvendor最优批量 + Bayesian需求学习 + 供给模式自动分配 + 快反决策
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from scipy import stats
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class NewProductProfile:
+    &quot;&quot;&quot;新品档案&quot;&quot;&quot;
+    sku_id: str
+    category: str
+    unit_price: float           # 售价($)
+    unit_cost: float            # 采购成本($)
+    clearance_price: float      # 清仓价($)
+    similar_sku_stats: Optional[Tuple[float, float]] = None  # (mean, std) 类似品历史需求
+    is_seasonal: bool = False
+    season_duration_months: int = 12
+
+
+@dataclass  
+class SupplierCapability:
+    &quot;&quot;&quot;供应商快反能力&quot;&quot;&quot;
+    supplier_id: str
+    min_order_qty: int          # 最小起订量
+    standard_lead_days: int     # 标准交期（天）
+    rush_lead_days: int         # 急单交期（天）
+    rush_premium_pct: float     # 急单溢价（%）
+    capacity_per_month: int     # 月产能上限
+    flexibility_score: float    # 柔性评分0-10
+
+
+def newsvendor_optimal_quantity(cu: float, co: float, 
+                                 demand_mean: float, demand_std: float) -&gt; Dict:
+    &quot;&quot;&quot;
+    Newsvendor模型最优批量
+    
+    Args:
+        cu: 单位缺货损失（售价-成本=毛利 + 机会成本）
+        co: 单位积压损失（成本 - 清仓价 + 持有成本）
+        demand_mean: 需求均值
+        demand_std: 需求标准差
+    
+    Returns:
+        最优批量和决策分析
+    &quot;&quot;&quot;
+    # 关键比率（服务水平）
+    critical_ratio = cu / (cu + co)
+    
+    # 最优批量（正态分布假设）
+    q_star = demand_mean + demand_std * stats.norm.ppf(critical_ratio)
+    q_star = max(int(np.ceil(q_star)), 1)
+    
+    # 期望利润</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2405.03912</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Flexible-Supply-Chain-Small-Batch-Agile" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-Dynamic-Lot-Sizing-MOQ.html'>Skill-Dynamic-Lot-Sizing-MOQ</a></li><li><a href='../skills/Skill-Flash-Sale-Realtime-Sellthrough-Forecast.html'>Skill-Flash-Sale-Realtime-Sellthrough-Forecast</a></li><li><a href='../skills/Skill-New-Product-Demand-Cold-Start.html'>Skill-New-Product-Demand-Cold-Start</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><a href='../skills/Skill-Supplier-Risk-XGBoost.html'>Skill-Supplier-Risk-XGBoost</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-Flash-Sale-Realtime-Sellthrough-Forecast.html'>Skill-Flash-Sale-Realtime-Sellthrough-Forecast</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><a href='../skills/Skill-Supplier-Risk-XGBoost.html'>Skill-Supplier-Risk-XGBoost</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Flash-Sale-Realtime-Sellthrough-Forecast.html'>Skill-Flash-Sale-Realtime-Sellthrough-Forecast</a></li><li><a href='../skills/Skill-Supplier-Risk-XGBoost.html'>Skill-Supplier-Risk-XGBoost</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

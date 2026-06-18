@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HTS Tariff Intelligence — LLM 驱动的跨境关税分类与节税优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-Cross-Border-Tax-Tariff-Modeling</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>HTS Tariff Intelligence — LLM 驱动的跨境关税分类与节税优化</h1>
+<p class="muted">Skill-Cross-Border-Tax-Tariff-Modeling · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-financial-cockpit.html'>运营财务驾驶舱手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-200 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴跨境卖家吸奶器被默认申报为液体泵（关税3.4%）而非呼吸治疗器具（0%），500万美元货值每年多缴17万美元关税——ATLAS LLM分层HTS分类识别正确10位编码，配合CBP Binding Ruling申请实现合规节税，Top-20 SKU年化节税20-200万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>HTS（Harmonized Tariff Schedule）分层分类本质是一个层级多标签分类问题：10 位编码中前 2 位是章节（Chapter），前 4 位是税则号（Heading），前 6 位是子目（Subheading），后 4 位由各国自定义。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：Momcozy S12 Pro 吸奶器被默认申报为 `8413.20.0000`（液体泵，关税 3.4%）。实际上按 GRI Rule 1，其主要功能为提供呼吸治疗式负压吸力，应归类为 `9019.20.0000`（呼吸治疗器具，关税 0%）。年销售额 500 万美元时，关税差异高达 17 万美元。</p><p>数据要求： - 商品英文描述（含材质、功能、医疗/非医疗用途声明） - 历史清关编码记录 - 竞品已获批的 CBP Binding Ruling（公开可查询）</p><p>执行路径： 1. ATLAS 分层分类 → 输出候选 HTS 编码 Top-3 及 GRI 依据 2. CBP 历史裁定检索 → 确认 `9019.20` 有先例支持 3. 申请 CBP Binding Ruling → 获得法律约束力的正式分类确认 4. 修改报关单申报编码 → 合规节税</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>ATLAS 论文报告 fine-tuned LLaMA-3.3-70B 在 10 位编码准确率达 40%（人工专家 ~ 60-70%），LLM+人工复核组合准确率 &gt; 90%</li><li>CBP 数据：2024 年进口商收到 HTS 错误通知并补缴关税的案例增加 23%</li><li>吸奶器案例：`8413.20`（3.4%）→ `9019.20`（0%），500 万美元货值年节税 17 万美元（约 122 万人民币）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+HTS Tariff Intelligence — LLM 驱动的 HTS 关税编码分类
+母婴跨境场景：5 个典型 SKU 的分层分类 + GRI 规则链输出
+依赖：openai&gt;=1.0.0 或可替换为任意 LLM API
+&quot;&quot;&quot;
+
+import json
+import re
+from dataclasses import dataclass, field
+from typing import Optional
+
+
+# ─── 数据结构 ─────────────────────────────────────────────
+
+@dataclass
+class HTSResult:
+    &quot;&quot;&quot;HTS 分类结果&quot;&quot;&quot;
+    sku_name: str
+    hts_code: str           # 10 位 HTS 编码（示例：9019.20.0000）
+    duty_rate: float        # 关税税率（百分比）
+    gri_rule: str           # 适用 GRI 规则（如 &quot;GRI Rule 1&quot;）
+    gri_reasoning: str      # GRI 规则适用理由
+    section: str            # HTS Section（如 &quot;Section XVI&quot;）
+    chapter: str            # Chapter（如 &quot;Chapter 90&quot;）
+    confidence: float       # 置信度 0-1
+    alternative_codes: list = field(default_factory=list)  # 备选编码
+    cbp_ruling_ref: Optional[str] = None  # CBP 裁定参考编号
+
+
+# ─── HTS 关键章节/税率数据（简化版，实际应接 USITC 数据库） ──
+
+HTS_CHAPTER_MAP = {
+    &quot;84&quot;: {&quot;name&quot;: &quot;核反应堆、锅炉、机械器具&quot;, &quot;section&quot;: &quot;Section XVI&quot;},
+    &quot;85&quot;: {&quot;name&quot;: &quot;电气机械及设备&quot;, &quot;section&quot;: &quot;Section XVI&quot;},
+    &quot;90&quot;: {&quot;name&quot;: &quot;光学、医疗、精密仪器&quot;, &quot;section&quot;: &quot;Section XVIII&quot;},
+    &quot;94&quot;: {&quot;name&quot;: &quot;家具、寝具、灯具&quot;, &quot;section&quot;: &quot;Section XX&quot;},
+    &quot;95&quot;: {&quot;name&quot;: &quot;玩具、游戏品、运动用品&quot;, &quot;section&quot;: &quot;Section XX&quot;},
+    &quot;87&quot;: {&quot;name&quot;: &quot;车辆及其零件&quot;, &quot;section&quot;: &quot;Section XVII&quot;},
+    &quot;62&quot;: {&quot;name&quot;: &quot;纺织服装&quot;, &quot;section&quot;: &quot;Section XI&quot;},
+}
+
+# 示例税率库（实际应接 USITC Tariff Schedule API）
+DUTY_RATE_DB = {
+    &quot;9019.20.0000&quot;: 0.0,    # 呼吸治疗器具 — 免税
+    &quot;8413.20.0000&quot;: 3.4,    # 液体泵
+    &quot;8509.80.5050&quot;: 4.2,    # 家用电动器具
+    &quot;8516.79.0050&quot;: 0.0,    # 电热器具（部分）
+    &quot;9403.20.0018&quot;: 0.0,    # 金属家具（婴儿床架）
+    &quot;8714.99.8000&quot;: 10.0,   # 童车零件
+    &quot;8715.00.0000&quot;: 0.0,    # 童车及婴儿车 — 免税
+    &quot;9021.90.8100&quot;: 0.0,    # 矫形器具
+    &quot;3406.00.0000&quot;: 0.0,    # 蜡烛（儿童夜灯蜡烛）
+    &quot;8471.60.9000&quot;: 0.0,    # 输入/输出装置
+}
+
+# GRI 规则摘要（简化）
+GRI_RULES = {
+    &quot;GRI Rule 1&quot;: &quot;按税则各类的条文及各节或章的注释归类，税则条文未另规定者，依后续规则处理&quot;,
+    &quot;GRI Rule 2a&quot;: &quot;非完整品/未制成品归类同完整品，前提是具备完整品的基本特征&quot;,
+    &quot;GRI Rule 2b&quot;: &quot;混合材料或物质归类，按 Rule 3 处理&quot;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2509.18400</li><li>2605.14857</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Border-Tax-Tariff-Modeling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><a href='../skills/Skill-Tax-Compliance-VAT-GST.html'>Skill-Tax-Compliance-VAT-GST</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+<div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>🧪 智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：品牌合规卫士（agent-brand-guardian）</p>
+<p style='margin:4px 0'><strong>测试输入</strong>：`{&quot;copy&quot;: &quot;Medical-grade breast pump with therapeutic suction&quot;, &quot;category&quot;: &quot;mother_baby&quot;, &quot;market&quot;: &quot;US&quot;}`</p>
+<p style='margin:4px 0'><strong>输出摘要</strong>：识别到&quot;medical-grade&quot;和&quot;therapeutic&quot;措辞触发 HTS 9019.20 优先归类条件；同时标记需要 FDA 510(k) 豁免声明，建议申请 CBP Binding Ruling 锁定 0% 税率，预估年化节税 ¥80-120 万</p>
+<p style='margin:4px 0'><strong>验证状态</strong>：✅ 本地计算通过 | 2026-06-12</p><div style='margin-top:10px'><a href='../agents.html' style='font-size:12px;color:#059669;font-weight:600'>→ 前往智能体广场运行</a></div></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

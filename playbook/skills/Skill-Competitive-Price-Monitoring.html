@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Competitive Price Monitoring（竞品价格监测与响应） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/17-价格优化.html">17-价格优化</a> / Skill-Competitive-Price-Monitoring</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Competitive Price Monitoring（竞品价格监测与响应）</h1>
+<p class="muted">Skill-Competitive-Price-Monitoring · 17-价格优化</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-pricing-engine.html'>AI 定价引擎手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5-60 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>定价负责人 / 运营负责人<span class='biz-ctx-secondary'> · 选品负责人 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Buy Box 竞价策略 · 多市场价格协调 · Prime Day / Coupon 折扣优化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>竞品突然降价，不知道该不该跟，跟了怕伤利润不跟怕丢 BSR；大促期间不知道折扣给多少，给多了利润没了</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>实时监控竞品价格并自动触发调价，毛利率保持在目标区间，BSR 排名和利润同时兼顾</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品降价了不知道要不要跟</span><span class='biz-pain-tag'>大促折扣给多少没有依据</span><span class='biz-pain-tag'>手动盯价格太累反应不及时</span><span class='biz-pain-tag'>新品上线定价高了还是低了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>竞品价格监测不只是&quot;看别人卖多少钱&quot;，而是建立价格-转化率的因果响应模型，在竞品降价时量化&quot;不跟降会损失多少&quot;和&quot;跟降能获得多少&quot;，做出有数据支撑的响应决策。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>竞品价格监测不只是&quot;看别人卖多少钱&quot;，而是建立价格转化率的因果响应模型，在竞品降价时量化&quot;不跟降会损失多少&quot;和&quot;跟降能获得多少&quot;，做出有数据支撑的响应决策。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：5 个竞品（Momcozy/Medela/Spectra/Bellababy/Elvie）在 Amazon US 频繁调价。需要每日监测+自动预警+响应建议。</p><p>数据要求：每日竞品价格爬虫 + 我们的日销量数据（用于估计交叉弹性）</p><p>预期产出： - 竞品价格仪表盘：5 竞品 × 3 变体（单边/双边/穿戴式）价格热力图 - 预警规则：PCI &gt; 1.10 且竞品降价 &gt; 10% 时触发橙色预警 - 响应建议：预计不跟降损失 15-20% 日销量 vs 跟降 10% 保护份额但利润率降 3pp</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：优化竞品响应决策，每月节约 $2,000-5,000；年化 <strong>25-60 万元</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（2 星）— 爬虫 + PCI 计算简单</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（4 星）— 跨境价格战是日常挑战</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;Competitive Price Monitoring — PCI 计算 + 响应决策&quot;&quot;&quot;
+
+import numpy as np
+from typing import List, Dict, Tuple
+
+
+def price_competitiveness_index(
+    our_price: float, competitor_prices: List[float]
+) -&gt; float:
+    &quot;&quot;&quot;价格竞争力指数&quot;&quot;&quot;
+    if not competitor_prices:
+        return 1.0
+    return our_price / np.median(competitor_prices)
+
+
+def estimate_cross_elasticity(
+    our_sales: List[float], competitor_prices: List[float],
+    window: int = 7
+) -&gt; float:
+    &quot;&quot;&quot;用滚动窗口估计交叉价格弹性&quot;&quot;&quot;
+    if len(our_sales) &lt; window * 2:
+        return -0.8  # 默认值
+    
+    elasticities = []
+    for t in range(window, len(our_sales) - window):
+        comp_change = (competitor_prices[t] - competitor_prices[t-window]) / competitor_prices[t-window]
+        sales_change = (our_sales[t+window] - our_sales[t]) / max(our_sales[t], 0.01)
+        if abs(comp_change) &gt; 0.01:
+            elasticities.append(sales_change / comp_change)
+    
+    return np.median(elasticities) if elasticities else -0.8
+
+
+def price_response_decision(
+    our_price: float, our_cost: float, our_sales: float,
+    competitor_prices: List[float], cross_elasticity: float = -0.8,
+) -&gt; Dict:
+    &quot;&quot;&quot;竞品响应决策&quot;&quot;&quot;
+    pci = price_competitiveness_index(our_price, competitor_prices)
+    min_comp = min(competitor_prices)
+    
+    # 场景分析
+    if pci &lt; 1.03:
+        return {&#x27;action&#x27;: &#x27;maintain&#x27;, &#x27;pci&#x27;: pci, &#x27;reason&#x27;: &#x27;价格有竞争力&#x27;}
+    
+    # 跟降 10% 的效果
+    target_price = min_comp * 1.02
+    price_drop_pct = (our_price - target_price) / our_price
+    expected_sales_gain = cross_elasticity * (-price_drop_pct) * our_sales
+    profit_change = (target_price - our_cost) * (our_sales + expected_sales_gain) - \
+                    (our_price - our_cost) * our_sales
+    
+    if profit_change &gt; 0 and price_drop_pct &gt; 0.03:
+        return {
+            &#x27;action&#x27;: &#x27;match&#x27;, &#x27;target_price&#x27;: round(target_price, 2),
+            &#x27;pci&#x27;: pci, &#x27;expected_sales_gain&#x27;: round(expected_sales_gain),
+            &#x27;profit_change&#x27;: round(profit_change), &#x27;drop_pct&#x27;: f&#x27;{price_drop_pct:.1%}&#x27;
+        }
+    elif pci &gt; 1.10:
+        return {&#x27;action&#x27;: &#x27;partial_match&#x27;, &#x27;pci&#x27;: pci,</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Competitive-Price-Monitoring" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-CABB-Cross-Category-Attribution.html'>Skill-CABB-Cross-Category-Attribution</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html'>Skill-Contextual-Dynamic-Pricing-Optimal</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Markdown-Optimization.html'>Skill-Markdown-Optimization</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-CABB-Cross-Category-Attribution.html'>Skill-CABB-Cross-Category-Attribution</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html'>Skill-Contextual-Dynamic-Pricing-Optimal</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Markdown-Optimization.html'>Skill-Markdown-Optimization</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-CABB-Cross-Category-Attribution.html'>Skill-CABB-Cross-Category-Attribution</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html'>Skill-Contextual-Dynamic-Pricing-Optimal</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 竞品雷达站</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Full Funnel Growth Dashboard — 多归因视角聚合的全漏斗增长量化看板 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Full-Funnel-Growth-Dashboard</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Full Funnel Growth Dashboard — 多归因视角聚合的全漏斗增长量化看板</h1>
+<p class="muted">Skill-Full-Funnel-Growth-Dashboard · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-full-funnel-ops.html'>全漏斗增长运营手册</a><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴品牌多平台投放（TikTok/Google/Amazon）归因混乱时——全漏斗多视角归因看板将ROAS评估误差从±40%压缩至±8%，预算重分配后季度GMV提升约¥18万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心洞察：单一归因模型（首点/末点）本质上是对用户旅程的单一视角投影，存在严重信息损失。MAL 提出用四个互补视角组成归因&quot;多面体&quot;：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景 A：Momcozy 全渠道投放归因诊断</p><p>- 业务问题：在 TikTok Shop 投放 KOL 种草（$20K/月）+ Google 搜索广告（$8K/月）+ Amazon DSP（$5K/月），三平台各报告不同转化数，总转化数之和超出实际订单量 30%，无法判断真实 ROAS - 数据要求：每用户触点序列（平台、时间戳、是否点击、是否购买），最少 1,000 条购买旅程 - 执行方案： 1. 对 10,000 条用户旅程同时运行四视角归因 2. TOFU 分析：TikTok 曝光→点击 CTR = 4.2%，Google 点击→加购 ATR = 12.8% 3. BOFU 分析：Amazon DSP 加购→购买 CR = 38% </p><p>- 业务问题：黑五前两周 ROI 突然下滑 28%，不知道是曝光量不足（TOFU 问题）、加购流失（MOFU 问题）还是弃单率增加（BOFU 问题） - 数据要求：大促前后 4 周漏斗各层日粒度数据，细分到广告组 - 执行方案：TOFU/MOFU/BOFU 分层看板，对比大促前后转化率变化，定位瓶颈层 - 预期产出：定位到 MOFU 加购→购买 CR 从 32% 跌至 19%（原因：竞品降价 22%），快速调价后 CR 回升至 27% - 业务价值：大促 GMV 损失减少约 ¥8 万，归因诊断时效从 3 天缩短至 2 小时</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>30-50 万</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Full Funnel Growth Dashboard — 多归因视角聚合全漏斗看板
+场景：Momcozy 10 条用户旅程，TikTok曝光→搜索→详情页→购买
+依赖：仅 numpy
+&quot;&quot;&quot;
+import numpy as np
+
+# ─── 数据定义 ──────────────────────────────────────────────────────────────────
+# 每条记录：用户旅程触点序列
+# 触点编码：0=TikTok曝光, 1=TikTok点击, 2=Google搜索, 3=详情页, 4=加购, 5=购买
+JOURNEYS = [
+    [0, 1, 2, 3, 4, 5],   # 完整6步旅程
+    [0, 2, 3, 5],          # 跳过TikTok点击
+    [2, 3, 4, 5],          # 从搜索开始
+    [0, 1, 3, 5],          # 跳过搜索直达详情
+    [0, 2, 3, 4, 5],
+    [1, 2, 3, 5],
+    [0, 1, 2, 4, 5],
+    [2, 4, 5],             # 直接搜索加购
+    [0, 3, 4, 5],
+    [1, 3, 5],
+]
+
+CHANNEL_NAMES = {0: &quot;TikTok曝光&quot;, 1: &quot;TikTok点击&quot;, 2: &quot;Google搜索&quot;,
+                 3: &quot;详情页&quot;, 4: &quot;加购&quot;, 5: &quot;购买&quot;}
+
+# 渠道平台映射（用于TOFU/MOFU/BOFU分层）
+TOFU_CHANNELS  = {0, 1}       # Top: 曝光 + 点击
+MOFU_CHANNELS  = {2, 3, 4}    # Mid: 搜索 + 详情 + 加购
+BOFU_CHANNELS  = {5}          # Bot: 购买
+
+
+# ─── 归因模型 ─────────────────────────────────────────────────────────────────
+def attribution_first_touch(journeys):
+    &quot;&quot;&quot;首点归因：100% 贡献给旅程第一个触点&quot;&quot;&quot;
+    counts = np.zeros(6)
+    for j in journeys:
+        if len(j) &gt; 0:
+            counts[j[0]] += 1.0
+    return counts / counts.sum()
+
+
+def attribution_last_touch(journeys):
+    &quot;&quot;&quot;末点归因：100% 贡献给最后一个触点（排除购买本身，给倒数第二步）&quot;&quot;&quot;
+    counts = np.zeros(6)
+    for j in journeys:
+        # 最后触点为购买(5)时，归因给购买前最后一个触点
+        effective = [c for c in j if c != 5]
+        if effective:
+            counts[effective[-1]] += 1.0
+        elif j:
+            counts[j[-1]] += 1.0
+    total = counts.sum()
+    return counts / total if total &gt; 0 else counts
+
+
+def attribution_linear(journeys):
+    &quot;&quot;&quot;线性归因：所有触点均分贡献（购买触点不参与分配）&quot;&quot;&quot;
+    counts = np.zeros(6)
+    for j in journeys:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2505.09861</li><li>2508.15217</li><li>2512.21211</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Full-Funnel-Growth-Dashboard" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Ad-Spend-Inventory-Sync.html'>Skill-Ad-Spend-Inventory-Sync</a></li><li><a href='../skills/Skill-Causal-Churn-Retention-Attribution.html'>Skill-Causal-Churn-Retention-Attribution</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Spend-Inventory-Sync.html'>Skill-Ad-Spend-Inventory-Sync</a></li><li><a href='../skills/Skill-Causal-Churn-Retention-Attribution.html'>Skill-Causal-Churn-Retention-Attribution</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Spend-Inventory-Sync.html'>Skill-Ad-Spend-Inventory-Sync</a></li><li><a href='../skills/Skill-Causal-Churn-Retention-Attribution.html'>Skill-Causal-Churn-Retention-Attribution</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

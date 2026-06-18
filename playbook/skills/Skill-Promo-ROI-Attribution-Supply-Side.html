@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>促销活动供应侧ROI归因 — 备货成本+促销库存持有成本+尾货损失的全成本核算 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Promo-ROI-Attribution-Supply-Side</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>促销活动供应侧ROI归因 — 备货成本+促销库存持有成本+尾货损失的全成本核算</h1>
+<p class="muted">Skill-Promo-ROI-Attribution-Supply-Side · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>15-20万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营团队面临&quot;大促ROI虚高忽视供应链成本&quot;——备货持有成本+尾货折价+退货增量三段核算，真实ROI比广告ROI低30-50pp，指导更理性备货决策</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>现有促销Skill（InPromo/PostPromo/PrePromo）都聚焦需求侧（流量/销量/售罄率），但供应侧成本通常被忽视。陈凤霞书中专门强调：促销的真实ROI必须包含供应链成本。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：Black Friday吸奶器大促完整ROI核算 - 业务问题：大促GMV 300万，毛利率35%，广告花费30万，但不知道供应侧成本多少，也不知道真实ROI - 数据要求： - 大促前备货量 + 实际入仓时间（vs 正常入仓时间） - 大促后剩余库存量 + 实际清仓价格 - 大促期间退货数量 vs 平时退货率 - 预期产出： - 备货持有成本：8万（备货额400万 × 0.5% × 4周） - 尾货折价损失：12万（剩余80万库存 × 15%折扣） - 大促退货增量成本：3万 - 供应侧总成本：23万 - 真实ROI = (300万×35% - 23万 - 30万) / 53万 = </p><p>**场景B：全年大促ROI纵向对比（黑五 vs 618 vs 日常）** - **业务问题**：黑五GMV是平时5倍，但供应侧成本也高5倍，真实利润贡献如何？ - **数据要求**：黑五/618/日常三个时期的供应侧成本数据 - **预期产出**：黑五供应侧ROI 90% vs 618供应侧ROI 120% vs 日常 150% → 618性价比最高</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：识别供应侧成本后，下次大促减少30%备货（精确控制尾货） + 提前期缩短7天 → 年化节省约15-20万元；让管理层看到&quot;真实ROI&quot;（比广告ROI低30-50pp），有助于更理性的大促决策</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要整合多个数据源：备货账单+销售数据+退货数据）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（陈凤霞：&quot;90%的品牌只看广告ROI，忽视供应侧成本，这是战略盲区&quot;）</li><li><strong>评估依据</strong>：大促供应侧成本通常占总促销成本的30-50%，但几乎从不被单独核算，是利润最容易被低估的地方</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+促销活动供应侧 ROI 归因模型
+功能：备货成本 / 持有成本 / 尾货损失 / 退货增量成本 / 真实促销ROI计算
+输入：大促备货数据 + 销售结果 + 退货数据
+输出：供应侧成本拆解 + 真实ROI + 改善建议
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def compute_promo_supply_cost(
+    backup_gmv_value: float,          # 备货货值（元）
+    backup_lead_days: int,            # 提前备货天数（vs正常）
+    capital_rate: float = 0.06,       # 年资金成本
+    remaining_inventory_pct: float = 0.25,  # 大促后剩余库存比例
+    clearance_discount: float = 0.30, # 清仓折扣率（30%=七折）
+    promo_return_rate: float = 0.06,  # 大促期间退货率（高于平时）
+    normal_return_rate: float = 0.03, # 正常退货率
+    promo_gmv: float = 3_000_000,     # 大促GMV
+    handling_cost_per_return: float = 80,  # 每次退货处理成本
+):
+    &quot;&quot;&quot;计算促销供应侧全成本&quot;&quot;&quot;
+    
+    # 1. 备货持有成本（提前备货的资金占用）
+    holding_cost = backup_gmv_value * capital_rate * backup_lead_days / 365
+    
+    # 2. 尾货折价损失
+    remaining_value = backup_gmv_value * remaining_inventory_pct
+    clearance_loss = remaining_value * clearance_discount  # 按折扣计算损失
+    
+    # 3. 大促退货增量成本
+    promo_orders = promo_gmv / 150  # 假设均单价150
+    incremental_returns = promo_orders * (promo_return_rate - normal_return_rate)
+    return_cost = incremental_returns * handling_cost_per_return
+    
+    # 4. 汇总
+    total_supply_cost = holding_cost + clearance_loss + return_cost
+    
+    return {
+        &#x27;holding_cost&#x27;: round(holding_cost),
+        &#x27;clearance_loss&#x27;: round(clearance_loss),
+        &#x27;return_cost&#x27;: round(return_cost),
+        &#x27;total_supply_cost&#x27;: round(total_supply_cost),
+        &#x27;supply_cost_rate&#x27;: round(total_supply_cost / promo_gmv * 100, 2),
+    }
+
+
+def compute_true_promo_roi(
+    promo_gmv: float,
+    gross_margin_rate: float,
+    ad_spend: float,
+    supply_cost: float,
+    baseline_gmv_daily: float,
+    promo_days: int = 5,
+):
+    &quot;&quot;&quot;计算促销真实ROI（含供应侧成本）&quot;&quot;&quot;
+    # 增量GMV（大促GMV - 正常同期GMV）
+    normal_period_gmv = baseline_gmv_daily * promo_days</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2307.14923</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Promo-ROI-Attribution-Supply-Side" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Inventory-Aging-Cost-Management.html'>Skill-Inventory-Aging-Cost-Management</a></li><li><a href='../skills/Skill-PostPromo-Retrospective-KPI.html'>Skill-PostPromo-Retrospective-KPI</a></li><li><a href='../skills/Skill-Pre-Promo-Stocktaking-KPI.html'>Skill-Pre-Promo-Stocktaking-KPI</a></li><li><a href='../skills/Skill-Procurement-Cycle-Time-KPI.html'>Skill-Procurement-Cycle-Time-KPI</a></li><li><a href='../skills/Skill-Sell-Through-Rate-Promo-Inventory.html'>Skill-Sell-Through-Rate-Promo-Inventory</a></li><li><a href='../skills/Skill-Supply-Chain-Total-Cost-TCO-Model.html'>Skill-Supply-Chain-Total-Cost-TCO-Model</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Inventory-Aging-Cost-Management.html'>Skill-Inventory-Aging-Cost-Management</a></li><li><a href='../skills/Skill-Pre-Promo-Stocktaking-KPI.html'>Skill-Pre-Promo-Stocktaking-KPI</a></li><li><a href='../skills/Skill-Procurement-Cycle-Time-KPI.html'>Skill-Procurement-Cycle-Time-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Total-Cost-TCO-Model.html'>Skill-Supply-Chain-Total-Cost-TCO-Model</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Pre-Promo-Stocktaking-KPI.html'>Skill-Pre-Promo-Stocktaking-KPI</a></li><li><a href='../skills/Skill-Procurement-Cycle-Time-KPI.html'>Skill-Procurement-Cycle-Time-KPI</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Price-Sensitive Recommendation — 价格感知推荐：弹性感知的个性化定价与排序融合 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Price-Sensitive-Recommendation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Price-Sensitive Recommendation — 价格感知推荐：弹性感知的个性化定价与排序融合</h1>
+<p class="muted">Skill-Price-Sensitive-Recommendation · 05-推荐系统</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务背景：Prime Day / Black Friday 母婴类目促销期间，某品牌对婴儿消毒器打折30%（$59.99→$41.99）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统推荐系统只关注用户与商品的&quot;相关性&quot;，完全忽视价格因素；而传统定价系统只优化利润或销量，不考虑用户个性化偏好。PriceSensitive Recommendation 的核心思想是将个体价格弹性注入推荐排序决策：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务背景：Prime Day / Black Friday 母婴类目促销期间，某品牌对婴儿消毒器打折30%（$59.99→$41.99）。但促销推送策略是&quot;给所有收藏过该商品的用户群发&quot;，导致原本会全价购买的用户（低弹性）也被打折吸引，削减利润；而真正需要折扣激励才会购买的用户（高弹性）反而没被精准触达。</p><p>Price-Sensitive Recommendation 应用：</p><p>业务背景：AIM DTC 独立站（婴儿消毒设备）同时销售$49（基础款）、$79（升级款）、$129（旗舰款）三个价位产品。当前首页推荐对所有用户展示相同顺序，无法区分价格敏感度不同的访客。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><ul><li>`final_score`：价格效用 + MF 锚定 + 促销增益的综合分</li><li>`segment_label`：用户弹性分层（`low/medium/high_elastic`），可用于前端展示逻辑差异化</li></ul>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Price-Sensitive Recommendation: 价格感知个性化推荐
+整合 MF 相关分 + 用户价格弹性估计 + 价格效用函数 + IPW 去偏
+完全使用 mock 数据，无需真实 API
+&quot;&quot;&quot;
+
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+
+
+# ── 数据结构 ──────────────────────────────────────────────────────────────────
+
+@dataclass
+class PriceHistory:
+    &quot;&quot;&quot;商品历史价格数据&quot;&quot;&quot;
+    product_id: str
+    prices: List[float]              # 历史价格序列
+    sales_volumes: List[float]       # 对应销量
+    reference_price: float = 0.0    # 参考价（类目均价）
+
+    def __post_init__(self):
+        if self.reference_price == 0.0 and self.prices:
+            self.reference_price = float(np.mean(self.prices))
+
+
+@dataclass
+class PricedProduct:
+    &quot;&quot;&quot;带价格信息的商品&quot;&quot;&quot;
+    product_id: str
+    name: str
+    current_price: float
+    original_price: float       # 原价（促销时 &lt; original_price）
+    category: str
+    reference_price: float = 0.0
+
+    @property
+    def is_on_sale(self) -&gt; bool:
+        return self.current_price &lt; self.original_price * 0.97
+
+    @property
+    def discount_rate(self) -&gt; float:
+        if self.original_price &lt;= 0:
+            return 0.0
+        return max(0.0, 1.0 - self.current_price / self.original_price)
+
+
+@dataclass
+class UserPriceProfile:
+    &quot;&quot;&quot;用户价格弹性画像&quot;&quot;&quot;
+    user_id: str
+    global_beta: float = 1.0         # 全局价格敏感系数 β_u
+    category_betas: Dict[str, float] = field(default_factory=dict)
+    purchase_price_history: List[float] = field(default_factory=list)  # 历史购买价格
+
+    def get_beta(self, category: str) -&gt; float:
+        &quot;&quot;&quot;获取特定品类的价格弹性&quot;&quot;&quot;
+        return self.category_betas.get(category, self.global_beta)
+
+    def elasticity_segment(self) -&gt; str:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2403.07571</li><li>2408.11589</li><li>2501.09223</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Price-Sensitive-Recommendation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Dynamic-Pricing-Elasticity]]</span></li><li><span class='muted'>Matrix-Factorization]]</span></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Diversity-Reranking-SMMR]]</span></li><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Counterfactual-Recommendation-DCE]]</span></li><li><a href='../skills/Skill-Counterfactual-Recommendation-DCE.html'>Skill-Counterfactual-Recommendation-DCE</a></li><li><a href='../skills/Skill-UCB-LDP-Dynamic-Pricing.html'>Skill-UCB-LDP-Dynamic-Pricing</a></li><li><span class='muted'>UCB-LDP-Dynamic-Pricing]]</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

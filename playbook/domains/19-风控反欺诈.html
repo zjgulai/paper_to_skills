@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>19-风控反欺诈 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>19-风控反欺诈</h1><p>Fake review detection, transaction anomaly, click fraud</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 19-风控反欺诈 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Account-Association-Risk-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Account Association Risk Detection — 电商多账户关联风险检测</h3>
+  <p class="sc-desc">新员工设备、共享 IP、旧供应商账号形成隐性关联，被 Amazon 认定即全部封禁损失 50-500 万元——多维信号图分析（银行卡/设备/IP/行为）提前 30 天识别关联风险，建议隔离操作防止连坐</p>
+  <div class='sc-footer'><span class='sc-roi'>50-500 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Account-Health-Proactive-Monitor.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Account Health Proactive Monitor — 账号健康主动监控：从被动处罚到提前预防</h3>
+  <p class="sc-desc">去年黑五账号ODR从0.6%升至1.2%接到Amazon警告广告暂停48小时损失15万但事前无任何预警——账号健康主动监控提前7-14天发现趋势恶化并联动降低广告预算年化避免封号损失30-100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-100 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Ad-Fraud-IVT-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Ad Fraud IVT Detection — 行为图 + GNN 无效流量实时检测</h3>
+  <p class="sc-desc">母婴品牌 TikTok/Google 广告月均 30 万投放中 15-25% 为无效点击（Bot/竞品刷量），ROAS 被高估 30%——行为图 WTG + DGCNN 将 IVT 识别率提升至 95%+，年化节省无效广告支出 5-15 万元，并为平台申诉提供量化证据</p>
+  <div class='sc-footer'><span class='sc-roi'>30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</h3>
+  <p class="sc-desc">运营每天需手动检查35个SKU×8个指标共280个时序数据点是否异常——时序基础模型零样本异常检测1小时内自动发现全域异常按优先级排队处理，提前发现缺货/竞品攻击/点击欺诈年化挽回20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Brand-Listing-Hijacking-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Brand Listing Hijacking Detection — 电商品牌 Listing 劫持网络检测</h3>
+  <p class="sc-desc">竞品在品牌方ASIN下挂载劣质品蹭流量，人工发现需 2 周、BSR 损失严重——product-reviewer 二部图网络聚类特征早期检测劫持卖家，发现时间压缩至 24-48h，年化保护 GMV 20-100 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-100 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Click-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Click Fraud Detection（广告刷量检测）</h3>
+  <p class="sc-desc">竞品对母婴广告发动 IVT 攻击，FB 广告 CTR 虚高 8.5% 但转化率跌至 0.1%，月广告预算 30% 被无效点击消耗——时序异常检测实时识别刷量 IP 并向平台申请退款，年均挽回 6-15 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>6-15 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Border-Payment-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Cross-Border Payment Fraud Detection — 跨境支付欺诈检测：多源信号图谱风险建模</h3>
+  <p class="sc-desc">独立站支付欺诈率3-8%每月因拒付损失3000美元以上但传统规则只能拦截60-70%——图神经网络多跳关联分析发现盗刷信用卡团伙，检测率提升至85-90%年化避免欺诈损失25-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥25-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</h3>
+  <p class="sc-desc">业务问题：新款奶瓶（ASIN B0XXXX）上架后 6 小时内突现 38 条 5 星评论，评论者账号注册时间集中在近 7 天、互相之间都购买过同一批产品</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">DS-DGA-GCN假评论群体检测 — 多样性与自相似性感知的动态图注意力GCN</h3>
+  <p class="sc-desc">竞争对手有组织的恶意差评攻击让新品评分在7天内从4.8崩至3.6——DS-DGA-GCN通过多样性与自相似性感知的动态图注意力识别假评论群体，Amazon数据集准确率89.8%（2026 arXiv:2603.08332）</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Fraud-Signal-Collection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</h3>
+  <p class="sc-desc">欺诈检测系统的核心上限由欺诈信号采集的覆盖度和质量决定。母婴电商面临的三类典型欺诈</p>
+  <div class='sc-footer'><span class='sc-roi'>48 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-FraudSquad-LLM-Review-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换器</h3>
+  <p class="sc-desc">业务问题：竞品通过 ChatGPT 批量生成高质量 5 星好评（语言自然流畅、细节丰富），注入自家 listing 的同时给我们的 listing 刷低评，导致： 1. 竞品 BSR 飙升 → 抢占 Featured Offer 2. 我们 listing 评分下降 → 转化率下滑 10-25% 3. Amazon 算法降权 → 广告 CVR 下降</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-IP-Trademark-Brand-Monitoring.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">IP Trademark Brand Monitoring — 知识产权主动监控：商标侵权自动检测与预警</h3>
+  <p class="sc-desc">竞品上架与我品牌名95%相似的仿冒品抢走流量但人工发现需要数周——多模态IP监控24小时内检测品牌名/Logo/图片侵权并生成证据包，快速举报保护品牌GMV年化避损20-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-80 万（以品牌保护为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Identity-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证</h3>
+  <p class="sc-desc">业务问题：某婴儿推车 Listing 在 48 小时内收到 12 条五星评论，怀疑是刷单行为</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-PromoGuardian-Promotion-Fraud-GNN.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">PromoGuardian — 促销欺诈多关系图神经网络检测</h3>
+  <p class="sc-desc">促销运营负责人面临大促期优惠券被批量套利日损数万元——多关系图神经网络同时捕获设备/地址/时序三维欺诈信号，促销套利损失减少60-70%，年化节省100-500万元</p>
+  <div class='sc-footer'><span class='sc-roi'>$144,000-$672,000</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Return-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Return Fraud Detection — 退货欺诈识别：GNN 检测虚假退货与促销滥用</h3>
+  <p class="sc-desc">某款299美元婴儿推车退货率18%但工厂QC合格率99.5%怀疑有组织欺诈却无法证明——账号关联图谱识别共享地址设备的欺诈团伙，拦截30-50%欺诈退货年化节省10-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Review-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Review Fraud Detection（虚假评论检测）</h3>
+  <p class="sc-desc">GNN 图神经网络检测虚假评论——不是看单条评论文本，而是看评论者-产品-评分之间的关系图。虚假评论团通常呈现异常图模式：同批次账号、评分极端（1 或 5 星）、评论时间集中、文本相似度高。</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Transaction-Anomaly-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Transaction Anomaly Detection（异常交易检测）</h3>
+  <p class="sc-desc">同一 IP 在 10 分钟内下 5 单跨州发货使用 5 张信用卡，人工审核滞后导致盗刷损失 $5000——Isolation Forest 实时异常交易检测在毫秒内触发 hold 订单，年化止损 3-8 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>3-8 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

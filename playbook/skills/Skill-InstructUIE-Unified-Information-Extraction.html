@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Skill: InstructUIE — 统一信息抽取框架 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/07-nlp-voc.html">07-NLP-VOC</a> / Skill-InstructUIE-Unified-Information-Extraction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Skill: InstructUIE — 统一信息抽取框架</h1>
+<p class="muted">Skill-InstructUIE-Unified-Information-Extraction · 07-NLP-VOC</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>产品运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 客服负责人 · 品牌负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Reviews / Q&amp;A · TikTok 评论区 · Reddit 母婴社区</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>每月几千条差评和 Q&amp;A 没有人力一条条看，但痛点都在里面；新品开发不知道做什么功能、改什么问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>自动提取 Top 10 高频痛点，新品开发有用户数据背书，每月出竞品用户洞察报告</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>差评太多看不过来</span><span class='biz-pain-tag'>不知道用户真正在意什么</span><span class='biz-pain-tag'>竞品评论没有系统分析过</span><span class='biz-pain-tag'>新品开发靠拍脑袋</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴出海平台每天数十万条多语言评论需同时抽取产品实体、品牌关系、属性对比，为每类任务单独训练模型成本极高——统一 IE 框架用单一模型一次推理完成 NER+RE+EE，标注成本降低 70%，评论结构化处理吞吐量提升 5 倍</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>InstructUIE 将所有信息抽取（IE）任务统一为 seq2seq 文本生成问题，通过指令（Instruction）+ 选项（Options）机制引导预训练语言模型完成结构化抽取。核心洞察：不同 IE 任务（NER、RE、EE、情感分析）的本质都是 &quot;从文本中提取结构化信息&quot;，可以用统一的自然语言接口表达。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>母婴出海平台每天处理数十万条多语言评论，需要同时抽取： - 实体：产品名、品牌、属性、用户群体 - 关系：产品-属性关联、产品间对比/互补关系 - 情感：方面级情感（质量、价格、物流、安全性等） - 事件：购买、退换货、投诉、推荐</p><p>传统方案需要 4-6 个独立模型，维护成本高，且各模型输出格式不一致，后处理复杂。</p><p>| 维度 | 内容 | 示例 | |-----|------|------| | 实体标签 | PRODUCT, BRAND, ATTRIBUTE, USER_GROUP | Spectra S1, 静音, 新手妈妈 | | 关系类型 | has_attribute, positive_for, negative_for, compare_with, complement_of | (吸奶器, complement_of, 储奶袋) | | 方面情感 | quality, price, logistics, packaging, safety, usability | quality: pos</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>数据要求：中，需要构建领域指令模板和选项列表</li><li>技术门槛：中，需理解指令微调和 seq2seq 生成</li><li>工程复杂度：中低，可基于 transformers 库快速搭建</li><li>维护成本：低，新增标签只需修改指令，无需重训</li><li><strong>业务价值极高</strong>：直接与当前 Phase 5 标签体系建设工作衔接</li><li><strong>技术适配性强</strong>：统一框架解决多个独立痛点（NER + RE + 情感 + 事件）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：7 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>cd paper2skills-code/nlp_voc/instructuie_unified_ie
+python instructuie_model.py</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2304.08085</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-InstructUIE-Unified-Information-Extraction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Seq2Seq 模型</span></li><li><span class='muted'>信息抽取基础</span></li><li><span class='muted'>指令微调 (Instruction Tuning)</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>LLM-based IE</span></li><li><span class='muted'>主动学习</span></li><li><span class='muted'>持续学习</span></li><li><span class='muted'>语义蓝图 (Semantic Blueprint)</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>ABSA</span></li><li><span class='muted'>LLM 打标管道</span></li><li><span class='muted'>标签体系管理</span></li><li><span class='muted'>知识图谱构建</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

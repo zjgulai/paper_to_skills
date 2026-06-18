@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Amazon 账号申诉策略（POA 行动计划） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/21-合规决策.html">21-合规决策</a> / Skill-Amazon-Account-Appeal-Strategy</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Amazon 账号申诉策略（POA 行动计划）</h1>
+<p class="muted">Skill-Amazon-Account-Appeal-Strategy · 21-合规决策</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-compliance.html'>跨境合规全链路</a><a class='hb-uplink' href='../playbooks/pb-risk-defense.html'>跨境风险防御作战室</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>1-3 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>合规负责人 / 选品负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>美国 CPSC/ASTM · 欧盟 CE/EN71 · Amazon 类目合规要求 · 德国/英国/中东市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>新品上架前不确定在美国/欧盟是否需要认证，怕因合规问题被下架；产品被平台下架但不清楚哪里出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>上架前自动完成合规预扫描，0 合规下架事故，新市场合规准备时间从 3 个月缩短到 2 周</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>产品被下架说是合规问题</span><span class='biz-pain-tag'>不知道目标市场需要什么认证</span><span class='biz-pain-tag'>EU/US 合规要求不一样怎么处理</span><span class='biz-pain-tag'>母婴产品安全标准太严怕踩雷</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>吸奶器 Listing 被 Amazon 以知识产权为由强制下架，模板化 POA 申诉成功率仅 20-30%，每天断货损失超 3 万元——结构化三段式 POA（根因/纠正/预防）可将申诉成功率提升至 65-80%，恢复周期缩短至 3-7 天</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：Amazon 账号/Listing 被封后，POA（Plan of Action）是唯一有效的申诉工具。成功率取决于 POA 的结构化程度，而非情感诉求。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴品牌吸奶器 Listing 因竞品恶意投诉知识产权被下架，不知道如何写 POA 才能快速恢复。</p><p>应用流程： 1. 收到 Amazon 通知 → 24h 内不要急着申诉（先收集证据） 2. 确认投诉类型（IP投诉 vs 产品安全 vs 政策违规） 3. 联系投诉方协商撤诉（成功率 40-60%） 4. 如协商失败，写 POA： - Section 1: 说明我司拥有合法权益（附品牌注册证/授权书） - Section 2: 已移除有歧义的描述词/图片 - Section 3: 建立月度 Listing 合规审查 SOP 5. 提交后 48-72h 审核，拒绝则升级到 Amazon Executive Seller Relations</p><p>年化收益： - 从被封到恢复缩短 3-7 天（vs 自行摸索 2-4 周） - 专业 POA 成功率 65-80%（vs 模板 POA 20-30%）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI</strong>：缩短申诉周期 = 每天 1-3 万 GMV × 节省天数</li><li><strong>难度</strong>：⭐⭐⭐☆☆（需要理解亚马逊审核逻辑）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（封号时唯一解法）</li><li><strong>适用场景</strong>：Listing 被投诉下架、账号 ODR 超标、知识产权纠纷申诉</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>POA_TEMPLATE = {
+    &quot;structure&quot;: {
+        &quot;root_cause&quot;: {
+            &quot;required&quot;: True,
+            &quot;format&quot;: &quot;具体事件描述 + 数据支撑&quot;,
+            &quot;bad_example&quot;: &quot;我们的产品没有问题，这是恶意投诉&quot;,
+            &quot;good_example&quot;: &quot;2026-06-01, ASIN B0XXX 收到 IP 投诉，投诉方为 Company X，投诉编号 XXXXXX。经核查，我司产品描述中使用了与对方商标相似的词汇&#x27;XXX&#x27;，该词汇已于2025年被对方注册为美国商标。&quot;,
+        },
+        &quot;corrective_actions&quot;: {
+            &quot;required&quot;: True,
+            &quot;format&quot;: &quot;已完成的具体步骤 + 时间戳&quot;,
+            &quot;examples&quot;: [
+                &quot;2026-06-02: 已从 Listing 标题/描述/Bullet 中删除争议词汇&quot;,
+                &quot;2026-06-02: 已联系投诉方 company@email.com 寻求撤诉，邮件已附&quot;,
+                &quot;2026-06-03: 已提交新版 Listing 图片（去除争议标识）&quot;,
+            ],
+        },
+        &quot;preventive_measures&quot;: {
+            &quot;required&quot;: True,
+            &quot;format&quot;: &quot;系统性流程改变&quot;,
+            &quot;examples&quot;: [
+                &quot;建立新品上架前商标检索 SOP（USPTO + 欧盟商标数据库）&quot;,
+                &quot;每季度进行全店 Listing 合规审查&quot;,
+                &quot;购买商标监控服务（如 TrademarkNow）实时预警&quot;,
+            ],
+        },
+    },
+    &quot;escalation_path&quot;: [
+        &quot;Seller Central &gt; Performance &gt; Account Health &gt; Submit Appeal&quot;,
+        &quot;如 48h 无回复: 邮件 seller-performance@amazon.com&quot;,
+        &quot;如仍拒绝: Amazon Executive Seller Relations（需要 Case ID）&quot;,
+        &quot;最后手段: Amazon Seller Forums + 寻求法律援助&quot;,
+    ],
+}
+
+def generate_poa(issue_type: str, asin: str, incident_date: str, actions_taken: list) -&gt; str:
+    &quot;&quot;&quot;生成 POA 框架，基于具体情况填写。&quot;&quot;&quot;
+    template = POA_TEMPLATE[&quot;structure&quot;]
+    
+    poa = f&quot;&quot;&quot;
+PLAN OF ACTION - {issue_type.upper()}
+ASIN: {asin} | Date: {incident_date}
+
+SECTION 1 - ROOT CAUSE:
+[描述根本原因，使用数据]
+Incident Date: {incident_date}
+ASIN Affected: {asin}
+Issue Type: {issue_type}
+Root Cause Analysis: [在此填写具体原因]
+
+SECTION 2 - CORRECTIVE ACTIONS TAKEN:
+&quot;&quot;&quot;
+    for i, action in enumerate(actions_taken, 1):
+        poa += f&quot;{i}. {action}\n&quot;
+    
+    poa += &quot;&quot;&quot;
+SECTION 3 - PREVENTIVE MEASURES:
+1. [在此填写系统性预防措施]
+2. [建立监控机制]
+3. [培训/流程改进]</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Amazon-Account-Appeal-Strategy" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Amazon-ToS-Compliance-Guardrail.html'>Skill-Amazon-ToS-Compliance-Guardrail</a></li><li><a href='../skills/Skill-Compliance-Scored-Guardrail-Orchestration.html'>Skill-Compliance-Scored-Guardrail-Orchestration</a></li><li><a href='../skills/Skill-Consumer-Complaint-Recall-Prediction.html'>Skill-Consumer-Complaint-Recall-Prediction</a></li><li><a href='../skills/Skill-Review-Fraud-Detection.html'>Skill-Review-Fraud-Detection</a></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><p class='muted'>暂无</p>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Compliance-Scored-Guardrail-Orchestration.html'>Skill-Compliance-Scored-Guardrail-Orchestration</a></li><li><a href='../skills/Skill-Consumer-Complaint-Recall-Prediction.html'>Skill-Consumer-Complaint-Recall-Prediction</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

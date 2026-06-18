@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AIGC Authenticity Trust Framework — 图文双轨 AIGC 真实性检测与消费者信任管理 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/11-ai人文.html">11-AI人文</a> / Skill-AIGC-Authenticity-Trust-Framework</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>AIGC Authenticity Trust Framework — 图文双轨 AIGC 真实性检测与消费者信任管理</h1>
+<p class="muted">Skill-AIGC-Authenticity-Trust-Framework · 11-AI人文</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>fraud_detection</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-compliance.html'>跨境合规全链路</a><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>0 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>品牌负责人 / 内容运营<span class='biz-ctx-secondary'> · CEO · 社媒运营</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>TikTok · Instagram · DTC 品牌站 · 母婴社媒内容</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品牌内容同质化，想在母婴赛道建立有温度有记忆点的品牌人设；海外用户文化差异大，本地化内容难以真正有共鸣</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>品牌内容从「产品介绍」升级为「情感共鸣的故事」，海外用户分享率和评论互动率提升</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>内容没有灵魂用户不爱看</span><span class='biz-pain-tag'>AI 写的东西太像 AI</span><span class='biz-pain-tag'>不同文化的妈妈怎么打动</span><span class='biz-pain-tag'>品牌故事讲不出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴卖家大量使用 AI 生图/文案后不知是否触发平台检测或被消费者察觉，信任危机导致评分骤降——双轨真实性检测（图像 Patch 不连续性 + 文本 TTR/重复率）预先标记高风险内容，避免上架后信任危机导致年化 50-200 万元 GMV 损失</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>当母婴品牌大规模使用 AI 生成图片和文案时，面临双重风险：平台合规检测（被 Amazon/TikTok 标记 AI 内容）和消费者信任危机（用户察觉 AI 生成后转化率骤降）。AIGC Authenticity Trust Framework 提供图像和文本的双轨检测，在发布前评估内容风险等级，而非事后补救。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：运营团队用 Midjourney 生成了 20 张产品场景图准备上传 Amazon，不确定是否会触发平台 AI 内容检测，也不知道消费者看到后信任度如何。</p><p>双轨检测流程： 1. 对每张图片计算 Patch 不连续性分数（0-1，越高越像 AI） 2. 输出风险等级：绿（&lt;0.3，安全）/ 黄（0.3-0.6，建议修图）/ 红（&gt;0.6，高风险） 3. 估算消费者信任下降幅度（基于真实性感知研究）</p><p>| 图片 | AI 真实性分 | 风险等级 | 建议 | |---|---|---|---| | main_hero.jpg | 0.18 | 🟢 安全 | 可直接使用 | | lifestyle_01.jpg | 0.52 | 🟡 注意 | 建议加入真实使用场景 | | product_flat.jpg | 0.78 | 🔴 高风险 | 需替换为实拍图 |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>每次 AI 内容引发的消费者信任危机（评分从 4.5→3.8 星）潜在 GMV 损失：50-200 万元/年</li><li>提前识别高风险内容，避免上架后补救：节省危机公关成本 10-30 万元/次</li><li>文案优化方向指导：TTR 提升使文案 CTR 提升 5-15%</li><li>消费者对 AI 内容真实性的敏感度随平台监管加强而上升（2025 年 Amazon/TikTok 均强化 AI 内容标注规定）</li><li>母婴品类消费者信任敏感度高于平均水平（涉及婴儿安全）</li><li>实施成本低（纯统计方法，无需 LLM 调用）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+AIGC Authenticity Trust Framework
+图文双轨 AIGC 真实性检测 + 消费者信任影响评估
+依赖: numpy, Pillow（pip install pillow numpy）
+&quot;&quot;&quot;
+import numpy as np
+from PIL import Image
+import re
+from typing import Tuple, Dict, List
+from dataclasses import dataclass
+
+@dataclass
+class AuthenticityResult:
+    content_id: str
+    content_type: str          # &#x27;image&#x27; or &#x27;text&#x27;
+    ai_score: float            # 0=真实, 1=AI生成
+    risk_level: str            # GREEN/YELLOW/RED
+    trust_impact: float        # 消费者信任下降估算（%）
+    details: Dict
+
+# ─────────────────────────────────────────
+# 图像轨：Patch 不连续性检测
+# ─────────────────────────────────────────
+
+def extract_patch_features(img_array: np.ndarray, patch_size: int = 16) -&gt; np.ndarray:
+    &quot;&quot;&quot;提取图像 Patch 级梯度特征&quot;&quot;&quot;
+    if len(img_array.shape) == 3:
+        gray = img_array.mean(axis=2)
+    else:
+        gray = img_array.astype(float)
+    h, w = gray.shape
+    features = []
+    for i in range(0, h - patch_size, patch_size):
+        for j in range(0, w - patch_size, patch_size):
+            patch = gray[i:i+patch_size, j:j+patch_size]
+            # 水平和垂直梯度
+            grad_h = np.diff(patch, axis=0)
+            grad_v = np.diff(patch, axis=1)
+            features.append([
+                grad_h.std(),           # 水平梯度标准差
+                grad_v.std(),           # 垂直梯度标准差
+                patch.std(),            # Patch 内亮度方差
+                np.abs(grad_h).mean(),  # 平均梯度幅度
+            ])
+    return np.array(features)
+
+def compute_patch_discontinuity(features: np.ndarray) -&gt; float:
+    &quot;&quot;&quot;
+    计算相邻 Patch 间的不连续性分数（GenDF 核心思路）
+    AI 图像：相邻 Patch 统计特性差异大 → 高分
+    真实图像：光照/噪声连续 → 低分
+    &quot;&quot;&quot;
+    if len(features) &lt; 2:
+        return 0.5
+    # 相邻 Patch 间梯度差异
+    diffs = np.abs(np.diff(features, axis=0))
+    discontinuity = diffs.mean()
+    # 归一化到 0-1
+    score = float(np.clip(discontinuity / 15.0, 0, 1))
+    return score</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2512.21709</li><li>2512.22027</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-AIGC-Authenticity-Trust-Framework" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AI-Consumer-Wellbeing-Ethics.html'>Skill-AI-Consumer-Wellbeing-Ethics</a></li><li><a href='../skills/Skill-AI-Explainability-Consumer-Trust.html'>Skill-AI-Explainability-Consumer-Trust</a></li><li><a href='../skills/Skill-AI-Fake-Review-Detection.html'>Skill-AI-Fake-Review-Detection</a></li><li><a href='../skills/Skill-AIGC-Content-Detection.html'>Skill-AIGC-Content-Detection</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AI-Explainability-Consumer-Trust.html'>Skill-AI-Explainability-Consumer-Trust</a></li><li><a href='../skills/Skill-AI-Fake-Review-Detection.html'>Skill-AI-Fake-Review-Detection</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AI-Fake-Review-Detection.html'>Skill-AI-Fake-Review-Detection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

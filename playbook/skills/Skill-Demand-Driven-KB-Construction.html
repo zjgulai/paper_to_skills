@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>需求驱动知识库构建 — Agent失败即信号：用任务失败驱动最小化知识摄入 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Demand-Driven-KB-Construction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>需求驱动知识库构建 — Agent失败即信号：用任务失败驱动最小化知识摄入</h1>
+<p class="muted">Skill-Demand-Driven-KB-Construction · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>传统预先规划知识库耗时3个月且充满无用冗余——DDC让Agent在真实任务中失败，用失败信号驱动最小化摄入，20-30个问题周期后知识库收敛，覆盖所有真正需要的知识（零冗余）（2025 arXiv:2603.14057）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：传统知识库构建方式是&quot;顶层设计&quot;——先想好&quot;用户会问什么&quot;，然后预先整理所有相关文档摄入知识库。这有两个致命问题：①不知道自己不知道什么（发现问题本身是难题）；②产生庞大冗余的知识库（大量内容永远不会被查询）。DDC（DemandDriven Context）的反直觉方案：让Agent先去干活，等它失败，用失败作为信号确定需要哪些知识。这类似测试驱动开发（TDD）——先写测试（真实任务），再写代码（摄入知识）。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 传统方式痛点：某母婴品牌让团队花3个月整理了500页合规文档摄入知识库，但AI助手实际使用时频繁出错（因为文档包含大量通用信息，而非Mother&amp;Baby跨境电商的具体场景） - DDC方案： 1. 让合规AI助手处理真实工单（&quot;我的吸奶器要进入英国市场，需要什么认证？&quot;） 2. 第1次失败：不知道UKCA vs CE的区别 → 摄入&quot;UKCA认证流程&quot;实体 3. 第3次失败：不知道FBA海外仓入库需要CPC证书 → 摄入&quot;FBA合规要求&quot;实体 4. 第7次：Agent独立完成US/UK/DE的合规清单 → 合规知识库基本收敛 5. 全程摄入：23个精确实体（vs 500页通用文档的&quot;大而</p><p>- **业务问题**：供应链AI需要了解&quot;采购-海运-清关-FBA入库&quot;全流程，但SOP文档分散在多个系统，没人知道AI真正需要哪些部分 - **DDC执行**：从高频任务开始（&quot;帮我计算这批货的到港时间&quot;），让AI失败，按失败收集缺失知识；9轮后形成包含37个实体的供应链知识库，覆盖80%的日常操作场景</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：传统方式构建合规知识库3个月$15000人工成本，DDC方式2周$3000；知识库精准度更高使AI助手成功率从58%→91%；年化减少人工复查50%；系统成本$2万，ROI≈500%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（方法论简单，关键是建立&quot;Agent失败→缺口识别→摄入→验证&quot;的闭环流程，无需特殊技术）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（知识库是所有Agent的底座，DDC从根本上解决了&quot;如何构建有用的知识库&quot;问题——这比优化检索算法更重要）</li><li><strong>适用规模</strong>：任何需要构建领域知识库的组织，特别是有大量未结构化领域知识的跨境电商合规/供应链场景</li><li><strong>数据依赖</strong>：只需要真实任务（而非预先规划的知识），通过失败自动发现需要什么知识</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+需求驱动知识库构建系统 (Demand-Driven Context)
+功能：Agent失败检测 + 知识缺口识别 + 渐进摄入 + 收敛监控
+基于 arXiv:2603.14057 (2025)
+&quot;&quot;&quot;
+import json
+import uuid
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Any
+from enum import Enum
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class EntityType(Enum):
+    FACT = &quot;fact&quot;           # 不变的业务规则/定义
+    PROCESS = &quot;process&quot;     # 操作步骤序列
+    DECISION = &quot;decision&quot;   # 判断准则
+
+
+class GapSeverity(Enum):
+    CRITICAL = &quot;critical&quot;   # 直接导致任务失败
+    HIGH = &quot;high&quot;           # 可能导致错误结果
+    LOW = &quot;low&quot;             # 影响质量但不影响完成
+
+
+@dataclass
+class KnowledgeEntity:
+    &quot;&quot;&quot;知识实体（DDC的基本单元）&quot;&quot;&quot;
+    entity_id: str
+    name: str
+    entity_type: EntityType
+    content: str
+    domain: str
+    source: str                     # 来源（文档路径/专家姓名/系统名称）
+    validated_by_tasks: List[str] = field(default_factory=list)  # 验证过此实体的任务ID
+    usage_count: int = 0
+    created_cycle: int = 0          # 在第几个DDC周期创建
+
+
+@dataclass
+class KnowledgeGap:
+    &quot;&quot;&quot;知识缺口&quot;&quot;&quot;
+    gap_id: str
+    task_id: str
+    description: str                # Agent描述的缺口
+    context: str                    # 任务上下文
+    severity: GapSeverity
+    impact_probability: float       # 影响任务成功的概率
+    resolved: bool = False
+    resolved_by_entity: Optional[str] = None
+
+
+@dataclass
+class DDCTaskResult:
+    &quot;&quot;&quot;DDC一轮任务执行结果&quot;&quot;&quot;
+    task_id: str
+    task_description: str
+    success: bool
+    gaps_identified: List[KnowledgeGap] = field(default_factory=list)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2603.14057</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Demand-Driven-KB-Construction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Context-Kubernetes-KB-Orchestration.html'>Skill-Context-Kubernetes-KB-Orchestration</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li><li><a href='../skills/Skill-KG-Data-Fusion-Pipeline.html'>Skill-KG-Data-Fusion-Pipeline</a></li><li><a href='../skills/Skill-NuggetIndex-Atomic-Knowledge-Management.html'>Skill-NuggetIndex-Atomic-Knowledge-Management</a></li><li><a href='../skills/Skill-Semantic-Chunking-Strategy.html'>Skill-Semantic-Chunking-Strategy</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Context-Kubernetes-KB-Orchestration.html'>Skill-Context-Kubernetes-KB-Orchestration</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li><li><a href='../skills/Skill-NuggetIndex-Atomic-Knowledge-Management.html'>Skill-NuggetIndex-Atomic-Knowledge-Management</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

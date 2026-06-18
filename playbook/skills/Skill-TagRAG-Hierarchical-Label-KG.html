@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TagRAG层级标签知识图谱 — 对象标签链驱动的超高效KG构建与检索 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-TagRAG-Hierarchical-Label-KG</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>TagRAG层级标签知识图谱 — 对象标签链驱动的超高效KG构建与检索</h1>
+<p class="muted">Skill-TagRAG-Hierarchical-Label-KG · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>GraphRAG构建成本极高（LLM全量摘要）导致大多数团队无法负担知识图谱——TagRAG标签链构建速度14.6×、检索1.9×快，平均胜率78.36%，支持实时增量更新（2026 arXiv:2601.05254）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：GraphRAG（微软）构建知识图谱时需要对整个文档集运行全量LLM摘要，成本极高、速度极慢。TagRAG的反直觉发现：不需要LLM理解整个文档的语义才能构建有用的图结构——提取&quot;对象标签&quot;就足够了，而标签提取比语义理解便宜100倍。实验证明：TagRAG比GraphRAG快14.6倍构建，检索快1.9倍，且胜率78.36%。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 传统方式（GraphRAG）：为1000个母婴产品文档构建KG，需要对每个文档运行LLM摘要，耗时8小时、成本$80 - TagRAG方案：NER提取产品/品牌/类目/功能标签，构建层级标签链，总耗时33分钟（14.6×加速），成本$8 - 检索示例：查询&quot;静音电动吸奶器&quot;→ 匹配标签`{静音, 电动, 吸奶器}` → 精准召回相关产品文档集 → 向量精排</p><p>- **业务问题**：80个SKU的产品关联关系（替代品/互补品/同类竞品）需要知识图谱支撑，但没有资源构建完整KG - **TagRAG增量方案**：新SKU上架时提取标签 → 自动添加到标签图 → 标签相似的SKU自动关联 → 即时可用，无需等待全量重建</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：1000个产品文档的KG构建，TagRAG vs GraphRAG时间从8小时→33分钟，成本从$80→$8；增量SKU上架的图更新时间从&quot;全量重建&quot;→&quot;秒级增量&quot;；每月新增100个SKU，年化节省约$9000构建成本；系统成本$3万，ROI≈300%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（标签提取规则为主，无需LLM；层级图构建逻辑简单；主要工作是定义领域标签层级）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（14.6×速度提升使&quot;实时知识图谱&quot;成为可能，不再受限于GraphRAG的高成本；任何需要知识图谱但预算有限的场景的首选）</li><li><strong>适用规模</strong>：所有规模，特别适合SKU数&gt;100的跨境电商（产品标签天然层级化）</li><li><strong>数据依赖</strong>：只需文本文档，无需任何标注数据；领域标签层级需人工初始化（一次性工作）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+TagRAG层级标签知识图谱系统
+功能：对象标签提取 + 层级标签链 + 图构建 + 标签引导检索
+基于 arXiv:2601.05254 (2026)
+&quot;&quot;&quot;
+import re
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Set, Tuple
+from collections import defaultdict, Counter
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# 母婴跨境电商的标签层级定义
+ECOMMERCE_TAG_HIERARCHY = {
+    # 具体产品 → 子类 → 大类 → 行业
+    &quot;吸奶器&quot;: &quot;母婴电器&quot;,
+    &quot;电动吸奶器&quot;: &quot;吸奶器&quot;,
+    &quot;手动吸奶器&quot;: &quot;吸奶器&quot;,
+    &quot;婴儿推车&quot;: &quot;母婴出行&quot;,
+    &quot;婴儿床&quot;: &quot;母婴家居&quot;,
+    &quot;婴儿奶瓶&quot;: &quot;母婴喂养&quot;,
+    &quot;温奶器&quot;: &quot;母婴电器&quot;,
+    &quot;消毒器&quot;: &quot;母婴电器&quot;,
+    &quot;母婴电器&quot;: &quot;母婴产品&quot;,
+    &quot;母婴出行&quot;: &quot;母婴产品&quot;,
+    &quot;母婴家居&quot;: &quot;母婴产品&quot;,
+    &quot;母婴喂养&quot;: &quot;母婴产品&quot;,
+    &quot;母婴产品&quot;: &quot;跨境电商&quot;,
+    &quot;CPSC&quot;: &quot;认证合规&quot;,
+    &quot;CE认证&quot;: &quot;认证合规&quot;,
+    &quot;UKCA&quot;: &quot;认证合规&quot;,
+    &quot;FBA&quot;: &quot;物流仓储&quot;,
+    &quot;亚马逊&quot;: &quot;电商平台&quot;,
+    &quot;认证合规&quot;: &quot;跨境电商&quot;,
+    &quot;物流仓储&quot;: &quot;跨境电商&quot;,
+    &quot;电商平台&quot;: &quot;跨境电商&quot;,
+}
+
+
+@dataclass
+class TagChain:
+    &quot;&quot;&quot;标签链（从具体到抽象）&quot;&quot;&quot;
+    base_tag: str
+    chain: List[str] = field(default_factory=list)  # [具体→抽象]
+
+
+@dataclass
+class TagNode:
+    &quot;&quot;&quot;标签图节点&quot;&quot;&quot;
+    tag: str
+    document_ids: Set[str] = field(default_factory=set)
+    co_occurrence: Dict[str, int] = field(default_factory=dict)  # 共现次数
+
+
+class TagExtractor:
+    &quot;&quot;&quot;对象标签提取器（无需LLM，规则+关键词）&quot;&quot;&quot;
+
+    BRAND_PATTERNS = [
+        &#x27;Spectra&#x27;, &#x27;Medela&#x27;, &#x27;BabyBuddha&#x27;, &#x27;Elvie&#x27;, &#x27;Lansinoh&#x27;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2601.05254</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-TagRAG-Hierarchical-Label-KG" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-DIAL-KG-Schema-Free-Incremental.html'>Skill-DIAL-KG-Schema-Free-Incremental</a></li><li><a href='../skills/Skill-Dense-Passage-Retrieval.html'>Skill-Dense-Passage-Retrieval</a></li><li><a href='../skills/Skill-Hybrid-Search-BM25-Vector.html'>Skill-Hybrid-Search-BM25-Vector</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-KG-Powered-User-Profiling.html'>Skill-KG-Powered-User-Profiling</a></li><li><a href='../skills/Skill-RAPTOR-Hierarchical-RAG.html'>Skill-RAPTOR-Hierarchical-RAG</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-DIAL-KG-Schema-Free-Incremental.html'>Skill-DIAL-KG-Schema-Free-Incremental</a></li><li><a href='../skills/Skill-Dense-Passage-Retrieval.html'>Skill-Dense-Passage-Retrieval</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-KG-Powered-User-Profiling.html'>Skill-KG-Powered-User-Profiling</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Dense-Passage-Retrieval.html'>Skill-Dense-Passage-Retrieval</a></li><li><a href='../skills/Skill-KG-Powered-User-Profiling.html'>Skill-KG-Powered-User-Profiling</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

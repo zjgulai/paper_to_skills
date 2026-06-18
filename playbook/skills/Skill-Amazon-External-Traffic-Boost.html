@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Amazon External Traffic Boost — 站外流量对 A10 排名速度的提升效应建模 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Amazon-External-Traffic-Boost</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Amazon External Traffic Boost — 站外流量对 A10 排名速度的提升效应建模</h1>
+<p class="muted">Skill-Amazon-External-Traffic-Boost · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>60-200 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>新品上架 90 天仍靠昂贵 PPC 维持排名——A10 Velocity 模型揭示 TikTok 外部转化的权重是站内的 3.2×，每天 20 个外部转化可将关键词排名从第 15 位推升至第 7 位，自然流量增加 2-3×</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>Amazon A10 算法的核心升级是大幅提高外部流量（OffAmazon Traffic）的排名权重。背后逻辑很简单：当 TikTok 用户看了视频后跑到 Amazon 搜索购买，说明这个产品有真实需求，Amazon 愿意给这类产品更好的自然排名——因为这为 Amazon 引入了新流量，而非仅在站内循环。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：发了一条 TikTok 视频（100K 播放），想知道它对 Amazon 排名有没有帮助，多久能看到效果，如何最大化 A10 权重。</p><p>追踪框架： 1. 视频发布时记录 Amazon 关键词当前自然排名（基准） 2. 在视频链接中放 Amazon 专属 UTM 链接追踪外部流量 3. 每天记录关键词排名变化 + 外部流量量 4. 通常 48-72 小时后看到排名上升</p><p>实测发现（母婴吸奶器案例）： - TikTok 视频引入 180 个 Amazon 购买（7天） - 关键词 &quot;wearable breast pump&quot; 排名：15 → 7（+8 位） - 7天后自然流量增加 230%（排名提升带来的飞轮效应）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>排名从第 15 → 第 7：自然流量增加 2-3×，等效减少 PPC 支出 $2,000-5,000/月</li><li>新品 90 天蜜月期外部流量加速：自然排名建立速度快 2-3×</li><li>TikTok Velocity 效应：同等内容投入带来额外 40-80% Amazon 自然排名提升</li><li><strong>年化综合 ROI</strong>：¥60-200 万</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（UTM 追踪 + Velocity 计算，1-2 天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Amazon External Traffic Boost — A10 排名速度模型
+基于 Learning to Rank (arXiv:1704.08173) + A10 实测数据
+
+依赖: numpy, dataclasses (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+import numpy as np
+from collections import defaultdict
+
+
+@dataclass
+class ExternalTrafficEvent:
+    &quot;&quot;&quot;外部流量事件&quot;&quot;&quot;
+    date: str
+    source: str                 # tiktok / pinterest / youtube / instagram / google
+    clicks: int
+    conversions: int            # Amazon 购买转化
+    platform_content_id: str = &quot;&quot;
+
+
+@dataclass
+class AmazonRankingSnapshot:
+    &quot;&quot;&quot;Amazon 排名快照&quot;&quot;&quot;
+    date: str
+    keyword: str
+    natural_rank: int
+    page_one: bool              # 是否在第一页（前48名）
+    daily_organic_sessions: int
+
+
+@dataclass
+class VelocityBoostResult:
+    &quot;&quot;&quot;Velocity 提升估算结果&quot;&quot;&quot;
+    keyword: str
+    current_rank: int
+    velocity_score: float
+    predicted_rank_7d: int
+    predicted_rank_30d: int
+    top_traffic_source: str
+    recommended_daily_target: int
+
+
+class A10ExternalTrafficModel:
+    &quot;&quot;&quot;
+    Amazon A10 外部流量排名速度模型
+
+    基于逆向工程的 A10 行为 + Learning to Rank 弱监督方法
+    &quot;&quot;&quot;
+
+    # 各平台 A10 权重倍数（实测数据）
+    PLATFORM_WEIGHTS = {
+        &quot;tiktok&quot;:    3.2,
+        &quot;pinterest&quot;: 2.8,
+        &quot;youtube&quot;:   2.5,
+        &quot;instagram&quot;: 2.1,
+        &quot;google&quot;:    1.5,
+        &quot;facebook&quot;:  1.2,
+        &quot;direct&quot;:    1.0,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>1704.08173</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Amazon-External-Traffic-Boost" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Instagram-Reels-Commerce-Attribution]]（组合场景</span></li><li><span class='muted'>Listing-Quality-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Amazon-A10-Algorithm-Ranking.html'>Skill-Amazon-A10-Algorithm-Ranking</a></li><li><a href='../skills/Skill-Cross-Platform-Brand-Search-Volume.html'>Skill-Cross-Platform-Brand-Search-Volume</a></li><li><a href='../skills/Skill-Instagram-Reels-Commerce-Attribution.html'>Skill-Instagram-Reels-Commerce-Attribution</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-TikTok-Algorithm-Content-Boost.html'>Skill-TikTok-Algorithm-Content-Boost</a></li><li><a href='../skills/Skill-Video-ROI-Attribution.html'>Skill-Video-ROI-Attribution</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Instagram-Reels-Commerce-Attribution]]（组合场景</span></li><li><span class='muted'>Listing-Quality-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Cross-Platform-Brand-Search-Volume.html'>Skill-Cross-Platform-Brand-Search-Volume</a></li><li><a href='../skills/Skill-Instagram-Reels-Commerce-Attribution.html'>Skill-Instagram-Reels-Commerce-Attribution</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Video-ROI-Attribution.html'>Skill-Video-ROI-Attribution</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Instagram-Reels-Commerce-Attribution]]（组合场景</span></li><li><span class='muted'>Listing-Quality-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Instagram-Reels-Commerce-Attribution.html'>Skill-Instagram-Reels-Commerce-Attribution</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

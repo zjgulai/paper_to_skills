@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multimodal RAG - 图文混合多模态检索增强生成 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Multimodal-RAG</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Multimodal RAG - 图文混合多模态检索增强生成</h1>
+<p class="muted">Skill-Multimodal-RAG · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>visual_generation</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Multimodal RAG（多模态检索增强生成） 将 RAG 系统从纯文本扩展到图文混合模态，实现</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>Multimodal RAG（多模态检索增强生成） 将 RAG 系统从纯文本扩展到图文混合模态，实现：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务背景：母婴卖家在亚马逊/独立站上传产品时，需要提供 FDA、CE、ASTM 等认证证书图片。客服和运营团队每天需要回答&quot;奶瓶 SKU-A32 有 FDA 认证吗？&quot;类问题，但证书存在图片 PDF 中，无法被纯文本系统检索。</p><p>Multimodal RAG 方案： 1. 对所有认证证书图片执行 OCR，提取证书编号/机构/有效期 2. CLIP 图像 embedding 索引证书图片 3. 用户文本查询同时检索 OCR 文本索引 + CLIP 图像索引 4. Late Fusion 融合排序后，LMM 生成带图证据的回答</p><p>量化 ROI： | 指标 | Before（人工翻查）| After（Multimodal RAG）| 提升 | |---|---|---|---| | 认证查询响应时间 | 15-30分钟 | 30秒 | 97% 降低 | | 认证覆盖率（能被检索到）| 60% | 94% | +57% | | 运营团队效率 | 基准 | 节省 10h/人/周 | $15K/人/年 | | 错误认证引用率 | 8% | 0.5% | -94% |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Multimodal RAG - 图文混合多模态检索增强生成
+参考论文: CLIP (arXiv:2103.00020), MuRAG (arXiv:2210.02928),
+          LLaVA (arXiv:2304.08485)
+
+实现要点：
+1. 图文统一 embedding（CLIP 风格，mock 实现）
+2. OCR 文字提取（mock）
+3. Late Fusion 多模态评分融合
+4. 多模态检索器（文本/图像/混合查询）
+5. 上下文组装（供 LMM 生成回答）
+
+运行环境：Python 3.9+，无需外部 API（全 mock）
+&quot;&quot;&quot;
+
+import ast
+import math
+import random
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Dict, List, Optional, Tuple
+
+
+# ─────────────────────────────────────────────
+# 枚举 &amp; 数据结构
+# ─────────────────────────────────────────────
+
+class ModalityType(Enum):
+    TEXT = &quot;text&quot;
+    IMAGE = &quot;image&quot;
+    MULTIMODAL = &quot;multimodal&quot;   # 图文混合文档（如带图说明书）
+
+
+@dataclass
+class MultimodalDocument:
+    &quot;&quot;&quot;多模态文档节点&quot;&quot;&quot;
+    doc_id: str
+    modality: ModalityType
+    text: Optional[str] = None          # 文本内容（文本文档 / OCR 文字）
+    image_description: Optional[str] = None  # 图像语义描述（mock）
+    ocr_text: Optional[str] = None      # OCR 提取的图中文字
+    metadata: Dict = field(default_factory=dict)
+    text_embedding: Optional[List[float]] = None
+    image_embedding: Optional[List[float]] = None
+
+
+@dataclass
+class RetrievalResult:
+    &quot;&quot;&quot;检索结果&quot;&quot;&quot;
+    document: MultimodalDocument
+    text_score: float = 0.0
+    image_score: float = 0.0
+    fusion_score: float = 0.0
+    matched_by: str = &quot;text&quot;    # &quot;text&quot; | &quot;image&quot; | &quot;ocr&quot; | &quot;fusion&quot;
+
+
+# ─────────────────────────────────────────────
+# Mock 工具函数（CLIP 风格）
+# ─────────────────────────────────────────────
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2103.00020</li><li>2210.02928</li><li>2304.08485</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multimodal-RAG" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Document-Intelligence-Parsing.html'>Skill-Document-Intelligence-Parsing</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-KGQA-Question-Answering.html'>Skill-KGQA-Question-Answering</a></li><li><a href='../skills/Skill-LMM-Searcher-Multimodal-Context.html'>Skill-LMM-Searcher-Multimodal-Context</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-HyDE-Hypothetical-Document.html'>Skill-HyDE-Hypothetical-Document</a></li><li><a href='../skills/Skill-Visual-Data-Collection.html'>Skill-Visual-Data-Collection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

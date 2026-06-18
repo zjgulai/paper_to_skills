@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>因果表示学习跨域迁移 — 从源域提取不变因果特征用于目标域零样本适配 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/12-ml基础.html">12-ML基础</a> / Skill-Causal-Representation-Transfer-Learning</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>因果表示学习跨域迁移 — 从源域提取不变因果特征用于目标域零样本适配</h1>
+<p class="muted">Skill-Causal-Representation-Transfer-Learning · 12-ML基础</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 数据工程师<span class='biz-ctx-secondary'> · 运营负责人 · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>选品评分 · 差评预测 · 用户流失预警 · 广告出价预测</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想用机器学习解决业务问题，但不知道该选什么模型；模型上线后效果越来越差不知道为什么</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>选对算法工具减少 50% 试错时间，模型上线后可监控可解释，数据团队和业务团队建立共同语言</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道该用什么模型</span><span class='biz-pain-tag'>模型准确率不稳定</span><span class='biz-pain-tag'>业务不相信模型结果</span><span class='biz-pain-tag'>模型黑盒说不清为什么这么预测</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>新市场冷启动期模型不准导致广告大量浪费——因果表示迁移从小样本中提取不变因果特征，使日本/欧洲新市场AUC从0.61提升至0.76，节省6-12个月成熟期广告浪费</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：在跨境电商场景中，我们常常面临&quot;源域数据丰富、目标域数据稀缺&quot;的问题——美国站积累了3年数据，但新开拓的日本站只有3个月数据，如何把美国站的预测模型迁移到日本站？传统迁移学习方法的失败点在于：它学的是统计相关性（spurious correlations），而非因果机制。比如&quot;冬季+高价=高转化&quot;在美国成立，但在日本可能不成立，因为背后的驱动因子不同。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌在美国站有24个月数据（日均500订单），转化率预测模型AUC=0.82。新开日本站仅3个月数据（日均30订单），无法训练可靠模型。直接迁移美国模型效果差（AUC=0.61） - 数据要求：美国站用户行为序列（浏览/加购/购买）、日本站小样本数据、产品特征（价格/类目/评分） - 算法应用： 1. 使用CORAL对美国和日本特征分布做协方差对齐 2. 识别不变因果特征：价格弹性、评分影响、搜索相关性（这些在两个市场都有因果效应） 3. 域特异特征（日本：品牌信任度权重更高；美国：价格敏感度更高）→ 用少量日本数据微调 4. 最终模型在日本站AUC从0.61提升至0.76</p><p>场景B：新品类预测迁移（婴儿辅食→婴儿护肤）</p><p>- **业务问题**：辅食类目有丰富的需求预测数据，新进入护肤类目数据稀缺。类目间有共同的影响因子（季节性、促销响应、复购率结构） - **算法应用**：跨类目IRM，识别&quot;母婴用户复购行为&quot;这一不变因果特征，迁移辅食品类的用户生命周期模型到护肤品类 - **预期产出**：护肤品类LTV预测误差从35%降至18%，6个月内达到辅食品类模型水平</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：新市场冷启动期（通常6-12个月）广告浪费减少40%，以日本站年广告预算$50万计，节省$20万；系统建设成本$8万，ROI≈250%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（概念理解有门槛，但代码框架标准化；主要挑战是确定&quot;哪些特征是不变的&quot;）</li><li><strong>优先级</strong>：⭐⭐⭐☆☆（适合同时运营3+个国家市场的中大型卖家，单市场卖家暂缓）</li><li><strong>适用规模</strong>：多市场卖家（3+个国家站点）、多品类扩张（从核心品类向新品类渗透）</li><li><strong>数据依赖</strong>：源域完整行为数据（12个月+）、目标域小样本（1-3个月即可）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+因果表示学习跨域迁移
+功能：CORAL域适配 + 域不变特征学习 + 跨市场/品类迁移
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import roc_auc_score
+from scipy.linalg import sqrtm
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def generate_multi_domain_data(seed: int = 42):
+    &quot;&quot;&quot;
+    生成跨域数据集（模拟美国→日本市场迁移）
+    
+    不变因果特征: price_elasticity, review_score（两个市场都有效）
+    域特异特征:   brand_trust（日本更重要）, price_sensitivity（美国更重要）
+    &quot;&quot;&quot;
+    np.random.seed(seed)
+    
+    def make_domain(n, domain=&#x27;us&#x27;, noise=0.1):
+        &quot;&quot;&quot;生成单域数据&quot;&quot;&quot;
+        # 不变特征（两个市场都有因果效应）
+        price_elasticity = np.random.normal(0, 1, n)
+        review_score = np.random.normal(0, 1, n)
+        
+        # 域特异特征
+        if domain == &#x27;us&#x27;:
+            brand_trust = np.random.normal(-0.3, 1, n)  # 美国品牌信任度权重低
+            price_sensitivity = np.random.normal(0.5, 1, n)  # 美国价格敏感度高
+        else:  # japan
+            brand_trust = np.random.normal(0.8, 1, n)   # 日本品牌信任度权重高
+            price_sensitivity = np.random.normal(-0.2, 1, n)  # 日本价格敏感度低
+        
+        # 特征矩阵（4个特征）
+        X = np.column_stack([price_elasticity, review_score, brand_trust, price_sensitivity])
+        
+        # 因果标签生成（转化=1）
+        # 不变因果效应：price_elasticity和review_score决定转化
+        # 域特异效应：brand_trust在日本有额外权重
+        if domain == &#x27;us&#x27;:
+            logit = 0.8 * price_elasticity + 0.9 * review_score + 0.2 * price_sensitivity
+        else:
+            logit = 0.8 * price_elasticity + 0.9 * review_score + 0.6 * brand_trust
+        
+        prob = 1 / (1 + np.exp(-logit + noise * np.random.normal(0, 1, n)))
+        y = (prob &gt; 0.5).astype(int)
+        
+        return X, y
+    
+    # 美国站：大样本
+    X_us, y_us = make_domain(2000, &#x27;us&#x27;)
+    # 日本站：小样本
+    X_jp_train, y_jp_train = make_domain(150, &#x27;japan&#x27;)  # 训练用少量数据
+    X_jp_test, y_jp_test = make_domain(500, &#x27;japan&#x27;)    # 测试用
+    
+    return X_us, y_us, X_jp_train, y_jp_train, X_jp_test, y_jp_test</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2402.11748</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Causal-Representation-Transfer-Learning" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Causal-ML-Feature-Engineering.html'>Skill-Causal-ML-Feature-Engineering</a></li><li><a href='../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html'>Skill-Contextual-Dynamic-Pricing-Optimal</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Embedding-Fundamentals.html'>Skill-Embedding-Fundamentals</a></li><li><a href='../skills/Skill-Online-Incremental-Learning.html'>Skill-Online-Incremental-Learning</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html'>Skill-Contextual-Dynamic-Pricing-Optimal</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Online-Incremental-Learning.html'>Skill-Online-Incremental-Learning</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html'>Skill-Contextual-Dynamic-Pricing-Optimal</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

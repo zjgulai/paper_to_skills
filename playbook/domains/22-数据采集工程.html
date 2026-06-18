@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>22-数据采集工程 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>22-数据采集工程</h1><p>新领域 (2026-06-05): Document intelligence, identity resolution, fake review detection, federated collection, web crawling</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 22-数据采集工程 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Adaptive-Crawl-Scheduling.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Adaptive Crawl Scheduling — 自适应爬取调度：Sleeping Bandit + 神经质量优先级</h3>
+  <p class="sc-desc">论文：SB-CLASSIFIER [2602.11874, EDBT 2026] + Neural Prioritisation [2506.16146]</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Clickstream-Persona-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Clickstream Persona Pipeline — 点击流用户画像：VQ-VAE 离散 Persona + 多层行为 KG</h3>
+  <p class="sc-desc">母婴跨境电商应用：独立站/APP 原始点击流 → 离散 persona token，驱动个性化推荐和 A/B 实验</p>
+  <div class='sc-footer'><span class='sc-roi'>837 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Data-Collection-Causal-Debiasing.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Data Collection Causal Debiasing — 采集偏差因果修正：爬虫选择性采集对因果分析的去污染</h3>
+  <p class="sc-desc">某母婴品牌通过爬虫采集 Amazon 评论，分析&quot;打折 coupon 是否提升复购率&quot;</p>
+  <div class='sc-footer'><span class='sc-roi'>180 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Data-Provenance-Lineage.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Data Provenance &amp; Lineage — 数据血缘追踪：LLM 训练数据溯源与 AI 法规合规</h3>
+  <p class="sc-desc">母婴跨境电商应用：追踪商品推荐/风控模型的训练数据来源，满足 EU AI Act 等法规审计要求</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Document-Intelligence-Parsing.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Document Intelligence Parsing — LLM 驱动的文档智能解析：图文统一 OCR、跨页表格恢复、布局感知推理</h3>
+  <p class="sc-desc">每季度收到 20 家供应商 PDF 报价单，人工录入 SKU/价格/MOQ 需 3-4 天且错误率 8%——Layout-aware LLM 解析实现 PDF→结构化数据全自动，人工录入工时归零，错误率降至 1% 以下</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Ecommerce-Data-Quality-Assessment.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">E-commerce Data Quality Assessment — 产品目录数据质量双轨评分与门控</h3>
+  <p class="sc-desc">母婴跨境电商应用：商品 catalog 错误检测与缺失模态补全，保证下游推荐/搜索质量</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万/年</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Fake-Review-Detection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Fake Review Detection — 假评论检测：图神经网络+LLM 可解释欺诈识别</h3>
+  <p class="sc-desc">论文：JARVIS [2602.12941] + DS-DGA-GCN [2603.08332] + CAMERA [2605.20032]</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Focused-Web-Crawling.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">LLM-Focused Web Crawling — LLM/MLLM 引导的主题爬取：KG 驱动发现与动态 JS 页面抽取</h3>
+  <p class="sc-desc">1. 广度优先爬取浪费资源：爬 100 个页面才找到 5 个有价值的竞品信息</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Market-Signal-Realtime-Collection.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Market Signal Realtime Collection — 实时市场信号采集：事件驱动感知与趋势冷启动检测</h3>
+  <p class="sc-desc">母婴爆品的&quot;起飞时刻&quot;通常在搜索量还很低的阶段。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multimodal-UGC-Cross-Platform-Fusion.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">跨平台UGC多模态融合采集 — 图文视频评论统一信号采集与去噪</h3>
+  <p class="sc-desc">品牌质量问题在TikTok已爆发而Amazon评分仍正常——跨平台多模态UGC融合将质量预警提前6周，保护年销$500万SKU避免$50-80万评分下滑损失</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Privacy-Preserving-Federated-Collection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Privacy-Preserving Federated Collection — 隐私保护联邦采集：差分隐私预算与联邦推荐</h3>
+  <p class="sc-desc">论文：SF-UBM [2604.14833] + MFG-RegretNet [2603.28329]</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Privacy-Safe-Identity-Resolution.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Privacy-Safe Identity Resolution — 隐私合规跨平台 ID 解析：多方对齐与差分隐私</h3>
+  <p class="sc-desc">论文：Sherpa.ai [2604.19219] + Cross-Domain SID [2606.01396]</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Procurement-Email-Extraction.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Procurement Email Extraction — 采购邮件结构化提取：合同条款解析与 MILP 合规验证</h3>
+  <p class="sc-desc">母婴跨境电商应用：自动解析供应商报价邮件→结构化 MOQ/交期/价格梯度，节省 4-6h/周人工录入</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Product-Attribute-Completion.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Product Attribute Completion — 商品属性自动补全：AI 填补 Listing 属性空白</h3>
+  <p class="sc-desc">新款吸奶器需要填写42个属性字段人工填写1.5小时但30-40%属性空白导致搜索排名下降——AI从标题/要点/图片自动提取属性值5分钟完成，属性完整度60%提升到90%搜索曝光增加20-35%年化15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Realtime-Feature-Collection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Realtime Feature Collection — 流式特征采集与在线特征仓库：推荐系统实时个性化的数据基础设施</h3>
+  <p class="sc-desc">后果：用户浏览了某款婴儿车 → 系统还在推荐她上周看过的奶粉 → CTR 下降，转化率损失。</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Review-Dedup-Quality-Filter.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</h3>
+  <p class="sc-desc">从 Amazon、TikTok Shop、独立站同时采集的评论中，30-40% 是重复或低质量内容（同一用户多平台发布、机器生成水评、极短无意义评论）。直接用于 VOC 分析会严重扭曲洞察结论。</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Synthetic-Data-Ecommerce.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Synthetic Data for E-commerce — 电商合成数据生成：解决新品冷启动与长尾数据稀缺</h3>
+  <p class="sc-desc">母婴跨境电商应用：新品上市无历史数据时生成高质量合成数据，驱动冷启动推荐和库存预测</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Weak-Supervision-Data-Labeling.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Weak Supervision Data Labeling — 弱监督数据标注：用规则函数替代人工标注</h3>
+  <p class="sc-desc">训练评论分类AI需要10000条人工标注数据花3万元等3周——弱监督用15个规则函数自动标注全部数据1天完成成本近零，标注效率提升10-50倍支持多个AI项目年化节省数据标注成本20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Web-Page-Change-Detection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Web Page Change Detection — 网页变化检测：VLM 视觉差异识别与 DOM 原子性保护</h3>
+  <p class="sc-desc">母婴跨境电商应用：仅在竞品价格/库存/图片发生变化时触发全量抓取，减少 70% 无效爬取</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

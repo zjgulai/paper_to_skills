@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multimarket Expansion Readiness Scorer（多市场拓展就绪度评分） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-Multimarket-Expansion-Readiness-Scorer</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Multimarket Expansion Readiness Scorer（多市场拓展就绪度评分）</h1>
+<p class="muted">Skill-Multimarket-Expansion-Readiness-Scorer · 06-增长模型</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-200 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CEO / 增长负责人<span class='biz-ctx-secondary'> · CMO · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · DTC 独立站 · 多市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>公司增长放缓，不知道是市场饱和还是产品问题还是获客太贵；老板要 12 个月 GMV 预测，只能靠感觉</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立增长拆解模型找到瓶颈，预测未来 6-12 个月营收区间，支撑融资/战略会议</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>增长放缓不知道问题在哪</span><span class='biz-pain-tag'>CAC 越来越高已经高于 LTV</span><span class='biz-pain-tag'>新市场要不要进没有数据支撑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>跨境品牌进入德国市场时，CE 认证未完成就提前烧 50 万广告费——五维就绪度评分模型（合规/物流/需求/内容/财务）输出 GO/WAIT/NO-GO，识别阻塞点并给出优先行动清单，避免因时机错误造成的首年损失 30-200 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：跨境品牌从美国市场扩张到欧洲/日本/中东时，面临的不是单一问题，而是产品合规、物流成本、用户需求差异、竞争格局、现金流压力五个维度同时变化。就绪度评分模型将这五个维度量化为 0100 分的综合指数，输出「GO/WAIT/NOGO」三档建议。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景：Momcozy 从美国站向德国 Amazon 扩张评估</p><p>| 维度 | 得分 | 关键发现 | |------|------|---------| | 产品合规 | 62 | 吸奶器需要 CE + MDR 认证（医疗器械），申请中（未持证扣 40 分），HTS 关税 0% 加分 | | 物流链路 | 78 | 已有法兰克福 FBA 仓，DE 配送次日达，头程成本 7% GMV（合格） | | 市场需求 | 71 | 德国 Amazon 母婴品类 BSR 90 天上升 12%，竞争以本土品牌为主（中等难度）| | 品牌/内容 | 45 | 仅有机器翻译德语 Listing，无本地化评论，TikTok DE 无内容 | | 财务就绪 | 68 | 首批备</p><p>综合得分：`62×0.25 + 78×0.20 + 71×0.25 + 45×0.15 + 68×0.15 = 65.8`</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>30-200 万元</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：7 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass
+
+@dataclass
+class MarketReadinessInput:
+    market: str
+    compliance_score: float
+    logistics_score: float
+    demand_score: float
+    content_score: float
+    financial_score: float
+
+WEIGHTS = {
+    &quot;compliance&quot;: 0.25,
+    &quot;logistics&quot;: 0.20,
+    &quot;demand&quot;: 0.25,
+    &quot;content&quot;: 0.15,
+    &quot;financial&quot;: 0.15,
+}
+
+def score_market_readiness(inp: MarketReadinessInput) -&gt; dict:
+    weighted = (
+        inp.compliance_score * WEIGHTS[&quot;compliance&quot;]
+        + inp.logistics_score * WEIGHTS[&quot;logistics&quot;]
+        + inp.demand_score * WEIGHTS[&quot;demand&quot;]
+        + inp.content_score * WEIGHTS[&quot;content&quot;]
+        + inp.financial_score * WEIGHTS[&quot;financial&quot;]
+    )
+
+    if weighted &gt;= 70 and inp.compliance_score &gt;= 60:
+        decision = &quot;GO&quot;
+        rationale = &quot;全面就绪，建议在下一个财季启动&quot;
+    elif weighted &gt;= 50 and inp.compliance_score &gt;= 30:
+        decision = &quot;WAIT&quot;
+        blockers = []
+        if inp.compliance_score &lt; 60:
+            blockers.append(f&quot;合规就绪度不足 ({inp.compliance_score:.0f}&lt;60)&quot;)
+        if inp.content_score &lt; 50:
+            blockers.append(f&quot;内容本地化薄弱 ({inp.content_score:.0f}&lt;50)&quot;)
+        if inp.financial_score &lt; 55:
+            blockers.append(f&quot;财务就绪度不足 ({inp.financial_score:.0f}&lt;55)&quot;)
+        rationale = &quot;阻塞点: &quot; + &quot;; &quot;.join(blockers) if blockers else &quot;综合得分偏低，建议先强化弱项&quot;
+    else:
+        decision = &quot;NO-GO&quot;
+        rationale = &quot;市场时机或资源条件不成熟，建议推迟 6+ 个月&quot;
+
+    return {
+        &quot;market&quot;: inp.market,
+        &quot;total_score&quot;: round(weighted, 1),
+        &quot;decision&quot;: decision,
+        &quot;rationale&quot;: rationale,
+        &quot;dim_scores&quot;: {
+            &quot;compliance&quot;: inp.compliance_score,
+            &quot;logistics&quot;: inp.logistics_score,
+            &quot;demand&quot;: inp.demand_score,
+            &quot;content&quot;: inp.content_score,
+            &quot;financial&quot;: inp.financial_score,
+        },
+    }
+
+markets = [</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multimarket-Expansion-Readiness-Scorer" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html'>Skill-Bass-Diffusion-New-Product-Forecasting</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-Cultural-Adaptation-Agent.html'>Skill-Cultural-Adaptation-Agent</a></li><li><a href='../skills/Skill-Market-Size-Estimation.html'>Skill-Market-Size-Estimation</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html'>Skill-Bass-Diffusion-New-Product-Forecasting</a></li><li><a href='../skills/Skill-Cultural-Adaptation-Agent.html'>Skill-Cultural-Adaptation-Agent</a></li><li><span class='muted'>延伸</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html'>Skill-Bass-Diffusion-New-Product-Forecasting</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-Cultural-Adaptation-Agent.html'>Skill-Cultural-Adaptation-Agent</a></li><li><a href='../skills/Skill-Supplier-Capacity-Planning.html'>Skill-Supplier-Capacity-Planning</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Product Safety Certification — AI驱动产品安全认证自动化：从测试报告解析到合规路径规划 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/21-合规决策.html">21-合规决策</a> / Skill-AI-Product-Safety-Certification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>AI Product Safety Certification — AI驱动产品安全认证自动化：从测试报告解析到合规路径规划</h1>
+<p class="muted">Skill-AI-Product-Safety-Certification · 21-合规决策</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-compliance.html'>跨境合规全链路</a><a class='hb-uplink' href='../playbooks/pb-product-selection.html'>选品决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>合规负责人 / 选品负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>美国 CPSC/ASTM · 欧盟 CE/EN71 · Amazon 类目合规要求 · 德国/英国/中东市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>新品上架前不确定在美国/欧盟是否需要认证，怕因合规问题被下架；产品被平台下架但不清楚哪里出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>上架前自动完成合规预扫描，0 合规下架事故，新市场合规准备时间从 3 个月缩短到 2 周</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>产品被下架说是合规问题</span><span class='biz-pain-tag'>不知道目标市场需要什么认证</span><span class='biz-pain-tag'>EU/US 合规要求不一样怎么处理</span><span class='biz-pain-tag'>母婴产品安全标准太严怕踩雷</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>当母婴产品需要进入美国+欧盟+澳大利亚三个市场时，AI认证路径规划在5分钟内输出最低成本认证组合并识别可共享测试，将认证周期从8周压缩到4周、成本降低20-35%。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>产品安全认证是一个多层级规则推理问题：给定产品描述，需要穿越多个规则树（国家→品类→材料→年龄段→使用场景），最终输出必要的测试项目。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>反直觉洞察：英国脱欧后，很多卖家误以为需要单独的UKCA认证。AI知识库实时更新：英国至今（2026年）仍接受CE标记的产品，UKCA强制日期已多次延期，避免卖家多花$500重复认证。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：8 · 路径：paper2skills-code/21-合规决策/ai_product_safety_certification</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>import json
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional
+from enum import Enum
+
+class Market(Enum):
+    US = &quot;美国&quot;
+    EU = &quot;欧盟&quot;
+    UK = &quot;英国&quot;
+    AU = &quot;澳大利亚&quot;
+    CA = &quot;加拿大&quot;
+
+@dataclass
+class CertificationRequirement:
+    standard: str           # e.g., &quot;ASTM F963&quot;
+    description: str
+    cost_usd: float
+    lead_time_weeks: float
+    lab_options: List[str]  # e.g., [&quot;SGS&quot;, &quot;BV&quot;, &quot;TÜV&quot;]
+    can_share_with: List[str] = field(default_factory=list)  # 可共享报告的其他认证
+
+@dataclass
+class ProductProfile:
+    name: str
+    category: str           # &quot;婴儿玩具&quot;, &quot;儿童家具&quot;, etc.
+    materials: List[str]
+    age_group_months: tuple # (min, max)
+    has_electronics: bool
+    has_bluetooth: bool
+    target_markets: List[Market]
+
+# 认证规则知识库（简化版）
+CERTIFICATION_RULES: Dict[str, Dict] = {
+    &quot;婴儿玩具&quot;: {
+        Market.US: [
+            CertificationRequirement(
+                &quot;ASTM F963&quot;, &quot;美国玩具安全标准&quot;, 800, 4, [&quot;SGS&quot;, &quot;BV&quot;, &quot;Intertek&quot;],
+                can_share_with=[]
+            ),
+            CertificationRequirement(
+                &quot;CPSIA Lead+Phthalates&quot;, &quot;铅和邻苯二甲酸盐检测&quot;, 300, 2, [&quot;SGS&quot;, &quot;BV&quot;],
+                can_share_with=[&quot;EN 71-3&quot;]  # 与欧盟化学测试共用
+            ),
+        ],
+        Market.EU: [
+            CertificationRequirement(
+                &quot;EN 71-1&quot;, &quot;机械和物理特性&quot;, 400, 3, [&quot;TÜV&quot;, &quot;SGS&quot;, &quot;Intertek&quot;],
+                can_share_with=[&quot;AS/NZS 8124-1&quot;]
+            ),
+            CertificationRequirement(
+                &quot;EN 71-2&quot;, &quot;燃烧性&quot;, 250, 2, [&quot;TÜV&quot;, &quot;SGS&quot;],
+                can_share_with=[]
+            ),
+            CertificationRequirement(
+                &quot;EN 71-3&quot;, &quot;特定元素迁移&quot;, 350, 3, [&quot;TÜV&quot;, &quot;SGS&quot;],
+                can_share_with=[&quot;CPSIA Lead+Phthalates&quot;]
+            ),
+        ],
+        Market.AU: [
+            CertificationRequirement(</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2405.09234</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-AI-Product-Safety-Certification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Category-Compliance-Prescan]]</span></li><li><span class='muted'>Cross-Border-Compliance-Framework]]</span></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Regulatory-Change-Auto-Monitor]]</span></li><li><span class='muted'>Regulatory-Graph-Compliance-Monitor]]</span></li><li><a href='../skills/Skill-Regulatory-Change-Auto-Monitor.html'>Skill-Regulatory-Change-Auto-Monitor</a></li><li><a href='../skills/Skill-Regulatory-Graph-Compliance-Monitor.html'>Skill-Regulatory-Graph-Compliance-Monitor</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>ATLAS-HTS-Tariff-Classification]]</span></li><li><span class='muted'>Compliance-Scored-Guardrail-Orchestration]]</span></li><li><span class='muted'>LLM-Contract-Compliance-Review]]</span></li><li><a href='../skills/Skill-ATLAS-HTS-Tariff-Classification.html'>Skill-ATLAS-HTS-Tariff-Classification</a></li><li><a href='../skills/Skill-Compliance-Scored-Guardrail-Orchestration.html'>Skill-Compliance-Scored-Guardrail-Orchestration</a></li><li><a href='../skills/Skill-LLM-Contract-Compliance-Review.html'>Skill-LLM-Contract-Compliance-Review</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

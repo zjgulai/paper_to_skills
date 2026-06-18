@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SKU-Level PL Dashboard — 单品利润核算：每个 SKU 今天赚了多少钱 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-SKU-Level-PL-Dashboard</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>SKU-Level PL Dashboard — 单品利润核算：每个 SKU 今天赚了多少钱</h1>
+<p class="muted">Skill-SKU-Level-PL-Dashboard · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-financial-cockpit.html'>运营财务驾驶舱手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5-20 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐☆☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>账号整体毛利率 22% 看似正常，但 CFO 发现现金流持续很紧，不知道哪些 SKU 在拖后腿——SKU 粒度五层 P&amp;L 拆解（FBA/广告/退货/仓储/关税）识别亏损 SKU，清退后整体毛利率提升至 28-32%，年化释放现金流 15-40 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨境电商的 P&amp;L 核算有一个普遍性问题：财务报表在品牌/账号层面，但决策需要在 SKU 层面——不知道吸奶器 M5 今天赚了多少钱，就无法判断是否要继续备货、调整定价、增减广告。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：账号整体毛利率 22%，看起来还行，但 CFO 发现实际现金流一直很紧。不知道哪些 SKU 在拖后腿。</p><p>| SKU | 售价 | COGS | FBA 费 | 广告费/件 | 退货损失 | 贡献毛利 | |---|---|---|---|---|---|---| | M5 吸奶器 | $89.99 | $28 | $4.45 | $8.20 | $3.20 | +$45.14 (50.2%) | | 储奶袋 50片 | $12.99 | $3.20 | $3.22 | $4.80 | $0.52 | -$0.75 (亏损) | | UV 消毒器 | $59.99 | $22 | $5.80 | $7.50 | $2.40 | +$19.29 (32.2%) |</p><p>发现：储奶袋配件 SKU 每卖一件亏损 $0.75——因为广告费/件过高，而低单价吸收不了 FBA 固定费用。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>发现隐性亏损 SKU：停止亏损广告投放，月节省 $500-3,000</li><li>定价情景分析：识别提价空间，月增 GMV ¥5-20 万</li><li>资源聚焦高贡献 SKU：FBA 仓储优化节省 $200-800/月</li><li><strong>年化综合 ROI</strong>：¥30-100 万</li><li><strong>实施难度</strong>：⭐☆☆☆☆（公式明确，数据来自 Amazon Seller Central，半天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：paper2skills-code/23-运营财务/sku_level_pl_dashboard</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+SKU-Level P&amp;L Dashboard — 单品利润核算模型
+基于 Amazon FBA 成本结构 + Contribution Margin 分析
+
+依赖: dataclasses, statistics (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+from statistics import mean
+from typing import Optional
+
+
+@dataclass
+class FBAConfig:
+    &quot;&quot;&quot;FBA 费用配置（2026 年标准）&quot;&quot;&quot;
+    referral_fee_rate: float = 0.08       # Amazon 平台佣金率（母婴品类 8%）
+    fulfillment_fee: float = 4.25         # 拣货配送费（标准件）
+    storage_rate_monthly: float = 0.78   # 月度仓储费（$0.78/立方英尺，Q1-Q3）
+    storage_rate_q4: float = 2.40        # Q4 旺季仓储费
+    inbound_fee_per_unit: float = 0.50   # FBA 入库费
+    return_processing_fee: float = 2.45  # 退货处理费
+    product_cubic_feet: float = 0.20     # 商品体积（立方英尺）
+
+
+@dataclass
+class SKUCosts:
+    &quot;&quot;&quot;单 SKU 成本结构&quot;&quot;&quot;
+    sku_id: str
+    title: str
+    selling_price: float
+    cogs: float                          # 产品成本（含采购+头程）
+    return_rate: float = 0.06            # 退货率
+    is_q4: bool = False                  # 是否 Q4 旺季（影响仓储费）
+    ad_spend_per_unit: float = 0.0       # 广告费/件（= 广告总花费/出货量）
+    monthly_units_sold: int = 100        # 月销售量
+
+
+@dataclass
+class SKUPL:
+    &quot;&quot;&quot;单 SKU P&amp;L 报表&quot;&quot;&quot;
+    sku_id: str
+    title: str
+    # 收入层
+    gross_revenue_per_unit: float
+    return_loss_per_unit: float
+    net_revenue_per_unit: float
+    # 成本层
+    cogs: float
+    gross_profit: float
+    gross_margin: float
+    # FBA 层
+    referral_fee: float
+    fulfillment_fee: float
+    storage_fee: float
+    inbound_fee: float
+    total_fba_fee: float
+    post_fba_profit: float
+    post_fba_margin: float
+    # 广告层
+    ad_spend_per_unit: float</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2211.09612</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-SKU-Level-PL-Dashboard" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Inventory-Financing-Optimization]]（组合场景</span></li><li><span class='muted'>Real-Time-Competitive-Repricing]]（组合场景</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-Inventory-Financing-Optimization.html'>Skill-Inventory-Financing-Optimization</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-Real-Time-Competitive-Repricing.html'>Skill-Real-Time-Competitive-Repricing</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Inventory-Financing-Optimization]]（组合场景</span></li><li><span class='muted'>Real-Time-Competitive-Repricing]]（组合场景</span></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-Inventory-Financing-Optimization.html'>Skill-Inventory-Financing-Optimization</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-Real-Time-Competitive-Repricing.html'>Skill-Real-Time-Competitive-Repricing</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Inventory-Financing-Optimization]]（组合场景</span></li><li><span class='muted'>Real-Time-Competitive-Repricing]]（组合场景</span></li><li><a href='../skills/Skill-Inventory-Financing-Optimization.html'>Skill-Inventory-Financing-Optimization</a></li><li><a href='../skills/Skill-Real-Time-Competitive-Repricing.html'>Skill-Real-Time-Competitive-Repricing</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAPPO+GAT多智能体图注意力动态定价 — 产品关系图驱动的多SKU协同价格优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/17-价格优化.html">17-价格优化</a> / Skill-MAPPO-GAT-Dynamic-Pricing</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>MAPPO+GAT多智能体图注意力动态定价 — 产品关系图驱动的多SKU协同价格优化</h1>
+<p class="muted">Skill-MAPPO-GAT-Dynamic-Pricing · 17-价格优化</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>定价负责人 / 运营负责人<span class='biz-ctx-secondary'> · 选品负责人 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Buy Box 竞价策略 · 多市场价格协调 · Prime Day / Coupon 折扣优化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>竞品突然降价，不知道该不该跟，跟了怕伤利润不跟怕丢 BSR；大促期间不知道折扣给多少，给多了利润没了</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>实时监控竞品价格并自动触发调价，毛利率保持在目标区间，BSR 排名和利润同时兼顾</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品降价了不知道要不要跟</span><span class='biz-pain-tag'>大促折扣给多少没有依据</span><span class='biz-pain-tag'>手动盯价格太累反应不及时</span><span class='biz-pain-tag'>新品上线定价高了还是低了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>独立对每个SKU定价忽略产品间价格交叉弹性导致组合利润显著低于最优解——MAPPO+GAT图注意力让每个定价Agent感知相关SKU状态，组合协同定价比独立定价提升10-20%总利润（2025 arXiv:2511.00039）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：单品定价策略通常独立优化每个SKU的价格，这在只有一个商品时够用，但母婴卖家通常同时运营50200个SKU，这些SKU之间存在复杂的价格交叉弹性——提高吸奶器价格会影响配件销售；婴儿奶粉降价可能带动婴儿食品全品类销售。反直觉发现：单独优化每个SKU价格的总利润，远低于考虑SKU间交互的协同定价。MAPPO+GAT将产品关系建模为图（每个SKU是一个节点，价格关联是边），让每个定价Agent能&quot;看到&quot;其他SKU的价格信息，实现</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某卖家同时销售吸奶器主机+配件包+储奶袋+清洁套装，目前各自独立定价，Amazon大促期间吸奶器主机降价20%，但配件销售并未同步增长（错过了联带销售机会） - 数据要求：每个SKU的历史价格/日销量/库存/竞品价格；各SKU间的历史购买关联（是否同单购买） - MAPPO+GAT应用： 1. 构建5个SKU的产品图（吸奶器主机-配件包-储奶袋-清洁套装-电源线），定义互补边 2. 训练：主机降价时，GAT自动传播信号给配件节点，相应降低配件价格，触发联带购买 3. 大促期间：主机-20%，配件-15%，储奶袋-10%，形成联动促销 - 预期产出：组合销售GMV比独立定价高约15</p><p>- **业务问题**：同一款吸奶器在US/UK/DE三个市场定价独立，当US市场竞品降价时，UK市场的同款用户也可能转向竞品（通过网络效应），但当前定价系统无法捕捉跨市场关联 - **MAPPO+GAT跨市场应用**：将不同市场的同款SKU视为图中相连节点，学习市场间的价格溢出效应，实现协同定价响应</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：50个SKU的母婴组合，协同定价比独立定价提升约10-20%总利润；月GMV$20万情况下，月增利润约$2000-4000；系统建设$4万，ROI≈600%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（MARL训练需要仿真环境，产品关系图边权重需要从历史数据学习；需要足够的探索时间收敛）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（适合有一定规模的多SKU卖家，单SKU卖家不需要；但对大型母婴品牌而言价值极高）</li><li><strong>适用规模</strong>：同时运营10+个相互关联SKU的卖家，SKU越多、关联越强，协同定价价值越大</li><li><strong>数据依赖</strong>：各SKU历史价格和销量数据（用于学习产品关联图边权重）；需要定价仿真环境</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+MAPPO+GAT多智能体图注意力动态定价
+基于 arXiv:2511.00039 (2025)
+产品关系图驱动的多SKU协同价格优化
+&quot;&quot;&quot;
+import numpy as np
+from collections import defaultdict
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class ProductGraph:
+    &quot;&quot;&quot;产品关系图&quot;&quot;&quot;
+    def __init__(self, n_skus):
+        self.n_skus = n_skus
+        self.adj_matrix = np.zeros((n_skus, n_skus))  # 邻接矩阵（有权）
+
+    def add_edge(self, sku_i, sku_j, weight=1.0, bidirectional=True):
+        &quot;&quot;&quot;添加产品关联边&quot;&quot;&quot;
+        self.adj_matrix[sku_i][sku_j] = weight
+        if bidirectional:
+            self.adj_matrix[sku_j][sku_i] = weight
+
+    def get_neighbors(self, sku_id, threshold=0.1):
+        &quot;&quot;&quot;获取相关SKU&quot;&quot;&quot;
+        row = self.adj_matrix[sku_id]
+        return [(j, row[j]) for j in range(self.n_skus) if abs(row[j]) &gt; threshold and j != sku_id]
+
+
+class GATLayer:
+    &quot;&quot;&quot;简化版图注意力层&quot;&quot;&quot;
+    def __init__(self, in_dim, out_dim):
+        np.random.seed(42)
+        self.W = np.random.randn(in_dim, out_dim) * 0.1
+        self.a = np.random.randn(2 * out_dim) * 0.1
+
+    def attention_weight(self, h_i, h_j):
+        &quot;&quot;&quot;计算注意力权重&quot;&quot;&quot;
+        h_concat = np.concatenate([h_i @ self.W, h_j @ self.W])
+        return max(np.dot(self.a, h_concat), 0)  # LeakyReLU
+
+    def forward(self, features, adj_matrix):
+        &quot;&quot;&quot;图注意力前向传播&quot;&quot;&quot;
+        n = len(features)
+        out = np.zeros((n, self.W.shape[1]))
+
+        for i in range(n):
+            # 计算与所有邻居的注意力权重
+            attn_weights = []
+            neighbors = [(j, adj_matrix[i][j]) for j in range(n) if adj_matrix[i][j] &gt; 0]
+            neighbors.append((i, 1.0))  # 自环
+
+            for j, edge_w in neighbors:
+                a_ij = self.attention_weight(features[i], features[j]) * abs(edge_w)
+                attn_weights.append((j, a_ij, edge_w))
+
+            # Softmax归一化
+            total_attn = sum(w for _, w, _ in attn_weights) + 1e-9
+            normalized = [(j, w / total_attn, ew) for j, w, ew in attn_weights]
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2511.00039</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MAPPO-GAT-Dynamic-Pricing" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-Causal-RL-Dynamic-Pricing.html'>Skill-Causal-RL-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><a href='../skills/Skill-Dynamic-Bundle-Pricing.html'>Skill-Dynamic-Bundle-Pricing</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-Real-Time-Competitive-Repricing.html'>Skill-Real-Time-Competitive-Repricing</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-Dynamic-Bundle-Pricing.html'>Skill-Dynamic-Bundle-Pricing</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-Real-Time-Competitive-Repricing.html'>Skill-Real-Time-Competitive-Repricing</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

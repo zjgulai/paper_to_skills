@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recommendation Finance — 推荐系统 GMV 贡献归因与毛利影响量化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-Recommendation-Finance</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Recommendation Finance — 推荐系统 GMV 贡献归因与毛利影响量化</h1>
+<p class="muted">Skill-Recommendation-Finance · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-100 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>推荐系统优化 CTR 但净利润下滑——GFlowGR utility 信号将利润感知排序净利润提升 21%（Taobao 生产验证），打通推荐系统→财务最后一公里</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>大多数推荐系统的优化目标是&quot;点击率&quot;或&quot;转化率&quot;，但这两个指标和财务目标（GMV、毛利）并不总是一致——推荐高单价低利润商品可能提高 GMV 但降低净利润。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴卖家在 Amazon Storefront 开启了&quot;经常一起购买&quot;推荐功能，但不知道它带来了多少额外销售——算法只给展示数据，财务说不清楚这个功能值不值钱。</p><p>归因量化： - 开启推荐的 SKU 组（实验组）vs 未开启的（对照组） - 控制季节性后，实验组 30 天内连带购买率高出 7.3% - 连带购买均值 $28 × 月销 500 件 × 7.3% = $1,022/月增量 GMV - 年化：$12,264，推荐功能运营成本接近 0 → ROI 极高</p><p>业务问题：当前推荐算法优化 CTR，结果常推低价低利润的配件（$5，毛利 20%），而忽略中高价主机（$90，毛利 38%）。GMV 看似不错，毛利却在下滑。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>推荐功能 GMV 增量验证：通常 5-15%（行业均值），年化 ¥20-100 万</li><li>利润感知排序改造：毛利提升 4-8%，年化 ¥15-50 万</li><li>停止低利润推荐：减少 FBA 配件的无效推广成本 ¥3-10 万/年</li><li><strong>年化综合 ROI</strong>：¥50-160 万</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（Holdout 实验需要 AB 权限；利润感知排序需要推荐系统源码修改）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Recommendation Finance — 推荐系统收入贡献量化
+基于 GFlowGR (arXiv: 2506.16114) 的财务感知评估框架
+
+依赖: numpy, dataclasses (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+import numpy as np
+
+
+@dataclass
+class RecommendationExperiment:
+    &quot;&quot;&quot;推荐系统 A/B 实验数据&quot;&quot;&quot;
+    sku_id: str
+    treatment_users: int       # 开启推荐的用户数
+    control_users: int         # 未开启推荐的用户数
+    treatment_gmv: float       # 实验组 GMV
+    control_gmv: float         # 对照组 GMV
+    treatment_orders: int
+    control_orders: int
+    gross_margin: float = 0.35
+    attribution_window_days: int = 30
+
+
+@dataclass
+class SkuFinancialProfile:
+    &quot;&quot;&quot;SKU 财务档案&quot;&quot;&quot;
+    sku_id: str
+    price: float
+    cogs: float
+    recommendation_cvr: float  # 推荐转化率
+    organic_cvr: float         # 自然转化率
+
+    @property
+    def gross_margin(self) -&gt; float:
+        return (self.price - self.cogs) / self.price
+
+    @property
+    def incremental_margin(self) -&gt; float:
+        &quot;&quot;&quot;推荐带来的增量毛利（每次展示）&quot;&quot;&quot;
+        incremental_cvr = self.recommendation_cvr - self.organic_cvr
+        return incremental_cvr * self.price * self.gross_margin
+
+    @property
+    def utility_score(self) -&gt; float:
+        &quot;&quot;&quot;GFlowGR 风格的 utility 分数（用于 profit-aware 排序）&quot;&quot;&quot;
+        return self.recommendation_cvr * self.price * self.gross_margin
+
+
+class RecommendationFinanceAnalyzer:
+    &quot;&quot;&quot;
+    推荐系统财务价值分析器
+
+    功能：
+    1. 增量 GMV 归因（Holdout 实验）
+    2. 利润感知排序（utility-based ranking）
+    3. 推荐 ROI 报告
+    &quot;&quot;&quot;
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2506.16114</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Recommendation-Finance" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Ad-Attribution-Modeling]]（组合场景</span></li><li><span class='muted'>Forecast-to-PL-Bridge]]（组合场景</span></li><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Ad-Attribution-Modeling]]（组合场景</span></li><li><span class='muted'>Forecast-to-PL-Bridge]]（组合场景</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Ad-Attribution-Modeling]]（组合场景</span></li><li><span class='muted'>Forecast-to-PL-Bridge]]（组合场景</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

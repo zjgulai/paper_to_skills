@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GNN Ecommerce Recommendation — 图神经网络电商推荐：用户-商品图谱深度学习 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-GNN-Ecommerce-Recommendation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>GNN Ecommerce Recommendation — 图神经网络电商推荐：用户-商品图谱深度学习</h1>
+<p class="muted">Skill-GNN-Ecommerce-Recommendation · 05-推荐系统</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥20-60 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>独立站关联推荐只显示同品类热销榜CTR仅2%未利用婴儿推车用户60%会购买安全座椅的配套关系——LightGCN图神经网络消息传递捕捉高阶配套效应，关联推荐CTR从2%提升到5-8%AOV提升15-25%年化增益20-60万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>节点: 用户 U + 商品 I</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：母婴独立站的&quot;相关商品&quot;推荐只显示同品类热销榜，推荐准确率低（CTR 仅 2%）。实际上购买吸奶器的用户 60% 会在 30 天内购买储奶袋/消毒器，这些配套关系没有被利用。</p><p>数据要求： - 用户购买历史（user_id, product_id, timestamp, quantity） - 商品属性（品类/价格/品牌） - 建议数据量：≥ 5,000 用户，≥ 500 商品</p><p>预期产出： - 用户嵌入向量（用于个性化推荐） - 商品嵌入向量（用于相似商品推荐） - Top-K 推荐列表（按 GNN 评分排序） - 配套关系图谱（发现未明显的商品关联）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>关联推荐 CTR 提升（配套关系捕捉）：从 2% → 5-8%，月增 GMV ¥5-15 万</li><li>客单价提升（配套商品同时推荐）：AOV 提升 15-25%</li><li>长尾商品曝光（GNN 传播低频但相关商品）：减少库存积压</li><li><strong>年化综合 ROI：¥20-60 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（LightGCN 有成熟实现（RecBole/DGL）；需要历史购买图数据；约 3-4 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+GNN Ecommerce Recommendation (LightGCN-style)
+图神经网络推荐：用户-商品图消息传递
+&quot;&quot;&quot;
+import numpy as np
+from collections import defaultdict
+
+
+class LightGCNRecommender:
+    &quot;&quot;&quot;
+    LightGCN 风格的轻量图卷积推荐
+    简化版本（无需 PyTorch/TensorFlow）
+    生产环境: pip install recbole 或 dgl
+    &quot;&quot;&quot;
+
+    def __init__(self, n_users: int, n_items: int, embed_dim: int = 32,
+                 n_layers: int = 3, lr: float = 0.01):
+        self.n_users = n_users
+        self.n_items = n_items
+        self.embed_dim = embed_dim
+        self.n_layers = n_layers
+        self.lr = lr
+        # 初始化嵌入
+        scale = 0.1
+        self.user_emb = np.random.normal(0, scale, (n_users, embed_dim))
+        self.item_emb = np.random.normal(0, scale, (n_items, embed_dim))
+        # 图结构
+        self.user_items = defaultdict(set)   # user -&gt; items
+        self.item_users = defaultdict(set)   # item -&gt; users
+
+    def build_graph(self, interactions: list):
+        &quot;&quot;&quot;构建用户-商品交互图&quot;&quot;&quot;
+        for user_id, item_id, _ in interactions:
+            self.user_items[user_id].add(item_id)
+            self.item_users[item_id].add(user_id)
+
+    def propagate(self) -&gt; tuple:
+        &quot;&quot;&quot;
+        LightGCN 消息传递：K 层图卷积
+        聚合邻居嵌入更新当前嵌入
+        &quot;&quot;&quot;
+        all_user_embs = [self.user_emb.copy()]
+        all_item_embs = [self.item_emb.copy()]
+
+        cur_user_emb = self.user_emb.copy()
+        cur_item_emb = self.item_emb.copy()
+
+        for _ in range(self.n_layers):
+            # 用户从购买商品聚合
+            new_user_emb = np.zeros_like(cur_user_emb)
+            for u in range(self.n_users):
+                neighbors = list(self.user_items.get(u, []))
+                if neighbors:
+                    neighbor_embs = cur_item_emb[neighbors]
+                    # 归一化聚合
+                    deg_u = np.sqrt(len(neighbors))
+                    for i in neighbors:
+                        deg_i = np.sqrt(max(len(self.item_users.get(i, [])), 1))
+                        new_user_emb[u] += cur_item_emb[i] / (deg_u * deg_i)
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2511.20564</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-GNN-Ecommerce-Recommendation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>GNN-Foundations]]（GNN 基础知识</span></li><li><span class='muted'>Multimodal-Product-Understanding]]（组合</span></li><li><span class='muted'>Purchase-Intent-Prediction]]（组合</span></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-GNN-Foundations.html'>Skill-GNN-Foundations</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-Multimodal-Product-Understanding.html'>Skill-Multimodal-Product-Understanding</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Multimodal-Product-Understanding]]（组合</span></li><li><span class='muted'>Purchase-Intent-Prediction]]（组合</span></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Multimodal-Product-Understanding.html'>Skill-Multimodal-Product-Understanding</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Multimodal-Product-Understanding]]（组合</span></li><li><span class='muted'>Purchase-Intent-Prediction]]（组合</span></li><li><a href='../skills/Skill-Multimodal-Product-Understanding.html'>Skill-Multimodal-Product-Understanding</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

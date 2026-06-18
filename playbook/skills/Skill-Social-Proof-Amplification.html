@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Social Proof Amplification — 评分/评论/UGC 密度对转化率的因果效应量化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Social-Proof-Amplification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Social Proof Amplification — 评分/评论/UGC 密度对转化率的因果效应量化</h1>
+<p class="muted">Skill-Social-Proof-Amplification · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>15-40 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>评分从 4.4 降到 4.1 但没有量化影响——自然实验证明 1% 评分提升等价 $2.50 价格折扣，年化转化提升价值 $31,000+；负面评分惩罚是正面奖励的 2×，防守比进攻更值钱</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>&quot;社交证明&quot;（Social Proof）是电商转化的核心驱动力，但大多数团队把它当作&quot;直觉&quot;而非&quot;可量化指标&quot;来管理。论文利用 Steam 2019 年算法变更作为自然实验，首次用因果推断方法精确量化了评分对评论行为和购买决策的影响。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：吸奶器 SKU 评分从 4.4 下降到 4.1（因为一批关于噪音的差评），运营想通过改版修复评分，但需要知道&quot;修复评分值多少钱&quot;来判断改版投入是否合理。</p><p>量化计算： - 评分从 4.1 → 4.4（+7.3%） - 按论文公式：转化率提升 ≈ 7.3% × 0.054 = +3.9% - 月自然流量 2000 次，当前 CVR 8%：月增销售 2000 × 3.9% = 78 件 - 月增 GMV：78 × $89 × 0.38（毛利）= $2,638/月 = $31,656/年</p><p>结论：改版成本 &lt; $31,656/年 = 值得投入（实际 FBA 评分修复改版成本通常 $5,000-15,000）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>评分从 4.1 → 4.4 + 评论翻倍：CVR 综合提升约 7-10%，年化 GMV ¥15-40 万</li><li>UGC 图片比例提升 20%：CVR 提升约 5.6%，年化 GMV ¥8-20 万</li><li>负面评分预防（及时响应差评）：防止 2x 的损失（比修复价值更高）</li><li><strong>年化综合 ROI</strong>：¥30-80 万</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（数据采集简单，因果模型参数固定，1 天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Social Proof Amplification — 评分/评论/UGC 转化效应量化
+基于 Steam Store Natural Experiment (Warwick WP714, 2024)
+
+依赖: numpy, dataclasses (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass
+import numpy as np
+
+
+@dataclass
+class ProductSocialProof:
+    &quot;&quot;&quot;产品社交证明指标&quot;&quot;&quot;
+    asin: str
+    avg_rating: float           # 当前平均评分（1-5）
+    review_count: int           # 评论总数
+    ugc_photo_pct: float        # 带图/视频评论比例（0-1）
+    verified_purchase_pct: float = 0.85  # 验证购买比例
+    review_velocity_30d: int = 5         # 近30天新评论数
+
+
+@dataclass
+class SocialProofImpact:
+    &quot;&quot;&quot;社交证明改善的财务影响&quot;&quot;&quot;
+    current_cvr: float
+    improved_cvr: float
+    cvr_lift_pct: float
+    monthly_traffic: int
+    monthly_additional_sales: float
+    annual_gmv_uplift: float
+    investment_threshold: float     # 值得投入的最大成本
+
+
+class SocialProofCalculator:
+    &quot;&quot;&quot;
+    社交证明转化效应计算器
+
+    基于 Warwick 2024 因果研究的参数：
+    - 评分弹性：α = 0.054（每10%评分提升→5.4% CVR提升）
+    - 评论量弹性：β = 0.032（评论数翻倍→3.2% CVR提升）
+    - UGC 弹性：γ = 0.028（每10% UGC比例提升→2.8% CVR提升）
+    - 负面非对称：负面信号影响是正面的 2x
+    &quot;&quot;&quot;
+
+    ALPHA = 0.054   # 评分弹性
+    BETA  = 0.032   # 评论量弹性（per log2 倍增）
+    GAMMA = 0.028   # UGC 密度弹性（每10%）
+
+    def compute_cvr_lift(
+        self,
+        current: ProductSocialProof,
+        improved: ProductSocialProof,
+    ) -&gt; float:
+        &quot;&quot;&quot;
+        计算社交证明改善后的 CVR 提升幅度
+
+        Returns:
+            cvr_lift: 绝对 CVR 提升（如 0.039 = +3.9%）
+        &quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Social-Proof-Amplification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>AB-Variance-Downstream]]（组合场景</span></li><li><span class='muted'>Creator-Economy-ROI-Model]]（组合场景</span></li><li><a href='../skills/Skill-AB-Variance-Downstream.html'>Skill-AB-Variance-Downstream</a></li><li><a href='../skills/Skill-Creator-Economy-ROI-Model.html'>Skill-Creator-Economy-ROI-Model</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Reddit-Community-Signal-Mining.html'>Skill-Reddit-Community-Signal-Mining</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>AB-Variance-Downstream]]（组合场景</span></li><li><span class='muted'>Creator-Economy-ROI-Model]]（组合场景</span></li><li><a href='../skills/Skill-AB-Variance-Downstream.html'>Skill-AB-Variance-Downstream</a></li><li><a href='../skills/Skill-Creator-Economy-ROI-Model.html'>Skill-Creator-Economy-ROI-Model</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Reddit-Community-Signal-Mining.html'>Skill-Reddit-Community-Signal-Mining</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>AB-Variance-Downstream]]（组合场景</span></li><li><span class='muted'>Creator-Economy-ROI-Model]]（组合场景</span></li><li><a href='../skills/Skill-AB-Variance-Downstream.html'>Skill-AB-Variance-Downstream</a></li><li><a href='../skills/Skill-Creator-Economy-ROI-Model.html'>Skill-Creator-Economy-ROI-Model</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

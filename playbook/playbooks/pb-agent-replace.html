@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Agent 替人手册 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / AI Agent 替人手册</nav>
+<div class='pb-hero'>
+  <span class='pb-icon'>AI</span>
+  <div>
+    <h1>AI Agent 替人手册</h1>
+    <p class='lead'>三类岗位的核心重复性工作，逐步交给 AI Agent 执行，释放人力专注高价值决策</p>
+    <span class='biz-tag'>供应链 · 数据分析 · 广告优化</span>
+  </div>
+</div>
+
+<div class='pb-intro'>AI 替代的不是岗位，是岗位里的「重复性决策」——每天都要做、做法固定、但规模超出人力上限的那部分。今天的现状是：供应链负责人每月花 2-3 天纯人工对账三层 Excel（SKU→仓库→市场），数据分析师 80% 时间在取数而非分析，客服团队因无法覆盖德语/日语工单导致旺季 Buy Box 丢失 35%。这三条业务线加起来消耗了 5-8 名运营人员的大量精力，但仍然有盲区、有滞后、有错误。本手册从供应链出发，提供三条独立的替代路径，每条路径都可以单独落地，合计年化 ROI 可达 2000 万+。</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 供应链人工对账工作量从 2-3 天/月 → 接近零</li><li>[OK] 数据分析提数响应从 2-3 天 → 5 分钟</li><li>[OK] 广告无关消耗从 18% → 3.2%，冷启动 ROAS +15-30%</li><li>[OK] 三类岗位重复性工作 Agent 覆盖率 &gt; 70%，人力聚焦高价值决策</li></ul></div>
+<div class='pb-steps'>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 1</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Chapter 1：供应链全链路 Agent（主角）</h3>
+    <p class='pb-problem'>15 个 Excel 联动地狱：SKU×仓库×市场三层预测加总不一致，月底 2-3 天纯人工对账；大促定价和补货是两个团队各自决策，无法实时联动</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html' class='pb-skill-name'>HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</a><div class='pb-skill-badges'><span class='roi-badge'>800-1500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 分层预测调和，数学保证 SKU→仓库→市场三层一致，月底对账人力清零（ROI 800-1500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Event-Driven-Demand-MAS.html' class='pb-skill-name'>Event-Driven Demand MAS — 事件感知补货 MAS：大促/季节自动触发</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 事件感知补货 MAS：大促信号触发自动备货，告别「排期跑批已来不及」（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FSDA-DRL.html' class='pb-skill-name'>FSDA-DRL 快慢双智能体动态定价与补货联合优化</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 快慢双 Agent 联动定价与补货：大促全周期利润最优，替代供应链+运营协调会（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html' class='pb-skill-name'>Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</a><div class='pb-skill-badges'><span class='roi-badge'>200-500 万/年</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 海运延误动态安全库存：苏伊士/巴拿马运河异常时自动预警并提前采购（ROI 200-500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html' class='pb-skill-name'>Multi-Channel Inventory Pooling（多渠道库存池化）</a><div class='pb-skill-badges'><span class='roi-badge'>200-400 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨渠道动态调拨：Amazon缺货+独立站积压同时存在时自动平衡（ROI 200-400万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：60天+销售历史、多仓库存快照、大促日历、供应商交货记录</div>
+    <div class="pb-output"><strong>输出结果：</strong>自动化补货计划 + 大促定价策略 + 海运风险预警 + 跨渠道调拨指令</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Chapter+1：供应链全链路+Agent（主角）+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-agent-replace-1'
+         onclick='markStepDone("pb-agent-replace",1,3,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-agent-replace';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(1)){
+        var btn=document.getElementById('step-done-pb-agent-replace-1');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 2</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Chapter 2：数据分析师 Agent</h3>
+    <p class='pb-problem'>提数需求排期 2-3 天，分析师 80% 时间在取数不在分析；GMV 异常时人工排查根因需要 1-2 小时，节假日无人监控</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html' class='pb-skill-name'>Text-to-SQL Agent for Natural Language Data Query</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 自然语言→SQL：业务同学直接用中文查数据库，消灭 BI 提数排期</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-NL2Dashboard-Automation.html' class='pb-skill-name'>NL2Dashboard Automation（自然语言→仪表盘）</a><div class='pb-skill-badges'><span class='roi-badge'>节省 BI 开发人力</span></div></div><p class='pb-skill-why'>→ 自然语言→仪表盘自动生成，运营自助分析，节省 BI 开发人力</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html' class='pb-skill-name'>DeepAnalyze — 自主数据科学Agent</a><div class='pb-skill-badges'><span class='roi-badge'>20万</span></div></div><p class='pb-skill-why'>→ 自主数据科学 Agent：多平台数据周报 4-6 小时人工 → 5 分钟 Agent 自动生成（ROI 20万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-ProRCA-Business-Analysis.html' class='pb-skill-name'>ProRCA — 因果图路径溯源根因分析</a><div class='pb-skill-badges'><span class='roi-badge'>100 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 因果图根因分析：GMV 暴跌 1-2 小时人工排查 → 0.5 秒锁定根因路径（ROI 100万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-CAR-Agent-Causal-Shapley.html' class='pb-skill-name'>CAR — Agent步骤因果Shapley归因：多步交互效应定量拆解</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ Agent 步骤因果 Shapley 归因：当 Agent 系统决策失效时，通过结构因果模型精确定位哪步贡献最大，MTTR 从 3 天降至 0.5 天（ROI 50-150万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：数据仓库连接权限、历史报表模板、异常阈值定义、Agent 执行轨迹日志</div>
+    <div class="pb-output"><strong>输出结果：</strong>自助查询接口 + 自动周报 + 实时异常根因诊断 + Agent 决策因果归因报告</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Chapter+2：数据分析师+Agent+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-agent-replace-2'
+         onclick='markStepDone("pb-agent-replace",2,3,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-agent-replace';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(2)){
+        var btn=document.getElementById('step-done-pb-agent-replace-2');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 3</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Chapter 3：广告优化师 Agent</h3>
+    <p class='pb-problem'>人工出价精度上限是工作时长：凌晨 2 点平台出新流量包，人在睡觉；新品冷启动 3-5 周无数据，靠经验猜测出价</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Negative-Keyword-Safe-Guard.html' class='pb-skill-name'>Negative Keyword Safe Guard — 贝叶斯小样本负关键词安全过滤</a><div class='pb-skill-badges'><span class='roi-badge'>$432（18% → 3.2%无关消耗）</span><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 贝叶斯小样本负关键词过滤：无关消耗从 18% → 3.2%，自动替代人工整词/否词</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Creative-Fatigue-Detection.html' class='pb-skill-name'>Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 广告素材疲劳检测：CTR/CVR 持续衰减时自动触发素材更新信号，替代人工监控</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html' class='pb-skill-name'>DARA - LLM+RL 双阶段广告预算分配 Agent</a><div class='pb-skill-badges'><span class='roi-badge'>360-720 万元</span><span class='diff-badge'>⭐⭐⭐⭐⭐</span></div></div><p class='pb-skill-why'>→ LLM+RL 双阶段广告预算分配：自动日预算分配，冷启动 ROAS 提升 15-30%（ROI 360-720万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Identified-Bayesian-MMM.html' class='pb-skill-name'>Identified Bayesian MMM — 基于高斯过程的无混淆贝叶斯营销归因</a><div class='pb-skill-badges'><span class='roi-badge'>1000 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 贝叶斯 MMM 归因：告诉你广告钱真正浪费在哪里，1000万 ROI</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：各平台广告 API 数据、历史出价记录、素材表现数据</div>
+    <div class="pb-output"><strong>输出结果：</strong>自动出价策略 + 素材更换信号 + 预算分配建议 + 归因报告</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Chapter+3：广告优化师+Agent+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-agent-replace-3'
+         onclick='markStepDone("pb-agent-replace",3,3,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-agent-replace';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(3)){
+        var btn=document.getElementById('step-done-pb-agent-replace-3');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div></div>
+
+<div class='calc-wrapper'>
+  <div class='calc-header'>
+    <h2>计算你的 ROI</h2>
+    <p class='muted'>填入你的业务数字，实时看 AI Agent 的年化收益估算</p>
+  </div>
+  <div class='calc-tabs'><button class='calc-tab active' data-sec='sc' style='--tc:#2563eb'>供应链</button><button class='calc-tab' data-sec='da' style='--tc:#7c3aed'>数据分析师</button><button class='calc-tab' data-sec='ad' style='--tc:#059669'>广告优化师</button></div>
+  <div class='calc-body'><div class='calc-panel active' id='panel_sc' data-sec='sc' style='--tc:#2563eb'><div class='calc-inputs'>
+<div class='calc-row'>
+  <label class='calc-label' for='sc_sku_count'>管理 SKU 数量</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='sc_sku_count'
+      data-sec='sc' data-var='sku_count'
+      min='1' max='5000' step='10' value='60'>
+    <span class='calc-val' id='v_sc_sku_count'>60</span>
+    <span class='calc-unit'>个</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='sc_stockout_rate'>当前断货率</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='sc_stockout_rate'
+      data-sec='sc' data-var='stockout_rate'
+      min='0' max='50' step='0.5' value='8'>
+    <span class='calc-val' id='v_sc_stockout_rate'>8</span>
+    <span class='calc-unit'>%</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='sc_monthly_gmv'>月均 GMV</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='sc_monthly_gmv'
+      data-sec='sc' data-var='monthly_gmv'
+      min='10' max='50000' step='10' value='200'>
+    <span class='calc-val' id='v_sc_monthly_gmv'>200</span>
+    <span class='calc-unit'>万元</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='sc_overstock_pct'>库存积压占总库存比例</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='sc_overstock_pct'
+      data-sec='sc' data-var='overstock_pct'
+      min='0' max='80' step='1' value='20'>
+    <span class='calc-val' id='v_sc_overstock_pct'>20</span>
+    <span class='calc-unit'>%</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='sc_pm_days'>月底对账人力</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='sc_pm_days'
+      data-sec='sc' data-var='pm_days'
+      min='0' max='30' step='0.5' value='3'>
+    <span class='calc-val' id='v_sc_pm_days'>3</span>
+    <span class='calc-unit'>人天/月</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='sc_pm_cost'>人力日均成本</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='sc_pm_cost'
+      data-sec='sc' data-var='pm_cost'
+      min='200' max='5000' step='100' value='800'>
+    <span class='calc-val' id='v_sc_pm_cost'>800</span>
+    <span class='calc-unit'>元/天</span>
+  </div>
+</div></div><div class='calc-result'><div class='calc-result-label'>年化 ROI 估算</div><div class='calc-result-num' id='result_sc'>—</div><div class='calc-result-unit'>万元/年</div><div class='calc-disclaimer'>基于行业平均改善率保守估算，实际收益因业务规模与实施深度而异</div></div></div><div class='calc-panel' id='panel_da' data-sec='da' style='--tc:#7c3aed'><div class='calc-inputs'>
+<div class='calc-row'>
+  <label class='calc-label' for='da_analyst_count'>数据分析师人数</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='da_analyst_count'
+      data-sec='da' data-var='analyst_count'
+      min='1' max='50' step='1' value='3'>
+    <span class='calc-val' id='v_da_analyst_count'>3</span>
+    <span class='calc-unit'>人</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='da_analyst_salary'>分析师年均成本</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='da_analyst_salary'
+      data-sec='da' data-var='analyst_salary'
+      min='10' max='200' step='5' value='40'>
+    <span class='calc-val' id='v_da_analyst_salary'>40</span>
+    <span class='calc-unit'>万元/人</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='da_fetch_hours_pct'>取数占工作时间比例</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='da_fetch_hours_pct'
+      data-sec='da' data-var='fetch_hours_pct'
+      min='10' max='90' step='5' value='60'>
+    <span class='calc-val' id='v_da_fetch_hours_pct'>60</span>
+    <span class='calc-unit'>%</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='da_anomaly_per_month'>月均 GMV 异常事件</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='da_anomaly_per_month'
+      data-sec='da' data-var='anomaly_per_month'
+      min='0' max='50' step='1' value='2'>
+    <span class='calc-val' id='v_da_anomaly_per_month'>2</span>
+    <span class='calc-unit'>次</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='da_anomaly_cost'>平均每次异常损失</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='da_anomaly_cost'
+      data-sec='da' data-var='anomaly_cost'
+      min='1' max='500' step='1' value='5'>
+    <span class='calc-val' id='v_da_anomaly_cost'>5</span>
+    <span class='calc-unit'>万元</span>
+  </div>
+</div></div><div class='calc-result'><div class='calc-result-label'>年化 ROI 估算</div><div class='calc-result-num' id='result_da'>—</div><div class='calc-result-unit'>万元/年</div><div class='calc-disclaimer'>基于行业平均改善率保守估算，实际收益因业务规模与实施深度而异</div></div></div><div class='calc-panel' id='panel_ad' data-sec='ad' style='--tc:#059669'><div class='calc-inputs'>
+<div class='calc-row'>
+  <label class='calc-label' for='ad_monthly_adspend'>月广告投放额</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='ad_monthly_adspend'
+      data-sec='ad' data-var='monthly_adspend'
+      min='1' max='10000' step='5' value='50'>
+    <span class='calc-val' id='v_ad_monthly_adspend'>50</span>
+    <span class='calc-unit'>万元</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='ad_wasted_pct'>估算无效消耗比例</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='ad_wasted_pct'
+      data-sec='ad' data-var='wasted_pct'
+      min='0' max='60' step='1' value='18'>
+    <span class='calc-val' id='v_ad_wasted_pct'>18</span>
+    <span class='calc-unit'>%</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='ad_cold_start_sku'>月均新品冷启动 SKU 数</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='ad_cold_start_sku'
+      data-sec='ad' data-var='cold_start_sku'
+      min='0' max='100' step='1' value='3'>
+    <span class='calc-val' id='v_ad_cold_start_sku'>3</span>
+    <span class='calc-unit'>个</span>
+  </div>
+</div>
+<div class='calc-row'>
+  <label class='calc-label' for='ad_cold_start_spend'>每 SKU 冷启动广告费</label>
+  <div class='calc-input-wrap'>
+    <input class='calc-input' type='range'
+      id='ad_cold_start_spend'
+      data-sec='ad' data-var='cold_start_spend'
+      min='0' max='200' step='1' value='5'>
+    <span class='calc-val' id='v_ad_cold_start_spend'>5</span>
+    <span class='calc-unit'>万元</span>
+  </div>
+</div></div><div class='calc-result'><div class='calc-result-label'>年化 ROI 估算</div><div class='calc-result-num' id='result_ad'>—</div><div class='calc-result-unit'>万元/年</div><div class='calc-disclaimer'>基于行业平均改善率保守估算，实际收益因业务规模与实施深度而异</div></div></div></div>
+</div>
+
+<script>
+(function(){
+  var CALC = {
+  'sc': {
+    vars: ["sku_count", "stockout_rate", "monthly_gmv", "overstock_pct", "pm_days", "pm_cost"],
+    defaults: {"sku_count": 60, "stockout_rate": 8, "monthly_gmv": 200, "overstock_pct": 20, "pm_days": 3, "pm_cost": 800},
+    compute: function(sku_count, stockout_rate, monthly_gmv, overstock_pct, pm_days, pm_cost) {
+    const stockout_loss = (stockout_rate/100) * monthly_gmv * 12 * 0.4;
+                            const overstock_cost = (overstock_pct/100) * monthly_gmv * 2 * 0.15;
+                            const labor_save = pm_days * pm_cost * 12 / 10000;
+                            const improvement_stockout = stockout_loss * 0.55;
+                            const improvement_overstock = overstock_cost * 0.25;
+                            return Math.round(improvement_stockout + improvement_overstock + labor_save);
+    },
+  },
+  'da': {
+    vars: ["analyst_count", "analyst_salary", "fetch_hours_pct", "anomaly_per_month", "anomaly_cost"],
+    defaults: {"analyst_count": 3, "analyst_salary": 40, "fetch_hours_pct": 60, "anomaly_per_month": 2, "anomaly_cost": 5},
+    compute: function(analyst_count, analyst_salary, fetch_hours_pct, anomaly_per_month, anomaly_cost) {
+    const labor_save = analyst_count * analyst_salary * (fetch_hours_pct/100) * 0.7;
+                            const anomaly_save = anomaly_per_month * anomaly_cost * 12 * 0.6;
+                            return Math.round(labor_save + anomaly_save);
+    },
+  },
+  'ad': {
+    vars: ["monthly_adspend", "wasted_pct", "cold_start_sku", "cold_start_spend"],
+    defaults: {"monthly_adspend": 50, "wasted_pct": 18, "cold_start_sku": 3, "cold_start_spend": 5},
+    compute: function(monthly_adspend, wasted_pct, cold_start_sku, cold_start_spend) {
+    const keyword_save = monthly_adspend * 12 * ((wasted_pct - 3.2) / 100) * 0.8;
+                            const roas_lift = cold_start_sku * cold_start_spend * 12 * 0.20;
+                            return Math.round(Math.max(0, keyword_save) + roas_lift);
+    },
+  },
+};
+  var state = {};
+  Object.keys(CALC).forEach(function(sec){
+    state[sec] = Object.assign({}, CALC[sec].defaults);
+  });
+
+  function compute(sec){
+    var cfg = CALC[sec];
+    var args = cfg.vars.map(function(v){ return state[sec][v]; });
+    try {
+      var result = cfg.compute.apply(null, args);
+      var el = document.getElementById('result_' + sec);
+      if(el) el.textContent = isNaN(result) || result < 0 ? '—' : result.toLocaleString('zh-CN');
+    } catch(e) {}
+  }
+
+  document.querySelectorAll('.calc-input').forEach(function(inp){
+    var sec = inp.dataset.sec, v = inp.dataset.var;
+    var valEl = document.getElementById('v_' + sec + '_' + v);
+    inp.addEventListener('input', function(){
+      state[sec][v] = parseFloat(this.value);
+      if(valEl) valEl.textContent = this.value;
+      compute(sec);
+    });
+    compute(sec);
+  });
+
+  document.querySelectorAll('.calc-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var sec = this.dataset.sec;
+      document.querySelectorAll('.calc-tab').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.calc-panel').forEach(function(p){ p.classList.remove('active'); });
+      this.classList.add('active');
+      var panel = document.getElementById('panel_' + sec);
+      if(panel){ panel.classList.add('active'); compute(sec); }
+    });
+  });
+
+  Object.keys(CALC).forEach(compute);
+})();
+</script>
+<div class='pb-lead-capture'>
+  <div class='pb-lead-inner'>
+    <div class='pb-lead-text'>
+      <h3>想了解这套方案如何落地你的业务？</h3>
+      <p>预约 30 分钟免费 ROI 测算 — 基于你的 SKU 数量、广告预算和当前痛点，给出定制化收益估算。</p>
+      <ul class='pb-lead-bullets'>
+        <li>✓ 结合你的实际数据，不是通用模板</li>
+        <li>✓ 明确哪 1-2 个 Skill 优先落地 ROI 最高</li>
+        <li>✓ 30 分钟，结束后你有一份行动清单</li>
+      </ul>
+    </div>
+    <div class='pb-lead-action'>
+      <a href='mailto:skills@lute-tlz-dddd.top?subject=预约ROI测算-AI%20Agent%20替人手册&body=手册:AI%20Agent%20替人手册%0A公司规模:%0A主要痛点:%0A当前月GMV:' class='pb-lead-btn'>预约 30 分钟 ROI 测算 →</a>
+      <p class='pb-lead-note'>发送邮件后 24h 内回复确认时间</p>
+    </div>
+  </div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

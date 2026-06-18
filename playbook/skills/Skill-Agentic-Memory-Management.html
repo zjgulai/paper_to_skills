@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AgeMem — 统一 LTM+STM 管理的 Agentic Memory · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Agentic-Memory-Management</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>AgeMem — 统一 LTM+STM 管理的 Agentic Memory</h1>
+<p class="muted">Skill-Agentic-Memory-Management · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>STM Filter + Summary 让对话 context 维持紧凑</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴用户从孕期到 3 岁的完整生命周期,跨越 4 年、可能数百次交互</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>AgeMem(Agentic Memory) 颠覆了传统 LTM/STM 分离架构,把记忆管理整合到 Agent 的 policy 本身。现有方法把 LTM 与 STM 当作两个独立模块,要么用 triggerbased 启发式,要么外挂 Memory Manager,导致:</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>母婴用户从孕期到 3 岁的完整生命周期,跨越 4 年、可能数百次交互。传统系统要么用 RAG(STM 一直膨胀)要么固定 trigger(每月强制总结),都不够精准。需要 Agent 自主决定:</p><p>- 哪些信息(过敏原、品牌偏好、宝宝月龄、产品满意度) 该存进 LTM - 哪些 context 该用 Filter 剔除(广告导流、闲聊) - 哪些 LTM 该 Update(月龄随时间增长) / Delete(过期偏好)</p><p>- 用户 4 年内全部对话历史 + 商品互动 + 客服记录 - HotpotQA 风格的&quot;上下文 + 干扰 + 任务&quot;训练对 - Ground-truth memory 标注(用于 RL 训 memory quality reward)</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>数据要求:高,需要 HotpotQA 风格的标注训练集 5000+</li><li>技术门槛:高,Step-wise GRPO + 三阶段 progressive RL 需要 RL 经验</li><li>工程复杂度:高,需要部署 RL 训练管道 + LLM judge 评估</li><li>维护成本:中,RL 训练后 policy 可以长期复用</li><li><strong>业务价值极高</strong>:与跨境母婴长周期场景高度契合</li><li><strong>小模型友好</strong>:论文 Qwen2.5-7B / Qwen3-4B 都能用,显著降成本</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass, field
+from datetime import datetime
+
+@dataclass
+class MemoryEntry:
+    key: str
+    value: str
+    memory_type: str  # &quot;stm&quot; | &quot;ltm&quot; | &quot;episodic&quot;
+    created_at: str = field(default_factory=lambda: datetime.now().isoformat())
+    access_count: int = 0
+
+class AgeMemStore:
+    def __init__(self, stm_limit: int = 20):
+        self.stm: list[MemoryEntry] = []
+        self.ltm: dict[str, MemoryEntry] = {}
+        self.episodic: list[MemoryEntry] = []
+        self.stm_limit = stm_limit
+
+    def add(self, key: str, value: str, mtype: str = &quot;stm&quot;):
+        entry = MemoryEntry(key=key, value=value, memory_type=mtype)
+        if mtype == &quot;stm&quot;:
+            self.stm.append(entry)
+            if len(self.stm) &gt; self.stm_limit:
+                evicted = self.stm.pop(0)
+                self.episodic.append(evicted)
+        elif mtype == &quot;ltm&quot;:
+            self.ltm[key] = entry
+        else:
+            self.episodic.append(entry)
+
+    def retrieve(self, query: str) -&gt; list[MemoryEntry]:
+        results = []
+        for e in self.stm + list(self.ltm.values()) + self.episodic:
+            if query.lower() in e.key.lower() or query.lower() in e.value.lower():
+                e.access_count += 1
+                results.append(e)
+        return results[:5]
+
+    def consolidate_stm_to_ltm(self, threshold: int = 3):
+        for e in list(self.stm):
+            if e.access_count &gt;= threshold:
+                e.memory_type = &quot;ltm&quot;
+                self.ltm[e.key] = e
+                self.stm.remove(e)
+
+mem = AgeMemStore()
+mem.add(&quot;user_pref_brand&quot;, &quot;偏好 Momcozy 吸奶器&quot;, &quot;ltm&quot;)
+mem.add(&quot;last_query&quot;, &quot;查询 B08XY 库存&quot;, &quot;stm&quot;)
+mem.add(&quot;session_note&quot;, &quot;用户询问过退货流程&quot;, &quot;stm&quot;)
+results = mem.retrieve(&quot;吸奶器&quot;)
+print(f&quot;检索到 {len(results)} 条记忆: {[r.key for r in results]}&quot;)
+mem.consolidate_stm_to_ltm(threshold=1)
+print(f&quot;LTM 条目: {len(mem.ltm)}&quot;)
+print(&quot;[✓] Agentic Memory Management 测试通过&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2402.03300</li><li>2504.19413</li><li>2601.01885</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Agentic-Memory-Management" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>(ACON)</span></li><li><span class='muted'>(SoK)</span></li><li><span class='muted'>02-A_B实验</span></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-Skill-Lifecycle-Design.html'>Skill-Skill-Lifecycle-Design</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>(Focus)</span></li><li><span class='muted'>(MemAct)</span></li><li><span class='muted'>(Shopping Companion)</span></li><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-Long-Term-Preference-Memory.html'>Skill-Long-Term-Preference-Memory</a></li><li><a href='../skills/Skill-Memory-as-Action.html'>Skill-Memory-as-Action</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>05-推荐系统</span></li><li><span class='muted'>07-NLP-VOC 自动打标签</span></li><li><span class='muted'>08-知识图谱</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>多触点非线性归因建模 — 跨渠道用户旅程因果归因与预算决策 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Nonlinear-Multi-Touch-Attribution</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>多触点非线性归因建模 — 跨渠道用户旅程因果归因与预算决策</h1>
+<p class="muted">Skill-Nonlinear-Multi-Touch-Attribution · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>4.2万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Last-Click归因导致TikTok预算被严重低估而Amazon SP被高估——Shapley值归因重新分配后整体ROAS从2.3x提升至3.1x，月增收$6.4万（$8万预算规模）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：跨境母婴卖家普遍使用&quot;末次触点归因&quot;（LastClick）——哪个广告渠道最后带来转化，就把所有功劳归给它。这导致一个系统性错误：TikTok和品牌词搜索长期被低估，而&quot;收割型&quot;关键词（如&quot;breast pump buy now&quot;）被严重高估。反直觉的真相是：用户在TikTok看到开箱视频→Google搜索品牌→Amazon下单，这个路径中TikTok是真正的需求激发者，但LastClick把100%功劳给了Amazon S</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：母婴品牌跨渠道归因重构（TikTok+Amazon+Google）</p><p>- 业务问题：某卖家月营销预算$8万，分配是Amazon SP 70% + Google 20% + TikTok 10%。Last-Click归因显示Amazon贡献90%转化，于是继续加大Amazon投入，但总销量停滞不增 - 数据要求：用户触点序列（需广告平台API + UTM追踪）、转化数据（订单）、品牌词搜索量数据 - 算法应用： 1. 重建用户触点序列：TikTok曝光→品牌搜索→Amazon点击→转化 2. Shapley归因重新分配：TikTok实际贡献28%（vs Last-Click的3%） 3. 因果分析：删除TikTok预算的反事实实验显示总转化量会下降35% 4. 重</p><p>场景B：促销活动归因分析（Prime Day/双11）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月广告预算$7万的卖家，通过正确归因后预算重分配，整体ROAS提升20-35%；以ROAS从2.3x→2.9x计，月增收$4.2万，年化$50万；系统建设成本$8万，ROI≈625%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（关键难点是跨平台触点数据统一（需UTM追踪+广告API），Shapley计算在渠道数&lt;10时可行）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（任何多渠道投放（3个渠道以上）的卖家强烈推荐）</li><li><strong>适用规模</strong>：月广告预算&gt;$3万且投放3+渠道的卖家</li><li><strong>数据依赖</strong>：跨平台用户级别触点数据（需要广告账户API权限 + 用户标识符统一）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+多触点非线性归因建模系统
+功能：Shapley值归因 + 时间衰减 + 因果归因 + 渠道预算建议
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from itertools import combinations, permutations
+from collections import defaultdict
+from typing import List, Dict, Tuple, Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def generate_user_journeys(n_users: int = 2000, seed: int = 42) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;
+    生成模拟用户触点序列数据
+    模拟：TikTok→Google→Amazon→转化 的典型母婴用户路径
+    &quot;&quot;&quot;
+    np.random.seed(seed)
+    channels = [&#x27;TikTok&#x27;, &#x27;Google_Brand&#x27;, &#x27;Google_Generic&#x27;, &#x27;Amazon_SP&#x27;, &#x27;Amazon_SB&#x27;, &#x27;Email&#x27;]
+    
+    journeys = []
+    for user_id in range(n_users):
+        # 用户类型：发现型（从TikTok进入）vs 意向型（直接搜索）
+        is_discovery_user = np.random.random() &lt; 0.45
+        
+        if is_discovery_user:
+            # TikTok激发需求路径
+            path_length = np.random.randint(2, 5)
+            path_channels = [&#x27;TikTok&#x27;]
+            remaining = np.random.choice([&#x27;Google_Brand&#x27;, &#x27;Google_Generic&#x27;, &#x27;Amazon_SP&#x27;, &#x27;Amazon_SB&#x27;],
+                                        size=min(path_length-1, 3), replace=False).tolist()
+            path_channels.extend(remaining)
+            convert_prob = 0.12
+        else:
+            # 直接搜索路径
+            path_length = np.random.randint(1, 4)
+            path_channels = np.random.choice([&#x27;Google_Brand&#x27;, &#x27;Google_Generic&#x27;, &#x27;Amazon_SP&#x27;, &#x27;Amazon_SB&#x27;],
+                                            size=path_length, replace=False).tolist()
+            convert_prob = 0.18
+        
+        # 时间戳（相对小时）
+        timestamps = sorted(np.random.uniform(0, 72, len(path_channels)))
+        converted = np.random.random() &lt; convert_prob
+        
+        for i, (ch, ts) in enumerate(zip(path_channels, timestamps)):
+            journeys.append({
+                &#x27;user_id&#x27;: user_id,
+                &#x27;channel&#x27;: ch,
+                &#x27;timestamp_hours&#x27;: ts,
+                &#x27;touch_order&#x27;: i + 1,
+                &#x27;total_touches&#x27;: len(path_channels),
+                &#x27;converted&#x27;: converted,
+                &#x27;order_value&#x27;: np.random.lognormal(4.2, 0.4) if converted and i == len(path_channels)-1 else 0,
+            })
+    
+    return pd.DataFrame(journeys)
+
+
+def last_click_attribution(journeys_df: pd.DataFrame) -&gt; Dict[str, float]:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2404.09823</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Nonlinear-Multi-Touch-Attribution" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AIGC-Revenue-Attribution.html'>Skill-AIGC-Revenue-Attribution</a></li><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><span class='muted'>Skill-Causal-Inference-Fundamentals</span></li><li><span class='muted'>Skill-Cohort-Analysis</span></li><li><a href='../skills/Skill-Data-Collection-Causal-Debiasing.html'>Skill-Data-Collection-Causal-Debiasing</a></li><li><span class='muted'>Skill-Funnel-Analysis</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AIGC-Revenue-Attribution.html'>Skill-AIGC-Revenue-Attribution</a></li><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><span class='muted'>Skill-Causal-Inference-Fundamentals</span></li><li><a href='../skills/Skill-Data-Collection-Causal-Debiasing.html'>Skill-Data-Collection-Causal-Debiasing</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AIGC-Revenue-Attribution.html'>Skill-AIGC-Revenue-Attribution</a></li><li><span class='muted'>Skill-Causal-Inference-Fundamentals</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

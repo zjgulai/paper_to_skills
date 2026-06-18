@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>StaR 观点语句排序 - 排序而非生成的可解释评论分析 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-StaR-Review-Statement-Ranking</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>StaR 观点语句排序 - 排序而非生成的可解释评论分析</h1>
+<p class="muted">Skill-StaR-Review-Statement-Ranking · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>80-150 万/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Momcozy 暖奶器在 Amazon US/DE 各 5000+ 评论,差评包含细碎复合表达(如&quot;加热慢又不均匀,温控也不准&quot;). 传统 ABSA 把整句标注为&quot;加热问题&quot;,丢失了 3 个独立改进点;直接用 LLM 总结容易生成评论中不存在的属性(如&quot;接口设计差&quot;) - 数据要求:Amazon Review API 双市场评论 - StaR 配置: - Step 1 Candidate</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统可解释推荐让 LLM 生成自由文本解释,有 3 大问题:① 幻觉(生成评论中不存在的属性)、② 难以评估(自由文本只能用主观打分)、③ 粒度不可控. StaR 把任务重构为对评论中真实出现的&quot;原子语句(statement)&quot;做排序,只输出真实存在的内容,可用 IR 指标客观评估.</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题:Momcozy 暖奶器在 Amazon US/DE 各 5000+ 评论,差评包含细碎复合表达(如&quot;加热慢又不均匀,温控也不准&quot;). 传统 ABSA 把整句标注为&quot;加热问题&quot;,丢失了 3 个独立改进点;直接用 LLM 总结容易生成评论中不存在的属性(如&quot;接口设计差&quot;) - 数据要求:Amazon Review API 双市场评论 - StaR 配置: - Step 1 Candidate Extract(高召回): &quot;加热慢又不均匀,温控也不准&quot; → [&quot;加热速度慢&quot;,&quot;加热不均匀&quot;,&quot;温控不准确&quot;] - Step 2 Verify(过滤虚构语句) - Step 3 语义聚类:&quot;</p><p>- 业务问题:三市场(US/DE/CN)的用户痛点分布完全不同,但传统差评分析只能产出&quot;差评列表&quot;,无法量化比较&quot;德国用户对噪音的敏感度 vs 美国用户的便携性偏好&quot; - 数据要求:三市场评论 + StaR 提取结果 - StaR 配置: - 各市场分别跑 StaR pipeline → 各得 Top 50 statements - 跨市场用 BGE-M3 多语种 embedding 做语义对齐 - 输出&quot;跨市场差异矩阵&quot;:同义 statement 在各市场的频率/排名差异 - 业务价值: - 选品决策:发现新品 SKU 在哪个市场最具竞争力(德国注重静音 = 主推静音吸奶器) - 营销 li</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>易处:无需 LLM 生成(避免幻觉),只需 embedding + 排序</li><li>易处:可用经典 IR 指标(P@k/NDCG@k)做训练监督</li><li>难处:Verify 阶段需要训练判别器(可用 cross-encoder 微调)</li><li>难处:跨语言 statement 对齐依赖高质量多语种 embedding(BGE-M3 / E5-multilingual)</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+StaR Statement-level Ranking 最小骨架
+论文 arXiv:2604.03724
+完整实现见 paper2skills-code/nlp_voc/star_statement_ranking/model.py
+&quot;&quot;&quot;
+from __future__ import annotations
+from collections import Counter
+from dataclasses import dataclass
+from typing import Dict, List
+import re
+
+
+@dataclass
+class Statement:
+    text: str
+    aspect: str
+    sentiment: str
+    review_id: str = &quot;&quot;
+
+
+def candidate_extraction(reviews: List[str]) -&gt; List[Statement]:
+    &quot;&quot;&quot;Step 1: 高召回提取候选 atomic statements&quot;&quot;&quot;
+    aspect_patterns = {
+        &quot;heating_speed&quot;: [r&quot;加热.{0,5}(慢|快|秒|分钟)&quot;, &quot;fast heat&quot;, &quot;slow heat&quot;, &quot;heats up&quot;],
+        &quot;heating_uniformity&quot;: [r&quot;加热.{0,5}(均匀|不均|底部|表面)&quot;, &quot;uneven&quot;, &quot;evenly heated&quot;],
+        &quot;temperature_control&quot;: [r&quot;温控.{0,5}(精准|准确|不准|不稳)&quot;, &quot;temperature accuracy&quot;, &quot;temp control&quot;],
+        &quot;noise_level&quot;: [r&quot;(噪音|声音|安静|吵)&quot;, &quot;quiet&quot;, &quot;loud&quot;, &quot;silent&quot;],
+        &quot;build_quality&quot;: [r&quot;(做工|质量|耐用)&quot;, &quot;build&quot;, &quot;durable&quot;, &quot;flimsy&quot;],
+    }
+    sent_keywords_pos = {&quot;好&quot;, &quot;棒&quot;, &quot;great&quot;, &quot;love&quot;, &quot;evenly&quot;, &quot;fast&quot;, &quot;quiet&quot;}
+    sent_keywords_neg = {&quot;差&quot;, &quot;慢&quot;, &quot;loud&quot;, &quot;uneven&quot;, &quot;broken&quot;, &quot;slow&quot;}
+
+    statements = []
+    for idx, text in enumerate(reviews):
+        text_low = text.lower()
+        for aspect, patterns in aspect_patterns.items():
+            for p in patterns:
+                if re.search(p, text_low, re.IGNORECASE):
+                    pos = sum(1 for w in sent_keywords_pos if w in text_low)
+                    neg = sum(1 for w in sent_keywords_neg if w in text_low)
+                    sent = &quot;positive&quot; if pos &gt; neg else &quot;negative&quot; if neg &gt; pos else &quot;neutral&quot;
+                    statements.append(Statement(text=text[:100], aspect=aspect, sentiment=sent, review_id=f&quot;r{idx}&quot;))
+                    break
+    return statements
+
+
+def verify_statements(statements: List[Statement]) -&gt; List[Statement]:
+    &quot;&quot;&quot;Step 2: 验证过滤,删除模糊语句&quot;&quot;&quot;
+    verified = []
+    for s in statements:
+        if len(s.text) &gt; 5 and s.aspect != &quot;&quot;:
+            verified.append(s)
+    return verified
+
+
+def semantic_clustering(statements: List[Statement]) -&gt; Dict[str, List[Statement]]:
+    &quot;&quot;&quot;Step 3: 语义聚类(按 aspect+sentiment canonical key)&quot;&quot;&quot;
+    clusters: Dict[str, List[Statement]] = {}
+    for s in statements:
+        key = f&quot;{s.aspect}|{s.sentiment}&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.03724</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-StaR-Review-Statement-Ranking" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Multilingual-NER-Universal-v2.html'>Skill-Multilingual-NER-Universal-v2</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-Explainable-Recommendation.html'>Skill-Explainable-Recommendation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

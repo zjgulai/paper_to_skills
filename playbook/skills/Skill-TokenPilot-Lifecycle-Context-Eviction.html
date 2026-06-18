@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TokenPilot生命周期感知上下文驱逐 — 双粒度上下文管理：摄入压实+驱逐调度 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-TokenPilot-Lifecycle-Context-Eviction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>TokenPilot生命周期感知上下文驱逐 — 双粒度上下文管理：摄入压实+驱逐调度</h1>
+<p class="muted">Skill-TokenPilot-Lifecycle-Context-Eviction · 10-MAS</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>传统上下文压缩破坏KV-Cache前缀导致缓存失效反而增加成本——TokenPilot摄入感知压实+生命周期驱逐在保持缓存前缀稳定的同时将成本降低61-87%，远超传统压缩的20-50%（2026 arXiv:2606.17016）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：现有上下文压缩方法（截断/摘要/滑动窗口）都在做文本变换，而文本变换有一个致命的副作用：破坏前缀缓存一致性。LLM推理框架（vLLM/SGLang）通过KVCache缓存公共前缀来加速推理，一旦前缀被修改，所有缓存失效，反而增加成本。TokenPilot的反直觉设计：上下文管理的首要约束不是&quot;压缩多少&quot;，而是&quot;不破坏缓存前缀&quot;。在这个约束下，成本降低6187%，而非传统压缩的2040%。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：母婴品牌MAS进行完整品类分析需要30+轮对话，每轮都需要处理大量工具调用结果（Amazon API/财务模型/合规检查），累积上下文超过64K tokens，API成本每次$0.65，月调用500次=$325 - TokenPilot方案： 1. 摄入时剥离Amazon API响应中的HTML标签和冗余字段（减少30%噪声） 2. 将变化的工具定义移到Prompt末尾，固定前缀→KV-Cache命中率95%+ 3. 已完成的竞品分析步骤标记为completed→evictable，在分析完成后批量驱逐 - 预期产出：连续模式下成本从$0.65降至$0.084/次（-87%），月</p><p>- **业务问题**：Prime Day期间MAS连续运行48小时监控100个SKU的实时数据，会话中累积的历史数据超过128K tokens，导致后期响应延迟超过8秒 - **TokenPilot机制**：已完成监控窗口的数据标记evictable，只保留：当前活跃窗口+关键决策记录+未解决告警。48小时后上下文维持在20K tokens以内 - **预期产出**：响应延迟从8秒降至1.5秒，整个大促期间成本降低61%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月500次长会话MAS分析（每次30+轮），TokenPilot将成本从$0.65降至$0.084（连续模式-87%），月节省$283，年化$3396；同时响应延迟降低60%提升用户体验；系统成本$3万（主要是集成工作），ROI≈1100%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（摄入压实规则工程量适中；生命周期驱逐需要修改Agent框架的上下文管理接口；已有开源实现LightMem2可参考）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（上下文成本是MAS最大的可见成本，TokenPilot是目前最高效的解决方案之一，且2026年6月16日刚发布，第一批工程化实践机会）</li><li><strong>适用规模</strong>：长会话（&gt;20轮）或高并发（&gt;100次/天）的MAS系统</li><li><strong>数据依赖</strong>：需要分析工具响应的典型噪声模式（一次性建立），无需历史数据</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+TokenPilot双粒度上下文管理系统
+功能：摄入感知压实 + 生命周期感知驱逐 + KV-Cache友好优化
+基于 arXiv:2606.17016 (2026-06-16)
+&quot;&quot;&quot;
+import re
+import hashlib
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from enum import Enum
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class SegmentState(Enum):
+    ACTIVE = &quot;active&quot;           # 当前任务仍需要该片段
+    COMPLETED = &quot;completed&quot;     # 步骤已完成但待确认驱逐
+    EVICTABLE = &quot;evictable&quot;     # 残差效用过期，可安全驱逐
+
+
+@dataclass
+class ContextSegment:
+    &quot;&quot;&quot;上下文片段（含生命周期状态）&quot;&quot;&quot;
+    seg_id: str
+    content: str
+    segment_type: str           # &#x27;tool_result&#x27;, &#x27;reasoning&#x27;, &#x27;conclusion&#x27;, &#x27;system&#x27;
+    created_turn: int
+    last_referenced_turn: int
+    state: SegmentState = SegmentState.ACTIVE
+    citation_count: int = 0     # 被后续推理引用次数
+    is_critical: bool = False   # 关键片段（告警/决策）永不驱逐
+
+    @property
+    def token_count(self) -&gt; int:
+        return max(len(self.content) // 4, 1)
+
+    def compute_residual_utility(self, current_turn: int) -&gt; float:
+        &quot;&quot;&quot;计算残差效用&quot;&quot;&quot;
+        if self.is_critical:
+            return 1.0
+        if self.state == SegmentState.EVICTABLE:
+            return 0.0
+
+        recency = 1.0 / max(current_turn - self.last_referenced_turn + 1, 1)
+        citation_bonus = min(self.citation_count * 0.1, 0.3)
+        type_weight = {
+            &#x27;system&#x27;: 1.0,
+            &#x27;conclusion&#x27;: 0.8,
+            &#x27;reasoning&#x27;: 0.5,
+            &#x27;tool_result&#x27;: 0.3,
+        }.get(self.segment_type, 0.5)
+
+        return min(recency * type_weight + citation_bonus, 1.0)
+
+
+class IngestionAwareCompactor:
+    &quot;&quot;&quot;
+    摄入感知压实器（全局层）
+    在内容进入上下文之前就消除噪声，稳定前缀
+    &quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2606.17016</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-TokenPilot-Lifecycle-Context-Eviction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-AdaCtx-Dynamic-Context-Budget-Allocation.html'>Skill-AdaCtx-Dynamic-Context-Budget-Allocation</a></li><li><a href='../skills/Skill-Context-Engine-Architecture.html'>Skill-Context-Engine-Architecture</a></li><li><a href='../skills/Skill-Context-Token-Compression.html'>Skill-Context-Token-Compression</a></li><li><a href='../skills/Skill-Glass-Box-MAS-Observability.html'>Skill-Glass-Box-MAS-Observability</a></li><li><a href='../skills/Skill-RCR-Router-Role-Aware-Context-Routing.html'>Skill-RCR-Router-Role-Aware-Context-Routing</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-AdaCtx-Dynamic-Context-Budget-Allocation.html'>Skill-AdaCtx-Dynamic-Context-Budget-Allocation</a></li><li><a href='../skills/Skill-Glass-Box-MAS-Observability.html'>Skill-Glass-Box-MAS-Observability</a></li><li><a href='../skills/Skill-RCR-Router-Role-Aware-Context-Routing.html'>Skill-RCR-Router-Role-Aware-Context-Routing</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-RCR-Router-Role-Aware-Context-Routing.html'>Skill-RCR-Router-Role-Aware-Context-Routing</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

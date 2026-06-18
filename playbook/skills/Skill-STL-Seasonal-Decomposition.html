@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>STL Seasonal Decomposition — STL 季节性分解：时间序列趋势×季节×残差三层分离 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/03-时间序列.html">03-时间序列</a> / Skill-STL-Seasonal-Decomposition</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>STL Seasonal Decomposition — STL 季节性分解：时间序列趋势×季节×残差三层分离</h1>
+<p class="muted">Skill-STL-Seasonal-Decomposition · 03-时间序列</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥10-30 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人 / 采购负责人<span class='biz-ctx-secondary'> · 运营负责人 · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多市场多仓</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>大促前备货总是不是多了就是少了；新品上线第一个月断货，再补又积压；年底预算不知道各月目标怎么定</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>提前 4-8 周准确预判各 SKU 需求峰值，库存积压减少 30%，断货率降低 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>备货总是压货或断货</span><span class='biz-pain-tag'>旺季淡季波动太大预测不准</span><span class='biz-pain-tag'>补货周期 30 天但预测只看 7 天</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>16个时序Skill居然没有STL季节性分解导致备货计划无法量化圣诞季高多少——STL将时序分解为趋势×季节×残差三层，季节性指数精确量化后备货误差降低30%异常检测误报率降低60%年化减少备货失误10-30万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>为什么先做季节性分解：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：吸奶器的年销量有明显的季节性（圣诞/母亲节/开学季会有高峰），但运营不确定每个月应该比基准高多少。STL 分解后可以精确量化：&quot;11月圣诞季比年均高 45%，2月情人节前后低 15%&quot;。</p><p>数据要求： - 过去 2-3 年的月度销量数据 - 节假日日历（用于解释残差）</p><p>预期产出： - 趋势成分：品牌真实的增长斜率 - 季节性指数：每月相对年均的倍率 - 残差：哪些月份有&quot;真正的异常&quot;（超出季节性预期）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>备货计划精确量化季节性：减少过度备货 ¥5-15 万/年</li><li>促销效果评估去季节化：正确计算 ROI，优化预算分配 ¥3-10 万</li><li>异常检测减少误报：运营精力集中在真实异常</li><li><strong>年化综合 ROI：¥10-30 万</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（statsmodels 有成熟 STL 实现；需要 2 年以上历史数据；约 1-2 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+STL Seasonal Decomposition
+时间序列季节性分解：趋势×季节×残差三层分离
+&quot;&quot;&quot;
+import numpy as np
+from collections import defaultdict
+
+
+def loess_smooth(y: np.ndarray, span: float = 0.3) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    LOESS 局部加权回归（简化版）
+    生产用: from statsmodels.tsa.seasonal import STL
+    &quot;&quot;&quot;
+    n = len(y)
+    smoothed = np.zeros(n)
+    window = max(3, int(span * n))
+
+    for i in range(n):
+        start = max(0, i - window // 2)
+        end = min(n, i + window // 2 + 1)
+        x_local = np.arange(start, end)
+        y_local = y[start:end]
+        # 距离权重（三次方核）
+        distances = np.abs(x_local - i) / max(np.abs(x_local - i).max(), 1)
+        weights = (1 - distances ** 3) ** 3
+
+        if weights.sum() &gt; 0:
+            # 加权最小二乘
+            X = np.column_stack([x_local, np.ones(len(x_local))])
+            W = np.diag(weights)
+            beta = np.linalg.lstsq(X.T @ W @ X, X.T @ W @ y_local, rcond=None)[0]
+            smoothed[i] = beta[0] * i + beta[1]
+        else:
+            smoothed[i] = y_local.mean()
+
+    return smoothed
+
+
+def stl_decompose(y: np.ndarray, period: int = 12,
+                  robust: bool = True, n_iter: int = 3) -&gt; dict:
+    &quot;&quot;&quot;
+    STL 分解：趋势 + 季节性 + 残差
+    y: 时序数据
+    period: 季节周期（月度数据=12，周度数据=52，日度=7）
+    robust: 是否使用鲁棒权重（减少异常值影响）
+    &quot;&quot;&quot;
+    n = len(y)
+    # 初始趋势估计
+    trend = loess_smooth(y, span=0.5)
+    seasonal = np.zeros(n)
+    weights = np.ones(n)
+
+    for iteration in range(n_iter):
+        # 去趋势
+        detrended = y - trend
+
+        # 季节性估计：对每个季节位置取 LOESS 平均
+        for s in range(period):
+            indices = np.arange(s, n, period)
+            if len(indices) &gt;= 2:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.09234</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-STL-Seasonal-Decomposition" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Online-Incremental-Learning]]（组合</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Online-Incremental-Learning.html'>Skill-Online-Incremental-Learning</a></li><li><a href='../skills/Skill-Prophet-Forecasting.html'>Skill-Prophet-Forecasting</a></li><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li><li><a href='../skills/Skill-Time-Series-Foundation-Model.html'>Skill-Time-Series-Foundation-Model</a></li><li><a href='../skills/Skill-VOC-Trend-Signal-Forecasting.html'>Skill-VOC-Trend-Signal-Forecasting</a></li><li><span class='muted'>Time-Series-Foundation-Model]]（基础模型预测前的数据预处理</span></li><li><span class='muted'>VOC-Trend-Signal-Forecasting]]（组合</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Online-Incremental-Learning]]（组合</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Online-Incremental-Learning.html'>Skill-Online-Incremental-Learning</a></li><li><a href='../skills/Skill-Time-Series-Foundation-Model.html'>Skill-Time-Series-Foundation-Model</a></li><li><a href='../skills/Skill-VOC-Trend-Signal-Forecasting.html'>Skill-VOC-Trend-Signal-Forecasting</a></li><li><span class='muted'>Time-Series-Foundation-Model]]（基础模型预测前的数据预处理</span></li><li><span class='muted'>VOC-Trend-Signal-Forecasting]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Online-Incremental-Learning]]（组合</span></li><li><a href='../skills/Skill-Online-Incremental-Learning.html'>Skill-Online-Incremental-Learning</a></li><li><a href='../skills/Skill-VOC-Trend-Signal-Forecasting.html'>Skill-VOC-Trend-Signal-Forecasting</a></li><li><span class='muted'>VOC-Trend-Signal-Forecasting]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

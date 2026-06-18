@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Causal Uplift Modeling — 因果提升模型：识别&quot;可说服者&quot;的跨域基础层 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-Causal-Uplift-Modeling</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Causal Uplift Modeling — 因果提升模型：识别&quot;可说服者&quot;的跨域基础层</h1>
+<p class="muted">Skill-Causal-Uplift-Modeling · 01-因果推断</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>增长负责人 / CMO<span class='biz-ctx-secondary'> · 数据分析师 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · Meta Ads · DTC 独立站</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告预算花了，但不确定哪个渠道真的带来新客；做了大促，不知道销量增长是促销效果还是季节规律</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>能区分「真实增量」和「自然购买」，砍掉虚假归因渠道后同等预算 ROI 提升 20-40%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>钱花出去了不知道有没有用</span><span class='biz-pain-tag'>各渠道报告都说自己贡献最大</span><span class='biz-pain-tag'>怎么向老板证明这笔钱值得花</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴品牌发2万张优惠券时60-70%给了本来就会买的用户白白损失利润——因果提升模型从A/B实验数据识别「可说服者」，精准发券后ROI从1.2x提升至3-5x，年化节省无效促销50-80万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统机器学习预测&quot;谁会买&quot;，Uplift Modeling 预测&quot;谁因为我们的干预才会买&quot;。两者差异在于因果归因：找到 CATE（条件平均处理效应），即每位用户在&quot;被干预 vs 不被干预&quot;两种情景下的响应差异。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：每月发 2 万张 20% 折扣券，其中 60-70% 是&quot;必然购买者&quot;（拿了券也会买，白给折扣）。Uplift 模型识别真正的&quot;可说服者&quot;，只向他们发券，节省预算同时提升增量 GMV。</p><p>数据要求： - 历史 A/B 实验数据：有券组 vs 无券组的购买结果 - 用户特征：购买历史、浏览行为、品类偏好、注册天数</p><p>预期产出： - 每位用户的 CATE 得分（升序排列） - 最优发券阈值：CATE &gt; X 的用户值得发券 - 增量 ROI：发券成本 vs 真实增量 GMV</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>优惠券精准定向：从全量发送到仅向可说服者发送，ROI 从 1.2x 提升至 3-5x</li><li>月均优惠券预算 ¥10 万 → 精准后节省 ¥4-6 万/月</li><li>年化 ROI：<strong>¥50-80 万</strong>（节省无效促销 + 增量 GMV）</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（需要 A/B 实验历史数据；scikit-learn 可实现；约 1-2 周）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（图谱基础层 Skill，被3个高层 Skill 依赖；用户运营最高 ROI 的基础工具）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Causal Uplift Modeling — T-Learner &amp; X-Learner 实现
+母婴跨境电商优惠券发放精准化
+&quot;&quot;&quot;
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+
+
+class TLearnerUplift:
+    &quot;&quot;&quot;T-Learner Uplift Model：分别训练处理组和对照组&quot;&quot;&quot;
+
+    def __init__(self, base_model=None):
+        self.model_t = base_model or GradientBoostingClassifier(n_estimators=100, random_state=42)
+        self.model_c = base_model or GradientBoostingClassifier(n_estimators=100, random_state=42)
+
+    def fit(self, X, treatment, outcome):
+        idx_t = treatment == 1
+        idx_c = treatment == 0
+        self.model_t.fit(X[idx_t], outcome[idx_t])
+        self.model_c.fit(X[idx_c], outcome[idx_c])
+        return self
+
+    def predict_uplift(self, X):
+        p_t = self.model_t.predict_proba(X)[:, 1]
+        p_c = self.model_c.predict_proba(X)[:, 1]
+        return p_t - p_c
+
+    def classify_users(self, X, threshold=0.05):
+        uplift = self.predict_uplift(X)
+        segments = np.where(uplift &gt; threshold, &#x27;Persuadable&#x27;,
+                   np.where(uplift &lt; -threshold, &#x27;Sleeping_Dog&#x27;, &#x27;Neutral&#x27;))
+        return uplift, segments
+
+
+def generate_sample_data(n=2000, seed=42):
+    &quot;&quot;&quot;生成模拟母婴用户优惠券实验数据&quot;&quot;&quot;
+    np.random.seed(seed)
+    # 用户特征
+    purchase_history = np.random.poisson(3, n)
+    days_since_last  = np.random.exponential(30, n)
+    category_loyalty = np.random.uniform(0, 1, n)
+    clv_score        = np.random.lognormal(3, 1, n)
+
+    X = np.column_stack([purchase_history, days_since_last, category_loyalty, clv_score])
+
+    # 随机处理分配（A/B实验）
+    treatment = np.random.binomial(1, 0.5, n)
+
+    # 真实提升效应（异质性：价格敏感用户提升更大）
+    true_uplift = 0.2 * (category_loyalty &lt; 0.4) + 0.1 * (days_since_last &gt; 20) - 0.05
+    base_prob   = 0.1 + 0.05 * np.log1p(purchase_history)
+    p_outcome   = np.clip(base_prob + treatment * true_uplift, 0.01, 0.99)
+    outcome     = np.random.binomial(1, p_outcome)
+
+    return X, treatment, outcome, true_uplift
+
+
+def run_uplift_analysis():
+    print(&quot;=&quot; * 60)
+    print(&quot;Causal Uplift Modeling — 母婴电商优惠券精准发放&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>1706.03461</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Causal-Uplift-Modeling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（组合</span></li><li><span class='muted'>LTV-Prediction-BTYD]]（组合</span></li><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Guardrailed-Uplift-Targeting.html'>Skill-Guardrailed-Uplift-Targeting</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（组合</span></li><li><span class='muted'>LTV-Prediction-BTYD]]（组合</span></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Guardrailed-Uplift-Targeting.html'>Skill-Guardrailed-Uplift-Targeting</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（组合</span></li><li><span class='muted'>LTV-Prediction-BTYD]]（组合</span></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CS Ticket Intelligence — 客服工单智能分诊：自动分类路由与优先级排序 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/09-dataagent-llm.html">09-DataAgent-LLM</a> / Skill-CS-Ticket-Intelligence</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>CS Ticket Intelligence — 客服工单智能分诊：自动分类路由与优先级排序</h1>
+<p class="muted">Skill-CS-Ticket-Intelligence · 09-DataAgent-LLM</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a><a class='hb-uplink' href='../playbooks/pb-risk-defense.html'>跨境风险防御作战室</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥15-40 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 运营负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API · Shopify · TikTok Ads API · 多平台数据整合</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>数据需求太多，数据团队排期 2 周；非技术人员（采购/客服/运营）有数据问题但不会 SQL；重复报表占用大量时间</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>业务方用自然语言自助查数据，常规报表自动化，数据驱动决策响应速度从「天」变「分钟」</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>数据需求排期太长</span><span class='biz-pain-tag'>不会 SQL 只能等数据团队</span><span class='biz-pain-tag'>老板临时要数据没法马上出</span><span class='biz-pain-tag'>分析师时间都花在取数上</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>每天50条买家消息手动分类处理需3-4小时且容易遗漏高危差评工单——AI工单分诊1秒完成多维分类（类型/紧急度/情感/差评风险），响应时间8h→2h客服效率提升3-5倍年化节省15-40万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>人工处理 vs 智能分诊：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：独立站+Amazon 每天收到约 50 条买家消息，1名客服需要 3-4 小时处理。其中 5% 是差评预警（需要立即跟进），30% 是可用模板快速回复的标准问题，65% 是需要查单的订单追踪询问。AI 分诊让客服专注在高价值互动上。</p><p>数据要求： - 历史客服消息+处理结果（用于训练） - 回复模板库</p><p>预期产出： - 工单分类（类型+紧急度+情感） - 推荐回复模板 - 差评预警单独推送</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>客服效率提升 3-5x：节省人力 ¥3-8 万/年</li><li>P0/P1 响应时间 8h→2h：差评率降低 15-25%</li><li>差评预警更早介入：每次挽回节省 ¥2-5 万</li><li><strong>年化综合 ROI：¥15-40 万</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（规则引擎版 1 周；需要 Amazon MWS/SP-API 消息接口；LLM 回复生成约 2-3 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+CS Ticket Intelligence
+客服工单智能分诊：分类+优先级+情感+回复建议
+&quot;&quot;&quot;
+import re
+from dataclasses import dataclass
+
+
+@dataclass
+class Ticket:
+    ticket_id: str
+    message: str
+    channel: str = &#x27;amazon&#x27;  # amazon/email/shopify
+    buyer_history_orders: int = 0
+    buyer_has_reviewed: bool = False
+
+
+# 多维度分诊规则库
+TICKET_RULES = {
+    &#x27;return_refund&#x27;: {
+        &#x27;keywords&#x27;: [&#x27;return&#x27;, &#x27;refund&#x27;, &#x27;exchange&#x27;, &#x27;money back&#x27;, &#x27;cancel&#x27;,
+                     &#x27;退&#x27;, &#x27;退款&#x27;, &#x27;退货&#x27;, &#x27;换货&#x27;, &#x27;取消&#x27;],
+        &#x27;priority&#x27;: &#x27;P1&#x27;,
+        &#x27;action&#x27;: &#x27;查询订单退货政策，准备退款处理&#x27;,
+        &#x27;template&#x27;: &#x27;I understand you would like to return/refund. I\&#x27;m checking your order now...&#x27;,
+    },
+    &#x27;order_tracking&#x27;: {
+        &#x27;keywords&#x27;: [&#x27;where&#x27;, &#x27;track&#x27;, &#x27;shipping&#x27;, &#x27;delivery&#x27;, &#x27;arrived&#x27;, &#x27;lost&#x27;,
+                     &#x27;在哪&#x27;, &#x27;快递&#x27;, &#x27;物流&#x27;, &#x27;发货&#x27;, &#x27;收到&#x27;],
+        &#x27;priority&#x27;: &#x27;P2&#x27;,
+        &#x27;action&#x27;: &#x27;查询物流单号，反馈最新状态&#x27;,
+        &#x27;template&#x27;: &#x27;I\&#x27;ve checked your order tracking. The latest status is...&#x27;,
+    },
+    &#x27;product_defect&#x27;: {
+        &#x27;keywords&#x27;: [&#x27;broken&#x27;, &#x27;defective&#x27;, &#x27;damaged&#x27;, &#x27;not work&#x27;, &#x27;stopped&#x27;,
+                     &#x27;坏&#x27;, &#x27;损坏&#x27;, &#x27;不工作&#x27;, &#x27;故障&#x27;, &#x27;破损&#x27;],
+        &#x27;priority&#x27;: &#x27;P1&#x27;,
+        &#x27;action&#x27;: &#x27;品控记录，安排换货或退款&#x27;,
+        &#x27;template&#x27;: &#x27;I sincerely apologize for the defective product. Let me arrange...&#x27;,
+    },
+    &#x27;safety_urgent&#x27;: {
+        &#x27;keywords&#x27;: [&#x27;injury&#x27;, &#x27;hurt&#x27;, &#x27;dangerous&#x27;, &#x27;doctor&#x27;, &#x27;hospital&#x27;, &#x27;lawyer&#x27;, &#x27;recall&#x27;,
+                     &#x27;受伤&#x27;, &#x27;危险&#x27;, &#x27;医院&#x27;, &#x27;律师&#x27;, &#x27;召回&#x27;],
+        &#x27;priority&#x27;: &#x27;P0&#x27;,
+        &#x27;action&#x27;: &#x27;立即升级到管理层，准备紧急响应&#x27;,
+        &#x27;template&#x27;: &#x27;【紧急】安全事故响应协议启动&#x27;,
+    },
+    &#x27;usage_question&#x27;: {
+        &#x27;keywords&#x27;: [&#x27;how to&#x27;, &#x27;how do&#x27;, &#x27;instruction&#x27;, &#x27;manual&#x27;, &#x27;setup&#x27;,
+                     &#x27;怎么用&#x27;, &#x27;如何&#x27;, &#x27;说明&#x27;, &#x27;操作&#x27;],
+        &#x27;priority&#x27;: &#x27;P3&#x27;,
+        &#x27;action&#x27;: &#x27;发送使用说明/FAQ链接&#x27;,
+        &#x27;template&#x27;: &#x27;Thank you for reaching out! Here\&#x27;s how to use/set up your product...&#x27;,
+    },
+    &#x27;review_complaint&#x27;: {
+        &#x27;keywords&#x27;: [&#x27;review&#x27;, &#x27;rating&#x27;, &#x27;star&#x27;, &#x27;feedback&#x27;, &#x27;complaint&#x27;,
+                     &#x27;差评&#x27;, &#x27;评价&#x27;, &#x27;投诉&#x27;, &#x27;星级&#x27;],
+        &#x27;priority&#x27;: &#x27;P1&#x27;,
+        &#x27;action&#x27;: &#x27;差评挽救流程，优先跟进&#x27;,
+        &#x27;template&#x27;: &#x27;I value your feedback greatly. Please allow me to make this right...&#x27;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.08923</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CS-Ticket-Intelligence" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Account-Health-Proactive-Monitor]]（组合</span></li><li><a href='../skills/Skill-Account-Health-Proactive-Monitor.html'>Skill-Account-Health-Proactive-Monitor</a></li><li><a href='../skills/Skill-LLM-Negotiation-Conversion-Agent.html'>Skill-LLM-Negotiation-Conversion-Agent</a></li><li><a href='../skills/Skill-NLP-Text-Classification.html'>Skill-NLP-Text-Classification</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><a href='../skills/Skill-VOC-Compliance-Signal-Mining.html'>Skill-VOC-Compliance-Signal-Mining</a></li><li><a href='../skills/Skill-VOC-Fraud-Review-Detection.html'>Skill-VOC-Fraud-Review-Detection</a></li><li><span class='muted'>VOC-Compliance-Signal-Mining]]（组合</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Account-Health-Proactive-Monitor]]（组合</span></li><li><a href='../skills/Skill-Account-Health-Proactive-Monitor.html'>Skill-Account-Health-Proactive-Monitor</a></li><li><a href='../skills/Skill-LLM-Negotiation-Conversion-Agent.html'>Skill-LLM-Negotiation-Conversion-Agent</a></li><li><a href='../skills/Skill-VOC-Compliance-Signal-Mining.html'>Skill-VOC-Compliance-Signal-Mining</a></li><li><a href='../skills/Skill-VOC-Fraud-Review-Detection.html'>Skill-VOC-Fraud-Review-Detection</a></li><li><span class='muted'>VOC-Compliance-Signal-Mining]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Account-Health-Proactive-Monitor]]（组合</span></li><li><a href='../skills/Skill-Account-Health-Proactive-Monitor.html'>Skill-Account-Health-Proactive-Monitor</a></li><li><a href='../skills/Skill-VOC-Compliance-Signal-Mining.html'>Skill-VOC-Compliance-Signal-Mining</a></li><li><span class='muted'>VOC-Compliance-Signal-Mining]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

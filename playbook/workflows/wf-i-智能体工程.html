@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-I 智能体工程 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-I 智能体工程</nav>
+<h1>WF-I 智能体工程</h1>
+<p class="lead">从 Agent 设计到生产运维的端到端工程化链路，覆盖能力构建、部署上线、生产监控、安全防御、自我进化五个阶段。面向希望将 AI Agent 稳定运行在跨境运营业务中的技术负责人。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>CTO / 技术负责人</span><span class='tag'>数据工程师</span><span class='tag'>AI 产品经理</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的 Agent 当前处于哪个阶段？</div>
+</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] Agent 生产失败率从 30-50% 降至 &lt; 10%（ReliabilityBench 基准验证）</li><li>[OK] 运营成本从 $150/天压缩至 $0.5-1.2/天（Workflow Compilation）</li><li>[OK] 新场景适配时间从 2-4 周（收集标注数据）降至 1-3 天（DTL 部署时学习）</li><li>[OK] Agent 安全事件（Prompt 注入/权限滥用）拦截率 &gt; 95%</li><li>[OK] 技能库持续增长，每月自动积累 20-30 个可复用技能模式</li></ul></div>
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">能力设计与工具接入</div>
+  <div class="wf-question">Agent 需要调用哪些工具/API？如何设计任务拆解结构？</div>
+  <div class="wf-context">Agent 成败 80% 取决于工具设计质量。跨境运营 Agent 的典型工具链：Amazon SP API / 库存系统 / 广告平台 / 客服工单</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">多工具协作型 Agent（需要调用 5+ 个外部工具）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-MCP-A2A-Protocol-Stack.html"><span class="chip-name">MCP + A2A 双协议栈 — Orchestrated Multi-Agent 企业架构</span><span class="chip-role">MCP 协议栈设计，定义 Agent 间通信标准（ROI：减少 60% 集成工作量）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Task-Adaptive-Topology.html"><span class="chip-name">任务自适应拓扑路由 — AdaptOrch 动态多智能体编排</span><span class="chip-role">任务自适应拓扑路由，动态选择最优 Agent 子网络</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Progent-Privilege-Control.html"><span class="chip-name">Progent — 最小权限 Agent 框架：SMT 验证 + 单调约束性</span><span class="chip-role">最小权限原则：每个 Agent 只获得完成任务所需的最低权限（ROI 30-80万）</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">单 Agent + 长任务链（需要跨多步骤完成复杂目标）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-KLong-Long-Horizon-Agent-Training.html"><span class="chip-name">KLong — 超长时域 Agent 训练：轨迹分割 SFT + 渐进 RL</span><span class="chip-role">长程任务链训练，解决跨 50+ 步骤的规划遗忘问题</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Context-Compression.html"><span class="chip-name">ACON — Agent 长上下文压缩与 NL 准则优化</span><span class="chip-role">上下文压缩：90% 成本节省，支持超长对话历史</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">部署上线与自适应</div>
+  <div class="wf-question">如何让 Agent 在新业务场景中快速适配，避免大量标注数据？</div>
+  <div class="wf-context">跨境运营场景变化快（新品类/新市场/政策变化），Agent 需要低样本快速适配</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-CASCADE-Deployment-Time-Learning.html"><span class="chip-name">CASCADE — 案例推理部署时学习：Contextual Bandit 无参数自适应</span><span class="chip-role">部署时学习（DTL）：用案例推理在部署阶段零标注自适应，Contextual Bandit 优化</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-VLM-Ecommerce-Adaptation.html"><span class="chip-name">VLM E-commerce Adaptation — 大规模视觉语言模型电商适配</span><span class="chip-role">电商视觉语言模型适配：主图/视频内容理解快速迁移到新品类（ROI 1.6万元）</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-AutoSkill-Lifelong-Learning.html"><span class="chip-name">AutoSkill — 经验驱动终身学习：Skill 自进化版本管理</span><span class="chip-role">终身学习技能库：自动将新场景经验沉淀为可复用技能，避免重复训练</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">生产监控与可靠性</div>
+  <div class="wf-question">Agent 上线后如何知道它是否在正常工作？性能是否符合 SLA？</div>
+  <div class="wf-context">生产环境 Agent 失败率比测试环境高 3-5 倍，必须有主动监控而非事后发现</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">需要建立 SLA 监控（响应时间/成功率/成本三角）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Agent-SLO-Manager.html"><span class="chip-name">Agent SLO Manager — 三层 SLI 体系：服务/任务/判断质量</span><span class="chip-role">Agent SLO（服务级别目标）管理：响应时间 P99 / 任务成功率 / token 成本三角监控</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-ReliabilityBench-Agent-Reliability.html"><span class="chip-name">ReliabilityBench — Agent 生产可靠性三维评估：pass@1 高估 20-40%</span><span class="chip-role">生产可靠性三维评估（pass@1 高估 20-40%，发现真实可靠性基线）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Agentic-Workflow-Compilation.html"><span class="chip-name">Subterranean Agent — 将工作流 SOP 编译进 LLM 权重</span><span class="chip-role">工作流编译优化：$150/天→$0.5-1.2/天，成本压缩 99%（ROI 62-462×）</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">需要根因追溯（Agent 失败了不知道哪步出问题）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-AgentTrace-Causal-RCA.html"><span class="chip-name">AgentTrace — 因果图根因分析：0.12s 定位多 Agent 故障</span><span class="chip-role">因果追溯：自动定位 Agent 失败的根因步骤（ROI 5-20万/月）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Agent-Fault-Tolerance.html"><span class="chip-name">Agent Fault Tolerance（Agent 容错回退）</span><span class="chip-role">容错机制：关键步骤失败时自动降级/重试/人工介入路由（ROI 5-15万）</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">安全防御与合规</div>
+  <div class="wf-question">如何防止 Agent 被注入攻击、权限滥用或产生合规风险？</div>
+  <div class="wf-context">跨境电商 Agent 操作 Amazon API / 支付系统 / 客户数据，安全风险高</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Agent-Safety-Guardrails.html"><span class="chip-name">Agent Safety Guardrails（Agent 安全对抗护栏）</span><span class="chip-role">多层安全护栏：输入过滤 + 输出校验 + 行为约束，防 Prompt 注入（ROI 10-30万）</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-AgentTrust-Runtime-Safety-Interception.html"><span class="chip-name">AgentTrust — 运行时安全拦截：95% 准确率，&lt; 1ms，MCP 集成</span><span class="chip-role">运行时安全拦截：95% 准确率，&lt; 1ms 延迟，MCP 原生集成（ROI 20-60万）</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-LDP-Identity-Aware-Protocol.html"><span class="chip-name">LDP — 身份感知 Agent 通信协议：模型级路由 + 37% Token 节省</span><span class="chip-role">身份感知协议：Agent 间调用的身份验证与最小权限传递</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-CapSeal-Agent-Secret-Mediation.html"><span class="chip-name">CapSeal — Agent 秘密中介：能力封装取代直接密钥暴露</span><span class="chip-role">密钥代管：Agent 无法直接访问 API Keys，通过中介层获取临时凭证</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">自我进化与记忆管理</div>
+  <div class="wf-question">如何让 Agent 从失败经验中学习，不断提升？</div>
+  <div class="wf-context">生产 Agent 每天处理数百个任务，应将经验积累为可复用的技能增量</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-AgeMem-Unified-Agent-Memory.html"><span class="chip-name">AgeMem — LTM+STM 统一 Agent 记忆：RL 自适应管理跨会话知识</span><span class="chip-role">统一记忆管理：短期工作记忆 + 长期知识库 + 情节记忆三层架构（ROI 10万）</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-ATLAS-Gradient-Free-Continual.html"><span class="chip-name">ATLAS — 梯度无关持续学习：Teacher-Student 双架构在线适应</span><span class="chip-role">免梯度持续学习：无需重训练即可从新案例中学习，防止灾难性遗忘</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Co-Evolutionary-Skill-Verification.html"><span class="chip-name">Skill 自动演化与验证 — EvoSkills 双 LLM 协同优化</span><span class="chip-role">协同进化技能验证：自动检测和淘汰过时技能，确保技能库质量</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">效果度量与迭代</div>
+  <div class="wf-question">如何量化 Agent 工程化的业务价值，驱动下一轮优化？</div>
+  <div class="wf-context">Agent ROI 需要与人工基线对比，分任务类型统计成本/质量/速度三角</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-MCP-Tool-Use-Benchmark.html"><span class="chip-name">MCP Tool Use 评估基准 — TFS/TEFS 双指标与干扰测试</span><span class="chip-role">MCP 工具使用基准评估：TFS/TEFS 双指标，定量对比 Agent vs 人工</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Agentic-Workflow-Compilation.html"><span class="chip-name">Subterranean Agent — 将工作流 SOP 编译进 LLM 权重</span><span class="chip-role">持续优化工作流编译，追踪成本压缩曲线</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Cost-Aware-Agent-Scheduling.html"><span class="chip-name">Cost-Aware Agent Scheduling（成本感知调度）</span><span class="chip-role">成本感知调度：实时监控 token 消耗，自动切换高/低成本模型路由</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

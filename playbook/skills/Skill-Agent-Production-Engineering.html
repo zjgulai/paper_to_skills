@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Agent Production Engineering（Agent 生产化工程） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-Agent-Production-Engineering</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Agent Production Engineering（Agent 生产化工程）</h1>
+<p class="muted">Skill-Agent-Production-Engineering · 10-MAS</p>
+<div class="tag-row"><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>供应链与补货</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>WF-A 智能补货 Agent：算法层用 MAS-Orchestrator 编排，工程层通过 MCP Server 暴露库存查询/补货下单工具，Context Compression 降低每次调用的 token 成本（$0.15→$0.04/次）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>连接 MAS 算法层（AutoGen/ReAct/编排）和智能体工程层（MCP/Context/Skill管理），把&quot;能跑的 Agent demo&quot;变成&quot;生产可用的 Agent 系统&quot;。核心模式：算法→协议→基础设施。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>WF-A 智能补货 Agent：算法层用 MAS-Orchestrator 编排，工程层通过 MCP Server 暴露库存查询/补货下单工具，Context Compression 降低每次调用的 token 成本（$0.15→$0.04/次）。日均 50 次调用 → 年省 $2,000。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI</strong>：年化 token 成本节省 $2,000-8,000；生产可靠性 → 隐性价值大</li><li><strong>难度</strong>：⭐⭐⭐⭐☆ | <strong>优先级</strong>：⭐⭐⭐⭐☆</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;Agent Production Bridge — 成本估算&quot;&quot;&quot;
+
+def estimate_production_cost(calls_per_day, tokens_per_call, 
+                              model_cost_per_1k=0.003, compression_ratio=0.3):
+    daily = calls_per_day * tokens_per_call * model_cost_per_1k / 1000
+    with_compression = daily * compression_ratio
+    return {&#x27;daily_wo_comp&#x27;: daily, &#x27;daily_with_comp&#x27;: with_compression, 
+            &#x27;annual_saving&#x27;: (daily-with_compression)*365}
+
+c = estimate_production_cost(50, 4000)
+print(f&quot;年节省: ${c[&#x27;annual_saving&#x27;]:,.0f}&quot;)
+print(&quot;[✓] Agent Production Engineering 测试通过&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Agent-Production-Engineering" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Agentic-Memory-Management.html'>Skill-Agentic-Memory-Management</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-MASEval-System-Evaluation.html'>Skill-MASEval-System-Evaluation</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><p class='muted'>暂无</p>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Agentic-Memory-Management.html'>Skill-Agentic-Memory-Management</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-MASEval-System-Evaluation.html'>Skill-MASEval-System-Evaluation</a></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>数据治理基础手册 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 数据治理基础手册</nav>
+<div class='pb-hero'>
+  <span class='pb-icon'>DB</span>
+  <div>
+    <h1>数据治理基础手册</h1>
+    <p class='lead'>中小跨境电商团队从零建立 AI 可用数据基础设施的分阶段路线图</p>
+    <span class='biz-tag'>数据质量 · KG · Agent</span>
+  </div>
+</div>
+
+<div class='pb-intro'>AI 决策的上限是数据质量。大多数中小团队在部署 AI 时遭遇的「效果差」，根因不是模型不好，而是数据没有准备好。今天大多数团队的数据现状是：Amazon/TikTok/Shopify 三套数据各自为政，手动导出对账每月耗时 2-3 天；SKU 命名不统一导致数据拼不起来；AI 工具喂进去的是脏数据，输出必然是垃圾。本手册提供从数据采集、清洗到知识图谱的分阶段建设路线，让 AI 有干净数据可用。</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 数据质量分从基线提升，AI 模型效果直接受益</li><li>[OK] 运营自助分析比例从 20% → 80%，数据团队提数工作量 -60%</li><li>[OK] 知识图谱建成后 KGQA 查询召回率 &gt; 90%</li><li>[OK] 新品上架数据同步从 2 天 → 实时</li></ul></div>
+<div class='pb-steps'>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 1</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 1 — 数据采集与质量基线</h3>
+    <p class='pb-problem'>数据从哪来？质量怎么保证？</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Data-Collection-Agent-Pipeline.html' class='pb-skill-name'>Data Collection Agent Pipeline — LLM Agent 自动化多源数据采集 Pipeline</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ Agent 驱动的自动化数据采集流水线，覆盖 Amazon/社媒/竞品多源</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html' class='pb-skill-name'>E-commerce Data Quality Assessment — 产品目录数据质量双轨评分与门控</a><div class='pb-skill-badges'><span class='roi-badge'>20-50 万/年</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 电商数据质量综合评估，建立数据质量基线（完整性/准确性/时效性）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Data-Provenance-Lineage.html' class='pb-skill-name'>Data Provenance &amp; Lineage — 数据血缘追踪：LLM 训练数据溯源与 AI 法规合规</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 数据血缘追踪，知道每条数据从哪来、经过什么处理</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：现有数据源清单（ERP/平台API/手工Excel）</div>
+    <div class="pb-output"><strong>输出结果：</strong>数据源地图 + 质量评分报告 + 优先修复清单</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+1+—+数据采集与质量基线+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-data-foundation-1'
+         onclick='markStepDone("pb-data-foundation",1,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-data-foundation';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(1)){
+        var btn=document.getElementById('step-done-pb-data-foundation-1');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 2</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 2 — 数据清洗与治理</h3>
+    <p class='pb-problem'>如何系统性消除脏数据、孤岛数据、重复数据？</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Dedup-Quality-Filter.html' class='pb-skill-name'>Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</a><div class='pb-skill-badges'><span class='roi-badge'>10-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 评论/工单去重与质量过滤，建立标准化文本数据集</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Entity-Resolution-KG-Dedup.html' class='pb-skill-name'>KG 实体消歧与去重（Entity Resolution &amp; Deduplication）</a><div class='pb-skill-badges'></div></div><p class='pb-skill-why'>→ 跨系统实体解析去重（同一 SKU 在不同系统有不同编码）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Data-Drift-Detection.html' class='pb-skill-name'>Skill-Data-Drift-Detection</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 数据漂移检测，发现数据分布变化（如季节性导致的分布偏移）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：各系统导出的原始数据文件</div>
+    <div class="pb-output"><strong>输出结果：</strong>清洗后的标准化数据集 + 实体映射表</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+2+—+数据清洗与治理+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-data-foundation-2'
+         onclick='markStepDone("pb-data-foundation",2,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-data-foundation';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(2)){
+        var btn=document.getElementById('step-done-pb-data-foundation-2');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 3</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 3 — 产品知识图谱构建</h3>
+    <p class='pb-problem'>如何把产品目录、用户行为、竞品关系结构化为 AI 可查询的知识库？</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Ontology-Schema-Design.html' class='pb-skill-name'>领域 Ontology 与图谱 Schema 设计</a><div class='pb-skill-badges'></div></div><p class='pb-skill-why'>→ 母婴电商本体设计（品牌→系列→产品→成分→适用年龄），是 KG 的地图</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Hierarchical-Product-KG-Construction.html' class='pb-skill-name'>层级商品知识图谱自动构建（图片→KG）</a><div class='pb-skill-badges'><span class='roi-badge'>0 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 层次化产品知识图谱自动构建</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-KG-Incremental-Update.html' class='pb-skill-name'>知识图谱增量更新（KG Incremental Update）</a><div class='pb-skill-badges'></div></div><p class='pb-skill-why'>→ 图谱增量更新，新品上架/下架自动同步，不用每次全量重建</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：产品目录（SKU/类目/属性）、历史订单中的同购关系</div>
+    <div class="pb-output"><strong>输出结果：</strong>可查询的产品知识图谱（支持 KGQA + GraphRAG）</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+3+—+产品知识图谱构建+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-data-foundation-3'
+         onclick='markStepDone("pb-data-foundation",3,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-data-foundation';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(3)){
+        var btn=document.getElementById('step-done-pb-data-foundation-3');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 4</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 4 — AI 可用数据接口</h3>
+    <p class='pb-problem'>如何让 AI Agent 能直接查询业务数据，而不依赖数据团队提数？</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html' class='pb-skill-name'>Text-to-SQL Agent for Natural Language Data Query</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 自然语言转 SQL，业务同学直接用中文查数据库</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-NL2Dashboard-Automation.html' class='pb-skill-name'>NL2Dashboard Automation（自然语言→仪表盘）</a><div class='pb-skill-badges'><span class='roi-badge'>节省 BI 开发人力</span></div></div><p class='pb-skill-why'>→ 自然语言→仪表盘自动生成，运营自助分析无需等排期</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-RAG-Enhanced-Data-Analysis.html' class='pb-skill-name'>RAG-Enhanced Data Analysis（RAG 增强数据分析）</a><div class='pb-skill-badges'><span class='roi-badge'>减少重复分析 50%，节省分析人力</span></div></div><p class='pb-skill-why'>→ RAG 增强数据分析，结合知识库回答「为什么」类问题</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：已完成 Step 1-3 的数据基础设施</div>
+    <div class="pb-output"><strong>输出结果：</strong>可供 AI Agent 调用的数据查询接口 + 自助分析工具</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+4+—+AI+可用数据接口+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-data-foundation-4'
+         onclick='markStepDone("pb-data-foundation",4,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-data-foundation';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(4)){
+        var btn=document.getElementById('step-done-pb-data-foundation-4');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div></div>
+
+<div class='pb-lead-capture'>
+  <div class='pb-lead-inner'>
+    <div class='pb-lead-text'>
+      <h3>想了解这套方案如何落地你的业务？</h3>
+      <p>预约 30 分钟免费 ROI 测算 — 基于你的 SKU 数量、广告预算和当前痛点，给出定制化收益估算。</p>
+      <ul class='pb-lead-bullets'>
+        <li>✓ 结合你的实际数据，不是通用模板</li>
+        <li>✓ 明确哪 1-2 个 Skill 优先落地 ROI 最高</li>
+        <li>✓ 30 分钟，结束后你有一份行动清单</li>
+      </ul>
+    </div>
+    <div class='pb-lead-action'>
+      <a href='mailto:skills@lute-tlz-dddd.top?subject=预约ROI测算-数据治理基础手册&body=手册:数据治理基础手册%0A公司规模:%0A主要痛点:%0A当前月GMV:' class='pb-lead-btn'>预约 30 分钟 ROI 测算 →</a>
+      <p class='pb-lead-note'>发送邮件后 24h 内回复确认时间</p>
+    </div>
+  </div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

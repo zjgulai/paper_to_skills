@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cross-Border Last Mile Routing — 跨境最后一公里路由优化：时效×成本双目标决策 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/18-物流履约.html">18-物流履约</a> / Skill-Cross-Border-Last-Mile-Routing</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Cross-Border Last Mile Routing — 跨境最后一公里路由优化：时效×成本双目标决策</h1>
+<p class="muted">Skill-Cross-Border-Last-Mile-Routing · 18-物流履约</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>fraud_detection</span><span class='tag'>visual_generation</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥30-80 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>物流负责人 / 供应链负责人<span class='biz-ctx-secondary'> · 客服负责人 · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>FBA vs FBM vs 第三方海外仓 · 美国本土最后一公里 · 跨境退货逆向物流</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>物流时效不稳定，差评里大量「收货太慢」，影响 DSR 评分；退货率高，处理成本吃掉大量利润；旺季物流爆仓</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>物流时效提升 20-30%，物流相关差评减少 40%，退货成本可控，旺季履约稳定不崩溃</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>物流超时差评太多</span><span class='biz-pain-tag'>旺季爆仓订单积压</span><span class='biz-pain-tag'>退货处理成本太高</span><span class='biz-pain-tag'>头程运费太贵压缩了毛利</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>黑五大促FedEx在Zone7-8时效从5天延到9天但运营不知道该切换哪个carrier——多目标路由评分模型实时监测准时率自动切换最优carrier，减少延迟差评率30-50%，年化综合ROI30-80万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨境电商最后一公里的路由决策面临三维矛盾：时效（用户期望快）× 成本（运营要低）× 可靠性（风控要可追溯）。传统方案（历史经验配送商选择）无法动态响应大促峰值、退货激增、新区域开拓等场景。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：黑五备货全走 FedEx，但大促爆单后 FedEx 在 Zone 7-8 时效从 5 天延到 9 天。运营不知道应该在哪些区域切换到 UPS 或 USPS，手动决策滞后 2-3 天，产生大量差评。</p><p>数据要求： - 历史订单：邮编/Zone/重量/选用 carrier/实际配送天数/是否准时 - 实时运力：各 carrier API 的时效承诺（FedEx Service Alerts、UPS Notifications） - 成本台账：各 carrier 分区分重量段报价</p><p>预期产出： - 自动路由决策表：Zone × 重量段 × 时期 → 推荐 carrier + 备选 - 大促切换触发条件：准时率 &lt; X% 自动降权该 carrier 在该 Zone - 成本预测：月均配送成本节省估算</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>大促期自动路由切换：减少延迟差评率 30-50%，保护 BSR 排名，季度影响 ¥10-30 万</li><li>区域差异化选路：配送成本降低 8-15%，月均 GMV ¥100 万规模节省 ¥8-15 万/月</li><li>逆向物流优化：退货成本降低 25-35%，高退货品类年节省 ¥8-25 万</li><li><strong>年化综合 ROI：¥30-80 万</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（需要 carrier API 接入 + 历史配送数据；规则版本1周可实现；ML 版本约 3-4 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Cross-Border Last Mile Routing Optimizer
+多目标 Carrier 路由决策模型（跨境最后一公里）
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import GradientBoostingRegressor
+
+
+# 运力配置（模拟）
+CARRIER_CONFIG = {
+    &#x27;FedEx_Ground&#x27;:    {&#x27;base_cost_per_lb&#x27;: 8.50, &#x27;zone_eta&#x27;: {1:2, 2:3, 3:4, 4:5, 5:6, 6:7, 7:8, 8:9}},
+    &#x27;UPS_Ground&#x27;:      {&#x27;base_cost_per_lb&#x27;: 8.20, &#x27;zone_eta&#x27;: {1:2, 2:3, 3:4, 4:5, 5:6, 6:7, 7:9, 8:10}},
+    &#x27;USPS_Priority&#x27;:   {&#x27;base_cost_per_lb&#x27;: 7.80, &#x27;zone_eta&#x27;: {1:1, 2:2, 3:2, 4:3, 5:3, 6:4, 7:4, 8:5}},
+    &#x27;FedEx_Express&#x27;:   {&#x27;base_cost_per_lb&#x27;: 18.50,&#x27;zone_eta&#x27;: {1:1, 2:1, 3:2, 4:2, 5:2, 6:3, 7:3, 8:3}},
+}
+
+# 实时运力权重（模拟大促期FedEx拥堵）
+CARRIER_RELIABILITY = {
+    &#x27;normal&#x27;:     {&#x27;FedEx_Ground&#x27;:0.96, &#x27;UPS_Ground&#x27;:0.95, &#x27;USPS_Priority&#x27;:0.93, &#x27;FedEx_Express&#x27;:0.98},
+    &#x27;peak_promo&#x27;: {&#x27;FedEx_Ground&#x27;:0.82, &#x27;UPS_Ground&#x27;:0.91, &#x27;USPS_Priority&#x27;:0.90, &#x27;FedEx_Express&#x27;:0.96},
+}
+
+
+def compute_routing_score(carrier, zone, weight_lb, period=&#x27;normal&#x27;,
+                          w_cost=0.4, w_eta=0.35, w_reliability=0.25):
+    &quot;&quot;&quot;计算 carrier 路由综合评分&quot;&quot;&quot;
+    config = CARRIER_CONFIG[carrier]
+    reliability = CARRIER_RELIABILITY[period][carrier]
+
+    cost = config[&#x27;base_cost_per_lb&#x27;] * weight_lb * (1 + zone * 0.05)
+    eta_days = config[&#x27;zone_eta&#x27;][zone]
+
+    # 归一化（基于最大值）
+    max_cost = 18.50 * weight_lb * 1.4
+    max_eta = 10
+
+    score = (w_cost * (1 - cost / max_cost) +
+             w_eta * (1 - eta_days / max_eta) +
+             w_reliability * reliability)
+    return {
+        &#x27;carrier&#x27;: carrier,
+        &#x27;cost&#x27;: round(cost, 2),
+        &#x27;eta_days&#x27;: eta_days,
+        &#x27;reliability&#x27;: reliability,
+        &#x27;score&#x27;: round(score, 4),
+    }
+
+
+def route_package(zone, weight_lb, urgency=&#x27;standard&#x27;, period=&#x27;normal&#x27;):
+    &quot;&quot;&quot;为单个包裹选择最优 carrier&quot;&quot;&quot;
+    # 时效要求不同时调整权重
+    weight_map = {
+        &#x27;economy&#x27;:  (0.55, 0.20, 0.25),
+        &#x27;standard&#x27;: (0.40, 0.35, 0.25),
+        &#x27;express&#x27;:  (0.20, 0.55, 0.25),
+    }
+    w_cost, w_eta, w_rel = weight_map.get(urgency, (0.40, 0.35, 0.25))
+
+    scores = []</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2309.07648</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Border-Last-Mile-Routing" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Cross-Border-Cash-Flow-Forecasting]]（组合</span></li><li><span class='muted'>Logistics-Fraud-Detection]]（组合</span></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Last-Mile-Delivery-Prediction.html'>Skill-Last-Mile-Delivery-Prediction</a></li><li><a href='../skills/Skill-Logistics-Cost-PL-Attribution.html'>Skill-Logistics-Cost-PL-Attribution</a></li><li><a href='../skills/Skill-Logistics-Fraud-Detection.html'>Skill-Logistics-Fraud-Detection</a></li><li><a href='../skills/Skill-Returns-Reverse-Logistics.html'>Skill-Returns-Reverse-Logistics</a></li><li><a href='../skills/Skill-Zone-GNN-Last-Mile-Routing.html'>Skill-Zone-GNN-Last-Mile-Routing</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Cross-Border-Cash-Flow-Forecasting]]（组合</span></li><li><span class='muted'>Logistics-Fraud-Detection]]（组合</span></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Logistics-Fraud-Detection.html'>Skill-Logistics-Fraud-Detection</a></li><li><a href='../skills/Skill-Returns-Reverse-Logistics.html'>Skill-Returns-Reverse-Logistics</a></li><li><a href='../skills/Skill-Zone-GNN-Last-Mile-Routing.html'>Skill-Zone-GNN-Last-Mile-Routing</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Cross-Border-Cash-Flow-Forecasting]]（组合</span></li><li><span class='muted'>Logistics-Fraud-Detection]]（组合</span></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Logistics-Fraud-Detection.html'>Skill-Logistics-Fraud-Detection</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

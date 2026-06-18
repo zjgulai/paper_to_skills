@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LTV Prediction BTYD — BG/NBD + Gamma-Gamma 客户生命周期价值预测 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-LTV-Prediction-BTYD</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>LTV Prediction BTYD — BG/NBD + Gamma-Gamma 客户生命周期价值预测</h1>
+<p class="muted">Skill-LTV-Prediction-BTYD · 06-增长模型</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥30-100 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CEO / 增长负责人<span class='biz-ctx-secondary'> · CMO · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · DTC 独立站 · 多市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>公司增长放缓，不知道是市场饱和还是产品问题还是获客太贵；老板要 12 个月 GMV 预测，只能靠感觉</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立增长拆解模型找到瓶颈，预测未来 6-12 个月营收区间，支撑融资/战略会议</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>增长放缓不知道问题在哪</span><span class='biz-pain-tag'>CAC 越来越高已经高于 LTV</span><span class='biz-pain-tag'>新市场要不要进没有数据支撑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴品牌把「3个月没复购」的用户一律当流失发EDM轰炸，浪费营销预算在已流失用户身上——BG/NBD模型给出每位用户的P_alive活跃概率，精准区分沉睡高价值用户与真实流失，复购激活ROI从1.2x提升到3-4x，年化增益30-100万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>BTYD（Buy Till You Die） 模型族解决一个核心问题：在用户从未明确&quot;取消订阅&quot;的情况下，如何判断他是否已经流失？ 跨境电商是典型的非合约场景——用户买了吸奶器之后，可能6个月后再买配件，也可能再也不回来，但他不会告诉你他走了。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：有 5,000 名历史买家，其中哪些是&quot;沉睡的高 LTV 用户&quot;（还活跃但3个月没买），哪些是&quot;真正流失&quot;（已经永久离开）？两种人的激活策略完全不同——沉睡用户发优惠券有效，真流失用户发再多也没用（浪费营销预算）。</p><p>数据要求： - Amazon/Shopify 订单历史：customer_id, order_date, order_value - 观测期：建议18-24个月历史数据 - 至少3-6个月的稳定数据（新品牌数据不足时模型效果差）</p><p>预期产出： - 每位用户的：活跃概率（P_alive）、预测未来12月购买次数、预测 CLV - 高价值沉睡用户名单（P_alive &gt; 0.5, CLV &gt; $50，近3月无购买） - RFM + CLV 四象限分析（Star/Cash Cow/Question Mark/Dog）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>精准识别沉睡高 CLV 用户并激活（vs 全量营销）：Email 营销 ROI 提升 2-3×，年增收 ¥10-30 万</li><li>渠道预算重分配（将 CAC 投向高 CLV 渠道）：年增 LTV ¥15-50 万</li><li>停止向低 p_alive 用户浪费广告再营销预算：节省 ¥5-15 万/年</li><li>高 CLV 用户优先客服资源：留存提升1%对应 LTV ¥5 万/年</li><li><strong>年化综合 ROI：¥30-100 万</strong></li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/06-增长模型/ltv_prediction_btyd</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+LTV Prediction using BG/NBD + Gamma-Gamma (BTYD Framework)
+不依赖外部 lifetimes 库的纯 Python 实现（简化版）
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from scipy.optimize import minimize
+from scipy.special import gammaln, betaln
+
+
+def generate_sample_customer_data():
+    &quot;&quot;&quot;生成模拟母婴电商客户 RFM 数据&quot;&quot;&quot;
+    np.random.seed(42)
+    n_customers = 500
+
+    # 模拟不同用户群体
+    data = []
+    for i in range(n_customers):
+        customer_type = np.random.choice([&#x27;loyal&#x27;, &#x27;occasional&#x27;, &#x27;one_time&#x27;],
+                                          p=[0.20, 0.35, 0.45])
+        T = np.random.uniform(12, 24)  # 观测期（月）
+        if customer_type == &#x27;loyal&#x27;:
+            freq = np.random.poisson(8)
+            recency = np.random.uniform(T * 0.5, T)
+            monetary = np.random.lognormal(np.log(75), 0.4)
+        elif customer_type == &#x27;occasional&#x27;:
+            freq = np.random.poisson(2)
+            recency = np.random.uniform(T * 0.2, T)
+            monetary = np.random.lognormal(np.log(45), 0.5)
+        else:
+            freq = 0
+            recency = 0
+            monetary = np.random.lognormal(np.log(35), 0.6)
+
+        data.append({
+            &#x27;customer_id&#x27;: f&#x27;C{i+1000}&#x27;,
+            &#x27;frequency&#x27;: max(0, freq),
+            &#x27;recency&#x27;: recency if freq &gt; 0 else 0,
+            &#x27;T&#x27;: T,
+            &#x27;monetary_value&#x27;: monetary,
+            &#x27;acquisition_channel&#x27;: np.random.choice([&#x27;tiktok&#x27;, &#x27;google&#x27;, &#x27;amazon_organic&#x27;],
+                                                      p=[0.3, 0.35, 0.35]),
+        })
+    return pd.DataFrame(data)
+
+
+def bgnbd_log_likelihood(params, frequency, recency, T):
+    &quot;&quot;&quot;BG/NBD 对数似然函数（简化实现）&quot;&quot;&quot;
+    r, alpha, a, b = params
+    if any(p &lt;= 0 for p in params):
+        return 1e10
+
+    ln_A0 = betaln(a, b + frequency) - betaln(a, b)
+    ln_A1 = (gammaln(r + frequency) - gammaln(r) - gammaln(frequency + 1)
+             + r * np.log(alpha) - (r + frequency) * np.log(alpha + T))
+
+    # 处理有复购的用户
+    if frequency &gt; 0:
+        ln_A2 = (gammaln(r + frequency) - gammaln(r)
+                 + r * np.log(alpha) - (r + frequency) * np.log(alpha + recency))</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2501.04719</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LTV-Prediction-BTYD" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Cold-Start-Meta-Learning-PAM]]（组合场景</span></li><li><span class='muted'>KOL-ROI-Causal-Attribution]]（组合场景</span></li><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html'>Skill-KOL-ROI-Causal-Attribution</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Cold-Start-Meta-Learning-PAM]]（组合场景</span></li><li><span class='muted'>KOL-ROI-Causal-Attribution]]（组合场景</span></li><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html'>Skill-KOL-ROI-Causal-Attribution</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Cold-Start-Meta-Learning-PAM]]（组合场景</span></li><li><span class='muted'>KOL-ROI-Causal-Attribution]]（组合场景</span></li><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li><li><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html'>Skill-KOL-ROI-Causal-Attribution</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

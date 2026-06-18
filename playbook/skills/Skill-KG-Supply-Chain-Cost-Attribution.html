@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KG Supply Chain Cost Attribution — 图神经网络 + 因果推断的供应链成本归因 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-KG-Supply-Chain-Cost-Attribution</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>KG Supply Chain Cost Attribution — 图神经网络 + 因果推断的供应链成本归因</h1>
+<p class="muted">Skill-KG-Supply-Chain-Cost-Attribution · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>knowledge_graph</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>知识图谱与RAG</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>3000-5000 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>跨境母婴品牌供应链成本季度性激增，头程/原材料/仓储三因素难以区分——时序生产图 TPG + PC 算法因果归因将成本驱动识别准确率从 40% 提升至 85%，年化节省错误决策成本 50-150 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>时序生产图（Temporal Production Graph, TPG） 将供应链建模为有向无环图：节点 = 供应链环节（工厂、头程、仓库、SKU），边 = 成本流量。Stanford AAAI 2025 工作用异构 GNN 从买家供应商历史交易记录自动推断隐式 BOM（物料清单）结构和生产函数——即使没有显式 BOM 文档，也能从数据中学习&quot;谁依赖谁、成本如何传导&quot;。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌（M5 吸奶器）Q4 总成本较 Q3 上涨 18%，财务团队不知道该压缩哪个环节——海运谈判、原材料采购还是换仓提效？ - 数据要求：6个月以上的 SKU 级成本流水（原材料采购价、头程运费发票、FBA 月结账单、制造工单） - 执行步骤： 1. 构建供应链 TPG（工厂→头程→FBA仓→SKU），每条边填入 Q3/Q4 单位成本 2. 路径分解得出各链路总成本变化（海运链路 +11.8%，空运链路 +14.8%） 3. PC 算法 + SCM 识别：头程运价方差贡献 73.5%（主因），制造成本贡献 38.2%（次因） 4. 反事实模拟：若海运谈判将头程降价 20 元</p><p>- **业务问题**：同时运营消毒器、吸奶器、婴儿车三类产品，CFO 想知道哪个品类供应链最脆弱（成本波动最难归因） - **数据要求**：按 SKU 分组的月度成本分项数据（至少 12 个月） - **执行方式**：对每个品类分别构建 TPG + 运行 SCM 归因，对比各品类&quot;头程运价方差贡献&quot;作为脆弱性指标 - **业务价值**：优先对高脆弱性品类建立运价对冲策略，年化稳定收益 20-50 万元</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 估算</strong>：中型跨境品牌（年营收 3000-5000 万元）每个季度因成本归因不清导致错误决策（优先压错环节）的隐性损失约 15-40 万元/次；图谱归因将准确率从 40% 提升至 85%，每年可避免 2-3 次错误决策，年化节省 <strong>50-150 万元</strong></li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（需要整理历史成本分项流水；PC 算法需要 ≥90 天数据样本；无需外部 API 依赖）</li><li><strong>优先级</strong>：⭐⭐⭐☆☆（建议在 SKU 级 P&amp;L 体系建立后再引入，否则输入数据质量不足）</li><li>线性 SCM 在成本非线性传导（如量价联动）时精度下降，可替换为 XGBoost 代理模型</li><li>观测数据中存在隐藏混淆变量（如汇率同时影响原材料和头程）时需引入工具变量</li><li>PC 算法在变量数 &gt; 10 时计算量指数增长，推荐使用 FCI 变体</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>import numpy as np
+import networkx as nx
+import warnings
+warnings.filterwarnings(&quot;ignore&quot;)
+
+
+class SupplyChainKG:
+
+    def __init__(self):
+        self.G = nx.DiGraph()
+        self._build_demo_graph()
+
+    def _build_demo_graph(self):
+        nodes = [
+            (&quot;factory_CN&quot;,   {&quot;type&quot;: &quot;factory&quot;,   &quot;name&quot;: &quot;中国工厂&quot;}),
+            (&quot;freight_sea&quot;,  {&quot;type&quot;: &quot;freight&quot;,   &quot;name&quot;: &quot;海运头程&quot;}),
+            (&quot;freight_air&quot;,  {&quot;type&quot;: &quot;freight&quot;,   &quot;name&quot;: &quot;空运头程&quot;}),
+            (&quot;warehouse_US&quot;, {&quot;type&quot;: &quot;warehouse&quot;, &quot;name&quot;: &quot;FBA美国仓&quot;}),
+            (&quot;sku_M5&quot;,       {&quot;type&quot;: &quot;sku&quot;,       &quot;name&quot;: &quot;M5吸奶器&quot;}),
+        ]
+        for nid, attr in nodes:
+            self.G.add_node(nid, **attr)
+
+        edges = [
+            (&quot;factory_CN&quot;,   &quot;freight_sea&quot;,  {&quot;cost_q3&quot;: 180, &quot;cost_q4&quot;: 185, &quot;label&quot;: &quot;原材料+制造&quot;}),
+            (&quot;factory_CN&quot;,   &quot;freight_air&quot;,  {&quot;cost_q3&quot;: 180, &quot;cost_q4&quot;: 220, &quot;label&quot;: &quot;原材料+制造&quot;}),
+            (&quot;freight_sea&quot;,  &quot;warehouse_US&quot;, {&quot;cost_q3&quot;: 45,  &quot;cost_q4&quot;: 67,  &quot;label&quot;: &quot;海运费&quot;}),
+            (&quot;freight_air&quot;,  &quot;warehouse_US&quot;, {&quot;cost_q3&quot;: 180, &quot;cost_q4&quot;: 195, &quot;label&quot;: &quot;空运费&quot;}),
+            (&quot;warehouse_US&quot;, &quot;sku_M5&quot;,       {&quot;cost_q3&quot;: 38,  &quot;cost_q4&quot;: 42,  &quot;label&quot;: &quot;FBA仓储费&quot;}),
+        ]
+        for src, dst, attr in edges:
+            self.G.add_edge(src, dst, **attr)
+
+    def decompose_cost_paths(self, period_a=&quot;cost_q3&quot;, period_b=&quot;cost_q4&quot;):
+        results = []
+        sources = [n for n, d in self.G.nodes(data=True) if d[&quot;type&quot;] == &quot;factory&quot;]
+        sinks   = [n for n, d in self.G.nodes(data=True) if d[&quot;type&quot;] == &quot;sku&quot;]
+        for src in sources:
+            for dst in sinks:
+                for path in nx.all_simple_paths(self.G, src, dst):
+                    cost_a = sum(self.G[u][v].get(period_a, 0) for u, v in zip(path[:-1], path[1:]))
+                    cost_b = sum(self.G[u][v].get(period_b, 0) for u, v in zip(path[:-1], path[1:]))
+                    delta  = cost_b - cost_a
+                    pct    = delta / cost_a * 100 if cost_a else 0
+                    path_label = &quot; → &quot;.join(self.G.nodes[n][&quot;name&quot;] for n in path)
+                    results.append({
+                        &quot;path&quot;: path_label,
+                        &quot;cost_q3&quot;: cost_a, &quot;cost_q4&quot;: cost_b,
+                        &quot;delta&quot;: delta, &quot;pct&quot;: pct,
+                    })
+        return results
+
+    def edge_contribution(self, period_a=&quot;cost_q3&quot;, period_b=&quot;cost_q4&quot;):
+        contributions = []
+        for u, v, data in self.G.edges(data=True):
+            ca = data.get(period_a, 0)
+            cb = data.get(period_b, 0)
+            delta = cb - ca
+            contributions.append({
+                &quot;edge&quot;: f&quot;{self.G.nodes[u][&#x27;name&#x27;]} → {self.G.nodes[v][&#x27;name&#x27;]}&quot;,</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-KG-Supply-Chain-Cost-Attribution" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-Causal-Attribution-Bridge.html'>Skill-Causal-Attribution-Bridge</a></li><li><a href='../skills/Skill-FBA-Cost-Forecast-Adjustment.html'>Skill-FBA-Cost-Forecast-Adjustment</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-Multi-Echelon-Inventory.html'>Skill-Multi-Echelon-Inventory</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-Causal-Attribution-Bridge.html'>Skill-Causal-Attribution-Bridge</a></li><li><a href='../skills/Skill-FBA-Cost-Forecast-Adjustment.html'>Skill-FBA-Cost-Forecast-Adjustment</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

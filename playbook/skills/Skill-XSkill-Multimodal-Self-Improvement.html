@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>XSkill — 多模态 Agent 双流自进化：经验+技能协同积累 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-XSkill-Multimodal-Self-Improvement</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>XSkill — 多模态 Agent 双流自进化：经验+技能协同积累</h1>
+<p class="muted">Skill-XSkill-Multimodal-Self-Improvement · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5-10 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务问题：婴儿奶粉主图审核 Agent 每次处理新品时独立工作，无法积累&quot;什么样的主图点击率高&quot;的视觉经验</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>XSkill 解决的是 AI Agent 的&quot;每次从零开始&quot;问题——传统 Agent 缺乏跨任务的知识积累机制，执行 100 次类似任务的性能与第 1 次几乎相同。XSkill 通过双流架构实现持续自进化：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：婴儿奶粉主图审核 Agent 每次处理新品时独立工作，无法积累&quot;什么样的主图点击率高&quot;的视觉经验。第 50 次审核的准确率和第 1 次一样低，浪费了大量历史轨迹中的隐含知识。</p><p>数据要求： - 任务轨迹：图片分析记录（分析步骤 + 决策 + 最终点击率反馈） - 视觉上下文：图片哈希 ID（关联特征） - 历史结果：CTR 数据（用于 outcome 标注）</p><p>| 积累阶段 | 技能内容 | 经验内容 | |---------|---------|---------| | 前 5 次 | 基础流程：`检查认证标识 → 评估主体清晰度 → 打分` | 具体失误记录：&quot;首次忽略了背景杂乱度对 CTR 的影响&quot; | | 5-10 次 | 优化流程：新增&quot;认证标识位置评分&quot;子步骤 | &quot;左上角认证比中部认证 CTR 高 12%&quot; | | 10+ 次 | 精炼技能：自动区分欧标/美标图片规范 | 竞品对比经验积累 |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>XSkill 是 Loop 36-50&quot;自主进化能力&quot;子系列的核心框架</li><li>双流设计（经验 + 技能）比单一记忆方案更具泛化能力</li><li>与 WF-D 选品 Agent、商品图片审核 Agent 直接对接，落地路径清晰</li><li>视觉上下文 UID 需要稳定的图像哈希方案（图片更新后 UID 失效）</li><li>经验流相似度计算用 Jaccard 词重叠是 MVP，生产环境建议升级为嵌入向量检索</li><li>技能合并阈值（0.6）需根据业务领域校准，过低导致技能爆炸，过高导致技能合并过度</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+XSkill — 多模态 Agent 双流自进化框架
+来源: arXiv:2603.12056 | 2026年3月
+场景: 商品图片分析 Agent + 选品 Agent 的持续知识积累
+&quot;&quot;&quot;
+
+import json
+import hashlib
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from typing import Optional
+from enum import Enum
+
+
+class TaskOutcome(Enum):
+    SUCCESS = &quot;success&quot;
+    PARTIAL = &quot;partial&quot;
+    FAILURE = &quot;failure&quot;
+
+
+@dataclass
+class Experience:
+    &quot;&quot;&quot;经验条目：战术层知识（具体轨迹反思）&quot;&quot;&quot;
+    task_type: str
+    context_summary: str            # 任务上下文摘要
+    action_taken: str               # 执行的关键动作
+    outcome: TaskOutcome            # 结果
+    lesson: str                     # 提炼的教训
+    visual_context_uid: Optional[str] = None  # 视觉上下文哈希 ID
+    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    relevance_score: float = 0.5    # 当前任务相关度（检索时动态赋值）
+
+    def to_dict(self) -&gt; dict:
+        return {
+            &quot;task_type&quot;: self.task_type,
+            &quot;context_summary&quot;: self.context_summary,
+            &quot;action_taken&quot;: self.action_taken,
+            &quot;outcome&quot;: self.outcome.value,
+            &quot;lesson&quot;: self.lesson,
+            &quot;visual_context_uid&quot;: self.visual_context_uid,
+            &quot;created_at&quot;: self.created_at,
+            &quot;relevance_score&quot;: self.relevance_score,
+        }
+
+
+@dataclass
+class Skill:
+    &quot;&quot;&quot;技能条目：战略层知识（结构化可复用流程）&quot;&quot;&quot;
+    skill_id: str
+    task_type: str
+    task_description: str
+    procedure_steps: list           # 执行步骤列表
+    success_rate: float = 0.5       # 历史成功率
+    usage_count: int = 0            # 使用次数
+    version: int = 1                # 版本号
+    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+    def to_dict(self) -&gt; dict:
+        return {</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2603.12056</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-XSkill-Multimodal-Self-Improvement" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-ATLAS-Gradient-Free-Continual.html'>Skill-ATLAS-Gradient-Free-Continual</a></li><li><a href='../skills/Skill-AgeMem-Unified-Agent-Memory.html'>Skill-AgeMem-Unified-Agent-Memory</a></li><li><a href='../skills/Skill-AutoSkill-Lifelong-Learning.html'>Skill-AutoSkill-Lifelong-Learning</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-CASCADE-Deployment-Time-Learning.html'>Skill-CASCADE-Deployment-Time-Learning</a></li><li><a href='../skills/Skill-EvoSC-Self-Consolidation.html'>Skill-EvoSC-Self-Consolidation</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-LMM-Searcher-Multimodal-Context.html'>Skill-LMM-Searcher-Multimodal-Context</a></li><li><a href='../skills/Skill-Shopping-Companion-Agent.html'>Skill-Shopping-Companion-Agent</a></li><li><a href='../skills/Skill-VLM-Ecommerce-Adaptation.html'>Skill-VLM-Ecommerce-Adaptation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

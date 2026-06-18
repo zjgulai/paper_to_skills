@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Difference-in-Differences (DiD) for Causal Effect Estimation · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-DiD-Difference-in-Differences</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Difference-in-Differences (DiD) for Causal Effect Estimation</h1>
+<p class="muted">Skill-DiD-Difference-in-Differences · 01-因果推断</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-pricing-engine.html'>AI 定价引擎手册</a><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>增长负责人 / CMO<span class='biz-ctx-secondary'> · 数据分析师 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · Meta Ads · DTC 独立站</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告预算花了，但不确定哪个渠道真的带来新客；做了大促，不知道销量增长是促销效果还是季节规律</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>能区分「真实增量」和「自然购买」，砍掉虚假归因渠道后同等预算 ROI 提升 20-40%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>钱花出去了不知道有没有用</span><span class='biz-pain-tag'>各渠道报告都说自己贡献最大</span><span class='biz-pain-tag'>怎么向老板证明这笔钱值得花</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务问题：2025年美国对中国产婴儿推车加征25%关税</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：利用处理组和对照组在政策/干预前后的变化差异来估计因果效应。基本逻辑是：如果没有干预，处理组的趋势应该与对照组平行（平行趋势假设）。干预后的实际差异减去趋势差异，就是干预的净效应。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：2025年美国对中国产婴儿推车加征25%关税。团队需要评估：关税究竟导致销量下降了多少？是自然的市场波动，还是关税的直接影响？</p><p>应用流程： 1. 定义处理组和对照组： - 处理组：销往美国的婴儿推车（受关税影响） - 对照组：销往加拿大/英国的婴儿推车（未受关税影响） 2. 定义时间窗口： - 干预前：2024年6月-2025年5月（12个月） - 干预后：2025年6月-2026年5月（12个月） 3. 检验平行趋势：事件研究法，看干预前12个月处理组和对照组的趋势是否平行 4. 估计DiD效应：计算交互项系数</p><p>预期产出： - 关税导致的销量下降幅度（如：月均销量下降 18%，其中 12% 可归因于关税） - 事件研究图：干预前后各月的动态效应 - 稳健性检验：安慰剂检验、替换对照组</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>数据要求：需要处理组和对照组在干预前后的面板数据</li><li>技术门槛：低，核心是OLS回归</li><li>主要挑战：平行趋势假设的检验和满足（需要领域知识选择合理的对照组）</li><li><strong>必要性极高</strong>：跨境电商面临大量外部政策冲击（关税、平台规则、物流变化），DiD是最自然的评估工具</li><li><strong>通用性强</strong>：几乎所有&quot;自然实验&quot;场景都适用</li><li><strong>实施成本低</strong>：不需要实验数据，利用现有历史数据即可</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Difference-in-Differences (DiD) — 双重差分因果效应估计
+用于评估政策/干预对母婴出海业务的因果影响
+
+支持：经典DiD、Staggered DiD（Callaway-Sant&#x27;Anna）、事件研究法
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ==================== DiD 核心实现 ====================
+
+class DifferenceInDifferences:
+    &quot;&quot;&quot;双重差分估计器&quot;&quot;&quot;
+
+    def __init__(self, method=&#x27;classic&#x27;):
+        &quot;&quot;&quot;
+        初始化 DiD 估计器
+
+        Args:
+            method: &#x27;classic&#x27; 或 &#x27;staggered&#x27;
+        &quot;&quot;&quot;
+        self.method = method
+        self.model = None
+        self.tau = None
+        self.se = None
+        self.event_study_results = None
+
+    def fit(self, df, unit_col, time_col, treat_col, post_col, outcome_col,
+            covariates=None, cluster_col=None):
+        &quot;&quot;&quot;
+        拟合 DiD 模型
+
+        Args:
+            df: DataFrame
+            unit_col: 单元标识列（如店铺ID、国家）
+            time_col: 时间列
+            treat_col: 处理标志列（1=处理组，0=对照组）
+            post_col: 干预后标志列（1=干预后，0=干预前）
+            outcome_col: 结果变量列（如销量、转化率）
+            covariates: 协变量列表（可选）
+            cluster_col: 聚类标准误的聚类变量（可选）
+        &quot;&quot;&quot;
+        df = df.copy()
+
+        # 创建交互项
+        df[&#x27;treat_post&#x27;] = df[treat_col] * df[post_col]
+
+        # 构建特征矩阵
+        feature_cols = [treat_col, post_col, &#x27;treat_post&#x27;]
+        if covariates:
+            feature_cols.extend(covariates)
+
+        X = df[feature_cols].values
+        y = df[outcome_col].values</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-DiD-Difference-in-Differences" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Causal-Discovery-PC-Algorithm.html'>Skill-Causal-Discovery-PC-Algorithm</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li></ul>
+    <h3>延伸技能</h3><p class='muted'>暂无</p>
+    <h3>可组合技能</h3><ul><li><span class='muted'>+ A/B-Experimental-Design</span></li><li><span class='muted'>+ Causal-Forest</span></li><li><span class='muted'>+ Time-Series-Forecasting</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

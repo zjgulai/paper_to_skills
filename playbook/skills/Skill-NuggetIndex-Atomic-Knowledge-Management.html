@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NuggetIndex原子知识单元管理 — 最小事实粒度+时效区间+生命周期状态的可维护RAG · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-NuggetIndex-Atomic-Knowledge-Management</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>NuggetIndex原子知识单元管理 — 最小事实粒度+时效区间+生命周期状态的可维护RAG</h1>
+<p class="muted">Skill-NuggetIndex-Atomic-Knowledge-Management · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5-10万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>段落级RAG中一个事实过期整个段落都变得不可信——NuggetIndex将知识分解为原子事实单元并附带时效区间，Nugget Recall提升42%，冲突率降低55%，生成器输入减少64%（2026 arXiv:2604.27306）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：传统RAG系统存储的是&quot;段落&quot;（Passage）或&quot;文档块&quot;（Chunk），这有一个根本性缺陷：一个段落可能同时包含多个事实，其中一个事实过期了，整个段落就变成&quot;部分有效&quot;——很难处理。NuggetIndex的反直觉方案：将知识分解到最小原子事实单元（nugget），每个nugget只包含一个不可再分的事实，并附带时效区间和生命周期状态。这样过期的是单个事实，而非整个段落。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 传统段落RAG的问题：一个段落包含&quot;FBA标准费率$8.50/件，旺季仓储费$2.40/月，返利政策为...&quot;，当FBA费率在2025年调整后，整段都需要重新处理，而且可能有部分信息仍然准确 - NuggetIndex方案： - Nugget-001: &quot;FBA标准尺寸吸奶器费率$8.50/件&quot; [valid_from=2024-10] - Nugget-002: &quot;FBA旺季仓储费$2.40/立方英尺/月&quot; [valid_from=2024-10] - 2025年费率调整时：Nugget-001 → Deprecated；新建 Nugget-201: &quot;$8.70/件&quot; [valid_f</p><p>- **业务问题**：Amazon每年更新1-3次儿童产品合规要求，每次变动涉及某几个具体条款，其他条款不变；传统系统需要人工判断&quot;哪些内容变了哪些没变&quot;，耗时且容易遗漏 - **NuggetIndex方案**：每条合规要求独立为nugget，附带&quot;有效期间&quot;（对应规则版本）；新规则发布时只更新涉及的具体nuggets，其他保持Active；Agent检索时自动获得当前有效的合规规则集合 - **预期产出**：合规信息过期错误率从18%降至2%，更新工作量减少75%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：传统段落RAG在合规知识库中过期信息率18%，NuggetIndex降至2%；知识更新工作量降低75%（只更新变化的原子事实）；检索质量提升42%（Nugget Recall）；综合年化价值$5-10万（减少错误决策+减少维护成本）；系统成本$5万，ROI≈200%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（原子事实提取需要LLM辅助，有一定工程量；主要挑战是为现有段落知识库做nugget化改造）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（解决了RAG系统的根本矛盾：评估粒度是事实级，但检索粒度是段落级；NuggetIndex对齐两者，是RAG质量提升的核心基础设施）</li><li><strong>适用规模</strong>：任何需要精确知识维护的知识库（特别是频繁更新的政策/规则/价格类）</li><li><strong>数据依赖</strong>：需要高质量的文档来源，以及时效信息（文档发布时间/有效期标注）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+NuggetIndex原子知识单元管理系统
+功能：原子事实提取 + 生命周期管理 + 时效过滤 + 新鲜度回退
+基于 arXiv:2604.27306 (2026)
+&quot;&quot;&quot;
+import re
+import uuid
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from datetime import datetime
+from enum import Enum
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class LifecycleState(Enum):
+    ACTIVE = &quot;Active&quot;           # 当前共识，正常使用
+    DEPRECATED = &quot;Deprecated&quot;   # 已被取代，降权检索
+    CONTESTED = &quot;Contested&quot;     # 有分歧，附加警告
+
+
+@dataclass
+class Nugget:
+    &quot;&quot;&quot;原子知识单元&quot;&quot;&quot;
+    nugget_id: str
+    content: str                    # 单一不可分原子事实
+    valid_from: datetime
+    valid_to: Optional[datetime]    # None = 持续有效
+    lifecycle_state: LifecycleState
+    sources: List[str] = field(default_factory=list)
+    confidence: float = 1.0
+    domain: str = &quot;&quot;
+    superseded_by: Optional[str] = None  # Deprecated时指向新nugget
+
+    @property
+    def is_valid_at(self) -&gt; bool:
+        &quot;&quot;&quot;当前时间是否有效&quot;&quot;&quot;
+        now = datetime.now()
+        if self.valid_from &gt; now:
+            return False
+        if self.valid_to and self.valid_to &lt; now:
+            return False
+        return self.lifecycle_state == LifecycleState.ACTIVE
+
+    @property
+    def token_count(self) -&gt; int:
+        return max(len(self.content) // 4, 1)
+
+
+class NuggetExtractor:
+    &quot;&quot;&quot;
+    从文本中提取原子事实Nuggets
+    生产版本：使用LLM提取，此处用规则近似
+    &quot;&quot;&quot;
+
+    # 常见事实句式（简化检测）
+    FACT_PATTERNS = [
+        r&#x27;(?:^|\n).*(?:\$[\d,.]+|[\d]+%|\d+件|\d+天|\d+月).*(?:\。|$)&#x27;,
+        r&#x27;.*(?:必须|需要|要求|禁止|允许|不得).*(?:[认证|合规|标准|规定]).*&#x27;,
+        r&#x27;.*(?:fee|cost|rate|price|penalty).*\$[\d,.]+.*&#x27;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.27306</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-NuggetIndex-Atomic-Knowledge-Management" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Context-Kubernetes-KB-Orchestration.html'>Skill-Context-Kubernetes-KB-Orchestration</a></li><li><a href='../skills/Skill-Entity-Resolution-KG-Dedup.html'>Skill-Entity-Resolution-KG-Dedup</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li><li><a href='../skills/Skill-Semantic-Chunking-Strategy.html'>Skill-Semantic-Chunking-Strategy</a></li><li><a href='../skills/Skill-SmartVector-Self-Aware-Embeddings.html'>Skill-SmartVector-Self-Aware-Embeddings</a></li><li><a href='../skills/Skill-TG-RAG-Temporal-Knowledge-Graph.html'>Skill-TG-RAG-Temporal-Knowledge-Graph</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Context-Kubernetes-KB-Orchestration.html'>Skill-Context-Kubernetes-KB-Orchestration</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li><li><a href='../skills/Skill-SmartVector-Self-Aware-Embeddings.html'>Skill-SmartVector-Self-Aware-Embeddings</a></li><li><a href='../skills/Skill-TG-RAG-Temporal-Knowledge-Graph.html'>Skill-TG-RAG-Temporal-Knowledge-Graph</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li><li><a href='../skills/Skill-SmartVector-Self-Aware-Embeddings.html'>Skill-SmartVector-Self-Aware-Embeddings</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAS Resource Scheduling — OS 调度原语驱动的多智能体资源管理 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-MAS-Resource-Scheduling</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>MAS Resource Scheduling — OS 调度原语驱动的多智能体资源管理</h1>
+<p class="muted">Skill-MAS-Resource-Scheduling · 10-MAS</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>12 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>双 11 大促前 20 个选品 Agent 同时调用 GPT-4o，API 配额耗尽导致任务排队超时——MAS 资源调度层通过 Token 预算感知分配避免配额溢出，大促期间 Agent 吞吐量提升 3.5 倍</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>MAS 生产化最常见的失败不来自 Agent 逻辑，而来自资源竞争：多个 Agent 并行调用同一个限速 API，导致连接重置、HTTP 502、上下文泄漏、Zombie Agent 挂起。这些问题在操作系统领域早已有成熟解法——HiveMind 和 AgentRM 把 OS 调度理论直接搬到 MAS 层。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务背景：双 11 大促前，需要同时启动 20 个选品扫描 Agent 评估候选 SKU。所有 Agent 共享同一个 GPT-4o API 配额（TPM 限制），历史上每次大促前都有 30-40% 的 Agent 因 429 错误失败，需要人工重跑。</p><p>业务背景：AIM-RM 库存 MAS 每天运行 500+ 次库存决策，运营反馈&quot;有时候任务卡住不动&quot;（Zombie Agent）。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>12 万元</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：7 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>import time
+import threading
+import queue
+from collections import deque
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, List, Optional
+from enum import Enum
+
+
+class Priority(Enum):
+    CRITICAL = 0
+    NORMAL = 1
+    BACKGROUND = 2
+
+
+class CircuitState(Enum):
+    CLOSED = &quot;closed&quot;
+    OPEN = &quot;open&quot;
+    HALF_OPEN = &quot;half_open&quot;
+
+
+@dataclass
+class AgentTask:
+    task_id: str
+    agent_fn: Callable
+    priority: Priority = Priority.NORMAL
+    budget_tokens: int = 4000
+    deadline_seconds: float = 60.0
+    created_at: float = field(default_factory=time.time)
+    mlfq_level: int = 0
+
+
+@dataclass
+class ContextLayer:
+    session: Dict[str, Any] = field(default_factory=dict)
+    task: Dict[str, Any] = field(default_factory=dict)
+    agent: Dict[str, Any] = field(default_factory=dict)
+
+    def clear_task(self):
+        self.task.clear()
+
+    def clear_agent(self):
+        self.agent.clear()
+
+
+class CircuitBreaker:
+    def __init__(self, failure_threshold: int = 5, cooldown: float = 30.0):
+        self.failure_threshold = failure_threshold
+        self.cooldown = cooldown
+        self.state = CircuitState.CLOSED
+        self.failure_count = 0
+        self.last_failure_time = 0.0
+
+    def record_success(self):
+        self.failure_count = 0
+        self.state = CircuitState.CLOSED
+
+    def record_failure(self):
+        self.failure_count += 1
+        self.last_failure_time = time.time()</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2603.13110</li><li>2604.17111</li><li>2605.06110</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MAS-Resource-Scheduling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Agent-Production-Engineering]]</span></li><li><span class='muted'>MAS-Orchestrator]]</span></li><li><a href='../skills/Skill-Agent-Production-Engineering.html'>Skill-Agent-Production-Engineering</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Agent-SLO-Manager]]</span></li><li><span class='muted'>Cost-Aware-Agent-Scheduling]]</span></li><li><a href='../skills/Skill-Agent-SLO-Manager.html'>Skill-Agent-SLO-Manager</a></li><li><a href='../skills/Skill-Cost-Aware-Agent-Scheduling.html'>Skill-Cost-Aware-Agent-Scheduling</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>MAS-Testing-Verification]]</span></li><li><span class='muted'>ParaManager-Parallel-Orchestration]]</span></li><li><a href='../skills/Skill-MAS-Testing-Verification.html'>Skill-MAS-Testing-Verification</a></li><li><a href='../skills/Skill-ParaManager-Parallel-Orchestration.html'>Skill-ParaManager-Parallel-Orchestration</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

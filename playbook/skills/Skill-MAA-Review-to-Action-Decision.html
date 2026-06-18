@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAA 多 Agent 行动建议 - 从评论到产品改进决策链 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-MAA-Review-to-Action-Decision</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>MAA 多 Agent 行动建议 - 从评论到产品改进决策链</h1>
+<p class="muted">Skill-MAA-Review-to-Action-Decision · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>510-920 万元/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Momcozy M5 吸奶器在美国/德国/中国三市场销售,各市场用户痛点完全不同(美国关注续航便携、德国关注静音认证、中国关注清洗方便). 现有运营复盘只产出&quot;差评列表&quot;,无法直接驱动产品改进决策——产品经理拿到差评列表还要花 1-2 周二次提炼 - 数据要求:三市场 Amazon Review API + market 标签 - MAA 配置: - 按市场分别聚类(K=5,每市场 5</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统评论分析停留在&quot;描述性&quot;层面(情感/属性). MAA 将其升级为&quot;规范性决策链路&quot;:评论 → 问题 → 建议 → 评估 → 排序. 通过 5 个 Agent 分工,把大规模评论语料蒸馏成企业可直接执行的行动清单,而非分析报告.</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题:Momcozy M5 吸奶器在美国/德国/中国三市场销售,各市场用户痛点完全不同(美国关注续航便携、德国关注静音认证、中国关注清洗方便). 现有运营复盘只产出&quot;差评列表&quot;,无法直接驱动产品改进决策——产品经理拿到差评列表还要花 1-2 周二次提炼 - 数据要求:三市场 Amazon Review API + market 标签 - MAA 配置: - 按市场分别聚类(K=5,每市场 5 个主题簇) - Issue Agent 提取每个簇的核心痛点(如&quot;夜间使用嘈杂吵醒宝宝&quot;) - Recommendation Agent 生成 3-4 条改进建议(如&quot;加静音模式降至 35dB&quot;/</p><p>- 业务问题:Q1-Q4 季度复盘,人工归纳 3 个产品 × 4 季度 = 12 次,每次 3-5 PM 天,总计 36-60 PM 天/年;复盘结论高度依赖个人经验,新人接手质量大幅波动 - 数据要求:季度 Amazon + Wayfair 评论合并 - MAA 配置: AGRS 摘要 → MAA 5 Agent 决策链 → 输出&quot;季度 Top 3-5 优先改进项 + ROI 排序&quot; - 业务价值: - 节省人工:36-60 PM 天 × 3000元/天 = 10-18 万/年 - 决策质量标准化(SRAC 评分客观可比),新人接手不衰退 - 改进 ROI 提升 20-30% = 额外 10</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>易处:论文 prompt 模板完整公开,5 Agent 模块清晰</li><li>难处:需要业务专家初始化 Ranking Agent 的成本/周期评分规则</li><li>难处:5 Agent 串联推理 token 成本较高(单产品估算 $0.05-0.15 GPT-4o-mini)</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+MAA Multi-Agent Actionable Advice 最小骨架
+论文 arXiv:2601.12024 (Bhandari et al., 2026-01)
+完整实现见 paper2skills-code/nlp_voc/maa_actionable_advice/model.py
+&quot;&quot;&quot;
+from __future__ import annotations
+from collections import defaultdict
+from dataclasses import dataclass, field
+from typing import Dict, List
+
+
+@dataclass
+class Review:
+    text: str
+    review_id: str = &quot;&quot;
+    market: str = &quot;&quot;
+
+
+@dataclass
+class SRAC:
+    S: int = 0
+    R: int = 0
+    A: int = 0
+    C: int = 0
+
+    @property
+    def score(self) -&gt; float:
+        return 0.25 * (self.S + self.R + self.A + self.C)
+
+
+def clustering_agent(reviews: List[Review], k: int = 5) -&gt; Dict[int, List[Review]]:
+    &quot;&quot;&quot;阶段 1: 聚类 + 选代表(生产替换为 TF-IDF + K-Means)&quot;&quot;&quot;
+    keyword_buckets = {
+        0: [&quot;noise&quot;, &quot;loud&quot;, &quot;quiet&quot;],
+        1: [&quot;clean&quot;, &quot;wash&quot;, &quot;hygiene&quot;],
+        2: [&quot;battery&quot;, &quot;portable&quot;, &quot;wireless&quot;],
+        3: [&quot;price&quot;, &quot;expensive&quot;, &quot;value&quot;],
+        4: [&quot;build&quot;, &quot;sturdy&quot;, &quot;broken&quot;],
+    }
+    clusters = defaultdict(list)
+    for r in reviews:
+        text_low = r.text.lower()
+        best_cluster, best_match = -1, 0
+        for cid, kws in keyword_buckets.items():
+            match = sum(1 for kw in kws if kw in text_low)
+            if match &gt; best_match:
+                best_cluster, best_match = cid, match
+        if best_cluster &gt;= 0:
+            clusters[best_cluster].append(r)
+    return dict(clusters)
+
+
+def issue_agent(cluster_reps: Dict[int, List[Review]]) -&gt; List[Dict]:
+    &quot;&quot;&quot;阶段 2: 抽取主题 + 具体问题&quot;&quot;&quot;
+    issues = []
+    for cid, reps in cluster_reps.items():
+        if not reps:
+            continue
+        themes = [&quot;noise&quot;, &quot;cleaning&quot;, &quot;portability&quot;, &quot;value&quot;, &quot;build_quality&quot;]
+        theme = themes[cid] if cid &lt; len(themes) else &quot;general&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2601.12024</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MAA-Review-to-Action-Decision" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Customer-Journey-Decision-Tree.html'>Skill-Customer-Journey-Decision-Tree</a></li><li><a href='../skills/Skill-Root-Cause-Analysis-Agent.html'>Skill-Root-Cause-Analysis-Agent</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DML-Cohort-Causal-Effect.html'>Skill-DML-Cohort-Causal-Effect</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

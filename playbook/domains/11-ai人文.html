@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>11-AI人文 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>11-AI人文</h1><p>AI × Humanities: cross-modal transfer, LoRA</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 11-AI人文 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AI-Algorithmic-Bias-Audit.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI Algorithmic Bias Audit — AI 算法偏见审计：跨境电商推荐公平性检测</h3>
+  <p class="sc-desc">品牌向欧洲市场扩张时推荐系统对德国vs法国用户存在系统性差异可能违反EU AI Act——因果公平性审计框架检测算法偏见并生成合规文档，避免最高30M美元罚款同时提升欧洲市场CVR5-10%</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-200 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AI-Brand-Storytelling.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI Brand Storytelling — AI 辅助品牌故事创作：情感连接与文化适应</h3>
+  <p class="sc-desc">钩子（Hook） → 冲突（Conflict） → 解决（Resolution） → 行动召唤（CTA）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AI-Consumer-Wellbeing-Ethics.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI Consumer Wellbeing Ethics — 消费者福祉与 AI 伦理：母婴场景</h3>
+  <p class="sc-desc">AI 系统必须在用户可感知的层面说明&quot;你在和一个 AI 交互&quot;。FTC 2023 年指南明确要求：AI 客服首条消息必须声明身份；AI 生成内容必须标注。母婴场景额外要求：当 AI 给出健康/营养建议时，必须附注&quot;请咨询儿科医生&quot;。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AI-Explainability-Consumer-Trust.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI Explainability for Consumer Trust — AI 推荐可解释性：消费者信任构建</h3>
+  <p class="sc-desc">母婴高风险购买决策（奶粉品牌、安全座椅、辅食选择）的特点是：消费者需要理由才能信任推荐。研究表明，在高风险品类中，&quot;不知道为什么推荐&quot;比&quot;不推荐&quot;更会降低购买意愿。黑盒 AI 推荐的三个信任障碍</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AI-Fake-Review-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI Fake Review Detection — 多模态虚假评论检测与可解释风控</h3>
+  <p class="sc-desc">母婴跨境卖家竞品批量刷好评、自品被刷 AI 差评难以举报——多模态 BERT+ResNet-50 虚假评论检测器准确率 93%+，SHAP 触发词证据报告将差评举报成功率从 30% 提升至 65%，年化保护 GMV 损失 5-30 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>1-5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AI-Humanities-Healing-Cards.html" data-domain="11-AI人文" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI技术概念 × 疗愈哲理金句卡片库</h3>
+  <p class="sc-desc">场景：跨境创业者/运营人员面对不确定性时，用 AI 技术的哲理类比获得心理支持与灵感</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AIGC-Authenticity-Trust-Framework.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AIGC Authenticity Trust Framework — 图文双轨 AIGC 真实性检测与消费者信任管理</h3>
+  <p class="sc-desc">母婴卖家大量使用 AI 生图/文案后不知是否触发平台检测或被消费者察觉，信任危机导致评分骤降——双轨真实性检测（图像 Patch 不连续性 + 文本 TTR/重复率）预先标记高风险内容，避免上架后信任危机导致年化 50-200 万元 GMV 损失</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AIGC-Content-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</h3>
+  <p class="sc-desc">AI 生成文本与人类写作在统计层面存在系统性差异，可通过以下三类特征加以量化鉴别</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AIGC-Revenue-Attribution.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AIGC Revenue Attribution — AI内容生成 ROI 财务归因：从内容投入到 GMV 的量化路径</h3>
+  <p class="sc-desc">品牌每月花2000美元请摄影师但不知道AI图片50美元能否替代——DiD+A/B双轨归因量化AIGC内容对GMV的真实贡献，验证AI图CVR差距若小于5%可全面替换年化节省内容成本17万元以上</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Cultural-Marketing-Adaptation.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">Cross-Cultural Marketing Adaptation — 多语言 CAM 嵌入驱动的跨文化营销适配</h3>
+  <p class="sc-desc">母婴跨境品牌进入东南亚（TH/VN/ID）时英文 Listing 直接机翻，本地用户搜索无法匹配——Compass-Embedding v4 CAM 多语言嵌入将跨语言产品匹配准确率从 11% 提升至 88%，Top-3 关键词召回率提升 70pp，东南亚自然流量翻倍，年化增量 GMV 20-60 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-60 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Cultural-VOC-Alignment.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">Cross-Cultural VOC Alignment — 跨文化用户声音对齐：消除翻译偏差的多语言评论分析</h3>
+  <p class="sc-desc">德国市场吸奶器平均4.2星低于美国4.6星于是投入资源改进产品实际是文化误读——德国4.2星校准后等于美国4.7星，跨文化VOC对齐避免基于误读信号的产品改进浪费年化5-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cultural-Data-Collection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">Cultural Data Collection — 跨文化 UGC 采集与母婴消费文化差异识别</h3>
+  <p class="sc-desc">文化语境的不可迁移性——相同语义在不同文化中承载截然不同的消费偏好信号。</p>
+  <div class='sc-footer'><span class='sc-roi'>280 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Emotional-AI-Customer-Care.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI</h3>
+  <p class="sc-desc">情绪识别：通过关键词匹配（域内词典）+ 句式特征（连续感叹号、全大写）识别用户情绪状态，将其分级为 CALM / ANXIOUS / FRUSTRATED / ANGRY / FRIGHTENED 五档。母婴高压场景（安全召回、产品危害）优先触发 FRIGHTENED 级别，绕过普通情绪判断逻辑。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

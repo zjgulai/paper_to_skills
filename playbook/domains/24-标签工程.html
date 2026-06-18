@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>24-标签工程 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>24-标签工程</h1><p>新领域 (2026-06-16): Tag schema, ontology-driven actions, Palantir-style Object-Action-Writeback, supply chain tag propagation</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 24-标签工程 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Auto-Tagging-Pipeline-Rule-ML-LLM.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">三层自动打标流水线 — 规则引擎+ML分类器+LLM抽取的混合置信度打标体系</h3>
+  <p class="sc-desc">数据团队面临&quot;500个SKU打标需要1周人工&quot;——规则+ML+LLM三层流水线将覆盖率从30%提升至97%，人工审核量从100%降至3%，节省标注成本4万元/年</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Black-Swan-Scenario-Simulation-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">黑天鹅情景模拟标签 — 极端事件供应链压力测试与预案激活机制</h3>
+  <p class="sc-desc">风控面临&quot;平台封号/供应商断供等极端事件没有预案&quot;——黑天鹅情景模拟量化每个场景的GMV损失和恢复时间，触发预案激活Tag</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CS-Supply-Chain-Feedback-Loop-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">客服反馈供应链改善闭环 — 差评/投诉自动归因到供应链节点并触发改善Action</h3>
+  <p class="sc-desc">运营面临&quot;差评反复出现同一问题却没有系统性改善&quot;——NLP自动归因将客服反馈→供应链改善从1周人工→即时自动，降低差评率40%</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Decision-Graph-SC-Inference.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链因果决策图推理 — 从相关性到因果性，Palantir分析→行动的核心跨越</h3>
+  <p class="sc-desc">决策者面临&quot;相关性分析无法判断因果方向导致错误干预&quot;——Pearl因果阶梯从关联→干预→反事实，Airbus/Merck案例证明正确干预降低30%库存决策错误率</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Climate-ESG-Supply-Chain-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">气候与ESG供应链风险标签 — 碳足迹追踪、CSRD合规与可持续供应链评级</h3>
+  <p class="sc-desc">品牌面临&quot;EU CSRD强制ESG披露但无系统化数据&quot;——碳足迹+劳工合规Tag体系满足CSRD合规要求，支持高溢价ESG定位（欧洲市场+5-10%）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Counterfactual-SC-Scenario-Sim.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链反事实情景仿真 — 决策前的数字沙盘，支撑Palantir高风险Action验证</h3>
+  <p class="sc-desc">&quot;如果当时采取了不同的行动，现在会怎样？</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Domain-Supply-Chain-Signal-Fusion.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">跨域供应链信号融合引擎 — 多域Tag汇聚、冲突消解与统一决策信号生成</h3>
+  <p class="sc-desc">供应链团队面临&quot;各域Tag孤岛，单域看风险medium却跨域组合成critical&quot;——5域加权融合引擎将断货预警准确率提升60%，Black Friday前识别23个隐性高风险SKU，提前行动避免50万元损失</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-System-Data-Reconciliation.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">跨系统数据对账 — ERP/WMS/OMS三系统库存一致性自动比对与差异处置</h3>
+  <p class="sc-desc">运营面临&quot;ERP/WMS/FBA三套库存数字不一致无从判断&quot;——自动对账从月度盘点→每日自动，防止超卖和缺货年化节省5-10万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Decision-Audit-Trail-Ontology.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">AI决策审计追踪本体 — 供应链自动化决策的完整记录、回溯与合规证明</h3>
+  <p class="sc-desc">AI自动化团队面临&quot;自动决策无法证明合规合理&quot;——哈希链审计追踪将合规审查准备从2周→即时查询，防范EU AI Act监管风险</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Decision-Confidence-Calibration-SC.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链决策置信度校准与分层触发 — 从置信度到人机分工的动态决策框架</h3>
+  <p class="sc-desc">AI说&quot;85%把握补货&quot;，但实际上每次说85%时，真正正确的只有60%——这叫&quot;过度自信（Overconfidence）&quot;。</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Decision-Outcome-Closed-Loop-Learning.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链决策结果闭环学习 — 从执行结果到模型改进的Palantir决策飞轮</h3>
+  <p class="sc-desc">反事实偏差（Counterfactual Bias）</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Dynamic-Carrier-Selection-Tag-Driven.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag驱动动态承运商选择引擎 — 基于实时标签的末程承运商智能匹配与成本优化</h3>
+  <p class="sc-desc">物流团队面临&quot;固定承运商导致偏远区域附加费浪费&quot;——基于实时Tag动态承运商选择比静态规则便宜15-20%，大促期间自动切换避免SLA违约</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-EPR-Extended-Producer-Responsibility-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">欧盟EPR扩大生产者责任标签体系 — EPR注册合规、包装标签与回收报告自动化</h3>
+  <p class="sc-desc">合规面临&quot;德国EPR不合规随时被罚款最高10万欧元&quot;——合规矩阵扫描从2周→10分钟，38个未注册SKU优先级自动排序</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-GCF-Counterfactual-Unobserved-Demand.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">图因果预测GCF — 时空GNN+Synthetic Control估计Listing删除的隐性需求</h3>
+  <p class="sc-desc">Listing断货/广告暂停期间观测销量为0导致预测系统性低估备货量——GCF时空GNN+合成控制估计真实需求，MAPE降低75.3%，备货推荐准确率提升61.2%</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Geopolitical-Risk-Tag-Supply-Impact.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">地缘政治风险供应链影响标签 — 贸易限制/区域冲突对供应链的实时风险量化</h3>
+  <p class="sc-desc">采购面临&quot;红海危机/关税变动时无法量化供应链影响&quot;——地缘风险BFS传播引擎实时评估影响范围，提前14天预警节省空运费$8,000/批次</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Graph-OKB-Design-SC.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链操作知识库OKB图谱设计 — Neo4j+Delta双层架构与CDC实时同步策略</h3>
+  <p class="sc-desc">供应商断供影响链分析需要3层SQL JOIN耗时30分钟且容易漏查——Neo4j+Delta双层OKB将多跳BOM遍历从分钟级→2秒，供应商替代方案秒级发现</p>
+  <div class='sc-footer'><span class='sc-roi'>400万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Human-in-Loop-Approval-Gate-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">人工审批门控标签系统 — 高影响Action的分级审批、工作流设计与审计追踪</h3>
+  <p class="sc-desc">AI自动化团队面临&quot;全自动系统触发误操作风险&quot;——分级审批门控(Auto/Manager/VP/Legal)防止高影响错误操作，保障合规留痕，防范潜在50-100万元损失</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Inventory-Event-Sourcing-Architecture.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">库存事件溯源架构 — Event Sourcing模式下的库存状态完全可追溯与重放</h3>
+  <p class="sc-desc">仓储团队面临&quot;库存差异找不到根因&quot;——事件溯源将盘点差异排查从2天→10分钟时间旅行回放，实现库存状态完全可追溯</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-SC-MultiAgent-Consensus-Replenishment.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">LLM多智能体共识补货决策 — InvAgent框架：需求/采购/仓储三方博弈自动达成最优</h3>
+  <p class="sc-desc">补货决策需要销售/采购/仓储三方周会耗时3天且结果次优——InvAgent三方共识框架将决策时间→1小时自动达成，牛鞭效应降低30%</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Last-Mile-Cost-Per-Zone-Analytics.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">末程分区成本精算 — 农村/偏远/标准区域差异化成本分解与路线优化</h3>
+  <p class="sc-desc">物流面临&quot;偏远区域附加费侵蚀利润但无法量化&quot;——分区精算识别高成本区域改用USPS，年均1000件偏远订单节省$6,000-12,000</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Market-Compliance-Matrix-Ontology.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">多市场合规矩阵本体 — US/EU/JP/AU跨境合规要求统一建模与差异分析</h3>
+  <p class="sc-desc">合规团队面临&quot;US/EU/JP/AU同时运营合规要求超50项靠人工管理必然遗漏&quot;——结构化合规矩阵10分钟完成多市场合规扫描，防止新品上市合规缺口导致的下架损失</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Objective-Constrained-Action-Planning.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链多目标约束感知行动规划 — MILP+LLM的Pareto最优决策方案自动生成</h3>
+  <p class="sc-desc">运营面临&quot;成本/质量/时效三角冲突无法系统化权衡&quot;——MILP+LLM自动生成Pareto最优方案，将多目标决策从1天人工讨论→5分钟方案输出，减少权衡失误</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Omnichannel-Order-Orchestration-MAS.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">全渠道订单编排MAS — 多智能体协同的跨平台订单统一调度与冲突消解</h3>
+  <p class="sc-desc">多平台运营面临&quot;Amazon/TikTok/Shopify并发下单超卖&quot;——MAS优先级调度超卖防御将超卖率从5-10%降至0.1%以下，保护Amazon账号安全</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Online-Feature-Store-SC-Realtime.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链实时特征存储架构 — Online/Offline分离+毫秒级读取的Zalando母婴SKU模式</h3>
+  <p class="sc-desc">Agent实时决策分别查询ERP/WMS/预测服务总延迟3秒影响决策效率——Online/Offline特征存储实现在线特征10-20ms读取，支撑每日100K+次实时决策</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Ontology-LLM-AutoBuild-SC.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">LLM驱动供应链本体自动构建 — 从ERP文档到语义图谱的零样本迭代萃取</h3>
+  <p class="sc-desc">企业本体靠人工维护更新滞后覆盖不全——LLM零样本迭代萃取将本体构建从3个月→2天，新供应商入库2周→1天，识别隐性单点故障提前预防</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Order-Promise-Date-Calculation.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">ATP/CTP动态承诺交期计算 — 基于实时库存+PLT的订单交货承诺日期引擎</h3>
+  <p class="sc-desc">运营面临&quot;承诺交期不准导致大量差评&quot;——ATP/CTP引擎将承诺准确率从70%提升至92%，减少30%因交期不准导致的退款</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Order-Routing-Intelligence-Engine.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">智能订单路由引擎 — 多约束订单履约路径优化与实时分配决策</h3>
+  <p class="sc-desc">订单团队面临&quot;3个仓库该从哪发货靠经验判断&quot;——多约束评分矩阵(时效×成本×可靠性)将SLA达成率从91%提升至97%，仓库负载均衡减少OOS率2-3pp</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Predictive-Tag-Engine-Supply-Chain.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">预测型标签引擎 — 将未来风险转化为当前可查询标签的供应链预测打标体系</h3>
+  <p class="sc-desc">补货团队面临&quot;等到断货才发现已经来不及&quot;——预测型标签引擎将断货事件从12件/年→3件/年，T-14天提前响应比T-0应急成本低20倍</p>
+  <div class='sc-footer'><span class='sc-roi'>18万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Proactive-Customer-Alert-Supply-Chain.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">主动客户预警供应链 — 基于在途延误Tag的客户主动通知与体验保护</h3>
+  <p class="sc-desc">客服面临&quot;延误被动等投诉，150条工单×$15处理成本&quot;——主动延误通知将投诉率降低70%，预警成本$0.02/封 vs 投诉处理$15/件，ROI高达750倍</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Real-Time-Supply-Chain-Drift-Detection.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链信号漂移实时检测 — 从概念漂移到Tag失效预警的在线检测体系</h3>
+  <p class="sc-desc">数据团队面临&quot;模型准确率悄悄下降但无法感知&quot;——流式漂移检测将数据质量问题发现从月度审计→5分钟实时预警，防止错误预测导致的断货超卖</p>
+  <div class='sc-footer'><span class='sc-roi'>2-8万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Regulatory-Change-Impact-Propagation.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">法规变更影响传播引擎 — 新规 → 受影响SKU/市场的Tag传播与行动触发</h3>
+  <p class="sc-desc">合规团队面临&quot;新法规出来需要2周人工核查哪些SKU受影响&quot;——BFS图谱传播10分钟完成全库评估，自动打标并触发合规行动，防止货到港被扣押损失5-15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Return-Fraud-Detection-Tag-Engine.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">退货欺诈检测标签引擎 — 识别假退货/滥用退货政策的行为模式与Tag自动标记</h3>
+  <p class="sc-desc">逆向物流面临&quot;退货欺诈占总退货3-8%无法识别&quot;——多维行为特征检测自动标记高风险退货，停止自动批准，年化减少欺诈损失2万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Return-Root-Cause-Attribution-Graph.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">退货根因归因图谱 — 多层次退货原因知识图谱与供应链改善闭环</h3>
+  <p class="sc-desc">运营面临&quot;退货率从3%升至7%不知道根因&quot;——三层因果图谱精确定位到电机批次变更，供应商整改后退货率回归3%，年化减少退货成本8万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SC-Causal-DAG-E2E-Attribution.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链端到端因果DAG归因框架 — Amazon PC算法+SCM实现缺货根因30分钟诊断</h3>
+  <p class="sc-desc">缺货/异常根因靠人工多系统排查耗时2天且易误判——Amazon PC算法+SCM端到端因果DAG将根因诊断→30分钟自动归因，准确率提升45%</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SC-Digital-Twin-Sync-Architecture.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链数字孪生同步架构 — 物理→数字实时镜像与仿真决策支持</h3>
+  <p class="sc-desc">供应商停产/FBA延误需要实时量化影响——数字孪生7层仿真引擎将What-if响应从3天人工协调→30分钟自动推演，防止断货GMV损失30-50万元/次</p>
+  <div class='sc-footer'><span class='sc-roi'>30-50万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SC-Ontology-Schema-Versioning.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链本体Schema版本化与迁移 — 向后兼容的本体演化策略防止Agent系统崩溃</h3>
+  <p class="sc-desc">本体Schema升级导致依赖Agent崩溃停机4-8小时——向后兼容双写过渡策略实现零停机Schema迁移，年化防止Agent崩溃事故损失20-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-80 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SC-WhatIf-Scenario-Analysis-Engine.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链What-If情景分析引擎 — 因果ML参数化多情景对比与韧性量化评估</h3>
+  <p class="sc-desc">促销力度/物流策略等决策缺乏量化多情景对比靠感觉——因果ML双重稳健估计将多情景分析从2天人工→30分钟引擎输出，避免过度折扣损失毛利5-10万元/年</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SKU-Entity-Unified-ID-Tagging.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">SKU跨平台实体统一标识与标签同步 — ASIN/SKU/ERP三码合一的实体对齐与标签一致性保障</h3>
+  <p class="sc-desc">运营团队面临&quot;3个平台5套SKU编码数据对不上&quot;——Golden Record三码合一将库存对账从3天人工→实时自动，跨平台标签同步从90分钟→5分钟</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SKU-Level-Margin-Attribution-Ontology.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">SKU级利润归因本体 — 从GMV到净利润的全链路成本拆解与Tag驱动的利润诊断</h3>
+  <p class="sc-desc">CEO/CFO面临&quot;GMV1000万但不知道哪些SKU在赚钱哪些在亏&quot;——全链路瀑布P&amp;L将亏损SKU(约16%)识别出来，Tag驱动的调价/下架行动直接增加利润3-5%</p>
+  <div class='sc-footer'><span class='sc-roi'>8-12万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SKU-Master-Data-Golden-Record.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">SKU主数据黄金记录治理 — MDM体系、主键统一与多源冲突消解</h3>
+  <p class="sc-desc">运营面临&quot;Amazon/Shopify/TikTok/ERP四套SKU编码跨渠道数据孤岛&quot;——MDM黄金记录将跨渠道库存准确率从74%提升至99%，新品上市从3天降至4小时</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Shipment-Risk-Tag-Realtime-Tracker.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">在途货物实时风险标签追踪器 — 海运/空运全链路可视化与预警Tag实时更新</h3>
+  <p class="sc-desc">采购团队面临&quot;在途28-45天海运是黑盒，延误时才发现&quot;——实时风险标签将延误预警从&quot;货到才知&quot;提前至5-10天，减少紧急空运3次/年节省12万元</p>
+  <div class='sc-footer'><span class='sc-roi'>12万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Signal-Uncertainty-Quantification-SC.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链信号不确定性量化 — 从点预测到区间估计，支撑置信度分层决策</h3>
+  <p class="sc-desc">决策者面临&quot;AI给出建议但不知道置信度导致盲目执行&quot;——Conformal Prediction量化不确定性为可靠区间，高置信度自动执行、低置信度升级审核，减少错误决策50%</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supplier-Ontology-Capability-Map.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应商本体能力图谱 — 产能/质量/认证/风险四维供应商Ontology设计与实例化</h3>
+  <p class="sc-desc">采购团队面临&quot;供应商评估靠表单+面谈需要2周&quot;——四维本体(能力/认证/绩效/风险)将评估时间从2周→2天，认证标签自动传播消除合规盲区</p>
+  <div class='sc-footer'><span class='sc-roi'>30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Agent-Orchestration-Hub.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链Agent编排中枢 — 多Agent协作、任务分发与跨域决策自动化</h3>
+  <p class="sc-desc">运营面临&quot;供应链响应靠人工协调需2-4小时&quot;——Hub-and-Spoke编排中枢将多Agent协作响应时间压缩至4分钟，级联触发机制自动协调采购/库存/物流/合规4个域</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Data-Lineage-Tracking.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链数据血缘追踪 — 从原始数据到Tag决策的全链路溯源与影响分析</h3>
+  <p class="sc-desc">数据团队面临&quot;AI补货触发后不知道数据来源&quot;——血缘图谱将数据问题排查从2天→5分钟，满足EU AI Act可解释性合规要求</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Data-Mesh-Architecture.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链数据网格架构 — 领域自治的分布式数据治理与跨域数据共享协议</h3>
+  <p class="sc-desc">数据团队面临&quot;中央数据团队成为所有业务部门的数据瓶颈&quot;——Data Mesh领域自治将数据需求响应从2周→1天，数据产品化提升吞吐量3-5倍</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Finance-Risk-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链金融风险标签 — 融资依赖度/信用评级/现金流压力的综合风险画像</h3>
+  <p class="sc-desc">CFO面临&quot;不知道供应商是否面临资金链断裂风险&quot;——金融风险三维画像（流动性/杠杆/现金）提前3-6个月预警，防止供应商断供损失20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链本体驱动行动触发 — Palantir风格Object-Action-Writeback全链路闭环</h3>
+  <p class="sc-desc">供应链运营面临&quot;分析看板有了但还要人工去ERP下单&quot;——Palantir风格Object-Action-Writeback闭环将补货响应从2天缩短至4小时自动触发，实现分析到行动的完整闭环</p>
+  <div class='sc-footer'><span class='sc-roi'>25万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Propagation-Supply-Chain.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链知识图谱标签传播算法 — LPA/层级继承/关系链传播的Tag扩散引擎</h3>
+  <p class="sc-desc">供应链团队面临&quot;认证标签手工维护60%覆盖率&quot;——LPA+层级继承传播算法将合规标签覆盖率从60%提升至95%，供应商FDA认证自动扩散到旗下所有SKU</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Quality-Coverage-KPI.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">标签质量KPI监控体系 — 覆盖率/准确率/时效性/一致性的全维度Tag质量仪表盘</h3>
+  <p class="sc-desc">自动化团队面临&quot;标签错误后几个月才发现&quot;——五维质量KPI(覆盖率/准确率/时效/一致性/完整性)将标签错误MTTD从数月降至实时，防止误触发Action损失20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Schema-Engineering-Lifecycle.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">标签Schema工程与生命周期管理 — 企业级Tag类型设计、Schema约束与版本治理</h3>
+  <p class="sc-desc">数据工程师面临&quot;多平台数据孤岛，断货识别延迟8小时&quot;——统一Tag Schema(七类标签+六阶段生命周期)将断货识别延迟从8小时降至15分钟，合规审查从3天→10分钟</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-WMS-Exception-Action-Trigger.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">WMS异常Tag触发引擎 — 仓储操作异常实时检测、标签化与自动处置触发</h3>
+  <p class="sc-desc">仓库主管面临&quot;拣货差错率升高1小时后才被发现&quot;——WMS异常Tag实时检测+自动暂停波次，将异常响应从1小时降至实时，年化减少补发成本5万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Warehouse-Slotting-Optimization-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">仓储货位优化Tag引擎 — ABC分层驱动的智能货位分配与拣货效率提升</h3>
+  <p class="sc-desc">仓储管理面临&quot;货位沿用历史分配导致拣货行走距离浪费&quot;——ABC标签驱动的智能货位分配将拣货效率提升20-40%，年化节省约14万元人力成本，零额外投入</p>
+  <div class='sc-footer'><span class='sc-roi'>14万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

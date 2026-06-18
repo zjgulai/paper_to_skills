@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ATLAS HTS Tariff Classification — LLM 驱动跨境 HS 关税编码自动分类 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-ATLAS-HTS-Tariff-Classification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>ATLAS HTS Tariff Classification — LLM 驱动跨境 HS 关税编码自动分类</h1>
+<p class="muted">Skill-ATLAS-HTS-Tariff-Classification · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>0 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴新品 HS 编码人工申报错误率 15-20%，清关延误 7-14 天或追补税款 5-50 万元——LLM 微调后自动分类 10 位 HTS 编码，准确率 40%（比 GPT-5 高 15pp），申报效率提升 100 倍</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：HS 关税编码（Harmonized System）是决定进口关税税率的核心，10 位编码对应全球 18,731 条法定税则。人工申报错误率高达 1520%，每次错误编码可导致扣货或补税。ATLAS 构建了首个 HTS 编码分类基准（基于 CBP 法定裁定数据库），通过微调 LLaMA3.370B 实现自动分类，10 位全准确率 40%（比 GPT5 高 +15pp），比人工快 100 倍，成本降低 5 倍。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌每年上新 30-50 款，每款需要申报 HS 编码，人工查阅耗时 2-4 小时/款，且错误率 15-20%。错误编码导致清关延误（平均 7-14 天）或追补税款（金额 $5,000-50,000+/批次）。 - 数据要求：商品描述文本（名称、材质、功能、目标用户），可选：参考商品的已知 HS 编码。 - 预期产出： - Top-3 候选 HS 编码 + 各自置信度 - 对应税率（MFN 税率 + Section 301 附加税） - 推荐依据（参考哪条 CBP 裁定） - 风险提示（是否有争议品类、是否需要 Binding Ruling） - 业务价值：申报效率提升 1</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：申报错误率从 15% → 3%，年化节省清关延误+补税 50-200 万元；效率提升 100 倍</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（低，调用 LLM API + 本地规则库即可）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（HS 编码错误是跨境运营的合规红线，直接影响清关速度和成本）</li><li><strong>评估依据</strong>：NeurIPS 2025 Workshop，LLaMA-3.3-70B 微调后 10 位准确率 40%，比 GPT-5 高 +15pp</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass
+from typing import List, Optional
+
+@dataclass
+class ProductDescription:
+    name: str
+    material: str
+    function: str
+    target_user: str
+    price_range: str
+
+@dataclass
+class HTSCandidate:
+    code: str
+    description: str
+    mfn_rate: float
+    section_301_rate: float
+    confidence: float
+    cbt_reference: Optional[str] = None
+
+HTS_KNOWLEDGE_BASE = {
+    &quot;breast_pump_electric&quot;: [
+        HTSCandidate(&quot;9019.20.0000&quot;, &quot;呼吸治疗器具（含吸乳器）&quot;, 0.0, 0.0, 0.85, &quot;HQ 956789&quot;),
+        HTSCandidate(&quot;8413.19.0000&quot;, &quot;液体泵（其他）&quot;, 0.03, 0.0, 0.12, None),
+    ],
+    &quot;baby_bottle_silicone&quot;: [
+        HTSCandidate(&quot;3924.10.4000&quot;, &quot;餐桌用塑料制品（婴儿奶瓶）&quot;, 0.033, 0.075, 0.90, &quot;NY N234567&quot;),
+        HTSCandidate(&quot;3926.90.9990&quot;, &quot;其他塑料制品&quot;, 0.053, 0.075, 0.08, None),
+    ],
+    &quot;baby_clothing_cotton&quot;: [
+        HTSCandidate(&quot;6111.20.6010&quot;, &quot;婴儿棉质服装（针织）&quot;, 0.148, 0.075, 0.88, None),
+        HTSCandidate(&quot;6209.20.5050&quot;, &quot;婴儿棉质服装（梭织）&quot;, 0.098, 0.075, 0.10, None),
+    ],
+    &quot;default&quot;: [
+        HTSCandidate(&quot;9999.99.9999&quot;, &quot;待人工复核&quot;, 0.0, 0.0, 0.30, None),
+    ]
+}
+
+def classify_hts(product: ProductDescription) -&gt; List[HTSCandidate]:
+    key = &quot;default&quot;
+    desc_lower = (product.name + product.material + product.function).lower()
+    if &quot;pump&quot; in desc_lower or &quot;吸奶&quot; in desc_lower:
+        key = &quot;breast_pump_electric&quot;
+    elif &quot;bottle&quot; in desc_lower or &quot;奶瓶&quot; in desc_lower:
+        key = &quot;baby_bottle_silicone&quot;
+    elif &quot;cloth&quot; in desc_lower or &quot;服装&quot; in desc_lower or &quot;棉&quot; in desc_lower:
+        key = &quot;baby_clothing_cotton&quot;
+    return HTS_KNOWLEDGE_BASE.get(key, HTS_KNOWLEDGE_BASE[&quot;default&quot;])
+
+def format_hts_report(product: ProductDescription) -&gt; str:
+    candidates = classify_hts(product)
+    lines = [f&quot;商品：{product.name}&quot;, &quot;=&quot; * 50, &quot;HTS 编码推荐：&quot;]
+    for i, c in enumerate(candidates, 1):
+        total_rate = c.mfn_rate + c.section_301_rate
+        ref = f&quot; | 依据: {c.cbt_reference}&quot; if c.cbt_reference else &quot;&quot;
+        lines.append(f&quot;  #{i} {c.code} (置信度 {c.confidence:.0%}){ref}&quot;)
+        lines.append(f&quot;     {c.description}&quot;)
+        lines.append(f&quot;     MFN税率: {c.mfn_rate:.1%} + 301附加税: {c.section_301_rate:.1%} = 综合 {total_rate:.1%}&quot;)
+    top = candidates[0]
+    if top.confidence &lt; 0.7:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2509.18400</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-ATLAS-HTS-Tariff-Classification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Compliant-Dynamic-Pricing-Guard.html'>Skill-Compliant-Dynamic-Pricing-Guard</a></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-HTS-Tariff-Classification.html'>Skill-HTS-Tariff-Classification</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Compliant-Dynamic-Pricing-Guard.html'>Skill-Compliant-Dynamic-Pricing-Guard</a></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><span class='muted'>组合</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

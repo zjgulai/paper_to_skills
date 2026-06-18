@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Agent 驱动的电商知识图谱自动构建 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-KG-Auto-Construction-Agent-Driven</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>AI Agent 驱动的电商知识图谱自动构建</h1>
+<p class="muted">Skill-KG-Auto-Construction-Agent-Driven · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务问题： 母婴出海电商管理数千个 SKU，商品信息分散在 Amazon、Shopify、供应商提供的不同格式描述中</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统知识图谱构建依赖人工定义 Schema 和编写抽取规则，成本高、扩展性差。AI Agent 驱动的 KG 自动构建 将全流程拆解为三个由 LLM Agent 协作完成的阶段，从非结构化产品描述中自动产出结构化知识图谱，无需预定义 Schema 或人工规则。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题： 母婴出海电商管理数千个 SKU，商品信息分散在 Amazon、Shopify、供应商提供的不同格式描述中。人工整理&quot;商品-属性-关系&quot;三元组成本极高，且新品上架频繁，知识图谱难以跟上更新速度。</p><p>数据要求： - 商品描述文本（标题 + Bullet Points + 描述段落） - 品类分类信息（如&quot;吸奶器&quot;、&quot;储奶袋&quot;、&quot;温奶器&quot;） - 可选：产品规格表（结构化补充）</p><p>预期产出： - 自动生成的商品本体 Schema： - 实例级三元组：</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>数据要求：需要商品描述文本数据，门槛较低</li><li>技术门槛：中等，核心依赖 LLM API 调用和 prompt 设计</li><li>工程复杂度：中，三阶段流水线需要模块化设计</li><li>维护成本：低，新商品自动扩展，人工仅需抽检</li><li><strong>战略价值极高</strong>：是 08-知识图谱领域的核心缺口，直接影响 GraphRAG 的可用性</li><li><strong>业务匹配度完美</strong>：电商产品 KG 构建是母婴出海的刚需场景</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：5 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+AI Agent 驱动的电商知识图谱自动构建系统
+基于 arXiv:2511.11017 (Peshevski et al., 2025)
+
+功能：
+1. 本体创建与扩展（Ontology Creation &amp; Expansion）
+2. 本体精炼（Ontology Refinement）
+3. 知识图谱填充（Knowledge Graph Population）
+
+Author: paper2skills
+Date: 2026-05-01
+&quot;&quot;&quot;
+
+import json
+import re
+from typing import List, Dict, Tuple, Optional, Set
+from dataclasses import dataclass, field, asdict
+from collections import defaultdict
+import random
+
+
+# ============================================================
+# 数据模型
+# ============================================================
+
+@dataclass
+class ProductDescription:
+    &quot;&quot;&quot;产品描述&quot;&quot;&quot;
+    product_id: str
+    title: str
+    bullets: List[str]
+    description: str
+    category: str
+
+    def full_text(self) -&gt; str:
+        return f&quot;{self.title}\n&quot; + &quot;\n&quot;.join(self.bullets) + f&quot;\n{self.description}&quot;
+
+
+@dataclass
+class OntologyClass:
+    &quot;&quot;&quot;本体类&quot;&quot;&quot;
+    name: str
+    comment: str = &quot;&quot;
+    parent: Optional[str] = None
+
+
+@dataclass
+class OntologyProperty:
+    &quot;&quot;&quot;本体属性&quot;&quot;&quot;
+    name: str
+    domain: str
+    range_type: str  # &quot;string&quot;, &quot;integer&quot;, &quot;float&quot;, &quot;ClassName&quot;
+    comment: str = &quot;&quot;
+    is_object_property: bool = False
+
+
+@dataclass
+class Ontology:
+    &quot;&quot;&quot;本体定义&quot;&quot;&quot;
+    classes: List[OntologyClass] = field(default_factory=list)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2404.03868</li><li>2502.06472</li><li>2511.11017</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-KG-Auto-Construction-Agent-Driven" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Knowledge Graph for Skills Management</span></li><li><span class='muted'>LLM API 调用基础</span></li><li><span class='muted'>Prompt Engineering</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>GraphRAG</span></li><li><span class='muted'>KARMA（多 Agent KG 富化）</span></li><li><span class='muted'>时序知识图谱</span></li><li><span class='muted'>跨语言 KG 对齐</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>GraphRAG</span></li><li><span class='muted'>Kano 需求分类</span></li><li><span class='muted'>LLM-Review-Structured-Extraction]]（组合</span></li><li><a href='../skills/Skill-KG-Data-Fusion-Pipeline.html'>Skill-KG-Data-Fusion-Pipeline</a></li><li><a href='../skills/Skill-KG-Incremental-Update.html'>Skill-KG-Incremental-Update</a></li><li><a href='../skills/Skill-LLM-Review-Structured-Extraction.html'>Skill-LLM-Review-Structured-Extraction</a></li><li><a href='../skills/Skill-Multilingual-NER-Universal-v2.html'>Skill-Multilingual-NER-Universal-v2</a></li><li><a href='../skills/Skill-VOC-Supply-Chain-Signal-Bridge.html'>Skill-VOC-Supply-Chain-Signal-Bridge</a></li><li><span class='muted'>SoMeR 多视角表示</span></li><li><span class='muted'>TopicImpact</span></li><li><span class='muted'>VOC Semantic Blueprint</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

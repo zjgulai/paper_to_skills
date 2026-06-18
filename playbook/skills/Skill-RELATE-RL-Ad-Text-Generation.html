@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RELATE强化学习广告文案生成 — RL端到端优化CTCVR的LLM广告创意框架 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-RELATE-RL-Ad-Text-Generation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>RELATE强化学习广告文案生成 — RL端到端优化CTCVR的LLM广告创意框架</h1>
+<p class="muted">Skill-RELATE-RL-Ad-Text-Generation · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>4.6万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>AI生成的&quot;流畅专业&quot;广告文案转化率提升不明显因为优化了语言质量而非真实转化——RELATE用RL直接把CTCVR作为奖励信号端到端训练LLM，在线部署CTCVR提升+9.19%（2026 arXiv:2602.11780）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：大多数LLM生成广告文案是用&quot;语言质量&quot;来评估（流畅度、相关性、语法），但实际上广告主关心的是CTCVR（点击转化率）——文案能不能让人点击并最终购买。这两个目标往往背离：AI生成&quot;流畅专业&quot;的文案不一定转化好，有些转化最好的文案语言风格甚至有点&quot;土&quot;。RELATE的核心：把CTCVR直接作为RL奖励信号，端到端训练LLM生成最大化真实转化率的文案。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：吸奶器Amazon SP广告文案自动生成</p><p>- 业务问题：某母婴卖家手工撰写广告文案，每个SKU1-2条，A/B测试周期长（7-14天）；LLM辅助生成的文案流畅但转化率提升不明显（平均+1.2% CTR） - 数据要求：历史广告文案+CTR/CTCVR标签、产品标题/五点/描述 - RELATE应用： 1. 用历史高/低CTCVR文案训练奖励模型（二分类） 2. RL优化：生成文案→奖励模型评分→梯度更新 3. PCPO约束：确保&quot;静音&quot;、&quot;双边&quot;等核心产品特点不被省略 4. 生成5-10条多样化文案供A/B测试 - 预期产出：文案CTCVR相对提升+9.19%（论文数据），母婴类目预估月GMV增量约$3-8万</p><p>- **业务问题**：将中文产品描述翻译为英文/德文/日文广告文案后，转化率远低于原生文案，因为直接翻译不能捕捉目标市场的转化语言习惯 - **RELATE跨语言应用**：分语言训练独立的奖励模型（用当地平台的CTR数据），对同一产品生成语言特定的转化导向文案，而非翻译版本</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月广告预算$5万，文案CTCVR提升+9.19%，等效月GMV增量约$4.6万；系统建设+数据标注约$3万，ROI&gt;1500%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（需要足够的历史CTR标注数据训练奖励模型，RL微调LLM有技术门槛；可先用规则奖励模型降低门槛）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（广告文案是母婴出海ROI最直接的可控变量之一，+9.19% CTCVR是非常显著的提升）</li><li><strong>适用规模</strong>：月广告预算&gt;$2万、有&gt;1000条历史文案+CTR数据的卖家</li><li><strong>数据依赖</strong>：历史广告文案+对应CTR/CTCVR标签（从广告后台可导出）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+RELATE强化学习广告文案生成框架
+基于 arXiv:2602.11780 (2026)
+RL端到端优化CTCVR + 产品中心偏好优化
+&quot;&quot;&quot;
+import numpy as np
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class CTCVRRewardModel:
+    &quot;&quot;&quot;
+    CTCVR代理奖励模型（简化版）
+    将传统CTR预估转化为二分类（是否高CTCVR文案）
+    &quot;&quot;&quot;
+    def __init__(self):
+        # 简化特征权重（生产环境用深度神经网络）
+        self.weights = {
+            &#x27;has_benefit&#x27;: 0.3,       # 包含利益点
+            &#x27;has_number&#x27;: 0.2,        # 包含具体数字
+            &#x27;has_action&#x27;: 0.2,        # 包含行动号召
+            &#x27;has_product_feat&#x27;: 0.2,  # 包含产品特性
+            &#x27;length_ok&#x27;: 0.1,         # 长度适中
+        }
+
+    def score(self, text, product_keywords=None):
+        &quot;&quot;&quot;
+        评估文案的预期CTCVR分数 (0-1)
+        &quot;&quot;&quot;
+        if product_keywords is None:
+            product_keywords = []
+
+        features = {}
+
+        # 利益点检测
+        benefit_words = [&#x27;free&#x27;, &#x27;免费&#x27;, &#x27;safe&#x27;, &#x27;安全&#x27;, &#x27;quiet&#x27;, &#x27;静音&#x27;,
+                        &#x27;hospital-grade&#x27;, &#x27;医院级&#x27;, &#x27;BPA-free&#x27;, &#x27;double&#x27;, &#x27;双边&#x27;]
+        features[&#x27;has_benefit&#x27;] = any(w.lower() in text.lower() for w in benefit_words)
+
+        # 数字特征
+        import re
+        features[&#x27;has_number&#x27;] = bool(re.search(r&#x27;\d+&#x27;, text))
+
+        # 行动号召
+        cta_words = [&#x27;buy&#x27;, &#x27;get&#x27;, &#x27;shop&#x27;, &#x27;try&#x27;, &#x27;order&#x27;, &#x27;立即&#x27;, &#x27;购买&#x27;, &#x27;抢购&#x27;]
+        features[&#x27;has_action&#x27;] = any(w.lower() in text.lower() for w in cta_words)
+
+        # 产品特性覆盖度
+        if product_keywords:
+            covered = sum(1 for kw in product_keywords if kw.lower() in text.lower())
+            features[&#x27;has_product_feat&#x27;] = covered / len(product_keywords) &gt; 0.4
+        else:
+            features[&#x27;has_product_feat&#x27;] = True
+
+        # 长度适中
+        features[&#x27;length_ok&#x27;] = 50 &lt;= len(text) &lt;= 300
+
+        # 加权求和
+        score = sum(self.weights[k] * (1.0 if v else 0.0) for k, v in features.items())
+        return float(score)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2602.11780</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-RELATE-RL-Ad-Text-Generation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AIGC-Content-Detection.html'>Skill-AIGC-Content-Detection</a></li><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><span class='muted'>Skill-CTR-Ad-Prediction</span></li><li><a href='../skills/Skill-Nonlinear-Multi-Touch-Attribution.html'>Skill-Nonlinear-Multi-Touch-Attribution</a></li><li><a href='../skills/Skill-Price-Sensitive-Personalized-Recommendation.html'>Skill-Price-Sensitive-Personalized-Recommendation</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Brand-Storytelling.html'>Skill-AI-Brand-Storytelling</a></li><li><a href='../skills/Skill-AIGC-Content-Detection.html'>Skill-AIGC-Content-Detection</a></li><li><span class='muted'>Skill-CTR-Ad-Prediction</span></li><li><a href='../skills/Skill-Nonlinear-Multi-Touch-Attribution.html'>Skill-Nonlinear-Multi-Touch-Attribution</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Skill-CTR-Ad-Prediction</span></li><li><a href='../skills/Skill-Nonlinear-Multi-Touch-Attribution.html'>Skill-Nonlinear-Multi-Touch-Attribution</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

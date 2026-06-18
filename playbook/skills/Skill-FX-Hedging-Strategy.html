@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FX Hedging Strategy — 跨境汇率风险对冲：动态套期保值降低外汇损失 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-FX-Hedging-Strategy</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>FX Hedging Strategy — 跨境汇率风险对冲：动态套期保值降低外汇损失</h1>
+<p class="muted">Skill-FX-Hedging-Strategy · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a><a class='hb-uplink' href='../playbooks/pb-tariff-response.html'>关税冲击 72h 响应手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥25-100 万（视汇率波动）</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>人民币兑美元每年波动3-6%月收入15万美元的卖家年化汇率损失可达30-60万元却没有任何对冲——动态汇率对冲策略量化暴露评估最优对冲比例，汇率损失降低50-70%年化节省25-100万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨境卖家的汇率暴露：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：去年人民币从 7.0 升值到 6.7，三个季度损失了 ¥45 万（月均 $150,000 收入，3% 汇率变化）。今年人民币走势不确定，需要一个简单的对冲决策框架。</p><p>数据要求： - 月度美元净流入估算（收入-美元支出） - 历史汇率数据（评估暴露规模） - 对冲成本参数（远期合约报价/期权费）</p><p>预期产出： - 年度汇率风险暴露评估（P50/P95 损失） - 最优对冲比例建议（基于成本收益分析） - 对冲工具选择：远期 vs 期权 vs 自然对冲</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>汇率损失降低 50-70%：月均节省 ¥2-8 万（视汇率波动程度）</li><li>使用专业外汇平台替代银行：节省 0.5-1% 换汇成本，月均 ¥1-3 万</li><li>财务规划更稳定：避免汇率大波动影响季度利润目标</li><li><strong>年化综合 ROI：¥25-100 万（视汇率波动）</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（Black-Scholes 公式简单；OFX/Wise API 接入 1-2 周；远期合约需要开设外汇账户）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+FX Hedging Strategy
+跨境汇率风险评估与动态对冲策略
+&quot;&quot;&quot;
+import numpy as np
+from scipy.stats import norm
+from dataclasses import dataclass
+
+
+@dataclass
+class FXExposure:
+    &quot;&quot;&quot;外汇暴露配置&quot;&quot;&quot;
+    monthly_usd_inflow: float      # 月均美元净流入
+    hedge_horizon_days: int = 90    # 对冲期限（天）
+    current_rate: float = 7.10      # 当前汇率（USD/CNY）
+    volatility_annual: float = 0.05  # 年化汇率波动率（5%）
+    risk_free_rate: float = 0.025   # 无风险利率
+
+
+def estimate_fx_risk(exposure: FXExposure, confidence: float = 0.95) -&gt; dict:
+    &quot;&quot;&quot;
+    评估汇率风险（VaR和CVaR）
+    VaR: 在给定置信度下的最大损失
+    &quot;&quot;&quot;
+    T = exposure.hedge_horizon_days / 365
+    sigma = exposure.volatility_annual * np.sqrt(T)
+    usd_amount = exposure.monthly_usd_inflow * (exposure.hedge_horizon_days / 30)
+
+    # 汇率变化（对数正态分布）
+    z_score = norm.ppf(1 - confidence)
+    worst_rate_change = sigma * z_score  # 负值表示美元贬值
+
+    # VaR（人民币损失）
+    var_loss_cny = usd_amount * exposure.current_rate * (1 - np.exp(worst_rate_change))
+
+    # 期望损失（正常情况下的中位数变化）
+    expected_rate_change = -sigma ** 2 / 2  # 对数正态期望
+    expected_loss_cny = usd_amount * exposure.current_rate * (1 - np.exp(expected_rate_change))
+
+    return {
+        &#x27;usd_exposure&#x27;: round(usd_amount, 0),
+        &#x27;cny_equivalent&#x27;: round(usd_amount * exposure.current_rate, 0),
+        &#x27;var_95_cny&#x27;: round(var_loss_cny, 0),
+        &#x27;expected_loss_cny&#x27;: round(expected_loss_cny, 0),
+        &#x27;sigma_pct&#x27;: round(sigma * 100, 2),
+    }
+
+
+def evaluate_hedging_strategies(exposure: FXExposure, risk: dict) -&gt; dict:
+    &quot;&quot;&quot;评估不同对冲策略的成本收益&quot;&quot;&quot;
+    usd_amount = risk[&#x27;usd_exposure&#x27;]
+    T = exposure.hedge_horizon_days / 365
+
+    # 1. 不对冲：承受全部汇率风险
+    no_hedge = {
+        &#x27;strategy&#x27;: &#x27;不对冲&#x27;,
+        &#x27;cost_cny&#x27;: 0,
+        &#x27;protection_cny&#x27;: 0,
+        &#x27;net_benefit&#x27;: -risk[&#x27;var_95_cny&#x27;] * 0.5,  # 期望损失的50%
+        &#x27;recommendation&#x27;: &#x27;最便宜但风险最大&#x27;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.11478</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-FX-Hedging-Strategy" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Marketing-Mix-Modeling]]（组合</span></li><li><span class='muted'>Multi-Seller-Account-Portfolio]]（组合</span></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Multi-Seller-Account-Portfolio.html'>Skill-Multi-Seller-Account-Portfolio</a></li><li><a href='../skills/Skill-Multicurrency-FX-Hedging.html'>Skill-Multicurrency-FX-Hedging</a></li><li><a href='../skills/Skill-Operating-Cash-Flow-Forecast.html'>Skill-Operating-Cash-Flow-Forecast</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Marketing-Mix-Modeling]]（组合</span></li><li><span class='muted'>Multi-Seller-Account-Portfolio]]（组合</span></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Multi-Seller-Account-Portfolio.html'>Skill-Multi-Seller-Account-Portfolio</a></li><li><a href='../skills/Skill-Multicurrency-FX-Hedging.html'>Skill-Multicurrency-FX-Hedging</a></li><li><a href='../skills/Skill-Operating-Cash-Flow-Forecast.html'>Skill-Operating-Cash-Flow-Forecast</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Marketing-Mix-Modeling]]（组合</span></li><li><span class='muted'>Multi-Seller-Account-Portfolio]]（组合</span></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Multi-Seller-Account-Portfolio.html'>Skill-Multi-Seller-Account-Portfolio</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

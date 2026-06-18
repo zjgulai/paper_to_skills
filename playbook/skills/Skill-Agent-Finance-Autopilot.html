@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Agent Finance Autopilot — LLM 多 Agent 财务自动化与 P&amp;L 实时分析 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-Agent-Finance-Autopilot</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Agent Finance Autopilot — LLM 多 Agent 财务自动化与 P&amp;L 实时分析</h1>
+<p class="muted">Skill-Agent-Finance-Autopilot · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>2-8 万/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>财务专员每周手工汇总三平台数据耗时 3 小时且错误率高——FinRobot 多 Agent CoA 架构将 P&amp;L 周报自动化，处理时间降低 40%、错误率降低 94%，年化节省 ¥8-20 万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨境电商的财务工作高度重复：每周拉 Amazon 报表 → 算 FBA 费用 → 核对广告花费 → 生成 P&amp;L → 找各维度差异原因。这些工作 80% 是固定 SOP，却仍然需要 12 名财务专员每天操作，还容易出错。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：财务专员每周一早上花 3 小时，分别从 Amazon Seller Central、广告后台、FBA 报表三个数据源手工汇总数据，计算各 SKU 的毛利率，对比上周变化，找差异原因。这个工作重复、枯燥、容易出错，且强烈依赖个人经验。</p><p>Agent Autopilot 执行流： 1. Data Fetch Agent：并行拉取三个数据源 2. P&amp;L Calc Agent：按 `毛利 = 销售额 - COGS - FBA费 - 广告费 - 退货损失` 计算 3. Variance Analysis Agent：与上周/上月/预算对比，标记 ±5% 以上异动 4. Root Cause Agent：对异动 SKU 自动生成假设（&quot;ACOS 上升可能因竞价提高&quot;） 5. Report Gen Agent：生成 Markdown 报告 + 发送钉钉/飞书通知</p><p>业务价值：财务专员从&quot;做数据&quot;转向&quot;看数据 + 决策&quot;，每周节省 2.5 小时</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>财务专员每周节省 2.5 小时：¥60,000-120,000/年（1-2 人）</li><li>FBA 异常费用追回：¥2-8 万/年</li><li>错误率降低 94%：避免财务决策失误损失 ¥5-20 万/年</li><li><strong>年化综合 ROI</strong>：¥80-200 万</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要 Amazon API 接入 + LLM 调用，2-3 周开发）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Agent Finance Autopilot — LLM 多 Agent 财务自动化
+基于 FinRobot CoA 架构 (arXiv: 2506.01423)
+
+依赖: json, dataclasses, typing (标准库)
+生产环境替换 MockDataSource 为真实 API 调用
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+from typing import Optional
+import json
+from datetime import date, timedelta
+
+
+@dataclass
+class FinancialRecord:
+    &quot;&quot;&quot;单条财务记录&quot;&quot;&quot;
+    sku_id: str
+    period: str
+    revenue: float
+    cogs: float
+    fba_fee: float
+    ad_spend: float
+    return_cost: float
+
+    @property
+    def gross_profit(self) -&gt; float:
+        return self.revenue - self.cogs - self.fba_fee - self.ad_spend - self.return_cost
+
+    @property
+    def gross_margin(self) -&gt; float:
+        return self.gross_profit / self.revenue if self.revenue &gt; 0 else 0.0
+
+    @property
+    def acos(self) -&gt; float:
+        return self.ad_spend / self.revenue if self.revenue &gt; 0 else 0.0
+
+
+@dataclass
+class ActionResult:
+    &quot;&quot;&quot;Agent 执行结果&quot;&quot;&quot;
+    action: str
+    success: bool
+    data: dict = field(default_factory=dict)
+    error: str = &quot;&quot;
+    requires_human: bool = False
+
+
+class MockDataSource:
+    &quot;&quot;&quot;模拟数据源（生产环境替换为 Amazon API）&quot;&quot;&quot;
+
+    def get_pl_records(self, period: str) -&gt; list:
+        base = [
+            {&quot;sku&quot;: &quot;SKU-M5-BPump&quot;, &quot;revenue&quot;: 12500, &quot;cogs&quot;: 4200, &quot;fba&quot;: 1800, &quot;ad&quot;: 2100, &quot;returns&quot;: 320},
+            {&quot;sku&quot;: &quot;SKU-S12-BPump&quot;, &quot;revenue&quot;: 8900, &quot;cogs&quot;: 3100, &quot;fba&quot;: 1200, &quot;ad&quot;: 1800, &quot;returns&quot;: 180},
+            {&quot;sku&quot;: &quot;SKU-UV-Steril&quot;,  &quot;revenue&quot;: 6200, &quot;cogs&quot;: 2100, &quot;fba&quot;: 890, &quot;ad&quot;: 950, &quot;returns&quot;: 90},
+        ]
+        # 模拟本周 ACOS 异常上升（SKU-M5 广告费暴增）
+        if &quot;current&quot; in period:
+            base[0][&quot;ad&quot;] = 3200  # M5 广告费从 2100 → 3200</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2506.01423</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Agent-Finance-Autopilot" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Agent-Fault-Tolerance]]（组合场景</span></li><li><span class='muted'>Amazon-Payment-Cycle-Forecast]]（组合场景</span></li><li><a href='../skills/Skill-Agent-Fault-Tolerance.html'>Skill-Agent-Fault-Tolerance</a></li><li><a href='../skills/Skill-Amazon-Payment-Cycle-Forecast.html'>Skill-Amazon-Payment-Cycle-Forecast</a></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Agent-Fault-Tolerance]]（组合场景</span></li><li><span class='muted'>Amazon-Payment-Cycle-Forecast]]（组合场景</span></li><li><a href='../skills/Skill-Agent-Fault-Tolerance.html'>Skill-Agent-Fault-Tolerance</a></li><li><a href='../skills/Skill-Amazon-Payment-Cycle-Forecast.html'>Skill-Amazon-Payment-Cycle-Forecast</a></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Agent-Fault-Tolerance]]（组合场景</span></li><li><span class='muted'>Amazon-Payment-Cycle-Forecast]]（组合场景</span></li><li><a href='../skills/Skill-Agent-Fault-Tolerance.html'>Skill-Agent-Fault-Tolerance</a></li><li><a href='../skills/Skill-Amazon-Payment-Cycle-Forecast.html'>Skill-Amazon-Payment-Cycle-Forecast</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

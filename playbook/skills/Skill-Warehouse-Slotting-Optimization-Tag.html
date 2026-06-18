@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>仓储货位优化Tag引擎 — ABC分层驱动的智能货位分配与拣货效率提升 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Warehouse-Slotting-Optimization-Tag</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>仓储货位优化Tag引擎 — ABC分层驱动的智能货位分配与拣货效率提升</h1>
+<p class="muted">Skill-Warehouse-Slotting-Optimization-Tag · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-intelligence.html'>供应链全链路智能化手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>14万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>仓储管理面临&quot;货位沿用历史分配导致拣货行走距离浪费&quot;——ABC标签驱动的智能货位分配将拣货效率提升20-40%，年化节省约14万元人力成本，零额外投入</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>货位优化（Slotting Optimization） 是仓储效率提升中ROI最高的单一操作——把对的货放到对的位置，无需任何额外投入，拣货效率可提升2040%。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：仓库重新货位化（季度优化） - 当前状态：历史沿用的货位分配，未考虑ABC动态变化 - 发现：15个A类SKU分散在仓库各区，平均拣货行走距离35米 - 优化后：A类集中到黄金区，平均行走距离降至12米 - 效果：日均拣货效率从120件/人时→165件/人时（+37.5%）</p><p>**场景B：大促前临时货位扩容** - Black Friday前7天： - 25个大促SKU升级为&quot;临时A类&quot; - 货位系统自动分配额外的黄金区货位 - 大促后7天：自动恢复原货位 - **效果**：大促期间拣货错误率从2%降至0.5%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：货位优化是&quot;零投入高回报&quot;——仅靠重新摆放，拣货效率提升20-40%；以仓库10人团队、月薪6000元测算，20%效率提升 = 2人工作量/月 = 年节省约14万元人力成本；大促期间临时扩容降低错误率，减少补发成本约5万元</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（只需WMS数据和ABC标签，核心是分配算法）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（陈凤霞书重点：货位优化是仓储精细化管理投入产出比最高的操作）</li><li><strong>评估依据</strong>：仓储研究：货位优化后行走距离减少平均35-50%，直接转化为拣货效率提升</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+仓储货位优化 Tag 引擎
+功能：ABC标签→货位分配规则 / 货位评分矩阵 / 重新分配触发 / 效率提升预测
+输入：SKU标签集 + 货位地图 + 历史拣货数据
+输出：最优货位分配方案 + 效率提升预测 + 迁移任务清单
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class WarehouseLocation:
+    &quot;&quot;&quot;货位定义&quot;&quot;&quot;
+    location_id: str
+    zone: str           # GOLDEN / SILVER / BRONZE / COLD / HAZMAT / OVERSIZE
+    aisle: int          # 通道号
+    bay: int            # 货架号
+    level: int          # 层数（1=最低层）
+    proximity_score: float   # 与拣货台距离得分（1.0=最近）
+    is_available: bool = True
+    current_sku: Optional[str] = None
+
+
+@dataclass
+class SKUSlottingProfile:
+    sku_id: str
+    abc_class: str
+    daily_picks: float      # 日均拣货次数
+    weight_kg: float
+    is_oversized: bool
+    is_hazmat: bool
+    is_cold_chain: bool
+    current_location: Optional[str] = None
+    tags: dict = field(default_factory=dict)
+
+
+class WarehouseSlottingEngine:
+
+    ZONE_REQUIREMENTS = {
+        &quot;A&quot;: &quot;GOLDEN&quot;,
+        &quot;B&quot;: &quot;SILVER&quot;,
+        &quot;C&quot;: &quot;BRONZE&quot;,
+        &quot;D&quot;: &quot;BRONZE&quot;,
+        &quot;E&quot;: &quot;COLD_STORAGE&quot;,
+    }
+
+    def __init__(self, locations: list):
+        self.locations = {loc.location_id: loc for loc in locations}
+        self.assignments: dict = {}  # sku_id → location_id
+        self.relocation_tasks: list = []
+
+    def get_required_zone(self, sku: SKUSlottingProfile) -&gt; str:
+        if sku.is_hazmat:
+            return &quot;HAZMAT&quot;
+        if sku.is_cold_chain:
+            return &quot;COLD&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2309.09823</li><li>2401.08234</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Warehouse-Slotting-Optimization-Tag" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-Inventory-Turnover-ABC-Classification.html'>Skill-Inventory-Turnover-ABC-Classification</a></li><li><a href='../skills/Skill-Pre-Promo-Stocktaking-KPI.html'>Skill-Pre-Promo-Stocktaking-KPI</a></li><li><a href='../skills/Skill-WMS-Exception-Action-Trigger.html'>Skill-WMS-Exception-Action-Trigger</a></li><li><a href='../skills/Skill-Warehouse-Operations-KPI-Picking-Efficiency.html'>Skill-Warehouse-Operations-KPI-Picking-Efficiency</a></li><li><a href='../skills/Skill-Warehouse-Outbound-Fulfillment-SLA.html'>Skill-Warehouse-Outbound-Fulfillment-SLA</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-Pre-Promo-Stocktaking-KPI.html'>Skill-Pre-Promo-Stocktaking-KPI</a></li><li><a href='../skills/Skill-WMS-Exception-Action-Trigger.html'>Skill-WMS-Exception-Action-Trigger</a></li><li><a href='../skills/Skill-Warehouse-Outbound-Fulfillment-SLA.html'>Skill-Warehouse-Outbound-Fulfillment-SLA</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-Pre-Promo-Stocktaking-KPI.html'>Skill-Pre-Promo-Stocktaking-KPI</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

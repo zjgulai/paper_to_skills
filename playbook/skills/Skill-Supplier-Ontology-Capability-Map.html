@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>供应商本体能力图谱 — 产能/质量/认证/风险四维供应商Ontology设计与实例化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Supplier-Ontology-Capability-Map</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>供应商本体能力图谱 — 产能/质量/认证/风险四维供应商Ontology设计与实例化</h1>
+<p class="muted">Skill-Supplier-Ontology-Capability-Map · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-tagging-ontology.html'>标签工程与本体驱动手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>采购团队面临&quot;供应商评估靠表单+面谈需要2周&quot;——四维本体(能力/认证/绩效/风险)将评估时间从2周→2天，认证标签自动传播消除合规盲区</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>供应商本体（Supplier Ontology） 是将供应商从&quot;联系人+报价单&quot;升级为&quot;可查询、可计算、可触发行动的结构化知识节点&quot;。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：新供应商快速本体实例化 - 业务问题：引入新供应商「宁波精工」，需要在 2 天内完成全量评估，传统方式需要 5 份表单+3 次面谈 - 本体化方案：填写标准化供应商 Ontology 模板（50 个字段），系统自动计算综合评分 + 识别缺失认证 + 给出风险评级 - 业务价值：评估时间从 2 周→ 2 天；历史供应商数据可复用</p><p>**场景B：供应商风险地图（地缘+集中度）** - **业务问题**：70% 的采购集中在广东省 3 家供应商，缺少分散意识，一旦遇到区域性停工就断供 - **本体查询**：`SELECT suppliers WHERE region=&#x27;广东&#x27; AND concentration&gt;0.15 ORDER BY risk.concentration DESC` - **结果**：识别出高集中度风险，触发&quot;寻找替代供应商&quot;Action</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：供应商本体化后，风险识别从&quot;季度审核&quot;→&quot;实时计算&quot;；集中度风险可视化帮助提前分散采购，避免一次断供损失约30万元；认证标签传播使合规检查效率提升10倍</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要整合多个数据源：ERP/SRM/质检系统，主要难点是数据整合）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（供应商是采购成本和供应风险的核心节点，本体化是精细化管理的基础）</li><li><strong>评估依据</strong>：Palantir在多个制造业客户的Supplier Ontology实践显示，供应商风险响应速度提升5-10倍</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+供应商本体能力图谱
+功能：供应商Ontology定义/实例化/健康评分/风险识别/查询引擎
+输入：供应商基础数据 + 绩效历史数据
+输出：供应商本体实例 + 健康评分 + 风险图谱 + 查询结果
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import Optional
+from datetime import datetime
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class CertificationTags:
+    fda_registered: bool = False
+    ce_certified: bool = False
+    iso9001: bool = False
+    rohs_compliant: bool = False
+    cpsc_compliant: bool = False
+    cert_expiry: dict = field(default_factory=dict)
+
+    def cert_score(self) -&gt; float:
+        &quot;&quot;&quot;认证完整度评分（0-1）&quot;&quot;&quot;
+        weights = {
+            &quot;fda_registered&quot;: 0.30, &quot;ce_certified&quot;: 0.25,
+            &quot;iso9001&quot;: 0.20, &quot;rohs_compliant&quot;: 0.15, &quot;cpsc_compliant&quot;: 0.10,
+        }
+        score = sum(w for attr, w in weights.items() if getattr(self, attr, False))
+        return score
+
+    def active_certs(self) -&gt; list:
+        &quot;&quot;&quot;获取有效认证列表（未过期）&quot;&quot;&quot;
+        now = datetime.now().date()
+        certs = []
+        for attr in [&quot;fda_registered&quot;, &quot;ce_certified&quot;, &quot;iso9001&quot;, &quot;rohs_compliant&quot;, &quot;cpsc_compliant&quot;]:
+            if getattr(self, attr, False):
+                expiry = self.cert_expiry.get(attr)
+                if expiry is None or expiry &gt; now:
+                    certs.append(attr)
+        return certs
+
+
+@dataclass
+class CapabilityTags:
+    product_lines: list = field(default_factory=list)
+    monthly_capacity: int = 0
+    min_order_qty: int = 0
+    lead_time_days: int = 30
+    customization_capability: bool = False
+    tech_level: str = &quot;standard&quot;  # entry/standard/advanced
+
+    def can_fulfill(self, product_line: str, qty: int) -&gt; bool:
+        return (product_line in self.product_lines and qty &gt;= self.min_order_qty
+                and qty &lt;= self.monthly_capacity)
+
+
+@dataclass</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2309.07441</li><li>2310.14922</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Supplier-Ontology-Capability-Map" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Supplier-Performance-Scorecard.html'>Skill-Supplier-Performance-Scorecard</a></li><li><a href='../skills/Skill-Supplier-Qualification-Onboarding-KPI.html'>Skill-Supplier-Qualification-Onboarding-KPI</a></li><li><a href='../skills/Skill-Supplier-Risk-XGBoost.html'>Skill-Supplier-Risk-XGBoost</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><a href='../skills/Skill-Tag-Schema-Engineering-Lifecycle.html'>Skill-Tag-Schema-Engineering-Lifecycle</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Supplier-Performance-Scorecard.html'>Skill-Supplier-Performance-Scorecard</a></li><li><a href='../skills/Skill-Supplier-Risk-XGBoost.html'>Skill-Supplier-Risk-XGBoost</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Supplier-Performance-Scorecard.html'>Skill-Supplier-Performance-Scorecard</a></li><li><a href='../skills/Skill-Supplier-Risk-XGBoost.html'>Skill-Supplier-Risk-XGBoost</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

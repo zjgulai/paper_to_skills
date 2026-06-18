@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>18-物流履约 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>18-物流履约</h1><p>Cross-border routing, last-mile prediction, returns/reverse logistics</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 18-物流履约 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-3D-Bin-Packing-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">3D Bin Packing Optimization — 3D 装箱优化：集装箱/货架空间利用率最大化</h3>
+  <p class="sc-desc">跨境卖家海运集装箱人工装载率只有65-70%每次多花一个柜子运费18000元——3D装箱优化算法智能排列商品箱子将利用率提升到85%，全年海运4-6批年化节省集装箱费用10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AR-Logistics-Visualization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">AR Logistics Visualization — 增强现实包裹可视化追踪：跨境物流透明化与客服AI视频答复</h3>
+  <p class="sc-desc">业务背景：某母婴品牌黑五期间发货 12,000 件婴儿推车至美国，FBA 舱容紧张，部分走 FBM 直邮，预计清关延误率 23%</p>
+  <div class='sc-footer'><span class='sc-roi'>12.7 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Border-Last-Mile-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Cross-Border Last Mile Routing — 跨境最后一公里路由优化：时效×成本双目标决策</h3>
+  <p class="sc-desc">黑五大促FedEx在Zone7-8时效从5天延到9天但运营不知道该切换哪个carrier——多目标路由评分模型实时监测准时率自动切换最优carrier，减少延迟差评率30-50%，年化综合ROI30-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Border-Logistics-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Cross-Border Logistics Routing（跨境物流路径优化）</h3>
+  <p class="sc-desc">旺季（Q4）缺货成本 $5000/天→空运；淡季持有成本低→海运</p>
+  <div class='sc-footer'><span class='sc-roi'>30-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CrossBorder-Logistics-Mode-Selection.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">跨境物流模式动态选择 — 需求预测驱动的保税仓与直邮模式联合优化框架</h3>
+  <p class="sc-desc">凭经验选保税仓或直邮导致旺季爆仓或淡季仓储成本浪费——注意力增强Seq2Seq需求预测+退货率量化+多目标优化实现动态模式切换，总物流成本降低约15%（IJSSO 2026）</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Delivery-Promise-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Delivery Promise Optimization — 时效承诺优化：转化率与准时率的帕累托</h3>
+  <p class="sc-desc">从历史配送记录中提取经验分位数，用 P95 分位数作为保守承诺基线</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-GraphDeepAR-Demand-Forecasting.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">GraphDeepAR — 图神经网络概率需求预测：商品关联 + 退货预测</h3>
+  <p class="sc-desc">传统需求预测（DeepAR、Prophet）将每个 SKU 独立建模，忽视了商品间的需求传导效应：奶粉缺货时纸尿裤也会滞销；新款婴儿车上市带动安全座椅需求。GraphDeepAR 的核心创新是将商品间关联关系显式建模为图结构</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Inventory-Demand-Sensing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Inventory Demand Sensing — 库存需求感知：实时信号融合驱动智能补货</h3>
+  <p class="sc-desc">吸奶器旺季等到销量上升才补货Lead Time 45天导致旺季缺货两周——搜索趋势+广告CTR多信号感知比纯销量触发提前7-14天补货，旺季缺货减少40-60%年化GMV保护25-65万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥25-65 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Last-Mile-Delivery-Prediction.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Last-Mile Delivery Prediction（最后一公里配送时效预测）</h3>
+  <p class="sc-desc">跨境母婴订单选择快递时仅凭经验判断，东海岸送 FedEx、西海岸送 USPS——最后一公里时效预测模型基于历史配送数据精准选路，每单节省 $1.2，年化 3000 单 = 节省 36 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>4-6 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Logistics-Cost-PL-Attribution.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Cost PL Attribution — 物流成本 P&amp;L 归因：每单头程+FBA+退货的利润拆解</h3>
+  <p class="sc-desc">母婴卖家月度账面毛利22%但实际某款婴儿枕头退货率18%、真实净利润为负——物流成本五层ABC拆解（L1货值到L5退货）到SKU粒度，发现隐性亏损SKU并停止无效广告，年化节省3-8万美元并优化退货成本</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Logistics-Fraud-Detection.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Fraud Detection — 物流链路欺诈检测：虚假收货、刷单物流与地址篡改的识别与拦截</h3>
+  <p class="sc-desc">&quot;Item Not Received&quot;（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%</p>
+  <div class='sc-footer'><span class='sc-roi'>月均 -$3,200</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Predictive-Batch-Returns-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">退货批量逆向路由预测 — 跨境退货智能分拣与逆向物流优化</h3>
+  <p class="sc-desc">跨境卖家面临高退货率（15-25%）——退货概率预测+批量逆向路由将逆向物流成本从$15/件降至$5/件，年化节省$24万（月均2000件退货规模）</p>
+  <div class='sc-footer'><span class='sc-roi'>24万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Predictive-Returns-Management.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Predictive Returns Management — 退货量预测与主动处理：降低逆向物流成本</h3>
+  <p class="sc-desc">黑五后两周退货洪峰超出处理能力3倍导致FBA延迟8天产生23个差评——韦布尔分布拟合退货时序提前预测每日退货量P10/P90分位数，提前预约逆向物流容量年化节省15-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Returns-Reverse-Logistics.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Returns Reverse Logistics（退货逆向物流）</h3>
+  <p class="sc-desc">预测模型识别高风险订单（新用户+特大号法兰+延迟配送=退货率 22%），提前触发&quot;确认尺寸&quot;邮件，退货率降至 15%</p>
+  <div class='sc-footer'><span class='sc-roi'>6-10 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supplier-Lead-Time-Buffer.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Supplier Lead Time Buffer — 供应商交货期缓冲：非正态分布下的安全库存</h3>
+  <p class="sc-desc">传统安全库存公式（$SS = Z \cdot \sigma_{LT} \cdot \bar{D}$）基于正态分布假设，但实际跨境供应链中交货期呈现两个典型特征</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Warehouse-Location-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Warehouse Location Optimization — 仓储选址优化：多仓库布局最优化决策</h3>
+  <p class="sc-desc">月均2000单60%在美东用加州单仓发货运费Zone 7-8超贵——混合整数规划选址优化找到美东+美西双仓最优方案，配送成本降低15-25%年化节省10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Zone-GNN-Last-Mile-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Zone-GNN — 区域化最后一公里路径优化：GNN + 指针网络</h3>
+  <p class="sc-desc">跨境卖家自营海外仓配送路线靠人工排线效率低下——区域化GNN+指针网络学习历史驾驶偏好，日均里程减少10-14%，2辆车年化节省8-18万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

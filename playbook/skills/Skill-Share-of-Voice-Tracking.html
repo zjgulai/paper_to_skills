@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Share of Voice Tracking — AI 时代跨平台品牌可见度份额测量 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Share-of-Voice-Tracking</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Share of Voice Tracking — AI 时代跨平台品牌可见度份额测量</h1>
+<p class="muted">Skill-Share-of-Voice-Tracking · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-100 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>AI 搜索引擎单次测量误差高达 ±40% 无法可靠监测品牌曝光——稳定性感知 SOV 框架通过 30 次多采样将误差压缩到 ±8%，揭示 Momcozy 在 ChatGPT 的引用份额与竞品 Elvie 差 17%，指明 GEO 优化方向</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统 SOV（Share of Voice）= 品牌广告曝光 / 市场总曝光，计算简单。但 AI 搜索引擎时代，SOV 变得极不稳定——同一个问题问 ChatGPT 两次，可能推荐不同品牌。论文证明：单次查询测量的 SOV 误差高达 ±40%，必须用多次采样 + 稳定性加权才能得到可靠估计。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：运营团队感觉&quot;AI 好像经常推荐 Elvie 不推荐我们&quot;，但没有数据证明，也不知道差距多大，无法制定针对性 GEO 策略。</p><p>SOV 测量方案： - 对 20 个高频查询词（&quot;best wearable breast pump&quot;、&quot;quiet breast pump for work&quot; 等） - 在 ChatGPT + Perplexity 各采样 30 次 - 计算 Momcozy vs Elvie vs Spectra 的稳定性加权 SOV</p><p>典型发现： - Momcozy AI-SOV：28%（Amazon 第一但 AI 引用第三） - Elvie AI-SOV：45%（内容策略更符合 AI 引用偏好） - Spectra AI-SOV：22%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>识别 SOV 差距后针对性 GEO 优化：AI 平台流量提升 30-40%</li><li>跨平台 SOV 矩阵指导预算分配：投入 ROI 提升 20-30%</li><li>竞品监测：及时发现竞品 SOV 上升，快速响应</li><li><strong>年化综合 ROI</strong>：¥30-100 万（随 AI 搜索流量增长持续扩大）</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（LLM API 采样 + 统计计算，1-2 天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Share of Voice Tracking — AI 时代跨平台品牌可见度测量
+基于 arXiv: 2604.07585 (2026) + arXiv: 2606.10907 (2026)
+
+依赖: re, statistics, dataclasses (标准库)
+生产环境: 替换 MockLLMSampler 为真实 API
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+from statistics import mean, stdev
+import re
+
+
+@dataclass
+class BrandMention:
+    &quot;&quot;&quot;单次查询中的品牌提及&quot;&quot;&quot;
+    query: str
+    platform: str
+    brand: str
+    position: int       # 1 = 第一个被提及
+    sample_idx: int     # 第几次采样
+
+
+@dataclass
+class SOVResult:
+    &quot;&quot;&quot;品牌 SOV 计算结果&quot;&quot;&quot;
+    brand: str
+    platform: str
+    raw_mention_rate: float      # 简单提及率
+    position_weighted_sov: float # 位置加权 SOV
+    stability_score: float       # 稳定性分数（多次采样的一致性）
+    sample_count: int
+
+
+class MockLLMSampler:
+    &quot;&quot;&quot;
+    模拟 LLM 响应采样（生产环境替换为真实 API）
+
+    生产环境示例：
+        import openai
+        response = openai.chat.completions.create(
+            model=&quot;gpt-4o-mini&quot;,
+            messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: query}]
+        )
+        return response.choices[0].message.content
+    &quot;&quot;&quot;
+
+    # 模拟不同品牌被推荐的概率（母婴吸奶器市场）
+    BRAND_PROBS = {
+        &quot;Momcozy&quot;: [0.45, 0.35, 0.20],   # 位置1/2/3的概率
+        &quot;Elvie&quot;:   [0.35, 0.40, 0.25],
+        &quot;Spectra&quot;: [0.20, 0.25, 0.55],
+    }
+
+    import random as _rand
+
+    def sample_response(self, query: str, platform: str) -&gt; list:
+        &quot;&quot;&quot;模拟单次 LLM 响应，返回品牌提及列表 [(brand, position)]&quot;&quot;&quot;
+        import random
+        mentions = []</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.07585</li><li>2606.10907</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Share-of-Voice-Tracking" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Cross-Platform-Brand-Search-Volume]]（组合场景</span></li><li><span class='muted'>Keyword-Competition-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Cross-Platform-Brand-Search-Volume.html'>Skill-Cross-Platform-Brand-Search-Volume</a></li><li><a href='../skills/Skill-GEO-Generative-Engine-Optimization.html'>Skill-GEO-Generative-Engine-Optimization</a></li><li><a href='../skills/Skill-Keyword-Competition-Scoring.html'>Skill-Keyword-Competition-Scoring</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Cross-Platform-Brand-Search-Volume]]（组合场景</span></li><li><span class='muted'>Keyword-Competition-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Cross-Platform-Brand-Search-Volume.html'>Skill-Cross-Platform-Brand-Search-Volume</a></li><li><a href='../skills/Skill-Keyword-Competition-Scoring.html'>Skill-Keyword-Competition-Scoring</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Cross-Platform-Brand-Search-Volume]]（组合场景</span></li><li><span class='muted'>Keyword-Competition-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Cross-Platform-Brand-Search-Volume.html'>Skill-Cross-Platform-Brand-Search-Volume</a></li><li><a href='../skills/Skill-Keyword-Competition-Scoring.html'>Skill-Keyword-Competition-Scoring</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

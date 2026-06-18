@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Compliant Dynamic Pricing Guard（合规-定价双约束优化） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/17-价格优化.html">17-价格优化</a> / Skill-Compliant-Dynamic-Pricing-Guard</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Compliant Dynamic Pricing Guard（合规-定价双约束优化）</h1>
+<p class="muted">Skill-Compliant-Dynamic-Pricing-Guard · 17-价格优化</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-pricing-engine.html'>AI 定价引擎手册</a><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>150-500 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>定价负责人 / 运营负责人<span class='biz-ctx-secondary'> · 选品负责人 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Buy Box 竞价策略 · 多市场价格协调 · Prime Day / Coupon 折扣优化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>竞品突然降价，不知道该不该跟，跟了怕伤利润不跟怕丢 BSR；大促期间不知道折扣给多少，给多了利润没了</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>实时监控竞品价格并自动触发调价，毛利率保持在目标区间，BSR 排名和利润同时兼顾</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品降价了不知道要不要跟</span><span class='biz-pain-tag'>大促折扣给多少没有依据</span><span class='biz-pain-tag'>手动盯价格太累反应不及时</span><span class='biz-pain-tag'>新品上线定价高了还是低了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>AI 动态定价在大促期间将美国售价压低 35%，触发品牌 MAP 协议并引发欧洲经销商投诉——合规-定价双约束框架在优化 GMV 的同时实时检测 MAP/最低价/反倾销边界，违规率归零</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：跨境动态定价不能只优化利润，必须同时满足多个合规约束，违规定价可能触发 MAP 违规、Amazon 最低价政策、或反倾销诉讼。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴品牌同时在 Amazon US/EU/JP 销售，AI 动态定价引擎在大促期间将美国售价压到了比欧洲便宜 35%，触发了品牌 MAP 协议，并引起了欧洲经销商的投诉。</p><p>应用流程： 1. 建立价格约束数据库（MAP价格/历史价格/关税系数） 2. 在 AIGP 动态定价引擎外层包装合规护栏 3. 每次调价前运行约束检查，违规则回退到 base_price + 安全边际 4. 记录约束激活日志，供合规审查</p><p>量化收益： - 消除 MAP 违规风险（一次 MAP 处罚：暂停账号 30-90 天，损失 150-500 万 GMV） - 跨市场价格差异保持在 15% 以内，防止灰色进口 - 关税调整自动传导到定价，不再依赖人工调整（节省 2-3 天响应时间）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI</strong>：预防一次 MAP 违规暂停 = 150-500 万 GMV 保护</li><li><strong>难度</strong>：⭐⭐⭐☆☆（技术集成难度中等）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（有动态定价 + 多市场的品牌必须配置）</li><li><strong>适用场景</strong>：跨境多市场动态定价、大促期间自动调价、关税冲击后价格传导</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass
+from typing import Optional
+import logging
+
+@dataclass
+class PriceConstraints:
+    map_price: float           # 品牌最低广告价格
+    amazon_floor: float        # Amazon 价格底线（历史最低 × 0.97）
+    min_margin_ratio: float    # 最低毛利率（如 0.15 = 15%）
+    max_cross_market_gap: float = 0.20  # 跨市场最大价差 20%
+    safety_margin: float = 0.03         # 合规安全边际 3%
+
+def compliant_price(
+    proposed_price: float,
+    constraints: PriceConstraints,
+    cost: float,
+    market: str = &quot;US&quot;,
+) -&gt; tuple[float, list[str]]:
+    &quot;&quot;&quot;
+    返回合规后的最终价格 + 触发的约束列表。
+    &quot;&quot;&quot;
+    final_price = proposed_price
+    triggered = []
+    
+    # MAP 约束
+    map_floor = constraints.map_price * (1 + constraints.safety_margin)
+    if final_price &lt; map_floor:
+        final_price = map_floor
+        triggered.append(f&quot;MAP: raised to ${map_floor:.2f}&quot;)
+    
+    # Amazon 价格底线
+    if final_price &lt; constraints.amazon_floor:
+        final_price = constraints.amazon_floor * (1 + constraints.safety_margin)
+        triggered.append(f&quot;AMZN_FLOOR: raised to ${final_price:.2f}&quot;)
+    
+    # 最低毛利约束
+    min_price = cost / (1 - constraints.min_margin_ratio)
+    if final_price &lt; min_price:
+        final_price = min_price
+        triggered.append(f&quot;MIN_MARGIN: raised to ${min_price:.2f}&quot;)
+    
+    if triggered:
+        logging.warning(f&quot;[Compliance] Market={market}, Proposed={proposed_price:.2f}, Final={final_price:.2f}, Constraints={triggered}&quot;)
+    
+    return final_price, triggered
+
+# 与 AIGP 动态定价集成
+def aigp_with_compliance(product_id: str, base_price: float, constraints: PriceConstraints) -&gt; float:
+    # 1. AIGP 生成建议价格
+    aigp_price = base_price * 0.92  # 模拟：建议降价 8%
+    
+    # 2. 合规护栏过滤
+    final_price, violations = compliant_price(aigp_price, constraints, cost=base_price*0.4)
+    
+    return final_price
+
+# 测试
+constraints = PriceConstraints(map_price=19.99, amazon_floor=17.99, min_margin_ratio=0.20)
+price, violations = compliant_price(17.50, constraints, cost=8.00)
+print(f&quot;最终合规价格: ${price:.2f}, 触发约束: {violations}&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Compliant-Dynamic-Pricing-Guard" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Regulatory-Change-Monitoring.html'>Skill-Regulatory-Change-Monitoring</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-Regulatory-Change-Monitoring.html'>Skill-Regulatory-Change-Monitoring</a></li><li><span class='muted'>延伸</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multi-Channel Inventory Sync — 多渠道库存协同：Amazon+独立站+TikTok联动库存管理 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Multi-Channel-Inventory-Sync</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Multi-Channel Inventory Sync — 多渠道库存协同：Amazon+独立站+TikTok联动库存管理</h1>
+<p class="muted">Skill-Multi-Channel-Inventory-Sync · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥15-40 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Amazon独立站TikTok三渠道各自独立备货导致总备货650件但最优只需450件且大促时超卖风险高——统一库存池+蒙特卡洛优化动态分配，总备货量减少20%大促缺货率降低年化节省15-40万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>独立库存 vs 协同库存：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：黑五期间 Amazon/独立站/TikTok Shop 三个渠道同时大促，都预期销量大增。如果各渠道独立备货，总备货量 = 300+200+150=650件，但实际最优只需 450 件（有一定共享）。如何在总库存 450 件的约束下，让三个渠道都不超卖且总利润最大？</p><p>数据要求： - 各渠道过去 30 天日销量历史 - 各渠道利润贡献率（Amazon 25%、独立站 35%、TikTok 20%） - 大促预期销量系数（各渠道的预测倍增）</p><p>预期产出： - 最优初始库存分配（各渠道各多少） - 动态重分配策略（哪个条件触发重分配） - 超卖风险评估（各渠道的超卖概率）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>总备货量减少 10-20%（共享池效应）：减少资金占用 ¥5-15 万</li><li>高利润渠道（独立站）缺货率降低：GMV 保护 ¥5-15 万</li><li>大促超卖风险降低：避免因超卖导致的差评和账号风险</li><li><strong>年化综合 ROI：¥15-40 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要多渠道 API 集成；蒙特卡洛优化约 2 周；实时重分配需要自动化系统约 4-6 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Multi-Channel Inventory Sync
+多渠道库存协同：统一库存池 + 动态分配
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass
+from typing import Optional
+
+
+@dataclass
+class SalesChannel:
+    &quot;&quot;&quot;销售渠道&quot;&quot;&quot;
+    channel_id: str
+    name: str
+    daily_demand_mean: float
+    daily_demand_std: float
+    profit_margin: float      # 单位利润
+    lead_time_days: int       # 补货到渠道的时间（FBA转移需要1-2天）
+    current_inventory: float
+    min_safety_days: float = 3.0  # 最低安全库存天数
+
+
+def allocate_inventory_optimal(channels: list[SalesChannel],
+                                total_pool: float,
+                                horizon_days: int = 7,
+                                n_scenarios: int = 1000,
+                                seed: int = 42) -&gt; dict:
+    &quot;&quot;&quot;
+    蒙特卡洛仿真优化库存分配
+    在 n 个随机需求场景下找到期望利润最大的分配
+    &quot;&quot;&quot;
+    np.random.seed(seed)
+    n = len(channels)
+
+    # 蒙特卡洛需求模拟
+    demand_scenarios = np.array([
+        [max(0, np.random.normal(c.daily_demand_mean, c.daily_demand_std) * horizon_days)
+         for c in channels]
+        for _ in range(n_scenarios)
+    ])  # shape: (n_scenarios, n_channels)
+
+    # 候选分配方案（格网搜索简化版）
+    best_allocation = None
+    best_expected_profit = -np.inf
+
+    margins = np.array([c.profit_margin for c in channels])
+
+    # 按利润率比例分配（基础方案）
+    margin_weights = margins / margins.sum()
+    base_alloc = total_pool * margin_weights
+
+    # 优化：调整比例
+    for delta in np.linspace(-0.2, 0.2, 11):
+        trial_weights = margin_weights.copy()
+        trial_weights[0] = max(0.1, margin_weights[0] + delta)
+        trial_weights = trial_weights / trial_weights.sum()
+        trial_alloc = total_pool * trial_weights
+
+        # 期望利润计算（蒙特卡洛）
+        actual_sales = np.minimum(demand_scenarios, trial_alloc)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.08734</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multi-Channel-Inventory-Sync" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>DRL-Inventory-Optimization]]（组合</span></li><li><span class='muted'>Omnichannel-Inventory-Sync]]（组合</span></li><li><a href='../skills/Skill-Ad-Spend-Inventory-Sync.html'>Skill-Ad-Spend-Inventory-Sync</a></li><li><a href='../skills/Skill-DRL-Inventory-Optimization.html'>Skill-DRL-Inventory-Optimization</a></li><li><a href='../skills/Skill-Inventory-Demand-Sensing.html'>Skill-Inventory-Demand-Sensing</a></li><li><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html'>Skill-Multi-Channel-Inventory-Pooling</a></li><li><a href='../skills/Skill-Omnichannel-Inventory-Sync.html'>Skill-Omnichannel-Inventory-Sync</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>DRL-Inventory-Optimization]]（组合</span></li><li><span class='muted'>Omnichannel-Inventory-Sync]]（组合</span></li><li><a href='../skills/Skill-Ad-Spend-Inventory-Sync.html'>Skill-Ad-Spend-Inventory-Sync</a></li><li><a href='../skills/Skill-DRL-Inventory-Optimization.html'>Skill-DRL-Inventory-Optimization</a></li><li><a href='../skills/Skill-Inventory-Demand-Sensing.html'>Skill-Inventory-Demand-Sensing</a></li><li><a href='../skills/Skill-Omnichannel-Inventory-Sync.html'>Skill-Omnichannel-Inventory-Sync</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>DRL-Inventory-Optimization]]（组合</span></li><li><span class='muted'>Omnichannel-Inventory-Sync]]（组合</span></li><li><a href='../skills/Skill-DRL-Inventory-Optimization.html'>Skill-DRL-Inventory-Optimization</a></li><li><a href='../skills/Skill-Omnichannel-Inventory-Sync.html'>Skill-Omnichannel-Inventory-Sync</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

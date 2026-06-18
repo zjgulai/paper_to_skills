@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MOQ与账期联动优化决策 — 最小起订量与付款条件的现金流效益模型 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-MOQ-Payment-Terms-Optimization</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>MOQ与账期联动优化决策 — 最小起订量与付款条件的现金流效益模型</h1>
+<p class="muted">Skill-MOQ-Payment-Terms-Optimization · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>100万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>采购谈判时面临&quot;单看价格忽视持有成本+账期价值&quot;——联合优化模型量化账期延长30天=0.5%折扣等价，避免系统性次优决策</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>MOQ（最小起订量）与账期是采购谈判的两大核心变量，单独优化任何一个都是次优解。陈凤霞框架的核心洞察：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：吸奶器SKU MOQ谈判量化决策 - 业务问题：供应商要求MOQ=2000件（约4个月销量），但给5%批量折扣；采购团队不确定是否接受 - 数据要求： - 当前月均销量 + 需求方差（预测误差CV） - 库存持有成本率（仓储+资金占用，通常18-24%/年） - 滞销/清仓损失估计 - 融资利率 - 预期产出：联合成本对比表（接受MOQ=2000 vs 谈判MOQ=1000），给出量化建议 - 业务价值：正确决策可避免额外库存持有成本超过折扣收益，按案例测算应谈MOQ=1200件</p><p>**场景B：A2奶粉供应商账期优化（Net30→Net60）** - **业务问题**：当前账期Net30，季节性旺季前需要大量备货，现金流压力大 - **数据要求**：年采购额、融资成本（银行贷款利率/供应链金融利率） - **预期产出**：账期延长30天的年化现金流价值（约=采购额×利率×30/365） - **业务价值**：以年采购额500万、融资利率6%计算，账期延长30天 = 释放现金流约2.5万元/月，等价于价格折扣0.6%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：月采购额100万的品牌，账期从Net30延长到Net60 = 年化释放约5万元融资价值；优化MOQ决策避免超量采购持有成本约10-15万元/年</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（核心是建立联合成本模型，数据主要来自ERP和供应商报价）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（每季度采购谈判都需要，是日常采购决策最高频工具）</li><li><strong>评估依据</strong>：陈凤霞书中案例显示，70%的采购团队只看单价，忽视持有成本和账期价值，导致系统性次优决策</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+MOQ与账期联动优化决策模型
+功能：MOQ批量折扣vs持有成本权衡 / 账期价值量化 / 采购谈判最优策略
+输入：SKU销售参数 / 供应商报价方案
+输出：最优MOQ建议 + 账期价值量化 + 谈判策略
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def compute_moq_joint_cost(
+    monthly_demand: float,
+    demand_cv: float,
+    unit_price_options: list,  # [(moq, unit_price), ...]
+    holding_cost_rate: float = 0.20,  # 年持有成本率（含资金占用）
+    ordering_cost: float = 500.0,     # 固定下单成本（元/次）
+    obsolescence_risk: float = 0.05,  # 滞销风险（超过3个月库存的损失率）
+    payment_term_days: int = 30,      # 当前账期（天）
+    financing_rate: float = 0.06,     # 融资年利率
+):
+    &quot;&quot;&quot;
+    联合MOQ-账期最优采购量计算
+    Returns: 各MOQ方案的全成本对比DataFrame
+    &quot;&quot;&quot;
+    results = []
+    annual_demand = monthly_demand * 12
+    
+    for moq, unit_price in unit_price_options:
+        # 1. 批量采购次数/年
+        orders_per_year = max(1, annual_demand / moq)
+        
+        # 2. 平均库存（假设均匀消耗）
+        avg_inventory = moq / 2
+        coverage_months = moq / monthly_demand  # 可覆盖月数
+        
+        # 3. 库存持有成本（年化）
+        holding_cost = avg_inventory * unit_price * holding_cost_rate
+        
+        # 4. 固定采购成本（年化）
+        ordering_cost_annual = ordering_cost * orders_per_year
+        
+        # 5. 滞销风险成本（超过3个月的库存有滞销风险）
+        excess_months = max(0, coverage_months - 3.0)
+        obsolescence_cost = (excess_months / coverage_months) * moq * unit_price * obsolescence_risk
+        
+        # 6. 采购货值成本（含账期融资）
+        purchase_value = moq * unit_price
+        # 账期内免息，超出部分付融资成本（此处假设已在holding rate中含）
+        financing_cost = purchase_value * financing_rate * (payment_term_days / 365)
+        # Net账期带来的隐性收益（相当于免息贷款）
+        payment_benefit = purchase_value * financing_rate * (payment_term_days / 365)
+        
+        # 7. 总全链路成本（年化）
+        total_cost_annual = (unit_price * annual_demand) + holding_cost + ordering_cost_annual + obsolescence_cost
+        cost_per_unit = total_cost_annual / annual_demand
+        
+        results.append({
+            &#x27;MOQ&#x27;: moq,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2210.08474</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MOQ-Payment-Terms-Optimization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Dynamic-Lot-Sizing-MOQ.html'>Skill-Dynamic-Lot-Sizing-MOQ</a></li><li><a href='../skills/Skill-Inventory-Aging-Cost-Management.html'>Skill-Inventory-Aging-Cost-Management</a></li><li><a href='../skills/Skill-Multi-SKU-Procurement-Budget-Allocation.html'>Skill-Multi-SKU-Procurement-Budget-Allocation</a></li><li><a href='../skills/Skill-Procurement-Cost-KPI-Price-Achievement.html'>Skill-Procurement-Cost-KPI-Price-Achievement</a></li><li><a href='../skills/Skill-Supply-Chain-Working-Capital-Optimization.html'>Skill-Supply-Chain-Working-Capital-Optimization</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Multi-SKU-Procurement-Budget-Allocation.html'>Skill-Multi-SKU-Procurement-Budget-Allocation</a></li><li><a href='../skills/Skill-Procurement-Cost-KPI-Price-Achievement.html'>Skill-Procurement-Cost-KPI-Price-Achievement</a></li><li><a href='../skills/Skill-Supply-Chain-Working-Capital-Optimization.html'>Skill-Supply-Chain-Working-Capital-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Multi-SKU-Procurement-Budget-Allocation.html'>Skill-Multi-SKU-Procurement-Budget-Allocation</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>三层自动打标流水线 — 规则引擎+ML分类器+LLM抽取的混合置信度打标体系 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Auto-Tagging-Pipeline-Rule-ML-LLM</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>三层自动打标流水线 — 规则引擎+ML分类器+LLM抽取的混合置信度打标体系</h1>
+<p class="muted">Skill-Auto-Tagging-Pipeline-Rule-ML-LLM · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-tagging-ontology.html'>标签工程与本体驱动手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>数据团队面临&quot;500个SKU打标需要1周人工&quot;——规则+ML+LLM三层流水线将覆盖率从30%提升至97%，人工审核量从100%降至3%，节省标注成本4万元/年</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>三层打标策略（按优先级从高到低）：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：SKU全量自动打标流水线 - 业务问题：500个 SKU，10 种标签维度，传统人工打标需要 1 周/次更新，远不能满足实时性要求 - 三层方案： - 规则层（瞬时）：`IF DOS&lt;7 → stockout_risk=critical`；`IF 退货率&gt;10% → return_risk=high` - ML层（毫秒）：GBM 训练 ABC 分类器（特征：销售额/周转率/库龄） - LLM层（分钟）：从产品描述提取合规关键词 → 合规标签 - 覆盖分布：规则层 45%，ML层 40%，LLM层 12%，人工审核 3% - 业务价值：打标时效从 1 周→ 实时（规则+ML），LLM每日</p><p>**场景B：供应商评论语义标签（LLM层）** - **业务问题**：采购团队对供应商有大量非结构化备注（&quot;这家工厂交期不稳定&quot;&quot;质量检查很严格&quot;），无法被规则或ML处理 - **LLM提取**： - 输入：`&quot;宁波精工交期非常稳定，但价格略高，CE认证资料齐全&quot;` - 输出：`{delivery_reliability: &quot;high&quot;, price_competitiveness: &quot;low&quot;, compliance_certs: [&quot;CE&quot;]}` - **业务价值**：采购知识从&quot;只存在个人脑中&quot;→ 结构化供应商标签，可被后续决策系统使用</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：三层流水线将500个SKU的10维标签打标时效从&quot;1周人工→实时(规则+ML)+每日批量(LLM)&quot;，标签覆盖率从30%→97%；人工审核量从100%降至3%，节省人力成本约4万元/年</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（规则层容易，ML层需要训练数据，LLM层需要API成本控制）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（打标是整个标签工程体系的数据入口，没有高质量打标，传播和Action触发都无从谈起）</li><li><strong>评估依据</strong>：三层混合策略比纯LLM打标便宜90%（LLM每千tokens约¥0.1，500 SKU × 10 tags × LLM全量 vs 仅12%走LLM层）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+三层自动打标流水线
+功能：规则引擎 / ML分类器 / LLM抽取 / 置信度聚合 / 人工审核队列
+输入：实体数据 + Tag Schema定义
+输出：标签结果 + 置信度 + 来源追踪 + 审核队列
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+import re
+import json
+from dataclasses import dataclass, field
+from typing import Any, Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class TagResult:
+    tag_id: str
+    value: Any
+    confidence: float
+    source: str          # rule/ml/llm/manual
+    rule_matched: Optional[str] = None
+    needs_review: bool = False
+
+
+class RuleEngine:
+    &quot;&quot;&quot;Layer 1: 规则引擎（确定性标签）&quot;&quot;&quot;
+
+    def __init__(self):
+        self.rules = []
+
+    def add_rule(self, tag_id: str, condition: callable, value_fn: callable,
+                 description: str = &quot;&quot;):
+        self.rules.append({
+            &quot;tag_id&quot;: tag_id, &quot;condition&quot;: condition,
+            &quot;value_fn&quot;: value_fn, &quot;description&quot;: description
+        })
+
+    def evaluate(self, entity: dict) -&gt; list:
+        results = []
+        for rule in self.rules:
+            try:
+                if rule[&quot;condition&quot;](entity):
+                    value = rule[&quot;value_fn&quot;](entity)
+                    results.append(TagResult(
+                        tag_id=rule[&quot;tag_id&quot;],
+                        value=value,
+                        confidence=1.0,
+                        source=&quot;rule&quot;,
+                        rule_matched=rule[&quot;description&quot;],
+                    ))
+            except Exception:
+                continue
+        return results
+
+
+class MLTagger:
+    &quot;&quot;&quot;Layer 2: ML分类器（统计推断标签）&quot;&quot;&quot;
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2209.04485</li><li>2307.09288</li><li>2402.15758</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Auto-Tagging-Pipeline-Rule-ML-LLM" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-LLM-Annotation-Weak-Supervision.html'>Skill-LLM-Annotation-Weak-Supervision</a></li><li><a href='../skills/Skill-Product-Attribute-Completion.html'>Skill-Product-Attribute-Completion</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><a href='../skills/Skill-Tag-Quality-Coverage-KPI.html'>Skill-Tag-Quality-Coverage-KPI</a></li><li><a href='../skills/Skill-Tag-Schema-Engineering-Lifecycle.html'>Skill-Tag-Schema-Engineering-Lifecycle</a></li><li><a href='../skills/Skill-Weak-Supervision-Data-Labeling.html'>Skill-Weak-Supervision-Data-Labeling</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-LLM-Annotation-Weak-Supervision.html'>Skill-LLM-Annotation-Weak-Supervision</a></li><li><a href='../skills/Skill-Product-Attribute-Completion.html'>Skill-Product-Attribute-Completion</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><a href='../skills/Skill-Tag-Quality-Coverage-KPI.html'>Skill-Tag-Quality-Coverage-KPI</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-LLM-Annotation-Weak-Supervision.html'>Skill-LLM-Annotation-Weak-Supervision</a></li><li><a href='../skills/Skill-Product-Attribute-Completion.html'>Skill-Product-Attribute-Completion</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ SKU标签质量扫描器</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

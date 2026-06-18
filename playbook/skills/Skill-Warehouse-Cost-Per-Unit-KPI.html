@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>仓储单位成本与费效比KPI — FBA/自营仓单件成本分解与效率提升量化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Warehouse-Cost-Per-Unit-KPI</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>仓储单位成本与费效比KPI — FBA/自营仓单件成本分解与效率提升量化</h1>
+<p class="muted">Skill-Warehouse-Cost-Per-Unit-KPI · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>WF-A 智能补货</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>0万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>财务面临&quot;FBA vs 自营仓决策拍脑袋&quot;——单件全成本对比（含Q4仓储费3.2倍）给出临界点月出货2000件，年化节省仓储成本10-20万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>单位仓储成本（Cost Per Unit, CPU） 是衡量仓储运营效率的核心财务指标。陈凤霞书中将仓储成本分解为四个维度，形成&quot;费效比&quot;分析框架：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：FBA vs 自营海外仓单件成本对比 - 业务问题：是继续全用FBA还是部分迁移自营海外仓，哪个更划算？ - 数据要求：FBA月仓储费 + FBA履约费 + 自营仓月租/人工/包材 + 各渠道月出货量 - 预期产出： - FBA单件成本：$4.85（仓储$0.45 + 履约$4.40） - 自营仓单件成本：$3.20（仓储$1.20 + 人工$1.20 + 包材$0.80） - 临界点：月出货量&gt;2000件时，自营仓更划算 - 业务价值：将2000件以上SKU迁至自营仓，年化节省约15万元</p><p>**场景B：旺季Q4 FBA仓储成本提前规划** - **业务问题**：Q4 Amazon仓储费是平时3.2倍，但提前不知道囤多少才合适 - **数据要求**：历史Q4库存量 + 实际Q4仓储费账单 - **预期产出**：每多备100件（旗舰吸奶器），Q4每月多付$35仓储费；过早入仓成本 vs 断货成本的权衡点 - **业务价值**：优化入仓时间（10月初而非9月），节省Q4仓储费约$1,200</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：通过FBA vs 自营仓精确决策，年化节省仓储成本约10-20万元；Q4提前入仓时间优化节省$1,200+/年；仓储成本率从5.5%降至4.5% = GMV 1000万品牌节省10万元</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（主要是整合FBA账单和自营仓成本数据）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（仓储成本是FBA卖家P&amp;L第二大成本项，陈凤霞：&quot;FBA成本盲区是利润杀手&quot;）</li><li><strong>评估依据</strong>：Amazon FBA Q4仓储费比平季高3.2倍，精确把握入仓时机是大促成本控制关键</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+仓储单位成本与费效比 KPI 体系
+功能：FBA vs 自营仓成本对比 / 单件成本分解 / 仓储成本率 / 临界点分析
+输入：仓储费用账单数据 + 出入库记录
+输出：仓储成本KPI + FBA vs 自营仓对比 + 降本建议
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def compute_fba_cost_per_unit(
+    monthly_units: int,
+    avg_cubic_feet: float = 0.5,
+    avg_weight_lbs: float = 2.0,
+    avg_months_in_fba: float = 1.5,
+    is_q4: bool = False,
+):
+    &quot;&quot;&quot;计算FBA单件全成本&quot;&quot;&quot;
+    # 仓储费
+    storage_rate = 2.40 if is_q4 else 0.75
+    monthly_storage_per_unit = avg_cubic_feet * storage_rate * avg_months_in_fba / monthly_units * monthly_units
+    storage_cost_per_unit = avg_cubic_feet * storage_rate * avg_months_in_fba
+    
+    # 履约费（按件重量估算）
+    if avg_weight_lbs &lt;= 1:
+        fulfillment_fee = 3.22
+    elif avg_weight_lbs &lt;= 2:
+        fulfillment_fee = 3.86
+    elif avg_weight_lbs &lt;= 3:
+        fulfillment_fee = 4.45
+    elif avg_weight_lbs &lt;= 5:
+        fulfillment_fee = 5.28
+    else:
+        fulfillment_fee = 6.10
+    
+    total_fba = storage_cost_per_unit + fulfillment_fee
+    return {
+        &#x27;storage_cost&#x27;: round(storage_cost_per_unit, 3),
+        &#x27;fulfillment_fee&#x27;: round(fulfillment_fee, 3),
+        &#x27;total_fba_cpu&#x27;: round(total_fba, 3),
+    }
+
+
+def compute_self_warehouse_cost(
+    monthly_rent: float,
+    monthly_labor: float,
+    monthly_materials: float,
+    monthly_units_handled: int,
+    monthly_orders: int,
+):
+    &quot;&quot;&quot;计算自营仓单件成本&quot;&quot;&quot;
+    total_monthly = monthly_rent + monthly_labor + monthly_materials
+    cost_per_unit = total_monthly / max(1, monthly_units_handled)
+    cost_per_order = total_monthly / max(1, monthly_orders)
+    cost_rate = total_monthly / (monthly_units_handled * 150) * 100  # 假设均价150元
+    
+    return {
+        &#x27;cost_per_unit&#x27;: round(cost_per_unit, 2),</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2310.11847</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Warehouse-Cost-Per-Unit-KPI" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-FBA-Stranded-Unfulfillable-Inventory-KPI.html'>Skill-FBA-Stranded-Unfulfillable-Inventory-KPI</a></li><li><a href='../skills/Skill-First-Last-Mile-Cost-KPI-CrossBorder.html'>Skill-First-Last-Mile-Cost-KPI-CrossBorder</a></li><li><a href='../skills/Skill-GMROI-Inventory-Investment-Efficiency.html'>Skill-GMROI-Inventory-Investment-Efficiency</a></li><li><a href='../skills/Skill-Supply-Chain-Total-Cost-TCO-Model.html'>Skill-Supply-Chain-Total-Cost-TCO-Model</a></li><li><a href='../skills/Skill-Warehouse-Capacity-Efficiency-Planning.html'>Skill-Warehouse-Capacity-Efficiency-Planning</a></li><li><a href='../skills/Skill-Warehouse-Operations-KPI-Picking-Efficiency.html'>Skill-Warehouse-Operations-KPI-Picking-Efficiency</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-First-Last-Mile-Cost-KPI-CrossBorder.html'>Skill-First-Last-Mile-Cost-KPI-CrossBorder</a></li><li><a href='../skills/Skill-GMROI-Inventory-Investment-Efficiency.html'>Skill-GMROI-Inventory-Investment-Efficiency</a></li><li><a href='../skills/Skill-Supply-Chain-Total-Cost-TCO-Model.html'>Skill-Supply-Chain-Total-Cost-TCO-Model</a></li><li><a href='../skills/Skill-Warehouse-Capacity-Efficiency-Planning.html'>Skill-Warehouse-Capacity-Efficiency-Planning</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-First-Last-Mile-Cost-KPI-CrossBorder.html'>Skill-First-Last-Mile-Cost-KPI-CrossBorder</a></li><li><a href='../skills/Skill-GMROI-Inventory-Investment-Efficiency.html'>Skill-GMROI-Inventory-Investment-Efficiency</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

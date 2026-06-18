@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PIE 实验增量预测多触点归因 - Amazon MTA 框架落地 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-PIE-Experimental-MTA</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>PIE 实验增量预测多触点归因 - Amazon MTA 框架落地</h1>
+<p class="muted">Skill-PIE-Experimental-MTA · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>200 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>广告归因的根本悖论：精度 vs 可信度。纯 RCT 实验（停投对照）可以给出无偏的渠道因果增量，但只能看总盘，无法下钻到每一条 Campaign 甚至每一次点击；纯 ML 多触点归因（Shapley / Attention）能细化到触点级别，但平台总是把广告优先投给&quot;本来就要买&quot;的高意图用户，模型捡到的全是&quot;选择偏差&quot;，转化贡献被系统性高估。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop。投手根据 Last-Click 数据削减 Facebook/TikTok 预算，老板看不到真实因果增量，高管层（要 RCT）与执行层（要触点）两套数据永远对不上账，每季度预算分配争论消耗 3-5 天。 - 数据要求： - RCT 数据：三渠道分别跑 4 周 Geo-holdout（2500+ 实验单元/渠道） - 触点数据：用户旅程记录（journey_id、channel、timestamp、converted），日均 5000+ 条转化路径 - 预</p><p>- 业务问题：Apple ATT 导致 Facebook 归因窗口数据缺失率 60%+，ML 模型在数据断点处随机输出，归因报告失真度高达 40%，导致 Facebook 预算被错误削减 30%，实际 ROAS 反而下降。 - 数据要求： - RCT &quot;总盘&quot;锚点：即使触点数据残缺，RCT 仍能给出渠道增量真实值（宏观约束） - 残缺触点数据：允许 journey 内某些触点无 channel 标记（映射到 `unknown`） - 预期产出： - 即使 ML 因数据断点产生偏差，PIE 校准会将所有渠道的总量强制对齐 RCT 增量，防止灾难性偏离 - 输出&quot;ATT 容忍归因报告&quot;：各渠道 P</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>中型品牌月广告费 200 万 × ROAS 提升 10-15%（归因偏差修正）= <strong>20-30 万/月 × 12 = 240-360 万/年</strong></li><li>决策时间从 3-5 天 → 0.5 天，运营人力节省约 <strong>20 万/年</strong></li><li>避免 Facebook 被错误削减 30% 导致的 ROAS 损失 = <strong>100-200 万/年</strong></li><li><strong>易处</strong>：PIE 框架逻辑清晰，校准公式简洁，本 Skill 提供完整可运行代码</li><li><strong>易处</strong>：RCT 实验设计（Geo-holdout）母婴品牌通常已有实践经验</li><li><strong>难处</strong>：需要整合三平台触点日志（ETL 工程量），大品牌可能涉及数据合规与隐私</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+PIE MTA 三步校准 - 最小可运行示例
+依赖: numpy, pandas, scipy
+&quot;&quot;&quot;
+from paper2skills_code.advertising.amazon_mta_pie_2025.model import (
+    PIEAttributionPipeline,
+    simulate_rct_experiment,
+    TouchpointMLEstimator,
+    PIECalibrator,
+)
+
+CHANNELS = [&#x27;google_search&#x27;, &#x27;facebook&#x27;, &#x27;tiktok&#x27;]
+
+# ---- Step 1: 每季度跑一次 RCT 实验 ----
+rct_results = simulate_rct_experiment(
+    channels=CHANNELS,
+    n_treated=5000,
+    n_control=5000,
+    true_incrementality={&#x27;google_search&#x27;: 0.035, &#x27;facebook&#x27;: 0.018, &#x27;tiktok&#x27;: 0.012},
+    seed=42,
+)
+# 输出：{&#x27;google_search&#x27;: {&#x27;rct_incrementality&#x27;: 0.037, &#x27;ci_lower&#x27;: ..., &#x27;ci_upper&#x27;: ...}, ...}
+
+# ---- Step 2: ML 对每日触点路径打分 ----
+estimator = TouchpointMLEstimator(channels=CHANNELS, seed=42)
+touchpoint_df = estimator.generate_touchpoint_data(n_journeys=10000)
+scored_df = estimator.fit_predict(touchpoint_df)
+# scored_df 新增列：ml_prob（无偏）、ml_prob_biased（有偏，待校准）
+
+# ---- Step 3: PIE 校准 ----
+calibrator = PIECalibrator()
+report = calibrator.calibrate(scored_df, rct_results, CHANNELS)
+print(report[[&#x27;channel&#x27;, &#x27;ml_share_biased&#x27;, &#x27;rct_share&#x27;, &#x27;pie_share&#x27;, &#x27;scaling_factor&#x27;]])
+# channel         ml_share_biased  rct_share  pie_share  scaling_factor
+# google_search          0.4138     0.5918     0.5918          1.4300
+# facebook               0.3444     0.2722     0.2722          0.7901
+# tiktok                 0.2417     0.1361     0.1361          0.5630
+
+# ---- 预算建议 ----
+current_budget = {&#x27;google_search&#x27;: 10000, &#x27;facebook&#x27;: 3000, &#x27;tiktok&#x27;: 2000}
+rec = calibrator.budget_recommendation(current_budget, total_budget=15000)
+print(rec[[&#x27;channel&#x27;, &#x27;current_budget&#x27;, &#x27;pie_weight&#x27;, &#x27;recommended_budget&#x27;, &#x27;action&#x27;]])
+# channel         current_budget  pie_weight  recommended_budget  action
+# google_search            10000      0.5917              8876.0      削减
+# facebook                  3000      0.2722              4083.0      增加
+# tiktok                    2000      0.1361              2041.0      持平
+
+# ---- 一行快速调用（Pipeline 封装） ----
+pipeline = PIEAttributionPipeline(channels=CHANNELS, n_journeys=10000, seed=42)
+pipeline.run_rct_experiment()
+pipeline.score_touchpoints()
+final_report = pipeline.calibrate()</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2508.08209</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-PIE-Experimental-MTA" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>Uplift-Modeling</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

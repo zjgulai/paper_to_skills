@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Visual Product Search — 视觉商品搜索：以图搜货与相似款发现 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Visual-Product-Search</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Visual Product Search — 视觉商品搜索：以图搜货与相似款发现</h1>
+<p class="muted">Skill-Visual-Product-Search · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥10-30 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>用户在社交媒体看到竞品同款想找相似但更便宜的款式文字搜索效果差——CLIP视觉搜索让用户上传图片直接找相似商品，搜索转化率提升8-15%同时帮助卖家发现视觉差异化空间年化增益10-30万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>CLIP 模型实现图文统一搜索：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：用户在朋友圈看到一个婴儿推车，想找一个类似款式但价格更低的。在独立站只能文字搜索，效果差。视觉搜索让用户上传这张图，直接展示相似款。</p><p>数据要求： - 商品图片库（每个 SKU 至少 3 张主图） - 预建 CLIP 向量索引（FAISS 向量数据库）</p><p>预期产出： - 图片查询 → Top 5 相似商品（含相似度分） - 竞品分析：上传竞品图，找到自己最接近的款式</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>独立站视觉搜索功能：用户体验提升，转化率提升 8-15%</li><li>竞品视觉相似度分析：差异化定位决策更数据驱动</li><li>以图找相似功能：减少用户流失（找不到想要的就离开）</li><li><strong>年化综合 ROI：¥10-30 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（CLIP 有开源预训练模型；FAISS 向量检索成熟；约 3-4 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Visual Product Search
+CLIP 视觉商品搜索：以图搜货与相似商品发现
+生产环境: pip install transformers torch pillow faiss-cpu
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass
+
+
+@dataclass
+class ProductImage:
+    product_id: str
+    category: str
+    price: float
+    image_features: np.ndarray  # CLIP 图像特征向量（512维）
+
+
+def simulate_clip_features(n_products: int, seed: int = 42) -&gt; list[ProductImage]:
+    &quot;&quot;&quot;
+    模拟 CLIP 图像特征（生产中替换为 CLIP 模型提取）
+    生产代码:
+    from transformers import CLIPModel, CLIPProcessor
+    model = CLIPModel.from_pretrained(&#x27;openai/clip-vit-base-patch32&#x27;)
+    processor = CLIPProcessor.from_pretrained(&#x27;openai/clip-vit-base-patch32&#x27;)
+    inputs = processor(images=pil_image, return_tensors=&#x27;pt&#x27;)
+    features = model.get_image_features(**inputs)
+    &quot;&quot;&quot;
+    np.random.seed(seed)
+    categories = [&#x27;breast_pump_electric&#x27;, &#x27;breast_pump_manual&#x27;, &#x27;stroller&#x27;,
+                  &#x27;car_seat&#x27;, &#x27;bottle&#x27;, &#x27;sterilizer&#x27;]
+    products = []
+
+    # 同类别产品视觉特征更相近（聚类模拟）
+    category_centers = {cat: np.random.normal(0, 1, 64) for cat in categories}
+
+    for i in range(n_products):
+        cat = categories[i % len(categories)]
+        center = category_centers[cat]
+        features = center + np.random.normal(0, 0.3, 64)
+        features = features / (np.linalg.norm(features) + 1e-8)  # L2归一化
+
+        products.append(ProductImage(
+            product_id=f&#x27;PROD-{i:03d}&#x27;,
+            category=cat,
+            price=np.random.uniform(30, 300),
+            image_features=features,
+        ))
+
+    return products
+
+
+def build_visual_index(products: list[ProductImage]) -&gt; np.ndarray:
+    &quot;&quot;&quot;构建视觉搜索索引&quot;&quot;&quot;
+    return np.vstack([p.image_features for p in products])
+
+
+def visual_search(query_features: np.ndarray, index: np.ndarray,
+                  products: list[ProductImage], top_k: int = 5,
+                  price_filter: tuple = None) -&gt; list[dict]:
+    &quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.09834</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Visual-Product-Search" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Listing-AI-Copywriting]]（组合</span></li><li><span class='muted'>Long-Tail-Search-Embedding-SEO]]（组合</span></li><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-GNN-Ecommerce-Recommendation.html'>Skill-GNN-Ecommerce-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Listing-AI-Copywriting.html'>Skill-Listing-AI-Copywriting</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><a href='../skills/Skill-Multimodal-Product-Understanding.html'>Skill-Multimodal-Product-Understanding</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Listing-AI-Copywriting]]（组合</span></li><li><span class='muted'>Long-Tail-Search-Embedding-SEO]]（组合</span></li><li><a href='../skills/Skill-GNN-Ecommerce-Recommendation.html'>Skill-GNN-Ecommerce-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Listing-AI-Copywriting.html'>Skill-Listing-AI-Copywriting</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Listing-AI-Copywriting]]（组合</span></li><li><span class='muted'>Long-Tail-Search-Embedding-SEO]]（组合</span></li><li><a href='../skills/Skill-Listing-AI-Copywriting.html'>Skill-Listing-AI-Copywriting</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

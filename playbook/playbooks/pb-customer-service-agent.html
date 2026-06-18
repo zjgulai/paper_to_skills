@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>客服售后智能体手册 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 客服售后智能体手册</nav>
+<div class='pb-hero'>
+  <span class='pb-icon'>CS</span>
+  <div>
+    <h1>客服售后智能体手册</h1>
+    <p class='lead'>跨境客服三大成本：人力、时效、差评——AI 覆盖 70% 工单，差评率从 3% 降至 1.5%</p>
+    <span class='biz-tag'>多语言客服 · 退货优化</span>
+  </div>
+</div>
+
+<div class='pb-intro'>跨境客服有三个独特难点：时区、语言、平台惩罚。今天大多数团队的客服现状是：中国团队只能覆盖北京时间工作日，德语/日语差评看不懂无法回复，高峰期工单积压平均响应时间超 48 小时。这直接导致 ODR（订单缺陷率）超标、差评堆积、A-to-Z 索赔风险上升，某团队因此在旺季丢失了 35% 的 Buy Box 份额。本手册提供从工单分流到退货闭环的完整 AI 客服体系，不需要人工值守即可 24h 响应。</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 70% 标准工单全自动处理，客服人力节省 60%（ROI 600-800万/年）</li><li>[OK] 多语言覆盖：德/日/法/西/葡，响应时效从 48h → 2h</li><li>[OK] 差评率从 3% 降至 1.5%，对应转化率提升约 8-12%</li><li>[OK] INR 欺诈退货从 35% 降至 5%，月均挽回 $3,200+</li><li>[OK] 差评根因转化为产品改进清单，形成「客服→R&amp;D」反馈闭环</li></ul></div>
+<div class='pb-steps'>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 1</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 1：工单意图自动分类与路由</h3>
+    <p class='pb-problem'>日均 500 条工单，40% 是重复问题（物流时效/使用方法/退货流程）；人工分流每条耗时 3-5 分钟，高峰期积压严重</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html' class='pb-skill-name'>Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树</a><div class='pb-skill-badges'><span class='roi-badge'>200-400 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 无监督层次化意图聚类：自动发现客服意图树（退款/换货/咨询/投诉），无需人工标注，70% 工单自动路由（ROI 200-400万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Customer-Journey-Decision-Tree.html' class='pb-skill-name'>客服对话决策树 - 从日志中自学策略</a><div class='pb-skill-badges'><span class='roi-badge'>600 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 从历史日志自学决策树：70% 标准工单完全自动化处理，客服人力节省，释放人力专注高价值案例（ROI 600万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：近 6 个月客服工单历史（含工单文本、处理结果、处理时长）</div>
+    <div class="pb-output"><strong>输出结果：</strong>意图分类体系 + 自动路由规则 + 工单自动回复模板</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+1：工单意图自动分类与路由+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-customer-service-agent-1'
+         onclick='markStepDone("pb-customer-service-agent",1,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-customer-service-agent';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(1)){
+        var btn=document.getElementById('step-done-pb-customer-service-agent-1');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 2</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 2：多语言实时响应</h3>
+    <p class='pb-problem'>德语/日语差评无人响应，导致 Amazon 账号健康分下降；人工翻译后回复不够专业，文化语气不对</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multilingual-Customer-Service-Translation.html' class='pb-skill-name'>Multilingual Customer Service Translation — 多语言客服自动翻译与情绪感知保全</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 多语言客服自动翻译与回复生成：覆盖德/日/法/西/葡语，A-to-Z 投诉文化适配回复，响应从 48h 压缩到 2h</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Emotional-AI-Customer-Care.html' class='pb-skill-name'>Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 情感感知客服：高压场景（召回恐慌/宝宝安全问题）识别情绪强度，ANGRY/FRIGHTENED 时自动升级人工，避免 AI 误判激化矛盾</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：目标市场语言列表、历史回复模板、升级阈值配置</div>
+    <div class="pb-output"><strong>输出结果：</strong>多语言 24h 自动回复 + 情绪升级告警</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+2：多语言实时响应+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-customer-service-agent-2'
+         onclick='markStepDone("pb-customer-service-agent",2,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-customer-service-agent';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(2)){
+        var btn=document.getElementById('step-done-pb-customer-service-agent-2');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 3</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 3：差评根因归因与主动干预</h3>
+    <p class='pb-problem'>差评出现才处理是被动模式——研究表明 70% 的差评根因是可预防的（说明书不清晰/预期管理失败/物流时效误判）</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html' class='pb-skill-name'>AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline</a><div class='pb-skill-badges'><span class='roi-badge'>1.5 万/月</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 方面引导评论摘要：将「宝宝用了皮肤发红」聚类到「材质/成分」问题，驱动产品改进而非仅回复差评（ROI 1.5万/月）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Pain-Point-Mining.html' class='pb-skill-name'>Review Pain-Point Mining（竞品差评痛点挖掘）</a><div class='pb-skill-badges'><span class='roi-badge'>50-100 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 差评痛点挖掘：识别高频重复投诉点（「说明书看不懂」「充电口设计差」），生成预防性改进优先级（ROI 50-100万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-LACA-CrossLingual-ABSA.html' class='pb-skill-name'>LACA 跨语言 ABSA - LLM 数据增强多语种情感分析</a><div class='pb-skill-badges'><span class='roi-badge'>300-600 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 跨语言方面级情感分析：德语/日语差评的情感极性识别，跨市场差评根因对比（ROI 300-600万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：全部市场评论数据（含评分、语言、日期）</div>
+    <div class="pb-output"><strong>输出结果：</strong>差评根因矩阵 + 高频问题改进清单 + 主动干预触发规则</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+3：差评根因归因与主动干预+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-customer-service-agent-3'
+         onclick='markStepDone("pb-customer-service-agent",3,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-customer-service-agent';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(3)){
+        var btn=document.getElementById('step-done-pb-customer-service-agent-3');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 4</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 4：退货预测与欺诈拦截</h3>
+    <p class='pb-problem'>退货率 12%，其中约 35% 的 PayPal/信用卡纠纷（Chargeback）是欺诈性退货（INR 欺诈），人工无法区分</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Returns-Reverse-Logistics.html' class='pb-skill-name'>Returns Reverse Logistics（退货逆向物流）</a><div class='pb-skill-badges'><span class='roi-badge'>6-10 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 退货概率预测（XGBoost，按品类/价格/历史退货率）+ 退货处理路径优化（FBA退货 vs 海外仓 vs 销毁），年化 ROI 6-10万</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Logistics-Fraud-Detection.html' class='pb-skill-name'>Logistics Fraud Detection — 物流链路欺诈检测：虚假收货、刷单物流与地址篡改的识别与拦截</a><div class='pb-skill-badges'><span class='roi-badge'>月均 -$3,200</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 物流链路欺诈检测：虚假收货/地址篡改/刷单物流识别，INR 欺诈从 35% 降至 5% 以下，月均挽回 $3,200+</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：订单数据、物流轨迹、历史退货记录、支付纠纷记录</div>
+    <div class="pb-output"><strong>输出结果：</strong>退货风险评分 + 欺诈退货拦截规则 + 退货处理路径建议</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+4：退货预测与欺诈拦截+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-customer-service-agent-4'
+         onclick='markStepDone("pb-customer-service-agent",4,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-customer-service-agent';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(4)){
+        var btn=document.getElementById('step-done-pb-customer-service-agent-4');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div></div>
+
+<div class='pb-lead-capture'>
+  <div class='pb-lead-inner'>
+    <div class='pb-lead-text'>
+      <h3>想了解这套方案如何落地你的业务？</h3>
+      <p>预约 30 分钟免费 ROI 测算 — 基于你的 SKU 数量、广告预算和当前痛点，给出定制化收益估算。</p>
+      <ul class='pb-lead-bullets'>
+        <li>✓ 结合你的实际数据，不是通用模板</li>
+        <li>✓ 明确哪 1-2 个 Skill 优先落地 ROI 最高</li>
+        <li>✓ 30 分钟，结束后你有一份行动清单</li>
+      </ul>
+    </div>
+    <div class='pb-lead-action'>
+      <a href='mailto:skills@lute-tlz-dddd.top?subject=预约ROI测算-客服售后智能体手册&body=手册:客服售后智能体手册%0A公司规模:%0A主要痛点:%0A当前月GMV:' class='pb-lead-btn'>预约 30 分钟 ROI 测算 →</a>
+      <p class='pb-lead-note'>发送邮件后 24h 内回复确认时间</p>
+    </div>
+  </div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

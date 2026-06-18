@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>17-价格优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>17-价格优化</h1><p>Dynamic pricing, competitive monitoring, markdown, bundle</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 17-价格优化 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AIGP-LLM-Dynamic-Pricing.html" data-domain="17-价格优化" data-diff="">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）</h3>
+  <p class="sc-desc">业务痛点：吸奶器年度销量呈强季节性（Q3-Q4 旺季 GMV 占全年 65%），且 Momcozy 经常在大促前一周大幅降价抢占位次</p>
+  <div class='sc-footer'><span class='sc-roi'>1,321 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Bundle-Pricing-Strategy.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Bundle Pricing Strategy（捆绑定价策略）</h3>
+  <p class="sc-desc">1+1&gt;2 的定价魔法——吸奶器 + 配件捆绑包的总价不是简单相加，而是利用消费者对捆绑包的心理估值高于单品之和（或互补品的联合需求），找到最大化总利润的捆绑价格。</p>
+  <div class='sc-footer'><span class='sc-roi'>10-15 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-RL-Dynamic-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Causal RL Dynamic Pricing — 因果强化学习动态定价：可信赖的自适应价格策略</h3>
+  <p class="sc-desc">纯RL定价因广告混淆错误学到促销期降价总是有效策略大促后无效降价继续损耗利润——因果强化学习DoubleML剔除广告混淆后才估计真实价格弹性，防止策略崩溃年化避免错误策略损失20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Competitive-Price-Monitoring.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Competitive Price Monitoring（竞品价格监测与响应）</h3>
+  <p class="sc-desc">竞品价格监测不只是&quot;看别人卖多少钱&quot;，而是建立价格-转化率的因果响应模型，在竞品降价时量化&quot;不跟降会损失多少&quot;和&quot;跟降能获得多少&quot;，做出有数据支撑的响应决策。</p>
+  <div class='sc-footer'><span class='sc-roi'>5-60 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Competitor-Price-Intelligence.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Competitor Price Intelligence — 竞品价格实时监控与智能响应</h3>
+  <p class="sc-desc">主要竞品每周五降价抢流量，每次被动应对要么跟降太晚要么过度跟降损失利润——CUSUM 实时检测价格突变、分类变动类型、自动执行响应策略，Buy Box 获取率 65%→82%</p>
+  <div class='sc-footer'><span class='sc-roi'>20-100 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Compliant-Dynamic-Pricing-Guard.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Compliant Dynamic Pricing Guard（合规-定价双约束优化）</h3>
+  <p class="sc-desc">AI 动态定价在大促期间将美国售价压低 35%，触发品牌 MAP 协议并引发欧洲经销商投诉——合规-定价双约束框架在优化 GMV 的同时实时检测 MAP/最低价/反倾销边界，违规率归零</p>
+  <div class='sc-footer'><span class='sc-roi'>150-500 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Contextual Dynamic Pricing — 最优上下文定价：O(√dT) Regret + LDP 隐私保护</h3>
+  <p class="sc-desc">业务背景：不同用户群（海外华人/本地消费者/新生儿家庭）对同款婴幼儿奶粉的购买意愿差异显著</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Border-Price-Harmonization.html" data-domain="17-价格优化" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Cross-Border Price Harmonization（跨境价格协调）</h3>
+  <p class="sc-desc">业务问题：美国 $129，德国 €119（≈$130），英国 £99（≈$125）</p>
+  <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Dynamic-Bundle-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Dynamic Bundle Pricing — 动态捆绑定价：配套商品组合最优定价策略</h3>
+  <p class="sc-desc">吸奶器配套储奶袋消毒器独立销售只有30%客户会主动购买配件——动态捆绑定价算法找到最优套餐组合和价格，配件渗透率提升到70%套餐利润率比单品高10-20%年化增益15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Dynamic-Pricing-Elasticity.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Dynamic Pricing with Demand Elasticity（动态定价与需求弹性）</h3>
+  <p class="sc-desc">吸奶器在美国定价 $129，德国 €119，英国 £99</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAPPO-GAT-Dynamic-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">MAPPO+GAT多智能体图注意力动态定价 — 产品关系图驱动的多SKU协同价格优化</h3>
+  <p class="sc-desc">独立对每个SKU定价忽略产品间价格交叉弹性导致组合利润显著低于最优解——MAPPO+GAT图注意力让每个定价Agent感知相关SKU状态，组合协同定价比独立定价提升10-20%总利润（2025 arXiv:2511.00039）</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Markdown-Optimization.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Markdown Optimization（折扣清仓定价优化）</h3>
+  <p class="sc-desc">S1 吸奶器库存 500 件，成本 $60，原价 $129</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Personalized-ML-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Personalized ML Pricing — 个性化 ML 定价：用户级支付意愿驱动的差异化定价</h3>
+  <p class="sc-desc">DTC独立站对所有用户展示相同价格$149但高消费老用户愿意付$169而新用户最多付$129——ML预测用户个体支付意愿并差异化展示价格，利润提升10-18%加上价格敏感用户转化率提升年化增益20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Price-Elasticity-Estimation.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Price Elasticity Estimation — 需求价格弹性估算：跨境 SKU 定价底线测算</h3>
+  <p class="sc-desc">母婴卖家对吸奶器盲目大促打折，不知道该 SKU 弹性是否足够高值得降价——价格弹性工具变量估算（OLS + DiD）给出每个 SKU 的弹性系数，识别哪些SKU可提价哪些不值得促销，年化节省无效促销并增加利润30-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Price-Sensitive-Personalized-Recommendation.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Price-Sensitive Personalized Recommendation — 价格感知个性化推荐：弹性×用户偏好协同</h3>
+  <p class="sc-desc">独立站首页推荐对高端用户推49美元低价品对价格敏感用户推299美元高端品导致CVR仅3.2%——价格感知推荐按用户历史购买价格档位差异化排序，CVR提升到5-6%年化增收30-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Price-Signal-Collection.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Price Signal Collection — 竞品价格信号实时采集与结构化</h3>
+  <p class="sc-desc">在于：数据异构性（多平台格式差异）、反爬对抗（动态 JS 渲染、验证码）、实时性需求（价格窗口窄、竞品调价响应快）三重矛盾。</p>
+  <div class='sc-footer'><span class='sc-roi'>73.2 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Real-Time-Competitive-Repricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Real-Time Competitive Repricing — 竞品价格监测与深度强化学习自动重定价</h3>
+  <p class="sc-desc">Momcozy M5 与 3 个竞品争夺 Buy Box，&quot;永远低于 Elvie $5&quot;策略导致旺季每件少赚 $10——DRL 动态重定价识别最优价格窗口，旺季 Buy Box 持有率保持 &gt;85% 同时 ASP 提升 8-12%，年化 GMV 增量 30-60 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>1000 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-VOC-Price-Signal-Analysis.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">VOC Price Signal Analysis — 评论价格信号分析：用户定价反馈驱动定价策略优化</h3>
+  <p class="sc-desc">卖家知道有人说吸奶器&quot;太贵&quot;但无法量化这对定价策略意味着什么——WTP代理模型从评论提取价格信号指数，区分真实价格阻力和价值感知不足，避免盲目降价年化保护毛利20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

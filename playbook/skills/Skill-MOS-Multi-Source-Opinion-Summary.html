@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MOS Multi-Source Opinion Summary — LLM 多源评论整合摘要 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-MOS-Multi-Source-Opinion-Summary</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>MOS Multi-Source Opinion Summary — LLM 多源评论整合摘要</h1>
+<p class="muted">Skill-MOS-Multi-Source-Opinion-Summary · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>跨平台 VOC 整合靠人工需 2-3 天，Amazon/TikTok/独立站关注点各异——M-OS 框架同时整合评论文本/产品规格/评分多源，30 分钟生成结构化摘要，月均节省 20-30 人时、关键信号漏报率降低 80%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：传统 VOC 分析只看 Amazon 评论，但消费者声音分散在 Amazon + TikTok 评论区 + 独立站 + 社交媒体，各平台用语风格不同，关注点也不同（Amazon 偏功能，TikTok 偏颜值体验，Reddit 偏长期使用）。MOS 框架用 LLM 同时整合评论文本、产品规格、评分数据等多源信息，构建结构化摘要，人类判断一致性 ρ=0.74，用户研究 87% 偏好 MOS 摘要。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：运营团队每月要整合 Amazon US（英文）、TikTok 评论（中英混合）、独立站反馈（中文）三个平台的用户声音，人工整理需要 2-3 天，且容易遗漏关键信号。 - 数据要求：各平台评论文本 + 产品规格 + 评分数据，支持中英双语混合输入。 - 预期产出： - 跨平台统一摘要（优点/缺点/使用场景/适合人群） - 各平台差异洞察（&quot;Amazon 用户关注噪音，TikTok 用户更在意外观设计&quot;） - 关键信号摘要（最高频提及的 Top-5 痛点 + Top-5 亮点） - 竞品对比摘要（如果提供竞品评论数据） - 业务价值：将跨平台 VOC 整合从 2-3 天压缩到 30 </p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：跨平台 VOC 整合从 2-3 天压缩到 30 分钟，月均节省 20-30 人时，关键信号漏报率降低 80%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（低，LLM API 调用 + 数据采集管道）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（多平台运营是母婴跨境标配，多源 VOC 整合是高频刚需）</li><li><strong>评估依据</strong>：IJCNLP 2025，人类判断一致性 ρ=0.74，用户研究 87% 偏好 M-OS 摘要</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass, field
+from typing import List, Dict
+from collections import Counter
+
+@dataclass
+class PlatformReviews:
+    platform: str
+    reviews: List[str]
+    avg_rating: float
+    rating_dist: Dict[int, int] = field(default_factory=dict)
+
+def extract_platform_signals(pr: PlatformReviews) -&gt; Dict:
+    all_text = &#x27; &#x27;.join(pr.reviews).lower()
+    pos_keywords = [&#x27;好用&#x27;, &#x27;love&#x27;, &#x27;great&#x27;, &#x27;quiet&#x27;, &#x27;安静&#x27;, &#x27;舒适&#x27;, &#x27;comfortable&#x27;,
+                    &#x27;方便&#x27;, &#x27;convenient&#x27;, &#x27;效果好&#x27;, &#x27;effective&#x27;, &#x27;推荐&#x27;, &#x27;recommend&#x27;]
+    neg_keywords = [&#x27;噪音&#x27;, &#x27;loud&#x27;, &#x27;noise&#x27;, &#x27;漏奶&#x27;, &#x27;leak&#x27;, &#x27;痛&#x27;, &#x27;painful&#x27;,
+                    &#x27;难清洗&#x27;, &#x27;hard to clean&#x27;, &#x27;贵&#x27;, &#x27;expensive&#x27;, &#x27;断货&#x27;, &#x27;售后&#x27;]
+    pos_count = sum(all_text.count(k) for k in pos_keywords)
+    neg_count = sum(all_text.count(k) for k in neg_keywords)
+    pos_ratio = pos_count / (pos_count + neg_count + 1)
+    top_pos = [k for k in pos_keywords if all_text.count(k) &gt; 0][:3]
+    top_neg = [k for k in neg_keywords if all_text.count(k) &gt; 0][:3]
+    return {&#x27;platform&#x27;: pr.platform, &#x27;avg_rating&#x27;: pr.avg_rating,
+            &#x27;pos_ratio&#x27;: round(pos_ratio, 2), &#x27;top_positive&#x27;: top_pos,
+            &#x27;top_negative&#x27;: top_neg, &#x27;review_count&#x27;: len(pr.reviews)}
+
+def multi_source_summary(platforms: List[PlatformReviews]) -&gt; Dict:
+    platform_signals = [extract_platform_signals(p) for p in platforms]
+    all_pos = Counter()
+    all_neg = Counter()
+    for p in platforms:
+        text = &#x27; &#x27;.join(p.reviews).lower()
+        for k in [&#x27;好用&#x27;,&#x27;安静&#x27;,&#x27;舒适&#x27;,&#x27;方便&#x27;,&#x27;效果好&#x27;,&#x27;推荐&#x27;,&#x27;love&#x27;,&#x27;great&#x27;,&#x27;quiet&#x27;]:
+            if text.count(k) &gt; 0:
+                all_pos[k] += text.count(k)
+        for k in [&#x27;噪音&#x27;,&#x27;漏奶&#x27;,&#x27;痛&#x27;,&#x27;难清洗&#x27;,&#x27;贵&#x27;,&#x27;expensive&#x27;,&#x27;loud&#x27;,&#x27;painful&#x27;]:
+            if text.count(k) &gt; 0:
+                all_neg[k] += text.count(k)
+    total_reviews = sum(len(p.reviews) for p in platforms)
+    weighted_rating = sum(p.avg_rating * len(p.reviews) for p in platforms) / total_reviews
+    platform_diff = []
+    for sig in platform_signals:
+        if sig[&#x27;avg_rating&#x27;] &gt; weighted_rating + 0.3:
+            platform_diff.append(f&quot;{sig[&#x27;platform&#x27;]} 评价明显更正面（{sig[&#x27;avg_rating&#x27;]:.1f}星）&quot;)
+        elif sig[&#x27;avg_rating&#x27;] &lt; weighted_rating - 0.3:
+            platform_diff.append(f&quot;{sig[&#x27;platform&#x27;]} 评价偏负面（{sig[&#x27;avg_rating&#x27;]:.1f}星）&quot;)
+    return {
+        &#x27;total_reviews&#x27;: total_reviews,
+        &#x27;weighted_avg_rating&#x27;: round(weighted_rating, 2),
+        &#x27;top5_positives&#x27;: [k for k, _ in all_pos.most_common(5)],
+        &#x27;top5_negatives&#x27;: [k for k, _ in all_neg.most_common(5)],
+        &#x27;platform_differences&#x27;: platform_diff,
+        &#x27;platform_details&#x27;: platform_signals,
+    }
+
+platforms = [
+    PlatformReviews(&#x27;Amazon US&#x27;, [
+        &#x27;Super quiet pump, love it! Easy to clean, my baby likes it.&#x27;,
+        &#x27;A bit expensive but worth it. Very comfortable, no pain at all.&#x27;,
+        &#x27;Loud noise at max level, otherwise great. Would recommend.&#x27;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2507.04751</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MOS-Multi-Source-Opinion-Summary" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-AutoQual-Review-Quality-Assessment.html'>Skill-AutoQual-Review-Quality-Assessment</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li><li><a href='../skills/Skill-Review-Dedup-Quality-Filter.html'>Skill-Review-Dedup-Quality-Filter</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-LACA-CrossLingual-ABSA.html'>Skill-LACA-CrossLingual-ABSA</a></li><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

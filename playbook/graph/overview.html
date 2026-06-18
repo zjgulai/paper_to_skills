@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>技能关系图谱 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .graph-page{display:flex;flex-direction:column;height:calc(100vh - var(--topbar-height,56px));overflow:hidden}
+    .graph-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 16px;background:var(--panel,#fff);border-bottom:1px solid var(--line,#e2e8f0);flex-shrink:0}
+    .graph-toolbar input[type=text]{padding:6px 12px;border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:13px;width:200px;font-family:inherit;outline:none}
+    .graph-toolbar input[type=text]:focus{border-color:var(--accent,#3b82f6)}
+    .domain-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .15s;white-space:nowrap}
+    .domain-pill.inactive{opacity:.3}
+    .graph-main{flex:1;display:flex;overflow:hidden;position:relative}
+    #graph-canvas{flex:1;background:var(--panel-2,#f8fafc);cursor:grab}
+    #graph-canvas:active{cursor:grabbing}
+    .graph-sidebar{width:270px;flex-shrink:0;border-left:1px solid var(--line,#e2e8f0);background:var(--panel,#fff);overflow-y:auto;display:flex;flex-direction:column}
+    .gsb-header{padding:12px 14px;border-bottom:1px solid var(--line,#e2e8f0);font-size:13px;font-weight:700;color:var(--ink,#0f172a);flex-shrink:0}
+    .gsb-body{padding:12px 14px;flex:1}
+    .gsb-empty{color:var(--muted,#94a3b8);font-size:12.5px;text-align:center;padding:30px 0}
+    .gsb-neighbor{display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:6px;background:var(--panel-2,#f8fafc);border:1px solid var(--line,#e2e8f0);cursor:pointer;transition:all .15s;margin-top:4px}
+    .gsb-neighbor:hover{background:var(--accent-light,#eff6ff);border-color:var(--accent,#3b82f6)}
+    .path-finder{padding:10px 14px;border-top:1px solid var(--line,#e2e8f0)}
+    .path-finder input{width:100%;padding:5px 8px;border:1.5px solid var(--line,#e2e8f0);border-radius:7px;font-size:11.5px;font-family:inherit;margin-bottom:5px;box-sizing:border-box}
+    .path-finder-btn{width:100%;padding:6px;background:var(--accent,#3b82f6);color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer}
+    .graph-stats{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,.9);border:1px solid var(--line,#e2e8f0);border-radius:8px;padding:5px 10px;font-size:11px;color:var(--muted,#94a3b8);pointer-events:none;backdrop-filter:blur(4px)}
+    .loading-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--panel-2,#f8fafc);flex-direction:column;gap:12px;z-index:10}
+    .loading-spinner{width:34px;height:34px;border:3px solid var(--line,#e2e8f0);border-top-color:var(--accent,#3b82f6);border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:768px){.graph-sidebar{display:none}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a class="brand" href="../index.html"><span class="brand-icon">P</span><span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span></a>
+    <div class="topbar-right"><input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索"><a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a></div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <div class="graph-page">
+    <div class="graph-toolbar">
+      <input type="text" id="node-search" placeholder="🔍 搜索技能..." autocomplete="off">
+      <div id="domain-pills" style="display:flex;flex-wrap:wrap;gap:4px;flex:1"></div>
+      <button id="btn-reset" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">重置</button>
+      <button id="btn-focus-top" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">核心节点</button>
+    </div>
+    <div class="graph-main">
+      <svg id="graph-canvas"></svg>
+      <div class="loading-overlay" id="loading">
+        <div class="loading-spinner"></div>
+        <div style="font-size:13px;color:var(--muted)">加载 726 个技能节点…</div>
+      </div>
+      <div class="graph-stats" id="graph-stats">节点 726 · 边 13893</div>
+      <div class="graph-sidebar">
+        <div class="gsb-header">📊 节点详情</div>
+        <div class="gsb-body" id="gsb-body"><div class="gsb-empty">点击图谱中的节点<br>查看详情和关联</div></div>
+        <div class="path-finder">
+          <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:7px">🗺 学习路径发现</div>
+          <input type="text" id="path-from" placeholder="起点 Skill ID...">
+          <input type="text" id="path-to" placeholder="终点 Skill ID...">
+          <button class="path-finder-btn" onclick="findPath()">找最短路径</button>
+          <div id="path-result" style="margin-top:7px;font-size:11px;color:var(--ink-2);line-height:1.7"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const DOMAIN_COLORS = {"supply_chain": "#0ea5e9", "mas": "#8b5cf6", "knowledge_graph": "#06b6d4", "llm_agent_engineering": "#ec4899", "advertising": "#f59e0b", "user_analytics": "#10b981", "tag_engineering": "#6366f1", "growth_model": "#ef4444", "marketing": "#f97316", "operations_finance": "#14b8a6", "recommendation": "#84cc16", "ab_testing": "#a855f7", "causal_inference": "#64748b", "time_series": "#22d3ee", "pricing": "#fb923c", "logistics": "#4ade80", "risk_fraud": "#f43f5e", "visual_content": "#c084fc", "compliance": "#fbbf24", "data_collection": "#38bdf8", "ml_fundamentals": "#94a3b8", "ai_humanities": "#e879f9", "nlp_voc": "#2dd4bf"};
+  const DOMAIN_LABELS = {"supply_chain": "供应链", "mas": "多智能体", "knowledge_graph": "知识图谱", "llm_agent_engineering": "LLM/Agent工程", "advertising": "广告分析", "user_analytics": "用户分析", "tag_engineering": "标签工程", "growth_model": "增长模型", "marketing": "营销投放", "operations_finance": "运营财务", "recommendation": "推荐系统", "ab_testing": "A/B实验", "causal_inference": "因果推断", "time_series": "时间序列", "pricing": "价格优化", "logistics": "物流履约", "risk_fraud": "风控反欺诈", "visual_content": "AI视频", "compliance": "合规决策", "data_collection": "数据采集", "ml_fundamentals": "ML基础", "ai_humanities": "AI人文", "nlp_voc": "NLP-VOC"};
+  let allNodes=[],allLinks=[],simulation,svg,g,zoom,selectedNode=null;
+  let activeDomains=new Set(Object.keys(DOMAIN_COLORS));
+  async function init(){
+    try{
+      const resp=await fetch('../assets/graph-data.json');
+      const data=await resp.json();
+      allNodes=data.nodes; allLinks=data.links;
+      buildDomainPills(); buildGraph();
+      document.getElementById('loading').style.display='none';
+    }catch(e){document.getElementById('loading').innerHTML='<div style="color:#ef4444">加载失败: '+e.message+'</div>';}
+  }
+  function buildDomainPills(){
+    const container=document.getElementById('domain-pills');
+    const dc={};allNodes.forEach(n=>{dc[n.domain]=(dc[n.domain]||0)+1;});
+    Object.entries(dc).sort((a,b)=>b[1]-a[1]).forEach(([domain,cnt])=>{
+      const color=DOMAIN_COLORS[domain]||'#94a3b8',label=DOMAIN_LABELS[domain]||domain;
+      const pill=document.createElement('div');
+      pill.className='domain-pill';pill.style.background=color+'22';pill.style.borderColor=color;pill.style.color=color;
+      pill.innerHTML=`<span style="width:6px;height:6px;border-radius:50%;background:${color};flex-shrink:0"></span>${label} <span style="opacity:.6">${cnt}</span>`;
+      pill.onclick=()=>toggleDomain(domain,pill);pill.dataset.domain=domain;container.appendChild(pill);
+    });
+  }
+  function toggleDomain(domain,pill){
+    if(activeDomains.has(domain)){activeDomains.delete(domain);pill.classList.add('inactive');}
+    else{activeDomains.add(domain);pill.classList.remove('inactive');}
+    if(!g)return;
+    g.selectAll('.node-group').style('display',d=>activeDomains.has(d.domain)?null:'none');
+    g.selectAll('.link').style('display',d=>{
+      const s=allNodes.find(n=>n.id===(d.source.id||d.source)),t=allNodes.find(n=>n.id===(d.target.id||d.target));
+      return(s&&t&&activeDomains.has(s.domain)&&activeDomains.has(t.domain))?null:'none';
+    });
+  }
+  function buildGraph(){
+    const svgEl=document.getElementById('graph-canvas');
+    const W=svgEl.clientWidth||window.innerWidth-270,H=svgEl.clientHeight||window.innerHeight-110;
+    svg=d3.select('#graph-canvas').attr('width',W).attr('height',H);
+    zoom=d3.zoom().scaleExtent([0.05,4]).on('zoom',e=>g.attr('transform',e.transform));
+    svg.call(zoom);g=svg.append('g');
+    const edgeColor={prerequisite:'#94a3b8',combinable:'#3b82f6',extension:'#10b981'};
+    const degree={};
+    allNodes.forEach(n=>{degree[n.id]=0;});
+    allLinks.forEach(l=>{const s=l.source.id||l.source,t=l.target.id||l.target;degree[s]=(degree[s]||0)+1;degree[t]=(degree[t]||0)+1;});
+    const topN=200,topIds=new Set(Object.entries(degree).sort((a,b)=>b[1]-a[1]).slice(0,topN).map(([id])=>id));
+    const vNodes=allNodes.filter(n=>topIds.has(n.id));
+    const vSet=new Set(vNodes.map(n=>n.id));
+    const vLinks=allLinks.filter(l=>{const s=l.source.id||l.source,t=l.target.id||l.target;return vSet.has(s)&&vSet.has(t);});
+    simulation=d3.forceSimulation(vNodes)
+      .force('link',d3.forceLink(vLinks).id(d=>d.id).distance(55).strength(0.4))
+      .force('charge',d3.forceManyBody().strength(-120).distanceMax(200))
+      .force('center',d3.forceCenter(W/2,H/2))
+      .force('collision',d3.forceCollide().radius(d=>nr(d,degree)+3))
+      .alphaDecay(0.02);
+    const link=g.append('g').selectAll('.link').data(vLinks).enter().append('line').attr('class','link')
+      .style('stroke',d=>edgeColor[d.type]||'#cbd5e1').style('stroke-width',d=>d.type==='prerequisite'?1.5:1)
+      .style('stroke-opacity',0.4).style('stroke-dasharray',d=>d.type==='extension'?'4,3':null);
+    const node=g.append('g').selectAll('.node-group').data(vNodes).enter().append('g').attr('class','node-group')
+      .style('cursor','pointer')
+      .call(d3.drag().on('start',(e,d)=>{if(!e.active)simulation.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;})
+                     .on('drag',(e,d)=>{d.fx=e.x;d.fy=e.y;})
+                     .on('end',(e,d)=>{if(!e.active)simulation.alphaTarget(0);d.fx=null;d.fy=null;}))
+      .on('click',(e,d)=>{e.stopPropagation();selectNode(d,degree,link,node);})
+      .on('mouseover',(e,d)=>highlightNb(d,link,node,true))
+      .on('mouseout',(e,d)=>{if(selectedNode!==d)highlightNb(d,link,node,false);});
+    node.append('circle').attr('r',d=>nr(d,degree)).style('fill',d=>DOMAIN_COLORS[d.domain]||'#94a3b8')
+      .style('fill-opacity',0.85).style('stroke','#fff').style('stroke-width',2);
+    node.append('text').text(d=>sl(d.title||d.id)).attr('dy',d=>nr(d,degree)+10)
+      .style('font-size',d=>degree[d.id]>30?'9px':'7.5px').style('text-anchor','middle').style('fill','#475569')
+      .style('pointer-events','none').style('paint-order','stroke').style('stroke','#f8fafc').style('stroke-width','3px');
+    simulation.on('tick',()=>{
+      link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+      node.attr('transform',d=>`translate(${d.x},${d.y})`);
+    });
+    svg.on('click',()=>deselectAll(link,node));
+    document.getElementById('graph-stats').textContent=`显示 ${vNodes.length} 节点 / ${vLinks.length} 边（全量 ${allNodes.length} / ${allLinks.length}）`;
+    document.getElementById('node-search').addEventListener('input',function(){
+      const q=this.value.toLowerCase().trim();
+      if(!q){node.style('opacity',1);link.style('opacity',0.4);return;}
+      const m=new Set(vNodes.filter(n=>n.id.toLowerCase().includes(q)||(n.title||'').toLowerCase().includes(q)).map(n=>n.id));
+      node.style('opacity',d=>m.has(d.id)?1:0.1);
+      link.style('opacity',l=>{const s=l.source.id||l.source,t=l.target.id||l.target;return(m.has(s)&&m.has(t))?0.6:0.03;});
+    });
+    document.getElementById('btn-reset').onclick=()=>{svg.transition().duration(600).call(zoom.transform,d3.zoomIdentity.translate(W/2,H/2).scale(1));node.style('opacity',1);link.style('opacity',0.4);document.getElementById('node-search').value='';};
+    document.getElementById('btn-focus-top').onclick=()=>{const t=new Set(Object.entries(degree).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([id])=>id));node.style('opacity',d=>t.has(d.id)?1:0.08);link.style('opacity',0.04);};
+  }
+  function nr(d,degree){return Math.max(5,Math.min(22,4+Math.sqrt(degree[d.id]||0)*1.8));}
+  function sl(t){return(t||'').split(/[—-]/)[0].trim().slice(0,16);}
+  function highlightNb(d,link,node,on){
+    if(selectedNode)return;const nid=d.id;const c=new Set([nid]);
+    link.each(l=>{const s=l.source.id||l.source,t=l.target.id||l.target;if(s===nid)c.add(t);if(t===nid)c.add(s);});
+    node.style('opacity',n=>on?(c.has(n.id)?1:0.15):1);
+    link.style('opacity',l=>{const s=l.source.id||l.source,t=l.target.id||l.target;return on?((s===nid||t===nid)?0.8:0.04):0.4;});
+  }
+  function selectNode(d,degree,link,node){
+    selectedNode=d;const nid=d.id;const nb={prerequisite:[],combinable:[],extension:[]};const nids=new Set([nid]);
+    link.each(l=>{const s=l.source.id||l.source,t=l.target.id||l.target;if(s===nid||t===nid){const o=s===nid?t:s;nids.add(o);nb[l.type]=nb[l.type]||[];nb[l.type].push({id:o});}});
+    node.style('opacity',n=>nids.has(n.id)?1:0.1).select('circle').style('stroke',n=>n.id===nid?'#fbbf24':'#fff').style('stroke-width',n=>n.id===nid?3:2);
+    link.style('opacity',l=>{const s=l.source.id||l.source,t=l.target.id||l.target;return(s===nid||t===nid)?0.9:0.04;}).style('stroke-width',l=>{const s=l.source.id||l.source,t=l.target.id||l.target;return(s===nid||t===nid)?2.5:1;});
+    renderSidebar(d,degree,nb);
+  }
+  function deselectAll(link,node){selectedNode=null;node.style('opacity',1).select('circle').style('stroke','#fff').style('stroke-width',2);link.style('opacity',0.4).style('stroke-width',d=>d.type==='prerequisite'?1.5:1);document.getElementById('gsb-body').innerHTML='<div class="gsb-empty">点击图谱中的节点<br>查看详情和关联</div>';}
+  function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function renderSidebar(d,degree,nb){
+    const DATA=window.PLAYBOOK_DATA||{};const sk=(DATA.skills||[]).find(s=>s.skill_id===d.id)||{};
+    const color=DOMAIN_COLORS[d.domain]||'#94a3b8',label=DOMAIN_LABELS[d.domain]||d.domain;
+    let html=`<div style="font-size:13px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:7px">${esc(d.title||d.id)}</div>
+      <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:10.5px;font-weight:600;background:${color}22;color:${color};margin-bottom:8px">◉ ${label}</span>
+      <div style="font-size:10.5px;color:#94a3b8;margin-bottom:7px">连接度: ${degree[d.id]||0}</div>`;
+    if(sk.problem_solved)html+=`<div style="font-size:12px;color:#475569;line-height:1.6;margin-bottom:8px">${esc(sk.problem_solved.slice(0,140))}…</div>`;
+    if(sk.roi_figure)html+=`<div style="font-size:11.5px;color:#059669;font-weight:600;margin-bottom:8px">💰 ${esc(sk.roi_figure)}</div>`;
+    const tl={prerequisite:'⬅ 前置',combinable:'🔗 组合',extension:'➡ 延伸'};
+    const tc={prerequisite:'#94a3b8',combinable:'#3b82f6',extension:'#10b981'};
+    html+='<div>';
+    for(const[type,nbs]of Object.entries(nb)){
+      if(!nbs.length)continue;
+      html+=`<div style="font-size:10.5px;color:#94a3b8;font-weight:600;margin:8px 0 3px">${tl[type]||type}</div>`;
+      nbs.slice(0,4).forEach(n=>{
+        const nn=allNodes.find(x=>x.id===n.id)||{title:n.id,domain:'unknown'};
+        const nc=DOMAIN_COLORS[nn.domain]||'#94a3b8';
+        html+=`<div class="gsb-neighbor" onclick="focusById('${esc(n.id)}')"><div style="width:6px;height:6px;border-radius:50%;background:${nc};flex-shrink:0"></div><span style="font-size:11px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc((nn.title||n.id).split('—')[0].trim().slice(0,30))}</span></div>`;
+      });
+    }
+    html+='</div>';
+    html+=`<a href="../skills/${d.id}.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--accent,#3b82f6);color:#fff;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none;margin-top:10px">→ 查看完整详情</a>`;
+    document.getElementById('gsb-body').innerHTML=html;
+  }
+  function findPath(){
+    const fi=document.getElementById('path-from').value.trim(),ti=document.getElementById('path-to').value.trim(),rel=document.getElementById('path-result');
+    if(!fi||!ti){rel.textContent='请输入起点和终点';return;}
+    const adj={};allNodes.forEach(n=>{adj[n.id]=[];});
+    allLinks.forEach(l=>{const s=l.source.id||l.source,t=l.target.id||l.target;if(!adj[s])adj[s]=[];if(!adj[t])adj[t]=[];adj[s].push(t);adj[t].push(s);});
+    const q=[[fi]],vis=new Set([fi]);let found=null;
+    while(q.length&&!found){const p=q.shift();const c=p[p.length-1];if(c===ti){found=p;break;}if(p.length>8)continue;for(const nb of(adj[c]||[])){if(!vis.has(nb)){vis.add(nb);q.push([...p,nb]);}}}
+    if(!found){rel.textContent=`未找到路径（最多8跳）`;return;}
+    const labels=found.map(id=>{const n=allNodes.find(n=>n.id===id);return(n&&n.title?n.title.split('—')[0].trim().slice(0,18):id);});
+    rel.innerHTML='<strong>最短路径（'+(found.length-1)+'步）：</strong><br>'+labels.map((l,i)=>`${i+1}. ${esc(l)}`).join('<br>');
+    if(g){const ps=new Set(found);g.selectAll('.node-group').style('opacity',d=>ps.has(d.id)?1:0.08);g.selectAll('.link').style('opacity',l=>{const s=l.source.id||l.source,t=l.target.id||l.target;const ip=found.some((p,i)=>i<found.length-1&&((p===s&&found[i+1]===t)||(p===t&&found[i+1]===s)));return ip?1:0.03;}).style('stroke-width',l=>{const s=l.source.id||l.source,t=l.target.id||l.target;const ip=found.some((p,i)=>i<found.length-1&&((p===s&&found[i+1]===t)||(p===t&&found[i+1]===s)));return ip?3:1;});}
+  }
+  function focusById(nid){
+    const tn=allNodes.find(n=>n.id===nid);if(!tn||tn.x===undefined)return;
+    const svgEl=document.getElementById('graph-canvas');svg.transition().duration(500).call(zoom.transform,d3.zoomIdentity.translate(svgEl.clientWidth/2-tn.x,svgEl.clientHeight/2-tn.y).scale(1.5));
+  }
+  window.findPath=findPath;window.focusById=focusById;
+  window.addEventListener('DOMContentLoaded',init);
+  </script>
+  <script>
+  const hbtn=document.getElementById('hamburger'),overlay=document.getElementById('mobile-overlay');
+  function toggleMenu(open){hbtn.setAttribute('aria-expanded',open);hbtn.classList.toggle('open',open);overlay.classList.toggle('show',open);document.body.style.overflow=open?'hidden':'';}
+  hbtn.addEventListener('click',()=>toggleMenu(hbtn.getAttribute('aria-expanded')!=='true'));overlay.addEventListener('click',()=>toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Promotion Effectiveness Evaluation with Causal ML · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Promotion-Effectiveness</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Promotion Effectiveness Evaluation with Causal ML</h1>
+<p class="muted">Skill-Promotion-Effectiveness · 15-营销投放分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>促销活动期间销售额暴涨30%，这是促销的真实效果，还是&quot;本来就会买的用户&quot;恰好遇到了促销？</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心问题：促销活动期间销售额暴涨30%，这是促销的真实效果，还是&quot;本来就会买的用户&quot;恰好遇到了促销？如果不做促销，销售额会是多少？促销是否侵蚀了利润？</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：Momcozy对新注册用户发20%首单优惠券，使用率为35%，使用后平均订单金额$80。团队认为&quot;首单折扣很成功&quot;。真实增量是多少？</p><p> naive分析（错误）： - 使用优惠券的用户平均消费$80 - 假设不用券会买$0 → 增量=$80 - 1000人使用 → 增量收入=$80,000</p><p>DML因果分析（正确）： 1. 找到&quot;类似但未收到券&quot;的用户作为对照组（Propensity Score Matching） 2. 控制变量：用户来源渠道、注册时间、浏览行为、 demographics 3. DML估计结果：</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI</strong>：识别无效促销支出后，可削减20-40%的促销浪费，年节省数十万</li><li><strong>难度</strong>：⭐⭐⭐⭐☆（4/5）— 因果推断概念门槛高，DML实现复杂</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（5/5）— 避免&quot;促销幻觉&quot;，确保每一分折扣都产生真实增量</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Promotion Effectiveness Evaluation — 促销效果评估
+支持：DML估计CATE、Uplift Modeling、利润分析
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import GradientBoostingRegressor, GradientBoostingClassifier
+from sklearn.model_selection import cross_val_predict, KFold
+
+
+class PromotionEffectDML:
+    &quot;&quot;&quot;基于DML的促销效果评估&quot;&quot;&quot;
+
+    def __init__(self, n_splits=5):
+        self.n_splits = n_splits
+        self.model_y = GradientBoostingRegressor(n_estimators=100, random_state=42)
+        self.model_t = GradientBoostingClassifier(n_estimators=100, random_state=42)
+        self.theta = None  # CATE估计
+        self.residual_y_model = GradientBoostingRegressor(n_estimators=100, random_state=42)
+        self.residual_t_model = GradientBoostingRegressor(n_estimators=100, random_state=42)
+
+    def fit(self, X, T, Y):
+        &quot;&quot;&quot;
+        拟合DML模型估计CATE
+
+        Args:
+            X: 特征矩阵 (n, d)
+            T: 处理变量 (n,) — 1=有促销, 0=无促销
+            Y: 结果变量 (n,) — 购买金额/利润
+        &quot;&quot;&quot;
+        n = len(Y)
+        kf = KFold(n_splits=self.n_splits, shuffle=True, random_state=42)
+
+        # 第一阶段：交叉拟合预测
+        Y_hat = np.zeros(n)
+        T_hat = np.zeros(n)
+
+        for train_idx, test_idx in kf.split(X):
+            X_train, X_test = X[train_idx], X[test_idx]
+            Y_train, Y_test = Y[train_idx], Y[test_idx]
+            T_train, T_test = T[train_idx], T[test_idx]
+
+            # 拟合E[Y|X]
+            self.model_y.fit(X_train, Y_train)
+            Y_hat[test_idx] = self.model_y.predict(X_test)
+
+            # 拟合E[T|X]
+            self.model_t.fit(X_train, T_train)
+            T_hat[test_idx] = self.model_t.predict_proba(X_test)[:, 1]
+
+        # 计算残差
+        Y_tilde = Y - Y_hat
+        T_tilde = T - T_hat
+
+        # 第二阶段：用残差估计CATE
+        # theta(X) = E[Y_tilde / T_tilde | X] ≈ 用X预测Y_tilde/T_tilde
+        # 简化：对每个样本直接计算局部效应，再用模型平滑
+        local_effects = np.divide(Y_tilde, T_tilde,
+                                  out=np.zeros_like(Y_tilde),</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Promotion-Effectiveness" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Intelligent-Prediction-Doubly-Robust.html'>Skill-Intelligent-Prediction-Doubly-Robust</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Monodense-单品价格弹性估计.html'>Skill-Monodense-单品价格弹性估计</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

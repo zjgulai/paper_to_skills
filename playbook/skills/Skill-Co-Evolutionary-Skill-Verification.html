@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Skill 自动演化与验证 — EvoSkills 双 LLM 协同优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Co-Evolutionary-Skill-Verification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Skill 自动演化与验证 — EvoSkills 双 LLM 协同优化</h1>
+<p class="muted">Skill-Co-Evolutionary-Skill-Verification · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>EvoSkills 解决 LLM Agent 多文件 Skill 包自动生成的两个根本挑战</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>EvoSkills 解决 LLM Agent 多文件 Skill 包自动生成的两个根本挑战:</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>跨境母婴客服需要覆盖大量场景:退货、过敏咨询、物流追踪、关税计算、母婴专业问答……每个场景的 SOP 需要人工撰写并打磨,周期 1-2 周/场景。同时人写的 SOP 经常出现 human-machine misalignment:客服 manager 觉得逻辑清晰的步骤,Claude/GPT 执行起来反而经常报错(对应论文 Takeaway 3)。</p><p>- 场景接入周期:1-2 周 → 2 天(只需收集 30 个 oracle 样本) - SOP 质量:对应论文 +18pp ~ +40pp 改进 - 维护成本:新法规出来后只需更新 oracle ground-truth,skill 自动重新演化</p><p>业务上需要在多个 LLM 服务商之间切换: - 高峰期用 Claude Opus 4.6(贵但准) - 平峰用 GPT-5.2(性价比) - 低优先级用 Qwen3-Coder(成本最低)</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>数据要求:中,需要 oracle ground-truth 样本(30-100 个/场景)</li><li>技术门槛:高,需要多 LLM session 编排 + 信息隔离设计</li><li>工程复杂度:中高,核心算法清晰但环境执行 + 沙箱隔离需要工程化</li><li>维护成本:中,主要是 oracle 数据维护 + 演化轮次调参</li><li><strong>方法论价值高</strong>:协同演化框架可推广到其他自我改进场景(prompt 优化、tool 演化)</li><li><strong>跨平台红利明显</strong>:论文给出 +36 ~ +44pp 跨模型迁移收益,直接转化为成本节省</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass
+
+@dataclass
+class SkillPackage:
+    skill_id: str
+    description: str
+    scripts: dict[str, str]
+    version: int = 1
+
+@dataclass
+class VerificationResult:
+    skill_id: str
+    passed: bool
+    feedback: str
+    score: float
+
+def generator_propose(skill_id: str, task: str, prev_feedback: str = &quot;&quot;) -&gt; SkillPackage:
+    base_desc = f&quot;执行任务: {task}&quot;
+    if &quot;缺少错误处理&quot; in prev_feedback:
+        base_desc += &quot; (含错误处理)&quot;
+    return SkillPackage(
+        skill_id=skill_id,
+        description=base_desc,
+        scripts={&quot;main.py&quot;: &quot;def run():\n    pass  # &quot; + task},
+    )
+
+def verifier_evaluate(pkg: SkillPackage) -&gt; VerificationResult:
+    issues = []
+    if &quot;错误处理&quot; not in pkg.description:
+        issues.append(&quot;缺少错误处理&quot;)
+    if len(pkg.scripts.get(&quot;main.py&quot;, &quot;&quot;)) &lt; 30:
+        issues.append(&quot;实现过于简单&quot;)
+    score = max(0.0, 1.0 - len(issues) * 0.3)
+    return VerificationResult(
+        skill_id=pkg.skill_id,
+        passed=score &gt;= 0.7,
+        feedback=&quot;; &quot;.join(issues) if issues else &quot;通过&quot;,
+        score=score,
+    )
+
+skill_id = &quot;Skill-补货决策&quot;
+feedback = &quot;&quot;
+for iteration in range(3):
+    pkg = generator_propose(skill_id, &quot;自动补货&quot;, feedback)
+    result = verifier_evaluate(pkg)
+    print(f&quot;Iter {iteration+1}: score={result.score:.2f} | feedback={result.feedback}&quot;)
+    feedback = result.feedback
+    if result.passed:
+        print(f&quot;  ✅ 通过验证 at iteration {iteration+1}&quot;)
+        break
+print(&quot;[✓] Co-Evolutionary Skill Verification 测试通过&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2602.20867</li><li>2604.01687</li><li>2604.08618</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Co-Evolutionary-Skill-Verification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>(SkillForge)</span></li><li><span class='muted'>(SoK)</span></li><li><span class='muted'>10-MAS [[Skill-MAS-Orchestrator]]</span></li><li><a href='../skills/Skill-Auto-Skill-Synthesis.html'>Skill-Auto-Skill-Synthesis</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-Skill-Lifecycle-Design.html'>Skill-Skill-Lifecycle-Design</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>(Focus,待萃取 P2-2)</span></li><li><span class='muted'>(MCP Smelly,待萃取 P2-8)</span></li><li><span class='muted'>(MemAct,待萃取 P2-3)</span></li><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-Memory-as-Action.html'>Skill-Memory-as-Action</a></li><li><a href='../skills/Skill-Tool-Description-Audit.html'>Skill-Tool-Description-Audit</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>(ACON)</span></li><li><span class='muted'>(AgeMem)</span></li><li><span class='muted'>16-智能体工程 [[Skill-MCP-A2A-Protocol-Stack]]</span></li><li><a href='../skills/Skill-Agentic-Memory-Management.html'>Skill-Agentic-Memory-Management</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><span class='muted'>本项目 paper-审核 skill</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

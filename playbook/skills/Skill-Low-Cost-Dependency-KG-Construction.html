@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>低成本依存解析KG构建 — 1/10成本达到LLM 94%质量的无监督知识图谱构建 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Low-Cost-Dependency-KG-Construction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>低成本依存解析KG构建 — 1/10成本达到LLM 94%质量的无监督知识图谱构建</h1>
+<p class="muted">Skill-Low-Cost-Dependency-KG-Construction · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>1.5万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>LLM构建知识图谱成本高阻止大多数团队落地——依存句法解析提取三元组达到LLM方案94%质量，成本仅1/10，无需GPU无需标注数据（2025 arXiv:2507.03226）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：大多数知识图谱构建方案（GraphRAG/DIALKG等）依赖LLM做语义理解和三元组提取，成本高（GPT4o每百万token $5）且速度慢。论文的反直觉发现：传统NLP工具（依存句法分析）提取三元组，在大多数场景下能达到LLM质量的94%，但成本只有1/10。关键洞察：大量领域知识的句式相对规则（&quot;X的Y是Z&quot;、&quot;X需要Y认证&quot;），这类规则句式不需要LLM的深度语义理解。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌有50000个产品页面、1000页合规文档、500页市场报告需要构建KG，用LLM方案成本$500-1000，超出预算 - 低成本方案：依存解析提取三元组，成本约$50-100（1/10），质量94%（对合规/产品规格类规则文本效果特别好） - 预期产出：3天内构建完整KG（vs LLM方案的2周），成本节省90%，质量基本相当</p><p>- **业务问题**：每天从Amazon新闻/卖家中心/Shopee通知接收约50份新文档，需要实时摄入知识库，LLM方案每日成本$10+，年化$3650 - **低成本方案**：依存解析本地运行，每日增量成本&lt;$0.1，年化&lt;$36；速度快（毫秒级）支持真正实时摄入</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：50000个产品文档KG构建，LLM方案$250，低成本方案$25；年均重建2次节省$450；加上日常增量（每日50文档×365天），年化成本从$3650降至$365，节省$3285；系统成本$1.5万，ROI≈200%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（spaCy开源，安装即用；中文需要zh_core_web_lg模型；规则句式丰富时效果最好）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（成本约束是大多数团队构建KG的主要障碍，1/10成本方案极大降低了门槛；是&quot;每个团队都应该先尝试&quot;的方案）</li><li><strong>适用规模</strong>：所有规模，文档数越多优势越显著</li><li><strong>数据依赖</strong>：无需任何标注数据，完全无监督；需要spaCy语言模型（开源免费）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+低成本依存解析知识图谱构建系统
+功能：依存句法三元组提取 + 混合检索 + 成本效益分析
+基于 arXiv:2507.03226 (2025)
+注：生产环境使用spaCy zh_core_web_lg模型，此处用规则模拟
+&quot;&quot;&quot;
+import re
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from collections import defaultdict
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class DependencyTriple:
+    &quot;&quot;&quot;依存解析三元组&quot;&quot;&quot;
+    subject: str
+    predicate: str
+    obj: str
+    sentence: str       # 原始句子（溯源）
+    confidence: float = 0.85
+    extraction_method: str = &quot;dependency_parsing&quot;
+
+
+class DependencyParser:
+    &quot;&quot;&quot;
+    依存句法三元组提取器
+    生产版本：使用spaCy zh_core_web_lg
+    此处：规则近似实现（演示框架）
+    &quot;&quot;&quot;
+
+    # 常见中文句式模式
+    PATTERNS = [
+        # &quot;X的Y为/是Z&quot;
+        (r&#x27;(.{2,15})的(.{2,15})(?:为|是|约|达到|等于)([\$¥]?[\d,.]+\S{0,5})&#x27;, 3),
+        # &quot;X需要Y（认证/证书/批准）&quot;
+        (r&#x27;(.{2,15})(?:需要|必须提供|要求)(.{2,25})(?:认证|证书|测试报告|合规)&#x27;, 2),
+        # &quot;X属于Y品类&quot;
+        (r&#x27;(.{2,15})(?:属于|归类为)(.{2,15})(?:品类|类别|类目)?&#x27;, 2),
+        # &quot;X的月销量为N件&quot;
+        (r&#x27;(.{2,15})(?:月销|月销量|日销|销量)(?:约|为|是)?([\d,万]+(?:件|个|套)?)&#x27;, 2),
+        # &quot;X的评分为N星&quot;
+        (r&#x27;(.{2,15})(?:评分|星级|好评率)(?:为|是|约)?(\d+\.?\d*(?:星|%)?)&#x27;, 2),
+    ]
+
+    def extract_triples(self, text: str) -&gt; List[DependencyTriple]:
+        &quot;&quot;&quot;从文本提取依存三元组&quot;&quot;&quot;
+        triples = []
+        sentences = re.split(r&#x27;[。\n！？]&#x27;, text)
+
+        for sent in sentences:
+            sent = sent.strip()
+            if len(sent) &lt; 5:
+                continue
+
+            for pattern, group_count in self.PATTERNS:
+                matches = re.findall(pattern, sent)
+                for match in matches:
+                    if group_count == 3 and len(match) &gt;= 3:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2507.03226</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Low-Cost-Dependency-KG-Construction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-DIAL-KG-Schema-Free-Incremental.html'>Skill-DIAL-KG-Schema-Free-Incremental</a></li><li><a href='../skills/Skill-Entity-Resolution-KG-Dedup.html'>Skill-Entity-Resolution-KG-Dedup</a></li><li><a href='../skills/Skill-Graph-RAG-Knowledge-Retrieval.html'>Skill-Graph-RAG-Knowledge-Retrieval</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-KG-Hallucination-Detection.html'>Skill-KG-Hallucination-Detection</a></li><li><a href='../skills/Skill-TagRAG-Hierarchical-Label-KG.html'>Skill-TagRAG-Hierarchical-Label-KG</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-DIAL-KG-Schema-Free-Incremental.html'>Skill-DIAL-KG-Schema-Free-Incremental</a></li><li><a href='../skills/Skill-Graph-RAG-Knowledge-Retrieval.html'>Skill-Graph-RAG-Knowledge-Retrieval</a></li><li><a href='../skills/Skill-KG-Hallucination-Detection.html'>Skill-KG-Hallucination-Detection</a></li><li><a href='../skills/Skill-TagRAG-Hierarchical-Label-KG.html'>Skill-TagRAG-Hierarchical-Label-KG</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Graph-RAG-Knowledge-Retrieval.html'>Skill-Graph-RAG-Knowledge-Retrieval</a></li><li><a href='../skills/Skill-KG-Hallucination-Detection.html'>Skill-KG-Hallucination-Detection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

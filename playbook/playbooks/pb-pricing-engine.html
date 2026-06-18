@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI 定价引擎手册 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / AI 定价引擎手册</nav>
+<div class='pb-hero'>
+  <span class='pb-icon'>PA</span>
+  <div>
+    <h1>AI 定价引擎手册</h1>
+    <p class='lead'>定价是乘数，广告是加法——A/B 实测 GMV +13%，定价科学化比多投广告更高效</p>
+    <span class='biz-tag'>竞品监控 · 弹性估算</span>
+  </div>
+</div>
+
+<div class='pb-intro'>大多数跨境品牌的定价策略是「跟感觉」+「盯竞品手动调」。今天的定价现状是：运营每天手动对比竞品价格，遇到竞品降价不知道该不该跟——跟了怕伤利润，不跟怕丢 BSR 排名；大促折扣拍脑袋给，给多了利润归零，给少了没效果。这种「经验驱动定价」的代价是：A/B 实测显示系统化定价可多获 GMV +13%，对应年化 1,321 万元。本手册提供从竞品监控到动态定价的完整飞轮，每步都有可量化 ROI。</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] Buy Box 获得率从 41% 恢复至 79%，月均 GMV +$32,000</li><li>[OK] AIGP 动态定价 A/B 实测 GMV +13%（真实实验，非预测）</li><li>[OK] 清仓效率提升，资金回收速度 +15-40%</li><li>[OK] 「定价是乘数，广告是加法」——精准定价 1% 比广告多投 15% 更高效</li></ul></div>
+<div class='pb-steps'>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 1</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 1：竞品价格实时感知</h3>
+    <p class='pb-problem'>竞品降价后 47 分钟才响应，Buy Box 已丢失——每 30 分钟延迟损失 GMV 约 $1,600</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Price-Signal-Collection.html' class='pb-skill-name'>Price Signal Collection — 竞品价格信号实时采集与结构化</a><div class='pb-skill-badges'><span class='roi-badge'>73.2 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 竞品价格信号实时采集，Buy Box 获得率 41%→79%，响应延迟从 47 分钟降至 18 分钟（ROI 73.2万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Competitive-Price-Monitoring.html' class='pb-skill-name'>Competitive Price Monitoring（竞品价格监测与响应）</a><div class='pb-skill-badges'><span class='roi-badge'>5-60 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 因果竞争响应模型：量化「不跟降损失多少」，驱动有依据的响应决策（ROI 5-60万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：竞品 ASIN 列表、自身历史定价与销量数据</div>
+    <div class="pb-output"><strong>输出结果：</strong>实时竞品价格监控面板 + 响应建议</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+1：竞品价格实时感知+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-pricing-engine-1'
+         onclick='markStepDone("pb-pricing-engine",1,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-pricing-engine';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(1)){
+        var btn=document.getElementById('step-done-pb-pricing-engine-1');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 2</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 2：需求弹性估算</h3>
+    <p class='pb-problem'>「这个 SKU 降 $2 能多卖多少件」——没有弹性数据，定价靠猜</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html' class='pb-skill-name'>Dynamic Pricing with Demand Elasticity（动态定价与需求弹性）</a><div class='pb-skill-badges'><span class='roi-badge'>50 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 需求价格弹性估计 + 最优价格公式 P*=ε/(ε+1)·MC，利润率 +8-12%（ROI 50万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DML-Cohort-Causal-Effect.html' class='pb-skill-name'>DML Cohort 因果效应 - 群体异质性 HTE 估计</a><div class='pb-skill-badges'><span class='roi-badge'>1500-2500 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ DML 分群弹性差异：7-12 月龄用户对价格敏感度是 0-3 月龄的 2.3 倍，精准定价（ROI 1500-2500万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：历史价格变动记录（至少 6 次调价）、同期销量数据</div>
+    <div class="pb-output"><strong>输出结果：</strong>各 SKU 价格弹性曲线 + 最优定价区间</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+2：需求弹性估算+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-pricing-engine-2'
+         onclick='markStepDone("pb-pricing-engine",2,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-pricing-engine';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(2)){
+        var btn=document.getElementById('step-done-pb-pricing-engine-2');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 3</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 3：动态定价执行</h3>
+    <p class='pb-problem'>人工定价最大缺陷：只能优化当前销量，无法同时考虑长期品牌溢价和库存健康</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html' class='pb-skill-name'>AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）</a><div class='pb-skill-badges'><span class='roi-badge'>1,321 万元</span></div></div><p class='pb-skill-why'>→ LLM 跨周期 GMV 对齐定价，A/B 实测 GMV +13%，这是真实实验数据不是预测（ROI 1321万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Markdown-Optimization.html' class='pb-skill-name'>Markdown Optimization（折扣清仓定价优化）</a><div class='pb-skill-badges'><span class='roi-badge'>20-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 清仓折扣优化：库存生命周期内最大化总回收价值，清仓多回收 15-40%（ROI 20-50万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Bundle-Pricing-Strategy.html' class='pb-skill-name'>Bundle Pricing Strategy（捆绑定价策略）</a><div class='pb-skill-badges'><span class='roi-badge'>10-15 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 捆绑定价提升 AOV：吸奶器+法兰配件组合定价，配件复购率 +25%（ROI 10-15万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：SKU 成本结构、库存水位、竞品定价实时数据</div>
+    <div class="pb-output"><strong>输出结果：</strong>动态定价策略 + 每日价格执行建议</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+3：动态定价执行+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-pricing-engine-3'
+         onclick='markStepDone("pb-pricing-engine",3,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-pricing-engine';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(3)){
+        var btn=document.getElementById('step-done-pb-pricing-engine-3');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 4</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 4：定价效果度量与迭代</h3>
+    <p class='pb-problem'>调价后「效果好不好」靠感觉判断，无法区分是定价作用还是季节波动</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DiD-Difference-in-Differences.html' class='pb-skill-name'>Difference-in-Differences (DiD) for Causal Effect Estimation</a><div class='pb-skill-badges'><span class='roi-badge'>50万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 双重差分估计调价因果效应：区分真实影响与自然波动（ROI 50万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Identified-Bayesian-MMM.html' class='pb-skill-name'>Identified Bayesian MMM — 基于高斯过程的无混淆贝叶斯营销归因</a><div class='pb-skill-badges'><span class='roi-badge'>1000 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 分离价格效应与广告效应：告诉 CMO 预算浪费在哪里（ROI 1000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Causal-Cohort-Analysis.html' class='pb-skill-name'>Causal Cohort Analysis — 因果队列分析：促销干预的长期用户行为效应</a><div class='pb-skill-badges'><span class='roi-badge'>200-500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 促销长期 LTV 追踪：6 个月后用户复购是否真的提升了？（ROI 200-500万）</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：调价前后各 30 天销售数据、广告投放数据</div>
+    <div class="pb-output"><strong>输出结果：</strong>调价效果因果报告 + 下一轮定价优化方向</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+4：定价效果度量与迭代+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-pricing-engine-4'
+         onclick='markStepDone("pb-pricing-engine",4,4,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-pricing-engine';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(4)){
+        var btn=document.getElementById('step-done-pb-pricing-engine-4');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div></div>
+
+<div class='pb-lead-capture'>
+  <div class='pb-lead-inner'>
+    <div class='pb-lead-text'>
+      <h3>想了解这套方案如何落地你的业务？</h3>
+      <p>预约 30 分钟免费 ROI 测算 — 基于你的 SKU 数量、广告预算和当前痛点，给出定制化收益估算。</p>
+      <ul class='pb-lead-bullets'>
+        <li>✓ 结合你的实际数据，不是通用模板</li>
+        <li>✓ 明确哪 1-2 个 Skill 优先落地 ROI 最高</li>
+        <li>✓ 30 分钟，结束后你有一份行动清单</li>
+      </ul>
+    </div>
+    <div class='pb-lead-action'>
+      <a href='mailto:skills@lute-tlz-dddd.top?subject=预约ROI测算-AI%20定价引擎手册&body=手册:AI%20定价引擎手册%0A公司规模:%0A主要痛点:%0A当前月GMV:' class='pb-lead-btn'>预约 30 分钟 ROI 测算 →</a>
+      <p class='pb-lead-note'>发送邮件后 24h 内回复确认时间</p>
+    </div>
+  </div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

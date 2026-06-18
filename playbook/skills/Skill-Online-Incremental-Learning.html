@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Online Incremental Learning — 在线增量学习：模型无需重训即可适应数据漂移 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/12-ml基础.html">12-ML基础</a> / Skill-Online-Incremental-Learning</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Online Incremental Learning — 在线增量学习：模型无需重训即可适应数据漂移</h1>
+<p class="muted">Skill-Online-Incremental-Learning · 12-ML基础</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥30-100 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 数据工程师<span class='biz-ctx-secondary'> · 运营负责人 · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>选品评分 · 差评预测 · 用户流失预警 · 广告出价预测</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想用机器学习解决业务问题，但不知道该选什么模型；模型上线后效果越来越差不知道为什么</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>选对算法工具减少 50% 试错时间，模型上线后可监控可解释，数据团队和业务团队建立共同语言</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道该用什么模型</span><span class='biz-pain-tag'>模型准确率不稳定</span><span class='biz-pain-tag'>业务不相信模型结果</span><span class='biz-pain-tag'>模型黑盒说不清为什么这么预测</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>旺季到来时需求预测模型仍用淡季规律导致严重缺货但批量重训需等4周——在线增量学习让模型每日自动更新漂移检测后2-3天校准完毕，减少旺季缺货损失年化30-100万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>概念漂移（Concept Drift）是电商模型的主要失效原因：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：吸奶器需求预测模型在非旺季训练，黑五前 BSR 飙升时预测严重偏低，导致缺货。模型需要等到月底批量重训才能修正，此时旺季已过半。</p><p>数据要求： - 每日销量数据（流式接入，无需历史批量） - 外部季节性特征（促销日历、搜索趋势）</p><p>预期产出： - 在线学习需求预测：每日自动更新，旺季到来时 2-3 天内校准完毕（vs 批量重训 4 周） - 漂移检测告警：当分布显著变化时通知运营</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>需求预测模型实时适应旺季：减少缺货损失 ¥20-60 万/年</li><li>广告出价模型快速响应竞品事件：ROAS 提升 10-20%，年化 ¥10-30 万</li><li>减少批量重训频率：节省 ML 工程师维护成本 ¥5-15 万/年</li><li><strong>年化综合 ROI：¥30-100 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（River/Vowpal Wabbit 等成熟库可用；流式数据接入需要工程改造；约 3-4 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Online Incremental Learning
+在线学习 + 漂移检测：让模型实时适应电商数据分布变化
+&quot;&quot;&quot;
+import numpy as np
+from collections import deque
+
+
+class OnlineSGDRegressor:
+    &quot;&quot;&quot;随机梯度下降在线回归模型（需求预测用）&quot;&quot;&quot;
+
+    def __init__(self, n_features: int, lr: float = 0.01, l2: float = 0.001):
+        self.w = np.zeros(n_features)
+        self.b = 0.0
+        self.lr = lr
+        self.l2 = l2
+        self.n_updates = 0
+
+    def predict(self, x: np.ndarray) -&gt; float:
+        return float(np.dot(x, self.w) + self.b)
+
+    def update(self, x: np.ndarray, y: float) -&gt; float:
+        &quot;&quot;&quot;单样本在线更新，返回更新前的预测误差&quot;&quot;&quot;
+        pred = self.predict(x)
+        error = pred - y
+        # SGD update with L2 regularization
+        self.w -= self.lr * (error * x + self.l2 * self.w)
+        self.b -= self.lr * error
+        self.n_updates += 1
+        return abs(error)
+
+
+class ADWINDriftDetector:
+    &quot;&quot;&quot;ADWIN 概念漂移检测（自适应滑动窗口）&quot;&quot;&quot;
+
+    def __init__(self, delta: float = 0.002, max_buckets: int = 5):
+        self.delta = delta  # 误报率（越小越保守）
+        self.window: deque = deque()
+        self.total = 0.0
+        self.n = 0
+        self.drift_detected = False
+
+    def add(self, value: float) -&gt; bool:
+        &quot;&quot;&quot;添加新误差值，返回是否检测到漂移&quot;&quot;&quot;
+        self.window.append(value)
+        self.total += value
+        self.n += 1
+
+        # 检测是否有分布变化（检查所有可能的分割点）
+        if self.n &lt; 10:
+            return False
+
+        mean_all = self.total / self.n
+        window_list = list(self.window)
+
+        for split in range(5, self.n - 5, max(1, self.n // 20)):
+            w1 = window_list[:split]
+            w2 = window_list[split:]
+            m1, m2 = np.mean(w1), np.mean(w2)
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.03219</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Online-Incremental-Learning" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Dynamic-Pricing-Elasticity]]（组合</span></li><li><span class='muted'>Prophet-Forecasting]]（组合</span></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Prophet-Forecasting.html'>Skill-Prophet-Forecasting</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Dynamic-Pricing-Elasticity]]（组合</span></li><li><span class='muted'>Prophet-Forecasting]]（组合</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Prophet-Forecasting.html'>Skill-Prophet-Forecasting</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Dynamic-Pricing-Elasticity]]（组合</span></li><li><span class='muted'>Prophet-Forecasting]]（组合</span></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Prophet-Forecasting.html'>Skill-Prophet-Forecasting</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

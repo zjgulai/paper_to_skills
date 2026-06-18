@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Churn Revenue Impact — 用户流失的财务损失量化与 P&amp;L 影响分析 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-Churn-Revenue-Impact</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Churn Revenue Impact — 用户流失的财务损失量化与 P&amp;L 影响分析</h1>
+<p class="muted">Skill-Churn-Revenue-Impact · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>25-80 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐☆☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>流失率 4% 看起来&quot;正常&quot;但实际年损失超 ¥100 万——显性收入损失+沉没 CAC 完整量化显示 1% 流失改善等效 6-8 个新客获取价值，最低门槛财务桥梁</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>流失预测模型告诉你&quot;下个月会有 8% 的用户流失&quot;，但财务团队需要的是&quot;这 8% 流失会让我们损失多少 GMV 和利润&quot;。更隐藏的是CAC 浪费：每个流失用户不仅带走了未来复购收入，还让获客投入打了水漂。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴品牌在 DTC 网站销售婴儿纸尿裤订阅套餐（每月 $45），月活 5000 户，月流失率 4%。CEO 直觉感知&quot;流失率有点高&quot;，但说不清楚&quot;高多少、值多少&quot;。</p><p>流失成本量化： - ARPU = $45/月，毛利率 35%，CAC = $55 - LTV = ($45 × 0.35) / 0.04 = $393.75 - 每月流失 200 户 × ($393.75 + $55) = $89,750/月 = $107.7 万/年</p><p>如果流失率从 4% → 3%： - LTV 从 $393.75 → $525（提升 33%） - 年化收益增加约 $26 万</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>1% 流失率改善：年化 GMV 增量 ¥25-80 万（视规模）</li><li>留存投入 ROI 量化：避免无效留存支出 ¥5-15 万/年</li><li>LTV 精准定价：CAC 可放宽到 LTV 的 1/3，获客规模提升</li><li><strong>年化综合 ROI</strong>：¥50-150 万</li><li><strong>实施难度</strong>：⭐☆☆☆☆（纯财务公式，无 ML 依赖，半天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Churn Revenue Impact — 用户流失财务损失量化模型
+综合 SaaS/DTC 工业财务框架（SaveMRR + G-Squared CFO 2026）
+
+依赖: dataclasses, typing (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass
+from typing import Optional
+
+
+@dataclass
+class BusinessParams:
+    &quot;&quot;&quot;业务参数&quot;&quot;&quot;
+    arpu_monthly: float           # 月均客单价
+    gross_margin: float           # 毛利率
+    cac: float                    # 单客获客成本
+    current_users: int            # 当前活跃用户数
+    monthly_churn_rate: float     # 月流失率（0-1）
+    new_users_per_month: int      # 月新增用户数
+
+
+class ChurnRevenueImpactModel:
+    &quot;&quot;&quot;
+    流失财务损失量化模型
+
+    核心输出：
+    1. 当前 LTV
+    2. 月度 / 年度流失成本（含 CAC 沉没）
+    3. 流失率改善的财务价值
+    4. 留存投入 ROI 阈值
+    &quot;&quot;&quot;
+
+    def __init__(self, params: BusinessParams):
+        self.p = params
+
+    @property
+    def ltv(self) -&gt; float:
+        &quot;&quot;&quot;客户生命周期价值&quot;&quot;&quot;
+        return (self.p.arpu_monthly * self.p.gross_margin) / self.p.monthly_churn_rate
+
+    @property
+    def avg_customer_lifespan_months(self) -&gt; float:
+        &quot;&quot;&quot;平均客户生命周期（月）&quot;&quot;&quot;
+        return 1 / self.p.monthly_churn_rate
+
+    def monthly_churn_cost(self) -&gt; dict:
+        &quot;&quot;&quot;月度流失成本（显性 + 隐性）&quot;&quot;&quot;
+        churned = int(self.p.current_users * self.p.monthly_churn_rate)
+        future_revenue_loss = churned * self.ltv
+        sunk_cac = churned * self.p.cac
+        total = future_revenue_loss + sunk_cac
+        return {
+            &quot;churned_users&quot;: churned,
+            &quot;future_revenue_loss&quot;: round(future_revenue_loss, 2),
+            &quot;sunk_cac_loss&quot;: round(sunk_cac, 2),
+            &quot;total_monthly_cost&quot;: round(total, 2),
+            &quot;annual_projection&quot;: round(total * 12, 2),
+        }
+</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Churn-Revenue-Impact" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（流失预测是本 Skill 的上游输入</span></li><li><span class='muted'>LTV-Prediction-ZILN]]（组合场景</span></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><a href='../skills/Skill-Uplift-Churn-Prediction.html'>Skill-Uplift-Churn-Prediction</a></li><li><span class='muted'>Uplift-Churn-Prediction]]（组合场景</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>LTV-Prediction-ZILN]]（组合场景</span></li><li><a href='../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html'>Skill-Cross-Border-Cash-Flow-Forecasting</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-Uplift-Churn-Prediction.html'>Skill-Uplift-Churn-Prediction</a></li><li><span class='muted'>Uplift-Churn-Prediction]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>LTV-Prediction-ZILN]]（组合场景</span></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-Uplift-Churn-Prediction.html'>Skill-Uplift-Churn-Prediction</a></li><li><span class='muted'>Uplift-Churn-Prediction]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

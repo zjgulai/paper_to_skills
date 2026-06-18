@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PPC Rule Automation Engine — PPC 规则自动化引擎：条件触发的广告出价智能运营 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-PPC-Rule-Automation-Engine</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>PPC Rule Automation Engine — PPC 规则自动化引擎：条件触发的广告出价智能运营</h1>
+<p class="muted">Skill-PPC-Rule-Automation-Engine · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥20-50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>中型卖家每周花6小时手动调整200个关键词出价规则不一致还有遗漏——条件触发规则引擎7×24小时自动执行高ACOS降价/无转化暂停/低曝光提价，ACOS降低15-20%运营时间节省80%年化20-50万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>手动调价 vs 规则自动化：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：运营有 200 个关键词，每周花 6 小时手动检查和调整。其中： - 30 个关键词 ACOS &gt; 35%（过度花费） - 20 个关键词 7 天无转化但还在花钱 - 10 个低 ACOS 优质词没有加预算（错失机会）</p><p>规则引擎把这些决策自动化，每天运行而非每周，响应更及时。</p><p>数据要求： - Amazon 广告报告（关键词维度，每日数据） - 目标 ACOS 设置（按 SKU 或活动）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>ACOS 降低 15-20%：月省广告费 ¥3-10 万</li><li>运营时间节省 80%：从 6h/周 → 1h/周，年化 ¥3-8 万</li><li>无转化词及时暂停：减少无效花费</li><li><strong>年化综合 ROI：¥20-50 万</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（规则引擎逻辑清晰；需要 Amazon 广告 API 权限；约 2-3 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+PPC Rule Automation Engine
+条件触发的广告出价自动化规则引擎
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from collections import defaultdict
+
+
+@dataclass
+class KeywordMetrics:
+    keyword: str
+    match_type: str           # exact/phrase/broad
+    current_bid: float
+    impressions: int
+    clicks: int
+    orders: int
+    spend: float
+    acos: float               # 实际 ACOS
+    target_acos: float = 0.25 # 目标 ACOS
+    last_modified: datetime = None
+
+
+@dataclass
+class AutomationRule:
+    rule_id: str
+    name: str
+    conditions: list[dict]    # [{metric, operator, value}]
+    action: dict              # {type, value}
+    cooldown_hours: int = 24
+    max_daily_changes: int = 2
+    enabled: bool = True
+
+    def evaluate(self, metrics: KeywordMetrics) -&gt; bool:
+        &quot;&quot;&quot;检查规则条件是否满足&quot;&quot;&quot;
+        for cond in self.conditions:
+            metric_val = getattr(metrics, cond[&#x27;metric&#x27;], None)
+            if metric_val is None:
+                return False
+            op = cond[&#x27;operator&#x27;]
+            threshold = cond[&#x27;value&#x27;]
+            if op == &#x27;&gt;&#x27; and not (metric_val &gt; threshold): return False
+            if op == &#x27;&lt;&#x27; and not (metric_val &lt; threshold): return False
+            if op == &#x27;&gt;=&#x27; and not (metric_val &gt;= threshold): return False
+            if op == &#x27;&lt;=&#x27; and not (metric_val &lt;= threshold): return False
+            if op == &#x27;==&#x27; and not (metric_val == threshold): return False
+        return True
+
+
+class PPCRuleEngine:
+    &quot;&quot;&quot;PPC 规则自动化引擎&quot;&quot;&quot;
+
+    def __init__(self):
+        self.rules: list[AutomationRule] = []
+        self.execution_log: list[dict] = []
+        self.keyword_change_count: dict = defaultdict(int)
+        self.keyword_last_modified: dict = {}
+
+    def add_rule(self, rule: AutomationRule):</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.14892</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-PPC-Rule-Automation-Engine" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Inventory-Demand-Sensing]]（组合</span></li><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合</span></li><li><a href='../skills/Skill-AB-Testing-Platform-Infrastructure.html'>Skill-AB-Testing-Platform-Infrastructure</a></li><li><a href='../skills/Skill-Inventory-Demand-Sensing.html'>Skill-Inventory-Demand-Sensing</a></li><li><a href='../skills/Skill-PPC-Keyword-Bid-Automation.html'>Skill-PPC-Keyword-Bid-Automation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-RTB-Multi-Objective-Bidding.html'>Skill-RTB-Multi-Objective-Bidding</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Inventory-Demand-Sensing]]（组合</span></li><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合</span></li><li><a href='../skills/Skill-AB-Testing-Platform-Infrastructure.html'>Skill-AB-Testing-Platform-Infrastructure</a></li><li><a href='../skills/Skill-Inventory-Demand-Sensing.html'>Skill-Inventory-Demand-Sensing</a></li><li><a href='../skills/Skill-RTB-Multi-Objective-Bidding.html'>Skill-RTB-Multi-Objective-Bidding</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Inventory-Demand-Sensing]]（组合</span></li><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合</span></li><li><a href='../skills/Skill-Inventory-Demand-Sensing.html'>Skill-Inventory-Demand-Sensing</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

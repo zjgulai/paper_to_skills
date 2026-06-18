@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MMM Budget PL Alignment — 营销预算分配与利润约束下的 ROI 优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-MMM-Budget-PL-Alignment</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>MMM Budget PL Alignment — 营销预算分配与利润约束下的 ROI 优化</h1>
+<p class="muted">Skill-MMM-Budget-PL-Alignment · 15-营销投放分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>按 ROAS 分配预算的营销团队每月留下 26% 利润在桌上——Hindsight Regret 审计 + P&amp;L 约束优化将净利润提升 26%（Amazon-PPC 过度投入 → TikTok 高毛利渠道补强）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统 MMM（Marketing Mix Modeling）优化目标是最大化 GMV 或 ROAS，但这忽略了一个关键约束：毛利率。把 $1 花在 ROAS=4 但毛利率 20% 的渠道，不如花在 ROAS=2.5 但毛利率 45% 的渠道。最终贡献到 P&amp;L 的净利润才是真正的优化目标。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴品牌月投放预算 $30,000，目前按 ROAS 最优分配：Amazon PPC $18K、TikTok $8K、Google Shopping $3K、Facebook $1K。CFO 发现尽管 ROAS 不错，但净利润没有随 GMV 增长——因为 Amazon PPC 带来的是低毛利配件订单（AOV $25，毛利 22%），而 TikTok 带来高毛利主机订单（AOV $90，毛利 38%）。</p><p>P&amp;L 约束优化结果： - Amazon PPC：$18K → $12K（降低，因为配件低毛利） - TikTok：$8K → $13K（提升） - Google Shopping：$3K → $4K（略提升，高 ROAS 且中毛利） - Facebook：$1K → $1K（保留品牌曝光底线）</p><p>结果：GMV 从 $95,000 → $91,000（-4.2%），净利润从 $15,200 → $18,400（+21%）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>ROAS 优化 → P&amp;L 约束优化：净利润提升 10-25%（GMV 小幅下降但毛利大幅提升）</li><li>月预算 $30K：净利润提升约 $2,000-5,000/月，年化 ¥20-50 万</li><li>Hindsight Regret 分析识别的改进空间：平均可挽回 8-15% 的&quot;遗留利润&quot;</li><li><strong>年化综合 ROI</strong>：¥30-80 万</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要历史 spend-GMV 数据拟合饱和曲线 + 各渠道毛利率数据，2 周建模）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+MMM Budget P&amp;L Alignment — 营销预算利润约束优化
+基于 arXiv: 2604.25977 (Hindsight Regret)
+
+依赖: numpy, dataclasses (标准库)
+生产环境: scipy.optimize.minimize 替换手动梯度
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+import numpy as np
+
+
+@dataclass
+class Channel:
+    &quot;&quot;&quot;营销渠道配置&quot;&quot;&quot;
+    name: str
+    alpha: float           # 饱和曲线上限参数（最大 GMV）
+    beta: float            # 饱和速度参数
+    gross_margin: float    # 该渠道带来的品类平均毛利率
+    min_spend: float = 0.0 # 最低投放（品牌曝光底线）
+    max_spend: float = None
+
+
+@dataclass
+class OptimizationResult:
+    &quot;&quot;&quot;优化结果&quot;&quot;&quot;
+    channel_name: str
+    optimal_spend: float
+    expected_gmv: float
+    expected_profit: float
+    marginal_roas: float   # 最后 $1 的 ROAS（边际回报）
+    allocation_pct: float
+
+
+class SpendResponseModel:
+    &quot;&quot;&quot;Spend-Response 饱和曲线模型&quot;&quot;&quot;
+
+    def gmv(self, channel: Channel, spend: float) -&gt; float:
+        &quot;&quot;&quot;S 形饱和曲线 GMV 预测&quot;&quot;&quot;
+        return channel.alpha * (1 - np.exp(-channel.beta * spend))
+
+    def marginal_gmv(self, channel: Channel, spend: float) -&gt; float:
+        &quot;&quot;&quot;边际 GMV（偏导数）&quot;&quot;&quot;
+        return channel.alpha * channel.beta * np.exp(-channel.beta * spend)
+
+    def profit(self, channel: Channel, spend: float) -&gt; float:
+        &quot;&quot;&quot;利润贡献 = GMV × 毛利率 - 投放成本&quot;&quot;&quot;
+        return self.gmv(channel, spend) * channel.gross_margin - spend
+
+    def roas(self, channel: Channel, spend: float) -&gt; float:
+        &quot;&quot;&quot;ROAS = GMV / spend&quot;&quot;&quot;
+        return self.gmv(channel, spend) / spend if spend &gt; 0 else 0
+
+
+class BudgetPLOptimizer:
+    &quot;&quot;&quot;
+    P&amp;L 约束预算优化器
+
+    优化策略：梯度上升（利润边际均等原则）
+    生产环境可替换为 scipy.optimize.minimize(method=&#x27;SLSQP&#x27;)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.25977</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MMM-Budget-PL-Alignment" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Forecast-to-PL-Bridge]]（组合场景</span></li><li><span class='muted'>Multi-Objective-Budget-Allocation]]（组合场景</span></li><li><span class='muted'>ROAS-Budget-Optimization]]（本 Skill 是 ROAS 优化的升级版</span></li><li><a href='../skills/Skill-Channel-Saturation-Curve.html'>Skill-Channel-Saturation-Curve</a></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Forecast-to-PL-Bridge]]（组合场景</span></li><li><span class='muted'>Multi-Objective-Budget-Allocation]]（组合场景</span></li><li><span class='muted'>ROAS-Budget-Optimization]]（本 Skill 是 ROAS 优化的升级版</span></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Forecast-to-PL-Bridge]]（组合场景</span></li><li><span class='muted'>Multi-Objective-Budget-Allocation]]（组合场景</span></li><li><a href='../skills/Skill-Forecast-to-PL-Bridge.html'>Skill-Forecast-to-PL-Bridge</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

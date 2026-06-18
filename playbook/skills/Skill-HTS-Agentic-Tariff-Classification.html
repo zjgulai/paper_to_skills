@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HTS多Agent关税编码分类 — 共识验证+层级推理+不确定性感知的跨境清关自动化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/21-合规决策.html">21-合规决策</a> / Skill-HTS-Agentic-Tariff-Classification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>HTS多Agent关税编码分类 — 共识验证+层级推理+不确定性感知的跨境清关自动化</h1>
+<p class="muted">Skill-HTS-Agentic-Tariff-Classification · 21-合规决策</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>合规负责人 / 选品负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>美国 CPSC/ASTM · 欧盟 CE/EN71 · Amazon 类目合规要求 · 德国/英国/中东市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>新品上架前不确定在美国/欧盟是否需要认证，怕因合规问题被下架；产品被平台下架但不清楚哪里出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>上架前自动完成合规预扫描，0 合规下架事故，新市场合规准备时间从 3 个月缩短到 2 周</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>产品被下架说是合规问题</span><span class='biz-pain-tag'>不知道目标市场需要什么认证</span><span class='biz-pain-tag'>EU/US 合规要求不一样怎么处理</span><span class='biz-pain-tag'>母婴产品安全标准太严怕踩雷</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>30%的年度HS申报编码存在错误导致关税多缴或清关延误——多Agent共识+逐元素投票+层级推理将4位HTS准确率提升至75%+，人工工作量减少80%（2026 arXiv:2606.16987）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：HS/HTS编码（协调制度关税编码）是全球贸易的通用语言，约30%的年出口申报编码存在错误，导致税率错误、清关延误、罚款。传统分类靠海关经纪人人工查阅17000页规则手册，一份申报要花4590分钟。反直觉发现：单个LLM哪怕是最先进的，在精确10位HTS编码上准确率也只有约2540%，因为这需要多步层级推理+法律条文检索+例外条款判断。但通过多Agent共识框架，将这个准确率大幅提升至75%+（4位数），同时提供可溯源的决策</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴卖家每月向美国发货约500个SKU，HS编码全靠海关经纪人手工查，费用约$1500/月，且错误率约15%（导致税率多缴或延误） - 多Agent框架应用： 1. 商品描述输入多Agent系统（如：&quot;Battery-operated electric double breast pump with USB charging, BPA-free silicone flanges, weight 1.2kg&quot;） 2. 5个Agent并行：检索CROSS数据库→层级推理→4阶段分类 3. 投票结果：前6位高置信度→自动申报；10位有分歧→推送经纪人确认 4. 经纪人平均只需处理20</p><p>- **业务问题**：2025年贸易政策频繁变化，Section 301关税多次调整，旧的HS编码可能对应新的税率表，需要快速批量重分类 - **自动化重分类**：以新的关税表为上下文，批量对所有SKU重新运行分类流水线，生成税率变化清单，优先处理税率变化最大的SKU</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月500个SKU申报，海关经纪人费用从$1500降至$400，年节省$13200；减少错误申报税率损失$5000/年；系统成本$4万，ROI≈460%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（核心挑战是构建完整的HTS规则检索库；论文提供了开源代码框架；可从6位编码开始逐步精细化）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（跨境清关HS编码错误会导致货物被扣、高额罚款；30%的错误率是全行业公认痛点，2026年最新顶刊）</li><li><strong>适用规模</strong>：月出口&gt;50个不同SKU的卖家，SKU越多节省越大</li><li><strong>数据依赖</strong>：产品标题/描述（已有），HTS规则文档（公开可获取），历史申报记录（最优但非必须）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+HTS多Agent关税编码分类系统
+基于 arXiv:2606.16987 + 2605.14857 (2026)
+多Agent共识投票 + 层级分类 + 不确定性感知
+&quot;&quot;&quot;
+import re
+from collections import Counter
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# HTS章级别分类规则（简化版，实际需加载完整17000页规则）
+HTS_CHAPTER_RULES = {
+    &quot;8543&quot;: {&quot;desc&quot;: &quot;电气机械和设备&quot;, &quot;keywords&quot;: [&quot;electric&quot;, &quot;battery&quot;, &quot;motor&quot;, &quot;pump&quot;]},
+    &quot;9018&quot;: {&quot;desc&quot;: &quot;医疗器械&quot;, &quot;keywords&quot;: [&quot;medical&quot;, &quot;hospital&quot;, &quot;clinical&quot;]},
+    &quot;3926&quot;: {&quot;desc&quot;: &quot;塑料制品&quot;, &quot;keywords&quot;: [&quot;plastic&quot;, &quot;BPA&quot;, &quot;silicone&quot;, &quot;bottle&quot;]},
+    &quot;6111&quot;: {&quot;desc&quot;: &quot;婴儿服装（针织）&quot;, &quot;keywords&quot;: [&quot;baby clothing&quot;, &quot;infant wear&quot;, &quot;onesie&quot;]},
+    &quot;9403&quot;: {&quot;desc&quot;: &quot;家具&quot;, &quot;keywords&quot;: [&quot;crib&quot;, &quot;stroller&quot;, &quot;high chair&quot;, &quot;furniture&quot;]},
+    &quot;8516&quot;: {&quot;desc&quot;: &quot;加热/冷却家电&quot;, &quot;keywords&quot;: [&quot;warmer&quot;, &quot;sterilizer&quot;, &quot;heater&quot;]},
+}
+
+HTS_SUFFIXES = {
+    &quot;8543&quot;: {&quot;70&quot;: &quot;其他电气设备&quot;, &quot;90&quot;: &quot;零件&quot;},
+    &quot;9018&quot;: {&quot;90&quot;: &quot;其他医疗器械&quot;, &quot;50&quot;: &quot;眼科器械&quot;},
+    &quot;3926&quot;: {&quot;90&quot;: &quot;其他塑料制品&quot;, &quot;10&quot;: &quot;学校用具&quot;},
+}
+
+
+def classify_hts_single_agent(product_description, agent_id=0):
+    &quot;&quot;&quot;
+    单个Agent的HTS分类（简化版层级推理）
+    &quot;&quot;&quot;
+    desc_lower = product_description.lower()
+
+    # 阶段1：章分类（2位）
+    chapter_scores = {}
+    for chapter, info in HTS_CHAPTER_RULES.items():
+        score = sum(1 for kw in info[&#x27;keywords&#x27;] if kw.lower() in desc_lower)
+        if score &gt; 0:
+            chapter_scores[chapter] = score
+
+    if not chapter_scores:
+        return None, 0.0, &quot;无法匹配任何章&quot;
+
+    # 加入随机扰动模拟不同Agent的视角差异
+    import random
+    rng = random.Random(agent_id)
+    for ch in chapter_scores:
+        chapter_scores[ch] += rng.uniform(-0.3, 0.3)
+
+    best_chapter = max(chapter_scores, key=chapter_scores.get)
+    confidence = chapter_scores[best_chapter] / (sum(chapter_scores.values()) + 1e-9)
+
+    # 阶段2：品目（4位）
+    heading_suffix = &quot;70&quot; if &quot;electric&quot; in desc_lower or &quot;battery&quot; in desc_lower else &quot;90&quot;
+
+    # 阶段3：子目（6位）
+    subheading = HTS_SUFFIXES.get(best_chapter, {}).get(heading_suffix, &quot;其他&quot;)
+
+    # 构建HTS编码（简化版）</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2605.14857</li><li>2606.16987</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-HTS-Agentic-Tariff-Classification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-ATLAS-HTS-Tariff-Classification.html'>Skill-ATLAS-HTS-Tariff-Classification</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html'>Skill-Platform-Policy-Change-Adaptive-Monitor</a></li><li><a href='../skills/Skill-Regulatory-Graph-Compliance-Monitor.html'>Skill-Regulatory-Graph-Compliance-Monitor</a></li><li><a href='../skills/Skill-Supply-Chain-Due-Diligence.html'>Skill-Supply-Chain-Due-Diligence</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html'>Skill-Platform-Policy-Change-Adaptive-Monitor</a></li><li><a href='../skills/Skill-Regulatory-Graph-Compliance-Monitor.html'>Skill-Regulatory-Graph-Compliance-Monitor</a></li><li><a href='../skills/Skill-Supply-Chain-Due-Diligence.html'>Skill-Supply-Chain-Due-Diligence</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Supply-Chain-Due-Diligence.html'>Skill-Supply-Chain-Due-Diligence</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>10-MAS · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>10-MAS</h1><p>Multi-agent systems, planning, orchestration</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 10-MAS 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html" data-domain="10-MAS" data-diff="">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">AIM-RM — LLM 多 Agent 库存管理：历史经验相似匹配</h3>
+  <p class="sc-desc">LLM-MAS 在库存管理中面临跨场景适应性差的困境——不同 SKU、季节、供应链配置导致需求模式千差万别，零样本或少样本 LLM Agent 难以泛化到新场景。</p>
+  <div class='sc-footer'><span class='sc-roi'>200-400万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AdaCtx-Dynamic-Context-Budget-Allocation.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">AdaCtx动态上下文预算分配 — 子Agent间Token预算自适应调度与边际价值追踪</h3>
+  <p class="sc-desc">MAS框架默认均匀分配上下文预算导致复杂Agent被截断简单Agent空耗——AdaCtx滑动窗口边际价值+Shapley归因动态重分配将任务成功率提升12.8%，同时减少31%Token消耗（2026 arXiv:2604.02042）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AgenTracer-MAS-Failure-Attribution.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">AgenTracer多智能体故障归因 — 反事实回放+故障注入定位MAS决策性错误步骤</h3>
+  <p class="sc-desc">MAS故障后最顶级LLM（Gemini-2.5-Pro）自动定位错误步骤准确率不足10%——AgenTracer反事实回放+RL微调8B专用归因模型超越GPT-4o/Claude 18.18%，并带来MetaGPT+4.8%系统性能提升（2025 arXiv:2509.03312）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Agent-Memory-Learning.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MemGPT — 长期记忆与虚拟上下文管理</h3>
+  <p class="sc-desc">母婴产品的用户咨询是长期关系（从孕期到孩子 3 岁），Agent 需要记住用户的历史偏好、购买记录、孩子的成长阶段、之前的咨询问题</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Agent-Production-Engineering.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Agent Production Engineering（Agent 生产化工程）</h3>
+  <p class="sc-desc">WF-A 智能补货 Agent：算法层用 MAS-Orchestrator 编排，工程层通过 MCP Server 暴露库存查询/补货下单工具，Context Compression 降低每次调用的 token 成本（$0.15→$0.04/次）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Agent-QMix-Topology-Learning.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Agent Q-Mix — MARL 学习最优 MAS 通信拓扑（QMIX 值分解）</h3>
+  <p class="sc-desc">Agent Q-Mix 将多 Agent 系统的通信拓扑选择建模为多智能体强化学习（MARL）问题：每个 Agent 在每个时间步从 6 种通信动作中选择一个，整个系统通过 QMIX 值分解联合优化，学习&quot;哪些 Agent 需要相互通信、何时通信、用何种方式通信&quot;。</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Agent-Registry-Discovery.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Agent Registry &amp; Discovery — 动态 Agent 能力注册与路由</h3>
+  <p class="sc-desc">大促期间 MAS 需动态扩容补货 Agent，无注册发现中心则新 Agent 无法被编排器感知——Agent Registry 让新实例自动上报能力标签，实现秒级灰度扩容</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AgenticPay-Procurement-Negotiation.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">AgenticPay — LLM 多 Agent 采购谈判：自主完成价格与 MOQ 协商</h3>
+  <p class="sc-desc">业务问题：母婴品牌向供应商采购配方奶粉，供应商初始 MOQ=1000 箱（资金占用约 50 万），品牌方目标 MOQ≤500 箱（降低首单风险）</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AutoGen-Multi-Agent-Conversation.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">AutoGen — 多智能体对话编排框架</h3>
+  <p class="sc-desc">母婴出海平台每天处理数万条评论，需要多维度分析（实体抽取、情感分析、异常检测、报告生成）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CAMEL-Role-Playing-Agents.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">CAMEL — 角色扮演式自主协作多 Agent 框架</h3>
+  <p class="sc-desc">分析母婴产品评论需要&quot;业务视角&quot;（关注什么属性重要）和&quot;数据视角&quot;（从文本中抽取具体信息）的结合</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CASTER-Context-Aware-Model-Routing.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">CASTER上下文感知模型路由 — 任务步骤级强弱LLM动态调度以破解性能-成本铁三角</h3>
+  <p class="sc-desc">用同一个昂贵LLM处理所有Agent任务导致成本失控——CASTER步骤级神经路由将75%低复杂度步骤路由到弱模型，在保持质量的同时降低23-54%成本（2026 arXiv:2601.19793）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CONCAT-Consensus-Decentralized-MAS.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">CONCAT共识驱动去中心化MAS协同 — 无需中央Orchestrator的自组织Agent网络</h3>
+  <p class="sc-desc">中央Orchestrator是MAS的单点故障和通信瓶颈——CONCAT共识聚类+置信度组长选举+Theory of Mind效益修剪在无需训练的情况下实现2.02x效率提升和50.1%延迟降低（2026 arXiv:2605.29612）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Context-Engine-Architecture.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Context Engine三层架构 — engine/agents/registry分离的可复用MAS骨架</h3>
+  <p class="sc-desc">紧耦合MAS中改一个Agent需要2天且担心影响其他Agent——engine/agents/registry三层分离使新增Agent从2天压缩至2小时，单Agent可独立测试无副作用</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Context-Token-Compression.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">上下文Token压缩 — Summarizer Agent语义保真压缩与成本效益优化</h3>
+  <p class="sc-desc">多轮MAS会话到第15轮就触发上下文窗口上限被迫截断关键信息——Summarizer Agent混合压缩将会话可持续轮次从15轮提升至40+轮，每次会话Token成本降低67%</p>
+  <div class='sc-footer'><span class='sc-roi'>每次会话$0.18→$0.06（节省67%）</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-ContextRL-Contrastive-Context-Selection.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">ContextRL对比上下文选择强化学习 — 细粒度上下文锚定训练突破长时域推理瓶颈</h3>
+  <p class="sc-desc">标准RL只奖励最终答案让Agent学会猜测而非识别关键证据——ContextRL辅助对比上下文选择目标使Agent真正学会细粒度证据锚定，长时域Benchmark平均+2.2%（2026 arXiv:2606.17053）</p>
+  <div class='sc-footer'><span class='sc-roi'>12万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Org-Agent-Protocol.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Cross-Org Agent Protocol — 跨组织多智能体协调协议：多委托人、联邦编排、工作区委托</h3>
+  <p class="sc-desc">MCP（Model Context Protocol）：解决 Agent 与工具/数据源的连接（Host ↔ Server）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Domain-Agnostic-Context-Engine.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">域无关Context Engine — 相同引擎跨域复用的通用MAS架构模式</h3>
+  <p class="sc-desc">每开拓一个新业务域就要重新开发一套MAS系统耗时2-4周——域无关Context Engine使新增业务域只需更新知识库和YAML配置文件（3人天vs30人天），节省90%开发成本</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Dual-RAG-Context-Engine.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">双通道RAG上下文引擎 — 指令RAG与事实RAG协同的高保真信息检索架构</h3>
+  <p class="sc-desc">单RAG系统将操作SOP和市场数据混为一谈导致指令遵从率只有71%——双通道RAG（指令RAG+事实RAG）将指令遵从率提升至96%，引用准确率从58%提升至89%</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Dynamic-DAG-Orchestration.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Dynamic DAG Orchestration — 运行时动态调整工作流 DAG</h3>
+  <p class="sc-desc">问题：选品流水线包含市场评估 → 深度竞品分析 → 毛利测算 → 合规检查 → 输出报告共 5 个串行节点</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Error-Cascade-Propagation-Defense.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS错误级联传播防御 — 有向依赖图传播建模与血统追踪治理层</h3>
+  <p class="sc-desc">注入一个原子错误种子就能让线性MAS Pipeline 100%崩溃——血统追踪治理层实时监控传播图并在超临界前触发断路器，阻断89%+的最终感染（2026 arXiv:2603.04474）</p>
+  <div class='sc-footer'><span class='sc-roi'>30万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Event-Driven-Demand-MAS.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Event-Driven Demand MAS — 事件感知补货 MAS：大促/季节自动触发</h3>
+  <p class="sc-desc">传统补货系统是轮询式（定时跑批），每日/每周检查库存状态。事件驱动架构（Event-Driven Architecture）改为推送式：事件发生时立刻触发对应 Agent，实现毫秒级响应而非天级延迟。</p>
+  <div class='sc-footer'><span class='sc-roi'>5000 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-EvoSC-Self-Consolidation.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">EvoSC — 对比反思 + 自我巩固：Agent 从失败轨迹进化</h3>
+  <p class="sc-desc">EvoSC（Self-Consolidation for Self-Evolving Agents，arXiv 2602.01966，2026年2月）解决了现有 Agent 自我进化框架的两个根本缺陷</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Flowr-Supply-Chain-MAS.html" data-domain="10-MAS" data-diff="">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Flowr — 零售供应链多 Agent 端到端自动化</h3>
+  <p class="sc-desc">母婴品牌在亚马逊/独立站同时运营，SKU 达 500+，跨境仓（海外仓 + 国内直发）补货涉及 DHL/UPS 运输周期（15-30 天）、海关清关（3-7 天）、Amazon FBA 入仓（1-5 天），任何一环延误都导致断货（Lost Buy Box，单 SKU 日损失 2,000-8,000 元）</p>
+  <div class='sc-footer'><span class='sc-roi'>91 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Glass-Box-MAS-Observability.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">玻璃盒MAS可观测性 — Agent推理轨迹追踪、Token成本仪表盘与透明度工程</h3>
+  <p class="sc-desc">管理层不信任AI建议因为&quot;不知道AI为什么这么说&quot;，AI采用率仅20%——玻璃盒推理轨迹+Token成本仪表盘使管理层信任度从30%提升至78%，AI辅助决策采用率从20%升至65%</p>
+  <div class='sc-footer'><span class='sc-roi'>50万/年</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Graph-Grounded-MAS-Protocol.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">G²CP — 图结构 MAS 通信协议：消除级联幻觉</h3>
+  <p class="sc-desc">传统 LLM Multi-Agent System（MAS）中，Agent 之间通过自然语言传递信息。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Helicase-Supply-Chain-KG-MAS.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Helicase — 不确定性感知供应链知识图谱：多 Agent 自主构建</h3>
+  <p class="sc-desc">业务问题：母婴品牌（奶粉/辅食）需追踪&quot;原料→供应商→工厂→认证机构&quot;多跳关系，人工调研一家供应商需 3-5 天，百家供应商无法覆盖</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-High-Fidelity-RAG-Defense.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">高保真RAG防御 — 引用链溯源、数据投毒与提示注入三层防御体系</h3>
+  <p class="sc-desc">AI合规助手给出错误的FDA认证流程导致申报失败损失8000美元——NASA级三层防御（输入清洗+数据投毒检测+引用链验证）将合规决策错误率从8%降至0.5%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-AutoBidding-MAS.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">LLM AutoBidding MAS — 大语言模型驱动的层次化自动竞价系统</h3>
+  <p class="sc-desc">诊断：用单一 LLM 直接生成竞价出价，会产生&quot;竞价幻觉&quot;——LLM 对价格的量化感知不准确，输出如 `$15.00`（实际均值 $0.80）的离谱出价。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Adversarial-Defense.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Adversarial Defense — 多智能体系统攻防：群体合谋检测、规划时攻击防御、路由感知注入</h3>
+  <p class="sc-desc">`Skill-Agent-Safety-Guardrails` 保护的是单个 Agent 免受提示注入攻击。但 MAS 中的攻击比单 Agent 复杂 10 倍：攻击者可以利用多个 Agent 之间的信任关系和通信路径发动群体级攻击。</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10 万/月</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Consensus-Mechanism.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Consensus Mechanism — 多智能体共识协议：分布式一致性与拜占庭容错</h3>
+  <p class="sc-desc">`Skill-Multi-Agent-Debate` 解决的是&quot;如何让多个 Agent 通过辩论收敛到更好的答案&quot;——这是非正式共识。MAS 共识机制解决的是更严格的问题：在部分 Agent 可能失败或说谎（Byzantine 容错）的情况下，如何保证整个系统仍能达成一致且正确的决策，并有数学证明？</p>
+  <div class='sc-footer'><span class='sc-roi'>200-500 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Dynamic-KG-Collaboration.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Dynamic KG Collaboration — 多智能体动态知识图谱协同：实时构建、冲突解决、协同进化</h3>
+  <p class="sc-desc">`Skill-Helicase-Supply-Chain-KG-MAS` 解决的是&quot;如何让 MAS 构建一个静态知识图谱&quot;——一次性构建，然后查询。动态 KG 协同解决的是更难的问题：知识在持续演变，多个 Agent 同时读写 KG，如何保持 KG 的一致性、处理冲突、并让 KG 与 Agent 共同进化？</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Dynamic-Trust.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Dynamic Trust — 多智能体动态信任图：抵御 Sleeper Agent 与历史感知可信聚合</h3>
+  <p class="sc-desc">若某个市场行情 Agent 被错误数据污染（如竞品恶意干扰），所有下游决策将偏差</p>
+  <div class='sc-footer'><span class='sc-roi'>5-30 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Orchestrator.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Orchestrator — 多智能体编排与调度</h3>
+  <p class="sc-desc">母婴跨境业务涉及选品/定价/补货/广告多个 AI Agent，各自独立运行相互无法协作——MAS 编排层通过有向无环图调度实现多 Agent 串并联协同，工作流完成率从 60% 提升到 92%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Resource-Scheduling.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Resource Scheduling — OS 调度原语驱动的多智能体资源管理</h3>
+  <p class="sc-desc">双 11 大促前 20 个选品 Agent 同时调用 GPT-4o，API 配额耗尽导致任务排队超时——MAS 资源调度层通过 Token 预算感知分配避免配额溢出，大促期间 Agent 吞吐量提升 3.5 倍</p>
+  <div class='sc-footer'><span class='sc-roi'>12 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Scale-Management.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Scale Management — 大规模多智能体集群管理：万级并发、单调扩展、公司制架构</h3>
+  <p class="sc-desc">1. 性能坍塌问题：新 Agent 加入时，系统路由还不了解其能力，导致任务分配混乱、性能下降</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Testing-Verification.html" data-domain="10-MAS" data-diff="">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Testing &amp; Verification — 多智能体系统测试验证：覆盖制导 Fuzzing + 跨框架可观测性</h3>
+  <p class="sc-desc">业务背景：选品扫描工作流由 5 个 Agent 串行协作（品类趋势 Agent → 竞品分析 Agent → 合规预筛 Agent → 利润计算 Agent → 综合评分 Agent）</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-MAS-VOC-Multi-Agent-Analysis.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS VOC Multi-Agent Analysis — 多智能体用户声音分析：协作挖掘产品迭代洞察</h3>
+  <p class="sc-desc">单LLM分析3000条评论只给出「改进噪音加强吸力」的泛泛结论无法指导具体产品决策——多智能体（产品经理/工程师/营销/UX）并行分析辩论共识，精准输出可执行改进建议并量化预期ROI年化产品迭代价值15-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MASEval-System-Evaluation.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MASEval — 系统级 MAS 评估：Framework 影响与模型影响同等重要</h3>
+  <p class="sc-desc">传统 MAS 评估聚焦模型级（Model-Level）：固定 framework，换 LLM 比性能差异。MASEval 提出系统级（System-Level）评估范式，将完整 MAS 系统（模型 × Framework × 协调逻辑）作为原子评测单元，形成 3×3×3 全因子实验设计：3 个 LLM backbone × 3 个 Agent Framework（smolagents/LlamaIndex/AutoGen 等）× 3 种协调逻辑（顺序/并行/自适应）。</p>
+  <div class='sc-footer'><span class='sc-roi'>20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MetaGPT-SOP-Driven-Collaboration.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MetaGPT — SOP 驱动的多智能体协作框架</h3>
+  <p class="sc-desc">母婴出海平台的 VOC 分析需要多人协作完成（分析师、工程师、质检员），但缺乏标准化流程，导致： - 每次分析的质量不一致 - 不同分析师的产出格式不统一 - 错误难以追溯和修复</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Agent-Debate.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Multi-Agent Debate — 多智能体辩论共识</h3>
+  <p class="sc-desc">- LLM 生成初始答案后，即使答案错误，也会在后续反思中&quot;维护&quot;这个答案</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-ParaManager-Parallel-Orchestration.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">ParaManager — 小模型主编排：Agent-as-Tool 并行子任务分解</h3>
+  <p class="sc-desc">Agent-as-Tool 协议统一：ParaManager 将传统系统中异构的 Agent（具有内部状态、多轮推理能力）和 Tool（无状态函数调用）统一为标准化的 `AgentAsTool` 接口。每个动作单元暴露相同的 `invoke(input) -&gt; result` 接口，同时携带显式状态反馈（`status`, `progress`, `output`），让编排器无需了解底层实现差异即可统一调度。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Policy-Driven-Meta-Controller.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">策略驱动元控制器 — 内容审核、延迟控制与多域通用控制面</h3>
+  <p class="sc-desc">同一MAS系统处理合规查询（需严格）和营销文案（需创意）却用单一策略导致合规域给出法律建议——多域策略元控制器零代码切换使合规查询零违规输出，营销文案创意度提升40%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RCR-Router-Role-Aware-Context-Routing.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">RCR-Router角色感知上下文路由 — Token预算约束下的多Agent记忆子集动态分配</h3>
+  <p class="sc-desc">让所有Agent访问完整记忆库既浪费Token又引入噪声干扰——RCR-Router按角色和任务阶段动态选择语义相关记忆子集，在严格Token预算下回答质量提升13-22%（2025 arXiv:2508.04903）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-ReAct-Reasoning-Acting.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">ReAct — 推理与行动交替执行</h3>
+  <p class="sc-desc">ReAct (Reasoning + Acting) 提出了一种推理与行动交织的范式。核心洞察：纯推理（Chain-of-Thought）容易幻觉，纯行动（Tool Use）缺乏规划——只有把两者交替进行，才能既保持思维连贯性又确保信息准确性。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Reflexion-Self-Improvement.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Reflexion — 言语强化学习与自我反思</h3>
+  <p class="sc-desc">VOC 分析 Agent 对&quot;使用体验差&quot;类评论打标一致性差，不同批次结果偏差 15%——Reflexion 自我反思循环让 Agent 从错误案例中学习并更新策略，打标一致性从 72% 提升到 91%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-ResMAS-Resilience-Topology-Optimization.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">ResMAS韧性拓扑优化 — GNN韧性预测+GRPO拓扑生成+拓扑感知Prompt优化</h3>
+  <p class="sc-desc">线性Pipeline是最脆弱的MAS拓扑，单节点失效导致性能下降23.7%——ResMAS用GNN韧性预测+GRPO自动生成层次拓扑，失效10%时性能下降仅5.5%（+30%韧性）（2026 arXiv:2601.04694）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SDOF-State-Constrained-Orchestration.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">SDOF — 状态机约束 MAS 编排：屏蔽非法操作，任务完成率 86.5%</h3>
+  <p class="sc-desc">SDOF 将 Multi-Agent System（MAS）的执行流程建模为有限状态机（FSM），通过双层防护机制确保 Agent 行为的合法性。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SRL-Semantic-Blueprint-MAS.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">SRL语义蓝图构建 — 用语义角色标注替代单一Prompt的结构化上下文工程</h3>
+  <p class="sc-desc">MAS中Agent接交错误率高达35%是因为用线性Prompt混合了角色/指令/约束——SRL六槽位语义蓝图将接交错误率从35%降至8%，同时内置槽位保护将提示注入防御成功率提升至98%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Self-Improving-Agent-Feedback-Loop.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Self-Refine + RL — 反馈闭环与自进化 Agent</h3>
+  <p class="sc-desc">Self-Refine 是一种让 Agent 对自身输出进行批评和改进的迭代机制。核心洞察：语言模型不仅能生成内容，也能评估和改进内容——利用同一模型的双重能力，实现无需外部监督的自我进化。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Skill-Registry-Dynamic-Loading.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Skill Registry — 技能注册表与动态发现</h3>
+  <p class="sc-desc">例如&quot;抽取实体和情感&quot;需要 InstructUIE + ABSA，&quot;构建用户画像&quot;需要 PERSONABOT + SoMeR</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Subagent-Decomposition.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Subagent Decomposer — 复杂任务子智能体分解</h3>
+  <p class="sc-desc">全品类 VOC 周报生成任务单 Agent 串行处理耗时 45 分钟，遇到复杂子任务容易超 context 失败——子 Agent 分解将任务拆成 8 个并行子任务，总耗时压缩到 8 分钟，成功率从 73% 提升到 96%</p>
+  <div class='sc-footer'><span class='sc-roi'>36万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TokenPilot-Lifecycle-Context-Eviction.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">TokenPilot生命周期感知上下文驱逐 — 双粒度上下文管理：摄入压实+驱逐调度</h3>
+  <p class="sc-desc">传统上下文压缩破坏KV-Cache前缀导致缓存失效反而增加成本——TokenPilot摄入感知压实+生命周期驱逐在保持缓存前缀稳定的同时将成本降低61-87%，远超传统压缩的20-50%（2026 arXiv:2606.17016）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tree-of-Thoughts-Planning.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Tree of Thoughts — 树搜索式任务规划</h3>
+  <p class="sc-desc">Tree of Thoughts (ToT) 将 LLM 的推理过程从线性链式思维（Chain-of-Thought）扩展为树状搜索。核心洞察：人类解决复杂问题时会探索多条路径、评估中间进展、在死胡同回溯——LLM 也应该具备这种&quot;深思熟虑&quot;的能力。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

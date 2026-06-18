@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Email Sequence RL Optimizer — 邮件序列强化学习优化：自动发现最优营养序列 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Email-Sequence-RL-Optimizer</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Email Sequence RL Optimizer — 邮件序列强化学习优化：自动发现最优营养序列</h1>
+<p class="muted">Skill-Email-Sequence-RL-Optimizer · 15-营销投放分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥20-60 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>静态邮件规则对所有用户相同序列导致CTR仅8%高频用户被骚扰低频用户错失时机——强化学习为每个用户学习个性化发送策略，CTR提升到12-15%复购率提升35%年化GMV增益20-60万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>静态规则 vs RL 序列优化：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：独立站有 5,000 名邮件订阅用户（已购买一次），现有静态序列 CTR 仅 8%，复购率 12%。运营无法手动为每个用户调整序列。RL 自动发现每类用户的最优序列。</p><p>数据要求： - 历史邮件发送和用户响应记录（发送/打开/点击/购买/退订） - 用户属性（购买时间/金额/品类/邮件偏好） - 至少 6 个月数据</p><p>预期产出： - 个性化邮件策略：每个用户的最优发送时机和内容类型 - 高价值用户识别：CLV 高但邮件响应低的用户需要特殊策略 - 退订预测：在用户退订前提前调整策略</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>邮件 CTR 提升 50%（8%→12-15%）：月增邮件引流收入 ¥3-10 万</li><li>复购率提升 35%（12%→16-20%）：月增 GMV ¥8-20 万</li><li>退订率降低（减少骚扰）：用户生命周期价值提升</li><li><strong>年化综合 ROI：¥20-60 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（RL 训练需要历史邮件数据；邮件 API 接入（Klaviyo/Mailchimp）；约 4-6 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Email Sequence RL Optimizer
+邮件序列强化学习优化：个性化发送策略
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass
+from collections import defaultdict
+
+
+@dataclass
+class UserEmailState:
+    &quot;&quot;&quot;用户邮件营销状态&quot;&quot;&quot;
+    user_id: str
+    days_since_purchase: int
+    emails_sent_30d: int
+    last_open_days_ago: int
+    last_click_days_ago: int
+    purchase_intent_score: float   # 0-1
+    clv_score: float               # 0-1
+    category_preference: str       # breast_pump / accessories / etc
+    has_unsubscribed: bool = False
+
+
+# 邮件动作类型
+EMAIL_ACTIONS = {
+    0: &#x27;no_send&#x27;,           # 不发送
+    1: &#x27;welcome_content&#x27;,   # 欢迎/教育内容（低打扰）
+    2: &#x27;product_tips&#x27;,      # 产品使用技巧
+    3: &#x27;repurchase_reminder&#x27;,# 复购提醒
+    4: &#x27;discount_offer&#x27;,    # 折扣优惠（高吸引力但高频退订风险）
+    5: &#x27;accessories_cross&#x27;, # 配件交叉销售
+}
+
+# 奖励函数参数
+REWARDS = {
+    &#x27;open&#x27;: 0.1,
+    &#x27;click&#x27;: 0.5,
+    &#x27;purchase&#x27;: 5.0,
+    &#x27;unsubscribe&#x27;: -3.0,
+    &#x27;no_action&#x27;: 0.0,
+}
+
+# 各状态下各动作的响应概率（简化模型，生产用历史数据训练）
+def simulate_user_response(state: UserEmailState, action: int) -&gt; str:
+    &quot;&quot;&quot;模拟用户对邮件的响应&quot;&quot;&quot;
+    if action == 0:  # 不发送
+        return &#x27;no_action&#x27;
+
+    # 基础打开率受意图分影响
+    base_open_rate = 0.1 + 0.3 * state.purchase_intent_score
+    # 高频发送降低打开率
+    frequency_penalty = max(0, state.emails_sent_30d - 4) * 0.05
+    open_rate = max(0.02, base_open_rate - frequency_penalty)
+
+    if not np.random.random() &lt; open_rate:
+        return &#x27;no_action&#x27;
+
+    # 打开后的行动
+    if action == 4:  # 折扣优惠
+        click_rate = 0.5 if state.purchase_intent_score &gt; 0.6 else 0.2</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2405.13892</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Email-Sequence-RL-Optimizer" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Causal-Uplift-Modeling]]（组合</span></li><li><span class='muted'>DTC-Customer-Acquisition-Attribution]]（组合</span></li><li><a href='../skills/Skill-Causal-Uplift-Modeling.html'>Skill-Causal-Uplift-Modeling</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html'>Skill-DTC-Customer-Acquisition-Attribution</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Post-Purchase-Email-Sequence-Optimizer.html'>Skill-Post-Purchase-Email-Sequence-Optimizer</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Causal-Uplift-Modeling]]（组合</span></li><li><span class='muted'>DTC-Customer-Acquisition-Attribution]]（组合</span></li><li><a href='../skills/Skill-Causal-Uplift-Modeling.html'>Skill-Causal-Uplift-Modeling</a></li><li><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html'>Skill-DTC-Customer-Acquisition-Attribution</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Causal-Uplift-Modeling]]（组合</span></li><li><span class='muted'>DTC-Customer-Acquisition-Attribution]]（组合</span></li><li><a href='../skills/Skill-Causal-Uplift-Modeling.html'>Skill-Causal-Uplift-Modeling</a></li><li><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html'>Skill-DTC-Customer-Acquisition-Attribution</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LLM Session Personalization Cache — LLM 驱动的会话意图缓存与千人千面推荐 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-LLM-Session-Personalization-Cache</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>LLM Session Personalization Cache — LLM 驱动的会话意图缓存与千人千面推荐</h1>
+<p class="muted">Skill-LLM-Session-Personalization-Cache · 05-推荐系统</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥40-120 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴独立站首页对所有用户展示相同商品，哺乳妈妈和奶爸看到的首屏完全一样导致CTR仅2.3%——LLM会话意图三层缓存（长期偏好+近期行为+即时session）驱动千人千面排序，首页CTR提升到4-5%，年化GMV增益40-120万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统会话推荐的痛点：用户当前 session 行为极少（平均37次点击），协同过滤没有足够信号推断意图。SPRINT 的解法：用 LLM 离线预生成用户意图画像（Intent Profile），缓存为向量，在线推理时直接检索而非实时调用 LLM。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：独立站首页对所有用户展示相同的商品排列——妈妈群体（关注吸奶器/哺乳配件）和奶爸群体（关注安全座椅/学步车）看到完全相同的首屏。首页 CTR 只有 2.3%，远低于行业 4-6% 的基准。</p><p>数据要求： - 用户历史浏览/加购/购买记录（近 90 天） - 商品属性向量（品类/价格带/年龄段适用/品牌） - 当前 session 实时行为流（需要前端埋点）</p><p>预期产出： - 每位用户的三层意图缓存：长期偏好 + 近期需求 + 实时意图 - 千人千面首页：基于意图缓存重排商品顺序 - 实时 CTR 预估：每次展示预估用户点击概率</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>独立站首页千人千面：CTR 从 2.3% 提升到 4-5%，月增流量价值 ¥10-30 万</li><li>搜索结果个性化重排：CVR 提升 30-50%，月增净收入 ¥10-30 万</li><li>配件/复购推荐精准化：复购率提升 10-15%，LTV 提升</li><li><strong>年化综合 ROI：¥40-120 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要用户行为埋点基础设施 + Redis 缓存层；LLM 画像生成离线批处理，约 3-4 周工程量）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：paper2skills-code/05-推荐系统/llm_session_personalization_cache</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+LLM Session Personalization Cache
+SPRINT 框架的轻量级实现：三层意图缓存 + 千人千面商品排序
+&quot;&quot;&quot;
+import numpy as np
+import json
+from datetime import datetime, timedelta
+from collections import defaultdict
+
+
+def generate_sample_users_and_items():
+    &quot;&quot;&quot;生成模拟用户行为和商品数据&quot;&quot;&quot;
+    np.random.seed(42)
+
+    items = {
+        &#x27;I001&#x27;: {&#x27;name&#x27;: &#x27;Quiet Double Breast Pump&#x27;, &#x27;category&#x27;: &#x27;breast_pump&#x27;,
+                 &#x27;price&#x27;: 149.99, &#x27;age_stage&#x27;: &#x27;newborn&#x27;, &#x27;brand&#x27;: &#x27;BrandA&#x27;, &#x27;attrs&#x27;: [1,0,1,0,1]},
+        &#x27;I002&#x27;: {&#x27;name&#x27;: &#x27;Portable Wearable Breast Pump&#x27;, &#x27;category&#x27;: &#x27;breast_pump&#x27;,
+                 &#x27;price&#x27;: 99.99, &#x27;age_stage&#x27;: &#x27;newborn&#x27;, &#x27;brand&#x27;: &#x27;BrandB&#x27;, &#x27;attrs&#x27;: [1,1,0,0,1]},
+        &#x27;I003&#x27;: {&#x27;name&#x27;: &#x27;Baby Car Seat 0-4 Years&#x27;, &#x27;category&#x27;: &#x27;car_seat&#x27;,
+                 &#x27;price&#x27;: 299.99, &#x27;age_stage&#x27;: &#x27;infant&#x27;, &#x27;brand&#x27;: &#x27;BrandC&#x27;, &#x27;attrs&#x27;: [0,0,1,1,0]},
+        &#x27;I004&#x27;: {&#x27;name&#x27;: &#x27;Infant Learning Walker&#x27;, &#x27;category&#x27;: &#x27;walker&#x27;,
+                 &#x27;price&#x27;: 79.99, &#x27;age_stage&#x27;: &#x27;toddler&#x27;, &#x27;brand&#x27;: &#x27;BrandD&#x27;, &#x27;attrs&#x27;: [0,1,0,1,0]},
+        &#x27;I005&#x27;: {&#x27;name&#x27;: &#x27;Breast Pump Replacement Parts&#x27;, &#x27;category&#x27;: &#x27;accessories&#x27;,
+                 &#x27;price&#x27;: 24.99, &#x27;age_stage&#x27;: &#x27;newborn&#x27;, &#x27;brand&#x27;: &#x27;BrandA&#x27;, &#x27;attrs&#x27;: [0,0,0,0,1]},
+        &#x27;I006&#x27;: {&#x27;name&#x27;: &#x27;Baby Bottle Sterilizer&#x27;, &#x27;category&#x27;: &#x27;sterilizer&#x27;,
+                 &#x27;price&#x27;: 59.99, &#x27;age_stage&#x27;: &#x27;newborn&#x27;, &#x27;brand&#x27;: &#x27;BrandE&#x27;, &#x27;attrs&#x27;: [0,0,1,0,0]},
+    }
+
+    users = {
+        &#x27;U001&#x27;: {  # 新妈妈，关注哺乳
+            &#x27;history&#x27;: [&#x27;I001&#x27;, &#x27;I005&#x27;, &#x27;I002&#x27;, &#x27;I006&#x27;, &#x27;I001&#x27;],
+            &#x27;session&#x27;: [&#x27;I002&#x27;, &#x27;I005&#x27;],
+            &#x27;profile&#x27;: &#x27;nursing_mom&#x27;,
+        },
+        &#x27;U002&#x27;: {  # 奶爸，关注安全
+            &#x27;history&#x27;: [&#x27;I003&#x27;, &#x27;I004&#x27;, &#x27;I003&#x27;],
+            &#x27;session&#x27;: [&#x27;I004&#x27;],
+            &#x27;profile&#x27;: &#x27;safety_dad&#x27;,
+        },
+        &#x27;U003&#x27;: {  # 孕期妈妈，全品类
+            &#x27;history&#x27;: [&#x27;I001&#x27;, &#x27;I003&#x27;, &#x27;I006&#x27;],
+            &#x27;session&#x27;: [&#x27;I001&#x27;, &#x27;I003&#x27;],
+            &#x27;profile&#x27;: &#x27;pregnant_mom&#x27;,
+        },
+    }
+    return users, items
+
+
+def build_item_vector(item):
+    &quot;&quot;&quot;构建商品嵌入向量&quot;&quot;&quot;
+    category_map = {&#x27;breast_pump&#x27;: [1,0,0,0,0,0], &#x27;car_seat&#x27;: [0,1,0,0,0,0],
+                    &#x27;walker&#x27;: [0,0,1,0,0,0], &#x27;accessories&#x27;: [0,0,0,1,0,0],
+                    &#x27;sterilizer&#x27;: [0,0,0,0,1,0]}
+    cat_vec = category_map.get(item[&#x27;category&#x27;], [0,0,0,0,0,1])
+
+    age_map = {&#x27;newborn&#x27;: 1.0, &#x27;infant&#x27;: 0.6, &#x27;toddler&#x27;: 0.3}
+    age_score = age_map.get(item[&#x27;age_stage&#x27;], 0.5)
+
+    price_norm = 1.0 - min(item[&#x27;price&#x27;] / 400, 1.0)  # 越便宜分越高（价格敏感）</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2508.00570</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LLM-Session-Personalization-Cache" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>LTV-Prediction-BTYD]]（组合场景</span></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-Session-Based-Recommendation-SR-GNN.html'>Skill-Session-Based-Recommendation-SR-GNN</a></li><li><a href='../skills/Skill-User-Lifecycle-STAN.html'>Skill-User-Lifecycle-STAN</a></li><li><span class='muted'>User-Lifecycle-STAN]]（组合场景</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>LTV-Prediction-BTYD]]（组合场景</span></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><a href='../skills/Skill-User-Lifecycle-STAN.html'>Skill-User-Lifecycle-STAN</a></li><li><span class='muted'>User-Lifecycle-STAN]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>LTV-Prediction-BTYD]]（组合场景</span></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-User-Lifecycle-STAN.html'>Skill-User-Lifecycle-STAN</a></li><li><span class='muted'>User-Lifecycle-STAN]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

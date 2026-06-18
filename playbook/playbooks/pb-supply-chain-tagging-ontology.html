@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>标签工程与本体驱动手册 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 标签工程与本体驱动手册</nav>
+<div class='pb-hero'>
+  <span class='pb-icon'>TG</span>
+  <div>
+    <h1>标签工程与本体驱动手册</h1>
+    <p class='lead'>从数据孤岛到供应链行动闭环——Tag Schema · 传播算法 · Palantir 本体 · Action 触发</p>
+    <span class='biz-tag'>标签工程 · 供应链本体 · 分析→行动</span>
+  </div>
+</div>
+
+<div class='pb-intro'>跨境电商供应链最大的效率陷阱：每个系统都有数据，每个团队都有分析，但没有任何一个标准化的「语言」让数据跨系统流动，也没有任何机制让分析结果自动变成业务操作。本手册构建以「标签（Tag）」为语言、以「本体（Ontology）」为骨架、以「Action 触发」为终点的完整闭环——实现从「只读分析」到「业务行动」的进化：SKU 断货风险标签变化 → 4 小时内自动触发补货工单，无需人工干预。</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 统一 Tag Schema 消除数据孤岛：断货识别延迟 8 小时→15 分钟，跨渠道库存准确率 74%→99%</li><li>[OK] 自动打标覆盖率 30%→97%：人工审核量降至 3%，节省标注成本 4 万元/年</li><li>[OK] Palantir 本体 + Action 触发：补货响应 2 天→4 小时，年化减少断货损失 25 万+</li><li>[OK] 跨域信号融合：单域中风险识别为极高风险，黑五防护年化价值 50 万+</li></ul></div>
+<div class='pb-steps'>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 1</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 1 — 建立统一 Tag Schema（数据语言标准化）</h3>
+    <p class='pb-problem'>多平台/多系统各自定义「库存状态」「合规状态」，字段名不同、值域不同，导致无法跨系统统一分析——补货团队看不到合规团队已知道的断货风险</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Tag-Schema-Engineering-Lifecycle.html' class='pb-skill-name'>标签Schema工程与生命周期管理 — 企业级Tag类型设计、Schema约束与版本治理</a><div class='pb-skill-badges'><span class='roi-badge'>20万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 定义标准化 Tag 命名空间、值域约束、SLA 要求、触发规则，是所有下游能力的基础，断货识别延迟从 8 小时→15 分钟</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SKU-Master-Data-Golden-Record.html' class='pb-skill-name'>SKU主数据黄金记录治理 — MDM体系、主键统一与多源冲突消解</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ Amazon ASIN / Shopify SKU / ERP 编码三码合一，Golden Record 是 Tag 归属的权威实体标识，跨渠道准确率 74%→99%</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SKU-Entity-Unified-ID-Tagging.html' class='pb-skill-name'>SKU跨平台实体统一标识与标签同步 — ASIN/SKU/ERP三码合一的实体对齐与标签一致性保障</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨平台 ID 映射 + 标签同步协议，新品上市操作从「3 平台各操作 90 分钟」→「一次操作 5 分钟」</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：各平台 SKU 编码列表 + ERP 产品主数据 + 供应商产品对照表</div>
+    <div class="pb-output"><strong>输出结果：</strong>统一 Tag Schema 注册表 · 500 SKU Golden Record · 跨平台 ID 映射索引</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+1+—+建立统一+Tag+Schema（数据语言标准化）+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-supply-chain-tagging-ontology-1'
+         onclick='markStepDone("pb-supply-chain-tagging-ontology",1,5,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-supply-chain-tagging-ontology';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(1)){
+        var btn=document.getElementById('step-done-pb-supply-chain-tagging-ontology-1');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 2</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 2 — 自动打标流水线（覆盖率从 30%→97%）</h3>
+    <p class='pb-problem'>500 个 SKU × 10 个标签维度，靠人工维护每周需要 1 人天，且覆盖率不足 30%——没有标签就没有自动化决策的依据</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Auto-Tagging-Pipeline-Rule-ML-LLM.html' class='pb-skill-name'>三层自动打标流水线 — 规则引擎+ML分类器+LLM抽取的混合置信度打标体系</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 规则层（DOS&lt;7→断货）ML 层（ABC 分类器）LLM 层（合规文本抽取），覆盖率 30%→97%，节省标注成本 4 万元/年</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html' class='pb-skill-name'>供应链知识图谱标签传播算法 — LPA/层级继承/关系链传播的Tag扩散引擎</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 供应商 FDA 认证→沿关系传播到旗下所有 SKU，合规标签更新从 2 小时人工→5 秒自动，覆盖率 60%→95%</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Predictive-Tag-Engine-Supply-Chain.html' class='pb-skill-name'>预测型标签引擎 — 将未来风险转化为当前可查询标签的供应链预测打标体系</a><div class='pb-skill-badges'><span class='roi-badge'>18万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 预测型标签将「未来断货风险」编码为当前可查询的 Tag，驱动 T-14 天提前行动，断货事件 12→3 件/年</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Tag-Quality-Coverage-KPI.html' class='pb-skill-name'>标签质量KPI监控体系 — 覆盖率/准确率/时效性/一致性的全维度Tag质量仪表盘</a><div class='pb-skill-badges'><span class='roi-badge'>20万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 标签错误 MTTD 从「几个月」→实时，防止低质量标签导致 Action 误触发，保护 20 万+ 资产</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：ERP 库存数据 · 销售历史 · 供应商认证文件 · 产品描述文本</div>
+    <div class="pb-output"><strong>输出结果：</strong>实时 Tag 覆盖率仪表盘 · 标签质量 SLA 报告 · 待人工审核队列（仅 3%）</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+2+—+自动打标流水线（覆盖率从+30%→97%）+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-supply-chain-tagging-ontology-2'
+         onclick='markStepDone("pb-supply-chain-tagging-ontology",2,5,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-supply-chain-tagging-ontology';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(2)){
+        var btn=document.getElementById('step-done-pb-supply-chain-tagging-ontology-2');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 3</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 3 — 供应商与 SKU 本体（Palantir 三层结构）</h3>
+    <p class='pb-problem'>供应商是「联系人+报价单」，SKU 是「Excel 里的一行」——没有结构化本体，AI 无法在「供应商延误」和「SKU 断货风险」之间建立因果连接</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Supplier-Ontology-Capability-Map.html' class='pb-skill-name'>供应商本体能力图谱 — 产能/质量/认证/风险四维供应商Ontology设计与实例化</a><div class='pb-skill-badges'><span class='roi-badge'>30万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 供应商四维本体（基础/能力/认证/风险）结构化建模，认证标签自动传播到旗下 SKU，评估周期 2 周→2 天</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SKU-Level-Margin-Attribution-Ontology.html' class='pb-skill-name'>SKU级利润归因本体 — 从GMV到净利润的全链路成本拆解与Tag驱动的利润诊断</a><div class='pb-skill-badges'><span class='roi-badge'>8-12万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ GMV - 平台佣金 - COGS - FBA - 广告 - 退货 = 净贡献，负利润 Tag 自动触发调价/下架审核，识别 16% 亏损 SKU</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：供应商档案 + 认证证书 + 历史 OTIF 数据 · Amazon 费用明细</div>
+    <div class="pb-output"><strong>输出结果：</strong>供应商本体知识图谱 · SKU 全链路 P&amp;L 仪表盘 · 利润 Tag 集合</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+3+—+供应商与+SKU+本体（Palantir+三层结构）+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-supply-chain-tagging-ontology-3'
+         onclick='markStepDone("pb-supply-chain-tagging-ontology",3,5,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-supply-chain-tagging-ontology';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(3)){
+        var btn=document.getElementById('step-done-pb-supply-chain-tagging-ontology-3');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 4</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 4 — Action 触发与审批门控（分析→行动闭环）</h3>
+    <p class='pb-problem'>仪表盘看到了断货风险，但还要人工去 ERP 下补货单——这个「最后一公里」的延迟就是供应链响应慢的根本原因</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html' class='pb-skill-name'>供应链本体驱动行动触发 — Palantir风格Object-Action-Writeback全链路闭环</a><div class='pb-skill-badges'><span class='roi-badge'>25万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ SKU.stockout_risk=CRITICAL → 补货工单 → Writeback to ERP，4 小时自动触发 vs 人工 2 天，年化减少断货损失 25 万+</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Human-in-Loop-Approval-Gate-Tag.html' class='pb-skill-name'>人工审批门控标签系统 — 高影响Action的分级审批、工作流设计与审计追踪</a><div class='pb-skill-badges'><span class='roi-badge'>50-100万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ ¥5000 以下自动执行，大额需 Manager/VP 审批，合规必须 Legal，防止误操作损失 50-100 万</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Decision-Audit-Trail-Ontology.html' class='pb-skill-name'>AI决策审计追踪本体 — 供应链自动化决策的完整记录、回溯与合规证明</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 每次自动化决策记录 5W（Who/What/Why/When/How），哈希链防篡改，满足 EU AI Act 可解释性要求</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：ERP API / WMS API · 审批工作流系统 · 补货参数配置</div>
+    <div class="pb-output"><strong>输出结果：</strong>实时 Action 触发仪表盘 · 审批队列 · 完整决策审计日志</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+4+—+Action+触发与审批门控（分析→行动闭环）+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-supply-chain-tagging-ontology-4'
+         onclick='markStepDone("pb-supply-chain-tagging-ontology",4,5,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-supply-chain-tagging-ontology';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(4)){
+        var btn=document.getElementById('step-done-pb-supply-chain-tagging-ontology-4');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div>
+<div class='pb-step'>
+  <div class='pb-step-num'>Step 5</div>
+  <div class='pb-step-body'>
+    <h3 class='pb-step-title'>Step 5 — 跨域信号融合与编排中枢（大脑）</h3>
+    <p class='pb-problem'>采购域看到「供应商延误」，库存域看到「DOS=8 天」，物流域看到「港口拥堵」——三个中风险叠加是极高风险，但没有一个系统能整合这三个信号</p>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cross-Domain-Supply-Chain-Signal-Fusion.html' class='pb-skill-name'>跨域供应链信号融合引擎 — 多域Tag汇聚、冲突消解与统一决策信号生成</a><div class='pb-skill-badges'><span class='roi-badge'>50万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 五域加权融合识别跨域叠加风险，黑五前发现 23 个单域看不见的高风险 SKU，断货预警准确率 +60%</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Supply-Chain-Agent-Orchestration-Hub.html' class='pb-skill-name'>供应链Agent编排中枢 — 多Agent协作、任务分发与跨域决策自动化</a><div class='pb-skill-badges'><span class='roi-badge'>50万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 融合信号→编排中枢→分派各域 Agent 并行处理，供应链响应从「人工协调 2-4 小时」→「自动编排 4 分钟」</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Supply-Chain-Data-Lineage-Tracking.html' class='pb-skill-name'>供应链数据血缘追踪 — 从原始数据到Tag决策的全链路溯源与影响分析</a><div class='pb-skill-badges'><span class='roi-badge'>5-10万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 追踪「这个补货 Action 依据的是哪些数据源」，AI 决策完全可解释，数据问题定位 2 天→5 分钟</p></div></div>
+    <div class="pb-data"><strong>所需数据：</strong>需要：各域实时 Tag 状态 · Agent 能力注册表 · 历史决策日志</div>
+    <div class="pb-output"><strong>输出结果：</strong>五域融合风险仪表盘 · Agent 执行报告 · 数据血缘图谱</div>
+    <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
+      <a href='../chat.html?q=Step+5+—+跨域信号融合与编排中枢（大脑）+在母婴跨境电商场景如何应用？' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
+         onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
+         onmouseout="this.style.background='var(--accent,#3b82f6)'">
+        ✦ 向 AI 咨询此步骤
+      </a>
+      <a href='../agents.html' target='_blank'
+         style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
+         onmouseover="this.style.borderColor='var(--accent,#3b82f6)';this.style.color='var(--accent,#3b82f6)'"
+         onmouseout="this.style.borderColor='var(--line,#e2e8f0)';this.style.color='var(--ink-2,#475569)'">
+        ◈ 调用 Agent 执行
+      </a>
+      <button id='step-done-pb-supply-chain-tagging-ontology-5'
+         onclick='markStepDone("pb-supply-chain-tagging-ontology",5,5,this)'
+         style='display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--muted,#94a3b8);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s'>
+        ○ 标记完成
+      </button>
+    </div>
+    <script>
+    (function(){
+      var k='pb_progress_pb-supply-chain-tagging-ontology';
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(done.includes(5)){
+        var btn=document.getElementById('step-done-pb-supply-chain-tagging-ontology-5');
+        if(btn){btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';}
+      }
+    })();
+    function markStepDone(pbId,stepNum,totalSteps,btn){
+      var k='pb_progress_'+pbId;
+      var done=JSON.parse(localStorage.getItem(k)||'[]');
+      if(!done.includes(stepNum)){done.push(stepNum);localStorage.setItem(k,JSON.stringify(done));}
+      btn.textContent='✓ 已完成';btn.style.background='#f0fdf4';btn.style.borderColor='#86efac';btn.style.color='#15803d';
+      if(done.length>=totalSteps){
+        var toast=document.createElement('div');
+        toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
+        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
+      }
+    }
+    </script>
+  </div>
+</div></div>
+
+<div class='pb-lead-capture'>
+  <div class='pb-lead-inner'>
+    <div class='pb-lead-text'>
+      <h3>想了解这套方案如何落地你的业务？</h3>
+      <p>预约 30 分钟免费 ROI 测算 — 基于你的 SKU 数量、广告预算和当前痛点，给出定制化收益估算。</p>
+      <ul class='pb-lead-bullets'>
+        <li>✓ 结合你的实际数据，不是通用模板</li>
+        <li>✓ 明确哪 1-2 个 Skill 优先落地 ROI 最高</li>
+        <li>✓ 30 分钟，结束后你有一份行动清单</li>
+      </ul>
+    </div>
+    <div class='pb-lead-action'>
+      <a href='mailto:skills@lute-tlz-dddd.top?subject=预约ROI测算-标签工程与本体驱动手册&body=手册:标签工程与本体驱动手册%0A公司规模:%0A主要痛点:%0A当前月GMV:' class='pb-lead-btn'>预约 30 分钟 ROI 测算 →</a>
+      <p class='pb-lead-note'>发送邮件后 24h 内回复确认时间</p>
+    </div>
+  </div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

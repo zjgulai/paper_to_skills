@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VOC-Driven Recommendation Signal — 评论语义驱动的推荐增强：NLP-VOC×推荐系统桥梁 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/07-nlp-voc.html">07-NLP-VOC</a> / Skill-VOC-Driven-Recommendation-Signal</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>VOC-Driven Recommendation Signal — 评论语义驱动的推荐增强：NLP-VOC×推荐系统桥梁</h1>
+<p class="muted">Skill-VOC-Driven-Recommendation-Signal · 07-NLP-VOC</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-60 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>产品运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 客服负责人 · 品牌负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Reviews / Q&amp;A · TikTok 评论区 · Reddit 母婴社区</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>每月几千条差评和 Q&amp;A 没有人力一条条看，但痛点都在里面；新品开发不知道做什么功能、改什么问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>自动提取 Top 10 高频痛点，新品开发有用户数据背书，每月出竞品用户洞察报告</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>差评太多看不过来</span><span class='biz-pain-tag'>不知道用户真正在意什么</span><span class='biz-pain-tag'>竞品评论没有系统分析过</span><span class='biz-pain-tag'>新品开发靠拍脑袋</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>推荐系统对静音敏感用户推了嘈杂的热销吸奶器导致退货率高——方面情感向量注入协同过滤将静音型产品从第8位升至第2位，推荐CVR提升8-15%，年化GMV增益20-60万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统协同过滤只用&quot;谁买了什么&quot;，忽略&quot;为什么买&quot;。ACFRS 框架把用户评论中的方面级情感注入推荐模型：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：搜索&quot;breast pump&quot;返回20个结果，但用户历史评论显示她特别在意&quot;静音&quot;（写了&quot;sleep-friendly&quot;，差评了噪音大的产品）——推荐系统完全不知道，只按购买频率排序。</p><p>数据要求： - 用户历史评论文本（近12个月） - 商品评论方面情感汇总（来自 VOC-Aspect-Sentiment-Extraction） - 现有推荐系统的候选集输出（Top 100）</p><p>预期产出： - 用户方面偏好向量（静音: 0.9, 便携: 0.7, 价格: 0.4...） - 个性化重排结果（静音型吸奶器从第8位升至第2位） - 方面解释：&quot;因为您对静音有强偏好，推荐此款 &lt;45dB 产品&quot;</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>搜索/推荐个性化重排：CTR 提升 12-20%，CVR 提升 8-15%</li><li>避免向&quot;噪音敏感用户&quot;推荐嘈杂产品：退货率降低 10-20%</li><li>年化 GMV 增益：¥20-60 万</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要评论方面分析基础设施 + 推荐系统接口改造，约 3-4 周）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（填补 NLP-VOC ↔ 推荐系统完全断链；评论信号比行为数据更能解释&quot;为什么不买&quot;）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+VOC-Driven Recommendation Signal
+评论方面情感增强推荐系统（NLP-VOC × 推荐系统桥梁）
+&quot;&quot;&quot;
+import numpy as np
+from collections import defaultdict
+
+
+# 方面词典（母婴品类）
+ASPECT_DICT = {
+    &#x27;噪音&#x27;: [&#x27;quiet&#x27;, &#x27;silent&#x27;, &#x27;noise&#x27;, &#x27;loud&#x27;, &#x27;噪音&#x27;, &#x27;安静&#x27;],
+    &#x27;便携&#x27;: [&#x27;portable&#x27;, &#x27;travel&#x27;, &#x27;compact&#x27;, &#x27;便携&#x27;, &#x27;轻便&#x27;],
+    &#x27;吸力&#x27;: [&#x27;suction&#x27;, &#x27;power&#x27;, &#x27;strong&#x27;, &#x27;吸力&#x27;, &#x27;吸奶量&#x27;],
+    &#x27;价格&#x27;: [&#x27;price&#x27;, &#x27;expensive&#x27;, &#x27;value&#x27;, &#x27;价格&#x27;, &#x27;贵&#x27;, &#x27;便宜&#x27;],
+    &#x27;清洁&#x27;: [&#x27;clean&#x27;, &#x27;easy&#x27;, &#x27;wash&#x27;, &#x27;清洗&#x27;, &#x27;方便&#x27;],
+}
+
+SENTIMENT_WORDS = {
+    &#x27;positive&#x27;: [&#x27;good&#x27;, &#x27;great&#x27;, &#x27;love&#x27;, &#x27;excellent&#x27;, &#x27;perfect&#x27;, &#x27;best&#x27;, &#x27;好&#x27;, &#x27;棒&#x27;, &#x27;喜欢&#x27;],
+    &#x27;negative&#x27;: [&#x27;bad&#x27;, &#x27;poor&#x27;, &#x27;hate&#x27;, &#x27;terrible&#x27;, &#x27;loud&#x27;, &#x27;heavy&#x27;, &#x27;差&#x27;, &#x27;不好&#x27;, &#x27;失望&#x27;],
+}
+
+
+def extract_aspect_sentiment(review_text):
+    &quot;&quot;&quot;简化版方面情感提取&quot;&quot;&quot;
+    text = review_text.lower()
+    aspect_scores = {}
+    for aspect, keywords in ASPECT_DICT.items():
+        matched = any(kw in text for kw in keywords)
+        if not matched:
+            continue
+        # 判断情感
+        pos = sum(1 for w in SENTIMENT_WORDS[&#x27;positive&#x27;] if w in text)
+        neg = sum(1 for w in SENTIMENT_WORDS[&#x27;negative&#x27;] if w in text)
+        sentiment = (pos - neg) / (pos + neg + 1)
+        aspect_scores[aspect] = round(sentiment, 2)
+    return aspect_scores
+
+
+def build_user_aspect_profile(user_reviews):
+    &quot;&quot;&quot;聚合用户历史评论，构建方面偏好向量&quot;&quot;&quot;
+    aspect_accumulator = defaultdict(list)
+    for review in user_reviews:
+        scores = extract_aspect_sentiment(review)
+        for asp, score in scores.items():
+            aspect_accumulator[asp].append(score)
+    # 加权平均（越强烈的情感权重越大）
+    profile = {}
+    for asp, scores in aspect_accumulator.items():
+        abs_scores = [abs(s) for s in scores]
+        weighted = sum(s * abs(s) for s in scores) / (sum(abs_scores) + 1e-8)
+        profile[asp] = round(weighted, 3)
+    return profile
+
+
+def build_item_aspect_quality(item_reviews):
+    &quot;&quot;&quot;聚合商品评论，构建方面质量向量&quot;&quot;&quot;
+    aspect_accumulator = defaultdict(list)
+    for review in item_reviews:
+        scores = extract_aspect_sentiment(review)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2401.15285</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-VOC-Driven-Recommendation-Signal" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>AGRS-Aspect-Guided-Review-Summarization]]（组合</span></li><li><span class='muted'>Long-Tail-Search-Embedding-SEO]]（组合</span></li><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-Explainable-Recommendation.html'>Skill-Explainable-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>AGRS-Aspect-Guided-Review-Summarization]]（组合</span></li><li><span class='muted'>Long-Tail-Search-Embedding-SEO]]（组合</span></li><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-Explainable-Recommendation.html'>Skill-Explainable-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>AGRS-Aspect-Guided-Review-Summarization]]（组合</span></li><li><span class='muted'>Long-Tail-Search-Embedding-SEO]]（组合</span></li><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-Long-Tail-Search-Embedding-SEO.html'>Skill-Long-Tail-Search-Embedding-SEO</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

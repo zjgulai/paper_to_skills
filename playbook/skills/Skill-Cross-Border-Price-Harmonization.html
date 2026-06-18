@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cross-Border Price Harmonization（跨境价格协调） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/17-价格优化.html">17-价格优化</a> / Skill-Cross-Border-Price-Harmonization</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Cross-Border Price Harmonization（跨境价格协调）</h1>
+<p class="muted">Skill-Cross-Border-Price-Harmonization · 17-价格优化</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tariff-response.html'>关税冲击 72h 响应手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>8-15 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐☆☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>定价负责人 / 运营负责人<span class='biz-ctx-secondary'> · 选品负责人 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Buy Box 竞价策略 · 多市场价格协调 · Prime Day / Coupon 折扣优化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>竞品突然降价，不知道该不该跟，跟了怕伤利润不跟怕丢 BSR；大促期间不知道折扣给多少，给多了利润没了</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>实时监控竞品价格并自动触发调价，毛利率保持在目标区间，BSR 排名和利润同时兼顾</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品降价了不知道要不要跟</span><span class='biz-pain-tag'>大促折扣给多少没有依据</span><span class='biz-pain-tag'>手动盯价格太累反应不及时</span><span class='biz-pain-tag'>新品上线定价高了还是低了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务问题：美国 $129，德国 €119（≈$130），英国 £99（≈$125）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>同一 SKU 在美国、德国、英国定价不能完全独立——消费者会跨市场比价，亚马逊全球店铺会显示价格差异。需要在&quot;市场本地化定价&quot;和&quot;全球价格一致性&quot;之间找最优平衡。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：美国 $129，德国 €119（≈$130），英国 £99（≈$125）。德国消费者投诉&quot;为什么比英国贵&quot;。同时汇率波动让欧元定价时而偏高时而偏低。</p><p>数据要求：各市场 12 个月价格-销量数据 + 汇率历史 + PPP 修正系数</p><p>预期产出： - PPP 归一化价格：美国 100（基准），德国 103，英国 102 — 差距 &lt;3% 在合理范围 - 汇率缓冲带：EUR/USD 在 1.05-1.12 区间内不调价，超出时阶梯式调整 - 价格走廊宽度 α=0.12，当前各市场均在走廊内</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：减少投诉 70% + 避免汇率误判损失 $5-8K/月；年化 <strong>8-15 万元</strong></li><li><strong>实施难度</strong>：⭐☆☆☆☆（1 星）— 纯计算逻辑</li><li><strong>优先级评分</strong>：⭐⭐⭐☆☆（3 星）— 多市场运营的基础设施</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;Cross-Border Price Harmonization — 多市场价格 + 汇率缓冲&quot;&quot;&quot;
+
+import numpy as np
+from typing import Dict, List
+
+
+def ppp_normalized_prices(
+    prices: Dict[str, float],  # {&#x27;US&#x27;: 129, &#x27;DE&#x27;: 119, &#x27;UK&#x27;: 99}
+    exchange_rates: Dict[str, float],  # to USD
+    ppp_factors: Dict[str, float]  # PPP修正
+) -&gt; Dict[str, float]:
+    &quot;&quot;&quot;PPP归一化价格对比&quot;&quot;&quot;
+    normalized = {}
+    for mkt, price in prices.items():
+        usd_price = price * exchange_rates.get(mkt, 1.0)
+        normalized[mkt] = usd_price / ppp_factors.get(mkt, 1.0)
+    return normalized
+
+
+def check_price_corridor(
+    normalized: Dict[str, float], alpha: float = 0.12
+) -&gt; List[str]:
+    &quot;&quot;&quot;检查价格走廊违规&quot;&quot;&quot;
+    alerts = []
+    markets = list(normalized.keys())
+    for i in range(len(markets)):
+        for j in range(i+1, len(markets)):
+            ratio = normalized[markets[i]] / normalized[markets[j]]
+            if ratio &gt; 1 + alpha:
+                alerts.append(f&quot;{markets[i]} too high vs {markets[j]} ({ratio:.2f})&quot;)
+            elif ratio &lt; 1 - alpha:
+                alerts.append(f&quot;{markets[i]} too low vs {markets[j]} ({ratio:.2f})&quot;)
+    return alerts
+
+
+def exchange_rate_buffer(
+    current_rate: float, baseline_rate: float,
+    volatility: float, buffer_width: float = 1.5
+) -&gt; str:
+    &quot;&quot;&quot;汇率缓冲带判断&quot;&quot;&quot;
+    z_score = abs(current_rate - baseline_rate) / max(volatility, 0.001)
+    if z_score &lt; buffer_width:
+        return &quot;hold&quot;
+    elif z_score &lt; buffer_width * 2:
+        return &quot;adjust_partial&quot;
+    return &quot;adjust_full&quot;
+
+
+if __name__ == &#x27;__main__&#x27;:
+    prices = {&#x27;US&#x27;: 129, &#x27;DE&#x27;: 119, &#x27;UK&#x27;: 99}
+    fx = {&#x27;US&#x27;: 1.0, &#x27;DE&#x27;: 1.09, &#x27;UK&#x27;: 1.26}
+    ppp = {&#x27;US&#x27;: 1.0, &#x27;DE&#x27;: 0.92, &#x27;UK&#x27;: 0.95}
+    
+    norm = ppp_normalized_prices(prices, fx, ppp)
+    print(f&quot;PPP归一化: {&#x27;, &#x27;.join(f&#x27;{m}:{v:.0f}&#x27; for m,v in norm.items())}&quot;)
+    
+    alerts = check_price_corridor(norm, alpha=0.12)
+    if alerts:
+        for a in alerts:
+            print(f&quot;  ⚠ {a}&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Border-Price-Harmonization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><a href='../skills/Skill-Cross-Market-Product-Transfer.html'>Skill-Cross-Market-Product-Transfer</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Geo-Level-Marketing-Effectiveness.html'>Skill-Geo-Level-Marketing-Effectiveness</a></li><li><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html'>Skill-Multi-Channel-Inventory-Pooling</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li><li><span class='muted'>相关</span></li></ul>
+    <h3>延伸技能</h3><p class='muted'>暂无</p>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Market-Product-Transfer.html'>Skill-Cross-Market-Product-Transfer</a></li><li><a href='../skills/Skill-Geo-Level-Marketing-Effectiveness.html'>Skill-Geo-Level-Marketing-Effectiveness</a></li><li><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html'>Skill-Multi-Channel-Inventory-Pooling</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li><li><span class='muted'>相关</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

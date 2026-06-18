@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>主动客户预警供应链 — 基于在途延误Tag的客户主动通知与体验保护 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Proactive-Customer-Alert-Supply-Chain</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>主动客户预警供应链 — 基于在途延误Tag的客户主动通知与体验保护</h1>
+<p class="muted">Skill-Proactive-Customer-Alert-Supply-Chain · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-intelligence.html'>供应链全链路智能化手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>客服面临&quot;延误被动等投诉，150条工单×$15处理成本&quot;——主动延误通知将投诉率降低70%，预警成本$0.02/封 vs 投诉处理$15/件，ROI高达750倍</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>主动预警（Proactive Alerting） 的核心洞察：在客户投诉之前主动告知，可以将差评率降低6070%，NPS提升1520分。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：大促后物流延误主动处理 - Black Friday后，FedEx延误导致500个订单预计超期1-3天 - 传统方式：等客户投诉 → 产生约150个投诉工单 → 客服成本约$15/件 → $2,250 - 主动预警：系统自动检测延误 → 500封个性化邮件 → 邮件成本约$0.02/件 → $10 - 净节省：$2,240 + 减少差评15条（每条差评影响约30个潜在购买）</p><p>**场景B：Prime会员优先预警** - 识别Prime会员订单（customer.tier=PRIME）在延误订单中的比例（30%） - Prime会员优先通知（30分钟内），并附加免费延长Prime一个月的补偿 - 普通订单次日通知+优惠券</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：大促期间500个延误订单的主动预警，将投诉工单从150个降至20个，节省客服成本约$1,950；减少差评15条，间接保护转化率（每条差评影响约30个购买决策）；Prime会员专属补偿保留率提升约15%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（主要是邮件模板系统和在途Tag的API对接）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（客户体验的投入产出比极高：$10成本的主动预警 vs $150被动处理的投诉）</li><li><strong>评估依据</strong>：Amazon研究：主动通知延误的卖家，差评率比被动处理低65%，因为客户感受到&quot;被关心&quot;而非&quot;被遗忘&quot;</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+主动客户预警供应链系统
+功能：延误检测 / 受影响订单识别 / 个性化通知生成 / 补偿方案计算 / 发送队列管理
+输入：在途延误Tags + 订单数据 + 客户信息
+输出：通知队列 + 补偿方案 + 发送结果
+&quot;&quot;&quot;
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from typing import Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class AffectedOrder:
+    order_id: str
+    customer_id: str
+    customer_tier: str      # PRIME / STANDARD
+    shipment_id: str
+    original_eta: datetime
+    new_eta: datetime
+    delay_days: float
+    order_value: float
+    already_alerted: bool = False
+    complaint_filed: bool = False
+
+
+@dataclass
+class AlertNotification:
+    alert_id: str
+    order_id: str
+    customer_id: str
+    alert_level: str        # L1 / L2 / L3
+    channel: str            # EMAIL / PUSH / SMS
+    subject: str
+    body: str
+    compensation: dict
+    sent_at: Optional[str] = None
+    status: str = &quot;queued&quot;
+
+
+class ProactiveCustomerAlertEngine:
+
+    COMPENSATION_MATRIX = {
+        &quot;L1&quot;: {&quot;prime&quot;: {&quot;voucher&quot;: 0, &quot;free_prime_days&quot;: 0, &quot;shipping_refund&quot;: False},
+               &quot;standard&quot;: {&quot;voucher&quot;: 0, &quot;free_prime_days&quot;: 0, &quot;shipping_refund&quot;: False}},
+        &quot;L2&quot;: {&quot;prime&quot;: {&quot;voucher&quot;: 8, &quot;free_prime_days&quot;: 7, &quot;shipping_refund&quot;: False},
+               &quot;standard&quot;: {&quot;voucher&quot;: 5, &quot;free_prime_days&quot;: 0, &quot;shipping_refund&quot;: False}},
+        &quot;L3&quot;: {&quot;prime&quot;: {&quot;voucher&quot;: 15, &quot;free_prime_days&quot;: 30, &quot;shipping_refund&quot;: True},
+               &quot;standard&quot;: {&quot;voucher&quot;: 10, &quot;free_prime_days&quot;: 0, &quot;shipping_refund&quot;: True}},
+    }
+
+    def __init__(self):
+        self.alert_queue: list = []
+        self.sent_alerts: list = []
+        self.suppressed: set = set()
+
+    def classify_delay(self, delay_days: float) -&gt; str:
+        if delay_days &lt;= 2: return &quot;L1&quot;
+        elif delay_days &lt;= 5: return &quot;L2&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2309.09234</li><li>2401.12834</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Proactive-Customer-Alert-Supply-Chain" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-B2C-Delivery-Timeliness-Experience-KPI.html'>Skill-B2C-Delivery-Timeliness-Experience-KPI</a></li><li><a href='../skills/Skill-CS-Supply-Chain-Feedback-Loop-Tag.html'>Skill-CS-Supply-Chain-Feedback-Loop-Tag</a></li><li><a href='../skills/Skill-Cross-Border-Return-Rate-By-Country-KPI.html'>Skill-Cross-Border-Return-Rate-By-Country-KPI</a></li><li><a href='../skills/Skill-Customer-Complaint-Supply-Root-Cause-KPI.html'>Skill-Customer-Complaint-Supply-Root-Cause-KPI</a></li><li><a href='../skills/Skill-Order-Cycle-Time-OTD-Analytics.html'>Skill-Order-Cycle-Time-OTD-Analytics</a></li><li><a href='../skills/Skill-Shipment-Risk-Tag-Realtime-Tracker.html'>Skill-Shipment-Risk-Tag-Realtime-Tracker</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-CS-Supply-Chain-Feedback-Loop-Tag.html'>Skill-CS-Supply-Chain-Feedback-Loop-Tag</a></li><li><a href='../skills/Skill-Cross-Border-Return-Rate-By-Country-KPI.html'>Skill-Cross-Border-Return-Rate-By-Country-KPI</a></li><li><a href='../skills/Skill-Customer-Complaint-Supply-Root-Cause-KPI.html'>Skill-Customer-Complaint-Supply-Root-Cause-KPI</a></li><li><a href='../skills/Skill-Order-Cycle-Time-OTD-Analytics.html'>Skill-Order-Cycle-Time-OTD-Analytics</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-CS-Supply-Chain-Feedback-Loop-Tag.html'>Skill-CS-Supply-Chain-Feedback-Loop-Tag</a></li><li><a href='../skills/Skill-Order-Cycle-Time-OTD-Analytics.html'>Skill-Order-Cycle-Time-OTD-Analytics</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

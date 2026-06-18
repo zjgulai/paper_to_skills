@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SCRABLE Review Response Generation — RAG+LLM 自优化差评回复生成 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-SCRABLE-Review-Response-Generation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>SCRABLE Review Response Generation — RAG+LLM 自优化差评回复生成</h1>
+<p class="muted">Skill-SCRABLE-Review-Response-Generation · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>客服与VOC</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-100 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>每天 20-30 条差评需在 48h 内回复否则影响卖家评分，人工团队时差覆盖困难——RAG 检索产品知识库 + LLM 自优化迭代生成专业回复，回复时效 18h→2h、回复率 60%→95%+，ROUGE-L 提升 8.5%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：电商卖家回复差评是维护品牌声誉的核心操作，但人工回复耗时（日均 50+ 条差评 × 510 分钟/条）且质量参差。SCRABLE 将 RAG（检索产品知识库）+ LLM（生成专业回复）+ 自优化评分（模拟人工评估并迭代改进）三层架构结合，生成的回复比基线 Prompt 提升 8.5%+，同时支持语气风格控制（正式/亲切/专业）。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景：吸奶器差评自动回复（Amazon UK/DE）</p><p>- 业务问题：某母婴品牌在 Amazon UK 每天有 20-30 条差评，需要 48h 内回复（超时影响卖家评分），人工团队时差覆盖困难，且英语/德语差评需要本地化语气。 - 数据要求：产品 FAQ 文档 + 退换货政策 + 历史优质回复示例（10-20 条）。 - 预期产出： - 针对每条差评的专业回复草稿（3 秒内生成） - 质量评分（0-1，低于 0.7 自动触发人工复核） - 可解释改进建议（&quot;未提及具体解决方案 -0.2&quot;） - 差评类型覆盖： - 产品质量问题 → 道歉 + 解释 + 退换货方案 - 使用方法误解 → 同理心 + 详细指导 + 视频链接 - 物流延误投诉 → 道歉</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：回复时效 18h → 2h，回复率 60% → 95%+，改善卖家评分 → BSR 排名稳定，年化 GMV 保护价值 20-100 万元</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（低，RAG + LLM API，无需训练模型）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（差评未回复是 Amazon 账号健康的直接风险因素）</li><li><strong>评估依据</strong>：LREC-COLING 2024，ROUGE-L +8.5%，人工评估可接受率 +15%</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass, field
+from typing import List, Optional
+
+@dataclass
+class ProductKnowledge:
+    faq: List[str] = field(default_factory=list)
+    return_policy: str = &quot;&quot;
+    warranty: str = &quot;&quot;
+
+@dataclass
+class CustomerReview:
+    text: str
+    rating: int
+    category: str = &quot;general&quot;
+
+def classify_review_issue(review: CustomerReview) -&gt; str:
+    text = review.text.lower()
+    if any(k in text for k in [&#x27;噪音&#x27;, &#x27;loud&#x27;, &#x27;noise&#x27;, &#x27;声音大&#x27;, &#x27;吵&#x27;]):
+        return &#x27;noise_complaint&#x27;
+    if any(k in text for k in [&#x27;漏&#x27;, &#x27;leak&#x27;, &#x27;漏奶&#x27;, &#x27;漏液&#x27;]):
+        return &#x27;leakage_complaint&#x27;
+    if any(k in text for k in [&#x27;不会用&#x27;, &#x27;how to&#x27;, &#x27;怎么用&#x27;, &#x27;confused&#x27;, &#x27;说明书&#x27;]):
+        return &#x27;usage_question&#x27;
+    if any(k in text for k in [&#x27;物流&#x27;, &#x27;shipping&#x27;, &#x27;发货&#x27;, &#x27;delivery&#x27;, &#x27;快递&#x27;, &#x27;慢&#x27;]):
+        return &#x27;shipping_complaint&#x27;
+    if any(k in text for k in [&#x27;坏了&#x27;, &#x27;broken&#x27;, &#x27;损坏&#x27;, &#x27;defective&#x27;, &#x27;质量差&#x27;]):
+        return &#x27;quality_complaint&#x27;
+    return &#x27;general_dissatisfaction&#x27;
+
+def retrieve_knowledge(issue_type: str, kb: ProductKnowledge) -&gt; str:
+    knowledge_map = {
+        &#x27;noise_complaint&#x27;: &quot;吸奶器在最高档位会有轻微马达声（约40dB），建议使用中低档位，噪音更低。&quot;,
+        &#x27;leakage_complaint&#x27;: &quot;请检查硅胶护罩是否安装到位，逆时针旋转至底部听到咔哒声。如仍有问题，请联系我们。&quot;,
+        &#x27;usage_question&#x27;: &quot;详细使用说明请参考包装内手册，或访问官网视频教程。我们也提供1对1远程指导。&quot;,
+        &#x27;shipping_complaint&#x27;: kb.return_policy or &quot;物流延误深感抱歉，请提供订单号，我们将协助追踪。&quot;,
+        &#x27;quality_complaint&#x27;: kb.warranty or &quot;产品享有18个月质保，如存在质量问题请联系我们，免费换新。&quot;,
+        &#x27;general_dissatisfaction&#x27;: &quot;感谢您的反馈，我们非常重视您的体验。&quot;,
+    }
+    return knowledge_map.get(issue_type, &quot;感谢您的反馈。&quot;)
+
+def generate_response(review: CustomerReview, kb: ProductKnowledge,
+                      tone: str = &#x27;empathetic&#x27;) -&gt; dict:
+    issue = classify_review_issue(review)
+    knowledge = retrieve_knowledge(issue, kb)
+    tone_prefix = {
+        &#x27;empathetic&#x27;: &quot;非常感谢您的详细反馈，我们深感抱歉让您有此体验。&quot;,
+        &#x27;professional&#x27;: &quot;感谢您的评价，我们对此高度重视。&quot;,
+        &#x27;friendly&#x27;: &quot;亲爱的顾客，谢谢您分享使用感受！&quot;,
+    }.get(tone, &quot;感谢您的反馈。&quot;)
+    response = f&quot;{tone_prefix}\n\n{knowledge}\n\n如有任何疑问，欢迎随时联系我们的客服团队，我们将在24小时内为您解答。祝您和宝宝一切顺好！&quot;
+    quality = _score_response(response, review)
+    return {&#x27;response&#x27;: response, &#x27;issue_type&#x27;: issue, &#x27;quality_score&#x27;: quality,
+            &#x27;needs_human_review&#x27;: quality &lt; 0.7}
+
+def _score_response(response: str, review: CustomerReview) -&gt; float:
+    score = 0.5
+    if len(response) &gt; 100: score += 0.1
+    if len(response) &gt; 200: score += 0.1
+    if any(k in response for k in [&#x27;联系&#x27;, &#x27;contact&#x27;, &#x27;客服&#x27;, &#x27;support&#x27;]): score += 0.1
+    if any(k in response for k in [&#x27;质保&#x27;, &#x27;warranty&#x27;, &#x27;退换&#x27;, &#x27;return&#x27;, &#x27;换新&#x27;]): score += 0.1</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2405.03845</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-SCRABLE-Review-Response-Generation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-Amazon-Account-Appeal-Strategy.html'>Skill-Amazon-Account-Appeal-Strategy</a></li><li><a href='../skills/Skill-AutoQual-Review-Quality-Assessment.html'>Skill-AutoQual-Review-Quality-Assessment</a></li><li><a href='../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Skill-DialIn-LLM-Case-Intent-Clustering</a></li><li><a href='../skills/Skill-Multilingual-Customer-Service-Translation.html'>Skill-Multilingual-Customer-Service-Translation</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Amazon-Account-Appeal-Strategy.html'>Skill-Amazon-Account-Appeal-Strategy</a></li><li><a href='../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Skill-DialIn-LLM-Case-Intent-Clustering</a></li><li><a href='../skills/Skill-Multilingual-Customer-Service-Translation.html'>Skill-Multilingual-Customer-Service-Translation</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html'>Skill-DialIn-LLM-Case-Intent-Clustering</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

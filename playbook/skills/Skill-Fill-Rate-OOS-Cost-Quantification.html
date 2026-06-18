@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>需求满足率与缺货成本全量化 — Fill Rate三层模型与OOS全链路损失计算 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Fill-Rate-OOS-Cost-Quantification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>需求满足率与缺货成本全量化 — Fill Rate三层模型与OOS全链路损失计算</h1>
+<p class="muted">Skill-Fill-Rate-OOS-Cost-Quantification · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>7天缺货损失被估算$6650实际高达$23290——OOS五层全量化模型（直接+排名+流失+广告+评分）揭示真实损失是传统估算3.5倍，支撑正确安全库存决策</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>业务背景（陈凤霞实战经验）：书中明确区分&quot;缺货率&quot;和&quot;满足率&quot;两个相关但不同的KPI：缺货率关注&quot;什么时候没货&quot;（时间维度），满足率关注&quot;多少需求被满足&quot;（数量维度）。书中特别强调：缺货的损失远不止&quot;这次没卖出去&quot;——更深层的损失包括：搜索排名下降（算法惩罚）、买家转向竞品（可能永久流失）、品牌口碑损伤（Review减少）。这些隐性损失往往是直接销售损失的35倍。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某卖家吸奶器爆款因备货不足OOS了7天，运营团队估算损失&quot;只有7天×25件×$38=$6650&quot;，觉得还好。但实际损失远不止于此 - 数据要求：OOS前后销量和排名数据、广告花费、历史评分、Buy Box拥有率 - 算法应用： 1. L1直接损失：7天×25件×$38=$6650 2. L2排名恢复期损失：补货后排名从P50降至P300，恢复需12天，流量衰减60%；损失=12天×25×0.6×$38=$6840 3. L3买家流失：7天访客约1400人，转化率3%流失永久，LTV=$220/人；损失=1400×3%×$220=$9240 4. L4广告浪费：7天继续投放$560</p><p>场景B：Fill Rate KPI体系建立（亚马逊运营团队）</p><p>- **业务问题**：运营团队没有Fill Rate指标，只追踪&quot;有没有货&quot;（二值），不知道&quot;满足了多少需求&quot; - **算法应用**：建立三层Fill Rate周报：Line Fill Rate（目标≥97%）、Order Fill Rate（目标≥94%）、Unit Fill Rate（目标≥99%）；每周报告各层Fill Rate，低于目标的SKU自动触发补货评审 - **预期产出**：引入Fill Rate KPI后3个月，缺货率从12%降至5%，月均GMV提升8%（约$4万）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月销$50万卖家，OOS真实成本=传统估算的3.5倍；通过正确量化后优化安全库存策略，年减少OOS 60%，避免损失约$8万；系统成本$2万，ROI≈400%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（Fill Rate计算本身简单，难点是L3（买家流失LTV）和L5（评分影响）的量化需要历史数据建模）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（OOS成本被严重低估是行业普遍现象，量化后直接改变安全库存决策ROI方程）</li><li><strong>适用规模</strong>：所有规模，月销&gt;$1万就值得建立Fill Rate监控</li><li><strong>数据依赖</strong>：订单级入库/出库记录（含OOS标记）、广告花费、评分历史、Buy Box拥有率历史</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+需求满足率与缺货成本全量化系统
+功能：Fill Rate三层计算 + OOS五层成本量化 + 动态FR预测 + 决策框架
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from datetime import datetime, timedelta
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class OrderLine:
+    &quot;&quot;&quot;订单行&quot;&quot;&quot;
+    order_id: str
+    sku_id: str
+    demanded_qty: int
+    fulfilled_qty: int
+    oos_occurred: bool = False
+
+    @property
+    def line_fulfilled(self) -&gt; bool:
+        return self.fulfilled_qty &gt;= self.demanded_qty * 0.98
+
+    @property
+    def unit_fill_rate(self) -&gt; float:
+        return self.fulfilled_qty / max(self.demanded_qty, 1)
+
+
+@dataclass
+class OOSEvent:
+    &quot;&quot;&quot;缺货事件&quot;&quot;&quot;
+    sku_id: str
+    start_date: datetime
+    end_date: datetime
+    daily_demand_pre_oos: float     # OOS前日均销量
+    unit_margin: float              # 单位毛利($)
+    # 广告参数
+    daily_ad_spend: float           # 日广告花费($)
+    # 排名影响参数
+    rank_recovery_days: int = 10    # 排名恢复天数
+    rank_flow_decay: float = 0.55   # 排名恢复期流量衰减
+    # 买家流失参数
+    daily_visitors_pre_oos: int = 0 # OOS前日访客数
+    permanent_loss_rate: float = 0.08  # 永久流失率
+    customer_ltv: float = 150.0     # 客户生命周期价值($)
+
+    @property
+    def oos_days(self) -&gt; int:
+        return max((self.end_date - self.start_date).days, 0)
+
+
+def compute_fill_rates(order_lines: List[OrderLine]) -&gt; Dict:
+    &quot;&quot;&quot;计算三层Fill Rate&quot;&quot;&quot;
+    if not order_lines:
+        return {}
+
+    # Line Fill Rate</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2404.11237</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Fill-Rate-OOS-Cost-Quantification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-ITO-DOI-Inventory-Turnover-Optimizer.html'>Skill-ITO-DOI-Inventory-Turnover-Optimizer</a></li><li><a href='../skills/Skill-Purchase-Sales-Inventory-3D-Tracking.html'>Skill-Purchase-Sales-Inventory-3D-Tracking</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-Purchase-Sales-Inventory-3D-Tracking.html'>Skill-Purchase-Sales-Inventory-3D-Tracking</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

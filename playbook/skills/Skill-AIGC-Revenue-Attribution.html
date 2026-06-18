@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AIGC Revenue Attribution — AI内容生成 ROI 财务归因：从内容投入到 GMV 的量化路径 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/11-ai人文.html">11-AI人文</a> / Skill-AIGC-Revenue-Attribution</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>AIGC Revenue Attribution — AI内容生成 ROI 财务归因：从内容投入到 GMV 的量化路径</h1>
+<p class="muted">Skill-AIGC-Revenue-Attribution · 11-AI人文</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-content-factory.html'>AI 内容工厂手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥30-100 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>品牌负责人 / 内容运营<span class='biz-ctx-secondary'> · CEO · 社媒运营</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>TikTok · Instagram · DTC 品牌站 · 母婴社媒内容</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品牌内容同质化，想在母婴赛道建立有温度有记忆点的品牌人设；海外用户文化差异大，本地化内容难以真正有共鸣</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>品牌内容从「产品介绍」升级为「情感共鸣的故事」，海外用户分享率和评论互动率提升</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>内容没有灵魂用户不爱看</span><span class='biz-pain-tag'>AI 写的东西太像 AI</span><span class='biz-pain-tag'>不同文化的妈妈怎么打动</span><span class='biz-pain-tag'>品牌故事讲不出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>品牌每月花2000美元请摄影师但不知道AI图片50美元能否替代——DiD+A/B双轨归因量化AIGC内容对GMV的真实贡献，验证AI图CVR差距若小于5%可全面替换年化节省内容成本17万元以上</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>AIGC 内容的财务归因面临&quot;最后一公里&quot;问题：用户看到 AI 生成的产品图片 → 点击 → 购买，但购买归因给了广告平台，内容的作用被稀释。因果归因框架解决这个问题：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：品牌每月花 $2000 请摄影师拍吸奶器产品图，同时用 Midjourney 生成图片花费 $50。AI 图的质量&quot;看起来差不多&quot;，但不知道用 AI 图是否会损失转化率，还是可以全面替换。</p><p>数据要求： - A/B 测试设计：50% 流量看 AI 图，50% 看人工图（同 ASIN，不同 A+ 内容） - 关键指标：CTR、CVR、退货率、评论中的图片相关投诉 - 持续时间：建议 4 周（覆盖工作日/周末）</p><p>预期产出： - AI 图 vs 人工图的 CTR/CVR 对比（含置信区间） - 每月内容成本对比：$2000 vs $50 - 增量 GMV/成本比：AI 图的真实内容 ROI - 决策建议：全替换/混用/某些品类保留人工</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>验证 AI 图可替换人工（CVR 差距 &lt;5%）：年化内容成本节省 ¥10-20 万</li><li>AIGC 文案批量优化的 GMV 增量归因：年化 ¥20-50 万</li><li>避免盲目投入昂贵人工内容（无ROI证明时）：年化节省 ¥10-30 万</li><li><strong>年化综合 ROI：¥30-100 万</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（A/B 测试框架 + DiD 计算；需要 Amazon A+ Content A/B 或独立站 CRO 工具支持）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+AIGC Revenue Attribution
+AI 内容生成 ROI 财务归因：DiD + A/B 双轨量化
+&quot;&quot;&quot;
+import numpy as np
+from scipy import stats
+
+
+def ab_test_content_roi(
+    ai_clicks, ai_conversions, ai_impressions,
+    human_clicks, human_conversions, human_impressions,
+    avg_order_value=89.99, ai_content_cost=50.0, human_content_cost=2000.0,
+    confidence=0.95
+):
+    &quot;&quot;&quot;A/B 检验：AI内容 vs 人工内容的 CVR 和 ROI 对比&quot;&quot;&quot;
+    ai_ctr = ai_clicks / ai_impressions if ai_impressions &gt; 0 else 0
+    human_ctr = human_clicks / human_impressions if human_impressions &gt; 0 else 0
+    ai_cvr = ai_conversions / ai_clicks if ai_clicks &gt; 0 else 0
+    human_cvr = human_conversions / human_clicks if human_clicks &gt; 0 else 0
+
+    # 比例 Z-test（CVR 显著性检验）
+    pooled_cvr = (ai_conversions + human_conversions) / (ai_clicks + human_clicks)
+    se = np.sqrt(pooled_cvr * (1 - pooled_cvr) * (1/ai_clicks + 1/human_clicks))
+    z_stat = (ai_cvr - human_cvr) / (se + 1e-10)
+    p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+    significant = p_value &lt; (1 - confidence)
+
+    # ROI 计算
+    ai_revenue = ai_conversions * avg_order_value
+    human_revenue = human_conversions * avg_order_value
+    ai_roi = (ai_revenue - ai_content_cost) / ai_content_cost if ai_content_cost &gt; 0 else 0
+    human_roi = (human_revenue - human_content_cost) / human_content_cost if human_content_cost &gt; 0 else 0
+
+    # 年化内容成本节省
+    annual_cost_saving = (human_content_cost - ai_content_cost) * 12
+
+    return {
+        &#x27;ai_ctr&#x27;: round(ai_ctr, 4), &#x27;human_ctr&#x27;: round(human_ctr, 4),
+        &#x27;ai_cvr&#x27;: round(ai_cvr, 4), &#x27;human_cvr&#x27;: round(human_cvr, 4),
+        &#x27;cvr_delta&#x27;: round(ai_cvr - human_cvr, 4),
+        &#x27;cvr_delta_pct&#x27;: round((ai_cvr - human_cvr) / (human_cvr + 1e-8) * 100, 2),
+        &#x27;p_value&#x27;: round(p_value, 4),
+        &#x27;significant&#x27;: significant,
+        &#x27;ai_revenue&#x27;: round(ai_revenue, 2),
+        &#x27;human_revenue&#x27;: round(human_revenue, 2),
+        &#x27;ai_content_roi&#x27;: round(ai_roi, 2),
+        &#x27;human_content_roi&#x27;: round(human_roi, 2),
+        &#x27;annual_cost_saving&#x27;: round(annual_cost_saving, 2),
+    }
+
+
+def did_listing_copy_attribution(
+    treated_before, treated_after,
+    control_before, control_after,
+    avg_order_value=89.99, copy_cost=50.0
+):
+    &quot;&quot;&quot;
+    双重差分：AI 文案优化对 GMV 的净效应
+    treated: 被 AIGC 优化的 SKU 组
+    control: 未优化的同期对照 SKU 组</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2502.08834</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-AIGC-Revenue-Attribution" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>KOL-ROI-Causal-Attribution]]（组合</span></li><li><span class='muted'>Listing-AB-Testing-Automation]]（组合</span></li><li><a href='../skills/Skill-AIGC-Content-Detection.html'>Skill-AIGC-Content-Detection</a></li><li><a href='../skills/Skill-DiD-Difference-in-Differences.html'>Skill-DiD-Difference-in-Differences</a></li><li><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html'>Skill-KOL-ROI-Causal-Attribution</a></li><li><a href='../skills/Skill-Listing-AB-Testing-Automation.html'>Skill-Listing-AB-Testing-Automation</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>KOL-ROI-Causal-Attribution]]（组合</span></li><li><span class='muted'>Listing-AB-Testing-Automation]]（组合</span></li><li><a href='../skills/Skill-AIGC-Content-Detection.html'>Skill-AIGC-Content-Detection</a></li><li><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html'>Skill-KOL-ROI-Causal-Attribution</a></li><li><a href='../skills/Skill-Listing-AB-Testing-Automation.html'>Skill-Listing-AB-Testing-Automation</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>KOL-ROI-Causal-Attribution]]（组合</span></li><li><span class='muted'>Listing-AB-Testing-Automation]]（组合</span></li><li><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html'>Skill-KOL-ROI-Causal-Attribution</a></li><li><a href='../skills/Skill-Listing-AB-Testing-Automation.html'>Skill-Listing-AB-Testing-Automation</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

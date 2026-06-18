@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>05-推荐系统 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>05-推荐系统</h1><p>Recommendation systems, cold start, diversity reranking</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 05-推荐系统 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Ad-Aware-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Ad-Aware Recommendation — 广告感知协同排序：有机推荐与赞助商品的联合优化</h3>
+  <p class="sc-desc">业务背景：某母婴品牌同时运营 Sponsored Products 广告和自然搜索排名</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CAGED-Debiased-Rec.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">因果图聚合权重去偏推荐 - CAGED</h3>
+  <p class="sc-desc">Momcozy 吸奶器爆款 SKU 占全部流量的 60%+，200 余款配件（替换配件、特殊尺码）几乎零曝光</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CSDM-Diffusion-ColdStart.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">扩散模型冷启动CTR - 新品零交互时的转化潜力预热</h3>
+  <p class="sc-desc">业务问题 跨境母婴电商每周上新 200-500 个 SKU（Momcozy 双泵吸奶器、有机棉连体衣、婴儿推车配件等）</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cold-Start-Meta-Learning-PAM.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Popularity-Aware Meta-Learning for Cold-Start Recommendation</h3>
+  <p class="sc-desc">母婴品类SKU迭代快（奶粉按月龄分段、辅食按月添加），新品上架无历史交互数据，传统协同过滤无法推荐。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Contrastive-Sequential-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Contrastive Sequential Recommendation — 对比学习序列推荐：高质量自监督训练</h3>
+  <p class="sc-desc">独立站月均购买仅500次数据稀疏无法训练高质量推荐模型——对比学习通过序列增强（掩码/截取/打乱）从稀疏行为中提取自监督信号，无需标注数据精度提升8-15%冷启动推荐质量大幅改善年化15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Counterfactual-Recommendation-DCE.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">反事实推荐 - 双重校准估计器（DCE）</h3>
+  <p class="sc-desc">是 MNAR（Missing Not At Random）选择偏差:用户只对系统曝光过的商品产生反馈,而曝光本身受热度/历史 CTR 影响,导致推荐模型陷入&quot;自我强化&quot;循环。</p>
+  <div class='sc-footer'><span class='sc-roi'>200-400 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Deep-Learning-Recommendation-HI.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Deep Learning Recommendation with Heterogeneous Inference</h3>
+  <p class="sc-desc">业务问题 某母婴出海APP使用传统协同过滤进行首页推荐，发现： - 新用户总是被推荐奶粉、纸尿裤等标品，难以发现长尾商品 - 用户反馈&quot;推荐太单一&quot;，复购率停滞在25% - 想推的新品牌（如本土有机棉品牌）得不到曝光机会</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Diffusion-Model-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Diffusion Model Recommendation — 扩散模型推荐：生成式推荐的范式革命</h3>
+  <p class="sc-desc">传统推荐从候选集中选最好的但新品上架当天没有候选历史数据——扩散模型生成式推荐直接生成用户理想商品嵌入向量不受候选集限制，新品上架第一天即可被推荐年化GMV增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Diversity-Reranking-SMMR.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Diversity-Aware Reranking with SMMR</h3>
+  <p class="sc-desc">传统推荐系统追求相关性最大化，导致结果高度同质化——用户搜&quot;婴儿奶粉&quot;，首页全是同一品牌同一段位。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Explainable-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Explainable Recommendation for Business Trust</h3>
+  <p class="sc-desc">黑盒推荐系统给用户推了&quot;吸奶器&quot;，用户会问&quot;为什么给我推这个？</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Federated-Cross-Seller-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Federated Cross-Seller Recommendation — 隐私保护的跨卖家联邦推荐</h3>
+  <p class="sc-desc">中小独立站用户行为数据不足1万无法训练好的推荐模型但又不愿意共享用户数据——联邦学习框架允许多卖家协同训练推荐模型数据不出本地，推荐召回率提升15-30%满足GDPR合规年化增益20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-GNN-Ecommerce-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">GNN Ecommerce Recommendation — 图神经网络电商推荐：用户-商品图谱深度学习</h3>
+  <p class="sc-desc">独立站关联推荐只显示同品类热销榜CTR仅2%未利用婴儿推车用户60%会购买安全座椅的配套关系——LightGCN图神经网络消息传递捕捉高阶配套效应，关联推荐CTR从2%提升到5-8%AOV提升15-25%年化增益20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Augmented-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">LLM Augmented Recommendation — 大语言模型增强个性化推荐：自然语言驱动的跨域用户意图理解</h3>
+  <p class="sc-desc">母婴跨境电商新用户注册率高但转化低，约 65% 新用户第一屏浏览 ≤3 个商品后跳出</p>
+  <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Session-Personalization-Cache.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">LLM Session Personalization Cache — LLM 驱动的会话意图缓存与千人千面推荐</h3>
+  <p class="sc-desc">母婴独立站首页对所有用户展示相同商品，哺乳妈妈和奶爸看到的首屏完全一样导致CTR仅2.3%——LLM会话意图三层缓存（长期偏好+近期行为+即时session）驱动千人千面排序，首页CTR提升到4-5%，年化GMV增益40-120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥40-120 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAS-Collaborative-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">MAS Collaborative Recommendation — 多智能体协同个性化推荐：LLM Agent 异构协作框架</h3>
+  <p class="sc-desc">业务背景：跨境母婴电商选品需要同时考虑：① 当前趋势（TikTok热词）② 安全认证（FDA/CE）③ 价格竞争力 ④ 用户历史偏好</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Marketing-Driven-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Marketing-Driven Recommendation — 营销活动驱动的推荐系统：Promotion-Aware 个性化协同优化</h3>
+  <p class="sc-desc">业务背景：母婴品类 Amazon Prime Day 期间，运营团队准备了 200 个参与促销的 SKU（折扣率 15%-50%），需要对不同用户展示「最可能因折扣购买」的商品组合，而非单纯推热销榜</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Matrix-Factorization.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Matrix Factorization for Recommendation (矩阵分解推荐)</h3>
+  <p class="sc-desc">根据用户历史行为，预测用户对未交互商品的兴趣程度。</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-NeuralNDCG-Learning-to-Rank.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">NeuralNDCG — 可微分排序优化与Learning to Rank</h3>
+  <p class="sc-desc">是排序评估指标与训练损失函数之间的不匹配。</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Personalized-Search-Ranking.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Personalized Search Ranking — 个性化搜索排名：用户历史驱动的搜索结果重排</h3>
+  <p class="sc-desc">独立站搜索&quot;吸奶器&quot;所有用户看同样排序导致CVR仅3.5%低于行业均值——用户历史偏好驱动的LTR个性化重排，老用户便携款和配件优先展示CVR从3.5%提升到5-7%年化增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Price-Sensitive-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Price-Sensitive Recommendation — 价格感知推荐：弹性感知的个性化定价与排序融合</h3>
+  <p class="sc-desc">业务背景：Prime Day / Black Friday 母婴类目促销期间，某品牌对婴儿消毒器打折30%（$59.99→$41.99）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Real-Time-Streaming-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Real-Time Streaming Recommendation — 流式实时推荐：毫秒级个性化更新架构</h3>
+  <p class="sc-desc">用户点击了便携吸奶器后首页推荐还是旧的因为批量系统明天才更新——流式推荐每次用户行为后毫秒级更新推荐结果，session内CTR提升15-25%年化GMV增益15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Semantic-ID-Retrieval-RPG.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Semantic ID Retrieval for Recommendation (RPG)</h3>
+  <p class="sc-desc">传统推荐系统用无序的one-hot ID或量化向量表示商品，丢失了语义信息。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Session-Based-Recommendation-SR-GNN.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Session-Based Recommendation with SR-GNN</h3>
+  <p class="sc-desc">母婴出海电商中 60%+ 用户以匿名状态浏览（未登录/未注册）</p>
+  <div class='sc-footer'><span class='sc-roi'>首年投入约 15 万，预期年增量 GMV 约 1440 万，</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

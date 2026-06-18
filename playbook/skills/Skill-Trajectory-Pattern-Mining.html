@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>用户行为轨迹模式挖掘与预测 - 变阶马尔可夫模型 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Trajectory-Pattern-Mining</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>用户行为轨迹模式挖掘与预测 - 变阶马尔可夫模型</h1>
+<p class="muted">Skill-Trajectory-Pattern-Mining · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5000 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴电商需要桑基图展示用户从首页→搜索→PDP→加购→支付的流量宽度</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>三步法闭环：① 改进 DBSCAN 密度聚类识别典型轨迹模式（用 LCS 相似度替代欧氏距离）；② 频繁子轨迹挖掘（FPTree 变体，支持度阈值筛选高频页面序列）；③ 变阶马尔可夫模型（VariableOrder Markov, VOM）预测下一步页面。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：母婴电商需要桑基图展示用户从首页→搜索→PDP→加购→支付的流量宽度。当前只知道每页 PV，不知道页面间的转移概率，无法渲染 Sankey。</p><p>| 字段 | 类型 | 示例 | |------|------|------| | `session_id` | string | `&quot;sess_20250101_u001&quot;` | | `user_id` | string | `&quot;u001&quot;` | | `page_type` | string | `&quot;HOME&quot;/&quot;SEARCH&quot;/&quot;CAT&quot;/&quot;PDP&quot;/&quot;CART&quot;/&quot;ORDER&quot;/&quot;PAY&quot;` | | `page_name` | string | `&quot;/product/12345&quot;` | | `dwell_time_sec` | int | `45`（秒） | | `event_time`</p><p>| 缩写 | 页面类型 | 说明 | |------|---------|------| | `HOME` | 首页 | 品牌官网/平台首页 | | `SEARCH` | 搜索结果页 | 关键词搜索 | | `CAT` | 品类页 | 奶粉/纸尿裤等类目 | | `PDP` | 商品详情页 | Product Detail Page | | `CART` | 购物车 | | | `ORDER` | 订单确认页 | | | `PAY` | 支付页 | | | `REVIEW` | 评论页 | | | `PROMOTION` | 促销活动页 | |</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>5000 万</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：8 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Trajectory Pattern Mining &amp; Variable-Order Markov Prediction
+轨迹模式挖掘与变阶马尔可夫预测
+
+功能：
+  1. 数据预处理（session 清洗、页面类型映射）
+  2. LCS-based 轨迹相似度计算
+  3. 改进 DBSCAN 聚类（r-neighborhood）
+  4. 频繁子轨迹挖掘
+  5. 变阶马尔可夫转移概率矩阵构建
+  6. 下一步页面预测（带停留时间权重）
+  7. 输出 Plotly/ECharts 桑基图 JSON
+
+依赖: pip install numpy pandas scikit-learn
+&quot;&quot;&quot;
+
+import json
+import math
+from collections import defaultdict, Counter
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
+import pandas as pd
+
+
+# ─────────────────────────────────────────────
+# 1. 数据结构定义
+# ─────────────────────────────────────────────
+
+# 母婴电商页面类型标准映射
+PAGE_TYPE_MAP = {
+    &quot;/&quot;: &quot;HOME&quot;,
+    &quot;/index&quot;: &quot;HOME&quot;,
+    &quot;/search&quot;: &quot;SEARCH&quot;,
+    &quot;/category&quot;: &quot;CAT&quot;,
+    &quot;/product&quot;: &quot;PDP&quot;,
+    &quot;/cart&quot;: &quot;CART&quot;,
+    &quot;/checkout&quot;: &quot;ORDER&quot;,
+    &quot;/payment&quot;: &quot;PAY&quot;,
+    &quot;/review&quot;: &quot;REVIEW&quot;,
+    &quot;/promotion&quot;: &quot;PROMO&quot;,
+}
+
+# Sankey 展示用的页面顺序（漏斗层级）
+FUNNEL_ORDER = [&quot;HOME&quot;, &quot;SEARCH&quot;, &quot;CAT&quot;, &quot;PDP&quot;, &quot;REVIEW&quot;, &quot;CART&quot;, &quot;ORDER&quot;, &quot;PAY&quot;, &quot;PROMO&quot;]
+
+
+# ─────────────────────────────────────────────
+# 2. 数据预处理
+# ─────────────────────────────────────────────
+
+class TrajectoryPreprocessor:
+    &quot;&quot;&quot;
+    用户轨迹序列预处理器
+    - 过滤停留时间异常（&lt; min_dwell 或 &gt; max_dwell）
+    - 过滤超长 session（&gt; max_pages）
+    - 合并超节点（重复子序列压缩）
+    &quot;&quot;&quot;
+
+    def __init__(</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Trajectory-Pattern-Mining" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-Customer-Journey-Prototype.html'>Skill-Customer-Journey-Prototype</a></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-TRACE-Clickstream-Embedding.html'>Skill-TRACE-Clickstream-Embedding</a></li><li><a href='../skills/Skill-Traffic-Source-Analysis.html'>Skill-Traffic-Source-Analysis</a></li><li><a href='../skills/Skill-User-Funnel-Analysis.html'>Skill-User-Funnel-Analysis</a></li><li><a href='../skills/Skill-Utimac-Uncertainty-Completion.html'>Skill-Utimac-Uncertainty-Completion</a></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-Customer-Journey-Prototype.html'>Skill-Customer-Journey-Prototype</a></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-Traffic-Source-Analysis.html'>Skill-Traffic-Source-Analysis</a></li><li><a href='../skills/Skill-Utimac-Uncertainty-Completion.html'>Skill-Utimac-Uncertainty-Completion</a></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cohort-Retention-Analysis.html'>Skill-Cohort-Retention-Analysis</a></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-Traffic-Source-Analysis.html'>Skill-Traffic-Source-Analysis</a></li><li><a href='../skills/Skill-Utimac-Uncertainty-Completion.html'>Skill-Utimac-Uncertainty-Completion</a></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LLM Negotiation Conversion Agent — LLM 谈判代理驱动的成交率优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-LLM-Negotiation-Conversion-Agent</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>LLM Negotiation Conversion Agent — LLM 谈判代理驱动的成交率优化</h1>
+<p class="muted">Skill-LLM-Negotiation-Conversion-Agent · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-pricing-engine.html'>AI 定价引擎手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥50-150 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴品牌WhatsApp客服面对「能便宜吗」统一回复「已最低价」导致成交率仅12%——LLM谈判Agent推断买家隐藏支付意愿执行分层让步策略，成交率提升到22-28%，年化私域GMV增益50-150万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>PrefBench 核心发现：LLM Agent 在谈判中&quot;达成交易&quot;（Deal Rate）高并不等于&quot;高利润成交&quot;——Agent 可能过度让步（给了买家不需要的折扣）或过早放弃（错过本来愿意多付的买家）。关键是推断买家的隐藏偏好（Hidden Preference）：支付意愿（WTP）上限和砍价特征（Bargaining Trait）。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：母婴品牌的 WhatsApp Business 客服每天收到 50-200 条询价，80% 是&quot;能便宜吗？&quot;&quot;能再优惠点？&quot;类消息。人工客服统一回复&quot;已经最低价&quot;，成交率 12%。其实有 30-40% 的用户支付意愿比现价高 10-20%，客服只是不知道如何分层应对。</p><p>数据要求： - 历史聊天记录（询价→成交/未成交）及成交价格 - 用户画像：来源渠道、历史购买记录、地区 - 产品成本结构（底价/最低折扣线）</p><p>预期产出： - 自动化谈判 Agent：根据用户询问内容推断买家类型，执行对应策略 - 实时 WTP 置信区间：当前对话中买家支付意愿的概率分布 - 成交价格建议：在利润底线以上的最优报价</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>私域 WhatsApp 成交率从 12% → 22-28%：月增 GMV ¥20-60 万（取决于询盘量）</li><li>B2B 询盘转化率从 8% → 18%：月增大客户合同 ¥15-50 万</li><li>平均成交价格提升（减少不必要让步）：每笔订单多 $10-30，月增利润 ¥5-20 万</li><li>客服人效提升（Agent 处理 60% 标准询价）：节省人力成本 ¥3-8 万/月</li><li><strong>年化综合 ROI：¥50-150 万</strong></li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：paper2skills-code/16-智能体工程/llm_negotiation_conversion_agent</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+LLM Negotiation Conversion Agent
+基于隐偏好推断的母婴成交率优化 Agent
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Optional
+
+
+@dataclass
+class BuyerBelief:
+    &quot;&quot;&quot;买家隐偏好信念分布&quot;&quot;&quot;
+    wtp_low: float = 0.3      # 低WTP概率（接受底价）
+    wtp_mid: float = 0.4      # 中WTP概率（接受折扣价）
+    wtp_high: float = 0.3     # 高WTP概率（接受原价甚至溢价）
+    price_sensitive: float = 0.5   # 价格敏感程度 0-1
+    quality_focused: float = 0.5   # 品质关注程度 0-1
+    urgency: float = 0.3           # 购买紧迫性 0-1
+    rounds: int = 0
+
+
+class NegotiationAgent:
+    &quot;&quot;&quot;LLM 驱动的谈判成交 Agent（规则驱动的简化实现）&quot;&quot;&quot;
+
+    def __init__(self, product_name, list_price, cost_price, min_margin=0.15):
+        self.product = product_name
+        self.list_price = list_price
+        self.cost = cost_price
+        self.min_price = cost_price * (1 + min_margin)
+        self.belief = BuyerBelief()
+        self.conversation = []
+        self.current_offer = list_price
+
+    def update_belief(self, user_message: str):
+        &quot;&quot;&quot;根据用户消息更新隐偏好信念（贝叶斯更新简化版）&quot;&quot;&quot;
+        msg = user_message.lower()
+        # 价格敏感信号
+        price_signals = [&#x27;cheap&#x27;, &#x27;cheaper&#x27;, &#x27;discount&#x27;, &#x27;cheaper&#x27;, &#x27;how much&#x27;, &#x27;too expensive&#x27;,
+                         &#x27;便宜&#x27;, &#x27;打折&#x27;, &#x27;优惠&#x27;, &#x27;太贵&#x27;, &#x27;能少点吗&#x27;, &#x27;best price&#x27;, &#x27;lowest&#x27;]
+        quality_signals = [&#x27;quality&#x27;, &#x27;certified&#x27;, &#x27;safe&#x27;, &#x27;review&#x27;, &#x27;certificate&#x27;, &#x27;fda&#x27;, &#x27;bpa&#x27;,
+                           &#x27;质量&#x27;, &#x27;认证&#x27;, &#x27;安全&#x27;, &#x27;评价&#x27;, &#x27;品质&#x27;, &#x27;warranty&#x27;, &#x27;保修&#x27;]
+        urgency_signals = [&#x27;urgent&#x27;, &#x27;asap&#x27;, &#x27;today&#x27;, &#x27;need now&#x27;, &#x27;rush&#x27;, &#x27;quickly&#x27;,
+                           &#x27;急&#x27;, &#x27;今天&#x27;, &#x27;马上&#x27;, &#x27;赶紧&#x27;, &#x27;快点&#x27;]
+
+        for sig in price_signals:
+            if sig in msg:
+                self.belief.price_sensitive = min(0.95, self.belief.price_sensitive + 0.15)
+                self.belief.wtp_low += 0.1
+                self.belief.wtp_high -= 0.1
+        for sig in quality_signals:
+            if sig in msg:
+                self.belief.quality_focused = min(0.95, self.belief.quality_focused + 0.15)
+                self.belief.wtp_high += 0.1
+                self.belief.wtp_low -= 0.05
+        for sig in urgency_signals:
+            if sig in msg:
+                self.belief.urgency = min(0.95, self.belief.urgency + 0.2)
+
+        # 归一化 WTP 分布
+        total = self.belief.wtp_low + self.belief.wtp_mid + self.belief.wtp_high</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2605.22855</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LLM-Negotiation-Conversion-Agent" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>LTV-Prediction-BTYD]]（组合扩展</span></li><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-AgenticPay-Procurement-Negotiation.html'>Skill-AgenticPay-Procurement-Negotiation</a></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Price-Elasticity-Estimation.html'>Skill-Price-Elasticity-Estimation</a></li><li><a href='../skills/Skill-Real-Time-Competitive-Repricing.html'>Skill-Real-Time-Competitive-Repricing</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>VOC-Aspect-Sentiment-Extraction]]（组合场景</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>LTV-Prediction-BTYD]]（组合扩展</span></li><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-LTV-Prediction-BTYD.html'>Skill-LTV-Prediction-BTYD</a></li><li><a href='../skills/Skill-Real-Time-Competitive-Repricing.html'>Skill-Real-Time-Competitive-Repricing</a></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>VOC-Aspect-Sentiment-Extraction]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>SKU-Level-PL-Dashboard]]（组合场景</span></li><li><a href='../skills/Skill-SKU-Level-PL-Dashboard.html'>Skill-SKU-Level-PL-Dashboard</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>VOC-Aspect-Sentiment-Extraction]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GMROI库存资金投资回报优化 — 毛利润/平均库存比率最大化决策模型 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-GMROI-Inventory-Investment-Efficiency</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>GMROI库存资金投资回报优化 — 毛利润/平均库存比率最大化决策模型</h1>
+<p class="muted">Skill-GMROI-Inventory-Investment-Efficiency · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-F 动态定价</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>80万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>高ITO低毛利的消毒袋占用大量资金却产生极低收益——GMROI资金最优分配将相同$80万预算年度组合毛利从$144万增至$192万（+$48万），零成本增收</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>业务背景（陈凤霞实战经验）：书中在&quot;库存周转率与企业战略&quot;小节明确指出：ITO/DOI是效率指标，但不是效益指标——卖毛利率1%的产品高速周转，和卖毛利率50%的产品中速周转，财务效益完全不同。GMROI（Gross Margin Return on Inventory Investment）正是将毛利和库存投资结合的综合效益指标，是库存资金配置的最优决策工具。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：全SKU GMROI评估与资金重配置</p><p>- 业务问题：某卖家有20个SKU，总库存预算$80万。按传统ITO排序：电池奶瓶消毒袋（ITO=12）排第一，但毛利率只有8%，GMROI=0.96；而吸奶器（ITO=6）排第10，但毛利率45%，GMROI=2.7。卖家把更多资金配置给了消毒袋，反而降低了整体资金效率 - 数据要求：每个SKU的年销售额、采购成本、平均库存成本（含仓储费） - 算法应用： 1. 计算20个SKU的GMROI 2. 发现：吸奶器GMROI=2.7，消毒袋GMROI=0.96，温奶器GMROI=3.2（最高） 3. 资金重配置：减少消毒袋库存$8万（降至安全库存），增加温奶器$5万+吸奶器$3万 4. 预期组合</p><p>- **业务问题**：每季度有3-5款新品候选，不知道选哪个值得引入并分配资金 - **算法应用**：建立新品GMROI门槛（≥2.0）：预测毛利率×预测ITO（基于类似品历史），&lt;2.0不引入，≥3.0优先引入；对每个候选新品做GMROI敏感性分析（毛利率、销量各±20%的情景） - **预期产出**：新品引入成功率从40%提升至65%，年减少新品失败积压约$15万</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：$80万库存预算的卖家，组合GMROI从1.8提升至2.4（+33%），年度组合毛利增加约$48万；系统建设$3万，ROI≈1600%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（GMROI计算极简单，关键是获取每个SKU的准确毛利率数据和平均库存投资数据）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（资金配置优化是零成本增收的最强杠杆，SKU数越多效益越显著）</li><li><strong>适用规模</strong>：SKU数&gt;10个的卖家，预算越大GMROI优化价值越高</li><li><strong>数据依赖</strong>：年度SKU级销售额、采购成本、平均库存价值（财务账本数据）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+GMROI库存资金投资回报优化系统
+功能：GMROI精确计算 + 行业对标 + 四象限矩阵 + 资金最优分配
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import List, Dict, Tuple
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class SKUGMROIProfile:
+    &quot;&quot;&quot;SKU GMROI档案&quot;&quot;&quot;
+    sku_id: str
+    annual_revenue: float           # 年销售额($)
+    annual_cogs: float              # 年销售成本($)
+    avg_inventory_cost: float       # 平均库存成本($，含采购价)
+    avg_holding_cost: float         # 平均持有成本（仓储+资金，$）
+    min_safety_stock_cost: float    # 最低安全库存资金($，不可削减)
+
+    @property
+    def gross_profit(self) -&gt; float:
+        return self.annual_revenue - self.annual_cogs
+
+    @property
+    def gross_margin_rate(self) -&gt; float:
+        return self.gross_profit / max(self.annual_revenue, 1)
+
+    @property
+    def total_inventory_investment(self) -&gt; float:
+        return self.avg_inventory_cost + self.avg_holding_cost
+
+    @property
+    def ito(self) -&gt; float:
+        return self.annual_cogs / max(self.total_inventory_investment, 1)
+
+    @property
+    def doi(self) -&gt; float:
+        return 365 / max(self.ito, 0.01)
+
+    @property
+    def gmroi(self) -&gt; float:
+        return self.gross_profit / max(self.total_inventory_investment, 1)
+
+
+def classify_gmroi(gmroi: float) -&gt; Tuple[str, str]:
+    &quot;&quot;&quot;GMROI分级评定&quot;&quot;&quot;
+    if gmroi &gt;= 5.0:
+        return &#x27;🏆卓越&#x27;, &#x27;明星SKU，优先保障库存&#x27;
+    elif gmroi &gt;= 3.0:
+        return &#x27;🟢良好&#x27;, &#x27;优质SKU，维持当前策略&#x27;
+    elif gmroi &gt;= 1.5:
+        return &#x27;🟡一般&#x27;, &#x27;关注提升路径&#x27;
+    else:
+        return &#x27;🔴差&#x27;, &#x27;评估是否继续运营&#x27;
+
+
+def compute_gmroi_improvement_paths(sku: SKUGMROIProfile) -&gt; List[Dict]:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2402.18341</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-GMROI-Inventory-Investment-Efficiency" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-ITO-DOI-Inventory-Turnover-Optimizer.html'>Skill-ITO-DOI-Inventory-Turnover-Optimizer</a></li><li><a href='../skills/Skill-Logistics-Cost-Structure-Decomposition.html'>Skill-Logistics-Cost-Structure-Decomposition</a></li><li><a href='../skills/Skill-Price-Elasticity-Estimation.html'>Skill-Price-Elasticity-Estimation</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-Price-Elasticity-Estimation.html'>Skill-Price-Elasticity-Estimation</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Price-Elasticity-Estimation.html'>Skill-Price-Elasticity-Estimation</a></li><li><a href='../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html'>Skill-Tariff-FX-FBA-Cost-Dynamics</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ SKU利润归因计算器</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

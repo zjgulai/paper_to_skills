@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>标签质量KPI监控体系 — 覆盖率/准确率/时效性/一致性的全维度Tag质量仪表盘 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Tag-Quality-Coverage-KPI</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>标签质量KPI监控体系 — 覆盖率/准确率/时效性/一致性的全维度Tag质量仪表盘</h1>
+<p class="muted">Skill-Tag-Quality-Coverage-KPI · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>fraud_detection</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-tagging-ontology.html'>标签工程与本体驱动手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>自动化团队面临&quot;标签错误后几个月才发现&quot;——五维质量KPI(覆盖率/准确率/时效/一致性/完整性)将标签错误MTTD从数月降至实时，防止误触发Action损失20万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>标签质量 是标签工程的护城河。高质量标签 = 可信赖的Action触发；低质量标签 = 误报预警/错误自动化操作。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：供应链标签质量SLA体系建立 - 业务问题：自动打标流水线上线后，没有质量监控，3 个月后发现某批供应商风险标签因数据源问题全部标为&quot;low&quot;（错误率约40%），导致错误的采购决策 - 解决方案：建立完整质量SLA体系 - 状态标签：覆盖率≥99%，时效≤4h，准确率≥92% - 合规标签：覆盖率=100%，时效≤30d，准确率≥98% - 预测标签：覆盖率≥95%，时效≤24h，准确率≥88% - 业务价值：质量监控上线后，标签错误被及时发现（MTTD从&quot;几个月&quot;→&quot;实时&quot;）</p><p>**场景B：大促前标签质量全面扫描** - **业务问题**：Black Friday前需要确保所有SKU的断货风险标签是最新的，但不知道系统是否正常运行 - **执行**：触发全量质量扫描 → 发现 23 个 SKU 的`stockout_risk`标签超过 8h 未更新（数据源超时） - **业务价值**：提前 48h 发现问题，修复后大促期间断货响应正常，防止 5 个 SKU 因未及时补货损失约 12 万元</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：质量监控使标签错误MTTD从&quot;几个月&quot;→&quot;实时&quot;，防止一次大规模错误标签导致的误操作损失（历史案例：供应商风险标签全错导致错误切换供应商，损失约20万元）；持续保障Action触发的准确率，每年防止误操作约10次</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（主要是定义SLA和建立监控Pipeline，工程量适中）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（&quot;无监控的自动化是最危险的&quot;——标签质量保障是整个自动化体系的安全防线）</li><li><strong>评估依据</strong>：Palantir实践：所有生产环境标签都有质量SLA和持续监控，这是&quot;可信任的行动触发&quot;的必要条件</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+标签质量 KPI 监控体系
+功能：五维质量计算 / SLA合规检测 / 质量预警 / 抽样准确率验证 / 质量仪表盘
+输入：实体标签数据 + Tag Schema（含SLA定义）
+输出：质量KPI报告 + 预警列表 + 改善建议
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+from collections import defaultdict
+from scipy.stats import entropy
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def generate_tag_data(n_entities: int = 200, seed: int = 42) -&gt; list:
+    &quot;&quot;&quot;生成模拟实体标签数据（含质量缺陷）&quot;&quot;&quot;
+    np.random.seed(seed)
+    now = datetime.now()
+    entities = []
+
+    for i in range(n_entities):
+        entity = {&quot;id&quot;: f&quot;SKU-{i+1:03d}&quot;, &quot;type&quot;: &quot;SKU&quot;, &quot;tags&quot;: {}}
+
+        # stockout_risk：99%覆盖，但有些超时未更新
+        if np.random.random() &lt; 0.99:
+            age_hours = np.random.choice([
+                np.random.uniform(0, 3),    # 75% 正常
+                np.random.uniform(8, 48),   # 15% 超时
+                np.random.uniform(0, 1),    # 10% 刚更新
+            ], p=[0.75, 0.15, 0.10])
+            entity[&quot;tags&quot;][&quot;stockout_risk&quot;] = {
+                &quot;value&quot;: np.random.choice([&quot;critical&quot;, &quot;high&quot;, &quot;medium&quot;, &quot;low&quot;, &quot;none&quot;],
+                                          p=[0.05, 0.10, 0.25, 0.35, 0.25]),
+                &quot;updated_at&quot;: (now - timedelta(hours=age_hours)).isoformat(),
+                &quot;confidence&quot;: np.random.uniform(0.75, 1.0),
+            }
+
+        # abc_class：95%覆盖
+        if np.random.random() &lt; 0.95:
+            entity[&quot;tags&quot;][&quot;abc_class&quot;] = {
+                &quot;value&quot;: np.random.choice([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;],
+                                          p=[0.05, 0.13, 0.27, 0.30, 0.25]),
+                &quot;updated_at&quot;: (now - timedelta(hours=np.random.uniform(0, 720))).isoformat(),
+                &quot;confidence&quot;: np.random.uniform(0.80, 1.0),
+            }
+
+        # compliance_certs：85%覆盖（故意低）
+        if np.random.random() &lt; 0.85:
+            entity[&quot;tags&quot;][&quot;compliance_certs&quot;] = {
+                &quot;value&quot;: np.random.choice([[&quot;CE&quot;], [&quot;CE&quot;, &quot;FDA&quot;], [&quot;FCC&quot;, &quot;CE&quot;], []],
+                                          p=[0.35, 0.25, 0.25, 0.15]),
+                &quot;updated_at&quot;: (now - timedelta(days=np.random.uniform(0, 400))).isoformat(),
+                &quot;confidence&quot;: np.random.uniform(0.85, 1.0),
+            }
+
+        # 故意制造冲突标签（inventory_health互斥冲突）
+        has_conflict = np.random.random() &lt; 0.03  # 3%冲突率
+        entity[&quot;tags&quot;][&quot;inventory_health&quot;] = {
+            &quot;value&quot;: &quot;healthy&quot; if not has_conflict else &quot;slow_moving&quot;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2206.07845</li><li>2311.04920</li><li>2404.09123</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Tag-Quality-Coverage-KPI" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Auto-Tagging-Pipeline-Rule-ML-LLM.html'>Skill-Auto-Tagging-Pipeline-Rule-ML-LLM</a></li><li><a href='../skills/Skill-Forecast-Bias-Adjustment-Detection.html'>Skill-Forecast-Bias-Adjustment-Detection</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><a href='../skills/Skill-Tag-Schema-Engineering-Lifecycle.html'>Skill-Tag-Schema-Engineering-Lifecycle</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Forecast-Bias-Adjustment-Detection.html'>Skill-Forecast-Bias-Adjustment-Detection</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Forecast-Bias-Adjustment-Detection.html'>Skill-Forecast-Bias-Adjustment-Detection</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ SKU标签质量扫描器</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DARA Agentic MMM — LLM Agent 驱动的营销组合建模：双阶段自动调参与智能归因 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-DARA-Agentic-MMM</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>DARA Agentic MMM — LLM Agent 驱动的营销组合建模：双阶段自动调参与智能归因</h1>
+<p class="muted">Skill-DARA-Agentic-MMM · 15-营销投放分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-60 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>某母婴辅食品牌在美国市场同时投放 Amazon Ads、Meta（FB+IG）、TikTok，月均广告预算 $15 万美元，但各渠道的 adstock 效应差异显著（TikTok 内容影响力可持续 2-4 周，Amazon 关键词效果衰减快）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统 Marketing Mix Modeling（MMM）存在根本性瓶颈：大量人工调参。数据科学家需要手动尝试 adstock（广告滞留）半衰期、saturation（饱和度）参数、季节性先验，一轮完整建模周期通常需要 28 周。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务背景：某母婴辅食品牌在美国市场同时投放 Amazon Ads、Meta（FB+IG）、TikTok，月均广告预算 $15 万美元，但各渠道的 adstock 效应差异显著（TikTok 内容影响力可持续 2-4 周，Amazon 关键词效果衰减快）。传统 MMM 用统一的 $\lambda=0.5$ 导致 TikTok 效果被严重低估。</p><p>数据要求： - 周级渠道消耗数据：`{week, channel, spend, impressions}` - 对应期间销售额/转化量：`{week, revenue, units_sold}` - 外部控制变量：`{week, seasonality_index, competitor_spend_estimate}`</p><p>量化 ROI： - 参数优化准确率提升 22-31%（vs 人工调参基线） - TikTok 预算重配后整体 ROAS 提升 +0.4x（$2.1 → $2.5 per dollar） - 建模周期从 6 周压缩至 4 小时</p>
+    <h2>4. 输入数据要求</h2><ul><li><strong>时序长度</strong>：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li><strong>渠道数</strong>：2-8 个（超过 8 个建议分组）</li><li><strong>数据粒度</strong>：周级；日级数据需先聚合</li><li><strong>外部变量</strong>（可选）：节假日指标、竞争对手促销标记</li></ul>
+    <h2>5. 输出结果</h2><ul><li><strong>时序长度</strong>：≥ 26 周（半年）；推荐 52+ 周以覆盖年度季节性</li><li><strong>渠道数</strong>：2-8 个（超过 8 个建议分组）</li><li><strong>数据粒度</strong>：周级；日级数据需先聚合</li><li><strong>外部变量</strong>（可选）：节假日指标、竞争对手促销标记</li></ul>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>30-60 万</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：6 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+DARA Agentic MMM
+整合 DARA 双阶段架构 + Agentic Bayesian 参数优化 + 自动洞察生成
+论文：DARA (arXiv:2601.14711) + MMM 4.0 (Applied Marketing Analytics 2025)
+&quot;&quot;&quot;
+
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+from scipy.optimize import minimize
+from scipy.stats import norm
+
+
+# ── 1. MMM 核心变换 ──────────────────────────────────────────────────────────
+
+def geometric_adstock(spend: np.ndarray, decay: float, max_lag: int = 8) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    Geometric Adstock 变换：x_t_star = x_t + λ * x_{t-1}_star
+    decay: 衰减系数 λ ∈ [0, 1]
+    &quot;&quot;&quot;
+    result = np.zeros_like(spend, dtype=float)
+    for t in range(len(spend)):
+        result[t] = spend[t]
+        for lag in range(1, min(t + 1, max_lag + 1)):
+            result[t] += (decay ** lag) * spend[t - lag]
+    return result
+
+
+def hill_saturation(x: np.ndarray, alpha: float, K: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    Hill 函数饱和变换：f(x) = x^alpha / (x^alpha + K^alpha)
+    alpha: 曲线斜率（越大S形越明显）
+    K: 半饱和点（达到最大效果50%时的投入量）
+    &quot;&quot;&quot;
+    x_safe = np.maximum(x, 1e-10)
+    return (x_safe ** alpha) / (x_safe ** alpha + K ** alpha)
+
+
+@dataclass
+class ChannelParams:
+    &quot;&quot;&quot;单渠道 MMM 参数&quot;&quot;&quot;
+    name: str
+    decay: float = 0.5      # adstock 衰减系数
+    alpha: float = 2.0      # Hill 饱和斜率
+    K: float = 5000.0       # 半饱和点（预算单位）
+    coef: float = 1.0       # 渠道系数（待估计）
+
+
+class MMMModel:
+    &quot;&quot;&quot;
+    核心 MMM 模型
+    Sales = baseline + Σ channel_coef * saturation(adstock(spend)) + ε
+    &quot;&quot;&quot;
+
+    def __init__(self, channel_params: List[ChannelParams]):
+        self.channel_params = {p.name: p for p in channel_params}
+
+    def transform_channel(self, spend: np.ndarray, params: ChannelParams) -&gt; np.ndarray:
+        &quot;&quot;&quot;adstock → saturation 双重变换&quot;&quot;&quot;
+        adstocked = geometric_adstock(spend, params.decay)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2601.14711</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-DARA-Agentic-MMM" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Marketing-Mix-Modeling]]</span></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>CDA-Cookieless-Attribution]]</span></li><li><span class='muted'>Identity-Fragmentation-Debiasing]]</span></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li><li><a href='../skills/Skill-Identity-Fragmentation-Debiasing.html'>Skill-Identity-Fragmentation-Debiasing</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Multi-Objective-Budget-Allocation]]</span></li><li><span class='muted'>ROAS-Budget-Optimization]]</span></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

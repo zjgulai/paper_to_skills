@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Graph Foundation Model Recommendation — 图基础模型推荐：跨图迁移的零样本推荐 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Graph-Foundation-Model-Recommendation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Graph Foundation Model Recommendation — 图基础模型推荐：跨图迁移的零样本推荐</h1>
+<p class="muted">Skill-Graph-Foundation-Model-Recommendation · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>定价与利润</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥10-40 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>新开设的独立站没有用户行为数据无法训练推荐系统只能展示热销榜——图基础模型零样本迁移第一天就有个性化推荐，比热销榜CVR提升15-25%解决新卖家推荐冷启动问题年化增益10-40万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>为什么图难以基础模型化：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：刚开设独立站的新卖家（&lt; 3 个月），没有足够的用户行为数据训练推荐系统，只能使用简单的热销榜推荐。图基础模型允许在零数据的情况下实现个性化推荐。</p><p>数据要求： - 商品属性（标题/类别/价格/图片）— 任何卖家都有 - 极少量用户交互（1-10 次点击即可启动个性化）</p><p>预期产出： - 基于商品图结构的初始嵌入（零样本） - 随用户交互积累，持续优化（few-shot 更新）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>新站从第1天就有推荐系统（vs 等待3-6个月数据积累）：提前 GMV ¥5-15 万</li><li>数据稀疏期推荐质量提升（零样本 vs 热销榜）：CVR 提升 15-25%</li><li>跨市场快速迁移：进入新市场无需重训推荐模型</li><li><strong>年化综合 ROI：¥10-40 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（2026年最新领域，成熟开源实现较少；UniGraph/GraphGPT 可参考；完整部署约 6-8 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Graph Foundation Model Recommendation
+图基础模型推荐：跨图零样本迁移（轻量近似实现）
+生产环境: 使用 UniGraph / GraphGPT 等开源图基础模型
+&quot;&quot;&quot;
+import numpy as np
+from collections import defaultdict
+
+
+class GraphFoundationRecommender:
+    &quot;&quot;&quot;
+    图基础模型推荐的轻量近似实现
+    核心思路：用商品属性相似性（谱特征代理）构建初始图
+    &quot;&quot;&quot;
+
+    def __init__(self, embed_dim: int = 32):
+        self.embed_dim = embed_dim
+        self.item_embeddings = {}
+        self.item_attributes = {}
+
+    def build_attribute_graph(self, items: list) -&gt; dict:
+        &quot;&quot;&quot;
+        基于商品属性构建初始图（谱特征代理）
+        不需要用户交互数据
+        &quot;&quot;&quot;
+        # 商品属性向量化
+        categories = list(set(item.get(&#x27;category&#x27;, &#x27;&#x27;) for item in items))
+        price_ranges = [&#x27;&lt;$50&#x27;, &#x27;$50-100&#x27;, &#x27;$100-200&#x27;, &#x27;&gt;$200&#x27;]
+
+        attr_vectors = {}
+        for item in items:
+            item_id = item[&#x27;id&#x27;]
+            cat_vec = [1.0 if item.get(&#x27;category&#x27;) == c else 0.0 for c in categories]
+            price = item.get(&#x27;price&#x27;, 100)
+            price_vec = [
+                1.0 if price &lt; 50 else 0.0,
+                1.0 if 50 &lt;= price &lt; 100 else 0.0,
+                1.0 if 100 &lt;= price &lt; 200 else 0.0,
+                1.0 if price &gt;= 200 else 0.0,
+            ]
+            # 模拟谱特征：商品的结构化属性
+            vec = np.array(cat_vec + price_vec + [item.get(&#x27;rating&#x27;, 4.0)/5.0])
+            norm = np.linalg.norm(vec)
+            attr_vectors[item_id] = vec / (norm + 1e-8)
+            self.item_attributes[item_id] = item
+
+        # 用随机投影升维到 embed_dim（模拟图基础模型的嵌入）
+        np.random.seed(42)
+        proj_matrix = np.random.normal(0, 1/np.sqrt(self.embed_dim),
+                                        (len(attr_vectors[list(attr_vectors.keys())[0]]), self.embed_dim))
+        for item_id, vec in attr_vectors.items():
+            emb = np.tanh(vec @ proj_matrix)
+            self.item_embeddings[item_id] = emb / (np.linalg.norm(emb) + 1e-8)
+
+        return attr_vectors
+
+    def zero_shot_recommend(self, query_item_id: str, top_k: int = 5,
+                             exclude_ids: set = None) -&gt; list:
+        &quot;&quot;&quot;零样本推荐：基于商品图结构相似度&quot;&quot;&quot;
+        if query_item_id not in self.item_embeddings:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2606.03315</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Graph-Foundation-Model-Recommendation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Agent-Observability-Tracing]]（组合</span></li><li><span class='muted'>Multimodal-Product-Understanding]]（组合</span></li><li><a href='../skills/Skill-Agent-Observability-Tracing.html'>Skill-Agent-Observability-Tracing</a></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-GNN-Ecommerce-Recommendation.html'>Skill-GNN-Ecommerce-Recommendation</a></li><li><a href='../skills/Skill-HGT-Heterogeneous-Graph-Transformer.html'>Skill-HGT-Heterogeneous-Graph-Transformer</a></li><li><a href='../skills/Skill-Multimodal-Product-Understanding.html'>Skill-Multimodal-Product-Understanding</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Agent-Observability-Tracing]]（组合</span></li><li><span class='muted'>Multimodal-Product-Understanding]]（组合</span></li><li><a href='../skills/Skill-Agent-Observability-Tracing.html'>Skill-Agent-Observability-Tracing</a></li><li><a href='../skills/Skill-Cold-Start-Product-Recommendation.html'>Skill-Cold-Start-Product-Recommendation</a></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-Multimodal-Product-Understanding.html'>Skill-Multimodal-Product-Understanding</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Agent-Observability-Tracing]]（组合</span></li><li><span class='muted'>Multimodal-Product-Understanding]]（组合</span></li><li><a href='../skills/Skill-Agent-Observability-Tracing.html'>Skill-Agent-Observability-Tracing</a></li><li><a href='../skills/Skill-Multimodal-Product-Understanding.html'>Skill-Multimodal-Product-Understanding</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

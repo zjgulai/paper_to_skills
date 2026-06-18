@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>高保真RAG防御 — 引用链溯源、数据投毒与提示注入三层防御体系 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-High-Fidelity-RAG-Defense</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>高保真RAG防御 — 引用链溯源、数据投毒与提示注入三层防御体系</h1>
+<p class="muted">Skill-High-Fidelity-RAG-Defense · 10-MAS</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>AI合规助手给出错误的FDA认证流程导致申报失败损失8000美元——NASA级三层防御（输入清洗+数据投毒检测+引用链验证）将合规决策错误率从8%降至0.5%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心洞察（Rothman NASA级严格性）：书中以NASA的研究助手为案例，强调在高风险决策场景（太空任务/医疗/法律/金融），RAG系统的可靠性必须达到工程级标准——不允许任何无来源的声明，所有数据必须可溯源验证，系统必须能检测并抵御恶意输入攻击。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌使用AI助手查询各国监管要求，曾出现&quot;AI信心满满给出错误的FDA认证流程&quot;，导致申报失败，损失$8000处理费 - 高保真RAG方案： 1. 所有输出必须引用具体法规条款（如&quot;根据21 CFR 1119.1[INS-a1b2c3d4]...&quot;） 2. 引用验证：实时确认引用的法规文档确实存在于知识库 3. 无法验证的声明输出[UNVERIFIED]并附带人工审核请求 4. 幻觉率从23%降至3% - 预期产出：合规决策错误率从8%降至0.5%，年化防损：0.5次/年×$8000=$4000（vs 无系统的4次/年×$8000=$32000）</p><p>- **业务问题**：竞争对手向共享RAG系统注入了虚假竞品数据（伪造的市场份额报告） - **防御机制**：新文档摘入时embedding异常检测——该文档的embedding与已知可信文档集群偏差超过3σ，自动标记为&quot;可疑文档&quot;并进入人工审核队列，未经验证不进入知识库 - **预期产出**：数据投毒成功率从无防御的100%降至&lt;5%（被检测并拦截）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：合规查询错误率从8%→0.5%（防止因AI错误指导导致的$8000/次申报失败），年化防损$28000；系统成本$8万，ROI≈350%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（数据投毒检测需要嵌入模型支撑；反向兼容性测试需要建立标准测试集；整体工程量较大）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（Rothman用整个Ch7讲这个主题，NASA级严格性适用于任何高风险决策场景——合规/医疗/法律/金融）</li><li><strong>适用规模</strong>：任何需要可信输出的MAS系统，尤其是处理合规/法律/医疗类查询</li><li><strong>数据依赖</strong>：已知注入攻击样本（用于检测器训练）、来源可信度评分体系、标准测试集（反向兼容测试）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+高保真RAG防御系统 — NASA级三层防御
+功能：提示注入检测 + 数据投毒防御 + 引用链验证 + 幻觉检测 + 反向兼容测试
+基于 Denis Rothman《Context Engineering for Multi-Agent Systems》Ch7
+&quot;&quot;&quot;
+import re
+import hashlib
+import json
+import numpy as np
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from datetime import datetime
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ─── Layer 1: 输入防御层 ───────────────────────────────────────
+
+class PromptInjectionDetector:
+    &quot;&quot;&quot;提示注入检测器&quot;&quot;&quot;
+
+    INJECTION_SIGNATURES = [
+        # 直接指令覆盖
+        r&#x27;ignore\s+(all\s+)?previous\s+instructions?&#x27;,
+        r&#x27;忽略(以上|之前|所有)(的)?(指令|规则|限制)&#x27;,
+        r&#x27;forget\s+your\s+(instructions?|training|rules?)&#x27;,
+        r&#x27;你(现在)?(是|变成|成为)一个?(?!专家|分析师)&#x27;,
+        # 角色替换
+        r&#x27;pretend\s+(you\s+are|to\s+be)&#x27;,
+        r&#x27;act\s+as\s+(?!an?\s+expert)&#x27;,
+        r&#x27;roleplay\s+as&#x27;,
+        # 系统覆盖
+        r&#x27;system\s*:\s*(you\s+are|ignore|override)&#x27;,
+        r&#x27;&lt;\s*system\s*&gt;&#x27;,
+        r&#x27;new\s+(system\s+)?prompt\s*:&#x27;,
+        # 数据提取攻击
+        r&#x27;print\s+your\s+(system\s+)?prompt&#x27;,
+        r&#x27;reveal\s+your\s+instructions?&#x27;,
+        r&#x27;show\s+me\s+your\s+(context|prompt|instructions?)&#x27;,
+        r&#x27;输出(你的|你的系统|原始)(提示词|指令|上下文)&#x27;,
+    ]
+
+    def detect(self, text: str) -&gt; Dict:
+        &quot;&quot;&quot;检测提示注入&quot;&quot;&quot;
+        detected = []
+        for pattern in self.INJECTION_SIGNATURES:
+            if re.search(pattern, text, re.IGNORECASE | re.DOTALL):
+                detected.append(pattern[:40])
+
+        severity = &#x27;CRITICAL&#x27; if len(detected) &gt;= 2 else (&#x27;HIGH&#x27; if detected else &#x27;NONE&#x27;)
+        return {
+            &#x27;is_injection&#x27;: len(detected) &gt; 0,
+            &#x27;severity&#x27;: severity,
+            &#x27;matched_patterns&#x27;: detected,
+            &#x27;action&#x27;: &#x27;BLOCK&#x27; if severity == &#x27;CRITICAL&#x27; else (&#x27;REVIEW&#x27; if severity == &#x27;HIGH&#x27; else &#x27;PASS&#x27;),
+        }
+
+    def sanitize(self, query: str) -&gt; str:
+        &quot;&quot;&quot;清洗查询&quot;&quot;&quot;
+        # 移除控制字符</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-High-Fidelity-RAG-Defense" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Context-Engine-Architecture.html'>Skill-Context-Engine-Architecture</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><a href='../skills/Skill-Glass-Box-MAS-Observability.html'>Skill-Glass-Box-MAS-Observability</a></li><li><a href='../skills/Skill-MAS-Adversarial-Defense.html'>Skill-MAS-Adversarial-Defense</a></li><li><a href='../skills/Skill-Policy-Driven-Meta-Controller.html'>Skill-Policy-Driven-Meta-Controller</a></li><li><a href='../skills/Skill-SRL-Semantic-Blueprint-MAS.html'>Skill-SRL-Semantic-Blueprint-MAS</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Context-Engine-Architecture.html'>Skill-Context-Engine-Architecture</a></li><li><a href='../skills/Skill-Glass-Box-MAS-Observability.html'>Skill-Glass-Box-MAS-Observability</a></li><li><a href='../skills/Skill-MAS-Adversarial-Defense.html'>Skill-MAS-Adversarial-Defense</a></li><li><a href='../skills/Skill-Policy-Driven-Meta-Controller.html'>Skill-Policy-Driven-Meta-Controller</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Context-Engine-Architecture.html'>Skill-Context-Engine-Architecture</a></li><li><a href='../skills/Skill-Glass-Box-MAS-Observability.html'>Skill-Glass-Box-MAS-Observability</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

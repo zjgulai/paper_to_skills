@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>供应链本体驱动行动触发 — Palantir风格Object-Action-Writeback全链路闭环 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Supply-Chain-Ontology-Action-Trigger</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>供应链本体驱动行动触发 — Palantir风格Object-Action-Writeback全链路闭环</h1>
+<p class="muted">Skill-Supply-Chain-Ontology-Action-Trigger · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-tagging-ontology.html'>标签工程与本体驱动手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>25万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>供应链运营面临&quot;分析看板有了但还要人工去ERP下单&quot;——Palantir风格Object-Action-Writeback闭环将补货响应从2天缩短至4小时自动触发，实现分析到行动的完整闭环</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>这是标签工程与 Palantir Ontology 结合的终极价值：分析→行动的完整闭环。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：断货风险 → 自动触发补货工单 - 触发链路： - 业务价值：补货响应从&quot;人工发现→2天后下单&quot;→&quot;4小时内自动触发&quot;，年化减少断货15件次</p><p>**场景B：供应商风险降级 → 启动替代供应商** - **触发链路**： - **业务价值**：供应商风险响应从&quot;季度审核&quot;→&quot;实时预警+自动切换&quot;，避免一次质量事故损失约10万元</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：断货响应从&quot;人工发现(8h)→2天下单&quot;→&quot;4h自动触发&quot;，年化减少断货损失约25万元；供应商风险实时响应比季度审核减少约60%的质量事故</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（技术可行，难点在于ERP/WMS API集成和审批工作流设计）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（这是&quot;分析→行动&quot;闭环的核心，是Palantir最核心的差异化价值）</li><li><strong>评估依据</strong>：Palantir客户案例：供应链Action触发系统将人工干预减少70%，响应速度提升10-50倍</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：6 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+供应链本体驱动行动触发系统（Palantir风格）
+功能：Object状态监控 / Action触发条件匹配 / Writeback执行 / 审批工作流
+输入：实体标签状态变更流
+输出：触发动作队列 + 执行日志 + 业务系统写回（模拟）
+&quot;&quot;&quot;
+import json
+import uuid
+import time
+from dataclasses import dataclass, field
+from typing import Callable, Any, Optional
+from datetime import datetime
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class ActionDefinition:
+    &quot;&quot;&quot;Action Type 定义&quot;&quot;&quot;
+    action_id: str
+    display_name: str
+    trigger_condition: Callable      # 触发条件函数
+    param_builder: Callable           # 参数构建函数
+    writeback_api: str               # 写回API端点（模拟）
+    approval_required: bool = False
+    approval_threshold_yuan: float = 50_000.0
+    idempotency_window_hours: int = 4
+    cooldown_minutes: int = 60
+
+
+@dataclass
+class ActionExecution:
+    &quot;&quot;&quot;Action执行记录&quot;&quot;&quot;
+    execution_id: str = field(default_factory=lambda: str(uuid.uuid4())[:8])
+    action_id: str = &quot;&quot;
+    triggered_by: str = &quot;&quot;           # 触发实体ID
+    trigger_tag: str = &quot;&quot;
+    trigger_value: Any = None
+    params: dict = field(default_factory=dict)
+    status: str = &quot;pending&quot;          # pending/approved/executed/rejected/rolled_back
+    created_at: str = field(default_factory=lambda: datetime.now().strftime(&quot;%H:%M:%S&quot;))
+    executed_at: Optional[str] = None
+    writeback_response: Optional[dict] = None
+    estimated_cost_yuan: float = 0.0
+
+
+class SupplyChainOntologyEngine:
+    &quot;&quot;&quot;供应链本体行动触发引擎&quot;&quot;&quot;
+
+    def __init__(self, dry_run: bool = True):
+        self.dry_run = dry_run
+        self.action_definitions: dict = {}
+        self.execution_queue: list = []
+        self.execution_history: list = []
+        self.recent_executions: dict = {}   # action_id:entity_id → last execution time
+
+    def register_action(self, action_def: ActionDefinition):
+        self.action_definitions[action_def.action_id] = action_def
+        print(f&quot;  ✅ 注册Action: [{action_def.action_id}] &quot;
+              f&quot;{&#x27;需审批&#x27; if action_def.approval_required else &#x27;自动执行&#x27;}&quot;)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2309.12188</li><li>2406.09341</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Supply-Chain-Ontology-Action-Trigger" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Demand-Supply-Matching-Gap-Analysis.html'>Skill-Demand-Supply-Matching-Gap-Analysis</a></li><li><a href='../skills/Skill-Predictive-Tag-Engine-Supply-Chain.html'>Skill-Predictive-Tag-Engine-Supply-Chain</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><a href='../skills/Skill-Supplier-Ontology-Capability-Map.html'>Skill-Supplier-Ontology-Capability-Map</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><a href='../skills/Skill-Tag-Schema-Engineering-Lifecycle.html'>Skill-Tag-Schema-Engineering-Lifecycle</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Demand-Supply-Matching-Gap-Analysis.html'>Skill-Demand-Supply-Matching-Gap-Analysis</a></li><li><a href='../skills/Skill-Predictive-Tag-Engine-Supply-Chain.html'>Skill-Predictive-Tag-Engine-Supply-Chain</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><a href='../skills/Skill-Supplier-Ontology-Capability-Map.html'>Skill-Supplier-Ontology-Capability-Map</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Demand-Supply-Matching-Gap-Analysis.html'>Skill-Demand-Supply-Matching-Gap-Analysis</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

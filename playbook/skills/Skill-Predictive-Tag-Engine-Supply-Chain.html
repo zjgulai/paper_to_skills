@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>预测型标签引擎 — 将未来风险转化为当前可查询标签的供应链预测打标体系 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Predictive-Tag-Engine-Supply-Chain</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>预测型标签引擎 — 将未来风险转化为当前可查询标签的供应链预测打标体系</h1>
+<p class="muted">Skill-Predictive-Tag-Engine-Supply-Chain · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-tagging-ontology.html'>标签工程与本体驱动手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>18万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>补货团队面临&quot;等到断货才发现已经来不及&quot;——预测型标签引擎将断货事件从12件/年→3件/年，T-14天提前响应比T-0应急成本低20倍</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>预测型标签（Predictive Tag） 的核心洞察：传统标签描述当前状态（库存=50件），但决策需要的是未来状态（7天后会断货）。预测标签把&quot;预测模型的输出&quot;编码为可查询、可触发行动的标签。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：7日断货预测标签（主力场景） - 业务问题：吸奶器旗舰款在Amazon平均PLT=35天，等到真的断货再补货已经来不及 - 预测标签逻辑： - 触发动作：`predicted_stockout_7d=True` → 自动创建补货预审单（采购经理24h内确认） - 业务价值：断货事件从&quot;12件/年&quot;降至&quot;3件/年&quot;，年化减少断货损失约18万元</p><p>**场景B：大促需求峰值预测标签** - **业务问题**：Black Friday前需要知道哪些SKU需要额外备货，但不确定会大多少 - **预测标签**：`predicted_demand_spike=True`（置信度≥0.80）→ 触发&quot;大促备货复核&quot;工作流 - **预测逻辑**：历史大促销量倍数 × 当年广告投入比例 × 外部搜索热度指数 - **业务价值**：大促备货准确率（售罄率50-65%目标）从42%提升至68%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：7日断货预测标签使断货事件从12件/年→3件/年，年化减少断货损失约18万元；大促需求峰值预测标签使大促备货准确率从42%→68%，减少大促后尾货损失约10万元</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要时序预测模型和PLT数据支撑，中等难度）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（把&quot;响应式&quot;补货变为&quot;预防式&quot;补货，是标签工程对供应链最大的价值贡献）</li><li><strong>评估依据</strong>：预测标签实现&quot;T-14天提前响应&quot;比&quot;T-0天断货应急&quot;，响应成本降低10-20倍（无需紧急空运）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+预测型标签引擎 — 供应链供应链预测打标体系
+功能：多类型预测标签计算 / 滚动更新 / 置信度管理 / 提前行动映射
+输入：SKU库存数据 + 销售历史 + PLT数据
+输出：预测标签集 + 置信度 + 行动优先级 + 预测准确率追踪
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+from dataclasses import dataclass, field
+from typing import Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class PredictiveTag:
+    tag_id: str
+    horizon_days: int
+    value: bool
+    confidence: float
+    predicted_at: str
+    model_name: str
+    evidence: dict = field(default_factory=dict)
+    action_priority: str = &quot;normal&quot;  # low/normal/high/urgent
+
+    def is_actionable(self, min_confidence: float = 0.75) -&gt; bool:
+        return self.value and self.confidence &gt;= min_confidence
+
+
+class PredictiveTagEngine:
+    &quot;&quot;&quot;预测型标签引擎&quot;&quot;&quot;
+
+    def __init__(self, confidence_thresholds: dict = None):
+        self.thresholds = confidence_thresholds or {
+            &quot;predicted_stockout_7d&quot;: 0.75,
+            &quot;predicted_stockout_14d&quot;: 0.70,
+            &quot;predicted_stockout_30d&quot;: 0.65,
+            &quot;predicted_demand_spike&quot;: 0.72,
+            &quot;predicted_slow_moving&quot;: 0.68,
+            &quot;predicted_price_increase&quot;: 0.70,
+        }
+        self.prediction_log = []
+
+    def predict_stockout(self, sku: dict, horizon_days: int,
+                          plt_p85: float = 35.0) -&gt; PredictiveTag:
+        &quot;&quot;&quot;
+        断货预测：基于DOS + PLT + 需求波动
+        DOS = current_inventory / avg_daily_sales
+        &quot;&quot;&quot;
+        inventory = sku.get(&quot;inventory&quot;, 0)
+        avg_daily = max(0.1, sku.get(&quot;avg_daily_sales_30d&quot;, 1.0))
+        demand_cv = sku.get(&quot;demand_cv&quot;, 0.25)
+        pending_po = sku.get(&quot;pending_po_qty&quot;, 0)
+
+        # 有效库存天数（含在途但扣安全库存）
+        effective_inventory = inventory + pending_po * 0.8  # 在途80%可期
+        dos = effective_inventory / avg_daily
+
+        # 需求上行风险（CV越大，断货风险越高）</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2305.14481</li><li>2308.11234</li><li>2401.07823</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Predictive-Tag-Engine-Supply-Chain" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Forecast-MAPE-MinMax-Accuracy-System.html'>Skill-Forecast-MAPE-MinMax-Accuracy-System</a></li><li><a href='../skills/Skill-Procurement-Cycle-Time-KPI.html'>Skill-Procurement-Cycle-Time-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Quality-Coverage-KPI.html'>Skill-Tag-Quality-Coverage-KPI</a></li><li><a href='../skills/Skill-Tag-Schema-Engineering-Lifecycle.html'>Skill-Tag-Schema-Engineering-Lifecycle</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Forecast-MAPE-MinMax-Accuracy-System.html'>Skill-Forecast-MAPE-MinMax-Accuracy-System</a></li><li><a href='../skills/Skill-Procurement-Cycle-Time-KPI.html'>Skill-Procurement-Cycle-Time-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Quality-Coverage-KPI.html'>Skill-Tag-Quality-Coverage-KPI</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Forecast-MAPE-MinMax-Accuracy-System.html'>Skill-Forecast-MAPE-MinMax-Accuracy-System</a></li><li><a href='../skills/Skill-Procurement-Cycle-Time-KPI.html'>Skill-Procurement-Cycle-Time-KPI</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

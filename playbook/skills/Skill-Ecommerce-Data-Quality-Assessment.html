@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E-commerce Data Quality Assessment — 产品目录数据质量双轨评分与门控 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Ecommerce-Data-Quality-Assessment</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>E-commerce Data Quality Assessment — 产品目录数据质量双轨评分与门控</h1>
+<p class="muted">Skill-Ecommerce-Data-Quality-Assessment · 22-数据采集工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>data_collection</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-50 万/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据工程师 / 技术负责人<span class='biz-ctx-secondary'> · 运营负责人 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想监控竞品价格/评论/排名但没有稳定采集能力，手动太慢；多平台数据分散整合成本极高；数据管道不稳定经常断</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>竞品价格/评论数据每日自动更新，多平台数据统一入仓，数据管道稳定性 &gt;99%，取数时间从小时降到分钟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品数据要手动收集太慢</span><span class='biz-pain-tag'>平台 API 限制抓不到数据</span><span class='biz-pain-tag'>多系统数据整合不起来</span><span class='biz-pain-tag'>报表用的数据是过期的</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴跨境电商应用：商品 catalog 错误检测与缺失模态补全，保证下游推荐/搜索质量</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>电商产品目录的质量问题藏得很深——表面上 SKU 数据&quot;有值&quot;，但值是错的、过期的、格式不统一、或关键属性缺失。母婴跨境卖家最常见的问题：800 个 SKU 的适用月龄字段有 60 种写法，80 个 SKU 图片 URL 已失效，200 个 SKU 的 BPAFree 认证状态为空。这些直接导致推荐系统乱推、AutoPKG 构建图谱时噪声激增。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：AutoPKG 多模态属性图谱构建需要高质量输入——产品描述残缺（&lt; 50 字符）、主图 URL 失效、属性格式混乱会让 PKG 属性提取 WKE 从 0.724 跌到 0.5 以下，浪费大量 LLM API 成本。</p><p>DQSOps 处理： 1. 批量 SKU 进入 AutoPKG 前，先运行 DQSOps 质量评估 2. 字段级评分：标题长度、描述长度、图片 URL 可访问性、必填属性完整率 3. 行级过滤：质量分 &lt; 0.6 的 SKU 进入&quot;待修复队列&quot;，不进入 AutoPKG 4. 表级报告：完整性 xx%、异常 URL yy 个，帮助运营优先修复</p><p>业务价值：LLM API 成本节省 30%（过滤低质量 SKU）；PKG 属性提取 WKE 从 ~0.5 提升到 ~0.72，带来年化 GMV 增量 ¥20-50 万</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>过滤低质量 SKU 节省 LLM API 成本：¥5,000-20,000/批（1000 SKU × 30% 过滤率）</li><li>PKG 属性提取质量提升带来 GMV 增量：¥20-50 万/年</li><li>避免 Amazon 违规上架处罚：¥50,000-200,000/次</li><li><strong>年化综合 ROI</strong>：¥80-300 万（视 SKU 规模）</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（纯 Python，无外部依赖，1-2 天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+E-commerce Data Quality Assessment — 产品目录数据质量双轨评分
+基于 DQSOps (arXiv: 2303.15068) 实现
+
+依赖: re, statistics, dataclasses (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+from typing import Optional
+import re
+import statistics
+
+
+@dataclass
+class FieldSchema:
+    name: str
+    required: bool = True
+    min_length: int = 0
+    max_length: int = 10000
+    dtype: str = &quot;str&quot;                      # str / int / float / url
+    valid_range: tuple = (None, None)
+    weight: float = 1.0
+    pattern: Optional[str] = None
+
+
+@dataclass
+class FieldQuality:
+    field_name: str
+    rule_score: float
+    ml_score: float
+    final_score: float
+    issues: list = field(default_factory=list)
+
+
+@dataclass
+class RowQuality:
+    row_id: str
+    field_scores: dict = field(default_factory=dict)
+    row_score: float = 1.0
+    is_blocked: bool = False
+
+
+@dataclass
+class TableQualityReport:
+    table_name: str
+    total_rows: int
+    passed_rows: int
+    blocked_rows: int
+    table_score: float
+    dimension_scores: dict
+    top_issues: list
+    sla_passed: bool
+
+
+class RuleScorer:
+    &quot;&quot;&quot;规则轨：完整性 + 类型准确性 + 长度约束 + 正则&quot;&quot;&quot;
+
+    def score_field(self, value, schema: FieldSchema) -&gt; FieldQuality:
+        issues = []
+        score = 1.0</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2303.15068</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Ecommerce-Data-Quality-Assessment" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Listing-Quality-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Adaptive-Crawl-Scheduling.html'>Skill-Adaptive-Crawl-Scheduling</a></li><li><a href='../skills/Skill-AutoPKG-Multimodal-Product-Attribute-KG.html'>Skill-AutoPKG-Multimodal-Product-Attribute-KG</a></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Data-Provenance-Lineage.html'>Skill-Data-Provenance-Lineage</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Product-Knowledge-Graph-Query.html'>Skill-Product-Knowledge-Graph-Query</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Listing-Quality-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-AutoPKG-Multimodal-Product-Attribute-KG.html'>Skill-AutoPKG-Multimodal-Product-Attribute-KG</a></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Product-Knowledge-Graph-Query.html'>Skill-Product-Knowledge-Graph-Query</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Listing-Quality-Scoring]]（组合场景</span></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Identity Fragmentation Debiasing（身份碎片化纠偏） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Identity-Fragmentation-Debiasing</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Identity Fragmentation Debiasing（身份碎片化纠偏）</h1>
+<p class="muted">Skill-Identity-Fragmentation-Debiasing · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>广告与投放</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务问题：女装独立站通过 Instagram（手机端）大量投放信息流广告</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：用户在多设备间切换（手机看广告、电脑下单）导致底层 Cookie/IDFA 无法跨端串联，同一真实用户被拆分为多个&quot;碎片化身份&quot;。这使得广告平台看到的 ROAS 严重失真——有的记录&quot;只有曝光没有购买&quot;，有的记录&quot;只有购买没有广告&quot;。算法通过 Stratified Aggregation（分层聚合） 在 Cohort 层面重建真实曝光与购买的对应关系，无需跨设备图谱，还原因果 ROI。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：女装独立站通过 Instagram（手机端）大量投放信息流广告。后台报表显示广告 CVR 极低（曝光了但转化接近 0），财务部门准备砍掉 Instagram 预算。真实情况是：高活跃用户在手机看到广告后，习惯切换到电脑上完成购买——这部分转化在设备级日志中被完全&quot;断链&quot;，无法归因到 Instagram。</p><p>数据要求： - 字段：`user_id（或邮箱哈希/手机号哈希）| device_id | cohort（地区+时段） | exposed | converted` - 数据源：Instagram Ads API（曝光数据）+ Shopify 后台（订单数据，含 UTM 来源） - 如无 user\_id 关联能力，则退化为 Cohort 层面的聚合统计（不需要用户级关联）</p><p>预期产出： - 朴素设备级 ATE：≈ 0.016（严重低估） - Stratified Aggregation 纠偏后 ATE：≈ 0.055-0.065（接近真实效果） - 纠偏后 ROI 从 0.28 提升至 0.80+，揭示 Instagram 渠道被严重低估</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from model import (
+    simulate_cross_device_logs,
+    naive_roi_estimate,
+    StratifiedAggregationDebiaser,
+    bias_decomposition_report,
+)
+
+# 1. 加载数据（或使用模拟数据）
+df = simulate_cross_device_logs(
+    n_true_users=3000,
+    fragmentation_rate=0.40,  # 40% 用户跨设备碎片化
+    ad_lift=0.06,              # 真实广告提升效果 6pp（仅模拟用）
+    seed=2024,
+)
+# df = pd.read_csv(&quot;cross_device_log.csv&quot;)  # 真实数据替换
+
+# 2. 朴素估计（展示有偏结果）
+naive = naive_roi_estimate(df, ad_spend=10000.0)
+print(f&quot;朴素 ATE: {naive[&#x27;naive_lift&#x27;]:.4f}  朴素 ROI: {naive[&#x27;naive_roi&#x27;]:.3f}&quot;)
+# 朴素 ATE: 0.0164   朴素 ROI: 0.279  ← 严重低估（碎片化失真）
+
+# 3. Stratified Aggregation 纠偏
+debiaser = StratifiedAggregationDebiaser(cohort_col=&quot;cohort&quot;, min_cohort_size=20)
+debiaser.fit(df)  # 关键：内部自动按 user_id 聚合，恢复真实曝光/购买状态
+corrected = debiaser.corrected_roi(ad_spend=10000.0, revenue_per_conversion=50.0)
+print(f&quot;纠偏 ATE: {corrected[&#x27;corrected_ate&#x27;]:.4f}  纠偏 ROI: {corrected[&#x27;corrected_roi&#x27;]:.3f}&quot;)
+# 纠偏 ATE: 0.0548   纠偏 ROI: 0.821  ← 接近真实效果
+
+# 4. Cohort 级别报告
+cohort_df = debiaser.cohort_report()
+print(cohort_df)
+# cohort  n_users  n_exposed  n_control  cvr_exposed  cvr_control    ate  ci_lower  ci_upper
+# C05      629        355        274        0.2901       0.1460   0.1442    0.0811    0.2072
+# ...
+
+# 5. 对比汇总
+bias_df = bias_decomposition_report(naive, corrected, true_lift=0.06)
+print(bias_df)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2008.12849</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Identity-Fragmentation-Debiasing" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Identity Fragmentation + CDA</span></li><li><span class='muted'>Identity Fragmentation + DARA Agentic MMM</span></li><li><span class='muted'>Identity Fragmentation + DML</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-GraphTrack-Cross-Device-Tracking.html'>Skill-GraphTrack-Cross-Device-Tracking</a></li><li><a href='../skills/Skill-HGNN-Cross-Device-Matching.html'>Skill-HGNN-Cross-Device-Matching</a></li><li><span class='muted'>相关</span></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

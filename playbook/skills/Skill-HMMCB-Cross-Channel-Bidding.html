@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HMMCB — 跨渠道广告竞价 MARL：CPC 约束下最大化总点击（美团真实 A/B） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-HMMCB-Cross-Channel-Bidding</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>HMMCB — 跨渠道广告竞价 MARL：CPC 约束下最大化总点击（美团真实 A/B）</h1>
+<p class="muted">Skill-HMMCB-Cross-Channel-Bidding · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>500 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴 DTC 品牌（如储奶袋/吸奶器）同时在 Google Ads（搜索意图强）、Meta（品牌认知+再营销）、TikTok Shop（内容种草+购买）三个渠道投放</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>HMMCB 的核心洞察：跨渠道广告竞价是一个两层嵌套决策问题——上层决定「把钱分给哪个渠道」，下层决定「每个渠道出多少价」。单一智能体无法同时优化两个时间尺度和约束维度。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>母婴 DTC 品牌（如储奶袋/吸奶器）同时在 Google Ads（搜索意图强）、Meta（品牌认知+再营销）、TikTok Shop（内容种草+购买）三个渠道投放。 - 每月广告预算 50 万，需满足整体 CPC ≤ 8 元的广告主约束 - 三个渠道竞价节奏不同（Google 实时竞价 &lt; 0.1s、Meta CPM 买量、TikTok 竞价+内容分） - 运营团队手动调预算，每周一次，无法响应促销季/节假日的流量峰谷</p><p>数据要求 - 各渠道历史出价记录、曝光量、点击量、成本（≥ 3 个月） - 渠道级别的 CPC、CTR、转化率时序数据（按小时/天） - 广告主设定的预算上限和 CPC 约束参数</p><p>HMMCB 运作方式 1. Top-level：每日/每小时根据三渠道实时状态和 CPC 约束，扩散模型生成最优预算分配 $[b_G, b_M, b_T]$ 2. Bottom-level：三个独立渠道智能体，在分配预算约束下实时竞价（Google 调整 tCPC / Meta 调整出价上限 / TikTok 调整竞价系数） 3. 约束保证：Top-level 的条件扩散采样天然保证 $\sum_i b_i \cdot \text{CPC}_i \leq \text{Budget}_{\text{total}} \cdot \text{CPC}_{\text{target}}$</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>CPC 降低：<strong>10–20%</strong>（同渠道出价更精准）</li><li>同预算总点击提升：<strong>15–25%</strong>（预算分配优化）</li><li>母婴 DTC 品牌年广告投入 500 万，优化增效约 <strong>75–125 万/年</strong></li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code># 快速使用示例
+from hmmcb_cross_channel.model import HMMCBSystem, ChannelState
+
+# 初始化三渠道系统
+channels = [
+    ChannelState(&quot;google&quot;, budget_remaining=200000, cpc_target=8.0,
+                 historical_ctr=0.045, bid_history=[6.5, 7.0, 7.2]),
+    ChannelState(&quot;meta&quot;,   budget_remaining=180000, cpc_target=8.0,
+                 historical_ctr=0.028, bid_history=[5.0, 5.5, 6.0]),
+    ChannelState(&quot;tiktok&quot;, budget_remaining=120000, cpc_target=8.0,
+                 historical_ctr=0.015, bid_history=[]),  # 新渠道，无历史
+]
+
+system = HMMCBSystem(channels, total_budget=500000, global_cpc_target=8.0)
+results = system.run_bidding_cycle(steps=10)
+
+# 验证：CPC 约束满足 + TikTok 迁移效果 + 总点击超过均匀基线
+system.validate_results(results)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2412.19064</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-HMMCB-Cross-Channel-Bidding" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>AIGP-LLM-Dynamic-Pricing]] — 定价与竞价联动</span></li><li><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html'>Skill-AIGP-LLM-Dynamic-Pricing</a></li><li><a href='../skills/Skill-Multi-Agent-Debate.html'>Skill-Multi-Agent-Debate</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Attribution.html'>Skill-TikTok-Shop-Content-Attribution</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

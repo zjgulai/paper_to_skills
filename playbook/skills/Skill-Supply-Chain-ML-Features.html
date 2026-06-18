@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Supply Chain ML Feature Engineering — 供应链 ML 特征工程：时序+图+统计三维 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/12-ml基础.html">12-ML基础</a> / Skill-Supply-Chain-ML-Features</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Supply Chain ML Feature Engineering — 供应链 ML 特征工程：时序+图+统计三维</h1>
+<p class="muted">Skill-Supply-Chain-ML-Features · 12-ML基础</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>供应链 ML 模型准确率提升 15-20%，减少缺货/积压成本</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 数据工程师<span class='biz-ctx-secondary'> · 运营负责人 · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>选品评分 · 差评预测 · 用户流失预警 · 广告出价预测</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想用机器学习解决业务问题，但不知道该选什么模型；模型上线后效果越来越差不知道为什么</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>选对算法工具减少 50% 试错时间，模型上线后可监控可解释，数据团队和业务团队建立共同语言</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道该用什么模型</span><span class='biz-pain-tag'>模型准确率不稳定</span><span class='biz-pain-tag'>业务不相信模型结果</span><span class='biz-pain-tag'>模型黑盒说不清为什么这么预测</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>1. 稀疏性：长尾 SKU 历史销量不足（&lt; 30 天），传统特征工程无法直接应用</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>供应链数据的特殊性</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务背景：预测 SKU 未来 14 天补货需求量，特征工程决定模型上限。</p><p>效果：加入供应链特征后，RMSE 从 23.5 降至 19.2（提升 18%）。</p><p>业务背景：构建供应商风险评分，输入 SCM Attribution 模型识别高风险供应商。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>跨域</strong>：Skill-Inventory-Health-Aging-Attribution</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：paper2skills-code/supply_chain/supply_chain_ml_features</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Supply Chain ML Feature Engineering — 供应链 ML 特征工程
+Python 标准库实现，无 sklearn/pandas 依赖，Python 3.14 兼容
+&quot;&quot;&quot;
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional
+import math
+import statistics
+
+
+# ─────────────────────────────────────────────
+# 数据结构
+# ─────────────────────────────────────────────
+
+@dataclass
+class SupplyChainRecord:
+    &quot;&quot;&quot;供应链时序记录（单 SKU 单天）&quot;&quot;&quot;
+    sku_id: str
+    timestamp: float          # Unix timestamp（天级别，取当天 00:00 的 ts）
+    demand: float             # 当日需求量（件数）
+    lead_time: float          # 供应商交货期（天）
+    is_promotion: bool = False  # 是否为促销日
+    supplier_id: str = &quot;&quot;     # 供应商ID
+    category: str = &quot;&quot;        # 品类
+
+
+# ─────────────────────────────────────────────
+# 时序特征构建器
+# ─────────────────────────────────────────────
+
+class TemporalFeatureBuilder:
+    &quot;&quot;&quot;
+    时序特征构建器：滞后特征、滚动统计、季节分解。
+    严格无数据泄露：t 时刻特征只使用 t-1 及以前的数据。
+    &quot;&quot;&quot;
+
+    def __init__(self, lag_windows: list[int] = None, roll_windows: list[int] = None):
+        &quot;&quot;&quot;
+        Args:
+            lag_windows: 滞后步数列表，如 [7, 14, 28]
+            roll_windows: 滚动窗口大小列表，如 [7, 14, 30]
+        &quot;&quot;&quot;
+        self.lag_windows = lag_windows or [7, 14, 28]
+        self.roll_windows = roll_windows or [7, 14, 30]
+
+    def build(self, records: list[SupplyChainRecord]) -&gt; list[dict]:
+        &quot;&quot;&quot;
+        为每条记录构建时序特征（使用严格的历史窗口，避免未来信息）。
+
+        Returns:
+            list of feature dicts，与 records 等长
+        &quot;&quot;&quot;
+        # 按 sku_id 分组后按时间排序
+        sku_records: dict[str, list[SupplyChainRecord]] = {}
+        for r in records:
+            sku_records.setdefault(r.sku_id, []).append(r)
+        for sku in sku_records:
+            sku_records[sku].sort(key=lambda x: x.timestamp)
+</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Supply-Chain-ML-Features" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Validation-Strategies.html'>Skill-Cross-Validation-Strategies</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-EventCast-LLM-Event-Forecasting.html'>Skill-EventCast-LLM-Event-Forecasting</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AIM-RM-LLM-Inventory-MAS-Memory.html'>Skill-AIM-RM-LLM-Inventory-MAS-Memory</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

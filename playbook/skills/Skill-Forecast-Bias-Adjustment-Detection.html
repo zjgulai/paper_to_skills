@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>预测偏差加减码检测与校正 — 供应链计划主动修正行为的量化分析与偏差溯源 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Forecast-Bias-Adjustment-Detection</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>预测偏差加减码检测与校正 — 供应链计划主动修正行为的量化分析与偏差溯源</h1>
+<p class="muted">Skill-Forecast-Bias-Adjustment-Detection · 04-供应链</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>供应链与补货</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-G Listing内容优化</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>供应链团队凭经验打折预测反而可能比直接使用原始预测更差——修正Theil&#x27;s U量化人工修正价值（&gt;1说明修正有害），发现有害修正后停止此类干预使计划准确率提升约5-8%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>书籍核心洞察（陈凤霞）：供应链团队在拿到销售预测后，往往会主动&quot;打折&quot;（认为预测偏高而缩减）或&quot;加码&quot;（认为保险起见而扩大）。书中将这种行为称为加减码（Supply Chain Adjustment），并明确指出：加减码本身不是问题，问题是加减码行为是否有依据、是否带来正向效果。如果供应链团队的历史修正总是让预测变得更差（即修正后的计划准确率低于原始预测准确率），那么这种&quot;经验调整&quot;实际上是在增加误差而非减少。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某卖家月末经常发现库存积压，运营声称&quot;预测做得很好&quot;，但实际供应链分析发现销售团队的月度预测平均高出实际28%（系统性乐观偏差） - 检测应用： 1. 计算过去12个月每月的FA：平均72%（28%偏差） 2. 计算修正后的PA（供应链后来打折了80%执行）：平均78%（修正有益！） 3. 但仍有22%误差，且修正系数本身也有偏差（打折80%基于经验，实际应打折74%） 4. 量化最优修正系数：0.74，更新供应链SOP - 预期产出：计划准确率从78%提升至84%，库存积压减少约20%</p><p>场景B：加减码行为影响评估（是否应该保留人工修正）</p><p>- **业务问题**：管理层质疑&quot;为什么需要人工修正预测？&quot;，想了解供应链团队的修正到底有没有价值 - **算法评估**：计算修正Theil&#x27;s U： - 吸奶器品类：U=0.85（修正有益，保留） - 婴儿服装品类：U=1.12（修正有害！去掉人工修正） - 婴儿食品品类：U=0.97（基本无效，建议自动化替代）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：发现&quot;有害修正&quot;后停止此类人工干预，直接使计划准确率提升约5-8%；以月GMV$50万计算，准确率每提升1%≈$5000价值；系统$1万，ROI&gt;400%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（只需历史预测+实际数据；主要挑战是记录每次人工修正前后的原始预测值）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（书中第五章专章讲解，是供应链计划管理的&quot;元认知&quot;——知道自己的决策质量）</li><li><strong>适用规模</strong>：所有有人工预测修正流程的组织，特别是销售与供应链存在&quot;博弈&quot;的团队</li><li><strong>数据依赖</strong>：原始销售预测（修正前）、最终执行计划（修正后）、实际销售数据（结果）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+预测偏差加减码检测与校正
+基于《全链路管理》陈凤霞 第五章第一节
+FA vs PA对比 + 修正Theil&#x27;s U + 最优修正系数
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from scipy import stats
+from typing import Dict, List, Optional, Tuple
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class ForecastBiasAnalyzer:
+    &quot;&quot;&quot;预测偏差与加减码分析器&quot;&quot;&quot;
+
+    @staticmethod
+    def forecast_accuracy(forecasts: np.ndarray, actuals: np.ndarray) -&gt; float:
+        &quot;&quot;&quot;计算预测准确率FA&quot;&quot;&quot;
+        if len(actuals) == 0:
+            return 0.0
+        errors = np.abs(forecasts - actuals) / np.maximum(actuals, 1)
+        return float(1 - np.mean(errors))
+
+    @staticmethod
+    def mean_bias(forecasts: np.ndarray, actuals: np.ndarray) -&gt; float:
+        &quot;&quot;&quot;计算系统性偏差（正=乐观偏高，负=悲观偏低）&quot;&quot;&quot;
+        biases = (forecasts - actuals) / np.maximum(actuals, 1)
+        return float(np.mean(biases))
+
+    @staticmethod
+    def theil_u_ratio(forecasts: np.ndarray, plans: np.ndarray,
+                       actuals: np.ndarray) -&gt; float:
+        &quot;&quot;&quot;
+        修正Theil&#x27;s U统计量
+        &lt;1: 修正优于原始预测
+        =1: 修正与原始预测等效
+        &gt;1: 修正劣于原始预测（有害修正）
+        &quot;&quot;&quot;
+        rmse_forecast = np.sqrt(np.mean((forecasts - actuals) ** 2))
+        rmse_plan = np.sqrt(np.mean((plans - actuals) ** 2))
+        if rmse_forecast == 0:
+            return 1.0
+        return float(rmse_plan / rmse_forecast)
+
+    def compute_optimal_adjustment_factor(self, forecasts: np.ndarray,
+                                           actuals: np.ndarray,
+                                           min_factor: float = 0.5,
+                                           max_factor: float = 1.5) -&gt; Dict:
+        &quot;&quot;&quot;
+        计算历史最优修正系数
+        通过网格搜索找到使PA最高的乘数因子
+        &quot;&quot;&quot;
+        best_factor = 1.0
+        best_pa = self.forecast_accuracy(forecasts, actuals)
+
+        for factor in np.arange(min_factor, max_factor, 0.02):
+            adjusted = forecasts * factor
+            pa = self.forecast_accuracy(adjusted, actuals)
+            if pa &gt; best_pa:</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Forecast-Bias-Adjustment-Detection" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Logistics-Plan-Three-Dimension-Accuracy.html'>Skill-Logistics-Plan-Three-Dimension-Accuracy</a></li><li><a href='../skills/Skill-ML-AB-Randomization-Test.html'>Skill-ML-AB-Randomization-Test</a></li><li><a href='../skills/Skill-Promo-Stocktaking-SOP-Automation.html'>Skill-Promo-Stocktaking-SOP-Automation</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-ML-AB-Randomization-Test.html'>Skill-ML-AB-Randomization-Test</a></li><li><a href='../skills/Skill-Promo-Stocktaking-SOP-Automation.html'>Skill-Promo-Stocktaking-SOP-Automation</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-ML-AB-Randomization-Test.html'>Skill-ML-AB-Randomization-Test</a></li><li><a href='../skills/Skill-Promo-Stocktaking-SOP-Automation.html'>Skill-Promo-Stocktaking-SOP-Automation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

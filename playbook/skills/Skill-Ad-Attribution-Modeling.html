@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multi-Touch Attribution Modeling for Digital Advertising · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-Ad-Attribution-Modeling</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Multi-Touch Attribution Modeling for Digital Advertising</h1>
+<p class="muted">Skill-Ad-Attribution-Modeling · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>用户从第一次看到广告到最终下单，平均接触5-7个触点（Facebook视频、Google搜索、TikTok短视频、再营销广告、邮件）。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心问题：用户从第一次看到广告到最终下单，平均接触57个触点（Facebook视频、Google搜索、TikTok短视频、再营销广告、邮件）。哪个触点真正促成了转化？最后点击（LastClick）模型把功劳全给最后一个触点，严重低估了上层漏斗的价值。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：Momcozy 月广告预算50万，分配为Facebook 30万、Google 15万、TikTok 5万。但Last-Click归因显示Google贡献60%转化，Facebook只有25%。团队想砍掉Facebook预算加到Google——这是Last-Click的陷阱。</p><p>数据驱动归因分析： 1. 收集用户旅程数据：每个转化的完整触点序列 2. Shapley值计算： - Facebook：边际贡献 38% - Google：边际贡献 32% - TikTok：边际贡献 18% - Email：边际贡献 12% 3. 与Last-Click对比： - Facebook：Last-Click 25% → Shapley 38%（被低估！） - Google：Last-Click 60% → Shapley 32%（被高估！）</p><p>决策变化： - 原方案：Facebook 30万 → Google 45万 - 修正后：Facebook 35万、Google 25万、TikTok 15万、Email 5万 - 预期效果：整体ROAS从2.5提升到3.2</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI</strong>：预算重新分配后ROAS提升20-40%，年节省浪费预算10万+</li><li><strong>难度</strong>：⭐⭐⭐☆☆（3/5）— Shapley计算复杂，但规则模型简单</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（5/5）— 广告预算分配的前提，没有归因就没有优化</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Ad Attribution Modeling — 广告归因模型
+支持：规则归因、Shapley值、马尔可夫链、移除效应
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from itertools import combinations
+from collections import defaultdict, Counter
+
+
+class AttributionModel:
+    &quot;&quot;&quot;广告归因模型&quot;&quot;&quot;
+
+    def __init__(self, journeys, conversions):
+        &quot;&quot;&quot;
+        Args:
+            journeys: list of lists, each inner list is touchpoint sequence
+            conversions: list of 0/1, whether each journey converted
+        &quot;&quot;&quot;
+        self.journeys = journeys
+        self.conversions = conversions
+        self.channels = sorted(set(c for j in journeys for c in j))
+
+    def last_click(self):
+        &quot;&quot;&quot;Last-Click归因&quot;&quot;&quot;
+        attribution = Counter()
+        for journey, conv in zip(self.journeys, self.conversions):
+            if conv and journey:
+                attribution[journey[-1]] += 1
+        return dict(attribution)
+
+    def first_click(self):
+        &quot;&quot;&quot;First-Click归因&quot;&quot;&quot;
+        attribution = Counter()
+        for journey, conv in zip(self.journeys, self.conversions):
+            if conv and journey:
+                attribution[journey[0]] += 1
+        return dict(attribution)
+
+    def linear(self):
+        &quot;&quot;&quot;Linear归因&quot;&quot;&quot;
+        attribution = Counter()
+        for journey, conv in zip(self.journeys, self.conversions):
+            if conv and journey:
+                for ch in journey:
+                    attribution[ch] += 1 / len(journey)
+        return dict(attribution)
+
+    def position_based(self, first_weight=0.4, last_weight=0.4):
+        &quot;&quot;&quot;Position-Based归因&quot;&quot;&quot;
+        attribution = Counter()
+        for journey, conv in zip(self.journeys, self.conversions):
+            if not conv or not journey:
+                continue
+            n = len(journey)
+            if n == 1:
+                attribution[journey[0]] += 1
+            elif n == 2:
+                attribution[journey[0]] += first_weight</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Ad-Attribution-Modeling" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Intelligent-Attribution-Causal-Forest.html'>Skill-Intelligent-Attribution-Causal-Forest</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-FrontDoor-Causal-MTA.html'>Skill-FrontDoor-Causal-MTA</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Negative-Keyword-Safe-Guard.html'>Skill-Negative-Keyword-Safe-Guard</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><span class='muted'>可组合（延伸）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

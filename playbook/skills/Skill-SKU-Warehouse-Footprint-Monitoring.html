@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SKU级仓容占用实时监控 — 体积换算精细化测算与存山如山预警机制 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-SKU-Warehouse-Footprint-Monitoring</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>SKU级仓容占用实时监控 — 体积换算精细化测算与存山如山预警机制</h1>
+<p class="muted">Skill-SKU-Warehouse-Footprint-Monitoring · 04-供应链</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>仓容管理只看总利用率忽视SKU级仓容黑洞导致FBA IPI下降——SKU级体积精确测算+两大仿真方案（确定性vs场景），识别仓容黑洞并清仓，IPI从430提升至535解除发货限制</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>书籍核心洞察（陈凤霞）：书中提出了仓容管理的精细化视角——不能只看&quot;仓库总用了多少面积&quot;，而要看&quot;每个SKU用了多少面积&quot;。SKU级仓容管理能精确识别哪些SKU是&quot;仓容黑洞&quot;（占用面积大但销售贡献小），从而优化货位布局和库存结构。书中还提出了两种仿真方案来预测未来仓容需求。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：FBA IPI（库存绩效指数）优化</p><p>- 业务问题：FBA IPI分数低于450（Amazon限制发货阈值），卖家不知道是哪几个SKU在拖累 - SKU级仓容分析： 1. 计算每个SKU的FBA库存体积和DOI 2. 发现3个C类SKU（旧款配件）DOI&gt;120天，占用17%仓容但只贡献2%销售 3. 将这3个SKU的FBA库存清减一半（发起移除），IPI从430提升至535 - 预期产出：解除FBA发货限制，爆款SKU可以正常补货，月GMV恢复增长</p><p>- **业务问题**：Q3末需要决策是否租用额外仓位（月租金$3000），但不确定Q4需求 - **方案B（场景仿真）**： - 乐观（销量+25%）：Q4峰值仓容需求=现有仓容×1.42（必须租额外仓） - 基准（销量正常）：Q4峰值仓容需求=现有仓容×1.18（略爆仓，也需要额外仓） - 悲观（销量-15%）：Q4峰值仓容需求=现有仓容×0.95（不需要额外仓） - 决策：乐观+基准加起来&gt;70%概率→租额外仓（ROI正）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：清理仓容黑洞释放20%仓位（对Amazon FBA而言=IPI改善→解除发货限制→恢复全品增长）；每月节省额外仓储费用$500-2000；系统$1万，ROI&gt;500%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（需要每个SKU的体积数据（从产品手册获取）；核心计算简单）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（书中第五章核心模块，特别是FBA卖家的IPI管理和旺季仓容预警价值极高）</li><li><strong>适用规模</strong>：所有有仓储的卖家（FBA/自营仓），SKU数&gt;20个即可受益</li><li><strong>数据依赖</strong>：SKU体积（产品手册）、当前库存数量、销售数据；FBA有效体积Amazon报告可直接下载</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+SKU级仓容占用实时监控
+基于《全链路管理》陈凤霞 第五章第四节
+体积精细测算 + 两大仿真方案 + 仓容ROI分析
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class SKUWarehouseProfile:
+    &quot;&quot;&quot;SKU仓储档案&quot;&quot;&quot;
+    sku_id: str
+    abc_class: str
+    current_stock: int
+    monthly_sales: float            # 月均销量
+    unit_price: float               # 售价
+    unit_volume_m3: float           # 单件体积（立方米）
+    shelf_layers: int = 4           # 货架层数
+    utilization_rate: float = 0.75  # 层高利用率
+
+
+class SKUWarehouseFootprintMonitor:
+    &quot;&quot;&quot;SKU级仓容占用监控器&quot;&quot;&quot;
+
+    def __init__(self, aisle_factor: float = 1.35):
+        &quot;&quot;&quot;aisle_factor: 通道系数（书中标准1.3-1.5）&quot;&quot;&quot;
+        self.aisle_factor = aisle_factor
+
+    def compute_sku_footprint(self, sku: SKUWarehouseProfile) -&gt; Dict:
+        &quot;&quot;&quot;计算单个SKU的仓容占用&quot;&quot;&quot;
+        # 净占用体积（不含通道）
+        net_volume_m3 = sku.current_stock * sku.unit_volume_m3
+        # 考虑层高利用率后的地面面积
+        floor_area_m2 = net_volume_m3 / (sku.shelf_layers * sku.utilization_rate)
+        # 含通道的实际占用面积
+        gross_area_m2 = floor_area_m2 * self.aisle_factor
+
+        # 仓容密度（GMV/平米）
+        monthly_gmv = sku.monthly_sales * sku.unit_price
+        gmv_per_sqm = monthly_gmv / max(gross_area_m2, 0.01)
+
+        doi = sku.current_stock / max(sku.monthly_sales / 30, 0.01)
+
+        return {
+            &#x27;sku_id&#x27;: sku.sku_id,
+            &#x27;abc_class&#x27;: sku.abc_class,
+            &#x27;current_stock&#x27;: sku.current_stock,
+            &#x27;doi&#x27;: round(doi, 1),
+            &#x27;net_volume_m3&#x27;: round(net_volume_m3, 3),
+            &#x27;floor_area_m2&#x27;: round(floor_area_m2, 2),
+            &#x27;gross_area_m2&#x27;: round(gross_area_m2, 2),
+            &#x27;monthly_gmv&#x27;: monthly_gmv,
+            &#x27;gmv_per_sqm&#x27;: round(gmv_per_sqm, 0),
+            &#x27;warehouse_roi_grade&#x27;: &#x27;A&#x27; if gmv_per_sqm &gt; 5000 else (&#x27;B&#x27; if gmv_per_sqm &gt; 1500 else &#x27;C&#x27;),
+        }</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-SKU-Warehouse-Footprint-Monitoring" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html'>Skill-Dynamic-ABC-Stratification-Adaptive-Policy</a></li><li><a href='../skills/Skill-ITO-Three-Phase-Health-Tracking.html'>Skill-ITO-Three-Phase-Health-Tracking</a></li><li><a href='../skills/Skill-Long-Tail-SKU-Clearance-Optimization.html'>Skill-Long-Tail-SKU-Clearance-Optimization</a></li><li><a href='../skills/Skill-Warehouse-Capacity-Efficiency-Planning.html'>Skill-Warehouse-Capacity-Efficiency-Planning</a></li><li><a href='../skills/Skill-Warehouse-Operations-KPI-Picking-Efficiency.html'>Skill-Warehouse-Operations-KPI-Picking-Efficiency</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-ITO-Three-Phase-Health-Tracking.html'>Skill-ITO-Three-Phase-Health-Tracking</a></li><li><a href='../skills/Skill-Long-Tail-SKU-Clearance-Optimization.html'>Skill-Long-Tail-SKU-Clearance-Optimization</a></li><li><a href='../skills/Skill-Warehouse-Operations-KPI-Picking-Efficiency.html'>Skill-Warehouse-Operations-KPI-Picking-Efficiency</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-ITO-Three-Phase-Health-Tracking.html'>Skill-ITO-Three-Phase-Health-Tracking</a></li><li><a href='../skills/Skill-Long-Tail-SKU-Clearance-Optimization.html'>Skill-Long-Tail-SKU-Clearance-Optimization</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

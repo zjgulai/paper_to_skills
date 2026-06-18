@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multilingual Named Entity Recognition (Universal NER v2) · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-Multilingual-NER-Universal-v2</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Multilingual Named Entity Recognition (Universal NER v2)</h1>
+<p class="muted">Skill-Multilingual-NER-Universal-v2 · 08-知识图谱</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴出海电商的用户评论、客服对话、社交媒体内容涉及多语言（英语、德语、法语、西班牙语、日语等）。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心问题：母婴出海电商的用户评论、客服对话、社交媒体内容涉及多语言（英语、德语、法语、西班牙语、日语等）。传统NER模型按语言独立训练，无法共享跨语言知识，且低资源语言（如荷兰语、波兰语）缺乏标注数据。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：Momcozy 在Amazon美国站、德国站、日本站销售，每月收到数万条多语言评论。需要从中自动抽取：品牌名、产品名、症状、年龄段、竞品提及等实体。</p><p>应用流程： 1. 实体类型定义： - BRAND（品牌）：Momcozy, Medela, Philips Avent - PRODUCT（产品）：breast pump, nursing bra, baby monitor - SYMPTOM（症状）：mastitis, low milk supply, sore nipples - AGE_GROUP（年龄段）：newborn, 3-month-old, toddler - COMPETITOR（竞品）：Spectra, Willow, Elvie 2. 多语言模型加载：Universal NER v2 预训练模型 3. 零语言标注推理：德</p><p>预期产出： - 实体抽取F1：英语85%+，德语/法语75%+，日语70%+ - 标注成本：降低80%（无需每种语言单独标注） - 评论分析覆盖：从仅英语 → 全语言</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI</strong>：多语言VOC分析覆盖度从25%→100%，标注成本降低80%</li><li><strong>难度</strong>：⭐⭐☆☆☆（2/5）— HuggingFace现成模型，调用即可</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（5/5）— 跨境电商刚需，零语言标注即可覆盖全市场</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Multilingual NER — Universal NER v2 inspired implementation
+用于多语言文本的实体抽取与归一化
+&quot;&quot;&quot;
+
+import re
+from collections import defaultdict
+
+
+class MultilingualNER:
+    &quot;&quot;&quot;多语言实体识别器（简化版规则+词典实现）&quot;&quot;&quot;
+
+    def __init__(self):
+        # 实体词典（实际应用中使用预训练模型）
+        self.entity_dict = {
+            &#x27;BRAND&#x27;: {
+                &#x27;en&#x27;: [&#x27;Momcozy&#x27;, &#x27;Medela&#x27;, &#x27;Philips Avent&#x27;, &#x27;Spectra&#x27;, &#x27;Willow&#x27;, &#x27;Elvie&#x27;],
+                &#x27;de&#x27;: [&#x27;Momcozy&#x27;, &#x27;Medela&#x27;, &#x27;Philips Avent&#x27;, &#x27;Nuk&#x27;, &#x27;Tommee Tippee&#x27;],
+                &#x27;ja&#x27;: [&#x27;Momcozy&#x27;, &#x27;Medela&#x27;, &#x27;Pigeon&#x27;, &#x27;Kaneson&#x27;, &#x27;Pipi&#x27;],
+                &#x27;zh&#x27;: [&#x27;Momcozy&#x27;, &#x27;美德乐&#x27;, &#x27;新安怡&#x27;, &#x27;贝亲&#x27;, &#x27;新贝&#x27;]
+            },
+            &#x27;PRODUCT&#x27;: {
+                &#x27;en&#x27;: [&#x27;breast pump&#x27;, &#x27;nursing bra&#x27;, &#x27;baby monitor&#x27;, &#x27;bottle warmer&#x27;, &#x27;diaper bag&#x27;],
+                &#x27;de&#x27;: [&#x27;Milchpumpe&#x27;, &#x27;Still-BH&#x27;, &#x27;Babyphone&#x27;, &#x27;Flaschenwärmer&#x27;, &#x27;Wickeltasche&#x27;],
+                &#x27;ja&#x27;: [&#x27;搾乳器&#x27;, &#x27;授乳ブラ&#x27;, &#x27;ベビーモニター&#x27;, &#x27;哺乳瓶ウォーマー&#x27;, &#x27;おむつポーチ&#x27;],
+                &#x27;zh&#x27;: [&#x27;吸奶器&#x27;, &#x27;哺乳内衣&#x27;, &#x27;婴儿监视器&#x27;, &#x27;温奶器&#x27;, &#x27; diaper bag&#x27;]
+            },
+            &#x27;SYMPTOM&#x27;: {
+                &#x27;en&#x27;: [&#x27;mastitis&#x27;, &#x27;low milk supply&#x27;, &#x27;sore nipples&#x27;, &#x27;clogged duct&#x27;, &#x27;engorgement&#x27;],
+                &#x27;de&#x27;: [&#x27;Mastitis&#x27;, &#x27;Milchmangel&#x27;, &#x27;wunde Brustwarzen&#x27;, &#x27;Milchstau&#x27;, &#x27;Brustdrücken&#x27;],
+                &#x27;ja&#x27;: [&#x27;乳腺炎&#x27;, &#x27;母乳不足&#x27;, &#x27;乳首の痛み&#x27;, &#x27;乳汁淤滞&#x27;, &#x27;乳房の張り&#x27;],
+                &#x27;zh&#x27;: [&#x27;乳腺炎&#x27;, &#x27;奶水不足&#x27;, &#x27;乳头疼痛&#x27;, &#x27;堵奶&#x27;, &#x27;涨奶&#x27;]
+            },
+            &#x27;AGE_GROUP&#x27;: {
+                &#x27;en&#x27;: [&#x27;newborn&#x27;, &#x27;infant&#x27;, &#x27;3-month-old&#x27;, &#x27;6-month-old&#x27;, &#x27;toddler&#x27;],
+                &#x27;de&#x27;: [&#x27;Neugeborenes&#x27;, &#x27;Säugling&#x27;, &#x27;3 Monate&#x27;, &#x27;6 Monate&#x27;, &#x27;Kleinkind&#x27;],
+                &#x27;ja&#x27;: [&#x27;新生児&#x27;, &#x27;乳児&#x27;, &#x27;3ヶ月&#x27;, &#x27;6ヶ月&#x27;, &#x27;幼児&#x27;],
+                &#x27;zh&#x27;: [&#x27;新生儿&#x27;, &#x27;婴儿&#x27;, &#x27;3个月&#x27;, &#x27;6个月&#x27;, &#x27;幼儿&#x27;]
+            }
+        }
+
+    def detect_language(self, text):
+        &quot;&quot;&quot;简易语言检测&quot;&quot;&quot;
+        # 实际应用中使用langdetect或fasttext
+        if re.search(r&#x27;[一-鿿]&#x27;, text):
+            return &#x27;zh&#x27;
+        elif re.search(r&#x27;[぀-ゟ゠-ヿ]&#x27;, text):
+            return &#x27;ja&#x27;
+        elif re.search(r&#x27;[äöüß]&#x27;, text):
+            return &#x27;de&#x27;
+        else:
+            return &#x27;en&#x27;
+
+    def extract_entities(self, text, lang=None):
+        &quot;&quot;&quot;
+        抽取实体
+
+        Args:
+            text: 输入文本
+            lang: 语言代码（可选，自动检测）</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multilingual-NER-Universal-v2" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-KG-Relation-Completion-CBLiP.html'>Skill-KG-Relation-Completion-CBLiP</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

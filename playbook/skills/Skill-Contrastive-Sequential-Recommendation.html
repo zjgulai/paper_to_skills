@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contrastive Sequential Recommendation — 对比学习序列推荐：高质量自监督训练 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Contrastive-Sequential-Recommendation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Contrastive Sequential Recommendation — 对比学习序列推荐：高质量自监督训练</h1>
+<p class="muted">Skill-Contrastive-Sequential-Recommendation · 05-推荐系统</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-dtc-growth.html'>DTC 独立站增长手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥15-40 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>独立站月均购买仅500次数据稀疏无法训练高质量推荐模型——对比学习通过序列增强（掩码/截取/打乱）从稀疏行为中提取自监督信号，无需标注数据精度提升8-15%冷启动推荐质量大幅改善年化15-40万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>为什么用对比学习训练序列推荐：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：独立站月 UV 5,000，每天只有 300-500 个真实购买行为，数据量不足以训练高质量序列推荐模型。对比学习通过数据增强从稀疏数据中提取更多监督信号。</p><p>数据要求： - 用户行为序列（点击/加购/购买） - 无需额外标注数据（自监督）</p><p>预期产出： - 基于对比学习预训练的商品嵌入 - 推荐精度对比：纯监督 vs 对比学习增强</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>数据稀疏场景推荐精度提升 8-15%：月增 GMV ¥3-10 万</li><li>减少冷启动期推荐质量损失</li><li>无需额外标注数据：节省标注成本 ¥5-15 万/年</li><li><strong>年化综合 ROI：¥15-40 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（需要 PyTorch + SASRec 完整实现；约 6-8 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Contrastive Sequential Recommendation
+对比学习序列推荐：质量感知自监督训练
+&quot;&quot;&quot;
+import numpy as np
+from collections import defaultdict
+
+
+class ContrastiveSeqRec:
+    &quot;&quot;&quot;
+    对比学习序列推荐（简化版）
+    生产用: PyTorch + SASRec backbone + 对比损失
+    &quot;&quot;&quot;
+
+    def __init__(self, embed_dim: int = 32, temperature: float = 0.1):
+        self.embed_dim = embed_dim
+        self.temperature = temperature
+        self.item_emb = {}
+        np.random.seed(42)
+
+    def _get_emb(self, item_id: str) -&gt; np.ndarray:
+        if item_id not in self.item_emb:
+            e = np.random.normal(0, 0.1, self.embed_dim)
+            self.item_emb[item_id] = e / (np.linalg.norm(e) + 1e-8)
+        return self.item_emb[item_id]
+
+    def augment_sequence(self, seq: list, method: str = &#x27;mask&#x27;) -&gt; list:
+        &quot;&quot;&quot;序列数据增强（生成对比学习的正例视角）&quot;&quot;&quot;
+        if len(seq) &lt; 2:
+            return seq
+        seq = seq.copy()
+        if method == &#x27;mask&#x27;:
+            # 随机遮盖20%商品
+            mask_idx = np.random.choice(len(seq), max(1, len(seq)//5), replace=False)
+            for i in mask_idx: seq[i] = &#x27;[MASK]&#x27;
+        elif method == &#x27;crop&#x27;:
+            # 随机截取子序列
+            start = np.random.randint(0, len(seq)//2)
+            end = start + len(seq)//2
+            seq = seq[start:end]
+        elif method == &#x27;reorder&#x27;:
+            # 局部随机打乱（只打乱中间段）
+            mid = len(seq) // 3
+            segment = seq[mid:2*mid]
+            np.random.shuffle(segment)
+            seq[mid:2*mid] = segment
+        return seq
+
+    def encode_sequence(self, seq: list) -&gt; np.ndarray:
+        &quot;&quot;&quot;将序列编码为向量（时间加权平均）&quot;&quot;&quot;
+        valid = [s for s in seq if s != &#x27;[MASK]&#x27;]
+        if not valid:
+            return np.zeros(self.embed_dim)
+        weights = np.exp(-0.1 * np.arange(len(valid)))[::-1]
+        weights /= weights.sum()
+        vec = sum(w * self._get_emb(item) for w, item in zip(weights, valid))
+        return vec / (np.linalg.norm(vec) + 1e-8)
+
+    def contrastive_loss(self, z1: np.ndarray, z2: np.ndarray,
+                          negatives: list[np.ndarray]) -&gt; float:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2605.11707</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Contrastive-Sequential-Recommendation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Federated-Cross-Seller-Recommendation]]（联邦对比学习</span></li><li><span class='muted'>Real-Time-Streaming-Recommendation]]（组合</span></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-GNN-Ecommerce-Recommendation.html'>Skill-GNN-Ecommerce-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Real-Time-Streaming-Recommendation.html'>Skill-Real-Time-Streaming-Recommendation</a></li><li><a href='../skills/Skill-Sequential-User-Behavior-Modeling.html'>Skill-Sequential-User-Behavior-Modeling</a></li><li><a href='../skills/Skill-Weak-Supervision-Data-Labeling.html'>Skill-Weak-Supervision-Data-Labeling</a></li><li><span class='muted'>Weak-Supervision-Data-Labeling]]（组合</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Federated-Cross-Seller-Recommendation]]（联邦对比学习</span></li><li><span class='muted'>Real-Time-Streaming-Recommendation]]（组合</span></li><li><a href='../skills/Skill-Federated-Cross-Seller-Recommendation.html'>Skill-Federated-Cross-Seller-Recommendation</a></li><li><a href='../skills/Skill-LLM-Session-Personalization-Cache.html'>Skill-LLM-Session-Personalization-Cache</a></li><li><a href='../skills/Skill-Real-Time-Streaming-Recommendation.html'>Skill-Real-Time-Streaming-Recommendation</a></li><li><a href='../skills/Skill-Weak-Supervision-Data-Labeling.html'>Skill-Weak-Supervision-Data-Labeling</a></li><li><span class='muted'>Weak-Supervision-Data-Labeling]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Real-Time-Streaming-Recommendation]]（组合</span></li><li><a href='../skills/Skill-Real-Time-Streaming-Recommendation.html'>Skill-Real-Time-Streaming-Recommendation</a></li><li><a href='../skills/Skill-Weak-Supervision-Data-Labeling.html'>Skill-Weak-Supervision-Data-Labeling</a></li><li><span class='muted'>Weak-Supervision-Data-Labeling]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

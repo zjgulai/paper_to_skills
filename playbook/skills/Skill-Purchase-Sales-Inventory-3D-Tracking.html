@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>进销存三维动态追踪 — 进货/销售/库存联动监控与比率预警体系 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Purchase-Sales-Inventory-3D-Tracking</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>进销存三维动态追踪 — 进货/销售/库存联动监控与比率预警体系</h1>
+<p class="muted">Skill-Purchase-Sales-Inventory-3D-Tracking · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>data_collection</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-I 智能体工程</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10-15万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>每周4小时手工汇总进销存且无法发现异常——P/S比率CUSUM检测将缺货/积压信号提前3-5天发现，年化防损$10-15万，报告时间从4小时降至10分钟</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>业务背景（陈凤霞实战经验）：书中将&quot;进销存管理&quot;列为物流计划供应链最核心的KPI维度。&quot;进&quot;=进货量（入库），&quot;销&quot;=销售量（出库），&quot;存&quot;=库存量（在库）。三者构成一个封闭会计恒等式：期末存 = 期初存 + 进  销。任何一维出现异常，都会在其他维度反映出来——这正是进销存分析的核心价值：通过监控三者的比率关系，比单独观察任何一个维度更早发现异常。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：多SKU进销存周报自动化（替代手工Excel）</p><p>- 业务问题：某卖家每周手工汇总各平台进销存数据到Excel，耗时4小时，且容易出错漏项，无法及时发现异常 - 数据要求：亚马逊Inventory API（日入库/出库记录）、FBA库存报告、采购PO记录 - 算法应用： 1. 每周一自动拉取上周进销存数据 2. 计算每个SKU的P/S Ratio和ΔI（库存变动率） 3. 发现：&quot;OLD-NIPPLE-PKG&quot;连续4周P/S=1.8（进货量远超销售），库存膨胀62% 4. 同时发现：&quot;PUMP-PRO&quot;上周P/S=0.31（销售远超进货），DOI已降至12天（缺货预警！） 5. 自动生成周报推送运营团队，含行动优先级 - 预期产出：周报从4小</p><p>- **业务问题**：月末盘点发现FBA库存账实差异3.2%（超标准0.5%），但不知道原因 - **算法应用**：三角平衡诊断：期初存500件 + 进货300件 - 销售320件 = 理论期末480件，实际盘点465件，差异15件。通过退货记录核查发现：12件退货客户已获退款但货物未退还FBA（Amazon判定&quot;退款不退货&quot;），3件在途被海关扣押未入账。根因清晰，处理有据 - **预期产出**：差异率从3.2%降至0.4%，库存准确率达标，财务账目可信度提升</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：每周4小时手工进销存 → 10分钟自动报告，年节省约200小时运营时间（价值$5000+）；P/S比率异常提前3-5天发现，防止断货和积压年化$10-15万；系统成本$2万，ROI≈600%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（逻辑简单，Amazon/Shopee均有入出库报告API；主要挑战是多平台数据对接统一）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（电商供应链最基础的管控工具，没有进销存追踪一切都是盲飞）</li><li><strong>适用规模</strong>：所有规模，月销&gt;$2万就值得自动化</li><li><strong>数据依赖</strong>：Amazon FBA Inventory API（入出库记录）、采购PO系统数据、销售报告</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+进销存三维动态追踪系统
+功能：P/S/I三维比率计算 + CUSUM异常检测 + 三角平衡稽核 + 计划准确率
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from datetime import datetime, timedelta
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class WeeklyPSI:
+    &quot;&quot;&quot;单周进销存数据&quot;&quot;&quot;
+    sku_id: str
+    week: str                   # &#x27;W2026-23&#x27; 格式
+    opening_stock: int          # 期初库存
+    purchases: int              # 本周进货（入库）
+    sales: int                  # 本周销售（出库）
+    closing_stock_actual: int   # 期末实际库存（盘点）
+    # 计划值
+    planned_purchases: int = 0
+    planned_sales: int = 0
+
+    @property
+    def closing_stock_theoretical(self) -&gt; int:
+        return self.opening_stock + self.purchases - self.sales
+
+    @property
+    def ps_ratio(self) -&gt; float:
+        return self.purchases / max(self.sales, 0.01)
+
+    @property
+    def is_ratio(self) -&gt; float:
+        return self.closing_stock_actual / max(self.sales / 7, 0.01)  # DOI
+
+    @property
+    def pi_ratio(self) -&gt; float:
+        return self.purchases / max(self.opening_stock, 0.01)
+
+    @property
+    def stock_change_rate(self) -&gt; float:
+        return (self.closing_stock_actual - self.opening_stock) / max(self.opening_stock, 1)
+
+    @property
+    def balance_discrepancy(self) -&gt; int:
+        return self.closing_stock_actual - self.closing_stock_theoretical
+
+    @property
+    def balance_discrepancy_rate(self) -&gt; float:
+        return abs(self.balance_discrepancy) / max(self.closing_stock_theoretical, 1)
+
+    @property
+    def purchase_plan_accuracy(self) -&gt; float:
+        if self.planned_purchases == 0:
+            return 1.0
+        return 1 - abs(self.purchases - self.planned_purchases) / max(self.planned_purchases, 1)
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2401.14523</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Purchase-Sales-Inventory-3D-Tracking" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Bullwhip-Effect-Mitigation.html'>Skill-Bullwhip-Effect-Mitigation</a></li><li><a href='../skills/Skill-Fill-Rate-OOS-Cost-Quantification.html'>Skill-Fill-Rate-OOS-Cost-Quantification</a></li><li><a href='../skills/Skill-ITO-DOI-Inventory-Turnover-Optimizer.html'>Skill-ITO-DOI-Inventory-Turnover-Optimizer</a></li><li><a href='../skills/Skill-In-Transit-Inventory-Tracking-Visibility.html'>Skill-In-Transit-Inventory-Tracking-Visibility</a></li><li><a href='../skills/Skill-SOP-Sales-Operations-Planning.html'>Skill-SOP-Sales-Operations-Planning</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Bullwhip-Effect-Mitigation.html'>Skill-Bullwhip-Effect-Mitigation</a></li><li><a href='../skills/Skill-Fill-Rate-OOS-Cost-Quantification.html'>Skill-Fill-Rate-OOS-Cost-Quantification</a></li><li><a href='../skills/Skill-In-Transit-Inventory-Tracking-Visibility.html'>Skill-In-Transit-Inventory-Tracking-Visibility</a></li><li><a href='../skills/Skill-Supply-Chain-KPI-Health-Dashboard.html'>Skill-Supply-Chain-KPI-Health-Dashboard</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Bullwhip-Effect-Mitigation.html'>Skill-Bullwhip-Effect-Mitigation</a></li><li><a href='../skills/Skill-In-Transit-Inventory-Tracking-Visibility.html'>Skill-In-Transit-Inventory-Tracking-Visibility</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

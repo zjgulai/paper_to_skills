@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RCR-Router角色感知上下文路由 — Token预算约束下的多Agent记忆子集动态分配 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-RCR-Router-Role-Aware-Context-Routing</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>RCR-Router角色感知上下文路由 — Token预算约束下的多Agent记忆子集动态分配</h1>
+<p class="muted">Skill-RCR-Router-Role-Aware-Context-Routing · 10-MAS</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>让所有Agent访问完整记忆库既浪费Token又引入噪声干扰——RCR-Router按角色和任务阶段动态选择语义相关记忆子集，在严格Token预算下回答质量提升13-22%（2025 arXiv:2508.04903）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：大多数MAS系统让每个Agent访问完整的共享记忆池——这看起来&quot;信息最丰富&quot;，实际上是一种浪费甚至有害：财务Agent看到的大量研究原始数据对它毫无用处（噪声），而合规Agent需要的法规细节却被稀释在海量市场数据中。RCRRouter的关键发现：按角色和任务阶段动态选择语义相关的记忆子集，不仅节省Token，还能提高回答质量（减少噪声干扰）。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：母婴MAS有一个包含5000条记忆的共享库（市场数据+法规文件+财务记录+品牌指南）。每次调用要给所有Agent传入完整记忆库，严重超出Token预算，而且Finance Agent收到大量无关的品牌指南信息，导致ROI计算时被不相关信息干扰 - RCR-Router方案： - Research Agent (阶段1)：路由市场数据+竞品记忆（B=2048） - Compliance Agent：路由法规文件+认证记录（B=1536） - Finance Agent (阶段2)：路由财务模板+历史ROI记录（B=1024） - Report Agent (阶段3)：路由所有Age</p><p>- **业务问题**：Prime Day实时分析中，早期阶段的研究记忆（&quot;吸奶器竞品分析&quot;）在财务决策阶段仍被频繁路由，但此时最相关的是实时销售数据 - **迭代精炼机制**：随着任务阶段推进，重要性评分自动降低旧研究数据的权重，提升实时数据权重；Agent在大促后期收到的上下文越来越聚焦于&quot;当前销售状态+历史决策&quot;，而非初期的&quot;市场背景&quot; - **预期产出**：大促后期决策质量提升15%，Token消耗减少25%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月调用5000次MAS的平台，RCR-Router节省约20%Token（无关信息不传入Agent），同时提升关键Agent质量13-22%；年化Token节省约$600，质量提升间接减少错误决策成本更高；系统成本$4万，综合ROI≈200%（首年），后续年ROI持续提升</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（规则基础版较简单；学习版重要性评分需要角色标签库；需要改造MAS的记忆访问接口）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（在记忆库&gt;50条、Agent数&gt;3的MAS中，无选择性地传入所有记忆会严重降低质量，RCR-Router是必要组件）</li><li><strong>适用规模</strong>：共享记忆库&gt;30条、多角色Agent（&gt;3个不同角色）的MAS系统</li><li><strong>数据依赖</strong>：需要为每个角色定义相关标签（可从Agent的SRL蓝图中自动提取）；不需要额外训练数据</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+RCR-Router角色感知上下文路由系统
+功能：Token预算分配 + 重要性评分 + 语义过滤 + 迭代上下文精炼
+基于 arXiv:2508.04903 + 2602.06025 (2025-2026)
+&quot;&quot;&quot;
+import numpy as np
+import re
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from collections import defaultdict
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class BudgetTier:
+    LOW = &quot;low&quot;     # 简化检索，&lt; 512 tokens
+    MID = &quot;mid&quot;     # 标准检索，512-2048 tokens
+    HIGH = &quot;high&quot;   # 深度检索，&gt; 2048 tokens
+
+
+@dataclass
+class MemoryItem:
+    &quot;&quot;&quot;记忆库中的单条记忆&quot;&quot;&quot;
+    item_id: str
+    content: str
+    source_agent: str
+    task_stage: int         # 0=信息收集, 1=分析, 2=决策, 3=报告
+    relevance_tags: List[str] = field(default_factory=list)  # 相关角色标签
+    citation_count: int = 0         # 被引用次数
+    creation_round: int = 0         # 创建轮次
+    importance_score: float = 0.5   # 当前重要性分数（动态更新）
+
+    @property
+    def token_count(self) -&gt; int:
+        return max(len(self.content) // 4, 1)
+
+
+class ImportanceScorer:
+    &quot;&quot;&quot;重要性评分器&quot;&quot;&quot;
+
+    ROLE_TAG_MAP = {
+        &#x27;research_agent&#x27;: [&#x27;market&#x27;, &#x27;competitor&#x27;, &#x27;trend&#x27;, &#x27;市场&#x27;, &#x27;竞品&#x27;, &#x27;增长&#x27;],
+        &#x27;compliance_agent&#x27;: [&#x27;regulation&#x27;, &#x27;cpsc&#x27;, &#x27;fda&#x27;, &#x27;compliance&#x27;, &#x27;合规&#x27;, &#x27;认证&#x27;, &#x27;法规&#x27;],
+        &#x27;finance_agent&#x27;: [&#x27;roi&#x27;, &#x27;cost&#x27;, &#x27;revenue&#x27;, &#x27;financial&#x27;, &#x27;成本&#x27;, &#x27;利润&#x27;, &#x27;fba&#x27;, &#x27;财务&#x27;],
+        &#x27;report_agent&#x27;: [&#x27;conclusion&#x27;, &#x27;recommendation&#x27;, &#x27;summary&#x27;, &#x27;结论&#x27;, &#x27;建议&#x27;, &#x27;报告&#x27;],
+    }
+
+    STAGE_RELEVANCE = {
+        0: [&#x27;market&#x27;, &#x27;competitor&#x27;, &#x27;市场&#x27;, &#x27;竞品&#x27;],    # 信息收集阶段
+        1: [&#x27;analysis&#x27;, &#x27;trend&#x27;, &#x27;分析&#x27;, &#x27;趋势&#x27;],        # 分析阶段
+        2: [&#x27;decision&#x27;, &#x27;roi&#x27;, &#x27;risk&#x27;, &#x27;决策&#x27;, &#x27;ROI&#x27;, &#x27;风险&#x27;],  # 决策阶段
+        3: [&#x27;conclusion&#x27;, &#x27;summary&#x27;, &#x27;结论&#x27;, &#x27;建议&#x27;],   # 报告阶段
+    }
+
+    def score(self, item: MemoryItem, agent_role: str,
+               task_stage: int, current_round: int) -&gt; float:
+        &quot;&quot;&quot;计算记忆项对特定角色在特定阶段的重要性&quot;&quot;&quot;
+        score = 0.5  # 基础分
+
+        # 1. 角色相关性</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2508.04903</li><li>2602.06025</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-RCR-Router-Role-Aware-Context-Routing" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AdaCtx-Dynamic-Context-Budget-Allocation.html'>Skill-AdaCtx-Dynamic-Context-Budget-Allocation</a></li><li><a href='../skills/Skill-Agent-Memory-Learning.html'>Skill-Agent-Memory-Learning</a></li><li><a href='../skills/Skill-CASTER-Context-Aware-Model-Routing.html'>Skill-CASTER-Context-Aware-Model-Routing</a></li><li><a href='../skills/Skill-Context-Token-Compression.html'>Skill-Context-Token-Compression</a></li><li><a href='../skills/Skill-Domain-Agnostic-Context-Engine.html'>Skill-Domain-Agnostic-Context-Engine</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-CASTER-Context-Aware-Model-Routing.html'>Skill-CASTER-Context-Aware-Model-Routing</a></li><li><a href='../skills/Skill-Context-Token-Compression.html'>Skill-Context-Token-Compression</a></li><li><a href='../skills/Skill-Domain-Agnostic-Context-Engine.html'>Skill-Domain-Agnostic-Context-Engine</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-CASTER-Context-Aware-Model-Routing.html'>Skill-CASTER-Context-Aware-Model-Routing</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LLMForecaster Seasonal Event — LLM 增强的季节性事件需求预测 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-LLMForecaster-Seasonal-Event</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>LLMForecaster Seasonal Event — LLM 增强的季节性事件需求预测</h1>
+<p class="muted">Skill-LLMForecaster-Seasonal-Event · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-80 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Prime Day 促销力度/KOL 合作/竞品断货等信息在传统预测模型里完全缺失，导致备货严重错误——LLM 读取促销文案生成需求修正系数，备货准确率提升 15-23%、年化减少断货积压损失 30-80 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：传统时序预测模型（ARIMA/Prophet/LightGBM）只能看到历史销量数字，对&quot;明天有双十一大促且同时发了网红推广&quot;这类信息完全盲目。LLMForecaster 将 LLM 作为后处理器：先用传统时序模型预测基线，再让 LLM 读取促销文案、活动描述等非结构化文本，输出一个修正系数（Δ），最终预测 = 基线 + Δ。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：Prime Day 是全年最大出货节点，但&quot;促销力度 40% off + 头部 KOL 合作推广 + 竞品主要型号断货&quot;这些信息在传统预测模型里全部缺失，导致备货要么严重不足要么大量积压。 - 数据要求：近 2 年周度销量历史 + 当次活动描述文本（折扣力度、广告预算、KOL 名单、竞品动态）。 - 预期产出： - 活动期日均销量预测（P10/P50/P90 三个场景） - 修正系数说明（&quot;本次相比去年 Prime Day 力度提升 15%，预测上调 18%&quot;） - 建议备货量（含安全库存缓冲） - 业务价值：备货准确率提升 15-23%，减少因断货导致的 BSR 排名下滑，年化</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：备货准确率 +15-23%，减少断货/积压损失 30-80 万元/年</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（低，无需训练模型，接入 LLM API 即可）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（大促备货是母婴跨境最高频、最高风险的决策场景）</li><li><strong>评估依据</strong>：论文在大型零售商数据上验证 MAPE 降低 15-23%</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass
+from typing import Optional
+import statistics
+
+@dataclass
+class SalesHistory:
+    weekly_sales: list
+    event_weeks: dict
+
+@dataclass
+class EventContext:
+    name: str
+    discount_pct: float
+    kol_count: int
+    budget_multiplier: float
+    competitor_oos: bool
+    description: str
+
+def baseline_forecast(history: SalesHistory, horizon_weeks: int = 2) -&gt; float:
+    recent = history.weekly_sales[-12:]
+    return round(statistics.mean(recent), 1)
+
+def compute_event_multiplier(ctx: EventContext, historical_multipliers: dict) -&gt; float:
+    base_mult = historical_multipliers.get(ctx.name, 2.5)
+    discount_adj = 1 + (ctx.discount_pct - 30) / 100
+    kol_adj = 1 + ctx.kol_count * 0.05
+    budget_adj = ctx.budget_multiplier
+    oos_adj = 1.15 if ctx.competitor_oos else 1.0
+    multiplier = base_mult * discount_adj * kol_adj * budget_adj * oos_adj
+    return round(multiplier, 2)
+
+def llm_forecaster(history: SalesHistory, event: EventContext,
+                   historical_multipliers: dict) -&gt; dict:
+    baseline = baseline_forecast(history)
+    multiplier = compute_event_multiplier(event, historical_multipliers)
+    p50 = round(baseline * multiplier)
+    p10 = round(p50 * 0.75)
+    p90 = round(p50 * 1.35)
+    safety_stock = round(p90 * 0.15)
+    return {
+        &quot;baseline_weekly&quot;: baseline,
+        &quot;event_multiplier&quot;: multiplier,
+        &quot;forecast_p10&quot;: p10,
+        &quot;forecast_p50&quot;: p50,
+        &quot;forecast_p90&quot;: p90,
+        &quot;recommended_stock&quot;: p90 + safety_stock,
+        &quot;explanation&quot;: (f&quot;基线周均 {baseline} 件，活动乘数 {multiplier}x &quot;
+                        f&quot;（折扣{event.discount_pct}% + {event.kol_count}个KOL + &quot;
+                        f&quot;预算{event.budget_multiplier}x{&#x27; + 竞品断货&#x27; if event.competitor_oos else &#x27;&#x27;}）&quot;)
+    }
+
+history = SalesHistory(
+    weekly_sales=[820, 850, 790, 900, 860, 880, 910, 870, 840, 920, 890, 950],
+    event_weeks={&quot;prime_day_2024&quot;: 3200, &quot;black_friday_2024&quot;: 2800}
+)
+event = EventContext(
+    name=&quot;prime_day&quot;, discount_pct=40, kol_count=3,
+    budget_multiplier=1.2, competitor_oos=True,
+    description=&quot;Prime Day 2026: 40% off + 3位头部KOL + 主要竞品断货&quot;
+)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2412.02525</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LLMForecaster-Seasonal-Event" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><span class='muted'>组合</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

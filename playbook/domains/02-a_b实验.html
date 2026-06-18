@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>02-A_B实验 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>02-A_B实验</h1><p>A/B testing, multi-armed bandits, sequential testing</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 02-A_B实验 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AB-Experimental-Design.html" data-domain="02-A_B实验" data-diff="">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Skill: A/B 实验设计基础</h3>
+  <p class="sc-desc">Momcozy 在 Amazon 详情页测试新版主图，基线转化率 2.5%，期望通过改版实现 10% 相对提升（即达到 2.75%）</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-AB-Test-Result-Interpretation.html" data-domain="02-A_B实验" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">A/B Test Result Interpretation and Practical Significance</h3>
+  <p class="sc-desc">Power Analysis告诉你&quot;测多少&quot;，实验跑完后，如何正确解读结果？</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AB-Testing-Platform-Infrastructure.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">AB Testing Platform Infrastructure — A/B 实验平台基础设施：可扩展的在线实验框架</h3>
+  <p class="sc-desc">同时运行5个实验无法管理实验冲突每次统计都要人工2小时——统一实验平台流量分层+自动统计+早停机制，同时运行实验增至5-10个迭代速度3-5倍年化加速产品迭代价值20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AB-Variance-Downstream.html" data-domain="02-A_B实验" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">AB-Variance-Downstream — AI 辅助方差缩减在电商多场景的下游应用</h3>
+  <p class="sc-desc">小卖家流量不足导致 A/B 实验需要 6 周才显著——AI 文本协变量将方差缩减 25%，实验周期从 6 周压缩至 4.5 周，每年多跑 2-3 轮测试，年化 GMV 增量 ¥30-80 万</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Agentic-AB-Testing.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Agentic AB Testing — AI Agent 驱动 A/B 实验：假设→设计→解读→决策</h3>
+  <p class="sc-desc">传统 A/B 测试有三大痛点：① 依赖统计专业知识（功效分析、多重检验校正），② 分析耗时（从数据到决策通常需要 2-3 周），③ 假设生成靠人工经验（容易受认知偏差影响）。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-BCCB-Causal-Bandits.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">预算约束因果Bandit - 新渠道从Day1开始的转化率估计</h3>
+  <p class="sc-desc">业务问题：刚在Pinterest上开了母婴用品广告，花了 $300，曝光 2000 次，只有 2 个转化</p>
+  <div class='sc-footer'><span class='sc-roi'>⭐⭐⭐⭐⭐</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CUPED-Variance-Reduction.html" data-domain="02-A_B实验" data-diff="">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">CUPED Variance Reduction（方差缩减）</h3>
+  <p class="sc-desc">CUPED (Controlled-experiment Using Pre-Experiment Data) 用实验前数据作为协变量，减少实验组间方差，使同样的样本量能检测到更小的效应量。核心公式：$Y_{cuped} = \bar{Y} - \theta(\bar{X} - \mu_X)$，其中 $X$ 是实验前同一用户的指标值，$\theta = \text{Cov}(Y,X)/\text{Var}(X)$。方差缩减率 $\approx 1 - \rho^2_{Y,X}$。若实验前购买金额</p>
+  <div class='sc-footer'><span class='sc-roi'>加速实验迭代，隐性价值</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Delayed-Conversion-Causal-MTL.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">促销延迟转化因果多任务建模 — 大促期用户行为的反事实分析</h3>
+  <p class="sc-desc">大促结束后财务无法区分&quot;真实增量&quot;和&quot;本来就会买&quot;导致ROI虚高——反事实多任务建模精准测量AICR，优惠券精准投放节省41%预算，年化保护促销预算18-80万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Experiment-Data-Quality-Guard.html" data-domain="02-A_B实验" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Experiment Data Quality Guard — A/B 实验数据采集质量保障：爬虫/日志污染检测与因果实验完整性</h3>
+  <p class="sc-desc">量化 ROI：避免因虚假显著性结果而错误全量上线（该改版涉及开发成本 ~15 万元 + 页面跳转改造），节省无效投入 15 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-ML-AB-Randomization-Test.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">ML辅助A/B随机化检验 — 有限样本随机化测试检测异质处理效应与干扰效应</h3>
+  <p class="sc-desc">传统t检验漏报异质处理效应导致真实有价值的实验被错误回滚——ML随机化检验将ML交叉验证误差差作为统计量，精准检测HTE和干扰效应，有限样本精确保证（2025 arXiv:2501.07722）</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Armed-Bandit.html" data-domain="02-A_B实验" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Multi-Armed Bandit (多臂老虎机)</h3>
+  <p class="sc-desc">在探索（exploration）和利用（exploitation）之间取得平衡。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-NLP-Copy-AB-Test-Optimizer.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">NLP Copy AB Test Optimizer — CTR 加权偏好优化 + 遗传算法的文案 A/B 测试闭环</h3>
+  <p class="sc-desc">母婴运营面临 Amazon Listing 主标题靠拍脑袋、手动 A/B 测试周期 2 周且变体有限——NLP 文案 A/B 闭环系统自动生成 10+ 高质量标题变体并用 Thompson Sampling MAB 快速收敛最优文案，CTR 提升 4-15%，年化增量 GMV 20-80 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Network-Effect-Experiments.html" data-domain="02-A_B实验" data-diff="">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Network Effect Experiments（网络效应实验）</h3>
+  <p class="sc-desc">测试&quot;推荐有奖&quot;功能——A 组用户分享推荐链接，B 组收到推荐</p>
+  <div class='sc-footer'><span class='sc-roi'>确保社交功能实验正确性，隐性</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Power-Analysis-Sample-Size.html" data-domain="02-A_B实验" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Power Analysis and Sample Size Calculation for A/B Testing</h3>
+  <p class="sc-desc">A/B测试需要多少样本才能检测出真实的效应？</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-STATE-Robust-Variance-Reduction.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">STATE — 重尾指标鲁棒 A/B 方差减少：Student-t 回归调整（-70% 方差）</h3>
+  <p class="sc-desc">电商 GMV / 订单量等指标天然重尾——极少数大客户的超大订单把方差撑得很高。</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Sequential-AB-Testing.html" data-domain="02-A_B实验" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Sequential AB Testing（序列化 A/B 检验）</h3>
+  <p class="sc-desc">吸奶器详情页 A/B 实验需等满 10000 样本×14 天才能分析，错过旺季窗口——序列检验在 Day 7 检测到显著差异即提前结束，缩短实验周期 40%，年加速 6-8 次产品迭代</p>
+  <div class='sc-footer'><span class='sc-roi'>15-30 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Switchback-Experiment-Design.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Switchback 实验设计 - 数据驱动的双边市场实验</h3>
+  <p class="sc-desc">同一海外仓为 Shopify/Amazon/TikTok Shop 多渠道发货,测试&quot;AI 波次合并算法&quot;是否降低拣货时长</p>
+  <div class='sc-footer'><span class='sc-roi'>1500 万/年</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Thompson-Sampling-MAB.html" data-domain="02-A_B实验" data-diff="">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Thompson Sampling for Multi-Armed Bandit</h3>
+  <p class="sc-desc">Thompson Sampling是一种基于贝叶斯后验采样的在线决策算法，用于解决探索-利用权衡（Exploration-Exploitation Tradeoff）问题。算法的核心洞见是：按照每个动作是最优动作的概率来选择动作，而非简单地选择当前估计奖励最高的动作。</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Thompson-Sampling-Traffic-Allocation.html" data-domain="02-A_B实验" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Thompson Sampling Traffic Allocation — Thompson 采样流量分配：自适应在线实验设计</h3>
+  <p class="sc-desc">传统A/B实验2周内50%流量给表现更差的方案浪费了大量转化机会——Thompson采样自适应流量分配减少损失转化30-50%同时将实验周期缩短20-40%，年化多发现2-3个增量实验结论</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

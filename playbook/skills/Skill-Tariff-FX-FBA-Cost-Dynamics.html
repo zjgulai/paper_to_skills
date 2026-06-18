@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>关税-汇率-FBA费率三联动成本动态测算 — 跨境利润实时压力测试模型 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-Tariff-FX-FBA-Cost-Dynamics</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>关税-汇率-FBA费率三联动成本动态测算 — 跨境利润实时压力测试模型</h1>
+<p class="muted">Skill-Tariff-FX-FBA-Cost-Dynamics · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>300万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>卖家用静态成本表决策被关税上调打蒙——三联动Monte Carlo压力测试在政策变化前4-6周找到临界价格点，保护3-5个百分点净利率（年化$9-15万）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：大多数跨境卖家用&quot;静态成本表&quot;核算利润，每月或每季度更新一次关税率和汇率。但实际上，关税（Section 301变动）、汇率（CNY/USD日波动±0.5%）、FBA费率（亚马逊年中/年末调价）三个成本驱动因子可以同时变化，且变化有明显的相关性——通常贸易摩擦升温期三个因子会同向恶化。反直觉的是：最佳应对不是等变化发生，而是在利润尚可时就跑&quot;压力测试&quot;，找到触发价格调整的临界点。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌在美国站销售电动吸奶器，HS Code 8543.70，当前Section 301关税25%，净利率8%。担心关税进一步上调至50%会导致亏损，需要量化风险并制定对策 - 数据要求：SKU成本结构（采购价、关税率、FBA费、广告费、佣金率）、当前汇率及历史数据、FBA费率调整历史 - 算法应用： 1. 建立该SKU完整成本模型 2. 运行10000次Monte Carlo模拟（关税25%-50%区间，汇率±15%，FBA±5%） 3. 输出&quot;利润等高线图&quot;：哪个关税×汇率组合区间仍可盈利 4. 关键发现：关税≥38%且USD/CNY&lt;7.1时净利润归零 5. 建议：关税</p><p>- **业务问题**：同时运营US/UK/DE三市场，收入分别是USD/GBP/EUR，成本是CNY，多币种汇率波动导致整体P&amp;L不稳定 - **算法应用**：三市场联合压力测试，找到&quot;汇率对冲最优比例&quot;；UK市场GBP大幅贬值时自动触发UK定价上调建议 - **预期产出**：多市场汇率风险对冲可减少利润波动率40%，年化稳定收益提升约$15万（$500万规模卖家）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：年销$300万美元卖家，通过提前1-2个月做出关税应对决策（提价或换货源），可保住3-5个百分点净利率，即年化$9-15万；系统建设成本$5万，ROI≈200-300%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（核心逻辑为Monte Carlo，Python可快速实现；主要工作是整理SKU成本结构数据）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（2025年贸易摩擦背景下强烈推荐，中美关税不确定性极高）</li><li><strong>适用规模</strong>：所有规模，月销&gt;$5万即可受益</li><li><strong>数据依赖</strong>：精确的SKU成本结构（需与财务/采购对齐）、历史汇率数据（可从Yahoo Finance免费获取）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+关税-汇率-FBA费率三联动成本动态测算系统
+功能：Monte Carlo压力测试 + 利润分布分析 + 定价决策触发
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class SKUCostStructure:
+    &quot;&quot;&quot;SKU成本结构&quot;&quot;&quot;
+    sku_id: str
+    product_name: str
+    
+    # 成本项（USD）
+    purchase_price_cny: float     # 采购价（人民币）
+    tariff_rate: float            # 当前关税率（如 0.25 = 25%）
+    fba_fee_usd: float            # FBA费用
+    platform_commission: float    # 平台佣金率（如 0.15 = 15%）
+    advertising_rate: float       # 广告费率（如 0.12 = 12%）
+    other_costs_usd: float        # 其他成本（头程/检测等）
+    
+    # 收入
+    selling_price_usd: float      # 售价（USD）
+    
+    # 当前汇率
+    usd_cny_rate: float           # 1 USD = X CNY（如 7.25）
+
+
+@dataclass
+class ScenarioAssumptions:
+    &quot;&quot;&quot;情景假设参数&quot;&quot;&quot;
+    # 关税情景（概率分布）
+    tariff_scenarios: List[Tuple[float, float]] = field(default_factory=lambda: [
+        (0.25, 0.30),   # 维持25%，概率30%
+        (0.30, 0.25),   # 上调至30%，概率25%
+        (0.40, 0.25),   # 上调至40%，概率25%
+        (0.50, 0.20),   # 上调至50%，概率20%
+    ])
+    
+    # 汇率GARCH参数（CNY/USD）
+    fx_mean: float = 7.25         # 均值
+    fx_vol: float = 0.08          # 年化波动率（8%）
+    fx_garch_alpha: float = 0.15  # GARCH alpha
+    fx_garch_beta: float = 0.80   # GARCH beta
+    
+    # FBA费率调整（离散）
+    fba_change_scenarios: List[Tuple[float, float]] = field(default_factory=lambda: [
+        (0.00, 0.40),   # 不变，40%
+        (0.03, 0.35),   # 上调3%，35%
+        (0.05, 0.15),   # 上调5%，15%
+        (-0.02, 0.10),  # 下调2%，10%
+    ])
+    
+    # 模拟时间周期（月）
+    horizon_months: int = 12</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2401.17823</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Tariff-FX-FBA-Cost-Dynamics" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-HTS-Tariff-Classification.html'>Skill-HTS-Tariff-Classification</a></li><li><a href='../skills/Skill-Logistics-Cost-PL-Attribution.html'>Skill-Logistics-Cost-PL-Attribution</a></li><li><a href='../skills/Skill-Markdown-Optimization.html'>Skill-Markdown-Optimization</a></li><li><a href='../skills/Skill-VAT-GST-Compliance-Automation.html'>Skill-VAT-GST-Compliance-Automation</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Border-Price-Harmonization.html'>Skill-Cross-Border-Price-Harmonization</a></li><li><a href='../skills/Skill-Dynamic-Pricing-Elasticity.html'>Skill-Dynamic-Pricing-Elasticity</a></li><li><a href='../skills/Skill-Markdown-Optimization.html'>Skill-Markdown-Optimization</a></li><li><a href='../skills/Skill-VAT-GST-Compliance-Automation.html'>Skill-VAT-GST-Compliance-Automation</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Markdown-Optimization.html'>Skill-Markdown-Optimization</a></li><li><a href='../skills/Skill-VAT-GST-Compliance-Automation.html'>Skill-VAT-GST-Compliance-Automation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

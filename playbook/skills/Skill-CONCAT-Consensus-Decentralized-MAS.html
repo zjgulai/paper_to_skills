@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CONCAT共识驱动去中心化MAS协同 — 无需中央Orchestrator的自组织Agent网络 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-CONCAT-Consensus-Decentralized-MAS</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>CONCAT共识驱动去中心化MAS协同 — 无需中央Orchestrator的自组织Agent网络</h1>
+<p class="muted">Skill-CONCAT-Consensus-Decentralized-MAS · 10-MAS</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>中央Orchestrator是MAS的单点故障和通信瓶颈——CONCAT共识聚类+置信度组长选举+Theory of Mind效益修剪在无需训练的情况下实现2.02x效率提升和50.1%延迟降低（2026 arXiv:2605.29612）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：Denis Rothman书中的所有MAS示例都有一个中央Orchestrator（engine.py是中央控制器）。这在小规模MAS中合理，但随着Agent数量增加，中央Orchestrator变成：①单点故障（挂了全挂）②通信瓶颈（所有消息都经过它）③扩展障碍（难以水平扩展）。反直觉的是：真正高韧性的MAS应该像市场经济而不是计划经济——Agent之间通过&quot;共识&quot;协调，而不是靠&quot;中央计划&quot;指挥。CONCAT证明：无需额外</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：母婴品牌同时运营US/UK/DE/AU四个市场，每个市场有各自的合规Agent（了解本地法规）。用中央Orchestrator协调时，UK的UKCA合规Agent必须等待US的CPSC Agent完成才能输出，延迟高；且中央Orchestrator故障时整个合规流程停止 - CONCAT方案： 1. 四个合规Agent独立并行生成各自市场的合规评估（无需等待） 2. 如果US和UK Agent的结论相近（产品安全合规），合并为一个声明；如果DE和AU结论分歧，保留独立输出 3. 无中央Orchestrator：任何一个Agent离线，其他三个继续工作 - 预期产出：并行化使合规检</p><p>场景B：供应商选择的自组织多Agent投票</p><p>- **业务问题**：5个专业Agent（价格/质量/交期/合规/物流）评估10个候选供应商，中央编排导致所有Agent按顺序执行，效率低；且Agent间的&quot;相互说服&quot;会导致质量好的意见被少数噪声Agent影响 - **Symphony+CONCAT方案**： 1. 5个Agent并行评估10个供应商（O(log N)Beacon路由分配任务） 2. 置信度高的Agent作为组长：价格Agent和质量Agent置信度高，作为最终讨论主导 3. 修剪低效益通信边：价格和物流高度相关（保留），价格和合规相关性低（修剪） 4. 投票聚合确定最优供应商 - **预期产出**：评估时间从串行120秒降至</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：5个Agent的合规MAS，CONCAT将串行120秒降至并行45秒（-62.5%），日处理50次合规检查，月节省时间=50×2.5min×22天=2750min≈45小时工程师时间=$1125/月；中央Orchestrator故障风险消除，避免业务中断；系统成本$5万，ROI≈270%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（CONCAT算法简单无需训练；最大挑战是将现有中央编排MAS迁移为去中心化架构）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（高并发/高可用需求的MAS必选，论文2.02x效率提升和50%延迟降低非常显著，且完全无需训练）</li><li><strong>适用规模</strong>：5个以上Agent、需要高可用（单Agent失效不中断）或高并发（&gt;100次/天）的MAS</li><li><strong>数据依赖</strong>：无需历史数据；仅需定义各Agent的能力向量（SRL蓝图的自然延伸）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+CONCAT共识驱动去中心化MAS协同系统
+功能：共识聚类 + 置信度组长选举 + 协作效益预测 + 稀疏通信图
+基于 arXiv:2605.29612 + 2602.00966 (2026)
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple, Set
+from collections import defaultdict
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class AgentAnswer:
+    &quot;&quot;&quot;Agent的初始答案&quot;&quot;&quot;
+    agent_id: str
+    answer: str
+    confidence: float       # 0-1 自评置信度
+    metadata: Dict = field(default_factory=dict)
+
+    def semantic_similarity(self, other: &#x27;AgentAnswer&#x27;) -&gt; float:
+        &quot;&quot;&quot;计算两个答案的语义相似度（简化版）&quot;&quot;&quot;
+        words_self = set(self.answer.lower().split())
+        words_other = set(other.answer.lower().split())
+        if not words_self and not words_other:
+            return 1.0
+        intersection = words_self &amp; words_other
+        union = words_self | words_other
+        return len(intersection) / max(len(union), 1)
+
+
+@dataclass
+class AgentCluster:
+    &quot;&quot;&quot;Agent共识聚类&quot;&quot;&quot;
+    cluster_id: int
+    agents: List[AgentAnswer]
+    leader: Optional[AgentAnswer] = None  # 最高置信度Agent
+
+    def elect_leader(self) -&gt; AgentAnswer:
+        &quot;&quot;&quot;选举组长（最高置信度）&quot;&quot;&quot;
+        self.leader = max(self.agents, key=lambda a: a.confidence)
+        return self.leader
+
+
+class CONCATCoordinator:
+    &quot;&quot;&quot;
+    CONCAT协调器：无需中央Orchestrator的去中心化MAS协同
+    &quot;&quot;&quot;
+
+    def __init__(self, similarity_threshold: float = 0.35,
+                 min_benefit_threshold: float = 0.20):
+        self.similarity_threshold = similarity_threshold
+        self.benefit_threshold = min_benefit_threshold
+        self.communication_log: List[Dict] = []
+
+    def cluster_by_consensus(self,
+                              answers: List[AgentAnswer]) -&gt; List[AgentCluster]:
+        &quot;&quot;&quot;基于共识的答案聚类&quot;&quot;&quot;
+        if not answers:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2602.00966</li><li>2605.29612</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CONCAT-Consensus-Decentralized-MAS" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Domain-Agnostic-Context-Engine.html'>Skill-Domain-Agnostic-Context-Engine</a></li><li><a href='../skills/Skill-Error-Cascade-Propagation-Defense.html'>Skill-Error-Cascade-Propagation-Defense</a></li><li><a href='../skills/Skill-MAS-Consensus-Mechanism.html'>Skill-MAS-Consensus-Mechanism</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-Multi-Agent-Debate.html'>Skill-Multi-Agent-Debate</a></li><li><a href='../skills/Skill-ResMAS-Resilience-Topology-Optimization.html'>Skill-ResMAS-Resilience-Topology-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Domain-Agnostic-Context-Engine.html'>Skill-Domain-Agnostic-Context-Engine</a></li><li><a href='../skills/Skill-Error-Cascade-Propagation-Defense.html'>Skill-Error-Cascade-Propagation-Defense</a></li><li><a href='../skills/Skill-MAS-Consensus-Mechanism.html'>Skill-MAS-Consensus-Mechanism</a></li><li><a href='../skills/Skill-ResMAS-Resilience-Topology-Optimization.html'>Skill-ResMAS-Resilience-Topology-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Domain-Agnostic-Context-Engine.html'>Skill-Domain-Agnostic-Context-Engine</a></li><li><a href='../skills/Skill-Error-Cascade-Propagation-Defense.html'>Skill-Error-Cascade-Propagation-Defense</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

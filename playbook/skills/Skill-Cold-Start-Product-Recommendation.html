@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cold-Start Product Recommendation (冷启动商品推荐) · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-Cold-Start-Product-Recommendation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Cold-Start Product Recommendation (冷启动商品推荐)</h1>
+<p class="muted">Skill-Cold-Start-Product-Recommendation · 06-增长模型</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-new-product-launch.html'>新品冷启动手册</a><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a></div>
+
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CEO / 增长负责人<span class='biz-ctx-secondary'> · CMO · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · DTC 独立站 · 多市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>公司增长放缓，不知道是市场饱和还是产品问题还是获客太贵；老板要 12 个月 GMV 预测，只能靠感觉</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立增长拆解模型找到瓶颈，预测未来 6-12 个月营收区间，支撑融资/战略会议</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>增长放缓不知道问题在哪</span><span class='biz-pain-tag'>CAC 越来越高已经高于 LTV</span><span class='biz-pain-tag'>新市场要不要进没有数据支撑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>新商品没有历史交互数据时，如何精准推荐给用户。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>冷启动商品推荐解决的核心问题是：新商品没有历史交互数据时，如何精准推荐给用户。传统方法通过内容特征生成合成嵌入向量，但这会造成冷商品和热商品之间的表征差距。本框架采用LLM用户行为模拟的全新思路：让大语言模型基于世界知识和推理能力，模拟用户可能如何与新商品交互。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题： 一款新上市的智能穿戴式吸奶器上架亚马逊，0销量、0评价、0浏览历史。如何在海量用户中找到最可能购买的目标用户，实现从0到1的突破？</p><p>数据要求： - 商品内容特征： - 标题：&quot;Wearable Breast Pump Hands-Free, Smart APP Control&quot; - 描述：静音设计、APP追踪奶量、适合职场妈妈 - 类目：母婴 &gt; 喂养 &gt; 吸奶器 - 价格：$129.99 - 图片：产品图、使用场景图</p><p>- 用户历史数据： - 用户画像：孕期阶段、宝宝月龄 - 历史交互：浏览过的商品、购买记录 - 偏好标签：科技爱好者、职场妈妈、价格敏感度</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>✅ 月均上新50+ SKU的快速迭代品类</li><li>✅ 依赖算法推荐驱动销售的业务（如亚马逊、独立站首页推荐）</li><li>✅ 有GPU/LLM推理资源的团队</li><li>✅ 商品内容信息（标题、描述、图片）完整的业务</li><li>❌ 商品内容信息缺失（如只有商品ID，无描述）</li><li>❌ 低频上新（季度上新&lt;10 SKU，可用人工策略）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Cold-Start Product Recommendation using LLM Simulator
+冷启动商品推荐 - 基于LLM用户行为模拟
+
+基于论文: &quot;Large Language Model Simulator for Cold-Start Recommendation&quot; (WSDM 2025)
+GitHub: https://github.com/ColdLLM-Team/ColdLLM-repo
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from typing import List, Dict, Tuple, Optional
+from dataclasses import dataclass
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class Product:
+    &quot;&quot;&quot;商品数据结构&quot;&quot;&quot;
+    item_id: str
+    title: str
+    description: str
+    category: str
+    price: float
+    attributes: Dict[str, str]
+
+
+@dataclass
+class User:
+    &quot;&quot;&quot;用户数据结构&quot;&quot;&quot;
+    user_id: str
+    history_items: List[str]  # 历史交互商品ID
+    history_ratings: List[float]  # 历史评分
+    demographics: Dict[str, str]  # 人口统计信息
+
+
+class ColdStartRecommender:
+    &quot;&quot;&quot;
+    冷启动商品推荐器 - ColdLLM简化版
+    &quot;&quot;&quot;
+
+    def __init__(self, n_filter_candidates: int = 100,
+                 n_simulate_interactions: int = 20):
+        &quot;&quot;&quot;
+        初始化冷启动推荐器
+
+        Args:
+            n_filter_candidates: 过滤阶段候选用户数
+            n_simulate_interactions: 最终模拟交互数
+        &quot;&quot;&quot;
+        self.n_filter_candidates = n_filter_candidates
+        self.n_simulate_interactions = n_simulate_interactions
+
+        # 存储
+        self.users = {}
+        self.products = {}
+        self.user_embeddings = {}
+        self.interaction_matrix = None
+
+    def add_user(self, user: User, embedding: np.ndarray):</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2402.09176</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cold-Start-Product-Recommendation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-New-Product-Opportunity-Mining.html'>Skill-New-Product-Opportunity-Mining</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Matrix-Factorization.html'>Skill-Matrix-Factorization</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

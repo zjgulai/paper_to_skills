@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ContextRL对比上下文选择强化学习 — 细粒度上下文锚定训练突破长时域推理瓶颈 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-ContextRL-Contrastive-Context-Selection</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>ContextRL对比上下文选择强化学习 — 细粒度上下文锚定训练突破长时域推理瓶颈</h1>
+<p class="muted">Skill-ContextRL-Contrastive-Context-Selection · 10-MAS</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>12万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>标准RL只奖励最终答案让Agent学会猜测而非识别关键证据——ContextRL辅助对比上下文选择目标使Agent真正学会细粒度证据锚定，长时域Benchmark平均+2.2%（2026 arXiv:2606.17053）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：RL训练LLM Agent时，标准方法（GRPO/PPO）只奖励&quot;最终答案对不对&quot;——这对于长时域任务有一个盲区：Agent可能得到了正确答案，但基于完全错误的上下文证据（幸运猜对）；或者Agent的上下文选择是完美的，但最终答案因为表述问题而错（倒霉失分）。ContextRL的反直觉方案：用&quot;选对上下文&quot;作为辅助奖励，而不只是&quot;给出对的答案&quot;。这使得Agent学会了&quot;找到支持答案的关键证据&quot;，而不只是&quot;输出正确答案&quot;。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：选品Research Agent的长时域推理改进</p><p>- 业务问题：Research Agent在处理30步骤的长选品研究时，到第20步经常出现&quot;上下文污染&quot;——早期收集的旧数据（2021年的市场报告）影响了后期的分析，但Agent无法识别哪些是支持当前判断的关键证据，哪些是干扰信息 - ContextRL方案： 1. 构建对比数据：成功选品轨迹（完整）vs 关键步骤被删除的失败轨迹 2. 微调Research Agent：学会识别&quot;支持当前决策的关键上下文段落&quot; 3. 推理时：Agent主动标注推理锚点（&quot;这个$28亿市场规模数据是我ROI计算的基础&quot;） - 预期产出：长时域选品分析中的事实错误率降低35%（Agent学会了&quot;找到支持性证据&quot;而</p><p>场景B：ActiveContext + 强模型协同</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：在长时域选品分析Agent上，ContextRL微调将关键步骤锚定能力提升，错误率降低35%，每月50次完整分析中减少17次错误决策；ActiveContext使GPT-4o成本降低8倍，月调用500次节省$1560；系统建设成本（含微调）$12万，ROI≈156%（首年），后续年ROI持续提升</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（对比数据构建和GRPO微调需要相对专业的ML工程；ActiveContext的ContextCurator训练较易，效果也很显著）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（解决了长时域Agent的根本问题——上下文识别能力，是&quot;治本&quot;而非&quot;治标&quot;；2026年6月16日最新论文，处于技术前沿）</li><li><strong>适用规模</strong>：需要处理长轨迹（&gt;10步骤）的高频使用Agent（月调用&gt;1000次）</li><li><strong>数据依赖</strong>：需要历史成功轨迹（至少100条）来构建对比数据集；ActiveContext只需要标准任务成功信号，较易获取</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+ContextRL对比上下文选择强化学习框架
+功能：对比上下文数据构建 + 辅助训练目标 + ActiveContext推理锚点
+基于 arXiv:2606.17053 + 2604.11462 (2026)
+&quot;&quot;&quot;
+import numpy as np
+import re
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from enum import Enum
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+@dataclass
+class ContrastiveContextPair:
+    &quot;&quot;&quot;对比上下文对（C+和C-）&quot;&quot;&quot;
+    query: str
+    answer: str
+    positive_context: str       # C+：支持(Q,A)的上下文
+    negative_context: str       # C-：不支持(Q,A)的相似上下文
+    construction_method: str    # &#x27;condition_filtering&#x27; or &#x27;generative_editing&#x27;
+    difficulty: float = 0.5     # 难度：正负例越相似越难
+
+
+class ContrastiveDataBuilder:
+    &quot;&quot;&quot;
+    对比上下文数据构建器
+    用于构建ContextRL训练数据
+    &quot;&quot;&quot;
+
+    def build_from_trajectory(self, trajectory_steps: List[Dict],
+                                final_answer: str,
+                                query: str) -&gt; ContrastiveContextPair:
+        &quot;&quot;&quot;
+        从成功轨迹构建对比对
+        方法：条件过滤（Condition Filtering）
+        
+        Args:
+            trajectory_steps: 完整成功轨迹步骤
+            final_answer: 最终正确答案
+            query: 任务查询
+        &quot;&quot;&quot;
+        # 正例：完整轨迹作为上下文
+        positive_ctx = &quot;\n&quot;.join([
+            f&quot;[Step {i+1}] {step.get(&#x27;output&#x27;, &#x27;&#x27;)[:100]}&quot;
+            for i, step in enumerate(trajectory_steps)
+        ])
+
+        # 负例：随机删除一个关键步骤
+        if len(trajectory_steps) &gt; 1:
+            # 选择重要步骤删除（通常是中间的分析步骤）
+            remove_idx = len(trajectory_steps) // 2
+            negative_steps = [s for i, s in enumerate(trajectory_steps)
+                               if i != remove_idx]
+            negative_ctx = &quot;\n&quot;.join([
+                f&quot;[Step {i+1}] {step.get(&#x27;output&#x27;, &#x27;&#x27;)[:100]}&quot;
+                for i, step in enumerate(negative_steps)
+            ])
+        else:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.11462</li><li>2606.17053</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-ContextRL-Contrastive-Context-Selection" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-ATLAS-Gradient-Free-Continual.html'>Skill-ATLAS-Gradient-Free-Continual</a></li><li><a href='../skills/Skill-AdaCtx-Dynamic-Context-Budget-Allocation.html'>Skill-AdaCtx-Dynamic-Context-Budget-Allocation</a></li><li><a href='../skills/Skill-Context-Token-Compression.html'>Skill-Context-Token-Compression</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li><li><a href='../skills/Skill-KLong-Long-Horizon-Agent-Training.html'>Skill-KLong-Long-Horizon-Agent-Training</a></li><li><a href='../skills/Skill-Reflexion-Self-Improvement.html'>Skill-Reflexion-Self-Improvement</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-ATLAS-Gradient-Free-Continual.html'>Skill-ATLAS-Gradient-Free-Continual</a></li><li><a href='../skills/Skill-AdaCtx-Dynamic-Context-Budget-Allocation.html'>Skill-AdaCtx-Dynamic-Context-Budget-Allocation</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li><li><a href='../skills/Skill-KLong-Long-Horizon-Agent-Training.html'>Skill-KLong-Long-Horizon-Agent-Training</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AdaCtx-Dynamic-Context-Budget-Allocation.html'>Skill-AdaCtx-Dynamic-Context-Budget-Allocation</a></li><li><a href='../skills/Skill-High-Fidelity-RAG-Defense.html'>Skill-High-Fidelity-RAG-Defense</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

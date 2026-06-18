@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Forecast-to-PL-Bridge — 需求预测误差的财务损失量化与成本优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/23-运营财务.html">23-运营财务</a> / Skill-Forecast-to-PL-Bridge</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Forecast-to-PL-Bridge — 需求预测误差的财务损失量化与成本优化</h1>
+<p class="muted">Skill-Forecast-to-PL-Bridge · 23-运营财务</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>80-120 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>供应链团队无法向 CFO 证明预测精度提升的价值——Newsvendor 成本函数将 MAPE 18%→12% 的改善转化为年化 ¥80-120 万节省，打通技术指标到财务语言的翻译层</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>大多数供应链团队用 MAPE、RMSE 等精度指标评估预测模型，但这些指标和钱没有直接关系——MAPE 从 12% 降到 10% 到底值多少钱？没人说得清。更危险的是：精度更高的模型在财务上未必更优，因为过高库存的持货成本（holding cost）可能比缺货损失更贵。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：数据团队花 3 个月把吸奶器需求预测 MAPE 从 18% 降到 12%，但管理层问&quot;这值多少钱&quot;，团队答不上来，项目价值无法量化，预算审批困难。</p><p>Forecast-to-PL 量化： - 设 h = 25%/年（含 FBA 仓储费 + 资金成本）、b = 40%（缺货 = 失去一次销售 + 差评风险溢价） - 分位数 $q^* = b/(b+h) = 0.615$（偏高备货） - MAPE 18% → 12%：需求分布标准差从 $0.18\bar{D}$ 降到 $0.12\bar{D}$ - 月销 1000 件、售价 $90：TC 降低 = $8,400/月 = $100,800/年</p><p>预期产出：每个预测改进项目有对应美元 ROI，管理层决策有数字依据</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>预测精度 MAPE 18%→12%：年化节省 ¥80-120 万（50 SKU × $100 均值节省/月）</li><li>大促备货决策优化：避免过度备货或缺货损失 ¥10-30 万/次大促</li><li>技术团队预算申请 ROI 量化：加速审批周期 1-2 个月</li><li><strong>年化综合 ROI</strong>：¥100-200 万</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（公式明确，标准库实现，1-2 天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Forecast-to-PL-Bridge — 需求预测误差财务损失量化
+基于 Newsvendor 成本函数 (arXiv: 2603.16815)
+
+依赖: numpy, scipy (标准科学计算库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass
+import numpy as np
+from scipy import stats
+
+
+@dataclass
+class CostParams:
+    &quot;&quot;&quot;成本参数&quot;&quot;&quot;
+    holding_rate: float      # 年持货成本率（如 0.25 = 售价的 25%/年）
+    stockout_rate: float     # 缺货惩罚率（如 0.40 = 售价的 40%）
+    unit_price: float        # 产品售价（USD）
+    review_period_days: int  # 补货周期（天）
+
+    @property
+    def h(self) -&gt; float:
+        &quot;&quot;&quot;单位持货成本（每补货周期）&quot;&quot;&quot;
+        return self.holding_rate * self.unit_price * self.review_period_days / 365
+
+    @property
+    def b(self) -&gt; float:
+        &quot;&quot;&quot;单位缺货成本&quot;&quot;&quot;
+        return self.stockout_rate * self.unit_price
+
+    @property
+    def critical_ratio(self) -&gt; float:
+        &quot;&quot;&quot;临界比率（最优库存分位数）&quot;&quot;&quot;
+        return self.b / (self.b + self.h)
+
+
+def newsvendor_cost(demand_mean: float, demand_std: float,
+                   order_qty: float, cost: CostParams) -&gt; dict:
+    &quot;&quot;&quot;
+    计算给定订货量的期望总成本
+
+    Returns:
+        dict: holding_cost, stockout_cost, total_cost, fill_rate
+    &quot;&quot;&quot;
+    # 假设正态需求分布
+    dist = stats.norm(loc=0, scale=1)  # 标准正态，z 已经标准化
+
+    # 期望过剩库存 E[(Q-D)+] = (Q-μ)*Φ(z) + σ*φ(z)
+    z = (order_qty - demand_mean) / demand_std
+    expected_excess = (order_qty - demand_mean) * dist.cdf(z) + demand_std * dist.pdf(z)
+
+    # 期望缺货量 E[(D-Q)+]
+    expected_shortage = demand_mean - order_qty + expected_excess
+
+    holding = cost.h * expected_excess
+    stockout = cost.b * expected_shortage
+    total = holding + stockout
+    fill_rate = dist.cdf(order_qty)
+
+    return {</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2603.16815</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Forecast-to-PL-Bridge" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Conformal-Prediction-Demand-UQ]]（组合场景</span></li><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Inventory-Financing-Optimization.html'>Skill-Inventory-Financing-Optimization</a></li><li><a href='../skills/Skill-LLMForecaster-Seasonal-Event.html'>Skill-LLMForecaster-Seasonal-Event</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Conformal-Prediction-Demand-UQ]]（组合场景</span></li><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-Inventory-Financing-Optimization.html'>Skill-Inventory-Financing-Optimization</a></li><li><a href='../skills/Skill-LLMForecaster-Seasonal-Event.html'>Skill-LLMForecaster-Seasonal-Event</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Conformal-Prediction-Demand-UQ]]（组合场景</span></li><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li><li><a href='../skills/Skill-LLMForecaster-Seasonal-Event.html'>Skill-LLMForecaster-Seasonal-Event</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

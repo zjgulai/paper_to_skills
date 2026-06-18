@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>12-ML基础 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>12-ML基础</h1><p>Feature engineering, model evaluation, drift detection, performance monitor</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 12-ML基础 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Causal-ML-Feature-Engineering.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Causal ML Feature Engineering — 因果驱动的特征工程：消除混淆提升模型可靠性</h3>
+  <p class="sc-desc">需求预测模型加入广告花费特征后大促期预测严重失真——因果DAG识别广告花费是混淆变量而非需求原因，去除后大促期预测误差降低30-50%，年化减少备货决策失误10-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Representation-Transfer-Learning.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">因果表示学习跨域迁移 — 从源域提取不变因果特征用于目标域零样本适配</h3>
+  <p class="sc-desc">新市场冷启动期模型不准导致广告大量浪费——因果表示迁移从小样本中提取不变因果特征，使日本/欧洲新市场AUC从0.61提升至0.76，节省6-12个月成熟期广告浪费</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Validation-Strategies.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Cross-Validation Strategies（交叉验证策略）</h3>
+  <p class="sc-desc">业务问题：我们用过去 24 个月数据训练 Prophet 预测下月销量</p>
+  <div class='sc-footer'><span class='sc-roi'>3-5 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Data-Drift-Detection.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill-Data-Drift-Detection</h3>
+  <p class="sc-desc">业务问题：baby sterilizer 需求预测模型（TFT）上线 6 个月后，MAPE 从 12% 悄悄涨到 28%，直到库存积压才被发现，损失约 $8,000 滞销成本</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Embedding-Fundamentals.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Embedding Fundamentals — 嵌入表示学习基础：从 ID 映射到多模态语义对齐</h3>
+  <p class="sc-desc">跨境平台上架 50 款新款婴儿车，无任何历史购买数据，纯 ID 嵌入无法初始化，导致新品在推荐系统中几乎不曝光（冷启动问题）</p>
+  <div class='sc-footer'><span class='sc-roi'>15-50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Ensemble-Methods.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Ensemble Methods（集成学习方法）</h3>
+  <p class="sc-desc">单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78</p>
+  <div class='sc-footer'><span class='sc-roi'>40-80 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Feature-Engineering.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Feature Engineering for E-Commerce Machine Learning</h3>
+  <p class="sc-desc">核心问题：模型效果的上限由特征质量决定。同样的算法，好的特征 vs 差的特征，效果可能差3-5倍。特征工程是&quot;把领域知识注入模型的艺术&quot;。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Feature-Selection.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Feature Selection（特征选择）</h3>
+  <p class="sc-desc">我们从多个数据源（CRM、广告平台、网站分析、客服系统）汇总了 200+ 特征</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Hyperparameter-Optimization.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Hyperparameter Optimization（超参调优）</h3>
+  <p class="sc-desc">默认参数的 XGBoost 流失预测 AUC=0.78，希望通过超参调优提升到 0.82+</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Imbalanced-Data-Handling.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Imbalanced Data Handling（不平衡数据处理）</h3>
+  <p class="sc-desc">流失率 5%，直接用 XGBoost 训练，Recall 只有 0.3——70% 的流失用户没被识别</p>
+  <div class='sc-footer'><span class='sc-roi'>150-300 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Model-Evaluation-Metrics.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Model Evaluation Metrics（模型评估体系）</h3>
+  <p class="sc-desc">业务问题： 我们训练了 3 个流失预测模型（XGBoost / LightGBM / Logistic Regression），需要决定用哪个模型上线到 WF-A 智能补货系统，触发对高风险用户的挽留优惠券</p>
+  <div class='sc-footer'><span class='sc-roi'>5-8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Model-Performance-Monitor.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill-Model-Performance-Monitor</h3>
+  <p class="sc-desc">核心思想：数据漂移检测（Skill-Data-Drift-Detection）解决的是&quot;输入变了吗&quot;，模型性能监控解决的是&quot;输出还准吗&quot;。两者共同构成生产 ML 模型的完整健康体系。性能监控通过滑动窗口持续评估 AUC/MAPE 等指标，配合 Shadow Mode（新模型静默跑）和 Champion-Challenger（A/B 对比）两种灰度部署模式，在不影响生产的前提下验证新版本并安全切换。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Online-Incremental-Learning.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Online Incremental Learning — 在线增量学习：模型无需重训即可适应数据漂移</h3>
+  <p class="sc-desc">旺季到来时需求预测模型仍用淡季规律导致严重缺货但批量重训需等4周——在线增量学习让模型每日自动更新漂移检测后2-3天校准完毕，减少旺季缺货损失年化30-100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-ML-Features.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Supply Chain ML Feature Engineering — 供应链 ML 特征工程：时序+图+统计三维</h3>
+  <p class="sc-desc">1. 稀疏性：长尾 SKU 历史销量不足（&lt; 30 天），传统特征工程无法直接应用</p>
+  <div class='sc-footer'><span class='sc-roi'>供应链 ML 模型准确率提升 15-20%，减少缺货/积压成本</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-C 客服分诊 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-C 客服分诊</nav>
+<h1>WF-C 客服分诊</h1>
+<p class="lead">从多语言用户声音采集到根因归因与智能分流的端到端客服优化链。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>客服运营负责人</span><span class='tag'>NLP / 用户洞察工程师</span><span class='tag'>产品经理</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的客服核心挑战是什么？</div>
+</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 客服首次响应解决率从 60% 提升至 85%</li><li>[OK] 多语言 VOC 覆盖从 25% → 100%</li><li>[OK] 工单正确路由率从 61% → 82%，年化节省 1900 万元</li><li>[OK] 客服人力成本节省 30-40%</li></ul></div>
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">评论与工单采集</div>
+  <div class="wf-question">数据来源是什么？</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">Amazon / 电商平台评论</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Review-Dedup-Quality-Filter.html"><span class="chip-name">Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</span><span class="chip-role">评论去重与质量过滤</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Fake-Review-Detection.html"><span class="chip-name">Fake Review Detection — 假评论检测：图神经网络+LLM 可解释欺诈识别</span><span class="chip-role">虚假评论检测与剔除</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Review-Pain-Point-Mining.html"><span class="chip-name">Review Pain-Point Mining（竞品差评痛点挖掘）</span><span class="chip-role">评论痛点挖掘与主题聚类</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">多语言客服工单</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Multilingual-Customer-Service-Translation.html"><span class="chip-name">Multilingual Customer Service Translation — 多语言客服自动翻译与情绪感知保全</span><span class="chip-role">多语言自动翻译与标准化</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-LACA-CrossLingual-ABSA.html"><span class="chip-name">LACA 跨语言 ABSA - LLM 数据增强多语种情感分析</span><span class="chip-role">跨语言方面级情感分析</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html"><span class="chip-name">Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树</span><span class="chip-role">LLM 驱动的工单意图聚类</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">情感与根因分析</div>
+  <div class="wf-question">需要哪个粒度的分析？</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">产品维度（功能/质量/价格）情感</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html"><span class="chip-name">AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline</span><span class="chip-role">方面引导的评论摘要生成</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-StaR-Review-Statement-Ranking.html"><span class="chip-name">StaR 观点语句排序 - 排序而非生成的可解释评论分析</span><span class="chip-role">评论声明重要性排序</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">业务异常根因归因</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Root-Cause-Analysis-Agent.html"><span class="chip-name">Root Cause Analysis Agent for Business Anomalies</span><span class="chip-role">自主 Agent 多维度根因分析</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-ProRCA-Business-Analysis.html"><span class="chip-name">ProRCA — 因果图路径溯源根因分析</span><span class="chip-role">因果图路径溯源根因分析</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">智能分诊与路由</div>
+  <div class="wf-question">工单量级与复杂度？</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">高频标准化工单（退换货 / 物流查询）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-AgentRouter-KG-Guided.html"><span class="chip-name">AgentRouter — 知识图谱引导的多智能体路由器</span><span class="chip-role">知识图谱引导的智能路由分配</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Emotional-AI-Customer-Care.html"><span class="chip-name">Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI</span><span class="chip-role">情感感知的自动化客户关怀</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">复杂多轮咨询（选品建议 / 喂养指导）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Shopping-Companion-Agent.html"><span class="chip-name">Shopping Companion — 跨会话偏好记忆购物助手（4B≈GPT-5，Lazada真实数据）</span><span class="chip-role">购物伴侣 Agent 个性化导购</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-PersonaBot-RAG-Profiling.html"><span class="chip-name">PersonaBot RAG画像生成 - LLM+RAG驱动的客户画像落地工具</span><span class="chip-role">RAG 增强的用户画像驱动回复</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">VOC 洞察沉淀</div>
+  <div class="wf-question">如何将洞察转化为产品改进信号？</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-MAA-Review-to-Action-Decision.html"><span class="chip-name">MAA 多 Agent 行动建议 - 从评论到产品改进决策链</span><span class="chip-role">评论→行动决策转化框架</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Consumer-Complaint-Recall-Prediction.html"><span class="chip-name">Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测</span><span class="chip-role">消费者投诉召回风险预测</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">客服效果度量与差评防御追踪</div>
+  <div class="wf-question">如何验证 AI 客服的效果，以及确认差评率是否下降？</div>
+  <div class="wf-context">每月对 ODR、差评数、A-to-Z 索赔率做对比，形成客服质量基线</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Cohort-Retention-Analysis.html"><span class="chip-name">Cohort Retention Analysis for User Lifecycle</span><span class="chip-role">追踪客服体验改善对30天复购率的影响（因果验证）</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Consumer-Complaint-Recall-Prediction.html"><span class="chip-name">Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测</span><span class="chip-role">监控投诉趋势，预防差评爆发</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-MAA-Review-to-Action-Decision.html"><span class="chip-name">MAA 多 Agent 行动建议 - 从评论到产品改进决策链</span><span class="chip-role">将遗留差评洞察转化为产品/包装改进建议，形成闭环</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

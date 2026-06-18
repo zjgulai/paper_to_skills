@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Skill-Product-Lifecycle-Stage · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-Product-Lifecycle-Stage</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Skill-Product-Lifecycle-Stage</h1>
+<p class="muted">Skill-Product-Lifecycle-Stage · 06-增长模型</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>客服与VOC</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CEO / 增长负责人<span class='biz-ctx-secondary'> · CMO · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · DTC 独立站 · 多市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>公司增长放缓，不知道是市场饱和还是产品问题还是获客太贵；老板要 12 个月 GMV 预测，只能靠感觉</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立增长拆解模型找到瓶颈，预测未来 6-12 个月营收区间，支撑融资/战略会议</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>增长放缓不知道问题在哪</span><span class='biz-pain-tag'>CAC 越来越高已经高于 LTV</span><span class='biz-pain-tag'>新市场要不要进没有数据支撑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务问题：考虑进入 baby UV-C sterilizer 品类，不知道该品类处于哪个 PLC 阶段，是该现在进还是已经过了最佳时机</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：把一个 SKU 或品类的销量时间序列，分解为趋势+季节+残差三层信号，通过微分分析（斜率变化率）自动定位「成长→成熟→衰退」的阶段边界，并用年龄销量矩（AVM）作为阶段状态的低成本代理特征，最终输出四阶段标签（引入/成长/成熟/衰退）+ 进入时机决策建议。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：考虑进入 baby UV-C sterilizer 品类，不知道该品类处于哪个 PLC 阶段，是该现在进还是已经过了最佳时机。 - 数据要求： - 品类月度搜索量（Google Trends 指数，近 24 个月） - Top 10 竞品的月度 BSR 排名或 Review 增速（近 24 个月） - 竞品数量（同类 ASIN 数，近 24 个月） - 预期产出： - 当前阶段标签（引入/成长/成熟/衰退） - 阶段置信度（基于斜率比和 AVM 特征） - 进入时机建议（GO/WAIT/NO-GO + 理由） - 业务价值：避免在衰退期进入，节省产品开发 + 认证 + 首批备货成</p><p>场景 B：在售 SKU 生命周期监控（换代预警）</p><p>- 业务问题：主力 SKU baby sterilizer Pro 已上市 18 个月，近 3 个月 BSR 在下滑，不确定是暂时性的还是进入衰退期，是否该启动换代新品研发。 - 数据要求：该 SKU 每周 BSR 排名（或 Review 增速）近 24 个月 - 预期产出： - 当前阶段 + 进入该阶段的月份数 - 衰退斜率/成熟斜率比值（&gt;3× 触发换代预警） - 预测剩余「有效生命期」（基于历史同类 SKU 衰退速度） - 业务价值：新品研发周期约 8-12 个月，提前 6 个月发出换代预警可确保无断档期</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>避免衰退期进入：baby UV wand 品类已进入衰退（FDA 召回 + 竞品清仓），若误判为成长期进入，首批备货+认证成本损失约 $20,000-$50,000</li><li>准确判断成长期进入时机：UV-C 密闭消毒器品类当前成长期，提前 6-12 个月进入比成熟期进入预期 LTV 高 2-3×</li><li>换代预警价值：提前 6 个月发出衰退预警，节省新品研发断档期销售损失约 $5,000-$15,000/月</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（2/5）— STL+微分分析，纯数值计算，无需 GPU/大数据</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（5/5）— WF-D 选品扫描的核心前置决策，缺失此 Skill 等于盲目进入品类</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：6 · 路径：paper2skills-code/growth_model/product_lifecycle_stage</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Skill-Product-Lifecycle-Stage
+基于 arXiv:2511.16248 (PhaseFormer, AAAI 2025) + arXiv:2511.17275 (AVM, 2025)
+母婴跨境电商品类/SKU 生命周期阶段检测
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+from typing import Optional
+from enum import Enum
+
+try:
+    from statsmodels.tsa.seasonal import STL
+    HAS_STATSMODELS = True
+except ImportError:
+    HAS_STATSMODELS = False
+    print(&quot;提示: pip install statsmodels 启用 STL 分解，当前使用简化版&quot;)
+
+
+class PLCStage(Enum):
+    INTRODUCTION = &quot;引入期&quot;
+    GROWTH       = &quot;成长期&quot;
+    MATURITY     = &quot;成熟期&quot;
+    DECLINE      = &quot;衰退期&quot;
+    UNKNOWN      = &quot;数据不足&quot;
+
+
+@dataclass
+class PLCResult:
+    sku_id: str
+    current_stage: PLCStage
+    confidence: float          # 0-1
+    months_in_stage: int
+    growth_rate_mom: float     # 最近3个月平均月增速
+    slope_ratio: Optional[float]  # 衰退斜率/成熟斜率，&gt;3× 为强衰退信号
+    avm_score: float           # 年龄-销量矩归一化值
+    decision: str              # GO / WAIT / NO-GO
+    rationale: str
+    warning: Optional[str] = None
+
+
+# ── STL 分解（剥离大促季节性）─────────────────────────────
+def decompose_trend(sales: np.ndarray, period: int = 12) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    STL 分解提取趋势项，剥离促销季节性噪声。
+    Y_t = T_t + S_t + R_t，返回 T_t。
+    &quot;&quot;&quot;
+    if len(sales) &lt; period * 2:
+        # 数据不足时用移动平均代替
+        window = min(3, len(sales))
+        return pd.Series(sales).rolling(window, center=True, min_periods=1).mean().values
+
+    if HAS_STATSMODELS:
+        stl = STL(sales, period=period, robust=True)
+        result = stl.fit()
+        return result.trend
+    else:
+        # 简化版：中心移动平均
+        return pd.Series(sales).rolling(period, center=True, min_periods=1).mean().values</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2511.16248</li><li>2511.17275</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Product-Lifecycle-Stage" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html'>Skill-Bass-Diffusion-New-Product-Forecasting</a></li><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Market-Size-Estimation.html'>Skill-Market-Size-Estimation</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Time-Series-Anomaly-Detection.html'>Skill-Time-Series-Anomaly-Detection</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Market-Size-Estimation.html'>Skill-Market-Size-Estimation</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

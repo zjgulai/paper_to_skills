@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Instagram Reels Commerce Attribution — Reels 商品发现链路归因与转化量化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Instagram-Reels-Commerce-Attribution</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Instagram Reels Commerce Attribution — Reels 商品发现链路归因与转化量化</h1>
+<p class="muted">Skill-Instagram-Reels-Commerce-Attribution · 15-营销投放分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5-20 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Instagram Reels 投入 $3000/月但 CFO 问不出 GMV 贡献——时间衰减多触点归因模型打通 Reels 商品标签→Amazon 购买的跨平台链路，将 ROAS 盲区变成可量化的 4.2x</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>Instagram Reels 已成为母婴 DTC 品牌的重要发现渠道，但 Instagram → 产品标签点击 → 官网/Amazon 购买 这条链路的归因一直是黑盒。DV365 揭示了 Reels 推荐的底层逻辑：用稠密视频嵌入（Dense Video Embeddings）跨越推荐、检索、排序三个阶段，同一视频特征在全链路复用，这意味着视频内容质量直接决定整个商业转化链路的效率。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：团队每月在 Instagram 投入 $3,000 Reels 内容（制作 + 推广），但不清楚带来了多少 Amazon 销售，CFO 质疑这笔投入的价值。</p><p>归因方案： 1. 所有 Reels 使用独立 UTM 参数（`utm_source=instagram&amp;utm_medium=reels&amp;utm_content=VID-001`） 2. Reels 中的产品链接指向专属落地页（带 tracking） 3. 7 天归因窗口内的购买事件归因给对应 Reels 4. 计算每条 Reels 的 `归因 GMV / (制作成本 + 推广成本)`</p><p>典型发现：真实使用场景类视频 ROAS=4.2x；产品功能展示类 ROAS=1.8x → 内容策略调整</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>Reels 归因打通后停止低 ROAS 内容投放：月省 $1,000-3,000</li><li>发现高 ROAS 内容类型并扩大投放：月增 GMV ¥5-20 万</li><li>Reels → A10 协同效应量化：发现间接价值，争取更多内容预算</li><li><strong>年化综合 ROI</strong>：¥30-100 万</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（UTM 追踪 + 时间衰减模型，1-2 天接入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Instagram Reels Commerce Attribution — 多触点归因链路量化
+基于 DV365 (arXiv: 2506.00450) + Amazon MTA (arXiv: 2508.08209)
+
+依赖: numpy, dataclasses (标准库)
+&quot;&quot;&quot;
+
+from dataclasses import dataclass, field
+import numpy as np
+from datetime import datetime, timedelta
+
+
+@dataclass
+class ReelsTouchpoint:
+    &quot;&quot;&quot;单个 Reels 触点&quot;&quot;&quot;
+    reel_id: str
+    user_id: str
+    action: str             # view / tag_click / profile_visit / link_click
+    timestamp: float        # Unix timestamp
+    video_completion_rate: float = 0.0
+    product_tag_id: str = &quot;&quot;
+
+
+@dataclass
+class PurchaseEvent:
+    &quot;&quot;&quot;购买事件&quot;&quot;&quot;
+    order_id: str
+    user_id: str
+    sku_id: str
+    amount: float
+    timestamp: float
+    channel: str            # instagram / amazon_organic / direct
+
+
+@dataclass
+class ReelsAttributionResult:
+    &quot;&quot;&quot;Reels 归因结果&quot;&quot;&quot;
+    reel_id: str
+    attributed_orders: int
+    attributed_gmv: float
+    attributed_gmv_7d: float    # 7天窗口
+    attributed_gmv_28d: float   # 28天窗口
+    roas: float
+    content_cost: float
+
+
+class TimeDecayAttributor:
+    &quot;&quot;&quot;
+    时间衰减多触点归因模型
+    基于 Amazon MTA 的 Transformer 注意力归因方法简化版
+    &quot;&quot;&quot;
+
+    def __init__(self, half_life_hours: float = 72.0,
+                 attribution_window_days: int = 7):
+        self.half_life = half_life_hours
+        self.window = attribution_window_days * 24 * 3600  # 转秒
+
+    def decay_weight(self, hours_before_purchase: float) -&gt; float:
+        &quot;&quot;&quot;指数衰减权重&quot;&quot;&quot;
+        lam = np.log(2) / self.half_life</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2506.00450</li><li>2508.08209</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Instagram-Reels-Commerce-Attribution" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Amazon-External-Traffic-Boost.html'>Skill-Amazon-External-Traffic-Boost</a></li><li><a href='../skills/Skill-Share-of-Voice-Tracking.html'>Skill-Share-of-Voice-Tracking</a></li><li><a href='../skills/Skill-Social-Proof-Amplification.html'>Skill-Social-Proof-Amplification</a></li><li><a href='../skills/Skill-TikTok-Algorithm-Content-Boost.html'>Skill-TikTok-Algorithm-Content-Boost</a></li><li><a href='../skills/Skill-Video-ROI-Attribution.html'>Skill-Video-ROI-Attribution</a></li><li><span class='muted'>Social-Proof-Amplification]]（组合场景</span></li><li><span class='muted'>TikTok-Algorithm-Content-Boost]]（组合场景</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Amazon-External-Traffic-Boost.html'>Skill-Amazon-External-Traffic-Boost</a></li><li><a href='../skills/Skill-Share-of-Voice-Tracking.html'>Skill-Share-of-Voice-Tracking</a></li><li><a href='../skills/Skill-Social-Proof-Amplification.html'>Skill-Social-Proof-Amplification</a></li><li><a href='../skills/Skill-TikTok-Algorithm-Content-Boost.html'>Skill-TikTok-Algorithm-Content-Boost</a></li><li><span class='muted'>Social-Proof-Amplification]]（组合场景</span></li><li><span class='muted'>TikTok-Algorithm-Content-Boost]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Social-Proof-Amplification.html'>Skill-Social-Proof-Amplification</a></li><li><a href='../skills/Skill-TikTok-Algorithm-Content-Boost.html'>Skill-TikTok-Algorithm-Content-Boost</a></li><li><span class='muted'>Social-Proof-Amplification]]（组合场景</span></li><li><span class='muted'>TikTok-Algorithm-Content-Boost]]（组合场景</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

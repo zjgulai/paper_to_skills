@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EvoPool — 进化式多智能体弱监督标注 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/09-dataagent-llm.html">09-DataAgent-LLM</a> / Skill-LLM-Annotation-Weak-Supervision</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>EvoPool — 进化式多智能体弱监督标注</h1>
+<p class="muted">Skill-LLM-Annotation-Weak-Supervision · 09-DataAgent-LLM</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>80-150 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 运营负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API · Shopify · TikTok Ads API · 多平台数据整合</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>数据需求太多，数据团队排期 2 周；非技术人员（采购/客服/运营）有数据问题但不会 SQL；重复报表占用大量时间</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>业务方用自然语言自助查数据，常规报表自动化，数据驱动决策响应速度从「天」变「分钟」</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>数据需求排期太长</span><span class='biz-pain-tag'>不会 SQL 只能等数据团队</span><span class='biz-pain-tag'>老板临时要数据没法马上出</span><span class='biz-pain-tag'>分析师时间都花在取数上</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴跨境卖家面临海量多语言评论与工单需标注的成本困境——EvoPool 进化式弱监督框架将 LLM 直接标注 10 万条的 10 万次 API 调用压缩为 50 次，标注速度提升 4500x，年化节省标注人力成本 80-150 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>EvoPool 的核心洞察：LLM 直接标注 100K 条数据成本极高（每条需一次 API 调用），但 LLM 能以极低成本生成标注规则代码，而规则代码运行几乎零成本。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：某母婴跨境品牌每月积累 30 万条全球买家评论（英/德/法），需要对每条评论打「质量投诉」「安全隐患」「正向体验」「物流问题」四个标签，用于训练合规预警模型。人工标注 10 条/人/小时，30 万条需 3 万人时（约 90 万元/轮）。</p><p>数据要求： - 原始评论文本（无需预处理） - 500 条人工验证集（用于 Fitness Gate 评估） - 可选：产品类目标签（奶瓶/推车/睡袋等）</p><p>执行流程： 1. LLM 生成初代 20 个标注函数（关键词匹配 + 正则 + 简单分类器） 2. 经 3-5 代进化，池扩充至 40-60 个函数 3. EvoAgg 聚合软标签，训练下游 BERT 分类器 4. 下游模型上线后持续接收新评论，零成本标注</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>需要 200-500 条高质量种子标注数据（可由业务专家一次性标注）</li><li>初代标注函数需要领域专家参与设计（半天工作量）</li><li>进化迭代需要调参经验</li><li><strong>高优先级场景</strong>：评论/工单数据量 &gt; 10 万条/月，且有持续标注需求</li><li><strong>中优先级场景</strong>：数据量 1-10 万条/月，可考虑与人工标注混合使用</li><li><strong>不适用场景</strong>：任务需要极高精度（医疗诊断），或数据量 &lt; 1 万条</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+EvoPool 简化实现：母婴评论弱监督标注
+场景：亚马逊母婴产品评论的安全合规 + 情感二分类
+
+核心思路：
+1. 生成多个基于关键词/规则的标注函数（模拟进化池）
+2. Fitness Gate 过滤低质量/冗余函数
+3. EvoAgg 软标签聚合（加权投票 + 语义特征）
+4. 输出软标签用于下游分类器训练
+&quot;&quot;&quot;
+
+import re
+import numpy as np
+from collections import Counter
+from typing import List, Tuple, Optional
+
+# ==============================================================
+# 1. 标注函数定义（模拟 LLM 进化生成的函数池）
+# ==============================================================
+
+def annotate_safety_concern(text: str) -&gt; int:
+    &quot;&quot;&quot;检测安全隐患相关评论 (1=有隐患, 0=无, -1=弃权)&quot;&quot;&quot;
+    safety_keywords = [
+        &quot;choke&quot;, &quot;choking&quot;, &quot;hazard&quot;, &quot;danger&quot;, &quot;injury&quot;, &quot;hurt&quot;,
+        &quot;recall&quot;, &quot;toxic&quot;, &quot;sharp&quot;, &quot;unsafe&quot;, &quot;accident&quot;, &quot;warning&quot;,
+        &quot;危险&quot;, &quot;安全&quot;, &quot;割伤&quot;, &quot;吞咽&quot;, &quot;有毒&quot;, &quot;召回&quot;
+    ]
+    text_lower = text.lower()
+    hits = sum(1 for kw in safety_keywords if kw in text_lower)
+    if hits &gt;= 2:
+        return 1
+    if hits == 1:
+        return -1  # 弃权（不确定）
+    return 0
+
+def annotate_quality_complaint(text: str) -&gt; int:
+    &quot;&quot;&quot;检测质量投诉 (1=投诉, 0=无, -1=弃权)&quot;&quot;&quot;
+    complaint_patterns = [
+        r&quot;broke? (after|in|within)&quot;,
+        r&quot;stopped? work&quot;,
+        r&quot;poor quality&quot;,
+        r&quot;cheap|cheaply made&quot;,
+        r&quot;fell apart&quot;,
+        r&quot;doesn&#x27;?t? work&quot;,
+        r&quot;defect&quot;,
+        r&quot;broken|crack&quot;,
+    ]
+    text_lower = text.lower()
+    for pat in complaint_patterns:
+        if re.search(pat, text_lower):
+            return 1
+    negative_words = [&quot;disappointed&quot;, &quot;waste&quot;, &quot;terrible&quot;, &quot;awful&quot;, &quot;horrible&quot;]
+    if any(w in text_lower for w in negative_words):
+        return 1
+    return -1  # 大多数情况弃权，让其他函数决定
+
+def annotate_positive_sentiment(text: str) -&gt; int:
+    &quot;&quot;&quot;检测正向情感 (1=正向, 0=负向, -1=弃权)&quot;&quot;&quot;
+    positive_strong = [&quot;love&quot;, &quot;excellent&quot;, &quot;perfect&quot;, &quot;amazing&quot;, &quot;wonderful&quot;, &quot;great&quot;, &quot;best&quot;]
+    negative_strong = [&quot;hate&quot;, &quot;terrible&quot;, &quot;awful&quot;, &quot;horrible&quot;, &quot;worst&quot;, &quot;never again&quot;]</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2606.01617</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LLM-Annotation-Weak-Supervision" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-InstructUIE-Unified-Information-Extraction.html'>Skill-InstructUIE-Unified-Information-Extraction</a></li><li><a href='../skills/Skill-NLP-Text-Classification.html'>Skill-NLP-Text-Classification</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-InstructUIE-Unified-Information-Extraction.html'>Skill-InstructUIE-Unified-Information-Extraction</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

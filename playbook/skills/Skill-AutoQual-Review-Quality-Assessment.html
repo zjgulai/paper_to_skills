@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AutoQual Review Quality Assessment — LLM Agent 自动化评论质量评估 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-AutoQual-Review-Quality-Assessment</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>AutoQual Review Quality Assessment — LLM Agent 自动化评论质量评估</h1>
+<p class="muted">Skill-AutoQual-Review-Quality-Assessment · 14-用户分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-ltv-retention.html'>用户生命周期价值运营手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>100 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>Amazon Listing 中 40% 评论是&quot;好用&quot;&quot;五星&quot;等无信息量水评，买家无法获得真实决策信息——LLM Agent 自动发现可解释质量特征、轻量分类器打分排序，高质量评论置顶提升转化率 0.2-0.5%，年化 GMV 增量 20-100 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：电商平台每天产生海量评论，但大量评论是无用噪音（刷单水评、&quot;好评&quot;两字、复制粘贴）。AutoQual 用 LLM Agent 自动发现「有用评论」的可解释特征维度（如：具体描述产品细节、说明使用场景、有比较对象），训练轻量分类器打分，亿级平台 A/B 测试验证提升转化率 0.27%。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴品牌 Listing 有 3,000+ 条评论，但 40% 是&quot;好用&quot;&quot;不错&quot;&quot;五星&quot;等无信息量评论，新买家看不到关键使用细节（噪音大不大、硅胶是否柔软、续航多久），导致转化决策困难。 - 数据要求：历史评论文本 + 评论评分 + 有用性投票数（可选）。 - 预期产出： - 每条评论的质量分（0-1）和可解释原因（&quot;描述了具体使用场景 +0.3，未提供量化数据 -0.1&quot;） - 高质量评论 Top-20 列表（用于 Listing 展示优化） - 水评/低质评论标记清单（用于向平台举报或内部过滤） - 业务价值：展示高质量评论 → 买家决策信息充分 → 转化率提升 0.2-</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：高质量评论置顶提升转化率 0.2-0.5%，月 GMV 100 万 × 0.3% = 年化 36 万元增量</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（低，主要是特征工程 + 轻量分类器）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（评论质量直接影响 Listing 转化，是最高频优化场景）</li><li><strong>评估依据</strong>：EMNLP 2025 工业 Track，亿级用户平台 A/B 测试验证转化率 +0.27%</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>from dataclasses import dataclass
+from typing import List, Dict
+
+@dataclass
+class Review:
+    review_id: str
+    text: str
+    rating: int
+    helpful_votes: int = 0
+
+def extract_quality_features(review: Review) -&gt; Dict[str, float]:
+    text = review.text
+    words = text.split()
+    sentences = text.split(&#x27;。&#x27;) + text.split(&#x27;.&#x27;)
+    sentences = [s.strip() for s in sentences if len(s.strip()) &gt; 2]
+    specificity = min(1.0, len(words) / 50)
+    has_numbers = any(c.isdigit() for c in text)
+    has_comparison = any(k in text for k in [&#x27;比&#x27;, &#x27;对比&#x27;, &#x27;vs&#x27;, &#x27;之前&#x27;, &#x27;换了&#x27;, &#x27;相比&#x27;])
+    has_scenario = any(k in text for k in [&#x27;宝宝&#x27;, &#x27;孩子&#x27;, &#x27;用了&#x27;, &#x27;试用&#x27;, &#x27;喂奶&#x27;, &#x27;吸奶&#x27;])
+    has_detail = any(k in text for k in [&#x27;硅胶&#x27;, &#x27;噪音&#x27;, &#x27;续航&#x27;, &#x27;清洗&#x27;, &#x27;吸力&#x27;, &#x27;舒适&#x27;])
+    generic_phrases = [&#x27;好用&#x27;, &#x27;不错&#x27;, &#x27;推荐&#x27;, &#x27;五星&#x27;, &#x27;好评&#x27;, &#x27;值得购买&#x27;]
+    is_generic = any(p in text for p in generic_phrases) and len(words) &lt; 10
+    return {
+        &#x27;specificity&#x27;: specificity,
+        &#x27;has_numbers&#x27;: float(has_numbers),
+        &#x27;has_comparison&#x27;: float(has_comparison),
+        &#x27;has_scenario&#x27;: float(has_scenario),
+        &#x27;has_product_detail&#x27;: float(has_detail),
+        &#x27;is_generic&#x27;: float(is_generic),
+        &#x27;length_score&#x27;: min(1.0, len(words) / 30),
+    }
+
+def compute_quality_score(features: Dict[str, float]) -&gt; float:
+    weights = {
+        &#x27;specificity&#x27;: 0.20,
+        &#x27;has_numbers&#x27;: 0.10,
+        &#x27;has_comparison&#x27;: 0.15,
+        &#x27;has_scenario&#x27;: 0.20,
+        &#x27;has_product_detail&#x27;: 0.20,
+        &#x27;is_generic&#x27;: -0.25,
+        &#x27;length_score&#x27;: 0.15,
+    }
+    score = sum(features[k] * w for k, w in weights.items())
+    return round(max(0.0, min(1.0, score)), 3)
+
+def rank_reviews(reviews: List[Review]) -&gt; List[Dict]:
+    results = []
+    for r in reviews:
+        feats = extract_quality_features(r)
+        score = compute_quality_score(feats)
+        label = &#x27;高质量&#x27; if score &gt;= 0.6 else &#x27;中等&#x27; if score &gt;= 0.35 else &#x27;低质量&#x27;
+        results.append({&#x27;review_id&#x27;: r.review_id, &#x27;score&#x27;: score, &#x27;label&#x27;: label,
+                        &#x27;text_preview&#x27;: r.text[:50], &#x27;features&#x27;: feats})
+    return sorted(results, key=lambda x: -x[&#x27;score&#x27;])
+
+reviews = [
+    Review(&#x27;R001&#x27;, &#x27;吸奶器用了三个月了，吸力很稳定，最大档位噪音大概40分贝左右，比上一款小很多。硅胶护罩很柔软，宝宝不排斥。充一次电能用2-3次，每次30分钟左右。强烈推荐！&#x27;, 5, 45),
+    Review(&#x27;R002&#x27;, &#x27;好用，五星好评，物流也快&#x27;, 5, 1),
+    Review(&#x27;R003&#x27;, &#x27;收到货试用了一下，吸力比医院级的弱一些，但便携性好很多。硅胶材质安全，清洗方便，宝宝接受度高。价格合适，适合日常外出使用。&#x27;, 4, 28),
+    Review(&#x27;R004&#x27;, &#x27;还不错，继续观察&#x27;, 4, 0),</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2510.08081</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-AutoQual-Review-Quality-Assessment" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-Review-Dedup-Quality-Filter.html'>Skill-Review-Dedup-Quality-Filter</a></li><li><a href='../skills/Skill-Review-Fraud-Detection.html'>Skill-Review-Fraud-Detection</a></li><li><a href='../skills/Skill-Review-Pain-Point-Mining.html'>Skill-Review-Pain-Point-Mining</a></li><li><a href='../skills/Skill-StaR-Review-Statement-Ranking.html'>Skill-StaR-Review-Statement-Ranking</a></li><li><span class='muted'>前置</span></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-Review-Fraud-Detection.html'>Skill-Review-Fraud-Detection</a></li><li><a href='../skills/Skill-StaR-Review-Statement-Ranking.html'>Skill-StaR-Review-Statement-Ranking</a></li><li><span class='muted'>延伸</span></li><li><span class='muted'>组合</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Review-Fraud-Detection.html'>Skill-Review-Fraud-Detection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

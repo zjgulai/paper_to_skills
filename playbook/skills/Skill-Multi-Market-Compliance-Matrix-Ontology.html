@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>多市场合规矩阵本体 — US/EU/JP/AU跨境合规要求统一建模与差异分析 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-Multi-Market-Compliance-Matrix-Ontology</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>多市场合规矩阵本体 — US/EU/JP/AU跨境合规要求统一建模与差异分析</h1>
+<p class="muted">Skill-Multi-Market-Compliance-Matrix-Ontology · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-intelligence.html'>供应链全链路智能化手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5-15万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>合规团队面临&quot;US/EU/JP/AU同时运营合规要求超50项靠人工管理必然遗漏&quot;——结构化合规矩阵10分钟完成多市场合规扫描，防止新品上市合规缺口导致的下架损失</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>多市场合规矩阵（Compliance Matrix Ontology） 用一张结构化矩阵解答：&quot;这个SKU在哪些市场是合规的，在哪些市场还缺什么？&quot;</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：新品上市多市场合规快速评估 - 新款辅食机即将上市，计划同时进入US/DE/JP - 矩阵扫描结果： - US：FCC ✅，CA Prop65 ⚠️（铅含量需检测） - DE：CE ✅，EPR ❌（未注册包装回收计划）→ 不能上市 - JP：PSE ❌（日本特定电器认证缺失）→ 不能上市 - 输出：DE和JP上市时间需推迟约60天，优先完成EPR注册和PSE认证 - 业务价值：在发货前发现合规缺口，避免货到港被扣押（损失约5-8万元）</p><p>**场景B：REACH法规变更对SKU库的影响** - EU REACH新增10种物质管制，影响哪些SKU？ - 矩阵引擎扫描：3个SKU使用了新管制物质 → 自动打标`sku.compliance.EU.REACH=PENDING` - 触发：这3个SKU暂停EU市场新入库</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：新品上市前合规矩阵扫描，避免货到口岸被拒（每次约5-15万元损失）；合规状态Tag化后审查时间从2周→10分钟；多市场同步管理节省约30%合规管理人力成本</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（主要工作量是建立各市场法规知识库，一旦建立维护成本低）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（跨境电商进入新市场的最大风险是合规，矩阵化管理是系统解）</li><li><strong>评估依据</strong>：同时运营US/EU/JP三个市场的母婴品牌，合规要求超过50项，人工管理必然遗漏，系统化矩阵是必须</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+多市场合规矩阵本体
+功能：多市场合规要求建模 / SKU合规状态矩阵 / 缺口识别 / 上市准入评估
+输入：SKU产品信息 + 目标市场 + 认证状态
+输出：合规矩阵 + 缺口报告 + 上市准入建议
+&quot;&quot;&quot;
+import pandas as pd
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# 多市场合规要求定义
+MARKET_REQUIREMENTS = {
+    &quot;US&quot;: {
+        &quot;electronics&quot;: [
+            {&quot;req_id&quot;: &quot;FCC&quot;, &quot;type&quot;: &quot;certification&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;UL&quot;, &quot;type&quot;: &quot;safety&quot;, &quot;mandatory&quot;: False, &quot;consequence&quot;: &quot;market_disadvantage&quot;},
+            {&quot;req_id&quot;: &quot;CA_PROP65&quot;, &quot;type&quot;: &quot;labeling&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;warning_label&quot;},
+            {&quot;req_id&quot;: &quot;CPSC_REPORT&quot;, &quot;type&quot;: &quot;registration&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;recall&quot;},
+        ],
+        &quot;food_supplement&quot;: [
+            {&quot;req_id&quot;: &quot;FDA_REGISTRATION&quot;, &quot;type&quot;: &quot;registration&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;GRAS&quot;, &quot;type&quot;: &quot;safety&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;recall&quot;},
+        ],
+    },
+    &quot;EU&quot;: {
+        &quot;electronics&quot;: [
+            {&quot;req_id&quot;: &quot;CE&quot;, &quot;type&quot;: &quot;certification&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;ROHS&quot;, &quot;type&quot;: &quot;substance&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;REACH&quot;, &quot;type&quot;: &quot;substance&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;EPR_PACKAGING&quot;, &quot;type&quot;: &quot;registration&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;delisting&quot;},
+            {&quot;req_id&quot;: &quot;WEEE&quot;, &quot;type&quot;: &quot;recycling&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;fine&quot;},
+        ],
+        &quot;food_supplement&quot;: [
+            {&quot;req_id&quot;: &quot;EFSA_APPROVAL&quot;, &quot;type&quot;: &quot;registration&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;EU_ORGANIC&quot;, &quot;type&quot;: &quot;certification&quot;, &quot;mandatory&quot;: False, &quot;consequence&quot;: &quot;label_only&quot;},
+        ],
+    },
+    &quot;JP&quot;: {
+        &quot;electronics&quot;: [
+            {&quot;req_id&quot;: &quot;PSE&quot;, &quot;type&quot;: &quot;certification&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;TELEC&quot;, &quot;type&quot;: &quot;certification&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+        ],
+        &quot;food_supplement&quot;: [
+            {&quot;req_id&quot;: &quot;MHLW_APPROVAL&quot;, &quot;type&quot;: &quot;registration&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+        ],
+    },
+    &quot;AU&quot;: {
+        &quot;electronics&quot;: [
+            {&quot;req_id&quot;: &quot;RCM&quot;, &quot;type&quot;: &quot;certification&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;ACMA&quot;, &quot;type&quot;: &quot;registration&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;fine&quot;},
+        ],
+        &quot;food_supplement&quot;: [
+            {&quot;req_id&quot;: &quot;FSANZ_APPROVAL&quot;, &quot;type&quot;: &quot;registration&quot;, &quot;mandatory&quot;: True, &quot;consequence&quot;: &quot;import_ban&quot;},
+            {&quot;req_id&quot;: &quot;TGA&quot;, &quot;type&quot;: &quot;certification&quot;, &quot;mandatory&quot;: False, &quot;consequence&quot;: &quot;market_only&quot;},
+        ],
+    },</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2310.08930</li><li>2402.14823</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multi-Market-Compliance-Matrix-Ontology" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-ATLAS-HTS-Tariff-Classification.html'>Skill-ATLAS-HTS-Tariff-Classification</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-Regulatory-Change-Impact-Propagation.html'>Skill-Regulatory-Change-Impact-Propagation</a></li><li><a href='../skills/Skill-Supplier-Qualification-Onboarding-KPI.html'>Skill-Supplier-Qualification-Onboarding-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-ATLAS-HTS-Tariff-Classification.html'>Skill-ATLAS-HTS-Tariff-Classification</a></li><li><a href='../skills/Skill-Supplier-Qualification-Onboarding-KPI.html'>Skill-Supplier-Qualification-Onboarding-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html'>Skill-Supply-Chain-Ontology-Action-Trigger</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Supplier-Qualification-Onboarding-KPI.html'>Skill-Supplier-Qualification-Onboarding-KPI</a></li><li><a href='../skills/Skill-Tag-Propagation-Supply-Chain.html'>Skill-Tag-Propagation-Supply-Chain</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 多市场合规矩阵</a><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ EPR合规费用测算</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

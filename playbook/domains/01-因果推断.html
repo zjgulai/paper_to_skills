@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>01-因果推断 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>01-因果推断</h1><p>Causal inference, uplift modeling, DiD, IV</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 01-因果推断 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Automated-Causal-Discovery.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Automated Causal Discovery — 自动化因果发现：从数据自动识别业务驱动因素</h3>
+  <p class="sc-desc">运营长期认为BSR排名是销量的原因努力刷排名但效果不稳定——NOTEARS自动因果发现揭示BSR是销量的结果而非原因，纠正错误认知后将资源聚焦真正的驱动因素（广告/价格）年化ROI提升10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Attribution-Bridge.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Attribution Bridge（因果归因桥梁）</h3>
+  <p class="sc-desc">TikTok 内容归因：naive 归因给 45%，因果 ITE 只有 32%——因为 13% 的&quot;内容驱动购买&quot;实际上是用户本身的品类偏好驱动的</p>
+  <div class='sc-footer'><span class='sc-roi'>10-20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Churn-Retention-Attribution.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Churn Retention Attribution — Uplift + DiD 因果用户流失归因与留存优化</h3>
+  <p class="sc-desc">母婴订阅运营面临流失挽留精准度不足——DR-Learner uplift 模型识别可说服用户（30%），将挽留 ROI 从 1.2x 提升至 4.8x，DiD 三重交互精准分解价格/产品/竞品各因子净贡献，年化节省无效促销成本 30-100 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30-100 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Cohort-Analysis.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Cohort Analysis — 因果队列分析：促销干预的长期用户行为效应</h3>
+  <p class="sc-desc">传统队列分析（Cohort Analysis）追踪同一时期加入的用户群体的行为轨迹，但无法剥离选择偏差：高价值用户本来就会复购，促销只是&quot;锦上添花&quot;而非真正驱动因素。直接比较&quot;接受促销的队列 vs 未接受促销的队列&quot;，会高估促销效果 30-60%。</p>
+  <div class='sc-footer'><span class='sc-roi'>200-500 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Discovery-PC-Algorithm.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Discovery with PC Algorithm</h3>
+  <p class="sc-desc">业务问题：Momcozy 美国站想理解广告 spend、竞品 price、季节 index、促销活动、KOL 合作这 5 个因素如何因果影响周销量</p>
+  <div class='sc-footer'><span class='sc-roi'>首年投入约 5 万元，避免 1-2 次重大错误决策即可收回成</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Sentiment-Attribution.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">DINER — 因果去偏的方面级情感分析</h3>
+  <p class="sc-desc">母婴产品运营面临差评方向归因失真困境——DINER 多变量因果推断（Backdoor Adjustment + TDE 反事实）消除价格/物流等方面词的标注偏置，将方面情感归因准确率提升约30%，避免1-3次错误产品迭代决策，年化规避成本50-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>70-240 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-Uplift-Modeling.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Uplift Modeling — 因果提升模型：识别&quot;可说服者&quot;的跨域基础层</h3>
+  <p class="sc-desc">母婴品牌发2万张优惠券时60-70%给了本来就会买的用户白白损失利润——因果提升模型从A/B实验数据识别「可说服者」，精准发券后ROI从1.2x提升至3-5x，年化节省无效促销50-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-ClusterSC-Synthetic-Control.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">ClusterSC - 聚类合成控制法</h3>
+  <p class="sc-desc">业务问题：母婴品牌在黑五期间，仅对美国加州投放 50 万美元 TikTok 联动广告</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Conformal-ROI-Prediction.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">共形预测ROI区间估计 - 小样本下的可信转化贡献量化</h3>
+  <p class="sc-desc">业务问题：桑基图显示 &quot;Google Ads → 首页 → 搜索 → PDP → 支付&quot; 这条路径贡献了 35% 的转化</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Conformal-Risk-Assessment.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Conformal Risk Assessment — 共形预测业务风险量化：覆盖率保证的区间估计</h3>
+  <p class="sc-desc">但预测误差未被显式量化，导致高估时积压、低估时缺货，实测缺货率 8%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DML-Cohort-Causal-Effect.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">DML Cohort 因果效应 - 群体异质性 HTE 估计</h3>
+  <p class="sc-desc">平台对所有新妈妈用户统一发放&quot;新生儿满减券&quot;,ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分 - 数据要求:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理) - DML 配置: - 第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$ - PCA 降维至 10 维,K-mea</p>
+  <div class='sc-footer'><span class='sc-roi'>1500-2500 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DiD-Difference-in-Differences.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Difference-in-Differences (DiD) for Causal Effect Estimation</h3>
+  <p class="sc-desc">业务问题：2025年美国对中国产婴儿推车加征25%关税</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-EPICSCORE-Uncertainty.html" data-domain="01-因果推断" data-diff="">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">认知不确定性共形评分 - 数据稀疏区域自适应区间加宽</h3>
+  <p class="sc-desc">桑基图中每条边代表一条用户路径转化，观测量差异极大</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Guardrailed-Uplift-Targeting.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Guardrailed Uplift Targeting — 约束优化 CATE：业务护栏驱动的精准干预</h3>
+  <p class="sc-desc">当前做法是向所有&quot;高流失风险&quot;用户统一发&quot;免费延长30天&quot;优惠券，ROI 极低——很多用户即使不发券也会续订</p>
+  <div class='sc-footer'><span class='sc-roi'>25-28万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-IV-Instrumental-Variables.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Instrumental Variables (IV) for Causal Inference with Endogeneity</h3>
+  <p class="sc-desc">Momcozy 想知道自己产品的价格弹性——价格下降10%，销量会增加多少</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Intelligent-Attribution-Causal-Forest.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">智能归因 - 因果森林 (Causal Forest)</h3>
+  <p class="sc-desc">我们在美国、加拿大、英国、德国同步投放吸奶器广告，不同市场的用户行为差异显著</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Mediation-Causal-Mechanism-Analysis.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Mediation Analysis — Decomposing &quot;Why It Works</h3>
+  <p class="sc-desc">核心思想：中介分析回答&quot;为什么&quot;——一个干预（如推荐算法更新）通过什么机制影响了结果（如转化率）。它将总效应分解为</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SSBC-Small-Sample-Conformal.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">小样本Beta修正共形预测 - 50个样本也能保证覆盖</h3>
+  <p class="sc-desc">业务问题：日本市场刚上线，只收集了50条带标签的转化数据做校准</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Uplift-Modeling.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Uplift Modeling (元学习框架)</h3>
+  <p class="sc-desc">识别哪些用户最有可能因为某个干预（如促销、广告）而产生正向行为。</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

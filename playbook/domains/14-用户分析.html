@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>14-用户分析 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>14-用户分析</h1><p>Funnel, cohort, clickstream, trajectory, traffic source</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 14-用户分析 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline</h3>
+  <p class="sc-desc">业务问题:Momcozy 在 Amazon US/DE 同时销售紫外线消毒器,每季度 1-2 万条评论,人工汇总需要 2-3 个产品经理 × 1 周;管理层季度复盘和供应链/产品团队迭代输入严重滞后 - 数据要求:Amazon Review API 季度评论数据(评论文本 + 评分 + 市场标记) - AGRS 配置: - ABSA 提取每条评论的 ≤5 个 aspect-sentiment 对(如 `disinfection_effe</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5 万/月</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Abandoned-Cart-Recovery-ML.html" data-domain="14-用户分析" data-diff="⭐⭐⭐">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Abandoned Cart Recovery ML — 弃购挽回机器学习：预测意图×序列触达×个性化优惠</h3>
+  <p class="sc-desc">当月弃购订单超过200个时，ML将弃购用户分为比价型/摩擦型/犹豫型/意外型并分别触达——挽回率从统一发折扣的3%提升到12%，同时减少对比价型用户的无效折扣损耗。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AutoQual-Review-Quality-Assessment.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">AutoQual Review Quality Assessment — LLM Agent 自动化评论质量评估</h3>
+  <p class="sc-desc">Amazon Listing 中 40% 评论是&quot;好用&quot;&quot;五星&quot;等无信息量水评，买家无法获得真实决策信息——LLM Agent 自动发现可解释质量特征、轻量分类器打分排序，高质量评论置顶提升转化率 0.2-0.5%，年化 GMV 增量 20-100 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-BlockEcho-Missing-Data.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">块缺失数据补全 - 整段流量数据丢失时的恢复</h3>
+  <p class="sc-desc">块缺失（Block-wise Missing）的独特挑战：当一整段时间（如连续3天）或一个完整维度（如某渠道所有数据）缺失时，传统插值方法（线性插值、KNN、MICE）依赖&quot;相邻元素&quot;做预测，在块缺失场景下这些邻居全部不存在，方法直接失效。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CASE-Cadence-Aware-Repurchase-Prediction.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">CASE节奏感知补购预测 — 日历时序多尺度卷积+诱导集注意力的大规模次篮复购推荐</h3>
+  <p class="sc-desc">母婴卖家3个月复购率仅22%因为补购提醒时机完全靠猜——CASE日历时序多尺度卷积学习每个SKU的个性化复购节奏，Top-5 Recall提升9.9%，复购率从22%提升至29%（2026 arXiv:2604.06718）</p>
+  <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cohort-Retention-Analysis.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Cohort Retention Analysis for User Lifecycle</h3>
+  <p class="sc-desc">业务问题：Momcozy 2025年1月新注册用户10,000人，D7留存15%，D30留存5%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Platform-User-Transfer.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Cross-Platform User Behavior Transfer — 跨平台用户行为迁移：亚马逊行为驱动独立站冷启动</h3>
+  <p class="sc-desc">DTC独立站刚上线用户没有行为历史只能展示热销榜推荐——将Amazon老买家的购买偏好迁移到独立站，第一天就能个性化推荐比热销榜CTR提升20-35%年化GMV增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Customer-Journey-Analytics.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Customer Journey Analytics — 用户旅程分析：全链路转化漏斗诊断与优化</h3>
+  <p class="sc-desc">独立站转化率2.1%低于行业3.5%但不知道哪个环节在流失用户——用户旅程分析找到关键流失节点并识别高效路径vs犹豫路径，精准优化后转化率提升30-50%年化GMV增益20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Full-Funnel-Growth-Dashboard.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Full Funnel Growth Dashboard — 多归因视角聚合的全漏斗增长量化看板</h3>
+  <p class="sc-desc">母婴品牌多平台投放（TikTok/Google/Amazon）归因混乱时——全漏斗多视角归因看板将ROAS评估误差从±40%压缩至±8%，预算重分配后季度GMV提升约¥18万</p>
+  <div class='sc-footer'><span class='sc-roi'>30-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-GPLR-Persona-Generation.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">GPLR 用户人群标签生成 - 购买行为到可解释 Persona 的低成本桥接</h3>
+  <p class="sc-desc">业务问题：Momcozy 在 Amazon US 有 10 万+ 活跃用户，现有 RFM 分群只能区分&quot;高消费/低消费&quot;，营销团队无法针对&quot;出差妈妈&quot;&quot;新手妈妈&quot;制定差异化素材；人工打标既慢又贵 - 数据要求：Amazon 订单数据（`user_id`, `product_id`, `purchase_date`）+ 预定义 Persona 集合（如：职场背奶妈妈 / 全职新手妈妈 / 出差旅行妈妈 / 静音敏感型 / 价格敏感型） -</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LACA-CrossLingual-ABSA.html" data-domain="14-用户分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">LACA 跨语言 ABSA - LLM 数据增强多语种情感分析</h3>
+  <p class="sc-desc">Momcozy 在德/法/西市场每月接收 5000+ 母语客服工单(如德语 &quot;Die Verpackung ist sehr schwer zu öffnen&quot;). 传统做法用 Google Translate 翻译成英文后跑英文 ABSA,翻译会丢失 aspect 对齐(&quot;Verpackung&quot; → &quot;package&quot; 时 BIO 边界错位 30%+). 跨境品牌每月因机翻错误导致工单</p>
+  <div class='sc-footer'><span class='sc-roi'>300-600 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MAA-Review-to-Action-Decision.html" data-domain="14-用户分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">MAA 多 Agent 行动建议 - 从评论到产品改进决策链</h3>
+  <p class="sc-desc">Momcozy M5 吸奶器在美国/德国/中国三市场销售,各市场用户痛点完全不同(美国关注续航便携、德国关注静音认证、中国关注清洗方便). 现有运营复盘只产出&quot;差评列表&quot;,无法直接驱动产品改进决策——产品经理拿到差评列表还要花 1-2 周二次提炼 - 数据要求:三市场 Amazon Review API + market 标签 - MAA 配置: - 按市场分别聚类(K=5,每市场 5</p>
+  <div class='sc-footer'><span class='sc-roi'>510-920 万元/年</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MOS-Multi-Source-Opinion-Summary.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">MOS Multi-Source Opinion Summary — LLM 多源评论整合摘要</h3>
+  <p class="sc-desc">跨平台 VOC 整合靠人工需 2-3 天，Amazon/TikTok/独立站关注点各异——M-OS 框架同时整合评论文本/产品规格/评分多源，30 分钟生成结构化摘要，月均节省 20-30 人时、关键信号漏报率降低 80%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Task-User-Representation.html" data-domain="14-用户分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Multi-Task User Representation — 多任务用户表示学习：统一用户画像驱动全业务</h3>
+  <p class="sc-desc">推荐广告流失LTV四个系统各自维护用户模型导致「安静偏好」信号无法跨系统复用——多任务统一用户表示一次编码服务四个任务，各任务精度提升5-12%推理成本节省30-50%年化15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multilingual-Customer-Service-Translation.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Multilingual Customer Service Translation — 多语言客服自动翻译与情绪感知保全</h3>
+  <p class="sc-desc">母婴出海电商的客服场景中，买家使用西班牙语、德语、日语等多语言发起售后投诉，直接机器翻译存在两大失真</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-NonItem-Page-Path-Modeling.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">非商品页路径建模 - 导航页在用户旅程中的转化贡献</h3>
+  <p class="sc-desc">母婴独立站（如 Momcozy/Graco 品牌站）的首页、分类页（奶瓶/奶粉/童车）、搜索页在转化漏斗中起什么作用</p>
+  <div class='sc-footer'><span class='sc-roi'>5000 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Nonlinear-Multi-Touch-Attribution.html" data-domain="14-用户分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">多触点非线性归因建模 — 跨渠道用户旅程因果归因与预算决策</h3>
+  <p class="sc-desc">Last-Click归因导致TikTok预算被严重低估而Amazon SP被高估——Shapley值归因重新分配后整体ROAS从2.3x提升至3.1x，月增收$6.4万（$8万预算规模）</p>
+  <div class='sc-footer'><span class='sc-roi'>4.2万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-PersonaBot-RAG-Profiling.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">PersonaBot RAG画像生成 - LLM+RAG驱动的客户画像落地工具</h3>
+  <p class="sc-desc">Momcozy 在 Amazon US 的 S9/S12 系列累积数万条评论，但产品团队只能依赖人工抽查了解用户诉求，无法识别&quot;职场背奶妈妈&quot;与&quot;新手妈妈&quot;在痛点上的差异，导致广告文案和详情页对所有人说同样的话，转化率损耗严重 - 数据要求： - Amazon Review 数据（user_id、product_id、评论文本、评分、时间戳），CSV 格式 - 数量：每 SKU ≥ 50</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Personalized-Promotion-Targeting.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Personalized Promotion Targeting — 个性化促销定向：用户响应异质性建模</h3>
+  <p class="sc-desc">1. Cannibalization（自相残杀）：把折扣发给&quot;本来就会买&quot;的高意愿用户，白白损失利润</p>
+  <div class='sc-footer'><span class='sc-roi'>300-600 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Purchase-Intent-Prediction.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Purchase Intent Prediction — 买家购买意图预测：从行为序列到转化概率</h3>
+  <p class="sc-desc">独立站每月800个弃购用户全部发同一封挽回邮件点击率仅4%——买家意图预测只对高意图用户（P&gt;0.7）精准触达CVR从4%提升到12-18%，年化GMV增益30-80万元同时降低低意图用户退订率</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Purchase-Sequence-Prediction.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Purchase Sequence Prediction — 买家下一购买行为序列预测</h3>
+  <p class="sc-desc">买了吸奶器的用户下个月最可能买配件还是辅食机，品牌完全不知道只能广撒网，复购率只有 18%——时间感知 Transformer 序列建模预测下一购买品类和时机，精准触达复购率提升到 30%+，LTV 增加 40-60%</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Review-Pain-Point-Mining.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Review Pain-Point Mining（竞品差评痛点挖掘）</h3>
+  <p class="sc-desc">想进入&quot;电动吸奶器&quot;品类，但已有 Momcozy/Medela/Spectra 等强竞品</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SCRABLE-Review-Response-Generation.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">SCRABLE Review Response Generation — RAG+LLM 自优化差评回复生成</h3>
+  <p class="sc-desc">每天 20-30 条差评需在 48h 内回复否则影响卖家评分，人工团队时差覆盖困难——RAG 检索产品知识库 + LLM 自优化迭代生成专业回复，回复时效 18h→2h、回复率 60%→95%+，ROUGE-L 提升 8.5%</p>
+  <div class='sc-footer'><span class='sc-roi'>20-100 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-STAMImputer-SpatioTemporal.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">时空注意力混合专家补全 - 高缺失率下的多维流量恢复</h3>
+  <p class="sc-desc">现有时序→空间的序贯方法在块状缺失（block-missing）场景下失效——当某个渠道或时段整块数据缺失时，无法提取有效特征。同时，静态图结构无法适应分布偏移（非平稳流量数据的动态空间依赖）。</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Sequential-User-Behavior-Modeling.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Sequential User Behavior Modeling — 用户行为序列建模：时序上下文驱动的意图理解</h3>
+  <p class="sc-desc">用户分析把行为当集合处理忽略顺序信息导致意图预测不准——「先看A款→搜便携→再看A款→加购」这个序列表明高意图决策阶段，Self-Attention序列建模精度提升15-30%识别比较决策阶段触发转化干预年化20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Session-Intent-Shift.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Session意图漂移建模 - 跨会话用户购买意图变化检测</h3>
+  <p class="sc-desc">业务问题：桑基图展示了页面间流量（如&quot;首页→分类页→PDP→加购→支付&quot;），但缺少&quot;为什么用户走这条路&quot;的语义信息</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Shopify-Landing-Page-CRO.html" data-domain="14-用户分析" data-diff="⭐⭐⭐">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Shopify Landing Page CRO — 独立站落地页转化率优化：ML驱动的A/B测试与个性化元素配置</h3>
+  <p class="sc-desc">当独立站落地页转化率徘徊在2%以下时，贝叶斯优化可在2000次点击内从243种元素组合中找到最优配置，CVR提升50-150%，等效将广告ROAS翻倍——而无需增加任何广告预算。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Shopping-Companion-Agent.html" data-domain="14-用户分析" data-diff="">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Shopping Companion — 跨会话偏好记忆购物助手（4B≈GPT-5，Lazada真实数据）</h3>
+  <p class="sc-desc">业务痛点：用户上月购买 Stage 1 奶粉（0-6月龄），宝宝即将 6 个月，需要升阶</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Social-Proof-Amplification.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Social Proof Amplification — 评分/评论/UGC 密度对转化率的因果效应量化</h3>
+  <p class="sc-desc">评分从 4.4 降到 4.1 但没有量化影响——自然实验证明 1% 评分提升等价 $2.50 价格折扣，年化转化提升价值 $31,000+；负面评分惩罚是正面奖励的 2×，防守比进攻更值钱</p>
+  <div class='sc-footer'><span class='sc-roi'>15-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Sparse-Matrix-Completion.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">超稀疏矩阵补全 - 每行仅2-5个观测值的页面转移矩阵恢复</h3>
+  <p class="sc-desc">业务问题：母婴独立站有10种页面类型（HOME/SEARCH/CAT/PDP/CART/CHECKOUT/PAY/REVIEW/BLOG/SUPPORT），理论上有 10×10=100 个可能的转移组合</p>
+  <div class='sc-footer'><span class='sc-roi'>高</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-StaR-Review-Statement-Ranking.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">StaR 观点语句排序 - 排序而非生成的可解释评论分析</h3>
+  <p class="sc-desc">Momcozy 暖奶器在 Amazon US/DE 各 5000+ 评论,差评包含细碎复合表达(如&quot;加热慢又不均匀,温控也不准&quot;). 传统 ABSA 把整句标注为&quot;加热问题&quot;,丢失了 3 个独立改进点;直接用 LLM 总结容易生成评论中不存在的属性(如&quot;接口设计差&quot;) - 数据要求:Amazon Review API 双市场评论 - StaR 配置: - Step 1 Candidate</p>
+  <div class='sc-footer'><span class='sc-roi'>80-150 万/年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TRACE-Clickstream-Embedding.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">TRACE 跨会话点击流用户嵌入</h3>
+  <p class="sc-desc">业务问题： 母婴出海跨境独立站（如婴儿推车、有机奶粉、儿童安全座椅品类）面临典型问题：用户决策周期长（备孕→孕期→育儿长达数年），单次会话转化率极低（通常 &lt;1%），但通过多次访问才能判断哪些用户真正处于购买决策阶段</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Traffic-Source-Analysis.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">电商流量来源全维度分析 - 设备/浏览器/来源的转化率诊断</h3>
+  <p class="sc-desc">同样的流量，为何不同渠道/设备/浏览器的转化率差异如此悬殊？</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Trajectory-Pattern-Mining.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">用户行为轨迹模式挖掘与预测 - 变阶马尔可夫模型</h3>
+  <p class="sc-desc">母婴电商需要桑基图展示用户从首页→搜索→PDP→加购→支付的流量宽度</p>
+  <div class='sc-footer'><span class='sc-roi'>5000 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-User-Funnel-Analysis.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">User Funnel and Behavior Path Analysis</h3>
+  <p class="sc-desc">用户从&quot;知道品牌&quot;到&quot;下单购买&quot;要经历多个步骤。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-User-LTV-Financial-Bridge.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">User LTV Financial Bridge — 用户生命周期价值预测驱动财务规划</h3>
+  <p class="sc-desc">母婴跨境 CFO 面临季度财务预测依赖历史销售均值、无法区分高价值用户（年贡献 5000 元）与低价值用户（年贡献 200 元）不同增长轨迹——CC-OR-Net 分层 LTV 预测（排序+残差精化）处理零膨胀长尾分布，将季度营收预测误差从 ±22% 降至 ±9%，年化减少过度/不足备货损失 50-150 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50-150 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-User-Profile-Long-Memory.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">User Profile Long Memory — 跨会话用户画像：育儿阶段感知与偏好记忆</h3>
+  <p class="sc-desc">用户上月购买了 Stage 1 奶粉，系统推断宝宝约 2-3 月龄</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Utimac-Uncertainty-Completion.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">不确定性感知矩阵补全 - 补全值带置信区间的页面转移矩阵恢复</h3>
+  <p class="sc-desc">业务问题：跨境电商平台（如独立站）的用户行为分析依赖页面转移矩阵——HOME 页流向哪里</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

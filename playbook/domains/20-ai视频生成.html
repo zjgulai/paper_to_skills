@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>20-AI视频生成 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>20-AI视频生成</h1><p>Virtual anchor demo, product showcase I2V, brand video, talking-head UGC</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 20-AI视频生成 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AI-Video-Script-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">AI Video Script Generation — 分层 CoT 电商短视频脚本自动生成</h3>
+  <p class="sc-desc">TikTok母婴广告运营面临脚本产能瓶颈——分层CoT三阶段脚本引擎（卖点映射→叙事弧→分镜配音）将每条脚本生产从2.5小时压缩至3分钟，A/B测试变体从每周5条扩展到40+条，CTR平均提升15-25%，年化内容制作成本节省12-18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>12-18 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）</h3>
+  <p class="sc-desc">在 TikTok 美国站推吸奶器，需要大量真人主播演示视频——但海外主播贵（$200-500/条），中文主播语言不通，且更换主播需重新拍摄</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Aquarius-Brand-Video-Generation.html" data-domain="20-AI视频生成" data-diff="">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Aquarius — Brand Video Generation（品牌营销视频生成）</h3>
+  <p class="sc-desc">母婴品牌需要在美/德/英/日 4 个市场投放品牌视频广告——每个市场需要不同模特、不同语言字幕、不同节日主题（美国感恩节/德国圣诞节/日本新年）</p>
+  <div class='sc-footer'><span class='sc-roi'>80-150 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Brand-Video-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Brand Video Generation — AI品牌视频生成：从文本/图像到高保真营销视频的全链路技术</h3>
+  <p class="sc-desc">如何将品牌语义（Logo、色调、产品特征）与视频扩散模型对齐，在保留用户意图（语义保真）的同时实现自然的品牌可见性。</p>
+  <div class='sc-footer'><span class='sc-roi'>4.5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-BrandFusion-Multi-Agent.html" data-domain="20-AI视频生成" data-diff="">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">BrandFusion — Multi-Agent Brand Integration（品牌无缝植入视频）</h3>
+  <p class="sc-desc">用 AI 生成品牌视频时，品牌 Logo/包装/视觉资产在视频中会变形、消失或被遮挡。</p>
+  <div class='sc-footer'><span class='sc-roi'>50-80 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Creator-Economy-ROI-Model.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Creator Economy ROI Model — KOL 分级评估、内容衰减曲线与 GMV 净贡献量化</h3>
+  <p class="sc-desc">花 $4000 签大 KOL ROAS 不如 $500 签 10 个微 KOL——Journal of Marketing 2024 田野实验证明 5K-50K 粉丝的垂直微 KOL ROI 高出一个数量级，内容衰减曲线指导最优发帖频率</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DAWN-Talking-Head-Review.html" data-domain="20-AI视频生成" data-diff="">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">DAWN — Talking-Head Review Video（AI口播Review视频）</h3>
+  <p class="sc-desc">首个基于 Diffusion 的非自回归 (Non-Autoregressive, NAR) talking head 生成方案。自回归方法逐帧生成 → 误差累积 → 30 秒后嘴歪眼斜。DAWN 一次性生成全序列，无误差累积，支持 30-60 秒长视频稳定输出——这正是 UGC review 视频需要的长度。</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Diffusion-Model-Product-Image.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Diffusion Model Product Image Generation — 扩散模型产品图生成：AI 主图替代专业摄影</h3>
+  <p class="sc-desc">新款吸奶器需要12张产品图专业摄影报价2400美元等7天——Stable Diffusion ControlNet基于一张真实产品照片2小时生成50张候选图，成本降低90%大促前快速迭代年化节省20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-E-Commerce-Video-Benchmark.html" data-domain="20-AI视频生成" data-diff="">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">E-Commerce Video Benchmark（电商视频质量评估基准）</h3>
+  <p class="sc-desc">唯一电商域专用 Benchmark。通用 T2V 评测用 UCF-101/MSR-VTT（自然场景），但电商视频核心要求完全不同——商品颜色/纹理/Logo 不能有任何失真。E-CommerceVideo 建立电商专属评测体系。</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Live-Commerce-Stream-Algorithm.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Live Commerce Stream Algorithm — 直播电商算法建模与互动信号优化</h3>
+  <p class="sc-desc">直播开播前 15 分钟是算法分流关键期，团队不知道该做什么来提升在线人数增速和加购率进入大流量池——针对算法决定期的预热策略将平均在线人数峰值提升 3-5 倍，场均 GMV 从 1 万增至 3-8 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>100-500 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multilingual-Live-Virtual-Anchor-Clone.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">多语言直播虚拟主播实时克隆 — 跨语言直播带货数字人生成与实时驱动</h3>
+  <p class="sc-desc">美国TikTok Shop黄金时段（本地晚7-10点）无法派驻中国主播——多语言数字人实现24/7英语直播，月运营成本$800替代$5000真人主播，月GMV增加$1.5-3万</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5-3万</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Phantom-Product-Showcase-I2V.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Phantom — Product Showcase I2V（商品主体一致性视频生成）</h3>
+  <p class="sc-desc">输入 1-3 张商品参考图，生成商品保持外观一致性的动态展示视频——商品 Logo、纹理、颜色在视频全程不畸变。这解决了通用 I2V 模型的致命伤：生成视频时商品外观逐渐漂移（&quot;copy-paste&quot;信息泄露问题）。</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Text-to-Edit-Video-Ad.html" data-domain="20-AI视频生成" data-diff="">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Text-to-Edit — Video Ad Auto-Editing（MLLM广告自动剪辑）</h3>
+  <p class="sc-desc">运营提交&quot;把产品视频第 5-8 秒换成使用场景&quot;的需求，人工剪辑需 2 天、外包成本 $500+——Text-to-Edit 视频编辑将自然语言指令直接执行，从&quot;需求到成品&quot;缩短到 10 分钟，广告素材迭代成本降低 90%</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-TikTok-Algorithm-Content-Boost.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">TikTok Algorithm Content Boost — FYP 算法建模与内容传播速度优化</h3>
+  <p class="sc-desc">TikTok 视频完播率只有 35% 导致流量熔断、每条视频曝光不足 500——FYP 信号评分模型精确诊断卡点，完播率优化到 70% 后进入扩大测试池，曝光提升 20×</p>
+  <div class='sc-footer'><span class='sc-roi'>50-150 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Video-ROI-Attribution.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Video ROI Attribution — 短视频内容 GMV 归因与财务 ROI 量化</h3>
+  <p class="sc-desc">视频创作团队和 CFO 说不同语言——VEI 指数将完播率/互动率转化为归因 GMV 和净利润贡献，预算效率提升 40-60%，视频团队获得财务话语权</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Virbo-Multilingual-Avatar-UGC.html" data-domain="20-AI视频生成" data-diff="">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</h3>
+  <p class="sc-desc">月省 $3,000-5,000，年化 35-60 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>35-60 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Visual-Data-Collection.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Visual Data Collection — 电商图文视频数据采集与 AI 视频生成素材库构建</h3>
+  <p class="sc-desc">- 多模态异构性：图片（JPEG/PNG/WebP）+ 视频（MP4/MOV）+ 产品页截图</p>
+  <div class='sc-footer'><span class='sc-roi'>380 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

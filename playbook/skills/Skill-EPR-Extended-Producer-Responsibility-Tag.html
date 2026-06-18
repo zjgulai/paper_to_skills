@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>欧盟EPR扩大生产者责任标签体系 — EPR注册合规、包装标签与回收报告自动化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/24-标签工程.html">24-标签工程</a> / Skill-EPR-Extended-Producer-Responsibility-Tag</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>欧盟EPR扩大生产者责任标签体系 — EPR注册合规、包装标签与回收报告自动化</h1>
+<p class="muted">Skill-EPR-Extended-Producer-Responsibility-Tag · 24-标签工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>fraud_detection</span><span class='tag'>供应链与补货</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-supply-chain-intelligence.html'>供应链全链路智能化手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据架构师 / 供应链数字化负责人<span class='biz-ctx-secondary'> · CTO · 数据工程师 · 供应链团队</span></span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>多平台数据孤岛导致断货识别延迟8小时；标签覆盖率不足使AI决策触发率&lt;30%；想实现分析→行动自动闭环但不知从何下手</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多平台 SKU 编码混乱无法统一</span><span class='biz-pain-tag'>合规标签手工维护遗漏频繁</span><span class='biz-pain-tag'>预测模型有了但结果无法自动触发采购</span><span class='biz-pain-tag'>标签打了但没有质量监控</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>合规面临&quot;德国EPR不合规随时被罚款最高10万欧元&quot;——合规矩阵扫描从2周→10分钟，38个未注册SKU优先级自动排序</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>EPR（Extended Producer Responsibility，扩大生产者责任） 是欧盟强制要求：在EU市场销售产品的制造商/进口商必须为其产品包装的回收负责，并支付相应费用。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：DE市场EPR合规批量评估 - 现有120个SKU销往德国，人工核查EPR状态需要2周 - Tag扫描：`sku.epr.de_registered=False` 的SKU有38个（32%） - 行动优先级：按销量×EPR费率排序，优先注册高销量SKU - 注册成本：每个SKU约€200注册费，38个 = €7,600 - 不注册风险：每个违规SKU罚款可达€100,000</p><p>**场景B：EPR费用纳入P&amp;L预算** - 通过`sku.epr.annual_fee_estimate`Tag，自动计算全品类EPR年度成本 - 结果：年度EPR费用约€45,000，占EU GMV的1.2% - 财务建议：在定价模型中加入EPR成本（约每件€0.5-2）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：德国120个SKU合规评估从2周人工→自动扫描10分钟；避免违规罚款（每个SKU最高€100,000）；EPR费用纳入定价模型后，利润核算更准确（约占EU GMV的1-2%）</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（主要是EPR费率知识库建立，计算逻辑清晰）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（2025年EU强制执行，违规不是罚款而是直接下架，影响整个EU市场收入）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+欧盟 EPR 扩大生产者责任标签体系
+功能：EPR合规状态管理 / 费用计算 / 注册优先级排序 / 年度报告生成
+&quot;&quot;&quot;
+from dataclasses import dataclass, field
+from typing import Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# 各国EPR材料费率（€/kg）
+EPR_MATERIAL_RATES = {
+    &quot;DE&quot;: {&quot;纸板&quot;: 0.30, &quot;塑料&quot;: 1.20, &quot;玻璃&quot;: 0.10, &quot;金属&quot;: 0.40, &quot;混合&quot;: 0.80, &quot;泡棉&quot;: 0.90},
+    &quot;FR&quot;: {&quot;纸板&quot;: 0.25, &quot;塑料&quot;: 1.05, &quot;玻璃&quot;: 0.08, &quot;金属&quot;: 0.35, &quot;混合&quot;: 0.70, &quot;泡棉&quot;: 0.75},
+    &quot;AT&quot;: {&quot;纸板&quot;: 0.28, &quot;塑料&quot;: 1.15, &quot;玻璃&quot;: 0.09, &quot;金属&quot;: 0.38, &quot;混合&quot;: 0.75, &quot;泡棉&quot;: 0.85},
+}
+
+ADMIN_FEE_PER_SKU = {&quot;DE&quot;: 200, &quot;FR&quot;: 150, &quot;AT&quot;: 100}  # 年度固定注册/管理费 €
+
+
+@dataclass
+class PackagingSpec:
+    &quot;&quot;&quot;产品包装规格&quot;&quot;&quot;
+    sku_id: str
+    inner_box_material: str
+    inner_box_weight_g: float
+    outer_box_material: str
+    outer_box_weight_g: float
+    filler_material: str
+    filler_weight_g: float = 0.0
+
+
+@dataclass
+class EPRComplianceTag:
+    sku_id: str
+    market: str
+    registered: bool = False
+    registration_number: Optional[str] = None
+    packaging_weight_g: float = 0.0
+    primary_material: str = &quot;混合&quot;
+    fee_per_unit_eur: float = 0.0
+    annual_units_sold: int = 0
+    annual_fee_estimate_eur: float = 0.0
+    compliance_status: str = &quot;PENDING&quot;  # COMPLIANT / NON_COMPLIANT / PENDING
+    risk_level: str = &quot;HIGH&quot;           # HIGH / MEDIUM / LOW
+    days_to_deadline: int = 0
+
+
+class EPRTagEngine:
+
+    def __init__(self):
+        self.tags: dict = {}
+
+    def compute_epr_tag(self, packaging: PackagingSpec, market: str,
+                         annual_units: int, registered: bool = False,
+                         reg_number: str = None) -&gt; EPRComplianceTag:
+        rates = EPR_MATERIAL_RATES.get(market, EPR_MATERIAL_RATES[&quot;DE&quot;])
+        admin_fee = ADMIN_FEE_PER_SKU.get(market, 150)
+
+        # 计算包装总重量和费率</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2401.09823</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-EPR-Extended-Producer-Responsibility-Tag" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Green-Supply-Chain-Carbon-Footprint.html'>Skill-Green-Supply-Chain-Carbon-Footprint</a></li><li><a href='../skills/Skill-Multi-Market-Compliance-Matrix-Ontology.html'>Skill-Multi-Market-Compliance-Matrix-Ontology</a></li><li><a href='../skills/Skill-Regulatory-Change-Impact-Propagation.html'>Skill-Regulatory-Change-Impact-Propagation</a></li><li><a href='../skills/Skill-SKU-Level-Margin-Attribution-Ontology.html'>Skill-SKU-Level-Margin-Attribution-Ontology</a></li><li><a href='../skills/Skill-Supply-Chain-Total-Cost-TCO-Model.html'>Skill-Supply-Chain-Total-Cost-TCO-Model</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Green-Supply-Chain-Carbon-Footprint.html'>Skill-Green-Supply-Chain-Carbon-Footprint</a></li><li><a href='../skills/Skill-SKU-Level-Margin-Attribution-Ontology.html'>Skill-SKU-Level-Margin-Attribution-Ontology</a></li><li><a href='../skills/Skill-Supply-Chain-Total-Cost-TCO-Model.html'>Skill-Supply-Chain-Total-Cost-TCO-Model</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Green-Supply-Chain-Carbon-Footprint.html'>Skill-Green-Supply-Chain-Carbon-Footprint</a></li><li><a href='../skills/Skill-SKU-Level-Margin-Attribution-Ontology.html'>Skill-SKU-Level-Margin-Attribution-Ontology</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 多市场合规矩阵</a><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ EPR合规费用测算</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

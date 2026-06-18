@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>客诉供应链根因KPI与闭环治理 — 供应链原因导致客诉率/处理时效/预防闭环 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/04-供应链.html">04-供应链</a> / Skill-Customer-Complaint-Supply-Root-Cause-KPI</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>客诉供应链根因KPI与闭环治理 — 供应链原因导致客诉率/处理时效/预防闭环</h1>
+<p class="muted">Skill-Customer-Complaint-Supply-Root-Cause-KPI · 04-供应链</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>5万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>客服团队面临&quot;客诉只处理不预防反复救火&quot;——42%客诉来自供应链+8D闭环追踪，SC客诉率降至5‰以下年化节省15万元处理成本</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>陈凤霞书中特别强调：大多数电商客诉最终根因在供应链，但客服和供应链两个团队通常割裂，导致问题反复出现。本Skill建立&quot;客诉→供应链根因&quot;的归因闭环。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：吸奶器&quot;破损到货&quot;客诉根因分析 - 业务问题：某月吸奶器&quot;到货破损&quot;客诉突增（从0.8‰升至3.2‰），但客服团队只是退款，没有找供应链根因 - 数据要求：破损客诉记录 + 发货仓 + 物流商 + 包材批次 + 日期 - 预期产出： - 时间切点分析：10月5日后破损率突增 - 关联因素：10月4日切换到新包材供应商（成本降低5%） - 根因：新包材泡棉厚度不足（3mm→2mm），抗震性降低 - 行动：立即切回原包材，损失1万包材费 vs 减少破损客诉损失约15万元 - 业务价值：找到根因后当月破损率降至0.6‰，供应链改善产生10倍以上ROI</p><p>**场景B：年度客诉供应链占比分析（管理层汇报）** - **业务问题**：客服团队月均处理客诉500件，但管理层不知道有多少是供应链问题、可以系统性解决 - **数据要求**：全年客诉记录 + 分类标签 - **预期产出**： - 供应链原因客诉占总客诉42%（约210件/月） - 其中发货错误31%、质量问题28%、延迟发货25%、包装破损16% - 全部可通过供应链改善系统性解决（年化节省客服成本约6万元）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI预估</strong>：供应链客诉系统化闭环后，客诉数量减少50%，年化节省处理成本约10-15万元；更重要的是Amazon ODR指标改善，保护账号健康和Buy Box排名</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要客服和供应链两个团队的数据打通，跨部门协作是主要挑战）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（陈凤霞：&quot;客诉是供应链问题的信号灯，不管客诉只处理不分析=每次都在救火而非预防&quot;）</li><li><strong>评估依据</strong>：42%的客诉来自供应链（书中数据），全部可系统性解决；Amazon的ODR指标将供应链问题直接与账号健康挂钩</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+客诉供应链根因 KPI 与闭环治理
+功能：客诉归因分类 / SC客诉率 / 根因分析 / 闭环追踪 / 重复率监控
+输入：客诉记录（含分类标签）
+输出：客诉KPI报告 + 根因分析 + 8D闭环状态 + 预防建议
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+def generate_complaint_data(n=500, seed=42):
+    &quot;&quot;&quot;生成客诉记录数据&quot;&quot;&quot;
+    np.random.seed(seed)
+    base_date = datetime(2025, 1, 1)
+    
+    # 客诉原因分类（供应链 vs 非供应链）
+    sc_reasons = {
+        &#x27;到货破损&#x27;: 0.16,
+        &#x27;发货错误(错SKU/数量)&#x27;: 0.14,
+        &#x27;发货延迟&#x27;: 0.12,
+        &#x27;质量问题&#x27;: 0.12,
+        &#x27;缺货取消&#x27;: 0.08,
+    }
+    non_sc_reasons = {
+        &#x27;价格问题&#x27;: 0.12,
+        &#x27;产品使用疑问&#x27;: 0.10,
+        &#x27;退款申请&#x27;: 0.08,
+        &#x27;其他&#x27;: 0.08,
+    }
+    
+    all_reasons = {**sc_reasons, **non_sc_reasons}
+    reason_list = list(all_reasons.keys())
+    reason_probs = list(all_reasons.values())
+    
+    sc_reason_set = set(sc_reasons.keys())
+    
+    records = []
+    for i in range(n):
+        order_date = base_date + timedelta(days=np.random.randint(0, 365))
+        reason = np.random.choice(reason_list, p=reason_probs)
+        is_sc = reason in sc_reason_set
+        
+        # 处理时效（小时）
+        if reason in [&#x27;发货错误(错SKU/数量)&#x27;, &#x27;到货破损&#x27;]:
+            resolution_hours = np.random.gamma(2, 6)  # 均值12小时
+        elif reason == &#x27;质量问题&#x27;:
+            resolution_hours = np.random.gamma(3, 10)  # 均值30小时
+        else:
+            resolution_hours = np.random.gamma(2, 3)  # 均值6小时
+        
+        # 是否有根因分析（闭环）
+        has_rca = is_sc and np.random.random() &lt; 0.75  # 75%有根因分析
+        # 是否重复（同类问题再次出现）
+        is_repeat = np.random.random() &lt; 0.08  # 8%重复率（偏高）
+        
+        records.append({
+            &#x27;complaint_id&#x27;: f&#x27;CPL-{i+1:05d}&#x27;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2310.02847</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Customer-Complaint-Supply-Root-Cause-KPI" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-B2C-Delivery-Timeliness-Experience-KPI.html'>Skill-B2C-Delivery-Timeliness-Experience-KPI</a></li><li><a href='../skills/Skill-Order-Accuracy-Exception-Rate-KPI.html'>Skill-Order-Accuracy-Exception-Rate-KPI</a></li><li><a href='../skills/Skill-Supplier-Delivery-Quality-Rate-KPI.html'>Skill-Supplier-Delivery-Quality-Rate-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><a href='../skills/Skill-Warehouse-Inbound-Quality-Accuracy-KPI.html'>Skill-Warehouse-Inbound-Quality-Accuracy-KPI</a></li><li><a href='../skills/Skill-Warehouse-Outbound-Fulfillment-SLA.html'>Skill-Warehouse-Outbound-Fulfillment-SLA</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-B2C-Delivery-Timeliness-Experience-KPI.html'>Skill-B2C-Delivery-Timeliness-Experience-KPI</a></li><li><a href='../skills/Skill-Order-Accuracy-Exception-Rate-KPI.html'>Skill-Order-Accuracy-Exception-Rate-KPI</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><a href='../skills/Skill-Warehouse-Inbound-Quality-Accuracy-KPI.html'>Skill-Warehouse-Inbound-Quality-Accuracy-KPI</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><a href='../skills/Skill-Warehouse-Inbound-Quality-Accuracy-KPI.html'>Skill-Warehouse-Inbound-Quality-Accuracy-KPI</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

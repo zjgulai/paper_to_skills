@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ad Fraud IVT Detection — 行为图 + GNN 无效流量实时检测 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/19-风控反欺诈.html">19-风控反欺诈</a> / Skill-Ad-Fraud-IVT-Detection</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Ad Fraud IVT Detection — 行为图 + GNN 无效流量实时检测</h1>
+<p class="muted">Skill-Ad-Fraud-IVT-Detection · 19-风控反欺诈</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-risk-defense.html'>跨境风险防御作战室</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 合规负责人<span class='biz-ctx-secondary'> · 品牌负责人 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 刷评检测与举报 · TikTok Shop 刷单识别 · 竞品 Listing 攻击溯源</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>竞品刷单刷好评，自己的 BSR 和评分被打压；账号/ASIN 被恶意投诉删除；店铺有异常订单不确定是真实买家</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>识别过滤刷评/恶意竞争行为，账号风险提前预警，维权有数据证据，降低封号风险</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品刷评打压我们</span><span class='biz-pain-tag'>我们的好评被恶意举报删除</span><span class='biz-pain-tag'>不知道差评是真实的还是恶意的</span><span class='biz-pain-tag'>如何证明竞品恶意行为</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴品牌 TikTok/Google 广告月均 30 万投放中 15-25% 为无效点击（Bot/竞品刷量），ROAS 被高估 30%——行为图 WTG + DGCNN 将 IVT 识别率提升至 95%+，年化节省无效广告支出 5-15 万元，并为平台申诉提供量化证据</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思路：传统 IVT 检测依赖 IP 黑名单和 UserAgent 特征，Bot 可轻易伪造；BOTracle 转而对用户会话行为序列建图，捕捉&quot;鼠标轨迹是否太规律、页面停留时间是否异常短、点击深度是否缺乏探索性&quot;等难以伪造的行为模式。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：TikTok Ads 竞品刷量识别 - 业务问题：母婴品牌（吸奶器/婴儿推车）TikTok 投流月均 30 万，点击后转化率异常低（&lt; 0.3%），疑似竞品雇佣点击农场刷量消耗预算 - 数据要求：TikTok 广告点击日志（click_id, session_id, timestamp, page_sequence, dwell_time_ms, scroll_events） - 检测逻辑：会话中位停留 &lt; 800ms、点击间隔 CV &lt; 0.1、页面深度 ≤ 1 → 标记为 IVT - 预期产出：识别 IVT 率 15-25%，自动向平台提交无效点击申诉（部分平台支持退款） - 业务</p><p>**场景B：Google Ads 搜索欺诈保护** - 业务问题：婴儿湿巾/纸尿裤关键词竞价激烈（CPC $2-5），疑似竞品批量点击消耗日预算 - 数据要求：Google Ads 点击日志 + GA4 会话行为序列（page_path, session_duration, bounce, engagement_time） - 检测逻辑：构建用户访问图，计算图级聚类系数 + 度分布异常度，融合 Isolation Forest 打分 - 预期产出：每天屏蔽 200-500 个异常 IP 段，日均节省无效点击费 1,500-3,000 元 - 业务价值：年化节省 55-110 万元投放预算浪费，</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月均 30 万广告预算中 15-25% 为 IVT（4.5-7.5 万元/月），年化节省 5-15 万元无效消耗；ROAS 真实值比平台报告值高 20-35%，指导预算重新分配</li><li><strong>额外价值</strong>：为 TikTok/Google 提交无效点击申诉提供量化证据，历史申诉成功率 40-70%，可额外追回 1-3 万元/月</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要广告点击日志访问权限，Bot 特征需周期性更新）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（直接影响广告投放 ROI，止损效果立竿见影）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Ad Fraud IVT Detection — 行为图 + 统计异常检测
+基于 BOTracle (arXiv:2412.02266) + GCD-GNN (arXiv:2407.17333) 核心思想
+使用 numpy + collections，无需额外依赖
+&quot;&quot;&quot;
+import numpy as np
+from collections import defaultdict
+import random
+
+random.seed(42)
+np.random.seed(42)
+
+
+# ─────────────────────────────────────────────
+# 1. 数据生成：模拟广告点击会话（真实用户 vs Bot）
+# ─────────────────────────────────────────────
+
+def generate_session_data(n_sessions=100):
+    &quot;&quot;&quot;
+    生成模拟广告点击会话数据
+    返回：list of dict，每条为一个会话
+    &quot;&quot;&quot;
+    sessions = []
+    for i in range(n_sessions):
+        is_bot = i &lt; 30  # 前30条为Bot（30% IVT率）
+
+        if is_bot:
+            # Bot特征：均匀间隔、极短停留、浅页面深度
+            n_clicks = random.randint(2, 4)
+            intervals_ms = [random.uniform(80, 120) for _ in range(n_clicks - 1)]  # 过于规律
+            dwell_times_ms = [random.uniform(50, 300) for _ in range(n_clicks)]      # 极短停留
+            page_depth = random.randint(1, 2)
+            scroll_events = random.randint(0, 2)  # 几乎不滚动
+            engagement_score = random.uniform(0, 0.2)
+        else:
+            # 真实用户：随机间隔、正常停留、有探索行为
+            n_clicks = random.randint(3, 12)
+            intervals_ms = [random.uniform(500, 15000) for _ in range(n_clicks - 1)]
+            dwell_times_ms = [random.uniform(800, 60000) for _ in range(n_clicks)]
+            page_depth = random.randint(2, 8)
+            scroll_events = random.randint(3, 30)
+            engagement_score = random.uniform(0.3, 1.0)
+
+        sessions.append({
+            &#x27;session_id&#x27;: f&#x27;sess_{i:04d}&#x27;,
+            &#x27;is_bot_truth&#x27;: is_bot,
+            &#x27;n_clicks&#x27;: n_clicks,
+            &#x27;intervals_ms&#x27;: intervals_ms,
+            &#x27;dwell_times_ms&#x27;: dwell_times_ms,
+            &#x27;page_depth&#x27;: page_depth,
+            &#x27;scroll_events&#x27;: scroll_events,
+            &#x27;engagement_score&#x27;: engagement_score,
+        })
+    return sessions
+
+
+# ─────────────────────────────────────────────
+# 2. 行为特征提取（BOTracle 核心特征）
+# ─────────────────────────────────────────────
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.17333</li><li>2412.02266</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Ad-Fraud-IVT-Detection" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-PromoGuardian-Promotion-Fraud-GNN.html'>Skill-PromoGuardian-Promotion-Fraud-GNN</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Transaction-Anomaly-Detection.html'>Skill-Transaction-Anomaly-Detection</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><a href='../skills/Skill-Transaction-Anomaly-Detection.html'>Skill-Transaction-Anomaly-Detection</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

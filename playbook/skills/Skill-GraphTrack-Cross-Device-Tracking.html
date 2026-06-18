@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>图基跨设备追踪 - 无监督IP-Domain图谱用户拼接 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-GraphTrack-Cross-Device-Tracking</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>图基跨设备追踪 - 无监督IP-Domain图谱用户拼接</h1>
+<p class="muted">Skill-GraphTrack-Cross-Device-Tracking · 13-广告分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>广告与投放</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>600-1200 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴用户在 TikTok 看到吸奶器短视频种草，切换到 Safari 搜索品牌名进独立站下单</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨设备追踪的本质是：在没有用户级关联ID的情况下，用行为相似性判断&quot;两台设备属于同一个人&quot;。GraphTrack 将这一问题建模为异构图上的节点相似度计算：把设备的 IP 访问记录构建成「IPDevice 二部图」，把域名访问记录构建成「DomainDevice 二部图」，然后用随机游走重启（RWwR / Personalized PageRank）在图上扩散相似度信号，最终输出设备对的匹配分数。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：母婴用户在 TikTok 看到吸奶器短视频种草，切换到 Safari 搜索品牌名进独立站下单。现有追踪完全断裂——TikTok 报表显示零转化，独立站显示&quot;直接访问&quot;来源。需要无监督匹配这两个设备的浏览记录，恢复 TikTok 的真实转化贡献。</p><p>| 字段 | 类型 | 示例 | |------|------|------| | `device_id` | str | &quot;device_TikTok_iPhone_A001&quot; / &quot;device_Safari_Mac_B001&quot; | | `ip_address` | str | &quot;192.168.1.10&quot;（家庭 WiFi，两设备共享） | | `domain` | str | &quot;momcozy.com&quot;, &quot;tiktok.com&quot;, &quot;google.com&quot; | | `visit_count` | int | 3（该设备访问该IP/域名的次数） | | `timestamp_range`</p><p>预期产出： - 设备对匹配分数矩阵：`match_score(TikTok设备, 独立站设备) &gt; 0.6` → 判定为同一用户 - 跨端归因链路：TikTok 曝光设备 → 独立站转化设备 的用户级关联表</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>600-1200 万元</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+GraphTrack: 无监督图基跨设备追踪
+论文: arXiv:2203.06833 (AsiaCCS 2022)
+Binghui Wang et al.
+
+核心算法:
+1. 构建 IP-Device 二部图 + Domain-Device 二部图
+2. 用 Personalized PageRank (Random Walk with Restart) 计算设备间相似度
+3. 双图融合 + 对称匹配 → 输出设备对匹配分数
+4. 无监督：无需任何标注设备对
+
+依赖: pip install numpy scipy networkx pandas
+&quot;&quot;&quot;
+from __future__ import annotations
+
+import numpy as np
+import pandas as pd
+import networkx as nx
+from dataclasses import dataclass, field
+from typing import Dict, List, Tuple, Optional
+from scipy import sparse
+
+
+# ─────────────────────────────────────────────
+# 数据结构
+# ─────────────────────────────────────────────
+
+@dataclass
+class BrowsingRecord:
+    &quot;&quot;&quot;设备浏览记录（IP 或 Domain 维度均通用）&quot;&quot;&quot;
+    device_id: str
+    feature: str       # IP 地址 或 域名
+    visit_count: int = 1
+
+
+# ─────────────────────────────────────────────
+# 图构建
+# ─────────────────────────────────────────────
+
+class DeviceGraph:
+    &quot;&quot;&quot;
+    构建 Device-Feature 二部图（Feature = IP 或 Domain）
+    节点分两类: device_* 和 feature_*
+    边权重 = 访问次数（频率加权）
+    &quot;&quot;&quot;
+
+    def __init__(self, records: List[BrowsingRecord]):
+        self.G = nx.Graph()
+        self.device_nodes: List[str] = []
+        self.feature_nodes: List[str] = []
+        self._build(records)
+
+    def _build(self, records: List[BrowsingRecord]):
+        device_set = set()
+        feature_set = set()
+
+        for r in records:
+            d_node = f&quot;device::{r.device_id}&quot;
+            f_node = f&quot;feature::{r.feature}&quot;
+            device_set.add(d_node)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2203.06833</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-GraphTrack-Cross-Device-Tracking" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-HGNN-Cross-Device-Matching.html'>Skill-HGNN-Cross-Device-Matching</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><span class='muted'>相关</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-HGNN-Cross-Device-Matching.html'>Skill-HGNN-Cross-Device-Matching</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><span class='muted'>相关</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-PVM-Attribution-Window-Harmonization.html'>Skill-PVM-Attribution-Window-Harmonization</a></li><li><span class='muted'>相关</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAS VOC Multi-Agent Analysis — 多智能体用户声音分析：协作挖掘产品迭代洞察 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-MAS-VOC-Multi-Agent-Analysis</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>MAS VOC Multi-Agent Analysis — 多智能体用户声音分析：协作挖掘产品迭代洞察</h1>
+<p class="muted">Skill-MAS-VOC-Multi-Agent-Analysis · 10-MAS</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥15-50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>单LLM分析3000条评论只给出「改进噪音加强吸力」的泛泛结论无法指导具体产品决策——多智能体（产品经理/工程师/营销/UX）并行分析辩论共识，精准输出可执行改进建议并量化预期ROI年化产品迭代价值15-50万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>单 LLM 分析 vs 多智能体辩论分析：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：每季度收集 3000 条评论，产品团队需要确定下季度产品迭代方向。用单个 LLM 分析得到的建议经常是&quot;改进噪音、加强吸力、增加便携性&quot;这种泛泛结论，无法指导具体产品决策。</p><p>数据要求： - 季度评论全量（含文本/评分/Verified Purchase） - 竞品评论对比（Momcozy/Medela） - 产品路线图约束（本季度只能做1个改进）</p><p>预期产出： - 多视角分析报告（产品/工程/营销三个视角的不同结论） - 辩论记录（关键争议点和解决方式） - 最终执行建议（具体可操作，含优先级和预期 ROI）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>产品改进决策质量提升（多视角辩论 vs 单一 LLM）：正确决策率提升 30-50%</li><li>分析效率：3 天人工 → 30 分钟 AI 辅助，节省运营人力 ¥3-10 万/年</li><li>精准迭代减少无效产品改动：每次改对 vs 改错差 ¥10-40 万 GMV 影响</li><li><strong>年化综合 ROI：¥15-50 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（AutoGen/CrewAI 等框架可直接用；需要 LLM API；角色设计约 1-2 周；完整系统约 3-4 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+MAS VOC Multi-Agent Analysis
+多智能体用户声音分析：协作辩论驱动产品改进洞察
+&quot;&quot;&quot;
+from dataclasses import dataclass
+from typing import Optional
+import re
+
+
+@dataclass
+class AgentRole:
+    name: str
+    persona: str     # 角色定位
+    focus: str       # 分析重点
+    bias: str        # 典型偏见（用于制造有益争论）
+
+
+# 产品改进分析的多智能体角色
+ANALYSIS_AGENTS = [
+    AgentRole(&#x27;PM-Agent&#x27;, &#x27;产品经理&#x27;, &#x27;用户需求优先级和市场机会&#x27;, &#x27;倾向于用户声音，可能忽视技术可行性&#x27;),
+    AgentRole(&#x27;ENG-Agent&#x27;, &#x27;工程师&#x27;, &#x27;技术可行性和实现成本&#x27;, &#x27;倾向于技术复杂度估算，可能低估用户价值&#x27;),
+    AgentRole(&#x27;MKT-Agent&#x27;, &#x27;营销经理&#x27;, &#x27;竞品对比和品牌定位&#x27;, &#x27;倾向于市场份额，可能过度强调竞品&#x27;),
+    AgentRole(&#x27;UX-Agent&#x27;, &#x27;用户研究员&#x27;, &#x27;使用场景和用户行为模式&#x27;, &#x27;倾向于边缘用户需求，可能忽视主流用户&#x27;),
+]
+
+
+def analyze_from_perspective(reviews: list, agent: AgentRole, aspect_data: dict) -&gt; dict:
+    &quot;&quot;&quot;
+    模拟特定角色视角的分析（生产中替换为 LLM API 调用）
+    &quot;&quot;&quot;
+    # 统计总体情感
+    pos_count = sum(1 for r in reviews if r.get(&#x27;rating&#x27;, 3) &gt;= 4)
+    neg_count = len(reviews) - pos_count
+    pos_ratio = pos_count / max(len(reviews), 1)
+
+    # 每个角色的分析逻辑不同
+    insights = {}
+
+    if agent.name == &#x27;PM-Agent&#x27;:
+        # PM 关注：哪个问题影响最多用户？
+        top_issue = max(aspect_data.items(), key=lambda x: x[1][&#x27;negative&#x27;], default=(&#x27;unknown&#x27;, {}))
+        insights = {
+            &#x27;priority_issue&#x27;: top_issue[0],
+            &#x27;affected_users&#x27;: f&#x27;{top_issue[1].get(&quot;negative&quot;, 0) / max(len(reviews), 1):.0%}&#x27;,
+            &#x27;recommendation&#x27;: f&#x27;优先解决 {top_issue[0]} 问题（影响最多用户）&#x27;,
+            &#x27;confidence&#x27;: &#x27;high&#x27;,
+        }
+
+    elif agent.name == &#x27;ENG-Agent&#x27;:
+        # 工程师关注：哪个问题技术上最容易修复？
+        easy_fix = &#x27;price&#x27;  # 模拟：价格策略比降噪更容易改
+        insights = {
+            &#x27;easiest_fix&#x27;: easy_fix,
+            &#x27;estimated_effort&#x27;: &#x27;低（定价策略调整，无需工程改动）&#x27;,
+            &#x27;recommendation&#x27;: f&#x27;先解决 {easy_fix} 问题（ROI最高，工程成本最低）&#x27;,
+            &#x27;confidence&#x27;: &#x27;medium&#x27;,
+        }
+
+    elif agent.name == &#x27;MKT-Agent&#x27;:
+        # 营销关注：和竞品相比差距最大的是什么？</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2409.14832</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MAS-VOC-Multi-Agent-Analysis" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Listing-Compliance-Auto-Repair]]（组合</span></li><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-AutoGen-Multi-Agent-Conversation.html'>Skill-AutoGen-Multi-Agent-Conversation</a></li><li><a href='../skills/Skill-Listing-Compliance-Auto-Repair.html'>Skill-Listing-Compliance-Auto-Repair</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><a href='../skills/Skill-VOC-Supply-Chain-Signal-Bridge.html'>Skill-VOC-Supply-Chain-Signal-Bridge</a></li><li><span class='muted'>VOC-Supply-Chain-Signal-Bridge]]（组合</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Listing-Compliance-Auto-Repair]]（组合</span></li><li><a href='../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html'>Skill-AGRS-Aspect-Guided-Review-Summarization</a></li><li><a href='../skills/Skill-AutoGen-Multi-Agent-Conversation.html'>Skill-AutoGen-Multi-Agent-Conversation</a></li><li><a href='../skills/Skill-Listing-Compliance-Auto-Repair.html'>Skill-Listing-Compliance-Auto-Repair</a></li><li><a href='../skills/Skill-VOC-Supply-Chain-Signal-Bridge.html'>Skill-VOC-Supply-Chain-Signal-Bridge</a></li><li><span class='muted'>VOC-Supply-Chain-Signal-Bridge]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Listing-Compliance-Auto-Repair]]（组合</span></li><li><a href='../skills/Skill-Listing-Compliance-Auto-Repair.html'>Skill-Listing-Compliance-Auto-Repair</a></li><li><a href='../skills/Skill-VOC-Supply-Chain-Signal-Bridge.html'>Skill-VOC-Supply-Chain-Signal-Bridge</a></li><li><span class='muted'>VOC-Supply-Chain-Signal-Bridge]]（组合</span></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

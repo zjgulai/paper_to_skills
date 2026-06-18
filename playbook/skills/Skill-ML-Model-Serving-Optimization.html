@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ML Model Serving Optimization — 知识蒸馏 + 量化 + 异步推理的模型生产化部署 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-ML-Model-Serving-Optimization</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>ML Model Serving Optimization — 知识蒸馏 + 量化 + 异步推理的模型生产化部署</h1>
+<p class="muted">Skill-ML-Model-Serving-Optimization · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-60 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴跨境团队训练了一个精度很好的推荐排序模型，但线上推理延迟 800ms 导致移动端用户流失率提升 15%——量化（NVFP4 6.7x加速）+蒸馏（大模型知识迁移小模型）+异步批处理三联优化将推理延迟从 800ms 压缩到 120ms，年化减少转化损失 30 万元、GPU 成本节省 60-70%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>模型生产化部署的核心矛盾是训练精度 vs 推理效率——训练阶段追求更大的模型、更复杂的特征，但推理阶段要求毫秒级响应、低 GPU 成本。三联优化组合是业界共识解法：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：Amazon/TikTok 母婴选品推荐排序模型（XGBoost + BERT 特征）推理延迟 600-800ms，移动端用户等待超过 500ms 流失率提升 15%，且 GPU 推理成本每月 3-5 万元 - 数据要求：已训练的排序模型权重文件、历史推理延迟日志、用户行为 A/B 测试框架（最少 1000 次/天曝光） - 实施方案： 1. INT8/INT4 量化 BERT 文本编码模块（最大延迟贡献者），保留 XGBoost 不量化 2. 知识蒸馏：用大模型生成的软标签重训一个 3 层 MLP 替代 BERT 特征提取 3. 异步预计算：用户进入商品详情页时异步触发推荐计算</p><p>场景B：广告实时竞价（RTB）LLM 评分加速</p><p>- 业务问题：TikTok 广告投放使用 LLM 进行素材质量评分（500ms+），实时竞价窗口仅 50ms，LLM 无法参与实时链路 - 数据要求：历史广告素材 + LLM 评分标签（10万+样本），在线竞价日志 - 实施方案：用 LLM 软标签蒸馏训练轻量评分器（5ms 延迟），LLM 异步作为&quot;慢路径&quot;持续更新评分缓存 - 预期产出：实时链路延迟达标（&lt;50ms），LLM 知识覆盖率 85%+ - 业务价值：RTB 链路 LLM 能力注入，预计 CTR 提升 8-15%，月增 GMV 5-20 万元</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：推理延迟 800ms → 120ms（降低 85%），移动端流失率下降 10-12%，年化转化损失减少 <strong>20-60 万元</strong>；GPU 推理成本节省 60-70%，月节省 <strong>2-4 万元</strong></li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（量化工具链成熟，蒸馏需要 10 万+标注样本，A/B 框架需要工程支持）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（延迟是电商 AI 落地最大阻塞，解锁后所有模型均可受益）</li><li><strong>适用阶段</strong>：已有排序/推荐模型且线上延迟 &gt; 300ms 时强烈推荐</li><li><strong>参考依据</strong>：YouTube 十亿用户推荐系统（LLM Personas, 2026）；NVIDIA ReSET NVFP4 量化（2026），2.5x kernel 加速，2x 端到端加速</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+ML Model Serving Optimization — 量化 + 蒸馏 + 异步推理模拟
+场景：母婴推荐排序服务延迟优化
+仅使用 numpy，模拟推理延迟和吞吐
+&quot;&quot;&quot;
+
+import numpy as np
+import time
+from typing import Tuple, Dict, List
+
+
+# ============================================================
+# 模块1：量化效果模拟（FP32 / INT8 / INT4）
+# ============================================================
+
+class QuantizationSimulator:
+    &quot;&quot;&quot;模拟不同量化精度下的延迟、内存、精度权衡&quot;&quot;&quot;
+
+    CONFIGS = {
+        &quot;FP32&quot;: {&quot;bits&quot;: 32, &quot;latency_factor&quot;: 1.0, &quot;size_factor&quot;: 1.0, &quot;accuracy_drop&quot;: 0.0},
+        &quot;INT8&quot;: {&quot;bits&quot;: 8, &quot;latency_factor&quot;: 0.45, &quot;size_factor&quot;: 0.25, &quot;accuracy_drop&quot;: 0.005},
+        &quot;INT4&quot;: {&quot;bits&quot;: 4, &quot;latency_factor&quot;: 0.30, &quot;size_factor&quot;: 0.125, &quot;accuracy_drop&quot;: 0.018},
+        &quot;NVFP4&quot;: {&quot;bits&quot;: 4, &quot;latency_factor&quot;: 0.15, &quot;size_factor&quot;: 0.125, &quot;accuracy_drop&quot;: 0.010},
+    }
+
+    def __init__(self, base_latency_ms: float = 800.0, base_model_size_mb: float = 2048.0,
+                 base_accuracy: float = 0.875):
+        self.base_latency = base_latency_ms
+        self.base_size = base_model_size_mb
+        self.base_accuracy = base_accuracy
+
+    def evaluate(self, precision: str) -&gt; Dict:
+        cfg = self.CONFIGS[precision]
+        latency = self.base_latency * cfg[&quot;latency_factor&quot;]
+        size = self.base_size * cfg[&quot;size_factor&quot;]
+        accuracy = self.base_accuracy - cfg[&quot;accuracy_drop&quot;]
+        throughput_qps = 1000.0 / latency * 8  # 8并发
+        return {
+            &quot;precision&quot;: precision,
+            &quot;latency_ms&quot;: round(latency, 1),
+            &quot;model_size_mb&quot;: round(size, 1),
+            &quot;accuracy&quot;: round(accuracy, 4),
+            &quot;throughput_qps&quot;: round(throughput_qps, 1),
+        }
+
+    def compare_all(self) -&gt; List[Dict]:
+        return [self.evaluate(p) for p in self.CONFIGS]
+
+
+# ============================================================
+# 模块2：知识蒸馏模拟（Teacher→Student）
+# ============================================================
+
+class DistillationSimulator:
+    &quot;&quot;&quot;模拟知识蒸馏过程：大模型软标签训练轻量学生模型&quot;&quot;&quot;
+
+    def __init__(self, n_samples: int = 10000, n_features: int = 128,
+                 n_classes: int = 10, seed: int = 42):
+        np.random.seed(seed)
+        self.n_samples = n_samples</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2606.12198</li><li>2606.12487</li><li>2606.13233</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-ML-Model-Serving-Optimization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><a href='../skills/Skill-NLP-Copy-AB-Test-Optimizer.html'>Skill-NLP-Copy-AB-Test-Optimizer</a></li><li><a href='../skills/Skill-RTB-Realtime-Bidding-Optimization.html'>Skill-RTB-Realtime-Bidding-Optimization</a></li><li><a href='../skills/Skill-Realtime-Feature-Collection.html'>Skill-Realtime-Feature-Collection</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-NLP-Copy-AB-Test-Optimizer.html'>Skill-NLP-Copy-AB-Test-Optimizer</a></li><li><a href='../skills/Skill-RTB-Realtime-Bidding-Optimization.html'>Skill-RTB-Realtime-Bidding-Optimization</a></li><li><a href='../skills/Skill-Realtime-Feature-Collection.html'>Skill-Realtime-Feature-Collection</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-NLP-Copy-AB-Test-Optimizer.html'>Skill-NLP-Copy-AB-Test-Optimizer</a></li><li><a href='../skills/Skill-RTB-Realtime-Bidding-Optimization.html'>Skill-RTB-Realtime-Bidding-Optimization</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

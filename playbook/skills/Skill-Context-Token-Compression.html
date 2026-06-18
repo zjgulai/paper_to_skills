@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>上下文Token压缩 — Summarizer Agent语义保真压缩与成本效益优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-Context-Token-Compression</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>上下文Token压缩 — Summarizer Agent语义保真压缩与成本效益优化</h1>
+<p class="muted">Skill-Context-Token-Compression · 10-MAS</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>每次会话$0.18→$0.06（节省67%）</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>多轮MAS会话到第15轮就触发上下文窗口上限被迫截断关键信息——Summarizer Agent混合压缩将会话可持续轮次从15轮提升至40+轮，每次会话Token成本降低67%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心洞察（Rothman上下文压缩架构）：在长链MAS中，上下文窗口是稀缺资源。随着对话轮次增加，历史消息不断累积，很快就会达到LLM上下文窗口上限（GPT4o: 128K tokens）。传统做法是截断（丢失关键信息）或滚动窗口（遗忘重要历史），都不理想。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：运营团队与MAS进行多轮选品研究对话（通常20-30轮），到第15轮时Token预算耗尽，系统要么截断历史（丢失早期竞品数据）要么报错 - Summarizer Agent方案： 1. 每当上下文超过6000 tokens，自动触发Summarizer Agent 2. 压缩策略：竞品数据（抽取式保留数字），分析过程（抽象式摘要），结论（抽取式保留） 3. 保留引用链：所有doc_id完整保留（不压缩引用元数据） 4. 压缩比：8000 tokens → 2200 tokens（压缩率72.5%） - 预期产出： - 会话可持续轮次从15轮→40+轮（不触发上下文上限） - GP</p><p>场景B：大规模市场报告生成的Token成本优化</p><p>- **业务问题**：生成一份50页市场报告需要处理大量中间数据（Research Agent产出3000 tokens），在传给Report Agent时会触发大量Token消耗，每份报告成本$0.85 - **方案**：在Research→Report的Agent间插入Summarizer，将Research输出压缩至800 tokens（关键数字+结论保留），Report Agent生成质量不变但成本降至$0.24/份 - **年化节省**：生成500份报告/年，节省$305，系统成本$2000，24个月ROI=+52%（加上时效提升的间接价值则ROI更高）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月500次会话的MAS系统，混合压缩使Token成本降低70%；以GPT-4o价格估算，月节省约$50-200（取决于上下文长度）；更重要的是使会话可持续轮次从15轮→40+轮，大幅提升复杂任务完成率；系统建设成本$2万，ROI≈500%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（抽取式压缩实现简单；抽象式压缩需要调用LLM进行摘要（额外API成本）；混合策略需要内容分类器）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（任何多轮MAS系统必然面临上下文窗口限制，这是不可回避的工程挑战；Rothman专门用Ch6讲这个主题）</li><li><strong>适用规模</strong>：多轮对话&gt;10轮的MAS系统，或需要处理大量文档的研究型Agent</li><li><strong>数据依赖</strong>：无需外部数据；需要历史会话数据来校准压缩策略和保真度阈值</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：4 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+上下文Token压缩系统 — Summarizer Agent
+功能：三种压缩策略 + 语义保真度评估 + 成本追踪 + 玻璃盒可审计
+基于 Denis Rothman《Context Engineering for Multi-Agent Systems》Ch6
+&quot;&quot;&quot;
+import re
+import math
+import json
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Tuple
+from enum import Enum
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class CompressionStrategy(Enum):
+    EXTRACTIVE = &quot;extractive&quot;
+    ABSTRACTIVE = &quot;abstractive&quot;
+    HYBRID = &quot;hybrid&quot;
+
+
+@dataclass
+class ContentSegment:
+    &quot;&quot;&quot;上下文内容片段（带类型标注）&quot;&quot;&quot;
+    content: str
+    segment_type: str       # &#x27;fact&#x27;, &#x27;reasoning&#x27;, &#x27;conclusion&#x27;, &#x27;citation&#x27;, &#x27;constraint&#x27;
+    importance: float       # 0-1 重要性评分
+    citations: List[str] = field(default_factory=list)  # 关联的引用ID
+
+
+@dataclass
+class CompressionResult:
+    &quot;&quot;&quot;压缩结果&quot;&quot;&quot;
+    original_tokens: int
+    compressed_tokens: int
+    compressed_content: str
+    compression_ratio: float
+    fidelity_score: float
+    strategy_used: str
+    citation_integrity: float   # 引用完整性（0-1）
+    audit_trail: List[Dict]     # 玻璃盒审计追踪
+    cost_saved_usd: float
+
+
+class TokenCounter:
+    &quot;&quot;&quot;Token计数器（简化：4字≈1token）&quot;&quot;&quot;
+
+    @staticmethod
+    def count(text: str) -&gt; int:
+        return max(len(text) // 4, 1)
+
+    @staticmethod
+    def estimate_cost(tokens: int, model: str = &#x27;gpt-4o&#x27;) -&gt; float:
+        prices = {
+            &#x27;gpt-4o&#x27;: 0.000005,     # $5/M input tokens
+            &#x27;gpt-4o-mini&#x27;: 0.0000002,
+        }
+        return tokens * prices.get(model, 0.000005)
+
+</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Context-Token-Compression" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Agent-Memory-Learning.html'>Skill-Agent-Memory-Learning</a></li><li><a href='../skills/Skill-Context-Engine-Architecture.html'>Skill-Context-Engine-Architecture</a></li><li><a href='../skills/Skill-Domain-Agnostic-Context-Engine.html'>Skill-Domain-Agnostic-Context-Engine</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><a href='../skills/Skill-Glass-Box-MAS-Observability.html'>Skill-Glass-Box-MAS-Observability</a></li><li><a href='../skills/Skill-Policy-Driven-Meta-Controller.html'>Skill-Policy-Driven-Meta-Controller</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Domain-Agnostic-Context-Engine.html'>Skill-Domain-Agnostic-Context-Engine</a></li><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><a href='../skills/Skill-Glass-Box-MAS-Observability.html'>Skill-Glass-Box-MAS-Observability</a></li><li><a href='../skills/Skill-Policy-Driven-Meta-Controller.html'>Skill-Policy-Driven-Meta-Controller</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Dual-RAG-Context-Engine.html'>Skill-Dual-RAG-Context-Engine</a></li><li><a href='../skills/Skill-Policy-Driven-Meta-Controller.html'>Skill-Policy-Driven-Meta-Controller</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

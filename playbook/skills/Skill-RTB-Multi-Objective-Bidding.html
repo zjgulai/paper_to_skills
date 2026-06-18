@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RTB Multi-Objective Bidding — 实时竞价多目标优化：广告出价的帕累托前沿策略 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-RTB-Multi-Objective-Bidding</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>RTB Multi-Objective Bidding — 实时竞价多目标优化：广告出价的帕累托前沿策略</h1>
+<p class="muted">Skill-RTB-Multi-Objective-Bidding · 15-营销投放分析</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>¥20-60 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>黑五期间单一ROAS目标限制出价导致曝光量不足错失旺季增长窗口——多目标帕累托优化在旺季自动切换到增长模式（最大化曝光/新客）淡季切换效率模式（最大化ROAS），年化GMV增益20-60万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>单目标 vs 多目标竞价：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：黑五前 2 周（增长模式）需要最大化曝光和新客获取，哪怕 ROAS 降到 1.5 也可以接受；黑五后 2 周（回收模式）需要将 ROAS 提升到 3.0+。当前手动切换出价效率低，总是切换太慢或太激进。</p><p>数据要求： - 历史广告数据（出价/展示/点击/转化/成本）按关键词/ASIN - 新客 vs 老客 识别（Amazon Attribution 或像素） - 预算约束和 ROAS 目标</p><p>预期产出： - 帕累托前沿：不同 ROAS 目标下对应的最优曝光量 - 动态出价策略：旺季/淡季自动切换权重 - 每日出价建议：各关键词的多目标优化出价</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>旺季曝光量提升 20-35%（同预算）：旺季 GMV 增益 ¥15-40 万</li><li>淡季 ROAS 提升 15-25%：节省无效广告花费 ¥5-15 万/季度</li><li>自动化模式切换（旺季/淡季）：减少手动调价频率，节省运营时间</li><li><strong>年化综合 ROI：¥20-60 万</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（多目标优化概念清晰；Amazon 广告 API 提供实时数据；约 3-4 周实施）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+RTB Multi-Objective Bidding Optimization
+实时竞价多目标优化：帕累托前沿出价策略
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass
+from typing import Callable
+
+
+@dataclass
+class AdKeyword:
+    keyword_id: str
+    base_cpc: float          # 基础 CPC（当前出价）
+    expected_ctr: float      # 预期点击率
+    expected_cvr: float      # 预期转化率
+    avg_order_value: float   # 平均客单价
+    new_customer_ratio: float  # 新客占比
+    quality_score: float = 1.0  # 质量分（影响实际曝光量）
+
+
+def compute_multi_objectives(keyword: AdKeyword, bid: float,
+                              budget: float = 1000) -&gt; dict:
+    &quot;&quot;&quot;
+    计算给定出价下的多目标值
+    &quot;&quot;&quot;
+    # 出价影响：出价越高，赢得的曝光机会越多（简化模型）
+    win_rate = min(1.0, (bid / keyword.base_cpc) ** 0.6 * keyword.quality_score)
+    impressions = win_rate * budget / max(bid, 0.01) * keyword.expected_ctr
+    clicks = impressions * keyword.expected_ctr
+    conversions = clicks * keyword.expected_cvr
+    cost = clicks * bid
+    revenue = conversions * keyword.avg_order_value
+
+    roas = revenue / max(cost, 0.01)
+    new_customers = conversions * keyword.new_customer_ratio
+    impression_per_dollar = impressions / max(cost, 0.01)
+
+    return {
+        &#x27;bid&#x27;: bid,
+        &#x27;roas&#x27;: round(roas, 3),
+        &#x27;impressions&#x27;: round(impressions, 1),
+        &#x27;conversions&#x27;: round(conversions, 2),
+        &#x27;cost&#x27;: round(cost, 2),
+        &#x27;revenue&#x27;: round(revenue, 2),
+        &#x27;new_customers&#x27;: round(new_customers, 2),
+        &#x27;impression_per_dollar&#x27;: round(impression_per_dollar, 2),
+    }
+
+
+def pareto_frontier(keyword: AdKeyword, budget: float = 1000) -&gt; list:
+    &quot;&quot;&quot;
+    计算帕累托前沿：遍历出价范围，找到非劣解集合
+    &quot;&quot;&quot;
+    bid_range = np.linspace(0.1 * keyword.base_cpc, 3.0 * keyword.base_cpc, 50)
+    points = [compute_multi_objectives(keyword, bid, budget) for bid in bid_range]
+
+    # 帕累托前沿（ROAS vs Impressions 双目标）
+    pareto = []
+    for p in points:
+        dominated = False</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2405.08756</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-RTB-Multi-Objective-Bidding" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Channel-Saturation-Curve]]（组合</span></li><li><span class='muted'>Purchase-Intent-Prediction]]（组合</span></li><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-Channel-Saturation-Curve.html'>Skill-Channel-Saturation-Curve</a></li><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Price-Elasticity-Estimation.html'>Skill-Price-Elasticity-Estimation</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Channel-Saturation-Curve]]（组合</span></li><li><span class='muted'>Purchase-Intent-Prediction]]（组合</span></li><li><a href='../skills/Skill-Channel-Saturation-Curve.html'>Skill-Channel-Saturation-Curve</a></li><li><a href='../skills/Skill-DARA-Agentic-MMM-Optimizer.html'>Skill-DARA-Agentic-MMM-Optimizer</a></li><li><a href='../skills/Skill-Price-Elasticity-Estimation.html'>Skill-Price-Elasticity-Estimation</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Channel-Saturation-Curve]]（组合</span></li><li><span class='muted'>Purchase-Intent-Prediction]]（组合</span></li><li><a href='../skills/Skill-Channel-Saturation-Curve.html'>Skill-Channel-Saturation-Curve</a></li><li><a href='../skills/Skill-Purchase-Intent-Prediction.html'>Skill-Purchase-Intent-Prediction</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CC-OR-Net条件级联有序残差网络LTV预测 — 结构分解破解零膨胀长尾分布的鲸鱼用户精准预测 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/06-增长模型.html">06-增长模型</a> / Skill-CC-OR-Net-LTV-Prediction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>CC-OR-Net条件级联有序残差网络LTV预测 — 结构分解破解零膨胀长尾分布的鲸鱼用户精准预测</h1>
+<p class="muted">Skill-CC-OR-Net-LTV-Prediction · 06-增长模型</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CEO / 增长负责人<span class='biz-ctx-secondary'> · CMO · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · DTC 独立站 · 多市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>公司增长放缓，不知道是市场饱和还是产品问题还是获客太贵；老板要 12 个月 GMV 预测，只能靠感觉</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立增长拆解模型找到瓶颈，预测未来 6-12 个月营收区间，支撑融资/战略会议</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>增长放缓不知道问题在哪</span><span class='biz-pain-tag'>CAC 越来越高已经高于 LTV</span><span class='biz-pain-tag'>新市场要不要进没有数据支撑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>传统LTV模型在零膨胀长尾分布上鲸鱼用户预测MAPE高达60%因为低LTV用户梯度淹没高价值信号——CC-OR-Net结构分解（有序排名+桶内回归+P99+增强）在3亿用户真实数据上全面超越SOTA，鲸鱼用户识别率从40%提升至75%（2026 arXiv:2601.10176）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>反直觉洞察：LTV预测的核心挑战不是算法选择，而是数据分布——绝大多数用户LTV接近零，极少数&quot;鲸鱼用户&quot;贡献了80%以上的收入。传统深度学习模型在这种零膨胀+长尾分布上失败，因为它在全局损失函数中，低LTV用户（数量多）会淹没高LTV用户（数量少但价值大）的梯度信号。反直觉的是：不应该用单一模型预测所有用户的LTV，而应该先在&quot;序数桶&quot;上排名，再在桶内精细回归——这种结构分解让模型在鲸鱼用户上的精度显著提升。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：某母婴跨境卖家有50万注册用户，其中约500个&quot;鲸鱼用户&quot;（年消费&gt;$5000）贡献了35%的收入，但现有LTV模型把这500人预测得很不准（MAPE&gt;60%），导致针对他们的VIP营销资源投放不精准 - 数据要求：用户历史购买记录（购买金额/频率/品类）、注册信息、活跃度指标 - CC-OR-Net应用： 1. 训练阶段：50万用户按LTV分4个桶，P99+桶约5000用户做过采样 2. 预测：对新用户30天内的LTV给出精准预估 3. 精准分层：P99+预测用户→专属客服+提前大促通知；P90-P99→专属优惠券；P50-P90→常规运营 - 预期产出：鲸鱼用户识别准确率从4</p><p>- **业务问题**：Amazon SP广告出价策略基于&quot;平均订单价值&quot;，对高LTV用户出价不足（获客成本与LTV不匹配），对低LTV用户出价过高（浪费预算） - **CC-OR-Net出价集成**：以预测LTV替代平均AOV作为出价依据，对P99+预测用户提高出价上限（值得多花钱获客），对P10以下预测用户降低出价</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：1%的鲸鱼用户（500人）贡献35%收入，鲸鱼识别精度从40%→75%，相当于额外正确识别175位鲸鱼用户，每人增加$200专属运营投入，年化回报约$87,500+；系统建设$3万，ROI&gt;2000%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要足够的历史LTV数据（建议&gt;5万用户历史记录），GBM实现相对简单；生产环境可替换为深度学习骨干）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（LTV是所有增长运营的核心指标，精准识别高价值用户是ROI最高的运营杠杆）</li><li><strong>适用规模</strong>：有至少6个月购买历史的10万+用户平台；数据量越大，分布越稳定，模型越准</li><li><strong>数据依赖</strong>：用户购买历史（金额/频率/时间）、RFM特征；零LTV用户也要包含在内（模拟真实分布）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+CC-OR-Net条件级联有序残差网络LTV预测
+基于 arXiv:2601.10176 (2026)
+结构分解：有序排名 + 桶内回归 + 高价值增强
+&quot;&quot;&quot;
+import numpy as np
+from sklearn.ensemble import GradientBoostingRegressor, GradientBoostingClassifier
+from sklearn.preprocessing import LabelEncoder
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+class BucketBoundaries:
+    &quot;&quot;&quot;LTV桶边界（按分位数自动确定）&quot;&quot;&quot;
+    def __init__(self, n_buckets=5):
+        self.n_buckets = n_buckets
+        self.boundaries = None
+
+    def fit(self, ltv_values):
+        quantiles = np.linspace(0, 100, self.n_buckets + 1)
+        self.boundaries = np.percentile(ltv_values[ltv_values &gt; 0], quantiles[1:-1])
+        return self
+
+    def assign(self, ltv):
+        if ltv &lt;= 0:
+            return 0
+        for i, b in enumerate(self.boundaries):
+            if ltv &lt;= b:
+                return i + 1
+        return len(self.boundaries) + 1
+
+
+class OrdinalDecompositionModule:
+    &quot;&quot;&quot;有序分解模块：预测用户落入哪个LTV桶&quot;&quot;&quot;
+    def __init__(self, n_buckets):
+        self.n_buckets = n_buckets
+        self.model = GradientBoostingClassifier(n_estimators=100, max_depth=4,
+                                                random_state=42)
+
+    def fit(self, X, bucket_labels):
+        self.model.fit(X, bucket_labels)
+
+    def predict_proba(self, X):
+        return self.model.predict_proba(X)
+
+    def predict_bucket(self, X):
+        return self.model.predict(X)
+
+
+class IntraBucketResidualModule:
+    &quot;&quot;&quot;桶内残差回归模块&quot;&quot;&quot;
+    def __init__(self, n_buckets):
+        self.n_buckets = n_buckets
+        self.models = {}
+        self.bucket_medians = {}
+
+    def fit(self, X, y, bucket_labels):
+        for b in range(self.n_buckets + 1):
+            mask = bucket_labels == b
+            if mask.sum() &lt; 5:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2601.10176</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-CC-OR-Net-LTV-Prediction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（流失预测与LTV联动</span></li><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-CASE-Cadence-Aware-Repurchase-Prediction.html'>Skill-CASE-Cadence-Aware-Repurchase-Prediction</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-KLong-Long-Horizon-Agent-Training.html'>Skill-KLong-Long-Horizon-Agent-Training</a></li><li><span class='muted'>Skill-RFM-Analysis</span></li><li><span class='muted'>Skill-User-LTV-Prediction</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Customer-Churn-Prediction]]（流失预测与LTV联动</span></li><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-CASE-Cadence-Aware-Repurchase-Prediction.html'>Skill-CASE-Cadence-Aware-Repurchase-Prediction</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-KLong-Long-Horizon-Agent-Training.html'>Skill-KLong-Long-Horizon-Agent-Training</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Autobidding-Budget-Allocation-Optimization.html'>Skill-Autobidding-Budget-Allocation-Optimization</a></li><li><a href='../skills/Skill-KLong-Long-Horizon-Agent-Training.html'>Skill-KLong-Long-Horizon-Agent-Training</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

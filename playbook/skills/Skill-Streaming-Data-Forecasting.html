@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Streaming Data Forecasting — 流式采集数据驱动的实时需求预测：采集→特征→预测端到端 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/03-时间序列.html">03-时间序列</a> / Skill-Streaming-Data-Forecasting</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Streaming Data Forecasting — 流式采集数据驱动的实时需求预测：采集→特征→预测端到端</h1>
+<p class="muted">Skill-Streaming-Data-Forecasting · 03-时间序列</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>60 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人 / 采购负责人<span class='biz-ctx-secondary'> · 运营负责人 · 财务负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多市场多仓</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>大促前备货总是不是多了就是少了；新品上线第一个月断货，再补又积压；年底预算不知道各月目标怎么定</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>提前 4-8 周准确预判各 SKU 需求峰值，库存积压减少 30%，断货率降低 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>备货总是压货或断货</span><span class='biz-pain-tag'>旺季淡季波动太大预测不准</span><span class='biz-pain-tag'>补货周期 30 天但预测只看 7 天</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>传统需求预测依赖离线批处理（T-1 日数据训练，次日生效预测），对突发事件（爆品上线、竞品大促、舆情事件）响应迟滞 12-24 小时。</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统需求预测依赖离线批处理（T1 日数据训练，次日生效预测），对突发事件（爆品上线、竞品大促、舆情事件）响应迟滞 1224 小时。流式数据实时预测解决的核心问题：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务背景：Prime Day 期间婴儿监视器需求在促销开始后 2 小时内飙升 8 倍，传统 T+1 批处理模型在促销开始前 12 小时仍预测正常销速，导致海外仓断货，损失 GMV 约 60 万元。</p><p>| 方案 | 断货时刻 | 断货损失 GMV | |------|---------|-------------| | 批处理 T+1 | 促销开始后 2h | ~60 万元 | | 流式预测（本方案） | 触发补货，未断货 | ~0 万元 | | 净收益 | — | ~60 万元 |</p><p>业务背景：母乳储奶袋需求受季节（夏天高温影响保鲜需求）+ 竞品活动 + 社交媒体育儿博主推荐的三重驱动。传统月度预测误差 MAPE 约 28%，导致频繁库存积压或断货。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>60 万元</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+流式采集数据驱动实时需求预测 Pipeline
+整合在线特征工程 + ADWIN 漂移检测 + 增量预测 + Conformal PI
+arXiv 参考: 2406.04356 (StreamFore: Online Time Series Forecasting),
+           2310.07169 (ADWIN Adaptive Windowing for Concept Drift),
+           2405.14682 (Conformal Prediction for Streaming Forecasts 2024)
+&quot;&quot;&quot;
+
+import time
+import random
+import numpy as np
+from collections import deque
+from dataclasses import dataclass, field
+from typing import Deque, Dict, List, Optional, Tuple
+
+
+# ── 数据结构 ─────────────────────────────────────────────────────────────
+
+@dataclass
+class StreamEvent:
+    &quot;&quot;&quot;流式事件（订单、价格变动、库存更新）&quot;&quot;&quot;
+    timestamp: float         # Unix 时间戳
+    event_type: str          # &quot;order&quot;, &quot;price_change&quot;, &quot;stock_update&quot;, &quot;social_signal&quot;
+    sku_id: str
+    value: float             # 订单量/价格/库存件数/搜索热度指数
+    source: str = &quot;&quot;
+
+
+@dataclass
+class RealtimeFeatures:
+    &quot;&quot;&quot;某 SKU 在 T 时刻的实时特征快照&quot;&quot;&quot;
+    sku_id: str
+    timestamp: float
+    sales_ewma_5min: float = 0.0
+    sales_ewma_30min: float = 0.0
+    sales_ewma_2h: float = 0.0
+    price_ratio: float = 1.0         # 己方价格 / 竞品最低价
+    stock_days: float = 30.0         # 当前库存可售天数
+    social_momentum: float = 0.0     # 搜索热度 1h 变化率
+    drift_detected: bool = False
+
+
+@dataclass
+class ForecastResult:
+    sku_id: str
+    timestamp: float
+    point_forecast: float
+    lower_bound: float    # 95% CI 下界
+    upper_bound: float    # 95% CI 上界
+    safety_stock: float
+    alert: Optional[str] = None   # 库存预警信息
+
+
+# ── 在线实时特征引擎 ───────────────────────────────────────────────────────
+
+class EWMAFeatureEngine:
+    &quot;&quot;&quot;
+    增量 EWMA 特征引擎
+    O(1) 更新，无需历史数据重扫
+    &quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2012.04740</li><li>2310.07169</li><li>2405.14682</li><li>2406.04356</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Streaming-Data-Forecasting" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>Demand-Forecasting-Supply-Chain]]</span></li><li><span class='muted'>Realtime-Feature-Collection]]</span></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Realtime-Feature-Collection.html'>Skill-Realtime-Feature-Collection</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Conformal-Prediction-Demand-UQ]]</span></li><li><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html'>Skill-Conformal-Prediction-Demand-UQ</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Data-Drift-Detection]]</span></li><li><span class='muted'>Market-Signal-Realtime-Collection]]</span></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Market-Signal-Realtime-Collection.html'>Skill-Market-Signal-Realtime-Collection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

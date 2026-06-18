@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>客服对话决策树 - 从日志中自学策略 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/09-dataagent-llm.html">09-DataAgent-LLM</a> / Skill-Customer-Journey-Decision-Tree</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>客服对话决策树 - 从日志中自学策略</h1>
+<p class="muted">Skill-Customer-Journey-Decision-Tree · 09-DataAgent-LLM</p>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>600 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 运营负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API · Shopify · TikTok Ads API · 多平台数据整合</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>数据需求太多，数据团队排期 2 周；非技术人员（采购/客服/运营）有数据问题但不会 SQL；重复报表占用大量时间</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>业务方用自然语言自助查数据，常规报表自动化，数据驱动决策响应速度从「天」变「分钟」</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>数据需求排期太长</span><span class='biz-pain-tag'>不会 SQL 只能等数据团队</span><span class='biz-pain-tag'>老板临时要数据没法马上出</span><span class='biz-pain-tag'>分析师时间都花在取数上</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>母婴出海电商客服 70% 工单是&quot;退换货咨询&quot;(尺码错、漏发、过敏等),人工处理成本高,响应慢</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>从历史客服对话日志中归纳出可执行的决策树策略,而非手工编写规则。三步骤:对话状态聚类(将历史多轮对话聚类为典型 dialog state) → 策略树归纳(用决策树学习从 state 到 action 的转移) → LLM 增强叶节点(每个叶节点由 LLM 生成自然语言回复模板,保持灵活性同时锁定流程)。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题:母婴出海电商客服 70% 工单是&quot;退换货咨询&quot;(尺码错、漏发、过敏等),人工处理成本高,响应慢。统一模板回复又不灵活 - 数据要求:历史退换货对话日志(≥10 万轮) + 处理结果(批准/拒绝/转人工) + 用户满意度评分 - 决策树配置: - 状态特征:订单时长、商品品类、退换理由 intent、用户历史投诉次数 - 决策节点:7 天内 vs 7-30 天 vs 30+ 天;品类敏感度(食品/护肤敏感 vs 服装) - 叶节点 action:自动批准 / 要求图片 / 转人工 / 拒绝 - LLM 叶节点:根据用户语气生成共情回复 - 业务价值: - 70% 工单自动化处理,客</p><p>- 业务问题:新手妈妈咨询&quot;宝宝 3 月夜醒频繁怎么办&quot;、&quot;5 月辅食怎么添加&quot;等场景,平台希望提供专业回答但医疗建议有合规风险,需要决策树锁定边界 - 数据要求:母婴专家撰写的咨询脚本 + 历史咨询日志 + 转专家次数 - 决策树配置: - 状态:宝宝月龄 + 症状 intent + 紧急度(发烧 38.5+ vs 一般夜醒) - 决策节点:紧急度阈值(高 → 直接推送医院/儿科;中 → 提供专业建议;低 → 一般育儿知识) - 合规叶节点:LLM 生成回复但加入&quot;非医学建议,建议咨询儿科医生&quot;声明 - 业务价值:专业咨询覆盖率从 20% → 80%,新妈妈活跃留存提升 30-40%;年化 </p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>易处:决策树本身工程成熟,sklearn 即可</li><li>难处:对话状态特征化需要 NLU 模块(BERT 或 LLM intent extraction)</li><li>难处:合规叶节点的医疗/法律边界需要法务介入审核</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Customer Journey Decision Tree 最小骨架
+综合 ConvLab + Reward-based Dialog Policy + LLM-as-Leaf 方向
+&quot;&quot;&quot;
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Callable, Dict, List, Optional, Tuple
+
+
+@dataclass
+class DialogState:
+    user_intent: str
+    days_since_order: int
+    product_category: str
+    user_complaint_history: int
+    severity: str = &quot;low&quot;
+
+
+@dataclass
+class DialogAction:
+    action_type: str
+    response_template: str
+
+
+@dataclass
+class DecisionNode:
+    feature: str
+    threshold: Optional[float] = None
+    categories: Optional[Dict[str, &quot;DecisionNode&quot;]] = None
+    left: Optional[&quot;DecisionNode&quot;] = None
+    right: Optional[&quot;DecisionNode&quot;] = None
+    leaf_action: Optional[DialogAction] = None
+
+    def is_leaf(self) -&gt; bool:
+        return self.leaf_action is not None
+
+
+def build_return_policy_tree() -&gt; DecisionNode:
+    &quot;&quot;&quot;硬编码的退换货决策树(生产中由日志学习得来)&quot;&quot;&quot;
+    return DecisionNode(
+        feature=&quot;days_since_order&quot;,
+        threshold=7,
+        left=DecisionNode(
+            feature=&quot;product_category&quot;,
+            categories={
+                &quot;food&quot;: DecisionNode(leaf_action=DialogAction(&quot;auto_approve&quot;, &quot;您好,食品类 7 天内无理由退货已为您批准,退款将在 24 小时内到账&quot;)),
+                &quot;clothing&quot;: DecisionNode(leaf_action=DialogAction(&quot;require_photo&quot;, &quot;请提供商品图片以便快速处理&quot;)),
+                &quot;default&quot;: DecisionNode(leaf_action=DialogAction(&quot;auto_approve&quot;, &quot;已为您批准退货申请&quot;)),
+            },
+        ),
+        right=DecisionNode(
+            feature=&quot;user_complaint_history&quot;,
+            threshold=3,
+            left=DecisionNode(leaf_action=DialogAction(&quot;manual_review&quot;, &quot;您的申请已提交人工审核,1-2 工作日反馈&quot;)),
+            right=DecisionNode(leaf_action=DialogAction(&quot;transfer_human&quot;, &quot;为您转接资深客服处理&quot;)),
+        ),
+    )
+
+
+def traverse_tree(node: DecisionNode, state: DialogState) -&gt; DialogAction:</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Customer-Journey-Decision-Tree" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-ReAct-Reasoning-Acting.html'>Skill-ReAct-Reasoning-Acting</a></li><li><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html'>Skill-SQL-Agent-Text-to-SQL</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Auto-Skill-Synthesis.html'>Skill-Auto-Skill-Synthesis</a></li><li><a href='../skills/Skill-Root-Cause-Analysis-Agent.html'>Skill-Root-Cause-Analysis-Agent</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-Multi-Agent-Debate.html'>Skill-Multi-Agent-Debate</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 客服分诊台</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+<div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>🧪 智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：客服分诊台</p>
+<p style='margin:4px 0'><strong>测试输入</strong>：工单=25条Shopify工单, SLA=48小时</p>
+<p style='margin:4px 0'><strong>输出摘要</strong>：自动识别高风险工单，生成物流查询标准回复模板，处理效率提升3x</p>
+<p style='margin:4px 0'><strong>验证状态</strong>：✅ 本地计算通过 | 2026-06-11</p><div style='margin-top:10px'><a href='../agents.html' style='font-size:12px;color:#059669;font-weight:600'>→ 前往智能体广场运行</a></div></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

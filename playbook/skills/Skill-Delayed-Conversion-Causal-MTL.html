@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>促销延迟转化因果多任务建模 — 大促期用户行为的反事实分析 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/02-a_b实验.html">02-A_B实验</a> / Skill-Delayed-Conversion-Causal-MTL</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>促销延迟转化因果多任务建模 — 大促期用户行为的反事实分析</h1>
+<p class="muted">Skill-Delayed-Conversion-Causal-MTL · 02-A_B实验</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 产品经理<span class='biz-ctx-secondary'> · 广告优化师 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Listing · TikTok 广告素材 · DTC 落地页</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>改了主图/标题/价格，不确定销量变化是改动导致的还是流量波动；两个方案团队各持己见，需要数据裁决</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每次改动都有 ≥95% 置信度的数据结论，好的改动快速全量，坏的及时止损</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>改了主图感觉好多了但不确定</span><span class='biz-pain-tag'>小范围测试结果好全量后没效果</span><span class='biz-pain-tag'>测试周期短结论不可靠</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>大促结束后财务无法区分&quot;真实增量&quot;和&quot;本来就会买&quot;导致ROI虚高——反事实多任务建模精准测量AICR，优惠券精准投放节省41%预算，年化保护促销预算18-80万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>大促前的延迟转化有两种本质不同的路径：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：每次 Prime Day 后，广告团队说&quot;Prime Day 带来了 3,000 单增量&quot;，但 CFO 质疑&quot;其中多少是本来就会买的？&quot;。传统方法：总 Prime Day 销量 - 同期去年销量 = 增量（非常粗糙，忽略自然增长趋势）。</p><p>CMTL 处理： 1. 收集 Prime Day 前 14 天用户行为（浏览次数/收藏/加购/停留时长） 2. 训练 Counterfactual 模型：用历史非大促期数据标定 $P(Y=1|X,T=0)$ 3. 对比 Prime Day 期间实际转化率与模型预测的&quot;自然转化率&quot; 4. AICR = 促销增量购买率</p><p>数据要求： - 用户前14天行为序列（每日浏览次数、加购次数、搜索词、页面停留时长） - 历史非促销期（普通周）的购买记录（用于训练反事实模型） - Prime Day 期间的购买记录（实际 $Y$）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>优惠券精准投放节省：30% 预算 = 月均 $5,000 优惠券支出节省 $1,500/月 = <strong>$18,000/年</strong></li><li>更准确的促销 ROI 测量 → 避免在低效促销上追加投入：年化节省 <strong>$30,000-80,000</strong>（中型卖家）</li><li>大卖家（月销 $1M+）：优化促销预算的 15% = <strong>$180,000/年</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆</li><li>需要2-3个月历史非促销期数据作为 control 训练集</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+CMTL - 促销延迟转化因果多任务建模
+估算每个用户的真实促销增量转化率 (AICR)
+
+依赖: numpy, scikit-learn
+&quot;&quot;&quot;
+
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from typing import List, Dict, Tuple
+
+# ─────────────────────────────────────────────
+# 特征工程：大促前行为序列
+# ─────────────────────────────────────────────
+
+def extract_pre_promo_features(behavior_logs: List[dict]) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    从大促前14天行为日志提取特征
+    
+    behavior_logs 格式：
+    [{&#x27;user_id&#x27;: str, &#x27;days_before_promo&#x27;: int(1-14),
+      &#x27;page_views&#x27;: int, &#x27;add_to_cart&#x27;: int, &#x27;searches&#x27;: int,
+      &#x27;session_duration_min&#x27;: float, &#x27;wishlist_add&#x27;: int}]
+    
+    返回：每用户的特征矩阵 shape=(n_users, n_features)
+    &quot;&quot;&quot;
+    from collections import defaultdict
+    user_data = defaultdict(lambda: {
+        &#x27;total_pv&#x27;: 0, &#x27;total_atc&#x27;: 0, &#x27;total_search&#x27;: 0,
+        &#x27;total_duration&#x27;: 0, &#x27;total_wishlist&#x27;: 0,
+        &#x27;active_days&#x27;: 0, &#x27;recent_3d_pv&#x27;: 0
+    })
+    
+    for log in behavior_logs:
+        uid = log[&#x27;user_id&#x27;]
+        d = log[&#x27;days_before_promo&#x27;]
+        user_data[uid][&#x27;total_pv&#x27;] += log.get(&#x27;page_views&#x27;, 0)
+        user_data[uid][&#x27;total_atc&#x27;] += log.get(&#x27;add_to_cart&#x27;, 0)
+        user_data[uid][&#x27;total_search&#x27;] += log.get(&#x27;searches&#x27;, 0)
+        user_data[uid][&#x27;total_duration&#x27;] += log.get(&#x27;session_duration_min&#x27;, 0)
+        user_data[uid][&#x27;total_wishlist&#x27;] += log.get(&#x27;wishlist_add&#x27;, 0)
+        user_data[uid][&#x27;active_days&#x27;] += 1
+        if d &lt;= 3:
+            user_data[uid][&#x27;recent_3d_pv&#x27;] += log.get(&#x27;page_views&#x27;, 0)
+    
+    uids = list(user_data.keys())
+    X = np.array([
+        [
+            user_data[u][&#x27;total_pv&#x27;],
+            user_data[u][&#x27;total_atc&#x27;],
+            user_data[u][&#x27;total_search&#x27;],
+            user_data[u][&#x27;total_duration&#x27;],
+            user_data[u][&#x27;total_wishlist&#x27;],
+            user_data[u][&#x27;active_days&#x27;],
+            user_data[u][&#x27;recent_3d_pv&#x27;] / max(user_data[u][&#x27;total_pv&#x27;], 1),
+        ]
+        for u in uids
+    ])
+    return uids, X</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2604.21675</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Delayed-Conversion-Causal-MTL" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>DiD-Difference-in-Differences]]（双重差分</span></li><li><span class='muted'>FBA-Fee-Intelligence]]（跨域桥梁 02↔23</span></li><li><span class='muted'>PL-Attribution-Analysis]]（跨域桥梁 02↔23</span></li><li><span class='muted'>Sequential-AB-Testing]]（序列实验</span></li><li><a href='../skills/Skill-DiD-Difference-in-Differences.html'>Skill-DiD-Difference-in-Differences</a></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-Sequential-AB-Testing.html'>Skill-Sequential-AB-Testing</a></li><li><a href='../skills/Skill-Uplift-Churn-Prediction.html'>Skill-Uplift-Churn-Prediction</a></li><li><span class='muted'>Uplift-Churn-Prediction]]（Uplift 建模基础</span></li><li><span class='muted'>前置（prerequisite）</span></li><li><span class='muted'>可组合（combinable）</span></li><li><span class='muted'>延伸（extends）</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>FBA-Fee-Intelligence]]（跨域桥梁 02↔23</span></li><li><span class='muted'>PL-Attribution-Analysis]]（跨域桥梁 02↔23</span></li><li><span class='muted'>Sequential-AB-Testing]]（序列实验</span></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><a href='../skills/Skill-Sequential-AB-Testing.html'>Skill-Sequential-AB-Testing</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>FBA-Fee-Intelligence]]（跨域桥梁 02↔23</span></li><li><span class='muted'>PL-Attribution-Analysis]]（跨域桥梁 02↔23</span></li><li><a href='../skills/Skill-FBA-Fee-Intelligence.html'>Skill-FBA-Fee-Intelligence</a></li><li><a href='../skills/Skill-PL-Attribution-Analysis.html'>Skill-PL-Attribution-Analysis</a></li><li><span class='muted'>可组合（combinable）</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

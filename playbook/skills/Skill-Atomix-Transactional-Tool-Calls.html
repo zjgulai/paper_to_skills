@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Atomix — Agent 工具调用事务性：故障注入成功率 0-7% → 37-57% · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Atomix-Transactional-Tool-Calls</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Atomix — Agent 工具调用事务性：故障注入成功率 0-7% → 37-57%</h1>
+<p class="muted">Skill-Atomix-Transactional-Tool-Calls · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>业务问题：补货 Agent 三步工作流：① 需求预测（调用预测 API）→ ② 安全库存计算（调用库存 API）→ ③ PO 生成（调用 ERP 下单 API）</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>Atomix 为 Agent 工具调用引入事务语义，解决多步 Agent 工作流在故障（网络抖动、服务超时、LLM 幻觉）下产生的中间态污染问题。无事务保护时，30% 故障注入场景的成功率仅 07%；Atomix TxFull 模式将其提升至 3757%，媲美快照回滚（CR）。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：补货 Agent 三步工作流：① 需求预测（调用预测 API）→ ② 安全库存计算（调用库存 API）→ ③ PO 生成（调用 ERP 下单 API）。若步骤②失败但步骤③已部分执行，会产生重复 PO 下单，损失 ¥1万-10万。</p><p>Atomix 保护： - 步骤①②标记为 BUFFERABLE（纯计算，不产生外部副作用） - 步骤③标记为 EXTERNALIZED，注册补偿函数 `cancel_po(po_id)` - progress predicate：三步均成功且 frontier 推进 → commit - 步骤②失败：abort → 步骤①②无副作用自动丢弃，步骤③若已创建 PO 则调用 `cancel_po` 回滚 - 重复下单风险归零，每次误操作损失风险消除</p><p>数据要求：ERP 系统支持 PO 撤销 API；补偿函数幂等（多次调用不产生额外效果）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>10万</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Atomix: 为 Agent 工具调用引入事务语义（epoch + frontier + 补偿）
+参考: arXiv:2602.14849 — Atomix: Timely, Transactional Tool Use for Reliable Agentic Workflows
+GitHub: https://github.com/mpi-dsg/atomix
+&quot;&quot;&quot;
+import uuid
+from enum import Enum
+from typing import Any, Callable, Optional
+from dataclasses import dataclass, field
+
+# ────────────────────────────────────────
+# 1. ToolEffect 枚举
+# ────────────────────────────────────────
+
+class ToolEffect(Enum):
+    BUFFERABLE = &quot;bufferable&quot;      # 纯内部效果，abort 时直接丢弃
+    EXTERNALIZED = &quot;externalized&quot;  # 已产生外部副作用，abort 时需补偿
+
+# ────────────────────────────────────────
+# 2. Effect 数据类
+# ────────────────────────────────────────
+
+@dataclass
+class Effect:
+    tool_name: str
+    effect_type: ToolEffect
+    result: Any
+    compensation_fn: Optional[Callable] = None
+    epoch: int = 0
+
+# ────────────────────────────────────────
+# 3. Transaction
+# ────────────────────────────────────────
+
+@dataclass
+class Transaction:
+    tx_id: str = field(default_factory=lambda: str(uuid.uuid4())[:8])
+    epoch: int = 0
+    effects: list[Effect] = field(default_factory=list)
+    status: str = &quot;active&quot;  # active | committed | aborted
+
+# ────────────────────────────────────────
+# 4. FrontierTracker
+# ────────────────────────────────────────
+
+class FrontierTracker:
+    def __init__(self):
+        self._frontiers: dict[str, int] = {}  # resource_id → max confirmed epoch
+
+    def track(self, resource_id: str, epoch: int) -&gt; None:
+        current = self._frontiers.get(resource_id, -1)
+        if epoch &gt; current:
+            self._frontiers[resource_id] = epoch
+
+    def can_commit(self, tx: Transaction, required_resources: list[str]) -&gt; bool:
+        for res in required_resources:
+            if self._frontiers.get(res, -1) &lt; tx.epoch:
+                return False
+        return True
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2602.14849</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Atomix-Transactional-Tool-Calls" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Agent-Fault-Tolerance.html'>Skill-Agent-Fault-Tolerance</a></li><li><a href='../skills/Skill-Agent-Production-Engineering.html'>Skill-Agent-Production-Engineering</a></li><li><a href='../skills/Skill-Tool-Call-Decision-Framework.html'>Skill-Tool-Call-Decision-Framework</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-DAG-Task-Decomposition-Planning.html'>Skill-DAG-Task-Decomposition-Planning</a></li><li><a href='../skills/Skill-ParaManager-Parallel-Orchestration.html'>Skill-ParaManager-Parallel-Orchestration</a></li><li><a href='../skills/Skill-SDOF-State-Constrained-Orchestration.html'>Skill-SDOF-State-Constrained-Orchestration</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AgentTrace-Causal-RCA.html'>Skill-AgentTrace-Causal-RCA</a></li><li><a href='../skills/Skill-Flowr-Supply-Chain-MAS.html'>Skill-Flowr-Supply-Chain-MAS</a></li><li><a href='../skills/Skill-Orchestration-Trace-RL.html'>Skill-Orchestration-Trace-RL</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

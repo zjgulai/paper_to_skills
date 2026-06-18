@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Experiment Data Quality Guard — A/B 实验数据采集质量保障：爬虫/日志污染检测与因果实验完整性 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/02-a_b实验.html">02-A_B实验</a> / Skill-Experiment-Data-Quality-Guard</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Experiment Data Quality Guard — A/B 实验数据采集质量保障：爬虫/日志污染检测与因果实验完整性</h1>
+<p class="muted">Skill-Experiment-Data-Quality-Guard · 02-A_B实验</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-new-product-launch.html'>新品冷启动手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10-50 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 产品经理<span class='biz-ctx-secondary'> · 广告优化师 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Listing · TikTok 广告素材 · DTC 落地页</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>改了主图/标题/价格，不确定销量变化是改动导致的还是流量波动；两个方案团队各持己见，需要数据裁决</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每次改动都有 ≥95% 置信度的数据结论，好的改动快速全量，坏的及时止损</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>改了主图感觉好多了但不确定</span><span class='biz-pain-tag'>小范围测试结果好全量后没效果</span><span class='biz-pain-tag'>测试周期短结论不可靠</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>量化 ROI：避免因虚假显著性结果而错误全量上线（该改版涉及开发成本 ~15 万元 + 页面跳转改造），节省无效投入 15 万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>A/B 实验的因果推断依赖随机化的完整性：处理组（Treatment）与对照组（Control）的差异必须仅来自实验干预，而非数据采集过程的污染。母婴跨境电商场景中常见的污染源包括：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务背景：针对婴儿推车详情页（PDP）新版信任徽章（Trust Badge）的 A/B 实验，实验周期 14 天，发现实验组 CTR 显著高于对照组（+8.3%），但转化率无显著差异，怀疑爬虫污染导致点击数虚高。</p><p>量化 ROI：避免因虚假显著性结果而错误全量上线（该改版涉及开发成本 ~15 万元 + 页面跳转改造），节省无效投入 15 万元。</p><p>业务背景：针对母乳储奶袋的首购优惠券 Push 实验，发现实验组与对照组的实验前 GMV 协变量 SMD = 0.34（远超 0.1 阈值），怀疑 SDK 批量上报导致日志乱序，部分高价值用户被错误分配。</p>
+    <h2>4. 输入数据要求</h2><ul><li>`bot_stats.bot_rate_treatment` vs `bot_stats.bot_rate_control`：差距 &gt; 3pp 表示不均匀污染，需高度警惕</li><li>`balance.status == &quot;critical&quot;`：立即停止实验，排查日志管道</li><li>`effect.adjusted_p_value` vs `effect.raw_p_value`：对比校正前后结论</li><li>[ ] 部署 A/A 测试（实验前 3 天），验证 SMD &lt; 0.1</li><li>[ ] 检查实验组/对照组 bot_rate 差值 &lt; 2pp</li></ul>
+    <h2>5. 输出结果</h2><ul><li>`bot_stats.bot_rate_treatment` vs `bot_stats.bot_rate_control`：差距 &gt; 3pp 表示不均匀污染，需高度警惕</li><li>`balance.status == &quot;critical&quot;`：立即停止实验，排查日志管道</li><li>`effect.adjusted_p_value` vs `effect.raw_p_value`：对比校正前后结论</li><li>[ ] 部署 A/A 测试（实验前 3 天），验证 SMD &lt; 0.1</li><li>[ ] 检查实验组/对照组 bot_rate 差值 &lt; 2pp</li></ul>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>10-50 万元</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+A/B 实验数据采集质量保障系统
+整合爬虫过滤 + 分组均衡检验 + CUPED 偏差校正
+arXiv 参考: 2309.12215 (ExP: Scalable Experimentation), 
+           2405.01817 (Causal Testing with Contaminated Data)
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+from scipy import stats
+
+
+# ── 数据结构 ─────────────────────────────────────────────────────────────
+
+@dataclass
+class ExperimentRecord:
+    user_id: str
+    group: str          # &quot;treatment&quot; or &quot;control&quot;
+    ua_string: str
+    event_count: int
+    session_duration: float   # 秒
+    click_count: int
+    pre_exp_gmv: float        # 实验前 GMV（CUPED 协变量）
+    outcome_metric: float     # 实验期间指标（如 CTR, GMV）
+    timestamp_gaps: List[float]  # 操作间隔时间列表（秒）
+
+
+# ── Layer 1：爬虫/机器人检测 ───────────────────────────────────────────────
+
+class BotDetector:
+    &quot;&quot;&quot;
+    基于行为特征的爬虫检测
+    三维评分：UA异常 + 时序异常 + 行为熵
+    &quot;&quot;&quot;
+
+    KNOWN_BOT_PATTERNS = [
+        &quot;bot&quot;, &quot;crawler&quot;, &quot;spider&quot;, &quot;scraper&quot;, &quot;python-requests&quot;,
+        &quot;curl&quot;, &quot;wget&quot;, &quot;scrapy&quot;, &quot;selenium&quot;, &quot;headless&quot;,
+    ]
+
+    def __init__(self, bot_score_threshold: float = 0.6):
+        self.threshold = bot_score_threshold
+
+    def ua_score(self, ua_string: str) -&gt; float:
+        &quot;&quot;&quot;UA 异常得分：匹配已知爬虫特征&quot;&quot;&quot;
+        ua_lower = ua_string.lower()
+        if any(pat in ua_lower for pat in self.KNOWN_BOT_PATTERNS):
+            return 1.0
+        # 缺少常见浏览器标识
+        if not any(b in ua_lower for b in [&quot;mozilla&quot;, &quot;chrome&quot;, &quot;safari&quot;, &quot;firefox&quot;]):
+            return 0.7
+        return 0.0
+
+    def timing_score(self, timestamp_gaps: List[float]) -&gt; float:
+        &quot;&quot;&quot;时序异常得分：机器行为 → 操作间隔方差极小&quot;&quot;&quot;
+        if len(timestamp_gaps) &lt; 3:
+            return 0.0
+        gaps = np.array(timestamp_gaps)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2309.12215</li><li>2405.01817</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Experiment-Data-Quality-Guard" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><span class='muted'>AB-Experimental-Design]]</span></li><li><span class='muted'>Ecommerce-Data-Quality-Assessment]]</span></li><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>CUPED-Variance-Reduction]]</span></li><li><a href='../skills/Skill-CUPED-Variance-Reduction.html'>Skill-CUPED-Variance-Reduction</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Data-Drift-Detection]]</span></li><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Switchback-Experiment-Design.html'>Skill-Switchback-Experiment-Design</a></li><li><span class='muted'>Switchback-Experiment-Design]]</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

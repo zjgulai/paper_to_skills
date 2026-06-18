@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>08-知识图谱 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content"><h1>08-知识图谱</h1><p>Heterogeneous graphs, GNN, KG construction, KGQA</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+  <input id='domain-search' placeholder='在 08-知识图谱 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<script>
+(function(){
+  var inp = document.getElementById('domain-search');
+  var cards = document.querySelectorAll('.cards .skill-card');
+  var cnt = document.getElementById('domain-count');
+  if(!inp) return;
+   inp.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
+      var vis = !q || text.includes(q);
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+  });
+})();
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AgentRouter-KG-Guided.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">AgentRouter — 知识图谱引导的多智能体路由器</h3>
+  <p class="sc-desc">大促高峰期每日 5 万条跨领域工单，正确路由率从 61% → 82%，每天减少约 10,500 条二次转单 - 单条转单处理成本约 5 元，节约运营成本 5.25 万元/天；年化 1900 万元 - 用户 CSAT 评分从 3.8 → 4.3（满分 5），复购意愿提升可观</p>
+  <div class='sc-footer'><span class='sc-roi'>1900 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Agentic-SCKG-Risk.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Agentic SCKG Risk Analyzer — 供应链知识图谱智能风险分析框架</h3>
+  <p class="sc-desc">手动 ERP 排查可能要 2-3 周，到时候竞争对手早把备货扫空了</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Audience-Knowledge-Graph.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Audience Knowledge Graph（广告受众知识图谱）</h3>
+  <p class="sc-desc">FB/TikTok Lookalike 受众精准度不足，基于购买行为的种子人群太窄、扩展效果差——受众知识图谱通过互补品购买+跨域行为构建 140% 受众扩展，ROAS 从 2.1 提升到 3.4</p>
+  <div class='sc-footer'><span class='sc-roi'>20-35 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-AutoPKG-Multimodal-Product-Attribute-KG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">AutoPKG — 多模态产品属性图谱自动构建：文本+图片→GMV提升</h3>
+  <p class="sc-desc">母婴跨境团队面临&quot;商品属性人工填写耗时且不标准导致推荐失准&quot;——多模态多Agent自动构建产品属性图谱，属性填充率从60%→96%，Search GMV+5.32%（Lazada生产A/B实测）</p>
+  <div class='sc-footer'><span class='sc-roi'>1,000万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CausalRAG-Causal-Graph-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">CausalRAG — 因果图增强检索：语义相似 + 因果链路双轨 RAG</h3>
+  <p class="sc-desc">传统 RAG 将文档切分为固定长度的 chunk，导致原本有完整因果逻辑的段落被割裂。例如&quot;产品A未通过认证 → 被召回 → 触发贸易禁令&quot;这一因果链横跨多个 chunk，单个 chunk 无法表达完整逻辑。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-CausalRAG-Knowledge-Retrieval.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">CausalRAG - 因果图驱动的检索增强生成</h3>
+  <p class="sc-desc">用户反馈&quot;机器转了两圈突然停下并闪红灯&quot;，传统 FAQ 机器人把所有带&quot;红灯&quot;的内容（充电时亮红灯/故障码等）全部返回，答非所问，最终用户申请退货</p>
+  <div class='sc-footer'><span class='sc-roi'>120-200 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Context-Kubernetes-KB-Orchestration.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识库声明式编排治理 — Context Kubernetes：右知识×右Agent×右权限×右新鲜度</h3>
+  <p class="sc-desc">无治理的多Agent知识系统在26.5%的查询中返回幽灵内容或发生跨域泄露——Context Kubernetes声明式YAML配置+调谐循环+三层权限模型将此降为0，新鲜度检测延迟仅0.65ms（2026 arXiv:2604.11623）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-DIAL-KG-Schema-Free-Incremental.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">DIAL-KG无Schema增量知识图谱构建 — 动态Schema归纳+治理裁决+增量演化闭环</h3>
+  <p class="sc-desc">传统KG构建需要2周人工设计Schema且无法应对快速演化的领域知识——DIAL-KG双轨提取+治理裁决+动态Schema归纳完全无需预定义，KG质量和Schema质量双SOTA，支持增量更新无需重建（2026 arXiv:2603.20059）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Demand-Driven-KB-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">需求驱动知识库构建 — Agent失败即信号：用任务失败驱动最小化知识摄入</h3>
+  <p class="sc-desc">传统预先规划知识库耗时3个月且充满无用冗余——DDC让Agent在真实任务中失败，用失败信号驱动最小化摄入，20-30个问题周期后知识库收敛，覆盖所有真正需要的知识（零冗余）（2025 arXiv:2603.14057）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Dense-Passage-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Dense Passage Retrieval — 密集段落检索：超越关键词的语义搜索基础设施</h3>
+  <p class="sc-desc">独立站搜索「安静吸奶器」找不到「low noise breast pump」的产品因为BM25只做关键词匹配——DPR密集向量检索捕捉语义相似度，搜索Recall@10提升25-40%长尾查询和多语言搜索大幅改善年化GMV增益15-45万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-45 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">面向电商的稠密检索与语义排序</h3>
+  <p class="sc-desc">传统电商搜索基于 BM25/TF-IDF 关键词匹配，无法理解语义。例如用户搜&quot;缓解涨奶 pain&quot;，关键词系统只能匹配包含&quot;pain&quot;或&quot;涨奶&quot;字样的商品，无法召回&quot;吸奶器&quot;、&quot;冷敷贴&quot;等语义相关但关键词不匹配的商品。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Entity-Resolution-KG-Dedup.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG 实体消歧与去重（Entity Resolution &amp; Deduplication）</h3>
+  <p class="sc-desc">业务背景：某母婴出海品牌同时运营亚马逊、独立站、天猫国际三个渠道，SKU 数据由不同团队维护，同一款&quot;Spectra S1 双边电动吸奶器&quot;在三个平台分别叫： - Amazon：`Spectra - S1 Plus Electric Breast Pump` - 独立站：`Spectra S1+ 双边吸奶器` - 天猫：`贝瑞克S1Plus吸奶器双边电动`</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-GNN-Foundations.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">GNN Foundations（图神经网络基础）</h3>
+  <p class="sc-desc">GCN 学习节点嵌入→发现&quot;硅胶法兰&quot;和&quot;乳头霜&quot;在嵌入空间接近（同一用户群购买），但传统协同过滤未能捕获——因为这两个产品没有共同购买者但有相似的购买者画像</p>
+  <div class='sc-footer'><span class='sc-roi'>补充 KG 推荐基础能力，隐性</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Graph-Attention-Network-Recommendation.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph Attention Network Recommendation — 图注意力网络推荐：动态权重的高精度图推荐</h3>
+  <p class="sc-desc">LightGCN推荐对吸奶器和汽车座椅给予相同权重但实际购买吸奶器后买储奶袋概率是汽车座椅8倍——GAT图注意力机制动态学习邻居权重，推荐精度比LightGCN提升8-15%配件交叉销售客单价提升10-20%</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Graph-Foundation-Model-Recommendation.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph Foundation Model Recommendation — 图基础模型推荐：跨图迁移的零样本推荐</h3>
+  <p class="sc-desc">新开设的独立站没有用户行为数据无法训练推荐系统只能展示热销榜——图基础模型零样本迁移第一天就有个性化推荐，比热销榜CVR提升15-25%解决新卖家推荐冷启动问题年化增益10-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Graph-Knowledge-Distillation-Recommendation.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph Knowledge Distillation Recommendation — 图知识蒸馏推荐：轻量化GNN的高效部署</h3>
+  <p class="sc-desc">当独立站/中小卖家因算力不足无法部署 LightGCN 等大型 GNN 推荐系统时，图知识蒸馏将大模型知识压缩至边缘可部署的轻量模型，保留 90-95% 精度、推理延迟从 100ms 降至 5ms，让小卖家也能用上企业级推荐。</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Graph-RAG-Knowledge-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph RAG Knowledge Retrieval — 知识图谱增强检索：结构化知识驱动精准问答</h3>
+  <p class="sc-desc">向量RAG无法回答「高退货产品的供应商还给哪些产品供货」等多跳推理问题——知识图谱增强检索沿图边多跳遍历发现跨SKU系统性质量问题，避免批量召回损失年化50-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-80 万（以避损为主）</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">GraphRAG - 知识图谱增强检索生成</h3>
+  <p class="sc-desc">GraphRAG（Graph Retrieval-Augmented Generation） 将传统 RAG（检索增强生成）中的文本块检索升级为知识图谱结构化检索，通过图遍历获取与查询相关的实体、关系和子图，显著提升复杂推理场景的答案准确性和可解释性。</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HGCN — 双曲图卷积网络</h3>
+  <p class="sc-desc">母婴电商的产品品类天然是层次树状结构（母婴 &gt; 喂养 &gt; 吸奶器 &gt; [品牌A, B, C]）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-HGT-Heterogeneous-Graph-Transformer.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HGT — 异构图 Transformer 表示学习</h3>
+  <p class="sc-desc">母婴出海电商覆盖多语言市场（英文站、中文站、日文站）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Hierarchical-Product-KG-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">层级商品知识图谱自动构建（图片→KG）</h3>
+  <p class="sc-desc">业务问题:出海卖家上架 1 万件母婴新品到 Amazon US,需逐 SKU 填写品类路径(`Baby &gt; Feeding &gt; Baby Formula &gt; Infant Formula 0-6m`)、净重(g)、包装材质、适用月龄等 10+ 个强制属性</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-HyDE-Hypothetical-Document.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HyDE - 假设文档嵌入查询扩展</h3>
+  <p class="sc-desc">HyDE（Hypothetical Document Embeddings） 的洞察极其简单却有效</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Hybrid-Search-BM25-Vector.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">稀疏+稠密混合检索 — BM25 与向量检索融合</h3>
+  <p class="sc-desc">母婴出海电商的搜索场景高度两极化：部分用户输入精确型号（&quot;Spectra S1 Plus&quot;、&quot;B07X4X5GXD&quot;），纯向量检索因 OOV 问题召回率低；另一部分用户输入模糊语义查询（&quot;适合背奶妈妈的静音吸奶器&quot;），纯 BM25 只能匹配字面词汇，无法理解意图</p>
+  <div class='sc-footer'><span class='sc-roi'>35 万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Application-Patterns.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG Application Patterns — 知识图谱下游应用：从构建到推荐/搜索/冷启动</h3>
+  <p class="sc-desc">知识图谱构建完成后无法应用——LLM-GNN Co-Teaching 将 KG 应用到新品类目标注（冷启动准确率 93%）和跨平台关联推荐（连带销售率+5-8%），年化 GMV ¥50-110 万</p>
+  <div class='sc-footer'><span class='sc-roi'>20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Augmented-Recommendation-CoLaKG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识图谱增强推荐 - CoLaKG (LLM × KG)</h3>
+  <p class="sc-desc">海外华人妈妈购买奶粉需综合考量品牌(HiPP/Aptamil)、成分(DHA/HMO 益生元)、段位(1段/2段)、认证(EU 有机/Non-GMO),传统 CF 无法解读这些维度</p>
+  <div class='sc-footer'><span class='sc-roi'>100-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Auto-Construction-Agent-Driven.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">AI Agent 驱动的电商知识图谱自动构建</h3>
+  <p class="sc-desc">业务问题： 母婴出海电商管理数千个 SKU，商品信息分散在 Amazon、Shopify、供应商提供的不同格式描述中</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Data-Fusion-Pipeline.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG Data Fusion Pipeline — 多源采集数据驱动的知识图谱自动构建：竞品属性图谱融合</h3>
+  <p class="sc-desc">业务背景：选品团队需要对婴儿奶瓶品类建立竞品知识图谱，覆盖 200+ SKU 的品牌、材质、容量、适用月龄、价格、评分等属性，以及产品间的兼容关系（哪些奶嘴可以与哪些奶瓶配合使用），以往依赖人工录入，每月更新需 3 天</p>
+  <div class='sc-footer'><span class='sc-roi'>4.5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Hallucination-Detection.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG三元组幻觉检测 — 将LLM响应结构化为知识图谱进行事实级一致性验证</h3>
+  <p class="sc-desc">让LLM自己评判LLM的错误准确率极低——将响应分解为KG三元组进行一致性验证比SelfCheckGPT准确率高+16%、F1高+20%，且成本低10倍（2025 arXiv:2512.23547）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Incremental-Update.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识图谱增量更新（KG Incremental Update）</h3>
+  <p class="sc-desc">业务背景：亚马逊 Prime Day 期间，价格每 10 分钟可能变化</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-KG-Powered-User-Profiling.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐</h3>
+  <p class="sc-desc">传统协同过滤仅依赖 user-item 矩阵，缺乏对产品语义的理解，导致跨品类推荐能力弱。KG-Powered User Profiling 通过异构图融合将产品知识图谱（属性/认证/成分/适用年龄段）与用户行为图（购买/浏览/评价）结合，构建知识增强的用户偏好向量。</p>
+  <div class='sc-footer'><span class='sc-roi'>跨品类推荐 CTR 提升 18%，用户 LTV 增加，冷启动转化率提升</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Relation-Completion-CBLiP.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Knowledge Graph Relation Completion with CBLiP</h3>
+  <p class="sc-desc">母婴出海电商的商品知识图谱需要维护大量实体关系（品牌-产品、产品-成分、成分-功效、产品-适用年龄等）。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KG-Supply-Chain-Cost-Attribution.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG Supply Chain Cost Attribution — 图神经网络 + 因果推断的供应链成本归因</h3>
+  <p class="sc-desc">跨境母婴品牌供应链成本季度性激增，头程/原材料/仓储三因素难以区分——时序生产图 TPG + PC 算法因果归因将成本驱动识别准确率从 40% 提升至 85%，年化节省错误决策成本 50-150 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>3000-5000 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-KGQA-Question-Answering.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Knowledge Graph Question Answering (KGQA)</h3>
+  <p class="sc-desc">构建了产品知识图谱后，如何让非技术人员（运营、客服、业务方）用自然语言查询它？</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Knowledge-Graph-for-Skills-Management.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Knowledge Graph for Skills Management（知识图谱驱动的技能管理）</h3>
+  <p class="sc-desc">知识图谱（Knowledge Graph, KG） 是一种用图结构表示知识的方法，通过实体-关系-实体的三元组形式（如&quot;Uplift Modeling -应用于- 广告投放&quot;）将碎片化信息组织成可推理的知识网络。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Generative-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">LLM Generative Product Search — LLM 生成式商品搜索：超越关键词的意图理解</h3>
+  <p class="sc-desc">用户说「上班偷偷泵奶开会不能发声」传统关键词搜索无法处理这种自然语言意图——LLM生成式搜索理解「安静+便携+工作场景」直接生成匹配商品，复杂查询转化率提升20-30%年化增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Low-Cost-Dependency-KG-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">低成本依存解析KG构建 — 1/10成本达到LLM 94%质量的无监督知识图谱构建</h3>
+  <p class="sc-desc">LLM构建知识图谱成本高阻止大多数团队落地——依存句法解析提取三元组达到LLM方案94%质量，成本仅1/10，无需GPU无需标注数据（2025 arXiv:2507.03226）</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multilingual-NER-Universal-v2.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Multilingual Named Entity Recognition (Universal NER v2)</h3>
+  <p class="sc-desc">母婴出海电商的用户评论、客服对话、社交媒体内容涉及多语言（英语、德语、法语、西班牙语、日语等）。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multimodal-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">UniECS — 统一多模态电商搜索与商品匹配</h3>
+  <p class="sc-desc">选品分析师看到竞品图但叫不出名字——多模态统一搜索引擎同时理解图文意图，竞品雷达覆盖率提升60%，年化节省调研工时18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multimodal-Product-Understanding.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Multimodal Product Understanding — 多模态商品理解：图文统一表示驱动搜索与推荐</h3>
+  <p class="sc-desc">买家上传竞品图片询问有没有类似产品但文本搜索无法处理图片查询——多模态商品理解将图文统一为单一向量支持以图搜货和图文一致性检测，搜索CVR提升5-10%并发现Listing图文不符风险年化GMV增益15-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multimodal-RAG.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Multimodal RAG - 图文混合多模态检索增强生成</h3>
+  <p class="sc-desc">Multimodal RAG（多模态检索增强生成） 将 RAG 系统从纯文本扩展到图文混合模态，实现</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-NuggetIndex-Atomic-Knowledge-Management.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">NuggetIndex原子知识单元管理 — 最小事实粒度+时效区间+生命周期状态的可维护RAG</h3>
+  <p class="sc-desc">段落级RAG中一个事实过期整个段落都变得不可信——NuggetIndex将知识分解为原子事实单元并附带时效区间，Nugget Recall提升42%，冲突率降低55%，生成器输入减少64%（2026 arXiv:2604.27306）</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Ontology-Schema-Design.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">领域 Ontology 与图谱 Schema 设计</h3>
+  <p class="sc-desc">业务背景：某跨境母婴品牌 KG 建设初期，不同工程师对&quot;吸奶器配件&quot;的关系建模方式各不相同（有人用 `hasPart`，有人用 `compatibleWith`，有人用 `accessoryOf`）</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Product-Knowledge-Graph-Query.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Product KG Query — 多 Agent 产品知识图谱查询与 SKU 跨平台映射</h3>
+  <p class="sc-desc">跨境运营面临多平台 SKU 数据孤岛——Q2K 多 Agent 自动匹配将跨平台 SKU 对齐准确率从人工 78% 提升至 92%，运营手工比对时间从 3-4 小时/款降至自动完成，年化节省 ¥15-30 万</p>
+  <div class='sc-footer'><span class='sc-roi'>800 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RAG-Reranking-CrossEncoder.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">检索后精排 — Cross-Encoder Reranking</h3>
+  <p class="sc-desc">RAG 管道的检索阶段（BM25/向量检索）优先保证召回率，会返回大量候选文档（top-50~100）。但这些候选文档与查询的相关性排序往往不准——召回阶段的 Bi-encoder 是独立编码查询和文档，无法捕捉两者间的细粒度交互。</p>
+  <div class='sc-footer'><span class='sc-roi'>28 万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RAPTOR-Hierarchical-RAG.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">RAPTOR - 递归抽象树型分层检索</h3>
+  <p class="sc-desc">RAPTOR（Recursive Abstractive Processing for Tree-Organized Retrieval） 将长文档转化为一棵&quot;抽象树&quot;</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Semantic-Chunking-Strategy.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">语义分块策略 — RAG 管道的基础层</h3>
+  <p class="sc-desc">母婴出海电商的 Amazon Listing 商品详情页通常包含多个话题段落：产品特性（Safety Features）、使用说明（How to Use）、注意事项（Warnings）、规格参数（Specifications）</p>
+  <div class='sc-footer'><span class='sc-roi'>18 万</span></div>
+</a><a class="card skill-card" href="../skills/Skill-SmartVector-Self-Aware-Embeddings.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">SmartVector自感知向量嵌入 — 时间感知+置信度衰减+关系感知的活嵌入框架</h3>
+  <p class="sc-desc">静态嵌入不知道自己什么时候创建的也无法判断是否过期——SmartVector添加时间感知+Ebbinghaus置信度衰减+关系感知，Top-1准确率从31%提升至62%，过期答案率从35%降至13.3%（2026 arXiv:2604.20598）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TG-RAG-Temporal-Knowledge-Graph.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">时序知识图谱RAG — 双层时序图增量更新与时间窗口检索</h3>
+  <p class="sc-desc">静态知识库的过期答案率高达35%，语义相关不等于时间有效——TG-RAG双层时序图在不重建知识库的前提下实现增量时序更新，过期答案率从35%降至13.3%（2025 arXiv:2510.13590）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TagRAG-Hierarchical-Label-KG.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">TagRAG层级标签知识图谱 — 对象标签链驱动的超高效KG构建与检索</h3>
+  <p class="sc-desc">GraphRAG构建成本极高（LLM全量摘要）导致大多数团队无法负担知识图谱——TagRAG标签链构建速度14.6×、检索1.9×快，平均胜率78.36%，支持实时增量更新（2026 arXiv:2601.05254）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Visual-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Visual Product Search — 视觉商品搜索：以图搜货与相似款发现</h3>
+  <p class="sc-desc">用户在社交媒体看到竞品同款想找相似但更便宜的款式文字搜索效果差——CLIP视觉搜索让用户上传图片直接找相似商品，搜索转化率提升8-15%同时帮助卖家发现视觉差异化空间年化增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-WRITEBACK-RAG-Trainable-KB.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">WRITEBACK-RAG可训练知识库 — 门控证据蒸馏让知识库从检索模式中持续自我优化</h3>
+  <p class="sc-desc">知识库被当作静态存储，有标注的查询-答案对作为学习信号白白浪费——WRITEBACK-RAG门控证据蒸馏将有用知识写回知识库，跨4种RAG方法和6个基准平均提升+2.14%（2026 arXiv:2603.25737）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>

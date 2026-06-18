@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Subterranean Agent — 将工作流 SOP 编译进 LLM 权重 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-icon">◪</span><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-icon">◳</span><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Agentic-Workflow-Compilation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<h1>Subterranean Agent — 将工作流 SOP 编译进 LLM 权重</h1>
+<p class="muted">Skill-Agentic-Workflow-Compilation · 16-智能体工程</p>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>multi_agent</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
+<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>$150/天 → 约 $0.5–1.2/天（按 128–462× 节省比例）</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>每日需要上架数百个 SKU，每个 SKU 经过「标题优化→图片描述生成→合规检查→关键词填写」4 步 SOP，当前用 LangGraph 编排，frontier 模型成本约 $0.15/SKU × 1000 SKU = $150/天</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统 LangGraph/CrewAI 等框架在运行时通过 Orchestrator 逐步调用 LLM 完成多步 SOP：每一步都需要独立的 API 调用、上下文窗口填充、token 计费。Subterranean Agent 的核心洞察是：当 SOP 固定时，Orchestrator 的编排逻辑可以从&quot;运行时解释&quot;变为&quot;编译时参数化&quot;——把整个多步工作流的决策逻辑直接烧录进单个模型权重。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：每日需要上架数百个 SKU，每个 SKU 经过「标题优化→图片描述生成→合规检查→关键词填写」4 步 SOP，当前用 LangGraph 编排，frontier 模型成本约 $0.15/SKU × 1000 SKU = $150/天。</p><p>数据要求： - 历史 SOP 执行轨迹（输入 SKU 信息 → 各步骤中间结果 → 最终 Listing） - 标准化 SOP 定义文件（每步 Prompt 模板 + 输出 Schema） - 至少 500 条高质量执行示例用于 SFT 训练数据</p><p>预期产出： - 编译后单次 API 调用完成全部 4 步 SOP - 输出结构化 JSON 包含：optimized_title / image_description / compliance_flags / keywords - 响应时间从 4 次串行调用（约 12s）降至 1 次推理（约 3s）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>需要搭建 SFT + GRPO 微调基础设施（A100 或等效 GPU × 8）</li><li>需要构建 SOP 执行轨迹数据集（每个 SOP 至少 500–2000 条样本）</li><li>编译后模型需要评估框架验证质量保留率（≥87%）</li><li>重编译 CI/CD 管线需要工程化（30–50 分钟/次）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+Subterranean Agent — 工作流编译范式模拟
+论文: Compiling Agentic Workflows into LLM Weights (arXiv:2605.22502)
+模拟将固定 SOP 从「运行时编排」转为「编译时参数化」的核心范式
+&quot;&quot;&quot;
+
+from __future__ import annotations
+import time
+import json
+from dataclasses import dataclass, field
+from typing import Any
+
+# ─── 数据类定义 ────────────────────────────────────────────────────────────────
+
+@dataclass
+class WorkflowStep:
+    &quot;&quot;&quot;单个 SOP 步骤的元数据&quot;&quot;&quot;
+    step_name: str
+    prompt_template: str
+    expected_output_schema: dict[str, str]
+    estimated_input_tokens: int = 500
+    estimated_output_tokens: int = 200
+
+    def format_prompt(self, context: dict[str, Any]) -&gt; str:
+        &quot;&quot;&quot;将上下文变量填充进 prompt 模板&quot;&quot;&quot;
+        try:
+            return self.prompt_template.format(**context)
+        except KeyError as e:
+            raise ValueError(f&quot;步骤 [{self.step_name}] 缺少上下文变量: {e}&quot;) from e
+
+
+@dataclass
+class SOPWorkflow:
+    &quot;&quot;&quot;固定 SOP 工作流定义（多步骤序列）&quot;&quot;&quot;
+    workflow_name: str
+    description: str
+    steps: list[WorkflowStep] = field(default_factory=list)
+
+    def add_step(self, step: WorkflowStep) -&gt; &quot;SOPWorkflow&quot;:
+        self.steps.append(step)
+        return self
+
+    @property
+    def total_steps(self) -&gt; int:
+        return len(self.steps)
+
+    @property
+    def total_estimated_tokens(self) -&gt; int:
+        &quot;&quot;&quot;运行时编排模式：每步独立调用的总 token 消耗（含上下文重复填充）&quot;&quot;&quot;
+        # 每步都需要重新填充完整上下文（SOP说明 + 历史步骤输出 + 当前步骤 prompt）
+        CONTEXT_OVERHEAD_PER_STEP = 800  # Orchestrator 系统 prompt + CoT 模板
+        HISTORY_ACCUMULATION = 150       # 每步会累积前序输出
+        total = 0
+        for i, step in enumerate(self.steps):
+            context_size = (
+                step.estimated_input_tokens
+                + CONTEXT_OVERHEAD_PER_STEP
+                + i * HISTORY_ACCUMULATION    # 历史步骤输出的累积
+            )
+            total += context_size + step.estimated_output_tokens</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2605.22502</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Agentic-Workflow-Compilation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cost-Aware-Agent-Scheduling.html'>Skill-Cost-Aware-Agent-Scheduling</a></li><li><a href='../skills/Skill-SLM-Tool-Calling-Optimization.html'>Skill-SLM-Tool-Calling-Optimization</a></li><li><a href='../skills/Skill-Skill-Lifecycle-Design.html'>Skill-Skill-Lifecycle-Design</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Auto-Skill-Synthesis.html'>Skill-Auto-Skill-Synthesis</a></li><li><a href='../skills/Skill-ParaManager-Parallel-Orchestration.html'>Skill-ParaManager-Parallel-Orchestration</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Active-Context-Pruning.html'>Skill-Active-Context-Pruning</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-DAG-Task-Decomposition-Planning.html'>Skill-DAG-Task-Decomposition-Planning</a></li><li><a href='../skills/Skill-GraphDeepAR-Demand-Forecasting.html'>Skill-GraphDeepAR-Demand-Forecasting</a></li><li><a href='../skills/Skill-LDP-Identity-Aware-Protocol.html'>Skill-LDP-Identity-Aware-Protocol</a></li><li><a href='../skills/Skill-MCP-A2A-Protocol-Stack.html'>Skill-MCP-A2A-Protocol-Stack</a></li><li><a href='../skills/Skill-Tool-Call-Decision-Framework.html'>Skill-Tool-Call-Decision-Framework</a></li><li><span class='muted'>关联</span></li><li><span class='muted'>相关技能</span></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260617231430"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  </script>
+</body>
+</html>
