@@ -248,6 +248,7 @@ python -m pytest model.py -v
 | `data_collection` | `22-数据采集工程` | **新领域 (2026-06-05)**: Document intelligence, identity resolution, fake review detection, federated collection, web crawling | 13 | ⬜ |
 | `operations_finance` | `23-运营财务` | **新领域 (2026-06-09)**: FBA fee intelligence, P&L attribution, cash flow forecasting | 3 | ⬜ |
 | `tag_engineering` | `24-标签工程` | **新领域 (2026-06-16)**: Tag schema, ontology-driven actions, Palantir-style Object-Action-Writeback, supply chain tag propagation | 8 | ⬜ |
+| `search_traffic` | `25-搜索流量工程` | **新领域 (2026-06-18)**: Amazon A9/A10 search ranking, keyword demand-gap analysis, listing semantic relevance, organic-paid synergy | 0 | ⬜ |
 
 **说明**：`ml_fundamentals`、`advertising`、`compliance` code 目录已于 Sprint 4-5 补全落地。`user_analytics`、`marketing`、`pricing`、`logistics`、`risk_fraud`、`visual_content` 仍为 vault-only，按需建立 code 子模块。
 

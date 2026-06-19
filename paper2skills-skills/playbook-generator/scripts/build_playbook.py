@@ -323,6 +323,14 @@ DOMAIN_BUSINESS_CONTEXT: dict[str, dict[str, Any]] = {
         "outcome": "统一 Tag Schema + 传播引擎将标签覆盖率从 30% 提升至 97%；Palantir 风格 Object-Action-Writeback 将补货响应从 2 天缩短至 4 小时自动触发",
         "pain": "多平台 SKU 编码混乱无法统一 · 合规标签手工维护遗漏频繁 · 预测模型有了但结果无法自动触发采购 · 标签打了但没有质量监控",
     },
+    "25-搜索流量工程": {
+        "role": "SEO 负责人 / 运营主管",
+        "role2": "CEO · 品牌负责人 · 广告投手",
+        "trigger": "Listing 自然排名停在第 3 页；广告 ACoS 居高不下但自然流量没有增长；关键词研究全靠感觉没有数据支撑",
+        "outcome": "系统化关键词缺口分析 + 排名因子权重建模，将目标关键词从第 3 页提升至第 1 页，自然流量提升 30-50%，广告依赖度降低",
+        "pain": "不知道哪些关键词最值得投入 · 自然排名影响因子不透明 · 广告投放和自然排名互相独立没有协同 · Listing 文案优化靠经验没有数据验证",
+        "platform": "Amazon SP-API · Amazon Advertising API · Helium 10 / DataDive · Merchant Words",
+    },
     "23-运营财务": {
         "role": "CFO / 财务负责人",
         "role2": "CEO · 运营负责人",
@@ -2423,6 +2431,127 @@ SOLUTIONS_CATALOG = [
         ],
         "vault_doc": "07-资源库/SC-TagToDecision-Architecture.md",
     },
+    {
+        "id": "sol-aigc-content-factory",
+        "title": "AIGC 内容工厂 → 全渠道投放自动化",
+        "subtitle": "从商品图文生成到多平台 A/B 测试投放的完整闭环",
+        "category": "AI 内容 & 营销",
+        "tags": ["AIGC", "内容生成", "A/B测试", "多渠道投放", "TikTok"],
+        "icon": "AI",
+        "icon_color": "#7c3aed",
+        "status": "published",
+        "updated": "2026-06-18",
+        "summary": "构建母婴跨境卖家的 AI 内容生产线：商品主图质量门控 → 多语言 Listing 生成 → A+ Content 自动排版 → 短视频素材制作 → 多平台 A/B 测试 → 投放预算自动分配。将内容制作周期从 2 周压缩至 2 天，单 SKU 内容成本降低 70%。",
+        "roi_headline": "内容制作周期 2周→2天，单 SKU 内容成本降低 70%，CTR 提升 15-25%",
+        "phases": [
+            {"name": "Phase 0 素材采集", "duration": "1-2 周", "action": "商品原始图/视频采集 + 品牌调性提取", "roi": "建立内容生产基准"},
+            {"name": "Phase 1 内容生成", "duration": "3-6 周", "action": "主图质量评分 + 多语言 Listing + A+ 模板生成", "roi": "内容成本 ↓50%"},
+            {"name": "Phase 2 测试优化", "duration": "2-4 月", "action": "多臂老虎机 A/B 测试 + CTR/CVR 追踪", "roi": "CTR 提升 15-25%"},
+            {"name": "Phase 3 全自动化", "duration": "4-8 月", "action": "内容生成 → 测试 → 胜出版本自动投放", "roi": "运营人力 ↓60%"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "素材基础层", "desc": "商品白底图 · 品牌色板 · 语调档案 · 竞品参考图"},
+            {"no": "L2", "name": "内容生成层", "desc": "主图质量评分 · Stable Diffusion 场景化 · 多语言 Listing LLM · A+ 模板引擎"},
+            {"no": "L3", "name": "内容审核层", "desc": "合规词检测 · 品牌一致性检查 · 文化本地化审核"},
+            {"no": "L4", "name": "测试分发层", "desc": "多臂老虎机 A/B · 各平台规格适配 · 流量分配策略"},
+            {"no": "L5", "name": "归因分析层", "desc": "素材 → 点击 → 转化归因 · 内容特征 XGBoost 归因"},
+            {"no": "L6", "name": "闭环学习层", "desc": "胜出素材特征提炼 → 下一批生成参数更新"},
+        ],
+        "traps": [
+            {"no": "①", "title": "先生成再合规审查", "desc": "AI 生成的内容含 'clinically tested' 等违禁词，上架后被 Amazon 下架或 FTC 罚款。必须在生成阶段嵌入合规过滤器。"},
+            {"no": "②", "title": "用同一套素材跨平台", "desc": "Amazon 主图要求白底、TikTok 要竖版短视频、Shopee 要本地化场景图。平台规格不匹配导致流量损失 30%+。"},
+            {"no": "③", "title": "A/B 测试样本量不足就结论", "desc": "在统计显著性不足时停止测试，伪胜出版本实际 CTR 与对照组无差异。必须预设功效分析和最小样本量。"},
+        ],
+        "core_skills": [
+            "Skill-Product-Image-Quality-Assessment", "Skill-Product-Background-Scene-Generation",
+            "Skill-Multilingual-Listing-Generation", "Skill-A-Plus-Content-Template-Engine",
+            "Skill-Cross-Market-Content-Localization", "Skill-Short-Video-Commerce-Attribution",
+            "Skill-Email-Sequence-RL-Optimizer", "Skill-TikTok-Shop-Content-Commerce-Funnel",
+            "Skill-Multi-Platform-Ad-Budget-Allocator", "Skill-KOL-ROI-Causal-Attribution",
+            "Skill-Category-Compliance-Prescan", "Skill-Listing-Compliance-Auto-Repair",
+        ],
+    },
+    {
+        "id": "sol-intelligent-pricing-revenue",
+        "title": "智能定价 → 利润最大化全链路",
+        "subtitle": "从竞品监控到动态调价再到 P&L 归因的闭环决策系统",
+        "category": "定价 & 财务",
+        "tags": ["动态定价", "价格弹性", "P&L", "竞品监控", "利润优化"],
+        "icon": "$$",
+        "icon_color": "#059669",
+        "status": "published",
+        "updated": "2026-06-18",
+        "summary": "构建母婴跨境卖家的智能定价决策系统：竞品价格实时监控 → 价格弹性建模 → 动态调价策略 → 促销效果评估 → P&L 影响归因 → 定价决策闭环。将价格决策从「拍脑袋」升级为「数据驱动」，毛利率提升 3-8 个百分点。",
+        "roi_headline": "定价响应速度从 3 天→实时，毛利率提升 3-8 pp，年化增利 $5-20 万",
+        "phases": [
+            {"name": "Phase 0 数据基础", "duration": "1-3 周", "action": "竞品价格爬取 + 成本结构录入 + 历史订单清洗", "roi": "定价决策有数据支撑"},
+            {"name": "Phase 1 弹性建模", "duration": "4-8 周", "action": "价格弹性估计 + 需求曲线拟合 + 竞品响应模型", "roi": "找到利润最优价格点"},
+            {"name": "Phase 2 动态调价", "duration": "2-4 月", "action": "规则引擎自动跟价 + 促销日历联动 + 库存价格联动", "roi": "毛利率 ↑3-5pp"},
+            {"name": "Phase 3 P&L 闭环", "duration": "4-8 月", "action": "定价决策 → P&L 影响归因 → 定价策略自我修正", "roi": "年化毛利增量 $5-20 万"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "数据采集层", "desc": "竞品价格实时爬取 · 促销活动监控 · 平台费率变化追踪"},
+            {"no": "L2", "name": "需求建模层", "desc": "价格弹性回归 · 交叉弹性 · 季节性分解 · 节假日调整"},
+            {"no": "L3", "name": "竞争分析层", "desc": "竞品定价策略识别 · 跟价 vs 领价决策 · 品牌定价护城河"},
+            {"no": "L4", "name": "调价执行层", "desc": "规则引擎（floor/ceiling）· Repricing API · 促销协同"},
+            {"no": "L5", "name": "财务归因层", "desc": "定价 → 毛利归因 · P&L 仿真 · 现金流影响预测"},
+            {"no": "L6", "name": "策略优化层", "desc": "多目标优化（利润/份额/清仓）· 竞品博弈策略"},
+        ],
+        "traps": [
+            {"no": "①", "title": "只看竞品最低价跟价", "desc": "最低价策略在非弹性品类会引发价格战，同时压缩自身利润率。必须先测定品类价格弹性，弹性 < 1 的品类不应激进跟价。"},
+            {"no": "②", "title": "调价不考虑库存水位", "desc": "高库存时降价清仓 + 低库存时涨价保利润，两者必须联动。割裂运营导致滞销品越降越贱、爆款越涨越缺货。"},
+            {"no": "③", "title": "促销期间不保护锚点价", "desc": "频繁打折让用户的心理锚点价格永久降低，恢复原价后转化率暴跌。促销节奏和力度必须用 DiD 归因管控。"},
+        ],
+        "core_skills": [
+            "Skill-Competitive-Price-Monitoring", "Skill-Price-Elasticity-Estimation",
+            "Skill-Dynamic-Pricing-Elasticity", "Skill-Real-Time-Competitive-Repricing",
+            "Skill-Causal-RL-Dynamic-Pricing", "Skill-Markdown-Optimization",
+            "Skill-Bundle-Pricing-Strategy", "Skill-Cross-Border-Price-Harmonization",
+            "Skill-PL-Attribution-Analysis", "Skill-FBA-Cost-Forecast-Adjustment",
+            "Skill-Forecast-to-PL-Bridge", "Skill-Promotion-Effectiveness",
+        ],
+    },
+    {
+        "id": "sol-global-compliance-firewall",
+        "title": "全球合规防火墙 → 风险零容忍运营体系",
+        "subtitle": "从 Listing 预扫描到账号健康管理的自动化合规全链路",
+        "category": "合规 & 风控",
+        "tags": ["合规", "风控", "账号健康", "产品安全", "平台规则"],
+        "icon": "CC",
+        "icon_color": "#dc2626",
+        "status": "published",
+        "updated": "2026-06-18",
+        "summary": "构建母婴跨境卖家的合规防火墙：新品上架前合规预扫描 → Listing 违规词自动修复 → 竞品投诉监控 → 账号健康实时预警 → 申诉 SOP 自动生成。将合规响应从「事后救火」转变为「事前预防」，封号风险降低 80%。",
+        "roi_headline": "违规 Listing 拦截率 95%+，封号风险 ↓80%，合规处理时间 3天→4小时",
+        "phases": [
+            {"name": "Phase 0 合规基线", "duration": "1-2 周", "action": "现有 Listing 全量合规扫描 + 问题分级", "roi": "摸清风险存量"},
+            {"name": "Phase 1 新品门控", "duration": "3-6 周", "action": "上架前合规预扫描 + 证书要求清单 + 禁用词过滤", "roi": "新品违规率 ↓90%"},
+            {"name": "Phase 2 动态监控", "duration": "2-4 月", "action": "平台规则变更监控 + 竞品投诉预警 + 账号健康仪表盘", "roi": "违规响应 3天→4小时"},
+            {"name": "Phase 3 智能申诉", "duration": "4-8 月", "action": "申诉 POA 自动生成 + 合规护城河构建", "roi": "申诉成功率 ↑35%"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "规则知识库", "desc": "Amazon ToS · FTC 禁用词 · CPSC 产品安全 · 各国 VAT 合规 · 平台规则变更 RSS"},
+            {"no": "L2", "name": "内容扫描层", "desc": "Listing 违规词检测 · 图片合规检查 · 医疗宣称识别 · 绝对化用语拦截"},
+            {"no": "L3", "name": "产品认证层", "desc": "品类认证路径规划 · 证书有效期追踪 · SGS/BV/TÜV API 对接"},
+            {"no": "L4", "name": "账号监控层", "desc": "ODR/LR/VTR 实时追踪 · 异常信号预警 · 竞品恶意投诉识别"},
+            {"no": "L5", "name": "风险处置层", "desc": "分级处置 SOP · POA 模板生成 · 申诉文档自动整理"},
+            {"no": "L6", "name": "护城河层", "desc": "高门槛认证（CE/FDA 510k）建立竞争壁垒 · 合规知识库沉淀"},
+        ],
+        "traps": [
+            {"no": "①", "title": "只扫 Title 不扫 Bullet/A+ 内容", "desc": "Amazon 合规审查覆盖所有可见文本，包括 A+ Content、视频字幕、Q&A。只扫 Title 导致 70% 的违规漏网。"},
+            {"no": "②", "title": "证书到期不追踪", "desc": "SGS/BV 检测报告通常 1-2 年有效期，过期后 Listing 可被投诉下架。必须建立证书到期日历和自动提醒。"},
+            {"no": "③", "title": "申诉模板千篇一律", "desc": "Amazon 审核员见过太多模板化 POA，识别率极高。申诉文件必须包含具体的违规修复证据截图和可量化的改进指标。"},
+        ],
+        "core_skills": [
+            "Skill-Category-Compliance-Prescan", "Skill-Listing-Compliance-Auto-Repair",
+            "Skill-AI-Product-Safety-Certification", "Skill-CPSC-Children-Product-Safety",
+            "Skill-Cross-Border-Compliance-Framework", "Skill-Regulatory-Change-Monitoring",
+            "Skill-Regulatory-Graph-Compliance-Monitor", "Skill-Platform-Policy-Change-Adaptive-Monitor",
+            "Skill-Account-Health-Proactive-Monitor", "Skill-Amazon-Account-Appeal-Strategy",
+            "Skill-Brand-Listing-Hijacking-Detection", "Skill-IP-Trademark-Brand-Monitoring",
+            "Skill-VOC-Compliance-Signal-Mining", "Skill-Compliance-Scored-Guardrail-Orchestration",
+        ],
+    },
 ]
 
 
@@ -3775,8 +3904,8 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
 # ---------------------------------------------------------------------------
 
 def render_graph_page(skill_count: int, edge_count: int, build_ts: str = "") -> str:
-    dc_js = '''{"supply_chain": "#0ea5e9", "mas": "#8b5cf6", "knowledge_graph": "#06b6d4", "llm_agent_engineering": "#ec4899", "advertising": "#f59e0b", "user_analytics": "#10b981", "tag_engineering": "#6366f1", "growth_model": "#ef4444", "marketing": "#f97316", "operations_finance": "#14b8a6", "recommendation": "#84cc16", "ab_testing": "#a855f7", "causal_inference": "#64748b", "time_series": "#22d3ee", "pricing": "#fb923c", "logistics": "#4ade80", "risk_fraud": "#f43f5e", "visual_content": "#c084fc", "compliance": "#fbbf24", "data_collection": "#38bdf8", "ml_fundamentals": "#94a3b8", "ai_humanities": "#e879f9", "nlp_voc": "#2dd4bf"}'''
-    dl_js = '''{"supply_chain": "供应链", "mas": "多智能体", "knowledge_graph": "知识图谱", "llm_agent_engineering": "LLM/Agent工程", "advertising": "广告分析", "user_analytics": "用户分析", "tag_engineering": "标签工程", "growth_model": "增长模型", "marketing": "营销投放", "operations_finance": "运营财务", "recommendation": "推荐系统", "ab_testing": "A/B实验", "causal_inference": "因果推断", "time_series": "时间序列", "pricing": "价格优化", "logistics": "物流履约", "risk_fraud": "风控反欺诈", "visual_content": "AI视频", "compliance": "合规决策", "data_collection": "数据采集", "ml_fundamentals": "ML基础", "ai_humanities": "AI人文", "nlp_voc": "NLP-VOC"}'''
+    dc_js = '''{"supply_chain": "#0ea5e9", "mas": "#8b5cf6", "knowledge_graph": "#06b6d4", "llm_agent_engineering": "#ec4899", "advertising": "#f59e0b", "user_analytics": "#10b981", "tag_engineering": "#6366f1", "growth_model": "#ef4444", "marketing": "#f97316", "operations_finance": "#14b8a6", "recommendation": "#84cc16", "ab_testing": "#a855f7", "causal_inference": "#64748b", "time_series": "#22d3ee", "pricing": "#fb923c", "logistics": "#4ade80", "risk_fraud": "#f43f5e", "visual_content": "#c084fc", "compliance": "#fbbf24", "data_collection": "#38bdf8", "ml_fundamentals": "#94a3b8", "ai_humanities": "#e879f9", "nlp_voc": "#2dd4bf", "search_traffic": "#f59e0b"}'''
+    dl_js = '''{"supply_chain": "供应链", "mas": "多智能体", "knowledge_graph": "知识图谱", "llm_agent_engineering": "LLM/Agent工程", "advertising": "广告分析", "user_analytics": "用户分析", "tag_engineering": "标签工程", "growth_model": "增长模型", "marketing": "营销投放", "operations_finance": "运营财务", "recommendation": "推荐系统", "ab_testing": "A/B实验", "causal_inference": "因果推断", "time_series": "时间序列", "pricing": "价格优化", "logistics": "物流履约", "risk_fraud": "风控反欺诈", "visual_content": "AI内容生成", "compliance": "合规决策", "data_collection": "数据采集", "ml_fundamentals": "ML基础", "ai_humanities": "AI人文", "nlp_voc": "NLP-VOC", "search_traffic": "搜索流量工程"}'''
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
