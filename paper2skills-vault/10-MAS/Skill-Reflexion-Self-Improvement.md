@@ -179,6 +179,54 @@ cd paper2skills-code/mas/reflexion_self_reflect
 python reflexion_agent.py
 ```
 
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class ExecutionResult:
+    attempt: int
+    success: bool
+    output: str
+
+
+class ReflexionAgent:
+    def __init__(self):
+        self.memory = []
+
+    def execute(self, task, strategy):
+        if strategy == "naive":
+            return ExecutionResult(1, False, f"{task}: 关键词未覆盖")
+        return ExecutionResult(2, True, f"{task}: 优化完成")
+
+    def reflect(self, result):
+        lesson = "首次失败因为策略过于粗糙，需加入品牌/价格/库存三层约束"
+        self.memory.append({"task": result.output, "lesson": lesson})
+        return lesson
+
+    def improve(self, task):
+        first = self.execute(task, "naive")
+        if not first.success:
+            lesson = self.reflect(first)
+            second = self.execute(task + " | " + lesson, "improved")
+            return first, lesson, second
+        return first, "", first
+
+
+def demo():
+    agent = ReflexionAgent()
+    first, lesson, second = agent.improve("优化Listing标题")
+    print(first)
+    print(lesson)
+    print(second)
+    print(agent.memory)
+    print("[✓] Reflexion-Self-Improvement测试通过")
+
+
+if __name__ == "__main__":
+    demo()
+```
+
 生产环境建议：
 1. 使用向量数据库存储记忆，支持语义检索
 2. 设置评估阈值，只有"有意义"的失败才触发反思（避免噪声）

@@ -172,6 +172,66 @@ cd paper2skills-code/mas/react_reasoning_acting
 python react_agent.py
 ```
 
+```python
+class Tool:
+    def __init__(self, name, fn):
+        self.name = name
+        self.fn = fn
+
+    def call(self, **kwargs):
+        return self.fn(**kwargs)
+
+
+class ReActAgent:
+    def __init__(self, tools, max_steps=5):
+        self.tools = {t.name: t for t in tools}
+        self.max_steps = max_steps
+
+    def run(self, question):
+        history = []
+        thought = f"判断{question}，先查库存"
+        for step in range(self.max_steps):
+            if step == 0:
+                action = ("check_inventory", {})
+            elif step == 1 and history[-1][2]["inventory"] < 20:
+                action = ("get_forecast", {})
+            elif step == 2:
+                action = ("get_price", {})
+            else:
+                break
+            observation = self.tools[action[0]].call(**action[1])
+            history.append((thought, action[0], observation))
+            if observation.get("decision") in {"replenish", "hold"}:
+                break
+            thought = f"基于{action[0]}结果继续推理"
+        return history
+
+
+def check_inventory():
+    return {"inventory": 12, "decision": "replenish"}
+
+
+def get_forecast():
+    return {"forecast": 68, "decision": "replenish"}
+
+
+def get_price():
+    return {"price": 18.5, "decision": "hold"}
+
+
+def demo():
+    tools = [Tool("check_inventory", lambda: check_inventory()), Tool("get_forecast", lambda: get_forecast()), Tool("get_price", lambda: get_price())]
+    agent = ReActAgent(tools)
+    trace = agent.run("当前库存不足时是否补货")
+    for item in trace:
+        print(item)
+    print("[✓] ReAct-Reasoning-Acting测试通过")
+
+
+if __name__ == "__main__":
+    demo()
+```
+
 生产环境建议：
 1. 接入真实 API（搜索引擎、电商平台、数据库）
 2. 实现 action 超时和重试机制

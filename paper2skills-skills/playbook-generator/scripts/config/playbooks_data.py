@@ -1355,8 +1355,180 @@ TOB_PLAYBOOKS = [
         "outcomes": [
             "选品门控：新品失败率 30%→15%，年化防护错误选品损失 60-90 万",
             "多渠道订单编排：超卖率 5-10%→0.1%，SLA 达成率 91%→97%",
-            "多市场合规矩阵：扫描 2 周→10 分钟，防止货到港扣押损失 5-15 万/次",
-            "供应链风险防御：地缘政治/黑天鹅情景量化预案，年化防护损失 50-100 万+",
+             "多市场合规矩阵：扫描 2 周→10 分钟，防止货到港扣押损失 5-15 万/次",
+             "供应链风险防御：地缘政治/黑天鹅情景量化预案，年化防护损失 50-100 万+",
+        ],
+    },
+    {
+        "id": "pb-game-theory-pricing",
+        "icon": "GT",
+        "name": "博弈论竞争定价手册",
+        "tag": "定价 · 博弈论 · 竞争策略",
+        "desc": "用纳什均衡和栈尔伯格博弈终结价格战，母婴电商卖家的竞争定价科学",
+        "intro": "大多数卖家的竞争定价策略是「跟价」——竞品降我也降，竞品涨我也涨。这个策略看似合理，实际上是博弈论中囚徒困境的完美陷阱：所有人跟价的最终均衡是利润被打到边际成本，没有赢家。博弈论给出了打破这个困境的数学答案：纳什均衡、先动优势、信号博弈。本手册把这些诺贝尔经济学奖级别的理论，变成你今天就能用的定价决策工具。",
+        "steps": [
+            {
+                "step": "Step 1 — 识别你在哪种博弈中（第 1 周）",
+                "problem": "我的市场是Bertrand竞争（价格战）、Stackelberg博弈（领导者-跟随者）还是垄断性竞争？诊断错了，策略就全错了。",
+                "skills": [
+                    {"id": "Skill-Nash-Equilibrium-Pricing-Model", "why": "用贝叶斯博弈计算当前市场的纳什均衡价格区间，判断「当前定价是否已到均衡」"},
+                    {"id": "Skill-Competitor-Price-Intelligence", "why": "竞品定价数据采集和模式识别，区分「机械跟价者」和「战略性定价者」"},
+                ],
+                "data": "需要：近 30 天竞品 ASIN 价格变动数据、自身销量-价格历史数据",
+                "output": "市场博弈类型诊断报告 + 当前均衡价格区间",
+            },
+            {
+                "step": "Step 2 — 争夺领导者地位（第 2-4 周）",
+                "problem": "如何从价格跟随者变成价格领导者？先动者的栈尔伯格均衡利润比跟随者高 15-30%。",
+                "skills": [
+                    {"id": "Skill-Stackelberg-Price-Leadership-Strategy", "why": "逆向归纳法预测跟随者响应，领导者选择让自己利润最大的先动价格"},
+                    {"id": "Skill-Signaling-Game-Brand-Premium", "why": "用价格作为质量信号：高定价建立品牌信任，防止竞品轻易用低价侵蚀品牌认知"},
+                ],
+                "data": "需要：市场份额数据、品牌搜索量趋势、竞品定价响应延迟分析",
+                "output": "最优领导者定价策略 + 价格信号设计方案",
+            },
+            {
+                "step": "Step 3 — 打破价格战陷阱（持续）",
+                "problem": "当竞品发动价格战时，跟还是不跟？重复博弈理论给出了反直觉答案。",
+                "skills": [
+                    {"id": "Skill-Repeated-Game-Long-Term-Pricing-Cooperation", "why": "Tit-for-Tat + Grim Trigger策略：计算「不降价」是长期理性均衡的条件，找到维持价格高位的临界贴现因子"},
+                    {"id": "Skill-Mixed-Strategy-Pricing-Unpredictability", "why": "当纯策略均衡不存在时，用随机化定价避免竞品的算法完全预测你的策略"},
+                ],
+                "data": "需要：竞品历史价格序列、市场需求弹性估计、自身贴现率/ROI目标",
+                "output": "价格战应对决策树 + 混合策略定价参数",
+            },
+            {
+                "step": "Step 4 — 广告竞价的拍卖理论（持续）",
+                "problem": "Amazon广告竞价是GSP拍卖（广义第二价格），90%的卖家用直觉出价而非理论最优。",
+                "skills": [
+                    {"id": "Skill-Auction-Theory-Advertising-Bidding", "why": "GSP均衡出价=真实价值×转化率，而非竞品出价±10%。理解拍卖机制省广告费15-25%"},
+                    {"id": "Skill-Search-Ad-Budget-ROI-Integration", "why": "自然排名+广告联合ROI建模：当自然排名提升，广告出价应该下调而非保持不变"},
+                ],
+                "data": "需要：广告关键词出价历史、搜索词报告、自然排名数据",
+                "output": "理论最优竞价策略 + 自然/付费协同预算分配",
+            },
+        ],
+        "outcomes": [
+            "从跟价者升级为领导者，利润提升 15-30%",
+            "识别价格战陷阱并主动规避，年化防护利润损失 8-15 万",
+            "广告竞价优化：相同预算 ROAS 提升 20%",
+            "建立价格信号护城河，品牌溢价可持续",
+        ],
+    },
+    {
+        "id": "pb-behavioral-pricing",
+        "icon": "BE",
+        "name": "行为经济学定价手册",
+        "tag": "定价 · 心理学 · 促销设计",
+        "desc": "用损失厌恶、锚定效应、心理账户重构定价策略，比价格弹性更接近用户真实决策",
+        "intro": "传统定价依赖价格弹性——价格降X%，销量增Y%。这个模型假设消费者是理性人。2002年诺贝尔经济学奖得主Kahneman的Prospect Theory证明：人类系统性偏离理性，损失的痛苦是同等收益快乐的2.25倍，「限时最后3件」比「立省30元」更有效。本手册把行为经济学的顶级理论变成你的促销和定价武器。",
+        "steps": [
+            {
+                "step": "Step 1 — 锚定效应：让原价成为你的武器（立即执行）",
+                "problem": "划线原价应该定多少？锚定比率是1.3x、1.5x还是2x？设错了，促销力度感知失效。",
+                "skills": [
+                    {"id": "Skill-Anchoring-Effect-Pricing-Optimization", "why": "锚定比率的最优区间来自实验经济学：1.5-2.0x感知折扣最强，超过3x反而触发怀疑"},
+                    {"id": "Skill-Price-Elasticity-Estimation", "why": "把锚定效应叠加到弹性模型：用锚定价格修正后的「感知价格」而非实际价格来预测销量"},
+                ],
+                "data": "需要：历史促销数据（原价/促销价/销量变化）、竞品锚定价格数据",
+                "output": "品类最优锚定比率建议 + 促销感知价值评分",
+            },
+            {
+                "step": "Step 2 — 损失厌恶框架：重写所有促销文案（第 1 周）",
+                "problem": "「节省20元」vs「别错过20元」vs「仅剩3件」——同样的折扣，哪种框架转化率最高？",
+                "skills": [
+                    {"id": "Skill-Loss-Aversion-Promotion-Design", "why": "A/B测试验证损失框架 vs 收益框架的转化率差异，母婴品类的最优触发语言模式"},
+                    {"id": "Skill-Promotion-Effectiveness", "why": "DiD评估不同促销框架的净增量贡献，区分「因框架带来的转化」和「自然购买」"},
+                ],
+                "data": "需要：不同促销文案的A/B测试数据（各≥500曝光），或历史促销效果记录",
+                "output": "品类最优促销框架 + Listing文案优化建议",
+            },
+            {
+                "step": "Step 3 — 心理账户：捆绑定价的正确姿势（第 2-3 周）",
+                "problem": "为什么主品+配件捆绑有时反而降低成交率？心理账户理论告诉你捆绑的隐藏陷阱。",
+                "skills": [
+                    {"id": "Skill-Mental-Accounting-Bundle-Psychology", "why": "识别哪些商品在消费者心智中属于「同一账户」，捆绑才能提升感知价值"},
+                    {"id": "Skill-Bundle-Pricing-Strategy", "why": "混合捆绑 vs 纯捆绑的最优选择：当消费者偏好异质性高时，混合捆绑利润更高"},
+                ],
+                "data": "需要：单品和捆绑的历史销售数据、消费者偏好调研（可选）",
+                "output": "最优捆绑组合建议 + 捆绑价格区间",
+            },
+            {
+                "step": "Step 4 — 禀赋效应：免费试用的转化密码（持续）",
+                "problem": "「先用30天再付款」的转化率为什么比「直接购买」高3-5倍？如何设计最优的试用终止时机？",
+                "skills": [
+                    {"id": "Skill-Endowment-Effect-Trial-Conversion", "why": "生存分析找到试用转化率最高的「结束时机」——不是第7天也不是第30天，是用户行为数据决定的"},
+                    {"id": "Skill-Repurchase-Trigger-Timing-Model", "why": "把禀赋效应和最优触达时机结合：在用户「最难放弃」的时刻发送转化邀请"},
+                ],
+                "data": "需要：试用用户的每日活跃度数据、试用转化率历史数据",
+                "output": "最优试用终止时机 + 转化触发脚本",
+            },
+        ],
+        "outcomes": [
+            "锚定效应优化：相同折扣深度感知价值提升 25%，转化率 +12%",
+            "损失框架重构：促销文案 CTR 提升 18-35%",
+            "捆绑定价优化：AOV（客单价）提升 22%，利润率不降",
+            "禀赋效应试用：付费转化率提升 40-60%",
+        ],
+    },
+    {
+        "id": "pb-cross-domain-algorithm-innovation",
+        "icon": "XI",
+        "name": "跨域算法创新手册",
+        "tag": "算法迁移 · 创新范式 · 竞争壁垒",
+        "desc": "从酒店运筹学、控制论、博弈论迁移顶级算法，构建竞品无法复制的AI能力护城河",
+        "intro": "母婴跨境电商的算法同质化严重——大家都在用需求预测、价格弹性、A/B测试。真正的竞争壁垒来自「别处心裁的算法迁移」：把酒店收益管理迁移到SKU容量定价，把火箭制导的Kalman Filter迁移到库存信号滤波，把博弈论迁移到竞争定价，把行为经济学迁移到促销设计。这些算法在本行业几乎无人使用，但在各自的原生领域已被证明有效。本手册是一本「算法创新地图」，指引从传统电商算法到跨域顶刊迁移的升级路径。",
+        "steps": [
+            {
+                "step": "Step 1 — Revenue Management迁移：从酒店定价到SKU容量管控",
+                "problem": "你知道FBA库存和酒店房间有什么共同点吗？都是有限容量+时间窗口+不能存货。酒店用了30年的EMSR模型可以直接迁移。",
+                "skills": [
+                    {"id": "Skill-EMSR-Bid-Price-Inventory-Control", "why": "EMSR-b模型：计算每个库存单位的边际价值，需求旺时自动提价，淡时降价清仓"},
+                    {"id": "Skill-Perishable-Inventory-Markdown-Optimization", "why": "易腐品动态规划降价：婴儿食品临期/季节品过季，DP算法找到最优降价时间表"},
+                    {"id": "Skill-Revenue-Per-Available-SKU-REVPAS", "why": "REVPAS指标：RevPAR思维评估每个可售库存单位的综合收益，找到定价效率最低的SKU"},
+                ],
+                "data": "需要：历史销量-价格数据、库存水位时序数据、竞品价格数据",
+                "output": "SKU容量价值矩阵 + 动态定价触发规则 + REVPAS排行榜",
+            },
+            {
+                "step": "Step 2 — Kalman Filter迁移：从火箭制导到库存信号滤波",
+                "problem": "需求预测的最大敌人是噪声：促销噪声、季节噪声、竞品促销干扰。Kalman Filter是1960年代解决这个问题的最优答案。",
+                "skills": [
+                    {"id": "Skill-Kalman-Filter-Demand-Tracking", "why": "实时追踪需求真实状态：区分信号和噪声，比移动平均精准3-5倍"},
+                    {"id": "Skill-PID-Safety-Stock-Controller", "why": "PID控制器：比例-积分-微分三项驱动安全库存自适应调整，不再用固定安全系数"},
+                    {"id": "Skill-Adaptive-Reorder-Point-Kalman", "why": "自适应补货点：ROP随Kalman估计的需求均值和方差实时漂移，比传统ROP误差降低40%"},
+                ],
+                "data": "需要：日级销量时序数据（≥90天）、补货到货记录、供应商lead time数据",
+                "output": "需求真实状态估计曲线 + 自适应ROP + 安全库存调整建议",
+            },
+            {
+                "step": "Step 3 — Choice Modeling迁移：从心理学到购买决策",
+                "problem": "传统推荐预测「用户会点击什么」，离散选择模型预测「用户为什么选这个不选那个」。一个是相关性，一个是因果性。",
+                "skills": [
+                    {"id": "Skill-MNL-Purchase-Choice-Model", "why": "MNL模型：估计价格/评分/品牌/配送时间各属性的边际效用，输出竞品胜出概率"},
+                    {"id": "Skill-Willingness-to-Pay-Estimation", "why": "WTP估计：从选择数据中估计各用户段的最高支付意愿，找到差异化定价的理论上限"},
+                    {"id": "Skill-Conjoint-Analysis-Product-Design", "why": "联合分析：新品开发阶段，用CBC实验量化消费者对BPA-free/有机/价格各属性的权重"},
+                ],
+                "data": "需要：搜索页曝光+点击+购买数据、用户属性数据（可选）",
+                "output": "属性效用权重表 + WTP分布 + 产品设计优先级建议",
+            },
+            {
+                "step": "Step 4 — Multi-task Learning迁移：从NLP到冷启动SKU",
+                "problem": "新SKU上市没有历史数据，需求预测误差高达±80%。MTL迁移学习是解决这个问题的武器——用同类老SKU的经验指导新SKU。",
+                "skills": [
+                    {"id": "Skill-MTL-Cold-Start-SKU-Demand", "why": "共享编码器迁移：同类SKU共享需求模式，新SKU仅需2周数据即可获得可靠预测"},
+                    {"id": "Skill-Seasonal-Pattern-Transfer-Learning", "why": "旺季模式迁移：新品首次面对黑五，从同类老品学习旺季放大系数"},
+                    {"id": "Skill-Cross-Market-Transfer-Demand", "why": "跨市场迁移：用美国成熟市场数据加速德国/日本新市场的需求预测"},
+                ],
+                "data": "需要：同类老SKU历史数据（≥6个月）、新SKU近期销量数据",
+                "output": "新SKU需求预测（含置信区间）+ 旺季备货建议",
+            },
+        ],
+        "outcomes": [
+            "Revenue Management迁移：动态定价年化提升毛利率 3-5pp",
+            "Kalman Filter迁移：需求预测误差降低 35%，库存周转率提升 20%",
+            "Choice Modeling迁移：推荐精准度+41%，WTP指导差异化定价",
+            "MTL迁移：冷启动SKU预测误差从±80%降至±25%",
         ],
     },
 ]

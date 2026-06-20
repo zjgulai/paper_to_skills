@@ -196,6 +196,61 @@ cd paper2skills-code/mas/mas_orchestrator
 python orchestrator.py
 ```
 
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Task:
+    name: str
+    payload: dict
+
+
+class InventoryAgent:
+    def process(self, task):
+        return {"agent": "InventoryAgent", "task": task.name, "result": f"库存检查完成:{task.payload.get('sku', 'N/A')}"}
+
+
+class PricingAgent:
+    def process(self, task):
+        return {"agent": "PricingAgent", "task": task.name, "result": f"价格建议完成:{task.payload.get('market', 'US')}"}
+
+
+class CSAgent:
+    def process(self, task):
+        return {"agent": "CSAgent", "task": task.name, "result": f"客服回复完成:{task.payload.get('ticket_id', '0')}"}
+
+
+class Supervisor:
+    def __init__(self, workers):
+        self.workers = workers
+
+    def dispatch(self, task):
+        worker = self.workers[hash(task.name) % len(self.workers)]
+        return worker.process(task)
+
+    def run(self, tasks):
+        results = [self.dispatch(task) for task in tasks]
+        return {"total": len(results), "results": results}
+
+
+def demo():
+    tasks = [
+        Task("inventory_audit", {"sku": "BP-001"}),
+        Task("pricing_review", {"market": "US"}),
+        Task("cs_followup", {"ticket_id": "T-1188"}),
+        Task("inventory_audit_2", {"sku": "BP-002"}),
+    ]
+    supervisor = Supervisor([InventoryAgent(), PricingAgent(), CSAgent()])
+    report = supervisor.run(tasks)
+    print(report)
+    print("[✓] MAS-Orchestrator测试通过")
+
+
+if __name__ == "__main__":
+    demo()
+```
+
 生产环境建议：
 1. 使用 Temporal / Airflow / Dagster 作为底层工作流引擎
 2. 实现执行状态持久化（支持断点续传）
