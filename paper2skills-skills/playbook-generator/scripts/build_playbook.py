@@ -2740,7 +2740,7 @@ def render_solution_detail(sol: dict, total_skill_count: int = 849) -> str:
 
 <div class="sd-grid-2">
   <div class="sd-section">
-    <h2>七层架构设计</h2>
+    <h2>{len(sol.get("layers", []))}层架构设计</h2>
     <p class="sd-sec-desc">从原始数据到自动执行决策的完整分层</p>
     <div class="sd-layers">
 {layers_html}
@@ -4724,7 +4724,7 @@ p:last-child { margin-bottom: 0; }
 .biz-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .biz-body strong { display: block; font-size: 13.5px; font-weight: 600; letter-spacing: -.02em; line-height: 1.35; color: var(--ink); word-break: keep-all; overflow-wrap: break-word; }
 .biz-body p { margin: 7px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.6; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.biz-tag { flex-shrink: 1; min-width: 0; font-size: 10.5px; font-weight: 500; background: var(--panel-2); color: var(--ink-2); padding: 2px 7px; border-radius: var(--r-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; border: 1px solid var(--line); }
+.biz-tag { flex-shrink: 0; font-size: 10.5px; font-weight: 500; background: var(--panel-2); color: var(--ink-2); padding: 2px 7px; border-radius: var(--r-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; border: 1px solid var(--line); }
 
 .ds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin: 12px 0; align-items: stretch; }
 .ds-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px; box-shadow: none; }
