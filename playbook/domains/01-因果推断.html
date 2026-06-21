@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>01-因果推断</h1><p>Causal inference, uplift modeling, DiD, IV</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 01-因果推断 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-Automated-Causal-Discovery.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">01-因果推断</div>
@@ -71,7 +101,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Causal-Cohort-Analysis.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">01-因果推断</div>
   <h3 class="sc-title">Causal Cohort Analysis — 因果队列分析：促销干预的长期用户行为效应</h3>
-  <p class="sc-desc">传统队列分析（Cohort Analysis）追踪同一时期加入的用户群体的行为轨迹，但无法剥离选择偏差：高价值用户本来就会复购，促销只是&quot;锦上添花&quot;而非真正驱动因素。直接比较&quot;接受促销的队列 vs 未接受促销的队列&quot;，会高估促销效果 30-60%。</p>
+  <p class="sc-desc">增长经理面临留存变化找不到真因——因果队列将误判率从28%降到9%，年化增收18万元</p>
   <div class='sc-footer'><span class='sc-roi'>200-500 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Causal-Discovery-PC-Algorithm.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">01-因果推断</div>
@@ -103,6 +133,11 @@
   <h3 class="sc-title">Conformal Risk Assessment — 共形预测业务风险量化：覆盖率保证的区间估计</h3>
   <p class="sc-desc">但预测误差未被显式量化，导致高估时积压、低估时缺货，实测缺货率 8%</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Counterfactual-Evaluation.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">反事实评估 — Potential Outcomes + 合成控制反事实基线</h3>
+  <p class="sc-desc">数据科学家面临&quot;无法量化如果不做这个促销销量会如何基线难以确定&quot;——合成控制反事实框架将促销净增量归因准确率从±30%提升至±8%，ROI决策置信度大幅提升</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-DML-Cohort-Causal-Effect.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">01-因果推断</div>
   <h3 class="sc-title">DML Cohort 因果效应 - 群体异质性 HTE 估计</h3>
@@ -136,7 +171,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Mediation-Causal-Mechanism-Analysis.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">01-因果推断</div>
   <h3 class="sc-title">Causal Mediation Analysis — Decomposing &quot;Why It Works</h3>
-  <p class="sc-desc">核心思想：中介分析回答&quot;为什么&quot;——一个干预（如推荐算法更新）通过什么机制影响了结果（如转化率）。它将总效应分解为</p>
+  <p class="sc-desc">研究经理面临效果链路说不清——中介分析将机制定位时间从3天降到4小时，年化省11万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-30万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-SSBC-Small-Sample-Conformal.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">01-因果推断</div>
@@ -146,13 +181,13 @@
 </a><a class="card skill-card" href="../skills/Skill-Uplift-Modeling.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">01-因果推断</div>
   <h3 class="sc-title">Uplift Modeling (元学习框架)</h3>
-  <p class="sc-desc">识别哪些用户最有可能因为某个干预（如促销、广告）而产生正向行为。</p>
+  <p class="sc-desc">私域运营面临优惠券乱发浪费预算——Uplift将无效触达率从45%降到18%，年化增收32万元</p>
   <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

@@ -57,7 +57,7 @@
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：月产生50次错误决策的MAS，AgenTracer将根因定位时间从2小时→30秒（节省98小时/月≈$2500工程师时间）；同时通过自我进化使3个月内重复错误减少42%，间接防损价值$10000+/月；系统成本$6万（含模型微调），ROI≈300%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（完整版需要微调AgenTracer-8B，需要TracerTraj风格的训练数据；规则版本（本代码）可快速部署，但准确率约60%而非87%）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（论文揭示的惊人事实：最顶级LLM在MAS故障归因上准确率&lt;10%——这意味着没有AgenTracer的MAS故障诊断基本是靠猜。任何生产级MAS都应该有这个能力）</li><li><strong>适用规模</strong>：月产生&gt;10次错误/意外输出的MAS系统</li><li><strong>数据依赖</strong>：需要历史失败轨迹（带ground truth答案）来构建TracerTraj数据集；冷启动可用规则版本，积累数据后微调专用模型</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
-    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <p class="muted">代码块数量：2 · 路径：paper2skills-code/mas/agentracer_mas_failure_attribution</p>
     <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
 AgenTracer多智能体故障归因系统
 功能：轨迹分析 + 反事实推理 + 故障步骤定位 + 级联影响追踪
@@ -157,7 +157,7 @@ function copyCode(btn) {
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>23-运营财务</h1><p>新领域 (2026-06-09): FBA fee intelligence, P&amp;L attribution, cash flow forecasting</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 23-运营财务 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-Accounts-Receivable-Intelligence.html" data-domain="23-运营财务" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">23-运营财务</div>
@@ -168,11 +198,16 @@
   <h3 class="sc-title">Tax Compliance VAT GST — 跨境电商增值税/GST 自动合规</h3>
   <p class="sc-desc">多欧洲站 VAT 手动核算耗时 3-4 天且吸奶器税率（7% 还是 19%）经常出错面临罚款——LLM 自动分类 + 税率数据库引擎，申报时间压缩至 1 天，避免错误分类罚款（未缴金额 20-100%）</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Temu-Consignment-Analytics.html" data-domain="23-运营财务" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">Temu 全托管/半托管利润分析 — 成本拆解矩阵与定价决策模型</h3>
+  <p class="sc-desc">全托管卖家面临&quot;Temu平台净利润算不清楚定价全靠感觉&quot;——成本拆解模型将SKU级净利润透明化，识别亏损SKU占比从不可知降至精确，年化止损$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

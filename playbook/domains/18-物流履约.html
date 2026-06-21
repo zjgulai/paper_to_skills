@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>18-物流履约</h1><p>Cross-border routing, last-mile prediction, returns/reverse logistics</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 18-物流履约 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-3D-Bin-Packing-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">18-物流履约</div>
@@ -78,15 +108,20 @@
   <h3 class="sc-title">跨境物流模式动态选择 — 需求预测驱动的保税仓与直邮模式联合优化框架</h3>
   <p class="sc-desc">凭经验选保税仓或直邮导致旺季爆仓或淡季仓储成本浪费——注意力增强Seq2Seq需求预测+退货率量化+多目标优化实现动态模式切换，总物流成本降低约15%（IJSSO 2026）</p>
   <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Customs-Clearance-Risk-Scoring.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Customs Clearance Risk Scoring — 跨境清关多维风险预警</h3>
+  <p class="sc-desc">清关合规团队面临&quot;婴配粉/CE产品查验扣押率25%、年均8-12次被扣损失20-80万元&quot;——多维风险评分模型AUC=0.81将高风险批次召回率提升至85%，年化减损20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Delivery-Promise-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">18-物流履约</div>
   <h3 class="sc-title">Delivery Promise Optimization — 时效承诺优化：转化率与准时率的帕累托</h3>
-  <p class="sc-desc">从历史配送记录中提取经验分位数，用 P95 分位数作为保守承诺基线</p>
+  <p class="sc-desc">履约经理面临承诺时效不敢报——交付承诺优化将延迟率从13%降到5%，年化省21万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-GraphDeepAR-Demand-Forecasting.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">18-物流履约</div>
   <h3 class="sc-title">GraphDeepAR — 图神经网络概率需求预测：商品关联 + 退货预测</h3>
-  <p class="sc-desc">传统需求预测（DeepAR、Prophet）将每个 SKU 独立建模，忽视了商品间的需求传导效应：奶粉缺货时纸尿裤也会滞销；新款婴儿车上市带动安全座椅需求。GraphDeepAR 的核心创新是将商品间关联关系显式建模为图结构</p>
+  <p class="sc-desc">预测工程师面临多SKU联动难学——GraphDeepAR将MAPE从21%降到12%，年化省23万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Inventory-Demand-Sensing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">18-物流履约</div>
@@ -98,6 +133,11 @@
   <h3 class="sc-title">Last-Mile Delivery Prediction（最后一公里配送时效预测）</h3>
   <p class="sc-desc">跨境母婴订单选择快递时仅凭经验判断，东海岸送 FedEx、西海岸送 USPS——最后一公里时效预测模型基于历史配送数据精准选路，每单节省 $1.2，年化 3000 单 = 节省 36 万元</p>
   <div class='sc-footer'><span class='sc-roi'>4-6 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Last-Mile-Network-Planning.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Last Mile Network Planning — VRP变体+海外仓选址末端网络优化</h3>
+  <p class="sc-desc">物流战略团队面临&quot;仅LA单仓导致东海岸2日达覆盖率仅12%、流失率18%&quot;——VRP选址优化增设NJ仓后2日达覆盖率提升至87%，年化节省配送成本55万元+间接增收20-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Logistics-Cost-PL-Attribution.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">18-物流履约</div>
   <h3 class="sc-title">Logistics Cost PL Attribution — 物流成本 P&amp;L 归因：每单头程+FBA+退货的利润拆解</h3>
@@ -108,6 +148,11 @@
   <h3 class="sc-title">Logistics Fraud Detection — 物流链路欺诈检测：虚假收货、刷单物流与地址篡改的识别与拦截</h3>
   <p class="sc-desc">&quot;Item Not Received&quot;（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%</p>
   <div class='sc-footer'><span class='sc-roi'>月均 -$3,200</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Temperature-Logistics.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Multi-Temperature Logistics — 多温区混合配送成本优化</h3>
+  <p class="sc-desc">物流运营面临&quot;有机婴儿辅食冷冻/冷藏/常温独立温区配送成本$12/箱超出利润空间&quot;——共用车厢+VRP优化将混合配送成本降至$7.5/箱，年化节省冷链成本120-190万元</p>
+  <div class='sc-footer'><span class='sc-roi'>6 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Predictive-Batch-Returns-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">18-物流履约</div>
   <h3 class="sc-title">退货批量逆向路由预测 — 跨境退货智能分拣与逆向物流优化</h3>
@@ -126,7 +171,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Supplier-Lead-Time-Buffer.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">18-物流履约</div>
   <h3 class="sc-title">Supplier Lead Time Buffer — 供应商交货期缓冲：非正态分布下的安全库存</h3>
-  <p class="sc-desc">传统安全库存公式（$SS = Z \cdot \sigma_{LT} \cdot \bar{D}$）基于正态分布假设，但实际跨境供应链中交货期呈现两个典型特征</p>
+  <p class="sc-desc">采购经理面临供应商交期波动大——交期缓冲将断供率从9%降到2%，年化省19万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Warehouse-Location-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">18-物流履约</div>
@@ -142,7 +187,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

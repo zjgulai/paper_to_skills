@@ -41,7 +41,7 @@
 </div>
 <h1>HTS Tariff Intelligence — LLM 驱动的跨境关税分类与节税优化</h1>
 <p class="muted">Skill-Cross-Border-Tax-Tariff-Modeling · 23-运营财务</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span></div>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-financial-cockpit.html'>运营财务驾驶舱手册</a></div>
 <div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20-200 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CFO / 财务负责人<span class='biz-ctx-secondary'> · CEO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Seller Central · Amazon SP API · FBA 报告 · 多货币财务系统</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>月度 FBA 账单 15 万但不知道哪些 SKU 在亏损；大促备货资金不够但不知道缺口多少；整体利润率 18% 但不知道是哪条产品线在拖累</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>SKU 级 P&amp;L 实时可见，FBA 费用长库龄提前预警，大促现金流缺口提前识别，融资窗口精准规划</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>FBA 费用算不清楚</span><span class='biz-pain-tag'>现金流紧张不知道哪里漏了</span><span class='biz-pain-tag'>哪个 SKU 真正赚钱看不见</span><span class='biz-pain-tag'>财务数据滞后一个月才出来</span></div></div></div></div>
@@ -57,7 +57,7 @@
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>ATLAS 论文报告 fine-tuned LLaMA-3.3-70B 在 10 位编码准确率达 40%（人工专家 ~ 60-70%），LLM+人工复核组合准确率 &gt; 90%</li><li>CBP 数据：2024 年进口商收到 HTS 错误通知并补缴关税的案例增加 23%</li><li>吸奶器案例：`8413.20`（3.4%）→ `9019.20`（0%），500 万美元货值年节税 17 万美元（约 122 万人民币）</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
-    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/growth_model/cross_border_tax_tariff_modeling</p>
     <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
 HTS Tariff Intelligence — LLM 驱动的 HTS 关税编码分类
 母婴跨境场景：5 个典型 SKU 的分层分类 + GRI 规则链输出
@@ -153,14 +153,14 @@ function copyCode(btn) {
 }
 </script>
 
-<div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>🧪 智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：品牌合规卫士（agent-brand-guardian）</p>
+<div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：品牌合规卫士（agent-brand-guardian）</p>
 <p style='margin:4px 0'><strong>测试输入</strong>：`{&quot;copy&quot;: &quot;Medical-grade breast pump with therapeutic suction&quot;, &quot;category&quot;: &quot;mother_baby&quot;, &quot;market&quot;: &quot;US&quot;}`</p>
 <p style='margin:4px 0'><strong>输出摘要</strong>：识别到&quot;medical-grade&quot;和&quot;therapeutic&quot;措辞触发 HTS 9019.20 优先归类条件；同时标记需要 FDA 510(k) 豁免声明，建议申请 CBP Binding Ruling 锁定 0% 税率，预估年化节税 ¥80-120 万</p>
 <p style='margin:4px 0'><strong>验证状态</strong>：✅ 本地计算通过 | 2026-06-12</p><div style='margin-top:10px'><a href='../agents.html' style='font-size:12px;color:#059669;font-weight:600'>→ 前往智能体广场运行</a></div></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

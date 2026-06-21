@@ -30,33 +30,63 @@
       </div>
     </aside>
     <section class="content"><h1>06-增长模型</h1><p>Churn, LTV, RFM, market size estimation, PLC stage</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 06-增长模型 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-Bass-Diffusion-New-Product-Forecasting.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">GEANN + Bass 新品冷启动需求预测 - 母婴跨境新品备货</h3>
-  <p class="sc-desc">母婴跨境新品冷启动需求预测痛点:每年 20-30 款新品上市,前 8 周零销售记录,人工拍脑袋备货首批,积压或断货损失年化 300+ 万元. 本 Skill 组合两个方法:① Bass 扩散模型生成新品扩散曲线形状(创新+模仿系数);② GEANN 图迁移从相似品历史借用销售信号;③ Bass 参数从相似品加权迁移初始化,实现&quot;形状从理论 + 规模从迁移&quot;的双驱动.</p>
+  <p class="sc-desc">新品经理面临首发备货拍脑袋——Bass扩散将预测误差18%压到8%，年化省26万元</p>
   <div class='sc-footer'><span class='sc-roi'>25 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Blue-Ocean-Category-Discovery.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">06-增长模型</div>
@@ -76,8 +106,13 @@
 </a><a class="card skill-card" href="../skills/Skill-Cold-Start-Product-Recommendation.html" data-domain="06-增长模型" data-diff="">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Cold-Start Product Recommendation (冷启动商品推荐)</h3>
-  <p class="sc-desc">新商品没有历史交互数据时，如何精准推荐给用户。</p>
+  <p class="sc-desc">运营经理面临新品上架无推荐位——冷启动推荐将点击率1.2%提到3.1%，年化增38万元</p>
   
+</a><a class="card skill-card" href="../skills/Skill-Combo-Customer-Churn-Recovery.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">客户流失预警→挽回 Combo Pattern — 从流失预测到精准干预的 5 步完整链路</h3>
+  <p class="sc-desc">用户运营面临&quot;用户流失了但流失预测/触达策略/最优时机/文案优化是四个孤立系统没有联动&quot;——5步精准干预链路将高危用户挽回率从12%提升至34%，年化增收$8.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>89.8 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Competitor-New-Product-Detection.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Competitor New Product Detection — 竞品新品预测：提前发现竞品动向的信号挖掘</h3>
@@ -91,7 +126,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Cross-Border-Cold-Start-Forecast.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Cross-Border Cold-Start Forecast（跨境冷启动需求预测）</h3>
-  <p class="sc-desc">跨境电商的致命问题：70-80% 商品在目标市场无历史数据，15-25% 上架后零销量，但传统预测模型会给出&quot;看起来合理&quot;的正数预测→导致库存积压。ZODIAC 用双域 LSTM + 双头架构同时解决&quot;零销量预测&quot;和&quot;过预测&quot;两个核心痛点。</p>
+  <p class="sc-desc">跨境品类经理面临新品销量难估——冷启动预测将备货偏差35%压到12%，年化省24万元</p>
   <div class='sc-footer'><span class='sc-roi'>60-120 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Cross-Market-Product-Transfer.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
@@ -101,7 +136,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Customer-Churn-Prediction.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Customer Churn Prediction (用户流失预测)</h3>
-  <p class="sc-desc">识别哪些用户即将停止使用产品/服务，从而提前采取挽留措施。</p>
+  <p class="sc-desc">CRM经理面临流失预警滞后——Churn Prediction将流失识别提前14天，年化省32万元</p>
   <div class='sc-footer'><span class='sc-roi'>1.5-3 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Customer-Journey-Prototype.html" data-domain="06-增长模型" data-diff="">
   <div class="sc-domain">06-增长模型</div>
@@ -111,7 +146,7 @@
 </a><a class="card skill-card" href="../skills/Skill-DQN-Purchase-Prediction.html" data-domain="06-增长模型" data-diff="">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">DQN-Inspired Purchase Intent Prediction</h3>
-  <p class="sc-desc">传统购买预测模型将问题视为静态分类任务。DQN-inspired方法引入强化学习思维：将用户会话视为状态，营销干预视为动作，转化/流失视为奖励。通过经验回放和Epsilon-Greedy探索，模型学会识别高价值干预时机。</p>
+  <p class="sc-desc">投放经理面临购买时点难判——DQN将转化窗口命中率52%提到74%，年化增20万元</p>
   <div class='sc-footer'><span class='sc-roi'>100万</span></div>
 </a><a class="card skill-card" href="../skills/Skill-DTC-Customer-Acquisition-Attribution.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
@@ -123,6 +158,21 @@
   <h3 class="sc-title">Skill: Deep Learning for Customer Churn Prediction</h3>
   <p class="sc-desc">母婴订阅盒服务（如每月奶粉+尿布套餐）面临用户流失风险</p>
   <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Email-Sequence-Multiarm-Optimizer.html" data-domain="06-增长模型" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Email Sequence Multiarm Optimizer — Thompson Sampling 驱动的邮件序列多臂老虎机优化</h3>
+  <p class="sc-desc">邮件运营面临&quot;多版本邮件文案靠感觉选一个A/B测试太慢&quot;——Thompson Sampling将最优邮件文案发现速度提升3倍，开启率年化提升$2.2万GMV</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Endowment-Effect-Trial-Conversion.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">禀赋效应试用转化 — 先拥有再付款，利用放弃厌恶将付费转化率提升40-60%</h3>
+  <p class="sc-desc">增长负责人面临&quot;免费试用转化率低不知道什么时候结束免费期成功率最高&quot;——禀赋效应KM生存分析找到最优试用终止时机，付费转化率提升40-60%，年化$9.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>9.6 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Epidemiological-Viral-Traffic-SIR.html" data-domain="06-增长模型" data-diff="">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">基于 SIR 传染病模型的 TikTok 流量拐点预测 (Epidemiological Traffic Modeling)</h3>
+  <p class="sc-desc">增长经理面临内容爆量难追踪——SIR将流量峰值预测误差25%压到10%，年化省18万元</p>
+  
 </a><a class="card skill-card" href="../skills/Skill-GP-Tweedie-Intermittent-New-Product-Demand.html" data-domain="06-增长模型" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">GP+Tweedie 间歇稀疏新品需求预测 — 零膨胀冷启动概率预测</h3>
@@ -153,10 +203,20 @@
   <h3 class="sc-title">LTV预测 - 零膨胀对数正态模型 (ZILN)</h3>
   <p class="sc-desc">我们通过 Facebook/TikTok 广告获取了大量北美新客，但并非所有新客都有长期价值</p>
   <div class='sc-footer'><span class='sc-roi'>100-200 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Loyalty-Program-ROI-Modeling.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Loyalty Program ROI Modeling — 双重差分评估会员积分体系 LTV 增量价值</h3>
+  <p class="sc-desc">CFO面临&quot;积分会员体系成本越来越高但到底有没有提升LTV不清楚&quot;——DiD净增量建模将积分体系ROI精确量化，避免积分负债超过收益的$15万/年损失</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MTL-Churn-LTV-Joint-Prediction.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">MTL Churn-LTV Joint Prediction — 流失预测与LTV联合建模</h3>
+  <p class="sc-desc">数据科学家面临&quot;流失预测和LTV预测分开建模两个模型都不够准&quot;——MTL联合建模将两个任务准确率各提升15%，年化增收$7.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>7.2 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Market-Size-Estimation.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Skill-Market-Size-Estimation</h3>
-  <p class="sc-desc">核心思想：在选品决策前量化「这个品类有多大、能拿多少」，避免「市场很大」的模糊判断。用两条互相校验的路径（Top-down 和 Bottom-up）估算 TAM/SAM/SOM，并通过 Google Trends 校准和 Monte Carlo 模拟将点估计扩展为置信区间，输出可进入 ROI 模型的数字范围。</p>
+  <p class="sc-desc">战略经理面临市场容量拍脑袋——Market Size将TAM误差30%压到12%，年化省22万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Multimarket-Expansion-Readiness-Scorer.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">06-增长模型</div>
@@ -171,7 +231,7 @@
 </a><a class="card skill-card" href="../skills/Skill-New-Product-Opportunity-Mining.html" data-domain="06-增长模型" data-diff="">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">New Product Opportunity Mining (新品机会挖掘模型)</h3>
-  <p class="sc-desc">在新商品上市前预测其成功概率，从而优化选品决策和资源配置。</p>
+  <p class="sc-desc">选品经理面临新品机会筛不准——Opportunity Mining将候选命中率40%提到68%，年化增30万元</p>
   <div class='sc-footer'><span class='sc-roi'>500万</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Probabilistic-Hierarchical-New-Product-Forecast.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
@@ -186,13 +246,23 @@
 </a><a class="card skill-card" href="../skills/Skill-Product-Opportunity-Scoring.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Product Opportunity Scoring（新品机会评分卡）</h3>
-  <p class="sc-desc">1. 市场规模（搜索量 + BSR 品类总量，$w$=0.25）</p>
+  <p class="sc-desc">产品总监面临机会排序混乱——Opportunity Scoring将误判率28%压到9%，年化省19万元</p>
   <div class='sc-footer'><span class='sc-roi'>40-80 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-RFM-Customer-Segmentation.html" data-domain="06-增长模型" data-diff="⭐☆☆☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">RFM Customer Segmentation for Targeted Marketing</h3>
-  <p class="sc-desc">R (Recency)：最近一次购买距今多少天。越近越可能再次购买。</p>
+  <p class="sc-desc">会员运营面临人群分层粗糙——RFM将召回率55%提到82%，年化增24万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RFM-to-Action-Policy-Engine.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">RFM to Action Policy Engine — RFM 分层驱动的自动化触达策略决策引擎</h3>
+  <p class="sc-desc">运营主管面临&quot;RFM分群做了但不知道对每群用户该做什么动作&quot;——ε-greedy策略引擎将分群到自动化触达从2天手工决策压缩至实时触发，复购率提升18%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Repurchase-Trigger-Timing-Model.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Repurchase Trigger Timing Model — 生存分析驱动的最佳复购触达时间窗预测</h3>
+  <p class="sc-desc">私域运营面临&quot;复购提醒发出去但时机不对打扰用户开率极低&quot;——Weibull生存分析将复购提醒精准时间窗CTR从8%提升至29%，年化增收$3.7万</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Social-Network-Viral-Growth-Simulation.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">社交网络病毒式增长模拟与放大 — 跨境品牌UGC传播建模与爆发点预测</h3>
@@ -203,6 +273,11 @@
   <h3 class="sc-title">Supplier Evaluation Model（供应商评估模型）</h3>
   <p class="sc-desc">对比 3 家吸奶器 OEM 供应商时靠主观印象决策，忽视交期稳定性和质量风险的量化权重——TOPSIS 多准则供应商评分模型将定性评估转为可解释综合评分，选型准确率可溯源，避免因供应商质量风险造成的批量召回损失</p>
   <div class='sc-footer'><span class='sc-roi'>15-25 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TikTok-Repurchase-From-Live-Audience.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">TikTok Live Audience Repurchase—直播首购用户复购转化</h3>
+  <p class="sc-desc">用户运营面临&quot;直播首购用户冲动购买后复购率远低于搜索购买用户&quot;——生存分析揭示直播用户7天复购窗口特性，差异化干预序列年化增收$5.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>5.2 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Transfer-Learning-New-Product-Forecast.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">迁移学习新品销量预测 — 网络权重迁移从相似品借力</h3>
@@ -216,7 +291,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Uplift-Churn-Prediction.html" data-domain="06-增长模型" data-diff="">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Uplift Modeling for Churn Prediction</h3>
-  <p class="sc-desc">识别哪些用户会因为干预（如优惠券、客服电话）而降低流失概率。</p>
+  <p class="sc-desc">留存经理面临挽留券乱发——Uplift Churn将无效挽留率22%压到6%，年化省28万元</p>
   <div class='sc-footer'><span class='sc-roi'>6万元</span></div>
 </a><a class="card skill-card" href="../skills/Skill-User-Lifecycle-STAN.html" data-domain="06-增长模型" data-diff="">
   <div class="sc-domain">06-增长模型</div>
@@ -228,11 +303,16 @@
   <h3 class="sc-title">Viral Marketing Model — 病毒式传播建模：K 因子裂变增长的量化设计</h3>
   <p class="sc-desc">品牌想设计老带新推荐计划但不知道奖励多少合适也不清楚K因子——K因子量化每个用户带来的新用户数并找到最优奖励结构，K从0.2提升到0.5后月新增用户提升50%年化低成本增长15-50万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-WhatsApp-Private-Domain-Analytics.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">WhatsApp Private Domain Analytics — Shapley Value 多渠道归因与私域触达效率分析</h3>
+  <p class="sc-desc">东南亚运营面临&quot;WhatsApp私域投入了钱但不知道对复购贡献多少&quot;——Shapley公平归因将WhatsApp渠道真实ROI透明化，帮助预算决策年化影响$8.6万</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

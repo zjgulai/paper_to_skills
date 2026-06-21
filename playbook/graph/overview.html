@@ -41,7 +41,7 @@
   <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <div class="graph-page">
     <div class="graph-toolbar">
-      <input type="text" id="node-search" placeholder="🔍 搜索技能..." autocomplete="off">
+      <input type="text" id="node-search" placeholder="搜索技能..." autocomplete="off">
       <div id="domain-pills" style="display:flex;flex-wrap:wrap;gap:4px;flex:1"></div>
       <button id="btn-reset" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">重置</button>
       <button id="btn-focus-top" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">核心节点</button>
@@ -50,14 +50,14 @@
       <svg id="graph-canvas"></svg>
       <div class="loading-overlay" id="loading">
         <div class="loading-spinner"></div>
-        <div style="font-size:13px;color:var(--muted)">加载 726 个技能节点…</div>
+        <div style="font-size:13px;color:var(--muted)">加载 874 个技能节点…</div>
       </div>
-      <div class="graph-stats" id="graph-stats">节点 726 · 边 13893</div>
+      <div class="graph-stats" id="graph-stats">节点 874 · 边 16107</div>
       <div class="graph-sidebar">
-        <div class="gsb-header">📊 节点详情</div>
+        <div class="gsb-header">PL 节点详情</div>
         <div class="gsb-body" id="gsb-body"><div class="gsb-empty">点击图谱中的节点<br>查看详情和关联</div></div>
         <div class="path-finder">
-          <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:7px">🗺 学习路径发现</div>
+          <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:7px"> 学习路径发现</div>
           <input type="text" id="path-from" placeholder="起点 Skill ID...">
           <input type="text" id="path-to" placeholder="终点 Skill ID...">
           <button class="path-finder-btn" onclick="findPath()">找最短路径</button>
@@ -67,11 +67,11 @@
     </div>
   </div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
-  const DOMAIN_COLORS = {"supply_chain": "#0ea5e9", "mas": "#8b5cf6", "knowledge_graph": "#06b6d4", "llm_agent_engineering": "#ec4899", "advertising": "#f59e0b", "user_analytics": "#10b981", "tag_engineering": "#6366f1", "growth_model": "#ef4444", "marketing": "#f97316", "operations_finance": "#14b8a6", "recommendation": "#84cc16", "ab_testing": "#a855f7", "causal_inference": "#64748b", "time_series": "#22d3ee", "pricing": "#fb923c", "logistics": "#4ade80", "risk_fraud": "#f43f5e", "visual_content": "#c084fc", "compliance": "#fbbf24", "data_collection": "#38bdf8", "ml_fundamentals": "#94a3b8", "ai_humanities": "#e879f9", "nlp_voc": "#2dd4bf"};
-  const DOMAIN_LABELS = {"supply_chain": "供应链", "mas": "多智能体", "knowledge_graph": "知识图谱", "llm_agent_engineering": "LLM/Agent工程", "advertising": "广告分析", "user_analytics": "用户分析", "tag_engineering": "标签工程", "growth_model": "增长模型", "marketing": "营销投放", "operations_finance": "运营财务", "recommendation": "推荐系统", "ab_testing": "A/B实验", "causal_inference": "因果推断", "time_series": "时间序列", "pricing": "价格优化", "logistics": "物流履约", "risk_fraud": "风控反欺诈", "visual_content": "AI视频", "compliance": "合规决策", "data_collection": "数据采集", "ml_fundamentals": "ML基础", "ai_humanities": "AI人文", "nlp_voc": "NLP-VOC"};
+  const DOMAIN_COLORS = {"supply_chain": "#0ea5e9", "mas": "#8b5cf6", "knowledge_graph": "#06b6d4", "llm_agent_engineering": "#ec4899", "advertising": "#f59e0b", "user_analytics": "#10b981", "tag_engineering": "#6366f1", "growth_model": "#ef4444", "marketing": "#f97316", "operations_finance": "#14b8a6", "recommendation": "#84cc16", "ab_testing": "#a855f7", "causal_inference": "#64748b", "time_series": "#22d3ee", "pricing": "#fb923c", "logistics": "#4ade80", "risk_fraud": "#f43f5e", "visual_content": "#c084fc", "compliance": "#fbbf24", "data_collection": "#38bdf8", "ml_fundamentals": "#94a3b8", "ai_humanities": "#e879f9", "nlp_voc": "#2dd4bf", "search_traffic": "#f59e0b"};
+  const DOMAIN_LABELS = {"supply_chain": "供应链", "mas": "多智能体", "knowledge_graph": "知识图谱", "llm_agent_engineering": "LLM/Agent工程", "advertising": "广告分析", "user_analytics": "用户分析", "tag_engineering": "标签工程", "growth_model": "增长模型", "marketing": "营销投放", "operations_finance": "运营财务", "recommendation": "推荐系统", "ab_testing": "A/B实验", "causal_inference": "因果推断", "time_series": "时间序列", "pricing": "价格优化", "logistics": "物流履约", "risk_fraud": "风控反欺诈", "visual_content": "AI内容生成", "compliance": "合规决策", "data_collection": "数据采集", "ml_fundamentals": "ML基础", "ai_humanities": "AI人文", "nlp_voc": "NLP-VOC", "search_traffic": "搜索流量工程"};
   let allNodes=[],allLinks=[],simulation,svg,g,zoom,selectedNode=null;
   let activeDomains=new Set(Object.keys(DOMAIN_COLORS));
   async function init(){
@@ -180,7 +180,7 @@
       <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:10.5px;font-weight:600;background:${color}22;color:${color};margin-bottom:8px">◉ ${label}</span>
       <div style="font-size:10.5px;color:#94a3b8;margin-bottom:7px">连接度: ${degree[d.id]||0}</div>`;
     if(sk.problem_solved)html+=`<div style="font-size:12px;color:#475569;line-height:1.6;margin-bottom:8px">${esc(sk.problem_solved.slice(0,140))}…</div>`;
-    if(sk.roi_figure)html+=`<div style="font-size:11.5px;color:#059669;font-weight:600;margin-bottom:8px">💰 ${esc(sk.roi_figure)}</div>`;
+    if(sk.roi_figure)html+=`<div style="font-size:11.5px;color:#059669;font-weight:600;margin-bottom:8px">PR ${esc(sk.roi_figure)}</div>`;
     const tl={prerequisite:'⬅ 前置',combinable:'🔗 组合',extension:'➡ 延伸'};
     const tc={prerequisite:'#94a3b8',combinable:'#3b82f6',extension:'#10b981'};
     html+='<div>';

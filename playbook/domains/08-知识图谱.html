@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>08-知识图谱</h1><p>Heterogeneous graphs, GNN, KG construction, KGQA</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 08-知识图谱 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-AgentRouter-KG-Guided.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
@@ -76,7 +106,7 @@
 </a><a class="card skill-card" href="../skills/Skill-CausalRAG-Causal-Graph-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">CausalRAG — 因果图增强检索：语义相似 + 因果链路双轨 RAG</h3>
-  <p class="sc-desc">传统 RAG 将文档切分为固定长度的 chunk，导致原本有完整因果逻辑的段落被割裂。例如&quot;产品A未通过认证 → 被召回 → 触发贸易禁令&quot;这一因果链横跨多个 chunk，单个 chunk 无法表达完整逻辑。</p>
+  <p class="sc-desc">研究经理面临知识检索只会相关不会因果——因果检索将方案误判率降35%，年化省10万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-CausalRAG-Knowledge-Retrieval.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
@@ -106,7 +136,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">面向电商的稠密检索与语义排序</h3>
-  <p class="sc-desc">传统电商搜索基于 BM25/TF-IDF 关键词匹配，无法理解语义。例如用户搜&quot;缓解涨奶 pain&quot;，关键词系统只能匹配包含&quot;pain&quot;或&quot;涨奶&quot;字样的商品，无法召回&quot;吸奶器&quot;、&quot;冷敷贴&quot;等语义相关但关键词不匹配的商品。</p>
+  <p class="sc-desc">运营分析师面临商品语义搜不到——稠密检索将命中率从62%提至86%，年化省8万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Entity-Resolution-KG-Dedup.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
@@ -141,7 +171,7 @@
 </a><a class="card skill-card" href="../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">GraphRAG - 知识图谱增强检索生成</h3>
-  <p class="sc-desc">GraphRAG（Graph Retrieval-Augmented Generation） 将传统 RAG（检索增强生成）中的文本块检索升级为知识图谱结构化检索，通过图遍历获取与查询相关的实体、关系和子图，显著提升复杂推理场景的答案准确性和可解释性。</p>
+  <p class="sc-desc">知识运营面临多文档关系难串联——图增强检索将找答案时间从30分降到5分，年化省12万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-100万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">08-知识图谱</div>
@@ -161,7 +191,7 @@
 </a><a class="card skill-card" href="../skills/Skill-HyDE-Hypothetical-Document.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">HyDE - 假设文档嵌入查询扩展</h3>
-  <p class="sc-desc">HyDE（Hypothetical Document Embeddings） 的洞察极其简单却有效</p>
+  <p class="sc-desc">研究员面临冷启动问题搜不到高质量答案——假设文档生成将首轮召回率提升20%，年化省9万元</p>
   
 </a><a class="card skill-card" href="../skills/Skill-Hybrid-Search-BM25-Vector.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
@@ -201,12 +231,12 @@
 </a><a class="card skill-card" href="../skills/Skill-KG-Powered-User-Profiling.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐</h3>
-  <p class="sc-desc">传统协同过滤仅依赖 user-item 矩阵，缺乏对产品语义的理解，导致跨品类推荐能力弱。KG-Powered User Profiling 通过异构图融合将产品知识图谱（属性/认证/成分/适用年龄段）与用户行为图（购买/浏览/评价）结合，构建知识增强的用户偏好向量。</p>
+  <p class="sc-desc">用户运营面临画像碎片化——知识图谱画像将标签覆盖率提40%，年化增收15万元</p>
   <div class='sc-footer'><span class='sc-roi'>跨品类推荐 CTR 提升 18%，用户 LTV 增加，冷启动转化率提升</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-KG-Relation-Completion-CBLiP.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Knowledge Graph Relation Completion with CBLiP</h3>
-  <p class="sc-desc">母婴出海电商的商品知识图谱需要维护大量实体关系（品牌-产品、产品-成分、成分-功效、产品-适用年龄等）。</p>
+  <p class="sc-desc">数据治理面临关系缺失导致图谱不完整——关系补全将缺边率从22%降至8%，年化省11万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-KG-Supply-Chain-Cost-Attribution.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">08-知识图谱</div>
@@ -216,12 +246,12 @@
 </a><a class="card skill-card" href="../skills/Skill-KGQA-Question-Answering.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Knowledge Graph Question Answering (KGQA)</h3>
-  <p class="sc-desc">构建了产品知识图谱后，如何让非技术人员（运营、客服、业务方）用自然语言查询它？</p>
+  <p class="sc-desc">客服主管面临图谱问答依赖人工查资料——KGQA将答案响应从10分压到1分，年化省14万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Knowledge-Graph-for-Skills-Management.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Knowledge Graph for Skills Management（知识图谱驱动的技能管理）</h3>
-  <p class="sc-desc">知识图谱（Knowledge Graph, KG） 是一种用图结构表示知识的方法，通过实体-关系-实体的三元组形式（如&quot;Uplift Modeling -应用于- 广告投放&quot;）将碎片化信息组织成可推理的知识网络。</p>
+  <p class="sc-desc">HRBP面临技能台账分散难调配——技能图谱将人才匹配周期缩短60%，年化省18万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-LLM-Generative-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
@@ -236,7 +266,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Multilingual-NER-Universal-v2.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Multilingual Named Entity Recognition (Universal NER v2)</h3>
-  <p class="sc-desc">母婴出海电商的用户评论、客服对话、社交媒体内容涉及多语言（英语、德语、法语、西班牙语、日语等）。</p>
+  <p class="sc-desc">本地化运营面临多语种实体抽取慢——多语NER将标注工时降50%，年化省7万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Multimodal-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
@@ -251,7 +281,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Multimodal-RAG.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Multimodal RAG - 图文混合多模态检索增强生成</h3>
-  <p class="sc-desc">Multimodal RAG（多模态检索增强生成） 将 RAG 系统从纯文本扩展到图文混合模态，实现</p>
+  <p class="sc-desc">内容审核面临图文视频信息混杂——多模态RAG将审核漏检率降30%，年化省13万元</p>
   
 </a><a class="card skill-card" href="../skills/Skill-NuggetIndex-Atomic-Knowledge-Management.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
@@ -271,12 +301,12 @@
 </a><a class="card skill-card" href="../skills/Skill-RAG-Reranking-CrossEncoder.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">检索后精排 — Cross-Encoder Reranking</h3>
-  <p class="sc-desc">RAG 管道的检索阶段（BM25/向量检索）优先保证召回率，会返回大量候选文档（top-50~100）。但这些候选文档与查询的相关性排序往往不准——召回阶段的 Bi-encoder 是独立编码查询和文档，无法捕捉两者间的细粒度交互。</p>
+  <p class="sc-desc">知识产品经理面临搜索结果前后不一致——重排模型将Top3准确率提升16%，年化省9万元</p>
   <div class='sc-footer'><span class='sc-roi'>28 万</span></div>
 </a><a class="card skill-card" href="../skills/Skill-RAPTOR-Hierarchical-RAG.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">RAPTOR - 递归抽象树型分层检索</h3>
-  <p class="sc-desc">RAPTOR（Recursive Abstractive Processing for Tree-Organized Retrieval） 将长文档转化为一棵&quot;抽象树&quot;</p>
+  <p class="sc-desc">研究助理面临长文档越搜越散——层级RAG将检索耗时从20分降到4分，年化省10万元</p>
   
 </a><a class="card skill-card" href="../skills/Skill-Semantic-Chunking-Strategy.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
@@ -312,7 +342,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

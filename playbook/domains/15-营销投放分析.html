@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>15-营销投放分析</h1><p>MMM, promotion effectiveness, causal ML, channel saturation</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 15-营销投放分析 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-Brand-Penetration-Modeling.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
@@ -61,13 +91,18 @@
 </a><a class="card skill-card" href="../skills/Skill-CDA-Privacy-Causal-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">CDA — 隐私保护因果渠道归因：无用户数据的多触点归因</h3>
-  <p class="sc-desc">传统多触点归因（Multi-Touch Attribution, MTA）依赖用户级点击路径数据：追踪每个用户从广告曝光→点击→转化的完整旅程，才能判断各渠道贡献。</p>
+  <p class="sc-desc">广告投放经理面临隐私下归因失真——CDA将归因偏差降25%，年化增收30万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Channel-Saturation-Curve.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Channel Saturation Curve（渠道饱和曲线建模）</h3>
   <p class="sc-desc">Facebook 月预算从 $5 万加到 $8 万后，ROAS 从 3.2 掉到 2.1</p>
   <div class='sc-footer'><span class='sc-roi'>18-25 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Combo-Ad-ROI-Maximizer.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">广告ROI最大化 Combo Pattern — 从归因分析到预算自动重分配的 6 步优化链路</h3>
+  <p class="sc-desc">广告负责人面临&quot;广告归因/预算分配/MMM/搜索协同是四个独立工具每次优化都要手动对齐&quot;——6步优化链路将广告总ROI提升24%，ACoS降低18%，年化效率提升$11.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>220 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Competitive-Response-Modeling.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Competitive Response Modeling（竞争响应建模）</h3>
@@ -111,7 +146,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Geo-Level-Marketing-Effectiveness.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Geo-Level Marketing Effectiveness（地理级营销效果）</h3>
-  <p class="sc-desc">同一广告在美国加州和德国巴伐利亚的效果完全不同。Geo-level 分析用地理准实验（Geo Experiment）估计各区域的因果营销效果，避免全国平均掩盖的区域异质性。</p>
+  <p class="sc-desc">区域营销经理面临城市投放看不准——地理效应将预算浪费率从22%降到7%，年化省19万元</p>
   <div class='sc-footer'><span class='sc-roi'>20-40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Identified-Bayesian-MMM.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">15-营销投放分析</div>
@@ -133,6 +168,11 @@
   <h3 class="sc-title">KOL ROI 因果归因（网红/达人投放效果的真实增量测算）</h3>
   <p class="sc-desc">月 KOL 投放 30 万元，naive 归因显示 ROAS 3.5，但无法区分「因 KOL 才购买」和「本来就会买顺路点了链接」——PSM+DiD 因果归因将头部 KOL iROAS 从 4.2 修正为 1.8，将 30 万预算转向腰部 KOL 后年化增量 GMV 提升 44%</p>
   <div class='sc-footer'><span class='sc-roi'>30 万/月</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Loss-Aversion-Promotion-Design.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">损失厌恶促销设计 — 「限时最后3件」比「立省30元」点击率高35%</h3>
+  <p class="sc-desc">营销负责人面临&quot;同样的折扣力度不同话术转化率差异高达3倍但不知道哪种最优&quot;——损失框架A/B测试将促销CTR提升18-35%，年化$3.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>3.2 万/年</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-MMM-Budget-PL-Alignment.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">MMM Budget PL Alignment — 营销预算分配与利润约束下的 ROI 优化</h3>
@@ -146,13 +186,18 @@
 </a><a class="card skill-card" href="../skills/Skill-Marketing-Mix-Modeling.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Marketing Mix Modeling (MMM) for Macro Budget Allocation</h3>
-  <p class="sc-desc">品牌每个月在不同渠道（Facebook、Google、TikTok、KOL、线下）投入数百万广告费。</p>
+  <p class="sc-desc">市场总监面临多渠道贡献分不清——MMM将预算回报率提16%，年化增收35万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Multi-Objective-Budget-Allocation.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Multi-Objective Budget Allocation（多目标预算分配）</h3>
   <p class="sc-desc">$30 万月预算要同时做三件事——黑五冲销量（短期 ROI）、母婴博主种草（品牌搜索量）、新款吸奶器 S2 预热（新品曝光）</p>
   <div class='sc-footer'><span class='sc-roi'>30-50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multi-Platform-Ad-Budget-Allocator.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">多平台广告预算最优分配 — 约束优化最大化跨平台 ROAS</h3>
+  <p class="sc-desc">广告投手面临&quot;Amazon/TikTok/Meta三个平台预算靠经验拍脑袋分配ROAS差异大&quot;——约束优化将多平台总ROAS提升19%，年化广告效率提升$11.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>20 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Organic-Content-Causal-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Organic Content Causal Attribution — 无用户数据的有机内容因果归因 (CDA)</h3>
@@ -161,17 +206,17 @@
 </a><a class="card skill-card" href="../skills/Skill-Post-Purchase-Email-Sequence-Optimizer.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Post-Purchase Email Sequence Optimizer（购后邮件序列优化）</h3>
-  <p class="sc-desc">核心思想：购后邮件序列（Post-Purchase Email Flow）是 DTC 品牌成本最低、ROI 最高的 LTV 工具。但大多数团队发送的是时间驱动的固定序列（下单后 D+3/D+7/D+30 自动发），而非行为驱动的个性化路径。基于强化学习的邮件序列优化，通过 Contextual Bandit 算法动态选择每个用户的最优触达时机、主题和内容组合。</p>
+  <p class="sc-desc">私域运营面临邮件跟进打不开——邮件序列优化将复购率从8%提到12%，年化增收13万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Promotion-Effectiveness.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Promotion Effectiveness Evaluation with Causal ML</h3>
-  <p class="sc-desc">促销活动期间销售额暴涨30%，这是促销的真实效果，还是&quot;本来就会买的用户&quot;恰好遇到了促销？</p>
+  <p class="sc-desc">电商经理面临大促值不值看不清——促销效果将毛利回收率从68%提到82%，年化增利21万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Promotion-Logistics-Surge-Forecast.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Promotion Logistics Surge Forecast — 大促物流爆仓预测：营销-履约联动容量规划</h3>
-  <p class="sc-desc">基于营销投放数据提前 3-7 天预测物流需求峰值，驱动仓储/运力的前置性扩容决策。</p>
+  <p class="sc-desc">仓配经理面临促销峰值压垮履约——峰值预测将爆仓率从17%降到4%，年化省26万元</p>
   <div class='sc-footer'><span class='sc-roi'>20-40 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-RL-Dynamic-Promotion-Optimization.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
@@ -183,11 +228,31 @@
   <h3 class="sc-title">RTB Multi-Objective Bidding — 实时竞价多目标优化：广告出价的帕累托前沿策略</h3>
   <p class="sc-desc">黑五期间单一ROAS目标限制出价导致曝光量不足错失旺季增长窗口——多目标帕累托优化在旺季自动切换到增长模式（最大化曝光/新客）淡季切换效率模式（最大化ROAS），年化GMV增益20-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TikTok-Algorithm-Traffic-Amplification.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">TikTok推流算法流量放大 — 逆向工程完播率/互动率临界点识别</h3>
+  <p class="sc-desc">运营负责人面临&quot;视频发出去推流量忽高忽低不知道算法触发放量的临界点&quot;——算法临界指标识别将触发推流放量的概率从32%提升至71%，年化流量成本节省$6.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TikTok-Live-Real-Time-CVR-Prediction.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">TikTok直播间实时CVR预测 — 基于弹幕情绪与互动信号的秒级转化率预测</h3>
+  <p class="sc-desc">TikTok直播运营面临&quot;不知道直播间转化率什么时候会下跌无法提前干预&quot;——秒级CVR预测将转化率下跌预警时间提前90秒，福利话术触发后CVR回升23%，年化$8.6万</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TikTok-Shop-Content-Commerce-Funnel.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">TikTok Shop 内容电商漏斗建模 — 短视频→直播→下单三段式转化率优化</h3>
+  <p class="sc-desc">TikTok Shop运营面临&quot;短视频和直播都在做但不知道哪个环节流失最多&quot;——Markov Chain三段式漏斗将关键流失环节定位精度提升至91%，GMV转化率提升23%</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-TikTok-Trending-Product-Signal.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">TikTok爆款商品信号挖掘 — 话题标签增速分析提前发现下一个爆款品类</h3>
+  <p class="sc-desc">选品运营面临&quot;总是比竞品晚2-4周发现TikTok爆款品类错过流量红利&quot;——话题标签增速信号挖掘将爆款发现提前2-4周，首波流量红利年化GMV$4.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>3-6 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

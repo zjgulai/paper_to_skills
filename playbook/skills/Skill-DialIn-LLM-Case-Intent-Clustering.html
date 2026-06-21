@@ -41,14 +41,14 @@
 </div>
 <h1>Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树</h1>
 <p class="muted">Skill-DialIn-LLM-Case-Intent-Clustering · 09-DataAgent-LLM</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class="tag-row"><span class='tag'>causal</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-M 新品上市全链路</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-customer-service-agent.html'>客服售后智能体手册</a></div>
 <div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>200-400 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 运营负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API · Shopify · TikTok Ads API · 多平台数据整合</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>数据需求太多，数据团队排期 2 周；非技术人员（采购/客服/运营）有数据问题但不会 SQL；重复报表占用大量时间</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>业务方用自然语言自助查数据，常规报表自动化，数据驱动决策响应速度从「天」变「分钟」</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>数据需求排期太长</span><span class='biz-pain-tag'>不会 SQL 只能等数据团队</span><span class='biz-pain-tag'>老板临时要数据没法马上出</span><span class='biz-pain-tag'>分析师时间都花在取数上</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2 id="s-problem">1. 解决的问题</h2>
-    <p>WF-C 客服分诊的核心是&quot;意图细分&quot;——母婴 Case 复杂(退款/换货/咨询/投诉/物流/产品使用/安全升级),嵌入距离无法区分字面相似但意图截然不同的对话片段(如&quot;宝宝用了这个奶粉一直哭&quot; 可能是质量投诉或产品适配咨询). Dial-In LLM 用 LoRA 微调小型 LLM 作为聚类&quot;工具人&quot;(Qwen2.5-7B / ChatGLM3-6B):① 连贯性评估器 判断簇语义一致性 ② 意图命名器 生成&quot;动作-目标&quot;标签 ③ 迭代搜索自动发现最优簇数,无需预设 K.</p>
+    <p>客服主管面临来电诉求归类靠人工——意图聚类将分拣准确率提到92%，年化省9万元</p>
     <h2 id="s-algo">2. 核心算法逻辑</h2>
     <p>WFC 客服分诊的核心是&quot;意图细分&quot;——母婴 Case 复杂(退款/换货/咨询/投诉/物流/产品使用/安全升级),嵌入距离无法区分字面相似但意图截然不同的对话片段(如&quot;宝宝用了这个奶粉一直哭&quot; 可能是质量投诉或产品适配咨询). DialIn LLM 用 LoRA 微调小型 LLM 作为聚类&quot;工具人&quot;(Qwen2.57B / ChatGLM36B):① 连贯性评估器 判断簇语义一致性 ② 意图命名器 生成&quot;动作目标&quot;标签 ③ 迭代搜索自动</p>
     <h2 id="s-scenario">3. 业务应用场景</h2>
@@ -57,7 +57,7 @@
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>极易</strong>:GitHub 完整开源,中文原生数据集</li><li>易处:BGE-large-zh-v1.5 嵌入模型公开可用</li><li>难处:LoRA 微调 Qwen 2.5-7B 需 A100 × 1 训练 8-16 小时</li><li>难处:母婴垂类意图树需业务专家初始化(20-30 个簇)</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
-    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/data_agent_llm/dialin_llm_case_intent_clustering</p>
     <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
 Dial-In LLM 母婴客服 Case 意图聚类骨架
 论文 arXiv:2412.09049 (EMNLP 2025)
@@ -152,15 +152,15 @@ function copyCode(btn) {
   });
 }
 </script>
-<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>⚡ 可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 客服分诊台</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
-<div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>🧪 智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：客服分诊台</p>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 客服分诊台</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+<div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：客服分诊台</p>
 <p style='margin:4px 0'><strong>测试输入</strong>：工单=63条Amazon工单</p>
 <p style='margin:4px 0'><strong>输出摘要</strong>：退货28.6%/质量22.2%/物流30.2%/咨询19%，3条高优先级A-to-Z威胁工单</p>
 <p style='margin:4px 0'><strong>验证状态</strong>：✅ 本地计算通过 | 2026-06-11</p><div style='margin-top:10px'><a href='../agents.html' style='font-size:12px;color:#059669;font-weight:600'>→ 前往智能体广场运行</a></div></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

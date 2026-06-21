@@ -30,30 +30,65 @@
       </div>
     </aside>
     <section class="content"><h1>09-DataAgent-LLM</h1><p>DataAgent, LLM-powered data analysis, NL2Dashboard</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 09-DataAgent-LLM 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
-</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Argos-Agentic-Anomaly-Detection.html" data-domain="09-DataAgent-LLM" data-diff="">
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Agent-Capability-Evaluation.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agent能力评估基准 — 任务完成率与工具调用准确率评测</h3>
+  <p class="sc-desc">技术运营面临&quot;Agent版本迭代无量化评估、上线后才发现能力退化引发运营事故&quot;——5D评估框架将Agent退化问题在上线前拦截，年化规避运营事故损失50万元+</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Argos-Agentic-Anomaly-Detection.html" data-domain="09-DataAgent-LLM" data-diff="">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Argos — Agentic时序异常检测</h3>
   <p class="sc-desc">背景：母婴品牌在Amazon US、Amazon EU、Shopify、SHEIN四平台销售，需要监控每日销量、广告ROI、退货率等指标异常</p>
@@ -71,12 +106,12 @@
 </a><a class="card skill-card" href="../skills/Skill-Data-Collection-Agent-Pipeline.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Data Collection Agent Pipeline — LLM Agent 自动化多源数据采集 Pipeline</h3>
-  <p class="sc-desc">传统数据采集依赖人工编写爬虫脚本，每个数据源需要单独维护。</p>
+  <p class="sc-desc">研究助理面临数据采集人工慢——采集Agent将抓数工时从8小时压到1小时，年化省14万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Data-to-Dashboard-Multi-Agent-Visualization.html" data-domain="09-DataAgent-LLM" data-diff="">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Data-to-Dashboard — 多Agent智能可视化生成</h3>
-  <p class="sc-desc">Data-to-Dashboard 的核心思想是模拟商业分析师的工作流——不是让 LLM 直接生成图表，而是先理解数据背后的业务洞察，再基于洞察选择最合适的可视化表达方式。</p>
+  <p class="sc-desc">经营管理者面临报表分散看不全——多Agent可视化将看数时间从40分降到8分，年化省10万元</p>
   <div class='sc-footer'><span class='sc-roi'>8.6万</span></div>
 </a><a class="card skill-card" href="../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html" data-domain="09-DataAgent-LLM" data-diff="">
   <div class="sc-domain">09-DataAgent-LLM</div>
@@ -86,7 +121,7 @@
 </a><a class="card skill-card" href="../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树</h3>
-  <p class="sc-desc">WF-C 客服分诊的核心是&quot;意图细分&quot;——母婴 Case 复杂(退款/换货/咨询/投诉/物流/产品使用/安全升级),嵌入距离无法区分字面相似但意图截然不同的对话片段(如&quot;宝宝用了这个奶粉一直哭&quot; 可能是质量投诉或产品适配咨询). Dial-In LLM 用 LoRA 微调小型 LLM 作为聚类&quot;工具人&quot;(Qwen2.5-7B / ChatGLM3-6B):① 连贯性评估器 判断簇语义一致性 ② 意图命名器 生成&quot;动作-目标&quot;标签 ③ 迭代搜索自动发现最优簇数,无需预设 K.</p>
+  <p class="sc-desc">客服主管面临来电诉求归类靠人工——意图聚类将分拣准确率提到92%，年化省9万元</p>
   <div class='sc-footer'><span class='sc-roi'>200-400 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-LLM-Annotation-Weak-Supervision.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
@@ -103,10 +138,15 @@
   <h3 class="sc-title">LLM Financial Report Analyst — 迭代精化 + 代码验证的智能财务报告解读</h3>
   <p class="sc-desc">跨境母婴 CFO 面临 Amazon/TikTok/银行三平台账单手工汇总需 3 天——迭代精化 + Python 数值验证 Agent 将月度 P&amp;L 汇总压缩至 30 分钟，误差率从手工 5-10% 降至 &lt;2%，年化节省财务人力成本 10-30 万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-LLM-Tool-Selection-Router.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM工具路由与意图识别 — 意图分类与置信过滤</h3>
+  <p class="sc-desc">智能体运营面临&quot;Multi-Tool Agent工具路由错误率32%、无效API调用占40%成本&quot;——意图分类+置信过滤将工具选择准确率从68%提升至91%，年化节省API成本24万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Multimodal-Table-Understanding.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Multimodal Table Understanding Agent — 表格理解：规格对比/认证矩阵/价格表</h3>
-  <p class="sc-desc">挑战一：跨单元格推理（Cross-Cell Reasoning）</p>
+  <p class="sc-desc">分析师面临表格截图难读——多模态表理解将录入错误率从12%降到3%，年化省8万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-NL2Dashboard-Automation.html" data-domain="09-DataAgent-LLM" data-diff="">
   <div class="sc-domain">09-DataAgent-LLM</div>
@@ -116,28 +156,38 @@
 </a><a class="card skill-card" href="../skills/Skill-ProRCA-Business-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">ProRCA — 因果图路径溯源根因分析</h3>
-  <p class="sc-desc">当 GMV 暴跌时，传统监控会同时弹出几百个警报——流量跌、加购跌、结账跌、支付跌……却不告诉你哪个是起因，哪个是被牵连的。</p>
+  <p class="sc-desc">运营总监面临业绩下滑原因说不清——ProRCA将定位时间从3天缩到6小时，年化省15万元</p>
   <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-RAG-Enhanced-Data-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">RAG-Enhanced Data Analysis（RAG 增强数据分析）</h3>
   <p class="sc-desc">&quot;为什么德国站吸奶器转化率下降&quot;→ RAG 检索到上月分析&quot;德国站转化率下降是因为欧元贬值导致价格上涨 8%&quot;→本次发现同样模式→自动引用历史结论+实时数据验证</p>
   <div class='sc-footer'><span class='sc-roi'>减少重复分析 50%，节省分析人力</span></div>
+</a><a class="card skill-card" href="../skills/Skill-RAG-Structured-Data-Fusion.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">RAG与结构化数据混合检索 — 向量检索与SQL查询融合</h3>
+  <p class="sc-desc">客服运营面临&quot;智能客服单一检索路径、结构化查单与语义问答无法同时满足、首答解决率仅58%&quot;——双路混合检索将首答解决率从58%提升至82%，年化节省人工客服成本15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Root-Cause-Analysis-Agent.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Root Cause Analysis Agent for Business Anomalies</h3>
-  <p class="sc-desc">异常检测告诉你&quot;什么出问题了&quot;，但不告诉你&quot;为什么&quot;。</p>
+  <p class="sc-desc">业务负责人面临异常暴增找不到根因——根因Agent将排查成本降40%，年化省18万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-SQL-Agent-Text-to-SQL.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Text-to-SQL Agent for Natural Language Data Query</h3>
-  <p class="sc-desc">业务团队（运营、市场、产品）需要数据但不懂SQL。</p>
+  <p class="sc-desc">BI分析师面临取数靠开发排队——Text-to-SQL将取数周期从2天缩到10分钟，年化省22万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Text2SQL-Schema-Linking.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Schema-Linking感知Text2SQL — 列对齐与表联接推断</h3>
+  <p class="sc-desc">数据运营面临&quot;运营每日10-20个临时数据请求、数据分析师3小时/天疲于应付查数需求&quot;——Schema-Linking感知Text2SQL将查询准确率从60%提升至85%，年化节省分析师人力20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

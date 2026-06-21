@@ -57,7 +57,7 @@
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：一次因错误级联导致的错误大批量采购（如过度备货$30万）是可避免的；血统治理层阻断89%的终端感染，年化避免1次此类事故=$30万防损；系统成本$8万，ROI≈375%</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（血统追踪需要修改MAS消息传递层，对现有框架有一定侵入性；建议作为消息layer的plugin实现，不修改Agent本身）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（论文发现&quot;注入1个错误种子即可导致整个Pipeline崩溃&quot;——这是所有线性MAS工作流的共同致命弱点，不解决这个问题所有MAS质量保证都是假的）</li><li><strong>适用规模</strong>：所有线性或层次化MAS系统，特别是涉及高风险决策（采购/合规/财务）的场景</li><li><strong>数据依赖</strong>：需要为每条消息定义置信度评分机制；可从来源可信度、事实可验证性、推理链长度等维度计算</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
-    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <p class="muted">代码块数量：3 · 路径：paper2skills-code/mas/error_cascade_propagation_defense</p>
     <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
 MAS错误级联传播防御系统
 功能：有向依赖图建模 + 血统追踪 + 断路器 + 超临界级联预警
@@ -157,7 +157,7 @@ function copyCode(btn) {
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

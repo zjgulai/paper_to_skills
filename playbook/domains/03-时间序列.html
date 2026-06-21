@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>03-时间序列</h1><p>Demand forecasting, conformal prediction, LLM forecasting</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 03-时间序列 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-Adaptive-Forecast-Accuracy-Optimization.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">03-时间序列</div>
@@ -66,7 +96,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Conformal-Prediction-Demand-UQ.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Conformal Prediction Demand UQ（需求预测不确定性量化）</h3>
-  <p class="sc-desc">传统需求预测只给点估计（&quot;下月卖 1000 件&quot;），业务需要区间估计（&quot;95% 置信区间: 850-1200 件&quot;）。Conformal Prediction 提供分布无关的、有限样本有效的预测区间，无需假设误差分布。</p>
+  <p class="sc-desc">供应链经理面临需求预测没把握——共形预测将库存缺口从18%降至6%，年化省20万元</p>
   <div class='sc-footer'><span class='sc-roi'>30-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Conformal-TS-Intervals.html" data-domain="03-时间序列" data-diff="">
   <div class="sc-domain">03-时间序列</div>
@@ -76,13 +106,18 @@
 </a><a class="card skill-card" href="../skills/Skill-Conformal-Time-Series-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Conformal Time Series Forecasting — 共形时序预测：有覆盖保证的需求预测区间</h3>
-  <p class="sc-desc">标准共形预测（Conformal Prediction）要求数据可交换性（exchangeability）：校准集和测试集的样本可以任意排列而不影响分布。但时间序列违反这个假设——序列存在自相关性，昨天的销量影响今天的需求。</p>
+  <p class="sc-desc">计划经理面临预测区间不可信——共形时序将超卖率降30%，年化省14万元</p>
   <div class='sc-footer'><span class='sc-roi'>200 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Contrastive-Time-Series-Cold-Start.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Contrastive Time Series Cold Start — 对比学习驱动的新品需求冷启动预测</h3>
   <p class="sc-desc">母婴选品运营面临新品上市零历史销售数据——对比学习冷启动预测通过找5个最相似历史SKU迁移需求模式，新品首月备货误差从±65%降至±28%，避免缺货/压库损失年化30-80万元</p>
   <div class='sc-footer'><span class='sc-roi'>40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Cross-Market-Transfer-Demand.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">跨市场需求迁移学习 — 用成熟市场数据加速新市场冷启动</h3>
+  <p class="sc-desc">出海运营面临&quot;德国日本新市场没有历史数据需求预测完全是盲猜&quot;——Domain Adaptation跨市场迁移将新市场冷启动误差降低45%，年化$3.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>3.6 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-EventCast-LLM-Event-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">EventCast — LLM 事件感知需求预测：大促/节假日场景 MAE-57%</h3>
@@ -103,6 +138,16 @@
   <h3 class="sc-title">智能预测 - 双重稳健估计 (Doubly Robust Estimation)</h3>
   <p class="sc-desc">我们计划在北美市场投放吸奶器季节性促销活动（如母亲节、黑五）</p>
   <div class='sc-footer'><span class='sc-roi'>30-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Kalman-Filter-Demand-Tracking.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Kalman Filter 需求状态追踪 — 在噪声销售数据中实时追踪真实需求</h3>
+  <p class="sc-desc">需求预测工程师面临&quot;销售数据噪声太大传统移动平均无法识别真实需求趋势&quot;——火箭制导Kalman Filter迁移将需求信号提取精准度提升4.2倍，预测误差降低48%，年化$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>1500万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MTL-Cold-Start-SKU-Demand.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">MTL 冷启动 SKU 需求预测 — 共享编码器加速新品上线</h3>
+  <p class="sc-desc">需求预测工程师面临&quot;新SKU上市前2-4周需求预测误差高达±80%备货全靠赌&quot;——Multi-task Learning共享同类SKU需求模式将冷启动预测误差降至±25%，年化减少过备货损失$4.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>4.2 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Multivariate-Cointegration.html" data-domain="03-时间序列" data-diff="">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Multivariate Cointegration（多变量协整 VECM）</h3>
@@ -111,17 +156,22 @@
 </a><a class="card skill-card" href="../skills/Skill-Prophet-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Prophet Forecasting with Seasonality and Holidays</h3>
-  <p class="sc-desc">业务时序数据充满&quot;人造季节性&quot;——黑五、Prime Day、圣诞促销让销量暴涨，春节让物流停滞。</p>
+  <p class="sc-desc">备货经理面临促销销量难预测——Prophet将MAPE从22%降到13%，年化省17万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-STL-Seasonal-Decomposition.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">STL Seasonal Decomposition — STL 季节性分解：时间序列趋势×季节×残差三层分离</h3>
   <p class="sc-desc">16个时序Skill居然没有STL季节性分解导致备货计划无法量化圣诞季高多少——STL将时序分解为趋势×季节×残差三层，季节性指数精确量化后备货误差降低30%异常检测误报率降低60%年化减少备货失误10-30万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Seasonal-Pattern-Transfer-Learning.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">旺季模式迁移学习 — 新品首次黑五从老品学习放大系数</h3>
+  <p class="sc-desc">新品负责人面临&quot;新品首次面对黑五完全没有旺季历史不知道该备多少货&quot;——旺季模式迁移从同类老品将首次旺季备货误差降低60%，年化避损$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>6.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Streaming-Data-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Streaming Data Forecasting — 流式采集数据驱动的实时需求预测：采集→特征→预测端到端</h3>
-  <p class="sc-desc">传统需求预测依赖离线批处理（T-1 日数据训练，次日生效预测），对突发事件（爆品上线、竞品大促、舆情事件）响应迟滞 12-24 小时。</p>
+  <p class="sc-desc">运营经理面临实时数据来不及算——流式预测将响应延迟从30分降到2分，年化省12万元</p>
   <div class='sc-footer'><span class='sc-roi'>60 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Temporal-Fusion-Transformer.html" data-domain="03-时间序列" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">03-时间序列</div>
@@ -131,12 +181,12 @@
 </a><a class="card skill-card" href="../skills/Skill-Time-Series-Anomaly-Detection.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Time Series Anomaly Detection for E-Commerce Monitoring</h3>
-  <p class="sc-desc">母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动。</p>
+  <p class="sc-desc">风控专员面临销量异常发现太晚——时序异常检测将漏报率从20%降到4%，年化省13万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Time-Series-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Time Series Forecasting (时间序列预测)</h3>
-  <p class="sc-desc">基于历史销售数据，预测未来一段时间的需求量，从而指导备货、定价和供应链决策。</p>
+  <p class="sc-desc">计划主管面临销量波动难排产——时序预测将缺货率降25%，年化省24万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Time-Series-Foundation-Model.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">03-时间序列</div>
@@ -146,13 +196,13 @@
 </a><a class="card skill-card" href="../skills/Skill-TimeCMA-LLM-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">TimeCMA - LLM-Empowered Multivariate Time Series Forecasting via Cross-Modality Alignment</h3>
-  <p class="sc-desc">如何让 LLM 的世界知识真正改善时间序列预测，而不仅仅是把数值序列塞进 Prompt 让 LLM 凑答案。</p>
+  <p class="sc-desc">业务分析师面临节假日波动难解释——TimeCMA将预测误差降18%，年化省11万元</p>
   <div class='sc-footer'><span class='sc-roi'>5,000 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

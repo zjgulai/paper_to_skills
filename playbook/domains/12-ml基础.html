@@ -30,30 +30,65 @@
       </div>
     </aside>
     <section class="content"><h1>12-ML基础</h1><p>Feature engineering, model evaluation, drift detection, performance monitor</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 12-ML基础 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
-</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Causal-ML-Feature-Engineering.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AutoML-Pipeline-Design.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">AutoML 流水线设计 — Optuna TPE + FLAML 自动化建模</h3>
+  <p class="sc-desc">数据科学家面临&quot;每个新预测任务都要重新手工搜索超参模型选择耗时数天&quot;——Optuna TPE贝叶斯搜索将模型调优时间从3天压缩至4小时，准确率提升7%</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Causal-ML-Feature-Engineering.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Causal ML Feature Engineering — 因果驱动的特征工程：消除混淆提升模型可靠性</h3>
   <p class="sc-desc">需求预测模型加入广告花费特征后大促期预测严重失真——因果DAG识别广告花费是混淆变量而非需求原因，去除后大促期预测误差降低30-50%，年化减少备货决策失误10-40万元</p>
@@ -63,6 +98,16 @@
   <h3 class="sc-title">因果表示学习跨域迁移 — 从源域提取不变因果特征用于目标域零样本适配</h3>
   <p class="sc-desc">新市场冷启动期模型不准导致广告大量浪费——因果表示迁移从小样本中提取不变因果特征，使日本/欧洲新市场AUC从0.61提升至0.76，节省6-12个月成熟期广告浪费</p>
   <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Class-Imbalance-Handling.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Class Imbalance Handling — SMOTE/ADASYN/Focal Loss 处理低频事件</h3>
+  <p class="sc-desc">风控运营面临&quot;欺诈/退货低频事件召回率仅38%、大量漏检导致月均损失15万元&quot;——SMOTE+Focal Loss将欺诈召回率从38%提升至78%，年化减损85-95万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Concept-Drift-Detection.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Concept Drift Detection — 在线监控模型分布漂移</h3>
+  <p class="sc-desc">广告运营面临&quot;大促后CTR预测模型漂移未被感知、出价策略失准导致月均5-8万元广告损耗&quot;——ADWIN/DDM在漂移后6-12小时内触发告警，比月度再训练提前20天感知，年化节省80-110万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-8 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Cross-Validation-Strategies.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Cross-Validation Strategies（交叉验证策略）</h3>
@@ -73,6 +118,11 @@
   <h3 class="sc-title">Skill-Data-Drift-Detection</h3>
   <p class="sc-desc">业务问题：baby sterilizer 需求预测模型（TFT）上线 6 个月后，MAPE 从 12% 悄悄涨到 28%，直到库存积压才被发现，损失约 $8,000 滞销成本</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Early-Stopping-Regularization.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Early Stopping and Regularization — 防止过拟合的训练控制技术</h3>
+  <p class="sc-desc">数据科学团队面临&quot;LTV预测模型训练集AUC=0.91但测试集仅0.73、严重过拟合导致广告CPO虚高&quot;——Elastic Net+Early Stopping将测试集AUC提升至0.84，年化提升广告效益8-12万元+降低仓储成本25-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8-12 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Embedding-Fundamentals.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Embedding Fundamentals — 嵌入表示学习基础：从 ID 映射到多模态语义对齐</h3>
@@ -86,7 +136,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Feature-Engineering.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Feature Engineering for E-Commerce Machine Learning</h3>
-  <p class="sc-desc">核心问题：模型效果的上限由特征质量决定。同样的算法，好的特征 vs 差的特征，效果可能差3-5倍。特征工程是&quot;把领域知识注入模型的艺术&quot;。</p>
+  <p class="sc-desc">数据科学家面临特征零散难复用——特征工程将建模周期从5天缩到1天，年化省14万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Feature-Selection.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">12-ML基础</div>
@@ -103,6 +153,16 @@
   <h3 class="sc-title">Imbalanced Data Handling（不平衡数据处理）</h3>
   <p class="sc-desc">流失率 5%，直接用 XGBoost 训练，Recall 只有 0.3——70% 的流失用户没被识别</p>
   <div class='sc-footer'><span class='sc-roi'>150-300 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Model-Calibration.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Model Calibration — 让预测概率真正可信的校准技术</h3>
+  <p class="sc-desc">运营决策团队面临&quot;退货预测模型概率输出失真、备货缓冲比例设置误差±20%导致过度备货&quot;——Platt Scaling/Isotonic Regression将ECE从0.18降至0.04，年化节省FBA仓储成本40-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Model-Compression-Edge-Deployment.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">模型压缩与边缘部署 — INT8 量化 + 结构化剪枝 + ONNX 导出</h3>
+  <p class="sc-desc">工程师面临&quot;预测模型推理延迟500ms无法满足实时调价要求&quot;——INT8量化+ONNX将推理延迟从500ms降至38ms，在边缘设备部署成本降低80%</p>
+  <div class='sc-footer'><span class='sc-roi'>9 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Model-Evaluation-Metrics.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Model Evaluation Metrics（模型评估体系）</h3>
@@ -111,7 +171,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Model-Performance-Monitor.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Skill-Model-Performance-Monitor</h3>
-  <p class="sc-desc">核心思想：数据漂移检测（Skill-Data-Drift-Detection）解决的是&quot;输入变了吗&quot;，模型性能监控解决的是&quot;输出还准吗&quot;。两者共同构成生产 ML 模型的完整健康体系。性能监控通过滑动窗口持续评估 AUC/MAPE 等指标，配合 Shadow Mode（新模型静默跑）和 Champion-Challenger（A/B 对比）两种灰度部署模式，在不影响生产的前提下验证新版本并安全切换。</p>
+  <p class="sc-desc">算法负责人面临模型劣化发现太晚——性能监控将故障发现从7天压到1小时，年化省16万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Online-Incremental-Learning.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">12-ML基础</div>
@@ -121,13 +181,13 @@
 </a><a class="card skill-card" href="../skills/Skill-Supply-Chain-ML-Features.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Supply Chain ML Feature Engineering — 供应链 ML 特征工程：时序+图+统计三维</h3>
-  <p class="sc-desc">1. 稀疏性：长尾 SKU 历史销量不足（&lt; 30 天），传统特征工程无法直接应用</p>
+  <p class="sc-desc">供应链分析师面临特征口径不一致——供应链特征将预测MAPE降12%，年化省18万元</p>
   <div class='sc-footer'><span class='sc-roi'>供应链 ML 模型准确率提升 15-20%，减少缺货/积压成本</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

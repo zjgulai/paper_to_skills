@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>14-用户分析</h1><p>Funnel, cohort, clickstream, trajectory, traffic source</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 14-用户分析 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
@@ -71,7 +101,7 @@
 </a><a class="card skill-card" href="../skills/Skill-BlockEcho-Missing-Data.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">块缺失数据补全 - 整段流量数据丢失时的恢复</h3>
-  <p class="sc-desc">块缺失（Block-wise Missing）的独特挑战：当一整段时间（如连续3天）或一个完整维度（如某渠道所有数据）缺失时，传统插值方法（线性插值、KNN、MICE）依赖&quot;相邻元素&quot;做预测，在块缺失场景下这些邻居全部不存在，方法直接失效。</p>
+  <p class="sc-desc">数据经理面临缺失值拖慢分析——BlockEcho将补数耗时从4小时降到30分，年化省8万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-CASE-Cadence-Aware-Repurchase-Prediction.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
@@ -108,6 +138,16 @@
   <h3 class="sc-title">LACA 跨语言 ABSA - LLM 数据增强多语种情感分析</h3>
   <p class="sc-desc">Momcozy 在德/法/西市场每月接收 5000+ 母语客服工单(如德语 &quot;Die Verpackung ist sehr schwer zu öffnen&quot;). 传统做法用 Google Translate 翻译成英文后跑英文 ABSA,翻译会丢失 aspect 对齐(&quot;Verpackung&quot; → &quot;package&quot; 时 BIO 边界错位 30%+). 跨境品牌每月因机翻错误导致工单</p>
   <div class='sc-footer'><span class='sc-roi'>300-600 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Latent-Class-Demand-Segmentation.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">潜在类别需求分群 — EM算法自动发现购买决策者类型</h3>
+  <p class="sc-desc">用户运营面临&quot;RFM分群维度太少无法区分不同定价敏感度的消费者&quot;——潜在类别模型自动发现3-5类购买决策者，差异化策略年化增收$5.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>80-120 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Live-Audience-Real-Time-Personalization.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">直播间实时受众画像 — 弹幕意图分类与动态话术切换</h3>
+  <p class="sc-desc">直播运营面临&quot;不同类型观众混在一起用同一套话术导致大量用户流失&quot;——弹幕意图分类+话术切换规则将转化率提升18%，年化$6.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>6.4 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-MAA-Review-to-Action-Decision.html" data-domain="14-用户分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">MAA 多 Agent 行动建议 - 从评论到产品改进决策链</h3>
@@ -126,7 +166,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Multilingual-Customer-Service-Translation.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">Multilingual Customer Service Translation — 多语言客服自动翻译与情绪感知保全</h3>
-  <p class="sc-desc">母婴出海电商的客服场景中，买家使用西班牙语、德语、日语等多语言发起售后投诉，直接机器翻译存在两大失真</p>
+  <p class="sc-desc">海外客服面临多语回复慢——多语翻译将首响时长从20分压到3分，年化省14万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-NonItem-Page-Path-Modeling.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
@@ -138,6 +178,11 @@
   <h3 class="sc-title">多触点非线性归因建模 — 跨渠道用户旅程因果归因与预算决策</h3>
   <p class="sc-desc">Last-Click归因导致TikTok预算被严重低估而Amazon SP被高估——Shapley值归因重新分配后整体ROAS从2.3x提升至3.1x，月增收$6.4万（$8万预算规模）</p>
   <div class='sc-footer'><span class='sc-roi'>4.2万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Peak-End-Rule-Customer-Experience.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">峰终定律体验设计 — 体验由峰值和终点决定，把资源投向峰值触点使 NPS 提升15点</h3>
+  <p class="sc-desc">用户体验负责人面临&quot;品牌体验预算分散在所有触点效果远低于预期&quot;——峰终定律将预算集中在峰值和终点触点，NPS提升15点复购率+18%，年化$7.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>7.2 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-PersonaBot-RAG-Profiling.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">PersonaBot RAG画像生成 - LLM+RAG驱动的客户画像落地工具</h3>
@@ -146,7 +191,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Personalized-Promotion-Targeting.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">Personalized Promotion Targeting — 个性化促销定向：用户响应异质性建模</h3>
-  <p class="sc-desc">1. Cannibalization（自相残杀）：把折扣发给&quot;本来就会买&quot;的高意愿用户，白白损失利润</p>
+  <p class="sc-desc">增长经理面临促销一刀切——个性化定向将转化率从3.2%提到4.6%，年化增收24万元</p>
   <div class='sc-footer'><span class='sc-roi'>300-600 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Purchase-Intent-Prediction.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
@@ -171,7 +216,7 @@
 </a><a class="card skill-card" href="../skills/Skill-STAMImputer-SpatioTemporal.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">时空注意力混合专家补全 - 高缺失率下的多维流量恢复</h3>
-  <p class="sc-desc">现有时序→空间的序贯方法在块状缺失（block-missing）场景下失效——当某个渠道或时段整块数据缺失时，无法提取有效特征。同时，静态图结构无法适应分布偏移（非平稳流量数据的动态空间依赖）。</p>
+  <p class="sc-desc">运营分析师面临门店时空数据断点——STAMImputer将缺失率从18%降到4%，年化省10万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Sequential-User-Behavior-Modeling.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
@@ -183,6 +228,11 @@
   <h3 class="sc-title">Session意图漂移建模 - 跨会话用户购买意图变化检测</h3>
   <p class="sc-desc">业务问题：桑基图展示了页面间流量（如&quot;首页→分类页→PDP→加购→支付&quot;），但缺少&quot;为什么用户走这条路&quot;的语义信息</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Shopee-Lazada-SEA-Market-Intelligence.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">东南亚市场情报与选品分群 — Shopee/Lazada 热搜词 + K-Means 价格带定位</h3>
+  <p class="sc-desc">东南亚选品负责人面临&quot;不知道Shopee哪个国家哪个价格带最有机会&quot;——K-means市场聚类将最优价格带定位精度提升至87%，新品首月GMV超预期35%</p>
+  <div class='sc-footer'><span class='sc-roi'>80-150 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Shopify-Landing-Page-CRO.html" data-domain="14-用户分析" data-diff="⭐⭐⭐">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">Shopify Landing Page CRO — 独立站落地页转化率优化：ML驱动的A/B测试与个性化元素配置</h3>
@@ -216,7 +266,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Traffic-Source-Analysis.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">电商流量来源全维度分析 - 设备/浏览器/来源的转化率诊断</h3>
-  <p class="sc-desc">同样的流量，为何不同渠道/设备/浏览器的转化率差异如此悬殊？</p>
+  <p class="sc-desc">投放经理面临流量来源说不清——流量分析将无效渠道占比从30%降到12%，年化省20万元</p>
   <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Trajectory-Pattern-Mining.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
@@ -226,7 +276,7 @@
 </a><a class="card skill-card" href="../skills/Skill-User-Funnel-Analysis.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">User Funnel and Behavior Path Analysis</h3>
-  <p class="sc-desc">用户从&quot;知道品牌&quot;到&quot;下单购买&quot;要经历多个步骤。</p>
+  <p class="sc-desc">增长负责人面临漏斗卡点不明——漏斗分析将流失率从42%降到27%，年化增收28万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-User-LTV-Financial-Bridge.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">14-用户分析</div>
@@ -247,7 +297,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

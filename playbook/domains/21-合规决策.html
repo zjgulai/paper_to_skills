@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>21-合规决策</h1><p>新领域 (2026-05-25): Category compliance prescan, regulatory risk, compliance-as-moat</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 21-合规决策 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-AI-Product-Safety-Certification.html" data-domain="21-合规决策" data-diff="⭐⭐⭐">
   <div class="sc-domain">21-合规决策</div>
@@ -113,6 +143,16 @@
   <h3 class="sc-title">Listing Compliance Auto Repair — AI 驱动违规 Listing 自动修复</h3>
   <p class="sc-desc">黑五前35个SKU需要合规修复人工每条需30分钟共需3-5天错过上架窗口——LLM驱动自动修复规则引擎30秒完成一条批量处理节省2-4天上架时机保护旺季GMV10-30万元并防止Amazon账号警告</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-MonteCarlo-Tariff-Risk.html" data-domain="21-合规决策" data-diff="">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">蒙特卡洛地缘政治尾部风险量化 (Monte Carlo Tariff Risk)</h3>
+  <p class="sc-desc">选品团队发现一款利润率45%的婴儿监控器诱惑巨大——引入蒙特卡洛模拟量化301关税突变与海运封锁的尾部风险(CVaR)，在最坏5%场景下该SKU净亏损将吞噬全品类18个月利润，CEO反直觉否决了&quot;伪高利润&quot;的糖衣炮弹，6个月后关税突变，我方毫发无损。</p>
+  
+</a><a class="card skill-card" href="../skills/Skill-Patent-Prior-Art-Risk-Scan.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">专利先验技术风险扫描 — 新品上市前侵权风险评估</h3>
+  <p class="sc-desc">合规负责人面临&quot;新品上市前不知道是否侵犯现有专利直到被起诉才发现&quot;——TF-IDF专利相似度扫描将专利风险发现提前到上架前，年化避免诉讼损失$15万+</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">21-合规决策</div>
   <h3 class="sc-title">平台政策变更自适应监控 — 跨境电商合规政策智能预警与快速响应</h3>
@@ -121,7 +161,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Product-Safety-Testing-Requirements.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">21-合规决策</div>
   <h3 class="sc-title">Product Safety Testing Requirements — 产品安全测试需求：品类×市场映射</h3>
-  <p class="sc-desc">美国：CPSC 强制性标准（16 CFR）/ FDA 21 CFR / FCC</p>
+  <p class="sc-desc">合规经理面临测试要求漏项——安全测试清单将返工率从18%降到4%，年化省10万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Regulatory-Change-Auto-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">21-合规决策</div>
@@ -131,7 +171,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Regulatory-Change-Monitoring.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">21-合规决策</div>
   <h3 class="sc-title">Regulatory Change Monitoring — 法规变更自动监控：受影响品类实时映射</h3>
-  <p class="sc-desc">将监管机构发布的非结构化更新，自动映射到受影响产品品类，并生成优先级告警，驱动合规行动。</p>
+  <p class="sc-desc">法务专员面临法规更新跟不上——法规监控将响应时延从14天缩到1天，年化省13万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Regulatory-Graph-Compliance-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">21-合规决策</div>
@@ -141,7 +181,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Due-Diligence.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">21-合规决策</div>
   <h3 class="sc-title">Supply Chain Due Diligence — 供应链合规尽职调查：劳工+环境+产品三维</h3>
-  <p class="sc-desc">2023 年起德国《供应链尽职调查法》（LkSG）生效，要求年营业额 &gt;4.5 亿欧元的企业对整条供应链的合规负责。母婴出海品牌虽暂无直接法律义务，但头部零售商（Walmart/Target/亚马逊）已要求供应商提供 ESG 合规证明</p>
+  <p class="sc-desc">供应链负责人面临供应商尽调慢——尽调流程将风险漏检率从16%降到3%，年化省17万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-VAT-GST-Compliance-Automation.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">21-合规决策</div>
@@ -152,7 +192,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

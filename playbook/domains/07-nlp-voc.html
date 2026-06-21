@@ -30,34 +30,69 @@
       </div>
     </aside>
     <section class="content"><h1>07-NLP-VOC</h1><p>已迁至 ../ai_nlp_voc/,本仓库保留代码模板</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 07-NLP-VOC 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-BERT-SRL-Event-Frame-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">BERT-SRL + 事件框架 — 语义角色标注与事件抽取</h3>
-  <p class="sc-desc">BERT-SRL 将语义角色标注（Semantic Role Labeling）任务转化为基于 BERT 的序列标注问题。核心洞察：预训练语言模型（BERT）已经蕴含了丰富的语义知识，只需在 predicate-aware 的条件下进行微调，即可达到 SOTA 的 SRL 性能。</p>
+  <p class="sc-desc">语义分析师面临评论事件抽取慢——SRL将抽取工时从6小时降到40分，年化省9万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Few-Shot-Review-Classification.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">少样本评论分类 — Prototypical Networks 从英语迁移到新市场语言</h3>
+  <p class="sc-desc">多语言运营面临&quot;德语法语日语评论只有少量标注数据无法建立分类模型&quot;——Prototypical Networks少样本分类将新市场VOC分析启动时间从3个月压缩至2周，年化$2.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>2.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-InstructUIE-Unified-Information-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill: InstructUIE — 统一信息抽取框架</h3>
@@ -68,6 +103,16 @@
   <h3 class="sc-title">LLM Review Structured Extraction — 方面情感 JSON 批量提取与语义聚类</h3>
   <p class="sc-desc">母婴运营每季度面对 3 万条吸奶器评论却无从下手——LLM JSON 批量提取将评论结构化时间压缩至 2 小时，自动生成 Top10 差评维度排行，年化节省人力约 18 万元并加速产品迭代 4 周</p>
   <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Live-Script-Optimization-NLP.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">直播话术优化NLP — 情感曲线+格兰杰因果挖掘高转化话术模式</h3>
+  <p class="sc-desc">直播团队面临&quot;不知道哪些话术能最快触发购买只能靠主播个人经验&quot;——格兰杰因果检验识别最高转化话术，成交触发时间压缩38%，年化GMV增量$9.8万</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Multilingual-NLP-Pipeline.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">多语言 NLP 管道 — mBERT Zero-Shot 跨语言情感/实体提取</h3>
+  <p class="sc-desc">多语言运营面临&quot;德语法语日语评论无法做情感分析只能看英语&quot;——mBERT零样本跨语言迁移将多语言VOC分析覆盖率从20%提升至100%，年化节省翻译费$3.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-NLP-Sentiment-ML-Pipeline.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">NLP Sentiment ML Pipeline — 评论情感→ML 特征工程桥梁：将 VOC 转化为可训练信号</h3>
@@ -88,10 +133,15 @@
   <h3 class="sc-title">Review Helpfulness Prediction — 评论有用性预测：识别高说服力评论提升转化</h3>
   <p class="sc-desc">产品页默认展示最新评论但很多是无信息的&#x27;Great!&#x27;类评论转化率低——评论有用性预测模型识别最有说服力的评论展示在首位，转化率提升10-20%年化GMV增益5-20万元同时快速识别最有影响力的差评</p>
   <div class='sc-footer'><span class='sc-roi'>¥5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Review-Temporal-Trend-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">Review 时序趋势挖掘 — LDA 滑动窗口演化分析</h3>
+  <p class="sc-desc">产品负责人面临&quot;最近新出现的用户投诉点淹没在历史评论里发现太慢&quot;——LDA时序滑动窗口将新兴问题发现时效从季度回顾压缩至周级预警，年化避免差评损失$7.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Semantic-Blueprint-Compiler.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Schema-Guided Generation — 语义蓝图编译器</h3>
-  <p class="sc-desc">Schema-Guided Generation 将语言模型的生成过程约束在预定义的结构化模式（Schema）中，确保输出符合预期的语义结构。核心洞察：无约束的 LLM 生成是“创造性”的，但业务系统需要的是“确定性”的结构化输出。</p>
+  <p class="sc-desc">产品经理面临需求文档难转结构——语义蓝图编译将需求返工率从20%降到6%，年化省10万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-VOC-Aspect-Sentiment-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
@@ -116,7 +166,7 @@
 </a><a class="card skill-card" href="../skills/Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill: VOC Proxy NPS × AIPL 统一标签萃取引擎</h3>
-  <p class="sc-desc">1. 标签碎片化：产品问题标签、AIPL 旅程标签、画像标签分散在不同系统，无法从一条 VOC 文本同时萃取</p>
+  <p class="sc-desc">用户研究员面临VOC指标口径不一——统一萃取将NPS偏差从15分压到4分，年化省12万元</p>
   <div class='sc-footer'><span class='sc-roi'>300万/年</span></div>
 </a><a class="card skill-card" href="../skills/Skill-VOC-Returns-Cost-Driver.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
@@ -137,7 +187,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

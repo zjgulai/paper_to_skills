@@ -1080,7 +1080,7 @@ def render_agents_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     </h1>
     <p class='lead'>12 个专业 AI Agent，覆盖选品→Listing→广告→客服→合规全链路</p>
     <div style='display:flex;gap:8px;flex-wrap:wrap;margin-top:4px'>
-      <span style='font-size:13px;background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:999px;font-weight:600'>⚡ 本地计算引擎</span>
+      <span style='font-size:13px;background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:999px;font-weight:600'> 本地计算引擎</span>
       <span style='font-size:13px;color:#64748b'>输入你的真实数据，即时获得个性化计算结果</span>
     </div>
   </div>
@@ -1178,7 +1178,7 @@ function computeSupplySentinel(id) {{
   const seaQty  = reorderQty - airQty;
   const airCost = (airQty * 0.8).toFixed(0);
   const lossMd  = Math.min(days, lt) * vel * 25;
-  const riskLv  = days < lt ? '🔴 高危' : days < lt + 7 ? '🟡 警戒' : '🟢 安全';
+  const riskLv  = days < lt ? '<span style="color:#B5323E;font-weight:600;">[高危]</span>' : days < lt + 7 ? '<span style="color:#d97706;font-weight:600;">[警戒]</span>' : '<span style="color:#059669;font-weight:600;">[安全]</span>';
   const action  = days < lt ? '需立即行动！' : days < lt + 7 ? '建议本周下单' : '库存充裕，按计划补货';
   const q4Multi = 2.8;
   const q4Stock = Math.ceil(vel * q4Multi * 60);
@@ -1844,553 +1844,356 @@ catBtns.forEach(btn => {{
 
 def render_agent_report_page() -> str:
     agent_names_js = json.dumps(
-        {ag["id"]: ag["name"] for ag in AGENT_CATALOG},
-        ensure_ascii=False,
-    )
-
-    seed_reports = [
-        {
-            "id": "agent-supply-sentinel",
-            "name": "供应链哨兵",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"当前库存量（件）": "340", "日均销速（件/天）": "28", "供货周期（天）": "21", "渠道类型": "Amazon FBA"},
-            "result": """[供应链哨兵] 实时计算结果
-
-━━ 库存状态 ━━
-当前库存: 340 件
-日均销速: 28 件/天（您输入）
-剩余可售天数: 12.1 天
-风险等级: 🔴 高危
-
-━━ 供货周期分析（Amazon FBA）━━
-您的供货周期: 21 天
-安全库存天数目标: 30 天
-[WARN] 已进入断货窗口，需立即行动！
-
-━━ 补货建议 ━━
-├─ 建议补货量: 1,428 件（21天周期 + 30天安全库存）
-├─ 推荐方案: 空运 714 件（应急）+ 海运 714 件（补充）
-├─ 空运额外成本: +$571
-└─ 不补货预估断货损失: $8,400（12天断货 × 28件/天 × $25 BSR成本）
-
-━━ Q4 旺季预警 ━━
-历史旺季销速倍数: ×2.8
-Q4 建议备货量: 4,704 件
-最迟启动时间: 旺季前 35 天
-
-[!] 结论: 需立即行动！""",
-        },
-        {
-            "id": "agent-pricing-advisor",
-            "name": "动态定价顾问",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"当前售价（$）": "19.99", "综合成本（$）": "7.80", "竞品价格区间": "$15-$22", "当前 BSR": "234"},
-            "result": """[动态定价顾问] 实时分析结果
-
-━━ 当前状态 ━━
-售价: $19.99 | 成本: $7.80 | 毛利率: 61.0% | BSR: #234（Top 500（良好））
-
-━━ 竞品价格带分析 ━━
-竞品区间: $15-$22 | 中位价: $18.50
-您的定价相对竞品: 处于合理区间
-
-━━ 最优定价建议 ━━
-推荐区间: $20.99 - $21.56
-理由: 竞品中位 $18.50，BSR Top 500（良好） 支持适当溢价
-预期毛利率提升: 61.0% → 62.8%（+1.8pp）
-月均增益估算: +$26（约 26 单/月 × $1.00 差价）
-
-━━ 分步涨价路径 ━━
-Week 1: $19.99 → $20.99（观察转化率变化）
-Week 2: 若转化率降幅 <15%，升至 $20.99
-Week 3+: 稳定后评估是否继续到 $21.56
-
-━━ 促销节奏建议 ━━
-├─ 每月1次 Coupon 10-15%（建议 $17.59）
-├─ Prime Day 前2周: $18.99（冲BSR）
-└─ Q4 旺季: $21.09（需求刚性，不主动降价）
-
-[WARN] 监控阈值: 若7天内转化率下降 >20%，立即回退至 $20.99""",
-        },
-        {
-            "id": "agent-pnl-analyzer",
-            "name": "P&L 透视镜",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"月销售额（$）": "32400", "商品成本（$）": "9200", "FBA 费用（$）": "5800", "广告花费（$）": "6500", "退货率（%）": "4"},
-            "result": """[P&L 透视镜] 实时财务分析
-
-━━ 收支明细 ━━
-收入: $32,400
-├─ 商品成本:  -$9,200（28.4%）
-├─ FBA 费用:  -$5,800（17.9%）
-├─ 广告花费:  -$6,500（20.1%）[!] 偏高
-├─ 平台佣金:  -$4,860（15.0%）
-├─ 头程物流:  -$1,912（5.9% 估算）
-├─ 退货成本:  -$518（4.0% × 40%）
-└─ 净利润:   +$3,610（净利率 11.1%）[~] 接近行业均值
-
-━━ 利润漏洞识别（TOP3，按优化空间排序）━━
-1. 广告花费占比 20.1% → 行业均值 18% → 优化空间: +$682/月
-2. 退货率 4.0% → 行业优秀 3% → 每降1% = +$130/月
-3. 头程物流优化（海运替代）→ 节省 +$612/月
-
-━━ 改善后利润模拟 ━━
-执行以上3项优化后:
-预计净利润: $5,024（净利率 15.5%）
-利润提升: +39%（+$1,414/月）
-
-[>] 最优先行动: 广告花费占比 20.1% → 行业均值 18% → 优化空间（ROI最高，可在30天内见效）""",
-        },
-        {
-            "id": "agent-ad-attribution",
-            "name": "广告归因侦探",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"广告平台": "Amazon SP", "月广告花费（$）": "12400", "目标 ACoS/ROAS": "ACoS 18%"},
-            "result": """[广告归因侦探] 实时诊断（Amazon SP）
-
-━━ 花费概览 ━━
-月广告花费: $12,400
-目标 ACoS: 18%
-估算当前 ACoS: 23.0% [!] 超标 5.0pp
-估算无效花费: $2,696（21.7%）
-
-━━ 优化行动清单（执行后预期节省）━━
-1. 否定低效关键词（高展现零转化） → 节省 $1,213/月
-2. 开启 SP 动态竞价-仅降低         → 节省 $372/月（ACoS -1.5pp）
-3. 新增否定词组（wholesale/cheap/bulk）→ 节省 $186/月
-──────────────────────────────
-预计月节省合计: $1,771 → 年化: $21,252
-
-━━ 归因漏洞检查 ━━
-[OK] 归因窗口配置正常（建议7天点击 + 1天浏览）
-[!] ACoS 超过25%，建议检查广告组与关键词相关性，SB 广告建议增加 Retargeting 受众
-
-[>] 首要行动: 立即暂停 ACoS > 36% 的关键词，预计7天内 ACoS 下降 5.0pp""",
-        },
-        {
-            "id": "agent-competitor-radar",
-            "name": "竞品雷达站",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"竞品 ASIN 列表（每行一个）": "B08XYZ1234\nB09ABC5678\nB07DEF9012", "监控周期": "过去7天", "监控维度": "全部"},
-            "result": """[竞品雷达站] 过去7天监控报告（全部）
-
-监控对象: 3 个 ASIN | 周期: 7 天 | 维度: 全部
-
-━━ 逐品分析 ━━
-B08XYZ1234（竞品1）
-├─ 价格变化: [WARN] 大幅降价 -18%
-├─ BSR 变化: 上升 253 名 [WARN]
-└─ 新增评论: +47条（7天）[注意] 增速较快
-
-B09ABC5678（竞品2）
-├─ 价格变化: 小幅降价 -5%
-├─ BSR 变化: 下降 45 名
-└─ 新增评论: +15条（7天）
-
-B07DEF9012（竞品3）
-├─ 价格变化: 稳定 0%
-├─ BSR 变化: 下降 34 名
-└─ 新增评论: +11条（7天）
-
-━━ 预警汇总 ━━
-[!] [B08XYZ1234] 大幅降价-18%，建议密切关注
-
-━━ 建议响应 ━━
-P0: 重点关注 B08XYZ1234 的价格动态
-P1: 若竞品出现大量差评，可针对竞品词做广告截流（时间窗口约 2 周）
-P2: 每月检查竞品 Listing 变更，防止关键卖点被模仿""",
-        },
-        {
-            "id": "agent-listing-doctor",
-            "name": "Listing 医生",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"当前 Title": "硅胶婴儿餐具套装 宝宝辅食碗 防摔防滑", "Bullet Points": "食品级材质\n好清洗\n颜色多样\n适合宝宝使用\n轻便携带", "目标核心词 Top3": "silicone baby plate, BPA free, toddler"},
-            "result": """[Listing 医生] 实时诊断
-
-━━ 综合评分 ━━
-当前 Listing 评分: 48/100（[!] 较差，急需改进）
-
-━━ Title 分析（20 字符）━━
-字符数评估: [!] 过短，严重损失关键词密度
-关键词覆盖: [!] 缺失: "silicone baby plate", "BPA free", "toddler"
-
-━━ Bullet Points 分析（5 条）━━
-[OK] 条数充足
-
-━━ 问题清单 ━━
-1. 标题字符仅 20 个，建议 150-200 字符，当前损失关键词密度
-2. 标题缺少核心词: "silicone baby plate" "BPA free" "toddler"，建议加入标题前60字符
-3. 部分 Bullet 过短（<20字符），缺乏量化证明和场景描述
-
-━━ 重写建议 ━━
-[参考重写] SILICONE BABY PLATE - 硅胶婴儿餐具套装 宝宝辅食碗 防摔防滑 | silicone baby plate | BPA free | toddler — Premium Quality
-
-预估优化后 CTR 提升: +25-35%""",
-        },
-        {
-            "id": "agent-voc-decoder",
-            "name": "用户之声解码器",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"评论文本（每行一条）": "suction doesn't work after 2 months\ncolors fade in dishwasher\nlove how easy to clean\nbest plate ever\nsuction breaks after few uses\namazing quality very durable\nnot big enough for 18 months\ngreat minimalist design\nleaked after first use\neasiest to clean", "竞品 ASIN（可选）": "B08XYZ1234", "语言": "英语"},
-            "result": """[用户之声解码器] 实时分析 (10条输入)
-
-━━ 评论概览 ━━
-输入评论数: 10 条
-负面信号: 5 条（50%）
-正面信号: 5 条（50%）
-
-━━ TOP 痛点（高频）━━
-1. 质量问题（4次提及）
-   "suction doesn't work after 2 months"
-2. 尺寸/规格（1次提及）
-   "not big enough for 18 months"
-
-━━ TOP 爽点（高频）━━
-1. 易用性（1次提及）
-   "love how easy to clean"
-2. 质量耐用（2次提及）
-   "amazing quality very durable"
-3. 外观设计（1次提及）
-   "great minimalist design"
-
-━━ 产品迭代建议 ━━
-P0: 改善「质量问题」→ 直接影响复购率
-P1: 改善「尺寸/规格」→ 延长产品生命周期
-
-[英语] 数据来源：用户输入""",
-        },
-        {
-            "id": "agent-cs-triage",
-            "name": "客服分诊台",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"工单文本（每行一条）": "Where is my order? tracking shows nothing\nI want a refund, product is broken\nHow do I clean this?\nWhere is my package?\nFile a-to-z claim if no response\nProduct defect, want money back\nDelivery says arrived but nothing here\nThis is terrible quality, returning it\nTracking not updated in 5 days", "平台来源": "Amazon", "SLA 要求": "24小时"},
-            "result": """[客服分诊台] 实时分析（Amazon | SLA 24小时）
-
-━━ 工单分类分布（共 9 条）━━
-退货退款请求: 3 条（33.3%）
-产品质量问题: 2 条（22.2%）
-物流查询:     3 条（33.3%）
-使用咨询:     1 条（11.1%）
-
-━━ 高优先级预警（需 24小时 内处理）━━
-[ALERT] 工单1: "File a-to-z claim if no response"
-
-━━ 标准回复模板（物流查询）━━
-"Hi [Name], thank you for reaching out!
-Your order is currently in transit. Expected delivery: [DATE].
-If not received by [DATE+3], reply and we will send a replacement immediately."
-
-━━ 产品缺陷信号 ━━
-[!] 2条工单涉及产品质量 → 可能存在批次性问题，建议联系工厂复查""",
-        },
-        {
-            "id": "agent-account-guardian",
-            "name": "账号风险卫士",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"近期异常通知": "Warning: Your account has been flagged for review of product listing policy violations.", "需检查的 ASIN 列表": "B08XYZ1234\nB09ABC5678", "当前账号健康状态": "黄色（预警）"},
-            "result": """[账号风险卫士] 实时风险评估
-
-━━ 综合风险评分 ━━
-风险评分: 8.0/10（高风险，需立即处理）
-账号状态: 黄色（预警）
-[!] 检测到警告通知，风险分上升 +1.5
-
-━━ 通知内容摘要 ━━
-> Warning: Your account has been flagged for review of product listing policy viola
-
-━━ ASIN 合规检查（2 个）━━
-B08XYZ1234: [~] 建议检查 Title 中是否含竞品品牌词、绝对化表述
-B09ABC5678: [~] 建议检查 Title 中是否含竞品品牌词、绝对化表述
-
-━━ 整改清单 ━━
-P0（今日）: 检查并删除 Listing 中的侵权词/医疗声明
-P0（今日）: 处理所有未回复差评工单（ODR 目标 <0.9%）
-P1（本周）: 提交 POA（行动计划）
-
-━━ POA 申诉框架（如需）━━
-"Root Cause: [问题根因]
-Corrective Actions: [已执行的改正措施]
-Preventive Measures: [预防措施和未来计划]" """,
-        },
-        {
-            "id": "agent-brand-guardian",
-            "name": "品牌合规卫士",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"品牌文案": "Clinically proven to prevent colic. 100% safe for babies. FDA approved materials. BPA-free and non-toxic.", "产品品类": "母婴", "目标市场": "US"},
-            "result": """[品牌合规卫士] 扫描报告（母婴 | US 市场）
-
-━━ 综合评分 ━━
-当前合规评分: 25/100 → 整改后预计: 77/100
-
-━━ 禁用词（5处违规）━━
-1. "clinically proven" → FDA - 需临床认证
-   合规改写: "designed with safety in mind..."
-2. "prevents" → FTC - 绝对化预防声明
-   合规改写: "designed for..."
-3. "100% safe" → FTC - 绝对化表述
-   合规改写: "made with food-grade materials..."
-4. "fda approved" → FDA - 批准措辞限制
-   合规改写: "FDA registered facility..."
-5. "cures" (colic) → FDA - 医疗声明
-   合规改写: "supports..."
-
-━━ 慎用词（2处需证明文件）━━
-6. "bpa-free" → 需第三方检测报告支撑
-7. "non-toxic" → 需 CPSIA/EN71 认证文件
-
-━━ 所需证明文件清单 ━━
-□ SGS/Intertek 第三方安全检测报告
-□ CPSIA 儿童产品认证（US必需）
-□ EN71/CE 认证（EU市场）
-□ BPA-Free 声明（实验室报告）""",
-        },
-        {
-            "id": "agent-product-radar",
-            "name": "选品雷达",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"品类关键词": "硅胶婴儿餐具", "目标市场": "US", "预算区间": "$5-20k"},
-            "result": """[选品雷达] 实时分析
-
-━━ 机会评分 ━━
-品类: "硅胶婴儿餐具" | 市场: 美国 | 预算: $5-20k
-综合评分: 83/100 [+] 强力推荐
-
-━━ 市场数据（基于关键词特征估算）━━
-月均搜索量: 116,000（YoY +20%）
-BSR TOP10 均价: $19.9 | 您的成本带: $6-9
-头部集中度（前3卖家）: 44% [OK] 仍有切入空间
-
-━━ 差异化切入角度 ━━
-1. 材质/工艺升级（食品级/环保材料 → 情感溢价 +$4）
-2. 套装/组合策略（提升 AOV 至 $36+）
-3. 月龄/场景分段（精准细分需求）
-
-━━ 竞争分析 ━━
-新品切入评论门槛: ~200 条
-新品窗口: ⭐⭐⭐⭐ 良好
-
-━━ 建议 ━━
-[+] 强力推荐 — 搜索量健康，价格带有利润空间
-建议首批备货: 500-900 件（$5-20k 预算匹配）""",
-        },
-        {
-            "id": "agent-tiktok-content",
-            "name": "TikTok 内容官",
-            "ts": "2026-06-11 00:16",
-            "inputs": {"产品名称/描述": "硅胶婴儿餐具套装", "目标受众画像": "0-2岁宝妈，关注辅食育儿", "内容风格偏好": "痛点反转", "周更新频次": "3条/周"},
-            "result": """[TikTok 内容官] 本周选题矩阵
-
-━━ 创作策略 ━━
-产品: 硅胶婴儿餐具套装
-目标受众: 0-2岁宝妈，关注辅食育儿
-内容风格: 痛点反转 | 更新频次: 3条/周
-
-━━ 内容日历（3 条/周）━━
-Day 1（周一）— 痛点反转
-Hook: "妈妈们最崩溃的吃饭时刻是这个 — 关于硅胶婴儿餐具套装"
-话题: #babymom #toddlermom #momhack #硅胶婴儿餐具套装
-
-Day 2（周二）— 痛点反转
-Hook: "Before/After 对比 — 关于硅胶婴儿餐具套装"
-话题: #babymom #toddlermom #momhack #硅胶婴儿餐具套装
-
-Day 3（周三）— 痛点反转
-Hook: "这一刻终于解放了 — 关于硅胶婴儿餐具套装"
-话题: #babymom #toddlermom #momhack #硅胶婴儿餐具套装
-
-━━ 爆款公式 ━━
-情绪触发（共鸣）+ 意外反转 + 简单CTA = 完播率 65%+
-
-━━ 发布建议 ━━
-最佳时间: 晚9-11PM（宝宝入睡后）
-话题标签: #babymom #toddlermom #momhack #babyfood #parenting
-预算建议: $75-150/周（寄送产品换视频）""",
-        },
-        # Round 2: 2026-06-11 real run with different business scenarios
-        {"id": "agent-supply-sentinel", "name": "供应链哨兵", "ts": "2026-06-11 00:44", "inputs": {"stock": "1250", "velocity": "65", "lead_time": "35", "channel": "FBA+海外仓混合"}, "result": "[供应链哨兵] 实时计算结果\n\n━━ 库存状态 ━━\n当前库存: 1,250 件\n日均销速: 65 件/天\n剩余可售天数: 19.2 天\n风险等级: 🔴 高危\n\n━━ 供货周期分析（FBA+海外仓混合）━━\n供货周期: 35 天 | 安全库存目标: 30 天\n[WARN] 已进入断货窗口，需立即行动！\n\n━━ 补货建议 ━━\n├─ 建议补货量: 4,225 件（35天周期 + 30天安全库存）\n├─ 推荐方案: 空运 2,113 件（应急）+ 海运 2,112 件（补充）\n├─ 空运额外成本: +$1690\n└─ 不补货预估断货损失: $31,250\n\n━━ Q4 旺季预警 ━━\n旺季销速倍数 ×2.8 → Q4建议备货: 10,920 件\n最迟启动时间: 旺季前 49 天\n\n[!] 结论: 需立即行动！"},
-        {"id": "agent-pricing-advisor", "name": "动态定价顾问", "ts": "2026-06-11 00:44", "inputs": {"price": "34.99", "cost": "12.50", "comp_range": "$28-$42", "bsr": "87"}, "result": "[动态定价顾问] 实时分析结果\n\n━━ 当前状态 ━━\n售价: $34.99 | 成本: $12.5 | 毛利率: 64.3% | BSR: #87（Top 100（强势））\n\n━━ 竞品价格带分析 ━━\n竞品区间: $28-$42 | 中位价: $35.00\n您的定价: 偏低，有提价空间\n\n━━ 最优定价建议 ━━\n推荐区间: $36.74 - $41.16\n预期毛利率: 64.3% → 66.0%（+1.7pp）\n月均增益估算: +$59（约 34 单/月 × $1.75 差价）\n\n━━ 分步涨价路径 ━━\nWeek 1: $34.99 → $35.99（观察转化率变化）\nWeek 2: 若转化率降幅 <15%，升至 $36.74\nWeek 3+: 评估是否继续到 $41.16\n\n━━ 促销节奏建议 ━━\n├─ 每月1次 Coupon 10-15%（建议 $30.79）\n├─ Prime Day 前2周: $33.24（冲BSR）\n└─ Q4 旺季: $40.24（需求刚性，不主动降价）\n\n[WARN] 监控阈值: 若7天内转化率下降 >20%，立即回退至 $35.99"},
-        {"id": "agent-pnl-analyzer", "name": "P&L 透视镜", "ts": "2026-06-11 00:44", "inputs": {"revenue": "58600", "cogs": "16200", "fba": "9400", "ads": "8800", "return_rate": "2.8"}, "result": "[P&L 透视镜] 实时财务分析\n\n━━ 收支明细 ━━\n收入: $58,600\n├─ 商品成本:  -$16,200（27.6%）\n├─ FBA 费用:  -$9,400（16.0%）\n├─ 广告花费:  -$8,800（15.0%）\n├─ 平台佣金:  -$8,790（15.0%）\n├─ 头程物流:  -$3,457（5.9% 估算）\n├─ 退货成本:  -$656（2.8% × 40%）\n└─ 净利润:   +$11,296（净利率 19.3%）[~] 接近行业均值\n\n━━ 利润漏洞识别（TOP3，按优化空间排序）━━\n1. 广告花费占比 15.0% → 行业均值 18% → 优化空间: +$0/月\n2. 头程物流优化（海运替代）→ 节省 $1,106/月\n3. 退货率 2.8% → 行业优秀 3% → 每降1% = +$234/月\n\n━━ 改善后利润模拟 ━━\n执行以上3项优化后:\n预计净利润: $12,637（净利率 21.6%）\n利润提升: +12%（+$1,340/月）\n\n[>] 最优先行动: 广告花费占比 15.0%（ROI最高，可在30天内见效）"},
-        {"id": "agent-ad-attribution", "name": "广告归因侦探", "ts": "2026-06-11 00:44", "inputs": {"platform": "TikTok Ads", "spend": "9500", "target_acos": "ROAS 4x", "data": ""}, "result": "[广告归因侦探] 实时诊断（TikTok Ads）\n\n━━ 花费概览 ━━\n月广告花费: $9,500\n目标 ACoS: 4.0%\n估算当前 ACoS: 35.0% [!] 超标 31.0pp\n估算无效花费: $7,152（88.6%）\n\n━━ 优化行动清单（执行后预期节省）━━\n1. 否定低效关键词（高展现零转化） → 节省 $3,218/月\n2. 开启 SP 动态竞价-仅降低         → 节省 $285/月（ACoS -1.5pp）\n3. 新增否定词组（wholesale/cheap/bulk）→ 节省 $142/月\n──────────────────────────────\n预计月节省合计: $3,645 → 年化: $43,751\n\n━━ 归因漏洞检查 ━━\n[OK] 归因窗口配置正常（建议7天点击 + 1天浏览）\n[!] ACoS 超过25%，建议检查广告组与关键词相关性\n\n[>] 首要行动: 立即暂停 ACoS > 8% 的关键词，预计7天内 ACoS 下降 31.0pp"},
-        {"id": "agent-competitor-radar", "name": "竞品雷达站", "ts": "2026-06-11 00:44", "inputs": {"asins": "B0CXYZ1234\nB0DABC5678\nB0EDEF9012\nB0FGHI3456", "period": "过去14天", "metrics": "价格+BSR"}, "result": "[竞品雷达站] 过去14天监控报告（价格+BSR）\n\n监控对象: 4 个 ASIN | 周期: 14 天 | 维度: 价格+BSR\n\n━━ 逐品分析 ━━\nB0CXYZ1234（竞品1）\n├─ 价格变化: [WARN] 大幅降价 -18%\n├─ BSR 变化: 上升 253 名 [WARN]\nB0DABC5678（竞品2）\n├─ 价格变化: 小幅降价 -5%\n├─ BSR 变化: 下降 45 名\nB0EDEF9012（竞品3）\n├─ 价格变化: 稳定 +3%\n├─ BSR 变化: 上升 89 名 [WARN]\nB0FGHI3456（竞品4）\n├─ 价格变化: 小幅降价 -2%\n├─ BSR 变化: 下降 120 名\n\n━━ 预警汇总 ━━\n[B0CXYZ1234] 大幅降价-18%，建议密切关注\n\n━━ 建议响应 ━━\nP0: 重点关注 B0CXYZ1234 的价格动态\nP1: 若竞品出现大量差评，可针对竞品词做广告截流（时间窗口约 2 周）\nP2: 每月检查竞品 Listing 变更，防止关键卖点被模仿"},
-        {"id": "agent-listing-doctor", "name": "Listing 医生", "ts": "2026-06-11 00:44", "inputs": {"title": "BPA-Free Silicone Baby Plate Set with Suction — Self-Feeding Toddler Bowl Spoon Fork Kit for Ages 6M", "bullets": "Stays put: extra-strong suction base tested to 8 lbs pull force\nBPA/PVC/phthalate free: FDA-complian", "keywords": "suction baby plate, BPA free toddler plate, self feeding set"}, "result": "[Listing 医生] 实时诊断\n\n━━ 综合评分 ━━\n当前 Listing 评分: 80/100（[OK] 良好）\n\n━━ Title 分析（178 字符）━━\n字符数评估: [OK] 长度充足\n关键词覆盖: [!] 缺失: \"suction baby plate\" \"BPA free toddler plate\" \"self feeding set\"\n\n━━ Bullet Points 分析（5 条）━━\n[OK] 条数充足\n\n━━ 问题清单 ━━\n1. 标题缺少核心词: \"suction baby plate\" \"BPA free toddler plate\" \"self feeding set\"，建议加入标题前60字符\n\n━━ 重写建议 ━━\n[参考重写] SUCTION BABY PLATE - BPA-Free Silicone Baby Plate Set with Suction — Self-Feeding Toddler Bowl Spoon Fork Kit for Ages 6M | suction baby plate | BPA free toddler plate | self feeding set — Premium Quality\n\n预估优化后 CTR 提升: +5-10%"},
-        {"id": "agent-voc-decoder", "name": "用户之声解码器", "ts": "2026-06-11 00:44", "inputs": {"reviews": "suction is incredible, never moves\nlove the sage green color, very stylish\nspoon is too shallow for ", "asin": "B0CXYZ1234", "lang": "英语"}, "result": "[用户之声解码器] 实时分析 (15条输入)\n\n━━ 评论概览 ━━\n输入评论数: 15 条\n负面信号: 4 条（27%）\n正面信号: 8 条（53%）\n\n━━ TOP 痛点（高频）━━\n1. 质量问题（3次提及）\n   \"arrived with a crack on the bowl edge\"\n2. 物流/包装（3次提及）\n   \"arrived with a crack on the bowl edge\"\n3. 性价比（2次提及）\n   \"color faded slightly after 3 months\"\n\n━━ TOP 爽点（高频）━━\n1. 外观设计（2次提及）\n   \"love the sage green color, very stylish\"\n2. 质量耐用（1次提及）\n   \"suction is incredible, never moves\"\n3. 易用性（1次提及）\n   \"so easy to clean in dishwasher\"\n\n━━ 产品迭代建议 ━━\nP0: 改善「质量问题」→ 直接影响复购率\nP1: 改善「物流/包装」→ 延长产品生命周期\nP2: 改善「性价比」→ 提升品牌形象\n\n[英语] 数据来源：用户输入"},
-        {"id": "agent-cs-triage", "name": "客服分诊台", "ts": "2026-06-11 00:44", "inputs": {"tickets": "Where is my order? It has been 2 weeks\nI want to return this, suction does not work\nMy baby scratche", "platform": "Amazon", "sla": "24小时"}, "result": "[客服分诊台] 实时分析（Amazon | SLA 24小时）\n\n━━ 工单分类分布（共 10 条）━━\n退货退款请求: 2 条（20.0%）\n产品质量问题: 2 条（20.0%）\n物流查询:     3 条（30.0%）\n使用咨询:     3 条（30.0%）\n\n━━ 高优先级预警（需 24小时 内处理）━━\n[ALERT] 工单1: \"I filed an A-to-Z claim, please respond\"\n\n━━ 标准回复模板（物流查询）━━\n\"Hi [Name], thank you for reaching out!\nYour order is currently in transit. Expected delivery: [DATE].\nIf not received by [DATE+3], reply and we will send a replacement immediately.\"\n\n━━ 产品缺陷信号 ━━\n[OK] 本批无明显批次性质量问题信号"},
-        {"id": "agent-account-guardian", "name": "账号风险卫士", "ts": "2026-06-11 00:44", "inputs": {"notice": "Your account is under review. We have noticed unusual review patterns on your listings. This is a wa", "asins": "B0CXYZ1234\nB0DABC5678", "health": "黄色（预警）"}, "result": "[账号风险卫士] 实时风险评估\n\n━━ 综合风险评分 ━━\n风险评分: 8.0/10（高风险，需立即处理）\n账号状态: 黄色（预警）\n[!] 检测到警告通知，风险分上升 +1.5\n\n━━ 通知内容摘要 ━━\n> Your account is under review. We have noticed unusual review patterns on your listings. This is a wa\n\n━━ ASIN 合规检查（2 个）━━\nB0CXYZ1234: [~] 建议检查 Title 中是否含竞品品牌词、绝对化表述\nB0DABC5678: [~] 建议检查 Title 中是否含竞品品牌词、绝对化表述\n\n━━ 整改清单 ━━\nP0（今日）: 检查并删除 Listing 中的侵权词/医疗声明\nP0（今日）: 处理所有未回复差评工单（ODR 目标 <0.9%）\nP1（本周）: 提交 POA（行动计划）\n\n━━ POA 申诉框架（如需）━━\n\"Root Cause: [问题根因]\nCorrective Actions: [已执行的改正措施]\nPreventive Measures: [预防措施和未来计划]\" "},
-        {"id": "agent-brand-guardian", "name": "品牌合规卫士", "ts": "2026-06-11 00:44", "inputs": {"copy": "Our BPA-free silicone plates are clinically tested for safety. Non-toxic and hypoallergenic material", "category": "母婴", "market": "US"}, "result": "[品牌合规卫士] 扫描报告（母婴 | US 市场）\n\n━━ 综合评分 ━━\n当前合规评分: 40/100 → 整改后预计: 92/100\n\n━━ 禁用词（3处违规）━━\n1. \"clinically tested\" → FDA - 需临床认证\n   合规改写: \"carefully evaluated...\"\n2. \"100% safe\" → FTC - 绝对化表述\n   合规改写: \"made with food-grade materials...\"\n3. \"no harmful chemicals\" → FTC - 无法证实\n   合规改写: \"free from common allergens...\"\n\n━━ 慎用词（4处需证明文件）━━\n4. \"bpa-free\" → 需第三方检测报告支撑\n5. \"non-toxic\" → 需 CPSIA/EN71 认证文件\n6. \"hypoallergenic\" → 需皮肤科测试报告\n7. \"pediatrician\" → 需执业医师签名或机构背书\n\n━━ 所需证明文件清单 ━━\n□ SGS/Intertek 第三方安全检测报告\n□ CPSIA 儿童产品认证（US必需）\n□ EN71/CE 认证（EU市场）"},
-        {"id": "agent-product-radar", "name": "选品雷达", "ts": "2026-06-11 00:44", "inputs": {"keyword": "婴儿安全防护角", "market": "DE", "budget": ">$20k"}, "result": "[选品雷达] 实时分析\n\n━━ 机会评分 ━━\n品类: \"婴儿安全防护角\" | 市场: 德国 | 预算: >$20k\n综合评分: 74/100 [~] 值得尝试\n\n━━ 市场数据（基于关键词特征估算）━━\n月均搜索量: 155,000（YoY +13%）\nBSR TOP10 均价: $22.0 | 成本带: $6-9\n头部集中度（前3卖家）: 47% [OK] 仍有切入空间\n\n━━ 差异化切入角度 ━━\n1. 材质/工艺升级（食品级/环保材料 → 情感溢价 +$4）\n2. 套装/组合策略（提升 AOV 至 $40+）\n3. 月龄/场景分段（精准细分需求）\n\n━━ 竞争分析 ━━\n新品切入评论门槛: ~200 条\n新品窗口: ⭐⭐⭐ 一般\n\n━━ 建议 ━━\n[~] 值得尝试 — 需要明确差异化方向\n建议首批备货: 1000-2000 件（>$20k 预算匹配）"},
-        {"id": "agent-tiktok-content", "name": "TikTok 内容官", "ts": "2026-06-11 00:44", "inputs": {"product": "BPA-Free硅胶餐具套装 鼠尾草绿", "audience": "6-18月龄辅食阶段宝妈，关注BLW自主进食", "style": "教程/攻略", "freq": "5条/周"}, "result": "[TikTok 内容官] 本周选题矩阵\n\n━━ 创作策略 ━━\n产品: BPA-Free硅胶餐具套装 鼠尾草绿\n目标受众: 6-18月龄辅食阶段宝妈，关注BLW自主进食\n内容风格: 教程/攻略 | 更新频次: 5条/周\n\n━━ 内容日历（5 条/周）━━\nDay 1（周一）— 教程/攻略\nHook: \"使用教程 — 关于BPA-Free硅胶餐具套装 鼠尾草绿\"\n话题: #babymom #toddlermom #momhack #BPA-Free硅胶餐具套装鼠尾草绿\n\nDay 2（周二）— 教程/攻略\nHook: \"3步搞定 — 关于BPA-Free硅胶餐具套装 鼠尾草绿\"\n话题: #babymom #toddlermom #momhack #BPA-Free硅胶餐具套装鼠尾草绿\n\nDay 3（周三）— 教程/攻略\nHook: \"保姆级攻略 — 关于BPA-Free硅胶餐具套装 鼠尾草绿\"\n话题: #babymom #toddlermom #momhack #BPA-Free硅胶餐具套装鼠尾草绿\n\nDay 4（周四）— 教程/攻略\nHook: \"新手必看 — 关于BPA-Free硅胶餐具套装 鼠尾草绿\"\n话题: #babymom #toddlermom #momhack #BPA-Free硅胶餐具套装鼠尾草绿\n\nDay 5（周五）— 教程/攻略\nHook: \"这样用对了 — 关于BPA-Free硅胶餐具套装 鼠尾草绿\"\n话题: #babymom #toddlermom #momhack #BPA-Free硅胶餐具套装鼠尾草绿\n\n━━ 爆款公式 ━━\n价值前置（3秒说明能学到什么）+ 步骤清晰 + 截图提示 = 收藏率 20%+\n\n━━ 发布建议 ━━\n最佳时间: 晚9-11PM（宝宝入睡后）\n话题标签: #babymom #toddlermom #momhack #babyfood #parenting\n预算建议: $75-150/周（寄送产品换视频）"},
-    ]
-
-    seed_reports_js = json.dumps(seed_reports, ensure_ascii=False)
-
+        {ag["id"]: ag["name"] for ag in AGENT_CATALOG}, ensure_ascii=False)
+    agent_categories_js = json.dumps(
+         {ag["id"]: ag.get("category","") for ag in AGENT_CATALOG}, ensure_ascii=False)
+    filter_buttons = "".join(
+        f'<button class="rpt-filter" data-agent="{ag["id"]}" onclick="setAgentFilter(\'{ag["id"]}\')">{ag["name"]}</button>'
+        for ag in AGENT_CATALOG[:18])
     body = f"""
-<div style='max-width:900px;margin:0 auto'>
-<div style='display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px'>
-  <div>
-    <h1 style='font-size:28px;font-weight:900;letter-spacing:-.03em;margin:0 0 6px'>智能体报告</h1>
-    <p style='color:#64748b;margin:0'>每次在智能体广场运行分析后，结果自动保存在此。</p>
+<div class="rpt-page">
+  <div class="rpt-header">
+    <div class="rpt-header-left">
+      <h1 class="rpt-title">智能体运行报告台</h1>
+      <p class="rpt-subtitle">Agent Analytics Dashboard</p>
+    </div>
+    <div class="rpt-header-actions">
+      <button onclick="exportReports()" class="rpt-btn rpt-btn-outline">导出报告</button>
+      <button onclick="clearReports()" class="rpt-btn rpt-btn-ghost">清空记录</button>
+    </div>
   </div>
-  <div style='display:flex;gap:10px'>
-    <button onclick='exportReports()' style='padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600'>⬇ 导出全部</button>
-    <button onclick='clearReports()' style='padding:8px 16px;border-radius:8px;border:1px solid #fecaca;background:#fff;color:#dc2626;cursor:pointer;font-size:13px;font-weight:600'>✕ 清空</button>
+  <div class="rpt-summary-bar">
+    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-total">0</span><span class="rpt-metric-label">总运行次数</span></div>
+    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-agents">0</span><span class="rpt-metric-label">调用智能体</span></div>
+    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-today">0</span><span class="rpt-metric-label">今日运行</span></div>
+    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-latest">—</span><span class="rpt-metric-label">最近运行</span></div>
   </div>
+  <div class="rpt-filter-bar">
+    <button class="rpt-filter active" data-agent="all" onclick="setAgentFilter('all')">全部</button>
+    {filter_buttons}
+  </div>
+  <div id="rpt-list" class="rpt-list"></div>
 </div>
-
-<div id='report-filter-bar' style='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center'>
-  <span style='font-size:12px;color:#94a3b8;font-weight:600;margin-right:2px'>按 Agent 筛选：</span>
-  <button class='rpt-filter active' data-agent='' onclick='setAgentFilter("")'
-    style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px;font-weight:600'>全部</button>
-  <button class='rpt-filter' data-agent='agent-supply-sentinel' onclick='setAgentFilter("agent-supply-sentinel")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>📦 供应链哨兵</button>
-  <button class='rpt-filter' data-agent='agent-pricing-advisor' onclick='setAgentFilter("agent-pricing-advisor")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>💰 定价顾问</button>
-  <button class='rpt-filter' data-agent='agent-pnl-analyzer' onclick='setAgentFilter("agent-pnl-analyzer")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>📊 P&L 透视</button>
-  <button class='rpt-filter' data-agent='agent-ad-attribution' onclick='setAgentFilter("agent-ad-attribution")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>📣 广告归因</button>
-  <button class='rpt-filter' data-agent='agent-competitor-radar' onclick='setAgentFilter("agent-competitor-radar")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>🔭 竞品雷达</button>
-  <button class='rpt-filter' data-agent='agent-listing-doctor' onclick='setAgentFilter("agent-listing-doctor")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>📝 Listing 医生</button>
-  <button class='rpt-filter' data-agent='agent-voc-decoder' onclick='setAgentFilter("agent-voc-decoder")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>💬 VOC 解码</button>
-  <button class='rpt-filter' data-agent='agent-cs-triage' onclick='setAgentFilter("agent-cs-triage")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>🎧 客服分诊</button>
-  <button class='rpt-filter' data-agent='agent-account-guardian' onclick='setAgentFilter("agent-account-guardian")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>🛡 账号卫士</button>
-  <button class='rpt-filter' data-agent='agent-brand-guardian' onclick='setAgentFilter("agent-brand-guardian")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>✅ 品牌合规</button>
-  <button class='rpt-filter' data-agent='agent-product-radar' onclick='setAgentFilter("agent-product-radar")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>🎯 选品雷达</button>
-  <button class='rpt-filter' data-agent='agent-tiktok-content' onclick='setAgentFilter("agent-tiktok-content")' style='padding:4px 12px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>🎬 TikTok 内容</button>
-</div>
-
-<div id='report-empty' style='display:none;text-align:center;padding:80px 20px;color:#94a3b8'>
-  <div style='font-size:48px;margin-bottom:16px'>📊</div>
-  <div style='font-size:18px;font-weight:600;margin-bottom:8px'>暂无报告</div>
-  <div style='font-size:14px;margin-bottom:24px'>前往智能体广场运行分析，结果将自动保存在这里</div>
-  <a href='agents.html' style='display:inline-block;padding:10px 24px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600'>前往智能体广场 →</a>
-</div>
-
-<div id='report-list' style='display:flex;flex-direction:column;gap:16px'></div>
-</div>
-
+<style>
+.rpt-page{{max-width:1100px;margin:0 auto;padding:32px 24px}}
+.rpt-header{{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid #E5E5E5}}
+.rpt-title{{margin:0;font-size:24px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-.5px}}
+.rpt-subtitle{{margin:4px 0 0;font-size:12px;color:#999;font-family:monospace;text-transform:uppercase;letter-spacing:.5px}}
+.rpt-header-actions{{display:flex;gap:8px}}
+.rpt-btn{{height:36px;padding:0 16px;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}}
+.rpt-btn-outline{{background:#fff;border:1px solid #E5E5E5;color:var(--ink,#0C0C0C)}}
+.rpt-btn-outline:hover{{border-color:#0C0C0C}}
+.rpt-btn-ghost{{background:transparent;border:1px solid transparent;color:#999}}
+.rpt-btn-ghost:hover{{color:var(--accent,#B5323E)}}
+.rpt-summary-bar{{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E5E5E5;border:1px solid #E5E5E5;border-radius:8px;overflow:hidden;margin-bottom:24px}}
+.rpt-metric{{background:#fff;padding:20px 24px}}
+.rpt-metric-value{{display:block;font-size:28px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-1px}}
+.rpt-metric-label{{display:block;font-size:12px;color:#888;margin-top:4px}}
+.rpt-filter-bar{{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #F0F0F0}}
+.rpt-filter{{height:30px;padding:0 12px;border:1px solid #E5E5E5;border-radius:4px;background:#FAFAFA;color:#555;font-size:12px;cursor:pointer;transition:all .15s}}
+.rpt-filter.active{{background:var(--ink,#0C0C0C);border-color:var(--ink,#0C0C0C);color:#fff}}
+.rpt-filter:hover:not(.active){{border-color:#999;color:var(--ink,#0C0C0C)}}
+.rpt-list{{display:flex;flex-direction:column;gap:16px}}
+.rpt-card{{border:1px solid #E5E5E5;border-radius:8px;background:#fff;overflow:hidden}}
+.rpt-card-header{{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #F0F0F0;background:#FAFAFA}}
+.rpt-card-title{{font-size:14px;font-weight:600;color:var(--ink,#0C0C0C)}}
+.rpt-card-meta{{display:flex;align-items:center;gap:10px}}
+.rpt-card-agent{{font-size:11px;color:#555;background:#F0F0F0;padding:3px 8px;border-radius:3px;font-family:monospace}}
+.rpt-card-ts{{font-size:11px;color:#999;font-family:monospace}}
+.rpt-card-body{{padding:20px}}
+.rpt-inputs{{margin-bottom:14px}}
+.rpt-inputs-title{{font-size:10px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}}
+.rpt-inputs-grid{{display:flex;flex-wrap:wrap;gap:6px}}
+.rpt-input-chip{{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:3px;font-size:12px}}
+.rpt-input-key{{color:#888}}
+.rpt-input-val{{color:var(--ink,#0C0C0C);font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.rpt-kpi-row{{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}}
+.rpt-kpi{{flex:1;min-width:110px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px}}
+ .rpt-kpi-label{{font-size:11px;color:#888;margin-bottom:4px}}
+ .rpt-kpi-value{{font-size:18px;font-weight:700;color:var(--ink,#0C0C0C)}}
+ .rpt-kpi-value.warn{{color:var(--accent,#B5323E)}}
+ .rpt-kpi-value.ok{{color:#059669}}
+ .rpt-output{{font-family:monospace;font-size:12.5px;color:#334155;background:#FAFAFA;border:1px solid #F0F0F0;border-radius:4px;padding:16px;white-space:pre-wrap;line-height:1.7;max-height:380px;overflow-y:auto}}
+ .rpt-output .rpt-warn{{color:var(--accent,#B5323E);font-weight:600}}
+ .rpt-output .rpt-ok{{color:#059669;font-weight:600}}
+ .rpt-output .rpt-info{{color:#0369a1}}
+ .rpt-output .rpt-section{{font-weight:700;color:var(--ink,#0C0C0C)}}
+ .rpt-card-footer{{padding:10px 20px;border-top:1px solid #F0F0F0;display:flex;gap:8px}}
+ .rpt-action-btn{{height:28px;padding:0 12px;font-size:12px;border-radius:3px;cursor:pointer;border:1px solid #E5E5E5;background:#fff;color:#555;transition:all .15s}}
+ .rpt-action-btn:hover{{border-color:var(--ink,#0C0C0C);color:var(--ink,#0C0C0C)}}
+ .rpt-seeded-badge{{font-size:10px;color:#888;margin-left:auto;padding:2px 6px;border:1px solid #E5E5E5;border-radius:3px}}
+ @media(max-width:640px){{.rpt-summary-bar{{grid-template-columns:repeat(2,1fr)}};.rpt-header{{flex-direction:column;align-items:flex-start;gap:16px}}}}
+/* ── Structured Report Renderer ── */
+.rr-body{{padding:4px 0;font-size:13px;color:#1e293b;line-height:1.7}}
+.rr-spacer{{height:6px}}
+.rr-section{{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#F1F5F9 0%,#FAFAFA 100%);border-left:3px solid var(--ink,#0C0C0C);padding:8px 12px;margin:14px 0 6px;font-size:12.5px;font-weight:700;color:var(--ink,#0C0C0C);border-radius:0 4px 4px 0;letter-spacing:.3px;text-transform:uppercase}}
+.rr-section-dot{{width:5px;height:5px;border-radius:50%;background:var(--ink,#0C0C0C);flex-shrink:0}}
+.rr-warn{{display:flex;align-items:flex-start;gap:8px;background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#991B1B;font-weight:500}}
+.rr-ok{{display:flex;align-items:flex-start;gap:8px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:6px;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#166534;font-weight:500}}
+.rr-action{{display:flex;align-items:flex-start;gap:8px;background:#EFF6FF;border-left:3px solid #3B82F6;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#1E40AF;font-weight:500;border-radius:0 4px 4px 0}}
+.rr-priority{{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12.5px;color:#334155}}
+.rr-p0{{background:var(--accent,#B5323E);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
+.rr-p1{{background:#F59E0B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
+.rr-p2{{background:#64748B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
+.rr-row{{display:flex;align-items:baseline;gap:8px;padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;margin-bottom:2px}}
+.rr-row-plain{{padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;color:#475569}}
+.rr-row-key{{color:#64748B;font-size:12px;flex-shrink:0;min-width:100px}}
+.rr-row-sep{{color:#CBD5E1;margin:0 2px}}
+.rr-kv{{display:flex;align-items:baseline;gap:6px;padding:3px 0;font-size:12.5px}}
+.rr-kv-key{{color:#64748B;font-size:12px;flex-shrink:0}}
+.rr-kv-sep{{color:#CBD5E1}}
+.rr-val{{font-weight:700;color:var(--ink,#0C0C0C);font-variant-numeric:tabular-nums}}
+.rr-line{{padding:2px 0;font-size:12.5px;color:#334155}}
+.rr-num{{font-weight:700;color:#0C0C0C;font-variant-numeric:tabular-nums}}
+.rr-pct{{font-weight:600;color:#0369a1;font-size:12px}}
+/* ── Pagination ── */
+.rpt-pagination{{display:flex;justify-content:center;align-items:center;gap:4px;padding:24px 0 8px;flex-wrap:wrap}}
+.rpt-page-btn{{min-width:32px;height:32px;padding:0 10px;border:1px solid #E5E5E5;border-radius:4px;background:#fff;color:#555;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}}
+.rpt-page-btn:hover:not([disabled]){{border-color:var(--ink,#0C0C0C);color:var(--ink,#0C0C0C)}}
+.rpt-page-btn.active{{background:var(--ink,#0C0C0C);border-color:var(--ink,#0C0C0C);color:#fff;font-weight:600}}
+.rpt-page-btn[disabled]{{opacity:.35;cursor:not-allowed}}
+.rpt-page-info{{font-size:12px;color:#888;padding:0 8px}}
+</style>
 <script>
-const AGENT_NAMES = {agent_names_js};
-const SEED_REPORTS = {seed_reports_js};
-const SEED_VERSION = 'v20260611-r2';
-let _currentAgentFilter = '';
-
-function setAgentFilter(agentId) {{
-  _currentAgentFilter = agentId;
-  document.querySelectorAll('.rpt-filter').forEach(b => {{
-    const isActive = b.dataset.agent === agentId;
-    b.style.background = isActive ? 'var(--accent)' : '#f8fafc';
-    b.style.color = isActive ? '#fff' : '';
-    b.style.borderColor = isActive ? 'var(--accent)' : '#e2e8f0';
-    b.classList.toggle('active', isActive);
-  }});
-  renderReports();
-}}
-
-function loadReports() {{
-  try {{
-    const seeded = localStorage.getItem('agentReportsSeeded');
-    let stored = [];
-    try {{ stored = JSON.parse(localStorage.getItem('agentReports') || '[]'); }} catch(e) {{ stored = []; }}
-    if (!Array.isArray(stored)) stored = [];
-    if (seeded !== SEED_VERSION) {{
-      const userIds = new Set(stored.map(r => r.ts + r.id));
-      const fresh = SEED_REPORTS.filter(s => !userIds.has(s.ts + s.id));
-      const merged = [...stored, ...fresh];
-      localStorage.setItem('agentReports', JSON.stringify(merged));
-      localStorage.setItem('agentReportsSeeded', SEED_VERSION);
-      return merged;
+const _AGENT_NAMES={agent_names_js};
+const _AGENT_CATS={agent_categories_js};
+let _activeFilter='all';
+function _initSeeds(){{
+  try{{
+    var ex=JSON.parse(localStorage.getItem('agentReports')||'[]');
+    if(ex.length===0){{
+      var rootPrefix=window.location.pathname.includes('/skills/')||window.location.pathname.includes('/domains/')||window.location.pathname.includes('/playbooks/')||window.location.pathname.includes('/solutions/')?'../':'';
+      fetch(rootPrefix+'assets/seed_reports.json').then(function(r){{return r.json();}}).then(function(seeds){{
+        localStorage.setItem('agentReports',JSON.stringify(seeds));
+        _renderR();
+      }}).catch(function(){{}});
     }}
-    return stored.length > 0 ? stored : SEED_REPORTS;
-  }} catch(e) {{ return SEED_REPORTS; }}
+  }}catch(e){{}}
 }}
+function _loadR(){{try{{return JSON.parse(localStorage.getItem('agentReports')||'[]')}}catch(e){{return[]}}}}
+function setAgentFilter(id){{_activeFilter=id;document.querySelectorAll('.rpt-filter').forEach(b=>b.classList.toggle('active',b.dataset.agent===id));_renderR();}}
+function _extractKPIs(result){{
+  const kpis=[];
+  const pats=[
+    {{rx:new RegExp('\u5269\u4f59\u53ef\u552e\u5929\u6570[:]+([0-9.]+)[ ]*\u5929'),label:'\u53ef\u552e\u5929\u6570',suffix:'\u5929',warnBelow:14}},
+    {{rx:new RegExp('\u51c0\u5229\u6da6[:]+[+]?[$]([0-9,.]+)'),label:'\u51c0\u5229\u6da6',prefix:'$'}},
+    {{rx:new RegExp('\u51c0\u5229\u7387[:]+([0-9.]+)%'),label:'\u51c0\u5229\u7387',suffix:'%',warnBelow:8}},
+    {{rx:new RegExp('ACoS[:]+([0-9.]+)%'),label:'ACoS',suffix:'%',warnAbove:25}},
+    {{rx:new RegExp('\u6708\u8282\u7701\u5408\u8ba1[:]+[$]([0-9,.]+)'),label:'\u6708\u8282\u7701',prefix:'$'}},
+    {{rx:new RegExp('\u8bc4\u5206[:]+([0-9]+)/100'),label:'\u8bc4\u5206',suffix:'/100',warnBelow:60}},
+  ];
+  for(const p of pats){{
+    const m=result.match(p.rx);
+    if(m){{
+      const n=parseFloat(m[1].replace(/,/g,''));
+      const w=(p.warnBelow&&n<p.warnBelow)||(p.warnAbove&&n>p.warnAbove);
+      kpis.push({{label:p.label,value:(p.prefix||'')+m[1]+(p.suffix||''),warn:w}});
+    }}
+    if(kpis.length>=3)break;
+  }}
+  return kpis;
+}}
+ function _colorize(txt){{
+   return txt.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+     .replace(/\[WARN\]|\[!\]/g,'<span class="rpt-warn">[!]</span>')
+      .replace(/\[OK\]/g,'<span class="rpt-ok">[OK]</span>')
+      .replace(/\[>\]/g,'<span class="rpt-info">[>]</span>')
+      .replace(/(\u2501\u2501[^\\n]+\u2501\u2501)/g,'<span class="rpt-section">$1</span>');
+ }}
+function _renderReport(raw){{
+  if(!raw)return'';
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const lines=raw.split('\\n');
+  let html='',inSection=false;
+  for(let i=0;i<lines.length;i++){{
+    const l=lines[i];
+    const trim=l.trim();
+    if(!trim){{html+='<div class="rr-spacer"></div>';continue;}}
 
-function renderReports() {{
-  let reports = loadReports();
-  if (_currentAgentFilter) reports = reports.filter(r => r.id === _currentAgentFilter);
-  const list = document.getElementById('report-list');
-  const empty = document.getElementById('report-empty');
-  if (!list) return;
-  if (reports.length === 0) {{
-    list.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:40px">该 Agent 暂无报告，前往 <a href="agents.html">智能体广场</a> 运行分析。</p>';
-    if (empty) empty.style.display = 'none';
+    // ━━ Section Header ━━
+    if(/^\u2501\u2501.+\u2501\u2501$/.test(trim)){{
+      const title=trim.replace(/^\u2501+\s*/,'').replace(/\s*\u2501+$/,'');
+      html+=`<div class="rr-section"><span class="rr-section-dot"></span>${{esc(title)}}</div>`;
+      continue;
+    }}
+    // [!] Warning
+    if(/^\[!\]|^\[WARN\]/.test(trim)){{
+      const msg=trim.replace(/^\[!\]\s*|\[WARN\]\s*/,'');
+      html+=`<div class="rr-warn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>${{esc(msg)}}</div>`;
+      continue;
+    }}
+    // [OK]
+    if(/^\[OK\]/.test(trim)){{
+      const msg=trim.replace(/^\[OK\]\s*/,'');
+      html+=`<div class="rr-ok"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${{esc(msg)}}</div>`;
+      continue;
+    }}
+    // [>] Action
+    if(/^\[>\]/.test(trim)){{
+      const msg=trim.replace(/^\[>\]\s*/,'');
+      html+=`<div class="rr-action"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>${{esc(msg)}}</div>`;
+      continue;
+    }}
+    // ├─ └─ tree line
+    if(/^[\u251c\u2514]\u2500/.test(trim)){{
+      const msg=trim.replace(/^[\u251c\u2514]\u2500+\s*/,'');
+      // Check if it contains a number value after colon
+      const valMatch=msg.match(/^(.+?):\s*(.+)$/);
+      if(valMatch){{
+        const isNum=/[\$\d,%\+\-]+/.test(valMatch[2]);
+        const val=isNum?`<span class="rr-val">${{esc(valMatch[2])}}</span>`:esc(valMatch[2]);
+        html+=`<div class="rr-row"><span class="rr-row-key">${{esc(valMatch[1])}}</span><span class="rr-row-sep">:</span>${{val}}</div>`;
+      }}else{{
+        html+=`<div class="rr-row-plain">${{esc(msg)}}</div>`;
+      }}
+      continue;
+    }}
+    // P0/P1/P2 priority
+    if(/^P[0-3][\u00ef\uff08（(]/.test(trim)||/^P[0-3]:/.test(trim)){{
+      const p=trim.match(/^(P\d)/)?.[1]||'P1';
+      const pClass=p==='P0'?'rr-p0':p==='P1'?'rr-p1':'rr-p2';
+      html+=`<div class="rr-priority"><span class="${{pClass}}">${{p}}</span>${{esc(trim.replace(/^P\d[^\s]*/,'').trim())}}</div>`;
+      continue;
+    }}
+    // Key: Value line
+    const kvMatch=trim.match(/^(.{2,20})[：:]\s*(.{1,200})$/);
+    if(kvMatch&&!trim.startsWith('http')){{
+      const numRaw=kvMatch[2];
+      const hasNum=/[\$\d,%]+/.test(numRaw)&&numRaw.length<60;
+      const val=hasNum?`<span class="rr-val">${{esc(numRaw)}}</span>`:esc(numRaw);
+      html+=`<div class="rr-kv"><span class="rr-kv-key">${{esc(kvMatch[1])}}</span><span class="rr-kv-sep">:</span>${{val}}</div>`;
+      continue;
+    }}
+    // Default text line
+    let styled=esc(trim)
+      .replace(/(\$[\d,]+(?:\.\d+)?)/g,'<span class="rr-num">$1</span>')
+      .replace(/([\d.]+%)/g,'<span class="rr-pct">$1</span>');
+    html+=`<div class="rr-line">${{styled}}</div>`;
+  }}
+  return html;
+}}
+function _fmtTs(ts){{
+  if(!ts)return'—';
+  const d=new Date(ts.replace(' ','T'));
+  return isNaN(d)?ts:d.toLocaleDateString('zh-CN',{{month:'2-digit',day:'2-digit'}})+' '+d.toLocaleTimeString('zh-CN',{{hour:'2-digit',minute:'2-digit'}});
+}}
+function _renderCard(r,idx){{
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  const ts=_fmtTs(r.ts);
+  const kpis=_extractKPIs(r.result||'');
+  const chips=Object.entries(r.inputs||{{}}).slice(0,5).map(([k,v])=>
+    `<span class="rpt-input-chip"><span class="rpt-input-key">${{k}}:</span><span class="rpt-input-val" title="${{v}}">${{v.length>30?v.slice(0,28)+'…':v}}</span></span>`
+  ).join('');
+  const kpiRow=kpis.length?`<div class="rpt-kpi-row">${{kpis.map(k=>`<div class="rpt-kpi"><div class="rpt-kpi-label">${{k.label}}</div><div class="rpt-kpi-value ${{k.warn?'warn':'ok'}}">${{k.value}}</div></div>`).join('')}}</div>`:'';
+  const seededBadge=r.seeded?'<span class="rpt-seeded-badge">预置示例</span>':'';
+  const reportBody=_renderReport(r.result||'');
+  return`<div class="rpt-card"><div class="rpt-card-header"><span class="rpt-card-title">分析报告 #${{idx+1}} — ${{name}}</span><div class="rpt-card-meta"><span class="rpt-card-agent">${{name}}</span><span class="rpt-card-ts">${{ts}}</span>${{seededBadge}}</div></div><div class="rpt-card-body">${{chips?`<div class="rpt-inputs"><div class="rpt-inputs-title">输入参数</div><div class="rpt-inputs-grid">${{chips}}</div></div>`:''}}<div>${{kpiRow}}</div><div class="rr-body">${{reportBody}}</div></div><div class="rpt-card-footer"><button class="rpt-action-btn" onclick="copyRpt(${{idx}})">复制报告</button><button class="rpt-action-btn" onclick="delRpt(${{idx}})">删除</button></div></div>`;
+}}
+function _updateSummary(reports){{
+  const today=new Date().toDateString();
+  const todayN=reports.filter(r=>r.ts&&new Date(r.ts.replace(' ','T')).toDateString()===today).length;
+  const agents=new Set(reports.map(r=>r.id)).size;
+  const latest=reports.length?_fmtTs(reports[reports.length-1].ts):'—';
+  document.getElementById('rpt-total').textContent=reports.length;
+  document.getElementById('rpt-agents').textContent=agents;
+  document.getElementById('rpt-today').textContent=todayN;
+  document.getElementById('rpt-latest').textContent=latest;
+}}
+function _renderR(){{
+  const reports=_loadR();
+  _updateSummary(reports);
+  const filtered=_activeFilter==='all'?reports:reports.filter(r=>r.id===_activeFilter);
+  const list=document.getElementById('rpt-list');
+  if(!filtered.length){{
+    list.innerHTML='<div style="text-align:center;padding:80px 40px;"><p style="font-size:16px;color:#555;font-weight:500;">暂无报告记录</p><p style="font-size:13px;color:#888;">前往 <a href=\"agents.html\" style=\"color:var(--accent,#B5323E);text-decoration:none\">智能体广场</a> 运行分析后，报告将自动保存至此。</p></div>';
     return;
   }}
-  if (empty) empty.style.display = 'none';
-  list.innerHTML = reports.map((r, i) => {{
-    const name = r.name || AGENT_NAMES[r.id] || r.id;
-    const inputSummary = r.inputs ? Object.entries(r.inputs).slice(0, 3).map(([k,v]) => `<span style='background:#f1f5f9;border-radius:4px;padding:2px 6px;font-size:11px;color:#475569'>${{k}}: ${{v.slice(0,30)}}${{v.length>30?'…':''}}</span>`).join(' ') : '';
-    const preview = (r.result || '').slice(0, 300).replace(/</g,'&lt;');
-    const catIcon = r.id.includes('supply') ? '📦' : r.id.includes('pricing') ? '💰' : r.id.includes('pnl') ? '📊' : r.id.includes('ad-') ? '📣' : r.id.includes('competitor') ? '🔭' : r.id.includes('listing') ? '📝' : r.id.includes('voc') ? '💬' : r.id.includes('cs-') ? '🎧' : r.id.includes('account') ? '🛡' : r.id.includes('brand') ? '✅' : r.id.includes('product-radar') ? '🎯' : '🎬';
-    return `<div style='background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06)'>
-  <div style='display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px'>
-    <div style='display:flex;align-items:center;gap:10px'>
-      <span style='font-size:22px'>${{catIcon}}</span>
-      <div>
-        <div style='font-size:15px;font-weight:700;color:#1e293b'>${{name}}</div>
-        <div style='font-size:12px;color:#94a3b8;margin-top:2px'>🕐 ${{r.ts || '未知时间'}}</div>
-      </div>
-    </div>
-    <div style='display:flex;gap:8px;flex-shrink:0'>
-      <button onclick='toggleReport(${{i}})' id='toggle-${{i}}' style='padding:5px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px;font-weight:600'>展开</button>
-      <button onclick='deleteReport(${{i}})' style='padding:5px 10px;border-radius:6px;border:1px solid #fecaca;background:#fff;color:#dc2626;cursor:pointer;font-size:12px'>删除</button>
-    </div>
-  </div>
-  ${{inputSummary ? `<div style='display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px'>${{inputSummary}}</div>` : ''}}
-  <pre id='report-body-${{i}}' style='display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;font-size:12px;line-height:1.8;white-space:pre-wrap;word-break:break-all;max-height:500px;overflow-y:auto;margin:0'>${{(r.result||'').replace(/</g,'&lt;')}}</pre>
-  <div id='report-preview-${{i}}' style='font-size:12px;color:#64748b;line-height:1.6;font-family:monospace;white-space:pre-wrap'>${{preview}}${{(r.result||'').length > 300 ? '…' : ''}}</div>
-</div>`;
-  }}).join('');
+  const PAGE_SIZE=6;
+  const reversed=[...filtered].reverse();
+  const totalPages=Math.ceil(reversed.length/PAGE_SIZE);
+  let curPage=parseInt(list.dataset.page||'1');
+  if(curPage<1)curPage=1;
+  if(curPage>totalPages)curPage=totalPages;
+  list.dataset.page=curPage;
+  const start=(curPage-1)*PAGE_SIZE;
+  const pageItems=reversed.slice(start,start+PAGE_SIZE);
+  const cards=pageItems.map((r,i)=>_renderCard(r,filtered.length-1-start-i)).join('');
+  const pager=totalPages<=1?'':(() => {{
+    let btns=`<button class="rpt-page-btn" onclick="_goPage(${{curPage-1}})" ${{curPage<=1?'disabled':''}}>‹</button>`;
+    for(let p=1;p<=totalPages;p++){{
+      if(totalPages>7&&p>2&&p<totalPages-1&&Math.abs(p-curPage)>1){{
+        if(p===3||p===totalPages-2)btns+='<span class="rpt-page-info">…</span>';
+        continue;
+      }}
+      btns+=`<button class="rpt-page-btn ${{p===curPage?'active':''}}" onclick="_goPage(${{p}})">${{p}}</button>`;
+    }}
+    btns+=`<button class="rpt-page-btn" onclick="_goPage(${{curPage+1}})" ${{curPage>=totalPages?'disabled':''}}>›</button>`;
+    btns+=`<span class="rpt-page-info">${{start+1}}-${{Math.min(start+PAGE_SIZE,filtered.length)}} / ${{filtered.length}} 条</span>`;
+    return`<div class="rpt-pagination">${{btns}}</div>`;
+  }})();
+  list.innerHTML=cards+pager;
 }}
-
-function toggleReport(i) {{
-  const body = document.getElementById('report-body-' + i);
-  const preview = document.getElementById('report-preview-' + i);
-  const btn = document.getElementById('toggle-' + i);
-  if (!body) return;
-  const isOpen = body.style.display !== 'none';
-  body.style.display = isOpen ? 'none' : 'block';
-  if (preview) preview.style.display = isOpen ? 'block' : 'none';
-  if (btn) btn.textContent = isOpen ? '展开' : '收起';
+function _goPage(p){{
+  const list=document.getElementById('rpt-list');
+  list.dataset.page=p;
+  _renderR();
+  list.scrollIntoView({{behavior:'smooth',block:'start'}});
 }}
-
-function deleteReport(i) {{
-  const reports = loadReports();
-  reports.splice(i, 1);
-  localStorage.setItem('agentReports', JSON.stringify(reports));
-  renderReports();
+function copyRpt(idx){{
+  const r=_loadR()[idx];if(!r)return;
+  navigator.clipboard.writeText(`[${{r.name||r.id}}] ${{r.ts||''}}\\n\\n输入:\\n${{JSON.stringify(r.inputs,null,2)}}\\n\\n结果:\\n${{r.result||''}}`).then(()=>alert('报告已复制'));
 }}
-
-function clearReports() {{
-  if (confirm('确认清空全部报告记录？')) {{
-    localStorage.removeItem('agentReports');
-    renderReports();
-  }}
+function delRpt(idx){{
+  if(!confirm('确认删除这条报告记录？'))return;
+  const rs=_loadR();rs.splice(idx,1);localStorage.setItem('agentReports',JSON.stringify(rs));_renderR();
 }}
-
-function exportReports() {{
-  const reports = loadReports();
-  if (reports.length === 0) {{ alert('暂无报告可导出'); return; }}
-  const sep = '\\n' + Array(60).fill('─').join('') + '\\n';
-  const lines = reports.map(r =>
-    '=== ' + r.name + ' | ' + r.ts + ' ===\\n' +
-    '输入: ' + JSON.stringify(r.inputs) + '\\n\\n' +
-    r.result + '\\n'
-  ).join(sep);
-  const blob = new Blob([lines], {{type:'text/plain;charset=utf-8'}});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'agent-reports-' + new Date().toISOString().slice(0,10) + '.txt';
-  a.click();
+function clearReports(){{
+  if(!confirm('确认清空全部运行记录？此操作不可撤销。'))return;
+  localStorage.removeItem('agentReports');_renderR();
 }}
-
-renderReports();
-window.addEventListener('storage', () => renderReports());
+function exportReports(){{
+  const rs=_loadR();if(!rs.length){{alert('暂无报告记录');return;}}
+  const txt=rs.map((r,i)=>`=== 报告 #${{i+1}} | ${{r.name||r.id}} | ${{r.ts||''}} ===\\n输入:\\n${{JSON.stringify(r.inputs,null,2)}}\\n\\n结果:\\n${{r.result||''}}\\n`).join('\\n');
+  const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='agent-reports-'+new Date().toISOString().slice(0,10)+'.txt';a.click();
+}}
+document.addEventListener('DOMContentLoaded',function(){{_initSeeds();_renderR();}});
+window.addEventListener('storage',e=>{{if(e.key==='agentReports')_renderR();}});
 </script>
 """
     return html_page("智能体报告", body, active_nav="agent-report")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 方案库 (Solutions)
-# ─────────────────────────────────────────────────────────────────────────────
-
 SOLUTIONS_CATALOG = [
+    {
+        "id": "sol-counterfactual-pricing",
+        "title": "反事实推演 → 动态定价架构",
+        "subtitle": "因果推断、博弈论与多智能体的融合决策系统",
+        "category": "定价策略 AI",
+        "tags": ["因果推断", "多智能体", "动态定价", "反直觉决策"],
+        "icon": "CP",
+        "icon_color": "#8b5cf6",
+        "status": "published",
+        "updated": "2026-06-20",
+        "summary": "打破基于滞后规则的竞价内卷，引入因果推断的反事实基线计算真实利润 Uplift。结合 MAS 跨部门利益制衡，构建反直觉的高价值商业化定价产品。",
+        "roi_headline": "告别无效价格战，通过反事实预判提升净利润率 15%-40%",
+        "phases": [
+            {"name": "Phase 1 因果基线", "duration": "1-2 月", "action": "计算历史真实 Uplift", "roi": "减少盲目降价"},
+            {"name": "Phase 2 旁路博弈", "duration": "3-4 月", "action": "MAS Agent 辩论报告", "roi": "决策视角升维"},
+            {"name": "Phase 3 闭环门控", "duration": "5-6 月", "action": "自动化调价与风险阻断", "roi": "极致响应"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "信号解析层", "desc": "正交数据获取：海关提单、社媒发帖加速度"},
+            {"no": "L2", "name": "因果推演层", "desc": "Do-Calculus 反事实基线，测算净增量"},
+            {"no": "L3", "name": "董事会博弈层", "desc": "流量、供应链、财务 Agent 纳什均衡"},
+            {"no": "L4", "name": "门控执行层", "desc": "三轨合规验证与 API 自动化执行"}
+        ],
+        "core_skills": [
+            "Skill-Cross-Domain-Orthogonal-Signals",
+            "Skill-Counterfactual-Price-Elasticity",
+            "Skill-Uplift-Cannibalization-Modeling",
+        ],
+        "traps": [],
+    },
     {
         "id": "sol-sc-tag-to-decision",
         "title": "供应链标签工程 → 决策全链路架构",
@@ -2675,16 +2478,100 @@ SOLUTIONS_CATALOG = [
             "Skill-Multilingual-Listing-Generation", "Skill-Combo-New-Product-Launch-Playbook",
         ],
     },
+    {
+        "id": "sol-voc-product-selection",
+        "title": "VOC 情报 → 选品决策全链路架构",
+        "subtitle": "用户声音驱动的母婴新品筛选与需求验证系统",
+        "category": "选品增长 AI",
+        "tags": ["VOC分析", "情感分析", "选品决策", "需求预测", "NLP"],
+        "icon": "VP",
+        "icon_color": "#10b981",
+        "status": "published",
+        "updated": "2026-06-21",
+        "summary": "系统整合 Amazon 评论、Reddit 社交讨论、品牌差评三层 VOC 数据，通过情感分析、痛点聚类、需求强度评分，将用户真实声音转化为可量化的选品决策信号，输出 GO/NO-GO 推荐和首批 SKU 配置建议。",
+        "roi_headline": "新品首月滞销率降低 35%，选品决策周期从 4 周压缩到 3 天",
+        "phases": [
+            {"name": "Phase 1 信号采集", "duration": "1-2 周", "action": "三层 VOC 数据接入（评论/社交/差评）", "roi": "覆盖 90% 消费者真实反馈"},
+            {"name": "Phase 2 痛点挖掘", "duration": "2-4 周", "action": "情感分析 + 主题聚类 + 频次评分", "roi": "痛点识别准确率 >85%"},
+            {"name": "Phase 3 机会评分", "duration": "1-2 月", "action": "需求强度 × 竞争密度 = 机会得分", "roi": "选品命中率提升 40%"},
+            {"name": "Phase 4 需求预测", "duration": "2-3 月", "action": "时序 + VOC 情绪信号融合预测", "roi": "新品首季备货准确率 ±15%"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "数据采集层", "desc": "Amazon 评论爬取 · Reddit/X 社交 VOC · 品牌官网差评 · 异步去重队列"},
+            {"no": "L2", "name": "NLP 处理层", "desc": "多语言情感分析 · ABSA 属性级情感 · BERTopic 主题聚类 · 事件框架提取"},
+            {"no": "L3", "name": "信号量化层", "desc": "痛点频次 × 情感强度 = 信号热度 · 竞争密度指数 · VOC 趋势斜率"},
+            {"no": "L4", "name": "决策推理层", "desc": "机会评分矩阵 · GO/NO-GO 阈值 · 首批 SKU 配置建议 · 三轨合规验证"},
+        ],
+        "core_skills": [
+            "Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎",
+            "Skill-BERT-SRL-Event-Frame-Extraction",
+            "Skill-Semantic-Blueprint-Compiler",
+            "Skill-New-Product-Opportunity-Mining",
+            "Skill-Product-Opportunity-Scoring",
+            "Skill-Bass-Diffusion-New-Product-Forecasting",
+            "Skill-Cross-Border-Cold-Start-Forecast",
+            "Skill-Review-Dedup-Quality-Filter",
+            "Skill-Fake-Review-Detection",
+            "Skill-LLM-Focused-Web-Crawling",
+        ],
+        "traps": [
+            {"no": "T1", "title": "VOC 滞后陷阱", "desc": "评论反映的是 3-6 个月前的需求，需结合搜索趋势做前向校正，避免追逐过时痛点上新"},
+            {"no": "T2", "title": "样本偏差陷阱", "desc": "差评用户只占 5-10%，情感分布需加权，避免过度优化低频极端痛点而忽略沉默大多数"},
+            {"no": "T3", "title": "语言墙陷阱", "desc": "多市场 VOC 需语种对齐后聚类，直接合并英/德/日评论会稀释核心信号，导致选品偏向英语市场"},
+        ],
+    },
+    {
+        "id": "sol-ads-organic-synergy",
+        "title": "广告-自然流量协同增长架构",
+        "subtitle": "搜索广告与自然排名一体化运营的 AI 决策系统",
+        "category": "流量增长 AI",
+        "tags": ["搜索广告", "自然排名", "ROAS优化", "关键词矩阵", "流量协同"],
+        "icon": "AO",
+        "icon_color": "#f59e0b",
+        "status": "published",
+        "updated": "2026-06-21",
+        "summary": "打破广告投放与自然 SEO 分开管理的孤岛思维，构建关键词维度的「广告-自然」双轨监控体系。以自然排名位置为决策变量动态调整广告出价，在目标词自然排名提升期间逐步降低广告 ACoS，最终实现流量成本最优化。",
+        "roi_headline": "综合 ACoS 降低 20-28%，自然流量占比从 35% 提升至 55%",
+        "phases": [
+            {"name": "Phase 1 关键词矩阵", "duration": "1-2 周", "action": "目标词分层（核心/长尾/防守）+ SOV 基线", "roi": "流量图谱可见化"},
+            {"name": "Phase 2 双轨监控", "duration": "2-4 周", "action": "每日自然排名 + 广告位置 + 出价联动看板", "roi": "响应时延从周→天"},
+            {"name": "Phase 3 协同出价", "duration": "1-2 月", "action": "自然排名↑→广告出价梯度下调算法", "roi": "ACoS 降低 15-20%"},
+            {"name": "Phase 4 预算智能分配", "duration": "2-3 月", "action": "ROAS 预测 + 多目标预算分配优化器", "roi": "综合 ROAS 提升 30%"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "数据采集层", "desc": "自然排名快照（每日）· 广告位置 & 出价 · 搜索量趋势 · CVR/CTR 历史"},
+            {"no": "L2", "name": "关键词分层层", "desc": "核心词（Top 20）· 长尾词矩阵 · 品牌防守词 · 竞品拦截词 · SOV 计算"},
+            {"no": "L3", "name": "协同决策层", "desc": "自然位置→广告出价映射函数 · 季节性调节 · 竞品动作响应 · 置信区间门控"},
+            {"no": "L4", "name": "预算优化层", "desc": "ROAS 预测模型 · 多目标线性规划 · 广告组预算再分配 · 归因窗口协调"},
+        ],
+        "core_skills": [
+            "Skill-Amazon-Search-Ranking-Factor-Model",
+            "Skill-Search-Share-of-Voice",
+            "Skill-Search-Funnel-Attribution",
+            "Skill-Brand-Defense-Search-Strategy",
+            "Skill-Organic-Paid-Rank-Synergy-Model",
+            "Skill-ROAS-Budget-Optimization",
+            "Skill-Ad-Attribution-Modeling",
+            "Skill-Search-Conversion-Rate-Predictor",
+            "Skill-Hierarchical-Search-Intent-Classification",
+            "Skill-Negative-Keyword-Safe-Guard",
+        ],
+        "traps": [
+            {"no": "T1", "title": "归因冲突陷阱", "desc": "广告和自然同时出现时，Last-click 会把转化归给广告，导致自然流量价值被低估 40-60%，需用 Data-Driven Attribution 修正"},
+            {"no": "T2", "title": "出价下调时机陷阱", "desc": "自然排名第 1 页不等于稳定，需连续 14 天 ≥ 第 5 位才可降广告出价，否则排名反弹后广告冷启动代价高"},
+            {"no": "T3", "title": "关键词蚕食陷阱", "desc": "广告词与自然词高度重叠时，同一词内部竞价抬高 CPC，需用 Keyword Cannibalization Detection 提前分离广告与自然词池"},
+        ],
+    },
 ]
 
 
-def render_solutions_index() -> str:
+def render_solutions_index(total_skill_count: int = 849) -> str:
     """方案库首页：所有系统方案的卡片列表"""
     cards_html = ""
     for sol in SOLUTIONS_CATALOG:
         tags_html = "".join(f'<span class="sol-tag">{t}</span>' for t in sol["tags"][:4])
         phase_count = len(sol.get("phases", []))
-        skill_count = len(sol.get("core_skills", []))
+        sol_skill_count = len(sol.get("core_skills", []))
         cards_html += f"""
 <a class="sol-card" href="{sol['id']}.html">
   <div class="sol-card-header">
@@ -2701,8 +2588,8 @@ def render_solutions_index() -> str:
   <div class="sol-footer">
     <div class="sol-tags">{tags_html}</div>
     <div class="sol-stats">
-      <span>📋 {phase_count} 阶段</span>
-      <span>⚡ {skill_count} Skills</span>
+      <span>{phase_count} 阶段</span>
+      <span>{sol_skill_count} Skills</span>
     </div>
   </div>
 </a>"""
@@ -2713,7 +2600,7 @@ def render_solutions_index() -> str:
   <p class="muted">从 Palantir 方法论到可落地的 AI 决策系统方案，每个方案含完整架构设计、分阶段路线图、核心 Skill 索引</p>
   <div class="sol-hero-stats">
     <span><strong>{len(SOLUTIONS_CATALOG)}</strong> 个方案</span>
-    <span><strong>726</strong> 个 Skills 支撑</span>
+    <span><strong>{total_skill_count}</strong> 个 Skills 支撑</span>
     <span><strong>24</strong> 个知识域覆盖</span>
   </div>
 </div>
@@ -2783,7 +2670,7 @@ def render_solutions_index() -> str:
     return html_page("方案库", body, nav="../", active_nav="solutions")
 
 
-def render_solution_detail(sol: dict) -> str:
+def render_solution_detail(sol: dict, total_skill_count: int = 849) -> str:
     """方案详情页：完整架构 + 分层设计 + 实施路线图"""
 
     # 七层架构
@@ -2846,7 +2733,7 @@ def render_solution_detail(sol: dict) -> str:
 </div>
 
 <div class="sd-roi-banner">
-  <span>📈</span> {sol['roi_headline']}
+  <span>[↑]</span> {sol['roi_headline']}
 </div>
 
 <p class="sd-summary">{sol['summary']}</p>
@@ -2870,7 +2757,7 @@ def render_solution_detail(sol: dict) -> str:
 </div>
 
 <div class="sd-section sd-full">
-  <h2>⚠️ 三大架构陷阱</h2>
+  <h2>[!] 三大架构陷阱</h2>
   <p class="sd-sec-desc">最容易被忽视、代价最大的设计决策错误</p>
   <div class="sd-traps">
 {traps_html}
@@ -2878,13 +2765,13 @@ def render_solution_detail(sol: dict) -> str:
 </div>
 
 <div class="sd-section sd-full">
-  <h2>⚡ 核心 Skill 索引（{len(sol.get('core_skills', []))} 个）</h2>
+  <h2>核心 Skill 索引（{len(sol.get('core_skills', []))} 个）</h2>
   <p class="sd-sec-desc">本方案涉及的关键 Skills，点击查看详情</p>
   <div class="sd-skills">
 {skills_html}
   </div>
   <div style="margin-top:12px">
-    <a href="../skills/index.html" style="font-size:13px;color:var(--accent,#3b82f6);text-decoration:none">查看全部 726 个 Skills →</a>
+    <a href="../skills/index.html" style="font-size:13px;color:var(--accent,#3b82f6);text-decoration:none">查看全部 {total_skill_count} 个 Skills →</a>
   </div>
 </div>
 
@@ -2930,7 +2817,7 @@ def render_solution_detail(sol: dict) -> str:
     return html_page(sol['title'], body, nav="../", active_nav="solutions")
 
 
-def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
+def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"], skill_count: int = 849) -> str:
     """CEO-facing AI capability roadmap whitepaper. Designed for B2B sales, print-ready via @media print."""
 
     PHASES = [
@@ -3198,7 +3085,7 @@ def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
       </form>
     </div>
     <p class="rm-footer-note">
-      数据来源：350 个从顶会论文萃取的业务 Skills，包含真实 A/B 实验与匿名客户案例。<br>
+      数据来源：{skill_count} 个从顶会论文萃取的业务 Skills，包含真实 A/B 实验与匿名客户案例。<br>
       所有案例均已脱敏处理，以「某跨境母婴品牌」表述。
     </p>
   </div>
@@ -3394,7 +3281,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
       if(done.length>=totalSteps){{
         var toast=document.createElement('div');
         toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(5,150,105,.3)';
-        toast.textContent='🎉 '+pbId+' 全部步骤完成！';
+        toast.textContent=''+pbId+' 全部步骤完成！';
         document.body.appendChild(toast);setTimeout(()=>toast.remove(),4000);
       }}
     }}
@@ -3711,7 +3598,7 @@ def render_skill_page(skill: PlaybookSkill) -> str:
             f"background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);"
             f"border:1px solid #c7d2fe;border-radius:12px'>"
             f"<div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>"
-            f"⚡ 可直接调用的 Agent</div>"
+            f"可直接调用的 Agent</div>"
             f"<div style='display:flex;flex-wrap:wrap;gap:8px'>{btns}</div>"
             f"<div style='font-size:11px;color:#94a3b8;margin-top:8px'>"
             f"Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div>"
@@ -3745,7 +3632,7 @@ def render_skill_page(skill: PlaybookSkill) -> str:
             agent_cases_html = (
                 f"<div style='margin-top:24px;padding:16px 20px;"
                 f"background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'>"
-                f"<div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>🧪 智能体广场调用案例</div>"
+                f"<div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>智能体广场调用案例</div>"
                 f"{inner}"
                 f"<div style='margin-top:10px'><a href='../agents.html' "
                 f"style='font-size:12px;color:#059669;font-weight:600'>→ 前往智能体广场运行</a></div>"
@@ -3893,7 +3780,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
 <div class="hero">
   <p class="hero-badge">唯一把顶会 ML 论文翻译为跨境运营决策的平台</p>
   <h1>母婴跨境品牌用这里的 AI 技能，每年多赚 3,000 万</h1>
-  <p class="lead">350 个从 NeurIPS / KDD / ICML 萃取的可落地决策技能——每个技能有真实 ROI 数字、可运行代码、和跨境电商业务场景。这是任何咨询公司和 SaaS 工具都无法复制的能力。</p>
+  <p class="lead">{skill_count} 个从 NeurIPS / KDD / ICML 萃取的可落地决策技能——每个技能有真实 ROI 数字、可运行代码、和跨境电商业务场景。这是任何咨询公司和 SaaS 工具都无法复制的能力。</p>
   <div class="hero-primary-cta">
     <a class="btn-primary accent" href="ai-roadmap.html">查看 AI 能力路线图</a>
     <a class="btn-secondary" href="mailto:skills@lute-tlz-dddd.top?subject=预约Demo-paper2skills" >预约 30 分钟 Demo</a>
@@ -3943,7 +3830,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
           <tr><td>证据级别</td><td>经验判断</td><td>平台数据</td><td><strong>顶会论文 + A/B实测</strong></td></tr>
           <tr><td>ROI可溯源</td><td>无</td><td>部分</td><td><strong>每个Skill有ROI数字</strong></td></tr>
           <tr><td>跨境场景</td><td>通用</td><td>通用</td><td><strong>母婴跨境专属</strong></td></tr>
-          <tr><td>可执行代码</td><td>无</td><td>无</td><td><strong>350个可运行模板</strong></td></tr>
+          <tr><td>可执行代码</td><td>无</td><td>无</td><td><strong>{skill_count}个可运行模板</strong></td></tr>
           <tr><td>知识更新</td><td>项目制</td><td>产品迭代</td><td><strong>持续萃取顶会论文</strong></td></tr>
         </tbody>
       </table>
@@ -4072,7 +3959,7 @@ def render_graph_page(skill_count: int, edge_count: int, build_ts: str = "") -> 
   <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <div class="graph-page">
     <div class="graph-toolbar">
-      <input type="text" id="node-search" placeholder="🔍 搜索技能..." autocomplete="off">
+      <input type="text" id="node-search" placeholder="搜索技能..." autocomplete="off">
       <div id="domain-pills" style="display:flex;flex-wrap:wrap;gap:4px;flex:1"></div>
       <button id="btn-reset" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">重置</button>
       <button id="btn-focus-top" style="padding:5px 11px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--ink-2,#475569)">核心节点</button>
@@ -4085,10 +3972,10 @@ def render_graph_page(skill_count: int, edge_count: int, build_ts: str = "") -> 
       </div>
       <div class="graph-stats" id="graph-stats">节点 {skill_count} · 边 {edge_count}</div>
       <div class="graph-sidebar">
-        <div class="gsb-header">📊 节点详情</div>
+        <div class="gsb-header">PL 节点详情</div>
         <div class="gsb-body" id="gsb-body"><div class="gsb-empty">点击图谱中的节点<br>查看详情和关联</div></div>
         <div class="path-finder">
-          <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:7px">🗺 学习路径发现</div>
+          <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:7px"> 学习路径发现</div>
           <input type="text" id="path-from" placeholder="起点 Skill ID...">
           <input type="text" id="path-to" placeholder="终点 Skill ID...">
           <button class="path-finder-btn" onclick="findPath()">找最短路径</button>
@@ -4211,7 +4098,7 @@ def render_graph_page(skill_count: int, edge_count: int, build_ts: str = "") -> 
       <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:10.5px;font-weight:600;background:${{color}}22;color:${{color}};margin-bottom:8px">◉ ${{label}}</span>
       <div style="font-size:10.5px;color:#94a3b8;margin-bottom:7px">连接度: ${{degree[d.id]||0}}</div>`;
     if(sk.problem_solved)html+=`<div style="font-size:12px;color:#475569;line-height:1.6;margin-bottom:8px">${{esc(sk.problem_solved.slice(0,140))}}…</div>`;
-    if(sk.roi_figure)html+=`<div style="font-size:11.5px;color:#059669;font-weight:600;margin-bottom:8px">💰 ${{esc(sk.roi_figure)}}</div>`;
+    if(sk.roi_figure)html+=`<div style="font-size:11.5px;color:#059669;font-weight:600;margin-bottom:8px">PR ${{esc(sk.roi_figure)}}</div>`;
     const tl={{prerequisite:'⬅ 前置',combinable:'🔗 组合',extension:'➡ 延伸'}};
     const tc={{prerequisite:'#94a3b8',combinable:'#3b82f6',extension:'#10b981'}};
     html+='<div>';
@@ -5246,7 +5133,7 @@ tr:hover td { background: var(--bg); }
 @media print { .topbar,.sidebar,.rm-hero-cta,.rm-footer-cta button{display:none!important} body{background:#fff} .content{padding:0!important;max-width:100%!important} .rm-summary-bar{margin:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact} .rm-phase,.rm-footer{break-inside:avoid} .rm-phases{gap:12px} @page{margin:20mm 15mm;size:A4} }
 """
 
-def render_chat_page(nav: str = "") -> str:
+def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -5442,7 +5329,7 @@ def render_chat_page(nav: str = "") -> str:
       <div class="chat-title-area">
         <span class="chat-title-icon">✦</span>
         <span class="chat-title-text">AI 知识库对话</span>
-        <span class="chat-title-sub">360 Skills · DeepSeek V3</span>
+        <span class="chat-title-sub">{skill_count} Skills · DeepSeek V3</span>
       </div>
     </header>
 
@@ -5451,7 +5338,7 @@ def render_chat_page(nav: str = "") -> str:
         <div class="chat-welcome" id="chat-welcome">
           <span class="chat-welcome-icon">✦</span>
           <h2>paper2skills 知识库助手</h2>
-          <p>基于 360 个从顶会论文萃取的跨境电商 AI 决策技能，为你提供专业问答</p>
+          <p>基于 {skill_count} 个从顶会论文萃取的跨境电商 AI 决策技能，为你提供专业问答</p>
           <div class="chat-suggestions">
             <button class="chat-sug-btn">如何提升广告 ROI？</button>
             <button class="chat-sug-btn">大促备货如何预测需求？</button>
@@ -5466,7 +5353,7 @@ def render_chat_page(nav: str = "") -> str:
       <div class="chat-input-area">
         <div class="chat-input-wrap">
           <button class="web-search-toggle" id="web-search-toggle" title="开启联网搜索">
-            <span class="web-search-toggle-icon">🌐</span>
+            <span class="web-search-toggle-icon">联网</span>
             <span id="web-search-label">联网</span>
           </button>
           <textarea class="chat-textarea" id="chat-input"
@@ -5549,7 +5436,7 @@ def build_chat_page_js() -> str:
     if (webBadge) {
       const badge = document.createElement('div');
       badge.className = 'cmsg-web-badge';
-      badge.innerHTML = '🌐 联网搜索';
+      badge.innerHTML = '联网搜索';
       body.appendChild(badge);
     }
     const bubble = document.createElement('div');
@@ -5606,7 +5493,7 @@ def build_chat_page_js() -> str:
 
     const typing = addTyping();
     const ctx = buildContext();
-    const systemPrompt = `你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策技能。知识库收录了360个从顶会论文（NeurIPS/KDD/ICML/WWW）萃取的可落地业务技能，涵盖供应链优化、广告归因、用户分析、KOL投放、合规决策、智能体工程等领域。请用清晰、结构化的中文回答，优先引用知识库中的具体Skill，给出可操作建议。当前时间：${new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'})}。`;
+    const systemPrompt = `你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策技能。知识库收录了{skill_count}个从顶会论文（NeurIPS/KDD/ICML/WWW）萃取的可落地业务技能，涵盖供应链优化、广告归因、用户分析、KOL投放、合规决策、智能体工程等领域。请用清晰、结构化的中文回答，优先引用知识库中的具体Skill，给出可操作建议。当前时间：${new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'})}。`;
 
     const messages = [
       { role: 'system', content: systemPrompt + '\n\n知识库摘要（前80条Skill）：\n' + ctx },
@@ -5774,7 +5661,7 @@ def render_pages(
     write_file(out / "assets" / "graph.js",   build_graph_js())
     write_file(out / "assets" / "ego-graph.js", build_ego_graph_js())
     write_file(out / "assets" / "chat-page.js", build_chat_page_js())
-    write_file(out / "chat.html", render_chat_page())
+    write_file(out / "chat.html", render_chat_page(skill_count=skill_count))
 
     # ── Index (Phase 3C) ──
     write_file(out / "index.html", html_page(
@@ -5806,33 +5693,78 @@ def render_pages(
   </select>
   <span class="filter-hint muted" id="filter-count"></span>
 </div>
+<div id="skill-pg-bar" class="pg-bar"></div>
 <script>
 (function(){{
-  function applyCardFilters(){{
-    var domSel  = document.getElementById('filter-domain');
-    var diffSel = document.getElementById('filter-diff');
-    var dom  = domSel  ? domSel.value  : '';
-    var diff = diffSel ? diffSel.value : '';
-    var cards = document.querySelectorAll('#skill-card-grid .skill-card');
-    var shown = 0;
-    cards.forEach(function(c){{
-      var matchDom  = !dom  || c.dataset.domain === dom;
-      var matchDiff = !diff || !c.dataset.diff || c.dataset.diff === diff;
-      var visible = matchDom && matchDiff;
-      c.style.display = visible ? '' : 'none';
-      if(visible) shown++;
-    }});
-    var hint = document.getElementById('filter-count');
-    if(hint){{
-      hint.textContent = (dom||diff) ? ('\u663e\u793a '+shown+' / '+cards.length+' \u4e2a') : '';
+  var PAGE=48;var cur=1;
+  function getVisible(){{return Array.from(document.querySelectorAll('#skill-card-grid .skill-card')).filter(function(c){{return c.style.display!=='none';}});}}
+  function renderPager(total){{
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('skill-pg-bar');
+    if(!bar)return;
+    if(pages<=1){{bar.innerHTML='';return;}}
+    var html='<div class="pg-inner">';
+    html+='<button class="pg-btn" onclick="window._pgGo('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹ 上一页</button>';
+    for(var p=1;p<=pages;p++){{
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){{
+        if(p===3||p===pages-2)html+='<span class="pg-ellipsis">…</span>';
+        continue;
+      }}
+      html+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._pgGo('+p+')">'+p+'</button>';
     }}
+    html+='<button class="pg-btn" onclick="window._pgGo('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>下一页 ›</button>';
+    html+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span>';
+    html+='</div>';
+    bar.innerHTML=html;
+  }}
+  function applyPage(){{
+    var all=getVisible();
+    var start=(cur-1)*PAGE;
+    all.forEach(function(c,i){{c.style.display=(i>=start&&i<start+PAGE)?'':'none';}});
+    renderPager(all.length);
+    window.scrollTo({{top:0,behavior:'smooth'}});
+  }}
+  window._pgGo=function(p){{
+    var all=getVisible();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){{c.style.display='';}});
+    applyPage();
+  }};
+  function applyCardFilters(){{
+    cur=1;
+    var domSel=document.getElementById('filter-domain');
+    var diffSel=document.getElementById('filter-diff');
+    var dom=domSel?domSel.value:'';
+    var diff=diffSel?diffSel.value:'';
+    var cards=document.querySelectorAll('#skill-card-grid .skill-card');
+    cards.forEach(function(c){{
+      var matchDom=!dom||c.dataset.domain===dom;
+      var matchDiff=!diff||!c.dataset.diff||c.dataset.diff===diff;
+      c.style.display=(matchDom&&matchDiff)?'':'none';
+    }});
+    var hint=document.getElementById('filter-count');
+    var vis=getVisible().length;
+    if(hint){{hint.textContent=(dom||diff)?('\u663e\u793a '+vis+' / '+cards.length+' \u4e2a'):('');}}
+    applyPage();
   }}
   ['filter-domain','filter-diff'].forEach(function(id){{
-    var el = document.getElementById(id);
-    if(el) el.addEventListener('change', applyCardFilters);
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('change',applyCardFilters);
   }});
+  document.addEventListener('DOMContentLoaded',applyCardFilters);
 }})();
-</script>"""
+</script>
+<style>
+.pg-bar{{margin:16px 0 8px}}
+.pg-inner{{display:flex;align-items:center;gap:4px;flex-wrap:wrap}}
+.pg-btn{{min-width:36px;height:32px;padding:0 10px;border:1px solid #E5E5E5;border-radius:4px;background:#fff;color:#555;font-size:12px;cursor:pointer;transition:all .12s}}
+.pg-btn:hover:not([disabled]){{border-color:#0C0C0C;color:#0C0C0C}}
+.pg-btn.pg-active{{background:#0C0C0C;border-color:#0C0C0C;color:#fff;font-weight:600}}
+.pg-btn[disabled]{{opacity:.35;cursor:not-allowed}}
+.pg-ellipsis{{color:#aaa;padding:0 4px}}
+.pg-info{{font-size:12px;color:#999;margin-left:8px}}
+</style>"""
     write_file(out / "skills" / "index.html", html_page(
         "全部 Skills",
         f"<h1>全部 Skills</h1>{filter_bar}<div class='cards' id='skill-card-grid'>{all_cards}</div>",
@@ -5847,28 +5779,58 @@ def render_pages(
         cards = "".join(render_skill_card(s, "../") for s in domain_skills)
         title = domain["vault_dir"]
         domain_search_bar = f"""
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 {html.escape(title)} 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){{
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){{
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){{
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){{return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){{return c.style.display!=='none';}});}}
+  function renderPager(total){{
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){{bar.innerHTML='';return;}}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){{
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){{if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }}
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }}
+  function applyPage(){{
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){{c.style.display=(i>=s&&i<s+PAGE)?'':'none';}});
+    renderPager(all.length);
+  }}
+  window._dpg=function(p){{
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){{c.style.display='';}});
+    applyPage();
+    window.scrollTo({{top:0,behavior:'smooth'}});
+  }};
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){{
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){{
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     }});
-    cnt.textContent = q ? ('\u663e\u793a ' + shown + ' / ' + cards.length + ' \u4e2a') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('\u663e\u793a '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' \u4e2a'):'';
+    applyPage();
   }});
+  document.addEventListener('DOMContentLoaded',applyPage);
 }})();
 </script>"""
         write_file(
@@ -5955,12 +5917,12 @@ def render_pages(
     write_file(out / "graph" / "overview.html", render_graph_page(skill_count, edge_count, data["generated_at"].replace("-", "").replace(":", "").replace("T", "")))
 
     # ── CEO Roadmap whitepaper ──
-    write_file(out / "ai-roadmap.html", render_roadmap_page(skill_lookup))
+    write_file(out / "ai-roadmap.html", render_roadmap_page(skill_lookup, skill_count=skill_count))
     write_file(out / "agents.html", render_agents_page(skill_lookup))
     write_file(out / "agent-report.html", render_agent_report_page())
-    write_file(out / "solutions" / "index.html", render_solutions_index())
+    write_file(out / "solutions" / "index.html", render_solutions_index(total_skill_count=skill_count))
     for sol in SOLUTIONS_CATALOG:
-        write_file(out / "solutions" / f"{sol['id']}.html", render_solution_detail(sol))
+        write_file(out / "solutions" / f"{sol['id']}.html", render_solution_detail(sol, total_skill_count=skill_count))
 
     # ── toB Scene Playbooks (Phase F) ──
     for pb in TOB_PLAYBOOKS:
@@ -6017,7 +5979,7 @@ def render_pages(
     style='padding:5px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>AI Agent</button>
   <button class='pb-tag-btn' data-tag='客服' onclick='pbFilter("客服")'
     style='padding:5px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>客服运营</button>
-  <a href='progress.html' style='margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:var(--accent-light,#eff6ff);border:1.5px solid var(--accent,#3b82f6);border-radius:8px;font-size:12.5px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none'>📊 进度看板</a>
+  <a href='progress.html' style='margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:var(--accent-light,#eff6ff);border:1.5px solid var(--accent,#3b82f6);border-radius:8px;font-size:12.5px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none'>PL 进度看板</a>
 </div>
 <script>
 (function(){
@@ -6079,6 +6041,12 @@ def render_pages(
         "generated_at": data["generated_at"],
     }
     write_file(out / "build-report.json", json.dumps(report, ensure_ascii=False, indent=2))
+    import shutil as _shutil
+    _seed_src = Path(__file__).parent / "scripts" / "config" / "seed_reports.json"
+    if not _seed_src.exists():
+        _seed_src = Path(__file__).parent / "config" / "seed_reports.json"
+    if _seed_src.exists():
+        _shutil.copy2(_seed_src, out / "assets" / "seed_reports.json")
     return report
 
 
@@ -6130,7 +6098,7 @@ def _post_build_patch(out: "Path") -> None:
                    f"<span style='font-size:11px;font-weight:600;color:#475569'>模式:</span>"
                    f"<label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'>"
                    f"<input type='radio' name='mode-{aid}' value='local' checked style='accent-color:#059669'>"
-                   f"⚡本地</label>"
+                   f"本地</label>"
                    f"<label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'>"
                    f"<input type='radio' name='mode-{aid}' value='ai' style='accent-color:#6366f1'>"
                    f"✦ AI</label></div>\n"
@@ -6183,7 +6151,7 @@ async function runChain(chainId){
 }
 """
         CHAIN_BANNER = """<div style='margin:0 0 18px;padding:14px 18px;background:linear-gradient(135deg,#f0f4ff,#faf5ff);border:1px solid #c7d2fe;border-radius:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px'><div><div style='font-size:13px;font-weight:700;color:#3730a3'>⛓ Agent 链式调用</div><div style='font-size:11px;color:#6366f1;margin-top:2px'>多个 Agent 串联执行，形成完整决策链</div></div><button onclick='openChainPanel()' style='padding:7px 15px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer' onmouseover="this.style.background='#4f46e5'" onmouseout="this.style.background='#6366f1'">启动链式分析 →</button></div>
-<div id='agent-chain-panel' style='display:none;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto'><div style='background:#fff;border-radius:14px;width:100%;max-width:660px;box-shadow:0 20px 60px rgba(0,0,0,.15);overflow:hidden'><div style='padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between'><div><div style='font-size:16px;font-weight:800;color:#0f172a'>⛓ Agent 链式调用</div><div style='font-size:11.5px;color:#64748b;margin-top:2px'>选择链路，多 Agent 串联深度分析</div></div><button onclick='closeChainPanel()' style='background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8'>×</button></div><div style='padding:16px 20px;display:flex;flex-direction:column;gap:12px'><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>🔗 供应链全链路决策</span><div style='font-size:11px;color:#64748b;margin-top:1px'>供应链哨兵 → P&L透视镜 → 动态定价顾问</div></div><button id='chain-btn-supply-decision' onclick='runChain("supply-decision")' style='padding:6px 13px;background:#059669;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-supply-decision' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>📈 增长归因分析</span><div style='font-size:11px;color:#64748b;margin-top:1px'>广告归因侦探 → 竞品雷达站 → 选品雷达</div></div><button id='chain-btn-growth-analysis' onclick='runChain("growth-analysis")' style='padding:6px 13px;background:#2563eb;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-growth-analysis' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>🛡️ 品牌合规防御</span><div style='font-size:11px;color:#64748b;margin-top:1px'>Listing医生 → 品牌合规卫士 → 账号风险卫士</div></div><button id='chain-btn-brand-protection' onclick='runChain("brand-protection")' style='padding:6px 13px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-brand-protection' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><p style='font-size:11px;color:#94a3b8;text-align:center;margin:4px 0 0'>链式调用使用 AI 模式（DeepSeek），每步约5-10秒</p></div></div></div>
+<div id='agent-chain-panel' style='display:none;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto'><div style='background:#fff;border-radius:14px;width:100%;max-width:660px;box-shadow:0 20px 60px rgba(0,0,0,.15);overflow:hidden'><div style='padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between'><div><div style='font-size:16px;font-weight:800;color:#0f172a'>⛓ Agent 链式调用</div><div style='font-size:11.5px;color:#64748b;margin-top:2px'>选择链路，多 Agent 串联深度分析</div></div><button onclick='closeChainPanel()' style='background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8'>×</button></div><div style='padding:16px 20px;display:flex;flex-direction:column;gap:12px'><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>🔗 供应链全链路决策</span><div style='font-size:11px;color:#64748b;margin-top:1px'>供应链哨兵 → P&L透视镜 → 动态定价顾问</div></div><button id='chain-btn-supply-decision' onclick='runChain("supply-decision")' style='padding:6px 13px;background:#059669;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-supply-decision' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>[↑] 增长归因分析</span><div style='font-size:11px;color:#64748b;margin-top:1px'>广告归因侦探 → 竞品雷达站 → 选品雷达</div></div><button id='chain-btn-growth-analysis' onclick='runChain("growth-analysis")' style='padding:6px 13px;background:#2563eb;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-growth-analysis' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><div style='border:1px solid #e2e8f0;border-radius:9px;padding:13px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div><span style='font-size:13.5px;font-weight:700;color:#0f172a'>RK️ 品牌合规防御</span><div style='font-size:11px;color:#64748b;margin-top:1px'>Listing医生 → 品牌合规卫士 → 账号风险卫士</div></div><button id='chain-btn-brand-protection' onclick='runChain("brand-protection")' style='padding:6px 13px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap'>▶ 执行</button></div><div id='chain-output-brand-protection' style='display:none;max-height:260px;overflow-y:auto;font-size:12.5px;color:#374151;line-height:1.65;white-space:pre-wrap'></div></div><p style='font-size:11px;color:#94a3b8;text-align:center;margin:4px 0 0'>链式调用使用 AI 模式（DeepSeek），每步约5-10秒</p></div></div></div>
 """
         # 替换 runAgent 函数（括号计数法）
         m = re.search(r'async function runAgent\(id\) \{', agents_html)
@@ -6283,14 +6251,14 @@ async function runChain(chainId){
   function buildSkillIndex(){if(_built)return;const DATA=window.PLAYBOOK_DATA||{};(DATA.skills||[]).forEach(s=>{const t=[s.skill_id||'',s.title||'',s.problem_solved||'',s.algorithm_summary||'',s.biz_trigger||'',s.biz_outcome||'',(s.tags||[]).join(' '),(s.topics||[]).join(' ')].join(' ').toLowerCase();_idx.push({s,t});});_built=true;}
   function searchSkills(query,k){k=k||8;buildSkillIndex();const words=query.toLowerCase().split(/\s+/).filter(w=>w.length>1);if(!words.length)return[];return _idx.map(item=>{let sc=0;words.forEach(w=>{const tf=item.t.split(w).length-1;if(tf>0)sc+=tf*(w.length>3?2:1);});return{skill:item.s,sc};}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,k).map(x=>x.skill);}
   function buildRAGContext(query){const top=searchSkills(query,10);if(!top.length){return(window.PLAYBOOK_DATA&&window.PLAYBOOK_DATA.skills||[]).slice(0,60).map(s=>s.skill_id+': '+(s.problem_solved||s.algorithm_summary||'').slice(0,140)).join('\n');}return top.map(s=>{const p=[s.skill_id,s.title];if(s.problem_solved)p.push('解决: '+s.problem_solved.slice(0,120));if(s.biz_trigger)p.push('触发: '+s.biz_trigger.slice(0,100));if(s.roi_figure)p.push('ROI: '+s.roi_figure);return p.join(' | ');}).join('\n');}
-  function renderSkillCards(text){const DATA=window.PLAYBOOK_DATA||{};const map={};(DATA.skills||[]).forEach(s=>{map[s.skill_id]=s;});const found=[],seen={};[/\[\[?(Skill-[\w-]+)\]?\]/g,/\*\*(Skill-[\w-]+)\*\*/g].forEach(pat=>{let m;while((m=pat.exec(text))!==null){if(map[m[1]]&&!seen[m[1]]){seen[m[1]]=1;found.push(map[m[1]]);}}});if(!found.length)return'';const esc=t=>(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');const cards=found.map(s=>'<a href="skills/'+s.skill_id+'.html" target="_blank" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--panel-2,#f8fafc);border:1px solid var(--line,#e2e8f0);border-radius:8px;text-decoration:none;color:inherit;margin-top:6px;transition:box-shadow .15s" onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.08)\'" onmouseout="this.style.boxShadow=\'none\'">'+'<div style="flex-shrink:0;width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700">S</div>'+'<div style="min-width:0"><div style="font-size:12px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc((s.title||s.skill_id).slice(0,60))+'</div>'+'<div style="font-size:11.5px;color:#64748b;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+esc((s.problem_solved||s.biz_trigger||'').slice(0,90))+'</div>'+(s.roi_figure?'<span style="font-size:11px;color:#059669;font-weight:600;margin-top:4px;display:block">ROI: '+esc(s.roi_figure)+'</span>':'')+'</div></a>').join('');return'<div style="margin-top:10px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><div style="font-size:11.5px;color:#64748b;font-weight:600;margin-bottom:6px">📚 相关技能</div>'+cards+'</div>';}
+  function renderSkillCards(text){const DATA=window.PLAYBOOK_DATA||{};const map={};(DATA.skills||[]).forEach(s=>{map[s.skill_id]=s;});const found=[],seen={};[/\[\[?(Skill-[\w-]+)\]?\]/g,/\*\*(Skill-[\w-]+)\*\*/g].forEach(pat=>{let m;while((m=pat.exec(text))!==null){if(map[m[1]]&&!seen[m[1]]){seen[m[1]]=1;found.push(map[m[1]]);}}});if(!found.length)return'';const esc=t=>(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');const cards=found.map(s=>'<a href="skills/'+s.skill_id+'.html" target="_blank" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--panel-2,#f8fafc);border:1px solid var(--line,#e2e8f0);border-radius:8px;text-decoration:none;color:inherit;margin-top:6px;transition:box-shadow .15s" onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.08)\'" onmouseout="this.style.boxShadow=\'none\'">'+'<div style="flex-shrink:0;width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700">S</div>'+'<div style="min-width:0"><div style="font-size:12px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc((s.title||s.skill_id).slice(0,60))+'</div>'+'<div style="font-size:11.5px;color:#64748b;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+esc((s.problem_solved||s.biz_trigger||'').slice(0,90))+'</div>'+(s.roi_figure?'<span style="font-size:11px;color:#059669;font-weight:600;margin-top:4px;display:block">ROI: '+esc(s.roi_figure)+'</span>':'')+'</div></a>').join('');return'<div style="margin-top:10px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><div style="font-size:11.5px;color:#64748b;font-weight:600;margin-bottom:6px">知识库 相关技能</div>'+cards+'</div>';}
   const AKWS={'agent-supply-sentinel':['供应链','库存','断货','补货','DOS','海运'],'agent-pricing-advisor':['定价','价格','ACoS','竞品价','利润率'],'agent-pnl-analyzer':['P&L','利润','GMV','毛利','亏损'],'agent-ad-attribution':['广告','ROAS','归因','ACoS','投放'],'agent-listing-doctor':['Listing','标题','关键词','A+'],'agent-voc-decoder':['评论','VOC','用户反馈','差评'],'agent-cs-triage':['客服','工单','退款','投诉','A-to-Z'],'agent-account-guardian':['封号','账号','违规','风险'],'agent-brand-guardian':['合规','文案','广告法','违禁'],'agent-product-radar':['选品','蓝海','竞争','市场机会'],'agent-tiktok-content':['TikTok','短视频','内容','脚本'],'agent-competitor-radar':['竞品','竞争对手','ASIN','BSR']};
   const ANAMES={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站'};
   function detectAgents(text){const t=text.toLowerCase();return Object.keys(AKWS).filter(id=>AKWS[id].some(k=>t.indexOf(k.toLowerCase())>=0)).slice(0,3);}
-  function renderAgentBtns(ids){if(!ids.length)return'';const btns=ids.map(id=>'<a href="agents.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--accent-light,#eff6ff);border:1px solid var(--accent,#3b82f6);border-radius:20px;font-size:12px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none;transition:all .15s;white-space:nowrap" onmouseover="this.style.background=\'var(--accent,#3b82f6)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-light,#eff6ff)\';this.style.color=\'var(--accent,#3b82f6)\'">◈ '+(ANAMES[id]||id)+'</a>').join('');return'<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><span style="font-size:11.5px;color:#64748b;font-weight:600;align-self:center;margin-right:4px">⚡ 直接调用：</span>'+btns+'</div>';}
-  function addMsg(text,role,extras){extras=extras||{};if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-'+role;const av=document.createElement('div');av.className='cmsg-avatar';av.textContent=role==='bot'?'\u2726':'U';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent=role==='bot'?'AI 助手':'你';body.appendChild(nm);if(extras.webBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.innerHTML='🌐 联网搜索';body.appendChild(b);}if(extras.ragBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.style.cssText='background:#f0fdf4;color:#166534;border-color:#bbf7d0';b.innerHTML='📚 知识库检索 · '+extras.ragBadge+' 条相关技能';body.appendChild(b);}const bubble=document.createElement('div');bubble.className='cmsg-bubble';if(role==='bot'){bubble.innerHTML=md(text);const agIds=detectAgents(text),sc=renderSkillCards(text),ab=renderAgentBtns(agIds);if(sc||ab){const x=document.createElement('div');x.innerHTML=(sc||'')+(ab||'');bubble.appendChild(x);}}else{bubble.textContent=text;}body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return{row,bubble};}
+  function renderAgentBtns(ids){if(!ids.length)return'';const btns=ids.map(id=>'<a href="agents.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--accent-light,#eff6ff);border:1px solid var(--accent,#3b82f6);border-radius:20px;font-size:12px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none;transition:all .15s;white-space:nowrap" onmouseover="this.style.background=\'var(--accent,#3b82f6)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-light,#eff6ff)\';this.style.color=\'var(--accent,#3b82f6)\'">◈ '+(ANAMES[id]||id)+'</a>').join('');return'<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><span style="font-size:11.5px;color:#64748b;font-weight:600;align-self:center;margin-right:4px"> 直接调用：</span>'+btns+'</div>';}
+  function addMsg(text,role,extras){extras=extras||{};if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-'+role;const av=document.createElement('div');av.className='cmsg-avatar';av.textContent=role==='bot'?'\u2726':'U';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent=role==='bot'?'AI 助手':'你';body.appendChild(nm);if(extras.webBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.innerHTML='联网搜索';body.appendChild(b);}if(extras.ragBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.style.cssText='background:#f0fdf4;color:#166534;border-color:#bbf7d0';b.innerHTML='知识库检索 · '+extras.ragBadge+' 条相关技能';body.appendChild(b);}const bubble=document.createElement('div');bubble.className='cmsg-bubble';if(role==='bot'){bubble.innerHTML=md(text);const agIds=detectAgents(text),sc=renderSkillCards(text),ab=renderAgentBtns(agIds);if(sc||ab){const x=document.createElement('div');x.innerHTML=(sc||'')+(ab||'');bubble.appendChild(x);}}else{bubble.textContent=text;}body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return{row,bubble};}
   function addTyping(){if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-bot cmsg-typing';const av=document.createElement('div');av.className='cmsg-avatar';av.textContent='\u2726';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent='AI 助手';const bubble=document.createElement('div');bubble.className='cmsg-bubble';body.appendChild(nm);body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return row;}
-  async function doSend(){const text=textarea.value.trim();if(!text||sendBtn.disabled)return;textarea.value='';textarea.style.height='auto';sendBtn.disabled=true;addMsg(text,'user');history.push({role:'user',content:text});const typing=addTyping();const ragSkills=searchSkills(text,10),ragCtx=buildRAGContext(text),ragCount=ragSkills.length;const sys='你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 708 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n当前时间：'+new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});const ctxMsg=ragCount>0?'\n\n【知识库相关技能（检索到'+ragCount+'条）】\n'+ragCtx:'\n\n【知识库摘要（前60条）】\n'+ragCtx;const messages=[{role:'system',content:sys+ctxMsg},...history.slice(-8)];try{const body={model:'deepseek-chat',messages,max_tokens:1500,temperature:0.55,stream:false};if(webSearchOn){body.tools=[{type:'function',function:{name:'web_search',description:'Search the web',parameters:{type:'object',properties:{query:{type:'string'}},required:['query']}}}];body.tool_choice='auto';}const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await res.json();const choice=data&&data.choices&&data.choices[0];let answer=(choice&&choice.message&&choice.message.content||'').trim();if(!answer&&choice&&choice.finish_reason==='tool_calls')answer='（联网搜索触发中…）\n\n'+((choice.message.tool_calls[0]&&choice.message.tool_calls[0].function.arguments)||'');answer=answer||'抱歉，暂时无法获取回答，请稍后重试。';typing.remove();addMsg(answer,'bot',{webBadge:webSearchOn,ragBadge:ragCount>0?ragCount:null});history.push({role:'assistant',content:answer});_saveH();}catch(e){typing.remove();addMsg('网络请求失败，请检查连接后重试。','bot');}finally{sendBtn.disabled=false;textarea.focus();}}
+  async function doSend(){const text=textarea.value.trim();if(!text||sendBtn.disabled)return;textarea.value='';textarea.style.height='auto';sendBtn.disabled=true;addMsg(text,'user');history.push({role:'user',content:text});const typing=addTyping();const ragSkills=searchSkills(text,10),ragCtx=buildRAGContext(text),ragCount=ragSkills.length;const sys='你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 {skill_count} 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n当前时间：'+new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});const ctxMsg=ragCount>0?'\n\n【知识库相关技能（检索到'+ragCount+'条）】\n'+ragCtx:'\n\n【知识库摘要（前60条）】\n'+ragCtx;const messages=[{role:'system',content:sys+ctxMsg},...history.slice(-8)];try{const body={model:'deepseek-chat',messages,max_tokens:1500,temperature:0.55,stream:false};if(webSearchOn){body.tools=[{type:'function',function:{name:'web_search',description:'Search the web',parameters:{type:'object',properties:{query:{type:'string'}},required:['query']}}}];body.tool_choice='auto';}const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await res.json();const choice=data&&data.choices&&data.choices[0];let answer=(choice&&choice.message&&choice.message.content||'').trim();if(!answer&&choice&&choice.finish_reason==='tool_calls')answer='（联网搜索触发中…）\n\n'+((choice.message.tool_calls[0]&&choice.message.tool_calls[0].function.arguments)||'');answer=answer||'抱歉，暂时无法获取回答，请稍后重试。';typing.remove();addMsg(answer,'bot',{webBadge:webSearchOn,ragBadge:ragCount>0?ragCount:null});history.push({role:'assistant',content:answer});_saveH();}catch(e){typing.remove();addMsg('网络请求失败，请检查连接后重试。','bot');}finally{sendBtn.disabled=false;textarea.focus();}}
 })();
 """
         chat_js_path.write_text(RAG_JS, encoding="utf-8")
@@ -6312,7 +6280,7 @@ async function runChain(chainId){
                     "onclick='exportReports()'",
                     "onclick='exportReports()' style='padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600'"
                 )
-            AI_SYNTH_FN = """function aiSynthesizeReports(){const reports=loadReports();if(!reports.length){alert('暂无报告，请先在智能体广场运行分析');return;}const recent=reports.slice(0,8);const st=recent.map((r,i)=>'【'+(i+1)+'. '+r.name+' | '+r.ts+'】\\n输入: '+JSON.stringify(r.inputs)+'\\n结果: '+r.result.slice(0,400)).join('\\n\\n---\\n\\n');const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;z-index:3000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px';overlay.innerHTML='<div style="background:#fff;border-radius:14px;width:100%;max-width:680px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)"><div style="padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:16px;font-weight:800;color:#0f172a">✦ AI 综合分析报告</div><div style="font-size:12px;color:#64748b;margin-top:2px">基于最近 '+recent.length+' 条 Agent 运行记录</div></div><button id="ai-synth-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8">×</button></div><div style="flex:1;overflow-y:auto;padding:16px 20px"><div id="ai-synth-output" style="font-size:13.5px;color:#374151;line-height:1.7;white-space:pre-wrap"><div style="color:#6366f1;font-weight:600">⏳ 正在综合分析 '+recent.length+' 条报告，请稍候…</div></div></div><div style="padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:8px"><button id="ai-synth-copy" style="padding:7px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">📋 复制</button></div></div>';document.body.appendChild(overlay);const outputEl=document.getElementById('ai-synth-output');document.getElementById('ai-synth-close').onclick=()=>overlay.remove();overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:'你是跨境电商AI数据分析师。请综合分析下面多个Agent的运行结果，给出：1.跨Agent综合洞察；2.最需优先处理的3个问题；3.具体可量化行动建议。结构化中文输出。'},{role:'user',content:'以下是近期Agent运行结果：\\n\\n'+st}],max_tokens:1500,temperature:0.45,stream:false})}).then(r=>r.json()).then(data=>{const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';outputEl.innerHTML=ans.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>').replace(/\\n\\n+/g,'<br><br>').replace(/\\n/g,'<br>');document.getElementById('ai-synth-copy').onclick=()=>{navigator.clipboard.writeText(ans).then(()=>{document.getElementById('ai-synth-copy').textContent='✓ 已复制';});};}).catch(e=>{outputEl.innerHTML='<span style="color:#ef4444">[AI调用失败] '+e.message+'</span>';});}\n"""
+            AI_SYNTH_FN = """function aiSynthesizeReports(){const reports=loadReports();if(!reports.length){alert('暂无报告，请先在智能体广场运行分析');return;}const recent=reports.slice(0,8);const st=recent.map((r,i)=>'【'+(i+1)+'. '+r.name+' | '+r.ts+'】\\n输入: '+JSON.stringify(r.inputs)+'\\n结果: '+r.result.slice(0,400)).join('\\n\\n---\\n\\n');const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;z-index:3000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px';overlay.innerHTML='<div style="background:#fff;border-radius:14px;width:100%;max-width:680px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)"><div style="padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:16px;font-weight:800;color:#0f172a">✦ AI 综合分析报告</div><div style="font-size:12px;color:#64748b;margin-top:2px">基于最近 '+recent.length+' 条 Agent 运行记录</div></div><button id="ai-synth-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8">×</button></div><div style="flex:1;overflow-y:auto;padding:16px 20px"><div id="ai-synth-output" style="font-size:13.5px;color:#374151;line-height:1.7;white-space:pre-wrap"><div style="color:#6366f1;font-weight:600">⏳ 正在综合分析 '+recent.length+' 条报告，请稍候…</div></div></div><div style="padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:8px"><button id="ai-synth-copy" style="padding:7px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer"> 复制</button></div></div>';document.body.appendChild(overlay);const outputEl=document.getElementById('ai-synth-output');document.getElementById('ai-synth-close').onclick=()=>overlay.remove();overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:'你是跨境电商AI数据分析师。请综合分析下面多个Agent的运行结果，给出：1.跨Agent综合洞察；2.最需优先处理的3个问题；3.具体可量化行动建议。结构化中文输出。'},{role:'user',content:'以下是近期Agent运行结果：\\n\\n'+st}],max_tokens:1500,temperature:0.45,stream:false})}).then(r=>r.json()).then(data=>{const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';outputEl.innerHTML=ans.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>').replace(/\\n\\n+/g,'<br><br>').replace(/\\n/g,'<br>');document.getElementById('ai-synth-copy').onclick=()=>{navigator.clipboard.writeText(ans).then(()=>{document.getElementById('ai-synth-copy').textContent='✓ 已复制';});};}).catch(e=>{outputEl.innerHTML='<span style="color:#ef4444">[AI调用失败] '+e.message+'</span>';});}\n"""
             # 在 exportReports 函数后插入
             if 'function exportReports' in report_html and 'aiSynthesizeReports' not in report_html:
                 # 找 exportReports 函数结束的位置（下一个 function 前）
@@ -6472,7 +6440,7 @@ def _render_playbook_progress_page(playbooks: list) -> str:
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="index.html">场景手册</a> / 学习进度看板</nav>
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-  <div><h1 style="margin:0 0 4px">📊 学习进度看板</h1><p class="muted" style="margin:0">{len(playbooks)} 本手册 · 步骤完成情况一目了然 · 支持导出 Markdown 报告</p></div>
+  <div><h1 style="margin:0 0 4px">PL 学习进度看板</h1><p class="muted" style="margin:0">{len(playbooks)} 本手册 · 步骤完成情况一目了然 · 支持导出 Markdown 报告</p></div>
   <div style="display:flex;gap:8px">
     <button onclick="exportAllProgress()" style="padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">⬇ 导出全部报告</button>
     <a href="index.html" style="padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:13px;font-weight:600;color:var(--ink-2);text-decoration:none">← 返回手册列表</a>

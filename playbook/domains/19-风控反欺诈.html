@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>19-风控反欺诈</h1><p>Fake review detection, transaction anomaly, click fraud</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 19-风控反欺诈 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-Account-Association-Risk-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
@@ -73,6 +103,11 @@
   <h3 class="sc-title">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</h3>
   <p class="sc-desc">运营每天需手动检查35个SKU×8个指标共280个时序数据点是否异常——时序基础模型零样本异常检测1小时内自动发现全域异常按优先级排队处理，提前发现缺货/竞品攻击/点击欺诈年化挽回20-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Brand-Hijacking-Realtime-Monitor.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Buy Box劫持实时监控 — 品牌跟卖检测与自动预警</h3>
+  <p class="sc-desc">品牌负责人面临&quot;跟卖者在ASIN上挂Offer劫持Buy Box发现总是延迟1-3天&quot;——轮询+Z-score异常检测将跟卖发现时间从3天压缩至15分钟，年化避损$3.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>3.2 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Brand-Listing-Hijacking-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Brand Listing Hijacking Detection — 电商品牌 Listing 劫持网络检测</h3>
@@ -83,11 +118,21 @@
   <h3 class="sc-title">Click Fraud Detection（广告刷量检测）</h3>
   <p class="sc-desc">竞品对母婴广告发动 IVT 攻击，FB 广告 CTR 虚高 8.5% 但转化率跌至 0.1%，月广告预算 30% 被无效点击消耗——时序异常检测实时识别刷量 IP 并向平台申请退款，年均挽回 6-15 万元</p>
   <div class='sc-footer'><span class='sc-roi'>6-15 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Counterfeit-Product-Visual-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">假冒商品视觉检测 — 感知哈希批量比对竞品图识别疑似仿品</h3>
+  <p class="sc-desc">知识产权团队面临&quot;不知道市面上是否有产品在视觉上仿造自己的外观设计&quot;——感知哈希批量比对将疑似仿品识别效率提升8倍，年化节省维权调查费$2.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>2.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Cross-Border-Payment-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Cross-Border Payment Fraud Detection — 跨境支付欺诈检测：多源信号图谱风险建模</h3>
   <p class="sc-desc">独立站支付欺诈率3-8%每月因拒付损失3000美元以上但传统规则只能拦截60-70%——图神经网络多跳关联分析发现盗刷信用卡团伙，检测率提升至85-90%年化避免欺诈损失25-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥25-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Crypto-Anomaly-Review-Fraud.html" data-domain="19-风控反欺诈" data-diff="">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">区块链女巫攻击检测驱动的虚假评论清洗 (Crypto Sybil Review Detection)</h3>
+  <p class="sc-desc">品牌方惨遭竞品虚假评论攻击导致BSR排名坍塌——引入区块链女巫攻击(Sybil Attack)检测算法识别对手刷单的句法指纹与时间模式异常，生成精准举报证据包向Amazon提交，一次性清退黑帽竞品的虚假评分，恢复20-40%流量下跌。</p>
+  
 </a><a class="card skill-card" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</h3>
@@ -101,7 +146,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Fraud-Signal-Collection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</h3>
-  <p class="sc-desc">欺诈检测系统的核心上限由欺诈信号采集的覆盖度和质量决定。母婴电商面临的三类典型欺诈</p>
+  <p class="sc-desc">风控分析师面临欺诈线索散乱——欺诈信号采集将线索覆盖率提38%，年化省12万元</p>
   <div class='sc-footer'><span class='sc-roi'>48 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-FraudSquad-LLM-Review-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
@@ -131,7 +176,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Review-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Review Fraud Detection（虚假评论检测）</h3>
-  <p class="sc-desc">GNN 图神经网络检测虚假评论——不是看单条评论文本，而是看评论者-产品-评分之间的关系图。虚假评论团通常呈现异常图模式：同批次账号、评分极端（1 或 5 星）、评论时间集中、文本相似度高。</p>
+  <p class="sc-desc">审核主管面临刷评识别太慢——刷评检测将误放率从14%降到3%，年化省15万元</p>
   <div class='sc-footer'><span class='sc-roi'>5-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Transaction-Anomaly-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
@@ -142,7 +187,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

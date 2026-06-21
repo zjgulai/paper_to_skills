@@ -30,38 +30,73 @@
       </div>
     </aside>
     <section class="content"><h1>17-价格优化</h1><p>Dynamic pricing, competitive monitoring, markdown, bundle</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 17-价格优化 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-AIGP-LLM-Dynamic-Pricing.html" data-domain="17-价格优化" data-diff="">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）</h3>
   <p class="sc-desc">业务痛点：吸奶器年度销量呈强季节性（Q3-Q4 旺季 GMV 占全年 65%），且 Momcozy 经常在大促前一周大幅降价抢占位次</p>
   <div class='sc-footer'><span class='sc-roi'>1,321 万元</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Anchoring-Effect-Pricing-Optimization.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">锚定效应定价优化 — 划线原价最优锚定比率让相同折扣感知价值提升25%</h3>
+  <p class="sc-desc">定价运营面临&quot;划线原价定多少完全靠感觉不知道什么比例锚定效果最强&quot;——锚定比率1.5-2.0x感知折扣最强的实验结论将CTR提升12%，年化$4.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>4.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Bundle-Pricing-Strategy.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Bundle Pricing Strategy（捆绑定价策略）</h3>
-  <p class="sc-desc">1+1&gt;2 的定价魔法——吸奶器 + 配件捆绑包的总价不是简单相加，而是利用消费者对捆绑包的心理估值高于单品之和（或互补品的联合需求），找到最大化总利润的捆绑价格。</p>
+  <p class="sc-desc">定价经理面临单卖转化低——捆绑定价将客单价从68元提到89元，年化增收26万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-15 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Causal-RL-Dynamic-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">17-价格优化</div>
@@ -71,7 +106,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Competitive-Price-Monitoring.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Competitive Price Monitoring（竞品价格监测与响应）</h3>
-  <p class="sc-desc">竞品价格监测不只是&quot;看别人卖多少钱&quot;，而是建立价格-转化率的因果响应模型，在竞品降价时量化&quot;不跟降会损失多少&quot;和&quot;跟降能获得多少&quot;，做出有数据支撑的响应决策。</p>
+  <p class="sc-desc">价格经理面临竞品调价反应慢——竞价监控将跟价时延从24小时缩到30分，年化省15万元</p>
   <div class='sc-footer'><span class='sc-roi'>5-60 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Competitor-Price-Intelligence.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">17-价格优化</div>
@@ -88,11 +123,21 @@
   <h3 class="sc-title">Contextual Dynamic Pricing — 最优上下文定价：O(√dT) Regret + LDP 隐私保护</h3>
   <p class="sc-desc">业务背景：不同用户群（海外华人/本地消费者/新生儿家庭）对同款婴幼儿奶粉的购买意愿差异显著</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Counterfactual-Price-Elasticity.html" data-domain="17-价格优化" data-diff="">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">反事实动态价格弹性测算 (Counterfactual Price Elasticity via DML)</h3>
+  <p class="sc-desc">定价分析师面临涨价影响估不准——反事实弹性将收入损失率从11%降到4%，年化增利22万元</p>
+  
 </a><a class="card skill-card" href="../skills/Skill-Cross-Border-Price-Harmonization.html" data-domain="17-价格优化" data-diff="⭐☆☆☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Cross-Border Price Harmonization（跨境价格协调）</h3>
   <p class="sc-desc">业务问题：美国 $129，德国 €119（≈$130），英国 £99（≈$125）</p>
   <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Demand-Forecasting-Booking-Curve.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Demand Forecasting via Booking Curve — 酒店预订曲线迁移到电商搜索量超前指标预测</h3>
+  <p class="sc-desc">采购负责人面临&quot;需求预测总是滞后于市场实际变化最快要等销量数据才能决策&quot;——酒店预订曲线迁移将需求预测提前4周，年化减少断货损失$7.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>25-50万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Dynamic-Bundle-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Dynamic Bundle Pricing — 动态捆绑定价：配套商品组合最优定价策略</h3>
@@ -103,6 +148,11 @@
   <h3 class="sc-title">Dynamic Pricing with Demand Elasticity（动态定价与需求弹性）</h3>
   <p class="sc-desc">吸奶器在美国定价 $129，德国 €119，英国 £99</p>
   <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-EMSR-Bid-Price-Inventory-Control.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">EMSR-b Bid-Price Inventory Control — 酒店边际座位收益模型迁移到FBA库存动态定价</h3>
+  <p class="sc-desc">定价负责人面临&quot;库存高峰期没有提价、淡季没有及时清仓错过收益窗口&quot;——酒店EMSR-b边际收益模型将SKU定价效率提升31%，年化毛利增量$4.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>16-30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-MAPPO-GAT-Dynamic-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">MAPPO+GAT多智能体图注意力动态定价 — 产品关系图驱动的多SKU协同价格优化</h3>
@@ -113,6 +163,31 @@
   <h3 class="sc-title">Markdown Optimization（折扣清仓定价优化）</h3>
   <p class="sc-desc">S1 吸奶器库存 500 件，成本 $60，原价 $129</p>
   <div class='sc-footer'><span class='sc-roi'>20-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Mental-Accounting-Bundle-Psychology.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">心理账户捆绑定价心理学 — 识别同一心智账户商品组合使 AOV 提升22%</h3>
+  <p class="sc-desc">产品运营面临&quot;捆绑套装卖得比单品加起来还贵但有时反而转化率更低&quot;——心理账户同账户识别让捆绑感知价值提升，AOV提升22%，年化$6.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>6.4 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Mixed-Strategy-Pricing-Unpredictability.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">混合策略定价不可预测性 — 随机化定价规避竞品跟价算法</h3>
+  <p class="sc-desc">运营负责人面临&quot;定价策略被竞品算法完全预测跟价响应不到10分钟&quot;——混合策略随机化将竞品跟价有效率降低68%，价格优势窗口扩大至4-8小时</p>
+  <div class='sc-footer'><span class='sc-roi'>15 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Nash-Equilibrium-Pricing-Model.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">纳什均衡定价模型 — 多卖家竞争价格博弈均衡求解</h3>
+  <p class="sc-desc">定价负责人面临&quot;跟价策略陷入价格战困境所有人利润都在下降&quot;——纳什均衡计算将脱离囚徒困境的临界价格区间可视化，年化防护利润损失$8.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>200 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Overbooking-Safety-Stock-Model.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Overbooking Safety Stock Model — 酒店超售模型迁移到FBA补货安全超备量优化</h3>
+  <p class="sc-desc">供应链负责人面临&quot;固定安全系数导致要么过备货要么缺货无法适应补货延误&quot;——超售理论迁移将安全库存准确率提升38%，年化库存成本节省$5.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>3-8万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Perishable-Inventory-Markdown-Optimization.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Perishable Inventory Markdown Optimization — 超市易腐品定价运筹学迁移到母婴临期/过季商品</h3>
+  <p class="sc-desc">仓储负责人面临&quot;临期婴儿食品和过季母婴用品不知道什么时候降价最划算&quot;——易腐品动态规划降价路径将库存回收价值提升42%，年化节省$3.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>1000万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Personalized-ML-Pricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Personalized ML Pricing — 个性化 ML 定价：用户级支付意愿驱动的差异化定价</h3>
@@ -123,6 +198,11 @@
   <h3 class="sc-title">Price Elasticity Estimation — 需求价格弹性估算：跨境 SKU 定价底线测算</h3>
   <p class="sc-desc">母婴卖家对吸奶器盲目大促打折，不知道该 SKU 弹性是否足够高值得降价——价格弹性工具变量估算（OLS + DiD）给出每个 SKU 的弹性系数，识别哪些SKU可提价哪些不值得促销，年化节省无效促销并增加利润30-80万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Price-Fence-Segmentation-Ecommerce.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Price Fence Segmentation — 航空分舱定价策略迁移到母婴电商三级价格歧视</h3>
+  <p class="sc-desc">运营总监面临&quot;Prime会员和普通买家用同一个价格导致价值捕获不充分&quot;——航空分舱定价迁移实现合法三级价格歧视，年化收益提升$6.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Price-Sensitive-Personalized-Recommendation.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Price-Sensitive Personalized Recommendation — 价格感知个性化推荐：弹性×用户偏好协同</h3>
@@ -131,23 +211,48 @@
 </a><a class="card skill-card" href="../skills/Skill-Price-Signal-Collection.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Price Signal Collection — 竞品价格信号实时采集与结构化</h3>
-  <p class="sc-desc">在于：数据异构性（多平台格式差异）、反爬对抗（动态 JS 渲染、验证码）、实时性需求（价格窗口窄、竞品调价响应快）三重矛盾。</p>
+  <p class="sc-desc">价格运营面临市场价信号分散——价格信号采集将监控覆盖率提40%，年化省8万元</p>
   <div class='sc-footer'><span class='sc-roi'>73.2 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Real-Time-Competitive-Repricing.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">Real-Time Competitive Repricing — 竞品价格监测与深度强化学习自动重定价</h3>
   <p class="sc-desc">Momcozy M5 与 3 个竞品争夺 Buy Box，&quot;永远低于 Elvie $5&quot;策略导致旺季每件少赚 $10——DRL 动态重定价识别最优价格窗口，旺季 Buy Box 持有率保持 &gt;85% 同时 ASP 提升 8-12%，年化 GMV 增量 30-60 万元</p>
   <div class='sc-footer'><span class='sc-roi'>1000 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Repeated-Game-Long-Term-Pricing-Cooperation.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">重复博弈长期定价合作 — Tit-for-Tat 策略维持价格高位</h3>
+  <p class="sc-desc">寡头市场卖家面临&quot;不知道什么时候跟价什么时候坚守价格&quot;——重复博弈Tit-for-Tat策略将价格高位维持时间延长3倍，年化毛利保护$11.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>4.5 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Revenue-Per-Available-SKU-REVPAS.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Revenue Per Available SKU（REVPAS）— 以可售库存单位衡量定价效率</h3>
+  <p class="sc-desc">品类运营面临&quot;只看ROAS和销量看不到哪个SKU的库存效率最差&quot;——RevPAR思维迁移为REVPAS指标将定价效率最低SKU识别精准度提升至92%，年化毛利提升$2.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>2.4 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Signaling-Game-Brand-Premium.html" data-domain="17-价格优化" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Signaling Game for Brand Premium—价格作为质量信号</h3>
+  <p class="sc-desc">品牌负责人面临&quot;频繁促销后品牌溢价下降用户心理锚点永久降低&quot;——信号博弈分离均衡维持品牌价格信号完整性，年化品牌价值保护$8万+</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Stackelberg-Price-Leadership-Strategy.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">栈尔伯格价格领导策略 — 市场领导者主动先动定价模型</h3>
+  <p class="sc-desc">市场份额领先者面临&quot;只知道自己是领导者但不知道如何利用先动优势&quot;——栈尔伯格逆向归纳将领导者利润提升15-30%，年化增益$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-VOC-Price-Signal-Analysis.html" data-domain="17-价格优化" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">17-价格优化</div>
   <h3 class="sc-title">VOC Price Signal Analysis — 评论价格信号分析：用户定价反馈驱动定价策略优化</h3>
   <p class="sc-desc">卖家知道有人说吸奶器&quot;太贵&quot;但无法量化这对定价策略意味着什么——WTP代理模型从评论提取价格信号指数，区分真实价格阻力和价值感知不足，避免盲目降价年化保护毛利20-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Willingness-to-Pay-Estimation.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">支付意愿估计 — 从MNL参数推导用户真实WTP分布</h3>
+  <p class="sc-desc">定价负责人面临&quot;不知道目标用户的真实最高支付意愿只能靠A/B测试盲目探索&quot;——WTP估计将差异化定价上限量化为具体区间，价格优化年化增益$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>2000万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

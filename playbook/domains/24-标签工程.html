@@ -30,28 +30,58 @@
       </div>
     </aside>
     <section class="content"><h1>24-标签工程</h1><p>新领域 (2026-06-16): Tag schema, ontology-driven actions, Palantir-style Object-Action-Writeback, supply chain tag propagation</p>
-<div style='display:flex;align-items:center;gap:10px;margin:12px 0 16px'>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
   <input id='domain-search' placeholder='在 24-标签工程 中搜索…' autocomplete='off'
     style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
   <span class='muted' id='domain-count' style='font-size:13px'></span>
 </div>
+<div id="dom-pg-bar" class="pg-bar"></div>
 <script>
 (function(){
-  var inp = document.getElementById('domain-search');
-  var cards = document.querySelectorAll('.cards .skill-card');
-  var cnt = document.getElementById('domain-count');
-  if(!inp) return;
-   inp.addEventListener('input', function(){
-    var q = this.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function(c){
-      var text = (c.textContent||'').toLowerCase() + (c.href||'').toLowerCase();
-      var vis = !q || text.includes(q);
-      c.style.display = vis ? '' : 'none';
-      if(vis) shown++;
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
     });
-    cnt.textContent = q ? ('显示 ' + shown + ' / ' + cards.length + ' 个') : '';
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
   });
+  document.addEventListener('DOMContentLoaded',applyPage);
 })();
 </script><div class='cards'><a class="card skill-card" href="../skills/Skill-Auto-Tagging-Pipeline-Rule-ML-LLM.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">24-标签工程</div>
@@ -81,7 +111,7 @@
 </a><a class="card skill-card" href="../skills/Skill-Counterfactual-SC-Scenario-Sim.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">24-标签工程</div>
   <h3 class="sc-title">供应链反事实情景仿真 — 决策前的数字沙盘，支撑Palantir高风险Action验证</h3>
-  <p class="sc-desc">&quot;如果当时采取了不同的行动，现在会怎样？</p>
+  <p class="sc-desc">计划经理面临断货与积压难权衡——反事实仿真将错误决策率从24%降到7%，年化省22万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-30万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Cross-Domain-Supply-Chain-Signal-Fusion.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">24-标签工程</div>
@@ -101,12 +131,12 @@
 </a><a class="card skill-card" href="../skills/Skill-Decision-Confidence-Calibration-SC.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">24-标签工程</div>
   <h3 class="sc-title">供应链决策置信度校准与分层触发 — 从置信度到人机分工的动态决策框架</h3>
-  <p class="sc-desc">AI说&quot;85%把握补货&quot;，但实际上每次说85%时，真正正确的只有60%——这叫&quot;过度自信（Overconfidence）&quot;。</p>
+  <p class="sc-desc">决策经理面临系统建议没把握——置信校准将低置信误用率从19%降到5%，年化省11万元</p>
   <div class='sc-footer'><span class='sc-roi'>10万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Decision-Outcome-Closed-Loop-Learning.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">24-标签工程</div>
   <h3 class="sc-title">供应链决策结果闭环学习 — 从执行结果到模型改进的Palantir决策飞轮</h3>
-  <p class="sc-desc">反事实偏差（Counterfactual Bias）</p>
+  <p class="sc-desc">运营负责人面临决策学不会复盘——闭环学习将策略迭代周期从30天缩到7天，年化增利20万元</p>
   <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Dynamic-Carrier-Selection-Tag-Driven.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">24-标签工程</div>
@@ -293,6 +323,46 @@
   <h3 class="sc-title">供应链本体驱动行动触发 — Palantir风格Object-Action-Writeback全链路闭环</h3>
   <p class="sc-desc">供应链运营面临&quot;分析看板有了但还要人工去ERP下单&quot;——Palantir风格Object-Action-Writeback闭环将补货响应从2天缩短至4小时自动触发，实现分析到行动的完整闭环</p>
   <div class='sc-footer'><span class='sc-roi'>25万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Driven-Ad-Audience-Segmentation.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Driven Ad Audience Segmentation — 标签工程驱动广告受众精准分割</h3>
+  <p class="sc-desc">广告投手面临&quot;SKU属性标签和广告受众定向完全割裂无法联动&quot;——标签体系自动映射DSP受众包将受众精准度提升68%，广告ROAS年化提升53万元</p>
+  <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Driven-Marketing-Attribution.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Driven Marketing Attribution — 营销渠道标签驱动MMM三维归因</h3>
+  <p class="sc-desc">营销分析师面临&quot;MMM归因只能到渠道级无法细分到内容类型和标签维度&quot;——标签作为MMM控制变量将归因粒度从渠道级升级至标签-渠道-内容三维，年化归因准确度提升33万元</p>
+  <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Driven-User-Behavior-Analytics.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Driven User Behavior Analytics — 实时行为事件流标签化与动态用户画像</h3>
+  <p class="sc-desc">数据分析师面临&quot;用户行为事件流无法实时更新用户画像分析总是滞后&quot;——流式标签打标+实时OLAP将用户画像更新延迟从T+1降至秒级，精细化运营效率年化提升63万元</p>
+  <div class='sc-footer'><span class='sc-roi'>38 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Driven-User-Growth-Trigger.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Driven User Growth Trigger — 用户生命周期标签驱动增长干预自动化</h3>
+  <p class="sc-desc">增长负责人面临&quot;用户生命周期阶段变化无法实时触发对应增长干预&quot;——状态机标签事件驱动将增长干预响应从2天手工决策压缩至实时触发，复购率提升23%，年化增收43万元</p>
+  <div class='sc-footer'><span class='sc-roi'>28 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Driven-VOC-Signal-Routing.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Driven VOC Signal Routing — VOC信号自动标签化与业务路由</h3>
+  <p class="sc-desc">运营团队面临&quot;用户差评信号收到了但不知道应该路由给供应链还是运营还是客服&quot;——NLP标签化自动路由将VOC响应到对应团队时间从2天压缩至15分钟，年化客诉处理效率提升70万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Enhanced-Personalized-Recommendation.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Enhanced Personalized Recommendation — 标签感知的个性化推荐系统</h3>
+  <p class="sc-desc">推荐算法工程师面临&quot;推荐系统不知道商品的品类合规约束导致不适龄产品被推给错误用户&quot;——标签约束过滤+协同过滤Hybrid将推荐精准度提升41%，客诉率降低35%，年化价值50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Informed-Dynamic-Pricing.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Informed Dynamic Pricing — SKU标签驱动动态定价策略自动化</h3>
+  <p class="sc-desc">定价负责人面临&quot;库存积压了但不知道该降多少价清仓还是继续持有&quot;——标签条件映射定价规则树将库存异常到定价响应从人工3天压缩至自动4小时，年化毛利改善50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>25 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card" href="../skills/Skill-Tag-Optimized-Logistics-Routing.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Optimized Logistics Routing — SKU物流属性标签驱动智能配送路由</h3>
+  <p class="sc-desc">物流负责人面临&quot;危品品类和温控商品每次发货都要人工核查承运商资质耗时且易出错&quot;——标签规则引擎自动过滤合规承运商将物流合规核查从人工1小时压缩至自动秒级，年化节省物流合规损失75万元</p>
+  <div class='sc-footer'><span class='sc-roi'>52 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a><a class="card skill-card" href="../skills/Skill-Tag-Propagation-Supply-Chain.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">24-标签工程</div>
   <h3 class="sc-title">供应链知识图谱标签传播算法 — LPA/层级继承/关系链传播的Tag扩散引擎</h3>
@@ -322,7 +392,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');

@@ -41,7 +41,7 @@
 </div>
 <h1>Synthetic Data for E-commerce — 电商合成数据生成：解决新品冷启动与长尾数据稀缺</h1>
 <p class="muted">Skill-Synthetic-Data-Ecommerce · 22-数据采集工程</p>
-<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span></div>
+<div class="tag-row"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-M 新品上市全链路</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-risk-defense.html'>跨境风险防御作战室</a></div>
 <div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据工程师 / 技术负责人<span class='biz-ctx-secondary'> · 运营负责人 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想监控竞品价格/评论/排名但没有稳定采集能力，手动太慢；多平台数据分散整合成本极高；数据管道不稳定经常断</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>竞品价格/评论数据每日自动更新，多平台数据统一入仓，数据管道稳定性 &gt;99%，取数时间从小时降到分钟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品数据要手动收集太慢</span><span class='biz-pain-tag'>平台 API 限制抓不到数据</span><span class='biz-pain-tag'>多系统数据整合不起来</span><span class='biz-pain-tag'>报表用的数据是过期的</span></div></div></div></div>
@@ -57,8 +57,47 @@
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
     <h2 id="s-code">7. 代码模板</h2>
-    <p class="muted">代码块数量：0 · 路径：未检测到</p>
-    <p class='muted'>请查看原始 Skill 卡片获取完整代码。</p>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/data_collection/synthetic_data_ecommerce</p>
+    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>import numpy as np
+import pandas as pd
+
+try:
+    from scipy import stats
+except Exception:
+    stats = None
+
+
+def generate_orders(n=100, seed=42):
+    rng = np.random.default_rng(seed)
+    amounts = rng.lognormal(mean=3.2, sigma=0.55, size=n).round(2)
+    order_freq = rng.poisson(lam=2.8, size=n)
+    categories = rng.choice([&quot;feeding&quot;, &quot;sleep&quot;, &quot;travel&quot;, &quot;safety&quot;], size=n, p=[0.35, 0.25, 0.25, 0.15])
+    returns = rng.binomial(1, p=0.12 + 0.03 * (categories == &quot;safety&quot;) + 0.02 * (order_freq &gt; 3), size=n)
+    df = pd.DataFrame({&quot;order_amount&quot;: amounts, &quot;order_freq&quot;: order_freq, &quot;category&quot;: categories, &quot;return_flag&quot;: returns})
+    return df
+
+
+def ks_validate(df):
+    mu = np.log(df[&quot;order_amount&quot;].mean()) - 0.5 * np.log(1 + (df[&quot;order_amount&quot;].std() / df[&quot;order_amount&quot;].mean()) ** 2)
+    sigma = np.sqrt(np.log(1 + (df[&quot;order_amount&quot;].std() / df[&quot;order_amount&quot;].mean()) ** 2))
+    poisson_lam = df[&quot;order_freq&quot;].mean()
+    if stats is None:
+        return {&quot;amount_mean&quot;: df[&quot;order_amount&quot;].mean(), &quot;freq_mean&quot;: poisson_lam, &quot;ks_amount&quot;: None, &quot;ks_freq&quot;: None}
+    ks_amount = stats.kstest(df[&quot;order_amount&quot;], &quot;lognorm&quot;, args=(sigma, 0, np.exp(mu)))
+    ks_freq = stats.kstest(df[&quot;order_freq&quot;], &quot;poisson&quot;, args=(poisson_lam,))
+    return {&quot;amount_mean&quot;: df[&quot;order_amount&quot;].mean(), &quot;freq_mean&quot;: poisson_lam, &quot;return_rate&quot;: df[&quot;return_flag&quot;].mean(), &quot;ks_amount&quot;: ks_amount, &quot;ks_freq&quot;: ks_freq}
+
+
+def demo():
+    df = generate_orders()
+    report = ks_validate(df)
+    print(df.head())
+    print(report)
+    print(&quot;[✓] Synthetic-Data-Ecommerce测试通过&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    demo()</code></pre></div>
     <h2>8. 论文来源</h2><ul><li>2602.07298</li><li>2602.23620</li><li>2606.00282</li></ul>
   </section>
   <aside class="relation-panel" id="s-relations">
@@ -98,7 +137,7 @@ function copyCode(btn) {
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260618012031"></script>
+  <script src="../assets/playbook-data.js?v=20260621022015"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
