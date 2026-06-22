@@ -1,0 +1,681 @@
+version: '1.0'
+generated_note: 10 个核心事件覆盖最高频风险场景，基于图谱被引用频率数据选定
+events:
+- event_id: customer-churn-risk
+  event_name: 用户流失风险
+  severity: high
+  icon: 👤
+  summary: 高价值用户近期无购买、活跃度骤降或发出流失信号
+  symptom_keywords:
+  - 用户流失
+  - 复购下降
+  - 老客不回购
+  - 留存率下降
+  - LTV 下降
+  - 高价值客户沉默
+  - 订阅取消
+  - 会员不续费
+  - 客户流失
+  - churn
+  - 留存
+  - 复购率
+  phases:
+    diagnose:
+    - skill_id: Skill-Customer-Churn-Prediction
+      role: 预测哪些用户在未来 30 天内流失，输出风险评分排行榜
+      sequence: 1
+    - skill_id: Skill-Cohort-Retention-Analysis
+      role: 按入组队列分析留存曲线，定位哪批用户的留存率最低
+      sequence: 2
+    - skill_id: Skill-VOC-Churn-Signal-Extraction
+      role: 从差评/低频评论中提取语义流失信号，比行为数据提前 2-3 周预警
+      sequence: 3
+    - skill_id: Skill-Causal-Churn-Retention-Attribution
+      role: 因果归因：流失是价格/产品/竞品/服务哪个因素驱动
+      sequence: 4
+    - skill_id: Skill-Deep-Learning-Churn-Prediction
+      role: Skill-Deep-Learning-Churn-Prediction
+      sequence: 5
+    - skill_id: Skill-Uplift-Churn-Prediction
+      role: Skill-Uplift-Churn-Prediction
+      sequence: 6
+    - skill_id: Skill-VOC-Churn-Early-Warning-Signal
+      role: 从评论/客服文本捕获用户流失早期信号
+      sequence: 7
+    - skill_id: Skill-High-Value-Customer-Proactive-Alert
+      role: 高价值客户出现沉默信号时自动触发客服主动联系
+      sequence: 8
+    - skill_id: Skill-Churn-Revenue-Impact
+      role: 用户流失的财务损失量化与 P&L 影响分析
+      sequence: 9
+    treat:
+    - skill_id: Skill-Cohort-Churn-Intervention-Dispatcher
+      role: 30日留存<40% → 自动触发差异化挽回序列（邮件/客服/优惠券）
+      condition: 30日留存率 < 40%
+    - skill_id: Skill-High-Value-Customer-Alert-Action
+      role: Champions 用户 30 天沉默 → 触发客服主动介入 + 个性化钩子
+      condition: 高 RFM 评分用户 30 天无购买
+    - skill_id: Skill-Uplift-Intervention-Priority-Queue
+      role: Uplift 分数 × LTV 排序，资源约束下优先干预最高价值可影响用户
+      condition: 干预资源有限（预算 / 客服人力）
+    - skill_id: Skill-Email-Sequence-Multiarm-Optimizer
+      role: 多臂老虎机优化挽回邮件序列，自动找出最高 CTR 话术
+    - skill_id: Skill-Combo-Customer-Churn-Recovery
+      role: 从流失预测到精准干预的 5 步完整链路
+    - skill_id: Skill-LTV-Acquisition-Budget-Gate
+      role: LTV/CAC比值驱动的获客预算自动开闸/熔断决策器
+    - skill_id: Skill-RFM-Campaign-Auto-Dispatcher
+      role: 按RFM分群自动映射并触发差异化营销序列
+    - skill_id: Skill-RFM-Segment-Campaign-Dispatcher
+      role: RFM分群结果自动触发差异化营销序列调度器
+    prevent:
+    - skill_id: Skill-LTV-Prediction-ZILN
+      role: 预测用户全生命周期价值，提前识别高 LTV 用户并加强维护
+    - skill_id: Skill-Repurchase-Trigger-Timing-Model
+      role: 建立品类复购周期模型，在最佳时机主动触达而非等待流失
+    - skill_id: Skill-MTL-Churn-LTV-Joint-Prediction
+      role: 流失率与 LTV 联合预测，同时优化挽回投入产出
+    - skill_id: Skill-Guardrailed-Uplift-Targeting
+      role: 约束优化 CATE：业务护栏驱动的精准干预
+  related_events:
+  - user-ltv-degradation
+  - review-sentiment-decline
+  related_playbooks:
+  - pb-ltv-retention
+  - pb-user-growth
+  related_workflows:
+  - WF-C 客服分诊
+  - WF-H 复购增长
+- event_id: compliance-prescan-alert
+  event_name: 产品合规风险 / 上架前合规预警
+  severity: critical
+  icon: ⚖️
+  summary: 产品被平台下架、收到合规警告、或新品上架前需要合规预扫描
+  symptom_keywords:
+  - 产品被下架
+  - 合规问题
+  - 认证不足
+  - 违规警告
+  - CPSC
+  - CE认证
+  - 召回风险
+  - 母婴安全标准
+  - 上架被拒
+  - 合规错误码
+  - 合规
+  - 认证
+  - 下架
+  - 召回
+  - 安全标准
+  - EU US 合规
+  phases:
+    diagnose:
+    - skill_id: Skill-Category-Compliance-Prescan
+      role: 扫描该品类历史召回数据（CPSC/RAPEX），输出风险等级和危害类型分布
+      sequence: 1
+    - skill_id: Skill-HTS-Code-Risk-Classifier
+      role: 基于 HTS 码进行 CPSC 多标签风险分类，识别高风险关税编码
+      sequence: 2
+    - skill_id: Skill-Amazon-Compliance-Error-Auto-Resolver
+      role: 解析 Amazon 合规错误码（8572/8574/8591），生成针对性修复建议
+      sequence: 3
+    - skill_id: Skill-GPSR-EU-Risk-Assessment-Auto
+      role: 欧盟 GPSR 合规自动评估，识别 EU 5995 错误风险
+      sequence: 4
+    - skill_id: Skill-CrossBorder-Customs-Compliance-Rate-KPI
+      role: 清关时效/合规申报率/风险等级分类的全流程量化
+      sequence: 5
+    - skill_id: Skill-VOC-Compliance-Signal-Mining
+      role: 评论合规信号挖掘：NLP-VOC×合规决策桥梁
+      sequence: 6
+    - skill_id: Skill-MAS-Cross-Market-Compliance-Orchestrator
+      role: 多市场合规Agent并行处理与冲突解决
+      sequence: 7
+    - skill_id: Skill-Compliance-ML-Risk-Scoring
+      role: 合规 ML 风险评分：用机器学习量化违规概率
+      sequence: 8
+    - skill_id: Skill-Infant-Formula-FDA-Compliance-Checker
+      role: 自动验证21 CFR Part 107标签合规性
+      sequence: 9
+    - skill_id: Skill-LLM-Contract-Compliance-Review
+      role: LLM 采购合同合规审查：跨境协议风险自动化识别
+      sequence: 10
+    - skill_id: Skill-Patent-Prior-Art-Risk-Scan
+      role: 新品上市前侵权风险评估
+      sequence: 11
+    - skill_id: Skill-Regulatory-Change-Monitoring
+      role: 法规变更自动监控：受影响品类实时映射
+      sequence: 12
+    - skill_id: Skill-Regulatory-Graph-Compliance-Monitor
+      role: 合规知识图谱+GenAI实时监控
+      sequence: 13
+    - skill_id: Skill-VAT-GST-Compliance-Automation
+      role: 跨境 VAT/GST 合规自动化：欧洲税务申报自动化
+      sequence: 14
+    - skill_id: Skill-Tax-Compliance-VAT-GST
+      role: 跨境电商增值税/GST 自动合规
+      sequence: 15
+    - skill_id: Skill-Multi-Market-Compliance-Matrix-Ontology
+      role: US/EU/JP/AU跨境合规要求统一建模与差异分析
+      sequence: 16
+    treat:
+    - skill_id: Skill-Listing-Compliance-Auto-Repair
+      role: AI 驱动违规 Listing 自动修复，生成合规版文案替换方案
+      condition: Listing 违规被下架
+    - skill_id: Skill-Cross-Border-Compliance-Framework
+      role: 多辖区合规自动映射，同时满足美/欧/英合规要求
+      condition: 多市场同步上架
+    - skill_id: Skill-Compliance-Scored-Guardrail-Orchestration
+      role: 合规评分 Best-of-N 编排，自动筛选合规风险最低的方案
+    prevent:
+    - skill_id: Skill-Regulatory-Change-Auto-Monitor
+      role: 实时追踪法规变更，受影响品类提前预警（提前 14-30 天）
+    - skill_id: Skill-Platform-Policy-Change-Adaptive-Monitor
+      role: 亚马逊/平台政策变更智能预警，防止突发下架
+    - skill_id: Skill-CPSC-eFiling-Auto-Mapper
+      role: CPSC eFiling 字段自动填充，节省 20-40h/月合规工时
+    - skill_id: Skill-Amazon-ToS-Compliance-Guardrail
+      role: Skill-Amazon-ToS-Compliance-Guardrail
+  related_events:
+  - tariff-risk-spike
+  - listing-suppression
+  related_playbooks:
+  - pb-compliance
+  - pb-cpsc-efiling-emergency
+  related_workflows:
+  - WF-D 选品扫描
+  - WF-K 全域风险防御
+  - WF-M 新品上市全链路
+- event_id: competitor-price-attack
+  event_name: 竞品价格攻击 / 定价竞争风险
+  severity: medium
+  icon: ⚔️
+  summary: 竞品大幅降价、Buy Box 被抢占、或自身定价偏离市场导致转化率下跌
+  symptom_keywords:
+  - 竞品降价
+  - Buy Box 被抢
+  - 价格战
+  - 转化率下跌
+  - 竞品截流
+  - BSR 排名跌落
+  - 定价策略
+  - 竞品监控
+  - 价格被跟卖
+  - 跟卖劫持
+  - 价格
+  - 竞品
+  - Buy Box
+  phases:
+    diagnose:
+    - skill_id: Skill-Competitive-Price-Monitoring
+      role: 实时监控竞品价格变动，识别价格战发起时机和幅度
+      sequence: 1
+    - skill_id: Skill-Brand-Hijacking-Realtime-Monitor
+      role: 检测 Buy Box 劫持，发现时间从 3 天压缩至 15 分钟
+      sequence: 2
+    - skill_id: Skill-Nash-Equilibrium-Pricing-Model
+      role: 博弈论分析：当前市场定价均衡是否被打破，预测竞品下一步行动
+      sequence: 3
+    treat:
+    - skill_id: Skill-Elasticity-Based-Repricing-Gate
+      role: 验证价格弹性后触发动态调价：弹性<1 可提价保利润，弹性>1.5 需跟价
+      condition: 需要响应竞品降价决策
+    - skill_id: Skill-Real-Time-Competitive-Repricing
+      role: 实时竞争性重新定价，在合规范围内自动跟随或差异化定价
+    - skill_id: Skill-Signaling-Game-Brand-Premium
+      role: 信号博弈：通过高质量信号（认证/品牌溢价）脱离价格战轨道
+      condition: 不想陷入价格战
+    prevent:
+    - skill_id: Skill-Willingness-To-Pay-Estimation
+      role: 估算用户支付意愿上限，为品牌溢价定价提供依据
+    - skill_id: Skill-Brand-Defense-Search-Strategy
+      role: 品牌词防守：防止竞品在品牌词搜索下截流广告位
+    - skill_id: Skill-Mixed-Strategy-Pricing-Unpredictability
+      role: 混合策略定价：引入随机性防止竞品算法预测并跟价
+  related_events:
+  - asin-traffic-drop
+  - brand-hijacking
+  related_playbooks:
+  - pb-pricing-engine
+  - pb-game-theory-pricing
+  related_workflows:
+  - WF-F 动态定价
+  - WF-K 全域风险防御
+- event_id: supply-chain-lead-time-risk
+  event_name: 供应链前置期风险 / 断货预警
+  severity: high
+  icon: 🚢
+  summary: 海运延误、供应商交期异常、或库存 DOS 低于安全线触发断货风险
+  symptom_keywords:
+  - 断货
+  - 海运延误
+  - 前置期异常
+  - 供应商交期
+  - 库存 DOS 低
+  - 安全库存不足
+  - 缺货
+  - 补货不及时
+  - 苏伊士
+  - 港口拥堵
+  - 空运救急
+  - 断货
+  - 缺货
+  - 海运
+  - 补货
+  - 前置期
+  phases:
+    diagnose:
+    - skill_id: Skill-Lead-Time-Distribution-Risk-GenQOT
+      role: 对海运前置期建立概率分布，量化 P95 延误风险并输出动态安全库存公式
+      sequence: 1
+    - skill_id: Skill-Supply-Chain-KPI-Health-Dashboard
+      role: 全链路 KPI 健康仪表盘：OTIF、OOS率、ITO 等指标一览
+      sequence: 2
+    - skill_id: Skill-Healthy-Inventory-Three-Layer-KPI
+      role: 三层库存健康度诊断：安全库存层 / 周转层 / 滞销层各自占比是否正常
+      sequence: 3
+    - skill_id: Skill-ITO-Three-Phase-Health-Tracking
+      role: 库存周转全周期过程KPI与干预决策闭环
+      sequence: 4
+    - skill_id: Skill-Inventory-Health-Aging-Attribution
+      role: Inventory Health Diagnostics & Aging Attribution
+      sequence: 5
+    - skill_id: Skill-Customs-Clearance-Risk-Scoring
+      role: 跨境清关多维风险预警
+      sequence: 6
+    - skill_id: Skill-Supply-Chain-Finance-Risk-Modeling
+      role: 供应链金融风险建模：跨境贸易融资信用评估
+      sequence: 7
+    - skill_id: Skill-Geopolitical-Risk-Tag-Supply-Impact
+      role: 贸易限制/区域冲突对供应链的实时风险量化
+      sequence: 8
+    - skill_id: Skill-Shipment-Risk-Tag-Realtime-Tracker
+      role: 海运/空运全链路可视化与预警Tag实时更新
+      sequence: 9
+    - skill_id: Skill-Supply-Chain-Finance-Risk-Tag
+      role: 融资依赖度/信用评级/现金流压力的综合风险画像
+      sequence: 10
+    treat:
+    - skill_id: Skill-Lead-Time-Safety-Stock-Auto-Adjuster
+      role: 前置期 P95 > 承诺期 × 1.3 → 自动上调安全库存并触发紧急补货
+      condition: 当前前置期超出正常范围 30%+
+    - skill_id: Skill-Automated-Replenishment-Decision-Engine
+      role: 自动化补货决策引擎：综合预测需求、当前库存、前置期生成补货量
+    - skill_id: Skill-Combo-Inventory-Crisis-Response
+      role: 库存危机响应 Combo：断货场景下的紧急补货 + 广告降速 + 价格保护组合拳
+      condition: 已发生或即将发生断货
+    prevent:
+    - skill_id: Skill-CVaR-Inventory-Risk-Portfolio
+      role: CVaR 风险度量：量化极端场景（台风/港罢工）下的库存损失上限
+    - skill_id: Skill-Supplier-Risk-XGBoost
+      role: 供应商风险评分：提前识别高风险供应商，建立双源备货
+    - skill_id: Skill-Real-Time-Supply-Chain-Drift-Detection
+      role: 供应链信号漂移实时检测：发货节奏异常早于用户感知 7-14 天预警
+  related_events:
+  - inventory-overstock
+  - supplier-failure
+  related_playbooks:
+  - pb-inventory-festival
+  - pb-supply-chain-intelligence
+  related_workflows:
+  - WF-A 智能补货
+  - WF-N 库存危机响应
+- event_id: fake-review-attack
+  event_name: 虚假评论攻击 / 刷评刷单
+  severity: high
+  icon: ⭐
+  summary: 竞品恶意刷差评、自身差评被批量举报删除、或平台检测到评论异常
+  symptom_keywords:
+  - 虚假评论
+  - 刷差评
+  - 差评被删
+  - 恶意竞争
+  - 评论异常
+  - 评分暴跌
+  - 刷单
+  - 好评被删
+  - 竞品攻击
+  - 虚假刷评
+  - 差评
+  - 刷评
+  - 评论
+  - 评分下降
+  phases:
+    diagnose:
+    - skill_id: Skill-Review-Fraud-Detection
+      role: 检测评论中的虚假信号：账号行为异常、时间分布、语言模式
+      sequence: 1
+    - skill_id: Skill-FraudSquad-LLM-Review-Detection
+      role: LLM 驱动的虚假评论检测，识别 AI 生成差评和有组织刷评群组
+      sequence: 2
+    - skill_id: Skill-DS-DGA-GCN-Fake-Review-Group-Detection
+      role: 动态图 GCN 检测刷评群组：识别协同行动的假评账号网络
+      sequence: 3
+    - skill_id: Skill-Review-Velocity-Anomaly-Detector
+      role: 评论速度异常检测：短时间内差评涌入是竞品攻击的典型信号
+      sequence: 4
+    - skill_id: Skill-AI-Fake-Review-Detection
+      role: 多模态虚假评论检测与可解释风控
+      sequence: 5
+    - skill_id: Skill-AI-Generated-Content-Detection
+      role: Perplexity/Burstiness 统计特征分类器
+      sequence: 6
+    - skill_id: Skill-AIGC-Content-Detection
+      role: AI生成内容鉴别：母婴评论真实性保护
+      sequence: 7
+    - skill_id: Skill-Crypto-Anomaly-Review-Fraud
+      role: Skill-Crypto-Anomaly-Review-Fraud
+      sequence: 8
+    treat:
+    - skill_id: Skill-Review-Defense-Vine-Optimizer
+      role: Vine 计划优化：通过可信 Vine Voice 评论对冲恶意差评影响
+      condition: 评分已受损需要修复
+    - skill_id: Skill-VOC-Churn-Signal-Extraction
+      role: 区分真实差评信号和攻击信号：真实痛点需改产品，攻击信号需举报
+    - skill_id: Skill-Amazon-Compliance-Error-Auto-Resolver
+      role: 如差评导致合规警告，自动生成申诉材料和修复方案
+      condition: 差评引发平台合规警告
+    prevent:
+    - skill_id: Skill-Review-Sentiment-Growth-Trigger
+      role: 情感趋势监控：7 日滚动均值跌破阈值时立即预警，不等爆发
+    - skill_id: Skill-Fake-Review-Detection
+      role: 持续监控评论质量，建立评论真实性基线
+    - skill_id: Skill-PromoGuardian-Promotion-Fraud-GNN
+      role: 促销期专项防护：大促期间虚假评论攻击频率提升 3-5 倍
+  related_events:
+  - account-health-degradation
+  - brand-hijacking
+  related_playbooks:
+  - pb-review-defense
+  - pb-risk-defense
+  related_workflows:
+  - WF-E Review 监控
+  - WF-K 全域风险防御
+- event_id: asin-traffic-drop
+  event_name: ASIN 流量异常下跌
+  severity: high
+  icon: 📉
+  summary: ASIN 搜索展示量、点击量或自然流量突然下降，排名跌落或关键词索引丢失
+  symptom_keywords:
+  - 流量下降
+  - 排名跌落
+  - 关键词排名掉了
+  - 搜索展示量骤降
+  - 自然流量消失
+  - 索引丢失
+  - Page 1 跌出
+  - 曝光量下降
+  - ASIN 流量
+  - 流量
+  - 排名
+  - 展示量
+  - 曝光
+  - 搜索
+  phases:
+    diagnose:
+    - skill_id: Skill-Index-Health-Monitoring
+      role: 检查关键词索引状态：是否被踢出索引或 Listing 被降权
+      sequence: 1
+    - skill_id: Skill-Keyword-Cannibalization-Detection
+      role: 检测关键词蚕食：自身多个 ASIN 互相竞争同一关键词导致排名稀释
+      sequence: 2
+    - skill_id: Skill-Creative-Fatigue-Detection
+      role: 广告素材疲劳诊断：CTR 下降是否由创意素材疲劳导致
+      sequence: 3
+    - skill_id: Skill-Listing-Health-Diagnostic
+      role: Listing 健康度全面诊断：标题/图片/A+/关键词密度综合评分
+      sequence: 4
+    - skill_id: Skill-Ad-Fraud-IVT-Detection
+      role: 行为图 + GNN 无效流量实时检测
+      sequence: 5
+    - skill_id: Skill-Click-Fraud-Detection
+      role: Skill-Click-Fraud-Detection
+      sequence: 6
+    treat:
+    - skill_id: Skill-Search-Traffic-Ad-Organic-Synergy
+      role: 重建广告-自然流量协同：确认哪些词需要广告支撑才能维持自然排名
+      condition: 自然流量依赖广告支撑
+    - skill_id: Skill-Long-Tail-Keyword-Mining
+      role: 挖掘核心词跌落后的长尾词机会，维持整体流量不断崖
+    - skill_id: Skill-Brand-Defense-Search-Strategy
+      role: 品牌词防守：防止竞品在流量低谷期趁机截流
+    prevent:
+    - skill_id: Skill-Amazon-Category-Trend-Forecasting
+      role: 品类流量季节性预测：提前 2-3 周准备流量切换，避免措手不及
+    - skill_id: Skill-Supply-Chain-KPI-Health-Dashboard
+      role: 将流量健康指标纳入日常监控仪表盘，从被动发现到主动预警
+  related_events:
+  - competitor-price-attack
+  - listing-suppression
+  - fake-review-attack
+  related_playbooks:
+  - pb-asin-traffic-diagnosis
+  - pb-search-traffic-growth
+  related_workflows:
+  - WF-B 广告优化
+  - WF-G Listing 内容优化
+- event_id: account-health-degradation
+  event_name: 账号健康恶化 / 封号风险
+  severity: critical
+  icon: 🔴
+  summary: 账号 ODR 超标、迟发率上升、投诉率异常，或收到 Amazon 合规警告
+  symptom_keywords:
+  - 账号封禁
+  - ODR 超标
+  - 账号警告
+  - 迟发率超标
+  - 封号风险
+  - Amazon 警告
+  - 账号关联
+  - 多账号风险
+  - 合规警告邮件
+  - 账号
+  - ODR
+  - 封号
+  - 警告
+  - 账号健康
+  phases:
+    diagnose:
+    - skill_id: Skill-Account-Health-Proactive-Monitor
+      role: 多维账号健康评分：ODR/取消率/延迟率/投诉率综合评估，提前 7-14 天预警
+      sequence: 1
+    - skill_id: Skill-Account-Health-Early-Warning-System
+      role: 健康指标趋势分析：哪个维度恶化速度最快，找到根因
+      sequence: 2
+    - skill_id: Skill-Account-Association-Risk-Detection
+      role: 多账号关联风险检测：确认是否有关联账号拖累当前账号
+      sequence: 3
+    - skill_id: Skill-Identity-Fraud-Detection
+      role: 多维账号欺诈检测：设备+行为+网络三重验证
+      sequence: 4
+    treat:
+    - skill_id: Skill-Amazon-Account-Appeal-Strategy
+      role: 构建申诉 POA（行动计划）：证据链组织 + 申诉信模板 + 关键指标修复路径
+      condition: 已收到警告或账号被降权
+    - skill_id: Skill-Listing-Compliance-Auto-Repair
+      role: 自动修复导致违规的 Listing 内容，消除合规警告根源
+    - skill_id: Skill-Account-Fingerprint-Risk-Scorer
+      role: 账号指纹风险评分：识别哪些操作行为触发了平台关联检测
+      condition: 怀疑被关联判定
+    prevent:
+    - skill_id: Skill-Review-Fraud-Detection
+      role: 预防虚假评论导致的投诉率上升，这是 ODR 恶化最常见根源之一
+    - skill_id: Skill-Multi-Account-Operational-Isolation
+      role: 多账号操作隔离规范：网络/设备/支付/运营行为全维度隔离方案
+    - skill_id: Skill-Platform-Policy-Change-Adaptive-Monitor
+      role: 政策变更预警：Amazon 规则更新后提前调整，不被动触发违规
+  related_events:
+  - fake-review-attack
+  - listing-suppression
+  related_playbooks:
+  - pb-risk-defense
+  - pb-multi-account-risk-defense
+  related_workflows:
+  - WF-K 全域风险防御
+- event_id: ad-creative-fatigue
+  event_name: 广告素材疲劳 / 广告效果衰减
+  severity: medium
+  icon: 📢
+  summary: 广告 CTR 持续下降、ACOS 上升、同一素材投放超过阈值天数导致受众免疫
+  symptom_keywords:
+  - 广告效果下降
+  - CTR 下降
+  - ACOS 上升
+  - 素材疲劳
+  - 广告 ROI 下降
+  - 受众免疫
+  - 广告转化率低
+  - 广告预算浪费
+  - 广告
+  - CTR
+  - ACOS
+  - 素材
+  - 疲劳
+  - 转化率
+  phases:
+    diagnose:
+    - skill_id: Skill-Creative-Fatigue-Detection
+      role: 检测素材疲劳信号：CTR 7日滚动均值跌破基线 30% 为疲劳阈值
+      sequence: 1
+    - skill_id: Skill-Channel-Saturation-Curve
+      role: 渠道饱和度曲线：判断 CTR 下降是素材疲劳还是渠道整体饱和
+      sequence: 2
+    - skill_id: Skill-Negative-Keyword-Safe-Guard
+      role: 负关键词护栏检查：是否有高消耗低转化词组拖累整体 ACOS
+      sequence: 3
+    treat:
+    - skill_id: Skill-Content-ROI-Budget-Shift-Trigger
+      role: 内容 ROI < 目标 → 自动减少该素材类型投放，预算转移到高效素材
+      condition: 内容 ROI 持续 7 天低于基准
+    - skill_id: Skill-Channel-Budget-Reallocation-Trigger
+      role: 渠道饱和度 > 80% → 自动削减该渠道 20% 预算，转移到未饱和渠道
+      condition: 渠道饱和度超阈值
+    - skill_id: Skill-MMM-Budget-Reallocation-Executor
+      role: MMM 输出的最优权重执行：将预算重分配指令下发到各广告平台
+    prevent:
+    - skill_id: Skill-DARA-Agentic-MMM-Optimizer
+      role: MAS 驱动的 MMM 持续优化，每周自动更新各渠道最优预算权重
+    - skill_id: Skill-Identified-Bayesian-MMM
+      role: 贝叶斯 MMM 提供置信区间：区分真实效果衰减和统计噪声
+    - skill_id: Skill-Bayesian-MMM-Scenario-Action-Plan
+      role: 季度预算决策：P10/P50/P90 情景下的预算分配方案提前规划
+  related_events:
+  - asin-traffic-drop
+  - customer-churn-risk
+  related_playbooks:
+  - pb-attribution-unification
+  - pb-tiktok-shop
+  related_workflows:
+  - WF-B 广告优化
+  - WF-L 流量获取
+- event_id: data-model-drift
+  event_name: 数据漂移 / 模型性能衰减
+  severity: medium
+  icon: 🤖
+  summary: 预测模型准确率下降、数据分布偏移、或 A/B 实验数据质量异常
+  symptom_keywords:
+  - 模型准确率下降
+  - 预测偏差大
+  - 数据漂移
+  - 特征分布变化
+  - A/B 实验异常
+  - 模型失效
+  - 预测结果不可信
+  - 模型退化
+  - 数据质量
+  - 模型
+  - 漂移
+  - 准确率
+  - 预测
+  - 数据分布
+  phases:
+    diagnose:
+    - skill_id: Skill-Data-Drift-Detection
+      role: PSI/KS 统计检验特征分布漂移，识别哪些特征分布已偏离训练集
+      sequence: 1
+    - skill_id: Skill-Concept-Drift-Detection
+      role: 概念漂移检测：目标变量与特征的关系是否在当前市场环境下已改变
+      sequence: 2
+    - skill_id: Skill-Model-Performance-Monitor
+      role: 模型性能持续监控：精确率/召回率/AUC 的时序趋势分析
+      sequence: 3
+    - skill_id: Skill-Experiment-Data-Quality-Guard
+      role: A/B 实验数据质量护栏：SRM 检测、网络效应检测、新奇效应评估
+      sequence: 4
+    treat:
+    - skill_id: Skill-Forecast-Bias-Adjustment-Detection
+      role: 预测偏差自动检测与校准：系统性高估/低估的自动修正
+      condition: 预测模型出现系统性偏差
+    - skill_id: Skill-Anomaly-Detection-Foundation-Model
+      role: 零样本异常检测基础模型：在数据分布变化时仍能有效识别异常
+    - skill_id: Skill-Data-Quality-Monitor-Alert
+      role: 数据管道质量告警：上游数据问题导致模型输入异常的实时检测
+    prevent:
+    - skill_id: Skill-Conformal-Risk-Assessment
+      role: 共形预测区间：量化模型不确定性，在漂移早期提供更宽的置信区间
+    - skill_id: Skill-Argos-Agentic-Anomaly-Detection
+      role: Agentic 异常检测：自动巡检所有关键业务指标，发现统计异常自动上报
+  related_events:
+  - supply-chain-lead-time-risk
+  - customer-churn-risk
+  related_playbooks:
+  - pb-data-foundation
+  related_workflows:
+  - WF-I 智能体工程
+  - WF-J 数据质量
+- event_id: tariff-fx-risk
+  event_name: 关税汇率风险
+  severity: high
+  icon: 💱
+  summary: 关税政策变化（301 条款/加征）、人民币汇率大幅波动导致利润侵蚀
+  symptom_keywords:
+  - 关税加征
+  - 301 条款
+  - 汇率波动
+  - 人民币升值
+  - 进口税提高
+  - 关税风险
+  - 汇率损失
+  - 定价无法覆盖成本
+  - 利润压缩
+  - 关税
+  - 汇率
+  - 人民币
+  - 301
+  - 进口税
+  - 税率
+  phases:
+    diagnose:
+    - skill_id: Skill-MonteCarlo-Tariff-Risk
+      role: Monte Carlo 模拟多情景关税变化，量化尾部风险（P95 利润损失）
+      sequence: 1
+    - skill_id: Skill-HTS-Tariff-Classification
+      role: 核查当前 HS 码分类是否最优：同一产品不同申报可差 10-15 个点税率
+      sequence: 2
+    - skill_id: Skill-FX-Exposure-Measurement
+      role: 测量净外汇敞口：每单位汇率变动对净利润的量化影响
+      sequence: 3
+    treat:
+    - skill_id: Skill-Elasticity-Based-Repricing-Gate
+      role: 关税上升后验证价格弹性：确认能否提价转嫁成本而不损失销量
+      condition: 关税成本需要转嫁给消费者
+    - skill_id: Skill-Cross-Border-Price-Harmonization
+      role: 多市场价格协调：关税差异下的最优跨市场定价策略
+    - skill_id: Skill-Supply-Chain-Total-Cost-TCO-Model
+      role: TCO 总成本重算：关税变化后全链路成本重新核算，找到对冲空间
+    prevent:
+    - skill_id: Skill-Forecast-To-PL-Bridge
+      role: 关税情景映射到 P&L：让管理层看懂「关税+5%=每月净利减少 X 万」
+    - skill_id: Skill-Commodity-Futures-Cost-Baseline
+      role: 大宗商品期货套期保值：锁定原材料成本，降低关税叠加原材料涨价风险
+    - skill_id: Skill-MAS-Compliance-Multi-Market-Orchestrator
+      role: 多市场合规 Agent 并行：关税政策变化后同步更新多市场合规策略
+  related_events:
+  - compliance-prescan-alert
+  - supply-chain-lead-time-risk
+  related_playbooks:
+  - pb-tariff-response
+  - pb-fx-tariff-hedging
+  related_workflows:
+  - WF-K 全域风险防御
+  - WF-L 汇率关税对冲

@@ -3505,6 +3505,7 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
       <div class="sb-top">
         {sidebar_section('主导航', 
           sidebar_link('index.html', '总览', 'index', '⊞') +
+          sidebar_link('diagnostic.html', '业务诊断中心', 'diagnostic', '⚕') +
           sidebar_link('chat.html', 'AI 知识库对话', 'chat', '✦') +
           sidebar_link('playbooks/index.html', '场景手册', 'playbooks', '◧') +
           sidebar_link('solutions/index.html', '方案库', 'solutions', '◆') +
@@ -5224,6 +5225,198 @@ tr:hover td { background: var(--bg); }
 @media print { .topbar,.sidebar,.rm-hero-cta,.rm-footer-cta button{display:none!important} body{background:#fff} .content{padding:0!important;max-width:100%!important} .rm-summary-bar{margin:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact} .rm-phase,.rm-footer{break-inside:avoid} .rm-phases{gap:12px} @page{margin:20mm 15mm;size:A4} }
 """
 
+def render_diagnostic_page(skill_count: int = 931) -> str:
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>业务诊断中心 — paper2skills</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.diag-wrap{{display:flex;gap:0;min-height:calc(100vh - 52px);background:var(--bg,#F6F6F6)}}
+.diag-left{{width:380px;min-width:320px;flex-shrink:0;background:#fff;border-right:1px solid var(--line,#e5e7eb);padding:28px 24px;display:flex;flex-direction:column;gap:20px}}
+.diag-right{{flex:1;padding:28px 24px;overflow-y:auto}}
+.diag-title{{font-size:18px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-.3px}}
+.diag-sub{{font-size:12.5px;color:var(--muted,#6b7280);line-height:1.5;margin-top:2px}}
+.diag-events{{display:flex;flex-direction:column;gap:6px}}
+.diag-event-btn{{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fafafa;border:1px solid var(--line,#e5e7eb);border-radius:8px;cursor:pointer;text-align:left;font-family:var(--font);transition:all .15s}}
+.diag-event-btn:hover{{background:var(--bg,#F6F6F6);border-color:#B5323E;transform:translateX(2px)}}
+.diag-event-btn.active{{background:#fff5f5;border-color:#B5323E;border-left:3px solid #B5323E}}
+.diag-event-icon{{font-size:18px;flex-shrink:0}}
+.diag-event-info{{min-width:0}}
+.diag-event-name{{font-size:13px;font-weight:600;color:var(--ink,#0C0C0C)}}
+.diag-event-sev{{font-size:11px;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:2px;font-weight:600}}
+.sev-critical{{background:#fef2f2;color:#991b1b}}
+.sev-high{{background:#fff7ed;color:#c2410c}}
+.sev-medium{{background:#eff6ff;color:#1d4ed8}}
+.sev-low{{background:#f0fdf4;color:#166534}}
+.diag-input-row{{display:flex;gap:8px}}
+.diag-input{{flex:1;padding:9px 12px;border:1px solid var(--line,#e5e7eb);border-radius:8px;font-size:13px;font-family:var(--font);outline:none;color:var(--ink)}}
+.diag-input:focus{{border-color:#B5323E}}
+.diag-btn{{padding:9px 16px;background:#B5323E;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:var(--font)}}
+.diag-btn:hover{{background:#9a2b34}}
+.diag-empty{{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--muted,#6b7280);text-align:center;gap:12px}}
+.diag-empty-icon{{font-size:40px;opacity:.5}}
+.diag-empty-text{{font-size:14px;line-height:1.6;max-width:300px}}
+.diag-result{{display:none}}
+.diag-result.visible{{display:block}}
+.diag-result-header{{background:#fff;border:1px solid var(--line,#e5e7eb);border-radius:10px;padding:20px 22px;margin-bottom:16px}}
+.diag-result-title{{display:flex;align-items:center;gap:10px;margin-bottom:8px}}
+.diag-result-icon{{font-size:24px}}
+.diag-result-name{{font-size:17px;font-weight:700;color:var(--ink)}}
+.diag-result-summary{{font-size:13px;color:var(--muted);line-height:1.6}}
+.diag-phases{{display:flex;flex-direction:column;gap:12px}}
+.diag-phase{{background:#fff;border:1px solid var(--line,#e5e7eb);border-radius:10px;overflow:hidden}}
+.diag-phase-header{{padding:12px 18px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line,#e5e7eb)}}
+.diag-phase-diagnose .diag-phase-header{{background:#f0f9ff;color:#0369a1}}
+.diag-phase-treat .diag-phase-header{{background:#fff7ed;color:#b45309}}
+.diag-phase-prevent .diag-phase-header{{background:#f0fdf4;color:#166534}}
+.diag-skill-list{{padding:8px 0}}
+.diag-skill-item{{display:flex;align-items:flex-start;gap:10px;padding:9px 18px;border-bottom:1px solid #f3f4f6;transition:background .12s}}
+.diag-skill-item:last-child{{border-bottom:none}}
+.diag-skill-item:hover{{background:#f9fafb}}
+.diag-skill-num{{font-size:11px;font-weight:700;color:#9ca3af;flex-shrink:0;padding-top:2px;min-width:16px}}
+.diag-skill-body{{min-width:0}}
+.diag-skill-link{{font-size:12.5px;font-weight:600;color:#B5323E;text-decoration:none;display:block}}
+.diag-skill-link:hover{{text-decoration:underline}}
+.diag-skill-role{{font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px}}
+.diag-skill-cond{{font-size:11px;background:#fef9c3;color:#854d0e;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:3px}}
+.diag-related{{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 18px}}
+.diag-related-title{{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}}
+.diag-related-links{{display:flex;flex-wrap:wrap;gap:6px}}
+.diag-related-link{{font-size:12px;padding:4px 10px;background:var(--bg);border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:all .12s}}
+.diag-related-link:hover{{border-color:#B5323E;color:#B5323E}}
+@media(max-width:768px){{.diag-wrap{{flex-direction:column}}.diag-left{{width:100%;border-right:none;border-bottom:1px solid var(--line)}}.diag-right{{padding:16px}}}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="topbar-brand" href="index.html">paper2skills</a>
+  <nav class="topbar-nav">
+    <a href="index.html">总览</a>
+    <a href="diagnostic.html" class="active" style="color:#B5323E;font-weight:700">⚕ 诊断</a>
+    <a href="chat.html">AI对话</a>
+    <a href="playbooks/">手册</a>
+    <a href="skills/">技能库</a>
+    <a href="agents.html">Agent</a>
+    <a href="graph/overview.html">图谱</a>
+  </nav>
+  <span style="font-size:12px;color:#888;margin-left:auto">{skill_count} Skills</span>
+</header>
+<div class="diag-wrap">
+  <aside class="diag-left">
+    <div>
+      <div class="diag-title">⚕ 业务诊断中心</div>
+      <div class="diag-sub">描述症状，匹配「诊断→处置→预防」Skill 链</div>
+    </div>
+    <div class="diag-input-row">
+      <input class="diag-input" id="diag-input" placeholder="描述你的业务问题，如：ASIN 流量突然下降…" />
+      <button class="diag-btn" onclick="runDiag()">诊断</button>
+    </div>
+    <div class="diag-events" id="diag-events"></div>
+  </aside>
+  <main class="diag-right" id="diag-right">
+    <div class="diag-empty" id="diag-empty">
+      <div class="diag-empty-icon">🔍</div>
+      <div class="diag-empty-text">点击左侧症状按钮，或输入业务问题描述<br>AI 将为你匹配最相关的 Skill 诊断链</div>
+    </div>
+    <div class="diag-result" id="diag-result"></div>
+  </main>
+</div>
+<script src="assets/risk-events.js"></script>
+<script>
+(function(){{
+  const SEV_CLASS={{'critical':'sev-critical','high':'sev-high','medium':'sev-medium','low':'sev-low'}};
+  const SEV_LABEL={{'critical':'紧急','high':'高风险','medium':'中风险','low':'低风险'}};
+  const PHASE_CFG={{
+    diagnose:{{label:'🔍 第一步：诊断根因',cls:'diag-phase-diagnose'}},
+    treat:{{label:'🔧 第二步：处置行动',cls:'diag-phase-treat'}},
+    prevent:{{label:'🛡️ 第三步：长效预防',cls:'diag-phase-prevent'}}
+  }};
+
+  function initButtons(){{
+    const events=(window.RISK_EVENTS||{{}}).events||[];
+    const container=document.getElementById('diag-events');
+    container.innerHTML='';
+    events.forEach(ev=>{{
+      const btn=document.createElement('button');
+      btn.className='diag-event-btn';
+      btn.dataset.id=ev.event_id;
+      const sevCls=SEV_CLASS[ev.severity]||'sev-medium';
+      const sevLabel=SEV_LABEL[ev.severity]||ev.severity;
+      btn.innerHTML=`<span class="diag-event-icon">${{ev.icon||'⚠️'}}</span><div class="diag-event-info"><div class="diag-event-name">${{ev.event_name}}</div><span class="diag-event-sev ${{sevCls}}">${{sevLabel}}</span></div>`;
+      btn.addEventListener('click',()=>showEvent(ev.event_id));
+      container.appendChild(btn);
+    }});
+  }}
+
+  function matchEvent(query){{
+    const events=(window.RISK_EVENTS||{{}}).events||[];
+    const q=query.toLowerCase();
+    let best=null,top=0;
+    events.forEach(ev=>{{
+      let sc=0;
+      (ev.symptom_keywords||[]).forEach(kw=>{{if(q.includes(kw.toLowerCase()))sc++;}});
+      if(sc>top){{top=sc;best=ev;}}
+    }});
+    return top>0?best:null;
+  }}
+
+  function showEvent(eventId){{
+    const events=(window.RISK_EVENTS||{{}}).events||[];
+    const ev=events.find(e=>e.event_id===eventId);
+    if(!ev)return;
+    document.querySelectorAll('.diag-event-btn').forEach(b=>b.classList.remove('active'));
+    const btn=document.querySelector(`.diag-event-btn[data-id="${{eventId}}"]`);
+    if(btn)btn.classList.add('active');
+    const sevCls=SEV_CLASS[ev.severity]||'sev-medium';
+    const sevLabel=SEV_LABEL[ev.severity]||ev.severity;
+    let html=`<div class="diag-result-header"><div class="diag-result-title"><span class="diag-result-icon">${{ev.icon||'⚠️'}}</span><span class="diag-result-name">${{ev.event_name}}</span><span class="diag-event-sev ${{sevCls}}" style="margin-left:4px">${{sevLabel}}</span></div><div class="diag-result-summary">${{ev.summary||''}}</div></div><div class="diag-phases">`;
+    ['diagnose','treat','prevent'].forEach(phase=>{{
+      const skills=(ev.phases||{{}})[phase]||[];
+      if(!skills.length)return;
+      const cfg=PHASE_CFG[phase];
+      let items='';
+      skills.forEach((sk,i)=>{{
+        const cond=sk.condition?`<span class="diag-skill-cond">触发条件：${{sk.condition}}</span>`:'';
+        const title=sk.title?` — ${{sk.title.split('—')[0].trim()}}`:'';
+        items+=`<div class="diag-skill-item"><span class="diag-skill-num">${{i+1}}</span><div class="diag-skill-body"><a class="diag-skill-link" href="skills/${{sk.skill_id}}.html" target="_blank">${{sk.skill_id}}</a><div class="diag-skill-role">${{sk.role||''}}</div>${{cond}}</div></div>`;
+      }});
+      html+=`<div class="diag-phase ${{cfg.cls}}"><div class="diag-phase-header">${{cfg.label}}<span style="margin-left:auto;font-size:11px;font-weight:400;opacity:.7">${{skills.length}} 个 Skills</span></div><div class="diag-skill-list">${{items}}</div></div>`;
+    }});
+    html+='</div>';
+    const pbs=(ev.related_playbooks||[]);
+    if(pbs.length){{
+      const links=pbs.map(id=>`<a class="diag-related-link" href="playbooks/${{id}}.html" target="_blank">📖 ${{id.replace('pb-','').replace(/-/g,' ')}}</a>`).join('');
+      html+=`<div class="diag-related"><div class="diag-related-title">相关手册</div><div class="diag-related-links">${{links}}</div></div>`;
+    }}
+    document.getElementById('diag-empty').style.display='none';
+    const res=document.getElementById('diag-result');
+    res.innerHTML=html;
+    res.className='diag-result visible';
+  }}
+
+  window.runDiag=function(){{
+    const q=document.getElementById('diag-input').value.trim();
+    if(!q)return;
+    const ev=matchEvent(q);
+    if(ev){{showEvent(ev.event_id);}}
+    else{{
+      document.getElementById('diag-empty').style.display='none';
+      document.getElementById('diag-result').className='diag-result visible';
+      document.getElementById('diag-result').innerHTML='<div class="diag-empty"><div class="diag-empty-icon">🤔</div><div class="diag-empty-text">未匹配到具体风险场景<br>请尝试点击左侧症状按钮，或前往 <a href="chat.html">AI对话</a> 获取帮助</div></div>';
+    }}
+  }};
+
+  document.getElementById('diag-input').addEventListener('keydown',e=>{{if(e.key==='Enter')window.runDiag();}});
+  if(window.RISK_EVENTS)initButtons();
+  else window.addEventListener('load',initButtons);
+}})();
+</script>
+</body>
+</html>"""
+
+
 def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -5339,6 +5532,12 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
       padding: 2px 8px; background: var(--panel-2); border-radius: var(--r-full);
       border: 1px solid var(--line);
     }}
+    .cmsg-event-badge {{
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; color: #991b1b; margin-bottom: 6px;
+      padding: 2px 8px; background: #fef2f2; border-radius: var(--r-full);
+      border: 1px solid #fecaca;
+    }}
     .cmsg-typing .cmsg-bubble::after {{
       content: ''; display: inline-block; width: 40px; height: 10px;
       background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Ccircle cx='5' cy='5' r='3' fill='%2386868b'%3E%3Canimate attributeName='opacity' values='1;0.2;1' dur='1s' begin='0s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='20' cy='5' r='3' fill='%2386868b'%3E%3Canimate attributeName='opacity' values='1;0.2;1' dur='1s' begin='0.2s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='35' cy='5' r='3' fill='%2386868b'%3E%3Canimate attributeName='opacity' values='1;0.2;1' dur='1s' begin='0.4s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E") no-repeat center;
@@ -5435,8 +5634,9 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
             <button class="chat-sug-btn">大促备货如何预测需求？</button>
             <button class="chat-sug-btn">供应链 AI 有哪些关键技能？</button>
             <button class="chat-sug-btn">KOL 投放效果怎么归因？</button>
-            <button class="chat-sug-btn">如何预防封号和合规风险？</button>
-            <button class="chat-sug-btn">用户流失预警方法有哪些？</button>
+            <button class="chat-sug-btn">🔴 账号 ODR 异常，担心被封号</button>
+            <button class="chat-sug-btn">📉 ASIN 流量突然下降 30%</button>
+            <button class="chat-sug-btn">⚖️ 产品被平台合规警告</button>
           </div>
         </div>
       </div>
@@ -5458,6 +5658,7 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
   </div>
 
   <script src="{nav}assets/playbook-data.js"></script>
+  <script src="{nav}assets/risk-events.js"></script>
   <script src="{nav}assets/chat-page.js"></script>
 </body>
 </html>"""
@@ -5511,7 +5712,7 @@ def build_chat_page_js() -> str:
       .replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');
   }
 
-  function addMsg(text, role, webBadge) {
+  function addMsg(text, role, webBadge, eventBadge) {
     if (welcome) welcome.style.display = 'none';
     const row = document.createElement('div');
     row.className = 'cmsg cmsg-' + role;
@@ -5528,6 +5729,12 @@ def build_chat_page_js() -> str:
       const badge = document.createElement('div');
       badge.className = 'cmsg-web-badge';
       badge.innerHTML = '联网搜索';
+      body.appendChild(badge);
+    }
+    if (eventBadge) {
+      const badge = document.createElement('div');
+      badge.className = 'cmsg-event-badge';
+      badge.innerHTML = eventBadge;
       body.appendChild(badge);
     }
     const bubble = document.createElement('div');
@@ -5565,6 +5772,59 @@ def build_chat_page_js() -> str:
     return row;
   }
 
+
+  function matchRiskEvent(query) {
+    if (!window.RISK_EVENTS || !window.RISK_EVENTS.events) return null;
+    const lowerQuery = query.toLowerCase();
+    let bestEvent = null;
+    let maxScore = 0;
+    
+    for (const event of window.RISK_EVENTS.events) {
+      if (!event.symptom_keywords) continue;
+      let score = 0;
+      for (const kw of event.symptom_keywords) {
+        if (lowerQuery.includes(kw.toLowerCase())) {
+          score++;
+        }
+      }
+      if (score > maxScore) {
+        maxScore = score;
+        bestEvent = event;
+      }
+    }
+    
+    return maxScore > 0 ? bestEvent : null;
+  }
+
+  function buildEventSkillChain(event) {
+    let result = '';
+    const phases = event.phases || {};
+    
+    if (phases.diagnose && phases.diagnose.length > 0) {
+      result += '【诊断层】\n';
+      phases.diagnose.forEach((s, i) => {
+        result += `  ${i+1}. ${s.skill_id}: ${s.role || ''}\n`;
+      });
+    }
+    
+    if (phases.treat && phases.treat.length > 0) {
+      result += '【处置层】\n';
+      phases.treat.forEach((s, i) => {
+        const cond = s.condition ? `（条件: ${s.condition}时触发）` : '';
+        result += `  ${i+1}. ${s.skill_id}: ${s.role || ''}${cond}\n`;
+      });
+    }
+    
+    if (phases.prevent && phases.prevent.length > 0) {
+      result += '【预防层】\n';
+      phases.prevent.forEach((s, i) => {
+        result += `  ${i+1}. ${s.skill_id}: ${s.role || ''}\n`;
+      });
+    }
+    
+    return result;
+  }
+
   function buildContext() {
     const DATA = window.PLAYBOOK_DATA || {};
     return (DATA.skills || []).slice(0, 80).map(s =>
@@ -5583,11 +5843,22 @@ def build_chat_page_js() -> str:
     history.push({ role: 'user', content: text });
 
     const typing = addTyping();
-    const ctx = buildContext();
-    const systemPrompt = `你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策技能。知识库收录了{skill_count}个从顶会论文（NeurIPS/KDD/ICML/WWW）萃取的可落地业务技能，涵盖供应链优化、广告归因、用户分析、KOL投放、合规决策、智能体工程等领域。请用清晰、结构化的中文回答，优先引用知识库中的具体Skill，给出可操作建议。当前时间：${new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'})}。`;
+    
+    let ctx = '';
+    let systemPrompt = `你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策技能。知识库收录了{skill_count}个从顶会论文（NeurIPS/KDD/ICML/WWW）萃取的可落地业务技能，涵盖供应链优化、广告归因、用户分析、KOL投放、合规决策、智能体工程等领域。请用清晰、结构化的中文回答，优先引用知识库中的具体Skill，给出可操作建议。当前时间：${new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'})}。`;
+    let matchedEventText = null;
+
+    const matchedEvent = matchRiskEvent(text);
+    if (matchedEvent) {
+      systemPrompt += `\n\n当前诊断场景：${matchedEvent.event_name}\n严重程度：${matchedEvent.severity}`;
+      ctx = buildEventSkillChain(matchedEvent);
+      matchedEventText = `${matchedEvent.icon} 识别到场景：${matchedEvent.event_name}`;
+    } else {
+      ctx = buildContext();
+    }
 
     const messages = [
-      { role: 'system', content: systemPrompt + '\n\n知识库摘要（前80条Skill）：\n' + ctx },
+      { role: 'system', content: systemPrompt + (matchedEvent ? '\n\n场景推荐 Skill 链：\n' + ctx : '\n\n知识库摘要（前80条Skill）：\n' + ctx) },
       ...history.slice(-6)
     ];
 
@@ -5616,7 +5887,7 @@ def build_chat_page_js() -> str:
       }
       answer = answer || '抱歉，暂时无法获取回答，请稍后重试。';
       typing.remove();
-      addMsg(answer, 'bot', webSearchOn);
+      addMsg(answer, 'bot', webSearchOn, matchedEventText);
       history.push({ role: 'assistant', content: answer });
     } catch (e) {
       typing.remove();
@@ -5747,12 +6018,31 @@ def render_pages(
         ],
     }
     write_file(out / "assets" / "graph-data.json", json.dumps(graph_json, ensure_ascii=False, indent=2))
+
+    _ont = Path(__file__).parent / "config" / "risk_events_ontology.yaml"
+    if _ont.exists():
+        import yaml as _yaml
+        with open(_ont, encoding="utf-8") as _f:
+            _oraw = _yaml.safe_load(_f)
+        _evts = _oraw.get("events", [])
+        _sm = {s.skill_id: {"title": s.title, "problem_solved": s.problem_solved} for s in skills}
+        for _ev in _evts:
+            for _ph in ("diagnose", "treat", "prevent"):
+                for _sk in _ev.get("phases", {}).get(_ph, []):
+                    _d = _sm.get(_sk.get("skill_id", ""), {})
+                    if _d:
+                        _sk.setdefault("title", _d.get("title", ""))
+        _re = {"version": _oraw.get("version", "1.0"), "events": _evts}
+        write_file(out / "assets" / "risk-events.json", json.dumps(_re, ensure_ascii=False, indent=2))
+        write_file(out / "assets" / "risk-events.js", "window.RISK_EVENTS = " + json.dumps(_re, ensure_ascii=False) + ";")
+
     write_file(out / "assets" / "style.css",  build_css())
     write_file(out / "assets" / "search.js",  build_search_js())
     write_file(out / "assets" / "graph.js",   build_graph_js())
     write_file(out / "assets" / "ego-graph.js", build_ego_graph_js())
     write_file(out / "assets" / "chat-page.js", build_chat_page_js())
     write_file(out / "chat.html", render_chat_page(skill_count=skill_count))
+    write_file(out / "diagnostic.html", render_diagnostic_page(skill_count=skill_count))
 
     # ── Index (Phase 3C) ──
     write_file(out / "index.html", html_page(
@@ -6347,9 +6637,13 @@ async function runChain(chainId){
   const ANAMES={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站'};
   function detectAgents(text){const t=text.toLowerCase();return Object.keys(AKWS).filter(id=>AKWS[id].some(k=>t.indexOf(k.toLowerCase())>=0)).slice(0,3);}
   function renderAgentBtns(ids){if(!ids.length)return'';const btns=ids.map(id=>'<a href="agents.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--accent-light,#eff6ff);border:1px solid var(--accent,#3b82f6);border-radius:20px;font-size:12px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none;transition:all .15s;white-space:nowrap" onmouseover="this.style.background=\'var(--accent,#3b82f6)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-light,#eff6ff)\';this.style.color=\'var(--accent,#3b82f6)\'">◈ '+(ANAMES[id]||id)+'</a>').join('');return'<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><span style="font-size:11.5px;color:#64748b;font-weight:600;align-self:center;margin-right:4px"> 直接调用：</span>'+btns+'</div>';}
-  function addMsg(text,role,extras){extras=extras||{};if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-'+role;const av=document.createElement('div');av.className='cmsg-avatar';av.textContent=role==='bot'?'\u2726':'U';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent=role==='bot'?'AI 助手':'你';body.appendChild(nm);if(extras.webBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.innerHTML='联网搜索';body.appendChild(b);}if(extras.ragBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.style.cssText='background:#f0fdf4;color:#166534;border-color:#bbf7d0';b.innerHTML='知识库检索 · '+extras.ragBadge+' 条相关技能';body.appendChild(b);}const bubble=document.createElement('div');bubble.className='cmsg-bubble';if(role==='bot'){bubble.innerHTML=md(text);const agIds=detectAgents(text),sc=renderSkillCards(text),ab=renderAgentBtns(agIds);if(sc||ab){const x=document.createElement('div');x.innerHTML=(sc||'')+(ab||'');bubble.appendChild(x);}}else{bubble.textContent=text;}body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return{row,bubble};}
+  function addMsg(text,role,extras){extras=extras||{};if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-'+role;const av=document.createElement('div');av.className='cmsg-avatar';av.textContent=role==='bot'?'\u2726':'U';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent=role==='bot'?'AI 助手':'你';body.appendChild(nm);if(extras.webBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.innerHTML='联网搜索';body.appendChild(b);}if(extras.ragBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.style.cssText='background:#f0fdf4;color:#166534;border-color:#bbf7d0';b.innerHTML='知识库检索 · '+extras.ragBadge+' 条相关技能';body.appendChild(b);}if(extras.evtBadge){const b=document.createElement('div');b.className='cmsg-web-badge';b.style.cssText='background:#fef2f2;color:#991b1b;border-color:#fecaca';b.innerHTML=extras.evtBadge;body.appendChild(b);}const bubble=document.createElement('div');bubble.className='cmsg-bubble';if(role==='bot'){bubble.innerHTML=md(text);const agIds=detectAgents(text),sc=renderSkillCards(text),ab=renderAgentBtns(agIds);if(sc||ab){const x=document.createElement('div');x.innerHTML=(sc||'')+(ab||'');bubble.appendChild(x);}}else{bubble.textContent=text;}body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return{row,bubble};}
   function addTyping(){if(welcome)welcome.style.display='none';const row=document.createElement('div');row.className='cmsg cmsg-bot cmsg-typing';const av=document.createElement('div');av.className='cmsg-avatar';av.textContent='\u2726';const body=document.createElement('div');body.className='cmsg-body';const nm=document.createElement('div');nm.className='cmsg-name';nm.textContent='AI 助手';const bubble=document.createElement('div');bubble.className='cmsg-bubble';body.appendChild(nm);body.appendChild(bubble);row.appendChild(av);row.appendChild(body);msgsEl.appendChild(row);msgsEl.scrollTop=msgsEl.scrollHeight;return row;}
-  async function doSend(){const text=textarea.value.trim();if(!text||sendBtn.disabled)return;textarea.value='';textarea.style.height='auto';sendBtn.disabled=true;addMsg(text,'user');history.push({role:'user',content:text});const typing=addTyping();const ragSkills=searchSkills(text,10),ragCtx=buildRAGContext(text),ragCount=ragSkills.length;const sys='你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 {skill_count} 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n当前时间：'+new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});const ctxMsg=ragCount>0?'\n\n【知识库相关技能（检索到'+ragCount+'条）】\n'+ragCtx:'\n\n【知识库摘要（前60条）】\n'+ragCtx;const messages=[{role:'system',content:sys+ctxMsg},...history.slice(-8)];try{const body={model:'deepseek-chat',messages,max_tokens:1500,temperature:0.55,stream:false};if(webSearchOn){body.tools=[{type:'function',function:{name:'web_search',description:'Search the web',parameters:{type:'object',properties:{query:{type:'string'}},required:['query']}}}];body.tool_choice='auto';}const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await res.json();const choice=data&&data.choices&&data.choices[0];let answer=(choice&&choice.message&&choice.message.content||'').trim();if(!answer&&choice&&choice.finish_reason==='tool_calls')answer='（联网搜索触发中…）\n\n'+((choice.message.tool_calls[0]&&choice.message.tool_calls[0].function.arguments)||'');answer=answer||'抱歉，暂时无法获取回答，请稍后重试。';typing.remove();addMsg(answer,'bot',{webBadge:webSearchOn,ragBadge:ragCount>0?ragCount:null});history.push({role:'assistant',content:answer});_saveH();}catch(e){typing.remove();addMsg('网络请求失败，请检查连接后重试。','bot');}finally{sendBtn.disabled=false;textarea.focus();}}
+  async function doSend(){const text=textarea.value.trim();if(!text||sendBtn.disabled)return;textarea.value='';textarea.style.height='auto';sendBtn.disabled=true;addMsg(text,'user');history.push({role:'user',content:text});const typing=addTyping();
+  const matchedEvt=(function(){if(!window.RISK_EVENTS||!window.RISK_EVENTS.events)return null;const q=text.toLowerCase();let best=null,top=0;for(const ev of window.RISK_EVENTS.events){let sc=0;for(const kw of(ev.symptom_keywords||[])){if(q.includes(kw.toLowerCase()))sc++;}if(sc>top){top=sc;best=ev;}}return top>0?best:null;})();
+  let ragCtx,ragCount=0,evtBadge=null;
+  if(matchedEvt){const ph=matchedEvt.phases||{};let chain='';if(ph.diagnose&&ph.diagnose.length){chain+='【诊断层】\n';ph.diagnose.forEach((s,i)=>{chain+=`  ${i+1}. ${s.skill_id}: ${s.role||''}\n`;});}if(ph.treat&&ph.treat.length){chain+='【处置层】\n';ph.treat.forEach((s,i)=>{const c=s.condition?`（条件: ${s.condition}）`:'';chain+=`  ${i+1}. ${s.skill_id}: ${s.role||''}${c}\n`;});}if(ph.prevent&&ph.prevent.length){chain+='【预防层】\n';ph.prevent.forEach((s,i)=>{chain+=`  ${i+1}. ${s.skill_id}: ${s.role||''}\n`;});}ragCtx=chain;evtBadge=`${matchedEvt.icon||'⚠️'} 识别到场景：${matchedEvt.event_name}`;}else{const ragSkills=searchSkills(text,10);ragCtx=buildRAGContext(text);ragCount=ragSkills.length;}
+  const sys='你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 {skill_count} 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n当前时间：'+new Date().toLocaleDateString('zh-CN',{{year:'numeric',month:'long',day:'numeric'}});const ctxLabel=matchedEvt?`\n\n【当前诊断场景：${matchedEvt.event_name}（严重程度：${matchedEvt.severity}）\n推荐 Skill 链：】\n`:'\n\n【知识库相关技能（检索到'+ragCount+'条）】\n';const messages=[{{role:'system',content:sys+ctxLabel+ragCtx}},...history.slice(-8)];try{{const body={{model:'deepseek-chat',messages,max_tokens:1500,temperature:0.55,stream:false}};if(webSearchOn){{body.tools=[{{type:'function',function:{{name:'web_search',description:'Search the web',parameters:{{type:'object',properties:{{query:{{type:'string'}}}},required:['query']}}}}}}];body.tool_choice='auto';}}const res=await fetch('/api/chat',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(body)}});const data=await res.json();const choice=data&&data.choices&&data.choices[0];let answer=(choice&&choice.message&&choice.message.content||'').trim();if(!answer&&choice&&choice.finish_reason==='tool_calls')answer='（联网搜索触发中…）\n\n'+((choice.message.tool_calls[0]&&choice.message.tool_calls[0].function.arguments)||'');answer=answer||'抱歉，暂时无法获取回答，请稍后重试。';typing.remove();const extras={{webBadge:webSearchOn,ragBadge:ragCount>0?ragCount:null}};if(evtBadge)extras.evtBadge=evtBadge;addMsg(answer,'bot',extras);history.push({{role:'assistant',content:answer}});_saveH();}}catch(e){{typing.remove();addMsg('网络请求失败，请检查连接后重试。','bot');}}finally{{sendBtn.disabled=false;textarea.focus();}}}}
 })();
 """
         chat_js_path.write_text(RAG_JS, encoding="utf-8")
@@ -6395,6 +6689,7 @@ async function runChain(chainId){
         if '分析报告台' not in index_html:
             QUICK_ACTIONS = (
                 '\n  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center">'
+                '<a href="diagnostic.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(181,50,62,.1);border:1.5px solid rgba(181,50,62,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#B5323E;text-decoration:none">⚕ 业务诊断</a>'
                 '<a href="chat.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(99,102,241,.1);border:1.5px solid rgba(99,102,241,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#6366f1;text-decoration:none">✦ AI 知识库对话</a>'
                 '<a href="graph/overview.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(6,182,212,.1);border:1.5px solid rgba(6,182,212,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#0891b2;text-decoration:none">◉ 技能关系图谱</a>'
                 '<a href="playbooks/index.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(16,185,129,.1);border:1.5px solid rgba(16,185,129,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#059669;text-decoration:none">◧ 场景手册</a>'
