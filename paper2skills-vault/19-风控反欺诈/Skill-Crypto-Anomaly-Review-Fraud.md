@@ -1,6 +1,7 @@
 ---
 name: crypto-anomaly-review-fraud
 description: 品牌方陷入竞品虚假评论攻击的同质化困境——引入区块链女巫攻击检测算法，识别对手刷单的句法指纹与时间模式异常，向Amazon提交精准举报证据包，一键净化类目。
+roadmap_phase: phase2
 ---
 
 # Skill Card: 区块链女巫攻击检测驱动的虚假评论清洗 (Crypto Sybil Review Detection)

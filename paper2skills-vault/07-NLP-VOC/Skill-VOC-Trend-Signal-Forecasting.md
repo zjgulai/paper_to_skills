@@ -290,6 +290,7 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合（combinable）**：[[Skill-Bass-Diffusion-New-Product-Forecasting]]（VOC趋势可作为扩散预测先验）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

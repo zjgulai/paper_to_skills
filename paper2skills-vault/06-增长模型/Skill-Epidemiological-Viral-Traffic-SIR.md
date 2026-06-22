@@ -1,6 +1,7 @@
 ---
 name: epidemiological-viral-traffic-sir
 description: 流量部门陷入TikTok爆款预测的同质化内卷——引入传染病流行病学(SIR)模型，将流量看作病毒传播，反直觉提前2周锁定爆发拐点，备货周转率大幅提升。
+roadmap_phase: phase2
 ---
 
 # Skill Card: 基于 SIR 传染病模型的 TikTok 流量拐点预测 (Epidemiological Traffic Modeling)

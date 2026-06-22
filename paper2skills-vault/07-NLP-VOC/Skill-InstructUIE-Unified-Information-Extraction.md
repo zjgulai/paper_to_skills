@@ -226,6 +226,7 @@ python instructuie_model.py
 - **延伸（extends）**：[[Skill-KG-Auto-Construction-Agent-Driven]]（统一信息提取结果驱动知识图谱自动构建）
 - **可组合（combinable）**：[[Skill-VOC-Supply-Chain-Signal-Bridge]]（组合：统一信息提取识别评论中的供应链信号实体）
 
+- **可组合（combinable）**：[[Skill-RFM-Customer-Segmentation]]（VOC标签可直接映射到客户分群特征）
 ## ⑤ 商业价值评估
 
 ### ROI 预估

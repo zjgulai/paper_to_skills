@@ -280,6 +280,7 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合（combinable）**：[[Skill-LTV-Prediction-ZILN]]（退货成本可纳入生命周期价值测算）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

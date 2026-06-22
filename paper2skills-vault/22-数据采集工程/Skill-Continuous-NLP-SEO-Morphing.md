@@ -1,6 +1,7 @@
 ---
 name: continuous-nlp-seo-morphing
 description: 运营团队躺在固定Listing关键词上等死——引入连续语义漂移追踪与对抗生成式SEO文本变异，每72小时从TikTok/Reddit新兴俚语中自动提取高熵长尾词，零广告费收割自然流量。
+roadmap_phase: phase2
 ---
 
 # Skill Card: 连续语义漂移 SEO 文本对抗变异 (Continuous NLP SEO Morphing)

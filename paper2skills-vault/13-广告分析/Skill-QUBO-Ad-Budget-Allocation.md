@@ -1,6 +1,7 @@
 ---
 name: qubo-ad-budget-allocation
 description: 投放主管陷入多平台预算分配的局部最优困境——引入量子退火(QUBO)求解广告分配，打破传统梯度下降的局部极值陷阱，找到亚马逊/Google/TikTok三平台全局最优组合。
+roadmap_phase: phase2
 ---
 
 # Skill Card: 量子退火 (QUBO) 驱动的跨平台广告预算全局最优分配

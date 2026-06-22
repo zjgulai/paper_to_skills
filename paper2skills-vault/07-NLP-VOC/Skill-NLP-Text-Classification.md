@@ -362,6 +362,7 @@ if __name__ == "__main__":
 
 ---
 
+- **可组合（combinable）**：[[Skill-Customer-Churn-Prediction]]（文本分类标签可用于流失识别）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

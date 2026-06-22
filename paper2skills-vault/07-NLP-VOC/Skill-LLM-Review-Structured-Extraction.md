@@ -634,6 +634,7 @@ if __name__ == "__main__":
 
 ---
 
+- **可组合（combinable）**：[[Skill-Product-Opportunity-Scoring]]（评论结构化结果可进入新品机会评分）
 ## ⑤ 商业价值评估
 
 | 指标 | 值 |

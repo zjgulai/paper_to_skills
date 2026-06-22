@@ -299,6 +299,7 @@ if __name__ == "__main__":
 
 ---
 
+- **可组合（combinable）**：[[Skill-Semantic-Blueprint-Compiler]]（语义蓝图可作为扩散曲线先验）
 ## ⑤ 商业价值评估
 
 ### ROI 预估

@@ -257,6 +257,7 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合（combinable）**：[[Skill-LTV-Prediction-ZILN]]（高帮助度评论可关联长期价值与复购）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

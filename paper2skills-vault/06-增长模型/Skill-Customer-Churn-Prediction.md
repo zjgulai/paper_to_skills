@@ -378,6 +378,7 @@ if __name__ == '__main__':
 - **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
 - **相关**：[[Skill-Guardrailed-CATE-NBA]]
 
+- **可组合（combinable）**：[[Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎]]（VOC情感信号作为流失预测的早期预警输入）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：Churn 预测模型命中率提升 15-20%，每月减少 50-100 名高价值客户流失，按客单价 ¥300 计，月均保留价值 ¥1.5-3 万

@@ -665,6 +665,7 @@ VOC 原始数据
 
 ---
 
+- **可组合（combinable）**：[[Skill-RFM-Customer-Segmentation]]（NPS/AIPL标签可直接映射客户分层）
 ## 5. 业务价值评估
 
 ### 5.1 ROI 估算

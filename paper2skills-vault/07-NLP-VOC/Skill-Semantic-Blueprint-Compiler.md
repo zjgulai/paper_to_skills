@@ -195,6 +195,7 @@ python blueprint_compiler.py
 - **延伸（extends）**：[[Skill-VOC-Supply-Chain-Signal-Bridge]]（语义蓝图中的缺货/需求信号传递给供应链）
 - **可组合（combinable）**：[[Skill-NL2Dashboard-Automation]]（组合：语义蓝图提取结构化数据→NL2Dashboard自动可视化）
 
+- **可组合（combinable）**：[[Skill-New-Product-Opportunity-Mining]]（语义蓝图可反哺新品机会发现）
 ## ⑤ 商业价值评估
 
 ### ROI 预估

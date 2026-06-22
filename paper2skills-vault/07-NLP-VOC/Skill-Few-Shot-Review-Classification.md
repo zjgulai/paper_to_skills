@@ -204,6 +204,7 @@ print(f"\n[✓] 少样本评论分类 测试通过")
 - **延伸（extends）**：[[Skill-VOC-Aspect-Sentiment-Extraction]]（方面级情感分析，分类后的深度挖掘）
 - **可组合（combinable）**：[[Skill-Cross-Market-Transfer-Demand]]（新市场 VOC 洞察 + 需求预测双轨并行）
 
+- **可组合（combinable）**：[[Skill-Customer-Churn-Prediction]]（VOC情感信号作为增长预测的早期预警输入）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：新市场 VOC 分析启动时间从 3 个月压缩至 2 周，**年化节省人力成本 $2.8 万**

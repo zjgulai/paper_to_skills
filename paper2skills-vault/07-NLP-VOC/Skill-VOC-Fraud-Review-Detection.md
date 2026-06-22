@@ -297,6 +297,7 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合（combinable）**：[[Skill-Customer-Churn-Prediction]]（异常评论与流失风险常伴随出现）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

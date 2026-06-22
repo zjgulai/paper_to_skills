@@ -1,6 +1,7 @@
 ---
 name: navier-stokes-warehouse
 description: 仓储主管面临旺季拣货效率塌方的同质化困境——引入计算流体力学(CFD)Navier-Stokes方程建模仓储人流，将拣货员视为高粘性流体粒子，反直觉找到最短的避撞路径，黑五吞吐量暴力提升22%。
+roadmap_phase: phase3
 ---
 
 # Skill Card: Navier-Stokes 流体力学驱动的旺季仓储人流最优化 (CFD Warehouse Picking)

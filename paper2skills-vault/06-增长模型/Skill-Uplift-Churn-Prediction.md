@@ -139,6 +139,7 @@ python3 model.py
 
 ---
 
+- **可组合（combinable）**：[[Skill-BERT-SRL-Event-Frame-Extraction]]（VOC事件抽取可作为干预 uplift 特征）
 ## ⑤ 商业价值评估
 
 ### ROI预估

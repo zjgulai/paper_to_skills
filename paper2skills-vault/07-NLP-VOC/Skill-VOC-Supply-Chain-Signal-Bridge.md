@@ -325,6 +325,7 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合（combinable）**：[[Skill-Product-Opportunity-Scoring]]（供应链VOC信号可转为新品机会分数）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

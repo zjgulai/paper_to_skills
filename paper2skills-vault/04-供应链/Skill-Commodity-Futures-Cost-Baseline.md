@@ -1,6 +1,7 @@
 ---
 name: commodity-futures-cost-baseline
 description: 供应链总监陷入对手定价不明的同质化困境——引入大宗商品期货与航运指数量化推演，反直觉穿透明对手底牌，在对手成本崩盘前提前收网。
+roadmap_phase: phase1
 ---
 
 # Skill Card: 大宗商品期货驱动的竞品成本底线穿透 (Commodity Futures Arbitrage)

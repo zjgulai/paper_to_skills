@@ -326,6 +326,7 @@ if __name__ == "__main__":
 
 ---
 
+- **可组合（combinable）**：[[Skill-Customer-Churn-Prediction]]（方面情感可作为流失风险特征）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

@@ -1,6 +1,7 @@
 ---
 name: gan-red-team-listing
 description: 运营团队在上架前始终找不到潜在攻击点——引入生成对抗网络(GAN)红队Agent，以灰色市场攻击者视角自动生成Listing劫持、专利碰瓷与差评轰炸模拟，在上架前完成免疫接种。
+roadmap_phase: phase2
 ---
 
 # Skill Card: GAN 红队驱动的 Listing 上线前免疫接种 (Adversarial Listing Defense)

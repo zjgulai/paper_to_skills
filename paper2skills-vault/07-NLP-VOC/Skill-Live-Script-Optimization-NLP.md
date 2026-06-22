@@ -284,6 +284,7 @@ simulate_script_analysis()
 - **延伸（extends）**：[[Skill-TikTok-Live-Real-Time-CVR-Prediction]]（话术优化 + CVR实时监测形成完整的主播辅助系统）
 - **可组合（combinable）**：[[Skill-TikTok-Creator-ROI-Attribution]]（话术效果可以纳入主播ROI计算，量化话术对转化的贡献）
 
+- **可组合（combinable）**：[[Skill-Uplift-Churn-Prediction]]（话术优化结果可用于留存/召回增益评估）
 ## ⑤ 商业价值评估
 
 - **ROI预估**：基于历史话术分析建立标准话术库，假设品牌有2名主播，话术优化后场均CVR从1.5%提升至2.6%（+73%），按每场UV 2000人、客单价$45计算，场均GMV增量约 $990。全年24场，增量GMV约 **$23,760**；分析工具开发约 $2,500，ROI ≈ 9.5x

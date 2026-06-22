@@ -654,6 +654,7 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合（combinable）**：[[Skill-BERT-SRL-Event-Frame-Extraction]]（VOC事件框架可直接喂给新品机会挖掘）
 ## ⑤ 业务价值评估
 
 | 维度 | 评估 |

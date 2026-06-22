@@ -1,6 +1,7 @@
 ---
 name: topological-data-analysis-cross-sell
 description: 关联销售陷入“看了又看”的平台内卷——引入拓扑数据分析(TDA)，发现时空多维流形中的隐性因果路径，实施跨越 3 个月维度的精准跨品类空投。
+roadmap_phase: phase2
 ---
 
 # Skill Card: 拓扑数据分析 (TDA) 挖掘时空隐性关联销售路径

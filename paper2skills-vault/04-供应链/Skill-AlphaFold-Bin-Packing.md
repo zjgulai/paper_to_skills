@@ -1,6 +1,7 @@
 ---
 name: alphafold-bin-packing
 description: 物流经理陷入FBA头程装箱率瓶颈的同质化困境——引入蛋白质折叠算法的三维异形装箱优化，反直觉将40尺柜装载率从78%暴力提升至94%，单柜头程成本骤降16%。
+roadmap_phase: phase3
 ---
 
 # Skill Card: 蛋白质折叠启发的异形 SKU 极限装箱 (AlphaFold Bin-Packing)

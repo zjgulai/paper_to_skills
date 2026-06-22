@@ -1,6 +1,7 @@
 ---
 name: monte-carlo-tariff-risk
 description: 选品团队陷入新品上市地缘政治风险盲区的同质化困境——引入蒙特卡洛模拟量化301关税突变、海运封锁与制裁升级的尾部风险，反直觉拒绝看起来利润丰厚但黑天鹅概率过高的SKU。
+roadmap_phase: phase1
 ---
 
 # Skill Card: 蒙特卡洛地缘政治尾部风险量化 (Monte Carlo Tariff Risk)

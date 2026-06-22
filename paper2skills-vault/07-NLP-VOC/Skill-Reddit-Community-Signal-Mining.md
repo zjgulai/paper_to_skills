@@ -345,6 +345,7 @@ if __name__ == "__main__":
 
 ---
 
+- **可组合（combinable）**：[[Skill-Bass-Diffusion-New-Product-Forecasting]]（社群扩散信号可映射新品扩散曲线）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：

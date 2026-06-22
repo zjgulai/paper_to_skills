@@ -1,6 +1,7 @@
 ---
 name: counterfactual-price-elasticity
 description: 财务与运营陷入黑五价格战绞杀——引入反事实推演(Do-Calculus)，反直觉切断广告维持高价，利用竞品断货真空期攫取超额溢价。当面临旺季大促、竞品大幅降价、毛利被严重压缩时使用。
+roadmap_phase: phase1
 ---
 
 # Skill Card: 反事实动态价格弹性测算 (Counterfactual Price Elasticity via DML)

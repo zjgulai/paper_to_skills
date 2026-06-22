@@ -202,6 +202,7 @@ python bert_srl_model.py
 - **延伸（extends）**：[[Skill-InstructUIE-Unified-Information-Extraction]]（统一信息提取将SRL能力泛化到任意域）
 - **可组合（combinable）**：[[Skill-Reddit-Community-Signal-Mining]]（组合：SRL提取Reddit讨论中的事件结构→识别竞品事件信号）
 
+- **可组合（combinable）**：[[Skill-New-Product-Opportunity-Mining]]（VOC情感信号作为新品机会挖掘的事件触发输入）
 ## ⑤ 商业价值评估
 
 ### ROI 预估

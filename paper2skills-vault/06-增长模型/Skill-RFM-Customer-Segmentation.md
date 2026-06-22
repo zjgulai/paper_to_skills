@@ -237,6 +237,7 @@ if __name__ == '__main__':
 - [Skill-Cohort-Retention-Analysis](../14-用户分析/[[Skill-Cohort-Retention-Analysis]].md) — RFM 分群后看每群的留存曲线
 - [Skill-User-Funnel-Analysis](../14-用户分析/[[Skill-User-Funnel-Analysis]].md) — RFM 分群后对比各群的漏斗转化
 
+- **可组合（combinable）**：[[Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎]]（VOC标签增强RFM分群解释性）
 ## ⑤ 商业价值评估
 
 - **ROI**：营销转化率提升3-5x，营销成本降低30-50%

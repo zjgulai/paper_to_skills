@@ -1731,4 +1731,122 @@ TOB_PLAYBOOKS = [
             "配送承诺准确率从 72% → 91%，差评率降低",
         ],
     },
+    {
+        "id": "pb-cpsc-efiling-emergency",
+        "icon": "CF",
+        "name": "CPSC eFiling 72小时紧急合规手册",
+        "tag": "合规 · CPSC · 紧急",
+        "desc": "2026年7月8日截止：Amazon母婴卖家eFiling强制合规的完整执行路径",
+        "intro": "2026年7月8日起，所有CPSC受管制商品进入美国必须完成电子申报（eFiling），覆盖婴儿车、安全座椅、吸奶器等600+母婴HTS码。违规后果：FBA入库拒绝+Listing压制+账号警告。距截止日期仅剩17天，本手册提供从「产品风险扫描」到「eFiling提交清单」的72小时紧急执行路径。",
+        "steps": [
+            {
+                "step": "Step 1 — 产品风险扫描（Day 1，4小时）",
+                "problem": "不知道自己的哪些SKU需要eFiling？超过600个HTS码在CPSC管制范围内，手动逐一核查需要2-3天",
+                "skills": [
+                    {"id": "Skill-HTS-Code-Risk-Classifier", "why": "自动扫描所有在售SKU的HTS码，匹配CPSC高风险清单，输出「必须eFiling」/「建议核查」/「暂不需要」三档清单"},
+                    {"id": "Skill-CPSC-Children-Product-Safety", "why": "母婴品类专项风险规则库：吸奶器(Class II)+安全座椅(Class I)+婴儿床(Class I)的特殊认证要求"},
+                ],
+                "data": "需要：所有在售SKU的HTS码列表（从Amazon后台导出）",
+                "output": "分级SKU清单：P0必须eFiling（X个）/ P1建议核查（Y个）/ P2暂不需要（Z个）",
+            },
+            {
+                "step": "Step 2 — GCC/CPC文档核查（Day 1-2，8小时）",
+                "problem": "eFiling要求上传有效的GCC/CPC，但很多卖家的文档过期、字段缺失或测试实验室不被认可",
+                "skills": [
+                    {"id": "Skill-GCC-CPC-Document-Validator", "why": "自动验证GCC/CPC文档的字段完整性：测试报告日期/ASTM标准版本/CPSC认可实验室/年龄段标注是否齐全"},
+                    {"id": "Skill-AI-Product-Safety-Certification", "why": "AI辅助识别认证文档中的缺失项，生成「补件清单」直接发给测试实验室"},
+                ],
+                "data": "需要：现有GCC/CPC文档（PDF格式），测试报告",
+                "output": "文档合规评分（每份100分制）+ 缺失字段清单 + 实验室联系建议",
+            },
+            {
+                "step": "Step 3 — eFiling字段自动填充（Day 2，2小时）",
+                "problem": "eFiling系统有30+必填字段，很多字段格式要求复杂，手动填写错误率高达30%",
+                "skills": [
+                    {"id": "Skill-CPSC-eFiling-Auto-Mapper", "why": "从产品信息+GCC/CPC自动提取并映射到eFiling字段，生成可直接提交的JSON/CSV格式"},
+                    {"id": "Skill-Category-Compliance-Prescan", "why": "提交前最后一道检查：对照CPSC最新高风险名单做交叉验证，确认无遗漏"},
+                ],
+                "data": "需要：Step 2的合规文档 + 产品规格表",
+                "output": "eFiling提交就绪的字段填充表 + 提交前核查清单",
+            },
+            {
+                "step": "Step 4 — 错误处理与Amazon错误码修复（Day 3，按需）",
+                "problem": "提交后Amazon返回错误码（8572/8574/8591），不知道如何处理导致反复被驳回",
+                "skills": [
+                    {"id": "Skill-Amazon-Compliance-Error-Auto-Resolver", "why": "错误码语义解析+修复Action生成：8572=测试报告过期/8574=实验室不被认可/8591=年龄段标注错误，每种各有标准修复路径"},
+                    {"id": "Skill-GPSR-EU-Risk-Assessment-Auto", "why": "同步处理欧盟GPSR合规（Error 5995），避免欧美市场同时爆发合规危机"},
+                ],
+                "data": "需要：Amazon后台的合规错误截图/错误码",
+                "output": "逐条错误修复指南 + 重新提交时间线",
+            },
+        ],
+        "outcomes": [
+            "72小时内完成全部SKU的eFiling合规自查",
+            "GCC/CPC文档合规率从65%→95%",
+            "eFiling错误率从30%→5%，避免反复驳回",
+            "7月8日前100%合规提交，零库存压制风险",
+        ],
+    },
+    {
+        "id": "pb-supply-chain-decision-bridge",
+        "icon": "SB",
+        "name": "供应链信号→决策行动映射手册",
+        "tag": "供应链 · 决策自动化 · Action",
+        "desc": "将119个供应链Skill从「分析报告」升级为「可执行决策」：12类供应链信号对应的标准Action触发矩阵",
+        "intro": "供应链团队每天面对海量信号：库存水位预警、前置期延误、需求激增、价格波动……但90%的时间花在「判断要不要行动」上，而不是「行动本身」。本手册提供12类供应链信号的标准决策Action映射：当信号X出现时，执行动作Y，设置护栏Z。让供应链从「人工分析→决策」升级为「信号→自动触发决策」。",
+        "steps": [
+            {
+                "step": "Step 1 — 库存健康信号 → 补货/调拨Action",
+                "problem": "库存水位预警触发后，运营需要人工判断：是补货？是跨仓调拨？是加速清仓？平均决策延迟2-4天",
+                "skills": [
+                    {"id": "Skill-Lead-Time-Safety-Stock-Auto-Adjuster", "why": "P95前置期>承诺×1.3时自动上调安全库存，无需人工干预"},
+                    {"id": "Skill-Markdown-Clearance-Auto-Trigger", "why": "库龄>45天+超比>1.5时自动触发降价阶梯，避免人工拖延决策"},
+                    {"id": "Skill-Safety-Stock-Replenishment", "why": "计算最优补货量和再订货点，输出可执行的采购订单建议"},
+                    {"id": "Skill-MAS-Multi-Warehouse-Replenishment-Consensus", "why": "多仓库存不平衡时，多Agent Nash协商确定最优调拨方案"},
+                ],
+                "data": "需要：各SKU当前库存、前置期历史、日均销量、多仓库存快照",
+                "output": "信号→Action映射表：补货触发/调拨触发/清仓触发，各含阈值和执行步骤",
+            },
+            {
+                "step": "Step 2 — 需求预测信号 → 备货/采购Action",
+                "problem": "需求预测模型给出预测值，但运营不知道预测置信度多高时才能下采购单，导致要么过于保守要么冒险押注",
+                "skills": [
+                    {"id": "Skill-Demand-Forecasting-Supply-Chain", "why": "输出含置信区间的预测，作为采购决策的概率输入"},
+                    {"id": "Skill-Inventory-Health-Aging-Attribution", "why": "大促前识别「会在大促中滞销」的库存，提前清仓腾出资金"},
+                    {"id": "Skill-Lead-Time-Distribution-Risk-GenQOT", "why": "量化前置期分布风险，当P95超阈值时自动触发备选供应商激活"},
+                ],
+                "data": "需要：历史销量、预测模型输出、采购成本和缺货成本",
+                "output": "分级采购决策：高置信度→自动下单 / 中等→人工确认 / 低置信度→保守观望",
+            },
+            {
+                "step": "Step 3 — 供应链风险信号 → 韧性Action",
+                "problem": "供应商延误/断货/质量问题等风险信号出现时，缺乏标准化的应对Action流程，每次都重新决策",
+                "skills": [
+                    {"id": "Skill-Safety-Stock-Replenishment", "why": "风险事件触发后的紧急补货量计算"},
+                    {"id": "Skill-MAS-Cross-Market-Compliance-Orchestrator", "why": "多市场上架合规并行处理，防止风险事件引发连锁合规失败"},
+                    {"id": "Skill-MAS-Multi-Warehouse-Replenishment-Consensus", "why": "供应商断货时，多仓Agent协商最优库存调配应急方案"},
+                ],
+                "data": "需要：供应商历史交期、各级库存快照、备选供应商列表",
+                "output": "供应链风险应对SOP：信号级别(P1/P2/P3) × 标准Action流程",
+            },
+            {
+                "step": "Step 4 — 大促/节假日信号 → 全链路协同Action",
+                "problem": "Prime Day/黑五来临前，库存/广告/定价/物流需要协同，但各团队各自为政，决策时序错乱",
+                "skills": [
+                    {"id": "Skill-Inventory-Health-Aging-Attribution", "why": "大促前识别「会在大促中滞销」的库存，提前清仓腾出资金"},
+                    {"id": "Skill-MAS-Multi-Warehouse-Replenishment-Consensus", "why": "大促期间多仓库存协同调配，防止单仓爆仓另一仓断货"},
+                    {"id": "Skill-MAS-Dynamic-Pricing-Coalition", "why": "大促期间多SKU联合定价，保持组合利润最大化而非单SKU促销"},
+                    {"id": "Skill-MAS-Ad-Budget-Multi-Platform-Negotiation", "why": "大促期间多平台广告预算Stackelberg博弈，避免各平台抢预算"},
+                ],
+                "data": "需要：历史大促数据、当前库存分布、各渠道广告计划",
+                "output": "大促备战Action时间线：T-8周到大促当日的标准决策节点和触发条件",
+            },
+        ],
+        "outcomes": [
+            "供应链决策延迟从平均2-4天→4小时（信号→Action自动化）",
+            "多仓调拨响应速度从48-72小时→8-12小时（Nash协商并行）",
+            "大促备货准确率提升15%（多信号协同决策）",
+            "供应链人工决策负担降低40%",
+        ],
+    },
 ]

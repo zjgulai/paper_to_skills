@@ -260,6 +260,7 @@ if __name__ == '__main__':
 
 ---
 
+- **可组合（combinable）**：[[Skill-RFM-Customer-Segmentation]]（合规信号可辅助高价值客群识别）
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：
