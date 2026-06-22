@@ -679,3 +679,171 @@ events:
   related_workflows:
   - WF-K 全域风险防御
   - WF-L 汇率关税对冲
+- event_id: inventory-overstock
+  event_name: 库存积压 / 滞销危机
+  severity: high
+  icon: 📦
+  summary: SKU 库龄超标、ITO 低于健康阈值、FBA 滞销费即将触发或资金被压死
+  symptom_keywords:
+  - 库存积压
+  - 滞销
+  - 库龄过长
+  - ITO 低
+  - 周转率低
+  - FBA 滞销费
+  - 资金压死
+  - 清货困难
+  - 积压库存
+  - 库存周转
+  - 库龄
+  - 滞销品
+  - 慢动销
+  phases:
+    diagnose:
+    - skill_id: Skill-ITO-Three-Phase-Health-Tracking
+      role: 三阶段库存周转率健康度诊断：快/正常/慢动销分层，量化每层的资金占用
+      sequence: 1
+    - skill_id: Skill-Inventory-Health-Aging-Attribution
+      role: 库存老化归因：哪个 SKU/仓库/渠道造成了积压，根因拆解
+      sequence: 2
+    - skill_id: Skill-Expiry-Date-Aging-Baby-Products-KPI
+      role: 母婴产品临期预警：保质期风险分级，量化损耗风险
+      sequence: 3
+    - skill_id: Skill-SKU-Warehouse-Footprint-Monitoring
+      role: SKU 仓储占地监控：哪些 SKU 仓储费用高但销量低，ROI 最差
+      sequence: 4
+    treat:
+    - skill_id: Skill-Long-Tail-SKU-Clearance-Optimization
+      role: 长尾 SKU 清货优化：多渠道清货方案（降价/捆绑/折扣/移库）的最优组合
+      condition: 库龄 > 90 天或 ITO < 健康阈值 50%
+    - skill_id: Skill-Markdown-Schedule-Auto-Trigger
+      role: 自动触发三阶段降价序列：-10% → -15% → -20%，防止积压继续恶化
+      condition: 库龄 > 45 天 + 库存 > 目标 × 1.5 倍
+    - skill_id: Skill-Perishable-Inventory-Markdown-Optimization
+      role: 易腐品（临期）动态降价：基于剩余保质期的最优变现策略
+      condition: 母婴产品临期风险高
+    prevent:
+    - skill_id: Skill-Healthy-Inventory-Three-Layer-KPI
+      role: 建立三层库存健康 KPI 体系：安全库存 / 周转层 / 滞销层占比预警
+    - skill_id: Skill-ITO-DOI-Inventory-Turnover-Optimizer
+      role: ITO/DOI 库存周转持续优化：按 SKU 设定健康周转目标并自动监控
+    - skill_id: Skill-Dynamic-ABC-Stratification-Adaptive-Policy
+      role: 动态 ABC 分层：按实时销速重分类，A类扩货 / C类清货自动触发
+  related_events:
+  - supply-chain-lead-time-risk
+  - asin-traffic-drop
+  related_playbooks:
+  - pb-inventory-festival
+  - pb-supply-chain-pl
+  related_workflows:
+  - WF-A 智能补货
+  - WF-N 库存危机响应
+- event_id: dtc-seo-geo-visibility
+  event_name: DTC 独立站 SEO / GEO 可见性下降
+  severity: medium
+  icon: 🌐
+  summary: 独立站自然搜索流量下滑、Google 排名跌落、或 AI 搜索引擎（ChatGPT/Perplexity）不再推荐品牌
+  symptom_keywords:
+  - 独立站流量下降
+  - Google 排名跌落
+  - 自然搜索减少
+  - SEO 效果差
+  - AI 搜索不推荐
+  - GEO 优化
+  - 品牌被 AI 遗忘
+  - 搜索可见性
+  - 有机流量
+  - 关键词排名
+  - 独立站 SEO
+  - DTC 流量
+  phases:
+    diagnose:
+    - skill_id: Skill-SEO-Organic-Ranking-Optimization
+      role: Google 自然排名诊断：核心关键词排名趋势 + 页面权重评估
+      sequence: 1
+    - skill_id: Skill-GEO-Generative-Engine-Optimization
+      role: AI 搜索可见性诊断：检查 ChatGPT/Perplexity/Claude 是否推荐你的品牌
+      sequence: 2
+    - skill_id: Skill-Long-Tail-Search-Embedding-SEO
+      role: 长尾词嵌入覆盖率：语义向量空间中品牌内容覆盖的查询意图广度
+      sequence: 3
+    treat:
+    - skill_id: Skill-Continuous-NLP-SEO-Morphing
+      role: 持续 NLP SEO 形变：内容实时适配搜索算法变化，保持语义相关性
+      condition: 核心关键词排名跌落 > 3 位
+    - skill_id: Skill-Organic-Paid-Rank-Synergy-Model
+      role: 自然-付费排名协同模型：SEO 跌落时用 SEM 补位，避免流量断崖
+      condition: 自然流量下降 > 20%
+    - skill_id: Skill-Organic-Content-Causal-Attribution
+      role: 内容因果归因：识别哪些内容资产真正驱动了自然流量
+    prevent:
+    - skill_id: Skill-GEO-Generative-Engine-Optimization
+      role: 持续 GEO 优化：定期检查 AI 搜索引擎的品牌推荐状态并优化内容
+    - skill_id: Skill-Brand-Defense-Search-Strategy
+      role: 品牌搜索防守：防止竞品在品牌词搜索中截流，保持 AI 推荐优先
+  related_events:
+  - asin-traffic-drop
+  - competitor-price-attack
+  related_playbooks:
+  - pb-search-traffic-growth
+  - pb-d2c-brand-building
+  related_workflows:
+  - WF-G Listing 内容优化
+  - WF-L 流量获取
+- event_id: tiktok-content-decay
+  event_name: TikTok 内容效果衰减
+  severity: medium
+  icon: 📱
+  summary: TikTok 视频 CTR 下降、直播间流量萎缩、内容 ROI 跌破目标，受众审美疲劳
+  symptom_keywords:
+  - TikTok 效果差
+  - 短视频 CTR 低
+  - 直播间流量少
+  - 内容 ROI 下降
+  - TikTok 算法变了
+  - 视频播放量低
+  - 粉丝增长停滞
+  - 带货效果差
+  - TikTok Shop 转化低
+  - 内容疲劳
+  - TikTok
+  - 直播
+  - 短视频
+  - 内容效果
+  phases:
+    diagnose:
+    - skill_id: Skill-TikTok-Content-Lifecycle-Analytics
+      role: TikTok 内容生命周期分析：识别内容进入衰减期的时机，对比各类型内容寿命
+      sequence: 1
+    - skill_id: Skill-TikTok-Algorithm-Content-Boost
+      role: 算法推流诊断：完播率/互动率/分享率哪个指标拖累了算法分发
+      sequence: 2
+    - skill_id: Skill-Video-ROI-Attribution
+      role: 视频 ROI 归因：哪个视频系列/创作者/时间段带来了最高 GMV 贡献
+      sequence: 3
+    treat:
+    - skill_id: Skill-TikTok-Shop-Content-Attribution
+      role: TikTok Shop 内容-转化路径分析：找出高转化内容共同特征，复制高效模板
+      condition: 带货转化率低于基准
+    - skill_id: Skill-TikTok-Repurchase-From-Live-Audience
+      role: 直播观众复购转化：将直播流量沉淀为私域，提升 LTV
+      condition: 直播 GMV 达标但复购率低
+    - skill_id: Skill-Content-ROI-Budget-Shift-Trigger
+      role: 内容预算迁移触发：ROI 低于目标 7 天 → 自动减少该内容类型投放比例
+      condition: 内容 ROI 持续低于基准
+    prevent:
+    - skill_id: Skill-TikTok-Algorithm-Traffic-Amplification
+      role: TikTok 算法流量放大：把握黄金 48 小时推流窗口，系统性提升自然曝光
+    - skill_id: Skill-Live-Commerce-Stream-Algorithm
+      role: 直播电商算法优化：直播间流量维持策略，防止流量断崖
+    - skill_id: Skill-TikTok-Creator-ROI-Attribution
+      role: 创作者 ROI 评估：提前识别内容疲劳的创作者，轮换素材来源
+  related_events:
+  - ad-creative-fatigue
+  - customer-churn-risk
+  related_playbooks:
+  - pb-tiktok-shop
+  - pb-content-factory
+  related_workflows:
+  - WF-B 广告优化
+  - WF-H 复购增长
