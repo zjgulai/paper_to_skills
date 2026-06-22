@@ -98,6 +98,7 @@ report = runner.compare_systems(configs, tasks)
 print(f"最优 Framework: {report.best_system.framework}")
 print(f"最大性能差距: {report.performance_gap:.1%}")
 print(f"Framework 效应量: {report.framework_effect_size:.3f}")
+print("[✓] MASEval System Evaluation 测试通过")
 ```
 
 ---

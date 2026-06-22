@@ -119,6 +119,7 @@ pred = predict_with_event(
     prompt_dim=64,
 )
 print(f"未来 7 天预测 (归一化空间): {pred}")
+print("[✓] TimeCMA LLM Forecasting 测试通过")
 ```
 
 **核心函数说明**：

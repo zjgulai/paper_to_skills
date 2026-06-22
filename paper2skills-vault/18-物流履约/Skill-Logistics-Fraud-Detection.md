@@ -808,6 +808,7 @@ if __name__ == "__main__":
     test_address_graph_cluster()
     test_fraud_type_comparison()
     print("=== 全部测试通过 ✓ ===")
+print("[✓] Logistics Fraud Detection 测试通过")
 ```
 
 ---

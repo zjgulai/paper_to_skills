@@ -397,6 +397,7 @@ if __name__ == "__main__":
         print(f"  决策: {result.decision} — {result.rationale}")
         if result.warning:
             print(f"  {result.warning}")
+print("[✓] Product Lifecycle Stage 测试通过")
 ```
 
 ---

@@ -489,6 +489,7 @@ def demo_reliability_evaluation():
 
 if __name__ == "__main__":
     demo_reliability_evaluation()
+print("[✓] ReliabilityBench Agent Re 测试通过")
 ```
 
 ---

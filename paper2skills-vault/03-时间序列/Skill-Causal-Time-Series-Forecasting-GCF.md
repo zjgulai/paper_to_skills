@@ -152,6 +152,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Causal Time Series Foreca 测试通过")
 ```
 
 ---

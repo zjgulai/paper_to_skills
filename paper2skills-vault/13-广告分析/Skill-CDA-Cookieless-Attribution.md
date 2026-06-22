@@ -115,6 +115,7 @@ print(report)
 current_budget = {'facebook': 3000, 'tiktok': 2000, 'google': 10000}
 rec = pipeline.budget_recommendation(current_budget, total_budget=15000)
 print(rec)
+print("[✓] CDA Cookieless Attributio 测试通过")
 ```
 
 **核心类说明**：

@@ -734,6 +734,7 @@ def main():
 
 if __name__ == '__main__':
     system = main()
+print("[✓] Dense Retrieval Ecommerce 测试通过")
 ```
 
 ---

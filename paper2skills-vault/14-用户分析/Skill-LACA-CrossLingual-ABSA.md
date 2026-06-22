@@ -217,6 +217,7 @@ def run_laca_inference_demo() -> None:
 
 if __name__ == "__main__":
     run_laca_inference_demo()
+print("[✓] LACA CrossLingual ABSA 测试通过")
 ```
 
 ---

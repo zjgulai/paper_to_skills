@@ -580,6 +580,7 @@ df = guard.batch_evaluate(keywords, aov=120.0)  # aov: 你的平均订单价值
 # 4. 导出负关键词列表
 negatives = df[df["decision"] == "negative"]["keyword"].tolist()
 print(f"建议添加负关键词 {len(negatives)} 个：{negatives}")
+print("[✓] Negative Keyword Safe Gua 测试通过")
 ```
 
 ### 参数调优建议

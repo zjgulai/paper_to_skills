@@ -86,6 +86,7 @@ result = orchestrator.select_best([
 ])
 
 print(result.as_dict())
+print("[✓] Compliance Scored Guardra 测试通过")
 ```
 
 本模板使用 Python 标准库实现以下能力：

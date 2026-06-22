@@ -372,6 +372,7 @@ if __name__ == '__main__':
     assert 0 <= r.precision <= 1
     assert 0 <= r.recall <= 1
     print("\n[验证] ✓ 所有断言通过")
+print("[✓] Model Evaluation Metrics 测试通过")
 ```
 
 ---

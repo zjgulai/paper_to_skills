@@ -784,6 +784,7 @@ ELEMENT_PROMPTS = {
     ContentElementType.KOL_RECOMMENDATION: "influencer recommending product to camera",
     # ...
 }
+print("[✓] TikTok Shop Content Attri 测试通过")
 ```
 
 4. **ROAS 结果接入广告投放系统**：将 `roas_adjusted` 输出接入 TikTok Ads 出价模型，高 ROAS 视频提高竞价上限。

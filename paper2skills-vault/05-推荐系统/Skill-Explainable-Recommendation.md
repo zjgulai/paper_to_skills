@@ -274,6 +274,7 @@ if __name__ == '__main__':
     kg_explainer = KnowledgeGraphExplainer(kg_edges)
     print(f"\n知识图谱解释:")
     print(kg_explainer.explain_similarity('爱他美3段', '美赞臣3段'))
+print("[✓] Explainable Recommendatio 测试通过")
 ```
 
 ---

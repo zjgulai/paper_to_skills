@@ -324,6 +324,7 @@ if __name__ == '__main__':
     s = profiler.generate_segment_persona('职场背奶妈妈', ['上班', '公司', '背奶'])
     print(f"  规模: {s['segment_size']} 用户")
     print(f"  营销: {s['marketing_insights']['key_message']}")
+print("[✓] PersonaBot RAG Profiling 测试通过")
 ```
 
 ---

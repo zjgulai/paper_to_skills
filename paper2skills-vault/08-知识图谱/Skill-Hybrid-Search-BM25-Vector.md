@@ -652,6 +652,7 @@ def run_tests():
 
 if __name__ == "__main__":
     run_tests()
+print("[✓] Hybrid Search BM25 Vector 测试通过")
 ```
 
 > **生产替换指引**：

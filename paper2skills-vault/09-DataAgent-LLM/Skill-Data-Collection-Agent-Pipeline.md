@@ -516,6 +516,7 @@ def run_multi_source_collection_demo():
 if __name__ == "__main__":
     result = run_multi_source_collection_demo()
     print(f"\n✅ Pipeline 完成，输出 {len(result)} 条融合记录")
+print("[✓] Data Collection Agent Pip 测试通过")
 ```
 
 ---

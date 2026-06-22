@@ -509,6 +509,7 @@ def test_helicase_baby_formula():
 
 if __name__ == "__main__":
     test_helicase_baby_formula()
+print("[✓] Helicase Supply Chain KG  测试通过")
 ```
 
 ---

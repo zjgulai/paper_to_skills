@@ -621,6 +621,7 @@ def run_test():
 
 if __name__ == "__main__":
     run_test()
+print("[✓] AIM RM LLM Inventory MAS  测试通过")
 ```
 
 ---

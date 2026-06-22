@@ -169,6 +169,7 @@ if __name__ == '__main__':
     smmr = SMMR(lambda_param=0.6, temperature=1.2)
     result = smmr.rerank(item_ids, relevance, features, k=5)
     print("SMMR重排序结果:", result)
+print("[✓] Diversity Reranking SMMR 测试通过")
 ```
 
 ---

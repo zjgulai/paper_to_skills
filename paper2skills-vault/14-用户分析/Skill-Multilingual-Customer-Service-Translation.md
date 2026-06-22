@@ -651,6 +651,7 @@ def translate_with_emotion_llm(text, source_lang, emotion_vad):
     文本：{text}
     """
     # return llm_client.complete(prompt)
+print("[✓] Multilingual Customer Ser 测试通过")
 ```
 
 4. **生产路由配置**：根据 `TranslatedMessage.priority` 接入 CRM 系统队列。

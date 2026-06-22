@@ -356,6 +356,7 @@ class LBMBiddingSystem:
             confidence=confidence,
             within_budget=within_budget,
         )
+print("[✓] LLM AutoBidding MAS 测试通过")
 ```
 
 ---

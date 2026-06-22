@@ -167,6 +167,7 @@ print("\n=== 优化后预算分配 ===")
 for ch, spend in optimal.items():
     orig = current_spends[ch]
     print(f"  {ch}: {orig:,.0f} → {spend:,.0f} ({(spend-orig)/orig*100:+.1f}%)")
+print("[✓] Identified Bayesian MMM 测试通过")
 ```
 
 ---

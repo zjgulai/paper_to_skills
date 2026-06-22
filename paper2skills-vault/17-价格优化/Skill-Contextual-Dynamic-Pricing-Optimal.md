@@ -115,6 +115,7 @@ pricer.observe_outcome(purchased=True)   # 二值反馈学习
 # 批量模拟
 results = simulate_pricing_trial(n_rounds=1000)
 print(f"累积 Regret: {results['cumulative_regret']:.2f}")
+print("[✓] Contextual Dynamic Pricin 测试通过")
 ```
 
 ---

@@ -255,7 +255,9 @@ class DataScienceAgent:
 
 2. **CODE**: 生成Python代码处理数据
    格式: ACTION: CODE
-   CONTENT: ```python
+   CONTENT: 
+print("[✓] DeepAnalyze Autonomous Da 测试通过")
+```python
    <代码>
    ```
 

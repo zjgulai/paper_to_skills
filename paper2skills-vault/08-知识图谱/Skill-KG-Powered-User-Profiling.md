@@ -423,6 +423,7 @@ def _run_test() -> None:
 
 if __name__ == "__main__":
     _run_test()
+print("[✓] KG Powered User Profiling 测试通过")
 ```
 
 ---

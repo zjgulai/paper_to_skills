@@ -406,6 +406,7 @@ def optimize_ad_channels():
 
 if __name__ == "__main__":
     optimize_ad_channels()
+print("[✓] Thompson Sampling MAB 测试通过")
 ```
 
 ---

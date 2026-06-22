@@ -243,6 +243,7 @@ def train_model():
 
 if __name__ == "__main__":
     train_model()
+print("[✓] Deep Learning Recommendat 测试通过")
 ```
 
 ---

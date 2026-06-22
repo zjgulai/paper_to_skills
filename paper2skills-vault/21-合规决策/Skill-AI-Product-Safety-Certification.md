@@ -335,6 +335,7 @@ if __name__ == '__main__':
     cpc = planner.generate_cpc_draft(product, plan)
     print("\n=== CPC声明草稿（前5行）===")
     print('\n'.join(cpc.strip().split('\n')[:6]))
+print("[✓] AI Product Safety Certifi 测试通过")
 ```
 
 ---

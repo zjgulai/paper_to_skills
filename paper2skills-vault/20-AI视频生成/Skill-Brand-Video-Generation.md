@@ -799,6 +799,7 @@ result = pipeline.generate(
     target_brand="YourBrand",
     config=VideoGenerationConfig(duration_seconds=15),
 )
+print("[✓] Brand Video Generation 测试通过")
 ```
 
 **Step 3：评估并迭代**

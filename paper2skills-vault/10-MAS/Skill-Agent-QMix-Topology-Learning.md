@@ -379,6 +379,7 @@ def test_agent_qmix_wf_a():
 
 if __name__ == "__main__":
     test_agent_qmix_wf_a()
+print("[✓] Agent QMix Topology Learn 测试通过")
 ```
 
 ---

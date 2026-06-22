@@ -611,6 +611,7 @@ def test_ar_logistics():
 if __name__ == "__main__":
     np.random.seed(42)
     test_ar_logistics()
+print("[✓] AR Logistics Visualizatio 测试通过")
 ```
 
 ---

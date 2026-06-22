@@ -361,6 +361,7 @@ def test_baby_bottle_analysis():
 
 if __name__ == "__main__":
     test_baby_bottle_analysis()
+print("[✓] VLM Ecommerce Adaptation 测试通过")
 ```
 
 ---

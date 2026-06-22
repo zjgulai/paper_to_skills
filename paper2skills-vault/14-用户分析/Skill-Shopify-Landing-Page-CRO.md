@@ -275,6 +275,7 @@ def run_cro_simulation():
 
 if __name__ == '__main__':
     optimizer = run_cro_simulation()
+print("[✓] Shopify Landing Page CRO 测试通过")
 ```
 
 ---

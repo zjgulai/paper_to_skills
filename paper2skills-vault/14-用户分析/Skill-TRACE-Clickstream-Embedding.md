@@ -925,6 +925,7 @@ if __name__ == "__main__":
     print("  2. 用 XGBoost 在嵌入上训练购买预测分类器")
     print("  3. 实时更新：每次页面访问后触发 TRACE 推理（< 30ms），更新用户向量")
     print("  4. 相似用户检索：用余弦相似度在 32 维嵌入空间做 ANN 搜索")
+print("[✓] TRACE Clickstream Embeddi 测试通过")
 ```
 
 ---

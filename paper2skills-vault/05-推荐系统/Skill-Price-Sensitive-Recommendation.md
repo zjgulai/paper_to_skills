@@ -685,6 +685,7 @@ if __name__ == "__main__":
 
 ```python
 (product_id, final_score, segment_label)
+print("[✓] Price Sensitive Recommend 测试通过")
 ```
 - `final_score`：价格效用 + MF 锚定 + 促销增益的综合分
 - `segment_label`：用户弹性分层（`low/medium/high_elastic`），可用于前端展示逻辑差异化

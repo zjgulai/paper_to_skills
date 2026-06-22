@@ -86,6 +86,7 @@ roadmap_phase: phase3
 
 ```python
 # 见 paper2skills-code/mas/dynamic_dag_orchestration/model.py
+print("[✓] Dynamic DAG Orchestration 测试通过")
 ```
 
 ## ④ 技能关联

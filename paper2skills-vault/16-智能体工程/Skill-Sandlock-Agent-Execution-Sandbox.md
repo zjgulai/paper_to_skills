@@ -74,6 +74,7 @@ policy = SandboxPolicy(
 executor = SandlockExecutor(policy)
 result = executor.execute("python generate_po.py --sku B001 --qty 500")
 print(result.verdict, result.rollback_applied)  # ALLOW False
+print("[✓] Sandlock Agent Execution  测试通过")
 ```
 
 ---

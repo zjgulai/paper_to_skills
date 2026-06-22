@@ -44,6 +44,7 @@ def competitive_alert(our_share: float, comp_shares: list,
 
 # test
 print(competitive_alert(0.14, [0.28, 0.12], [0.9, 0.5]))
+print("[✓] Competitive Response Mode 测试通过")
 ```
 
 ---

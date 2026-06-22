@@ -456,6 +456,7 @@ if __name__ == "__main__":
     test_replenishment_dag()
     print("\n" + "=" * 60)
     print("✅ 全部 TDP 测试通过")
+print("[✓] DAG Task Decomposition Pl 测试通过")
 ```
 
 ---

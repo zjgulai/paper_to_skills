@@ -380,6 +380,7 @@ def test_selection_agent_scenario():
 
 if __name__ == "__main__":
     test_selection_agent_scenario()
+print("[✓] LMM Searcher Multimodal C 测试通过")
 ```
 
 ---

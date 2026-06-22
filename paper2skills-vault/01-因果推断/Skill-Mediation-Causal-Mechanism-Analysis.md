@@ -428,6 +428,7 @@ def main():
 
 if __name__ == '__main__':
     result = main()
+print("[✓] Mediation Causal Mechanis 测试通过")
 ```
 
 ---

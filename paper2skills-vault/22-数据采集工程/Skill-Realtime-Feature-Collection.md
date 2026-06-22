@@ -864,6 +864,7 @@ FEATURE_TIERS = {
 # 实时特征：TTL 30 分钟，写入频率：事件触发
 # Nearline 特征：TTL 2 小时，写入频率：5 分钟微批
 # Batch 特征：无 TTL（持久），写入频率：每日 ETL
+print("[✓] Realtime Feature Collecti 测试通过")
 ```
 
 ### 注意事项

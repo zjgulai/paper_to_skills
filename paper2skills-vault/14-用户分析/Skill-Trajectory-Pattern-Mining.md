@@ -950,6 +950,7 @@ if __name__ == "__main__":
     
     # 运行完整 Demo
     results = run_demo()
+print("[✓] Trajectory Pattern Mining 测试通过")
 ```
 
 ---

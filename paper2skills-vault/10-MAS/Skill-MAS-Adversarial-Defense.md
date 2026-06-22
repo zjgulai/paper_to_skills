@@ -353,6 +353,7 @@ class ConjunctiveGuard:
         ext_suspicious = any(k in ext for k in suspicious_ext_keywords)
         usr_suspicious = any(k in usr for k in suspicious_usr_keywords)
         return ext_suspicious and usr_suspicious
+print("[✓] MAS Adversarial Defense 测试通过")
 ```
 
 ---

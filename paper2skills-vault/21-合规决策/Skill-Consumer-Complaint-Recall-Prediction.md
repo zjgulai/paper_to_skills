@@ -94,6 +94,7 @@ from paper2skills_code.compliance.complaint_recall_prediction import (
 # 快速运行演示
 if __name__ == "__main__":
     run_demo()
+print("[✓] Consumer Complaint Recall 测试通过")
 ```
 
 **核心类说明**：

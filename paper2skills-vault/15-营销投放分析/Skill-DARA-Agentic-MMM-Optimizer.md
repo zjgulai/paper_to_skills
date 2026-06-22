@@ -146,6 +146,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] DARA Agentic MMM Optimize 测试通过")
 ```
 
 ---

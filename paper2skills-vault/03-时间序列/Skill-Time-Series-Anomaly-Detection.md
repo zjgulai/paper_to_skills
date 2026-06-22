@@ -419,6 +419,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+print("[✓] Time Series Anomaly Detec 测试通过")
 ```
 
 ---

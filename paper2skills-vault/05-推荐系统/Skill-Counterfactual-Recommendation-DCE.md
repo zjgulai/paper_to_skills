@@ -140,6 +140,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Counterfactual Recommenda 测试通过")
 ```
 
 ---

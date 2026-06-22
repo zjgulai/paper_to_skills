@@ -884,6 +884,7 @@ def run_tests():
 if __name__ == "__main__":
     run_tests()
     run_tiktok_pixel_scenario()
+print("[✓] BlockEcho Missing Data 测试通过")
 ```
 
 ---

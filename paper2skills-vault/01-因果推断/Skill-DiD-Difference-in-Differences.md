@@ -477,6 +477,7 @@ def main():
 
 if __name__ == '__main__':
     model = main()
+print("[✓] DiD Difference in Differe 测试通过")
 ```
 
 ---

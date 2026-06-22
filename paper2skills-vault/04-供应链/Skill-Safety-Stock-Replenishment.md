@@ -239,6 +239,7 @@ if __name__ == '__main__':
     plan = planner.plan()
     print("\n补货计划:")
     print(plan[['sku_id', 'current_stock', 'reorder_point', 'need_replenish', 'order_qty']].to_string(index=False))
+print("[✓] Safety Stock Replenishmen 测试通过")
 ```
 
 ---

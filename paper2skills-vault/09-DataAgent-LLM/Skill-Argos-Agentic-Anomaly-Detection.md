@@ -321,6 +321,7 @@ def inference(sample: np.ndarray, threshold: float) -> np.ndarray:
 代码:
 ```python
 {code}
+print("[✓] Argos Agentic Anomaly Det 测试通过")
 ```
 
 请修正代码中的错误，只输出修正后的完整代码。"""

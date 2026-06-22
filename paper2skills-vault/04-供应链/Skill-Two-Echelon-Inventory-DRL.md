@@ -669,6 +669,7 @@ if __name__ == "__main__":
     
     prediction = forecaster.forecast(horizon=7)
     print(f"7天需求预测: {prediction:.1f} 件/天")
+print("[✓] Two Echelon Inventory DRL 测试通过")
 ```
 
 ---

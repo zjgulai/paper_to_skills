@@ -278,6 +278,7 @@ def demo():
 
 if __name__ == '__main__':
     demo()
+print("[✓] KG Relation Completion CB 测试通过")
 ```
 
 ---

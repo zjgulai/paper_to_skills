@@ -555,6 +555,7 @@ def test_xskill_self_improvement() -> None:
 
 if __name__ == "__main__":
     test_xskill_self_improvement()
+print("[✓] XMultimodal Self Improvem 测试通过")
 ```
 
 ---

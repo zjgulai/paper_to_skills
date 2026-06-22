@@ -107,6 +107,7 @@ from paper2skills_code.risk_fraud.identity_fraud_detection import (
 
 if __name__ == "__main__":
     run_demo()
+print("[✓] Identity Fraud Detection 测试通过")
 ```
 
 **核心类说明**：

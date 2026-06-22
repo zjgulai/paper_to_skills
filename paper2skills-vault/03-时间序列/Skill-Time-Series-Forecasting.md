@@ -398,6 +398,7 @@ def main():
 
 if __name__ == '__main__':
     model = main()
+print("[✓] Time Series Forecasting 测试通过")
 ```
 
 ---

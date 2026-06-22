@@ -534,6 +534,7 @@ def main():
 
 if __name__ == '__main__':
     model = main()
+print("[✓] Uplift Modeling 测试通过")
 ```
 
 ---

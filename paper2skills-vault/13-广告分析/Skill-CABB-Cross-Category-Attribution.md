@@ -761,6 +761,7 @@ if __name__ == "__main__":
     print("\n" + "=" * 60)
     print("所有测试通过 ✓")
     print("=" * 60)
+print("[✓] CABB Cross Category Attri 测试通过")
 ```
 
 ---

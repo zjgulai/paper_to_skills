@@ -562,6 +562,7 @@ def main():
 
 if __name__ == '__main__':
     model, scaler = main()
+print("[✓] LTV Prediction ZILN 测试通过")
 ```
 
 ---

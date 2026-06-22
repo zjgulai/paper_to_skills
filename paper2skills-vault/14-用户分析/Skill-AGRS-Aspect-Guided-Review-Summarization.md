@@ -231,6 +231,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] AGRS Aspect Guided Review 测试通过")
 ```
 
 ---

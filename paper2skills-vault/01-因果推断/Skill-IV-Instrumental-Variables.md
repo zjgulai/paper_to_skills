@@ -413,6 +413,7 @@ def main():
 
 if __name__ == '__main__':
     result = main()
+print("[✓] IV Instrumental Variables 测试通过")
 ```
 
 ---

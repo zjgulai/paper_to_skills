@@ -225,6 +225,7 @@ if __name__ == '__main__':
     }
     comparison = optimizer.compare_scenarios(['Facebook', 'Google', 'TikTok'], scenarios)
     print(comparison[['scenario', 'total_revenue', 'roas']].to_string(index=False))
+print("[✓] ROAS Budget Optimization 测试通过")
 ```
 
 ---

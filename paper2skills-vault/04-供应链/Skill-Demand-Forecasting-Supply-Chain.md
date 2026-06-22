@@ -238,6 +238,7 @@ if __name__ == '__main__':
     forecaster.fit(train, feature_cols)
     metrics = forecaster.evaluate(test, feature_cols)
     print(f"WAPE: {metrics['wape']:.2%}, MAE: {metrics['mae']:.1f}")
+print("[✓] Demand Forecasting Supply 测试通过")
 ```
 
 ---

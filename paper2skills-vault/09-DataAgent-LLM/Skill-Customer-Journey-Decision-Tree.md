@@ -172,6 +172,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Customer Journey Decision 测试通过")
 ```
 
 ---

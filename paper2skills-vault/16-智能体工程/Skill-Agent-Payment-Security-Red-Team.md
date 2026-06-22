@@ -247,6 +247,7 @@ class PaymentSecurityGuard:
             is_safe=(threat_level in (ThreatLevel.SAFE, ThreatLevel.LOW)),
             recommendations=recommendations,
         )
+print("[✓] Agent Payment Security Re 测试通过")
 ```
 
 **上线前安全 Checklist（最低 5 项）**：

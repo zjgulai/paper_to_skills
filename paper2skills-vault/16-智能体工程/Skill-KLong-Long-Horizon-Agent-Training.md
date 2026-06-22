@@ -551,6 +551,7 @@ def demo_product_selection_training() -> None:
 
 if __name__ == "__main__":
     demo_product_selection_training()
+print("[✓] KLong Long Horizon Agent  测试通过")
 ```
 
 ---

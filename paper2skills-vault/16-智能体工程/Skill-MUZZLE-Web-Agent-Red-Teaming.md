@@ -104,6 +104,7 @@ content = WebContent(
 cleaned = defense.sanitize_web_content(content)
 result = defense.detect_injection_attempt(content)
 print(f"检测到注入: {result.is_injection}, 置信度: {result.confidence:.2f}")
+print("[✓] MUZZLE Web Agent Red Team 测试通过")
 ```
 
 ---

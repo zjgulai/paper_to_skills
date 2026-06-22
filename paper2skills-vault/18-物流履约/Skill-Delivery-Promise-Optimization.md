@@ -133,6 +133,7 @@ optimizer = PromiseOptimizer(target_on_time_rate=0.95)
 result = optimizer.optimize(records)
 print(f"最优承诺时效: {result.optimal_days} 天")
 print(f"实际准时率: {result.actual_on_time_rate:.1%}")
+print("[✓] Delivery Promise Optimiza 测试通过")
 ```
 
 ---

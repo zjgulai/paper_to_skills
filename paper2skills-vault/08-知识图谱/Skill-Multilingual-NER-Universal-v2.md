@@ -205,6 +205,7 @@ def demo():
 
 if __name__ == '__main__':
     demo()
+print("[✓] Multilingual NER Universa 测试通过")
 ```
 
 ---

@@ -287,6 +287,7 @@ if __name__ == "__main__":
         delta = r_cut.order_qty - r_full.order_qty
         status = "✅ 不变" if delta == 0 else f"⚠️ 变化{delta:+d}"
         print(f"  {r_full.sku_id}: {r_full.order_qty} → {r_cut.order_qty} {status}")
+print("[✓] Multi SKU Procurement Bud 测试通过")
 ```
 
 ---

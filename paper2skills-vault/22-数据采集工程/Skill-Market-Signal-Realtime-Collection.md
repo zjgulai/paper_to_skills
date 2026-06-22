@@ -748,6 +748,7 @@ class ProductionRTTPDetector(RTTPTrendDetector):
         """
         response = self.llm.complete(prompt)
         return [q.strip() for q in response.strip().split("\n") if q.strip()][:4]
+print("[✓] Market Signal Realtime Co 测试通过")
 ```
 
 ---

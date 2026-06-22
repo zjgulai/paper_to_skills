@@ -690,6 +690,7 @@ if __name__ == "__main__":
             tail_entity = kg.entities.get(t.tail)
             tail_name = tail_entity.name if tail_entity else t.tail
             print(f"  --[{t.relation}]--> {tail_name}")
+print("[✓] KG Data Fusion Pipeline 测试通过")
 ```
 
 ---

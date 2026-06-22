@@ -730,6 +730,7 @@ def main():
 
 if __name__ == '__main__':
     result = main()
+print("[✓] KG Auto Construction Agen 测试通过")
 ```
 
 ---

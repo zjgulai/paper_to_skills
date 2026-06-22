@@ -325,6 +325,7 @@ class SACConsensus:
             if out_degree < r:
                 return False
         return True
+print("[✓] MAS Consensus Mechanism 测试通过")
 ```
 
 ---

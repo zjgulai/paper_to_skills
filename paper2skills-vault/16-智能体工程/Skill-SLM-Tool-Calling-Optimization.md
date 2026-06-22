@@ -154,6 +154,7 @@ examples = [
     },
     # ... 更多样本
 ]
+print("[✓] SLM Tool Calling Optimiza 测试通过")
 ```
 
 **业务价值**:

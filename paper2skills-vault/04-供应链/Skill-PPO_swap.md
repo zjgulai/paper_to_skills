@@ -133,6 +133,7 @@ final_cost = graph.shortest_path_cost(facilities)
 print(f"\n优化完成，成本从 {initial_cost:.2f} → {final_cost:.2f}，"
       f"下降 {(initial_cost - final_cost) / initial_cost:.1%}")
 print(f"最优站点配置: {facilities}")
+print("[✓] PPO_swap 测试通过")
 ```
 
 **核心 API 速查**

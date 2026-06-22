@@ -246,6 +246,7 @@ if __name__ == '__main__':
     comparison = model.compare_models()
     print("归因模型对比 (%):")
     print(comparison.round(1))
+print("[✓] Ad Attribution Modeling 测试通过")
 ```
 
 ---

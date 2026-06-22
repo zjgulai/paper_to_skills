@@ -400,6 +400,7 @@ if __name__ == "__main__":
         print(f"  {root}: {detail['impact']:+d}件 ({detail['share']}) — {detail['detail']}")
     print(f"  残差: {attr['residual']}件")
     print(f"  主因: {attr['primary_root_cause']}")
+print("[✓] Inventory Health Aging At 测试通过")
 ```
 
 ---

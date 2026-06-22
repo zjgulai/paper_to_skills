@@ -653,6 +653,7 @@ def run_tests():
 
 if __name__ == "__main__":
     run_tests()
+print("[✓] Semantic Chunking Strateg 测试通过")
 ```
 
 > **生产替换指引**：`mock_embed` → `sentence_transformers.SentenceTransformer("BAAI/bge-m3").encode`；`count_tokens` → `tiktoken.encoding_for_model("gpt-4o").encode` 的长度。

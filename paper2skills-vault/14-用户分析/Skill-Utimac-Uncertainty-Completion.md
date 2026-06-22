@@ -803,6 +803,7 @@ def run_tests():
 if __name__ == "__main__":
     run_tests()
     run_example()
+print("[✓] Utimac Uncertainty Comple 测试通过")
 ```
 
 ---

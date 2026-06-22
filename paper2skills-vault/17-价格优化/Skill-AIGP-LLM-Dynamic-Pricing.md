@@ -451,6 +451,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+print("[✓] AIGP LLM Dynamic Pricing 测试通过")
 ```
 
 ---

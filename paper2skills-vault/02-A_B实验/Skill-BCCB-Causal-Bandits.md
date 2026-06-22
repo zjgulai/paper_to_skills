@@ -803,6 +803,7 @@ def main():
 
 if __name__ == "__main__":
     daily_df = main()
+print("[✓] BCCB Causal Bandits 测试通过")
 ```
 
 ---

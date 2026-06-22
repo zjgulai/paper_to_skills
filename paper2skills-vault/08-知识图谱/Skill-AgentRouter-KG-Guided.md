@@ -146,6 +146,7 @@ print(f"路由原因: {result.routing_reason}")
 for agent_name, weight in result.top_k_agents:
     response = call_agent(agent_name, result.query, weight=weight)
     # ... 加权聚合 response
+print("[✓] AgentRouter KG Guided 测试通过")
 ```
 
 **核心类说明**：

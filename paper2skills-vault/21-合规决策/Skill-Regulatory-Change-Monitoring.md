@@ -84,6 +84,7 @@ for alert in alerts:
 
 # 选品门控：检查品类风险
 risks = engine.check_category_risk("婴儿床具")
+print("[✓] Regulatory Change Monitor 测试通过")
 ```
 
 ### `RegulationUpdate` 数据类

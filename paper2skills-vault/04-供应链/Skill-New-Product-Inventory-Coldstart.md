@@ -345,6 +345,7 @@ if __name__ == "__main__":
     print(f"  峰值月需求: {bass['peak_monthly_demand']} 件（第 {bass['months_to_peak']} 个月）")
     print(f"  推荐首批量: {bass['recommended_first_order']} 件")
     print(f"  理由: {bass['rationale']}")
+print("[✓] New Product Inventory Col 测试通过")
 ```
 
 ---

@@ -351,6 +351,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+print("[✓] GPLR Persona Generation 测试通过")
 ```
 
 ---

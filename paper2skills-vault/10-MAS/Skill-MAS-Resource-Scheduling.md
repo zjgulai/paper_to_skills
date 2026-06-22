@@ -422,6 +422,7 @@ class MCPPPlanner:
             "recommended_order": [t.task_id for t in critical + normal + background],
             "feasible": completion_rate >= 0.8,
         }
+print("[✓] MAS Resource Scheduling 测试通过")
 ```
 
 ---

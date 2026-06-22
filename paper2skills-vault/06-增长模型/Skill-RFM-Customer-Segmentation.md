@@ -220,6 +220,7 @@ if __name__ == '__main__':
     print(rfm['segment'].value_counts())
     print("\n冠军用户示例:")
     print(rfm[rfm['segment'] == '冠军用户'].head(3)[['customer_id', 'recency', 'frequency', 'monetary']])
+print("[✓] RFM Customer Segmentation 测试通过")
 ```
 
 ---

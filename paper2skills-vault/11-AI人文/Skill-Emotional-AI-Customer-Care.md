@@ -69,6 +69,7 @@ print(result.emotion.state)              # EmotionState.FRIGHTENED
 print(result.response.escalation.value) # "human"
 print(result.response.should_escalate)  # True
 print(result.response.full_response)    # 同理心响应文本
+print("[✓] Emotional AI Customer Car 测试通过")
 ```
 
 ### `EmotionState` 枚举

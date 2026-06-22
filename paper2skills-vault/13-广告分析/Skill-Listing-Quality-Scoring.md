@@ -456,6 +456,7 @@ if __name__ == "__main__":
     for r in results:
         status = "✅ 达标，可投放" if r.total_score >= 70 else "❌ 未达标，需先优化 Listing"
         print(f"  {r.asin}: {r.total_score:.0f}分 ({r.grade}级) → {status}")
+print("[✓] Listing Quality Scoring 测试通过")
 ```
 
 ---

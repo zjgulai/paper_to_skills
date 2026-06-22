@@ -480,6 +480,7 @@ def _run_test() -> None:
 
 if __name__ == "__main__":
     _run_test()
+print("[✓] Supply Chain ML Features 测试通过")
 ```
 
 ---

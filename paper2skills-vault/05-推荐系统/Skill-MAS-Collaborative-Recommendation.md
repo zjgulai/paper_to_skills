@@ -730,6 +730,7 @@ class BrandLoyaltyAgent(SpecializedRecommendationAgent):
 
 ```python
 (product_id, final_score, explanation)
+print("[✓] MAS Collaborative Recomme 测试通过")
 ```
 - `final_score`：综合所有 Agent 加权 + MF 锚定后的最终分
 - `explanation`：包含主要决策 Agent 和具体推理链，可直接展示给用户

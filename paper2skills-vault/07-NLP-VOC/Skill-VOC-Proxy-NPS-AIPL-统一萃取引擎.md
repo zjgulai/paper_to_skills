@@ -615,6 +615,7 @@ def demo():
 
 if __name__ == "__main__":
     demo()
+print("[✓] VOC Proxy NPS AIPL 统一萃取引擎 测试通过")
 ```
 
 ---

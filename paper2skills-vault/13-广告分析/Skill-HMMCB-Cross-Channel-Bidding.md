@@ -141,6 +141,7 @@ results = system.run_bidding_cycle(steps=10)
 
 # 验证：CPC 约束满足 + TikTok 迁移效果 + 总点击超过均匀基线
 system.validate_results(results)
+print("[✓] HMMCB Cross Channel Biddi 测试通过")
 ```
 
 ---

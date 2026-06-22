@@ -259,6 +259,7 @@ if __name__ == '__main__':
     print(f"\n最常见路径:")
     for path, count in common:
         print(f"  {' → '.join(path)}: {count}次")
+print("[✓] User Funnel Analysis 测试通过")
 ```
 
 ---

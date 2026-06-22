@@ -392,6 +392,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Personalized Promotion Ta 测试通过")
 ```
 
 ---

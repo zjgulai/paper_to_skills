@@ -352,6 +352,7 @@ if __name__ == "__main__":
         print(f"  Lift系数: {p['lift_coefficient']}x | Post-dip: -{p['post_dip_ratio']*100:.0f}%")
 
     print(f"\n年化节省（4次大促资金占用）: ${annual_saving:,.0f}")
+print("[✓] Promotion Demand Decompos 测试通过")
 ```
 
 ---

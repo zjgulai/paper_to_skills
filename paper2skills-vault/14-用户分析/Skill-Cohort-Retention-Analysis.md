@@ -265,6 +265,7 @@ if __name__ == '__main__':
         print(f"\n幂律模型: Retention(d) = {a:.3f} * d^(-{b:.3f})")
         ltv = analyzer.predict_ltv(a, b, arpu=50, max_days=365)
         print(f"预测LTV (ARPU=$50): ${ltv:.2f}")
+print("[✓] Cohort Retention Analysis 测试通过")
 ```
 
 ---

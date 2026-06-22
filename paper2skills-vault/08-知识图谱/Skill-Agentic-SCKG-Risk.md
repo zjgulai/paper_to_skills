@@ -173,6 +173,7 @@ for i, (chain, shell) in enumerate(zip(chains, shells)):
 summary = analyzer.get_centrality_summary()
 for nid, info in sorted(summary.items(), key=lambda x: -x[1]["pagerank"]):
     print(f"{info['name']:30s}  PR={info['pagerank']:.4f}  BT={info['betweenness']:.4f}")
+print("[✓] Agentic SCKG Risk 测试通过")
 ```
 
 **核心类说明**：

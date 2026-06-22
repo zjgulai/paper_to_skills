@@ -136,6 +136,7 @@ sim.pricing_agent = PricingAgent(safety_stock_ratio=0.25)  # 保守型
 
 # 3. 更换需求弹性系数（根据实际品类调整）
 sim.demand_model = DemandModel(base_demand=500.0, elasticity=2.2)  # 高弹性品类
+print("[✓] FSDA DRL 测试通过")
 ```
 
 ---

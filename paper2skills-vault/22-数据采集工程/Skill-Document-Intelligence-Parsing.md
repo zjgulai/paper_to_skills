@@ -540,6 +540,7 @@ class DocumentIntelligenceParser:
                     results.append(entry)
 
         return results
+print("[✓] Document Intelligence Par 测试通过")
 ```
 
 ---

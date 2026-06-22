@@ -117,6 +117,7 @@ pricer.observe(ctx, price, reward)
 
 # 4. 查看累计 Regret（仿真评估时使用）
 regrets = pricer.cumulative_regret()
+print("[✓] UCB LDP Dynamic Pricing 测试通过")
 ```
 
 完整代码见 `paper2skills-code/06-增长模型/dynamic_pricing_2025/model.py`，含：

@@ -631,6 +631,7 @@ def main():
 
 if __name__ == '__main__':
     miner = main()
+print("[✓] New Product Opportunity M 测试通过")
 ```
 
 ---

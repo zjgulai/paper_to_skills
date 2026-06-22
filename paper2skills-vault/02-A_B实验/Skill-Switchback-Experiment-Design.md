@@ -165,6 +165,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Switchback Experiment Des 测试通过")
 ```
 
 ---

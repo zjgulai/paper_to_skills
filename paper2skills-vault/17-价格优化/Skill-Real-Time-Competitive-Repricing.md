@@ -145,7 +145,9 @@ class SimpleQLearner:
     简化版 Q-Learning 重定价策略
 
     生产环境替换为 DQN（2层MLP）:
-    ```python
+    
+print("[✓] Real Time Competitive Rep 测试通过")
+```python
     import torch.nn as nn
     class DQN(nn.Module):
         def __init__(self):

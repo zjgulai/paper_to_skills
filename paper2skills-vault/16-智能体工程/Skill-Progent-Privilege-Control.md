@@ -86,6 +86,7 @@ result = framework.request_policy_update(
     reason="大额补货需要",
 )
 print(result.action, result.requires_approval)  # PENDING True
+print("[✓] Progent Privilege Control 测试通过")
 ```
 
 ---

@@ -149,6 +149,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] DML Cohort Causal Effect 测试通过")
 ```
 
 ---

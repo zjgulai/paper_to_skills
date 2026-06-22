@@ -475,6 +475,7 @@ if __name__ == "__main__":
     print(f"  最终实验结论: {'显著' if sig else '不显著'} "
           f"(调整效应={result['effect']['adjusted_effect']:.4f}, "
           f"p={result['effect']['adjusted_p_value']:.4f})")
+print("[✓] Experiment Data Quality G 测试通过")
 ```
 
 ---

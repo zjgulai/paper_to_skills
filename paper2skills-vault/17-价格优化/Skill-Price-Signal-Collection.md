@@ -484,6 +484,7 @@ if __name__ == "__main__":
     print("\nAll tests passed!\n")
 
     run_price_signal_pipeline()
+print("[✓] Price Signal Collection 测试通过")
 ```
 
 ---

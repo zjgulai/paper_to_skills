@@ -415,6 +415,7 @@ def test_restock_learning():
 
 if __name__ == "__main__":
     test_restock_learning()
+print("[✓] ATLAS Gradient Free Conti 测试通过")
 ```
 
 ---

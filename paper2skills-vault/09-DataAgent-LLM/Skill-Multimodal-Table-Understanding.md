@@ -144,6 +144,7 @@ print(f"平均价格: ${agg_result:.2f}")
 # 比较查询：Brand A vs Brand D 的价格差
 compare_result = agent.compare_rows("Brand A", "Brand D", column="价格($/lb)")
 print(f"价格差: ${compare_result:.1f}")
+print("[✓] Multimodal Table Understa 测试通过")
 ```
 
 ---

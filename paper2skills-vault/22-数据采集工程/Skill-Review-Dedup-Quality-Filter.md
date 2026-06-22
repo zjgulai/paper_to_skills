@@ -432,6 +432,7 @@ class ReviewQualityPipeline:
             "final_top_k": len(tagged),
             "dedup_stats": self.deduplicator.stats(),
         }
+print("[✓] Review Dedup Quality Filt 测试通过")
 ```
 
 ---

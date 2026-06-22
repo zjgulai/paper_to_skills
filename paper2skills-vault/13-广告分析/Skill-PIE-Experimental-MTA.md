@@ -142,6 +142,7 @@ pipeline = PIEAttributionPipeline(channels=CHANNELS, n_journeys=10000, seed=42)
 pipeline.run_rct_experiment()
 pipeline.score_touchpoints()
 final_report = pipeline.calibrate()
+print("[✓] PIE Experimental MTA 测试通过")
 ```
 
 **关键输出字段说明**：

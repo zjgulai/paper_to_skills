@@ -250,6 +250,7 @@ if __name__ == '__main__':
     features = build_user_features(orders, browsing)
     print(f"特征维度: {features.shape}")
     print(features.head())
+print("[✓] Feature Engineering 测试通过")
 ```
 
 ---

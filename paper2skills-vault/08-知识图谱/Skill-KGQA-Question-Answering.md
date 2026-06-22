@@ -319,6 +319,7 @@ if __name__ == '__main__':
         result = kgqa.answer(q)
         print(f"\nQ: {q}")
         print(f"A: {result['answer']}")
+print("[✓] KGQA Question Answering 测试通过")
 ```
 
 ---

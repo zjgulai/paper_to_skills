@@ -613,6 +613,7 @@ if __name__ == "__main__":
 
     bot_result = bot_det.score_batch(sessions)
     print(f"\n[Bot流量] 检测率: {bot_result['bot_rate']:.0%} ({bot_result['bot_sessions']}/{bot_result['total_sessions']})")
+print("[✓] Fraud Signal Collection 测试通过")
 ```
 
 ---

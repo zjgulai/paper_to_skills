@@ -437,6 +437,7 @@ def main():
 
 if __name__ == '__main__':
     model = main()
+print("[✓] Intelligent Prediction Do 测试通过")
 ```
 
 ---

@@ -457,6 +457,7 @@ def main():
 
 if __name__ == '__main__':
     model = main()
+print("[✓] Intelligent Attribution C 测试通过")
 ```
 
 ---

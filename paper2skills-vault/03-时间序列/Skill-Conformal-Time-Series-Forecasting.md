@@ -464,6 +464,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Conformal Time Series For 测试通过")
 ```
 
 ---

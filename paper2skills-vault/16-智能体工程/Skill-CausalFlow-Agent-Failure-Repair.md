@@ -492,6 +492,7 @@ def test_causalflow() -> None:
 
 if __name__ == "__main__":
     test_causalflow()
+print("[✓] CausalFlow Agent Failure  测试通过")
 ```
 
 ---

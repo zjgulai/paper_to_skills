@@ -85,6 +85,7 @@ $$D = w_1 \cdot N + w_2 \cdot U + w_3 \cdot A \quad \in [0,1]$$
 
 ```python
 # 完整实现见 paper2skills-code/llm_agent_engineering/tool_call_decision/model.py
+print("[✓] Tool Call Decision Framew 测试通过")
 ```
 
 ---

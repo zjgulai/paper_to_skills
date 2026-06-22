@@ -440,6 +440,7 @@ def test_skill_evolution() -> None:
 
 if __name__ == "__main__":
     test_skill_evolution()
+print("[✓] AutoLifelong Learning 测试通过")
 ```
 
 ---

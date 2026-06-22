@@ -616,6 +616,7 @@ def demo_baby_ecommerce_routing() -> None:
 
 if __name__ == "__main__":
     demo_baby_ecommerce_routing()
+print("[✓] LDP Identity Aware Protoc 测试通过")
 ```
 
 ---

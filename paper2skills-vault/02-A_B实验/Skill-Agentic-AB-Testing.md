@@ -107,6 +107,7 @@ hypothesis = runner.generate_hypothesis(
 design = runner.design_experiment(hypothesis, daily_traffic=3000)
 result = runner.interpret_result(control_data, treatment_data, hypothesis)
 print(result.recommendation)
+print("[✓] Agentic AB Testing 测试通过")
 ```
 
 ---

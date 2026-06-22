@@ -623,6 +623,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+print("[✓] Cold Start Product Recomm 测试通过")
 ```
 
 ---

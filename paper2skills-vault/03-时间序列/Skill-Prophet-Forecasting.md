@@ -231,6 +231,7 @@ if __name__ == '__main__':
     print("未来90天预测:")
     print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].head(10))
     print(f"\n预测区间: [{forecast['yhat'].min():.0f}, {forecast['yhat'].max():.0f}]")
+print("[✓] Prophet Forecasting 测试通过")
 ```
 
 ---

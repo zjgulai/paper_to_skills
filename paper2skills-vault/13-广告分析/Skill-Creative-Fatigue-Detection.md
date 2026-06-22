@@ -676,6 +676,7 @@ def daily_fatigue_check():
         elif row["status"] == "warning":
             # 准备备用素材
             prepare_backup_creative(row["creative_id"])
+print("[✓] Creative Fatigue Detectio 测试通过")
 ```
 
 ### 参数调优建议

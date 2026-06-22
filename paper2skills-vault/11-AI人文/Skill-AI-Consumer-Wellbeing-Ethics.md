@@ -112,6 +112,7 @@ print(ok.compliant)  # False — 未披露 AI 身份
 child_checker = ChildProtectionChecker()
 result = child_checker.check_content("Baby's first formula, collect your baby's growth data")
 print(result.requires_parental_consent)  # True
+print("[✓] AI Consumer Wellbeing Eth 测试通过")
 ```
 
 ---

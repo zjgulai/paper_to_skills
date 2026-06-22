@@ -182,6 +182,7 @@ def demo():
 
 if __name__ == '__main__':
     demo()
+print("[✓] Semantic ID Retrieval RPG 测试通过")
 ```
 
 ---

@@ -367,6 +367,7 @@ class ACPNegotiator:
             sync_interval_minutes=agreed_sync, data_format=agreed_format,
             retry_policy={"max_retries": 3, "backoff": "exponential"},
         )
+print("[✓] Cross Org Agent Protocol 测试通过")
 ```
 
 ---

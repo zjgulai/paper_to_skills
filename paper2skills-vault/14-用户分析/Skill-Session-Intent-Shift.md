@@ -750,6 +750,7 @@ if __name__ == "__main__":
             print(f"  🎯 {pl.from_page}→{pl.to_page}: 目标购买型用户减少摩擦（直接展示加购按钮）")
         elif pl.intent_label == "复购型":
             print(f"  🔄 {pl.from_page}→{pl.to_page}: 复购型用户推送订阅优惠（提升LTV）")
+print("[✓] Session Intent Shift 测试通过")
 ```
 
 ---

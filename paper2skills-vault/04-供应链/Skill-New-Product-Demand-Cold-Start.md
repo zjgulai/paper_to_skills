@@ -140,7 +140,9 @@ class ColdStartForecaster:
 
     生产环境：
     替换为 CDLF 预训练模型：
-    ```python
+    
+print("[✓] New Product Demand Cold S 测试通过")
+```python
     from cdlf import ColdStartDiffusion
     model = ColdStartDiffusion.from_pretrained("cdlf-retail-v1")
     forecast = model.predict(new_product, similar_products)

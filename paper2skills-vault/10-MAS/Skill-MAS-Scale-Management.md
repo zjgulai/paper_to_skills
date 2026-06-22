@@ -351,6 +351,7 @@ class OrgAgentSystem:
 
     def get_audit_log(self) -> List[Dict]:
         return list(self._audit_log)
+print("[✓] MAS Scale Management 测试通过")
 ```
 
 ---

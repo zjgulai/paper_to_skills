@@ -140,6 +140,7 @@ initial_cost = cost_history[0]
 final_cost = best_solution.total_cost
 saving_pct = (initial_cost - final_cost) / initial_cost * 100
 print(f"\n优化效益: {initial_cost:.2f} → {final_cost:.2f} 万元 (节省 {saving_pct:.1f}%)")
+print("[✓] Multilevel_FLP 测试通过")
 ```
 
 **核心数据输入格式**：

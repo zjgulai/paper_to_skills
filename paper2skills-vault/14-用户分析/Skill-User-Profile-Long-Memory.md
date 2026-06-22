@@ -516,6 +516,7 @@ def test_user_profile_accumulation() -> None:
 
 if __name__ == "__main__":
     test_user_profile_accumulation()
+print("[✓] User Profile Long Memory 测试通过")
 ```
 
 ---

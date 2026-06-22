@@ -423,6 +423,7 @@ def test_baby_formula_negotiation():
 
 if __name__ == "__main__":
     test_baby_formula_negotiation()
+print("[✓] AgenticPay Procurement Ne 测试通过")
 ```
 
 ---

@@ -666,6 +666,7 @@ if __name__ == "__main__":
     test_full_pipeline()
     test_feedback_reward()
     print("=== 全部测试通过 ✓ ===")
+print("[✓] Marketing Driven Recommen 测试通过")
 ```
 
 ---

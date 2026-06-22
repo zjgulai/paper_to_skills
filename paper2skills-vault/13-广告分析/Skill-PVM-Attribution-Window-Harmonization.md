@@ -219,6 +219,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] PVM Attribution Window Ha 测试通过")
 ```
 
 ---

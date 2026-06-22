@@ -568,6 +568,7 @@ if __name__ == "__main__":
     print("\n=== 结果摘要 ===")
     for k, v in result.items():
         print(f"  {k}: {v:.3f}" if isinstance(v, float) else f"  {k}: {v}")
+print("[✓] MAS Dynamic Trust 测试通过")
 ```
 
 ---

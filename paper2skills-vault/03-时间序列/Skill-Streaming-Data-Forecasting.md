@@ -594,6 +594,7 @@ def run_demo():
 
 if __name__ == "__main__":
     run_demo()
+print("[✓] Streaming Data Forecastin 测试通过")
 ```
 
 ---

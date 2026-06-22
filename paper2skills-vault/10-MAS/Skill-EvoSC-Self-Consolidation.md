@@ -510,6 +510,7 @@ def demo_evosc_evolution():
 
 if __name__ == "__main__":
     demo_evosc_evolution()
+print("[✓] EvoSC Self Consolidation 测试通过")
 ```
 
 ---

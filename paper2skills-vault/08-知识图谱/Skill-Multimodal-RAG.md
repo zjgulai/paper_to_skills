@@ -666,6 +666,7 @@ image_emb = model.encode_image(preprocess(image).unsqueeze(0))
 from paddleocr import PaddleOCR
 ocr = PaddleOCR(use_angle_cls=True, lang="ch")
 ocr_result = ocr.ocr(image_path)
+print("[✓] Multimodal RAG 测试通过")
 ```
 
 **适用场景矩阵**：

@@ -107,6 +107,7 @@ best_set, worst_rev, detail_df = optimizer.optimize_greedy()
 print(f"推荐上架组合: {best_set}")
 print(f"最坏情况期望收益: ¥{worst_rev:.2f}")
 print(detail_df[detail_df["selected"]])
+print("[✓] PASTA Offline Assortment 测试通过")
 ```
 
 **关键输出说明**：

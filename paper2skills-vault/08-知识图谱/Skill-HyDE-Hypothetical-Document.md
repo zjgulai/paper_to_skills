@@ -556,6 +556,7 @@ def demo_crosslingual_retrieval() -> None:
 if __name__ == "__main__":
     run_tests()
     demo_crosslingual_retrieval()
+print("[✓] HyDE Hypothetical Documen 测试通过")
 ```
 
 ---

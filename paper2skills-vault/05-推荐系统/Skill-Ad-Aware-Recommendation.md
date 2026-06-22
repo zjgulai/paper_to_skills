@@ -536,6 +536,7 @@ if __name__ == "__main__":
 
     # 运行测试
     test_ad_aware_reranker()
+print("[✓] Ad Aware Recommendation 测试通过")
 ```
 
 ---

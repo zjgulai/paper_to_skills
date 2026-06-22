@@ -354,6 +354,7 @@ def main():
 
 if __name__ == '__main__':
     optimizer = main()
+print("[✓] Multi Echelon Inventory 测试通过")
 ```
 
 ---

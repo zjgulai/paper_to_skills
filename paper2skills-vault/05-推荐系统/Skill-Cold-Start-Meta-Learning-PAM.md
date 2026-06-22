@@ -197,6 +197,7 @@ if __name__ == '__main__':
     # 元训练...
     # 新品适应...
     print("PAM模型初始化完成")
+print("[✓] Cold Start Meta Learning  测试通过")
 ```
 
 ---

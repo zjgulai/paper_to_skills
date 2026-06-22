@@ -507,6 +507,7 @@ if __name__ == "__main__":
     test_cultural_annotator()
     test_pipeline()
     print("\nAll tests passed!")
+print("[✓] Cultural Data Collection 测试通过")
 ```
 
 ---

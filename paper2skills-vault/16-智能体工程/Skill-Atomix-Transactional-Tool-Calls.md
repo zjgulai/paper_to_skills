@@ -363,6 +363,7 @@ def test_wf_b_budget_atomic():
 if __name__ == "__main__":
     test_wf_a_po_transaction()
     test_wf_b_budget_atomic()
+print("[✓] Atomix Transactional Tool 测试通过")
 ```
 
 ---

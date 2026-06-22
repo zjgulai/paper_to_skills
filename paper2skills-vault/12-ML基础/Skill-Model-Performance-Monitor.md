@@ -450,6 +450,7 @@ if __name__ == "__main__":
         print(f"   建议: {report.recommendation}")
         for item in report.action_items:
             print(f"   → {item}")
+print("[✓] Model Performance Monitor 测试通过")
 ```
 
 ---

@@ -952,4 +952,5 @@ plt.plot(s[:10], 'o-')
 plt.xlabel("奇异值索引"); plt.ylabel("奇异值大小")
 plt.title("选择肘部位置作为 rank")
 # 通常 rank=3 对应母婴电商的 3 种主要购买意图
+print("[✓] Sparse Matrix Completion 测试通过")
 ```

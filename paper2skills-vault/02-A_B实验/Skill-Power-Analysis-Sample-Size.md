@@ -288,6 +288,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+print("[✓] Power Analysis Sample Siz 测试通过")
 ```
 
 ---

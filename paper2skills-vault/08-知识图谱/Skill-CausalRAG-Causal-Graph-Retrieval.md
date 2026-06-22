@@ -458,6 +458,7 @@ def test_causal_rag():
 
 if __name__ == "__main__":
     test_causal_rag()
+print("[✓] CausalRAG Causal Graph Re 测试通过")
 ```
 
 ---

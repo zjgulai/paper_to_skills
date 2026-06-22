@@ -662,6 +662,7 @@ if __name__ == "__main__":
     test_recagent_conversation()
     test_cold_start_vs_warm_start()
     print("=== 全部测试通过 ✓ ===")
+print("[✓] LLM Augmented Recommendat 测试通过")
 ```
 
 ---

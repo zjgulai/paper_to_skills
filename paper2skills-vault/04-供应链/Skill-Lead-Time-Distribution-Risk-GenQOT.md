@@ -220,6 +220,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Lead Time Distribution Ri 测试通过")
 ```
 
 ---

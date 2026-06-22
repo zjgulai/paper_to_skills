@@ -816,6 +816,7 @@ if __name__ == "__main__":
     test_embedding_compression()
     test_recfound_style_multitask()
     print("\n🎉 所有测试通过")
+print("[✓] Embedding Fundamentals 测试通过")
 ```
 
 ---

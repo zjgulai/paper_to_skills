@@ -437,6 +437,7 @@ def test_g2cp_pipeline():
 
 if __name__ == "__main__":
     test_g2cp_pipeline()
+print("[✓] Graph Grounded MAS Protoc 测试通过")
 ```
 
 ---

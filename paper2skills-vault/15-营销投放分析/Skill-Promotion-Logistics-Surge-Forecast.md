@@ -588,6 +588,7 @@ def test_surge_forecast():
 if __name__ == "__main__":
     np.random.seed(42)
     test_surge_forecast()
+print("[✓] Promotion Logistics Surge 测试通过")
 ```
 
 ---

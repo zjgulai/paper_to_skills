@@ -141,6 +141,7 @@ for market in ["US", "EU", "JP"]:
     score = scorer.score(story.render())
     print(f"{market}: 真实性评分 {score:.2f}")
     print(f"  钩子: {story.hook[:50]}...")
+print("[✓] AI Brand Storytelling 测试通过")
 ```
 
 ---

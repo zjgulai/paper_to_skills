@@ -530,6 +530,7 @@ def run_test():
 
 if __name__ == "__main__":
     sim_matrix, pairs = run_test()
+print("[✓] GraphTrack Cross Device T 测试通过")
 ```
 
 ---

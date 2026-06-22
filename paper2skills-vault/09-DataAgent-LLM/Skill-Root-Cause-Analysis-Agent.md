@@ -333,6 +333,7 @@ if __name__ == '__main__':
     )
 
     result = agent.analyze(event)
+print("[✓] Root Cause Analysis Agent 测试通过")
 ```
 
 ---

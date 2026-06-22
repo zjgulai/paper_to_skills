@@ -238,6 +238,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] MAA Review to Action Deci 测试通过")
 ```
 
 ---

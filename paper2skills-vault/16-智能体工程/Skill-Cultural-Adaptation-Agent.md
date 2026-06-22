@@ -108,6 +108,7 @@ response = agent.adapt_response(
     intent="refund_request"
 )
 print(response.tone)  # → "direct"
+print("[✓] Cultural Adaptation Agent 测试通过")
 ```
 
 ---

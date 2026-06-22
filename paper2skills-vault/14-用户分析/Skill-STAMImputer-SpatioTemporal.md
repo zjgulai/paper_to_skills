@@ -993,6 +993,7 @@ if __name__ == "__main__":
     test_moe_gating()
     test_full_imputation()
     print("\n全部测试通过 ✓")
+print("[✓] STAMImputer SpatioTempora 测试通过")
 ```
 
 ---

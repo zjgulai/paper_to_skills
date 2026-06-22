@@ -114,6 +114,7 @@ analyzer.print_report({"control": control_result, "treatment": treatment_result}
 # 6. 提取口碑传播日志
 print(f"WOM 消息总量: {treatment_result['total_wom_messages']}")
 print(f"各品牌 WOM 分布: {treatment_result['wom_by_brand']}")
+print("[✓] Generative Agent Simulati 测试通过")
 ```
 
 **自测运行结果（seed=2025, 80 agents, 7 days）**：

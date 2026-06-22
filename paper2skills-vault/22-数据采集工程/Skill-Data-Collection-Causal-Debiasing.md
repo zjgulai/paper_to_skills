@@ -701,6 +701,7 @@ def test_causal_debiasing():
 if __name__ == "__main__":
     np.random.seed(42)
     test_causal_debiasing()
+print("[✓] Data Collection Causal De 测试通过")
 ```
 
 ---

@@ -351,6 +351,7 @@ def test_ad_agent_cross_session_memory():
 
 if __name__ == "__main__":
     test_ad_agent_cross_session_memory()
+print("[✓] AgeMem Unified Agent Memo 测试通过")
 ```
 
 ---

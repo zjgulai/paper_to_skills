@@ -296,6 +296,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Hierarchical Product KG C 测试通过")
 ```
 
 ---

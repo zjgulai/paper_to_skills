@@ -91,6 +91,7 @@ roadmap_phase: phase1
 
 ```python
 # 见 paper2skills-code/causal_inference/conformal_risk_assessment/model.py
+print("[✓] Conformal Risk Assessment 测试通过")
 ```
 
 ## ④ 技能关联

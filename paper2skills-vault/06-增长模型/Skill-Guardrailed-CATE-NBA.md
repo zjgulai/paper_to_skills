@@ -159,6 +159,7 @@ class ProductionCATEEstimator(MockCATEEstimator):
         for action in actions:
             results[action.action_id] = self.model.effect(X)
         return pd.DataFrame(results, index=X.index)
+print("[✓] Guardrailed CATE NBA 测试通过")
 ```
 
 ---

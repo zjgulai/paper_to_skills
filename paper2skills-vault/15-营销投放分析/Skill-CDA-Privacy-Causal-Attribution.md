@@ -455,6 +455,7 @@ def test_cda_attribution() -> None:
 
 if __name__ == "__main__":
     test_cda_attribution()
+print("[✓] CDA Privacy Causal Attrib 测试通过")
 ```
 
 ---

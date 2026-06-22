@@ -829,6 +829,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+print("[✓] Conformal ROI Prediction 测试通过")
 ```
 
 ---

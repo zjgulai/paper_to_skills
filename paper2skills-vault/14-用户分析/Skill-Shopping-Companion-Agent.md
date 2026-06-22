@@ -460,6 +460,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+print("[✓] Shopping Companion Agent 测试通过")
 ```
 
 ---

@@ -267,6 +267,7 @@ class ScoringModel(nn.Module):
         features_flat = features.view(-1, feat_dim)
         scores_flat = self.network(features_flat).squeeze(-1)
         return scores_flat.view(batch_size, list_size)
+print("[✓] NeuralNDCG Learning to Ra 测试通过")
 ```
 
 完整可运行代码见 `paper2skills-code/recommendation/learning_to_rank/neural_ndcg.py`。

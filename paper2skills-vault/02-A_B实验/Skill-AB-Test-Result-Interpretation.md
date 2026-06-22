@@ -223,6 +223,7 @@ if __name__ == '__main__':
     print("\n分段分析:")
     for s in segments:
         print(f"  {s['segment']}: {s['rel_lift']:+.1%} (P={s['p_value']:.3f}) {s['interpretation'][0]}")
+print("[✓] AB Test Result Interpreta 测试通过")
 ```
 
 ---

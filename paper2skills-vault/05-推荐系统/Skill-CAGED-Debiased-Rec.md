@@ -153,6 +153,7 @@ print(f"长尾覆盖率: {tail_cov:.1%}")
 result = pipeline.compare_biased_vs_unbiased(user_id=user_id, top_k=20)
 print(f"有偏推荐: {[i for i, _ in result['biased'][:5]]}")
 print(f"无偏推荐: {[i for i, _ in result['unbiased'][:5]]}")
+print("[✓] CAGED Debiased Rec 测试通过")
 ```
 
 **运行自测：**

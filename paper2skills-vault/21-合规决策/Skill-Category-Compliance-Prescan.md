@@ -438,6 +438,7 @@ if __name__ == "__main__":
             print(f"  ⛔ 硬性门控触发（设计缺陷）")
         print(f"  决策: {result.decision}")
         print(f"  理由: {result.rationale}")
+print("[✓] Category Compliance Presc 测试通过")
 ```
 
 ---

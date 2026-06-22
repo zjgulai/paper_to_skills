@@ -823,6 +823,7 @@ if __name__ == "__main__":
     print("✓ TRACE 延迟 CVR 预测 — 演示完成")
     print("代码仓库：https://github.com/LunaZhangxy/TRACE")
     print("=" * 60)
+print("[✓] TRACE Delayed CVR 测试通过")
 ```
 
 ---

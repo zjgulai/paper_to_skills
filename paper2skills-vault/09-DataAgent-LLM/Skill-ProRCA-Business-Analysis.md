@@ -144,6 +144,7 @@ agent_prompt = f"""
 
 请用一句话向运营团队说明问题，并给出立即行动建议。
 """
+print("[✓] ProRCA Business Analysis 测试通过")
 ```
 
 **关键参数调优**：

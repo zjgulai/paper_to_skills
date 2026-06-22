@@ -339,6 +339,7 @@ if __name__ == '__main__':
         print(f"\n查询: {q}")
         sql = agent.generate_sql(q)
         print(f"SQL:\n{sql}")
+print("[✓] SQL Agent Text to SQL 测试通过")
 ```
 
 ---

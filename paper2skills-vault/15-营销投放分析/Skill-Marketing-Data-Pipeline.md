@@ -541,6 +541,7 @@ if __name__ == "__main__":
     test_identity_graph()
     test_pipeline()
     print("\nAll tests passed!")
+print("[✓] Marketing Data Pipeline 测试通过")
 ```
 
 ---

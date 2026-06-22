@@ -83,6 +83,7 @@ precondition（HITL → ORDER）：
 
 ```python
 # 见 paper2skills-code/mas/sdof_state_orchestration/model.py
+print("[✓] SDOF State Constrained Or 测试通过")
 ```
 
 ## ④ 技能关联

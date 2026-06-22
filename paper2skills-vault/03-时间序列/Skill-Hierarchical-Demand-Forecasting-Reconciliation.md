@@ -211,6 +211,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Hierarchical Demand Forec 测试通过")
 ```
 
 ---

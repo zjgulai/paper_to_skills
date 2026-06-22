@@ -114,6 +114,7 @@ print(f"原生回答:\n{result.native_response}")
 
 # 用户未点击 → 更新 alpha，增加用户体验权重
 system.auction_engine.update_alpha(user_clicked=False)
+print("[✓] Generative Audience LLM A 测试通过")
 ```
 
 **运行验证**（4 个用例全绿）：

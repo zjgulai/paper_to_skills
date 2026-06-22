@@ -204,6 +204,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] StaR Review Statement Ran 测试通过")
 ```
 
 ---

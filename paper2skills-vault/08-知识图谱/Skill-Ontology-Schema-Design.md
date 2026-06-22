@@ -662,6 +662,7 @@ print(f"违规数: {len(violations)}")  # 0
 evaluator = OntologyCoverageEvaluator(ontology)
 report = evaluator.report([instance])
 print(report)
+print("[✓] Ontology Schema Design 测试通过")
 ```
 
 ### 生产化建议

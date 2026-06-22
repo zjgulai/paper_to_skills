@@ -553,6 +553,7 @@ def run_all_tests():
 
 if __name__ == "__main__":
     run_all_tests()
+print("[✓] EPICSCORE Uncertainty 测试通过")
 ```
 
 ### 生产环境推荐替换

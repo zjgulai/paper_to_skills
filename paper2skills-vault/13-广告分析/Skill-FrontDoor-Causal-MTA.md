@@ -118,6 +118,7 @@ roas_df = compute_roas_correction(result, spend, total_revenue=500000)
 print(roas_df)
 # retarget_sms 原始ROAS=0.70，矫正ROAS=2.60 → 水分倍数=0.27
 # 说明 73% 的 ROAS 来自用户自身意愿，而非广告贡献
+print("[✓] FrontDoor Causal MTA 测试通过")
 ```
 
 **真实数据接入指南：**

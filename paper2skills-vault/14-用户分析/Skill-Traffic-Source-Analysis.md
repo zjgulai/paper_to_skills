@@ -682,6 +682,7 @@ def test_traffic_analysis():
 
 if __name__ == "__main__":
     test_traffic_analysis()
+print("[✓] Traffic Source Analysis 测试通过")
 ```
 
 ---

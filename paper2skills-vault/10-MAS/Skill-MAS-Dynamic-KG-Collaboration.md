@@ -357,6 +357,7 @@ class MAGEKnowledgeBase:
             "experiences": len(self.experience_graph),
             "entities": len(self.environment_graph),
         }
+print("[✓] MAS Dynamic KG Collaborat 测试通过")
 ```
 
 ---

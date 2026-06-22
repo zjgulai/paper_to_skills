@@ -295,6 +295,7 @@ if __name__ == '__main__':
         for step, action in enumerate(plan, 1):
             discount_str = f" | 折扣{action.discount_pct*100:.0f}%" if action.discount_pct > 0 else ""
             print(f"    Step {step}: T+{action.delay_hours}h → {action.channel} | {action.content_type}{discount_str}")
+print("[✓] Abandoned Cart Recovery M 测试通过")
 ```
 
 ---

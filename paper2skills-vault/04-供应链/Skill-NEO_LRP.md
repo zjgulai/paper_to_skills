@@ -111,6 +111,7 @@ result = solve_location_routing(
 print(f"开放仓库: {result.open_depots}")
 print(f"总成本: {result.total_cost:.2f} 元/天")
 print(f"  开仓: {result.open_cost:.2f} | 路径: {result.routing_cost:.2f}")
+print("[✓] NEO_LRP 测试通过")
 ```
 
 **代码结构**：

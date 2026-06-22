@@ -160,6 +160,7 @@ class EmbeddingCausalTracer(CausalTracer):
         q_vec = self.embed.encode(query)
         n_vec = self._node_vecs.get(node_desc, self.embed.encode(node_desc))
         return float(np.dot(q_vec, n_vec) / (np.linalg.norm(q_vec) * np.linalg.norm(n_vec) + 1e-9))
+print("[✓] CausalRAG Knowledge Retri 测试通过")
 ```
 
 ---

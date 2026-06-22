@@ -639,6 +639,7 @@ if __name__ == "__main__":
     
     # 业务场景演示
     run_business_demo()
+print("[✓] HGNN Cross Device Matchin 测试通过")
 ```
 
 **运行方式**：

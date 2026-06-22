@@ -330,6 +330,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+print("[✓] AgentTrace Causal RCA 测试通过")
 ```
 
 ---

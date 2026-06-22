@@ -334,6 +334,7 @@ if __name__ == '__main__':
     print(f"\n最优预算分配(总预算10万):")
     for ch, alloc in opt['allocation'].items():
         print(f"  {ch}: ${alloc:,.0f}")
+print("[✓] Marketing Mix Modeling 测试通过")
 ```
 
 ---

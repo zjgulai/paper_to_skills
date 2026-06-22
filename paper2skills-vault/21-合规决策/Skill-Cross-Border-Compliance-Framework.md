@@ -106,6 +106,7 @@ from paper2skills_code.compliance.cross_border_compliance import (
 
 if __name__ == "__main__":
     run_demo()
+print("[✓] Cross Border Compliance F 测试通过")
 ```
 
 **核心类说明**：

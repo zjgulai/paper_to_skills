@@ -427,6 +427,7 @@ def run_comparison_test():
 
 if __name__ == "__main__":
     run_comparison_test()
+print("[✓] Agentic Workflow Compilat 测试通过")
 ```
 
 ---

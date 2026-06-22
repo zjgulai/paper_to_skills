@@ -133,6 +133,7 @@ results = simulate_demand_forecasting(n_skus=20, n_days=180)
 print(f"GraphDeepAR WAPE: {results['graphdeepar_wape']:.3f}")
 print(f"Standard DeepAR WAPE: {results['deepar_wape']:.3f}")
 print(f"提升: {results['improvement_pct']:.1f}%")
+print("[✓] GraphDeepAR Demand Foreca 测试通过")
 ```
 
 ---

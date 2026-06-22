@@ -559,6 +559,7 @@ if __name__ == "__main__":
     test_quality_evaluator()
     test_pipeline()
     print("\nAll tests passed!")
+print("[✓] Visual Data Collection 测试通过")
 ```
 
 ---

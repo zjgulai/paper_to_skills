@@ -552,6 +552,7 @@ if __name__ == "__main__":
     print("所有测试通过 ✅")
     print("\n📋 场景二（断货风险）详细输出:")
     print(json.dumps(r2, ensure_ascii=False, indent=2))
+print("[✓] Flowr Supply Chain MAS 测试通过")
 ```
 
 ---

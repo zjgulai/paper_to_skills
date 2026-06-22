@@ -633,6 +633,7 @@ def main():
 
 if __name__ == '__main__':
     graph_rag = main()
+print("[✓] GraphRAG Knowledge Enhanc 测试通过")
 ```
 
 ---

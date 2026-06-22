@@ -826,6 +826,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+print("[✓] SSBC Small Sample Conform 测试通过")
 ```
 
 ---

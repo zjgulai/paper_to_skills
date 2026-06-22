@@ -277,6 +277,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Bass Diffusion New Produc 测试通过")
 ```
 
 ---

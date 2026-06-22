@@ -562,6 +562,7 @@ def demo_maternity_compliance() -> None:
 if __name__ == "__main__":
     run_tests()
     demo_maternity_compliance()
+print("[✓] RAPTOR Hierarchical RAG 测试通过")
 ```
 
 ---

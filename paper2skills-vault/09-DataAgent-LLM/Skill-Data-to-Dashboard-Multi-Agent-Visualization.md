@@ -360,6 +360,7 @@ class DataToDashboardAgent:
             "score": chart.score,
             "insight": chart.insight.description,
         }
+print("[✓] Data to Dashboard Multi A 测试通过")
 ```
 
 完整可运行代码见 `paper2skills-code/data_agent_llm/data_to_dashboard_agent/dashboard_agent.py`。

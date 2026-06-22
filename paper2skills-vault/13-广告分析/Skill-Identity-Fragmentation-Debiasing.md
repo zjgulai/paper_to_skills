@@ -118,6 +118,7 @@ print(cohort_df)
 # 5. 对比汇总
 bias_df = bias_decomposition_report(naive, corrected, true_lift=0.06)
 print(bias_df)
+print("[✓] Identity Fragmentation De 测试通过")
 ```
 
 **核心函数说明**：

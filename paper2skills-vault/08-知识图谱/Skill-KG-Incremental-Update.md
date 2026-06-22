@@ -683,6 +683,7 @@ for t in old:
 new = [TemporalTriple("p1", "hasPrice", "159.99", timestamp=time.time())]
 result = pipeline.run_update(old, new)
 print(result)  # {"status": "ok", "update_stats": {"updated": 1, ...}}
+print("[✓] KG Incremental Update 测试通过")
 ```
 
 ### 生产化建议

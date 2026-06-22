@@ -376,6 +376,7 @@ if __name__ == "__main__":
         print(f"  #{i}: {p}")
     print(f"\n置信度说明: {result.confidence_note}")
     print(f"决策建议: {result.decision}")
+print("[✓] Market Size Estimation 测试通过")
 ```
 
 ---

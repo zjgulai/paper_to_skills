@@ -610,6 +610,7 @@ def run_tests():
 
 if __name__ == "__main__":
     run_tests()
+print("[✓] RAG Reranking CrossEncode 测试通过")
 ```
 
 > **生产替换指引**：

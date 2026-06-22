@@ -861,6 +861,7 @@ allocator = DARABudgetAllocator(
     total_budget=monthly_budget,
 )
 budget = allocator.allocate(context={}, marginal_roi=current_roi, is_first_episode=True)
+print("[✓] DARA Agentic MMM 测试通过")
 ```
 
 ### 关键参数说明

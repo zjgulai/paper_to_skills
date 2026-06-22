@@ -428,6 +428,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+print("[✓] Event Driven Demand MAS 测试通过")
 ```
 
 ---

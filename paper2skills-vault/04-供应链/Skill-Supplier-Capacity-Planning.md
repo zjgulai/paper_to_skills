@@ -281,6 +281,7 @@ if __name__ == "__main__":
         print(f"{r['primary_ratio']:<8.0%} {r['backup_ratio']:<8.0%} "
               f"${r['total_cost']:<11,} {r['delay_risk']:<8.1%} "
               f"${r['stockout_loss_expected']:<11,} ${r['total_expected_cost']:<11,} {flag}")
+print("[✓] Supplier Capacity Plannin 测试通过")
 ```
 
 ---

@@ -373,6 +373,7 @@ if __name__ == '__main__':
         aov=100, margin=0.4, fixed_cost=500
     )
     print(optimal[['discount', 'incremental_orders', 'incremental_profit', 'incremental_roi']].to_string(index=False))
+print("[✓] Promotion Effectiveness 测试通过")
 ```
 
 ---

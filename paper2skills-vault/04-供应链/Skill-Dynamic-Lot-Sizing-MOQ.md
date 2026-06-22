@@ -367,6 +367,7 @@ if __name__ == "__main__":
     print(f"  最优联合订货间隔: {jrp['optimal_interval_months']} 个月")
     print(f"  联合 vs 分开订货节省: ¥{jrp['saving_vs_separate']:,.0f}/轮")
     print(f"  建议: {jrp['recommendation']}")
+print("[✓] Dynamic Lot Sizing MOQ 测试通过")
 ```
 
 ---

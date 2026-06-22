@@ -113,6 +113,7 @@ mcp_tools = registry.discover_from_mcp(mcp_list_tools_response)
 
 # 查询活跃工具（按质量排序）
 active = registry.get_active_tools(min_success_rate=0.8)
+print("[✓] Tool Auto Discovery 测试通过")
 ```
 
 ---

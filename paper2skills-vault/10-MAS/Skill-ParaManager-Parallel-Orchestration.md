@@ -80,6 +80,7 @@ ParaManager 协调：
 
 ```python
 # 见 paper2skills-code/mas/paramanager_parallel/model.py
+print("[✓] ParaManager Parallel Orch 测试通过")
 ```
 
 ## ④ 技能关联

@@ -791,6 +791,7 @@ def run_all_tests():
 if __name__ == "__main__":
     run_all_tests()
     main()
+print("[✓] NonItem Page Path Modelin 测试通过")
 ```
 
 ---

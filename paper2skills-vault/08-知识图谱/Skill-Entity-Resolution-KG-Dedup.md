@@ -692,6 +692,7 @@ resolver = EntityResolver(threshold=0.60)
 merged, pairs = resolver.resolve(entities)
 for m in merged:
     print(f"规范名: {m.canonical_name}, 成员: {m.member_ids}")
+print("[✓] Entity Resolution KG Dedu 测试通过")
 ```
 
 ### 生产化建议

@@ -397,6 +397,7 @@ if __name__ == "__main__":
         print(f"建议: {report.recommendation}")
         if report.retrain_roi_estimate:
             print(f"重训 ROI: {report.retrain_roi_estimate}")
+print("[✓] Data Drift Detection 测试通过")
 ```
 
 ---

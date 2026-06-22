@@ -427,6 +427,7 @@ class WKWCrawler:
             "pages_crawled": len(self.visited_urls),
             "knowledge_gaps": len(self.gap_analyzer.analyze_gaps(self.kg)),
         }
+print("[✓] LLM Focused Web Crawling 测试通过")
 ```
 
 ---

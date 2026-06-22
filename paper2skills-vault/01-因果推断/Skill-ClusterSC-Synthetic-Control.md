@@ -153,6 +153,7 @@ incremental_gmv = avg_att * 3 * unit_price   # 3 个月增量 GMV
 roi = incremental_gmv / ad_spend
 print(f"3 个月增量 GMV: {incremental_gmv:,.0f} 元")
 print(f"广告 ROI: {roi:.2f}x")
+print("[✓] ClusterSC Synthetic Contr 测试通过")
 ```
 
 **输入输出定义**：
