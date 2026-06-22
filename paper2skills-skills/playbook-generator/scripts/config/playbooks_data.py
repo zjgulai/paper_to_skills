@@ -1961,4 +1961,212 @@ TOB_PLAYBOOKS = [
             "极端风险场景提前准备，避免被动应对",
         ],
     },
+    {
+        "id": "pb-asin-traffic-diagnosis",
+        "icon": "🔍",
+        "name": "ASIN流量诊断手册",
+        "tag": "搜索流量 · 关键词 · 排名优化",
+        "desc": "从关键词排名跌落到ASIN被合并：系统性诊断Amazon流量异常的6步排查框架",
+        "intro": "ASIN流量突然下降30%是每个卖家的噩梦。但「流量下降」是结果，真正的原因可能是：关键词排名跌出Page 1、竞品截流、Review踩雷导致转化率崩溃、季节性流量迁移、或是Amazon算法更新。不同原因对应完全不同的处理方案。本手册提供系统性的6步诊断框架，帮助你在48小时内定位真正病因并开始干预。",
+        "steps": [
+            {
+                "step": "Step 1 — 流量基线诊断（发现异常后立即执行）",
+                "problem": "不知道流量下降是哪个环节出了问题：展示量、点击率还是转化率",
+                "skills": [
+                    {"id": "Skill-Amazon-Traffic-Funnel-Attribution", "why": "将流量拆解为「曝光→点击→加购→购买」漏斗，定位断层位置"},
+                    {"id": "Skill-Search-Keyword-Rank-Tracking", "why": "追踪核心关键词排名变化：哪些词排名跌落了，跌了多少位"},
+                ],
+                "data": "需要：Brand Analytics数据（过去30天 vs 上期）、Search Query Performance报告",
+                "output": "流量诊断报告：漏斗断层位置 + 排名跌落词列表 + 异常时间点定位",
+            },
+            {
+                "step": "Step 2 — 竞品截流分析（确认是否被竞品截走流量）",
+                "problem": "自己的词排名没变但流量下降，可能是竞品广告抢占了展示份额",
+                "skills": [
+                    {"id": "Skill-Competitive-Price-Monitoring", "why": "检查竞品是否发动价格战，吸引了你的目标用户"},
+                    {"id": "Skill-Amazon-A9-Algorithm-Traffic-Prediction", "why": "分析A9算法权重变化：销量速度下降导致排名被算法惩罚的负向循环"},
+                ],
+                "data": "需要：竞品ASIN列表、竞品价格历史、广告市场份额数据",
+                "output": "竞品威胁评估报告 + 流量被截份额估算 + 应对策略建议",
+            },
+            {
+                "step": "Step 3 — Listing健康度检查（排查内部因素）",
+                "problem": "流量来了但转化率暴跌，可能是Review差评、主图质量下降或价格异常",
+                "skills": [
+                    {"id": "Skill-Amazon-Index-Health-Monitor", "why": "确认关键词是否被索引、Listing是否被降权、变体是否被强制合并"},
+                    {"id": "Skill-Review-Sentiment-Growth-Trigger", "why": "监控最新差评是否集中在某个具体问题，导致转化率崩溃"},
+                ],
+                "data": "需要：Listing审计数据、最新Review、主图CTR变化",
+                "output": "Listing健康评分 + 关键问题清单 + 快速修复优先级",
+            },
+            {
+                "step": "Step 4 — 广告覆盖诊断（广告是否在支撑自然流量）",
+                "problem": "停掉某个广告活动后自然流量也下降——说明广告在支撑自然排名",
+                "skills": [
+                    {"id": "Skill-Search-Traffic-Ad-Organic-Synergy", "why": "拆解自然流量和广告流量的协同关系：广告ROI不高但撤掉会损失更多自然流量"},
+                    {"id": "Skill-Search-Traffic-Funnel-Attribution", "why": "重新分配广告预算：优先保住「排名支撑型」关键词，再优化「纯ROI型」词"},
+                ],
+                "data": "需要：广告流量贡献率、关键词自然/广告流量比、ACOS趋势",
+                "output": "广告-自然流量依存矩阵 + 广告撤出风险评估 + 预算重分配方案",
+            },
+            {
+                "step": "Step 5 — 季节性与类目趋势分析（排查外部因素）",
+                "problem": "不知道流量下降是自己的问题还是整个类目都在下降（季节性）",
+                "skills": [
+                    {"id": "Skill-Amazon-Category-Trend-Forecasting", "why": "对比品类整体搜索趋势：类目流量下降是行业问题，类目不变但自己下降是竞争问题"},
+                    {"id": "Skill-Long-Tail-Keyword-Mining", "why": "季节性切换期：核心词流量萎缩时，提前布局下一季节长尾词维持曝光"},
+                ],
+                "data": "需要：Google Trends、Amazon类目搜索量历史、Keepa销量历史",
+                "output": "季节性流量周期报告 + 类目vs自身流量对比 + 下一周期提前布局清单",
+            },
+            {
+                "step": "Step 6 — 干预方案执行与效果追踪",
+                "problem": "找到原因后如何快速干预并追踪恢复效果",
+                "skills": [
+                    {"id": "Skill-Search-Index-Health-Keyword-Recovery", "why": "针对排名跌落词快速恢复策略：提升相关性分（Listing优化）+ 销量速度（促销）"},
+                    {"id": "Skill-Amazon-Traffic-Funnel-Attribution", "why": "设置恢复追踪仪表板：每48小时监控漏斗指标，确认干预有效"},
+                ],
+                "data": "需要：干预执行记录、实时流量数据",
+                "output": "恢复进度追踪报告 + 下次预防清单 + ASIN健康度评分基准",
+            },
+        ],
+        "outcomes": [
+            "流量异常响应时间从「发现→7天研究→干预」→「发现→48小时定位→干预」",
+            "因诊断不准确导致的无效广告投入减少50%（精准定位原因后精准治疗）",
+            "季节性流量切换提前2-3周准备，减少过渡期收入损失",
+            "建立ASIN流量健康监控SOP，预防性发现问题而非被动应对",
+        ],
+    },
+    {
+        "id": "pb-multi-account-risk-defense",
+        "icon": "🛡️",
+        "name": "多账号风险防御手册",
+        "tag": "账号安全 · 关联风险 · 合规运营",
+        "desc": "Amazon多账号关联封号：系统性防御框架，从网络隔离到行为去关联的全链路风控",
+        "intro": "Amazon对多账号运营的打击是持续性的：同一IP登录、同一支付方式、相似的定价策略、甚至相同的客服话术都可能触发关联检测。一旦被认定多账号，所有账号资金同时冻结，损失可能是数年的积累。本手册从技术层、运营层、财务层三个维度提供全链路防御框架。",
+        "steps": [
+            {
+                "step": "Step 1 — 账号关联风险自检（每季度执行）",
+                "problem": "不知道自己的账号组合有哪些潜在关联点，无法评估封号风险",
+                "skills": [
+                    {"id": "Skill-Multi-Account-Association-Detection", "why": "扫描账号组合的关联特征：共享设备指纹、IP段、登录时间模式、绑定银行账户"},
+                    {"id": "Skill-Account-Risk-Profile-Scoring", "why": "生成每个账号的风险评分：根据Amazon关联检测算法逆向构建的风险因子模型"},
+                ],
+                "data": "需要：各账号的登录IP记录、支付方式、店铺设置配置",
+                "output": "账号关联风险矩阵 + 高风险关联点清单 + 优先整改排序",
+            },
+            {
+                "step": "Step 2 — 技术层隔离（基础设施整改）",
+                "problem": "知道要隔离但不知道哪些技术因素Amazon能检测到",
+                "skills": [
+                    {"id": "Skill-Device-Fingerprint-Isolation", "why": "识别Amazon可检测的设备特征：浏览器指纹/Canvas指纹/字体列表/时区，以及对应的隔离方案"},
+                    {"id": "Skill-Network-Topology-Risk-Mapping", "why": "分析网络拓扑风险：同一机房IP/同一ISP/住宅IP vs 数据中心IP的风险差异"},
+                ],
+                "data": "需要：当前IP方案、设备配置、登录行为日志",
+                "output": "技术隔离整改清单 + 成本估算 + 优先级排序",
+            },
+            {
+                "step": "Step 3 — 运营行为去关联",
+                "problem": "技术隔离做了但运营行为模式相同，依然被关联",
+                "skills": [
+                    {"id": "Skill-Behavioral-Pattern-Divergence", "why": "让不同账号的运营行为模式产生可信差异：定价策略/促销节奏/客服话术/广告投放时间"},
+                    {"id": "Skill-Account-Health-Proactive-Monitor", "why": "主动监控账号健康指标，在Amazon发出警告前发现异常信号"},
+                ],
+                "data": "需要：各账号的运营SOP、广告策略、定价规则",
+                "output": "账号差异化运营规范 + 行为隔离检查清单 + 风险行为预警规则",
+            },
+            {
+                "step": "Step 4 — 财务层隔离（资金防护）",
+                "problem": "账号被关联封号后，所有账号的资金同时被冻结，现金流断裂",
+                "skills": [
+                    {"id": "Skill-Multi-Account-Financial-Firewall", "why": "构建账号间的财务防火墙：独立银行账户/不同支付主体/资金提现节奏设计"},
+                    {"id": "Skill-FX-Exposure-Measurement", "why": "评估封号场景下的资金损失：多少资金在Amazon在途，封号时如何快速申请提款"},
+                ],
+                "data": "需要：各账号资金结构、提款历史、在途资金规模",
+                "output": "财务隔离方案 + 最坏情景下资金损失估算 + 应急提款流程",
+            },
+            {
+                "step": "Step 5 — 合规建档与申诉准备",
+                "problem": "万一被误判关联，没有充分证据证明两个账号是合理独立运营",
+                "skills": [
+                    {"id": "Skill-Amazon-Account-Appeal-Strategy", "why": "建立平时的合规证据档案：独立经营证明/不同供应链/不同用户群，申诉时可调取"},
+                    {"id": "Skill-CPSC-HTS-Code-Risk-Classifier", "why": "如果涉及品类合规，确保不同账号的合规文件独立，避免文件关联带来账号关联"},
+                ],
+                "data": "需要：各账号的商业注册信息、独立经营证据链",
+                "output": "合规建档包 + 申诉材料模板 + 定期更新SOP",
+            },
+        ],
+        "outcomes": [
+            "账号关联风险点从「不透明」→「可量化评分」，可主动管控",
+            "技术隔离完成后，IP/设备关联风险降低85%",
+            "财务防火墙实施后，单账号封号的资金损失上限控制在月流水15%以内",
+            "合规档案建立后，误判申诉成功率提升60%",
+        ],
+    },
+    {
+        "id": "pb-d2c-brand-building",
+        "icon": "🏷️",
+        "name": "DTC品牌建设手册",
+        "tag": "品牌 · 独立站 · 私域流量",
+        "desc": "从Amazon卖家到DTC品牌：品牌溢价建设、独立站流量获取、私域复购体系的系统化路径",
+        "intro": "90%的跨境卖家陷在Amazon平台依赖的陷阱里：流量成本逐年上涨、佣金不断提高、品牌没有任何积累。DTC品牌建设不是「做个独立站」这么简单，而是建立「Amazon导流→独立站收割→私域复购→品牌溢价」的完整飞轮。本手册提供从0到1的系统化路径，帮助年GMV在500万-5000万美元的卖家实现品牌化转型。",
+        "steps": [
+            {
+                "step": "Step 1 — 品牌资产诊断（转型前必做）",
+                "problem": "不知道自己的「品牌」值多少，是否有用户愿意主动搜索我的品牌词",
+                "skills": [
+                    {"id": "Skill-Brand-Search-Volume-Tracker", "why": "追踪品牌词搜索量趋势：品牌词搜索量增长是品牌建设最直接的ROI衡量指标"},
+                    {"id": "Skill-Cross-Platform-Brand-Search-Volume", "why": "跨平台品牌声量分析：Amazon/Google/TikTok/Instagram上用户主动搜索你的频率"},
+                ],
+                "data": "需要：Amazon品牌词搜索量、Google Search Console数据、社媒提及量",
+                "output": "品牌资产基线报告 + 品牌认知地图 + 竞品品牌对比",
+            },
+            {
+                "step": "Step 2 — 用户群体精准画像（找到品牌核心用户）",
+                "problem": "不知道谁才是最愿意为品牌付溢价的核心用户，盲目做品牌浪费预算",
+                "skills": [
+                    {"id": "Skill-RFM-Customer-Segmentation", "why": "从Amazon订单中识别高价值复购用户：他们是最可能转化为DTC用户的核心群体"},
+                    {"id": "Skill-LTV-Prediction-ZILN", "why": "预测不同用户群的DTC平台LTV：哪类用户在脱离平台后仍有高价值"},
+                ],
+                "data": "需要：Amazon订单历史（3年以上）、用户购买品类组合、复购频率",
+                "output": "核心用户画像报告 + DTC转化潜力评分 + 优先触达用户名单",
+            },
+            {
+                "step": "Step 3 — 独立站流量获取（从Amazon引流）",
+                "problem": "独立站建好了但没有流量，Amazon规则不允许直接引流，如何合规操作",
+                "skills": [
+                    {"id": "Skill-Geo-Generative-Engine-Optimization", "why": "GEO优化：让AI搜索引擎（ChatGPT/Perplexity）推荐你的品牌，这是最新的品牌流量来源"},
+                    {"id": "Skill-KOL-Creator-Matching", "why": "通过KOL/UGC创造器内容引流独立站：合规且高效的站外流量获取路径"},
+                ],
+                "data": "需要：独立站当前流量数据、Amazon外部流量报告",
+                "output": "多渠道流量获取方案 + 各渠道ROI预估 + 90天流量增长路线图",
+            },
+            {
+                "step": "Step 4 — 私域复购体系搭建",
+                "problem": "用户来到独立站买了一次，没有后续联系，白白流失",
+                "skills": [
+                    {"id": "Skill-Email-Sequence-Multiarm-Optimizer", "why": "搭建自动化邮件序列：首购欢迎→产品使用指南→15天跟进→30天复购触发"},
+                    {"id": "Skill-RFM-Segment-Campaign-Dispatcher", "why": "基于RFM分层的差异化运营：高价值用户VIP计划，流失风险用户挽回序列"},
+                ],
+                "data": "需要：邮件列表、用户购买历史、产品使用周期",
+                "output": "私域运营SOP + 邮件序列模板集 + 复购率提升预测",
+            },
+            {
+                "step": "Step 5 — 品牌溢价量化与提价策略",
+                "problem": "不知道品牌已经建立到什么程度，能否开始提价而不损失销量",
+                "skills": [
+                    {"id": "Skill-Willingness-To-Pay-Estimation", "why": "通过A/B测试或Conjoint分析估算用户的品牌溢价支付意愿"},
+                    {"id": "Skill-Elasticity-Based-Repricing-Gate", "why": "在提价前验证价格弹性：品牌建设成功的标志是弹性从>1.5降至<1.0"},
+                ],
+                "data": "需要：A/B测试数据或Conjoint调研、当前价格弹性基线",
+                "output": "品牌溢价估算报告 + 分步提价方案 + 提价风险评估",
+            },
+        ],
+        "outcomes": [
+            "品牌词搜索量从0基线建立，6个月内实现月增长20%+",
+            "独立站GMV占总GMV比例从0%→15-25%（12个月）",
+            "私域用户复购率（独立站）高于Amazon平台30-50%",
+            "品牌溢价实现：同等产品定价比无品牌竞品高15-25%",
+        ],
+    },
 ]
