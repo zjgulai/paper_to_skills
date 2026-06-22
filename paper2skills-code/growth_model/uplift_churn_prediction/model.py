@@ -258,7 +258,7 @@ class UpliftMetrics:
         thresholds, qini = UpliftMetrics.qini_curve(y_true, uplift, treatment)
         
         # 计算曲线下的面积
-        auuc = np.trapz(qini, thresholds)
+        auuc = np.trapezoid(qini, thresholds)
         
         return auuc
     
@@ -281,8 +281,8 @@ class UpliftMetrics:
         random_qini = (y_t_sum / n_t - y_c_sum / n_c) * thresholds * n
         
         # Qini系数
-        qini_auc = np.trapz(qini, thresholds)
-        random_auc = np.trapz(random_qini, thresholds)
+        qini_auc = np.trapezoid(qini, thresholds)
+        random_auc = np.trapezoid(random_qini, thresholds)
         
         if random_auc == 0:
             return 0

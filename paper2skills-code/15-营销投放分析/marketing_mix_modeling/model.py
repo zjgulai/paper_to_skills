@@ -56,7 +56,7 @@ class SimpleMMM:
         for ch in channels:
             # Adstock
             adstock = AdstockTransformer(
-                decay=self.adstock_params.get(ch, 0.5)
+                decay_rate=self.adstock_params.get(ch, 0.5)
             ).transform(spend_df[ch].values)
             # Hill饱和
             hill = HillSaturation(

@@ -1,0 +1,122 @@
+id: wf-m
+name: WF-M 新品上市全链路
+description: 从蓝海关键词发现到首月排名突破的完整新品上市 7 步决策链，覆盖关键词研究、排名因子分析、多语言 Listing 生成、图片质量门控、合规预扫描、SEO 评分和广告协同七个核心环节。
+target_users:
+  - 选品运营
+  - 品牌增长负责人
+  - 跨境电商数据科学家
+entry_question: 你目前新品上市最大的卡点在哪里？
+steps:
+  - id: step-1
+    name: 蓝海关键词发现
+    question: 是否已确定目标竞品 ASIN 集合？
+    context: 分析竞品反查关键词，筛选搜索量 > 5000 且竞争度 < 0.5 的蓝海机会词
+    branches:
+      - condition: 有 10+ 竞品 ASIN + 目标市场已确定
+        skills:
+          - id: Skill-Keyword-Demand-Gap-Analysis
+            role: 蓝海关键词发现，gap_score 评分筛选
+          - id: Skill-Blue-Ocean-Category-Discovery
+            role: 品类级蓝海机会识别，避开红海竞争
+        next: step-2
+      - condition: 新品类探索（无竞品参照）
+        skills:
+          - id: Skill-Category-Trend-Forecasting
+            role: 趋势预测识别新兴品类机会
+          - id: Skill-Cold-Start-Product-Recommendation
+            role: 冷启动条件下的相似品类迁移
+        next: step-2
+  - id: step-2
+    name: 排名因子分析
+    question: 目标品类 Top 10 Listing 有哪些共同特征？
+    context: 提取影响 A9 排名的关键因子，指导后续 Listing 创作
+    skills:
+      - id: Skill-Amazon-Search-Ranking-Factor-Model
+        role: Top10 共同排名因子提取（图片/评论/关键词密度）
+      - id: Skill-Listing-Semantic-Relevance-Scoring
+        role: 语义相关性预评估，确认关键词方向
+  - id: step-3
+    name: 多语言 Listing 生成
+    question: 目标市场语言覆盖是否完整？
+    context: 基于关键词和排名因子生成高质量多语言 Listing，确保 A9 语义相关性
+    branches:
+      - condition: 进入北美（EN）单语言市场
+        skills:
+          - id: Skill-Multilingual-Listing-Generation
+            role: EN 高质量 Listing，关键词密度 2-3%
+        next: step-4
+      - condition: 同时进入欧洲多语言市场（DE/FR/ES）
+        skills:
+          - id: Skill-Multilingual-Listing-Generation
+            role: 多语言 Listing 批量生成（EN/DE/FR/ES）
+          - id: Skill-Cross-Border-Cold-Start-Forecast
+            role: 跨境市场需求迁移预测，优先语言市场排序
+        next: step-4
+  - id: step-4
+    name: 主图质量门控
+    question: 产品主图是否符合平台规范和转化率标准？
+    context: 严格审查主图质量，不通过则退回修改，是上架前的硬性 Gate Check
+    skills:
+      - id: Skill-Product-Image-Quality-Assessment
+        role: 主图质检（纯白背景/产品占比/无水印/分辨率）
+      - id: Skill-Listing-Semantic-Relevance-Scoring
+        role: 图文一致性检验，确保主图与标题关键词匹配
+  - id: step-5
+    name: 合规预扫描
+    question: 产品是否涉及受限类目或特殊认证要求？
+    context: 上架前合规检查，提前发现问题避免上架后被下架损失
+    branches:
+      - condition: 母婴类产品（安全认证要求严格）
+        skills:
+          - id: Skill-Category-Compliance-Prescan
+            role: 儿童产品安全合规预扫（FDA/CE/EN标准）
+          - id: Skill-Agent-Safety-Guardrails
+            role: 合规检测 Agent 兜底扫描，确认风险项
+        next: step-6
+      - condition: 普通消费品（合规要求标准）
+        skills:
+          - id: Skill-Category-Compliance-Prescan
+            role: 标准合规预扫描，识别材料/标签要求
+        next: step-6
+  - id: step-6
+    name: SEO 相关性评分
+    question: Listing 整体 SEO 质量是否达到上架标准（≥7/10）？
+    context: 综合评分，低于 7 分退回修改对应模块
+    skills:
+      - id: Skill-Listing-Semantic-Relevance-Scoring
+        role: 综合 SEO 评分（关键词覆盖/语义相关/五点质量）
+      - id: Skill-Keyword-Demand-Gap-Analysis
+        role: 补充遗漏高价值关键词，提升覆盖率
+  - id: step-7
+    name: 广告+自然流量协同
+    question: 首月广告策略如何设计才能最大化排名突破速度？
+    context: 制定首月广告+自然流量协同预算，建立初始评论 & 排名飞轮
+    branches:
+      - condition: 预算充足（首月 > $3000 广告费）
+        skills:
+          - id: Skill-Search-Ad-Budget-ROI-Integration
+            role: 广告+自然协同预算分配，避免自我蚕食
+          - id: Skill-Combo-New-Product-Launch-Playbook
+            role: 完整 7 步 Combo 编排验证，确认上市准备就绪
+        next: step-measure
+      - condition: 预算受限（首月 < $3000）
+        skills:
+          - id: Skill-Search-Ad-Budget-ROI-Integration
+            role: 低预算高效投放策略（长尾关键词优先）
+          - id: Skill-Multi-Platform-Ad-Budget-Allocator
+            role: 有限预算跨平台最优分配
+        next: step-measure
+  - id: step-measure
+    name: 首月效果追踪
+    question: 上架后第 7/14/30 天排名和转化是否符合预期？
+    context: 建立上市效果追踪仪表盘，及时调整关键词出价和广告策略
+    skills:
+      - id: Skill-Anomaly-Detection-Foundation-Model
+        role: 实时监控 BSR/转化率异常，早期预警
+      - id: Skill-Amazon-Search-Ranking-Factor-Model
+        role: 排名变化归因，识别改善和恶化的因子
+outcomes:
+  - 首月自然排名从第 500+ 位突破至 Top 50，概率从 22% 提升至 65%
+  - 广告 ACoS 从 45% 降至 26%（-42%），同等预算产出提升 1.7x
+  - 合规风险提前拦截，避免上架后下架损失（单次约 3-10 万元）
+  - 多语言 Listing 覆盖率 100%，欧洲市场流量损失 < 5%

@@ -66,6 +66,8 @@ class SkillEdge:
     target: str
     edge_type: str  # 'prerequisite', 'extension', 'combinable'
     weight: float = 1.0
+    domain_relevance: float = 1.0  # 跨域关联度：跨 domain 的边若命中核心博弈或非共识映射，权重上升
+    biz_confidence: float = 1.0    # 商业置信度：来源于业务落地数据的反向赋权（例如被高频 Solution 引用或在实盘有极高 ROI）
 
 
 class SkillsGraph:

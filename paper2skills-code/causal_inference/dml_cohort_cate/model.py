@@ -47,7 +47,7 @@ def fit_dml_cohort_cate(X: np.ndarray, D: np.ndarray, Y: np.ndarray, psi: np.nda
         raise ImportError("Install econml: pip install econml")
     model = LinearDML(
         model_y=GradientBoostingRegressor(n_estimators=100),
-        model_t=GradientBoostingClassifier(n_estimators=100),
+        model_t=GradientBoostingRegressor(n_estimators=100),
         featurizer=None,
         cv=3,
         random_state=42,

@@ -1,0 +1,121 @@
+id: wf-o
+name: WF-O 广告ROI最大化
+description: 从多触点归因修正到 Agent 自动预算优化的广告 ROI 最大化 6 步决策链，覆盖归因去偏、价格弹性校准、MMM 饱和度分析、跨平台预算分配、自然+付费协同和 Agent 持续优化六个环节，适用于月度广告支出 ≥ $5,000 的跨境品牌。
+target_users:
+  - 广告投放运营
+  - 增长数据科学家
+  - 品牌 CMO / 营销负责人
+entry_question: 你当前最大的广告 ROI 问题是什么？
+steps:
+  - id: step-1
+    name: 归因诊断与修正
+    question: 当前广告平台上报的 ROAS 是否可信？
+    context: 平台自报归因普遍存在虚报偏差（TikTok/Meta 末次点击高估 30-50%），需要进行因果化修正
+    branches:
+      - condition: 有 A/B 实验数据（开/关广告组对照）
+        skills:
+          - id: Skill-Ad-Attribution-Modeling
+            role: 实验驱动的真实归因，消除混淆偏差
+          - id: Skill-DiD-Difference-in-Differences
+            role: 双重差分估计广告净效应（开广告 vs 关广告组）
+        next: step-2
+      - condition: 仅有观测数据（无实验）
+        skills:
+          - id: Skill-Ad-Attribution-Modeling
+            role: Shapley 值近似归因，各渠道贡献分解
+          - id: Skill-Causal-Attribution-Bridge
+            role: 因果归因替代 naive 末次点击，去除渠道间相关性偏差
+          - id: Skill-CDA-Privacy-Causal-Attribution
+            role: 无 Cookie 环境下的隐私安全归因（适用于欧洲市场）
+        next: step-2
+      - condition: 多触点归因窗口冲突（同一用户被多渠道重复计算）
+        skills:
+          - id: Skill-PIE-Experimental-MTA
+            role: 实验驱动的多触点归因，解决窗口重叠问题
+          - id: Skill-FrontDoor-Causal-MTA
+            role: 前门准则多触点因果归因
+        next: step-2
+  - id: step-2
+    name: 价格弹性校准
+    question: 广告引流配合折扣活动时，净利润是增加还是减少？
+    context: 高弹性产品降价促销可放大广告效果，但需要计算盈亏平衡点，避免「越卖越亏」
+    skills:
+      - id: Skill-Price-Elasticity-Estimation
+        role: 产品价格弹性系数估计（ε），识别价格敏感型 vs 品牌忠诚型
+      - id: Skill-Competitive-Response-Modeling
+        role: 竞品价格响应预测，确认降价不会触发价格战
+  - id: step-3
+    name: MMM 饱和度分析
+    question: 各渠道当前投入是否已经超过边际收益最优点？
+    context: 识别过度投入的饱和渠道（边际 ROI 接近 0），找到欠投资的高潜力渠道
+    branches:
+      - condition: 有 90 天以上多渠道广告数据
+        skills:
+          - id: Skill-Marketing-Mix-Modeling
+            role: Hill 函数拟合各渠道饱和曲线，找边际 ROI 最优区间
+          - id: Skill-Channel-Saturation-Curve
+            role: 渠道饱和曲线精确建模，识别「资金黑洞」渠道
+        next: step-4
+      - condition: 数据不足（< 90天）或新渠道
+        skills:
+          - id: Skill-Marketing-Mix-Modeling
+            role: 贝叶斯 MMM（少数据场景），结合先验信息估计饱和度
+          - id: Skill-Causal-Discovery-PC-Algorithm
+            role: 渠道间因果结构发现，识别间接效果
+        next: step-4
+  - id: step-4
+    name: 跨平台预算最优分配
+    question: 如何在亚马逊 SP/SB/SD、TikTok、Google 等渠道间最优分配预算？
+    context: 拉格朗日最优化：在总预算约束下，使各渠道边际 ROI 相等（Equi-marginal principle）
+    skills:
+      - id: Skill-Multi-Platform-Ad-Budget-Allocator
+        role: 跨平台预算最优分配（考虑饱和曲线 + 修正后 ROAS）
+      - id: Skill-Search-Ad-Budget-ROI-Integration
+        role: 亚马逊内部 SP/SB/SD 三类型广告资源分配
+  - id: step-5
+    name: 自然+付费协同优化
+    question: 付费广告是否在蚕食原本属于自然排名的流量？
+    context: 自我蚕食（cannibalization）是广告效率损失的隐性原因，识别并消除
+    branches:
+      - condition: 同一关键词同时有自然 Top3 和付费广告位
+        skills:
+          - id: Skill-Search-Ad-Budget-ROI-Integration
+            role: 自我蚕食检测 + 付费出价压低策略（节省蚕食部分预算）
+          - id: Skill-IV-Instrumental-Variables
+            role: 工具变量法分离自然 vs 付费转化真实归因
+        next: step-6
+      - condition: 自然排名较低（Page 2+），付费是主要流量来源
+        skills:
+          - id: Skill-Search-Ad-Budget-ROI-Integration
+            role: 全付费驱动策略，建立排名飞轮（评论 → 自然排名提升）
+          - id: Skill-Keyword-Demand-Gap-Analysis
+            role: 识别自然排名可突破的长尾词，减少付费依赖
+        next: step-6
+  - id: step-6
+    name: Agent 持续自动优化
+    question: 如何建立自动化机制让广告 ROI 持续改善？
+    context: 将前 5 步的模型封装为 Agent，实现每周自动数据读取 → 模型更新 → 预算调整闭环
+    skills:
+      - id: Skill-DARA-Agentic-MMM-Optimizer
+        role: Agent 化 MMM，每周自动更新饱和曲线，触发预算重分配
+      - id: Skill-Agent-Observability-Tracing
+        role: Agent 执行可观测性，记录每次调整的决策链路和效果追踪
+      - id: Skill-Combo-Ad-ROI-Maximizer
+        role: Combo Pattern 全链路 Agent 编排，整合前 5 步为自动化 Pipeline
+  - id: step-measure
+    name: ROI 改善效果验证
+    question: 优化后第 30/60/90 天 ROAS 是否持续改善？
+    context: 严格评估归因修正 + 预算重分配的实际效果，避免表面 ROAS 上涨掩盖实际问题
+    skills:
+      - id: Skill-DiD-Difference-in-Differences
+        role: 对照实验验证预算调整的真实因果效果（holdout 组对比）
+      - id: Skill-Switchback-Experiment-Design
+        role: 时间序列实验设计，控制季节性干扰评估 Agent 优化效果
+      - id: Skill-Ad-Attribution-Modeling
+        role: 定期重新校准归因模型，防止市场变化导致模型漂移
+outcomes:
+  - 归因修正后真实 ROAS 比平台上报提升准确性 30-50%（减少虚假高 ROAS 渠道的过度投入）
+  - 预算重分配后综合 ROAS 提升 40-65%（月广告费 $20,000 级别约增收 $16,000-$26,000）
+  - 自我蚕食率平均下降 15pp，付费广告不再侵占自然流量
+  - Agent 自动化后运营每周节省 8-12 小时人工分析调整时间
+  - 年化 ROI：实施成本 3-5 万元，预期收益 150-300 万元，ROI 30-60x

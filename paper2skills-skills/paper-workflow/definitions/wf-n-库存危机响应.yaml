@@ -1,0 +1,119 @@
+id: wf-n
+name: WF-N 库存危机响应
+description: 从异常检测触发到物流路由决策的库存危机 5 步自动响应链，专门处理断货危机（DSI < 14天）和积压危机（库龄 > 90天积压率 > 30%）两类紧急场景，要求在 4 小时内完成决策闭环。
+target_users:
+  - 供应链数据科学家
+  - 库存/采购运营
+  - 供应链负责人
+entry_question: 当前库存是断货风险还是积压问题？
+steps:
+  - id: step-1
+    name: 异常检测与危机定性
+    question: 当前库存异常是什么类型？
+    context: 快速诊断危机类型，是断货危机（DSI < 14天）还是积压危机（库龄 > 90天），精准触发对应响应链
+    branches:
+      - condition: DSI < 14天 且 销售速度未下滑
+        skills:
+          - id: Skill-Anomaly-Detection-Foundation-Model
+            role: 断货风险检测，计算修正后真实 DSI（考虑即将到来的需求峰值）
+          - id: Skill-Inventory-Health-Aging-Attribution
+            role: 紧急健康诊断，识别断货根因（预测误差/备货不足/销速突增）
+        next: step-2
+      - condition: 库龄 > 90天库存占比 > 30%
+        skills:
+          - id: Skill-Inventory-Health-Aging-Attribution
+            role: 积压根因四分类归因（需求误判/滞销/竞品冲击/季节性错判）
+          - id: Skill-Anomaly-Detection-Foundation-Model
+            role: 销速异常检测，判断积压是否仍在加深
+        next: step-2
+      - condition: 混合危机（断货 + 其他 SKU 积压）
+        skills:
+          - id: Skill-Anomaly-Detection-Foundation-Model
+            role: 全SKU异常扫描，按危机类型分流
+          - id: Skill-Inventory-Health-Aging-Attribution
+            role: 库存组合健康度总览，优先级排序
+        next: step-2
+  - id: step-2
+    name: 需求重新预测
+    question: 是否处于大促 / 旺季前期（距离高峰 < 45 天）？
+    context: 考虑季节性、大促放量因子进行快速修正预测，这一步决定补货量的基准
+    branches:
+      - condition: 距大促 < 30天（Prime Day / Black Friday / 圣诞旺季）
+        skills:
+          - id: Skill-Demand-Forecasting-Supply-Chain
+            role: 大促需求快速预测（季节倍数 2-4x），修正 DSI
+          - id: Skill-EventCast-LLM-Event-Forecasting
+            role: 大促特征感知预测，识别历史同期爆发模式
+        next: step-3
+      - condition: 日常运营期（非大促）
+        skills:
+          - id: Skill-Demand-Forecasting-Supply-Chain
+            role: ARIMA 快速预测（优先速度，30 分钟内出结果）
+          - id: Skill-Conformal-Prediction-Demand-UQ
+            role: 需求置信区间量化，确定补货量上下界
+        next: step-3
+  - id: step-3
+    name: ABC 紧急重分级
+    question: 危机 SKU 在整体商品组合中的优先级如何？
+    context: 危机情况下重新评估 SKU 价值，将有限资源（资金/物流）集中到最关键的 SKU
+    skills:
+      - id: Skill-Dynamic-ABC-Stratification-Adaptive-Policy
+        role: 紧急度 × 价值度双维度重分级，生成 A+/A/B/C 优先级排序
+      - id: Skill-Forecast-Driven-Inventory
+        role: 预测驱动的补货策略匹配（按新 ABC 分级设置目标 DSI）
+  - id: step-4
+    name: 紧急补货量决策
+    question: 补货还是甩货？补多少？
+    context: 在 MOQ 约束下计算最优补货量（断货危机）或最优甩货方案（积压危机）
+    branches:
+      - condition: 断货危机 → 紧急补货
+        skills:
+          - id: Skill-Dynamic-Lot-Sizing-MOQ
+            role: MOQ 约束下的紧急批量决策，目标 DSI = 45 天安全线
+          - id: Skill-Safety-Stock-Replenishment
+            role: 应急安全库存重新设定，考虑交期不确定性
+        next: step-5
+      - condition: 积压危机 → 甩货/降价清仓
+        skills:
+          - id: Skill-Dynamic-Lot-Sizing-MOQ
+            role: 反向批量决策，计算促销/打包清仓的最优甩货量
+          - id: Skill-Multi-Channel-Inventory-Pooling
+            role: 跨渠道调拨，将 FBA 积压转移至第三方仓降低存储费
+        next: step-5
+  - id: step-5
+    name: 最优物流路由
+    question: 空运还是海运？紧急度 vs 成本如何权衡？
+    context: 比较空运和海运的 ROI（避免断货损失 vs 运费成本），生成最终物流执行方案
+    branches:
+      - condition: A+ 级 SKU 断货危机（单价 > $30，日销 > 10件）
+        skills:
+          - id: Skill-Cross-Border-Logistics-Routing
+            role: 空运优先方案，计算 Air ROI = (断货损失节省 - 空运费) / 空运费
+          - id: Skill-Tag-Optimized-Logistics-Routing
+            role: 标签驱动的智能路由，自动选择最优承运商和线路
+          - id: Skill-Delivery-Promise-Optimization
+            role: FBA 入库时效承诺，优化 ETA 可见性
+        next: step-measure
+      - condition: B/C 级 SKU 或积压清仓物流
+        skills:
+          - id: Skill-Cross-Border-Logistics-Routing
+            role: 海运成本优先，计算最低成本路线
+          - id: Skill-Last-Mile-Delivery-Prediction
+            role: 末端时效预测，评估是否影响 Prime 资格
+        next: step-measure
+  - id: step-measure
+    name: 危机解除验证
+    question: 执行后 7 天内库存 DSI 是否恢复至安全线以上？
+    context: 闭环验证危机响应效果，避免「以为解决了但其实没有」
+    skills:
+      - id: Skill-Anomaly-Detection-Foundation-Model
+        role: 每日 DSI 监控，危机解除条件：DSI > 21 天持续 3 天
+      - id: Skill-Inventory-Health-Aging-Attribution
+        role: 危机复盘，识别根因并防止同类问题重现
+      - id: Skill-Combo-Inventory-Crisis-Response
+        role: Combo Pattern 全链路复盘，更新参数配置供下次使用
+outcomes:
+  - 断货危机响应时效从 2-3 天（人工协调）压缩至 < 4 小时（自动化决策）
+  - 大促断货率从 18% 降至 4%，期望避免损失 8.4 万元/年（按 2 次大促计算）
+  - 积压 SKU 45 天清库率从 35% 提升至 70%，节省 FBA 长期存储费 3-8 万元/年
+  - A+ 级 SKU 空运 ROI 平均 > 3x（断货损失节省远超运费）

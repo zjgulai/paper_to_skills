@@ -140,8 +140,12 @@ def extract_hazard_type(recalls: list[dict]) -> str:
     }
     counts = {h: 0 for h in HAZARD_KEYWORDS}
     for recall in recalls:
-        hazard_text = (recall.get("Hazards", "") + " " +
-                       recall.get("Description", "")).lower()
+        hazards_val = recall.get("Hazards", "")
+        if isinstance(hazards_val, list):
+            hazards_str = " ".join(str(item) if not isinstance(item, dict) else item.get("name", item.get("Name", "")) for item in hazards_val)
+        else:
+            hazards_str = str(hazards_val)
+        hazard_text = (hazards_str + " " + str(recall.get("Description", ""))).lower()
         for hazard, keywords in HAZARD_KEYWORDS.items():
             if any(kw in hazard_text for kw in keywords):
                 counts[hazard] += 1

@@ -56,7 +56,8 @@ def generate_pricing_iv_data(n=5000, seed=42):
 if __name__ == '__main__':
     d = generate_pricing_iv_data()
     iv = InstrumentalVariables()
-    iv.fit(d['price'], d[['competitor_price', 'exchange_rate']], d['sales'])
+    Z = np.column_stack([d['competitor_price'], d['exchange_rate']])
+    iv.fit(d['price'], Z, d['sales'])
     iv.summary()
     p_mean, q_mean = d['price'].mean(), d['sales'].mean()
     print(f"Price Elasticity (IV): {iv.iv_coef * (p_mean / q_mean):.2f}")

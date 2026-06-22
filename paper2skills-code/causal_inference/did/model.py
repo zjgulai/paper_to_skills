@@ -20,7 +20,7 @@ class DifferenceInDifferences:
         df = df.copy()
         df['treat_post'] = df[treat_col] * df[post_col]
 
-        X = df[['treat_col_dummy', 'post_col_dummy', 'treat_post']].values
+        X = df[[treat_col, post_col, 'treat_post']].values
         # 使用实际列名
         X = df[[treat_col, post_col, 'treat_post']].values
         y = df[outcome_col].values
