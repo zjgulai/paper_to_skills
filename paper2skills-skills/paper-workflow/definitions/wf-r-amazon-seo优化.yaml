@@ -1,0 +1,74 @@
+id: wf-r
+name: WF-R Amazon SEO 关键词优化
+description: 从关键词挖掘到自然排名提升再到 PPC 协同的端到端搜索流量增长链，覆盖词库构建、Listing 优化、排名跟踪、广告-自然协同四个阶段。
+target_users:
+- Listing 运营
+- 搜索流量负责人
+- 广告优化师
+- 品牌增长负责人
+entry_question: 你的搜索流量当前最大的问题是：索引覆盖率低？排名不稳定？还是关键词选择错误？
+steps:
+- id: step-1
+  name: 关键词挖掘与分级
+  question: 是否已有系统化的关键词词库？
+  context: Amazon A9 算法的核心是相关性×转化率，关键词选择决定了能争夺哪些流量入口，分层规划（头/体/尾）是关键
+  branches:
+  - condition: 从零建立词库（新品/新市场）
+    skills:
+    - id: Skill-Semantic-Keyword-Expansion
+      role: 语义关键词扩展，从种子词出发挖掘长尾词矩阵
+    - id: Skill-Competitor-Keyword-Reverse-Engineering
+      role: 竞品关键词反查，提取头部 ASIN 的核心流量词
+    - id: Skill-Search-Query-Intent-Classification
+      role: 搜索意图分类，区分信息型/导航型/购买型查询，精准匹配购买意图词
+  - condition: 已有词库，需优化筛选
+    skills:
+    - id: Skill-Keyword-Value-Scoring
+      role: 关键词价值评分，综合搜索量/竞争强度/转化预期计算 KV 分
+    - id: Skill-Long-Tail-Keyword-Discovery
+      role: 长尾词发现，挖掘低竞争高转化的细分需求词
+- id: step-2
+  name: Listing 内容优化
+  question: 关键词是否已最优分布在 Title/Bullet/Description/ST 中？
+  context: Amazon 索引逻辑是"出现即索引，位置决定权重"——Title 权重最高，Search Terms 补充尾词，位置规划至关重要
+  skills:
+  - id: Skill-NLP-Listing-Content-Optimization
+    role: NLP Listing 优化，关键词密度分析和自然嵌入，规避堆砌惩罚
+  - id: Skill-Readability-Conversion-Copywriting
+    role: 可读性+转化力文案，关键词优化与用户体验兼顾
+  - id: Skill-AB-Test-Listing-Content
+    role: Listing A/B 测试，数据驱动验证 Title/主图变体的排名和转化差异
+  - id: Skill-Multilingual-Listing-Localization
+    role: 多语言本地化，欧洲/日本市场关键词的文化适配
+- id: step-3
+  name: 自然排名追踪与诊断
+  question: 核心关键词排名趋势如何？是否存在排名下滑预警？
+  context: 排名是结果指标，需要追踪点击率(CTR)、转化率(CVR)、销售速度三个驱动因子，才能诊断排名变化根因
+  branches:
+  - condition: 排名稳定，追求进一步提升
+    skills:
+    - id: Skill-CTR-Optimization-Main-Image
+      role: 主图 CTR 优化，提升搜索结果页点击率（CTR 每提升1%→排名显著提升）
+    - id: Skill-Conversion-Rate-Optimization-PDP
+      role: 详情页 CVR 优化，A+ 内容/视频/Q&A 转化率提升
+    next: step-4
+  - condition: 排名下滑，需诊断修复
+    skills:
+    - id: Skill-Ranking-Drop-Root-Cause-Analysis
+      role: 排名下滑根因分析，区分算法变化/竞品进入/库存断货/差评影响
+    - id: Skill-Review-Velocity-Defense
+      role: 评价速度防御，维持 BSR 所需的最低评价积累速度
+    next: step-4
+- id: step-4
+  name: 广告-自然流量协同
+  question: PPC 广告是否在为自然排名输送转化信号？
+  context: PPC 和自然流量不是竞争关系——精准的 PPC 关键词成交能加速 A9 对该词的相关性确认，是最快的自然排名破冰工具
+  skills:
+  - id: Skill-PPC-Organic-Synergy-Attribution
+    role: PPC-自然协同归因，识别哪些关键词的 PPC 投入正在撬动自然排名提升
+  - id: Skill-Search-Term-Harvest-Strategy
+    role: 搜索词收割策略，从广泛→精准的关键词挖掘漏斗，不断将高转化长尾词纳入自然优化
+  - id: Skill-Ad-Budget-Organic-ROI-Allocation
+    role: 广告-自然 ROI 综合分配，计算每个关键词的全渠道 ROAS 决定投放力度
+  - id: Skill-Dayparting-Bid-Automation
+    role: 分时出价自动化，在自然排名空窗期加大广告弥补流量缺口

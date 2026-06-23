@@ -1,0 +1,85 @@
+id: wf-q
+name: WF-Q 标签驱动全链路决策
+description: 从 SKU 标签体系构建到供应链、定价、广告 AI 自动决策触发的端到端智能运营链，实现"标签即策略"的决策自动化。
+target_users:
+- 数据工程师/标签工程师
+- 运营负责人
+- 供应链数据科学家
+- AI 产品经理
+entry_question: 当前业务决策的自动化程度如何？哪类决策最依赖人工判断？
+steps:
+- id: step-1
+  name: SKU 标签体系设计
+  question: 是否已有统一的 SKU 标签分类体系？
+  context: 标签是决策自动化的语言——没有一致的标签本体论，下游补货/定价/广告决策就无法自动协同
+  branches:
+  - condition: 从零建立标签体系
+    skills:
+    - id: Skill-Palantir-Ontology-Design
+      role: Palantir 本体论方法，设计 SKU 实体-关系-行动的三层标签架构
+    - id: Skill-Taxonomy-Hierarchy-Construction
+      role: 分类体系构建，建立品类→细分→属性的层次化标签树
+    - id: Skill-Entity-Resolution-Product-Matching
+      role: 实体解析，跨平台 SKU 标识统一（ASIN/EAN/内部编码映射）
+  - condition: 已有标签体系，需质量提升
+    skills:
+    - id: Skill-Tag-Quality-Assessment
+      role: 标签质量诊断，识别缺失/冲突/过时标签（覆盖率、一致性、新鲜度三维）
+    - id: Skill-Active-Learning-Label-Correction
+      role: 主动学习标签修正，人机协作高效修复错误标签
+- id: step-2
+  name: 决策触发规则设计
+  question: 哪类业务决策已有明确规则可以自动化？
+  context: 决策自动化分三层：规则触发→ML 预测触发→Agent 自主触发，从确定性高的场景先入手
+  branches:
+  - condition: 补货决策自动化（最成熟、ROI 最高）
+    skills:
+    - id: Skill-Inventory-Policy-Automation
+      role: 库存策略自动化，基于 SKU 标签（速度/季节性/ABC 类）自动生成补货策略
+    - id: Skill-Safety-Stock-Replenishment
+      role: 安全库存动态计算，标签驱动差异化安全系数
+    - id: Skill-Forecast-Driven-Inventory
+      role: 预测驱动库存，将预测结果直接映射到补货 PO
+    next: step-3
+  - condition: 定价决策自动化
+    skills:
+    - id: Skill-Bayesian-Dynamic-Pricing
+      role: 贝叶斯动态定价，基于竞争位置/库存健康/需求信号自动调价
+    - id: Skill-Competitive-Pricing-Intelligence
+      role: 竞品价格监控，触发式竞价响应规则
+    - id: Skill-Price-Elasticity-Estimation
+      role: 价格弹性建模，为不同标签组的 SKU 设置不同调价幅度上限
+    next: step-3
+  - condition: 广告出价自动化
+    skills:
+    - id: Skill-Bid-Optimization-Reinforcement
+      role: 强化学习出价优化，基于 SKU 利润标签自动设置 Target ACoS
+    - id: Skill-Campaign-Budget-Allocation-Bayesian
+      role: 贝叶斯预算分配，按 SKU 标签（新品/成熟/清仓）差异化投放策略
+    next: step-3
+- id: step-3
+  name: 特征工程与信号融合
+  question: 驱动决策的信号来源是否完整可信？
+  context: 标签驱动决策的质量上限取决于信号质量——销速/竞争位置/库存健康/搜索趋势四类信号缺一不可
+  skills:
+  - id: Skill-Feature-Store-Design
+    role: 特征存储设计，统一管理跨业务的决策特征，避免重复计算
+  - id: Skill-Real-Time-Feature-Engineering
+    role: 实时特征工程，支持低延迟的动态决策触发（<100ms）
+  - id: Skill-Multi-Source-Signal-Fusion
+    role: 多源信号融合，整合站内+站外信号提升决策准确率
+  - id: Skill-Data-Quality-Anomaly-Detection
+    role: 数据质量异常检测，防止脏数据触发错误决策
+- id: step-4
+  name: 决策自动化编排与监控
+  question: 自动化决策系统上线后如何保证可控？
+  context: AI 决策自动化的最大风险是"黑盒失控"——必须建立人工审核阈值、决策回滚机制和持续监控
+  skills:
+  - id: Skill-Human-in-the-Loop-Decision-Audit
+    role: 人机协作审核，设置置信度阈值，低置信决策转人工复核
+  - id: Skill-Decision-Drift-Monitoring
+    role: 决策漂移监控，检测自动化决策质量下降（PSI/KL 散度监控）
+  - id: Skill-Causal-Impact-Auto-Decision
+    role: 因果影响评估，量化自动化决策对核心指标的净效果
+  - id: Skill-Multi-Agent-Orchestration
+    role: 多智能体编排，协调补货/定价/广告 Agent 避免决策冲突

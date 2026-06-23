@@ -73,6 +73,18 @@ TOPIC_RULES = {
     "定价与利润": ["pricing", "price", "价格", "elasticity", "margin"],
     "风控与合规": ["fraud", "risk", "compliance", "合规", "风控", "fake"],
     "视觉内容生成": ["video", "visual", "image", "avatar", "ai视频", "multimodal"],
+    "实验与因果推断": ["causal", "因果", "uplift", "did", "diff-in-diff", "instrumental", "iv", "experiment", "a/b", "bandit", "counterfactual", "treatment", "rct"],
+    "用户增长与留存": ["churn", "ltv", "retention", "rfm", "lifecycle", "cohort", "复购", "流失", "留存", "用户增长", "lapse", "reactivation", "clv"],
+    "营销分析与预算": ["mmm", "budget allocation", "promo", "promotion", "saturation", "cannibalization", "media mix", "incrementality", "营销归因", "预算分配", "投资回报"],
+    "跨境物流与履约": ["logistics", "fulfillment", "cross-border", "物流", "头程", "fba", "海外仓", "last-mile", "routing", "freight", "clearance", "履约"],
+    "合规与关税决策": ["compliance", "tariff", "关税", "duty", "regulation", "gdpr", "ccpa", "合规", "legal", "policy", "prohibited", "cbam", "ipr"],
+    "运营财务与P&L": ["p&l", "cogs", "财务", "成本", "profit", "cash-flow", "fba cost", "fee", "margin analysis", "财务建模", "roi", "irr", "payback"],
+    "标签工程与决策触发": ["tag engineering", "label", "标签", "trigger", "ontology", "决策触发", "feature store", "entity resolution", "tagging", "taxonomy", "sku tag"],
+    "搜索流量与SEO": ["seo", "a9", "organic", "搜索", "流量", "keyword ranking", "search visibility", "ppc synergy", "search traffic", "amazon seo", "索引"],
+    "时序预测": ["time series", "时序", "forecasting", "预测", "arima", "prophet", "tft", "lstm", "seasonal", "trend", "decomposition", "temporal"],
+    "LLM数据分析": ["llm", "nl2sql", "data agent", "text-to-sql", "自然语言", "language model", "gpt", "deepseek", "rag pipeline", "prompt", "in-context"],
+    "ML基础与可解释性": ["shap", "lime", "explainab", "可解释", "feature importance", "feature engineering", "feature selection", "xgboost", "lightgbm", "calibration", "overfitting"],
+    "AI伦理与治理": ["ethics", "bias", "fairness", "伦理", "aigc", "hallucination", "safety", "alignment", "privacy", "responsible ai", "transparency", "accountability"],
 }
 
 WORKFLOW_RULES = {
@@ -91,6 +103,12 @@ WORKFLOW_RULES = {
     "WF-M 新品上市全链路": ["新品", "上市", "launch", "listing", "keyword", "compliance", "ranking", "新品上市", "上架"],
     "WF-N 库存危机响应": ["库存危机", "断货", "积压", "stockout", "overstock", "emergency", "crisis", "物流路由"],
     "WF-O 广告ROI最大化": ["广告roi", "mmm", "预算分配", "budget allocation", "saturation", "cannibalization", "ad roi", "归因修正"],
+    "WF-P 关税危机应对": ["tariff", "关税", "duty", "trade war", "cbam", "供应链重构", "成本转嫁", "alternative sourcing", "hts", "de minimis"],
+    "WF-Q 标签驱动决策": ["tag engineering", "标签工程", "sku tag", "trigger", "label hierarchy", "ontology", "决策触发", "feature store", "taxonomy", "action trigger"],
+    "WF-R Amazon SEO优化": ["seo", "a9", "search ranking", "keyword ranking", "organic traffic", "索引", "search visibility", "listing optimization", "amazon seo", "搜索排名"],
+    "WF-S 跨境数据合规": ["gdpr", "ccpa", "privacy", "data governance", "合规", "跨境数据", "数据出境", "pii", "consent", "data residency"],
+    "WF-T 用户分层精细运营": ["rfm", "segmentation", "用户分层", "persona", "lifecycle stage", "cohort", "uplift", "personalization", "targeted intervention", "precision marketing"],
+    "WF-U P&L健康诊断": ["p&l", "profitability", "cogs", "fba cost", "unit economics", "margin", "break-even", "cash flow", "财务健康", "成本结构"],
 }
 
 KNOWN_SKILL_IDS: set[str] = set()

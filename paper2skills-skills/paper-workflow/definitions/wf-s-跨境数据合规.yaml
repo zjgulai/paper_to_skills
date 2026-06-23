@@ -1,0 +1,76 @@
+id: wf-s
+name: WF-S 跨境数据合规
+description: 从数据采集合规到跨境传输再到隐私计算的端到端数据治理合规链，覆盖数据分类、合规评估、隐私保护技术、跨境传输四个阶段。面向欧美日等高监管市场。
+target_users:
+- 数据工程师/合规工程师
+- 法务/合规团队
+- CTO/数据负责人
+- 跨境电商平台运营
+entry_question: 业务涉及哪些市场？当前最紧迫的合规压力来自哪里（GDPR/CCPA/PIPL）？
+steps:
+- id: step-1
+  name: 数据资产分类与合规现状评估
+  question: 是否已知道自己收集了哪些个人数据及其流向？
+  context: 合规的起点是数据资产清单——不知道自己有什么数据、数据流向哪里，就无法评估合规缺口
+  skills:
+  - id: Skill-Data-Inventory-Classification
+    role: 数据资产分类，识别 PII/敏感数据/业务数据，建立数据地图
+  - id: Skill-Compliance-Gap-Assessment
+    role: 合规缺口评估，对照 GDPR/CCPA/PIPL 逐条核查现状与要求的差距
+  - id: Skill-Data-Flow-Mapping
+    role: 数据流向图，可视化数据从采集→存储→处理→传输的完整路径
+- id: step-2
+  name: 数据采集合规改造
+  question: 数据采集环节是否满足告知同意（Consent）要求？
+  context: 合规采集的核心是"明确同意+最小必要"——超出必要范围采集数据是 GDPR 最常见的违规类型
+  branches:
+  - condition: 面向欧盟用户（GDPR）
+    skills:
+    - id: Skill-Consent-Management-Design
+      role: 同意管理设计，构建合规的 Cookie Consent 和数据使用授权流程
+    - id: Skill-Data-Minimization-Privacy-By-Design
+      role: 数据最小化+隐私设计，从架构层减少不必要数据采集
+    - id: Skill-Right-To-Erasure-Implementation
+      role: 被遗忘权实现，用户删除请求的端到端技术落地
+  - condition: 面向加州/美国用户（CCPA）
+    skills:
+    - id: Skill-CCPA-Do-Not-Sell-Implementation
+      role: Do Not Sell 机制实现，用户选择退出数据销售的技术方案
+    - id: Skill-Privacy-Notice-Optimization
+      role: 隐私声明优化，满足 CCPA 的透明度披露要求
+  - condition: 面向中国市场出海数据（PIPL）
+    skills:
+    - id: Skill-PIPL-Cross-Border-Data-Assessment
+      role: PIPL 跨境数据安全评估，出境数据的合规申报流程
+    - id: Skill-Data-Localization-Architecture
+      role: 数据本地化架构，境内数据不出境的技术隔离方案
+- id: step-3
+  name: 隐私增强计算技术
+  question: 业务上是否需要在保护隐私的前提下进行数据分析或共享？
+  context: 隐私计算让数据"可用不可见"——差分隐私、联邦学习、同态加密解决了合规与数据价值的矛盾
+  branches:
+  - condition: 内部多团队数据协作（不外传）
+    skills:
+    - id: Skill-Differential-Privacy-Analytics
+      role: 差分隐私分析，给数据加噪声同时保留统计有效性
+    - id: Skill-Secure-Multi-Party-Computation
+      role: 安全多方计算，多方数据联合分析但互不泄露原始数据
+  - condition: 跨企业/跨平台数据联合建模
+    skills:
+    - id: Skill-Federated-Learning-Cross-Silo
+      role: 跨机构联邦学习，数据不出域的联合模型训练
+    - id: Skill-Privacy-Preserving-Attribution
+      role: 隐私保护归因，在不共享用户数据前提下的跨平台转化归因
+- id: step-4
+  name: 跨境数据传输合规
+  question: 数据是否需要从欧盟/中国传输到其他国家？
+  context: 跨境数据传输必须有合法依据——标准合同条款(SCC)、充分性认定、绑定公司规则(BCR)是主要工具
+  skills:
+  - id: Skill-Standard-Contractual-Clauses-Design
+    role: 标准合同条款(SCC)设计，欧盟→第三国数据传输的合法合规机制
+  - id: Skill-Data-Transfer-Impact-Assessment
+    role: 数据传输影响评估(DTIA)，识别传输风险并设计缓解措施
+  - id: Skill-Encryption-In-Transit-At-Rest
+    role: 传输和静态加密，技术层面保障跨境数据安全
+  - id: Skill-Compliance-Monitoring-Alerting
+    role: 合规持续监控告警，自动检测违规数据访问和传输行为

@@ -1,0 +1,82 @@
+id: wf-t
+name: WF-T 用户分层精细运营
+description: 从 RFM 分层到 Uplift 建模再到精准干预的端到端用户精细化运营链，通过科学分层识别可干预用户，最大化干预 ROI，避免资源浪费在无效用户上。
+target_users:
+- 用户增长负责人
+- CRM/会员运营
+- 数据分析师
+- 营销团队负责人
+entry_question: 当前用户运营最大的痛点是：不知道对谁干预？还是干预效果不好？还是干预成本太高？
+steps:
+- id: step-1
+  name: 用户价值分层
+  question: 是否已有系统化的用户价值分层？
+  context: 母婴用户有明确的生命周期阶段（备孕→孕期→0-1岁→1-3岁），不同阶段的需求和价值完全不同，统一运营是最大的资源浪费
+  branches:
+  - condition: 建立基础分层（从零开始）
+    skills:
+    - id: Skill-RFM-Customer-Segmentation
+      role: RFM 三维分层，将用户分成冠军/忠诚/高潜/流失等8类，每类对应明确策略
+    - id: Skill-User-Lifecycle-STAN
+      role: 时空注意力生命周期模型，判断用户所在阶段（备孕/婴儿/幼儿），实现阶段化运营
+    - id: Skill-CLV-Prediction-BG-NBD
+      role: BG/NBD + Gamma-Gamma LTV 预测，识别未来高价值用户，提前布局
+  - condition: 已有分层，需精细化升级
+    skills:
+    - id: Skill-LTV-Prediction-ZILN
+      role: 零膨胀 LTV 预测，更精准识别低消费量级中的高潜力用户
+    - id: Skill-Behavioral-Sequence-Modeling
+      role: 行为序列建模，基于浏览/购买/评价序列的深度用户画像
+- id: step-2
+  name: 流失识别与预警
+  question: 哪些用户正在流失？哪些是可干预的流失？
+  context: 母婴用户存在大量"自然毕业"流失（孩子长大了）——必须区分"自然流失"和"可干预流失"，前者不值得投入资源
+  branches:
+  - condition: 个体级精准流失预测
+    skills:
+    - id: Skill-Uplift-Churn-Prediction
+      role: Uplift 流失建模，同时预测"会否流失"和"是否可干预"，只对可说服者投入资源
+    - id: Skill-Customer-Churn-Prediction
+      role: 深度学习流失预测，捕捉复杂行为序列中的流失信号
+    next: step-3
+  - condition: 群体级流失规律分析
+    skills:
+    - id: Skill-Cohort-Retention-Analysis
+      role: 队列留存分析，发现复购黄金时间窗口（如首单后14天是母婴最关键节点）
+    - id: Skill-Survival-Analysis-Customer
+      role: 生存分析，估算不同用户群的预期留存时长和最优干预时机
+    next: step-3
+- id: step-3
+  name: 精准干预策略设计
+  question: 选择干预方式？
+  context: 四象限干预框架：确定留存者（不需要干预）→可说服者（精准干预）→睡狗（干预会加速流失）→确定流失者（放弃）
+  branches:
+  - condition: 发券/促销干预（预算敏感场景）
+    skills:
+    - id: Skill-Guardrailed-CATE-NBA
+      role: 预算约束下的最优行动(NBA)，在 ROI 护栏约束下自动输出最优干预名单
+    - id: Skill-Personalized-Promotion-Targeting
+      role: 个性化促销定向，识别对券/折扣/满减哪种形式响应最强
+    - id: Skill-Propensity-Score-Matching
+      role: 倾向分匹配，构建干预组/对照组，确保促销效果归因准确
+    next: step-4
+  - condition: 内容/触达干预（非价格手段）
+    skills:
+    - id: Skill-Next-Best-Content-Recommendation
+      role: 最优内容推荐，基于用户阶段推送最相关的育儿内容提升粘性
+    - id: Skill-Push-Notification-Optimization
+      role: 推送通知优化，最优发送时机+频次+内容组合，减少骚扰提升 CTR
+    next: step-4
+- id: step-4
+  name: 干预效果评估与策略迭代
+  question: 干预是否真的有效？ROI 是否达标？
+  context: 没有严格的因果效果评估，就无法知道干预是真的有效还是"挑了本来就会复购的用户"——幸存者偏差是 CRM 最常见的误区
+  skills:
+  - id: Skill-Uplift-Model-Evaluation-Qini
+    role: Uplift 模型 Qini 曲线评估，量化增量提升效果而非绝对转化率
+  - id: Skill-Causal-Impact-CRM-Evaluation
+    role: 因果影响评估，分离自然复购趋势和干预净效果
+  - id: Skill-Multi-Armed-Bandit-Strategy-Optimization
+    role: 多臂老虎机策略优化，在线学习最有效的干预策略组合
+  - id: Skill-Customer-Equity-Attribution
+    role: 用户资产归因，将 LTV 提升归因到具体干预动作，驱动策略持续优化

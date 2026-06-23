@@ -1,0 +1,78 @@
+id: wf-u
+name: WF-U P&L 健康度诊断
+description: 从毛利率拆解到 FBA 成本优化再到现金流预测的端到端财务健康诊断链，帮助跨境电商在复杂费用结构中找到真实利润漏洞并系统修复。
+target_users:
+- 财务负责人/CFO
+- 运营总监
+- 供应链/采购负责人
+- 创始人/CEO
+entry_question: 你的 P&L 当前最大的痛点是：算不清楚利润？还是知道亏钱但找不到原因？还是利润正常但现金流紧张？
+steps:
+- id: step-1
+  name: 单品 P&L 精算
+  question: 是否清楚每个 SKU 的真实利润？
+  context: 跨境 P&L 的特殊性在于费用项极多（FBA 费/退款/汇损/头程/广告/平台佣金），任何一项算错都会导致整体判断失真
+  branches:
+  - condition: 从零建立 P&L 核算体系
+    skills:
+    - id: Skill-FBA-Cost-Decomposition
+      role: FBA 成本分解，精确拆解存储费/配送费/退货处理费/长期仓储费等8项费用
+    - id: Skill-Unit-Economics-DTC
+      role: 单品经济模型，构建"收入-变动成本-固定成本分摊"的标准 P&L 模板
+    - id: Skill-PnL-Attribution-Decomposition
+      role: P&L 归因拆解，识别哪个费用项变化导致了利润波动
+  - condition: 已有 P&L，需深度诊断
+    skills:
+    - id: Skill-Margin-Waterfall-Analysis
+      role: 利润瀑布分析，从毛利→净利逐层拆解每个费用的侵蚀幅度
+    - id: Skill-SKU-Portfolio-Profitability-Segmentation
+      role: SKU 组合盈利分层，识别利润贡献 80/20（哪些 SKU 在拖累整体利润）
+- id: step-2
+  name: FBA 成本优化
+  question: FBA 各项费用中哪些有优化空间？
+  context: FBA 成本通常占收入的 25-35%，每降低 1 个百分点对净利润的影响极大，且大部分费用都有可优化空间
+  branches:
+  - condition: 存储费/长期仓储费过高
+    skills:
+    - id: Skill-Inventory-Health-Aging-Attribution
+      role: 库存老化归因，识别积压根因（预测偏差/促销失败/竞争冲击）
+    - id: Skill-Markdown-Optimization
+      role: 清仓降价优化，在最小利润损失下快速清理滞销库存
+    - id: Skill-Multi-Echelon-Inventory-Optimization
+      role: 多级库存优化，降低超量备货率，减少长期存储费触发
+  - condition: 退货率/退款成本过高
+    skills:
+    - id: Skill-Return-Root-Cause-Analysis
+      role: 退货根因分析，区分产品质量/描述不符/竞品诱导退货的不同根因
+    - id: Skill-Review-Fraud-Detection
+      role: 竞品诱导退货识别，检测异常退货模式
+  - condition: 配送费/头程成本过高
+    skills:
+    - id: Skill-Logistics-Route-Optimization
+      role: 物流路由优化，海运/空运/快递的最优选择模型
+    - id: Skill-Total-Landed-Cost-Optimization
+      role: 全链路到岸成本优化，含头程+清关+FBA 入仓的综合最优方案
+- id: step-3
+  name: 汇率风险与对冲
+  question: 汇率波动对利润的影响是否已被纳入 P&L 管理？
+  context: 跨境业务天然面临多币种风险——美元结算、人民币采购成本、欧元/英镑/日元收入的汇率敞口不对冲可能使利润大幅波动
+  skills:
+  - id: Skill-FX-Exposure-Measurement
+    role: 汇率敞口测量，量化各币种的净敞口规模和 P&L 敏感度
+  - id: Skill-FX-Hedging-Strategy-Design
+    role: 汇率对冲策略，远期合约/期权/自然对冲的成本收益分析
+  - id: Skill-Currency-Forecasting-VAR
+    role: 汇率预测 VAR 模型，为对冲时机和规模提供量化依据
+- id: step-4
+  name: 现金流预测与优化
+  question: 未来3-6个月的现金流是否可预见？
+  context: 跨境电商的现金流特殊性：Amazon 账期延迟（2周）+旺季大额备货+退款冻结，现金流管理不善会导致即使盈利也资金链断裂
+  skills:
+  - id: Skill-Cash-Flow-Forecasting-ML
+    role: 机器学习现金流预测，结合季节性/备货周期/账期的综合预测模型
+  - id: Skill-Working-Capital-Optimization
+    role: 营运资金优化，平衡库存占用/账期/融资成本的最优资金配置
+  - id: Skill-Scenario-Cashflow-Stress-Test
+    role: 现金流情景压测，模拟旺季备货/账号被封/关税冲击等极端场景下的现金储备需求
+  - id: Skill-Break-Even-Sensitivity-Analysis
+    role: 盈亏平衡敏感性分析，识别哪个变量变化对现金流影响最大，建立预警阈值

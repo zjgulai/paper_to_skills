@@ -1,0 +1,82 @@
+id: wf-p
+name: WF-P 关税危机应对
+description: 从关税冲击评估到供应链重构的端到端应对决策链，覆盖影响量化、成本转嫁、选品调整、供应链多元化四个阶段。面向加征关税、贸易政策突变等高烈度事件。
+target_users:
+- 跨境运营负责人
+- 供应链总监
+- 财务/成本分析师
+- CEO / GMV 责任人
+entry_question: 关税冲击的紧迫程度和影响范围是什么？
+steps:
+- id: step-1
+  name: 关税冲击量化
+  question: 是否已明确新税率对当前 SKU 组合的 P&L 影响？
+  context: 关税变化对不同品类和价格段影响差异极大，必须先精确量化才能制定应对策略，避免一刀切
+  branches:
+  - condition: 税率已明确，需快速测算 P&L 影响
+    skills:
+    - id: Skill-FBA-Cost-Decomposition
+      role: FBA 成本分解，精确计算关税冲击后单品利润变化
+    - id: Skill-PnL-Attribution-Decomposition
+      role: P&L 归因拆解，识别利润下降的根因和幅度
+    - id: Skill-Unit-Economics-DTC
+      role: 单品经济模型，计算新关税下的盈亏平衡价格
+  - condition: 税率仍不确定，需情景规划
+    skills:
+    - id: Skill-Scenario-Planning-Supply-Chain
+      role: 情景规划框架，构建乐观/基准/悲观三情景 P&L
+    - id: Skill-Conformal-Prediction-Demand-UQ
+      role: 不确定性量化，为价格弹性和需求变化建立置信区间
+- id: step-2
+  name: 成本转嫁与定价调整
+  question: 消费者价格弹性是否支持涨价转嫁？
+  context: 关税成本能否转嫁给消费者取决于竞品定价和品类价格弹性，错误涨价会造成转化率崩塌
+  branches:
+  - condition: 弹性低，品类粘性强（母婴刚需品）
+    skills:
+    - id: Skill-Price-Elasticity-Estimation
+      role: 价格弹性估算，测算涨价对转化率和 GMV 的影响
+    - id: Skill-Bayesian-Dynamic-Pricing
+      role: 贝叶斯动态定价，在弹性约束下找到最优涨价幅度
+    - id: Skill-Competitive-Pricing-Intelligence
+      role: 竞品定价监控，确认涨价空间不被竞品截流
+    next: step-3
+  - condition: 弹性高，竞争激烈（配件/消耗品）
+    skills:
+    - id: Skill-Markdown-Optimization
+      role: 主动降价清库存，在关税生效前加速动销
+    - id: Skill-Bundle-Pricing-Optimization
+      role: 捆绑定价重构价值感知，对冲涨价阻力
+    next: step-3
+- id: step-3
+  name: SKU 组合调整
+  question: 受影响 SKU 是否可通过选品替代降低关税暴露？
+  context: 关税改变了品类相对利润率，是重构 SKU 组合的时间窗口——高税率品类换道，低税率品类加仓
+  skills:
+  - id: Skill-Category-Opportunity-Scoring
+    role: 品类机会评分，筛选关税后利润率改善的新品类方向
+  - id: Skill-VOC-Product-Gap-Mining
+    role: VOC 竞品缺口挖掘，找低税率替代品的市场空间
+  - id: Skill-Product-Portfolio-Optimization
+    role: SKU 组合优化，基于税后利润率重新分配资源
+  - id: Skill-New-Product-Inventory-Coldstart
+    role: 新品冷启动库存策略，为替代品快速建立库存安全垫
+- id: step-4
+  name: 供应链多元化
+  question: 是否需要将供应商/工厂迁移到低关税地区？
+  context: 越南/墨西哥/印度等替代产地有不同的交期、质量、MOQ 约束，迁移决策需综合权衡
+  branches:
+  - condition: 短期应对（6个月内），不迁移工厂
+    skills:
+    - id: Skill-Multi-Echelon-Inventory-Optimization
+      role: 多级库存优化，在关税生效前集中备货降低综合成本
+    - id: Skill-Logistics-Route-Optimization
+      role: 物流路由优化，利用关税豁免条款（如 de minimis）重新规划头程
+  - condition: 中长期战略，供应商多元化
+    skills:
+    - id: Skill-Supply-Chain-Risk-Diversification
+      role: 供应链风险分散，建立双源/多源采购体系
+    - id: Skill-Lead-Time-Uncertainty-Modeling
+      role: 交期不确定性建模，量化新产地的供应可靠性风险
+    - id: Skill-Total-Landed-Cost-Optimization
+      role: 全链路到岸成本优化，综合关税+运费+质检做最优产地决策
