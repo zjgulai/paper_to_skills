@@ -1078,14 +1078,14 @@ def render_agents_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
     <h1 style='font-size:32px;font-weight:900;letter-spacing:-.03em;margin:0 0 10px'>
       智能体广场
     </h1>
-    <p class='lead'>12 个专业 AI Agent，覆盖选品→Listing→广告→客服→合规全链路</p>
+    <p class='lead'>{len(AGENT_CATALOG)} 个专业 AI Agent，覆盖选品→Listing→广告→客服→合规全链路</p>
     <div style='display:flex;gap:8px;flex-wrap:wrap;margin-top:4px'>
       <span style='font-size:13px;background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:999px;font-weight:600'> 本地计算引擎</span>
       <span style='font-size:13px;color:#64748b'>输入你的真实数据，即时获得个性化计算结果</span>
     </div>
   </div>
   <div class='agent-hero-stats'>
-    <div class='agent-stat'><strong>12</strong><span>个专业 Agent</span></div>
+    <div class='agent-stat'><strong>{len(AGENT_CATALOG)}</strong><span>个专业 Agent</span></div>
     <div class='agent-stat'><strong>7</strong><span>业务场景</span></div>
     <div class='agent-stat'><strong>30+</strong><span>关联 Skills</span></div>
   </div>
@@ -3887,6 +3887,28 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
   </div>
 </div>
 
+
+  <div style="margin:32px 0 24px;padding:20px 24px;background:#fff;border:1px solid var(--line);border-radius:12px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px">从你的角色开始</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <a href="playbooks/pb-supply-chain-intelligence.html" style="padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;transition:all .15s;display:block" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--line)'">
+        <div style="font-size:20px;margin-bottom:6px">🏭</div>
+        <div style="font-size:13px;font-weight:700;color:#0c0c0c;margin-bottom:3px">供应链负责人</div>
+        <div style="font-size:12px;color:var(--muted)">补货·库存·履约·风险</div>
+      </a>
+      <a href="playbooks/pb-attribution-unification.html" style="padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;transition:all .15s;display:block" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--line)'">
+        <div style="font-size:20px;margin-bottom:6px">📢</div>
+        <div style="font-size:13px;font-weight:700;color:#0c0c0c;margin-bottom:3px">广告运营</div>
+        <div style="font-size:12px;color:var(--muted)">ROAS·归因·MMM·预算</div>
+      </a>
+      <a href="ai-roadmap.html" style="padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;transition:all .15s;display:block" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--line)'">
+        <div style="font-size:20px;margin-bottom:6px">👔</div>
+        <div style="font-size:13px;font-weight:700;color:#0c0c0c;margin-bottom:3px">CEO / 管理层</div>
+        <div style="font-size:12px;color:var(--muted)">能力路线图·ROI·成熟度</div>
+      </a>
+    </div>
+  </div>
+
 <div class="tab-panel active" id="tab-biz">
   <h2>从业务问题出发</h2>
   <p class="muted">选择你正在面对的挑战，直达对应的 Skill 路径与工作流。</p>
@@ -5342,13 +5364,35 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
     <div class="mr-meta-item"><span class="mr-meta-num">100%</span><span class="mr-meta-label">技能均含可运行代码</span></div>
   </div>
 
+  <div style="background:#0c0c0c;color:#fff;border-radius:10px;padding:22px 28px;margin-bottom:40px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:14px">执行摘要</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="border-left:2px solid #B5323E;padding-left:12px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:3px">分析能力 ≠ 执行能力</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.6">95% 的卖家 AI 停在「看报表」，D 层自动决策渗透率 &lt;5%</div>
+      </div>
+      <div style="border-left:2px solid #d97706;padding-left:12px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:3px">风险 ROI &gt; 增长 ROI</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.6">风控/合规技能年化避损 30-100 万元，高于增长类 15-50 万元</div>
+      </div>
+      <div style="border-left:2px solid #059669;padding-left:12px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:3px">供应链是最确定的起点</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.6">124 个供应链 Skills，平均被引用 53 次，ROI 最可量化</div>
+      </div>
+      <div style="border-left:2px solid #7c3aed;padding-left:12px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:3px">13 类风险已有诊断链</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.6">每类风险配备诊断→处置→预防三层 Skill，可直接调用</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Section 1: 核心发现 -->
   <div class="mr-section">
-    <div class="mr-section-title">核心发现</div>
+    <div class="mr-section-title">01 · 核心发现</div>
     <p class="mr-section-desc">通过对 {skill_count} 个技能的系统性分析，我们识别出母婴跨境电商 AI 能力建设的三个关键洞察：</p>
-    <div class="mr-callout">
-      <div class="mr-callout-title">⚠️ 发现 1：分析能力过剩，决策执行能力严重不足</div>
-      <div class="mr-callout-body">当前知识图谱中 A 层（分析/检测/预测）Skills 占比 >95%，D 层（自动触发/执行/封锁）Skills 占比不足 5%。绝大多数卖家的 AI 应用停留在「看报表」阶段，尚未进入「自动决策」阶段。这是最大的能力鸿沟——拥有预测结果却无法自动化执行，等同于有地图却不会开车。</div>
+    <div class="mr-callout" style="background:#eff6ff;border-color:#bfdbfe">
+      <div class="mr-callout-title" style="color:#1d4ed8">📊 发现 1：分析能力过剩，决策执行能力严重不足</div>
+      <div class="mr-callout-body" style="color:#1e3a8a">当前知识图谱中 A 层（分析/检测/预测）Skills 占比 >95%，D 层（自动触发/执行/封锁）Skills 占比不足 5%。绝大多数卖家的 AI 应用停留在「看报表」阶段，尚未进入「自动决策」阶段。这是最大的能力鸿沟——拥有预测结果却无法自动化执行，等同于有地图却不会开车。</div>
     </div>
     <div class="mr-callout" style="background:#eff6ff;border-color:#bfdbfe">
       <div class="mr-callout-title" style="color:#1d4ed8">💡 发现 2：风险防御的 ROI 远高于增长投入</div>
@@ -5362,14 +5406,14 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
 
   <!-- Section 2: 技能分布 -->
   <div class="mr-section">
-    <div class="mr-section-title">AI 技能业务分布图谱</div>
+    <div class="mr-section-title">02 · AI 技能业务分布</div>
     <p class="mr-section-desc">{skill_count} 个技能按业务方向分布如下，覆盖母婴跨境电商全链路核心场景：</p>
     <div class="mr-grid-2">{groups_html}</div>
   </div>
 
   <!-- Section 3: 成熟度矩阵 -->
   <div class="mr-section">
-    <div class="mr-section-title">AI 能力成熟度四阶段模型</div>
+    <div class="mr-section-title">03 · 成熟度四阶段模型</div>
     <p class="mr-section-desc">我们将母婴跨境卖家的 AI 能力建设分为四个阶段，每个阶段有明确的标志性技能和典型 ROI：</p>
     <table class="mr-table">
       <tr>
@@ -5408,7 +5452,7 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
 
   <!-- Section 4: 风险事件 Ontology -->
   <div class="mr-section">
-    <div class="mr-section-title">13 类高频风险事件与诊断链</div>
+    <div class="mr-section-title">04 · 13 类高频风险事件</div>
     <p class="mr-section-desc">基于图谱引用频率和业务痛点频次，识别出母婴跨境卖家面临的 13 类高频风险事件，每类均配备「诊断→处置→预防」三层 Skill 链：</p>
     <div class="mr-grid-2">{events_html}</div>
     <p style="font-size:12px;color:#9ca3af;margin-top:12px">→ 完整诊断链可访问 <a href="diagnostic.html" style="color:#B5323E">业务诊断中心</a></p>
@@ -5416,7 +5460,7 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
 
   <!-- Section 5: 行动建议 -->
   <div class="mr-section">
-    <div class="mr-section-title">分阶段行动建议</div>
+    <div class="mr-section-title">05 · 分阶段行动建议</div>
     <p class="mr-section-desc">基于成熟度模型，不同阶段的卖家应优先投入以下方向：</p>
     <table class="mr-table">
       <tr><th>当前阶段</th><th>优先投入方向</th><th>推荐起点技能</th><th>预期达成时间</th></tr>
@@ -5443,7 +5487,7 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
 
   <!-- Section 6: 方法论 -->
   <div class="mr-section">
-    <div class="mr-section-title">数据来源与方法论</div>
+    <div class="mr-section-title">06 · 数据来源与方法论</div>
     <p class="mr-section-desc">本报告基于以下数据来源，确保所有结论有据可查：</p>
     <ul style="font-size:13px;color:#374151;line-height:2;padding-left:20px">
       <li><strong>{skill_count} 个 Skill 文件</strong>：从 NeurIPS/KDD/ICML/WWW/ICLR 等顶会论文萃取，每个 Skill 含可运行 Python 代码</li>
@@ -5557,8 +5601,23 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
   </aside>
   <main class="diag-right" id="diag-right">
     <div class="diag-empty" id="diag-empty">
-      <div class="diag-empty-icon">🔍</div>
-      <div class="diag-empty-text">点击左侧症状按钮，或输入业务问题描述<br>AI 将为你匹配最相关的 Skill 诊断链</div>
+      <div class="diag-empty-icon">⚕</div>
+      <div class="diag-empty-title" style="font-size:16px;font-weight:700;color:#0c0c0c;margin-bottom:6px">症状 → 诊断链 → 行动方案</div>
+      <div class="diag-empty-text">点击左侧症状，获取「诊断→处置→预防」三层 Skill 链</div>
+      <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:400px;text-align:left">
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
+          <div style="font-weight:700;margin-bottom:3px">🔍 诊断层</div>找出根因的算法技能
+        </div>
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
+          <div style="font-weight:700;margin-bottom:3px">🔧 处置层</div>立即执行的行动 Skill
+        </div>
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
+          <div style="font-weight:700;margin-bottom:3px">🛡️ 预防层</div>长效防范的系统 Skill
+        </div>
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
+          <div style="font-weight:700;margin-bottom:3px">📖 手册链接</div>配套可执行场景手册
+        </div>
+      </div>
     </div>
     <div class="diag-result" id="diag-result"></div>
   </main>
@@ -5869,6 +5928,7 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
           <span class="chat-welcome-icon">✦</span>
           <h2>paper2skills 知识库助手</h2>
           <p>基于 {skill_count} 个从顶会论文萃取的跨境电商 AI 决策技能，为你提供专业问答</p>
+          <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">试试问这些</div>
           <div class="chat-suggestions">
             <button class="chat-sug-btn">如何提升广告 ROI？</button>
             <button class="chat-sug-btn">大促备货如何预测需求？</button>
@@ -5884,11 +5944,11 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
       <div class="chat-input-area">
         <div class="chat-input-wrap">
           <button class="web-search-toggle" id="web-search-toggle" title="开启联网搜索">
-            <span class="web-search-toggle-icon">联网</span>
-            <span id="web-search-label">联网</span>
+            <span class="web-search-toggle-icon">🌐</span>
+            <span id="web-search-label">联网搜索</span>
           </button>
           <textarea class="chat-textarea" id="chat-input"
-            placeholder="问我关于跨境电商 AI 决策技能的任何问题…"
+            placeholder="描述业务症状，如：ASIN 流量下降、库存积压、广告 ACOS 过高…"
             rows="1" autocomplete="off"></textarea>
           <button class="chat-send-btn" id="chat-send" title="发送 (Enter)">↑</button>
         </div>
@@ -6597,7 +6657,7 @@ def render_pages(
 </style>"""
     write_file(out / "skills" / "index.html", html_page(
         "全部 Skills",
-        f"<h1>全部 Skills</h1>{filter_bar}<div class='cards' id='skill-card-grid'>{all_cards}</div>",
+        f"<h1>全部 Skills</h1>\n<p class='page-lead'>从 1010 个顶会论文萃取的 AI 决策技能中，找到你的业务场景对应算法。每个 Skill 含可运行 Python 代码、量化 ROI 估算和具体案例。</p>\n{filter_bar}<div class='cards' id='skill-card-grid'>{all_cards}</div>",
         "../",
         active_nav="skills",
     ))
@@ -6672,14 +6732,53 @@ def render_pages(
                       f"<div class='cards'>{cards}</div>",
                       "../"),
         )
+        DOMAIN_BIZ_LABELS = {
+            "01-因果推断": "广告归因·促销效果",
+            "02-A_B实验": "策略验证·转化测试",
+            "03-时间序列": "销量预测·需求预测",
+            "04-供应链": "补货·库存·物流",
+            "05-推荐系统": "复购推荐·搜索排序",
+            "06-增长模型": "用户增长·LTV·流失",
+            "07-NLP-VOC": "评论分析·情感挖掘",
+            "08-知识图谱": "语义检索·关系图谱",
+            "09-DataAgent-LLM": "数据智能体·Text2SQL",
+            "10-MAS": "多Agent协作·编排",
+            "11-AI人文": "AI伦理·内容检测",
+            "12-ML基础": "模型校准·漂移检测",
+            "13-广告分析": "ROAS·归因·预算分配",
+            "14-用户分析": "漏斗分析·分群·RFM",
+            "15-营销投放分析": "MMM·促销效果",
+            "16-智能体工程": "Agent工程·工具调用",
+            "17-价格优化": "动态定价·弹性估算",
+            "18-物流履约": "清关·跨境物流",
+            "19-风控反欺诈": "刷单·封号·跟卖",
+            "20-AI视频生成": "TikTok·直播·短视频",
+            "21-合规决策": "CPSC·关税·法规",
+            "22-数据采集工程": "数据质量·采集管道",
+            "23-运营财务": "P&L·FBA成本·汇率",
+            "24-标签工程": "标签体系·决策触发",
+            "25-搜索流量工程": "Amazon SEO·关键词",
+        }
+        biz_label = DOMAIN_BIZ_LABELS.get(title, "")
         domain_index_cards.append(
             f"<a class='metric-card domain-card' href='{slugify(title)}.html'>"
             f"<strong>{html.escape(title)}</strong>"
-            f"<span>{len(domain_skills)} Skills</span></a>"
+            f"<span class='domain-biz-label'>{html.escape(biz_label)}</span>"
+            f"<span class='domain-skill-count'>{len(domain_skills)} Skills</span></a>"
         )
     write_file(out / "domains" / "index.html", html_page(
         "按领域",
-        "<h1>按领域</h1><div class='grid'>" + "".join(domain_index_cards) + "</div>",
+        """<h1>按领域浏览</h1>
+<p class='page-lead'>从 25 个技术领域进入，每个领域包含完整 Skill 卡片、引用关系和业务场景。不熟悉领域名称？按业务方向选择：</p>
+<div class='domain-biz-tags' style='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px'>
+  <a href='04-供应链.html' class='domain-tag'>📦 供应链&库存</a>
+  <a href='13-广告分析.html' class='domain-tag'>📢 广告&归因</a>
+  <a href='06-增长模型.html' class='domain-tag'>📈 用户增长</a>
+  <a href='19-风控反欺诈.html' class='domain-tag'>🛡️ 风控&安全</a>
+  <a href='07-NLP-VOC.html' class='domain-tag'>💬 VOC&评论</a>
+  <a href='21-合规决策.html' class='domain-tag'>⚖️ 合规&关税</a>
+</div>
+<div class='grid'>""" + "".join(domain_index_cards) + "</div>",
         "../",
         active_nav="domains",
     ))
@@ -6810,7 +6909,7 @@ def render_pages(
     style='padding:5px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>AI Agent</button>
   <button class='pb-tag-btn' data-tag='客服' onclick='pbFilter("客服")'
     style='padding:5px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:12px'>客服运营</button>
-  <a href='progress.html' style='margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:var(--accent-light,#eff6ff);border:1.5px solid var(--accent,#3b82f6);border-radius:8px;font-size:12.5px;font-weight:600;color:var(--accent,#3b82f6);text-decoration:none'>PL 进度看板</a>
+  <a href='progress.html' style='margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none'>PL 进度看板</a>
 </div>
 <script>
 (function(){
@@ -6841,7 +6940,15 @@ def render_pages(
     write_file(out / "playbooks" / "index.html", html_page(
         "场景手册",
         "<h1>场景手册</h1>"
-        "<p class='muted'>针对运营部门的开箱即用决策指南，每本手册包含完整操作步骤、所需数据和预期收益。</p>"
+        "<p class='page-lead'>33 本可执行场景手册，覆盖选品→上架→广告→供应链→风控全链路。每本手册包含分步骤操作指南、所需数据和预期 ROI。</p>"
+        "<div class='playbook-quick-tags' style='display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px'>"
+        "  <span class='pq-tag'>📦 供应链</span>"
+        "  <span class='pq-tag'>📢 广告投放</span>"
+        "  <span class='pq-tag'>🛡️ 风险防御</span>"
+        "  <span class='pq-tag'>📈 用户增长</span>"
+        "  <span class='pq-tag'>⚖️ 合规关税</span>"
+        "  <span class='pq-tag'>🔍 搜索流量</span>"
+        "</div>"
         f"{pb_search_bar}"
         f"<div class='biz-grid'>{tob_index_cards}</div>",
         "../",
