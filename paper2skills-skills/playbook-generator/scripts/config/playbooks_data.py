@@ -1963,7 +1963,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-asin-traffic-diagnosis",
-        "icon": "🔍",
+        "icon": "SR",
         "name": "ASIN流量诊断手册",
         "tag": "搜索流量 · 关键词 · 排名优化",
         "desc": "从关键词排名跌落到ASIN被合并：系统性诊断Amazon流量异常的6步排查框架",
@@ -2039,7 +2039,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-multi-account-risk-defense",
-        "icon": "🛡️",
+        "icon": "RA",
         "name": "多账号风险防御手册",
         "tag": "账号安全 · 关联风险 · 合规运营",
         "desc": "Amazon多账号关联封号：系统性防御框架，从网络隔离到行为去关联的全链路风控",
@@ -2105,7 +2105,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-d2c-brand-building",
-        "icon": "🏷️",
+        "icon": "DT",
         "name": "DTC品牌建设手册",
         "tag": "品牌 · 独立站 · 私域流量",
         "desc": "从Amazon卖家到DTC品牌：品牌溢价建设、独立站流量获取、私域复购体系的系统化路径",

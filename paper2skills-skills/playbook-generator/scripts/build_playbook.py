@@ -3342,7 +3342,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
          style='display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent,#3b82f6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .15s'
          onmouseover="this.style.background='var(--accent-dark,#2563eb)'"
          onmouseout="this.style.background='var(--accent,#3b82f6)'">
-        ✦ 向 AI 咨询此步骤
+        向 AI 咨询此步骤
       </a>
       <a href='../agents.html' target='_blank'
          style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);color:var(--ink-2,#475569);border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s'
@@ -3503,25 +3503,25 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
   <div class="mobile-nav-overlay" id="mobile-overlay"></div>
   <main class="layout">
     <aside class="sidebar" id="sidebar">
-      <div class="sb-top">
-        {sidebar_section('主导航', 
-          sidebar_link('index.html', '总览', 'index', '⊞') +
-          sidebar_link('diagnostic.html', '业务诊断中心', 'diagnostic', '⚕') +
-          sidebar_link('chat.html', 'AI 知识库对话', 'chat', '✦') +
-          sidebar_link('playbooks/index.html', '场景手册', 'playbooks', '◧') +
-          sidebar_link('solutions/index.html', '方案库', 'solutions', '◆') +
-          sidebar_link('agents.html', '智能体广场', 'agents', '◈') +
-          sidebar_link('agent-report.html', '智能体报告', 'agent-report', '◑') +
-          sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap', '◉') +
-          sidebar_link('maturity-report.html', '成熟度报告 2026', 'maturity', '📊')
-        )}
-        {sidebar_section('知识图谱',
-          sidebar_link('domains/index.html', '按领域浏览', 'domains', '◫') +
-          sidebar_link('topics/index.html', '按主题浏览', 'topics', '◪') +
-          sidebar_link('workflows/index.html', '业务工作流', 'workflows', '◳') +
-          sidebar_link('graph/overview.html', '技能关系图谱', 'graph', '◉') +
-          sidebar_link('skills/index.html', '全部 Skills', 'skills', '≡')
-        )}
+       <div class="sb-top">
+         {sidebar_section('主导航', 
+           sidebar_link('index.html', '总览', 'index', '') +
+           sidebar_link('diagnostic.html', '业务诊断中心', 'diagnostic', '') +
+           sidebar_link('chat.html', 'AI 知识库对话', 'chat', '') +
+           sidebar_link('playbooks/index.html', '场景手册', 'playbooks', '') +
+           sidebar_link('solutions/index.html', '方案库', 'solutions', '') +
+           sidebar_link('agents.html', '智能体广场', 'agents', '') +
+           sidebar_link('agent-report.html', '智能体报告', 'agent-report', '') +
+           sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap', '') +
+           sidebar_link('maturity-report.html', '成熟度报告 2026', 'maturity', '')
+         )}
+         {sidebar_section('知识图谱',
+           sidebar_link('domains/index.html', '按领域浏览', 'domains', '') +
+           sidebar_link('topics/index.html', '按主题浏览', 'topics', '') +
+           sidebar_link('workflows/index.html', '业务工作流', 'workflows', '') +
+           sidebar_link('graph/overview.html', '技能关系图谱', 'graph', '') +
+           sidebar_link('skills/index.html', '全部 Skills', 'skills', '')
+         )}
       </div>
     </aside>
     <section class="content">{body}</section>
@@ -3892,18 +3892,15 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
     <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px">从你的角色开始</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
       <a href="playbooks/pb-supply-chain-intelligence.html" style="padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;transition:all .15s;display:block" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--line)'">
-        <div style="font-size:20px;margin-bottom:6px">🏭</div>
-        <div style="font-size:13px;font-weight:700;color:#0c0c0c;margin-bottom:3px">供应链负责人</div>
+        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px">供应链负责人</div>
         <div style="font-size:12px;color:var(--muted)">补货·库存·履约·风险</div>
       </a>
       <a href="playbooks/pb-attribution-unification.html" style="padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;transition:all .15s;display:block" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--line)'">
-        <div style="font-size:20px;margin-bottom:6px">📢</div>
-        <div style="font-size:13px;font-weight:700;color:#0c0c0c;margin-bottom:3px">广告运营</div>
+        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px">广告运营</div>
         <div style="font-size:12px;color:var(--muted)">ROAS·归因·MMM·预算</div>
       </a>
       <a href="ai-roadmap.html" style="padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;transition:all .15s;display:block" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--line)'">
-        <div style="font-size:20px;margin-bottom:6px">👔</div>
-        <div style="font-size:13px;font-weight:700;color:#0c0c0c;margin-bottom:3px">CEO / 管理层</div>
+        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px">CEO / 管理层</div>
         <div style="font-size:12px;color:var(--muted)">能力路线图·ROI·成熟度</div>
       </a>
     </div>
@@ -4566,8 +4563,8 @@ def build_css() -> str:
   --panel-2:     #F3F3F3;
   --panel-3:     #ECECEC;
 
-  --ink:         #0C0C0C;
-  --ink-2:       #383838;
+  --ink:         #1A1A2E;
+  --ink-2:       #3D3D52;
   --muted:       #888888;
 
   --line:        #E4E4E4;
@@ -4598,10 +4595,10 @@ def build_css() -> str:
   --tag-topic-bg:#F0FDF4;
   --tag-topic-ink:#14532D;
 
-  --nav-bg:         #111111;
-  --nav-border:     #252525;
-  --nav-text:       #AAAAAA;
-  --nav-text-hover: #EEEEEE;
+  --nav-bg:         #1C2B3A;
+  --nav-border:     #2A3D52;
+  --nav-text:       #8FA8BE;
+  --nav-text-hover: #D8E6F0;
   --nav-active-bg:  transparent;
   --nav-active-text:#FFFFFF;
   --nav-highlight:  #B5323E;
@@ -5259,19 +5256,19 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
         ("风险与合规", 117, "风控反欺诈·合规决策·用户流失防御", "#b45309"),
     ]
     risk_events = [
-        ("👤", "用户流失风险", "high", 21),
-        ("⚖️", "产品合规预警", "critical", 23),
-        ("⚔️", "竞品价格攻击", "medium", 9),
-        ("🚢", "供应链断货风险", "high", 16),
-        ("⭐", "虚假评论攻击", "high", 14),
-        ("📉", "ASIN流量异常", "high", 11),
-        ("🔴", "账号健康恶化", "critical", 10),
-        ("📢", "广告素材疲劳", "medium", 9),
-        ("🤖", "数据/模型漂移", "medium", 9),
-        ("💱", "关税汇率风险", "high", 9),
-        ("📦", "库存积压滞销", "high", 10),
-        ("🌐", "DTC SEO可见性", "medium", 8),
-        ("📱", "TikTok内容衰减", "medium", 9),
+        ("", "用户流失风险", "high", 21),
+        ("", "产品合规预警", "critical", 23),
+        ("", "竞品价格攻击", "medium", 9),
+        ("", "供应链断货风险", "high", 16),
+        ("", "虚假评论攻击", "high", 14),
+        ("", "ASIN流量异常", "high", 11),
+        ("", "账号健康恶化", "critical", 10),
+        ("", "广告素材疲劳", "medium", 9),
+        ("", "数据/模型漂移", "medium", 9),
+        ("", "关税汇率风险", "high", 9),
+        ("", "库存积压滞销", "high", 10),
+        ("", "DTC SEO可见性", "medium", 8),
+        ("", "TikTok内容衰减", "medium", 9),
     ]
     sev_colors = {"critical": "#dc2626", "high": "#d97706", "medium": "#2563eb"}
 
@@ -5295,10 +5292,9 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
     for icon, name, sev, cnt in risk_events:
         col = sev_colors.get(sev, "#6b7280")
         events_html += f"""
-        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:8px">
-          <span style="font-size:18px;flex-shrink:0">{icon}</span>
+        <div style="display:flex;align-items:center;gap:12px;padding:9px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:8px">
           <div style="flex:1;min-width:0">
-            <div style="font-size:12.5px;font-weight:600;color:#0c0c0c">{name}</div>
+            <div style="font-size:12.5px;font-weight:600;color:var(--ink,#1A1A2E)">{name}</div>
             <div style="font-size:11px;color:#6b7280;margin-top:2px">{cnt} Skills 诊断链</div>
           </div>
           <span style="font-size:10px;font-weight:700;color:{col};background:{col}18;padding:2px 7px;border-radius:4px;white-space:nowrap">{sev.upper()}</span>
@@ -5342,7 +5338,7 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
   <a class="topbar-brand" href="index.html">paper2skills</a>
   <nav class="topbar-nav">
     <a href="index.html">总览</a>
-    <a href="diagnostic.html">⚕ 诊断</a>
+    <a href="diagnostic.html">诊断</a>
     <a href="chat.html">AI对话</a>
     <a href="maturity-report.html" style="color:#B5323E;font-weight:700">成熟度报告</a>
     <a href="ai-roadmap.html">路线图</a>
@@ -5391,15 +5387,15 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
     <div class="mr-section-title">01 · 核心发现</div>
     <p class="mr-section-desc">通过对 {skill_count} 个技能的系统性分析，我们识别出母婴跨境电商 AI 能力建设的三个关键洞察：</p>
     <div class="mr-callout" style="background:#eff6ff;border-color:#bfdbfe">
-      <div class="mr-callout-title" style="color:#1d4ed8">📊 发现 1：分析能力过剩，决策执行能力严重不足</div>
+      <div class="mr-callout-title" style="color:#1d4ed8">发现 1：分析能力过剩，决策执行能力严重不足</div>
       <div class="mr-callout-body" style="color:#1e3a8a">当前知识图谱中 A 层（分析/检测/预测）Skills 占比 >95%，D 层（自动触发/执行/封锁）Skills 占比不足 5%。绝大多数卖家的 AI 应用停留在「看报表」阶段，尚未进入「自动决策」阶段。这是最大的能力鸿沟——拥有预测结果却无法自动化执行，等同于有地图却不会开车。</div>
     </div>
     <div class="mr-callout" style="background:#eff6ff;border-color:#bfdbfe">
-      <div class="mr-callout-title" style="color:#1d4ed8">💡 发现 2：风险防御的 ROI 远高于增长投入</div>
+      <div class="mr-callout-title" style="color:#1d4ed8">发现 2：风险防御的 ROI 远高于增长投入</div>
       <div class="mr-callout-body" style="color:#1e3a8a">从 ps_override 数据统计，风险/合规类技能的平均量化 ROI（年化避损）达 30-100 万元，而纯增长类技能平均 ROI 约 15-50 万元。母婴跨境卖家对风险的接受敏感度远高于增长机会，这一心理偏好也得到实际数据验证：风险类 Skills 被引用频率比增长类高 40%。</div>
     </div>
     <div class="mr-callout" style="background:#f0fdf4;border-color:#bbf7d0">
-      <div class="mr-callout-title" style="color:#166534">🚀 发现 3：供应链是 AI 渗透最深、回报最确定的领域</div>
+      <div class="mr-callout-title" style="color:#166534">发现 3：供应链是 AI 渗透最深、回报最确定的领域</div>
       <div class="mr-callout-body" style="color:#14532d">供应链域拥有 {skill_count} 个技能中最多的 124 个（12.3%），且跨 Skills 引用关系最密集（平均每个供应链 Skill 被引用 53 次）。需求预测→安全库存→补货决策→前置期风险的完整 AI 决策链已在论文层面成熟，是当前 ROI 最确定的 AI 投入方向。</div>
     </div>
   </div>
@@ -5578,7 +5574,7 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
   <a class="topbar-brand" href="index.html">paper2skills</a>
   <nav class="topbar-nav">
     <a href="index.html">总览</a>
-    <a href="diagnostic.html" class="active" style="color:#B5323E;font-weight:700">⚕ 诊断</a>
+    <a href="diagnostic.html" class="active" style="color:#B5323E;font-weight:700">诊断</a>
     <a href="chat.html">AI对话</a>
     <a href="playbooks/">手册</a>
     <a href="skills/">技能库</a>
@@ -5590,7 +5586,7 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
 <div class="diag-wrap">
   <aside class="diag-left">
     <div>
-      <div class="diag-title">⚕ 业务诊断中心</div>
+      <div class="diag-title">业务诊断中心</div>
       <div class="diag-sub">描述症状，匹配「诊断→处置→预防」Skill 链</div>
     </div>
     <div class="diag-input-row">
@@ -5601,21 +5597,21 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
   </aside>
   <main class="diag-right" id="diag-right">
     <div class="diag-empty" id="diag-empty">
-      <div class="diag-empty-icon">⚕</div>
-      <div class="diag-empty-title" style="font-size:16px;font-weight:700;color:#0c0c0c;margin-bottom:6px">症状 → 诊断链 → 行动方案</div>
+      <div class="diag-empty-icon">—</div>
+      <div class="diag-empty-title" style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px">症状 → 诊断链 → 行动方案</div>
       <div class="diag-empty-text">点击左侧症状，获取「诊断→处置→预防」三层 Skill 链</div>
       <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:400px;text-align:left">
-        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
-          <div style="font-weight:700;margin-bottom:3px">🔍 诊断层</div>找出根因的算法技能
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">诊断层</div>找出根因的算法技能
         </div>
-        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
-          <div style="font-weight:700;margin-bottom:3px">🔧 处置层</div>立即执行的行动 Skill
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">处置层</div>立即执行的行动 Skill
         </div>
-        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
-          <div style="font-weight:700;margin-bottom:3px">🛡️ 预防层</div>长效防范的系统 Skill
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">预防层</div>长效防范的系统 Skill
         </div>
-        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:#374151">
-          <div style="font-weight:700;margin-bottom:3px">📖 手册链接</div>配套可执行场景手册
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">手册</div>配套可执行场景手册
         </div>
       </div>
     </div>
@@ -5628,9 +5624,9 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
   const SEV_CLASS={{'critical':'sev-critical','high':'sev-high','medium':'sev-medium','low':'sev-low'}};
   const SEV_LABEL={{'critical':'紧急','high':'高风险','medium':'中风险','low':'低风险'}};
   const PHASE_CFG={{
-    diagnose:{{label:'🔍 第一步：诊断根因',cls:'diag-phase-diagnose'}},
-    treat:{{label:'🔧 第二步：处置行动',cls:'diag-phase-treat'}},
-    prevent:{{label:'🛡️ 第三步：长效预防',cls:'diag-phase-prevent'}}
+    diagnose:{{label:'第一步：诊断根因',cls:'diag-phase-diagnose'}},
+    treat:{{label:'第二步：处置行动',cls:'diag-phase-treat'}},
+    prevent:{{label:'第三步：长效预防',cls:'diag-phase-prevent'}}
   }};
 
   function initButtons(){{
@@ -5643,7 +5639,7 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
       btn.dataset.id=ev.event_id;
       const sevCls=SEV_CLASS[ev.severity]||'sev-medium';
       const sevLabel=SEV_LABEL[ev.severity]||ev.severity;
-      btn.innerHTML=`<span class="diag-event-icon">${{ev.icon||'⚠️'}}</span><div class="diag-event-info"><div class="diag-event-name">${{ev.event_name}}</div><span class="diag-event-sev ${{sevCls}}">${{sevLabel}}</span></div>`;
+      btn.innerHTML=`<div class="diag-event-info"><div class="diag-event-name">${{ev.event_name}}</div><span class="diag-event-sev ${{sevCls}}">${{sevLabel}}</span></div>`;
       btn.addEventListener('click',()=>showEvent(ev.event_id));
       container.appendChild(btn);
     }});
@@ -5670,7 +5666,7 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
     if(btn)btn.classList.add('active');
     const sevCls=SEV_CLASS[ev.severity]||'sev-medium';
     const sevLabel=SEV_LABEL[ev.severity]||ev.severity;
-    let html=`<div class="diag-result-header"><div class="diag-result-title"><span class="diag-result-icon">${{ev.icon||'⚠️'}}</span><span class="diag-result-name">${{ev.event_name}}</span><span class="diag-event-sev ${{sevCls}}" style="margin-left:4px">${{sevLabel}}</span></div><div class="diag-result-summary">${{ev.summary||''}}</div></div><div class="diag-phases">`;
+    let html=`<div class="diag-result-header"><div class="diag-result-title"><span class="diag-result-name">${{ev.event_name}}</span><span class="diag-event-sev ${{sevCls}}" style="margin-left:8px">${{sevLabel}}</span></div><div class="diag-result-summary">${{ev.summary||''}}</div></div><div class="diag-phases">`;
     ['diagnose','treat','prevent'].forEach(phase=>{{
       const skills=(ev.phases||{{}})[phase]||[];
       if(!skills.length)return;
@@ -5686,7 +5682,7 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
     html+='</div>';
     const pbs=(ev.related_playbooks||[]);
     if(pbs.length){{
-      const links=pbs.map(id=>`<a class="diag-related-link" href="playbooks/${{id}}.html" target="_blank">📖 ${{id.replace('pb-','').replace(/-/g,' ')}}</a>`).join('');
+      const links=pbs.map(id=>`<a class="diag-related-link" href="playbooks/${{id}}.html" target="_blank">${{id.replace('pb-','').replace(/-/g,' ')}}</a>`).join('');
       html+=`<div class="diag-related"><div class="diag-related-title">相关手册</div><div class="diag-related-links">${{links}}</div></div>`;
     }}
     document.getElementById('diag-empty').style.display='none';
@@ -5703,7 +5699,7 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
     else{{
       document.getElementById('diag-empty').style.display='none';
       document.getElementById('diag-result').className='diag-result visible';
-      document.getElementById('diag-result').innerHTML='<div class="diag-empty"><div class="diag-empty-icon">🤔</div><div class="diag-empty-text">未匹配到具体风险场景<br>请尝试点击左侧症状按钮，或前往 <a href="chat.html">AI对话</a> 获取帮助</div></div>';
+      document.getElementById('diag-result').innerHTML='<div class="diag-empty"><div class="diag-empty-icon">—</div><div class="diag-empty-text">未匹配到具体风险场景<br>请尝试点击左侧症状按钮，或前往 <a href="chat.html">AI对话</a> 获取帮助</div></div>';
     }}
   }};
 
@@ -5916,7 +5912,6 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
     <header class="chat-topbar">
       <a class="chat-back" href="{nav}index.html">← 返回</a>
       <div class="chat-title-area">
-        <span class="chat-title-icon">✦</span>
         <span class="chat-title-text">AI 知识库对话</span>
         <span class="chat-title-sub">{skill_count} Skills · DeepSeek V3</span>
       </div>
@@ -5925,7 +5920,6 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
     <div class="chat-body">
       <div class="chat-messages" id="chat-messages">
         <div class="chat-welcome" id="chat-welcome">
-          <span class="chat-welcome-icon">✦</span>
           <h2>paper2skills 知识库助手</h2>
           <p>基于 {skill_count} 个从顶会论文萃取的跨境电商 AI 决策技能，为你提供专业问答</p>
           <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">试试问这些</div>
@@ -5934,9 +5928,9 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
             <button class="chat-sug-btn">大促备货如何预测需求？</button>
             <button class="chat-sug-btn">供应链 AI 有哪些关键技能？</button>
             <button class="chat-sug-btn">KOL 投放效果怎么归因？</button>
-            <button class="chat-sug-btn">🔴 账号 ODR 异常，担心被封号</button>
-            <button class="chat-sug-btn">📉 ASIN 流量突然下降 30%</button>
-            <button class="chat-sug-btn">⚖️ 产品被平台合规警告</button>
+            <button class="chat-sug-btn">账号 ODR 异常，担心被封号</button>
+            <button class="chat-sug-btn">ASIN 流量突然下降 30%</button>
+            <button class="chat-sug-btn">产品被平台合规警告</button>
           </div>
         </div>
       </div>
@@ -5944,7 +5938,7 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
       <div class="chat-input-area">
         <div class="chat-input-wrap">
           <button class="web-search-toggle" id="web-search-toggle" title="开启联网搜索">
-            <span class="web-search-toggle-icon">🌐</span>
+            <span class="web-search-toggle-icon">联网</span>
             <span id="web-search-label">联网搜索</span>
           </button>
           <textarea class="chat-textarea" id="chat-input"
@@ -6771,12 +6765,12 @@ def render_pages(
         """<h1>按领域浏览</h1>
 <p class='page-lead'>从 25 个技术领域进入，每个领域包含完整 Skill 卡片、引用关系和业务场景。不熟悉领域名称？按业务方向选择：</p>
 <div class='domain-biz-tags' style='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px'>
-  <a href='04-供应链.html' class='domain-tag'>📦 供应链&库存</a>
-  <a href='13-广告分析.html' class='domain-tag'>📢 广告&归因</a>
-  <a href='06-增长模型.html' class='domain-tag'>📈 用户增长</a>
-  <a href='19-风控反欺诈.html' class='domain-tag'>🛡️ 风控&安全</a>
-  <a href='07-NLP-VOC.html' class='domain-tag'>💬 VOC&评论</a>
-  <a href='21-合规决策.html' class='domain-tag'>⚖️ 合规&关税</a>
+  <a href='04-供应链.html' class='domain-tag'>供应链&amp;库存</a>
+  <a href='13-广告分析.html' class='domain-tag'>广告&amp;归因</a>
+  <a href='06-增长模型.html' class='domain-tag'>用户增长</a>
+  <a href='19-风控反欺诈.html' class='domain-tag'>风控&amp;安全</a>
+  <a href='07-NLP-VOC.html' class='domain-tag'>VOC&amp;评论</a>
+  <a href='21-合规决策.html' class='domain-tag'>合规&amp;关税</a>
 </div>
 <div class='grid'>""" + "".join(domain_index_cards) + "</div>",
         "../",
@@ -6942,12 +6936,12 @@ def render_pages(
         "<h1>场景手册</h1>"
         "<p class='page-lead'>33 本可执行场景手册，覆盖选品→上架→广告→供应链→风控全链路。每本手册包含分步骤操作指南、所需数据和预期 ROI。</p>"
         "<div class='playbook-quick-tags' style='display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px'>"
-        "  <span class='pq-tag'>📦 供应链</span>"
-        "  <span class='pq-tag'>📢 广告投放</span>"
-        "  <span class='pq-tag'>🛡️ 风险防御</span>"
-        "  <span class='pq-tag'>📈 用户增长</span>"
-        "  <span class='pq-tag'>⚖️ 合规关税</span>"
-        "  <span class='pq-tag'>🔍 搜索流量</span>"
+        "  <span class='pq-tag'>供应链</span>"
+        "  <span class='pq-tag'>广告投放</span>"
+        "  <span class='pq-tag'>风险防御</span>"
+        "  <span class='pq-tag'>用户增长</span>"
+        "  <span class='pq-tag'>合规关税</span>"
+        "  <span class='pq-tag'>搜索流量</span>"
         "</div>"
         f"{pb_search_bar}"
         f"<div class='biz-grid'>{tob_index_cards}</div>",
@@ -7039,7 +7033,7 @@ def _post_build_patch(out: "Path") -> None:
                    f"本地</label>"
                    f"<label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'>"
                    f"<input type='radio' name='mode-{aid}' value='ai' style='accent-color:#6366f1'>"
-                   f"✦ AI</label></div>\n"
+                   f"AI 深度分析</label></div>\n"
                    f"      <button class='modal-run-btn' id='run-{aid}' onclick='runAgent(\"{aid}\")'>"
             )
             if old in agents_html:
@@ -7064,7 +7058,7 @@ async function runAgentAI(id){
     const inp=getInputs(id),inpStr=Object.entries(inp).map(([k,v])=>k+': '+v).join('\\n');
     const res=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[id]||'你是跨境电商AI分析助手。'},{role:'user',content:'请根据以下数据分析：\\n'+inpStr}],max_tokens:1800,temperature:0.5,stream:false})});
     const data=await res.json();const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';
-    if(th)th.style.display='none';await streamText(cel,'[✦ AI深度分析 · DeepSeek]\\n\\n'+ans);saveReport(id,'[AI] '+ans);
+    if(th)th.style.display='none';await streamText(cel,'[AI深度分析 · DeepSeek]\\n\\n'+ans);saveReport(id,'[AI] '+ans);
   }catch(e){if(th)th.style.display='none';if(cel)cel.textContent='[AI调用失败] '+e.message;}
   finally{if(btn)btn.disabled=false;if(lb)lb.textContent='重新分析';}
 }
@@ -7287,14 +7281,14 @@ async function runChain(chainId){
                 "onclick='exportReports()'"
                 " style='padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600'>"
                 "⬇ 导出全部</button>"
-                "  <button onclick='aiSynthesizeReports()' style='padding:8px 16px;border-radius:8px;border:1.5px solid #6366f1;background:#f0f4ff;color:#6366f1;cursor:pointer;font-size:13px;font-weight:600'>✦ AI 综合分析"
+                "  <button onclick='aiSynthesizeReports()' style='padding:8px 16px;border-radius:8px;border:1.5px solid #6366f1;background:#f0f4ff;color:#6366f1;cursor:pointer;font-size:13px;font-weight:600'>AI 综合分析"
             )
             if OLD_EXPORT in report_html:
                 report_html = report_html.replace(
                     "onclick='exportReports()'",
                     "onclick='exportReports()' style='padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600'"
                 )
-            AI_SYNTH_FN = """function aiSynthesizeReports(){const reports=loadReports();if(!reports.length){alert('暂无报告，请先在智能体广场运行分析');return;}const recent=reports.slice(0,8);const st=recent.map((r,i)=>'【'+(i+1)+'. '+r.name+' | '+r.ts+'】\\n输入: '+JSON.stringify(r.inputs)+'\\n结果: '+r.result.slice(0,400)).join('\\n\\n---\\n\\n');const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;z-index:3000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px';overlay.innerHTML='<div style="background:#fff;border-radius:14px;width:100%;max-width:680px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)"><div style="padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:16px;font-weight:800;color:#0f172a">✦ AI 综合分析报告</div><div style="font-size:12px;color:#64748b;margin-top:2px">基于最近 '+recent.length+' 条 Agent 运行记录</div></div><button id="ai-synth-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8">×</button></div><div style="flex:1;overflow-y:auto;padding:16px 20px"><div id="ai-synth-output" style="font-size:13.5px;color:#374151;line-height:1.7;white-space:pre-wrap"><div style="color:#6366f1;font-weight:600">⏳ 正在综合分析 '+recent.length+' 条报告，请稍候…</div></div></div><div style="padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:8px"><button id="ai-synth-copy" style="padding:7px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer"> 复制</button></div></div>';document.body.appendChild(overlay);const outputEl=document.getElementById('ai-synth-output');document.getElementById('ai-synth-close').onclick=()=>overlay.remove();overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:'你是跨境电商AI数据分析师。请综合分析下面多个Agent的运行结果，给出：1.跨Agent综合洞察；2.最需优先处理的3个问题；3.具体可量化行动建议。结构化中文输出。'},{role:'user',content:'以下是近期Agent运行结果：\\n\\n'+st}],max_tokens:1500,temperature:0.45,stream:false})}).then(r=>r.json()).then(data=>{const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';outputEl.innerHTML=ans.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>').replace(/\\n\\n+/g,'<br><br>').replace(/\\n/g,'<br>');document.getElementById('ai-synth-copy').onclick=()=>{navigator.clipboard.writeText(ans).then(()=>{document.getElementById('ai-synth-copy').textContent='✓ 已复制';});};}).catch(e=>{outputEl.innerHTML='<span style="color:#ef4444">[AI调用失败] '+e.message+'</span>';});}\n"""
+            AI_SYNTH_FN = """function aiSynthesizeReports(){const reports=loadReports();if(!reports.length){alert('暂无报告，请先在智能体广场运行分析');return;}const recent=reports.slice(0,8);const st=recent.map((r,i)=>'【'+(i+1)+'. '+r.name+' | '+r.ts+'】\\n输入: '+JSON.stringify(r.inputs)+'\\n结果: '+r.result.slice(0,400)).join('\\n\\n---\\n\\n');const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;z-index:3000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px';overlay.innerHTML='<div style="background:#fff;border-radius:14px;width:100%;max-width:680px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)"><div style="padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:16px;font-weight:800;color:#0f172a">AI 综合分析报告</div><div style="font-size:12px;color:#64748b;margin-top:2px">基于最近 '+recent.length+' 条 Agent 运行记录</div></div><button id="ai-synth-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8">×</button></div><div style="flex:1;overflow-y:auto;padding:16px 20px"><div id="ai-synth-output" style="font-size:13.5px;color:#374151;line-height:1.7;white-space:pre-wrap"><div style="color:#6366f1;font-weight:600">⏳ 正在综合分析 '+recent.length+' 条报告，请稍候…</div></div></div><div style="padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:8px"><button id="ai-synth-copy" style="padding:7px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer"> 复制</button></div></div>';document.body.appendChild(overlay);const outputEl=document.getElementById('ai-synth-output');document.getElementById('ai-synth-close').onclick=()=>overlay.remove();overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:'你是跨境电商AI数据分析师。请综合分析下面多个Agent的运行结果，给出：1.跨Agent综合洞察；2.最需优先处理的3个问题；3.具体可量化行动建议。结构化中文输出。'},{role:'user',content:'以下是近期Agent运行结果：\\n\\n'+st}],max_tokens:1500,temperature:0.45,stream:false})}).then(r=>r.json()).then(data=>{const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';outputEl.innerHTML=ans.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>').replace(/\\n\\n+/g,'<br><br>').replace(/\\n/g,'<br>');document.getElementById('ai-synth-copy').onclick=()=>{navigator.clipboard.writeText(ans).then(()=>{document.getElementById('ai-synth-copy').textContent='✓ 已复制';});};}).catch(e=>{outputEl.innerHTML='<span style="color:#ef4444">[AI调用失败] '+e.message+'</span>';});}\n"""
             # 在 exportReports 函数后插入
             if 'function exportReports' in report_html and 'aiSynthesizeReports' not in report_html:
                 # 找 exportReports 函数结束的位置（下一个 function 前）
@@ -7307,7 +7301,7 @@ async function runChain(chainId){
             if old_export_btn in report_html:
                 report_html = report_html.replace(
                     old_export_btn,
-                    ">⬇ 导出全部</button>\n  <button onclick='aiSynthesizeReports()' style='padding:8px 16px;border-radius:8px;border:1.5px solid #6366f1;background:#f0f4ff;color:#6366f1;cursor:pointer;font-size:13px;font-weight:600'>✦ AI 综合分析</button>"
+                    ">⬇ 导出全部</button>\n  <button onclick='aiSynthesizeReports()' style='padding:8px 16px;border-radius:8px;border:1.5px solid #6366f1;background:#f0f4ff;color:#6366f1;cursor:pointer;font-size:13px;font-weight:600'>AI 综合分析</button>"
                 )
             report_path.write_text(report_html, encoding="utf-8")
 
@@ -7318,11 +7312,11 @@ async function runChain(chainId){
         if '分析报告台' not in index_html:
             QUICK_ACTIONS = (
                 '\n  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center">'
-                '<a href="diagnostic.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(181,50,62,.1);border:1.5px solid rgba(181,50,62,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#B5323E;text-decoration:none">⚕ 业务诊断</a>'
-                '<a href="chat.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(99,102,241,.1);border:1.5px solid rgba(99,102,241,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#6366f1;text-decoration:none">✦ AI 知识库对话</a>'
-                '<a href="graph/overview.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(6,182,212,.1);border:1.5px solid rgba(6,182,212,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#0891b2;text-decoration:none">◉ 技能关系图谱</a>'
-                '<a href="playbooks/index.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(16,185,129,.1);border:1.5px solid rgba(16,185,129,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#059669;text-decoration:none">◧ 场景手册</a>'
-                '<a href="agent-report.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#d97706;text-decoration:none">◑ 分析报告台</a>'
+                '<a href="diagnostic.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(181,50,62,.1);border:1.5px solid rgba(181,50,62,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#B5323E;text-decoration:none">业务诊断</a>'
+                '<a href="chat.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(99,102,241,.1);border:1.5px solid rgba(99,102,241,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#6366f1;text-decoration:none">AI 知识库对话</a>'
+                '<a href="graph/overview.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(6,182,212,.1);border:1.5px solid rgba(6,182,212,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#0891b2;text-decoration:none">技能关系图谱</a>'
+                '<a href="playbooks/index.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(16,185,129,.1);border:1.5px solid rgba(16,185,129,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#059669;text-decoration:none">场景手册</a>'
+                '<a href="agent-report.html" style="display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.3);border-radius:20px;font-size:11.5px;font-weight:600;color:#d97706;text-decoration:none">分析报告台</a>'
                 '</div>'
             )
             HERO_CTA_END = '</div>\n  <div class="hero-tabs"'
@@ -7332,7 +7326,7 @@ async function runChain(chainId){
             elif ALT_CTA_END in index_html:
                 index_html = index_html.replace(ALT_CTA_END, QUICK_ACTIONS + ALT_CTA_END, 1)
             # 替换 Demo 按钮为 Agent 工作台
-            index_html = index_html.replace('预约 30 分钟 Demo', '◈ 进入智能体工作台')
+            index_html = index_html.replace('预约 30 分钟 Demo', '进入智能体广场')
             index_html = index_html.replace('mailto:skills@lute-tlz-dddd.top?subject=预约Demo-paper2skills', 'agents.html')
             index_path.write_text(index_html, encoding="utf-8")
 
@@ -7448,8 +7442,8 @@ def _render_playbook_progress_page(playbooks: list) -> str:
   <main class="layout">
     <aside class="sidebar" id="sidebar">
       <div class="sb-top">
-        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon">⊞</span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon">✦</span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon">◧</span><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-icon">◆</span><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-icon">◈</span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon">◑</span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon">◉</span><span class="sbl-text">AI 能力路线图</span></a></div></div>
-        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon">◫</span><span class="sbl-text">按领域浏览</span></a><a href="../graph/overview.html"><span class="sbl-icon">◉</span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon">≡</span><span class="sbl-text">全部 Skills</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-icon"></span><span class="sbl-text">总览</span></a><a href="../chat.html"><span class="sbl-icon"></span><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-icon"></span><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-icon"></span><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-icon"></span><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-icon"></span><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-icon"></span><span class="sbl-text">AI 能力路线图</span></a></div></div>
+        <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-icon"></span><span class="sbl-text">按领域浏览</span></a><a href="../graph/overview.html"><span class="sbl-icon"></span><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-icon"></span><span class="sbl-text">全部 Skills</span></a></div></div>
       </div>
     </aside>
     <section class="content">
