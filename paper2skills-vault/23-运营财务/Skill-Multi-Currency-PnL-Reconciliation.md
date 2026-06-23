@@ -131,12 +131,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 多币种P&L对账测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-FX-Exposure-Measurement]] — 汇率敞口测量
-- 延伸：[[Skill-FX-Hedging-Strategy]] — 外汇对冲策略
-- 延伸：[[Skill-Multi-Currency-PnL-Reconciliation]] — 联合分析
-- 组合：[[Skill-PL-Attribution-Analysis]] — P&L 归因分析
+- 前置技能：[[Skill-FX-Hedging-Strategy]]
+- 前置技能：[[Skill-Multicurrency-FX-Hedging]]
+- 延伸技能：[[Skill-Tariff-FX-FBA-Cost-Dynamics]]
+- 延伸技能：[[Skill-Cross-Border-Cash-Flow-Forecasting]]
+- 可组合：[[Skill-SKU-Level-PL-Dashboard]]
+- 可组合：[[Skill-Profitability-Waterfall-By-ASIN]]
 
 ## ⑤ 商业价值评估
 

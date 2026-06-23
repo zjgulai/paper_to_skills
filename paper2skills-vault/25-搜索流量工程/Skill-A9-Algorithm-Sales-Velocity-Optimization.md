@@ -163,6 +163,8 @@ print("\n[✓] A9-Algorithm-Sales-Velocity-Optimization 测试通过")
 - **前置**：[[Skill-Search-Position-Click-Elasticity]]（排名-流量弹性基础）、[[Skill-Listing-Semantic-Relevance-Scoring]]（相关性基础）
 - **延伸**：[[Skill-Sponsored-Organic-Rank-Synergy]]（广告协同自然排名）、[[Skill-Click-Through-Rate-Title-Optimizer]]（CTR 提升）
 - **可组合**：[[Skill-Seasonal-Keyword-Rotation-Strategy]]（促销时机选择）+ [[Skill-Search-Term-Negative-Optimization]]（降低 ACOS）
+- 可组合：[[Skill-Auto-Tagging-Pipeline-Rule-ML-LLM]]
+- 可组合：[[Skill-Keyword-Cannibalization-Detection]]
 
 ## ⑤ 商业价值评估
 

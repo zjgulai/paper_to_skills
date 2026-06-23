@@ -145,12 +145,15 @@ if __name__ == "__main__":
     print("[✓] Regulatory-Update-Impact-Dispatcher 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Regulatory-Change-Auto-Monitor]]（检测法规变更）
-> 前置: [[Skill-Platform-Policy-Change-Adaptive-Monitor]]（平台政策变更监控）
-> 延伸: [[Skill-Category-Compliance-Prescan]]（变更后重新预扫描受影响品类）
-> 可组合: [[Skill-Compliance-Violation-Auto-Escalation]]（违规后升级响应）
+- 前置技能：[[Skill-Regulatory-Change-Monitoring]]
+- 前置技能：[[Skill-Regulatory-Change-Auto-Monitor]]
+- 延伸技能：[[Skill-Regulatory-Change-Impact-Propagation]]
+- 延伸技能：[[Skill-Regulatory-Graph-Compliance-Monitor]]
+- 可组合：[[Skill-Compliance-Scored-Guardrail-Orchestration]]
+- 可组合：[[Skill-Platform-Policy-Change-Adaptive-Monitor]]
 
 ## ⑤ 商业价值评估
 

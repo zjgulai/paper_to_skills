@@ -130,11 +130,15 @@ print(f"⚡ 预警触发: {'是' if result['alert'] else '否'}")
 print("[✓] Demand-Signal-Nowcasting 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Sales-Velocity-Momentum-Detection]]（动量信号检测）
-> 延伸: [[Skill-Temporal-Fusion-Transformer-Inventory]]（多信号融合）
-> 可组合: [[Skill-Promotional-Lift-Decomposition]]（实时促销效果估计）
+- 前置技能：[[Skill-Time-Series-Forecasting]]
+- 前置技能：[[Skill-Realtime-Feature-Collection]]
+- 延伸技能：[[Skill-EventCast-LLM-Event-Forecasting]]
+- 延伸技能：[[Skill-Flash-Sale-Realtime-Sellthrough-Forecast]]
+- 可组合：[[Skill-Online-Incremental-Learning]]
+- 可组合：[[Skill-Inventory-Demand-Sensing]]
 
 ## ⑤ 商业价值评估
 

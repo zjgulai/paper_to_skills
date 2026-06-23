@@ -178,11 +178,15 @@ for alert in result['alerts']:
 print("[✓] Brand-Registry-Infringement-Tracker 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Hijacker-Seller-Network-Analysis]]（卖家身份识别）
-> 延伸: [[Skill-Supply-Chain-Counterfeit-Detection]]（视觉商标比对）
-> 可组合: [[Skill-Competitor-Negative-Campaign-Detection]]（全链路品牌防御）
+- 前置技能：[[Skill-IP-Trademark-Brand-Monitoring]]
+- 前置技能：[[Skill-Brand-Listing-Hijacking-Detection]]
+- 延伸技能：[[Skill-Counterfeit-Product-Visual-Detection]]
+- 延伸技能：[[Skill-Hijacker-Seller-Network-Analysis]]
+- 可组合：[[Skill-Brand-Defense-Search-Strategy]]
+- 可组合：[[Skill-Listing-Suppression-Detection]]
 
 ## ⑤ 商业价值评估
 

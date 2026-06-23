@@ -333,6 +333,8 @@ if __name__ == "__main__":
 - **前置（prerequisite）**：[[Skill-Promotion-Demand-Decomposition]]（大促基线预测）、[[Skill-LLMForecaster-Seasonal-Event]]（季节大促预测）
 - **延伸（extends）**：[[Skill-SOP-Sales-Operations-Planning]]（大促S&OP盘货流程上游）、[[Skill-Promo-Stocktaking-SOP-Automation]]（大促盘货自动化）
 - **可组合（combinable）**：[[Skill-Autobidding-Budget-Allocation-Optimization]]（流量协同与广告竞价联动）、[[Skill-FDC-RDC-Inventory-Allocation]]（紧急调拨前置仓库存）
+- 可组合：[[Skill-InPromo-Realtime-Decision-KPI]]
+- 可组合：[[Skill-Black-Swan-Scenario-Simulation-Tag]]
 
 ## ⑤ 商业价值评估
 

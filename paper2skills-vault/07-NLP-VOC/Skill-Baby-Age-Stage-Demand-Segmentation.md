@@ -171,12 +171,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 婴儿月龄需求分层测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-VOC-Aspect-Sentiment-Extraction]] — 属性情感分析
-- 延伸：[[Skill-VOC-Competitive-Positioning-Map]] — 竞争定位
-- 延伸：[[Skill-Review-Helpfulness-Ranking-Model]] — 高价值评论
-- 组合：[[Skill-Semantic-Blueprint-Compiler]] — 语义蓝图编译
+- 前置技能：[[Skill-VOC-Aspect-Sentiment-Extraction]]
+- 前置技能：[[Skill-NLP-Sentiment-ML-Pipeline]]
+- 延伸技能：[[Skill-User-Lifecycle-STAN]]
+- 延伸技能：[[Skill-RFM-Customer-Segmentation]]
+- 可组合：[[Skill-Personalized-Promotion-Targeting]]
+- 可组合：[[Skill-Cohort-Retention-Analysis]]
 
 ## ⑤ 商业价值评估
 

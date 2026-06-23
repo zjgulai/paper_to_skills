@@ -77,11 +77,15 @@ if __name__ == "__main__":
     main()
 ```
 
+
 ## ④ 技能关联
-- 前置：[[Skill-Repurchase-Trigger-Timing-Model]]
-- 前置：[[Skill-RFM-to-Action-Policy-Engine]]
-- 延伸：[[Skill-Cohort-LTV-Model]]
-- 可组合：[[Skill-Channel-Attribution-Triggering]]（用于把复购动作绑定到渠道来源）
+
+- 前置技能：[[Skill-Live-Commerce-Stream-Algorithm]]
+- 前置技能：[[Skill-RFM-Customer-Segmentation]]
+- 延伸技能：[[Skill-Customer-Churn-Prediction]]
+- 延伸技能：[[Skill-LTV-Prediction-ZILN]]
+- 可组合：[[Skill-TikTok-Shop-Content-Attribution]]
+- 可组合：[[Skill-Email-Sequence-RL-Optimizer]]
 
 ## ⑤ 商业价值评估
 - ROI 预估：针对直播首购用户做 7 天差异化干预，复购率提升约 28%，年化增收约 $5.2 万

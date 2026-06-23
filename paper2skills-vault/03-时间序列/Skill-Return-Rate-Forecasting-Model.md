@@ -139,11 +139,15 @@ print(f"前5天退货率预测: {forecast['forecast_rates'][:5].round(3)}")
 print("[✓] Return-Rate-Forecasting-Model 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Holiday-Spike-Demand-Decomposition]]（节日效应建模）
-> 延伸: [[Skill-Promotional-Lift-Decomposition]]（大促订单量预测）
-> 可组合: [[Skill-Lead-Time-Demand-Integration-Model]]（可用库存修正）
+- 前置技能：[[Skill-Time-Series-Forecasting]]
+- 前置技能：[[Skill-Returnformer-Returns-Prediction]]
+- 延伸技能：[[Skill-Refund-Rate-Financial-Impact]]
+- 延伸技能：[[Skill-Return-Root-Cause-Attribution-Graph]]
+- 可组合：[[Skill-Predictive-Returns-Management]]
+- 可组合：[[Skill-Cross-Border-Return-Rate-By-Country-KPI]]
 
 ## ⑤ 商业价值评估
 

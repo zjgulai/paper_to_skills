@@ -128,12 +128,15 @@ if __name__ == '__main__':
     print(f"\n[✓] FBA费用瀑布归因测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-FBA-Fee-Intelligence]] — 基础费用数据采集
-- 延伸：[[Skill-SKU-Level-PL-Dashboard]] — 单品盈利看板
-- 延伸：[[Skill-Profitability-Waterfall-By-ASIN]] — ASIN级盈利瀑布
-- 组合：[[Skill-Inventory-Carrying-Cost-Model]] — 库存持有成本联合分析
+- 前置技能：[[Skill-FBA-Cost-Forecast-Adjustment]]
+- 前置技能：[[Skill-SKU-Level-PL-Dashboard]]
+- 延伸技能：[[Skill-Profitability-Waterfall-By-ASIN]]
+- 延伸技能：[[Skill-PL-Attribution-Analysis]]
+- 可组合：[[Skill-FBA-Fee-Intelligence]]
+- 可组合：[[Skill-Logistics-Cost-PL-Attribution]]
 
 ## ⑤ 商业价值评估
 

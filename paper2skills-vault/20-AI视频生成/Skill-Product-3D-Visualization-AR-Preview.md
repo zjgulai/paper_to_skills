@@ -123,11 +123,15 @@ if __name__ == "__main__":
     print("[✓] Product-3D-Visualization-AR-Preview 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Product-Image-Quality-Assessment]]
-> 延伸: [[Skill-A-Plus-Content-Video-Embedding]]
-> 可组合: [[Skill-Diffusion-Model-Product-Image]]
+- 前置技能：[[Skill-Diffusion-Model-Product-Image]]
+- 前置技能：[[Skill-Visual-Product-Search]]
+- 延伸技能：[[Skill-Phantom-Product-Showcase-I2V]]
+- 延伸技能：[[Skill-Multimodal-Product-Understanding]]
+- 可组合：[[Skill-Listing-AB-Testing-Automation]]
+- 可组合：[[Skill-A-Plus-Content-Video-Embedding]]
 
 ## ⑤ 商业价值评估
 

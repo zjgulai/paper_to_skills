@@ -143,11 +143,15 @@ print(f"Granger 因果最优滞后: {gc_result['best_lag']} 周")
 print("[✓] Cross-SKU-Demand-Correlation-Mining 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Adaptive-Forecast-Accuracy-Optimization]]（预测优化基础）
-> 延伸: [[Skill-Intermittent-Demand-Croston-TSB]]（配件长尾预测）
-> 可组合: [[Skill-Lead-Time-Demand-Integration-Model]]（组合补货前置期建模）
+- 前置技能：[[Skill-Demand-Forecasting-Supply-Chain]]
+- 前置技能：[[Skill-GraphDeepAR-Demand-Forecasting]]
+- 延伸技能：[[Skill-Hierarchical-Demand-Forecasting-Reconciliation]]
+- 延伸技能：[[Skill-Multi-Echelon-Inventory]]
+- 可组合：[[Skill-Bullwhip-Effect-Mitigation]]
+- 可组合：[[Skill-Safety-Stock-Replenishment]]
 
 ## ⑤ 商业价值评估
 

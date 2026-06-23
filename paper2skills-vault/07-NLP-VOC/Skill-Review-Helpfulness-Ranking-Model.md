@@ -170,12 +170,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 评论有用性排序模型测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-NLP-Text-Classification]] — 基础文本分类
-- 延伸：[[Skill-VOC-Product-Iteration-Signal-Extractor]] — 产品迭代信号
-- 延伸：[[Skill-Safety-Concern-Signal-Extraction]] — 安全信号提取
-- 组合：[[Skill-Review-Driven-Growth-Opportunity-Scorer]] — 增长机会评分
+- 前置技能：[[Skill-Review-Dedup-Quality-Filter]]
+- 前置技能：[[Skill-NLP-Sentiment-ML-Pipeline]]
+- 延伸技能：[[Skill-AutoQual-Review-Quality-Assessment]]
+- 延伸技能：[[Skill-StaR-Review-Statement-Ranking]]
+- 可组合：[[Skill-Social-Proof-Amplification]]
+- 可组合：[[Skill-Review-Pain-Point-Mining]]
 
 ## ⑤ 商业价值评估
 

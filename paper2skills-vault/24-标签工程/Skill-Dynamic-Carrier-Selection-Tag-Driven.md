@@ -240,6 +240,8 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Proactive-Delivery-Exception-Handling]]（承运商切换后需主动通知客户）
 - **可组合（combinable）**：[[Skill-First-Last-Mile-Cost-KPI-CrossBorder]]（承运商成本是末程成本KPI的核心）
 - **可组合（combinable）**：[[Skill-Cross-Domain-Supply-Chain-Signal-Fusion]]（承运商延误信号输入跨域融合引擎）
+- 可组合：[[Skill-Time-Series-Forecasting]]
+- 可组合：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

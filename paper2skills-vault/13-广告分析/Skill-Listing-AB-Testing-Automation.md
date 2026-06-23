@@ -153,6 +153,8 @@ print("[✓] Listing AB Testing Automation 测试通过")
 - **组合**：[[Skill-Listing-AI-Copywriting]]（AI 生成多个候选变体 → A/B 测试选最优）
 
 ---
+- 可组合：[[Skill-A9-Algorithm-Sales-Velocity-Optimization]]
+- 可组合：[[Skill-Amazon-Search-Ranking-Factor-Model]]
 
 ## ⑤ 商业价值评估
 

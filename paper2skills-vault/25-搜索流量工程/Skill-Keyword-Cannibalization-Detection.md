@@ -231,6 +231,8 @@ print("\n[✓] 关键词自相竞争检测测试通过")
 - **前置（prerequisite）**：[[Skill-NeuralNDCG-Learning-to-Rank]]（主权分配中的排名价值估计基于 LTR 框架）
 - **延伸（extends）**：[[Skill-Keyword-Demand-Gap-Analysis]]（差异化分配后，可进一步挖掘每个 SKU 的蓝海词）
 - **可组合（combinable）**：[[Skill-Ad-Aware-Recommendation]]（竞争词检测结果直接用于广告组否定词配置，防广告内耗）
+- 可组合：[[Skill-ML-AB-Randomization-Test]]
+- 可组合：[[Skill-Sequential-AB-Testing]]
 
 ## ⑤ 商业价值评估
 

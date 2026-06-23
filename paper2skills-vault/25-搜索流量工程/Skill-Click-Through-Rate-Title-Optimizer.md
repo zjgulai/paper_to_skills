@@ -194,6 +194,8 @@ print("\n[✓] Click-Through-Rate-Title-Optimizer 测试通过")
 - **前置**：[[Skill-Listing-Semantic-Relevance-Scoring]]（相关性基础）、[[Skill-A9-Algorithm-Sales-Velocity-Optimization]]（排名信号）
 - **延伸**：[[Skill-Listing-Conversion-Rate-Optimizer]]（CVR 协同优化）、[[Skill-Review-Keyword-Mining-SEO]]（词库来源）
 - **可组合**：[[Skill-Search-Query-Performance-Attribution]]（验证 CTR 提升效果）+ [[Skill-Sponsored-Organic-Rank-Synergy]]（CTR×CVR 双提升）
+- 可组合：[[Skill-AB-Experimental-Design]]
+- 可组合：[[Skill-NLP-Copy-AB-Test-Optimizer]]
 
 ## ⑤ 商业价值评估
 

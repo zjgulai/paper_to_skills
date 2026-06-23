@@ -126,11 +126,15 @@ print(f"年均趋势: {np.mean(result['trend']):.1f}")
 print("[✓] Holiday-Spike-Demand-Decomposition 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Prophet-Forecasting]]（节假日建模基础）
-> 延伸: [[Skill-Promotional-Lift-Decomposition]]（促销效果剥离）
-> 可组合: [[Skill-Bayesian-Structural-Time-Series]]（贝叶斯趋势分离）
+- 前置技能：[[Skill-STL-Seasonal-Decomposition]]
+- 前置技能：[[Skill-Prophet-Forecasting]]
+- 延伸技能：[[Skill-Promotion-Logistics-Surge-Forecast]]
+- 延伸技能：[[Skill-Conformal-TS-Intervals]]
+- 可组合：[[Skill-Safety-Stock-Replenishment]]
+- 可组合：[[Skill-Promotion-Demand-Decomposition]]
 
 ## ⑤ 商业价值评估
 

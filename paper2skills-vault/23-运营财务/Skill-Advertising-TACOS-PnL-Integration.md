@@ -139,12 +139,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 广告TACoS与P&L集成测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-PL-Attribution-Analysis]] — P&L 归因分析
-- 延伸：[[Skill-SKU-Level-PL-Dashboard]] — 单品盈利看板
-- 延伸：[[Skill-Forecast-to-PL-Bridge]] — 预测到 P&L 桥接
-- 组合：[[Skill-Recommendation-Finance]] — 广告推荐与财务联动
+- 前置技能：[[Skill-PL-Attribution-Analysis]]
+- 前置技能：[[Skill-SKU-Level-PL-Dashboard]]
+- 延伸技能：[[Skill-MMM-Budget-PL-Alignment]]
+- 延伸技能：[[Skill-ROAS-Budget-Optimization]]
+- 可组合：[[Skill-Ad-Spend-Inventory-Sync]]
+- 可组合：[[Skill-Forecast-to-PL-Bridge]]
 
 ## ⑤ 商业价值评估
 

@@ -95,11 +95,15 @@ print(f"非零需求均值: {result['demand_size']:.2f} 件")
 print("[✓] Intermittent-Demand-Croston-TSB 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Conformal-Prediction-Demand-UQ]]（不确定性量化）
-> 延伸: [[Skill-Lead-Time-Demand-Integration-Model]]（前置期建模）
-> 可组合: [[Skill-Cross-SKU-Demand-Correlation-Mining]]（组合长尾补货）
+- 前置技能：[[Skill-Demand-Forecasting-Supply-Chain]]
+- 前置技能：[[Skill-Time-Series-Forecasting]]
+- 延伸技能：[[Skill-Safety-Stock-Replenishment]]
+- 延伸技能：[[Skill-Long-Tail-SKU-Clearance-Optimization]]
+- 可组合：[[Skill-Dynamic-Lot-Sizing-MOQ]]
+- 可组合：[[Skill-Forecast-Driven-Inventory]]
 
 ## ⑤ 商业价值评估
 

@@ -77,11 +77,15 @@ if __name__ == "__main__":
     main()
 ```
 
+
 ## ④ 技能关联
-- 前置：[[Skill-Bullwhip-Effect-Mitigation]]
-- 前置：[[Skill-Kalman-Filter-Demand-Tracking]]
-- 延伸：[[Skill-State-Space-Inventory-Signal-Smoothing]]
-- 可组合：[[Skill-Forecast-Driven-Inventory]]（用于平滑后滚动补货）
+
+- 前置技能：[[Skill-Bullwhip-Effect-Mitigation]]
+- 前置技能：[[Skill-Demand-Forecasting-Supply-Chain]]
+- 延伸技能：[[Skill-Multi-Echelon-Inventory]]
+- 延伸技能：[[Skill-Safety-Stock-Replenishment]]
+- 可组合：[[Skill-Hierarchical-Demand-Forecasting-Reconciliation]]
+- 可组合：[[Skill-Supply-Chain-Resilience-Modeling]]
 
 ## ⑤ 商业价值评估
 - ROI 预估：牛鞭效应降低约 50%，上游备货量减少 15-20%，年化库存成本节省约 $7.6 万

@@ -158,12 +158,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 现金转换周期优化测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-Working-Capital-Cycle-Optimizer]] — 营运资金周期
-- 延伸：[[Skill-Amazon-Payment-Cycle-Forecast]] — 回款预测
-- 延伸：[[Skill-Amazon-Lending-Decision]] — Amazon 融资决策
-- 组合：[[Skill-Operating-Cash-Flow-Forecast]] — 现金流预测
+- 前置技能：[[Skill-Cross-Border-Cash-Flow-Forecasting]]
+- 前置技能：[[Skill-Operating-Cash-Flow-Forecast]]
+- 延伸技能：[[Skill-Supply-Chain-Working-Capital-Optimization]]
+- 延伸技能：[[Skill-Amazon-Payment-Cycle-Forecast]]
+- 可组合：[[Skill-Inventory-Financing-Optimization]]
+- 可组合：[[Skill-Working-Capital-Cycle-Optimizer]]
 
 ## ⑤ 商业价值评估
 

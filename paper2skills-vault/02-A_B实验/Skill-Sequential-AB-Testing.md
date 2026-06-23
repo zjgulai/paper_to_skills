@@ -61,6 +61,8 @@ print("[✓] Sequential AB 测试通过")
 ---
 - **相关**：[[Skill-Multi-Armed-Bandit]]
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
+- 可组合：[[Skill-Keyword-Competition-Scoring]]
+- 可组合：[[Skill-Share-of-Voice-Tracking]]
 
 ## ⑤ 商业价值
 

@@ -336,6 +336,8 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Tag-Quality-Coverage-KPI]]（预测标签准确率需要回溯验证监控）
 - **可组合（combinable）**：[[Skill-Procurement-Cycle-Time-KPI]]（PLT_P85是断货预测的关键输入）
 - **可组合（combinable）**：[[Skill-Forecast-MAPE-MinMax-Accuracy-System]]（预测准确率KPI反馈到预测标签质量）
+- 可组合：[[Skill-A9-Algorithm-Sales-Velocity-Optimization]]
+- 可组合：[[Skill-Index-Health-Monitoring]]
 
 ## ⑤ 商业价值评估
 

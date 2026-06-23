@@ -269,6 +269,8 @@ if __name__ == '__main__':
 - **可组合（combinable）**：[[Skill-Keyword-Competition-Scoring]]（组合场景：嵌入模型发现语义相关词 + 竞争度评分过滤 = 精准高价值长尾词优先级排序）
 
 ---
+- 可组合：[[Skill-Auto-Tagging-Pipeline-Rule-ML-LLM]]
+- 可组合：[[Skill-Tag-Quality-Coverage-KPI]]
 
 ## ⑤ 商业价值评估
 

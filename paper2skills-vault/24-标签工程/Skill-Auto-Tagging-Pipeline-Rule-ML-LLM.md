@@ -438,6 +438,8 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Tag-Quality-Coverage-KPI]]（流水线输出的覆盖率/准确率需要质量KPI监控）
 - **可组合（combinable）**：[[Skill-LLM-Annotation-Weak-Supervision]]（LLM弱监督可生成ML层训练数据）
 - **可组合（combinable）**：[[Skill-Product-Attribute-Completion]]（产品属性补全是LLM层的典型应用）
+- 可组合：[[Skill-SEO-Organic-Ranking-Optimization]]
+- 可组合：[[Skill-Amazon-Search-Ranking-Factor-Model]]
 
 ## ⑤ 商业价值评估
 

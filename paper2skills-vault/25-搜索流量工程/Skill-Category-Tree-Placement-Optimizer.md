@@ -159,6 +159,8 @@ print("\n[✓] Category-Tree-Placement-Optimizer 测试通过")
 - **前置**：[[Skill-Amazon-Search-Ranking-Factor-Model]]（排名因子基础）、[[Skill-Listing-Semantic-Relevance-Scoring]]（品类相关性）
 - **延伸**：[[Skill-A9-Algorithm-Sales-Velocity-Optimization]]（细分品类 BSR 冲刺）、[[Skill-Brand-Defense-Search-Strategy]]（品类防御）
 - **可组合**：[[Skill-Competitor-Keyword-Gap-Analysis]]（品类内词缺口）+ [[Skill-Seasonal-Keyword-Rotation-Strategy]]（品类季节性）
+- 可组合：[[Skill-TagRAG-Hierarchical-Label-KG]]
+- 可组合：[[Skill-Tag-Propagation-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

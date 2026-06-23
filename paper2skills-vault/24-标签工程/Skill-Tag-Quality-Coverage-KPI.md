@@ -338,6 +338,8 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Tag-Propagation-Supply-Chain]]（传播后的标签质量需要专项监控）
 - **可组合（combinable）**：[[Skill-Supply-Chain-KPI-Health-Dashboard]]（标签质量仪表盘集成到供应链KPI总看板）
 - **可组合（combinable）**：[[Skill-Forecast-Bias-Adjustment-Detection]]（预测标签的偏差检测与质量监控互通）
+- 可组合：[[Skill-Long-Tail-Search-Embedding-SEO]]
+- 可组合：[[Skill-Keyword-Competition-Scoring]]
 
 ## ⑤ 商业价值评估
 

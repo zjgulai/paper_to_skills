@@ -152,11 +152,15 @@ print(f"主要风险因子: {result['features_contribution']}")
 print("[✓] Product-Safety-Complaint-Risk-Model 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Account-Health-Early-Warning-System]]（账号健康预警体系）
-> 延伸: [[Skill-Competitor-Negative-Campaign-Detection]]（恶意投诉攻击识别）
-> 可组合: [[Skill-Social-Engineering-Attack-Detection]]（虚假投诉来源识别）
+- 前置技能：[[Skill-Consumer-Complaint-Recall-Prediction]]
+- 前置技能：[[Skill-Safety-Concern-Signal-Extraction]]
+- 延伸技能：[[Skill-CPSC-Children-Product-Safety]]
+- 延伸技能：[[Skill-AI-Product-Safety-Certification]]
+- 可组合：[[Skill-Category-Compliance-Prescan]]
+- 可组合：[[Skill-Compliance-ML-Risk-Scoring]]
 
 ## ⑤ 商业价值评估
 

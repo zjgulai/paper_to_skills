@@ -199,12 +199,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 多市场VOC交叉分析测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-Multilingual-NLP-Pipeline]] — 多语言 NLP 管线
-- 延伸：[[Skill-VOC-Competitive-Positioning-Map]] — 竞品定位
-- 延伸：[[Skill-Baby-Age-Stage-Demand-Segmentation]] — 需求分层
-- 组合：[[Skill-VOC-Aspect-Sentiment-Extraction]] — 属性情感分析
+- 前置技能：[[Skill-VOC-Aspect-Sentiment-Extraction]]
+- 前置技能：[[Skill-Multilingual-Customer-Service-Translation]]
+- 延伸技能：[[Skill-Cross-Cultural-VOC-Alignment]]
+- 延伸技能：[[Skill-LACA-CrossLingual-ABSA]]
+- 可组合：[[Skill-Review-Pain-Point-Mining]]
+- 可组合：[[Skill-Blue-Ocean-Category-Discovery]]
 
 ## ⑤ 商业价值评估
 

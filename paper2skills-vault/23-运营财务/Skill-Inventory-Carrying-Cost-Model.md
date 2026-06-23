@@ -151,12 +151,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 库存持有成本模型测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-FBA-Fee-Intelligence]] — FBA 仓储费数据
-- 延伸：[[Skill-Inventory-Financing-Optimization]] — 库存融资优化
-- 延伸：[[Skill-Working-Capital-Cycle-Optimizer]] — 营运资金周期
-- 组合：[[Skill-FBA-Cost-Forecast-Adjustment]] — 费用预测联动
+- 前置技能：[[Skill-Inventory-Health-Aging-Attribution]]
+- 前置技能：[[Skill-FBA-Cost-Forecast-Adjustment]]
+- 延伸技能：[[Skill-GMROI-Inventory-Investment-Efficiency]]
+- 延伸技能：[[Skill-Supply-Chain-Total-Cost-TCO-Model]]
+- 可组合：[[Skill-Markdown-Optimization]]
+- 可组合：[[Skill-Safety-Stock-Replenishment]]
 
 ## ⑤ 商业价值评估
 

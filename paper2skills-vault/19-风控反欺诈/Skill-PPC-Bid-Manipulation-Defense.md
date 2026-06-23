@@ -136,11 +136,15 @@ assert result['attack_detected'], "应检测到 PPC 攻击"
 print("[✓] PPC-Bid-Manipulation-Defense 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Ad-Fraud-IVT-Detection]]（无效流量检测基础）
-> 延伸: [[Skill-Listing-Suppression-Detection]]（Listing 可见性联合监控）
-> 可组合: [[Skill-Competitor-Negative-Campaign-Detection]]（竞品攻击综合防御）
+- 前置技能：[[Skill-Click-Fraud-Detection]]
+- 前置技能：[[Skill-Ad-Fraud-IVT-Detection]]
+- 延伸技能：[[Skill-Competitor-Negative-Campaign-Detection]]
+- 延伸技能：[[Skill-MAS-Adversarial-Defense]]
+- 可组合：[[Skill-PPC-Keyword-Bid-Automation]]
+- 可组合：[[Skill-Negative-Keyword-Safe-Guard]]
 
 ## ⑤ 商业价值评估
 

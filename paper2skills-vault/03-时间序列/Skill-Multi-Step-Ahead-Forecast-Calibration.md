@@ -113,11 +113,15 @@ print(f"第8步偏差修正: {bias_h8:.2f}（预测将上调）")
 print("[✓] Multi-Step-Ahead-Forecast-Calibration 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Conformal-Prediction-Demand-UQ]]（不确定性量化基础）
-> 延伸: [[Skill-Temporal-Fusion-Transformer-Inventory]]（多变量预测框架）
-> 可组合: [[Skill-Lead-Time-Demand-Integration-Model]]（前置期误差管理）
+- 前置技能：[[Skill-Time-Series-Forecasting]]
+- 前置技能：[[Skill-Prophet-Forecasting]]
+- 延伸技能：[[Skill-Conformal-Time-Series-Forecasting]]
+- 延伸技能：[[Skill-EPICSCORE-Uncertainty]]
+- 可组合：[[Skill-Forecast-Bias-Adjustment-Detection]]
+- 可组合：[[Skill-Forecast-MAPE-MinMax-Accuracy-System]]
 
 ## ⑤ 商业价值评估
 

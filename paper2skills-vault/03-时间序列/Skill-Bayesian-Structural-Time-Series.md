@@ -130,11 +130,15 @@ print(f"累积增量: {result['cumulative_impact'][-1]:.0f} 件")
 print("[✓] Bayesian-Structural-Time-Series 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Causal-Time-Series-Forecasting-GCF]]（因果时序基础）
-> 延伸: [[Skill-Promotional-Lift-Decomposition]]（促销效果量化）
-> 可组合: [[Skill-Holiday-Spike-Demand-Decomposition]]（节假日效应分离）
+- 前置技能：[[Skill-Prophet-Forecasting]]
+- 前置技能：[[Skill-STL-Seasonal-Decomposition]]
+- 延伸技能：[[Skill-Conformal-Time-Series-Forecasting]]
+- 延伸技能：[[Skill-Identified-Bayesian-MMM]]
+- 可组合：[[Skill-Promotion-Demand-Decomposition]]
+- 可组合：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值评估
 

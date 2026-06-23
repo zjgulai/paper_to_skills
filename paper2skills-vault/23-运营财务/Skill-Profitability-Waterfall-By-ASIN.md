@@ -149,12 +149,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 单品盈利瀑布分析测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-SKU-Level-PL-Dashboard]] — SKU 盈利看板
-- 延伸：[[Skill-FBA-Fee-Waterfall-Attribution]] — FBA 费用瀑布
-- 延伸：[[Skill-Advertising-TACOS-PnL-Integration]] — 广告 P&L 集成
-- 组合：[[Skill-PL-Attribution-Analysis]] — 全品组合归因
+- 前置技能：[[Skill-FBA-Cost-Forecast-Adjustment]]
+- 前置技能：[[Skill-PL-Attribution-Analysis]]
+- 延伸技能：[[Skill-SKU-Level-PL-Dashboard]]
+- 延伸技能：[[Skill-FBA-Fee-Waterfall-Attribution]]
+- 可组合：[[Skill-Advertising-TACOS-PnL-Integration]]
+- 可组合：[[Skill-Logistics-Cost-PL-Attribution]]
 
 ## ⑤ 商业价值评估
 

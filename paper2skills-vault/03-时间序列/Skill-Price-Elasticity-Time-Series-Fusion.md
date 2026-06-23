@@ -129,11 +129,15 @@ print(f"需求变化: +{forecast['demand_change_pct']:.1f}%")
 print("[✓] Price-Elasticity-Time-Series-Fusion 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Bayesian-Structural-Time-Series]]（效应分离）
-> 延伸: [[Skill-Promotional-Lift-Decomposition]]（促销效果量化）
-> 可组合: [[Skill-Holiday-Spike-Demand-Decomposition]]（大促场景融合）
+- 前置技能：[[Skill-Price-Elasticity-Estimation]]
+- 前置技能：[[Skill-Dynamic-Pricing-Elasticity]]
+- 延伸技能：[[Skill-Causal-RL-Dynamic-Pricing]]
+- 延伸技能：[[Skill-Contextual-Dynamic-Pricing-Optimal]]
+- 可组合：[[Skill-Demand-Forecasting-Supply-Chain]]
+- 可组合：[[Skill-Promotion-Effectiveness]]
 
 ## ⑤ 商业价值评估
 

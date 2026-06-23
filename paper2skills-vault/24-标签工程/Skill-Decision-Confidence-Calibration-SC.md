@@ -337,6 +337,8 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Supply-Chain-Agent-Orchestration-Hub]]（路由结果输入编排中枢的分层调度）
 - **可组合（combinable）**：[[Skill-Supply-Chain-Ontology-Action-Trigger]]（校准后的置信度作为Action触发条件）
 - **可组合（combinable）**：[[Skill-Decision-Audit-Trail-Ontology]]（每个分层决策的置信度都写入审计日志）
+- 可组合：[[Skill-Bayesian-Structural-Time-Series]]
+- 可组合：[[Skill-Multi-Step-Ahead-Forecast-Calibration]]
 
 ## ⑤ 商业价值评估
 

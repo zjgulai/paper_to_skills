@@ -174,6 +174,8 @@ print("[✓] SEO Organic Ranking Optimization 测试通过")
 - **组合**：[[Skill-Review-Pain-Point-Mining]]（高频痛点词注入标题/Bullet，SEO + 转化率双提升）
 
 ---
+- 可组合：[[Skill-Predictive-Tag-Engine-Supply-Chain]]
+- 可组合：[[Skill-Decision-Audit-Trail-Ontology]]
 
 ## ⑤ 商业价值评估
 

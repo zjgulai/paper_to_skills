@@ -165,11 +165,15 @@ assert any(a['ratio'] > 0.5 for a in alerts.values()), "应识别到高风险区
 print("[✓] Tax-Evasion-Risk-Signal-Monitor 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Account-Health-Early-Warning-System]]（账号合规健康监控）
-> 延伸: [[Skill-Brand-Registry-Infringement-Tracker]]（多市场合规追踪）
-> 可组合: [[Skill-Cross-Platform-Account-Linkage-Risk]]（多市场账号合规联动）
+- 前置技能：[[Skill-Tax-Compliance-VAT-GST]]
+- 前置技能：[[Skill-Compliance-ML-Risk-Scoring]]
+- 延伸技能：[[Skill-VAT-GST-Compliance-Automation]]
+- 延伸技能：[[Skill-Cross-Border-Tax-Tariff-Modeling]]
+- 可组合：[[Skill-Transaction-Anomaly-Detection]]
+- 可组合：[[Skill-Regulatory-Graph-Compliance-Monitor]]
 
 ## ⑤ 商业价值评估
 

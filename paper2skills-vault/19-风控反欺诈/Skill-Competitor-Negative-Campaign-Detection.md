@@ -158,11 +158,15 @@ print(f"状态: {'⚠️ 检测到恶意攻击' if result['attack_detected'] els
 print("[✓] Competitor-Negative-Campaign-Detection 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Review-Fraud-Detection]]（虚假评论基础检测）
-> 延伸: [[Skill-Listing-Suppression-Detection]]（Listing 健康综合监控）
-> 可组合: [[Skill-Seller-Rating-Attack-Pattern]]（A-to-Z 索赔攻击检测）
+- 前置技能：[[Skill-Review-Fraud-Detection]]
+- 前置技能：[[Skill-DS-DGA-GCN-Fake-Review-Group-Detection]]
+- 延伸技能：[[Skill-Seller-Rating-Attack-Pattern]]
+- 延伸技能：[[Skill-PPC-Bid-Manipulation-Defense]]
+- 可组合：[[Skill-Brand-Keyword-Hijack-Alert]]
+- 可组合：[[Skill-MAS-Adversarial-Defense]]
 
 ## ⑤ 商业价值评估
 

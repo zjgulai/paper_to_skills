@@ -146,6 +146,8 @@ print("\n[✓] 索引健康度监控测试通过")
 - **前置（prerequisite）**：[[Skill-Amazon-Search-Ranking-Factor-Model]]（搜索排名因子是索引健康的结果验证）
 - **延伸（extends）**：[[Skill-Search-Share-of-Voice]]（索引健康是声量份额的基础保障）
 - **可组合（combinable）**：[[Skill-Keyword-Demand-Gap-Analysis]]（健康度异常 → 触发关键词需求缺口补救分析）
+- 可组合：[[Skill-AB-Experimental-Design]]
+- 可组合：[[Skill-Agentic-AB-Testing]]
 
 ## ⑤ 商业价值评估
 - ROI预估：100 SKU 规模，年化减少索引问题导致的流量损失约 20-50 万元；运营人天节省 ≈ 0.5 人/月

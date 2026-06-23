@@ -193,11 +193,15 @@ print(f"风险信号: {supplier_result['signals']}")
 print("[✓] Social-Engineering-Attack-Detection 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Account-Health-Proactive-Monitor]]（账号安全监控）
-> 延伸: [[Skill-Product-Safety-Complaint-Risk-Model]]（外部攻击综合防御）
-> 可组合: [[Skill-Cross-Platform-Account-Linkage-Risk]]（账号信息泄露风险）
+- 前置技能：[[Skill-Identity-Fraud-Detection]]
+- 前置技能：[[Skill-Transaction-Anomaly-Detection]]
+- 延伸技能：[[Skill-Agent-Payment-Security-Red-Team]]
+- 延伸技能：[[Skill-MAS-Adversarial-Defense]]
+- 可组合：[[Skill-AgentTrust-Runtime-Safety-Interception]]
+- 可组合：[[Skill-Cross-Platform-Account-Linkage-Risk]]
 
 ## ⑤ 商业价值评估
 

@@ -124,12 +124,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 营运资金周期优化测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-Cash-Conversion-Cycle-Optimization]] — CCC 深度优化
-- 延伸：[[Skill-Operating-Cash-Flow-Forecast]] — 现金流预测
-- 延伸：[[Skill-Amazon-Payment-Cycle-Forecast]] — 回款周期预测
-- 组合：[[Skill-Inventory-Financing-Optimization]] — 库存融资联动
+- 前置技能：[[Skill-Cash-Conversion-Cycle-Optimization]]
+- 前置技能：[[Skill-Operating-Cash-Flow-Forecast]]
+- 延伸技能：[[Skill-Supply-Chain-Finance-Risk-Modeling]]
+- 延伸技能：[[Skill-Inventory-Financing-Optimization]]
+- 可组合：[[Skill-Amazon-Lending-Decision]]
+- 可组合：[[Skill-Amazon-Payment-Cycle-Forecast]]
 
 ## ⑤ 商业价值评估
 

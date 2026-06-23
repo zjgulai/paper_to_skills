@@ -192,6 +192,8 @@ print("\n[✓] Amazon 搜索排名因子模型测试通过")
 - **前置（prerequisite）**：[[Skill-NeuralNDCG-Learning-to-Rank]]（Learning-to-Rank 算法框架）
 - **延伸（extends）**：[[Skill-Competitive-Price-Monitoring]]（价格因子是排名重要变量）
 - **可组合（combinable）**：[[Skill-Ad-Aware-Recommendation]]（广告质量得分与自然排名因子高度重叠，联合优化效果最优）
+- 可组合：[[Skill-Tag-Schema-Engineering-Lifecycle]]
+- 可组合：[[Skill-SKU-Entity-Unified-ID-Tagging]]
 
 ## ⑤ 商业价值评估
 

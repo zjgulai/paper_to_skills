@@ -143,11 +143,15 @@ print(f"关键特征: {result['features']}")
 print("[✓] Seller-Rating-Attack-Pattern 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Competitor-Negative-Campaign-Detection]]（恶意评论攻击检测）
-> 延伸: [[Skill-Product-Safety-Complaint-Risk-Model]]（投诉驱动封号预警）
-> 可组合: [[Skill-Listing-Suppression-Detection]]（账号健康综合监控）
+- 前置技能：[[Skill-Review-Fraud-Detection]]
+- 前置技能：[[Skill-DS-DGA-GCN-Fake-Review-Group-Detection]]
+- 延伸技能：[[Skill-Competitor-Negative-Campaign-Detection]]
+- 延伸技能：[[Skill-Fake-Review-Detection]]
+- 可组合：[[Skill-Account-Health-Proactive-Monitor]]
+- 可组合：[[Skill-Amazon-Account-Appeal-Strategy]]
 
 ## ⑤ 商业价值评估
 

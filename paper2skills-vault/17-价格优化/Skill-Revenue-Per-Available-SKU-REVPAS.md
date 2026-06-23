@@ -103,11 +103,15 @@ if __name__ == "__main__":
     main()
 ```
 
+
 ## ④ 技能关联
-- 前置：[[Skill-SKU-Level-PL-Dashboard]]
-- 前置：[[Skill-FBA-Fee-Intelligence]]
-- 延伸：[[Skill-Cross-Border-Price-Harmonization]]
-- 可组合：[[Skill-Bundle-Pricing-Strategy]]（适合捆绑定价与库存清理联动）
+
+- 前置技能：[[Skill-Dynamic-Pricing-Elasticity]]
+- 前置技能：[[Skill-SKU-Level-PL-Dashboard]]
+- 延伸技能：[[Skill-Markdown-Optimization]]
+- 延伸技能：[[Skill-Bundle-Pricing-Strategy]]
+- 可组合：[[Skill-Inventory-Turnover-ABC-Classification]]
+- 可组合：[[Skill-GMROI-Inventory-Investment-Efficiency]]
 
 ## ⑤ 商业价值评估
 - ROI 预估：识别低 REVPAS SKU 后做定价/库存优化，年化毛利提升约 $2.4 万

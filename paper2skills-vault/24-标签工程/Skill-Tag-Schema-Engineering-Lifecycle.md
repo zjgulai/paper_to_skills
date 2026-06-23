@@ -447,6 +447,8 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Supply-Chain-Ontology-Action-Trigger]]（Action触发依赖Schema中的trigger_actions）
 - **可组合（combinable）**：[[Skill-Tag-Quality-Coverage-KPI]]（Schema中定义quality_sla，KPI Skill负责监控）
 - **可组合（combinable）**：[[Skill-Auto-Tagging-Pipeline-LLM]]（打标流水线按Schema定义输出标准化Tag）
+- 可组合：[[Skill-Category-Tree-Placement-Optimizer]]
+- 可组合：[[Skill-International-Search-Localization]]
 
 ## ⑤ 商业价值评估
 

@@ -189,3 +189,12 @@ if __name__ == "__main__":
     assert result.decision in ("PASS", "WARN_PASS", "BLOCK")
     assert 0 <= result.total_score <= 100
     print("[✓] Pre-Launch-Compliance-Gate 测试通过")
+
+## ④ 技能关联
+
+- 前置技能：[[Skill-Category-Compliance-Prescan]]
+- 前置技能：[[Skill-Cross-Border-Compliance-Framework]]
+- 延伸技能：[[Skill-Compliance-Scored-Guardrail-Orchestration]]
+- 延伸技能：[[Skill-Listing-Compliance-Auto-Repair]]
+- 可组合：[[Skill-New-SKU-Launch-Readiness-Gate]]
+- 可组合：[[Skill-Amazon-ToS-Compliance-Guardrail]]

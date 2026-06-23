@@ -133,6 +133,8 @@ if __name__ == "__main__":
 - **前置（prerequisite）**：[[Skill-Geopolitical-Risk-Tag-Supply-Impact]]（地缘风险是黑天鹅的触发源）
 - **延伸（extends）**：[[Skill-Supply-Chain-Agent-Orchestration-Hub]]（预案激活触发编排中枢启动应急响应）
 - **可组合（combinable）**：[[Skill-Supplier-Capacity-Booking-Engine]]（弹性产能预订是S1场景的预案之一）
+- 可组合：[[Skill-Holiday-Spike-Demand-Decomposition]]
+- 可组合：[[Skill-Conformal-TS-Intervals]]
 
 ## ⑤ 商业价值评估
 

@@ -154,12 +154,15 @@ if __name__ == '__main__':
     print(f"\n[✓] 安全隐患信号提取测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-VOC-Compliance-Signal-Mining]] — 合规信号挖掘
-- 延伸：[[Skill-Negative-Review-Root-Cause-Analyzer]] — 差评根因分析
-- 延伸：[[Skill-NLP-Sentiment-ML-Pipeline]] — 情感分析管线
-- 组合：[[Skill-Review-Helpfulness-Ranking-Model]] — 高价值评论识别
+- 前置技能：[[Skill-VOC-Aspect-Sentiment-Extraction]]
+- 前置技能：[[Skill-NLP-Text-Classification]]
+- 延伸技能：[[Skill-Consumer-Complaint-Recall-Prediction]]
+- 延伸技能：[[Skill-Product-Safety-Complaint-Risk-Model]]
+- 可组合：[[Skill-Listing-Compliance-Auto-Repair]]
+- 可组合：[[Skill-Category-Compliance-Prescan]]
 
 ## ⑤ 商业价值评估
 

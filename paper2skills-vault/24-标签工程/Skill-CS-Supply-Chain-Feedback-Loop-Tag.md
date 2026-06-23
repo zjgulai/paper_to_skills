@@ -178,6 +178,8 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Return-Root-Cause-Attribution-Graph]]（退货根因与客服反馈形成双通道归因）
 - **可组合（combinable）**：[[Skill-Supply-Chain-Agent-Orchestration-Hub]]（改善任务输入编排中枢执行）
 - **可组合（combinable）**：[[Skill-Proactive-Customer-Alert-Supply-Chain]]（主动预警与反馈闭环形成客户体验完整链路）
+- 可组合：[[Skill-Sales-Velocity-Momentum-Detection]]
+- 可组合：[[Skill-Demand-Signal-Nowcasting]]
 
 ## ⑤ 商业价值评估
 

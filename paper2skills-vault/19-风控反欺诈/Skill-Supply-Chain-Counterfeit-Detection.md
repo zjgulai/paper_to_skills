@@ -157,11 +157,15 @@ assert result['suspicious_count'] >= 1
 print("[✓] Supply-Chain-Counterfeit-Detection 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Account-Fingerprint-Risk-Scorer]]（数字指纹技术基础）
-> 延伸: [[Skill-Brand-Registry-Infringement-Tracker]]（品牌侵权线上追踪）
-> 可组合: [[Skill-Inventory-Theft-Warehouse-Anomaly]]（仓库异常综合检测）
+- 前置技能：[[Skill-Counterfeit-Product-Visual-Detection]]
+- 前置技能：[[Skill-Brand-Listing-Hijacking-Detection]]
+- 延伸技能：[[Skill-Hijacker-Seller-Network-Analysis]]
+- 延伸技能：[[Skill-Supply-Chain-Due-Diligence]]
+- 可组合：[[Skill-IP-Trademark-Brand-Monitoring]]
+- 可组合：[[Skill-Supplier-Qualification-Onboarding-KPI]]
 
 ## ⑤ 商业价值评估
 

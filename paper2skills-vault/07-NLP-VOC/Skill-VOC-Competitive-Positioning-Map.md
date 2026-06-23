@@ -166,12 +166,15 @@ if __name__ == '__main__':
     print(f"\n[✓] VOC竞争定位地图测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-VOC-Aspect-Sentiment-Extraction]] — 属性情感提取
-- 延伸：[[Skill-VOC-New-Product-Gap-Scoring]] — 新品机会评分
-- 延伸：[[Skill-NLP-Sentiment-ML-Pipeline]] — 情感分析管线
-- 组合：[[Skill-Baby-Age-Stage-Demand-Segmentation]] — 月龄需求分层
+- 前置技能：[[Skill-VOC-Aspect-Sentiment-Extraction]]
+- 前置技能：[[Skill-Competitor-Product-Intelligence]]
+- 延伸技能：[[Skill-Blue-Ocean-Category-Discovery]]
+- 延伸技能：[[Skill-Review-Pain-Point-Mining]]
+- 可组合：[[Skill-Competitive-Response-Modeling]]
+- 可组合：[[Skill-Product-Opportunity-Scoring]]
 
 ## ⑤ 商业价值评估
 

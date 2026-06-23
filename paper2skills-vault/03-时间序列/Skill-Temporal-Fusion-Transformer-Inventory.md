@@ -103,11 +103,15 @@ print(f"变量重要性: {result['var_importance']}")
 print("[✓] Temporal-Fusion-Transformer-Inventory 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Conformal-Prediction-Demand-UQ]]（区间校准）
-> 延伸: [[Skill-Holiday-Spike-Demand-Decomposition]]（节假日特征工程）
-> 可组合: [[Skill-Lead-Time-Demand-Integration-Model]]（前置期整合）
+- 前置技能：[[Skill-Temporal-Fusion-Transformer]]
+- 前置技能：[[Skill-Demand-Forecasting-Supply-Chain]]
+- 延伸技能：[[Skill-Multi-Echelon-Inventory]]
+- 延伸技能：[[Skill-Forecast-Driven-Inventory]]
+- 可组合：[[Skill-Safety-Stock-Replenishment]]
+- 可组合：[[Skill-DRL-Inventory-Optimization]]
 
 ## ⑤ 商业价值评估
 

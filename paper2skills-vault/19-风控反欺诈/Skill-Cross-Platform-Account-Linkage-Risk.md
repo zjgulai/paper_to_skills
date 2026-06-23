@@ -142,11 +142,15 @@ for ar in result['account_risk']:
 print("[✓] Cross-Platform-Account-Linkage-Risk 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Account-Association-Risk-Detection]]（单平台账号关联）
-> 延伸: [[Skill-Account-Health-Early-Warning-System]]（账号健康综合管理）
-> 可组合: [[Skill-Product-Safety-Complaint-Risk-Model]]（多平台风险联动）
+- 前置技能：[[Skill-Account-Association-Risk-Detection]]
+- 前置技能：[[Skill-Identity-Fraud-Detection]]
+- 延伸技能：[[Skill-Multi-Seller-Account-Portfolio]]
+- 延伸技能：[[Skill-Transaction-Anomaly-Detection]]
+- 可组合：[[Skill-Account-Health-Proactive-Monitor]]
+- 可组合：[[Skill-Amazon-Account-Appeal-Strategy]]
 
 ## ⑤ 商业价值评估
 

@@ -259,6 +259,8 @@ print("[✓] Demand Forecasting Supply 测试通过")
 
 
 - **可组合（延伸）**：[[Skill-Bass-Diffusion-New-Product-Forecasting]] / [[Skill-Cross-Border-Cold-Start-Forecast]] / [[Skill-Category-Trend-Forecasting]] / [[Skill-Switchback-Experiment-Design]]
+- 可组合：[[Skill-Predictive-Tag-Engine-Supply-Chain]]
+- 可组合：[[Skill-Dynamic-ABC-Stratification-Adaptive-Policy]]
 
 ## ⑤ 商业价值评估
 

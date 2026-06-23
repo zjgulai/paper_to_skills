@@ -99,11 +99,15 @@ if __name__ == "__main__":
     print("[✓] Live-Stream-Highlight-Extraction 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-TikTok-Content-Lifecycle-Analytics]]
-> 延伸: [[Skill-Cross-Platform-Video-Repurposing]]
-> 可组合: [[Skill-TikTok-Hook-Optimizer]]
+- 前置技能：[[Skill-Live-Commerce-Stream-Algorithm]]
+- 前置技能：[[Skill-E-Commerce-Video-Benchmark]]
+- 延伸技能：[[Skill-TikTok-Algorithm-Content-Boost]]
+- 延伸技能：[[Skill-AI-Video-Script-Generation]]
+- 可组合：[[Skill-TikTok-Shop-Content-Attribution]]
+- 可组合：[[Skill-Creator-Economy-ROI-Model]]
 
 ## ⑤ 商业价值评估
 

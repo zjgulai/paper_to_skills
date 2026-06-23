@@ -161,12 +161,15 @@ if __name__ == '__main__':
     print(f"[✓] 关税冲击利润压力测试通过")
 ```
 
+
 ## ④ 技能关联
 
-- 前置：[[Skill-Cross-Border-Tax-Tariff-Modeling]] — 基础关税建模
-- 延伸：[[Skill-Tariff-FX-FBA-Cost-Dynamics]] — 多因素成本动态
-- 延伸：[[Skill-SKU-Level-PL-Dashboard]] — 单品盈利看板
-- 组合：[[Skill-FX-Dynamic-Pricing-Adjustment]] — 联合定价调整
+- 前置技能：[[Skill-Cross-Border-Tax-Tariff-Modeling]]
+- 前置技能：[[Skill-HTS-Tariff-Classification]]
+- 延伸技能：[[Skill-SC-WhatIf-Scenario-Analysis-Engine]]
+- 延伸技能：[[Skill-Conformal-Risk-Assessment]]
+- 可组合：[[Skill-FX-Hedging-Strategy]]
+- 可组合：[[Skill-Tariff-FX-FBA-Cost-Dynamics]]
 
 ## ⑤ 商业价值评估
 

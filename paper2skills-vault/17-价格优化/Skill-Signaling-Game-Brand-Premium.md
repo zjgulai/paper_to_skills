@@ -86,11 +86,15 @@ if __name__ == "__main__":
     main()
 ```
 
+
 ## ④ 技能关联
-- 前置：[[Skill-Cross-Border-Price-Harmonization]]
-- 前置：[[Skill-Bundle-Pricing-Strategy]]
-- 延伸：[[Skill-Reputation-Pricing-Model]]
-- 可组合：[[Skill-Brand-Positioning-Elasticity]]（用于品牌定位与价格弹性联动）
+
+- 前置技能：[[Skill-Competitive-Price-Monitoring]]
+- 前置技能：[[Skill-Price-Elasticity-Estimation]]
+- 延伸技能：[[Skill-Compliant-Dynamic-Pricing-Guard]]
+- 延伸技能：[[Skill-Contextual-Dynamic-Pricing-Optimal]]
+- 可组合：[[Skill-Brand-Penetration-Modeling]]
+- 可组合：[[Skill-Competitive-Response-Modeling]]
 
 ## ⑤ 商业价值评估
 - ROI 预估：维持价格信号均衡，年化品牌价值保护约 $8 万+

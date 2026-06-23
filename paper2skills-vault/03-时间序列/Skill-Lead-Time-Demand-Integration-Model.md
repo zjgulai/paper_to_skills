@@ -115,11 +115,15 @@ print(f"需求分布: {result['demand_distribution']}")
 print("[✓] Lead-Time-Demand-Integration-Model 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Conformal-Prediction-Demand-UQ]]（不确定性量化）
-> 延伸: [[Skill-Intermittent-Demand-Croston-TSB]]（间歇需求场景）
-> 可组合: [[Skill-Multi-Step-Ahead-Forecast-Calibration]]（多步预测对齐）
+- 前置技能：[[Skill-Safety-Stock-Replenishment]]
+- 前置技能：[[Skill-Demand-Forecasting-Supply-Chain]]
+- 延伸技能：[[Skill-Lead-Time-Distribution-Risk-GenQOT]]
+- 延伸技能：[[Skill-Conformal-Prediction-Demand-UQ]]
+- 可组合：[[Skill-Multi-Echelon-Inventory]]
+- 可组合：[[Skill-Supplier-Lead-Time-Buffer]]
 
 ## ⑤ 商业价值评估
 

@@ -144,11 +144,15 @@ for i, cluster in enumerate(result['dangerous_clusters']):
 print("[✓] Hijacker-Seller-Network-Analysis 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Account-Association-Risk-Detection]]（账号关联识别）
-> 延伸: [[Skill-Competitor-Negative-Campaign-Detection]]（组织性攻击检测）
-> 可组合: [[Skill-Brand-Registry-Infringement-Tracker]]（品牌侵权追踪）
+- 前置技能：[[Skill-Brand-Listing-Hijacking-Detection]]
+- 前置技能：[[Skill-Account-Association-Risk-Detection]]
+- 延伸技能：[[Skill-Brand-Registry-Infringement-Tracker]]
+- 延伸技能：[[Skill-Competitor-Negative-Campaign-Detection]]
+- 可组合：[[Skill-DS-DGA-GCN-Fake-Review-Group-Detection]]
+- 可组合：[[Skill-Supply-Chain-Counterfeit-Detection]]
 
 ## ⑤ 商业价值评估
 

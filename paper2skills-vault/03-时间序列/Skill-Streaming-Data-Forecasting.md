@@ -626,6 +626,8 @@ print("[✓] Streaming Data Forecastin 测试通过")
 | 端到端 | < 1min | 异步流水线，各阶段并行 |
 
 ---
+- 可组合：[[Skill-CS-Supply-Chain-Feedback-Loop-Tag]]
+- 可组合：[[Skill-Dynamic-Carrier-Selection-Tag-Driven]]
 
 ## ⑤ 业务价值
 

@@ -152,11 +152,15 @@ assert result['total_discrepancy'] < -100, "应累积明显负差异"
 print("[✓] Inventory-Theft-Warehouse-Anomaly 测试通过")
 ```
 
+
 ## ④ 技能关联
 
-> 前置: [[Skill-Account-Health-Proactive-Monitor]]（账号资产监控）
-> 延伸: [[Skill-Supply-Chain-Counterfeit-Detection]]（供应链品质验真）
-> 可组合: [[Skill-Return-Rate-Forecasting-Model]]（退货库存综合管理）
+- 前置技能：[[Skill-Transaction-Anomaly-Detection]]
+- 前置技能：[[Skill-Time-Series-Anomaly-Detection]]
+- 延伸技能：[[Skill-Supply-Chain-Counterfeit-Detection]]
+- 延伸技能：[[Skill-Anomaly-Detection-Foundation-Model]]
+- 可组合：[[Skill-SKU-Warehouse-Footprint-Monitoring]]
+- 可组合：[[Skill-Warehouse-Inbound-Quality-Accuracy-KPI]]
 
 ## ⑤ 商业价值评估
 
