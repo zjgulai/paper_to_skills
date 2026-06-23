@@ -1,0 +1,62 @@
+id: wf-y
+name: WF-Y 账期现金流优化
+description: 从现金转换周期诊断到供应链融资工具选择再到多币种损耗修复的端到端现金流健康链。反直觉核心：大多数卖家的真实利润吞噬者不是广告费，而是亚马逊14天账期+60天备货周期+汇率自动转换3-4%三者叠加产生的隐性现金漏洞。
+target_users:
+- 财务负责人/CFO
+- 创始人/CEO
+- 运营总监
+- 供应链负责人
+entry_question: 你的现金转换周期（CCC）是多少天？超过60天就需要外部融资填补缺口。
+steps:
+- id: step-1
+  name: 现金转换周期诊断
+  question: 资金从采购到回款需要多少天？
+  context: 反直觉：跨境卖家的CCC（现金转换周期）通常在75-120天（中国备货30-45天+头程15-30天+Amazon入库7天+账期14天），而传统零售只有45-60天。CCC越长，需要的运营资金越多，现金流压力越大。
+  skills:
+  - id: Skill-Cross-Border-Cash-Flow-Forecasting
+    role: 跨境现金流预测，建立SKU级别的采购-到货-销售-回款时间线
+  - id: Skill-Operating-Cash-Flow-Forecast
+    role: 经营现金流预测，滚动3-6个月现金流缺口测算
+  - id: Skill-Cash-Conversion-Cycle-Optimization
+    role: 现金转换周期优化，识别DIO/DSO/DPO三个驱动因子的压缩空间
+- id: step-2
+  name: 汇率损耗修复
+  question: 你是否在用Amazon自动结汇？每年多付了多少汇兑成本？
+  context: 反直觉：Amazon自动结汇收取3-4%手续费，对年销$500K的卖家意味着$15K-$20K的隐性年损耗，完全透明但被大多数卖家忽视。换用第三方收款工具可以将成本降到0.5-1%，年节省$10K+。
+  skills:
+  - id: Skill-Multicurrency-FX-Hedging
+    role: 多币种汇率对冲，计算美元/欧元/英镑/日元各币种的最优持有比例
+  - id: Skill-FX-Hedging-Strategy
+    role: 汇率对冲策略设计，远期锁汇vs自然对冲vs期权对冲的成本收益对比
+  - id: Skill-Tariff-FX-FBA-Cost-Dynamics
+    role: 关税+汇率+FBA费用动态联动，综合测算三项隐性成本的年度总损耗
+- id: step-3
+  name: 供应链融资工具选择
+  question: 旺季备货资金缺口如何填补？有哪些成本最低的融资方式？
+  context: 供应链融资工具的成本差异巨大：Amazon Lending年化利率10-12%，Payoneer融资15-18%，银行供应链金融6-8%，而抵押库存的专业供应链融资平台可以做到8-12%+更灵活的还款周期。
+  branches:
+  - condition: 短期缺口（1-3个月），优先便捷性
+    skills:
+    - id: Skill-Amazon-Lending-Decision
+      role: Amazon Lending决策模型，评估接受Amazon融资的真实成本vs机会成本
+    - id: Skill-Inventory-Financing-Optimization
+      role: 库存融资优化，以库存为抵押的融资工具成本收益计算
+  - condition: 中长期资金规划，优先成本
+    skills:
+    - id: Skill-Supply-Chain-Finance-Risk-Modeling
+      role: 供应链金融风险建模，评估不同融资渠道的综合风险调整后成本
+    - id: Skill-Working-Capital-Optimization
+      role: 营运资金优化，通过延长账期/加速回款/减少安全库存系统降低资金占用
+    - id: Skill-Amazon-Payment-Cycle-Forecast
+      role: Amazon账期周期预测，精确预测每笔款项回款时间优化资金调度
+- id: step-4
+  name: 旺季现金流压测
+  question: 如果Q4销售额翻3倍，现金流能否支撑？
+  context: 旺季是现金流陷阱最高发期：备货资金需求是平时的3-4倍，但回款时间反而因FBA拥堵延长，大量卖家在旺季最高销量时陷入现金流危机。
+  skills:
+  - id: Skill-Scenario-Cashflow-Stress-Test
+    role: 现金流情景压测，模拟Q4旺季/账号被封/退款激增三类极端场景下的资金需求
+  - id: Skill-Procurement-Budget-Rolling-Reforecast
+    role: 采购预算滚动重预测，每月更新旺季备货资金需求预测
+  - id: Skill-Cross-Border-Cash-Flow-Forecasting
+    role: 跨境现金流预测精化，将关税变化/汇率波动/FBA费用调整纳入情景模型

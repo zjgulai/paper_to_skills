@@ -85,6 +85,16 @@ TOPIC_RULES = {
     "LLM数据分析": ["llm", "nl2sql", "data agent", "text-to-sql", "自然语言", "language model", "gpt", "deepseek", "rag pipeline", "prompt", "in-context"],
     "ML基础与可解释性": ["shap", "lime", "explainab", "可解释", "feature importance", "feature engineering", "feature selection", "xgboost", "lightgbm", "calibration", "overfitting"],
     "AI伦理与治理": ["ethics", "bias", "fairness", "伦理", "aigc", "hallucination", "safety", "alignment", "privacy", "responsible ai", "transparency", "accountability"],
+    "供应商管理与博弈": ["supplier", "vendor", "sourcing", "procurement", "supplier evaluation", "supplier risk", "negotiation", "qualification", "supplier performance", "supply base", "采购"],
+    "KPI运营指标体系": ["kpi", "otif", "otd", "fill-rate", "fill rate", "oos", "sell-through", "days inventory", "scorecard", "dashboard", "benchmark", "metric", "运营指标", "履约率"],
+    "逆向物流与退货": ["return", "reverse logistics", "refund", "chargeback", "退货", "退款", "disposition", "returnformer", "return fraud", "reverse", "退换"],
+    "直播与TikTok商业化": ["live commerce", "tiktok shop", "直播", "短视频", "kol", "creator", "virtual anchor", "ugc", "short video", "livestream", "tiktok-shop", "live stream"],
+    "仓储运营效率": ["warehouse", "wms", "slotting", "bin packing", "picking", "inbound", "outbound", "warehouse cost", "仓储", "库位", "理货", "入库"],
+    "AI搜索与GEO": ["geo", "generative engine", "ai search", "zero-click", "answer engine", "llm search", "perplexity", "chatgpt search", "ai overview", "search generative", "featured snippet"],
+    "现金流与供应链融资": ["cash conversion", "working capital", "inventory financing", "lending", "credit risk", "payable", "receivable", "cash cycle", "现金流", "融资", "账期", "供应链金融"],
+    "竞品情报自动化": ["competitor keyword", "competitive intelligence", "competitor price", "market share", "competitive response", "competitor monitor", "竞品", "竞争对手", "情报", "share of voice"],
+    "多渠道协同增长": ["omnichannel", "multi-channel", "cross-platform", "channel synergy", "walmart", "temu", "shopee", "lazada", "多渠道", "全渠道", "跨平台", "渠道协同"],
+    "ESG与绿色供应链": ["esg", "carbon", "sustainability", "green supply", "epr", "cbam", "carbon footprint", "climate", "responsible sourcing", "碳足迹", "绿色", "可持续"],
 }
 
 WORKFLOW_RULES = {
@@ -109,6 +119,12 @@ WORKFLOW_RULES = {
     "WF-S 跨境数据合规": ["gdpr", "ccpa", "privacy", "data governance", "合规", "跨境数据", "数据出境", "pii", "consent", "data residency"],
     "WF-T 用户分层精细运营": ["rfm", "segmentation", "用户分层", "persona", "lifecycle stage", "cohort", "uplift", "personalization", "targeted intervention", "precision marketing"],
     "WF-U P&L健康诊断": ["p&l", "profitability", "cogs", "fba cost", "unit economics", "margin", "break-even", "cash flow", "财务健康", "成本结构"],
+    "WF-V 供应商降本博弈": ["supplier negotiation", "supplier evaluation", "supplier risk", "procurement", "sourcing", "vendor", "commodity", "moq", "price negotiation", "supplier development"],
+    "WF-W 退货根因修复": ["return", "退货", "refund", "returnformer", "return root cause", "return fraud", "reverse logistics", "chargeback", "return rate", "disposition"],
+    "WF-X TikTok Shop冷启动": ["tiktok shop", "tiktok-shop", "live commerce", "直播", "creator", "kol", "ugc", "short video", "viral", "livestream", "tiktok algorithm"],
+    "WF-Y 账期现金流优化": ["cash conversion", "working capital", "inventory financing", "cash cycle", "现金流", "账期", "supply chain finance", "lending", "receivable", "payable"],
+    "WF-Z 竞品情报作战室": ["competitive intelligence", "competitor keyword", "competitor price", "market share", "competitive response", "share of voice", "竞品监控", "competitor monitor"],
+    "WF-AA 多渠道协同增长": ["omnichannel", "multi-channel", "cross-platform", "channel synergy", "多渠道", "全渠道", "渠道协同", "platform expansion", "channel diversification"],
 }
 
 KNOWN_SKILL_IDS: set[str] = set()

@@ -1,0 +1,66 @@
+id: wf-z
+name: WF-Z 竞品情报作战室
+description: 从竞品价格监控到关键词渗透分析再到算法攻防的端到端竞品情报作战链。反直觉核心：90%的卖家把竞品分析当一次性选品工具，实际上竞品的实时动态是每日运营决策的关键输入——他们的定价变化、库存状态、广告动作，每一项都在影响你的排名和转化。
+target_users:
+- 运营负责人
+- 广告优化师
+- 选品/品类经理
+- 创始人
+entry_question: 你是否知道：你的直接竞品上周改了多少次价？他们的广告关键词和你重叠了多少？他们的库存还剩多少天？
+steps:
+- id: step-1
+  name: 竞品图谱构建
+  question: 你的真正竞争对手是谁？（不只是同品类，是抢走你转化的那些人）
+  context: 反直觉：大多数卖家把"同品类"当竞品，实际上抢走转化的竞品通常在3个位置：相同关键词排名前5、相关购买推荐区、同品类最低价区间。这三类不一定重叠。
+  skills:
+  - id: Skill-Competitor-Product-Intelligence
+    role: 竞品产品情报，从ASIN反查竞品月销量/BSR趋势/评价速度
+  - id: Skill-Competitor-SKU-Ontology
+    role: 竞品SKU本体论，构建竞品产品线的完整属性图谱
+  - id: Skill-Competitive-Response-Modeling
+    role: 竞争响应建模，预测竞品对你降价/上新/广告加投的反应模式
+- id: step-2
+  name: 实时价格与库存监控
+  question: 竞品的价格和库存变化，你能在1小时内知道吗？
+  context: 反直觉：竞品库存断货是你最好的进攻时机——当竞品断货时提高广告出价0.5倍，通常能以极低成本抢占排名，而大多数卖家完全没有监控竞品库存的机制。
+  branches:
+  - condition: 价格竞争为主的品类
+    skills:
+    - id: Skill-Competitive-Price-Monitoring
+      role: 竞品价格实时监控，设置价格变化触发器自动调整你的定价策略
+    - id: Skill-Real-Time-Competitive-Repricing
+      role: 实时竞价响应，基于竞品价格变化的自动跟价/差价维持策略
+    - id: Skill-Competitor-Price-Intelligence
+      role: 竞品定价情报，从历史价格模式推断竞品的促销规律和底价
+    next: step-3
+  - condition: 品类竞争为主（非纯价格）
+    skills:
+    - id: Skill-Competitor-New-Product-Detection
+      role: 竞品新品检测，在竞品新品上线的早期（0-30天）介入差异化布局
+    - id: Skill-Share-of-Voice-Tracking
+      role: 搜索份额跟踪，监控你和竞品在核心关键词上的搜索可见度变化
+    next: step-3
+- id: step-3
+  name: 关键词攻防博弈
+  question: 竞品在哪些你还没布局的关键词上有排名？
+  context: 关键词白地是最低成本的增长机会——竞品已经验证了该关键词有购买意图，但你还没有布局。用竞品已有排名的关键词作为广告切入点，转化成本通常比泛关键词低40-60%。
+  skills:
+  - id: Skill-Competitor-Keyword-Gap-Analysis
+    role: 竞品关键词差距分析，找到竞品有排名但你没有覆盖的高转化词
+  - id: Skill-Keyword-Cannibalization-Detection
+    role: 关键词蚕食检测，识别你的不同ASIN在互相抢排名的浪费
+  - id: Skill-PPC-Keyword-Bid-Automation
+    role: PPC关键词出价自动化，在竞品关键词白地上快速建立广告霸位
+- id: step-4
+  name: 防守与反制
+  question: 竞品是否在攻击你的品牌词、Review或Listing？
+  context: 品牌词攻击是跨境电商最常见但最被低估的竞争手段：竞品在你的品牌词上投广告，在你的Listing下方抢Related Products位置，甚至通过批量差评打压你的排名。
+  skills:
+  - id: Skill-Brand-Defense-Search-Strategy
+    role: 品牌词防御策略，在自己品牌词上保持广告覆盖防止竞品截流
+  - id: Skill-Brand-Keyword-Hijack-Alert
+    role: 品牌关键词劫持告警，实时检测竞品投放你品牌词广告的行为
+  - id: Skill-Competitor-Ad-Surge-Defense-Trigger
+    role: 竞品广告激增防御触发器，竞品突然大幅增加投放时自动响应
+  - id: Skill-Hijacker-Seller-Network-Analysis
+    role: 劫持卖家网络分析，识别通过跟卖/Listing劫持攻击你的卖家网络

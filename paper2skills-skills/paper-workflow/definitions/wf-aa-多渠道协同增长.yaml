@@ -1,0 +1,70 @@
+id: wf-aa
+name: WF-AA 多渠道协同增长
+description: 从单一亚马逊依赖到多渠道协同增长的战略转型决策链。反直觉核心：亚马逊卖家的真实LTV只有$15-25，而通过独立站/TikTok/Shopee等渠道建立直接客户关系的LTV是3-4倍（$60-120）。大多数卖家错把渠道扩张当运营复杂度增加，实际上多渠道协同可以用亚马逊流量反哺其他渠道，边际成本接近零。
+target_users:
+- 品牌增长负责人
+- 渠道运营负责人
+- 创始人/CEO
+- 营销总监
+entry_question: 你目前有多少比例的销售依赖亚马逊？客户邮箱/社交媒体数据你有多少？
+steps:
+- id: step-1
+  name: 渠道组合诊断与优先级
+  question: 你的产品适合哪种多渠道扩张路径？
+  context: 渠道扩张不是越多越好——母婴品类最高ROI的渠道组合通常是Amazon主力+独立站CRM+TikTok Shop内容，三者互相喂数据。关键是找到适合你品类价格带和目标市场的渠道组合。
+  branches:
+  - condition: 客单价$30+，有品牌调性，追求LTV
+    skills:
+    - id: Skill-DTC-Customer-Acquisition-Attribution
+      role: DTC客户获取归因，测算不同渠道（Amazon品牌流量/TikTok/Google）引流独立站的成本
+    - id: Skill-Shopify-Landing-Page-CRO
+      role: 独立站落地页CRO，提升从Amazon/TikTok导流到独立站的转化率
+    - id: Skill-Cross-Platform-User-Transfer
+      role: 跨平台用户迁移，将Amazon匿名买家转化为独立站会员的路径设计
+    next: step-2
+  - condition: 客单价$15以下，走量模式，追求GMV
+    skills:
+    - id: Skill-Multi-Channel-Inventory-Sync
+      role: 多渠道库存同步，防止超卖/断货影响各平台评分
+    - id: Skill-Omnichannel-Order-Orchestration-MAS
+      role: 全渠道订单编排，跨平台订单的智能履约路由
+    next: step-2
+- id: step-2
+  name: 数据资产建立
+  question: 你拥有多少自己的客户数据？（不依赖亚马逊的）
+  context: 反直觉：Amazon不提供买家邮箱，这是亚马逊对卖家最大的战略限制。独立站的核心价值不是今天的销售额，而是建立你拥有的客户数据库，一旦建立，后续营销成本接近零。
+  skills:
+  - id: Skill-User-Profile-Long-Memory
+    role: 用户长期记忆画像，构建跨渠道统一用户身份和行为历史
+  - id: Skill-Privacy-Safe-Identity-Resolution
+    role: 隐私安全身份解析，在合规前提下合并多渠道用户行为数据
+  - id: Skill-Email-Sequence-RL-Optimizer
+    role: 邮件序列强化学习优化，对独立站用户设计最优邮件触达策略
+  - id: Skill-Post-Purchase-Email-Sequence-Optimizer
+    role: 购后邮件序列优化，将Amazon一次性买家引导到独立站建立复购关系
+- id: step-3
+  name: 渠道间流量飞轮
+  question: 各渠道之间是否在互相喂流量？
+  context: 最理想的多渠道状态是飞轮：TikTok内容引发品牌搜索→Amazon品牌词排名提升→Amazon自然流量引导到独立站→独立站CRM复购→用复购用户生成UGC内容再投TikTok。每个渠道都在为其他渠道降低获客成本。
+  skills:
+  - id: Skill-Federated-Cross-Seller-Recommendation
+    role: 联邦跨平台推荐，在不共享原始数据的前提下实现跨渠道个性化
+  - id: Skill-Multi-Channel-Inventory-Pooling
+    role: 多渠道库存池化，统一管理各渠道库存减少安全库存总量
+  - id: Skill-Cross-Platform-Brand-Search-Volume
+    role: 品牌词搜索量跨渠道追踪，量化TikTok/社交内容对Amazon搜索量的提升
+  - id: Skill-Social-Proof-Amplification
+    role: 社会证明放大，将TikTok好评/UGC内容同步到Amazon Listing和独立站
+- id: step-4
+  name: 渠道财务健康监控
+  question: 每个渠道的边际利润是否清晰？是否存在某个渠道在亏损补贴其他渠道？
+  context: 多渠道运营最大的财务风险是渠道间利润互相补贴而不自知——TikTok Shop佣金+投流+达人费用叠加后实际利润可能为负，而看起来GMV在涨。
+  skills:
+  - id: Skill-SKU-Level-PL-Dashboard
+    role: SKU级P&L仪表盘，分渠道追踪每个SKU的真实边际利润
+  - id: Skill-ROAS-Budget-Optimization
+    role: 跨渠道ROAS预算优化，将广告预算动态分配到边际ROI最高的渠道
+  - id: Skill-Marketing-Mix-Modeling
+    role: 营销组合建模，量化每个渠道对总GMV和总利润的独立贡献
+  - id: Skill-Channel-Saturation-Curve
+    role: 渠道饱和曲线，识别每个渠道的投入边际递减拐点防止过度投入

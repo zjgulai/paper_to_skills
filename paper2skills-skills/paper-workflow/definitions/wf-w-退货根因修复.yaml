@@ -1,0 +1,75 @@
+id: wf-w
+name: WF-W 退货根因修复
+description: 从退货数据挖掘到根因识别再到排名保护的端到端退货治理链。反直觉核心：退货不只是客服问题，亚马逊A10算法已将退货率纳入自然排名信号，超过品类中位数1.4倍即触发排名惩罚，而大多数卖家把它当售后问题处理。
+target_users:
+- 运营负责人
+- 客服/售后团队
+- 供应链/质量团队
+- Listing优化师
+entry_question: 你的退货率是多少？和品类平均相比如何？退货原因你能精确到哪一层？
+steps:
+- id: step-1
+  name: 退货损失全量化
+  question: 你算过退货的真实全链路成本吗？
+  context: 反直觉：大多数卖家只看退款金额，实际退货总成本=退款+FBA处理费+库存贬值+差评风险+排名损失，通常是退款金额的2.5-4倍。
+  skills:
+  - id: Skill-Refund-Rate-Financial-Impact
+    role: 退款率财务影响全量化，计算退货的直接+间接+排名损失总成本
+  - id: Skill-Return-Value-Recovery-Auction
+    role: 退货价值回收拍卖，分级处理可二次销售/降价清仓/报废的退货
+  - id: Skill-VOC-Returns-Cost-Driver
+    role: VOC退货成本驱动因素分析，从评论挖掘退货原因分布
+- id: step-2
+  name: 退货根因四象限诊断
+  question: 退货的主要原因是产品质量、描述不符、竞品诱导还是欺诈？
+  context: 四类退货对应完全不同的解法——质量问题改供应链，描述不符改Listing，欺诈退货报Amazon，竞品诱导需要Listing加防御性描述。
+  branches:
+  - condition: 质量/功能性退货（实物与预期不符）
+    skills:
+    - id: Skill-Return-Root-Cause-Attribution-Graph
+      role: 退货根因图归因，用知识图谱连接质检记录→退货原因→改进动作
+    - id: Skill-Consumer-Complaint-Recall-Prediction
+      role: 消费者投诉召回预测，识别系统性质量问题在爆发前预警
+    - id: Skill-Predictive-Returns-Management
+      role: 预测性退货管理，在高退货率SKU的新备货批次前提前介入质检
+    next: step-3
+  - condition: 描述/图片/尺寸不符退货
+    skills:
+    - id: Skill-VOC-Aspect-Sentiment-Extraction
+      role: VOC细粒度情感分析，精确提取"尺寸偏大""颜色失真"等描述缺陷
+    - id: Skill-Listing-Health-Diagnostic
+      role: Listing健康诊断，识别主图/尺寸表/材质说明的描述偏差
+    - id: Skill-NLP-Listing-Content-Optimization
+      role: NLP Listing内容优化，修复退货高频原因对应的描述缺陷
+    next: step-3
+  - condition: 欺诈/竞品诱导退货
+    skills:
+    - id: Skill-Return-Fraud-Detection
+      role: 退货欺诈检测，识别异常退货模式（批量/同地址/短间隔）
+    - id: Skill-Brand-Listing-Hijacking-Detection
+      role: Listing劫持检测，识别竞品恶意下单再退货的攻击模式
+    - id: Skill-Review-Fraud-Detection
+      role: 差评+退货联动欺诈检测，识别竞品恶意差评+退货组合攻击
+    next: step-3
+- id: step-3
+  name: 排名影响修复
+  question: 退货率上升后自然排名是否已经受影响？
+  context: 反直觉：退货率对排名的影响有2-4周滞后，等你发现排名下滑时问题已经积累了一个月。需要主动监控退货率-排名相关性。
+  skills:
+  - id: Skill-Returnformer-Returns-Prediction
+    role: Returnformer退货预测，提前预判高退货率批次防止排名崩塌
+  - id: Skill-Cross-Border-Return-Rate-By-Country-KPI
+    role: 分国家退货率KPI，识别特定市场的退货问题与欧洲本地习惯差异
+  - id: Skill-Review-Velocity-Defense
+    role: 评价速度防御，退货率上升期通过加速正向评价积累对冲排名损失
+- id: step-4
+  name: 逆向物流价值最大化
+  question: 退货商品如何处置以最大化残值回收？
+  context: 大多数卖家让Amazon直接销毁退货（$0.15-0.30/件），实际上60-70%的退货商品可以通过检验后二次销售/降价/捆绑销售回收40-80%残值。
+  skills:
+  - id: Skill-Predictive-Batch-Returns-Routing
+    role: 批量退货智能路由，自动分类可修复/二次销售/销毁的退货
+  - id: Skill-Reverse-Logistics-Disposition-Optimization
+    role: 逆向物流处置优化，最大化退货商品残值回收
+  - id: Skill-Returns-Reverse-Logistics
+    role: 跨境逆向物流设计，欧洲本地退货仓vs美国退货中心的成本对比

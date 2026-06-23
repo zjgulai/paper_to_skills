@@ -1,0 +1,72 @@
+id: wf-x
+name: WF-X TikTok Shop冷启动
+description: 从账号破零到稳定GMV的TikTok Shop端到端冷启动决策链。反直觉核心：TikTok Shop算法与亚马逊A9本质不同——亚马逊奖励销售历史，TikTok奖励内容互动率。新卖家反而比老卖家有优势，内容质量决定流量而非广告费。
+target_users:
+- 新兴渠道运营负责人
+- 内容营销团队
+- 品牌增长负责人
+- 创始人/渠道负责人
+entry_question: 你在TikTok Shop上最大的障碍是什么？0销售破零？流量不稳定？还是找不到合适的创作者？
+steps:
+- id: step-1
+  name: 账号与内容基建
+  question: TikTok Shop账号和内容生产体系是否就位？
+  context: 反直觉：TikTok Shop的流量分配不依赖账号粉丝数，而是依赖单条视频的完播率和互动率。没有粉丝的新账号发布高质量内容，算法会主动推流，这与Amazon的历史销量逻辑完全相反。
+  branches:
+  - condition: 从零开始，没有内容积累
+    skills:
+    - id: Skill-Live-Commerce-Stream-Algorithm
+      role: 直播电商算法建模，理解TikTok完播率/互动率/购买率三层算法逻辑
+    - id: Skill-TikTok-Algorithm-Content-Boost
+      role: TikTok算法内容加速，识别触发大规模推流的内容特征（前3秒钩子/情绪弧/CTA）
+    - id: Skill-AI-Video-Script-Generation
+      role: AI视频脚本生成，批量生产符合TikTok格式的产品展示/测评/故事脚本
+  - condition: 已有内容，但播放量低
+    skills:
+    - id: Skill-E-Commerce-Video-Benchmark
+      role: 电商视频基准测评，对比同品类头部视频的关键指标找差距
+    - id: Skill-Creative-Fatigue-Detection
+      role: 素材疲劳检测，识别已失效的内容模板，强制迭代新创意
+- id: step-2
+  name: 达人/创作者合作策略
+  question: 自播还是达人带货？如何找到ROI最高的创作者？
+  context: 反直觉：粉丝量10万以下的微达人，带货转化率通常比百万大V高3-5倍（粉丝信任度更高，品类垂直）。母婴品类尤其如此——宝妈信任有相同经历的普通用户，而非明星。
+  branches:
+  - condition: 预算有限，优先微达人矩阵
+    skills:
+    - id: Skill-KOL-Creator-Matching
+      role: KOL/创作者匹配，用互动率/受众重叠度/品类相关性而非粉丝量选人
+    - id: Skill-KOL-ROI-Causal-Attribution
+      role: KOL合作ROI因果归因，区分达人带来的增量销售vs自然销售
+    - id: Skill-Creator-Economy-ROI-Model
+      role: 创作者经济ROI模型，计算不同达人合作形式（佣金/固定费/置换）的预期回报
+    next: step-3
+  - condition: 预算充足，需要快速放量
+    skills:
+    - id: Skill-TikTok-Shop-Content-Attribution
+      role: TikTok Shop内容归因，追踪每条视频/每个达人的实际销售贡献
+    - id: Skill-Organic-Content-Causal-Attribution
+      role: 自然内容因果归因，分离广告流量vs内容自然流量
+    next: step-3
+- id: step-3
+  name: 直播间运营优化
+  question: 是否已开启直播带货？直播间留存率和GPM是否健康？
+  context: TikTok Shop的复利效应来自直播——直播算法看的是直播间人均停留时长（>60秒为健康），互动率（评论+分享>5%），和GPM（千次展示成交额>$X）。这三个指标决定算法是否给你加流量。
+  skills:
+  - id: Skill-Live-Stream-Highlight-Extraction
+    role: 直播高光提取，自动剪辑直播最高转化时段转为短视频扩散流量
+  - id: Skill-Multilingual-Live-Virtual-Anchor-Clone
+    role: 多语言虚拟主播克隆，24小时不间断直播提升直播间权重
+  - id: Skill-AnchorCrafter-Virtual-Anchor-Demo
+    role: 虚拟主播产品演示，AI生成真实感产品使用场景演示视频
+- id: step-4
+  name: TikTok-Amazon飞轮协同
+  question: TikTok流量是否在为Amazon自然排名输送信号？
+  context: 反直觉：TikTok Shop产生的外部流量进入Amazon Listing，是Amazon A10算法中权重最高的外部流量信号之一。从TikTok引流到Amazon会触发算法的排名加速，形成双平台飞轮。
+  skills:
+  - id: Skill-Amazon-External-Traffic-Boost
+    role: Amazon外部流量加速，量化TikTok/社交流量对Amazon自然排名的提升系数
+  - id: Skill-TikTok-Creator-ROI-Attribution
+    role: TikTok创作者ROI归因，追踪TikTok流量在Amazon的转化路径
+  - id: Skill-Cross-Platform-Brand-Search-Volume
+    role: 跨平台品牌搜索量监控，TikTok曝光带来的Amazon品牌词搜索量提升是飞轮效应的关键证据

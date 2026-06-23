@@ -1,0 +1,73 @@
+id: wf-v
+name: WF-V 供应商降本博弈
+description: 从供应商评估到议价博弈再到风险分散的端到端采购优化链。反直觉核心：大多数卖家把采购价当固定成本，实际上供应商议价空间通常在15-30%，且工厂的真实成本卖家可以用大宗商品期货指数精确推算。
+target_users:
+- 采购/供应链负责人
+- 运营总监
+- 创始人/CEO
+entry_question: 你上次主动和供应商谈判降价是什么时候？降了多少？
+steps:
+- id: step-1
+  name: 供应商成本穿透
+  question: 你知道供应商的真实生产成本吗？
+  context: 反直觉：80%的卖家不知道原材料价格走势，而供应商报价里通常包含30-50%的不透明利润。用大宗商品期货指数可以推算供应商底牌。
+  branches:
+  - condition: 主材是金属/塑料/棉纱等标准大宗商品
+    skills:
+    - id: Skill-Commodity-Futures-Cost-Baseline
+      role: 大宗商品期货基线，从铜铝塑料指数反推供应商真实原材料成本
+    - id: Skill-BOM-Cost-Rollup-Tag-Engine
+      role: BOM成本展开，将产品拆解到原材料级别精算成本
+    - id: Skill-Supplier-Evaluation-Model
+      role: 供应商综合评估模型，量化质量/交期/成本/服务四维得分
+  - condition: 定制品/专有工艺，成本不透明
+    skills:
+    - id: Skill-Supplier-Performance-Scorecard
+      role: 供应商绩效评分卡，用历史交期/质检/响应速度建立客观评分
+    - id: Skill-Supplier-Risk-XGBoost
+      role: XGBoost供应商风险预测，识别供应商财务/产能/依赖度风险
+- id: step-2
+  name: 议价策略设计
+  question: 当前你是单一供应商还是多家竞争？
+  context: 单一供应商意味着你没有BATNA（最佳替代方案），议价力为零。引入备选供应商报价是最强的议价工具，哪怕你不打算换。
+  branches:
+  - condition: 单一供应商依赖，无备选
+    skills:
+    - id: Skill-Supplier-Development-Roadmap-Tracking
+      role: 供应商开发路线图，制定6-12个月备选供应商引入计划
+    - id: Skill-Multi-Factory-Capacity-Allocation
+      role: 多工厂产能分配，逐步将20-30%订单转移备选供应商制造博弈压力
+    - id: Skill-AgenticPay-Procurement-Negotiation
+      role: AI采购谈判Agent，生成数据支撑的议价方案和谈判脚本
+    next: step-3
+  - condition: 已有2-3家供应商竞价
+    skills:
+    - id: Skill-Multi-SKU-Procurement-Budget-Allocation
+      role: 多SKU采购预算分配，在供应商间最优化订单分配最大化价格竞争
+    - id: Skill-Supplier-Capacity-Booking-Engine
+      role: 供应商产能预订引擎，用提前锁产能换取价格优惠
+    next: step-3
+- id: step-3
+  name: 质量成本优化
+  question: 你的质检是在出货后还是生产中？
+  context: 反直觉：出货后质检发现问题的修复成本是生产中质检的8-12倍（加上退货/差评/排名损失）。质检前置是最高ROI的成本优化。
+  skills:
+  - id: Skill-Supplier-Delivery-Quality-Rate-KPI
+    role: 供应商交付质量KPI，建立缺陷率/漏检率/返工率三层质量指标
+  - id: Skill-Supplier-Qualification-Onboarding-KPI
+    role: 供应商准入KPI，用数据驱动的准入标准替代主观判断
+  - id: Skill-Inbound-ETA-Accuracy-KPI
+    role: 入库准时率KPI，量化供应商交期不确定性对库存成本的影响
+- id: step-4
+  name: 供应链韧性建设
+  question: 如果主供应商停产30天，你的损失是多少？
+  context: 集中度风险是跨境卖家最被低估的风险。单一工厂依赖在旺季断供时损失可达年利润的40-80%，而分散采购成本只增加3-5%。
+  skills:
+  - id: Skill-Supply-Chain-Resilience-Modeling
+    role: 供应链韧性建模，量化单一工厂依赖的VaR和CVaR风险
+  - id: Skill-Lead-Time-Distribution-Risk-GenQOT
+    role: 交期分布风险，用概率分布而非单点预测建立备货安全垫
+  - id: Skill-Supplier-Capacity-Planning
+    role: 供应商产能规划，旺季前3个月预锁产能防止被竞争对手抢占
+  - id: Skill-MOQ-Payment-Terms-Optimization
+    role: 最小起订量与账期联合优化，通过增加MOQ换取更长账期改善现金流
