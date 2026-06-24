@@ -2688,6 +2688,126 @@ SOLUTIONS_CATALOG = [
             {"no": "T3", "title": "库存响应延迟陷阱", "desc": "传播峰值预测再准，如果供应链前置期是30天，仍然赶不上3天后的需求峰。爆品备货的核心是「预测触发补货」要早于传播信号出现"},
         ],
     },
+    {
+        "id": "sol-cdp-lookalike-full-stack",
+        "title": "CDP 全链路：身份统一 → 种子净化 → Lookalike 扩展",
+        "subtitle": "从碎片化多平台数据到高质量广告受众的完整架构",
+        "category": "CDP & 广告技术",
+        "tags": ["CDP", "Lookalike", "身份统一", "广告投放", "隐私合规"],
+        "icon": "CDP",
+        "icon_color": "#0ea5e9",
+        "status": "published",
+        "updated": "2026-06-24",
+        "summary": "解决母婴跨境卖家最核心的数据碎片化问题：Amazon/TikTok/独立站同一用户三套 ID，导致 Lookalike 种子质量差、广告重复触达、归因失真。三层 CDP 架构彻底打通，ROAS 从 1.9x 恢复到 3.5x+。",
+        "roi_headline": "广告 ROAS 提升 40-80%，年化增效 20-40 万元，GDPR 合规零风险",
+        "phases": [
+            {"name": "Phase 1 身份统一", "duration": "2-3 周", "action": "L1 哈希匹配 + L2 行为概率 + L3 图结构", "roi": "跨平台识别率 85%+"},
+            {"name": "Phase 2 种子净化", "duration": "1 周", "action": "孤立森林 + 代理分类器剔除刷单/员工内购", "roi": "种子纯度 68%→94%"},
+            {"name": "Phase 3 Lookalike 扩展", "duration": "2 周", "action": "双塔 / 图传播 / 联邦 Lookalike 三路并行", "roi": "ROAS 提升 40-80%"},
+            {"name": "Phase 4 置信校准", "duration": "1 周", "action": "Platt Scaling + Precision@K 决策扩展比例", "roi": "避免盲目扩量损失"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "身份统一层", "desc": "哈希匹配 + 行为概率匹配 + GNN 跨设备匹配 → 统一 CDP 用户 ID"},
+            {"no": "L2", "name": "种子质量层", "desc": "规则过滤 + 孤立森林异常检测 + 代理分类器净化"},
+            {"no": "L3", "name": "Lookalike 建模层", "desc": "双塔自建 / 图神经网络传播 / 联邦学习（隐私合规）"},
+            {"no": "L4", "name": "置信度校准层", "desc": "密度估计 + Platt Scaling + Precision@K 扩展决策"},
+        ],
+        "traps": [
+            {"no": "①", "title": "跳过种子净化直接建模", "desc": "含 10-30% 噪声种子的 Lookalike 模型 ROAS 可能低于随机投放。种子净化是 Lookalike 效果的天花板，不是可选优化。"},
+            {"no": "②", "title": "盲目扩展到 10% 受众", "desc": "未校准的 Lookalike 分数在 Top 5%→10% 时精度骤降。必须用 Platt Scaling 校准后再决定扩展比例，否则 ROAS 崩盘。"},
+            {"no": "③", "title": "欧盟市场直接上传用户哈希", "desc": "GDPR Article 9 对儿童数据有特殊保护。欧盟市场必须用联邦 Lookalike 方案，数据不出本地。"},
+        ],
+        "core_skills": [
+            "Skill-Multi-Source-User-Identity-Unification",
+            "Skill-Seed-Quality-Optimization-for-Lookalike",
+            "Skill-Dual-Tower-Lookalike-Modeling",
+            "Skill-Graph-Neural-Lookalike-Propagation",
+            "Skill-Privacy-Preserving-Lookalike-FL",
+            "Skill-Calibrated-Audience-Expansion-Uncertainty",
+            "Skill-Cleanroom-Audience-Collaboration",
+            "Skill-Tag-Driven-Ad-Audience-Segmentation",
+        ],
+    },
+    {
+        "id": "sol-member-growth-system",
+        "title": "会员增长体系：等级设计 → 生命周期干预 → 裂变归因",
+        "subtitle": "从零搭建母婴跨境 DTC 完整会员运营闭环",
+        "category": "会员运营 AI",
+        "tags": ["会员体系", "LTV", "生命周期", "裂变", "积分管理"],
+        "icon": "MEM",
+        "icon_color": "#8b5cf6",
+        "status": "published",
+        "updated": "2026-06-24",
+        "summary": "为母婴 DTC 品牌提供从等级体系设计到运营执行的完整 AI 方案。Markov CLV 优化等级门槛，RL 序列干预精准触达，裂变网络价值精算激励额度，积分负债精算控制财务风险。",
+        "roi_headline": "会员 CLV 提升 15-25%，干预成本降低 30%，年化增收 50-150 万元",
+        "phases": [
+            {"name": "Phase 1 体系设计", "duration": "1-2 周", "action": "Markov CLV 优化等级结构 + 门槛", "roi": "CLV +12-18%"},
+            {"name": "Phase 2 注册优化", "duration": "2 周", "action": "分市场漏斗 + 早期 LTV 预测动态激励", "roi": "注册转化 +10-15pp"},
+            {"name": "Phase 3 生命周期运营", "duration": "持续", "action": "RL 序列干预 + 图预警 + 积分精算", "roi": "流失率 -20%"},
+            {"name": "Phase 4 裂变扩增", "duration": "持续", "action": "裂变价值精算 + 分层激励 + 超级推荐者", "roi": "获客成本 -40%"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "体系设计层", "desc": "Markov 链 CLV 建模 → 最优等级数量和门槛 → 积分负债精算"},
+            {"no": "L2", "name": "获客转化层", "desc": "跨境注册漏斗分市场优化 → 早期 LTV 预测 → 动态激励分配"},
+            {"no": "L3", "name": "生命周期管理层", "desc": "RL 序列干预 → 图神经网络流失预警 → 会员阶段触达策略"},
+            {"no": "L4", "name": "裂变扩增层", "desc": "裂变网络价值归因 → 最优激励额度 → 超级推荐者识别与激励"},
+        ],
+        "traps": [
+            {"no": "①", "title": "等级门槛拍脑袋设定", "desc": "三级门槛 $50/$200/$500 是最常见的随意设定。Markov CLV 优化后，最优门槛可能完全不同（如 $80/$300），且不同用户类型最优门槛不同。"},
+            {"no": "②", "title": "所有用户同一干预策略", "desc": "给高意图用户发 25% 折扣券是浪费。RL 序列干预证明：高意图用户只需内容触达，低意图用户才需折扣。统一策略比个性化策略多花 30-40%。"},
+            {"no": "③", "title": "积分体系越来越成功越亏损", "desc": "积分发放量快速增长但兑换率被低估，积分负债在资产负债表上悄悄累积。必须用 Beta-Binomial 精算兑换率，季度审查积分负债。"},
+        ],
+        "core_skills": [
+            "Skill-Membership-Tier-Design-Optimization",
+            "Skill-Cross-Border-Member-Onboarding-Optimization",
+            "Skill-Member-Lifecycle-Intervention-Sequencing",
+            "Skill-Membership-Churn-Early-Warning-Graph",
+            "Skill-Points-Expiry-Redemption-Liability-Model",
+            "Skill-Referral-Network-Value-Attribution",
+            "Skill-Loyalty-Program-ROI-Modeling",
+            "Skill-LTV-Prediction-ZILN",
+        ],
+    },
+    {
+        "id": "sol-privacy-safe-advertising",
+        "title": "隐私合规广告架构：联邦 Lookalike + 洁净室 + 因果去偏",
+        "subtitle": "Cookie 消亡时代的跨境广告精准投放全栈解决方案",
+        "category": "隐私合规 & 广告技术",
+        "tags": ["隐私合规", "GDPR", "联邦学习", "归因去偏", "洁净室"],
+        "icon": "PPA",
+        "icon_color": "#10b981",
+        "status": "published",
+        "updated": "2026-06-24",
+        "summary": "GDPR/CCPA/PIPL 三法叠加的合规压力下，传统广告方法论正在失效。本方案提供「数据不出境 + 归因不失真 + 受众不泄露」的完整技术栈，在最严苛的隐私约束下维持广告效果。",
+        "roi_headline": "欧盟/北美市场广告合规零风险，ROAS 提升 12-20%，规避最高 4% 全球营收罚款",
+        "phases": [
+            {"name": "Phase 1 合规评估", "duration": "1 周", "action": "数据流审计 + GDPR 风险识别 + 优先级排序", "roi": "消除法律盲区"},
+            {"name": "Phase 2 联邦 Lookalike", "duration": "4-6 周", "action": "VFL 跨平台建模，原始数据不出本地", "roi": "Lookalike 质量 +12%"},
+            {"name": "Phase 3 洁净室协作", "duration": "2-3 周", "action": "AWS Clean Rooms 受众重叠分析 + 媒体规划", "roi": "媒体决策准确率 +30%"},
+            {"name": "Phase 4 归因去偏", "duration": "2 周", "action": "IPW 去混淆，识别真实 iROAS", "roi": "避免预算浪费 15-20 万"},
+        ],
+        "layers": [
+            {"no": "L1", "name": "身份隐私层", "desc": "哈希 ID 匹配 + 差分隐私保护 + K-匿名性约束"},
+            {"no": "L2", "name": "联邦建模层", "desc": "垂直联邦学习 VFL + 知识蒸馏 + 非对齐用户处理"},
+            {"no": "L3", "name": "洁净室协作层", "desc": "AWS Clean Rooms / 自建 DCR + SQL 受众分析"},
+            {"no": "L4", "name": "因果归因层", "desc": "IPW 倒数概率加权 + 混淆去偏 + 真实 iROAS 计算"},
+        ],
+        "traps": [
+            {"no": "①", "title": "用哈希邮箱上传就认为合规", "desc": "SHA-256 哈希可被逆向工程还原，且 GDPR 明确规定哈希数据仍属个人数据。欧盟市场必须用联邦学习，禁止任何形式的用户数据上传。"},
+            {"no": "②", "title": "相信平台报告的 ROAS", "desc": "平台 ROAS 通常高估 25-45%（混淆偏差）。按高估 ROAS 加大预算，实际是在「高意图人群」上浪费广告费。必须用 IPW 计算真实 iROAS 再做预算决策。"},
+            {"no": "③", "title": "洁净室查询没有 K-匿名性约束", "desc": "分组数量 < 50 的洁净室查询结果可反向推断个人信息。必须设置最小分组阈值，否则洁净室成为隐私泄露渠道。"},
+        ],
+        "core_skills": [
+            "Skill-Privacy-Preserving-Lookalike-FL",
+            "Skill-Cleanroom-Audience-Collaboration",
+            "Skill-Counterfactual-Ad-Attribution-Debiasing",
+            "Skill-CDA-Privacy-Causal-Attribution",
+            "Skill-Privacy-Safe-Identity-Resolution",
+            "Skill-Ad-Creative-Personalization-Bandit",
+            "Skill-Constrained-Multi-Objective-Ad-Delivery",
+            "Skill-Cross-Channel-Budget-Pacing-Controller",
+        ],
+    },
 ]
 
 
@@ -5303,6 +5423,10 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
         ("", "库存积压滞销", "high", 10),
         ("", "DTC SEO可见性", "medium", 8),
         ("", "TikTok内容衰减", "medium", 9),
+        ("", "库存积压/清仓", "high", 10),
+        ("", "FBA仓储费超标", "high", 8),
+        ("", "物流履约异常", "high", 9),
+        ("", "评价质量下滑", "high", 8),
     ]
     sev_colors = {"critical": "#dc2626", "high": "#d97706", "medium": "#2563eb"}
 
@@ -5539,7 +5663,7 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
 </html>"""
 
 
-def render_diagnostic_page(skill_count: int = 931) -> str:
+def render_diagnostic_page(skill_count: int = 931, build_ts: str = "") -> str:
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -5652,7 +5776,7 @@ def render_diagnostic_page(skill_count: int = 931) -> str:
     <div class="diag-result" id="diag-result"></div>
   </main>
 </div>
-<script src="assets/risk-events.js"></script>
+<script src="assets/risk-events.js?v={build_ts}"></script>
 <script>
 (function(){{
   const SEV_CLASS={{'critical':'sev-critical','high':'sev-high','medium':'sev-medium','low':'sev-low'}};
@@ -6579,7 +6703,7 @@ def render_pages(
     write_file(out / "assets" / "ego-graph.js", build_ego_graph_js())
     write_file(out / "assets" / "chat-page.js", build_chat_page_js())
     write_file(out / "chat.html", render_chat_page(skill_count=skill_count))
-    write_file(out / "diagnostic.html", render_diagnostic_page(skill_count=skill_count))
+    write_file(out / "diagnostic.html", render_diagnostic_page(skill_count=skill_count, build_ts=build_ts))
 
     # ── Index (Phase 3C) ──
     write_file(out / "index.html", html_page(

@@ -847,3 +847,217 @@ events:
   related_workflows:
   - WF-B 广告优化
   - WF-H 复购增长
+
+- event_id: inventory-overstock-writedown
+  event_name: 库存积压 / 滞销清仓风险
+  severity: high
+  icon: "📦"
+  summary: SKU 销售速度持续低于补货量，库存日数（DOI）超安全线，FBA 仓储费与账期压力叠加
+  symptom_keywords:
+    - 库存积压
+    - 滞销
+    - DOI 超标
+    - 仓储费飙升
+    - 清仓
+    - 呆滞库存
+    - 库龄超90天
+    - 库存消化慢
+    - 超储
+    - inventory overstock
+  phases:
+    diagnose:
+    - skill_id: Skill-ITO-Three-Phase-Health-Tracking
+      role: 库存健康三阶段追踪：识别哪些 SKU 进入「预警」「告警」「超期」哪个阶段
+      sequence: 1
+    - skill_id: Skill-GMROI-Inventory-Investment-Efficiency
+      role: GMROI 投资效率诊断：量化每美元库存投入产生多少毛利，找出低效 SKU
+      sequence: 2
+    - skill_id: Skill-Dynamic-ABC-Stratification-Adaptive-Policy
+      role: 动态 ABC 分层：用滚动销速将 SKU 重新分层，找出从 A 降为 C 的滞销品
+      sequence: 3
+    - skill_id: Skill-Inventory-Aging-Cost-Management
+      role: 库存账龄成本管理：精算各 SKU 的仓储费、机会成本，计算清仓 vs 持有的 break-even
+      sequence: 4
+    treat:
+    - skill_id: Skill-Long-Tail-SKU-Clearance-Optimization
+      role: 长尾 SKU 清仓优化：选择最优降价幅度在最短时间清仓同时最大化回收金额
+      condition: DOI > 90天或仓储费 > 毛利的15%
+    - skill_id: Skill-Markdown-Optimization
+      role: Markdown 降价节奏优化：阶梯式降价策略避免过早折价损害品牌价格锚点
+      condition: 清仓期大于30天
+    - skill_id: Skill-Multi-Channel-Inventory-Sync
+      role: 多渠道库存同步：将滞销库存分发到 eBay/Walmart 等替代渠道加速消化
+      condition: 单渠道销速不足以消化积压
+    prevent:
+    - skill_id: Skill-Forecast-Driven-Inventory
+      role: 预测驱动补货：用高精度需求预测替代经验补货，从源头控制过量入库
+    - skill_id: Skill-MOQ-Payment-Terms-Optimization
+      role: MOQ 与账期优化：与供应商谈判降低最小起订量，降低过度备货风险
+    - skill_id: Skill-Safety-Stock-Replenishment
+      role: 安全库存优化：精算安全系数，防止「安全库存过高」变成系统性积压来源
+  related_events:
+  - supply-chain-lead-time-risk
+  - tariff-fx-risk
+  related_playbooks:
+  - pb-supply-chain-intelligence
+  - pb-fba-operations
+  related_workflows:
+  - WF-A 智能补货
+  - WF-N 库存危机响应
+
+- event_id: fba-storage-fee-surge
+  event_name: FBA 仓储费超标 / 账号存储限制
+  severity: high
+  icon: "🏭"
+  summary: FBA 仓储费突然大幅上涨，或账号存储限制（IPI 评分下降）触发入库配额收缩
+  symptom_keywords:
+    - FBA 仓储费
+    - 存储费飙升
+    - IPI 评分低
+    - 入库限制
+    - 月度存储费超预算
+    - 长期仓储费
+    - 仓储成本
+    - FBA storage fee
+    - storage limit
+  phases:
+    diagnose:
+    - skill_id: Skill-FBA-Fee-Intelligence
+      role: FBA 费用智能分析：拆解各 SKU 的存储费、配送费、长期仓储费构成，找出费用异常项
+      sequence: 1
+    - skill_id: Skill-FBA-Fee-Waterfall-Attribution
+      role: FBA 费用瀑布归因：逐层拆解费用增长来源（是 SKU 尺寸变更、仓位分类还是季节性附加费）
+      sequence: 2
+    - skill_id: Skill-FBA-Stranded-Unfulfillable-Inventory-KPI
+      role: FBA 搁置/不可售库存 KPI：识别被搁置的库存占用的存储空间成本
+      sequence: 3
+    treat:
+    - skill_id: Skill-FBA-Cost-Forecast-Adjustment
+      role: FBA 成本预测调整：滚动预测下季度 FBA 费用，提前制定清仓或转仓计划
+      condition: 月度 FBA 费用超预算20%以上
+    - skill_id: Skill-SKU-Warehouse-Footprint-Monitoring
+      role: SKU 仓储足迹监控：优化 SKU 的入库数量和频次，降低峰值仓储占用
+      condition: IPI评分低于400或入库配额紧张
+    - skill_id: Skill-Inventory-Financing-Optimization
+      role: 库存融资优化：在仓储成本高企时评估仓储贷款 vs 清仓的资金成本对比
+      condition: 大量现金被锁定在滞销库存中
+    prevent:
+    - skill_id: Skill-FDC-RDC-Inventory-Allocation
+      role: FDC/RDC 库存分配优化：合理分配自营仓和 FBA 仓的比例，避免过度依赖 FBA
+    - skill_id: Skill-ITO-DOI-Inventory-Turnover-Optimizer
+      role: 库存周转率优化器：持续监控 DOI 指标，在 IPI 评分下降前预警
+  related_events:
+  - inventory-overstock-writedown
+  - supply-chain-lead-time-risk
+  related_playbooks:
+  - pb-fba-operations
+  - pb-supply-chain-pl
+  related_workflows:
+  - WF-A 智能补货
+  - WF-U P&L健康诊断
+
+- event_id: logistics-fulfillment-exception
+  event_name: 物流履约异常 / CST-ODR 指标恶化
+  severity: high
+  icon: "🚚"
+  summary: 跨境物流出现延误、包裹损失或清关异常，导致 ODR（缺陷率）和 CST（客户满意度评分）下滑，账号 KPI 面临超标风险
+  symptom_keywords:
+    - 物流延误
+    - 包裹丢失
+    - 清关异常
+    - ODR 超标
+    - 客服投诉飙升
+    - 配送时效差
+    - 退货率上升
+    - 物流异常
+    - logistics delay
+    - delivery exception
+  phases:
+    diagnose:
+    - skill_id: Skill-OTIF-On-Time-In-Full-Analytics
+      role: OTIF 全量分析：统计各物流商/路线的准时完整交付率，找出系统性延误节点
+      sequence: 1
+    - skill_id: Skill-Last-Mile-Delivery-Prediction
+      role: 末端配送预测：预测哪些订单处于延误高风险中，提前预警需人工干预的包裹
+      sequence: 2
+    - skill_id: Skill-B2C-Delivery-Timeliness-Experience-KPI
+      role: B2C 配送时效体验 KPI 诊断：量化物流异常对用户满意度和 ODR 的实际影响
+      sequence: 3
+    treat:
+    - skill_id: Skill-Dynamic-Carrier-Selection-Tag-Driven
+      role: 动态物流商切换：基于实时时效评分自动切换到备用物流商，规避持续延误
+      condition: 主物流商延误率连续3天超10%
+    - skill_id: Skill-Predictive-Batch-Returns-Routing
+      role: 预测性退货路由：对高风险延误订单提前安排退货通道，降低 ODR 恶化速度
+      condition: 客诉率超1%
+    - skill_id: Skill-Cross-Border-Last-Mile-Routing
+      role: 跨境末端路由优化：重新规划清关路径和末端物流网络，绕开拥堵节点
+      condition: 清关异常导致整批货物延误
+    prevent:
+    - skill_id: Skill-Shipment-Risk-Tag-Realtime-Tracker
+      role: 货物风险标签实时追踪：对每批货物打实时风险标签，提前识别高风险路线
+    - skill_id: Skill-In-Transit-Inventory-Tracking-Visibility
+      role: 在途库存全程可视化：建立全程追踪，在异常发生前完成预案启动
+    - skill_id: Skill-Lead-Time-Distribution-Risk-GenQOT
+      role: 前置期分布风险建模：精算各路线前置期的尾部风险，优化备货计划
+  related_events:
+  - supply-chain-lead-time-risk
+  - account-health-degradation
+  related_playbooks:
+  - pb-fba-operations
+  - pb-supply-chain-intelligence
+  related_workflows:
+  - WF-A 智能补货
+  - WF-K 全域风险防御
+
+- event_id: review-sentiment-decline
+  event_name: 评价质量下滑 / 星级下降
+  severity: high
+  icon: "⭐"
+  summary: 产品星级从 4.5★ 降至 4.2★ 以下，或近期一星差评集中爆发，影响转化率和搜索排名
+  symptom_keywords:
+    - 差评增加
+    - 星级下降
+    - 一星评价
+    - 评价质量下滑
+    - 负面评论
+    - 用户投诉
+    - 产品质量问题
+    - review rating drop
+    - negative review
+  phases:
+    diagnose:
+    - skill_id: Skill-VOC-Aspect-Sentiment-Extraction
+      role: 多维度情感分析：从差评中提取具体痛点（物流/质量/功能/客服），定位主要问题类别
+      sequence: 1
+    - skill_id: Skill-Review-Pain-Point-Mining
+      role: 评价痛点挖掘：聚类高频差评 Pattern，找出需要优先解决的 Top 3 产品/服务问题
+      sequence: 2
+    - skill_id: Skill-AutoQual-Review-Quality-Assessment
+      role: 评价质量自动评估：区分「真实差评」和「恶意刷差评」，避免对虚假评价过度反应
+      sequence: 3
+    treat:
+    - skill_id: Skill-SCRABLE-Review-Response-Generation
+      role: 智能评价回复生成：针对差评自动生成专业回复，展示品牌responsiveness同时修复口碑
+      condition: 差评累计超10条/7天
+    - skill_id: Skill-Post-Purchase-Review-Request-Dispatcher
+      role: 购后评价触发优化：针对高满意度用户精准触发评价邀请，用好评稀释差评
+      condition: 好评率低于85%
+    - skill_id: Skill-MAA-Review-to-Action-Decision
+      role: 评价→行动决策链：将差评信号转化为产品/运营的具体改进行动单
+      condition: 同类问题差评超过5条
+    prevent:
+    - skill_id: Skill-AGRS-Aspect-Guided-Review-Summarization
+      role: 结构化评价摘要监控：每周自动生成评价健康报告，持续追踪星级趋势
+    - skill_id: Skill-Fake-Review-Detection
+      role: 虚假评价检测：持续监控竞对恶意差评攻击，及时向平台申诉
+  related_events:
+  - fake-review-attack
+  - customer-churn-risk
+  - asin-traffic-drop
+  related_playbooks:
+  - pb-voc-product-loop
+  - pb-customer-service-agent
+  related_workflows:
+  - WF-E Review监控
+  - WF-C 客服分诊

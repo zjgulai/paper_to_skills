@@ -132,13 +132,17 @@ class SkillsGraph:
         """提取子部分内容，支持 ### 标题和 **bold** 平铺两种格式，兼容短标签"""
         # 生成短标签变体：前置技能 → 前置, 延伸技能 → 延伸, 可组合技能 → 可组合|组合
         short_names = {
-            '前置技能': ['前置技能', '前置'],
-            '延伸技能': ['延伸技能', '延伸'],
-            '可组合技能': ['可组合技能', '可组合', '组合'],
+            '前置技能': ['前置技能', '前置', '前置（prerequisite）', '前置 (prerequisite)'],
+            '延伸技能': ['延伸技能', '延伸', '延伸（extends）', '延伸 (extends)'],
+            '可组合技能': ['可组合技能', '可组合', '组合', '可组合（combinable）', '可组合 (combinable)'],
         }
         names = short_names.get(section_name, [section_name])
         name_alt = '|'.join(re.escape(n) for n in names)
-        name_alt_stop = '|'.join(re.escape(n) for n in ['前置技能','前置','延伸技能','延伸','可组合技能','可组合','组合'])
+        name_alt_stop = '|'.join(re.escape(n) for n in [
+            '前置技能', '前置', '前置（prerequisite）', '前置 (prerequisite)',
+            '延伸技能', '延伸', '延伸（extends）', '延伸 (extends)',
+            '可组合技能', '可组合', '组合', '可组合（combinable）', '可组合 (combinable)',
+        ])
 
         # 格式 1：### 标题（标准格式）
         for name in names:
@@ -205,25 +209,30 @@ class SkillsGraph:
                 items.append(candidate)
 
         # 章节标题噪声词过滤（避免把 '前置技能' '延伸技能' '可组合' 等当作 skill 引用）
-        _SECTION_HEADER_NOISE = frozenset(['前置技能', '延伸技能', '可组合技能', '可组合', '技能关联',
-                                           'prerequisites', 'extensions', 'combinable'])
+        _SECTION_HEADER_NOISE = frozenset([
+            '前置技能', '延伸技能', '可组合技能', '可组合', '技能关联',
+            'prerequisites', 'extensions', 'combinable',
+            '前置（prerequisite）', '前置 (prerequisite)',
+            '延伸（extends）', '延伸 (extends)',
+            '可组合（combinable）', '可组合 (combinable)',
+        ])
 
         pattern1 = r'[-*]\s*\*\*([^*]+?)\*\*\s*[:：]'
         for match in re.finditer(pattern1, subsection_content):
             item = match.group(1).strip()
-            if item and len(item) < 100 and item not in items and item not in _SECTION_HEADER_NOISE:
+            if item and item.startswith('Skill-') and len(item) < 100 and item not in items:
                 items.append(item)
 
         pattern2 = r'[-*]\s*\*\*([^*]+?)\*\*\s*$'
         for match in re.finditer(pattern2, subsection_content, re.MULTILINE):
             item = match.group(1).strip()
-            if item and len(item) < 100 and item not in items and item not in _SECTION_HEADER_NOISE:
+            if item and item.startswith('Skill-') and len(item) < 100 and item not in items:
                 items.append(item)
 
         pattern3 = r'[-*]\s*([^\n*\[]+?)\s*[:：]\s*'
         for match in re.finditer(pattern3, subsection_content):
             item = match.group(1).strip()
-            if item and len(item) < 50 and not item.startswith('http') and item not in items and item not in _SECTION_HEADER_NOISE:
+            if item and item.startswith('Skill-') and len(item) < 100 and item not in items:
                 items.append(item)
 
         return items
