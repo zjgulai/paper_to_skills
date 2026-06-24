@@ -25,6 +25,46 @@ This file provides guidance to AI agents (OpenCode/Codex) working with this repo
 | Workflows | **27** business workflows |
 | Topics | **32** topic pages |
 | Risk Ontology | **17 events / 193 Skill mappings** (diagnostic.html) |
+| VOID Framework | **启动** — Q2-2026 Session 完成，8 个未命名问题入库，1 个原型 Skill |
+
+---
+
+## VOID 框架（第三象限创新引擎）
+
+> **理念**：第三象限 = 我不知道 + AI 也不知道的问题。不能用"解题框架"来框，只能在已知体系遭遇压力时从裂缝里显现。
+
+```
+VOID = Venture into Original Ignorance Deliberately
+
+V — Venture     主动走到边界（崩溃设计/跨行业移植/隐性知识访谈）
+O — Observe     观察摩擦和断裂（盲点登记册/放弃问题存档）
+I — Interrogate 审讯已有答案（反转/排除人群/10年测试）
+D — Distill     蒸馏未命名问题（三测试→问题银行→原型Skill）
+```
+
+**文件位置**：`paper2skills-vault/00-项目管理/VOID/`
+
+```
+VOID/
+├── README.md                          ← 框架总手册
+├── sessions/Q2-2026-void-session.md   ← 第一次季度执行记录
+├── problem-bank.md                    ← 问题银行（8个问题，5个L1）
+├── blind-spot-registry.md             ← 盲点登记册（4个活跃条目）
+├── abandoned-questions.md             ← 放弃问题存档（4个待激活）
+└── proto-skills/
+    ├── proto-skill-template.md
+    └── proto-skill-001-content-efficacy-trace.md  ← 第一个原型Skill
+```
+
+**运转节奏**：每季度一次 VOID Session（半天）+ 每月 30 分钟问题银行维护
+
+**当前原型 Skill**：
+- `proto-skill-001`：无平台数据的内容效力痕迹推断（PB-001，L1，待实验验证）
+
+**核心发现（Q2-2026 Session）**：
+1. 三个顶级 Skill 的崩溃场景揭示了同一深层问题：**"核心数据断供时的降级推断能力缺失"**
+2. 盲点 B001-B004 的模式分析揭示：**母婴消费者运行在多个时间参照系上**（公历/婴儿月龄/社群事件），而现有所有 AI 系统只关注公历时间
+3. 跨行业移植（考古/法医"痕迹推断"）提供了统一方法论框架
 
 ---
 
