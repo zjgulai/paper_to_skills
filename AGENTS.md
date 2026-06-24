@@ -143,10 +143,10 @@ def build_css() -> str:
 python3 paper2skills-skills/playbook-generator/scripts/build_playbook.py \
   --root . --vault paper2skills-vault --out playbook 2>&1 | tail -8
 
-# 2. 打包（含 solutions/）
+# 2. 打包（用 *.html 通配符确保所有顶层页面都包含）
 cd playbook && tar -czf /tmp/pb.tar.gz \
   assets/ domains/ graph/ playbooks/ topics/ workflows/ skills/ solutions/ \
-  agents.html agent-report.html ai-roadmap.html index.html chat.html \
+  *.html \
   build-report.json README.md
 
 # 3. 上传 + 解压
