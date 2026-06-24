@@ -66,6 +66,12 @@ VOID/
 2. 盲点 B001-B004 的模式分析揭示：**母婴消费者运行在多个时间参照系上**（公历/婴儿月龄/社群事件），而现有所有 AI 系统只关注公历时间
 3. 跨行业移植（考古/法医"痕迹推断"）提供了统一方法论框架
 
+**第一次第三象限→主线转化（2026-06-24）**：
+盲点 B003 → AQ-004 → 婴儿月龄时钟 → 3 个正式 Skill 上线：
+- `Skill-Baby-Age-Clock-RFM-Enhancement`（14-用户分析）
+- `Skill-Infant-Lifecycle-Purchase-Rhythm`（06-增长模型）
+- `Skill-Baby-Age-Aware-Recommendation`（05-推荐系统）
+
 ---
 
 ## Project Structure
