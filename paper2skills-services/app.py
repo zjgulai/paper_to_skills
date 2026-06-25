@@ -7,13 +7,17 @@ paper2skills 飞书回调服务
 - GET  /api/reports          查询 Agent 运行报告（按 session_key）
 - DELETE /api/reports/{id}   删除单条报告
 """
-import os, json, hashlib, hmac, time, requests
+import os, json, requests
 import sqlite3, uuid
 from datetime import datetime, timezone
 from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from feishu_oauth import auth_callback as _auth_callback
+from feishu_oauth import auth_login as _auth_login
+from feishu_oauth import auth_logout as _auth_logout
+from feishu_oauth import auth_me as _auth_me
 
 app = FastAPI()
 
@@ -45,6 +49,17 @@ def _init_db():
         conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_session
             ON agent_reports(session_key, created_at DESC)
+        """)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                feishu_id TEXT PRIMARY KEY,
+                name TEXT,
+                org TEXT,
+                tier TEXT DEFAULT 'free',
+                created_at TEXT,
+                last_seen TEXT,
+                usage_count INTEGER DEFAULT 0
+            )
         """)
         conn.commit()
 
@@ -152,6 +167,26 @@ async def delete_report(report_id: str):
         conn.execute("DELETE FROM agent_reports WHERE id=?", (report_id,))
         conn.commit()
     return {"deleted": report_id}
+
+
+@app.get("/auth/login")
+async def auth_login():
+    return await _auth_login()
+
+
+@app.get("/auth/callback")
+async def auth_callback(code: str = "", state: str = ""):
+    return await _auth_callback(code=code, state=state)
+
+
+@app.get("/auth/me")
+async def auth_me(request: Request):
+    return await _auth_me(request)
+
+
+@app.post("/auth/logout")
+async def auth_logout():
+    return await _auth_logout()
 
 
 @app.post("/api/feishu-callback")
