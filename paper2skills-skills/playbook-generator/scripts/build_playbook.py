@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 import re
 import shutil
 import sys
@@ -33,6 +34,9 @@ _sys.path.insert(0, str(_pathlib.Path(__file__).parent))
 from config.playbooks_data import TOB_PLAYBOOKS
 from config.agents_data import AGENT_CATALOG
 # ─────────────────────────────────────────────────────────────────────────────
+
+GA4_MEASUREMENT_ID = "G-N9HJR3G0MR"
+FEISHU_WEBHOOK_URL = os.environ.get("P2S_FEISHU_WEBHOOK_URL", "")
 
 
 # ---------------------------------------------------------------------------
@@ -1760,6 +1764,7 @@ ${{style === '痛点反转' ? '情绪触发（共鸣）+ 意外反转 + 简单CT
 }}
 
 async function runAgent(id) {{
+  if(typeof gtag!=='undefined')gtag('event','agent_run',{{agent_id:id}});
   const btn = document.getElementById('run-' + id);
   const label = document.getElementById('run-label-' + id);
   const thinking = document.getElementById('thinking-' + id);
@@ -1797,6 +1802,12 @@ async function runAgent(id) {{
   if (label) label.textContent = '重新计算';
 }}
 
+function _sessionKey() {{
+  let k = localStorage.getItem('_p2s_sk');
+  if (!k) {{ k = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('_p2s_sk', k); }}
+  return k;
+}}
+
 function saveReport(agentId, result) {{
   try {{
     const reports = JSON.parse(localStorage.getItem('agentReports') || '[]');
@@ -1806,15 +1817,51 @@ function saveReport(agentId, result) {{
       const name = c.querySelector('.agent-name')?.textContent;
       if (id && name) agentNames[id] = name;
     }});
-    reports.unshift({{
+    const entry = {{
       id: agentId,
       name: agentNames[agentId] || agentId,
       result,
       ts: new Date().toLocaleString('zh-CN'),
       inputs: collectInputs(agentId),
-    }});
+    }};
+    reports.unshift(entry);
     localStorage.setItem('agentReports', JSON.stringify(reports.slice(0, 50)));
+    pushToFeishu(entry);
+    try {{
+      fetch('/api/reports', {{
+        method: 'POST',
+        headers: {{'Content-Type': 'application/json'}},
+        body: JSON.stringify({{
+          session_key: _sessionKey(),
+          agent_id: agentId,
+          agent_name: entry.name,
+          inputs: entry.inputs || {{}},
+          result: result,
+          metadata: {{}}
+        }})
+      }}).catch(function(){{}});
+    }} catch(e) {{}}
   }} catch(e) {{}}
+}}
+
+const _FEISHU_HOOK = '{FEISHU_WEBHOOK_URL}';
+function pushToFeishu(entry) {{
+  if (!_FEISHU_HOOK) return;
+  const inpLines = Object.entries(entry.inputs||{{}}).map(([k,v])=>k+': '+v).join('\n');
+  const resultText = (entry.result||'').replace(/\*\*/g,'').replace(/#+\s/g,'').trim().slice(0,1800);
+  const header = 'Agent: '+entry.name+'\n时间: '+entry.ts+(inpLines?'\n\n输入参数:\n'+inpLines:'');
+  const body = JSON.stringify({{
+    msg_type: 'interactive',
+    card: {{
+      header: {{title: {{tag:'plain_text', content:'paper2skills · '+entry.name}}, template:'red'}},
+      elements: [
+        {{tag:'div', text:{{tag:'plain_text', content:header}}}},
+        {{tag:'hr'}},
+        {{tag:'div', text:{{tag:'plain_text', content:resultText}}}}
+      ]
+    }}
+  }});
+  fetch(_FEISHU_HOOK, {{method:'POST', headers:{{'Content-Type':'application/json'}}, body}}).catch(()=>{{}});
 }}
 
 function collectInputs(agentId) {{
@@ -2191,7 +2238,22 @@ function exportReports(){{
   const txt=rs.map((r,i)=>`=== 报告 #${{i+1}} | ${{r.name||r.id}} | ${{r.ts||''}} ===\\n输入:\\n${{JSON.stringify(r.inputs,null,2)}}\\n\\n结果:\\n${{r.result||''}}\\n`).join('\\n');
   const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='agent-reports-'+new Date().toISOString().slice(0,10)+'.txt';a.click();
 }}
-document.addEventListener('DOMContentLoaded',function(){{_initSeeds();_renderR();}});
+document.addEventListener('DOMContentLoaded',function(){{_initSeeds();_renderR();_loadRemoteReports();}});
+function _loadRemoteReports(){{
+  (async function(){{
+    try{{
+      const remote=await fetch('/api/reports?session_key='+_sessionKey()+'&limit=20').then(function(r){{return r.json();}});
+      if(remote&&remote.length){{
+        const local=_loadR();
+        const seen=new Set(local.map(function(r){{return r.id||r.ts;}}) );
+        const merged=remote.filter(function(r){{return !seen.has(r.id)&&!seen.has(r.created_at);}})
+          .map(function(r){{return {{id:r.agent_id,name:r.agent_name,result:r.result,ts:r.created_at,inputs:JSON.parse(r.inputs||'{{}}')}}; }})
+          .concat(local).slice(0,50);
+        if(remote.length&&!local.length){{localStorage.setItem('agentReports',JSON.stringify(merged));_renderR();}}
+      }}
+    }}catch(e){{}}
+  }})();
+}}
 window.addEventListener('storage',e=>{{if(e.key==='agentReports')_renderR();}});
 </script>
 """
@@ -2811,7 +2873,7 @@ SOLUTIONS_CATALOG = [
 ]
 
 
-def render_solutions_index(total_skill_count: int = 849) -> str:
+def render_solutions_index(total_skill_count: int) -> str:
     """方案库首页：所有系统方案的卡片列表"""
     cards_html = ""
     for sol in SOLUTIONS_CATALOG:
@@ -2916,7 +2978,7 @@ def render_solutions_index(total_skill_count: int = 849) -> str:
     return html_page("方案库", body, nav="../", active_nav="solutions")
 
 
-def render_solution_detail(sol: dict, total_skill_count: int = 849) -> str:
+def render_solution_detail(sol: dict, total_skill_count: int) -> str:
     """方案详情页：完整架构 + 分层设计 + 实施路线图"""
 
     # 七层架构
@@ -3063,7 +3125,7 @@ def render_solution_detail(sol: dict, total_skill_count: int = 849) -> str:
     return html_page(sol['title'], body, nav="../", active_nav="solutions")
 
 
-def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"], skill_count: int = 849) -> str:
+def render_roadmap_page(skill_lookup: dict[str, "PlaybookSkill"], skill_count: int) -> str:
     """CEO-facing AI capability roadmap whitepaper. Designed for B2B sales, print-ready via @media print."""
 
     PHASES = [
@@ -3561,6 +3623,10 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
 {''.join([f"<div class='pb-roi-callout'>{html.escape(item['label'])}<span class='pb-roi-val'>{html.escape(item['value'])}</span></div>" for item in pb.get('roi_callout', [])])}
 <div class='pb-intro'>{html.escape(pb['intro'])}</div>
 {'<div class="wf-outcomes"><h3>预期收益</h3><ul>' + outcomes + '</ul></div>' if outcomes else ''}
+<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+  <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-{pb['id']}">0</strong> / {len(pb.get('steps',[]))} 步</span>
+  <button onclick="pbShareFeishu('{html.escape(pb['id'])}','{html.escape(pb['name'])}',{len(pb.get('steps',[]))})" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
+</div>
 <div class='pb-steps'>{steps_html}</div>
 {calc_html}
 <div class='pb-lead-capture'>
@@ -3631,13 +3697,20 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
     def sidebar_section(label: str, links: str) -> str:
         return f'<div class="sb-section"><p class="sb-label">{label}</p><div class="sb-links">{links}</div></div>'
 
+    ga4_snippet = f"""
+  <script async src="https://www.googletagmanager.com/gtag/js?id={GA4_MEASUREMENT_ID}"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}
+  gtag('js',new Date());gtag('config','{GA4_MEASUREMENT_ID}');
+  </script>""" if GA4_MEASUREMENT_ID and not GA4_MEASUREMENT_ID.startswith("G-X") else ""
+
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{html.escape(title)} · paper2skills</title>
-  <link rel="stylesheet" href="{nav}assets/style.css">
+  <link rel="stylesheet" href="{nav}assets/style.css">{ga4_snippet}
 </head>
 <body>
   <header class="topbar">
@@ -3697,6 +3770,28 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
   }}
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {{
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {{
+      method: 'POST',
+      headers: {{'Content-Type': 'application/json'}},
+      body: JSON.stringify({{
+        action: {{value: {{
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}}}
+      }})
+    }}).then(() => {{
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => {{ btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }}, 2000);
+    }}).catch(() => {{}});
+  }};
   </script>
 </body>
 </html>"""
@@ -3943,6 +4038,7 @@ function copyCode(btn) {{
   navigator.clipboard.writeText(text).then(function() {{
     btn.textContent = '已复制 ✓';
     btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{{skill_id:'{html.escape(skill.skill_id)}',skill_domain:'{html.escape(skill.domain_dir)}'}});
     setTimeout(function() {{
       btn.textContent = '复制';
       btn.classList.remove('copied');
@@ -3952,6 +4048,7 @@ function copyCode(btn) {{
     setTimeout(function() {{ btn.textContent = '复制'; }}, 1500);
   }});
 }}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{{skill_id:'{html.escape(skill.skill_id)}',skill_domain:'{html.escape(skill.domain_dir)}',skill_difficulty:'{html.escape(skill.difficulty or "")}'}});
 </script>
 {agent_invoke_html}
 {agent_cases_html}"""
@@ -4041,6 +4138,14 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
   </div>
 </div>
 
+
+  <div style="margin:0 0 28px;padding:16px 22px;background:linear-gradient(135deg,#fff5f5 0%,#fff 100%);border:1.5px solid #f0c0c0;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div>
+      <div style="font-size:13.5px;font-weight:700;color:#B5323E;margin-bottom:3px">免费探索 5 个核心领域 · 解锁全部 25 域 + Agent 运行权限</div>
+      <div style="font-size:12px;color:#6b7280">当前开放：因果推断 · A/B实验 · 时间序列 · 供应链 · 推荐系统</div>
+    </div>
+    <a href="mailto:skills@lute-tlz-dddd.top?subject=申请企业版-paper2skills" style="padding:9px 20px;background:#B5323E;color:#fff;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0">申请企业版 →</a>
+  </div>
 
   <div style="margin:32px 0 24px;padding:20px 24px;background:#fff;border:1px solid var(--line);border-radius:12px">
     <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px">从你的角色开始</div>
@@ -5400,7 +5505,7 @@ tr:hover td { background: var(--bg); }
 @media print { .topbar,.sidebar,.rm-hero-cta,.rm-footer-cta button{display:none!important} body{background:#fff} .content{padding:0!important;max-width:100%!important} .rm-summary-bar{margin:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact} .rm-phase,.rm-footer{break-inside:avoid} .rm-phases{gap:12px} @page{margin:20mm 15mm;size:A4} }
 """
 
-def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, domain_count: int = 25) -> str:
+def render_maturity_report(skill_count: int, edge_count: int, domain_count: int) -> str:
     biz_groups = [
         ("供应链与库存", 182, "需求预测·补货优化·物流履约", "#0369a1"),
         ("智能决策基础", 202, "知识图谱·MAS·Agent工程·DataAgent", "#7c3aed"),
@@ -5663,7 +5768,7 @@ def render_maturity_report(skill_count: int = 1010, edge_count: int = 17419, dom
 </html>"""
 
 
-def render_diagnostic_page(skill_count: int = 931, build_ts: str = "") -> str:
+def render_diagnostic_page(skill_count: int, build_ts: str) -> str:
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -5724,6 +5829,24 @@ def render_diagnostic_page(skill_count: int = 931, build_ts: str = "") -> str:
 .diag-related-links{{display:flex;flex-wrap:wrap;gap:6px}}
 .diag-related-link{{font-size:12px;padding:4px 10px;background:var(--bg);border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:all .12s}}
 .diag-related-link:hover{{border-color:#B5323E;color:#B5323E}}
+.path-finder{{margin-top:8px;border:1px solid var(--line,#e5e7eb);border-radius:10px;overflow:hidden}}
+.path-finder-header{{padding:11px 14px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:#fafafa}}
+.path-finder-header:hover{{background:#f3f4f6}}
+.path-finder-body{{padding:12px 14px;display:none;border-top:1px solid var(--line)}}
+.path-finder-body.open{{display:block}}
+.path-select{{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;font-family:var(--font);margin-bottom:8px;outline:none}}
+.path-select:focus{{border-color:#B5323E}}
+.path-run-btn{{width:100%;padding:8px;background:#B5323E;color:#fff;border:none;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font)}}
+.path-run-btn:hover{{background:#9a2b34}}
+.path-result{{margin-top:14px}}
+.path-step{{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6}}
+.path-step:last-child{{border-bottom:none}}
+.path-step-num{{font-size:11px;font-weight:700;color:#fff;background:#B5323E;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}}
+.path-step-link{{font-size:12.5px;font-weight:600;color:#B5323E;text-decoration:none;display:block}}
+.path-step-link:hover{{text-decoration:underline}}
+.path-step-domain{{font-size:11px;color:var(--muted);margin-top:1px}}
+.path-edge-type{{font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle}}
+.pet-prerequisite{{background:#f0f9ff;color:#0369a1}}.pet-extension{{background:#f0fdf4;color:#166534}}.pet-combinable{{background:#fef3c7;color:#92400e}}
 @media(max-width:768px){{.diag-wrap{{flex-direction:column}}.diag-left{{width:100%;border-right:none;border-bottom:1px solid var(--line)}}.diag-right{{padding:16px}}}}
 </style>
 </head>
@@ -5752,6 +5875,16 @@ def render_diagnostic_page(skill_count: int = 931, build_ts: str = "") -> str:
       <button class="diag-btn" onclick="runDiag()">诊断</button>
     </div>
     <div class="diag-events" id="diag-events"></div>
+    <div class="path-finder">
+      <div class="path-finder-header" onclick="togglePathFinder()">
+        <span>Skill 路径规划</span><span id="pf-arrow">▸</span>
+      </div>
+      <div class="path-finder-body" id="path-finder-body">
+        <select class="path-select" id="pf-from" title="起点 Skill"></select>
+        <select class="path-select" id="pf-to" title="目标 Skill"></select>
+        <button class="path-run-btn" onclick="runPathFinder()">查找路径 →</button>
+      </div>
+    </div>
   </aside>
   <main class="diag-right" id="diag-right">
     <div class="diag-empty" id="diag-empty">
@@ -5865,12 +5998,82 @@ def render_diagnostic_page(skill_count: int = 931, build_ts: str = "") -> str:
   if(window.RISK_EVENTS)initButtons();
   else window.addEventListener('load',initButtons);
 }})();
+
+(function(){{
+  let gNodes={{}}, gAdj={{}};
+
+  function loadGraph(cb){{
+    if(Object.keys(gNodes).length){{cb();return;}}
+    fetch('assets/graph-data.json').then(r=>r.json()).then(d=>{{
+      d.nodes.forEach(n=>{{gNodes[n.id]={{id:n.id,domain:n.domain,title:n.title}};gAdj[n.id]=[];}});
+      d.links.forEach(l=>{{if(gAdj[l.source])gAdj[l.source].push({{to:l.target,type:l.type}});}});
+      const from=document.getElementById('pf-from'),to=document.getElementById('pf-to');
+      const sorted=d.nodes.slice().sort((a,b)=>a.id.localeCompare(b.id));
+      sorted.forEach(n=>{{
+        const o1=document.createElement('option');o1.value=n.id;o1.textContent=n.id;from.appendChild(o1);
+        const o2=document.createElement('option');o2.value=n.id;o2.textContent=n.id;to.appendChild(o2);
+      }});
+      cb();
+    }}).catch(()=>{{}});
+  }}
+
+  function bfs(startId,endId){{
+    if(startId===endId)return [{{id:startId,edgeType:''}}];
+    const visited={{[startId]:true}},queue=[{{id:startId,path:[{{id:startId,edgeType:''}}]}}];
+    while(queue.length){{
+      const {{id,path}}=queue.shift();
+      for(const nb of(gAdj[id]||[])){{
+        if(visited[nb.to])continue;
+        visited[nb.to]=true;
+        const np=[...path,{{id:nb.to,edgeType:nb.type}}];
+        if(nb.to===endId)return np;
+        if(np.length<7)queue.push({{id:nb.to,path:np}});
+      }}
+    }}
+    return null;
+  }}
+
+  window.togglePathFinder=function(){{
+    const body=document.getElementById('path-finder-body');
+    const arrow=document.getElementById('pf-arrow');
+    const open=body.classList.toggle('open');
+    arrow.textContent=open?'▾':'▸';
+    if(open)loadGraph(()=>{{}});
+  }};
+
+  window.runPathFinder=function(){{
+    const fromId=document.getElementById('pf-from').value;
+    const toId=document.getElementById('pf-to').value;
+    if(!fromId||!toId)return;
+    loadGraph(()=>{{
+      const path=bfs(fromId,toId);
+      const empty=document.getElementById('diag-empty');
+      const res=document.getElementById('diag-result');
+      empty.style.display='none';
+      if(!path){{
+        res.className='diag-result visible';
+        res.innerHTML=`<div class="diag-result-header"><div class="diag-result-name">未找到路径</div><div class="diag-result-summary">从 ${{fromId}} 到 ${{toId}} 在当前图谱中无可达路径（跳数≤6）。</div></div>`;
+        return;
+      }}
+      const edgeLabel={{'prerequisite':'前置','extension':'延伸','combinable':'可组合'}};
+      const edgeCls={{'prerequisite':'pet-prerequisite','extension':'pet-extension','combinable':'pet-combinable'}};
+      let steps='';
+      path.forEach((node,i)=>{{
+        const n=gNodes[node.id]||{{}};
+        const badge=node.edgeType?`<span class="path-edge-type ${{edgeCls[node.edgeType]||''}}">${{edgeLabel[node.edgeType]||node.edgeType}}</span>`:'';
+        steps+=`<div class="path-step"><span class="path-step-num">${{i+1}}</span><div><a class="path-step-link" href="skills/${{node.id}}.html" target="_blank">${{node.id}}</a><div class="path-step-domain">${{n.domain||''}}${{badge}}</div></div></div>`;
+      }});
+      res.className='diag-result visible';
+      res.innerHTML=`<div class="diag-result-header"><div class="diag-result-title"><span class="diag-result-name">Skill 路径：${{fromId}} → ${{toId}}</span></div><div class="diag-result-summary">${{path.length}} 步路径（${{path.length-1}} 条边）</div></div><div class="path-result">${{steps}}</div>`;
+    }});
+  }};
+}})();
 </script>
 </body>
 </html>"""
 
 
-def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
+def render_chat_page(nav: str = "", skill_count: int = 0) -> str:
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -6073,6 +6276,13 @@ def render_chat_page(nav: str = "", skill_count: int = 849) -> str:
         <span class="chat-title-text">AI 知识库对话</span>
         <span class="chat-title-sub">{skill_count} Skills · DeepSeek V3</span>
       </div>
+      <div class="chat-ctrl">
+        <select id="role-select" style="font-size:12px;padding:5px 9px;border:1.5px solid var(--line);border-radius:var(--r-full);background:transparent;color:var(--ink);cursor:pointer;font-family:var(--font);">
+          <option value="ops">运营视角</option>
+          <option value="analyst">数据分析师</option>
+          <option value="ceo">CEO 战略</option>
+        </select>
+      </div>
     </header>
 
     <div class="chat-body">
@@ -6209,6 +6419,30 @@ def build_chat_page_js() -> str:
       _idx.push({ s, t });
     });
     _built = true;
+  }
+
+  let _skillIdx = null;
+  async function _loadSkillIdx() {
+    if (_skillIdx) return _skillIdx;
+    try {
+      _skillIdx = await fetch('/assets/skill-index.json').then(r => r.json());
+    } catch(e) { _skillIdx = []; }
+    return _skillIdx;
+  }
+
+  async function _retrieveSkills(query, topK) {
+    topK = topK || 5;
+    const idx = await _loadSkillIdx();
+    if (!idx || !idx.length) return [];
+    const tokens = query.toLowerCase().replace(/[^\u4e00-\u9fa5a-z0-9\s]/g,' ').split(/\s+/).filter(function(t){ return t.length > 1; });
+    if (!tokens.length) return [];
+    const scored = idx.map(function(s) {
+      const text = (s.summary + ' ' + s.keywords.join(' ')).toLowerCase();
+      const score = tokens.reduce(function(n, t) { return n + (text.includes(t) ? 1 : 0); }, 0);
+      return { s: s, score: score };
+    }).filter(function(x) { return x.score > 0; });
+    scored.sort(function(a,b) { return b.score - a.score; });
+    return scored.slice(0, topK).map(function(x) { return x.s; });
   }
 
   function searchSkills(query, k) {
@@ -6494,6 +6728,13 @@ def build_chat_page_js() -> str:
       const ragCtx = buildRAGContext(text);
       const ragCount = ragSkills.length;
       ctxMsg = ragCount > 0 ? '\n\n【知识库相关技能（检索到' + ragCount + '条）】\n' + ragCtx : '\n\n【知识库摘要（前60条）】\n' + ragCtx;
+      const _idxSkills = await _retrieveSkills(text, 5);
+      if (_idxSkills.length) {
+        ctxMsg += '\n\n【知识库检索结果 — 请优先引用这些 Skill ID 回答】\n' +
+          _idxSkills.map(function(s) {
+            return '[' + s.id + '] ' + s.title + ': ' + s.summary.slice(0, 120);
+          }).join('\n');
+      }
     }
     
     const messages = [
@@ -6540,12 +6781,26 @@ def build_chat_page_js() -> str:
       typing.remove();
       
       let ragCountToPass = null;
+      let _lastRagSkills = [];
       if (!matchedEvent) {
           const ragSkills = searchSkills(text, 10);
           ragCountToPass = ragSkills.length > 0 ? ragSkills.length : null;
+          _lastRagSkills = ragSkills;
       }
       
-      addMsg(answer, 'bot', { webBadge: webSearchOn, eventBadge: matchedEventText, ragBadge: ragCountToPass });
+      const _msgResult = addMsg(answer, 'bot', { webBadge: webSearchOn, eventBadge: matchedEventText, ragBadge: ragCountToPass });
+      
+      if (_lastRagSkills.length) {
+        _retrieveSkills(text, 5).then(function(idxSkills) {
+          if (!idxSkills.length) return;
+          const citDiv = document.createElement('div');
+          citDiv.style.cssText = 'font-size:11px;color:#94a3b8;margin-top:6px;padding-top:6px;border-top:1px solid #f1f5f9';
+          citDiv.innerHTML = '\u53c2\u8003 Skill: ' + idxSkills.map(function(s) {
+            return '<a href="/skills/' + s.id + '.html" target="_blank" style="color:#6366f1;text-decoration:none">' + s.title + '</a>';
+          }).join(' \u00b7 ');
+          if (_msgResult && _msgResult.bubble) _msgResult.bubble.appendChild(citDiv);
+        });
+      }
       
       history.push({ role: 'assistant', content: answer });
       _saveH();
@@ -6647,8 +6902,17 @@ def render_pages(
     (out / "assets").mkdir(parents=True)
 
     skill_count  = len(skills)
-    edge_count   = len(graph.edges)
     domain_count = len({s.domain_dir for s in skills})
+
+    # 有效边 = 两端节点均在图谱内（与 graph-data.json 的 links 保持一致）
+    _skill_title_map = {s.skill_id: s.title for s in skills}
+    graph_node_ids = {n.id for n in graph.nodes.values()}
+    valid_links = [
+        {"source": e.source, "target": e.target, "type": e.edge_type}
+        for e in graph.edges
+        if e.source in graph_node_ids and e.target in graph_node_ids
+    ]
+    edge_count = len(valid_links)
 
     # Data assets
     build_ts = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -6661,8 +6925,6 @@ def render_pages(
     write_file(out / "assets" / "playbook-data.json", json.dumps(data, ensure_ascii=False, indent=2))
     write_file(out / "assets" / "playbook-data.js",  "window.PLAYBOOK_DATA = " + json.dumps(data, ensure_ascii=False) + ";")
 
-    _skill_title_map = {s.skill_id: s.title for s in skills}
-    graph_node_ids = {n.id for n in graph.nodes.values()}
     graph_json = {
         "nodes": [
             {
@@ -6672,11 +6934,7 @@ def render_pages(
             }
             for n in graph.nodes.values()
         ],
-        "links": [
-            {"source": e.source, "target": e.target, "type": e.edge_type}
-            for e in graph.edges
-            if e.source in graph_node_ids and e.target in graph_node_ids
-        ],
+        "links": valid_links,
     }
     write_file(out / "assets" / "graph-data.json", json.dumps(graph_json, ensure_ascii=False, indent=2))
 
@@ -6922,6 +7180,10 @@ def render_pages(
         "按领域",
         """<h1>按领域浏览</h1>
 <p class='page-lead'>从 25 个技术领域进入，每个领域包含完整 Skill 卡片、引用关系和业务场景。不熟悉领域名称？按业务方向选择：</p>
+<div style="margin-bottom:20px;padding:14px 18px;background:linear-gradient(135deg,#fff5f5 0%,#fff 100%);border:1.5px solid #f0c0c0;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+  <div><span style="font-size:13px;font-weight:700;color:#B5323E">免费开放：因果推断 · A/B实验 · 时间序列 · 供应链 · 推荐系统</span><span style="font-size:12px;color:#6b7280;margin-left:8px">/ 企业版解锁全部 25 域</span></div>
+  <a href="mailto:skills@lute-tlz-dddd.top?subject=申请企业版-paper2skills" style="padding:7px 16px;background:#B5323E;color:#fff;border-radius:7px;font-size:12.5px;font-weight:700;text-decoration:none;white-space:nowrap">申请企业版 →</a>
+</div>
 <div class='domain-biz-tags' style='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px'>
   <a href='04-供应链.html' class='domain-tag'>供应链&amp;库存</a>
   <a href='13-广告分析.html' class='domain-tag'>广告&amp;归因</a>
@@ -7130,7 +7392,29 @@ def render_pages(
         "edges": edge_count,
         "generated_at": data["generated_at"],
     }
+    assert skill_count > 1000, f"Unexpected skill count: {skill_count}"
     write_file(out / "build-report.json", json.dumps(report, ensure_ascii=False, indent=2))
+
+    skill_index = []
+    for s in skills:
+        summary = " ".join(filter(None, [
+            s.algorithm_summary[:150] if s.algorithm_summary else "",
+            s.problem_solved[:100] if s.problem_solved else "",
+        ]))
+        keywords = list({
+            t.lower() for tag in (s.tags or []) for t in tag.split()
+        } | {
+            w for w in re.sub(r'[^\u4e00-\u9fa5a-z0-9]', ' ', (s.problem_solved or "").lower()).split()
+            if len(w) > 1
+        })[:30]
+        skill_index.append({
+            "id": s.skill_id,
+            "title": s.title,
+            "domain": s.domain_dir,
+            "summary": summary,
+            "keywords": keywords,
+        })
+    write_file(out / "assets" / "skill-index.json", json.dumps(skill_index, ensure_ascii=False))
     import shutil as _shutil
     _seed_src = Path(__file__).parent / "scripts" / "config" / "seed_reports.json"
     if not _seed_src.exists():
@@ -7175,48 +7459,74 @@ def _post_build_patch(out: "Path") -> None:
     if agents_path.exists():
         agents_html = agents_path.read_text(encoding="utf-8")
 
-        # 插入模式切换控件（在每个 run 按钮前）
-        agent_ids = ['agent-supply-sentinel','agent-pricing-advisor','agent-pnl-analyzer',
-                     'agent-ad-attribution','agent-competitor-radar','agent-listing-doctor',
-                     'agent-voc-decoder','agent-cs-triage','agent-account-guardian',
-                     'agent-brand-guardian','agent-product-radar','agent-tiktok-content']
+        # 插入模式切换控件（在每个 run 按钮前）— 覆盖全部 Agent
+        agent_ids = [ag["id"] for ag in AGENT_CATALOG]
         for aid in agent_ids:
             old = f"<button class='modal-run-btn' id='run-{aid}' onclick='runAgent(\"{aid}\")'>"
             new = (f"<div style='display:flex;gap:8px;align-items:center;margin-bottom:8px;"
-                   f"padding:8px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;"
+                   f"padding:6px 10px;background:var(--panel-2,#f8fafc);border-radius:7px;"
                    f"border:1px solid var(--line,#e2e8f0)'>"
                    f"<span style='font-size:11px;font-weight:600;color:#475569'>模式:</span>"
                    f"<label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'>"
-                   f"<input type='radio' name='mode-{aid}' value='local' checked style='accent-color:#059669'>"
-                   f"本地</label>"
+                   f"<input type='radio' name='mode-{aid}' value='local' style='accent-color:#059669'>"
+                   f"本地演示</label>"
                    f"<label style='display:flex;gap:3px;align-items:center;cursor:pointer;font-size:11px'>"
-                   f"<input type='radio' name='mode-{aid}' value='ai' style='accent-color:#6366f1'>"
-                   f"AI 深度分析</label></div>\n"
+                   f"<input type='radio' name='mode-{aid}' value='ai' checked style='accent-color:#6366f1'>"
+                   f"<span style='color:#6366f1;font-weight:600'>AI 真实分析</span></label></div>\n"
                    f"      <button class='modal-run-btn' id='run-{aid}' onclick='runAgent(\"{aid}\")'>"
             )
             if old in agents_html:
                 agents_html = agents_html.replace(old, new, 1)
 
         # 注入 AI 运行引擎 + 链式调用（在 catBtns 之前）
-        AI_ENGINE = """const AGENT_PROMPTS={'agent-supply-sentinel':'你是供应链分析专家。根据库存数据分析断货风险、给出补货建议（海运vs空运）。结构化中文输出。','agent-pricing-advisor':'你是跨境电商定价顾问。分析定价策略，给出最优定价区间、提价路径建议。','agent-pnl-analyzer':'你是P&L财务分析师。拆解利润结构，找出亏损原因，给出改善优先级。','agent-ad-attribution':'你是广告归因分析师。分析广告效率，给出优化和预算调整建议。','agent-competitor-radar':'你是竞品情报分析师。识别市场机会、定价策略、差评规律，给出竞争建议。','agent-listing-doctor':'你是Listing优化专家。诊断标题卖点关键词，给出具体优化建议。','agent-voc-decoder':'你是VOC分析师。从评论提取用户痛点、高频诉求、产品改进信号。','agent-cs-triage':'你是客服分诊专家。分类工单优先级，识别高风险工单，生成回复模板。','agent-account-guardian':'你是账号风险专家。分析账号健康，识别违规风险，给出预防申诉策略。','agent-brand-guardian':'你是品牌合规专家。审查文案违禁词夸大声明，给出合规修改建议。','agent-product-radar':'你是选品分析师。评估品类机会，分析竞争格局，给出GO/NO-GO建议。','agent-tiktok-content':'你是TikTok内容策略师。规划内容矩阵脚本框架达人合作策略。',
-'agent-sku-tag-scanner':'你是标签工程质量专家。分析SKU标签覆盖率/时效/准确率，识别缺口，生成修复优先级清单和自动化打标建议。',
-'agent-compliance-matrix':'你是跨境合规专家。根据产品和目标市场，扫描US/EU/JP/AU合规缺口，给出认证清单和上市准入评分（0-100）。',
-'agent-return-analyzer':'你是退货根因分析专家。三层归因（表层→运营→供应链根因），量化改善ROI，给出优先级行动方案。',
-'agent-margin-calculator':'你是SKU利润归因专家。生成完整P&L瀑布图（GMV→净贡献），识别成本漏点，给出具体提利建议。',
-'agent-geopolitical-risk':'你是供应链地缘风险专家。评估关税/港口/汇率/出口管制/供应商集中度五维风险，给出量化评分和应急预案。',
-'agent-epr-calculator':'你是欧盟EPR合规专家。计算各市场EPR注册费用，给出注册优先级和操作步骤，帮助品牌在截止日前完成合规。'};
+        AI_ENGINE = """const AGENT_PROMPTS={
+'agent-supply-sentinel':'你是供应链分析专家，专注母婴跨境电商。用户会提供SKU库存和销速数据。输出格式严格如下：\\n【风险评级】🔴/🟡/🟢 + 一句话定性\\n【DOS分析】当前可销天数 vs 安全阈值（给出具体数字）\\n【断货概率】% + 置信区间\\n【补货建议】海运/空运决策 + 建议补货量（件）+ 到货时间窗口\\n【紧急行动】3条，48小时内必须执行的具体步骤\\n用数字说话，禁止模糊表达。',
+'agent-pricing-advisor':'你是跨境电商定价顾问，专注母婴品类。输出格式：\\n【当前定价诊断】评分0-10 + 问题点\\n【竞争价格带】市场P25/P50/P75分位价格\\n【最优定价区间】具体价格范围 + 毛利率预测\\n【提价/降价路径】分3步的具体执行方案（时间+幅度+监控指标）\\n【预期ROI影响】价格调整后GMV/利润变化预测%\\n所有数字必须具体，不得写"大约"。',
+'agent-pnl-analyzer':'你是P&L财务分析师，专注跨境电商。输出格式：\\n【利润结构瀑布】GMV→退款→FBA→广告→头程→净利，逐层拆解（%）\\n【亏损根因TOP3】每条附具体金额和占GMV%\\n【对标行业基准】各项成本率vs行业均值（用+/-说明偏差）\\n【提利优先级】3个改善方向，每个附：当前值→目标值→预期净利润改善额\\n【本月预警】需要立即关注的财务指标。',
+'agent-ad-attribution':'你是广告归因分析师，专注Amazon/TikTok跨境广告。输出格式：\\n【广告健康评分】0-100 + 关键问题\\n【ROAS归因拆解】品牌词/泛词/竞品词/ASIN各自ROAS\\n【预算浪费识别】具体浪费金额/天 + 浪费原因\\n【优化TOP3行动】每条：当前指标→目标指标→预期ROAS提升\\n【预算重分配方案】各渠道/campaign建议预算%。',
+'agent-competitor-radar':'你是竞品情报分析师，专注母婴跨境品类。输出格式：\\n【竞争格局】头部3家市占率估算 + 市场集中度\\n【竞品定价策略】对手价格带 + 近期调价趋势\\n【差评规律】竞品TOP差评词频（给出具体词和频次）\\n【市场空白】2-3个未被充分满足的用户需求\\n【切入建议】差异化方向 + 预期可获得的市占率%。',
+'agent-listing-doctor':'你是Amazon Listing优化专家。输出格式：\\n【综合评分】0-100（A10算法视角）\\n【Title诊断】字符数/核心词覆盖/问题点 → 重写版本\\n【Bullet诊断】逐条评分 + 最差一条的重写版本\\n【关键词缺口】搜索量>5000但未覆盖的核心词（列出TOP5）\\n【A+内容建议】模块结构推荐\\n【预期效果】优化后预计自然流量提升%。',
+'agent-voc-decoder':'你是VOC分析师，专注母婴电商用户声音。输出格式：\\n【情感分布】正面/中性/负面占比%\\n【TOP痛点】频次最高的5个负面词 + 出现频率\\n【用户期待TOP3】高频出现的改进诉求 + 商业机会评估\\n【竞品对比信号】用户提到竞品时的核心关键词\\n【产品迭代建议】3条，每条附：用户需求来源 + 开发优先级（高/中/低）。',
+'agent-cs-triage':'你是客服分诊专家，专注跨境电商售后。输出格式：\\n【工单分类】A-to-Z风险/退款/换货/咨询 各占%\\n【高风险工单】识别出需要24h内处理的紧急工单特征\\n【根因TOP3】引发工单的产品/物流/描述问题\\n【回复模板】针对最高频工单类型生成标准回复（中英双语）\\n【预防建议】减少工单量的2个具体运营动作。',
+'agent-account-guardian':'你是Amazon账号风险专家。输出格式：\\n【账号健康评分】0-100 + 风险等级（低/中/高/紧急）\\n【违规风险点】具体指标值 vs Amazon阈值（ODR/LDR/VTR等）\\n【封号概率】% + 主要风险因子\\n【48h紧急行动】必须立即执行的3个步骤\\n【长期健康方案】3条系统性改善建议 + 预期指标改善时间线。',
+'agent-brand-guardian':'你是品牌合规专家，专注跨境广告法。输出格式：\\n【合规评分】0-100\\n【违禁词清单】逐个标出文案中的违禁/夸大表达 + 违规依据（FTC/广告法）\\n【风险等级】每处违规：低风险/中风险/下架风险\\n【合规改写】针对每处违规给出合规替代表达\\n【上架可行性】当前文案能否通过Amazon/TikTok审核的判断。',
+'agent-product-radar':'你是母婴跨境选品分析师。输出格式：\\n【机会评分】0-100 + GO/NO-GO建议\\n【市场规模】月销量估算 + 市场增长率%/年\\n【竞争强度】头部垄断度 + 新品切入难度（1-10）\\n【利润空间】预估毛利率% + FBA成本结构\\n【差异化方向】3个具体切入角度 + 各自可获得溢价估算\\n【首批建议】备货量 + 预算 + ROI预测。',
+'agent-tiktok-content':'你是TikTok跨境内容策略师，专注母婴品类。输出格式：\\n【内容矩阵】痛点类/种草类/测评类/UGC各建议占比%\\n【爆款公式】针对该品类的黄金钩子 + 情绪触发点\\n【脚本框架】一条完整30秒视频脚本（分镜+文案）\\n【达人合作建议】腰部达人画像 + 合理报价区间\\n【数据预期】预估CPM/CPV/转化率范围。',
+'agent-sku-tag-scanner':'你是标签工程质量专家，专注电商SKU数据治理。输出格式：\\n【标签覆盖率诊断】各关键标签维度覆盖%\\n【质量问题TOP3】具体缺失/错误标签 + 影响的下游决策\\n【高优先级修复清单】按ROI排序的5个标签修复任务\\n【自动化打标建议】哪些标签可规则化，哪些需ML模型\\n【预期改善效果】修复后预计决策准确率提升%。',
+'agent-compliance-matrix':'你是跨境合规专家。输出格式：\\n【多市场准入评分】US/EU/JP/AU各市场0-100分\\n【认证缺口清单】每个市场缺失的强制认证 + 申请周期\\n【高风险项】可能导致下架/罚款的合规问题（标注紧急程度）\\n【合规成本估算】各市场认证总费用范围\\n【上市时间线】按优先级排序的合规路径，标注关键节点日期。',
+'agent-return-analyzer':'你是退货根因分析专家。输出格式：\\n【退货率诊断】当前退货率 vs 品类均值（%）\\n【三层归因】表层原因→运营原因→供应链根因，每层TOP2\\n【金额影响】退货损失/月（GMV%）\\n【改善优先级】3个行动项，每个附：预计退货率下降%+实施难度\\n【快赢方案】1周内可执行、不需要产品改动的2个降退货操作。',
+'agent-margin-calculator':'你是SKU利润归因专家。输出格式：\\n【P&L瀑布图】GMV→平台佣金→退款→FBA→广告→头程→关税→其他→净利润，每项金额+%\\n【成本漏点TOP3】超出行业均值的费用项 + 具体超出金额\\n【利润改善杠杆】3个提利方向，每个附：当前值→目标值→净利润改善/月\\n【保本价格】当前成本结构下的最低定价\\n【下月利润预测】基于当前趋势的利润区间预测。',
+'agent-geopolitical-risk':'你是供应链地缘风险专家。输出格式：\\n【综合风险评分】0-100（越高越危险）\\n【五维风险评估】关税/港口/汇率/出口管制/供应商集中度，每维：当前状态+风险分（0-10）\\n【最高风险项】详细分析 + 触发概率%\\n【应急预案】针对最高风险的3步应对方案\\n【多元化建议】供应链分散化路径 + 预期成本增加%。',
+'agent-epr-calculator':'你是欧盟EPR合规专家。输出格式：\\n【EPR义务概览】各市场（DE/FR/IT/ES/PL等）是否需要注册\\n【费用估算】各市场年度EPR注册费用区间（€）\\n【截止日期】各市场强制合规截止日期（标注紧急程度）\\n【注册优先级】按销售体量和截止日期排序的注册顺序\\n【操作步骤】最紧急市场的注册流程（3-5步）。',
+'agent-dml-counterfactual-pricing':'你是反事实定价专家，专注跨境电商动态定价。输出格式：\\n【反事实基线】当前价格的弹性估算（价格↑1%→销量变化%）\\n【最优价格区间】基于弹性+竞品+季节性的建议定价\\n【定价情景对比】3个情景（保守/中性/激进）各自GMV/利润预测\\n【竞品反应预测】竞品可能的跟价行为及概率\\n【执行时机】最优调价时间窗口 + 监控指标阈值。',
+'agent-cold-start-advisor':'你是新品冷启动策略专家，专注跨境电商。输出格式：\\n【冷启动诊断】当前阶段（0-7天/1-4周/1-3月）及核心障碍\\n【流量获取方案】前30天具体推广策略（广告类型+预算分配%）\\n【定价策略】冷启动期建议价格 + 提价时间节点\\n【首评获取】获取前20条真实评价的3个具体操作\\n【里程碑目标】D7/D30/D90的可量化目标（排名/评价数/日销）。',
+'agent-festival-replenishment':'你是大促补货决策专家，专注跨境电商旺季。输出格式：\\n【大促需求预测】基于历史数据的需求倍率区间（P50/P80/P95）\\n【安全库存计算】建议备货量 = 预测需求×安全系数，给出具体件数\\n【资金占用评估】备货总成本 + 滞销风险敞口（超卖/断货各自损失估算）\\n【物流时间线】最晚下单时间 + 各运输方式到仓时间\\n【清仓预案】大促后剩余库存>30%的降价处理方案。'
+};
 const CHAINS=[{id:'supply-decision',name:'供应链全链路决策',agents:['agent-supply-sentinel','agent-pnl-analyzer','agent-pricing-advisor']},{id:'growth-analysis',name:'增长归因分析',agents:['agent-ad-attribution','agent-competitor-radar','agent-product-radar']},{id:'brand-protection',name:'品牌合规防御',agents:['agent-listing-doctor','agent-brand-guardian','agent-account-guardian']}];
-const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站','agent-sku-tag-scanner':'SKU标签质量扫描器','agent-compliance-matrix':'多市场合规矩阵','agent-return-analyzer':'退货根因分析师','agent-margin-calculator':'SKU利润归因计算器','agent-geopolitical-risk':'地缘风险评估仪','agent-epr-calculator':'EPR合规费用测算'};
+const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站','agent-sku-tag-scanner':'SKU标签质量扫描器','agent-compliance-matrix':'多市场合规矩阵','agent-return-analyzer':'退货根因分析师','agent-margin-calculator':'SKU利润归因计算器','agent-geopolitical-risk':'地缘风险评估仪','agent-epr-calculator':'EPR合规费用测算','agent-dml-counterfactual-pricing':'反事实定价引擎','agent-cold-start-advisor':'新品冷启动顾问','agent-festival-replenishment':'大促补货决策师'};
 function getMode(id){const r=document.querySelector('input[name="mode-'+id+'"]:checked');return r?r.value:'local';}
 function getInputs(id){const o={};document.querySelectorAll('[id^="'+id+'__"]').forEach(el=>{o[el.id.replace(id+'__','')]=el.value||el.textContent||'';});return o;}
+function getInputsLabeled(id){
+  const o={};
+  document.querySelectorAll('[id^="'+id+'__"]').forEach(el=>{
+    const fieldId=el.id.replace(id+'__','');
+    const wrap=el.closest('.modal-input-group');
+    const label=wrap?wrap.querySelector('label')?.textContent?.trim()||fieldId:fieldId;
+    const val=el.value||el.textContent||'';
+    if(val)o[label]=val;
+  });
+  return o;
+}
 async function runAgentAI(id){
   const btn=document.getElementById('run-'+id),lb=document.getElementById('run-label-'+id),th=document.getElementById('thinking-'+id),out=document.getElementById('output-'+id),cel=document.getElementById('content-'+id);
   btn.disabled=true;if(lb)lb.textContent='AI分析中...';if(cel)cel.textContent='';if(out)out.classList.add('visible');if(th)th.style.display='flex';
   try{
-    const inp=getInputs(id),inpStr=Object.entries(inp).map(([k,v])=>k+': '+v).join('\\n');
-    const res=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[id]||'你是跨境电商AI分析助手。'},{role:'user',content:'请根据以下数据分析：\\n'+inpStr}],max_tokens:1800,temperature:0.5,stream:false})});
+    const inp=getInputsLabeled(id),inpStr=Object.entries(inp).map(([k,v])=>k+': '+v).join('\\n');
+    const res=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[id]||'你是跨境电商AI分析助手。'},{role:'user',content:'请根据以下数据进行分析，严格按照格式输出：\\n\\n'+inpStr}],max_tokens:1800,temperature:0.5,stream:false})});
     const data=await res.json();const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';
-    if(th)th.style.display='none';await streamText(cel,'[AI深度分析 · DeepSeek]\\n\\n'+ans);saveReport(id,'[AI] '+ans);
+    if(th)th.style.display='none';await streamText(cel,'[AI深度分析 · DeepSeek]\\n\\n'+ans);
+    saveReport(id,'[AI] '+ans);
+    pushToFeishu({id,name:ADISP[id]||id,result:ans,ts:new Date().toLocaleString('zh-CN'),inputs:inp});
   }catch(e){if(th)th.style.display='none';if(cel)cel.textContent='[AI调用失败] '+e.message;}
   finally{if(btn)btn.disabled=false;if(lb)lb.textContent='重新分析';}
 }
@@ -7339,6 +7649,8 @@ async function runChain(chainId){
   function md(text){return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.+?)\*\*/gs,'<strong>$1</strong>').replace(/\*([^*\n]+)\*/g,'<em>$1</em>').replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/^#{1,3}\s+(.+)$/gm,'<strong style="font-size:15px">$1</strong>').replace(/^[-•]\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">• $1</span>').replace(/^\d+\.\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">$&</span>').replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');}
   const _idx=[];let _built=false;
   function buildSkillIndex(){if(_built)return;const DATA=window.PLAYBOOK_DATA||{};(DATA.skills||[]).forEach(s=>{const t=[s.skill_id||'',s.title||'',s.problem_solved||'',s.algorithm_summary||'',s.biz_trigger||'',s.biz_outcome||'',(s.tags||[]).join(' '),(s.topics||[]).join(' ')].join(' ').toLowerCase();_idx.push({s,t});});_built=true;}
+  let _skillIdx=null;async function _loadSkillIdx(){if(_skillIdx)return _skillIdx;try{_skillIdx=await fetch('/assets/skill-index.json').then(r=>r.json());}catch(e){_skillIdx=[];}return _skillIdx;}
+  async function _retrieveSkills(query,topK){topK=topK||5;const idx=await _loadSkillIdx();if(!idx||!idx.length)return[];const tokens=query.toLowerCase().replace(/[^\u4e00-\u9fa5a-z0-9\s]/g,' ').split(/\s+/).filter(t=>t.length>1);if(!tokens.length)return[];const scored=idx.map(function(s){const text=(s.summary+' '+s.keywords.join(' ')).toLowerCase();const score=tokens.reduce(function(n,t){return n+(text.includes(t)?1:0);},0);return{s,score};}).filter(x=>x.score>0);scored.sort((a,b)=>b.score-a.score);return scored.slice(0,topK).map(x=>x.s);}
   function searchSkills(query,k){k=k||8;buildSkillIndex();const words=query.toLowerCase().split(/\s+/).filter(w=>w.length>1);if(!words.length)return[];return _idx.map(item=>{let sc=0;words.forEach(w=>{const tf=item.t.split(w).length-1;if(tf>0)sc+=tf*(w.length>3?2:1);});return{skill:item.s,sc};}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,k).map(x=>x.skill);}
   function buildRAGContext(query){const top=searchSkills(query,10);if(!top.length){return(window.PLAYBOOK_DATA&&window.PLAYBOOK_DATA.skills||[]).slice(0,60).map(s=>s.skill_id+': '+(s.problem_solved||s.algorithm_summary||'').slice(0,140)).join('\n');}return top.map(s=>{const p=[s.skill_id,s.title];if(s.problem_solved)p.push('解决: '+s.problem_solved.slice(0,120));if(s.biz_trigger)p.push('触发: '+s.biz_trigger.slice(0,100));if(s.roi_figure)p.push('ROI: '+s.roi_figure);return p.join(' | ');}).join('\n');}
   function renderSkillCards(text){const DATA=window.PLAYBOOK_DATA||{};const map={};(DATA.skills||[]).forEach(s=>{map[s.skill_id]=s;});const found=[],seen={};[/\[\[?(Skill-[\w-]+)\]?\]/g,/\*\*(Skill-[\w-]+)\*\*/g].forEach(pat=>{let m;while((m=pat.exec(text))!==null){if(map[m[1]]&&!seen[m[1]]){seen[m[1]]=1;found.push(map[m[1]]);}}});if(!found.length)return'';const esc=t=>(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');const cards=found.map(s=>'<a href="skills/'+s.skill_id+'.html" target="_blank" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--panel-2,#f8fafc);border:1px solid var(--line,#e2e8f0);border-radius:8px;text-decoration:none;color:inherit;margin-top:6px;transition:box-shadow .15s" onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.08)\'" onmouseout="this.style.boxShadow=\'none\'">'+'<div style="flex-shrink:0;width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700">S</div>'+'<div style="min-width:0"><div style="font-size:12px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc((s.title||s.skill_id).slice(0,60))+'</div>'+'<div style="font-size:11.5px;color:#64748b;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+esc((s.problem_solved||s.biz_trigger||'').slice(0,90))+'</div>'+(s.roi_figure?'<span style="font-size:11px;color:#059669;font-weight:600;margin-top:4px;display:block">ROI: '+esc(s.roi_figure)+'</span>':'')+'</div></a>').join('');return'<div style="margin-top:10px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><div style="font-size:11.5px;color:#64748b;font-weight:600;margin-bottom:6px">知识库 相关技能</div>'+cards+'</div>';}
@@ -7405,7 +7717,16 @@ async function runChain(chainId){
   const matchedEvent = matchRiskEvent(text);
   let matchedEventText = null;
   
-  let sys=`你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 ${window.PLAYBOOK_DATA && window.PLAYBOOK_DATA.skills ? window.PLAYBOOK_DATA.skills.length : 800}+ 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n当前时间：${new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'})}`;
+  const roleSelect = document.getElementById('role-select');
+  const roleVal = roleSelect ? roleSelect.value : 'ops';
+  const rolePrompts = {
+    ops: '当前用户是电商运营，关注具体操作步骤、SOP 执行、数据指标改善，回答要简洁可执行。',
+    analyst: '当前用户是数据分析师，关注算法原理、统计方法、代码实现，回答要有技术深度，可附公式。',
+    ceo: '当前用户是 CEO，关注战略决策、ROI 全局、竞争壁垒，回答要高度概括、突出商业价值。',
+  };
+  const roleCtx = rolePrompts[roleVal] || rolePrompts.ops;
+  
+  let sys=`你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 ${window.PLAYBOOK_DATA && window.PLAYBOOK_DATA.skills ? window.PLAYBOOK_DATA.skills.length : 800}+ 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n${roleCtx}\n当前时间：${new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'})}`;
   
   if (matchedEvent) {
     sys += `\n\n当前诊断场景：${matchedEvent.event_name}\n严重程度：${matchedEvent.severity}`;
@@ -7415,6 +7736,7 @@ async function runChain(chainId){
   } else {
     const ragSkills=searchSkills(text,10),ragCtx=buildRAGContext(text),ragCount=ragSkills.length;
     ctxMsg=ragCount>0?'\n\n【知识库相关技能（检索到'+ragCount+'条）】\n'+ragCtx:'\n\n【知识库摘要（前60条）】\n'+ragCtx;
+    const _idxSkills=await _retrieveSkills(text,5);if(_idxSkills.length){ctxMsg+='\n\n【知识库检索结果 — 请优先引用这些 Skill ID 回答】\n'+_idxSkills.map(function(s){return'['+s.id+'] '+s.title+': '+s.summary.slice(0,120);}).join('\n');}
   }
   
   const messages=[{role:'system',content:sys+ctxMsg},...history.slice(-8)];try{const body={model:'deepseek-chat',messages,max_tokens:1500,temperature:0.55,stream:false};if(webSearchOn){body.tools=[{type:'function',function:{name:'web_search',description:'Search the web',parameters:{type:'object',properties:{query:{type:'string'}},required:['query']}}}];body.tool_choice='auto';}const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await res.json();const choice=data&&data.choices&&data.choices[0];let answer=(choice&&choice.message&&choice.message.content||'').trim();if(!answer&&choice&&choice.finish_reason==='tool_calls')answer='（联网搜索触发中…）\n\n'+((choice.message.tool_calls[0]&&choice.message.tool_calls[0].function.arguments)||'');answer=answer||'抱歉，暂时无法获取回答，请稍后重试。';typing.remove();
@@ -7423,7 +7745,8 @@ async function runChain(chainId){
       const ragSkills = searchSkills(text, 10);
       ragCountToPass = ragSkills.length > 0 ? ragSkills.length : null;
   }
-  addMsg(answer,'bot',{webBadge:webSearchOn, eventBadge: matchedEventText, ragBadge: ragCountToPass});
+  const _msgResult=addMsg(answer,'bot',{webBadge:webSearchOn, eventBadge: matchedEventText, ragBadge: ragCountToPass});
+  if (!matchedEvent){_retrieveSkills(text,5).then(function(idxSkills){if(!idxSkills.length)return;const citDiv=document.createElement('div');citDiv.style.cssText='font-size:11px;color:#94a3b8;margin-top:6px;padding-top:6px;border-top:1px solid #f1f5f9';citDiv.innerHTML='\u53c2\u8003 Skill: '+idxSkills.map(function(s){return'<a href="/skills/'+s.id+'.html" target="_blank" style="color:#6366f1;text-decoration:none">'+s.title+'</a>';}).join(' \u00b7 ');if(_msgResult&&_msgResult.bubble)_msgResult.bubble.appendChild(citDiv);});}
   history.push({role:'assistant',content:answer});_saveH();}catch(e){typing.remove();addMsg('网络请求失败，请检查连接后重试。','bot');}finally{sendBtn.disabled=false;textarea.focus();}}
 })();
 """

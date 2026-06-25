@@ -119,6 +119,8 @@ jobs:
           pip install -r paper2skills-skills/playbook-generator/requirements.txt
 
       - name: Build Playbook
+        env:
+          P2S_FEISHU_WEBHOOK_URL: ${{ secrets.P2S_FEISHU_WEBHOOK_URL }}
         run: |
           python3 paper2skills-skills/playbook-generator/scripts/build_playbook.py \
             --root . \
