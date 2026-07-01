@@ -28,11 +28,12 @@ roadmap_phase: phase1
 （位于 `paper2skills-code/compliance/monte_carlo_tariff/model.py`，使用 `numpy` 的随机过程模拟）。
 
 #### ④ 技能关联
-- **前置技能**：[[Skill-Global-Compliance-Firewall]]
-- **延伸技能**：[[Skill-Supply-Chain-Finance-Velocity]]
-- **可组合**：与 [[Skill-Cash-Flow-Forecast]] 组合，模拟极端风险下的企业生存周期。
 
-#### ⑤ 商业价值评估
+- **前置（prerequisite）**：[[Skill-Cross-Border-Tax-Tariff-Modeling]]（关税建模基础）、[[Skill-Tariff-FX-FBA-Cost-Dynamics]]（关税+汇率联动分析）
+- **延伸（extends）**：[[Skill-Tariff-Impact-Margin-Stress-Test]]（蒙特卡洛模拟驱动关税压力测试）
+- **可组合（combinable）**：[[Skill-Supply-Chain-Finance-Risk-Modeling]]（供应链金融风险+关税风险联合建模）、[[Skill-Tax-Compliance-VAT-GST]]（关税风险与VAT/GST合规联动）
+
+## ⑤ 商业价值评估
 - **ROI预估**：避免一次地缘黑天鹅事件，可挽救数十万至百万级美元的库存损失。
 - **实施难度**：★★★☆☆ (概率分布建模为主)
 - **优先级评分**：★★★★★

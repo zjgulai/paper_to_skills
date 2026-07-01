@@ -28,11 +28,12 @@ roadmap_phase: phase2
 （位于 `paper2skills-code/risk_fraud/crypto_sybil_review/model.py`，使用 `stellargraph` 或 `dgl` 构建 GAT）。
 
 #### ④ 技能关联
-- **前置技能**：[[Skill-Graph-Neural-Network]]
-- **延伸技能**：[[Skill-Automated-Listing-Defense]]
-- **可组合**：与 [[Skill-Competitor-Digital-Twin]] 组合，先建竞品数字孪生，再用 Sybil 检测定向爆破。
 
-#### ⑤ 商业价值评估
+- **前置（prerequisite）**：[[Skill-GNN-Foundations]]（图神经网络基础，是加密异常检测的核心工具）
+- **延伸（extends）**：[[Skill-AI-Fake-Review-Detection]]（评论欺诈检测的深化应用）
+- **可组合（combinable）**：[[Skill-AIGC-Content-Detection]]（AI生成内容检测与加密欺诈联合防御）、[[Skill-AI-Generated-Content-Watermarking]]（可信内容溯源与欺诈防范）
+
+## ⑤ 商业价值评估
 - **ROI预估**：清退一次恶意竞品的虚假评分，可恢复 20-40% 的流量下跌。
 - **实施难度**：★★★☆☆ (GAT 有成熟库，评论数据 Amazon API 可拉)
 - **优先级评分**：★★★★☆

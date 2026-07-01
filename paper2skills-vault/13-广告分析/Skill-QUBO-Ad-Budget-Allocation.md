@@ -28,11 +28,12 @@ roadmap_phase: phase2
 （位于 `paper2skills-code/advertising/qubo_ad_budget/model.py`，使用 `dwave-ocean-sdk` 的模拟退火器或 `neal` 库）。
 
 #### ④ 技能关联
-- **前置技能**：[[Skill-Multi-Touch-Attribution]]
-- **延伸技能**：[[Skill-Real-Time-Bidding-Agent]]
-- **可组合**：与 [[Skill-HFT-RealTime-Arbitration]] 组合，在全局最优框架内实现秒级动态调价。
 
-#### ⑤ 商业价值评估
+- **前置（prerequisite）**：[[Skill-ROAS-Budget-Optimization]]（传统ROAS预算优化，QUBO是其量子计算增强版）
+- **延伸（extends）**：[[Skill-Autobidding-Budget-Allocation-Optimization]]（自动出价预算分配的深化）
+- **可组合（combinable）**：[[Skill-RTB-Multi-Objective-Bidding]]（组合实时竞价+QUBO预算分配，双层优化）、[[Skill-HMMCB-Cross-Channel-Bidding]]（跨渠道预算联合优化）
+
+## ⑤ 商业价值评估
 - **ROI预估**：ROAS 综合提升 15-25%，年化额外贡献利润 10-20 万美元。
 - **实施难度**：★★★★★ (需要 QUBO 建模经验和高维归因数据)
 - **优先级评分**：★★★★☆

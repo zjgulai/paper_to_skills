@@ -33,11 +33,12 @@ roadmap_phase: phase1
 （请参考 `paper2skills-code/pricing/counterfactual_price_elasticity/model.py` 中的完整 DML 实现，直接调用 `EconML` 的 `LinearDML` 方法计算弹性）。
 
 #### ④ 技能关联
-- **前置技能**：[[Skill-Cross-Domain-Orthogonal-Signals]] (提取竞品库存等正交特征才能消除混淆)
-- **延伸技能**：[[Skill-Uplift-Cannibalization-Modeling]] (计算降价对全价单量的真实蚕食率)
-- **可组合**：结合 [[Skill-Agentic-Nash-Equilibrium-Debate]]，将 DML 算出的反事实数据喂给财务 Agent，在多方博弈中作为“底牌”数据。
 
-#### ⑤ 商业价值评估
+- **前置（prerequisite）**：[[Skill-Causal-Uplift-Modeling]]（因果效应估计基础）、[[Skill-DML-Cohort-Causal-Effect]]（双机器学习估计弹性）
+- **延伸（extends）**：[[Skill-Dynamic-Pricing-Elasticity]]（弹性估计直接驱动动态定价）
+- **可组合（combinable）**：[[Skill-Counterfactual-Ad-Attribution-Debiasing]]（反事实方法在广告归因的对应实现）、[[Skill-Causal-Attribution-Bridge]]（价格弹性+跨媒体归因联合分析）
+
+## ⑤ 商业价值评估
 - **ROI预估**：告别盲目跟价，年化节省 10%-15% 的无效折扣损耗。
 - **实施难度**：★★★★☆ (需要构建规整的特征工程，对数据科学基建要求高)
 - **优先级评分**：★★★★★ (红海时代的绝对护城河算法)
