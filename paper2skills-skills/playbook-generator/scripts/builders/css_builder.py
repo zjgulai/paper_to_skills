@@ -1535,12 +1535,25 @@ pre code {
 
 /* 图标 */
 .gallery-card-icon {
-  font-size: 28px;
-  line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,.1));
+  width: 32px; height: 32px;
+  flex-shrink: 0;
   margin-top: 4px;
+  color: var(--card-color, #555);
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.08));
+  transition: transform .22s ease;
 }
-.gallery-card-icon-lg { font-size: 36px; margin-top: 8px; }
+.gallery-card-icon svg {
+  width: 100%; height: 100%;
+  display: block;
+  stroke: currentColor;
+}
+.gallery-card:hover .gallery-card-icon {
+  transform: scale(1.08);
+}
+.gallery-card-icon-lg {
+  width: 38px; height: 38px;
+  margin-top: 8px;
+}
 
 /* 标题 */
 .gallery-card-title {
