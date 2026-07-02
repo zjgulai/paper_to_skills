@@ -1403,6 +1403,252 @@ pre code {
   animation: shimmer 1.5s infinite;
 }
 
+
+/* ═══════════════════════════════════════════════════════
+   GALLERY GRID — 5列大卡片浏览系统
+   用于: 按领域浏览 / 按主题浏览 / 业务工作流
+   ═══════════════════════════════════════════════════════ */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin: 24px 0;
+}
+
+@media (max-width: 1400px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 1100px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px)  { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .gallery-grid { grid-template-columns: 1fr; } }
+
+/* ── 卡片基座 ── */
+.gallery-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  transition: transform .22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow .22s ease,
+              border-color .15s ease;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+/* 悬浮效果 */
+.gallery-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 20px 40px rgba(0,0,0,.12), 0 6px 12px rgba(0,0,0,.06);
+  border-color: rgba(0,0,0,.08);
+  text-decoration: none;
+}
+
+/* ── 背景图层 ── */
+.gallery-card-bg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--card-bg, #f5f5f5);
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  opacity: 0.6;
+  transition: opacity .22s ease, transform .35s ease;
+  z-index: 0;
+}
+.gallery-card:hover .gallery-card-bg {
+  opacity: 0.4;
+  transform: scale(1.05);
+}
+
+/* 彩色渐变遮罩（品牌色） */
+.gallery-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card-color, #555) 8%, transparent) 0%,
+    color-mix(in srgb, var(--card-color, #555) 3%, transparent) 60%,
+    transparent 100%
+  );
+  z-index: 1;
+  transition: opacity .22s ease;
+}
+.gallery-card:hover::before {
+  opacity: 0.7;
+}
+
+/* 底部渐变蒙层（确保footer可读） */
+.gallery-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0.92) 0%,
+    rgba(255,255,255,0.6) 50%,
+    transparent 100%
+  );
+  z-index: 2;
+}
+
+/* ── 卡片正文 ── */
+.gallery-card-body {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  padding: 18px 18px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 编号徽章 */
+.gallery-card-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--card-color, #555);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  font-family: "JetBrains Mono", monospace;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+.gallery-card-num-sm {
+  font-size: 9px;
+  width: 32px;
+  height: 20px;
+  border-radius: 4px;
+  letter-spacing: .02em;
+}
+
+/* 图标 */
+.gallery-card-icon {
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.1));
+  margin-top: 4px;
+}
+.gallery-card-icon-lg { font-size: 36px; margin-top: 8px; }
+
+/* 标题 */
+.gallery-card-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -.02em;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+/* 描述 */
+.gallery-card-desc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Footer（数量徽章）── */
+.gallery-card-footer {
+  position: relative;
+  z-index: 3;
+  padding: 10px 18px 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  background: transparent;
+}
+
+.gallery-card-count {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--card-color, #555);
+  font-family: "JetBrains Mono", var(--font-num, var(--font));
+  letter-spacing: -.04em;
+  line-height: 1;
+  transition: color .15s;
+}
+.gallery-card-unit {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+/* ── 领域卡片专属 ── */
+.domain-gallery-card .gallery-card-num {
+  font-size: 13px;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+}
+.domain-gallery-card .gallery-card-title {
+  font-size: 14px;
+}
+.domain-gallery-card .gallery-card-desc {
+  font-size: 11px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+/* ── 主题卡片专属 ── */
+.topic-gallery-card {
+  height: 200px;
+}
+.topic-gallery-card .gallery-card-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ── 工作流卡片专属 ── */
+.wf-gallery-card {
+  height: 210px;
+}
+.wf-gallery-card .gallery-card-footer {
+  padding-top: 8px;
+}
+
+/* ── 卡片入场动画 ── */
+.gallery-card {
+  animation: fadeInUp .35s ease both;
+}
+.gallery-grid .gallery-card:nth-child(1)  { animation-delay: .00s; }
+.gallery-grid .gallery-card:nth-child(2)  { animation-delay: .03s; }
+.gallery-grid .gallery-card:nth-child(3)  { animation-delay: .06s; }
+.gallery-grid .gallery-card:nth-child(4)  { animation-delay: .09s; }
+.gallery-grid .gallery-card:nth-child(5)  { animation-delay: .12s; }
+.gallery-grid .gallery-card:nth-child(6)  { animation-delay: .06s; }
+.gallery-grid .gallery-card:nth-child(7)  { animation-delay: .09s; }
+.gallery-grid .gallery-card:nth-child(8)  { animation-delay: .12s; }
+.gallery-grid .gallery-card:nth-child(9)  { animation-delay: .15s; }
+.gallery-grid .gallery-card:nth-child(10) { animation-delay: .12s; }
+
+/* ── color-mix降级兼容 ── */
+@supports not (color: color-mix(in srgb, red 50%, blue)) {
+  .gallery-card::before {
+    background: linear-gradient(145deg, rgba(0,0,0,.04) 0%, transparent 100%);
+  }
+}
+
 """
 
 

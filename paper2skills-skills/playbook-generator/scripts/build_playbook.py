@@ -101,6 +101,164 @@ TOPIC_RULES = {
     "ESG与绿色供应链": ["esg", "carbon", "sustainability", "green supply", "epr", "cbam", "carbon footprint", "climate", "resp", "cold chain", "冷链", "碳排放", "carbon emission", "green logistics", "drone delivery", "uav", "carrier selection", "onsible sourcing", "碳足迹", "绿色", "可持续"],
 }
 
+
+# ── 全局：工作流卡片配置 ──
+
+# ── 工作流卡片颜色配置 ──
+WF_CARD_CONFIG = {
+    "WF-A 智能补货":        {"color": "#15803d", "icon": "📦", "pattern": "hex"},
+    "WF-B 广告优化":        {"color": "#dc2626", "icon": "📣", "pattern": "dots"},
+    "WF-C 客服分诊":        {"color": "#0891b2", "icon": "💬", "pattern": "wave"},
+    "WF-D 选品扫描":        {"color": "#d97706", "icon": "🔍", "pattern": "grid"},
+    "WF-E Review监控":      {"color": "#7c3aed", "icon": "⭐", "pattern": "dots"},
+    "WF-F 动态定价":        {"color": "#b45309", "icon": "💰", "pattern": "wave"},
+    "WF-G Listing内容优化": {"color": "#0369a1", "icon": "✍️", "pattern": "grid"},
+    "WF-H 复购增长":        {"color": "#059669", "icon": "🔄", "pattern": "hex"},
+    "WF-I 智能体工程":      {"color": "#1d4ed8", "icon": "🤖", "pattern": "circuit"},
+    "WF-J DTC 独立站增长":  {"color": "#be185d", "icon": "🛍️", "pattern": "dots"},
+    "WF-K 全域风险防御":    {"color": "#b91c1c", "icon": "🛡️", "pattern": "circuit"},
+    "WF-L 内容营销增长":    {"color": "#6d28d9", "icon": "🎥", "pattern": "wave"},
+    "WF-M 新品上市全链路":  {"color": "#0f766e", "icon": "🚀", "pattern": "hex"},
+    "WF-N 库存危机响应":    {"color": "#dc2626", "icon": "🚨", "pattern": "grid"},
+    "WF-O 广告ROI最大化":   {"color": "#c2410c", "icon": "📊", "pattern": "dots"},
+    "WF-P 关税危机应对":    {"color": "#92400e", "icon": "⚖️", "pattern": "wave"},
+    "WF-Q 标签驱动决策":    {"color": "#6d28d9", "icon": "🏷️", "pattern": "circuit"},
+    "WF-R Amazon SEO优化":  {"color": "#0369a1", "icon": "🔎", "pattern": "grid"},
+    "WF-S 跨境数据合规":    {"color": "#0891b2", "icon": "🔐", "pattern": "hex"},
+    "WF-T 用户分层精细运营":{"color": "#059669", "icon": "👥", "pattern": "wave"},
+    "WF-U P&L健康诊断":    {"color": "#065f46", "icon": "💹", "pattern": "circuit"},
+    "WF-V 供应商降本博弈":  {"color": "#15803d", "icon": "🤝", "pattern": "dots"},
+    "WF-W 退货根因修复":    {"color": "#dc2626", "icon": "↩️", "pattern": "grid"},
+    "WF-X TikTok Shop冷启动":{"color": "#7c3aed", "icon": "🎵", "pattern": "wave"},
+    "WF-Y 账期现金流优化":  {"color": "#047857", "icon": "💳", "pattern": "hex"},
+    "WF-Z 竞品情报作战室":  {"color": "#1e40af", "icon": "🎯", "pattern": "circuit"},
+    "WF-AA 多渠道协同增长": {"color": "#059669", "icon": "📡", "pattern": "dots"},
+    "WF-AB 视频电商全链路": {"color": "#6d28d9", "icon": "🎬", "pattern": "wave"},
+    "WF-AC 因果定价决策":   {"color": "#b45309", "icon": "⚗️", "pattern": "grid"},
+    "WF-AD 标签驱动实验设计":{"color": "#7c3aed", "icon": "🧪", "pattern": "circuit"},
+    "WF-AE 搜索流量全链路优化":{"color": "#0369a1", "icon": "🔎", "pattern": "hex"},
+    "WF-AF MAS运营财务智能化":{"color": "#065f46", "icon": "🤖", "pattern": "dots"},
+}
+_WF_DEFAULT_COLORS = ["#555","#0369a1","#15803d","#dc2626","#7c3aed","#d97706","#0891b2"]
+_WF_PATTERNS = ["grid", "dots", "wave", "hex", "circuit"]
+
+
+# ── 全局：领域卡片配置 ──
+
+# ── 领域卡片颜色和图案配置 ──
+DOMAIN_CARD_CONFIG = {
+    "01-因果推断":      {"color": "#7c3aed", "bg": "#f5f3ff", "num": "01", "icon": "⚗️", "pattern": "grid"},
+    "02-A_B实验":      {"color": "#0891b2", "bg": "#ecfeff", "num": "02", "icon": "⚖️", "pattern": "dots"},
+    "03-时间序列":      {"color": "#0369a1", "bg": "#eff6ff", "num": "03", "icon": "📈", "pattern": "wave"},
+    "04-供应链":        {"color": "#15803d", "bg": "#f0fdf4", "num": "04", "icon": "🔗", "pattern": "hex"},
+    "05-推荐系统":      {"color": "#d97706", "bg": "#fffbeb", "num": "05", "icon": "✨", "pattern": "dots"},
+    "06-增长模型":      {"color": "#059669", "bg": "#ecfdf5", "num": "06", "icon": "🚀", "pattern": "grid"},
+    "07-NLP-VOC":      {"color": "#7c3aed", "bg": "#fdf4ff", "num": "07", "icon": "💬", "pattern": "wave"},
+    "08-知识图谱":      {"color": "#0f766e", "bg": "#f0fdfa", "num": "08", "icon": "🕸️", "pattern": "hex"},
+    "09-DataAgent-LLM":{"color": "#1d4ed8", "bg": "#eff6ff", "num": "09", "icon": "🤖", "pattern": "circuit"},
+    "10-MAS":           {"color": "#7c3aed", "bg": "#faf5ff", "num": "10", "icon": "🧠", "pattern": "circuit"},
+    "11-AI人文":        {"color": "#be185d", "bg": "#fdf2f8", "num": "11", "icon": "🎭", "pattern": "wave"},
+    "12-ML基础":        {"color": "#0369a1", "bg": "#eff6ff", "num": "12", "icon": "⚙️", "pattern": "grid"},
+    "13-广告分析":      {"color": "#b91c1c", "bg": "#fef2f2", "num": "13", "icon": "📊", "pattern": "dots"},
+    "14-用户分析":      {"color": "#0891b2", "bg": "#ecfeff", "num": "14", "icon": "👥", "pattern": "wave"},
+    "15-营销投放分析":  {"color": "#c2410c", "bg": "#fff7ed", "num": "15", "icon": "📣", "pattern": "grid"},
+    "16-智能体工程":    {"color": "#1d4ed8", "bg": "#eff6ff", "num": "16", "icon": "🔧", "pattern": "circuit"},
+    "17-价格优化":      {"color": "#b45309", "bg": "#fffbeb", "num": "17", "icon": "💰", "pattern": "dots"},
+    "18-物流履约":      {"color": "#047857", "bg": "#ecfdf5", "num": "18", "icon": "🚚", "pattern": "hex"},
+    "19-风控反欺诈":    {"color": "#dc2626", "bg": "#fef2f2", "num": "19", "icon": "🛡️", "pattern": "circuit"},
+    "20-AI视频生成":    {"color": "#7c3aed", "bg": "#fdf4ff", "num": "20", "icon": "🎬", "pattern": "wave"},
+    "21-合规决策":      {"color": "#92400e", "bg": "#fffbeb", "num": "21", "icon": "⚖️", "pattern": "grid"},
+    "22-数据采集工程":  {"color": "#1e40af", "bg": "#eff6ff", "num": "22", "icon": "🔍", "pattern": "dots"},
+    "23-运营财务":      {"color": "#065f46", "bg": "#f0fdf4", "num": "23", "icon": "💹", "pattern": "hex"},
+    "24-标签工程":      {"color": "#6d28d9", "bg": "#f5f3ff", "num": "24", "icon": "🏷️", "pattern": "circuit"},
+    "25-搜索流量工程":  {"color": "#0369a1", "bg": "#eff6ff", "num": "25", "icon": "🔎", "pattern": "wave"},
+}
+
+# ── SVG图案生成函数 ──
+def make_pattern_svg(pattern: str, color: str) -> str:
+    alpha = "26"  # 15% opacity hex
+    c = color
+    if pattern == "grid":
+        return f"""<svg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='p' width='20' height='20' patternUnits='userSpaceOnUse'><path d='M20 0L0 0 0 20' fill='none' stroke='{c}' stroke-width='0.8' opacity='0.25'/></pattern></defs><rect width='60' height='60' fill='url(%23p)'/></svg>"""
+    elif pattern == "dots":
+        return f"""<svg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'><circle cx='10' cy='10' r='2' fill='{c}' opacity='0.3'/><circle cx='30' cy='10' r='2' fill='{c}' opacity='0.2'/><circle cx='10' cy='30' r='2' fill='{c}' opacity='0.2'/><circle cx='30' cy='30' r='2' fill='{c}' opacity='0.3'/></svg>"""
+    elif pattern == "wave":
+        return f"""<svg width='80' height='40' viewBox='0 0 80 40' xmlns='http://www.w3.org/2000/svg'><path d='M0 20 Q20 10 40 20 Q60 30 80 20' stroke='{c}' stroke-width='1.5' fill='none' opacity='0.25'/><path d='M0 30 Q20 20 40 30 Q60 40 80 30' stroke='{c}' stroke-width='1' fill='none' opacity='0.15'/></svg>"""
+    elif pattern == "hex":
+        return f"""<svg width='60' height='52' viewBox='0 0 60 52' xmlns='http://www.w3.org/2000/svg'><polygon points='30,2 58,17 58,47 30,62 2,47 2,17' stroke='{c}' stroke-width='1' fill='none' opacity='0.2'/><polygon points='30,10 50,21 50,43 30,54 10,43 10,21' stroke='{c}' stroke-width='0.8' fill='none' opacity='0.15'/></svg>"""
+    elif pattern == "circuit":
+        return f"""<svg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'><path d='M10 40 H30 V20 H60' stroke='{c}' stroke-width='1.2' fill='none' opacity='0.25'/><path d='M10 60 H40 V40' stroke='{c}' stroke-width='1' fill='none' opacity='0.2'/><circle cx='30' cy='40' r='3' fill='{c}' opacity='0.3'/><circle cx='60' cy='20' r='3' fill='{c}' opacity='0.25'/><circle cx='40' cy='60' r='2.5' fill='{c}' opacity='0.2'/></svg>"""
+    return ""
+
+def svg_to_css_bg(svg_str: str) -> str:
+    import urllib.parse
+    return "url(\"data:image/svg+xml," + urllib.parse.quote(svg_str) + "\")"
+
+DOMAIN_BIZ_LABELS = {
+    "01-因果推断": "广告归因·促销效果",
+    "02-A_B实验": "策略验证·转化测试",
+    "03-时间序列": "销量预测·需求预测",
+    "04-供应链": "补货·库存·物流",
+    "05-推荐系统": "复购推荐·搜索排序",
+    "06-增长模型": "用户增长·LTV·流失",
+    "07-NLP-VOC": "评论分析·情感挖掘",
+    "08-知识图谱": "语义检索·关系图谱",
+    "09-DataAgent-LLM": "数据智能体·Text2SQL",
+    "10-MAS": "多Agent协作·编排",
+    "11-AI人文": "AI伦理·内容检测",
+    "12-ML基础": "模型校准·漂移检测",
+    "13-广告分析": "ROAS·归因·预算分配",
+    "14-用户分析": "漏斗分析·分群·RFM",
+    "15-营销投放分析": "MMM·促销效果",
+    "16-智能体工程": "Agent工程·工具调用",
+    "17-价格优化": "动态定价·弹性估算",
+    "18-物流履约": "清关·跨境物流",
+    "19-风控反欺诈": "刷单·封号·跟卖",
+    "20-AI视频生成": "TikTok·直播·短视频",
+    "21-合规决策": "CPSC·关税·法规",
+    "22-数据采集工程": "数据质量·采集管道",
+    "23-运营财务": "P&L·FBA成本·汇率",
+    "24-标签工程": "标签体系·决策触发",
+    "25-搜索流量工程": "Amazon SEO·关键词",
+}
+
+# ── 全局：主题卡片颜色配置 ──
+TOPIC_CARD_COLORS = {
+    "广告与投放":       {"color": "#dc2626", "icon": "📣"},
+    "供应链与补货":     {"color": "#15803d", "icon": "🔗"},
+    "客服与VOC":        {"color": "#0891b2", "icon": "💬"},
+    "推荐与搜索":       {"color": "#d97706", "icon": "✨"},
+    "知识图谱与RAG":    {"color": "#0f766e", "icon": "🕸️"},
+    "数据采集与治理":   {"color": "#1e40af", "icon": "🔍"},
+    "MAS与智能体工程":  {"color": "#7c3aed", "icon": "🤖"},
+    "定价与利润":       {"color": "#b45309", "icon": "💰"},
+    "风控与合规":       {"color": "#b91c1c", "icon": "🛡️"},
+    "视觉内容生成":     {"color": "#6d28d9", "icon": "🎬"},
+    "实验与因果推断":   {"color": "#7c3aed", "icon": "⚗️"},
+    "用户增长与留存":   {"color": "#059669", "icon": "🚀"},
+    "营销分析与预算":   {"color": "#c2410c", "icon": "📊"},
+    "跨境物流与履约":   {"color": "#047857", "icon": "🚚"},
+    "合规与关税决策":   {"color": "#92400e", "icon": "⚖️"},
+    "运营财务与P&L":    {"color": "#065f46", "icon": "💹"},
+    "标签工程与决策触发": {"color": "#6d28d9", "icon": "🏷️"},
+    "搜索流量与SEO":    {"color": "#0369a1", "icon": "🔎"},
+    "时序预测":         {"color": "#0369a1", "icon": "📈"},
+    "LLM数据分析":      {"color": "#1d4ed8", "icon": "🧠"},
+    "ML基础与可解释性": {"color": "#0369a1", "icon": "⚙️"},
+    "AI伦理与治理":     {"color": "#be185d", "icon": "🎭"},
+    "供应商管理与博弈": {"color": "#15803d", "icon": "🤝"},
+    "KPI运营指标体系":  {"color": "#0891b2", "icon": "📋"},
+    "逆向物流与退货":   {"color": "#dc2626", "icon": "↩️"},
+    "直播与TikTok商业化": {"color": "#7c3aed", "icon": "🎥"},
+    "仓储运营效率":     {"color": "#047857", "icon": "🏭"},
+    "AI搜索与GEO":      {"color": "#1d4ed8", "icon": "🌐"},
+    "现金流与供应链融资": {"color": "#065f46", "icon": "💳"},
+    "竞品情报自动化":   {"color": "#0891b2", "icon": "🎯"},
+    "多渠道协同增长":   {"color": "#059669", "icon": "📡"},
+    "ESG与绿色供应链":  {"color": "#15803d", "icon": "🌱"},
+}
+_TOPIC_PATTERNS = ["dots", "wave", "grid", "hex", "circuit"]
+
 WORKFLOW_RULES = {
     "WF-A 智能补货": ["供应链", "库存", "补货", "demand", "forecast", "lead-time", "safety-stock", "logistics"],
     "WF-B 广告优化": ["广告", "roas", "attribution", "tiktok", "keyword", "creative", "mmm", "marketing"],
@@ -5965,39 +6123,29 @@ def render_pages(
                       f"<div class='cards'>{cards}</div>",
                       "../"),
         )
-        DOMAIN_BIZ_LABELS = {
-            "01-因果推断": "广告归因·促销效果",
-            "02-A_B实验": "策略验证·转化测试",
-            "03-时间序列": "销量预测·需求预测",
-            "04-供应链": "补货·库存·物流",
-            "05-推荐系统": "复购推荐·搜索排序",
-            "06-增长模型": "用户增长·LTV·流失",
-            "07-NLP-VOC": "评论分析·情感挖掘",
-            "08-知识图谱": "语义检索·关系图谱",
-            "09-DataAgent-LLM": "数据智能体·Text2SQL",
-            "10-MAS": "多Agent协作·编排",
-            "11-AI人文": "AI伦理·内容检测",
-            "12-ML基础": "模型校准·漂移检测",
-            "13-广告分析": "ROAS·归因·预算分配",
-            "14-用户分析": "漏斗分析·分群·RFM",
-            "15-营销投放分析": "MMM·促销效果",
-            "16-智能体工程": "Agent工程·工具调用",
-            "17-价格优化": "动态定价·弹性估算",
-            "18-物流履约": "清关·跨境物流",
-            "19-风控反欺诈": "刷单·封号·跟卖",
-            "20-AI视频生成": "TikTok·直播·短视频",
-            "21-合规决策": "CPSC·关税·法规",
-            "22-数据采集工程": "数据质量·采集管道",
-            "23-运营财务": "P&L·FBA成本·汇率",
-            "24-标签工程": "标签体系·决策触发",
-            "25-搜索流量工程": "Amazon SEO·关键词",
-        }
+
+        # DOMAIN_CARD_CONFIG, make_pattern_svg, svg_to_css_bg 已在全局定义
+
         biz_label = DOMAIN_BIZ_LABELS.get(title, "")
+        cfg = DOMAIN_CARD_CONFIG.get(title, {"color": "#555555", "bg": "#f5f5f5", "num": "?", "icon": "📌", "pattern": "dots"})
+        c = cfg["color"]; bg = cfg["bg"]; num = cfg["num"]; icon = cfg["icon"]
+        pattern_svg = make_pattern_svg(cfg["pattern"], c)
+        bg_svg = svg_to_css_bg(pattern_svg)
         domain_index_cards.append(
-            f"<a class='metric-card domain-card' href='{slugify(title)}.html'>"
-            f"<strong>{html.escape(title)}</strong>"
-            f"<span class='domain-biz-label'>{html.escape(biz_label)}</span>"
-            f"<span class='domain-skill-count'>{len(domain_skills)} Skills</span></a>"
+            f"<a class='gallery-card domain-gallery-card' href='{slugify(title)}.html' "
+            f"style='--card-color:{c};--card-bg:{bg}'>"
+            f"<div class='gallery-card-bg' style='background-image:{bg_svg}'></div>"
+            f"<div class='gallery-card-body'>"
+            f"<div class='gallery-card-num'>{num}</div>"
+            f"<div class='gallery-card-icon'>{icon}</div>"
+            f"<div class='gallery-card-title'>{html.escape(title.split('-', 1)[-1] if '-' in title else title)}</div>"
+            f"<div class='gallery-card-desc'>{html.escape(biz_label)}</div>"
+            f"</div>"
+            f"<div class='gallery-card-footer'>"
+            f"<span class='gallery-card-count'>{len(domain_skills)}</span>"
+            f"<span class='gallery-card-unit'>Skills</span>"
+            f"</div>"
+            f"</a>"
         )
     write_file(out / "domains" / "index.html", html_page(
         "按领域",
@@ -6015,45 +6163,73 @@ def render_pages(
   <a href='07-NLP-VOC.html' class='domain-tag'>VOC&amp;评论</a>
   <a href='21-合规决策.html' class='domain-tag'>合规&amp;关税</a>
 </div>
-<div class='grid'>""" + "".join(domain_index_cards) + "</div>",
+<div class='gallery-grid'>""" + "".join(domain_index_cards) + "</div>",
         "../",
         active_nav="domains",
     ))
 
     # ── Topic pages ──
     all_topics = sorted({topic for s in skills for topic in s.topics})
+
+    # ── 主题卡片颜色配置 (使用全局变量) ──
+    # TOPIC_CARD_COLORS 和 _TOPIC_PATTERNS 已定义在全局
+
     topic_cards: list[str] = []
-    for topic in all_topics:
+    for _ti, topic in enumerate(all_topics):
         topic_skills = [s for s in skills if topic in s.topics]
         cards = "".join(render_skill_card(s, "../") for s in topic_skills)
         path = f"{slugify(topic)}.html"
-        topic_search = f"""<input id='topic-search' placeholder='在 {html.escape(topic)} 中搜索…'
-  style='max-width:320px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;margin:10px 0 16px;display:block'>
-<script>(function(){{var inp=document.getElementById('topic-search');var cards=document.querySelectorAll('.cards .skill-card');if(!inp)return;inp.addEventListener('input',function(){{var q=this.value.trim().toLowerCase();cards.forEach(function(c){{var t=(c.textContent||'').toLowerCase()+(c.href||'').toLowerCase();c.style.display=(!q||t.includes(q))?'':'none';}})}});}})();</script>"""
+        topic_search = (
+            "<input id='topic-search' placeholder='在 " + html.escape(topic) + " 中搜索…'"
+            " style='max-width:320px;padding:8px 14px;border:1px solid #e2e8f0;"
+            "border-radius:8px;font-size:14px;margin:10px 0 16px;display:block'>"
+            "<script>(function(){var inp=document.getElementById('topic-search');"
+            "var cs=document.querySelectorAll('.cards .skill-card');"
+            "if(!inp)return;inp.addEventListener('input',function(){"
+            "var q=this.value.trim().toLowerCase();"
+            "cs.forEach(function(c){c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';});"
+            "});})()</script>"
+        )
         write_file(out / "topics" / path, html_page(
             topic,
             f"<h1>{html.escape(topic)}</h1>{topic_search}<div class='cards'>{cards}</div>",
             "../",
         ))
-        topic_cards.append(f"<a class='metric-card' href='{path}'>{html.escape(topic)}<span>{len(topic_skills)} Skills</span></a>")
+        _tcfg = TOPIC_CARD_COLORS.get(topic, {"color": "#555", "icon": "📌"})
+        _tc = _tcfg["color"]; _ticon = _tcfg["icon"]
+        _tpat = _TOPIC_PATTERNS[_ti % len(_TOPIC_PATTERNS)]
+        _tsvg = make_pattern_svg(_tpat, _tc)
+        _tbg  = svg_to_css_bg(_tsvg)
+        topic_cards.append(
+            f"<a class='gallery-card topic-gallery-card' href='{path}' style='--card-color:{_tc}'>"
+            f"<div class='gallery-card-bg' style='background-image:{_tbg}'></div>"
+            f"<div class='gallery-card-body'>"
+            f"<div class='gallery-card-icon gallery-card-icon-lg'>{_ticon}</div>"
+            f"<div class='gallery-card-title'>{html.escape(topic)}</div>"
+            f"</div>"
+            f"<div class='gallery-card-footer'>"
+            f"<span class='gallery-card-count'>{len(topic_skills)}</span>"
+            f"<span class='gallery-card-unit'>Skills</span>"
+            f"</div>"
+            f"</a>"
+        )
     write_file(out / "topics" / "index.html", html_page(
         "按主题",
-        "<h1>按主题</h1><div class='grid'>" + "".join(topic_cards) + "</div>",
+        "<h1>按主题浏览</h1><p class='page-lead'>按业务主题聚合的 AI 技能索引，快速定位你关心的场景。</p><div class='gallery-grid'>" + "".join(topic_cards) + "</div>",
         "../",
     ))
-
     # ── Workflow pages (Phase 2B: YAML-first, keyword fallback) ──
     skill_lookup = {s.skill_id: s for s in skills}
-    workflow_cards: list[str] = []
-    for workflow_name in WORKFLOW_RULES:
-        slug_path = f"{slugify(workflow_name)}.html"
-        wf_id = slugify(workflow_name).split("-")[0] + "-" + slugify(workflow_name).split("-")[1]  # e.g. "wf-a"
+    # WF_CARD_CONFIG 等已在全局定义
 
-        # Check if a structured YAML definition exists
+    workflow_cards: list[str] = []
+    for _wfi, workflow_name in enumerate(WORKFLOW_RULES):
+        slug_path = f"{slugify(workflow_name)}.html"
+        wf_id = slugify(workflow_name).split("-")[0] + "-" + slugify(workflow_name).split("-")[1]
+
         if wf_defs and wf_id in wf_defs:
             page_html = render_workflow_page(wf_defs[wf_id], skill_lookup)
         else:
-            # Fallback: keyword-matched skill list (original behaviour)
             wf_skills = [s for s in skills if workflow_name in s.workflows]
             cards = "".join(render_skill_card(s, "../") for s in wf_skills)
             page_html = html_page(
@@ -6066,16 +6242,38 @@ def render_pages(
             wf_skills_for_count = wf_skills
 
         write_file(out / "workflows" / slug_path, page_html)
-        wf_skill_count = len(wf_defs.get(wf_id, {}).get("steps", [])) or len([s for s in skills if workflow_name in s.workflows])
+        _wf_steps_dict = wf_defs.get(wf_id, {})
+        wf_skill_count = len(_wf_steps_dict.get("steps", [])) or len([s for s in skills if workflow_name in s.workflows])
+        
+        _wcfg = WF_CARD_CONFIG.get(workflow_name, {
+            "color": _WF_DEFAULT_COLORS[_wfi % len(_WF_DEFAULT_COLORS)],
+            "icon": "⚡",
+            "pattern": _WF_PATTERNS[_wfi % len(_WF_PATTERNS)]
+        })
+        _wc = _wcfg["color"]; _wicon = _wcfg["icon"]; _wpat = _wcfg["pattern"]
+        _wsvg = make_pattern_svg(_wpat, _wc)
+        _wbg  = svg_to_css_bg(_wsvg)
+        # 提取WF编号
+        _wf_num = workflow_name.split(" ")[0] if " " in workflow_name else workflow_name[:4]
+        _wf_title = workflow_name.split(" ", 1)[1] if " " in workflow_name else workflow_name
         workflow_cards.append(
-            f"<a class='metric-card' href='{slug_path}'>"
-            f"<strong>{html.escape(workflow_name)}</strong>"
-            f"<span>{wf_skill_count} 步骤/Skills</span></a>"
+            f"<a class='gallery-card wf-gallery-card' href='{slug_path}' style='--card-color:{_wc}'>"
+            f"<div class='gallery-card-bg' style='background-image:{_wbg}'></div>"
+            f"<div class='gallery-card-body'>"
+            f"<div class='gallery-card-num gallery-card-num-sm'>{_wf_num}</div>"
+            f"<div class='gallery-card-icon'>{_wicon}</div>"
+            f"<div class='gallery-card-title'>{html.escape(_wf_title)}</div>"
+            f"</div>"
+            f"<div class='gallery-card-footer'>"
+            f"<span class='gallery-card-count'>{wf_skill_count}</span>"
+            f"<span class='gallery-card-unit'>步骤</span>"
+            f"</div>"
+            f"</a>"
         )
     write_file(out / "workflows" / "index.html", html_page(
         "工作流",
-        "<h1>工作流</h1><p class='muted'>端到端业务决策路径，每条工作流包含分步决策树和推荐 Skill 组合。</p>"
-        "<div class='grid'>" + "".join(workflow_cards) + "</div>",
+        "<h1>业务工作流</h1><p class='page-lead'>端到端业务决策路径，每条工作流包含分步决策树和推荐 Skill 组合。</p>"
+        "<div class='gallery-grid'>" + "".join(workflow_cards) + "</div>",
         "../",
     ))
 
