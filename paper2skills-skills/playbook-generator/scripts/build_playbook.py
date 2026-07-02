@@ -3240,7 +3240,7 @@ def render_skill_card(skill: PlaybookSkill, nav: str = "") -> str:
     desc = html.escape(skill.problem_solved or skill.algorithm_summary)
     data_domain = html.escape(skill.domain_dir)
     data_diff   = html.escape(skill.difficulty or "")
-    return f"""<a class="card skill-card" href="{skill_url(skill.skill_id, nav)}" data-domain="{data_domain}" data-diff="{data_diff}">
+    return f"""<a class="card skill-card anim-fade-in-up" href="{skill_url(skill.skill_id, nav)}" data-domain="{data_domain}" data-diff="{data_diff}">
   <div class="sc-domain">{html.escape(skill.domain_dir)}</div>
   <h3 class="sc-title">{html.escape(skill.title)}</h3>
   <p class="sc-desc">{desc}</p>
@@ -3293,7 +3293,11 @@ def render_skill_page(skill: PlaybookSkill) -> str:
             parts.append(f"<div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>{html.escape(skill.difficulty)}</span></div>")
         if skill.priority:
             parts.append(f"<div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>{html.escape(skill.priority)}</span></div>")
-        roi_meta = "<div class='roi-panel'>" + "".join(parts) + "</div>"
+        roi_meta = (
+            "<div class='roi-panel anim-fade-in-up anim-delay-2'>"
+            + "".join(parts)
+            + "</div>"
+        )
 
     # Business context panel (injected from DOMAIN_BUSINESS_CONTEXT)
     biz_panel = ""
@@ -3420,9 +3424,12 @@ def render_skill_page(skill: PlaybookSkill) -> str:
   <a href="#s-relations">⑤ 关联</a>
   <a href="#s-value">⑥ 价值</a>
 </div>
-<h1>{html.escape(skill.title)}</h1>
-<p class="muted">{html.escape(skill.skill_id)} · {html.escape(skill.domain_dir)}</p>
-<div class="tag-row">{''.join(f"<span class='tag'>{html.escape(t)}</span>" for t in skill.tags + skill.topics + skill.workflows)}</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">{html.escape(skill.domain_dir)}</div>
+  <h1 class="skill-main-title">{html.escape(skill.title)}</h1>
+  <p class="skill-skill-id">{html.escape(skill.skill_id)}</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1">{''.join(f"<span class='tag'>{html.escape(t)}</span>" for t in skill.tags + skill.topics + skill.workflows)}</div>
 {handbook_uplinks}
 {roi_meta}
 {biz_panel}
@@ -3497,11 +3504,21 @@ def _render_code_preview(code: str) -> str:
     if not code:
         return "<p class='muted'>请查看原始 Skill 卡片获取完整代码。</p>"
     escaped = html.escape(code)
+    # 检测语言
+    lang = "Python" if "import " in code or "def " in code or "print(" in code else "Code"
+    line_count = code.count("\n") + 1
     return (
-        "<div class='code-wrap'>"
-        "<button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button>"
-        f"<pre class='code-preview'><code>{escaped}</code></pre>"
-        "</div>"
+        f"<div class='code-wrap'>"
+        f"<div class='code-header'>"
+        f"<span class='code-lang-badge'>{lang}</span>"
+        f"<span class='code-meta'>{line_count} 行 · 可运行</span>"
+        f"<button class='copy-btn' onclick='copyCode(this)' title='复制代码'>"
+        f"<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>"
+        f"复制"
+        f"</button>"
+        f"</div>"
+        f"<pre class='code-preview' data-lang='{lang}'><code>{escaped}</code></pre>"
+        f"</div>"
     )
 
 
@@ -3516,19 +3533,25 @@ def write_file(path: Path, content: str) -> None:
 
 def render_index(skill_count: int, domain_count: int, edge_count: int, domains: list[dict[str, Any]], skills: list[PlaybookSkill], workflow_count: int = 32) -> str:
     domain_cards = "".join(
-        f"<a class='metric-card domain-card' href='domains/{slugify(d['vault_dir'])}.html'>"
+        f"<a class='metric-card domain-card anim-fade-in-up' href='domains/{slugify(d['vault_dir'])}.html' "
+        f"style='animation-delay:{i*0.03:.2f}s'>"
         f"<strong>{html.escape(d['vault_dir'])}</strong>"
         f"<span>{d.get('skill_count', 0)} Skills</span></a>"
-        for d in domains
+        for i, d in enumerate(domains)
     )
 
     # Top 5 skills by relation count (degree centrality proxy)
     skill_degree = {s.skill_id: len(s.relations.get("prerequisite", [])) + len(s.relations.get("combinable", [])) for s in skills}
     hot_skills = sorted(skills, key=lambda s: skill_degree.get(s.skill_id, 0), reverse=True)[:5]
     hot_items = "".join(
-        f"<li><a href='skills/{s.skill_id}.html'>{html.escape(s.title)}</a>"
-        f"{'<span class=roi-badge>' + html.escape(s.roi_figure) + '</span>' if s.roi_figure else ''}</li>"
-        for s in hot_skills
+        f"<li class='anim-fade-in-up' style='animation-delay:{i*0.04:.2f}s'>"
+        f"<a href='skills/{s.skill_id}.html' class='hot-skill-link'>"
+        f"<span class='hot-skill-domain'>{html.escape(s.domain_dir)}</span>"
+        f"{html.escape(s.title)}"
+        f"</a>"
+        f"{'<span class=roi-badge>' + html.escape(s.roi_figure) + '</span>' if s.roi_figure else ''}"
+        f"</li>"
+        for i, s in enumerate(hot_skills)
     )
 
     business_cards = "".join(
@@ -3684,12 +3707,12 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
 <div class="tab-panel" id="tab-explore">
   <h2>按领域浏览</h2>
   <div class="metrics">
-    <div><strong>{skill_count}</strong><span>Skills</span></div>
-    <div><strong>{domain_count}</strong><span>领域</span></div>
-    <div><strong>{edge_count}</strong><span>关系边</span></div>
-    <div><strong>{workflow_count}</strong><span>业务工作流</span></div>
-    <div><strong>¥3.3亿</strong><span>年化ROI总量</span></div>
-    <div><strong>26</strong><span>AI Agent</span></div>
+    <div><strong class="anim-fade-in-up" style="animation-delay:.0s">{skill_count}</strong><span>Skills</span></div>
+    <div><strong class="anim-fade-in-up" style="animation-delay:.05s">{domain_count}</strong><span>领域</span></div>
+    <div><strong class="anim-fade-in-up" style="animation-delay:.10s">{edge_count}</strong><span>知识边</span></div>
+    <div><strong class="anim-fade-in-up" style="animation-delay:.15s">{workflow_count}</strong><span>业务工作流</span></div>
+    <div><strong class="anim-fade-in-up accent-num" style="animation-delay:.20s">¥3.3亿</strong><span>年化ROI总量</span></div>
+    <div><strong class="anim-fade-in-up" style="animation-delay:.25s">26</strong><span>AI Agents</span></div>
   </div>
   <div class="grid">{domain_cards}</div>
 </div>
