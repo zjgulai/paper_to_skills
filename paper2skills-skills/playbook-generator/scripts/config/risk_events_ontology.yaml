@@ -1061,3 +1061,194 @@ events:
   related_workflows:
   - WF-E Review监控
   - WF-C 客服分诊
+- event_id: ai-compliance-risk
+  event_name: AI系统合规风险
+  severity: critical
+  icon: ''
+  summary: AI推荐/定价/内容系统被监管机构标记存在歧视性或不透明决策，面临EU AI Act罚款
+  symptom_keywords:
+  - AI合规
+  - 算法歧视
+  - 可解释性
+  - EU AI Act
+  - 算法透明度
+  - GDPR罚款
+  - 监管审查
+  - 偏见检测
+  - XAI
+  - 数据歧视
+  phases:
+    diagnose:
+    - skill_id: Skill-XAI-Regulatory-Compliance
+      role: EU AI Act合规审计：特征歧视检测+个体解释能力评估，生成监管合规报告
+      sequence: 1
+    - skill_id: Skill-SHAP-Shapley-Feature-Attribution
+      role: SHAP特征归因分析，识别模型中的隐性偏见特征
+      sequence: 2
+    - skill_id: Skill-Responsible-AI-Red-Teaming
+      role: AI红队测试，发现模型的安全边界漏洞和有害输出风险
+      sequence: 3
+    - skill_id: Skill-AI-Ethics-Fairness-Audit
+      role: 全面伦理合规审计，覆盖公平性/透明度/问责制三维度
+      sequence: 4
+    treat:
+    - skill_id: Skill-Privacy-Preserving-Personalization
+      role: LDP差分隐私个性化，在满足GDPR/CCPA要求的前提下保持推荐效果
+      condition: 涉及用户隐私数据的个性化系统
+    - skill_id: Skill-Federated-Learning-Privacy
+      role: 联邦学习架构，数据不离境满足数据本地化法规
+      condition: 跨境数据处理场景
+    - skill_id: Skill-AI-Algorithmic-Bias-Audit
+      role: 算法偏见持续监控，防止模型随时间产生歧视性漂移
+  related_events:
+  - compliance-prescan-alert
+  - account-health-degradation
+  related_playbooks:
+  - pb-compliance
+  - pb-causal-intelligence
+  related_workflows:
+  - WF-S 跨境数据合规
+  - WF-K 全域风险防御
+
+- event_id: model-performance-degradation
+  event_name: ML模型跨季节性能退化
+  severity: high
+  icon: ''
+  summary: 生产模型在季节切换或大促后性能急剧下降（MAPE从12%升至28%），导致备货/定价决策失误
+  symptom_keywords:
+  - 模型退化
+  - 预测精度下降
+  - MAPE上升
+  - 季节切换
+  - 模型漂移
+  - 分布偏移
+  - 备货失准
+  - 模型失效
+  - concept drift
+  - 模型稳定性
+  phases:
+    diagnose:
+    - skill_id: Skill-Concept-Drift-Detection
+      role: 概念漂移检测，识别数据分布变化的时间节点和严重程度
+      sequence: 1
+    - skill_id: Skill-Data-Drift-Detection
+      role: 特征分布漂移检测，PSI/KS检验定位哪些特征发生漂移
+      sequence: 2
+    - skill_id: Skill-Model-Performance-Monitor
+      role: 模型性能实时监控，AUC/MAPE退化告警
+      sequence: 3
+    - skill_id: Skill-Tag-ML-Causal-Feature-Selection
+      role: 分布不变因果特征选择，识别跨季节稳定特征vs伪相关特征
+      sequence: 4
+    treat:
+    - skill_id: Skill-Continual-Learning-Production
+      role: EWC持续学习，在新季节数据上更新模型同时不遗忘旧季节知识
+      condition: 季节切换导致的需求预测MAPE>20%
+    - skill_id: Skill-Causal-Representation-Learning
+      role: 因果表示学习，学习跨环境不变的用户偏好表示，减少分布偏移影响
+      condition: 跨市场/跨季节模型迁移场景
+    - skill_id: Skill-In-Context-Learning-Tabular
+      role: ICL少样本快速适应，新季节前期数据极少时直接推理
+      condition: 新季节/新品类数据量<200条
+  related_events:
+  - data-model-drift
+  - inventory-overstock
+  related_playbooks:
+  - pb-mas-ai-agent-ops
+  - pb-supply-chain-intelligence
+  related_workflows:
+  - WF-A 智能补货
+  - WF-F 动态定价
+
+- event_id: video-commerce-traffic-collapse
+  event_name: 视频电商流量坍塌
+  severity: high
+  icon: ''
+  summary: TikTok/Reels内容爆款率骤降至2%以下，视频带货GMV下滑30%+，内容矩阵失效
+  symptom_keywords:
+  - 视频流量下降
+  - TikTok爆款率低
+  - 内容衰退
+  - 短视频失效
+  - 带货GMV下滑
+  - 视频转化率下降
+  - 内容创作枯竭
+  - 达人视频表现差
+  - 视频电商
+  - 内容营销失效
+  phases:
+    diagnose:
+    - skill_id: Skill-MAS-Video-Content-Optimization
+      role: 多智能体内容分析，快速诊断选题/脚本/发布时机哪个环节是瓶颈
+      sequence: 1
+    - skill_id: Skill-TikTok-Content-Lifecycle-Analytics
+      role: 内容生命周期分析，识别爆款衰退规律和内容疲劳周期
+      sequence: 2
+    - skill_id: Skill-DataAgent-Marketing-Attribution
+      role: 因果归因分析，区分平台算法变化vs内容质量下降vs竞争加剧
+      sequence: 3
+    treat:
+    - skill_id: Skill-Tag-Video-Commerce-Tagging
+      role: 视频商品自动标签，确保每条视频都有正确的购物链接，最大化变现效率
+      condition: 视频购物链接关联率<60%
+    - skill_id: Skill-Reward-Model-RLHF-Ecommerce
+      role: RLHF奖励模型筛选高质量内容，从5个候选中选出转化率最高的版本
+      condition: 内容质量参差不齐，爆款率<10%
+    - skill_id: Skill-AI-Content-Marketing-Growth
+      role: AIGC内容矩阵扩充，批量生产高质量内容，覆盖更多关键词和场景
+  related_events:
+  - tiktok-content-decay
+  - asin-traffic-drop
+  related_playbooks:
+  - pb-video-ecommerce
+  - pb-content-factory
+  related_workflows:
+  - WF-AB 视频电商全链路
+  - WF-L 内容营销增长
+
+- event_id: logistics-compliance-esg-risk
+  event_name: 物流合规与ESG风险
+  severity: high
+  icon: ''
+  summary: 跨境冷链温控记录不符合FDA标准被扣押，或EU CBAM碳边境税合规文件缺失，导致货物滞留
+  symptom_keywords:
+  - 冷链合规
+  - FDA通关
+  - 碳排放合规
+  - CBAM碳税
+  - 物流ESG
+  - 冷链温度超标
+  - 碳足迹报告
+  - 可持续物流
+  - 绿色供应链
+  - 冷链监控
+  phases:
+    diagnose:
+    - skill_id: Skill-Cold-Chain-Temperature-Monitoring
+      role: 冷链全程温控监测，MKT计算，生成FDA合规温度报告
+      sequence: 1
+    - skill_id: Skill-Carbon-Footprint-ML-Model
+      role: AI系统碳足迹量化，满足欧盟CSRD数字碳排放披露要求
+      sequence: 2
+    - skill_id: Skill-Green-Logistics-Carbon-Optimization
+      role: 物流碳排放计算，各运输方式对比，帕累托最优路线规划
+      sequence: 3
+    treat:
+    - skill_id: Skill-Carrier-Selection-ML
+      role: ML承运商智能选择，在满足时效的前提下选碳排放最低的承运商
+      condition: 欧洲市场运输，需满足ESG报告要求
+    - skill_id: Skill-Real-Time-Fleet-Dynamic-Routing
+      role: 实时动态重路由，兼顾成本/时效/碳排放三目标的最优配送路径
+      condition: 末端配送网络优化
+    - skill_id: Skill-KG-Logistics-Intelligence
+      role: 物流知识图谱，自动查询目标国认证要求和禁运规定，防止报关错误
+  related_events:
+  - tariff-fx-risk
+  - logistics-fulfillment-exception
+  related_playbooks:
+  - pb-compliance
+  - pb-cross-border-logistics
+  related_workflows:
+  - WF-P 关税危机应对
+  - WF-S 跨境数据合规
+

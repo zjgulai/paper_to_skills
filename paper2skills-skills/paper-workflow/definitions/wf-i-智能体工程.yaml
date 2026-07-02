@@ -1,106 +1,109 @@
 id: wf-i
 name: WF-I 智能体工程
-description: 从 Agent 设计到生产运维的端到端工程化链路，覆盖能力构建、部署上线、生产监控、安全防御、自我进化五个阶段。面向希望将 AI Agent 稳定运行在跨境运营业务中的技术负责人。
+description: 从 Agent 设计到生产运维的端到端工程化链路，覆盖能力构建、部署上线、生产监控、安全防御、自我进化五个阶段。面向希望将 AI Agent
+  稳定运行在跨境运营业务中的技术负责人。
 target_users:
-  - CTO / 技术负责人
-  - 数据工程师
-  - AI 产品经理
+- CTO / 技术负责人
+- 数据工程师
+- AI 产品经理
 entry_question: 你的 Agent 当前处于哪个阶段？
-
 steps:
-  - id: step-1
-    name: 能力设计与工具接入
-    question: Agent 需要调用哪些工具/API？如何设计任务拆解结构？
-    context: Agent 成败 80% 取决于工具设计质量。跨境运营 Agent 的典型工具链：Amazon SP API / 库存系统 / 广告平台 / 客服工单
-    branches:
-      - condition: 多工具协作型 Agent（需要调用 5+ 个外部工具）
-        skills:
-          - id: Skill-MCP-A2A-Protocol-Stack
-            role: MCP 协议栈设计，定义 Agent 间通信标准（ROI：减少 60% 集成工作量）
-          - id: Skill-Task-Adaptive-Topology
-            role: 任务自适应拓扑路由，动态选择最优 Agent 子网络
-          - id: Skill-Progent-Privilege-Control
-            role: 最小权限原则：每个 Agent 只获得完成任务所需的最低权限（ROI 30-80万）
-      - condition: 单 Agent + 长任务链（需要跨多步骤完成复杂目标）
-        skills:
-          - id: Skill-KLong-Long-Horizon-Agent-Training
-            role: 长程任务链训练，解决跨 50+ 步骤的规划遗忘问题
-          - id: Skill-Context-Compression
-            role: 上下文压缩：90% 成本节省，支持超长对话历史
-
-  - id: step-2
-    name: 部署上线与自适应
-    question: 如何让 Agent 在新业务场景中快速适配，避免大量标注数据？
-    context: 跨境运营场景变化快（新品类/新市场/政策变化），Agent 需要低样本快速适配
+- id: step-1
+  name: 能力设计与工具接入
+  question: Agent 需要调用哪些工具/API？如何设计任务拆解结构？
+  context: Agent 成败 80% 取决于工具设计质量。跨境运营 Agent 的典型工具链：Amazon SP API / 库存系统 / 广告平台 /
+    客服工单
+  branches:
+  - condition: 多工具协作型 Agent（需要调用 5+ 个外部工具）
     skills:
-      - id: Skill-CASCADE-Deployment-Time-Learning
-        role: 部署时学习（DTL）：用案例推理在部署阶段零标注自适应，Contextual Bandit 优化
-      - id: Skill-VLM-Ecommerce-Adaptation
-        role: 电商视觉语言模型适配：主图/视频内容理解快速迁移到新品类（ROI 1.6万元）
-      - id: Skill-AutoSkill-Lifelong-Learning
-        role: 终身学习技能库：自动将新场景经验沉淀为可复用技能，避免重复训练
-
-  - id: step-3
-    name: 生产监控与可靠性
-    question: Agent 上线后如何知道它是否在正常工作？性能是否符合 SLA？
-    context: 生产环境 Agent 失败率比测试环境高 3-5 倍，必须有主动监控而非事后发现
-    branches:
-      - condition: 需要建立 SLA 监控（响应时间/成功率/成本三角）
-        skills:
-          - id: Skill-Agent-SLO-Manager
-            role: Agent SLO（服务级别目标）管理：响应时间 P99 / 任务成功率 / token 成本三角监控
-          - id: Skill-ReliabilityBench-Agent-Reliability
-            role: 生产可靠性三维评估（pass@1 高估 20-40%，发现真实可靠性基线）
-          - id: Skill-Agentic-Workflow-Compilation
-            role: 工作流编译优化：$150/天→$0.5-1.2/天，成本压缩 99%（ROI 62-462×）
-      - condition: 需要根因追溯（Agent 失败了不知道哪步出问题）
-        skills:
-          - id: Skill-AgentTrace-Causal-RCA
-            role: 因果追溯：自动定位 Agent 失败的根因步骤（ROI 5-20万/月）
-          - id: Skill-Agent-Fault-Tolerance
-            role: 容错机制：关键步骤失败时自动降级/重试/人工介入路由（ROI 5-15万）
-
-  - id: step-4
-    name: 安全防御与合规
-    question: 如何防止 Agent 被注入攻击、权限滥用或产生合规风险？
-    context: 跨境电商 Agent 操作 Amazon API / 支付系统 / 客户数据，安全风险高
+    - id: Skill-MCP-A2A-Protocol-Stack
+      role: MCP 协议栈设计，定义 Agent 间通信标准（ROI：减少 60% 集成工作量）
+    - id: Skill-Task-Adaptive-Topology
+      role: 任务自适应拓扑路由，动态选择最优 Agent 子网络
+    - id: Skill-Progent-Privilege-Control
+      role: 最小权限原则：每个 Agent 只获得完成任务所需的最低权限（ROI 30-80万）
+  - condition: 单 Agent + 长任务链（需要跨多步骤完成复杂目标）
     skills:
-      - id: Skill-Agent-Safety-Guardrails
-        role: 多层安全护栏：输入过滤 + 输出校验 + 行为约束，防 Prompt 注入（ROI 10-30万）
-      - id: Skill-AgentTrust-Runtime-Safety-Interception
-        role: 运行时安全拦截：95% 准确率，< 1ms 延迟，MCP 原生集成（ROI 20-60万）
-      - id: Skill-LDP-Identity-Aware-Protocol
-        role: 身份感知协议：Agent 间调用的身份验证与最小权限传递
-      - id: Skill-CapSeal-Agent-Secret-Mediation
-        role: 密钥代管：Agent 无法直接访问 API Keys，通过中介层获取临时凭证
-
-  - id: step-5
-    name: 自我进化与记忆管理
-    question: 如何让 Agent 从失败经验中学习，不断提升？
-    context: 生产 Agent 每天处理数百个任务，应将经验积累为可复用的技能增量
+    - id: Skill-KLong-Long-Horizon-Agent-Training
+      role: 长程任务链训练，解决跨 50+ 步骤的规划遗忘问题
+    - id: Skill-Context-Compression
+      role: 上下文压缩：90% 成本节省，支持超长对话历史
+- id: step-2
+  name: 部署上线与自适应
+  question: 如何让 Agent 在新业务场景中快速适配，避免大量标注数据？
+  context: 跨境运营场景变化快（新品类/新市场/政策变化），Agent 需要低样本快速适配
+  skills:
+  - id: Skill-CASCADE-Deployment-Time-Learning
+    role: 部署时学习（DTL）：用案例推理在部署阶段零标注自适应，Contextual Bandit 优化
+  - id: Skill-VLM-Ecommerce-Adaptation
+    role: 电商视觉语言模型适配：主图/视频内容理解快速迁移到新品类（ROI 1.6万元）
+  - id: Skill-AutoSkill-Lifelong-Learning
+    role: 终身学习技能库：自动将新场景经验沉淀为可复用技能，避免重复训练
+- id: step-3
+  name: 生产监控与可靠性
+  question: Agent 上线后如何知道它是否在正常工作？性能是否符合 SLA？
+  context: 生产环境 Agent 失败率比测试环境高 3-5 倍，必须有主动监控而非事后发现
+  branches:
+  - condition: 需要建立 SLA 监控（响应时间/成功率/成本三角）
     skills:
-      - id: Skill-AgeMem-Unified-Agent-Memory
-        role: 统一记忆管理：短期工作记忆 + 长期知识库 + 情节记忆三层架构（ROI 10万）
-      - id: Skill-ATLAS-Gradient-Free-Continual
-        role: 免梯度持续学习：无需重训练即可从新案例中学习，防止灾难性遗忘
-      - id: Skill-Co-Evolutionary-Skill-Verification
-        role: 协同进化技能验证：自动检测和淘汰过时技能，确保技能库质量
-
-  - id: step-6
-    name: 效果度量与迭代
-    question: 如何量化 Agent 工程化的业务价值，驱动下一轮优化？
-    context: Agent ROI 需要与人工基线对比，分任务类型统计成本/质量/速度三角
+    - id: Skill-Agent-SLO-Manager
+      role: Agent SLO（服务级别目标）管理：响应时间 P99 / 任务成功率 / token 成本三角监控
+    - id: Skill-ReliabilityBench-Agent-Reliability
+      role: 生产可靠性三维评估（pass@1 高估 20-40%，发现真实可靠性基线）
+    - id: Skill-Agentic-Workflow-Compilation
+      role: 工作流编译优化：$150/天→$0.5-1.2/天，成本压缩 99%（ROI 62-462×）
+  - condition: 需要根因追溯（Agent 失败了不知道哪步出问题）
     skills:
-      - id: Skill-MCP-Tool-Use-Benchmark
-        role: MCP 工具使用基准评估：TFS/TEFS 双指标，定量对比 Agent vs 人工
-      - id: Skill-Agentic-Workflow-Compilation
-        role: 持续优化工作流编译，追踪成本压缩曲线
-      - id: Skill-Cost-Aware-Agent-Scheduling
-        role: 成本感知调度：实时监控 token 消耗，自动切换高/低成本模型路由
-
+    - id: Skill-AgentTrace-Causal-RCA
+      role: 因果追溯：自动定位 Agent 失败的根因步骤（ROI 5-20万/月）
+    - id: Skill-Agent-Fault-Tolerance
+      role: 容错机制：关键步骤失败时自动降级/重试/人工介入路由（ROI 5-15万）
+- id: step-4
+  name: 安全防御与合规
+  question: 如何防止 Agent 被注入攻击、权限滥用或产生合规风险？
+  context: 跨境电商 Agent 操作 Amazon API / 支付系统 / 客户数据，安全风险高
+  skills:
+  - id: Skill-Agent-Safety-Guardrails
+    role: 多层安全护栏：输入过滤 + 输出校验 + 行为约束，防 Prompt 注入（ROI 10-30万）
+  - id: Skill-AgentTrust-Runtime-Safety-Interception
+    role: 运行时安全拦截：95% 准确率，< 1ms 延迟，MCP 原生集成（ROI 20-60万）
+  - id: Skill-LDP-Identity-Aware-Protocol
+    role: 身份感知协议：Agent 间调用的身份验证与最小权限传递
+  - id: Skill-CapSeal-Agent-Secret-Mediation
+    role: 密钥代管：Agent 无法直接访问 API Keys，通过中介层获取临时凭证
+- id: step-5
+  name: 自我进化与记忆管理
+  question: 如何让 Agent 从失败经验中学习，不断提升？
+  context: 生产 Agent 每天处理数百个任务，应将经验积累为可复用的技能增量
+  skills:
+  - id: Skill-AgeMem-Unified-Agent-Memory
+    role: 统一记忆管理：短期工作记忆 + 长期知识库 + 情节记忆三层架构（ROI 10万）
+  - id: Skill-ATLAS-Gradient-Free-Continual
+    role: 免梯度持续学习：无需重训练即可从新案例中学习，防止灾难性遗忘
+  - id: Skill-Co-Evolutionary-Skill-Verification
+    role: 协同进化技能验证：自动检测和淘汰过时技能，确保技能库质量
+- id: step-6
+  name: 效果度量与迭代
+  question: 如何量化 Agent 工程化的业务价值，驱动下一轮优化？
+  context: Agent ROI 需要与人工基线对比，分任务类型统计成本/质量/速度三角
+  skills:
+  - id: Skill-MCP-Tool-Use-Benchmark
+    role: MCP 工具使用基准评估：TFS/TEFS 双指标，定量对比 Agent vs 人工
+  - id: Skill-Agentic-Workflow-Compilation
+    role: 持续优化工作流编译，追踪成本压缩曲线
+  - id: Skill-Cost-Aware-Agent-Scheduling
+    role: 成本感知调度：实时监控 token 消耗，自动切换高/低成本模型路由
+  - id: Skill-Speculative-Decoding-Agent
+    role: 投机解码推理加速，LLM Agent延迟降低50-63%，大促期实时监控覆盖率提升3倍
+  - id: Skill-KV-Cache-Optimization-Agent
+    role: PagedAttention+Prefix Sharing，多Agent并发GPU内存利用率从25%→80%
+  - id: Skill-Agentic-RAG-Active-Retrieval
+    role: Self-RAG按需检索，准确率85%→95%，检索API成本降低40%
+  - id: Skill-In-Context-Learning-Tabular
+    role: ICL少样本快速建模，新品类50条样本即可部署风控，无需训练周期
 outcomes:
-  - Agent 生产失败率从 30-50% 降至 < 10%（ReliabilityBench 基准验证）
-  - 运营成本从 $150/天压缩至 $0.5-1.2/天（Workflow Compilation）
-  - 新场景适配时间从 2-4 周（收集标注数据）降至 1-3 天（DTL 部署时学习）
-  - Agent 安全事件（Prompt 注入/权限滥用）拦截率 > 95%
-  - 技能库持续增长，每月自动积累 20-30 个可复用技能模式
+- Agent 生产失败率从 30-50% 降至 < 10%（ReliabilityBench 基准验证）
+- 运营成本从 $150/天压缩至 $0.5-1.2/天（Workflow Compilation）
+- 新场景适配时间从 2-4 周（收集标注数据）降至 1-3 天（DTL 部署时学习）
+- Agent 安全事件（Prompt 注入/权限滥用）拦截率 > 95%
+- 技能库持续增长，每月自动积累 20-30 个可复用技能模式

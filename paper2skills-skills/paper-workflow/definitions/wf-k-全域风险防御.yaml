@@ -68,6 +68,13 @@ steps:
       role: LLM 自动修复，30秒替换违规词
     - id: Skill-VOC-Compliance-Signal-Mining
       role: 评论合规信号，实时监控召回风险
+  skills:
+  - id: Skill-GNN-Fraud-Detection
+    role: 图神经网络欺诈团伙检测，通过共享设备/地址/IP关系识别欺诈网络
+  - id: Skill-Tag-Fraud-Risk-Intelligence
+    role: 行为标签序列欺诈特征工程，捕捉"先积累信誉再欺诈"模式
+  - id: Skill-Synthetic-Data-Generation-Tabular
+    role: 合成欺诈数据增强，解决欺诈样本极端不平衡问题（1.8%），F1从0.43提升至0.71
 outcomes:
 - 账号健康问题提前 7-14 天预警，充足时间响应
 - 欺诈退货识别率 70-85%，月节省 ¥3-15 万

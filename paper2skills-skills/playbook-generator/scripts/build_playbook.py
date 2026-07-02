@@ -76,7 +76,7 @@ TOPIC_RULES = {
     "MAS与智能体工程": ["mas", "agent", "mcp", "orchestr", "tool", "memory", "trust"],
     "定价与利润": ["pricing", "price", "价格", "elasticity", "margin"],
     "风控与合规": ["fraud", "risk", "compliance", "合规", "风控", "fake"],
-    "视觉内容生成": ["video", "visual", "image", "avatar", "ai视频", "multimodal"],
+    "视觉内容生成": ["video", "visual", "image", "avatar", "ai视频", "multimodal", "mas video", "video commerce", "视频电商", "短视频带货", "视频标签化"],
     "实验与因果推断": ["causal", "因果", "uplift", "did", "diff-in-diff", "instrumental", "iv", "experiment", "a/b", "bandit", "counterfactual", "treatment", "rct"],
     "用户增长与留存": ["churn", "ltv", "retention", "rfm", "lifecycle", "cohort", "复购", "流失", "留存", "用户增长", "lapse", "reactivation", "clv"],
     "营销分析与预算": ["mmm", "budget allocation", "promo", "promotion", "saturation", "cannibalization", "media mix", "incrementality", "营销归因", "预算分配", "投资回报"],
@@ -87,8 +87,8 @@ TOPIC_RULES = {
     "搜索流量与SEO": ["seo", "a9", "organic", "搜索", "流量", "keyword ranking", "search visibility", "ppc synergy", "search traffic", "amazon seo", "索引"],
     "时序预测": ["time series", "时序", "forecasting", "预测", "arima", "prophet", "tft", "lstm", "seasonal", "trend", "decomposition", "temporal"],
     "LLM数据分析": ["llm", "nl2sql", "data agent", "text-to-sql", "自然语言", "language model", "gpt", "deepseek", "rag pipeline", "prompt", "in-context"],
-    "ML基础与可解释性": ["shap", "lime", "explainab", "可解释", "feature importance", "feature engineering", "feature selection", "xgboost", "lightgbm", "calibration", "overfitting"],
-    "AI伦理与治理": ["ethics", "bias", "fairness", "伦理", "aigc", "hallucination", "safety", "alignment", "privacy", "responsible ai", "transparency", "accountability"],
+    "ML基础与可解释性": ["shap", "lime", "explainab", "可解释", "feature importance", "feature engineering", "feature selection", "in-context learning", "icl", "tabpfn", "continual learning", "ewc", "rlhf", "reward model", "continual", "持续学习", "少样本", "few-shot", "xgboost", "lightgbm", "calibration", "overfitting"],
+    "AI伦理与治理": ["ethics", "bias", "fairness", "伦理", "aigc", "hallucination", "safety", "alignment", "privacy", "responsi", "xai", "explainability", "regulatory compliance", "eu ai act", "gdpr compliance", "responsible ai", "red team", "transparency", "accountability"],
     "供应商管理与博弈": ["supplier", "vendor", "sourcing", "procurement", "supplier evaluation", "supplier risk", "negotiation", "qualification", "supplier performance", "supply base", "采购"],
     "KPI运营指标体系": ["kpi", "otif", "otd", "fill-rate", "fill rate", "oos", "sell-through", "days inventory", "scorecard", "dashboard", "benchmark", "metric", "运营指标", "履约率"],
     "逆向物流与退货": ["return", "reverse logistics", "refund", "chargeback", "退货", "退款", "disposition", "returnformer", "return fraud", "reverse", "退换"],
@@ -98,7 +98,7 @@ TOPIC_RULES = {
     "现金流与供应链融资": ["cash conversion", "working capital", "inventory financing", "lending", "credit risk", "payable", "receivable", "cash cycle", "现金流", "融资", "账期", "供应链金融"],
     "竞品情报自动化": ["competitor keyword", "competitive intelligence", "competitor price", "market share", "competitive response", "competitor monitor", "竞品", "竞争对手", "情报", "share of voice"],
     "多渠道协同增长": ["omnichannel", "multi-channel", "cross-platform", "channel synergy", "walmart", "temu", "shopee", "lazada", "多渠道", "全渠道", "跨平台", "渠道协同"],
-    "ESG与绿色供应链": ["esg", "carbon", "sustainability", "green supply", "epr", "cbam", "carbon footprint", "climate", "responsible sourcing", "碳足迹", "绿色", "可持续"],
+    "ESG与绿色供应链": ["esg", "carbon", "sustainability", "green supply", "epr", "cbam", "carbon footprint", "climate", "resp", "cold chain", "冷链", "碳排放", "carbon emission", "green logistics", "drone delivery", "uav", "carrier selection", "onsible sourcing", "碳足迹", "绿色", "可持续"],
 }
 
 WORKFLOW_RULES = {
@@ -3514,7 +3514,7 @@ def write_file(path: Path, content: str) -> None:
 # Index page (Phase 3C — three-audience redesign)
 # ---------------------------------------------------------------------------
 
-def render_index(skill_count: int, domain_count: int, edge_count: int, domains: list[dict[str, Any]], skills: list[PlaybookSkill]) -> str:
+def render_index(skill_count: int, domain_count: int, edge_count: int, domains: list[dict[str, Any]], skills: list[PlaybookSkill], workflow_count: int = 32) -> str:
     domain_cards = "".join(
         f"<a class='metric-card domain-card' href='domains/{slugify(d['vault_dir'])}.html'>"
         f"<strong>{html.escape(d['vault_dir'])}</strong>"
@@ -3550,8 +3550,8 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
     return f"""
 <div class="hero">
   <p class="hero-badge">唯一把顶会 ML 论文翻译为跨境运营决策的平台</p>
-  <h1>母婴跨境品牌用这里的 AI 技能，每年多赚 3,000 万</h1>
-  <p class="lead">{skill_count} 个从 NeurIPS / KDD / ICML 萃取的可落地决策技能——每个技能有真实 ROI 数字、可运行代码、和跨境电商业务场景。这是任何咨询公司和 SaaS 工具都无法复制的能力。</p>
+  <h1>1123 个顶会 AI 技能 × 3.3亿元年化 ROI — 母婴跨境品牌的增长基础设施</h1>
+  <p class="lead">{skill_count} 个从 NeurIPS / KDD / ICML / ICLR 顶会萃取的决策技能，覆盖因果推断·MAS多智能体·视频电商·ESG合规等最新方向。每个技能配有真实 ROI 数字（均值29万元/年）、可运行代码和业务场景——这是任何咨询公司和 SaaS 工具都无法复制的能力。</p>
   <div class="hero-primary-cta">
     <a class="btn-primary accent" href="ai-roadmap.html">查看 AI 能力路线图</a>
     <a class="btn-secondary" href="mailto:skills@lute-tlz-dddd.top?subject=预约Demo-paper2skills" >预约 30 分钟 Demo</a>
@@ -3687,7 +3687,9 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
     <div><strong>{skill_count}</strong><span>Skills</span></div>
     <div><strong>{domain_count}</strong><span>领域</span></div>
     <div><strong>{edge_count}</strong><span>关系边</span></div>
-    <div><strong>5</strong><span>工作流</span></div>
+    <div><strong>{workflow_count}</strong><span>业务工作流</span></div>
+    <div><strong>¥3.3亿</strong><span>年化ROI总量</span></div>
+    <div><strong>26</strong><span>AI Agent</span></div>
   </div>
   <div class="grid">{domain_cards}</div>
 </div>
@@ -5764,7 +5766,7 @@ def render_pages(
     # ── Index (Phase 3C) ──
     write_file(out / "index.html", html_page(
         "总览",
-        render_index(skill_count, domain_count, edge_count, domains, skills),
+        render_index(skill_count, domain_count, edge_count, domains, skills, len(WORKFLOW_RULES)),
         active_nav="index",
     ))
 
@@ -6303,7 +6305,12 @@ def _post_build_patch(out: "Path") -> None:
 'agent-dml-counterfactual-pricing':'你是反事实定价专家，专注跨境电商动态定价。输出格式：\\n【反事实基线】当前价格的弹性估算（价格↑1%→销量变化%）\\n【最优价格区间】基于弹性+竞品+季节性的建议定价\\n【定价情景对比】3个情景（保守/中性/激进）各自GMV/利润预测\\n【竞品反应预测】竞品可能的跟价行为及概率\\n【执行时机】最优调价时间窗口 + 监控指标阈值。',
 'agent-cold-start-advisor':'你是新品冷启动策略专家，专注跨境电商。输出格式：\\n【冷启动诊断】当前阶段（0-7天/1-4周/1-3月）及核心障碍\\n【流量获取方案】前30天具体推广策略（广告类型+预算分配%）\\n【定价策略】冷启动期建议价格 + 提价时间节点\\n【首评获取】获取前20条真实评价的3个具体操作\\n【里程碑目标】D7/D30/D90的可量化目标（排名/评价数/日销）。',
 'agent-festival-replenishment':'你是大促补货决策专家，专注跨境电商旺季。输出格式：\\n【大促需求预测】基于历史数据的需求倍率区间（P50/P80/P95）\\n【安全库存计算】建议备货量 = 预测需求×安全系数，给出具体件数\\n【资金占用评估】备货总成本 + 滞销风险敞口（超卖/断货各自损失估算）\\n【物流时间线】最晚下单时间 + 各运输方式到仓时间\\n【清仓预案】大促后剩余库存>30%的降价处理方案。'
-};
+
+,'agent-video-content-mas':'你是视频电商内容专家，擅长TikTok/Reels母婴内容策略。\n输出格式：\n【热点话题】3个当前趋势（含预测爆款率）\n【脚本方案A】开场Hook + 核心内容 + CTA（字数限制60秒）\n【脚本方案B】不同角度的替代方案\n【商品标签建议】视频中应展示的SKU + 购物链接策略\n【发布策略】最优时间 + 标签 + 跨平台建议\n【预测指标】首日播放量范围 + 爆款概率 + ROI预估\n严格控制在母婴安全红线内，不发布任何医疗建议。'
+,'agent-causal-pricing-advisor':'你是因果定价专家，使用DML和X-Learner方法估计真实价格弹性。\n输出格式：\n【弹性诊断】OLS估计值 vs DML去偏估计值 + 偏差来源分析\n【用户分群弹性】高/中/低弹性用户群体划分 + 每群弹性值\n【定价建议】全量降价ROI vs 精准发券ROI对比\n【行动方案】3步精准定价策略：目标人群+优惠形式+预期效果\n【风险提示】定价操纵合规检查 + 竞品跟价风险\n数据驱动，用具体数字，禁止"可能"等模糊词。'
+,'agent-growth-diagnostics':'你是增长分析专家，专注用户激活率/复购率/ROAS等核心增长指标的根因诊断。\n输出格式：\n【异常确认】统计检验结果（p值 + z分数）+ 是否显著异常\n【假设树】5个候选根因（按概率排序）\n【数据验证】每个假设对应的数据查询和验证结果\n【根因定位】主因（置信度>80%）+ 次因（如有）\n【行动清单】P0行动（今日执行）+ P1行动（本周内）+ 预计恢复时间\n严格基于数据，不做主观猜测，每个结论附数据支撑。'
+,'agent-search-mas-monitor':'你是Amazon搜索排名专家，擅长多Agent协同监控和根因诊断。\n输出格式：\n【排名扫描】已监控关键词数量 + 发现异常关键词列表\n【根因矩阵】库存/评分/广告/竞品4个维度的影响评估\n【优先级排序】P0/P1/P2行动，每个行动的预期恢复天数和排名回升幅度\n【协同建议】广告出价调整 × 自然排名优化的协同策略\n【监控设置】建议的告警阈值和监控频率\n输出具体数字，不接受"可能""大概"等模糊表达。'
+,'agent-xai-compliance-auditor':'你是AI合规专家，专注EU AI Act、GDPR和算法公平性审计。\n输出格式：\n【合规级别】高风险/中风险/低风险 + 判定依据（引用具体法规条款）\n【歧视检测】各受保护属性的差异冲击比(DI) + 是否通过80%规则\n【可解释性评估】SHAP特征分析 + 个体解释能力 + 反事实解释\n【合规差距清单】已满足/待补充/未满足三栏对比\n【整改路线图】3个优先级行动 + 工程工时估算 + 合规风险量化\n以监管机构视角评审，不为企业利益辩护。'};
 const CHAINS=[{id:'supply-decision',name:'供应链全链路决策',agents:['agent-supply-sentinel','agent-pnl-analyzer','agent-pricing-advisor']},{id:'growth-analysis',name:'增长归因分析',agents:['agent-ad-attribution','agent-competitor-radar','agent-product-radar']},{id:'brand-protection',name:'品牌合规防御',agents:['agent-listing-doctor','agent-brand-guardian','agent-account-guardian']}];
 const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站','agent-sku-tag-scanner':'SKU标签质量扫描器','agent-compliance-matrix':'多市场合规矩阵','agent-return-analyzer':'退货根因分析师','agent-margin-calculator':'SKU利润归因计算器','agent-geopolitical-risk':'地缘风险评估仪','agent-epr-calculator':'EPR合规费用测算','agent-dml-counterfactual-pricing':'反事实定价引擎','agent-cold-start-advisor':'新品冷启动顾问','agent-festival-replenishment':'大促补货决策师'};
 function getMode(id){const r=document.querySelector('input[name="mode-'+id+'"]:checked');return r?r.value:'local';}
