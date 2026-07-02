@@ -6,6 +6,7 @@
 AGENT_CATALOG = [
     {
         "id": "agent-product-radar",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="2"/><circle cx="11" cy="11" r="5" stroke-dasharray="2 1.5" opacity=".6"/><circle cx="11" cy="11" r="8.5" stroke-dasharray="2 2" opacity=".35"/><line x1="11" y1="4" x2="11" y2="2.5" stroke-width="2"/></svg>',
         "icon": "RA",
         "name": "选品雷达",
         "category": "选品分析",
@@ -36,6 +37,7 @@ BSR TOP10 均价: $18.9 | 您的成本带: $6-8
     },
     {
         "id": "agent-listing-doctor",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3.5"/><path d="M8 10.5C5 10.5 3 13 3 15v1h10v-1c0-2-2-4.5-5-4.5z"/><path d="M14.5 8.5h5M17 6v5" stroke-width="2"/></svg>',
         "icon": "LD",
         "name": "Listing 医生",
         "category": "Listing 优化",
@@ -67,6 +69,7 @@ Tested 10,000+ bends without cracking — Made from 100% FDA-compliant food-grad
     },
     {
         "id": "agent-voc-decoder",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h12a1 1 0 011 1v7a1 1 0 01-1 1H9l-4 3v-3H3a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M7 8h6M7 11h4" stroke-width="1.5"/></svg>',
         "icon": "VC",
         "name": "用户之声解码器",
         "category": "VOC 分析",
@@ -101,6 +104,7 @@ P2: 加强洗碗机染色防护工艺""",
     },
     {
         "id": "agent-ad-attribution",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="4" cy="17" r="1.5" fill="currentColor" stroke="none"/><circle cx="11" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="5" r="1.5" fill="currentColor" stroke="none"/><path d="M5.1 16 10 12M12 10l5-4.5" stroke-dasharray="2 1"/><path d="M3 17l5-6 5 4 5-9" stroke-width="2" stroke-dasharray="none"/></svg>',
         "icon": "AA",
         "name": "广告归因侦探",
         "category": "广告归因",
@@ -132,6 +136,7 @@ SB广告 impression 12万 → 无再营销链路，损失中端漏斗流量
     },
     {
         "id": "agent-competitor-radar",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11,2 13.5,8.5 20.5,8.5 15,12.5 17,19 11,15 5,19 7,12.5 1.5,8.5 8.5,8.5" opacity=".9"/></svg>',
         "icon": "CR",
         "name": "竞品雷达站",
         "category": "竞品监控",
@@ -162,6 +167,7 @@ P2: 竞品B更新Listing → 检查是否使用你的核心卖点词汇""",
     },
     {
         "id": "agent-supply-sentinel",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l8 4.5V15L11 20 3 15V6.5L11 2z"/><path d="M11 2v18M3 6.5l8 4.5 8-4.5" stroke-width="1.2" opacity=".6"/><circle cx="11" cy="11" r="2.5" fill="currentColor" stroke="none" opacity=".8"/></svg>',
         "icon": "SC",
         "name": "供应链哨兵",
         "category": "供应链预警",
@@ -196,6 +202,7 @@ P2: 竞品B更新Listing → 检查是否使用你的核心卖点词汇""",
     },
     {
         "id": "agent-cs-triage",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="16" height="3.5" rx="1"/><rect x="3" y="9.5" width="11" height="3.5" rx="1"/><rect x="3" y="15" width="7" height="3.5" rx="1"/><path d="M17.5 12l-3 3 1.5 1.5 4.5-4.5" stroke-width="1.8" stroke="currentColor"/></svg>',
         "icon": "CS",
         "name": "客服分诊台",
         "category": "客服售后",
@@ -228,6 +235,7 @@ If you haven't received it by [DATE+3], please reply and we'll send a replacemen
     },
     {
         "id": "agent-pricing-advisor",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18L10 8l4 5 4-9"/><path d="M4 18h14" stroke-width="1.2" opacity=".5"/><path d="M16 4h4v4" stroke-width="1.8"/></svg>',
         "icon": "PA",
         "name": "动态定价顾问",
         "category": "价格策略",
@@ -261,6 +269,7 @@ Week 2: 若转化率降幅 <15%，升至 $21.99
     },
     {
         "id": "agent-account-guardian",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l7.5 3v6c0 4.5-3.5 7.5-7.5 8.5C3.5 18.5 3 15.5 3 11V5L11 2z"/><path d="M7.5 11l2.5 2.5 4.5-4.5" stroke-width="2"/></svg>',
         "icon": "AG",
         "name": "账号风险卫士",
         "category": "合规风控",
@@ -296,6 +305,7 @@ P2（下月）: 申请 Brand Registry 加强品牌保护
     },
     {
         "id": "agent-pnl-analyzer",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="13" width="4" height="6" rx=".8" fill="currentColor" opacity=".3"/><rect x="9" y="9" width="4" height="10" rx=".8" fill="currentColor" opacity=".5"/><rect x="15" y="5" width="4" height="14" rx=".8" fill="currentColor" opacity=".8"/><path d="M3 19h16" stroke-width="1.2"/></svg>',
         "icon": "PL",
         "name": "P&L 透视镜",
         "category": "数据分析",
@@ -329,6 +339,7 @@ P2（下月）: 申请 Brand Registry 加强品牌保护
     },
     {
         "id": "agent-brand-guardian",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l7.5 3v6c0 4.5-3.5 7.5-7.5 8.5C3.5 18.5 3 15.5 3 11V5L11 2z"/><circle cx="11" cy="10.5" r="2.5"/><path d="M8.5 15.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5" stroke-width="1.4"/></svg>',
         "icon": "BG",
         "name": "品牌合规卫士",
         "category": "合规风控",
@@ -366,6 +377,7 @@ P2（下月）: 申请 Brand Registry 加强品牌保护
     },
     {
         "id": "agent-tiktok-content",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="4"/><path d="M15 3h3v3" stroke-width="1.8"/><path d="M15 6a4 4 0 01-4 4" stroke-width="1.8"/><path d="M9 13l2 2 4-4" stroke="none" fill="currentColor" opacity=".7"/><polygon points="9,11 15,13 9,15" fill="currentColor" stroke="none"/></svg>',
         "icon": "TC",
         "name": "TikTok 内容官",
         "category": "内容营销",
@@ -401,6 +413,7 @@ Day 5（周五）— UGC 素人合作
     },
     {
         "id": "agent-dml-counterfactual-pricing",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c2-4 5-4 7 0s5 4 7 0" stroke-width="2"/><path d="M4 9c2-4 5-4 7 0s5 4 7 0" stroke-width="1.5" opacity=".5" stroke-dasharray="2 1"/><path d="M11 7v8" stroke-dasharray="2 1.5" opacity=".4"/></svg>',
         "icon": "CP",
         "name": "反事实定价策略 Agent",
         "category": "价格策略",
@@ -435,6 +448,7 @@ Day 5（周五）— UGC 素人合作
     },
     {
         "id": "agent-sku-tag-scanner",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="11" height="12" rx="1.5"/><path d="M8.5 3.5h7.5a1 1 0 011 1v12" stroke-width="1.2" opacity=".5"/><path d="M6 10h6M6 13h4" stroke-width="1.4"/><path d="M16 14l2.5 2.5M17.5 12.5a3 3 0 100 6 3 3 0 000-6z" stroke-width="1.5"/></svg>',
         "icon": "TQ",
         "name": "SKU标签质量扫描器",
         "category": "标签工程",
@@ -488,6 +502,7 @@ predicted_stockout_7d 超时（>24h未更新）: 8个SKU 🔴
     },
     {
         "id": "agent-compliance-matrix",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="8" height="8" rx="1"/><rect x="12" y="2" width="8" height="8" rx="1"/><rect x="2" y="12" width="8" height="8" rx="1"/><rect x="12" y="12" width="8" height="8" rx="1"/><path d="M14 16l2 2 4-3" stroke-width="1.8"/></svg>',
         "icon": "CM",
         "name": "多市场合规矩阵",
         "category": "合规风控",
@@ -537,6 +552,7 @@ P2（持续）: 监控EU REACH成分变化通知""",
     },
     {
         "id": "agent-return-analyzer",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10H18M14 6l4 4-4 4" stroke-width="1.8"/><path d="M3 17h8M3 17l3-2.5M3 17l3 2.5" stroke-width="1.5"/><circle cx="17" cy="16.5" r="2.5"/><line x1="15.8" y1="15.3" x2="18.2" y2="17.7" stroke-width="1.5"/><line x1="18.2" y1="15.3" x2="15.8" y2="17.7" stroke-width="1.5"/></svg>',
         "icon": "RT",
         "name": "退货根因分析师",
         "category": "客服售后",
@@ -587,6 +603,7 @@ P2（持续）: 监控EU REACH成分变化通知""",
     },
     {
         "id": "agent-margin-calculator",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="16" height="16" rx="2"/><path d="M7 11h8M11 7v8"/><circle cx="7.5" cy="7.5" r=".8" fill="currentColor" stroke="none"/><circle cx="14.5" cy="14.5" r=".8" fill="currentColor" stroke="none"/></svg>',
         "icon": "PL",
         "name": "SKU利润归因计算器",
         "category": "数据分析",
@@ -638,6 +655,7 @@ FBA费率 12%：✅ 正常
     },
     {
         "id": "agent-geopolitical-risk",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8.5"/><ellipse cx="11" cy="11" rx="3.5" ry="8.5"/><path d="M2.5 8.5h17M2.5 13.5h17" stroke-width="1.2" opacity=".6"/><path d="M11 5l1.5 3.5-3 .5 2 3-2.5 1.5" stroke="none" fill="currentColor" opacity=".6"/><circle cx="11" cy="4" r="1.5" fill="currentColor" stroke="none" opacity=".9"/></svg>',
         "icon": "GR",
         "name": "地缘风险评估仪",
         "category": "合规风控",
@@ -691,6 +709,7 @@ FBA费率 12%：✅ 正常
     },
     {
         "id": "agent-epr-calculator",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="16" height="14" rx="1.5"/><path d="M7 9h3M7 12h5M7 15h2" stroke-width="1.4"/><path d="M14 9l1.5 3-1.5 3M16 9l1.5 3-1.5 3" stroke-width="1.3" opacity=".7"/></svg>',
         "icon": "EP",
         "name": "EPR合规费用测算",
         "category": "合规风控",
@@ -753,6 +772,7 @@ EU目标市场: DE, FR, AT  年销量: 5,000件
     },
     {
         "id": "agent-cold-start-advisor",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 19V8M7 12l4-4 4 4" stroke-width="2"/><path d="M5 19h12" stroke-width="1.2" opacity=".5"/><circle cx="11" cy="5" r="2.5"/><path d="M9 5.5L11 3l2 2.5" stroke-width="1.5" fill="none"/></svg>',
         "icon": "CS",
         "name": "新品冷启动助手",
         "category": "选品增长",
@@ -794,6 +814,7 @@ Week 4: 评估点击率/转化率，调整出价策略
     },
     {
         "id": "agent-festival-replenishment",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h16M5 18V9l6-6 6 6v9"/><rect x="8.5" y="12" width="5" height="6" rx=".8"/><path d="M9 9h4" stroke-width="1.2"/><path d="M17 5l2-2M19 7l1-3" stroke-width="1.5" opacity=".7"/></svg>',
         "icon": "FR",
         "name": "大促备货决策Agent",
         "category": "供应链",
@@ -830,5 +851,189 @@ T-2周: 大促前最后一次库存盘点，不足则启动航空紧急补货
 ROI预测: 大促期间额外GMV $142,000，净利润率18%，投资回报率5.4x
 
 [+] 建议：按分批采购计划执行，降低单次资金压力""",
+    },
+
+    {
+        "id": "agent-video-content-mas",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="12" rx="2"/><polygon points="19,8 22,11 19,14" fill="currentColor" stroke="none"/><circle cx="9" cy="11" r="2.5"/></svg>',
+        "icon": "VC",
+        "name": "视频内容MAS优化师",
+        "category": "内容营销",
+        "cat_key": "content",
+        "cat_class": "cat-ad",
+        "desc": "输入产品和目标受众，MAS多智能体自动完成趋势选题→脚本生成→A/B对比→最优推荐，爆款率从5%提升至18%。",
+        "roi": "爆款率5%→18%，年化GMV增量约150万元",
+        "linked_skills": ["Skill-MAS-Video-Content-Optimization", "Skill-Tag-Video-Commerce-Tagging", "Skill-AI-Content-Marketing-Growth"],
+        "inputs": [
+            {"id": "product", "label": "产品名称/品类", "type": "text", "placeholder": "例：婴儿推车轻便折叠款"},
+            {"id": "target_age", "label": "宝宝月龄", "type": "select", "options": ["0-3月", "3-6月", "6-12月", "12-24月", "全龄段"]},
+            {"id": "platform", "label": "目标平台", "type": "select", "options": ["TikTok", "Instagram Reels", "YouTube Shorts", "全平台"]}
+        ],
+        "demo_output": """[MAS视频内容分析] 婴儿推车 → TikTok
+
+━━ Trend Agent：今日热门话题 ━━
+🔥 #新生儿必备清单  搜索量↑34%
+🔥 #出行神器  近7日爆款率18%
+
+━━ Script Agent：推荐脚本 ━━
+版本A: "90%新手妈妈都犯的推车错误..."（悬念Hook）
+版本B: "测评12款推车后，我选了这一款"（对比Hook）
+
+━━ 商品标签化 ━━
+识别商品: 婴儿推车-轻便折叠 ✅ 置信度94%
+购物链接: 已生成
+
+━━ 发布建议 ━━
+最优时间: 今日 19:30
+预测爆款概率: 23%（平台均值5%）
+
+[+] 建议先发版本A（悬念Hook在0-3月新手妈妈群转化更高）""",
+    },
+    {
+        "id": "agent-causal-pricing-advisor",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 L8 10 L12 13 L18 6"/><circle cx="18" cy="6" r="1.5" fill="currentColor"/><path d="M3 19h16" stroke-dasharray="2 1"/></svg>',
+        "icon": "CP",
+        "name": "因果定价顾问",
+        "category": "价格策略",
+        "cat_key": "pricing",
+        "cat_class": "cat-supply",
+        "desc": "用DML双重去偏机器学习估计真实价格弹性（去除季节/促销混淆），给出降价/提价的预测ROI和差异化定价建议。",
+        "roi": "定价精准度提升，年化GMV优化约120万元",
+        "linked_skills": ["Skill-Double-Debiased-ML-Price", "Skill-Heterogeneous-Treatment-Effect-XLearner", "Skill-Dynamic-Pricing-Elasticity"],
+        "inputs": [
+            {"id": "sku", "label": "SKU/ASIN", "type": "text", "placeholder": "例：B07ABC123"},
+            {"id": "current_price", "label": "当前售价 ($)", "type": "text", "placeholder": "例：89.99"},
+            {"id": "price_change", "label": "考虑的价格变化", "type": "select", "options": ["降价5%", "降价10%", "降价15%", "提价5%", "提价10%"]}
+        ],
+        "demo_output": """[DML因果定价分析] 婴儿推车 $89.99 → 降价10%
+
+━━ 弹性估计（去偏后）━━
+OLS原始估计: -0.31（严重低估，混入了季节效应）
+DML去偏估计: -1.68（95%CI: [-2.01, -1.35]）
+解读: 价格每降10%，销量净增约16.8%
+
+━━ 用户群异质弹性 ━━
+新生儿期妈妈 (0-3月): 弹性 -2.1 → 降价效果最强
+大月龄妈妈 (12+月):   弹性 -0.9 → 降价效果有限
+
+━━ 降价10% ROI测算 ━━
+当前月GMV: $22,049 → 预测: $23,166 (+$1,117)
+月净利润变化: -$891（利润率下降但总量上升）
+
+━━ 最优策略建议 ━━
+✅ 对0-3月新手妈妈: 发放定向9折券（精准触达高弹性用户）
+✅ 对复购用户: 保持原价，改用会员积分奖励
+
+[!] 全量降价损失$891/月，建议精准用券替代全量降价""",
+    },
+    {
+        "id": "agent-growth-diagnostics",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M11 7v4l3 3"/><path d="M7 11h1M15 11h1M11 7v1M11 15v1"/></svg>',
+        "icon": "GD",
+        "name": "增长DataAgent诊断师",
+        "category": "数据分析",
+        "cat_key": "analytics",
+        "cat_class": "cat-supply",
+        "desc": "输入增长指标异常（激活率/复购率/ROAS），Agent 5分钟自动完成根因诊断，输出根因排查结果和优先行动清单。",
+        "roi": "诊断时间2天→5分钟，年化价值约120万元",
+        "linked_skills": ["Skill-Growth-DataAgent-Analytics", "Skill-Multi-Step-Reasoning-BI", "Skill-Streaming-Analytics-Agent"],
+        "inputs": [
+            {"id": "metric", "label": "异常指标", "type": "select", "options": ["用户激活率", "7日复购率", "广告ROAS", "搜索转化率", "退货率", "平均客单价"]},
+            {"id": "change", "label": "变化幅度", "type": "text", "placeholder": "例：下降12%（本周vs上周）"},
+            {"id": "segment", "label": "受影响范围", "type": "text", "placeholder": "例：0-3月新用户 / 全品类"}
+        ],
+        "demo_output": """[增长DataAgent] 用户激活率 22%→15% ↓7pp
+
+━━ 异常检测 (z=-9.90) ━━
+✅ 确认显著异常，影响集中在0-3月新用户
+
+━━ 假设树验证 ━━
+✅ 确认: 首页月龄匹配率从82%→48% (p<0.001)
+  → 推荐模型更新忽略了月龄标签权重
+✅ 确认: 渠道质量得分0.78→0.58
+  → TikTok新渠道引入低意愿用户
+❌ 排除: 页面加载速度无变化
+❌ 排除: 外部市场因素（对照组正常）
+
+━━ 优先行动清单 ━━
+P0 (今日): 回滚推荐模型月龄权重设置 → 预计恢复70%激活率
+P1 (本周): TikTok引流用户单独建模，调整激活策略
+
+[+] 根因已定位，P0行动可立即执行""",
+    },
+    {
+        "id": "agent-search-mas-monitor",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5 L19 19"/><path d="M9 6v3l2 2"/></svg>',
+        "icon": "SM",
+        "name": "搜索MAS监控站",
+        "category": "搜索流量",
+        "cat_key": "search",
+        "cat_class": "cat-ad",
+        "desc": "输入ASIN和关键词，多Agent自动完成排名监控→根因诊断→行动建议，响应时间从次日→5分钟，年化流量保护约80万元。",
+        "roi": "排名响应时间次日→5分钟，年化流量保护80万元",
+        "linked_skills": ["Skill-MAS-Search-Optimization", "Skill-Causal-SEO-Search-Attribution", "Skill-Amazon-A10-Algorithm-Ranking"],
+        "inputs": [
+            {"id": "asin", "label": "ASIN 或产品名", "type": "text", "placeholder": "例：B07ABC123 或 婴儿推车"},
+            {"id": "keywords", "label": "核心关键词 (逗号分隔)", "type": "textarea", "placeholder": "例：lightweight baby stroller, foldable baby stroller"},
+            {"id": "market", "label": "目标市场", "type": "select", "options": ["Amazon US", "Amazon DE", "Amazon UK", "Amazon JP"]}
+        ],
+        "demo_output": """[MAS搜索监控] ASIN: B07ABC123 | Amazon US
+
+━━ 排名扫描 (500个关键词) ━━
+🚨 "lightweight baby stroller": 第2→第8位 (↓6位)
+🚨 "foldable stroller for travel": 第5→第12位 (↓7位)
+
+━━ 根因诊断 ━━
+InventoryAgent: FBA库存22天 < 最优60天 → A10降权
+ReviewAgent: 近30天1星评价+85%，折叠机构投诉8条
+BidAgent: 广告出价不足，无法弥补自然排名损失
+
+━━ 行动计划 ━━
+P0 [今日]: 紧急补货至60天库存
+P0 [本周]: 处理折叠机构差评
+P1 [本周]: 提高核心词广告出价至$2.8
+
+预计恢复: 10-14天排名回至第3-4位
+
+[+] 主因锁定，P0行动优先执行""",
+    },
+    {
+        "id": "agent-xai-compliance-auditor",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L4 7v5c0 3.5 2.8 6.8 7 8 4.2-1.2 7-4.5 7-8V7L11 3z"/><path d="M8 11l2 2 4-4"/></svg>',
+        "icon": "XA",
+        "name": "XAI合规审计师",
+        "category": "合规风控",
+        "cat_key": "compliance",
+        "cat_class": "cat-risk",
+        "desc": "输入AI模型类型，自动完成EU AI Act合规审计：特征歧视检测+偏差量化+个体解释能力评估，生成监管报告。",
+        "roi": "EU AI Act违规罚款最高7%营业额，合规建设ROI约7:1",
+        "linked_skills": ["Skill-XAI-Regulatory-Compliance", "Skill-SHAP-Shapley-Feature-Attribution", "Skill-Responsible-AI-Red-Teaming"],
+        "inputs": [
+            {"id": "model_type", "label": "AI系统类型", "type": "select", "options": ["推荐系统", "动态定价", "欺诈风控", "内容生成", "客服AI"]},
+            {"id": "market", "label": "目标市场", "type": "select", "options": ["欧盟 (EU AI Act)", "美国 (FTC)", "中国 (算法推荐管理)", "全球"]},
+            {"id": "model_desc", "label": "模型简述", "type": "textarea", "placeholder": "简要描述模型的输入特征、预测目标和应用场景..."}
+        ],
+        "demo_output": """[XAI合规审计] 推荐系统 → 欧盟 EU AI Act
+
+━━ 合规级别判定 ━━
+分类: 高风险AI系统 (Article 6)
+原因: 影响消费者购买决策 → 强制可解释性要求
+
+━━ 歧视检测 (Article 13) ━━
+性别属性: ✅ DI=0.97 (>0.8 无歧视)
+地区属性: ✅ DI=0.91 (>0.8 无歧视)
+月龄: ✅ 合理业务逻辑（非保护属性）
+
+━━ 合规差距 ━━
+✅ 已满足: 特征透明度、歧视防护、SHAP解释
+⚠️ 待补充: 反事实解释API（建议1周实现）
+❌ 未满足: 正式第三方审计报告
+
+━━ 建议行动 ━━
+1. 实现Counterfactual API（1周工程）
+2. 建立AI决策日志（满足审计要求）
+3. 委托第三方审计（预算€15,000）
+
+[+] 当前合规度75%，距强制执行还需补充3项""",
     },
 ]

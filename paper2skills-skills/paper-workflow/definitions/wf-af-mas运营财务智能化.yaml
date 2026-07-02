@@ -1,0 +1,54 @@
+id: wf-af
+name: WF-AF MAS运营财务智能化
+description: 利用多智能体协同将P&L分析、库存财务、广告ROI核算等运营财务工作从人工2天压缩到20分钟自动完成的智能化工作流。
+target_users:
+- CFO
+- 财务总监
+- 运营数据分析师
+- 供应链财务
+entry_question: 你的财务分析当前最大问题是：P&L归因太慢？各部门数据口径不统一？还是无法快速回答CEO的临时性财务问题？
+steps:
+- id: step-1
+  name: 月度P&L自动归因分析
+  question: 月度P&L分析是否能在20分钟内完成？
+  context: 传统3天人工P&L分析的核心瓶颈是：数据获取2天+分析1天，MAS并行处理可压缩到20分钟
+  skills:
+  - id: Skill-MAS-Revenue-Operations
+    role: MAS多Agent P&L协同，20分钟生成结构化归因报告消除部门推诿，年化节省40万元
+  - id: Skill-Multi-Step-Reasoning-BI
+    role: 多步CoT推理，自动完成"利润下降→拆解收入/成本→锁定SKU/渠道→建议行动"链路
+  - id: Skill-LLM-Financial-Report-Analyst
+    role: LLM财务报告分析，自动解读财务数据并生成可读报告
+- id: step-2
+  name: 实时财务异常预警
+  question: 财务异常（广告超支/利润骤降）是否能在发生后2分钟内被检测到？
+  context: 大促期间广告异常平均被发现时间T+22小时，损失2-4万元，实时监控可降低80%损失
+  skills:
+  - id: Skill-Streaming-Analytics-Agent
+    role: 流式ADWIN监控广告消耗/利润异常，2分钟内告警，年化大促保护137万元
+  - id: Skill-LLM-Hallucination-Detection-BI
+    role: AI日报幻觉检测，确保财务数字准确不被AI误报，防止决策错误
+  - id: Skill-Forecast-to-PL-Bridge
+    role: 预测→P&L桥接，将需求预测直接转化为利润预测，前置风险识别
+- id: step-3
+  name: 多维度财务归因（渠道/SKU/地区）
+  question: 利润能否快速下钻到SKU级别/渠道级别/地区级别？
+  context: P&L下钻能力决定了运营优化的精度，粗粒度归因导致资源投向无效方向
+  skills:
+  - id: Skill-DataAgent-Marketing-Attribution
+    role: 对话式营销归因，CMO随时追问"TikTok贡献了多少利润"立即得到答案
+  - id: Skill-SKU-Level-PL-Dashboard
+    role: SKU级P&L看板，精确到每个ASIN的贡献毛利
+  - id: Skill-PL-Attribution-Analysis
+    role: P&L归因分析，将总体利润变化拆解到各个驱动因子
+- id: step-4
+  name: 财务预测与情景规划
+  question: 是否有自动化的财务预测和多情景模拟能力？
+  context: 关税/汇率/大促等外部冲击的财务影响需要快速量化，人工建模太慢
+  skills:
+  - id: Skill-Agent-Time-Series-Forecasting
+    role: 智能体时序预测，自动选择最优预测模型，MAPE从18%降至9%
+  - id: Skill-Cross-Border-Tax-Tariff-Modeling
+    role: 跨境关税建模，量化贸易政策变化的财务冲击
+  - id: Skill-FX-Hedging-Strategy
+    role: 外汇对冲策略，最小化汇率波动对利润的影响

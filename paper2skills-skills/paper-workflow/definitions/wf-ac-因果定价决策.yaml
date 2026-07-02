@@ -1,0 +1,60 @@
+id: wf-ac
+name: WF-AC 因果驱动定价决策
+description: 从价格弹性估计到最优定价再到A/B验证的全链路因果定价体系，解决传统OLS弹性估计偏差导致的定价失误问题。
+target_users:
+- 定价策略负责人
+- 数据科学家
+- 运营总监
+- CFO
+entry_question: 你的定价决策当前最大问题是：不知道真实价格弹性？担心降价会引发价格战？还是不同用户群的价格敏感度差异未被利用？
+steps:
+- id: step-1
+  name: 因果价格弹性估计（去偏）
+  question: 是否有可靠的价格弹性数据？
+  context: 传统OLS弹性估计因为季节/促销等混淆变量，通常有50-200%的偏差——甚至显示错误的弹性方向
+  branches:
+  - condition: 需要重新建立弹性估计
+    skills:
+    - id: Skill-Double-Debiased-ML-Price
+      role: DML双重去偏弹性估计，从OLS偏差1.57降至0.12，年化定价优化GMV约120万元
+    - id: Skill-IV-Instrumental-Variables
+      role: 工具变量法，用竞品价格变化作为IV消除内生性偏差
+  - condition: 需要细粒度异质弹性
+    skills:
+    - id: Skill-Heterogeneous-Treatment-Effect-XLearner
+      role: X-Learner异质弹性，识别哪类用户（月龄段/消费水平）价格敏感度最高
+    - id: Skill-Propensity-Score-Matching-QuasiExp
+      role: PSM准实验，当无法做随机定价实验时用历史数据估计
+- id: step-2
+  name: 竞品价格监控与响应策略
+  question: 当竞品降价时如何快速决策是否跟进？
+  context: 错误的定价响应（跟进引发价格战，不跟进损失流量）是母婴电商最高频的决策失误
+  skills:
+  - id: Skill-Competitive-Price-Monitoring
+    role: 竞品价格实时监控，检测价格变化触发分析流程
+  - id: Skill-Augmented-Synthetic-Control-ML
+    role: ASCM合成控制，评估竞品降价对自家销量的真实因果影响
+  - id: Skill-Dynamic-Pricing-Elasticity
+    role: 动态定价引擎，基于弹性实时调整建议价格
+- id: step-3
+  name: 促销定价的因果效果评估
+  question: 如何区分促销真实拉动效果vs只是提前购买？
+  context: 很多促销只是让会买的用户提前买（需求借贷），真实增量比表面增长低50%以上
+  skills:
+  - id: Skill-Causal-Time-Series-CausalImpact
+    role: CausalImpact评估促销真实增量，消除自然趋势偏差
+  - id: Skill-Long-Horizon-Experiment-Effect
+    role: 长期实验遗留效应，分析促销后的复购是否有净增量
+  - id: Skill-Bayesian-AB-Testing
+    role: 贝叶斯定价A/B，小流量快速验证新价格策略效果
+- id: step-4
+  name: 用户分层差异化定价
+  question: 是否对不同用户群使用差异化定价策略？
+  context: 不同月龄段/消费历史的用户价格敏感度差异3-5倍，统一定价是巨大机会损失
+  skills:
+  - id: Skill-Tag-Causal-Treatment-Effect
+    role: 标签因果效应，量化不同用户标签的真实价格响应差异
+  - id: Skill-Personalized-ML-Pricing
+    role: 个性化ML定价，基于用户特征实现精准定价
+  - id: Skill-Compliant-Dynamic-Pricing-Guard
+    role: 合规定价保护，确保差异化定价符合平台规则和法律法规

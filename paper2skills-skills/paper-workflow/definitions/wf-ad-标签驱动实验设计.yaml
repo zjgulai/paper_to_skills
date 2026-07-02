@@ -1,0 +1,50 @@
+id: wf-ad
+name: WF-AD 标签驱动精准实验设计
+description: 从用户标签体系出发，设计分层A/B实验、评估处理效应异质性、消除选择偏差的完整实验科学工作流。
+target_users:
+- 增长运营
+- 数据分析师
+- 产品经理
+- 用户研究团队
+entry_question: 你的A/B实验当前最大问题是：效果检测太慢？标签群体间效果差异无法量化？还是实验结论在不同用户群不一致？
+steps:
+- id: step-1
+  name: 标签分层实验设计
+  question: 实验是否考虑了用户标签的分层随机分配？
+  context: 不分层的随机实验可能让高活跃用户恰好集中在处理组，导致效果被高估7pp，浪费预算
+  skills:
+  - id: Skill-Tag-AB-Experiment-Design
+    role: 标签分层A/B实验，消除选择偏差并发现新生儿段+20%效果的精准投放人群
+  - id: Skill-CUPED-Variance-Reduction
+    role: CUPED协变量调整，利用用户历史标签降低30-50%实验方差，减少实验周期
+  - id: Skill-Power-Analysis-Sample-Size
+    role: 功效分析，根据标签分布精确计算最小样本量
+- id: step-2
+  name: 实验中的溢出效应检测
+  question: 推荐系统/社交功能实验是否存在用户间的相互干扰？
+  context: 推荐算法A/B的对照组受处理组影响（共享库存/口碑传播），导致效果被低估2-3pp
+  skills:
+  - id: Skill-Interference-Spillover-Correction
+    role: 溢出效应纠正，检测并修正网络干扰，精确估计真实ATE
+  - id: Skill-Network-Effect-Experiments
+    role: 网络效应实验设计，用集群随机化隔离社交溢出
+- id: step-3
+  name: 异质处理效应分析
+  question: 实验整体效果可以，但不同用户群的效果差异是否被深入分析？
+  context: 平均效果+3%的背后，高月龄用户可能-2%、低月龄用户+12%，统一策略是次优的
+  skills:
+  - id: Skill-Heterogeneous-Treatment-Effect-XLearner
+    role: X-Learner异质效应，识别高效果标签人群优先投放，节省40%预算同时维持效果
+  - id: Skill-Multi-Metric-Experiment-Tradeoff
+    role: 多指标实验权衡，各标签组在GMV/复购/NPS上的综合表现
+- id: step-4
+  name: 地理区域实验（无法用户分流时）
+  question: 平台不允许用户分流或存在市场均衡效应时如何评估策略效果？
+  context: 亚马逊广告/SEO策略、线下推广无法做用户级A/B，需要地理区域实验
+  skills:
+  - id: Skill-Geo-Holdout-Experiment
+    role: Geo地理控制实验，揭示平台归因虚高12pp，年化广告预算优化100万元
+  - id: Skill-Augmented-Synthetic-Control-ML
+    role: ASCM合成控制，小规模市场测试的效果外推到全市场
+  - id: Skill-Bayesian-AB-Testing
+    role: 贝叶斯实验，小流量快速决策，测试周期从12天→3天

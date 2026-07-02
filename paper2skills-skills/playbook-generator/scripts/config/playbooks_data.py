@@ -6,6 +6,7 @@
 TOB_PLAYBOOKS = [
     {
         "id": "pb-tiktok-shop",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="14" r="4"/><path d="M15 3h3v3"/><path d="M15 6a4 4 0 01-4 4"/><polygon points="9,12 14.5,14 9,16" fill="currentColor" stroke="none"/></svg>',
         "icon": "RA",
         "name": "TikTok Shop 运营决策手册",
         "tag": "广告 · 内容 · 归因",
@@ -48,6 +49,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-inventory-festival",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h16M5 18V9l6-6 6 6v9"/><rect x="8.5" y="12" width="5" height="6" rx=".8"/><path d="M17 5l2-2M19 7l1-3" opacity=".7"/></svg>',
         "icon": "SC",
         "name": "大促备货决策手册",
         "tag": "供应链 · 补货 · 预测",
@@ -91,6 +93,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-new-product-launch",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 18V7M7 11l4-5 4 5" stroke-width="2"/><path d="M5 18h12" opacity=".4"/><circle cx="11" cy="4" r="2" fill="currentColor" stroke="none"/></svg>',
         "icon": "NP",
         "name": "新品冷启动手册",
         "tag": "选品 · 预测 · 增长",
@@ -136,6 +139,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-user-growth",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="2.8"/><circle cx="15" cy="8" r="2" opacity=".7"/><path d="M2 18c0-3 2.5-5 6-5s6 2 6 5"/><path d="M15 13c2 .5 4 2 4 5" opacity=".6"/></svg>',
         "icon": "UG",
         "name": "用户增长决策手册",
         "tag": "LTV · 流失 · 分层运营",
@@ -195,6 +199,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-data-foundation",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="11" cy="6" rx="7" ry="2.5"/><path d="M4 6v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6"/><path d="M4 10v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-4" opacity=".6"/></svg>',
         "icon": "DB",
         "name": "数据治理基础手册",
         "tag": "数据质量 · KG · Agent",
@@ -255,6 +260,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-agent-replace",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="12" height="10" rx="2"/><path d="M9 9h4M9 12h2"/><path d="M8 14v2l-2 2h10l-2-2v-2"/><circle cx="9.5" cy="7.5" r=".8" fill="currentColor" stroke="none"/><circle cx="12.5" cy="7.5" r=".8" fill="currentColor" stroke="none"/></svg>',
         "icon": "AI",
         "name": "AI Agent 替人手册",
         "tag": "供应链 · 数据分析 · 广告优化",
@@ -382,6 +388,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-content-factory",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h16M3 9h12M3 13h8"/><path d="M15 14l3.5 3.5-1.5 1.5L13.5 15.5"/><circle cx="18" cy="12" r="3.5"/></svg>',
         "icon": "TC",
         "name": "AI 内容工厂手册",
         "tag": "素材采集 · 视频生成",
@@ -440,6 +447,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-pricing-engine",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17L9 7l4 5 4-8"/><path d="M16 4h4v4"/><path d="M4 17h14" opacity=".4"/></svg>',
         "icon": "PA",
         "name": "AI 定价引擎手册",
         "tag": "竞品监控 · 弹性估算",
@@ -498,6 +506,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-risk-defense",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l7.5 3v6c0 4.5-3.5 7.5-7.5 8.5C3.5 18.5 3 15.5 3 11V5L11 2z"/><path d="M11 8v4M11 15v.5" stroke-width="2"/></svg>',
         "icon": "AG",
         "name": "跨境风险防御作战室",
         "tag": "欺诈反制 · 合规预警",
@@ -600,6 +609,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-tariff-response",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8.5"/><path d="M11 6v5l3.5 2" stroke-width="2"/><path d="M6.5 3.5L4 2M15.5 3.5L18 2" opacity=".6"/></svg>',
         "icon": "TR",
         "name": "关税冲击 72h 响应手册",
         "tag": "关税应对 · 定价重估",
@@ -665,6 +675,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-compliance",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="14" height="16" rx="1.5"/><path d="M7 8h8M7 12h8M7 16h5"/><path d="M13 15.5l1.5 1.5 3-3" stroke-width="1.8"/></svg>',
         "icon": "CL",
         "name": "跨境合规全链路手册",
         "tag": "产品合规 · HTS关税",
@@ -752,6 +763,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-voc-product-loop",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h10a1 1 0 011 1v5a1 1 0 01-1 1H9l-4 3v-3H4a1 1 0 01-1-1V6a1 1 0 011-1z"/><path d="M15 9h2a1 1 0 011 1v4a1 1 0 01-1 1h-1l-2 2v-2"/></svg>',
         "icon": "VP",
         "name": "竞品情报→产品迭代加速器",
         "tag": "VOC挖掘 · 痛点归因",
@@ -819,6 +831,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-customer-service-agent",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="8" r="3.5"/><path d="M4.5 19c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><path d="M8 7.5a5 5 0 010-5M14 7.5a5 5 0 000-5" opacity=".5" stroke-dasharray="2 1"/></svg>',
         "icon": "CS",
         "name": "客服售后智能体手册",
         "tag": "多语言客服 · 退货优化",
@@ -886,6 +899,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-fba-operations",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="16" height="9" rx="1"/><path d="M3 13h16M7 13V19M11 13V19M15 13V19"/><path d="M7 10V7l4-4 4 4v3"/></svg>',
         "icon": "SC",
         "name": "FBA 运营全链路手册",
         "tag": "库存健康 · 头程优化",
@@ -951,6 +965,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-attribution-unification",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="4" cy="11" r="2" fill="currentColor" stroke="none"/><circle cx="11" cy="4" r="2" fill="currentColor" stroke="none"/><circle cx="18" cy="11" r="2" fill="currentColor" stroke="none"/><circle cx="11" cy="18" r="2" fill="currentColor" stroke="none"/><path d="M6 11h5M11 6v5M16 11h-5M11 16v-5" stroke-width="1.8"/></svg>',
         "icon": "CR",
         "name": "全渠道归因统一手册",
         "tag": "多渠道归因 · MMM预算",
@@ -1030,6 +1045,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-ltv-retention",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l4-5 3 3 4-6 4 2"/><path d="M3 19h16" opacity=".4"/><path d="M19 5c0 3-4 5-8 9C7 10 3 8 3 5a4 4 0 018 0 4 4 0 018 0z" opacity=".5"/></svg>',
         "icon": "LV",
         "name": "用户生命周期价值运营手册",
         "tag": "CLV · BTYD · 精准复购",
@@ -1088,6 +1104,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-supply-chain-pl",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="7" rx=".8" fill="currentColor" opacity=".3"/><rect x="9" y="8" width="4" height="11" rx=".8" fill="currentColor" opacity=".5"/><rect x="15" y="4" width="4" height="15" rx=".8" fill="currentColor" opacity=".8"/><path d="M3 19h16" stroke-width="1.2"/><path d="M3 5l7 4 5-3 4 2" stroke-width="1.5"/></svg>',
         "icon": "SC",
         "name": "供应链财务核算手册",
         "tag": "物流成本 · SKU P&L · VOC信号",
@@ -1148,6 +1165,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-dtc-growth",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11h4M16 11h4M11 2v4M11 16v4"/><path d="M5 5l3 3M14 14l3 3M5 17l3-3M14 8l3-3"/><circle cx="11" cy="11" r="3"/></svg>',
         "icon": "DG",
         "name": "DTC 独立站增长手册",
         "tag": "获客归因 · 千人千面 · 成交转化",
@@ -1208,6 +1226,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-supply-chain-tagging-ontology",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h6l1.5 1.5v2L9 11H3V6z"/><path d="M3 13h7l1.5 1.5v2L10 18H3v-5z"/><path d="M12 8h7M12 15h5"/><circle cx="16" cy="8" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="1.5" fill="currentColor" stroke="none"/></svg>',
         "icon": "TG",
         "name": "标签工程与本体驱动手册",
         "tag": "标签工程 · 供应链本体 · 分析→行动",
@@ -1279,6 +1298,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-supply-chain-intelligence",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l8 4.5V15L11 20 3 15V6.5L11 2z"/><path d="M7 11l2 2 5-5" stroke-width="2"/><path d="M11 2v5M3 6.5l5 3M19 6.5l-5 3" opacity=".4"/></svg>',
         "icon": "SI",
         "name": "供应链全链路智能化手册",
         "tag": "全链路 · 智能决策 · 供应链韧性",
@@ -1361,6 +1381,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-game-theory-pricing",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="12" y="3" width="7" height="7" rx="1"/><rect x="3" y="12" width="7" height="7" rx="1"/><rect x="12" y="12" width="7" height="7" rx="1"/><path d="M11 6.5h0M6.5 11v0M15.5 11v0M11 15.5h0" stroke-width="2.5" stroke-linecap="round"/></svg>',
         "icon": "GT",
         "name": "博弈论竞争定价手册",
         "tag": "定价 · 博弈论 · 竞争策略",
@@ -1417,6 +1438,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-behavioral-pricing",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="8" r="4"/><path d="M9 8h4M11 6v4"/><path d="M5 17c0-2.5 2.7-4.5 6-4.5s6 2 6 4.5" opacity=".6"/><path d="M3 14l2-2 2 2" opacity=".5"/><path d="M17 14l2-2 2 2" opacity=".5"/></svg>',
         "icon": "BE",
         "name": "行为经济学定价手册",
         "tag": "定价 · 心理学 · 促销设计",
@@ -1473,6 +1495,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-cross-domain-algorithm-innovation",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="16" cy="6" r="3"/><circle cx="6" cy="16" r="3"/><circle cx="16" cy="16" r="3"/><path d="M9 6h4M6 9v4M16 9v4M9 16h4M8.1 8.1l5.8 5.8M13.9 8.1L8.1 13.9" stroke-dasharray="1.5 1"/></svg>',
         "icon": "XI",
         "name": "跨域算法创新手册",
         "tag": "算法迁移 · 创新范式 · 竞争壁垒",
@@ -1533,6 +1556,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-search-traffic-growth",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="9.5" r="5.5"/><path d="M13.5 13.5L19 19"/><path d="M7 9.5h5M9.5 7v5" stroke-width="1.8"/></svg>',
         "icon": "SG",
         "name": "搜索流量增长手册",
         "tag": "搜索排名 · 关键词 · 广告协同",
@@ -1605,6 +1629,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-agent-ops-automation",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="2.5"/><path d="M11 4V2M11 20v-2M4 11H2M20 11h-2"/><path d="M6.3 6.3L4.9 4.9M17.1 17.1l-1.4-1.4M17.1 6.3l-1.4 1.4M6.3 17.1l-1.4-1.4"/><circle cx="11" cy="11" r="5.5" stroke-dasharray="3 2" opacity=".5"/></svg>',
         "icon": "AO",
         "name": "AI Agent 运营自动化手册",
         "tag": "智能体 · 自动化 · MCP协议",
@@ -1671,6 +1696,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-cross-border-logistics",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h14l3-5H5L2 12z"/><path d="M2 12v4h14v-4"/><circle cx="6" cy="18" r="2"/><circle cx="14" cy="18" r="2"/><path d="M15 9V6H5" opacity=".5"/></svg>',
         "icon": "CB",
         "name": "跨境物流与清关手册",
         "tag": "海外仓 · 清关 · 履约",
@@ -1733,6 +1759,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-cpsc-efiling-emergency",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l7.5 3v6c0 4.5-3.5 7.5-7.5 8.5C3.5 18.5 3 15.5 3 11V5L11 2z"/><path d="M11 7v5" stroke-width="2.5"/><circle cx="11" cy="15" r="1" fill="currentColor" stroke="none"/></svg>',
         "icon": "CF",
         "name": "CPSC eFiling 72小时紧急合规手册",
         "tag": "合规 · CPSC · 紧急",
@@ -1789,6 +1816,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-supply-chain-decision-bridge",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="4" cy="6" r="2.5"/><circle cx="4" cy="16" r="2.5"/><circle cx="18" cy="11" r="2.5"/><path d="M6.5 6.5L18 11M6.5 15.5L18 11" stroke-width="1.8"/><path d="M11 8v6" stroke-dasharray="2 1.5" opacity=".5"/></svg>',
         "icon": "SB",
         "name": "供应链信号→决策行动映射手册",
         "tag": "供应链 · 决策自动化 · Action",
@@ -1851,6 +1879,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-review-defense",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h12a1 1 0 011 1v6a1 1 0 01-1 1H9l-4 3v-3H3a1 1 0 01-1-1V6a1 1 0 011-1z"/><path d="M7 9h4"/><path d="M16 8h2a1 1 0 011 1v3a1 1 0 01-1 1h-.5l-1 1.5v-1.5h-.5" stroke-width="1.3"/></svg>',
         "icon": "RD",
         "name": "差评防御作战手册",
         "tag": "评论 · 防御 · 口碑",
@@ -1907,6 +1936,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-fx-tariff-hedging",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c2-5 5-5 7 0s5 5 7 0" stroke-width="2"/><path d="M3 9c2-4 5-4 7 0s5 4 7 0" stroke-width="1.3" stroke-dasharray="2 1" opacity=".5"/><path d="M3 19h16" opacity=".3"/></svg>',
         "icon": "FX",
         "name": "汇率关税风险对冲手册",
         "tag": "汇率 · 关税 · 财务风控",
@@ -1963,6 +1993,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-asin-traffic-diagnosis",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l4-4 3 2 4-5 4 3"/><path d="M3 19h16" opacity=".3"/><circle cx="18.5" cy="5" r="2.5"/><line x1="18.5" y1="7.5" x2="18.5" y2="10" stroke-width="2"/><line x1="18.5" y1="11" x2="18.5" y2="11.5" stroke-width="2"/></svg>',
         "icon": "SR",
         "name": "ASIN流量诊断手册",
         "tag": "搜索流量 · 关键词 · 排名优化",
@@ -2039,6 +2070,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-multi-account-risk-defense",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l-4 2v4c0 2.5 1.5 4 4 4.5C9.5 21 11 19 11 16v-4l-4-2z"/><path d="M15 8l-3 1.5v3c0 2 1.2 3.2 3 3.8 1.8-.6 3-1.8 3-3.8v-3L15 8z" opacity=".6"/></svg>',
         "icon": "RA",
         "name": "多账号风险防御手册",
         "tag": "账号安全 · 关联风险 · 合规运营",
@@ -2105,6 +2137,7 @@ TOB_PLAYBOOKS = [
     },
     {
         "id": "pb-d2c-brand-building",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19V9L11 4l6 5v10"/><path d="M8.5 19v-6h5v6"/><path d="M5 9l6-5 6 5" opacity=".4"/><circle cx="11" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg>',
         "icon": "DT",
         "name": "DTC品牌建设手册",
         "tag": "品牌 · 独立站 · 私域流量",
@@ -2168,5 +2201,159 @@ TOB_PLAYBOOKS = [
             "私域用户复购率（独立站）高于Amazon平台30-50%",
             "品牌溢价实现：同等产品定价比无品牌竞品高15-25%",
         ],
+    },
+
+    {
+        "id": "pb-video-ecommerce",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="12" rx="2"/><polygon points="19,8 22,11 19,14" fill="currentColor" stroke="none"/><circle cx="9" cy="11" r="2.5"/></svg>',
+        "icon": "VE",
+        "name": "视频电商全链路增长手册",
+        "tag": "内容 · 标签 · 归因",
+        "desc": "从MAS自动选题到商品标签化再到因果效果评估的TikTok/Reels视频电商完整决策体系",
+        "intro": "视频电商是2024-2026年增长最快的母婴渠道，但大多数团队面临三大痛点：内容产量不够（手工3小时/篇）、商品关联率低（手工打标错误率15%）、ROI归因不清（平台报告高估30%）。本手册提供从MAS自动内容生产到商品标签化再到因果效果评估的完整闭环。",
+        "steps": [
+            {
+                "step": "Step 1 — AI驱动内容批量生产（第1周）",
+                "problem": "内容产量不足，每天只能产出1篇视频，竞争对手已有AI生产矩阵",
+                "skills": [
+                    {"id": "Skill-MAS-Video-Content-Optimization", "role": "MAS多智能体视频全链路优化，自动选题+脚本+A/B对比，爆款率5%→18%"},
+                    {"id": "Skill-AI-Content-Marketing-Growth", "role": "AIGC内容矩阵，月200篇成本12元/篇，年化ROI 7倍"},
+                    {"id": "Skill-Reward-Model-RLHF-Ecommerce", "role": "RLHF奖励模型筛选最优内容，转化率+18%"},
+                ]
+            },
+            {
+                "step": "Step 2 — 视频商品标签化与购物链接（第2周）",
+                "problem": "达人视频中的商品未被识别关联，丢失大量购物链接变现机会",
+                "skills": [
+                    {"id": "Skill-Tag-Video-Commerce-Tagging", "role": "多模态LLM视频商品标签，准确率88%，节省75%人工打标"},
+                    {"id": "Skill-LLM-as-Judge-Evaluator", "role": "AI质检商品关联质量，防止错误标签损害体验"},
+                    {"id": "Skill-Listing-Quality-Scoring", "role": "被标签商品的详情页质量评估，确保转化能力达标"},
+                ]
+            },
+            {
+                "step": "Step 3 — 因果效果评估与预算优化（第3-4周）",
+                "problem": "平台归因报告说TikTok贡献+23%，但实际增量可能只有+11%，导致预算错配",
+                "skills": [
+                    {"id": "Skill-DataAgent-Marketing-Attribution", "role": "对话式营销归因Agent，10分钟生成多渠道报告"},
+                    {"id": "Skill-Geo-Holdout-Experiment", "role": "Geo控制实验，发现平台归因虚高12pp，年化节省约40万元"},
+                    {"id": "Skill-Causal-Time-Series-CausalImpact", "role": "CausalImpact量化内容发布对销量的真实因果冲击"},
+                ]
+            },
+        ]
+    },
+    {
+        "id": "pb-causal-intelligence",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="5" r="2.5"/><circle cx="4" cy="17" r="2.5"/><circle cx="18" cy="17" r="2.5"/><path d="M11 7.5V12M11 12L4 14.5M11 12L18 14.5"/></svg>',
+        "icon": "CI",
+        "name": "因果智能决策体系手册",
+        "tag": "因果 · 弹性 · 实验",
+        "desc": "系统性建立因果推断能力：从价格弹性估计到用户异质效应再到市场准入评估，用因果思维驱动业务决策",
+        "intro": "传统数据分析的核心局限是「相关≠因果」——促销后销量增加，未必是促销的功劳；新市场销量差，未必是产品问题。本手册提供从DML价格弹性估计到X-Learner异质效应再到合成控制市场评估的完整因果智能体系。",
+        "steps": [
+            {
+                "step": "Step 1 — 建立去偏的价格弹性估计",
+                "problem": "OLS弹性估计因季节/促销混淆通常偏差50%以上，导致定价决策失误",
+                "skills": [
+                    {"id": "Skill-Double-Debiased-ML-Price", "role": "DML双重去偏弹性，从OLS偏差1.57降至0.12，年化定价优化120万元"},
+                    {"id": "Skill-IV-Instrumental-Variables", "role": "工具变量法消除价格内生性偏差"},
+                ]
+            },
+            {
+                "step": "Step 2 — 识别异质用户群的差异效应",
+                "problem": "平均效果+3%背后，不同用户群的真实差异可能从-2%到+12%，统一策略是次优的",
+                "skills": [
+                    {"id": "Skill-Heterogeneous-Treatment-Effect-XLearner", "role": "X-Learner异质效应，精准发券节省40%预算同时维持效果"},
+                    {"id": "Skill-Tag-Causal-Treatment-Effect", "role": "标签因果效应，揭示不同用户标签的真实运营增量"},
+                ]
+            },
+            {
+                "step": "Step 3 — 因果市场准入与策略评估",
+                "problem": "新市场/新策略的效果如何去除自然趋势，获得可信的增量估计",
+                "skills": [
+                    {"id": "Skill-Augmented-Synthetic-Control-ML", "role": "ASCM合成控制，SCM偏差3.5%→0.8%，年化减少错误决策80万元"},
+                    {"id": "Skill-Causal-Representation-Learning", "role": "因果表示学习，跨市场模型迁移性能下降30%→8%"},
+                    {"id": "Skill-Causal-Time-Series-CausalImpact", "role": "时序因果冲击，量化促销/新品对销量的真实增量"},
+                ]
+            },
+        ]
+    },
+    {
+        "id": "pb-mas-ai-agent-ops",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="5" height="10" rx="1"/><rect x="9" y="3" width="5" height="16" rx="1"/><rect x="15" y="8" width="5" height="8" rx="1"/><path d="M3 19h16"/></svg>',
+        "icon": "MA",
+        "name": "MAS多智能体运营自动化手册",
+        "tag": "MAS · 搜索 · 财务 · 时序",
+        "desc": "利用多智能体系统将搜索运营、财务分析、时序预测等核心运营工作从人工驱动升级为Agent自动化",
+        "intro": "随着运营复杂度增加（500+关键词、21个Agent、月度P&L分析），人工运营已无法覆盖全部决策节点。本手册提供MAS搜索自动化、运营财务协同、智能时序预测三大场景的落地方案。",
+        "steps": [
+            {
+                "step": "Step 1 — MAS搜索排名全自动监控",
+                "problem": "500个关键词人工监控根本做不到，排名下滑往往次日才发现，损失已经发生",
+                "skills": [
+                    {"id": "Skill-MAS-Search-Optimization", "role": "MAS搜索监控，5分钟诊断，年化流量保护80万元"},
+                    {"id": "Skill-Streaming-Analytics-Agent", "role": "ADWIN实时异常检测，2分钟告警，大促期广告保护137万元"},
+                ]
+            },
+            {
+                "step": "Step 2 — MAS财务协同与P&L自动归因",
+                "problem": "月度P&L归因需要3天多部门对接，各部门推诿，CFO决策等不及",
+                "skills": [
+                    {"id": "Skill-MAS-Revenue-Operations", "role": "MAS多Agent P&L协同，20分钟生成归因报告，年化节省40万元"},
+                    {"id": "Skill-Multi-Step-Reasoning-BI", "role": "多步CoT推理，自动完成利润下降的5步根因链路"},
+                    {"id": "Skill-DataAgent-Marketing-Attribution", "role": "对话式营销归因，CMO随时追问立即得到答案"},
+                ]
+            },
+            {
+                "step": "Step 3 — 智能体驱动时序预测",
+                "problem": "不同产品需要不同预测模型，手工选型依赖经验，误差大",
+                "skills": [
+                    {"id": "Skill-Agent-Time-Series-Forecasting", "role": "AutoTS Agent自适应模型选择，MAPE从18%降至9%"},
+                    {"id": "Skill-Time-Series-Foundation-Model-Zero-Shot", "role": "零样本TSFM，新品45天历史即可预测，冷启动问题解决"},
+                    {"id": "Skill-Continual-Learning-Production", "role": "EWC持续学习，季节切换期模型不退化"},
+                ]
+            },
+        ]
+    },
+    {
+        "id": "pb-tag-data-intelligence",
+        "svg_icon": '<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h6l1.5 3L9 11H3V5z"/><path d="M11 5h6l1.5 3L17 11h-6V5z"/><path d="M3 13h6l1.5 3L9 19H3V13z"/><path d="M11 13h6l1.5 3L17 19h-6V13z"/></svg>',
+        "icon": "TD",
+        "name": "标签数据智能体系手册",
+        "tag": "标签 · 实验 · 因果 · 风控",
+        "desc": "将用户标签从静态描述升级为动态因果推断工具：标签驱动实验设计、因果效应量化、视频标签化变现、风控特征融合",
+        "intro": "标签工程是所有精准运营的基础设施，但大多数团队的标签只用于分群展示，未被用于实验设计、因果推断和AI模型训练。本手册提供标签数据智能化的完整升级路径。",
+        "steps": [
+            {
+                "step": "Step 1 — 标签驱动精准实验",
+                "problem": "A/B实验因标签分布不均导致效果被高估7pp，浪费预算",
+                "skills": [
+                    {"id": "Skill-Tag-AB-Experiment-Design", "role": "标签分层实验，消除选择偏差，发现新生儿段效果达+20%"},
+                    {"id": "Skill-Heterogeneous-Treatment-Effect-XLearner", "role": "X-Learner异质效应，精准投放节省40%预算"},
+                ]
+            },
+            {
+                "step": "Step 2 — 标签因果效应量化",
+                "problem": "不知道运营动作（发券/客服外呼）对不同标签用户的真实效果",
+                "skills": [
+                    {"id": "Skill-Tag-Causal-Treatment-Effect", "role": "GPS多分类DR估计，揭示流失外呼效果仅3%（非预期30%）"},
+                    {"id": "Skill-Tag-ML-Causal-Feature-Selection", "role": "分布不变因果特征，跨季节模型稳定性显著提升"},
+                ]
+            },
+            {
+                "step": "Step 3 — 视频内容标签化变现",
+                "problem": "视频中商品未被识别，丢失购物链接变现机会",
+                "skills": [
+                    {"id": "Skill-Tag-Video-Commerce-Tagging", "role": "视频商品自动标签，准确率88%，新增购物链接GMV+50万/年"},
+                ]
+            },
+            {
+                "step": "Step 4 — 标签驱动欺诈风控",
+                "problem": "欺诈团伙行为序列有规律，但传统规则只看单次交易特征",
+                "skills": [
+                    {"id": "Skill-Tag-Fraud-Risk-Intelligence", "role": "行为标签序列，欺诈AUC 0.45→0.96，精确率93%"},
+                    {"id": "Skill-GNN-Fraud-Detection", "role": "图神经网络团伙发现，与行为标签特征互补"},
+                ]
+            },
+        ]
     },
 ]

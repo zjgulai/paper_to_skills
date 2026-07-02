@@ -129,6 +129,11 @@ WORKFLOW_RULES = {
     "WF-Y 账期现金流优化": ["cash conversion", "working capital", "inventory financing", "cash cycle", "现金流", "账期", "supply chain finance", "lending", "receivable", "payable"],
     "WF-Z 竞品情报作战室": ["competitive intelligence", "competitor keyword", "competitor price", "market share", "competitive response", "share of voice", "竞品监控", "competitor monitor"],
     "WF-AA 多渠道协同增长": ["omnichannel", "multi-channel", "cross-platform", "channel synergy", "多渠道", "全渠道", "渠道协同", "platform expansion", "channel diversification"],
+    "WF-AB 视频电商全链路": ["video commerce", "视频电商", "tiktok shop", "短视频", "mas video", "content tagging", "video tagging", "rlhf", "爆款率"],
+    "WF-AC 因果定价决策": ["dml", "double debiased", "causal pricing", "price elasticity", "因果弹性", "价格弹性去偏", "heterogeneous treatment", "定价决策"],
+    "WF-AD 标签驱动实验设计": ["tag experiment", "标签分层", "stratified", "tag ab", "causal feature", "geo holdout", "interference", "spillover"],
+    "WF-AE 搜索流量全链路优化": ["search revenue", "搜索p&l", "search attribution", "mas search", "search organic", "organic growth attribution"],
+    "WF-AF MAS运营财务智能化": ["mas revenue", "p&l agent", "financial agent", "运营财务", "多智能体财务", "financial diagnostics", "agent finance"],
 }
 
 KNOWN_SKILL_IDS: set[str] = set()
@@ -1045,7 +1050,7 @@ def render_agents_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
         cards_html += f"""
 <div class='agent-card' data-cat='{html.escape(ag["cat_key"])}' onclick='openAgent("{html.escape(ag["id"])}")'>
   <div class='agent-card-top'>
-    <div class='agent-icon-wrap {html.escape(ag["cat_class"])}'>{ag["icon"]}</div>
+    <div class='agent-icon-wrap {html.escape(ag["cat_class"])}'>{ag.get("svg_icon") or ag["icon"]}</div>
     <div class='agent-card-info'>
       <div class='agent-name'>{html.escape(ag["name"])}</div>
       <span class='agent-cat-badge'>{html.escape(ag["category"])}</span>
@@ -1069,7 +1074,7 @@ def render_agents_page(skill_lookup: dict[str, "PlaybookSkill"]) -> str:
 <div id='modal-{html.escape(ag["id"])}' class='agent-modal-overlay' role='dialog' aria-modal='true' aria-label='{html.escape(ag["name"])}'>
   <div class='agent-modal'>
     <div class='modal-header'>
-      <span class='modal-icon'>{ag["icon"]}</span>
+      <span class='modal-icon'>{ag.get("svg_icon") or ag["icon"]}</span>
       <div class='modal-header-info'>
         <h2>{html.escape(ag["name"])}</h2>
         <div style='display:flex;gap:8px;align-items:center'>
@@ -3001,7 +3006,7 @@ def render_tob_playbook(pb: dict[str, Any], skill_lookup: dict[str, "PlaybookSki
     body = f"""
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / {html.escape(pb['name'])}</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>{pb['icon']}</span>
+  <span class='pb-icon'>{pb.get('svg_icon') or pb['icon']}</span>
   <div>
     <h1>{html.escape(pb['name'])}</h1>
     <p class='lead'>{html.escape(pb['desc'])}</p>
@@ -3124,16 +3129,18 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         {sidebar_section('主导航', 
+         {sidebar_section('决策工具',
            sidebar_link('index.html', '总览', 'index', '') +
            sidebar_link('diagnostic.html', '业务诊断中心', 'diagnostic', '') +
-           sidebar_link('chat.html', 'AI 知识库对话', 'chat', '') +
+           sidebar_link('chat.html', 'AI 知识库对话', 'chat', '')
+         )}
+         {sidebar_section('执行手册',
            sidebar_link('playbooks/index.html', '场景手册', 'playbooks', '') +
-           sidebar_link('solutions/index.html', '方案库', 'solutions', '') +
+           sidebar_link('solutions/index.html', '方案库', 'solutions', '')
+         )}
+         {sidebar_section('智能体',
            sidebar_link('agents.html', '智能体广场', 'agents', '') +
-           sidebar_link('agent-report.html', '智能体报告', 'agent-report', '') +
-           sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap', '') +
-           sidebar_link('maturity-report.html', '成熟度报告 2026', 'maturity', '')
+           sidebar_link('agent-report.html', '智能体报告', 'agent-report', '')
          )}
          {sidebar_section('知识图谱',
            sidebar_link('domains/index.html', '按领域浏览', 'domains', '') +
@@ -3142,6 +3149,21 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
            sidebar_link('graph/overview.html', '技能关系图谱', 'graph', '') +
            sidebar_link('skills/index.html', '全部 Skills', 'skills', '')
          )}
+         {sidebar_section('战略报告',
+           sidebar_link('ai-roadmap.html', 'AI 能力路线图', 'roadmap', '') +
+           sidebar_link('maturity-report.html', '成熟度报告 2026', 'maturity', '')
+         )}
+      </div>
+      <div class="sb-bottom">
+        <a href="{nav}pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="{nav}settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">{body}</section>
@@ -3516,9 +3538,9 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
         f"<div class='biz-body'>"
         f"<div class='biz-card-meta'>"
         f"<strong>{html.escape(e['label'])}</strong>"
-        f"<span class='biz-tag'>{html.escape(e['tag'])}</span>"
         f"</div>"
         f"<p>{html.escape(e['desc'])}</p>"
+        f"<div class='biz-card-footer'><span class='biz-tag'>{html.escape(e['tag'])}</span></div>"
         f"</div>"
         f"</div>"
         f"</a>"
@@ -3921,6 +3943,247 @@ def render_graph_page(skill_count: int, edge_count: int, build_ts: str = "") -> 
 
 from builders.graph_js_builder import build_ego_graph_js, build_graph_js  # noqa: E402
 from builders.css_builder import build_css  # noqa: E402
+
+
+def render_settings_page() -> str:
+    return html_page(
+        "设置 · API Key",
+        """
+<style>
+.settings-wrap{max-width:760px;margin:0 auto;padding:40px 20px 60px}
+.settings-wrap h1{font-size:1.5rem;font-weight:800;color:var(--ink);margin:0 0 6px}
+.settings-wrap .sub{font-size:14px;color:var(--muted);margin-bottom:32px}
+.scard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px 28px;margin-bottom:24px}
+.scard h2{font-size:14px;font-weight:700;color:var(--ink);margin:0 0 16px;letter-spacing:.03em;text-transform:uppercase}
+.key-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.key-row input{flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:monospace;background:#f8fafc;color:var(--ink)}
+.key-row button{padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff;border:none}
+.btn-secondary{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn-primary:hover{opacity:.88}
+.btn-secondary:hover{border-color:var(--ink)}
+.usage-bar{background:#e2e8f0;border-radius:4px;height:8px;overflow:hidden;margin:8px 0}
+.usage-fill{background:var(--accent);height:100%;transition:width .3s}
+.usage-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+.tag-free{display:inline-block;padding:2px 8px;background:#f1f5f9;color:#64748b;border-radius:20px;font-size:11px;font-weight:600}
+.tag-pro{display:inline-block;padding:2px 8px;background:#fef2f2;color:var(--accent);border-radius:20px;font-size:11px;font-weight:700}
+#key-status{font-size:12.5px;margin-top:6px;min-height:20px}
+</style>
+<div class="settings-wrap">
+  <h1>设置</h1>
+  <p class="sub">管理 API Key、查看使用量、升级账户</p>
+
+  <div class="scard">
+    <h2>使用量</h2>
+    <div class="usage-row">
+      <span>本月 Agent 调用</span>
+      <span id="usage-count">加载中…</span>
+    </div>
+    <div class="usage-bar"><div class="usage-fill" id="usage-fill" style="width:0%"></div></div>
+    <div style="font-size:12px;color:var(--muted)">免费版每月 <strong>10 次</strong>。<a href="pricing.html" style="color:var(--accent);font-weight:600">升级 Pro</a> 获取无限次数。</div>
+  </div>
+
+  <div class="scard">
+    <h2>API Key <span class="tag-pro">Pro</span></h2>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 14px">用于程序化调用 <code>/api/v1/skills/search</code> 等接口。格式：<code>Authorization: Bearer p2s_xxx</code></p>
+    <div class="key-row">
+      <input type="password" id="api-key-display" value="••••••••••••••••" readonly placeholder="升级 Pro 后可生成 API Key">
+      <button class="btn-secondary" onclick="toggleKeyVisibility()">显示</button>
+      <button class="btn-primary" onclick="generateApiKey()">生成新 Key</button>
+    </div>
+    <div id="key-status"></div>
+    <div style="font-size:12px;color:#94a3b8;margin-top:8px">Key 只显示一次，请妥善保存</div>
+  </div>
+
+  <div class="scard">
+    <h2>浏览器指纹（Session Key）</h2>
+    <div class="key-row">
+      <input type="text" id="session-key-display" readonly value="加载中…" style="font-family:monospace;font-size:12px">
+      <button class="btn-secondary" onclick="copySessionKey()">复制</button>
+    </div>
+    <div style="font-size:12px;color:#94a3b8">这是当前浏览器的匿名标识，用于追踪免费用量。清除 localStorage 会重置。</div>
+  </div>
+
+  <div class="scard">
+    <h2>快速接入示例</h2>
+    <pre style="background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:14px;font-size:12.5px;overflow-x:auto;color:#374151">curl -H "Authorization: Bearer &lt;your-api-key&gt;" \\
+  "https://skills.lute-tlz-dddd.top/api/v1/skills/search?q=供应链&limit=5"</pre>
+  </div>
+</div>
+
+<script>
+(function(){
+  function _sessionKey(){
+    let k=localStorage.getItem('p2s_session');
+    if(!k){k='sk-'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('p2s_session',k);}
+    return k;
+  }
+  const sk=_sessionKey();
+  document.getElementById('session-key-display').value=sk;
+
+  fetch('/api/agent/check-limit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_key:sk,agent_id:''})})
+    .then(r=>r.json()).then(d=>{
+      const used=d.monthly_used||0,limit=d.monthly_limit||10;
+      document.getElementById('usage-count').textContent=used+' / '+limit+' 次';
+      document.getElementById('usage-fill').style.width=Math.min(100,used/limit*100)+'%';
+      document.getElementById('usage-fill').style.background=used>=limit?'#ef4444':used/limit>0.7?'#f59e0b':'var(--accent)';
+    }).catch(()=>{document.getElementById('usage-count').textContent='--';});
+
+  let _storedKey=localStorage.getItem('p2s_api_key')||'';
+  if(_storedKey){document.getElementById('api-key-display').value='••••••••••••••••';}
+
+  window.toggleKeyVisibility=function(){
+    const el=document.getElementById('api-key-display');
+    if(el.type==='password'){el.type='text';el.value=_storedKey||'（尚未生成）';}
+    else{el.type='password';el.value='••••••••••••••••';}
+  };
+
+  window.generateApiKey=function(){
+    const tier=localStorage.getItem('p2s_tier')||'free';
+    if(tier!=='pro'){
+      document.getElementById('key-status').innerHTML='<span style="color:#b91c1c">需要升级 Pro 才能生成 API Key。<a href="pricing.html" style="color:var(--accent);font-weight:700">立即升级 →</a></span>';
+      return;
+    }
+    const newKey='p2s_sk_'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+    _storedKey=newKey;
+    localStorage.setItem('p2s_api_key',newKey);
+    const el=document.getElementById('api-key-display');
+    el.type='text';el.value=newKey;
+    document.getElementById('key-status').innerHTML='<span style="color:#059669">✓ 已生成并保存到本地（仅本设备可见）</span>';
+    setTimeout(()=>{el.type='password';el.value='••••••••••••••••';},10000);
+  };
+
+  window.copySessionKey=function(){
+    navigator.clipboard.writeText(sk).then(()=>{document.getElementById('session-key-display').select();});
+  };
+})();
+</script>
+""",
+        active_nav="settings",
+    )
+
+
+def render_pricing_page(skill_count: int = 1037) -> str:
+    return html_page(
+        "升级 Pro",
+        f"""
+<style>
+.pricing-hero{{text-align:center;padding:60px 20px 40px;max-width:800px;margin:0 auto}}
+.pricing-hero h1{{font-size:2rem;font-weight:800;color:var(--ink);margin:0 0 12px}}
+.pricing-hero p{{font-size:1.05rem;color:var(--muted);max-width:520px;margin:0 auto 32px}}
+.pricing-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin:0 auto 60px;padding:0 20px}}
+.pc{{background:#fff;border:1px solid var(--line);border-radius:12px;padding:32px 28px;display:flex;flex-direction:column}}
+.pc.featured{{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,50,62,.15)}}
+.pc-badge{{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 10px;border-radius:20px;margin-bottom:16px;width:fit-content}}
+.pc-name{{font-size:1.2rem;font-weight:800;color:var(--ink);margin-bottom:4px}}
+.pc-price{{font-size:2rem;font-weight:800;color:var(--accent);margin:8px 0 4px}}
+.pc-price sub{{font-size:14px;font-weight:500;color:var(--muted)}}
+.pc-desc{{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}}
+.pc-features{{list-style:none;padding:0;margin:0 0 28px;flex:1}}
+.pc-features li{{font-size:13.5px;color:var(--ink);padding:7px 0;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:flex-start}}
+.pc-features li:last-child{{border-bottom:none}}
+.pc-features li::before{{content:"✓";color:var(--accent);font-weight:700;flex-shrink:0}}
+.pc-cta{{display:block;text-align:center;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;cursor:pointer;transition:opacity .15s}}
+.pc-cta.primary{{background:var(--accent);color:#fff;border:none}}
+.pc-cta.secondary{{background:transparent;color:var(--ink);border:1px solid var(--line)}}
+.pc-cta.primary:hover{{opacity:.88}}
+.pc-cta.secondary:hover{{border-color:var(--ink)}}
+.pricing-faq{{max-width:700px;margin:0 auto;padding:0 20px 60px}}
+.pricing-faq h2{{font-size:1.2rem;font-weight:800;margin-bottom:20px;color:var(--ink)}}
+.faq-item{{border-bottom:1px solid var(--line);padding:16px 0}}
+.faq-item summary{{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:14px}}
+.faq-item summary::after{{content:"+";color:var(--muted);font-size:18px}}
+.faq-item[open] summary::after{{content:"−"}}
+.faq-item p{{font-size:13.5px;color:var(--muted);line-height:1.7;margin:10px 0 0}}
+</style>
+<div class="pricing-hero">
+  <h1>为母婴出海卖家而生的 AI 决策平台</h1>
+  <p>免费访问 {skill_count}+ Skill 知识库，升级 Pro 解锁无限 Agent 调用、数据接入与 API 权限。</p>
+</div>
+<div class="pricing-grid">
+  <div class="pc">
+    <div class="pc-name">Free</div>
+    <div class="pc-price">¥0 <sub>/月</sub></div>
+    <p class="pc-desc">适合个人探索与学习</p>
+    <ul class="pc-features">
+      <li>访问全部 {skill_count}+ Skill 卡片</li>
+      <li>25 个领域知识图谱</li>
+      <li>场景手册（只读）</li>
+      <li>AI Agent 每月 10 次调用</li>
+      <li>Agent 报告本地存储（7 天）</li>
+    </ul>
+    <a href="agents.html" class="pc-cta secondary">开始使用</a>
+  </div>
+  <div class="pc featured">
+    <div class="pc-badge">最受欢迎</div>
+    <div class="pc-name">Pro</div>
+    <div class="pc-price">¥299 <sub>/月</sub></div>
+    <p class="pc-desc">适合跨境电商运营团队</p>
+    <ul class="pc-features">
+      <li>Free 所有权益</li>
+      <li><strong>无限</strong> AI Agent 调用</li>
+      <li>Agent 报告云端持久化（永久）</li>
+      <li>CSV 数据文件直接上传</li>
+      <li>飞书多维表格自动触发分析</li>
+      <li>REST API 访问（1000 次/月）</li>
+      <li>飞书群专属技术支持</li>
+    </ul>
+    <a href="#pro-payment" class="pc-cta primary" onclick="document.getElementById('pro-modal').style.display='flex'">立即升级 Pro</a>
+  </div>
+  <div class="pc">
+    <div class="pc-name">Enterprise</div>
+    <div class="pc-price">定制 <sub></sub></div>
+    <p class="pc-desc">适合品牌方 / 大型 TP 服务商</p>
+    <ul class="pc-features">
+      <li>Pro 所有权益</li>
+      <li>私有化部署选项</li>
+      <li>无限 API 调用</li>
+      <li>Amazon SP-API 数据接入</li>
+      <li>定制 Agent Prompt 与工作流</li>
+      <li>SLA 保障 + 专属客户成功</li>
+    </ul>
+    <a href="mailto:support@paper2skills.com" class="pc-cta secondary">联系销售</a>
+  </div>
+</div>
+
+<div class="pricing-faq">
+  <h2>常见问题</h2>
+  <details class="faq-item">
+    <summary>免费版和 Pro 版的 Agent 调用有什么区别？</summary>
+    <p>免费版每月可调用 AI Agent 10 次（所有 Agent 共享），Pro 版无限制。超过 10 次后免费用户会看到升级提示，当月已用次数会在下月 1 日重置。</p>
+  </details>
+  <details class="faq-item">
+    <summary>REST API 可以做什么？</summary>
+    <p>Pro 版可通过 <code>GET /api/v1/skills/search?q=关键词</code> 程序化查询 Skill 知识库，适合把 paper2skills 集成到自有系统、飞书机器人、或自动化工作流中。</p>
+  </details>
+  <details class="faq-item">
+    <summary>如何升级？支持什么支付方式？</summary>
+    <p>点击「立即升级 Pro」按钮，扫码完成微信支付后系统自动开通。支持月付，随时可取消，下个计费周期不再续费。</p>
+  </details>
+  <details class="faq-item">
+    <summary>企业版有试用期吗？</summary>
+    <p>企业版提供 7 天免费 POC 试用，包含完整功能接入和技术支持。请通过邮件联系我们安排。</p>
+  </details>
+</div>
+
+<!-- Pro 升级 Modal -->
+<div id="pro-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:16px;padding:40px 36px;max-width:420px;width:90%;text-align:center">
+    <h2 style="font-size:1.3rem;font-weight:800;margin:0 0 8px">升级 Pro 版</h2>
+    <p style="font-size:13.5px;color:#64748b;margin:0 0 24px">微信扫码完成支付，系统自动开通</p>
+    <div style="width:180px;height:180px;margin:0 auto 20px;background:#f1f5f9;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:13px">
+      微信支付二维码<br>（配置后显示）
+    </div>
+    <div style="font-size:28px;font-weight:800;color:#B5323E;margin-bottom:4px">¥299<span style="font-size:14px;font-weight:500;color:#64748b">/月</span></div>
+    <p style="font-size:12px;color:#94a3b8;margin:4px 0 20px">支付后自动开通，随时可取消</p>
+    <button onclick="document.getElementById('pro-modal').style.display='none'" style="width:100%;padding:12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;font-size:13px;color:#64748b">稍后再说</button>
+  </div>
+</div>
+""",
+        active_nav="pricing",
+    )
+
+
 def render_maturity_report(skill_count: int, edge_count: int, domain_count: int) -> str:
     biz_groups = [
         ("供应链与库存", 182, "需求预测·补货优化·物流履约", "#0369a1"),
@@ -4014,15 +4277,14 @@ def render_maturity_report(skill_count: int, edge_count: int, domain_count: int)
 </head>
 <body>
 <header class="topbar">
-  <a class="topbar-brand" href="index.html">paper2skills</a>
-  <nav class="topbar-nav">
-    <a href="index.html">总览</a>
-    <a href="diagnostic.html">诊断</a>
-    <a href="chat.html">AI对话</a>
-    <a href="maturity-report.html" style="color:#B5323E;font-weight:700">成熟度报告</a>
-    <a href="ai-roadmap.html">路线图</a>
-  </nav>
-  <button onclick="window.print()" style="margin-left:auto;padding:5px 12px;background:#B5323E;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">⬇ 下载 PDF</button>
+  <a class="brand" href="index.html">
+    <span class="brand-icon">P</span>
+    <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+  </a>
+  <div class="topbar-right">
+    <span class="topbar-stat">成熟度报告 2026</span>
+    <button onclick="window.print()" class="topbar-cta" style="border:none;cursor:pointer">⬇ PDF</button>
+  </div>
 </header>
 
 <div class="mr-wrap">
@@ -4192,29 +4454,93 @@ def render_diagnostic_page(skill_count: int, build_ts: str) -> str:
 <title>业务诊断中心 — paper2skills</title>
 <link rel="stylesheet" href="assets/style.css">
 <style>
-.diag-wrap{{display:flex;gap:0;min-height:calc(100vh - 52px);background:var(--bg,#F6F6F6)}}
-.diag-left{{width:380px;min-width:320px;flex-shrink:0;background:#fff;border-right:1px solid var(--line,#e5e7eb);padding:28px 24px;display:flex;flex-direction:column;gap:20px}}
-.diag-right{{flex:1;padding:28px 24px;overflow-y:auto}}
-.diag-title{{font-size:18px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-.3px}}
-.diag-sub{{font-size:12.5px;color:var(--muted,#6b7280);line-height:1.5;margin-top:2px}}
-.diag-events{{display:flex;flex-direction:column;gap:6px}}
-.diag-event-btn{{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fafafa;border:1px solid var(--line,#e5e7eb);border-radius:8px;cursor:pointer;text-align:left;font-family:var(--font);transition:all .15s}}
-.diag-event-btn:hover{{background:var(--bg,#F6F6F6);border-color:#B5323E;transform:translateX(2px)}}
-.diag-event-btn.active{{background:#fff5f5;border-color:#B5323E;border-left:3px solid #B5323E}}
-.diag-event-icon{{font-size:18px;flex-shrink:0}}
-.diag-event-info{{min-width:0}}
-.diag-event-name{{font-size:13px;font-weight:600;color:var(--ink,#0C0C0C)}}
-.diag-event-sev{{font-size:11px;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:2px;font-weight:600}}
+.diag-wrap{{display:flex;gap:0;min-height:calc(100vh - var(--topbar-height,52px));background:var(--bg,#F6F6F6)}}
+.diag-left{{
+  width:320px;min-width:280px;flex-shrink:0;
+  background:var(--panel,#fff);
+  border-right:1px solid var(--line,#e4e4e4);
+  padding:0;
+  display:flex;flex-direction:column;
+  position:sticky;top:var(--topbar-height,52px);
+  height:calc(100vh - var(--topbar-height,52px));
+  overflow-y:auto;overflow-x:hidden;
+}}
+.diag-left::-webkit-scrollbar{{width:3px}}
+.diag-left::-webkit-scrollbar-track{{background:transparent}}
+.diag-left::-webkit-scrollbar-thumb{{background:var(--line-strong,#ccc);border-radius:2px}}
+.diag-left-head{{
+  padding:20px 16px 14px;
+  border-bottom:1px solid var(--line,#e4e4e4);
+  flex-shrink:0;
+}}
+.diag-left-eyebrow{{
+  font-size:10px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted,#888);
+  margin-bottom:5px;
+}}
+.diag-title{{font-size:15px;font-weight:700;color:var(--ink,#1A1A2E);letter-spacing:-.02em;line-height:1.3}}
+.diag-sub{{font-size:12px;color:var(--muted,#888);line-height:1.5;margin-top:3px}}
+.diag-search-wrap{{padding:12px 16px;border-bottom:1px solid var(--line,#e4e4e4);flex-shrink:0}}
+.diag-input-row{{display:flex;gap:7px}}
+.diag-input{{
+  flex:1;padding:8px 12px;
+  border:1.5px solid var(--line,#e4e4e4);
+  border-radius:var(--r-md,6px);
+  font-size:13px;font-family:var(--font);
+  outline:none;color:var(--ink);
+  background:var(--bg,#F6F6F6);
+  transition:border-color var(--t),background var(--t);
+}}
+.diag-input:focus{{border-color:var(--accent,#B5323E);background:#fff;box-shadow:0 0 0 3px rgba(181,50,62,.08)}}
+.diag-input::placeholder{{color:var(--muted,#888);font-size:12.5px}}
+.diag-btn{{
+  padding:8px 14px;
+  background:var(--accent,#B5323E);color:#fff;
+  border:none;border-radius:var(--r-md,6px);
+  font-size:12.5px;font-weight:600;cursor:pointer;
+  white-space:nowrap;font-family:var(--font);
+  transition:background var(--t);flex-shrink:0;
+}}
+.diag-btn:hover{{background:var(--accent-dark,#8C2530)}}
+.diag-section-label{{
+  font-size:10px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted,#888);
+  padding:12px 16px 6px;
+  user-select:none;
+}}
+.diag-events{{display:flex;flex-direction:column;gap:1px;padding:0 8px 8px}}
+.diag-event-btn{{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;
+  background:transparent;
+  border:none;border-radius:var(--r-md,6px);
+  cursor:pointer;text-align:left;font-family:var(--font);
+  transition:background var(--t),color var(--t);
+  position:relative;width:100%;
+}}
+.diag-event-btn:hover{{background:var(--panel-2,#f3f3f3)}}
+.diag-event-btn.active{{
+  background:var(--accent-bg,#FDF0F1);
+}}
+.diag-event-btn.active::before{{
+  content:'';position:absolute;left:0;top:6px;bottom:6px;
+  width:2px;border-radius:0 2px 2px 0;
+  background:var(--accent,#B5323E);
+}}
+.diag-event-info{{min-width:0;flex:1}}
+.diag-event-name{{font-size:12.5px;font-weight:500;color:var(--ink,#1A1A2E);line-height:1.35}}
+.diag-event-btn.active .diag-event-name{{font-weight:600;color:var(--accent,#B5323E)}}
+.diag-event-sev{{
+  font-size:10px;padding:1px 6px;border-radius:3px;
+  display:inline-block;margin-top:3px;font-weight:600;
+  letter-spacing:.02em;
+}}
 .sev-critical{{background:#fef2f2;color:#991b1b}}
 .sev-high{{background:#fff7ed;color:#c2410c}}
 .sev-medium{{background:#eff6ff;color:#1d4ed8}}
 .sev-low{{background:#f0fdf4;color:#166534}}
-.diag-input-row{{display:flex;gap:8px}}
-.diag-input{{flex:1;padding:9px 12px;border:1px solid var(--line,#e5e7eb);border-radius:8px;font-size:13px;font-family:var(--font);outline:none;color:var(--ink)}}
-.diag-input:focus{{border-color:#B5323E}}
-.diag-btn{{padding:9px 16px;background:#B5323E;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:var(--font)}}
-.diag-btn:hover{{background:#9a2b34}}
-.diag-empty{{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--muted,#6b7280);text-align:center;gap:12px}}
+.diag-right{{flex:1;padding:28px 28px;overflow-y:auto}}
+.diag-empty{{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--muted,#888);text-align:center;gap:12px}}
 .diag-empty-icon{{font-size:40px;opacity:.5}}
 .diag-empty-text{{font-size:14px;line-height:1.6;max-width:300px}}
 .diag-result{{display:none}}
@@ -4236,7 +4562,7 @@ def render_diagnostic_page(skill_count: int, build_ts: str) -> str:
 .diag-skill-item:hover{{background:#f9fafb}}
 .diag-skill-num{{font-size:11px;font-weight:700;color:#9ca3af;flex-shrink:0;padding-top:2px;min-width:16px}}
 .diag-skill-body{{min-width:0}}
-.diag-skill-link{{font-size:12.5px;font-weight:600;color:#B5323E;text-decoration:none;display:block}}
+.diag-skill-link{{font-size:12.5px;font-weight:600;color:var(--accent,#B5323E);text-decoration:none;display:block}}
 .diag-skill-link:hover{{text-decoration:underline}}
 .diag-skill-role{{font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px}}
 .diag-skill-cond{{font-size:11px;background:#fef9c3;color:#854d0e;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:3px}}
@@ -4244,56 +4570,88 @@ def render_diagnostic_page(skill_count: int, build_ts: str) -> str:
 .diag-related-title{{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}}
 .diag-related-links{{display:flex;flex-wrap:wrap;gap:6px}}
 .diag-related-link{{font-size:12px;padding:4px 10px;background:var(--bg);border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:all .12s}}
-.diag-related-link:hover{{border-color:#B5323E;color:#B5323E}}
-.path-finder{{margin-top:8px;border:1px solid var(--line,#e5e7eb);border-radius:10px;overflow:hidden}}
-.path-finder-header{{padding:11px 14px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:#fafafa}}
-.path-finder-header:hover{{background:#f3f4f6}}
+.diag-related-link:hover{{border-color:var(--accent);color:var(--accent)}}
+.path-finder{{
+  margin:8px 8px;
+  border:1px solid var(--line,#e4e4e4);
+  border-radius:var(--r-lg,8px);overflow:hidden;
+  flex-shrink:0;
+}}
+.path-finder-header{{
+  padding:10px 14px;font-size:12.5px;font-weight:600;
+  color:var(--ink-2);cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--panel-2,#f3f3f3);
+  transition:background var(--t);user-select:none;
+}}
+.path-finder-header:hover{{background:var(--panel-3,#ececec)}}
+.path-finder-arrow{{font-size:10px;color:var(--muted);transition:transform var(--t)}}
+.path-finder-header.open .path-finder-arrow{{transform:rotate(90deg)}}
 .path-finder-body{{padding:12px 14px;display:none;border-top:1px solid var(--line)}}
 .path-finder-body.open{{display:block}}
-.path-select{{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;font-family:var(--font);margin-bottom:8px;outline:none}}
-.path-select:focus{{border-color:#B5323E}}
-.path-run-btn{{width:100%;padding:8px;background:#B5323E;color:#fff;border:none;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font)}}
-.path-run-btn:hover{{background:#9a2b34}}
+.path-select{{
+  width:100%;padding:7px 10px;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-md,6px);
+  font-size:12.5px;font-family:var(--font);
+  margin-bottom:7px;outline:none;
+  background:var(--bg);color:var(--ink);
+  transition:border-color var(--t);
+}}
+.path-select:focus{{border-color:var(--accent)}}
+.path-run-btn{{width:100%;padding:8px;background:var(--accent);color:#fff;border:none;border-radius:var(--r-md,6px);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font);transition:background var(--t)}}
+.path-run-btn:hover{{background:var(--accent-dark)}}
 .path-result{{margin-top:14px}}
 .path-step{{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6}}
 .path-step:last-child{{border-bottom:none}}
-.path-step-num{{font-size:11px;font-weight:700;color:#fff;background:#B5323E;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}}
-.path-step-link{{font-size:12.5px;font-weight:600;color:#B5323E;text-decoration:none;display:block}}
+.path-step-num{{font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}}
+.path-step-link{{font-size:12.5px;font-weight:600;color:var(--accent);text-decoration:none;display:block}}
 .path-step-link:hover{{text-decoration:underline}}
 .path-step-domain{{font-size:11px;color:var(--muted);margin-top:1px}}
 .path-edge-type{{font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle}}
 .pet-prerequisite{{background:#f0f9ff;color:#0369a1}}.pet-extension{{background:#f0fdf4;color:#166534}}.pet-combinable{{background:#fef3c7;color:#92400e}}
-@media(max-width:768px){{.diag-wrap{{flex-direction:column}}.diag-left{{width:100%;border-right:none;border-bottom:1px solid var(--line)}}.diag-right{{padding:16px}}}}
+@media(max-width:768px){{.diag-wrap{{flex-direction:column}}.diag-left{{width:100%;position:static;height:auto;border-right:none;border-bottom:1px solid var(--line)}}.diag-right{{padding:16px}}}}
 </style>
 </head>
 <body>
 <header class="topbar">
-  <a class="topbar-brand" href="index.html">paper2skills</a>
-  <nav class="topbar-nav">
-    <a href="index.html">总览</a>
-    <a href="diagnostic.html" class="active" style="color:#B5323E;font-weight:700">诊断</a>
-    <a href="chat.html">AI对话</a>
-    <a href="playbooks/">手册</a>
-    <a href="skills/">技能库</a>
-    <a href="agents.html">Agent</a>
-    <a href="graph/overview.html">图谱</a>
-  </nav>
-  <span style="font-size:12px;color:#888;margin-left:auto">{skill_count} Skills</span>
+  <button class="hamburger" id="hamburger-diag" aria-label="菜单" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <a class="brand" href="index.html">
+    <span class="brand-icon">P</span>
+    <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+  </a>
+  <div class="topbar-right">
+    <input id="global-search-diag" placeholder="搜索技能 / 场景…" autocomplete="off"
+      style="width:min(220px,18vw);padding:6px 12px 6px 30px;border-radius:var(--r-sm);border:1px solid #2E2E2E;background:#1A1A1A url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23555%22 stroke-width=%222%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%228%22/%3E%3Cpath d=%22m21 21-4.35-4.35%22/%3E%3C/svg%3E') no-repeat 10px center;color:#CCCCCC;font-size:12.5px;font-family:var(--font)">
+    <span class="topbar-stat">{skill_count} Skills</span>
+    <a href="pricing.html" class="topbar-cta">升级 Pro →</a>
+    <div id="p2s-auth-widget" style="margin-left:4px;display:flex;align-items:center;gap:8px">
+      <span id="p2s-user-avatar-d" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+      <a id="p2s-login-btn-d" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+    </div>
+  </div>
 </header>
 <div class="diag-wrap">
   <aside class="diag-left">
-    <div>
-      <div class="diag-title">业务诊断中心</div>
-      <div class="diag-sub">描述症状，匹配「诊断→处置→预防」Skill 链</div>
+    <div class="diag-left-head">
+      <div class="diag-left-eyebrow">paper2skills · 诊断中心</div>
+      <div class="diag-title">症状 → Skill 链</div>
+      <div class="diag-sub">描述业务问题，匹配「诊断→处置→预防」三层技能</div>
     </div>
-    <div class="diag-input-row">
-      <input class="diag-input" id="diag-input" placeholder="描述你的业务问题，如：ASIN 流量突然下降…" />
-      <button class="diag-btn" onclick="runDiag()">诊断</button>
+    <div class="diag-search-wrap">
+      <div class="diag-input-row">
+        <input class="diag-input" id="diag-input" placeholder="例：ASIN 流量下降、广告 ACoS 过高…" />
+        <button class="diag-btn" onclick="runDiag()">诊断</button>
+      </div>
     </div>
+    <div class="diag-section-label">风险症状</div>
     <div class="diag-events" id="diag-events"></div>
     <div class="path-finder">
-      <div class="path-finder-header" onclick="togglePathFinder()">
-        <span>Skill 路径规划</span><span id="pf-arrow">▸</span>
+      <div class="path-finder-header" id="pf-header" onclick="togglePathFinder()">
+        <span>Skill 路径规划</span>
+        <span class="path-finder-arrow" id="pf-arrow">▸</span>
       </div>
       <div class="path-finder-body" id="path-finder-body">
         <select class="path-select" id="pf-from" title="起点 Skill"></select>
@@ -4449,10 +4807,12 @@ def render_diagnostic_page(skill_count: int, build_ts: str) -> str:
     return null;
   }}
 
-  window.togglePathFinder=function(){{
+   window.togglePathFinder=function(){{
     const body=document.getElementById('path-finder-body');
+    const header=document.getElementById('pf-header');
     const arrow=document.getElementById('pf-arrow');
     const open=body.classList.toggle('open');
+    if(header)header.classList.toggle('open',open);
     arrow.textContent=open?'▾':'▸';
     if(open)loadGraph(()=>{{}});
   }};
@@ -4483,6 +4843,28 @@ def render_diagnostic_page(skill_count: int, build_ts: str) -> str:
       res.innerHTML=`<div class="diag-result-header"><div class="diag-result-title"><span class="diag-result-name">Skill 路径：${{fromId}} → ${{toId}}</span></div><div class="diag-result-summary">${{path.length}} 步路径（${{path.length-1}} 条边）</div></div><div class="path-result">${{steps}}</div>`;
     }});
   }};
+}})();
+</script>
+<script src="assets/search.js"></script>
+<script src="assets/playbook-data.js"></script>
+<script>
+(function(){{
+  const hbtn=document.getElementById('hamburger-diag');
+  if(hbtn){{
+    hbtn.addEventListener('click',function(){{
+      const open=hbtn.getAttribute('aria-expanded')!=='true';
+      hbtn.setAttribute('aria-expanded',open);
+      hbtn.classList.toggle('open',open);
+    }});
+  }}
+  fetch('/auth/me',{{credentials:'include',cache:'no-store'}}).then(function(r){{return r.json();}}).then(function(u){{
+    if(u&&u.name){{
+      var av=document.getElementById('p2s-user-avatar-d');
+      var lb=document.getElementById('p2s-login-btn-d');
+      if(av){{av.textContent=String(u.name).slice(0,1);av.style.display='inline-flex';}}
+      if(lb){{lb.textContent=u.name;lb.href='/settings.html';lb.style.background='transparent';lb.style.color='#94a3b8';lb.style.border='1px solid rgba(255,255,255,.15)';}}
+    }}
+  }}).catch(function(){{}});
 }})();
 </script>
 </body>
@@ -5680,6 +6062,8 @@ def render_pages(
     write_file(out / "maturity-report.html", render_maturity_report(skill_count=skill_count, edge_count=edge_count, domain_count=domain_count))
     write_file(out / "agents.html", render_agents_page(skill_lookup))
     write_file(out / "agent-report.html", render_agent_report_page())
+    write_file(out / "pricing.html", render_pricing_page(skill_count=skill_count))
+    write_file(out / "settings.html", render_settings_page())
     write_file(out / "solutions" / "index.html", render_solutions_index(total_skill_count=skill_count))
     for sol in SOLUTIONS_CATALOG:
         write_file(out / "solutions" / f"{sol['id']}.html", render_solution_detail(sol, total_skill_count=skill_count))
@@ -5694,7 +6078,7 @@ def render_pages(
         tag = html.escape(pb.get("tag", ""))
         pb_id = pb["id"]
         name = html.escape(pb["name"])
-        icon = pb["icon"]
+        icon = pb.get("svg_icon") or pb["icon"]
         biz_tag = html.escape(pb["tag"])
         desc = html.escape(pb["desc"])
         total_steps = len(pb.get("steps", []))
@@ -5705,10 +6089,12 @@ def render_pages(
             f"<div class='biz-body'>"
             f"<div class='biz-card-meta'>"
             f"<strong>{name}</strong>"
-            f"<span class='biz-tag'>{biz_tag}</span>"
             f"</div>"
             f"<p>{desc}</p>"
-            f"<div id='prog-{pb_id}' style='margin-top:6px;font-size:11px;color:#94a3b8'></div>"
+            f"<div class='biz-card-footer'>"
+            f"<span class='biz-tag'>{biz_tag}</span>"
+            f"<div id='prog-{pb_id}' style='margin-left:auto;font-size:11px;color:#94a3b8'></div>"
+            f"</div>"
             f"</div>"
             f"</div>"
             f"</a>"
@@ -5717,8 +6103,8 @@ def render_pages(
             f"var el=document.getElementById('prog-{pb_id}');"
             f"if(el&&done.length>0){{"
             f"var pct=Math.round(done.length/{total_steps}*100);"
-            f"el.innerHTML='<div style=\"background:#e2e8f0;border-radius:4px;height:4px;overflow:hidden;margin-bottom:3px\"><div style=\"background:#059669;height:100%;width:'+pct+'%;transition:width .3s\"></div></div>'"
-            f"+'<span style=\"color:#059669;font-weight:600\">'+done.length+'/{total_steps} 步已完成</span>';}}"
+            f"el.innerHTML='<div style=\"display:flex;align-items:center;gap:5px\"><div style=\"background:#e2e8f0;border-radius:4px;height:4px;overflow:hidden;width:40px\"><div style=\"background:#059669;height:100%;width:'+pct+'%;transition:width .3s\"></div></div>'"
+            f"+'<span style=\"color:#059669;font-weight:600\">'+done.length+'/{total_steps}</span></div>';}}"
             f"}})();</script>"
         )
     tob_index_cards = "".join(_pb_card(pb) for pb in TOB_PLAYBOOKS)
@@ -5937,12 +6323,23 @@ async function runAgentAI(id){
   const btn=document.getElementById('run-'+id),lb=document.getElementById('run-label-'+id),th=document.getElementById('thinking-'+id),out=document.getElementById('output-'+id),cel=document.getElementById('content-'+id);
   btn.disabled=true;if(lb)lb.textContent='AI分析中...';if(cel)cel.textContent='';if(out)out.classList.add('visible');if(th)th.style.display='flex';
   try{
+    const sk=_sessionKey();
+    const limitRes=await fetch('/api/agent/check-limit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_key:sk,agent_id:id})});
+    const limitData=await limitRes.json();
+    if(!limitData.can_proceed){
+      if(th)th.style.display='none';
+      if(cel)cel.innerHTML='<div style="padding:16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;text-align:center"><div style="font-size:15px;font-weight:700;color:#b91c1c;margin-bottom:8px">本月免费次数已用完</div><div style="font-size:13px;color:#6b7280;margin-bottom:14px">免费版每月 '+limitData.monthly_limit+' 次 Agent 调用已用完。升级 Pro 版解锁无限次调用。</div><a href="/pricing.html" style="display:inline-block;padding:9px 20px;background:#B5323E;color:#fff;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">升级 Pro →</a></div>';
+      if(btn)btn.disabled=false;if(lb)lb.textContent='运行分析';return;
+    }
     const inp=getInputsLabeled(id),inpStr=Object.entries(inp).map(([k,v])=>k+': '+v).join('\\n');
     const res=await fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:AGENT_PROMPTS[id]||'你是跨境电商AI分析助手。'},{role:'user',content:'请根据以下数据进行分析，严格按照格式输出：\\n\\n'+inpStr}],max_tokens:1800,temperature:0.5,stream:false})});
     const data=await res.json();const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';
+    await fetch('/api/agent/record-usage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_key:sk,agent_id:id})});
     if(th)th.style.display='none';await streamText(cel,'[AI深度分析 · DeepSeek]\\n\\n'+ans);
     saveReport(id,'[AI] '+ans);
     pushToFeishu({id,name:ADISP[id]||id,result:ans,ts:new Date().toLocaleString('zh-CN'),inputs:inp});
+    const newLimit=await fetch('/api/agent/check-limit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_key:sk,agent_id:id})}).then(r=>r.json()).catch(()=>null);
+    if(newLimit&&newLimit.remaining<=3&&newLimit.remaining>=0){const warn=document.getElementById('usage-warning-banner');if(!warn){const b=document.createElement('div');b.id='usage-warning-banner';b.style.cssText='position:fixed;bottom:16px;right:16px;z-index:9999;background:#fff;border:1px solid #fbbf24;border-radius:10px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.12);max-width:320px';b.innerHTML='<div style="font-size:13px;font-weight:700;color:#b45309;margin-bottom:4px">⚠ 免费次数剩余 '+newLimit.remaining+' 次</div><div style="font-size:12px;color:#6b7280;margin-bottom:8px">本月免费版 Agent 调用即将用完</div><a href="/pricing.html" style="font-size:12px;color:#B5323E;font-weight:700;text-decoration:none">升级 Pro 获取无限次数 →</a><button onclick="this.parentNode.remove()" style="position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;color:#94a3b8;font-size:14px">×</button>';document.body.appendChild(b);setTimeout(()=>b.remove(),8000);}}
   }catch(e){if(th)th.style.display='none';if(cel)cel.textContent='[AI调用失败] '+e.message;}
   finally{if(btn)btn.disabled=false;if(lb)lb.textContent='重新分析';}
 }
@@ -6031,6 +6428,84 @@ async function runChain(chainId){
         grid_marker = "<div class='agent-grid' id='agentGrid'>"
         if grid_marker in agents_html and 'agent-chain-panel' not in agents_html:
             agents_html = agents_html.replace(grid_marker, CHAIN_BANNER + '\n' + grid_marker, 1)
+
+        # 注入 CSV 上传功能
+        if 'p2s-csv-upload' not in agents_html:
+            CSV_JS = """
+<script id="p2s-csv-upload">
+(function(){
+function parseCSV(text){
+  const lines=text.trim().split(/\\r?\\n/);
+  if(lines.length<2)return{headers:[],rows:[]};
+  const headers=lines[0].split(',').map(h=>h.trim().replace(/^["']|["']$/g,''));
+  const rows=lines.slice(1).map(l=>{
+    const cols=[],re=/,(?=(?:[^"]*"[^"]*")*[^"]*$)/g;
+    let last=0,m;
+    while((m=re.exec(l))!==null){cols.push(l.slice(last,m.index).replace(/^"|"$/g,''));last=m.index+1;}
+    cols.push(l.slice(last).replace(/^"|"$/g,''));
+    return Object.fromEntries(headers.map((h,i)=>[h,cols[i]||'']));
+  });
+  return{headers,rows};
+}
+function csvFillAgent(agentId,rows,headers){
+  if(!rows.length)return;
+  const allText=rows.map(r=>headers.map(h=>h+': '+r[h]).join(' | ')).join('\\n');
+  const textareas=document.querySelectorAll('#modal-'+agentId+' textarea, #modal-'+agentId+' input[type=text]');
+  textareas.forEach(function(el){
+    const label=(el.id||el.placeholder||'').toLowerCase();
+    const matchedHeader=headers.find(function(h){
+      const hl=h.toLowerCase();
+      return label.includes(hl)||hl.includes(label.replace(/\\s+/g,'_'));
+    });
+    if(matchedHeader){
+      const vals=rows.map(r=>r[matchedHeader]||'').filter(Boolean);
+      el.value=vals.join('\\n');
+    } else if(el.tagName==='TEXTAREA'&&!el.value){
+      el.value=allText.slice(0,2000);
+    }
+  });
+  const notice=document.getElementById('csv-notice-'+agentId);
+  if(notice)notice.textContent='✓ 已导入 '+rows.length+' 行 CSV 数据（'+headers.join('、')+'）';
+}
+function openCSVPicker(agentId){
+  const inp=document.createElement('input');
+  inp.type='file';inp.accept='.csv,text/csv';
+  inp.onchange=function(){
+    const file=this.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const{headers,rows}=parseCSV(e.target.result);
+      if(!rows.length){alert('CSV 为空或格式不正确，请确保第一行为表头');return;}
+      csvFillAgent(agentId,rows,headers);
+    };
+    reader.readAsText(file,'UTF-8');
+  };
+  inp.click();
+}
+window.openCSVPicker=openCSVPicker;
+})();
+</script>"""
+            agents_html = agents_html.replace('</body>', CSV_JS + '\n</body>', 1)
+
+            modal_marker = "class='modal-run-btn'"
+            if modal_marker in agents_html:
+                import re as _re2
+                def _inject_csv_btn(m):
+                    full = m.group(0)
+                    agent_id_match = _re2.search(r"id='run-([^']+)'", full)
+                    if not agent_id_match:
+                        return full
+                    aid = agent_id_match.group(1)
+                    csv_btn = (
+                        f"<button type='button' onclick='openCSVPicker(\"{aid}\")' "
+                        f"style='padding:8px 14px;border:1px dashed #cbd5e1;border-radius:8px;"
+                        f"background:transparent;color:#64748b;font-size:12px;cursor:pointer;"
+                        f"display:inline-flex;align-items:center;gap:5px'>"
+                        f"⬆ 上传 CSV</button>"
+                        f"<div id='csv-notice-{aid}' style='font-size:11px;color:#059669;margin-top:4px'></div>"
+                    )
+                    return csv_btn + full
+                agents_html = _re2.sub(r"<button class='modal-run-btn'[^>]+>[^<]*</button>", _inject_csv_btn, agents_html)
 
         agents_path.write_text(agents_html, encoding="utf-8")
 
