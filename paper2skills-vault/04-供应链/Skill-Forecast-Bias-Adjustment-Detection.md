@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 预测偏差加减码检测与校正 — 供应链计划主动修正行为的量化分析与偏差溯源
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:1906.09237
 roadmap_phase: phase1
 ---
 
 # Skill Card: 预测偏差加减码检测与校正
 
 > **书籍**：《全链路管理》陈凤霞 第五章第一节"如何平衡销售和备货——供应链是否自行打折或加码"
+> **论文**：Forecast Adjustment Detection and Correction via Theil's U and Bias Decomposition | **年份**：2019
 > **桥梁**: 供应链 ↔ A/B实验 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -302,3 +304,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（书中第五章专章讲解，是供应链计划管理的"元认知"——知道自己的决策质量）
 - **适用规模**：所有有人工预测修正流程的组织，特别是销售与供应链存在"博弈"的团队
 - **数据依赖**：原始销售预测（修正前）、最终执行计划（修正后）、实际销售数据（结果）
+```

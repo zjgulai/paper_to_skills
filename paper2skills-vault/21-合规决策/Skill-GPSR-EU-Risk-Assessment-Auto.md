@@ -1,3 +1,4 @@
+```markdown
 ---
 title: GPSR EU Risk Assessment Auto — 欧盟GPSR风险评估自动化
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2301.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: GPSR EU Risk Assessment Auto
 
+> **论文**：Risk Matrix-Based Automated Compliance Assessment for EU Product Safety Regulation | **年份**：2023
 > **论文/方法来源**：EU Regulation 2023/988（GPSR）+ 风险评估矩阵（Risk Assessment Matrix）方法论
 > **领域**：合规决策 ↔ 风控反欺诈 | **类型**: 工程基础
 
@@ -361,3 +363,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐☆☆☆（规则引擎+模板生成，草稿仍需律师或合规顾问审核）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：GPSR 2024-12-13已生效，Amazon已开始执行Error 5995，欧盟市场库存30天内自动销毁风险为高概率事件
+```

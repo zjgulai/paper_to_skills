@@ -1,3 +1,4 @@
+```markdown
 ---
 title: MAS-Pricing-Coalition-Stability — 多SKU联合定价纳什均衡检测与联合体稳定性维持
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2203.07467
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 均衡维持型 | **触发条件**: 某SKU定价Agent单边降价超出联合策略范围 | **执行动作**: 纳什均衡检测+Shapley值重分配，恢复联合体稳定
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Coalitional Game Theory for Multi-Agent Pricing | **年份**：2022
 
 核心是「博弈均衡检测 + 公平分配防搭便车」：
 
@@ -195,3 +198,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐（Shapley计算指数复杂度，SKU数>10需近似算法）
 - **优先级**：⭐⭐⭐（适合有3-8个关联SKU的捆绑销售场景）
 - **扩展方向**：SKU数>8时用近似Shapley（采样版）替换精确计算
+```

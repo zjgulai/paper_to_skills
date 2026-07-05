@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 跨境物流模式动态选择 — 需求预测驱动的保税仓与直邮模式联合优化框架
 doc_type: knowledge
@@ -7,15 +8,14 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:2506.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 跨境物流模式动态选择
 
 > **论文**：Sales prediction-driven dynamic selection of logistics modes for cross-border e-commerce considering products return
-> **发表期刊**：International Journal of Systems Science: Operations & Logistics (2026)
-> **DOI**：10.1080/23302674.2025.2612317 | **桥梁**: 物流履约 ↔ 供应链 | **类型**: 算法工具
+> **年份**：2026 | **来源**：International Journal of Systems Science: Operations & Logistics (IJSSO) | **DOI**：10.1080/23302674.2025.2612317
 
 ## ① 算法原理
 
@@ -361,3 +361,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（物流成本是跨境电商最大可控成本之一；保税仓vs直邮的选择直接影响利润率和用户体验）
 - **适用规模**：月出货500件以上、有2种以上物流模式可选的跨境卖家
 - **数据依赖**：历史销量（按SKU按周）、保税仓和直邮的成本数据、退货记录（品类级）
+```

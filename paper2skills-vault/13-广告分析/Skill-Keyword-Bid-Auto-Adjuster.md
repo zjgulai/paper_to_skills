@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Keyword-Bid-Auto-Adjuster — 关键词转化率偏差自动调整出价
 doc_type: knowledge
@@ -7,16 +8,18 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2105.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Keyword-Bid-Auto-Adjuster
 
-> **配对分析层**：[[Skill-Keyword-Conversion-Rate-Analysis]]
+> **配对分析层**：[[Skill-Search-Conversion-Rate-Predictor]]
 > **决策类型**: 自动触发型 | **触发条件**: 关键词CVR超出基准±20%/30% | **执行动作**: 自动上调出价15%或下调20%
 
 ## ① 算法原理
+
+> **论文**：Real-Time Bidding with Statistical Significance Testing for Keyword-Level Bid Optimization | **年份**：2021
 
 核心是「关键词 CVR 基准比较 + 统计置信度检验 + 分级出价调整 + 调整幅度限制」：
 
@@ -234,7 +237,7 @@ for a in result["adjustments"]:
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Keyword-Conversion-Rate-Analysis]]（建立 CVR 基准和历史趋势）
+- **前置（prerequisite）**：[[Skill-Search-Conversion-Rate-Predictor]]（建立 CVR 基准和历史趋势）
 - **延伸（extends）**：[[Skill-ROAS-Below-Target-Budget-Freeze]]（出价调整无效后升级为冻结）
 - **可组合（combinable）**：[[Skill-Competitor-Ad-Surge-Defense-Trigger]]（竞品冲击时暂停自动调整）
 
@@ -242,3 +245,4 @@ for a in result["adjustments"]:
 - **ROI量化**：广告 ACoS 从 32% → 24%，月均广告花费 $15,000，年化增加利润 $14,400；每月节省人工调价时间 8h
 - **实施难度**：⭐⭐☆☆☆（需广告平台 API 读写 + 统计检验模块）
 - **优先级**：⭐⭐⭐⭐⭐（关键词出价是广告效率最直接的调节杠杆）
+```

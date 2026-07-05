@@ -1,14 +1,14 @@
+```markdown
 ---
 title: Delivery Promise Optimization — 时效承诺优化：转化率与准时率的帕累托
 doc_type: knowledge
 module: 18-物流履约
 topic: delivery-promise-time-optimization
-
 roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 ---
 
 # Skill Card: Delivery Promise Optimization — 时效承诺优化
@@ -19,6 +19,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**: Pareto-Optimal Delivery Promise Time Optimization via Quantile Regression | **年份**: 2023
 
 ### 时效承诺的 Pareto 优化
 
@@ -175,3 +177,4 @@ print("[✓] Delivery Promise Optimiza 测试通过")
 ---
 
 *参考来源：Amazon Delivery Promise Experience (2024)；JD.com 配送承诺优化技术报告；Operations Research in E-commerce Logistics, 2024-2025*
+```

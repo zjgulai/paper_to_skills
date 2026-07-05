@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Property Graph Query Optimization — 属性图查询工程
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase2
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2306.05165
 ---
 
 # Skill Card: Property Graph Query Optimization — 属性图查询工程
@@ -19,6 +20,9 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Graph Query Optimization: A Survey | **年份**：2023
+> **论文**：Cypher: An Evolving Query Language for Property Graphs | **年份**：2023
 
 **属性图（Property Graph）** 是企业级知识图谱的主流存储格式，节点和边都可以有属性：
 
@@ -290,3 +294,4 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐（添加索引是 DDL，APOC 插件安装即用）
 
 **优先级**：⭐⭐⭐⭐（直接决定知识图谱功能能否上线的工程门槛）
+```

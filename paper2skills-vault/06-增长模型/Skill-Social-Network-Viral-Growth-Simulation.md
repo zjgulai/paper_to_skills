@@ -384,7 +384,7 @@ if __name__ == "__main__":
 
 ## ④ 技能关联
 
-- **前置（prerequisite）**：[[Skill-User-LTV-Prediction]]（病毒增长与LTV结合评估ROI）、[[Skill-Churn-Prediction-Model]]（传播衰减与用户流失建模共享）
+- **前置（prerequisite）**：[[Skill-LTV-Prediction-ZILN]]（病毒增长与LTV结合评估ROI）、[[Skill-Customer-Churn-Prediction]]（传播衰减与用户流失建模共享）
 - **延伸（extends）**：[[Skill-Growth-Hacking-Experimentation]]（病毒增长实验设计）、[[Skill-New-Product-Launch-Prediction]]（新品传播预测）
 - **可组合（combinable）**：[[Skill-Cross-Cultural-Marketing-Adaptation]]（不同市场病毒传播参数差异化）、[[Skill-AI-Brand-Storytelling]]（病毒内容创作策略与传播模型联动）
 

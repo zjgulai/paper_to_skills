@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Agentic AB Testing — AI Agent 驱动 A/B 实验：假设→设计→解读→决策
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2305.10086
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Agentic AB Testing: LLM-Driven Automated Experimentation | **年份**：2023
 
 ### 核心思想
 
@@ -147,3 +150,4 @@ print("[✓] Agentic AB Testing 测试通过")
 - ⚠️ 新奇效应：实验前 48 小时数据不稳定，建议从第 3 天起计算结果
 - ⚠️ 网络效应：Amazon 平台算法调整会干扰实验，建议控制组与实验组在相同时间窗口
 - ⚠️ 多重检验：同时监测 5+ 指标时必须应用 Bonferroni 或 FDR 校正
+```

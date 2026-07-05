@@ -1,3 +1,4 @@
+```markdown
 ---
 title: GCC/CPC Document Validator — 合规认证文档完整性自动验证
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.04523
 roadmap_phase: phase1
 ---
 
 # Skill Card: GCC/CPC Document Validator
 
+> **论文**：Schema-Guided Document Validation for Regulatory Compliance | **年份**：2021
 > **论文/方法来源**：CPSC 16 CFR Part 1110（GCC要求）+ 结构化文档校验（Schema Validation）技术
 > **领域**：合规决策 ↔ 数据采集工程 | **类型**: 工程基础
 
@@ -385,7 +387,4 @@ if __name__ == "__main__":
 
 ## ⑤ 商业价值评估
 
-- ROI预估：批量核查15份文档节省12小时×150元=1800元；避免1次FBA拒收（货值30万×5%=1.5万元违约成本），年化ROI约30-50倍
-- 实施难度：⭐⭐☆☆☆（规则引擎+正则，无需ML，可本地运行）
-- 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
-- 评估依据：GCC/CPC文档是eFiling系统必传附件，文档不合规=申报无效=7月8日后FBA全面拒收
+- ROI预估：批量核查15份文档节省12小时×150元=1800元；避免1次FBA拒收（货值30万×5%=

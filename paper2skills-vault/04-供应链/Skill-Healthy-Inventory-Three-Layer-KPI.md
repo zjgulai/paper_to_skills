@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 健康库存三层数字化KPI体系 — 可视层/分析层/应用层的量化指标与联通机制
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:2106.09278
 roadmap_phase: phase1
 ---
 
 # Skill Card: 健康库存三层数字化KPI体系
 
 > **书籍**：《全链路管理》陈凤霞 第七章第六节"健康库存管理系统——健康库存数字化架构"
+> **论文**：Deep Inventory: A Deep Learning Framework for Multi-echelon Inventory Optimization | **年份**：2021
 > **桥梁**: 供应链 ↔ DataAgent-LLM | **类型**: 算法工具
 
 ## ① 算法原理
@@ -349,3 +351,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（书中第七章收官之作，是所有供应链数字化的终极形态；是从"KPI追踪"到"数字化决策支持"的质的跨越）
 - **适用规模**：月GMV>$10万、SKU数>30个的卖家；越大越有价值
 - **数据依赖**：多系统数据整合（OMS+WMS+财务）；数据质量是最大挑战
+```

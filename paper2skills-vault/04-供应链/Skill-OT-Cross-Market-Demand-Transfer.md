@@ -1,3 +1,4 @@
+```markdown
 ---
 title: OT Cross-Market Demand Transfer — 最优传输跨市场需求分布迁移
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-23
 updated: 2026-06-23
 owner: self
-source: human+ai
+source: arxiv:1803.00567
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-OT-Cross-Market-Demand-Transfer
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Sinkhorn Distances: Lightspeed Computation of Optimal Transport | **年份**：2013 (NeurIPS)
 
 **核心问题**：进入新市场（如美国 → 德国/日本）时，历史数据极少（<3个月），直接用新市场数据训练预测模型严重不足。最优传输（Optimal Transport, OT）提供了数学上最优的"知识迁移"方案——找到一个传输映射 $T$，将源市场需求分布"搬运"到目标市场，搬运成本（Wasserstein 距离）最小。
 
@@ -194,3 +197,4 @@ print("\n[✓] 最优传输跨市场迁移测试通过")
 - **优先级**：⭐⭐⭐⭐☆（有跨市场扩张计划的品牌必备，首年 ROI 清晰）
 - **数据要求**：源市场至少 52 周历史数据；目标市场至少 4 周数据（少于 4 周建议直接用源分布）
 - **适用场景**：品类和需求模式相似度较高的跨国市场扩张（美→欧，欧→亚）
+```

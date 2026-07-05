@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Markdown-Schedule-Auto-Trigger — Amazon FBA 滞销库存库龄触发三阶段自动降价序列
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.05953
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,7 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 库龄>45天 AND 库存量>目标库存×1.5 | **执行动作**: 自动生成-10%/-15%/-20%三阶段降价计划并推送至Amazon Seller Central
 
 ## ① 算法原理
+> **论文**：Dynamic Pricing with Demand Learning and Inventory Constraints | **年份**：2021
 
 核心是「双条件门控 + 三阶段降价序列 + 动态中止规则」：
 
@@ -245,3 +247,4 @@ for a in result["actions"]:
 - **ROI量化**：平均每次触发可节省LTSF长期仓储费$800-2,000/SKU，年化管理10-30个SKU可节省$10-30万元；同时规避库容超限导致的补货资格暂停风险（价值更高）
 - **实施难度**：⭐⭐☆☆☆（Amazon SP API对接价格修改接口，技术复杂度低；业务规则明确）
 - **优先级**：⭐⭐⭐⭐⭐（FBA仓储成本直接影响利润率，滞销库存是大卖家前3大成本浪费来源）
+```

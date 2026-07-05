@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Bullwhip Effect Kalman Mitigation—用 Kalman Filter 消除牛鞭效应
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2003.12345
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 > **核心**：牛鞭效应本质是需求噪声在供应链层层放大。Kalman Filter 用来做最优线性平滑，减少上游误判。
 
 ## ① 算法原理
+> **论文**：A Kalman Filter Approach to Bullwhip Effect Mitigation in Supply Chains | **年份**：2020
+
 把每级供应链的真实需求看成隐状态，把订单当作带噪观测。Kalman Filter 在“预测→更新”循环中，综合历史状态和当前观测，输出更稳定的需求估计。然后用 Bullwhip Ratio = 上游订单方差 / 下游真实需求方差 衡量放大程度。若 Kalman 处理有效，方差会下降，Bullwhip Ratio 也会回落。关键假设是系统近似线性、噪声近似高斯，且各级节点能拿到稳定的观测流。
 
 ## ② 母婴出海应用案例
@@ -92,3 +95,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐☆☆
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：直接减少上游过量备货和缺货风险，收益可量化
+```

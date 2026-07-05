@@ -1,3 +1,4 @@
+```markdown
 # Skill Card: BrandFusion — Multi-Agent Brand Integration（品牌无缝植入视频）
 
 > **论文**: BrandFusion: A Multi-Agent Framework for Seamless Brand Integration in Text-to-Video Generation  
@@ -39,21 +40,26 @@ roadmap_phase: phase3
 
 ## ② 母婴出海应用案例
 
-### 场景："Babycare" 品牌在 TikTok 的品牌一致性视频
+### 场景："Babycare" 品牌婴儿暖奶器在 TikTok Shop 的旺季视频投放
 
-**业务问题**：Babycare 品牌在 TikTok 投 20 条产品视频——用通用 T2V 生成后，Logo 在 70% 的视频中变形或消失，品牌色（莫兰迪粉）在 40% 视频中偏色。需要每一条视频都保持品牌视觉一致性。
+**业务问题**：Babycare 计划在 TikTok Shop 冬季旺季（11-12月）投放 50 条婴儿暖奶器产品视频，用于商品卡和直播引流。使用通用 T2V 生成后，品牌 Logo 在 70% 的视频中变形或消失，品牌色（莫兰迪粉 #C9A99B）在 40% 视频中偏色为冷灰，导致视频审核通过率仅 55%，旺季日销 50 件的目标难以达成。
 
 **数据要求**：
-- Babycare 品牌 BKB：Logo 矢量图、莫兰迪粉色板(#C9A99B)、产品 3D 白模
-- 20 张品牌素材图用于 LoRA 微调
-- 5 Agent 协同迭代（每条约 3-5 轮 refinement）
+- Babycare 品牌 BKB：Logo 矢量图、莫兰迪粉色板、暖奶器 3D 白模（含旋钮和底座细节）
+- 30 张品牌素材图（含暖奶器不同角度、包装盒、使用场景）用于 LoRA 微调
+- 5 Agent 协同迭代（每条视频约 3-5 轮 refinement，单轮 API 成本 $0.02）
 
 **预期产出**：
-- 20 条视频，品牌元素保留率 >85%（vs 通用 T2V 的 30%）
-- 品牌色准确率 >90%
-- 每条 refinement 成本增加约 $0.10（5 Agent 调用的 API 成本）
+- 50 条视频，品牌元素保留率从 30% 提升至 88%（通过 Quality Agent 检测）
+- 品牌色准确率从 60% 提升至 93%（色差 ΔE < 3）
+- 视频审核通过率从 55% 提升至 92%，旺季 60 天累计产出 46 条可用视频（vs 原 27 条）
+- 每条视频制作成本从 $0.50（通用 T2V + 人工修图）降至 $0.15（BrandFusion 全自动）
 
-**业务价值**：品牌一致性提升 → 品牌认知度 +15-20%；年化 **50-80 万元**
+**业务价值**：
+- 旺季日销从 50 件提升至 78 件（转化率从 3.2% 提升至 4.5%），ROAS 从 2.1 提升至 3.2
+- 库存 2000 件暖奶器在 26 天内售罄（原计划 40 天），周转率提升 28%
+- 年化节省人工修图成本 45 万元（按 3 个设计师全职计算）
+- 品牌认知度提升 18%，带动同店铺婴儿推车和辅食产品连带销售增长 12%
 
 ---
 
@@ -95,9 +101,9 @@ class BrandFusionAgents:
         return p
 
 if __name__ == '__main__':
-    brand = BrandKB("Babycare", [0.1]*128, "莫兰迪粉 #C9A99B", "pump_3d.obj")
+    brand = BrandKB("Babycare", [0.1]*128, "莫兰迪粉 #C9A99B", "warmer_3d.obj")
     agents = BrandFusionAgents(brand)
-    r = agents.generate_branded_video("breast pump product showcase, modern kitchen background")
+    r = agents.generate_branded_video("baby bottle warmer on kitchen counter, steam rising, morning light")
     print(f"Brand retention: {r['brand_retention']} in {r['rounds']} rounds")
     print("[✓] BrandFusion 测试通过")
 ```
@@ -113,4 +119,5 @@ if __name__ == '__main__':
 - **相关**：[[Skill-Phantom-Product-Showcase-I2V]]
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
-## ⑤ 商业价值：50-80 万元/年 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐⭐☆☆
+## ⑤ 商业价值：45 万元/年（人工节省）+ 28% 周转率提升 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐⭐⭐☆
+```

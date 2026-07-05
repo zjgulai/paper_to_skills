@@ -1,3 +1,4 @@
+```markdown
 ---
 title: LLM工具路由与意图识别 — 意图分类与置信过滤
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2302.04761
 roadmap_phase: phase2
 ---
 
@@ -17,6 +18,9 @@ roadmap_phase: phase2
 > **领域**：09-DataAgent-LLM ↔ 16-智能体工程 | **类型**: 算法工具
 
 ## ① 算法原理
+
+> **论文**：ToolFormer: Language Models Can Teach Themselves to Use Tools | **年份**：2023  
+> **论文**：Gorilla: Large Language Model Connected with Massive APIs | **年份**：2023
 
 LLM 工具路由解决 Multi-Tool Agent 的核心问题：**给定用户请求，选择正确的工具（或工具组合）执行**。错误的工具选择导致无效调用、API 成本浪费、错误结果。
 
@@ -224,3 +228,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐☆☆☆（规则引擎先快速落地，再迭代向量化方案）
 - 优先级：⭐⭐⭐⭐⭐
 - 评估依据：任何 Multi-Tool Agent 项目的第一个工程问题就是工具路由，准确的路由是 Agent 可用性的前提，投入小产出大
+```

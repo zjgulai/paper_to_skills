@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Agent Skill Runtime Orchestrator — 运行时动态选取并执行 Skill 的编排框架
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2305.18365
 roadmap_phase: phase3
 ---
 
@@ -19,6 +20,8 @@ roadmap_phase: phase3
 ---
 
 ## ① 算法原理
+
+> **论文**：Toolformer: Language Models Can Teach Themselves to Use Tools | **年份**：2023
 
 ### 核心思想
 
@@ -329,3 +332,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要 Skill frontmatter 规范化 + embedding 服务）
 - **优先级评分**：⭐⭐⭐⭐⭐（Agent 工程化的底层基础设施，所有其他 Agent Skill 的前提）
 - **评估依据**：当前 13 个 Agent 全部依赖硬编码工具选取，引入统一 Orchestrator 后可复用同一套检索逻辑，是 Agent 从"演示级"到"生产级"的关键跃迁
+```

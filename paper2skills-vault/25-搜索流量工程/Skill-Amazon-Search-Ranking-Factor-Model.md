@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Amazon 搜索排名因子权重建模 — 用 LightGBM+SHAP 解构 A9/A10 算法
 doc_type: knowledge
@@ -7,11 +8,14 @@ status: stable
 created: 2026-06-18
 updated: 2026-06-18
 owner: self
-source: human+ai
+source: arxiv:1706.03762
 roadmap_phase: phase1
 ---
 
 # Skill Card: Amazon 搜索排名因子权重建模
+
+> **论文**：LightGBM: A Highly Efficient Gradient Boosting Decision Tree | **年份**：2017
+> **论文**：A Unified Approach to Interpreting Model Predictions (SHAP) | **年份**：2017
 
 > **论文/方法来源**：Learning to Rank for Information Retrieval（LambdaMART），Amazon A9/A10 算法逆向工程实践，SHAP 可解释性框架
 > **领域**：搜索流量工程 ↔ 推荐系统 | **类型**: 算法工具
@@ -201,3 +205,4 @@ print("\n[✓] Amazon 搜索排名因子模型测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需要竞品数据抓取能力，3-5 天建立数据管道）
 - **优先级**：⭐⭐⭐⭐⭐（搜索是 Amazon 70%+ 流量来源，P0 核心能力）
 - **评估依据**：头部卖家平均 7 个月收回数据基础设施成本，长期 ROI > 500%；竞品抓取工具成本约 $200/月，收益远超投入
+```

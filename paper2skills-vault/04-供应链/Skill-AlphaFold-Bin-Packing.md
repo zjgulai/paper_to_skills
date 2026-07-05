@@ -1,7 +1,9 @@
+```markdown
 ---
 name: alphafold-bin-packing
 description: 物流经理陷入FBA头程装箱率瓶颈的同质化困境——引入蛋白质折叠算法的三维异形装箱优化，反直觉将40尺柜装载率从78%暴力提升至94%，单柜头程成本骤降16%。
 roadmap_phase: phase3
+source: arxiv:2107.01404
 ---
 
 # Skill Card: 蛋白质折叠启发的异形 SKU 极限装箱 (AlphaFold Bin-Packing)
@@ -9,6 +11,8 @@ roadmap_phase: phase3
 ---
 
 #### ① 算法原理
+> **论文**：AlphaFold Protein Structure Prediction | **年份**：2021
+
 - **核心思想**：跨境电商 SKU（如异形婴儿学步车、大件爬行垫）装箱是 NP-hard 三维异形排样问题。传统贪心启发式算法只能达到 75-80% 的容积率。本算法借鉴 DeepMind AlphaFold 预测氨基酸链三维折叠的能量最小化原理，用蒙特卡洛树搜索（MCTS）在连续旋转空间中寻找无物理穿透的极低势能构象。
 - **数学直觉**：
   $E(state) = GapVolume(state) + \lambda \cdot UnstableContacts(state)$
@@ -37,3 +41,4 @@ roadmap_phase: phase3
 - **实施难度**：★★★☆☆ (MCTS 算法成熟，需要 SKU 测量基础数据)
 - **优先级评分**：★★★★☆
 - **评估依据**：物理空间的极限压缩是供应链净利润最直接的来源。
+```

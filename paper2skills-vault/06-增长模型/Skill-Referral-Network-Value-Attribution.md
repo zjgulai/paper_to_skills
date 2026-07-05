@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Referral Network Value Attribution — 量化会员裂变价值定价推荐激励额度
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-23
 updated: 2026-06-23
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase2
 ---
 
 # Skill Card: Referral Network Value Attribution — 会员裂变价值归因
 
-> **论文**：Evolution of Referrals over Customers' Life Cycle: Evidence from a Ride-Sharing Platform (Information Systems Research, 2023, Fernández-Loría, Cohen, Ghose, 40万用户) + Referral Contagion: Downstream Benefits of Customer Referrals (Marketing Science, 2023, 41.2M 用户字段实验) + Acquiring Customers via Referral Reward Programs versus Advertising (Journal of Retailing and Consumer Services, 2024)
+> **论文**：Evolution of Referrals over Customers' Life Cycle: Evidence from a Ride-Sharing Platform | **年份**：2023
 > **方法来源**：IS Research 2023 + Marketing Science 2023 | **桥梁**: 06-增长模型 ↔ 01-因果推断 | **类型**: 跨域融合
 
 ---
@@ -361,3 +362,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（主要是数据分析，推荐关系追踪系统已有即可，1-2 周出完整分析）
 - **优先级**：⭐⭐⭐⭐☆（推荐获客成本比广告低 5-8 倍，且被推荐用户 LTV 更高，精算激励是投入产出比极高的优化）
 - **评估依据**：IS Research 2023（40万用户）实证：用户使用频次与推荐质量正相关，不同生命周期阶段激励差异显著；Marketing Science 2023（4120万用户）：裂变传导效应使推荐计划价值被低估 20-27%，提醒推荐来源可额外提升推荐率 20-27%
+```

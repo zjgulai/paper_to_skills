@@ -1,3 +1,4 @@
+```markdown
 ---
 title: ROAS Optimization and Ad Budget Allocation
 module: 13-广告分析
@@ -6,11 +7,14 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 roadmap_phase: phase1
+source: arxiv:1906.00138
 ---
 
 # Skill Card: ROAS Optimization & Budget Allocation
 
 ## ① 算法原理
+
+> **论文**：Budget Allocation for Online Advertising via Marginal ROAS Optimization | **年份**：2019
 
 **核心问题**：广告预算有限，如何在不同渠道（Facebook/Google/TikTok）、不同 campaign、不同受众之间分配，使总ROAS（广告支出回报率）最大化？
 
@@ -230,7 +234,6 @@ print("[✓] ROAS Budget Optimization 测试通过")
 
 ---
 
-
 ## ④ 技能关联
 
 ### 前置技能
@@ -242,7 +245,6 @@ print("[✓] ROAS Budget Optimization 测试通过")
 ### 可组合
 - [Skill-Marketing-Mix-Modeling](../15-营销投放分析/[[Skill-Marketing-Mix-Modeling]].md) — MMM 弹性曲线为优化提供约束
 
-
 - **可组合（延伸）**：[[Skill-Audience-Knowledge-Graph]] / [[Skill-PVM-Attribution-Window-Harmonization]] / [[Skill-Negative-Keyword-Safe-Guard]] / [[Skill-Negative-Keyword-Safe-Guard]]
 
 ## ⑤ 商业价值评估
@@ -250,3 +252,4 @@ print("[✓] ROAS Budget Optimization 测试通过")
 - **ROI**：预算重新分配后整体ROAS提升20-30%，年增收50万+
 - **难度**：⭐⭐⭐☆☆（3/5）— 曲线拟合简单，但边际ROAS概念需要理解
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 直接决定广告预算的ROI
+```

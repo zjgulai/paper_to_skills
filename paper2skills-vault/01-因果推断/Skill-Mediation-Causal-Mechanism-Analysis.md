@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Causal Mediation Analysis — Decomposing "Why It Works"
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 owner: self
-source: human+ai
+source: arxiv:2007.04271
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,9 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Causal Mediation Analysis: A Review | **年份**：2020  
+> **核心引用**：Pearl, J. (2001). Direct and Indirect Effects. *UAI 2001*.
 
 **核心思想**：中介分析回答"为什么"——一个干预（如推荐算法更新）通过什么机制影响了结果（如转化率）。它将总效应分解为：
 - **直接效应**：干预直接影响结果（不经过中介变量）
@@ -480,5 +484,4 @@ print("[✓] Mediation Causal Mechanis 测试通过")
 ### 评估依据
 1. 母婴出海电商的决策链条长（广告→点击→浏览→加购→支付→复购），每个环节都是潜在中介。不看机制就只能盲目优化。
 2. 与DiD + IV形成完整因果推断工具链：DiD（时间维度）+ IV（截面维度）+ Mediation（机制维度）= 三维因果分析
-3. 实施成本极低（两个回归），但业务价值极高（避免错误优化方向）
-4. 是A/B测试后必做的分析——没有机制分解的A/B测试只完成了一半
+3. 实施成本极低（两个回归），但业务价值极高（避免错误优化方向

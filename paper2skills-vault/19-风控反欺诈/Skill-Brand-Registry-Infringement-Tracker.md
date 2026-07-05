@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Brand Registry Infringement Tracker — 品牌注册侵权追踪自动监控 EUIPO/USPTO
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2006.03589
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Brand-Registry-Infringement-Tracker
 
 ## ① 算法原理（≤300字）
+
+> **论文**：A Benchmark for Trademark Similarity Detection Using Levenshtein and Jaro-Winkler | **年份**：2020
 
 **核心问题**：母婴品牌的商标侵权分为两类：① 他人在电商平台使用近似商标（品牌仿冒）；② 他人在 EUIPO/USPTO 注册相同或近似商标（商标抢注）。前者发现已造成销售损失，后者若未监控可能导致商标无效化。
 
@@ -193,3 +196,4 @@ print("[✓] Brand-Registry-Infringement-Tracker 测试通过")
 - **ROI量化**: 阻止商标抢注，年化保护品牌价值 100-500 万元
 - **实施难度**: ⭐⭐（商标文字比对算法简单，图形比对需额外工具）
 - **优先级**: ⭐⭐⭐⭐（品牌注册后必须持续监控，非注册卖家优先注册）
+```

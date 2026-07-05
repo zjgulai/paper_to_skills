@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 多账号操作隔离规范 — 风险传染模型与安全运营SOP
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.08947
 roadmap_phase: phase1
 ---
 
 # Skill Card: 多账号操作隔离规范
 
-> **论文**：Risk Contagion Modeling in Multi-Account E-Commerce Operations: Isolation Strategies and Verification
+> **论文**：Risk Contagion Modeling in Multi-Account E-Commerce Operations: Isolation Strategies and Verification | **年份**：2021
 > **领域**：账号合规运营 | **类型**：算法工具 | **桥梁**: 19-风控反欺诈 ↔ 10-MAS
 
 ## ① 算法原理
@@ -263,3 +264,4 @@ if __name__ == "__main__":
 - **ROI 预估**：一账号被封引发关联封号（传染），额外损失约150-500万元；本工具提前识别并整改，防止传染发生，投入约5万元工具成本，防损ROI极高
 - **实施难度**：⭐⭐☆☆☆（规则明确，主要是组织和流程挑战，不是技术挑战）
 - **优先级**：⭐⭐⭐⭐⭐（任何运营多个店铺的团队的刚需合规工具）
+```

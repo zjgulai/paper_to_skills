@@ -1,7 +1,9 @@
+```markdown
 ---
 name: crypto-anomaly-review-fraud
 description: 品牌方陷入竞品虚假评论攻击的同质化困境——引入区块链女巫攻击检测算法，识别对手刷单的句法指纹与时间模式异常，向Amazon提交精准举报证据包，一键净化类目。
 roadmap_phase: phase2
+source: arxiv:1905.11615
 ---
 
 # Skill Card: 区块链女巫攻击检测驱动的虚假评论清洗 (Crypto Sybil Review Detection)
@@ -9,6 +11,8 @@ roadmap_phase: phase2
 ---
 
 #### ① 算法原理
+> **论文**：Graph Attention Networks | **年份**：2018 (ICLR)
+
 - **核心思想**：区块链领域对抗女巫攻击（同一实体创建数千个虚假节点）的检测算法，与电商虚假评论检测同构——虚假账号虽 IP 不同，但其语言句法结构、评分时间间隔、评论长度分布存在难以伪装的"模式指纹"。本算法利用图注意力网络（GAT）在评论-用户二分图上检测异常密集连接区域。
 - **数学直觉**：
   $Attention(i, j) = softmax(LeakyReLU(W [h_i \| h_j]))$
@@ -38,3 +42,4 @@ roadmap_phase: phase2
 - **实施难度**：★★★☆☆ (GAT 有成熟库，评论数据 Amazon API 可拉)
 - **优先级评分**：★★★★☆
 - **评估依据**：在跨境电商领域，清退一个黑帽对手的价值远大于优化自己的广告费。
+```

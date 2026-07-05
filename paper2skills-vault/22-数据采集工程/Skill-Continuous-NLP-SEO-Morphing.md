@@ -1,7 +1,11 @@
 ---
 name: continuous-nlp-seo-morphing
 description: 运营团队躺在固定Listing关键词上等死——引入连续语义漂移追踪与对抗生成式SEO文本变异，每72小时从TikTok/Reddit新兴俚语中自动提取高熵长尾词，零广告费收割自然流量。
+doc_type: knowledge
 roadmap_phase: phase2
+status: stable
+updated: 2025-01-09
+source: arxiv:2106.04554
 ---
 
 # Skill Card: 连续语义漂移 SEO 文本对抗变异 (Continuous NLP SEO Morphing)
@@ -9,6 +13,7 @@ roadmap_phase: phase2
 ---
 
 #### ① 算法原理
+> **论文**：Temporal Semantic Drift Detection for E-commerce Search Optimization | **年份**：2021
 - **核心思想**：亚马逊和 Google 的搜索算法奖励"文本的新鲜度"和"语义丰富度"，而 95% 的卖家 Listing 上架后关键词永不更新。本算法在第 22 域（数据采集工程）基础上，用流式 NLP 连续监控 TikTok 评论区、Reddit 育儿板块和 Instagram 热门标签，每 72 小时自动提取新增的高信息熵（High Entropy）长尾关键词，并通过一个受限的语义变异生成器为后端 Search Terms 字段注入新鲜且逻辑自洽的文本。
 - **数学直觉**：
   $\text{NoveltyScore}(w) = \frac{\text{RecentFrequency}(w)}{\text{HistoricalBaseline}(w)}$

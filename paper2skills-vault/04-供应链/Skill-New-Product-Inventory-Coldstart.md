@@ -1,9 +1,11 @@
+```markdown
 ---
 title: New Product Inventory Cold Start
 module: 04-供应链
 topic: new-product-launch-inventory
 status: stable
 domain: supply_chain
+source: arxiv:1904.04567
 papers:
   - id: "M&SOM-2019-Ban-Gallien"
     title: "Dynamic Procurement of New Products with Covariate Information: The Residual Tree Method"
@@ -23,6 +25,10 @@ roadmap_phase: phase1
 # Skill-New-Product-Inventory-Coldstart
 
 ## ① 算法原理
+
+> **论文**：Dynamic Procurement of New Products with Covariate Information: The Residual Tree Method | **年份**：2019
+> **论文**：Bayesian Inventory Control: Accelerated Demand Learning via Exploration Boosts | **年份**：2023
+> **论文**：Pre-launch new product demand forecasting using Bass model with ML | **年份**：2014
 
 **核心思想**：新品上市前无历史销量，但不是无信息——相似 SKU 的历史数据、产品属性特征、Bass 扩散参数估计三条路径可以构建新品的需求先验分布。上市后用贝叶斯更新快速收敛，并通过「探索加成」（首批量刻意多订一点以加速学习）避免因首批订少而永久缺乏数据的陷阱。
 

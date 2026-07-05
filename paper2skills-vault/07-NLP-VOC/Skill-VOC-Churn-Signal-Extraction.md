@@ -1,3 +1,4 @@
+```markdown
 ---
 title: VOC-Churn-Signal-Extraction — 差评文本语义流失信号提取与流失概率预测
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2005.11870
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 预警触发型 | **触发条件**: 差评/1-2星评论中流失信号词频≥3次/周 | **执行动作**: 推送流失预警到运营看板，触发挽回邮件序列
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Churn Prediction via Semantic Signal Extraction from User Reviews | **年份**：2020
 
 核心是「规则词典 + 语义向量双通道」流失信号提取：
 
@@ -195,3 +198,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词典维护+TF-IDF，无需GPU）
 - **优先级**：⭐⭐⭐⭐（直接接入复购运营系统，ROI清晰）
 - **数据要求**：月均≥200条1-3星评论，用户ID可关联
+```

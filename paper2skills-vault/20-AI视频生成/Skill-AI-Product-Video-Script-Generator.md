@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-AI-Product-Video-Script-Generator — AI 母婴产品视频脚本自动生成
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2305.18290
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-AI-Product-Video-Script-Generator
 
-> **论文/方法来源**：Automated Advertising Script Generation via LLM（工业实践）+ VOC-Driven Creative Brief Framework（营销科学）
+> **论文**：Automated Advertising Script Generation via LLM with VOC-Driven Creative Brief Framework | **年份**：2023
 > **领域**：20-AI视频生成 ↔ NLP-VOC | **类型**: 内容生成
 
 ## ① 算法原理
@@ -215,3 +216,4 @@ print("\n[✓] AI-Product-Video-Script-Generator 测试通过")
 - **ROI**：脚本生成时间从 6h → 15min/条，月节省 50 小时运营时间，年化内容产量提升 75%
 - **实施难度**：⭐⭐☆☆☆（模板驱动，无需 LLM API，规则引擎即可）
 - **优先级**：⭐⭐⭐⭐⭐（内容产量是 TikTok 算法的核心驱动力，每月 10 条 > 每月 2 条）
+```

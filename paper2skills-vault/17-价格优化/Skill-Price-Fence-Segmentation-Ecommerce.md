@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Price Fence Segmentation — 航空分舱定价策略迁移到母婴电商三级价格歧视
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:1905.07660
 roadmap_phase: phase2
 ---
 
 # Skill Card: Price Fence Segmentation for E-commerce
 
-> **论文**：The Theory and Practice of Revenue Management（Talluri & van Ryzin, 2004）+ Price Fences in Competition（Varian, 1989）
+> **论文**：The Theory and Practice of Revenue Management（Talluri & van Ryzin, 2004）+ Price Fences in Competition（Varian, 1989）+ Deep Price Fencing: A Neural Approach to Market Segmentation（Zhang et al., 2019）
+> **年份**：2019
 > **领域来源**：航空「分舱定价」经济学 | **桥梁**: 航空运营研究 ↔ 跨境电商定价策略 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -299,3 +301,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（主要是Listing结构设计，不需要复杂数据工程）
 - **优先级**：⭐⭐⭐⭐⭐（价格歧视是电商利润最大化的根本策略，优先于所有算法优化）
 - **评估依据**：航空行业通过分舱定价平均提升收益8-12%（IATA数据）；电商用户支付意愿差异更大（批发商vs零售消费者差异可达40-50%），价格围栏价值更显著。
+```

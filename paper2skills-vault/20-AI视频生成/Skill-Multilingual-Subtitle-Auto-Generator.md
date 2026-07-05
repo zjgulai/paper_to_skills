@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Multilingual-Subtitle-Auto-Generator — 多语言字幕自动生成
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2212.04356
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,9 @@ roadmap_phase: phase1
 > **领域**：20-AI视频生成 ↔ NLP-VOC | **类型**: 多语言处理
 
 ## ① 算法原理
+
+> **论文**：Whisper: Robust Speech Recognition via Large-Scale Weak Supervision | **年份**：2022
+> **论文**：No Language Left Behind: Scaling Human-Centered Machine Translation | **年份**：2022
 
 多语言字幕自动生成（Multilingual Subtitle Auto Generator）采用两阶段流水线：语音识别（ASR）→ 机器翻译（MT），自动为视频生成多语言 SRT 字幕文件。
 
@@ -248,3 +252,4 @@ print("\n[✓] Multilingual-Subtitle-Auto-Generator 测试通过")
 - **ROI**：翻译成本从 $900/月 → $15/月（API 费），年化节省约 10,600 元，同时支持更多市场进入
 - **实施难度**：⭐⭐☆☆☆（Whisper 开源可本地部署，翻译 API 成熟）
 - **优先级**：⭐⭐⭐⭐⭐（视频出海的基础能力，多语言字幕直接影响非英语市场转化率）
+```

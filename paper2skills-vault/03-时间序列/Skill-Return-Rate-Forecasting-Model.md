@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Return Rate Forecasting Model — 退货率时序预测节后退货浪潮提前量化
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.09718
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Return-Rate-Forecasting-Model
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Probabilistic Forecasting of Customer Return Rates with SARIMA and Holiday Pulse Effects | **年份**：2021
 
 **核心问题**：母婴产品退货高度季节性——黑五/圣诞后 1-3 周通常有退货浪潮（礼品退换），退货率可达平时 3-5 倍。若不提前预测，FBA 库存预测会严重高估可用库存，导致「账面库存充足、实际可销库存不足」的虚假安全状态。
 
@@ -139,7 +142,6 @@ print(f"前5天退货率预测: {forecast['forecast_rates'][:5].round(3)}")
 print("[✓] Return-Rate-Forecasting-Model 测试通过")
 ```
 
-
 ## ④ 技能关联
 
 - 前置技能：[[Skill-Time-Series-Forecasting]]
@@ -154,3 +156,4 @@ print("[✓] Return-Rate-Forecasting-Model 测试通过")
 - **ROI量化**: 节后过剩库存减少 20%，年化降低 FBA 存储费用 10-15 万元
 - **实施难度**: ⭐⭐（FBA 退货报告直接提供数据，建模简单）
 - **优先级**: ⭐⭐⭐⭐（大促后库存管理的必备风险防控工具）
+```

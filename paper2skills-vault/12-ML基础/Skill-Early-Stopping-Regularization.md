@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Early Stopping and Regularization — 防止过拟合的训练控制技术
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1206.5533
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **领域**：12-ML基础 ↔ 06-增长模型 | **类型**: 算法工具
 
 ## ① 算法原理
+
+> **论文**：Dropout: A Simple Way to Prevent Neural Networks from Overfitting | **年份**：2014
 
 **过拟合（Overfitting）**是模型在训练集表现优秀但在新数据上泛化失败的核心问题。两条防御路线：
 
@@ -202,3 +205,4 @@ print("[✓] Early Stopping and Regularization 测试通过")
 - **实施难度**：⭐⭐☆☆☆（sklearn 原生支持，不需要额外依赖；GBM 加 validation_fraction 参数即可）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：过拟合是初期建模的头号问题；Early Stopping + Elastic Net 是工程上最稳定可靠的组合，几乎无副作用
+```

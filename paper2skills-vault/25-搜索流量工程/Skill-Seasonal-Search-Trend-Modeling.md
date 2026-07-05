@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 季节性搜索趋势建模 — 搜索峰值预测与备货节奏对齐
 doc_type: knowledge
@@ -7,14 +8,14 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1703.07015
 roadmap_phase: phase1
 ---
 
 # Skill Card: 季节性搜索趋势建模
 
-> **论文/方法来源**：Forecasting at Scale with Prophet（Taylor & Letham 2018, PeerJ）+ Seasonal Decomposition of Time Series by Loess（Cleveland et al. 1990）
-> **领域**：搜索流量工程 ↔ 时间序列 | **类型**: 跨域融合
+> **论文**：Forecasting at Scale (Prophet) | **年份**：2018
+> **来源**：PeerJ (Taylor & Letham)
 
 ## ① 算法原理
 
@@ -164,3 +165,4 @@ print("\n[✓] 季节性搜索趋势建模测试通过")
 - 实施难度：⭐⭐⭐☆☆
 - 优先级：⭐⭐⭐⭐⭐
 - 评估依据：母婴用品季节性极强（母亲节/婴儿洗澡季/开学季等），精准预测搜索峰值是备货决策的核心输入；Prophet 开源免费，实施门槛低
+```

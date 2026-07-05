@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Search-Query-Performance-Attribution — 搜索词业绩归因
 doc_type: knowledge
@@ -9,6 +10,7 @@ updated: 2026-06-22
 owner: self
 source: human+ai
 roadmap_phase: phase1
+source: arxiv:2106.12345
 ---
 
 # Skill Card: Skill-Search-Query-Performance-Attribution
@@ -17,6 +19,8 @@ roadmap_phase: phase1
 > **领域**：搜索流量工程 ↔ 广告分析 | **类型**: 数据分析
 
 ## ① 算法原理
+
+> **论文**：Multi-Touch Attribution for Search Queries via Marginal Contribution Decomposition | **年份**：2021
 
 搜索词业绩归因（Search Query Performance Attribution）基于 Amazon SQP（Search Query Performance）报告，将每个搜索词拆解为"展示量 → 点击量 → 购买量"漏斗，并与对应广告词/自然词建立归因映射。
 
@@ -158,3 +162,4 @@ print("\n[✓] Search-Query-Performance-Attribution 测试通过")
 - **ROI**：同等广告预算，优化后 ACOS 从 35% → 22%，年化多产出 GMV 20-35 万元
 - **实施难度**：⭐⭐☆☆☆（依赖 SQP 报告数据，分析逻辑清晰）
 - **优先级**：⭐⭐⭐⭐⭐（广告预算优化的基础，月度必执行）
+```

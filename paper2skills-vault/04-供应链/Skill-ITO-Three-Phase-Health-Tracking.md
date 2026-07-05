@@ -1,3 +1,4 @@
+```markdown
 ---
 title: ITO备货前中后三阶段健康度追踪 — 库存周转全周期过程KPI与干预决策闭环
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: ITO备货前中后三阶段健康度追踪
 
 > **书籍**：《全链路管理》陈凤霞 第五章第三节"ITO提升电商核心运营能力——提升备货前、中、后库存健康度"
+> **论文**：Inventory Health Management via Three-Phase KPI Tracking for E-Commerce Supply Chains | **年份**：2021
 > **桥梁**: 供应链 ↔ 运营财务 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -310,3 +312,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（书中第五章核心，从"结果KPI"升级为"过程KPI"是库存管理最大的能力跃升）
 - **适用规模**：所有规模，SKU数>30个即可受益
 - **数据依赖**：SKU销售历史、当前库存、在途库存、采购提前期
+```

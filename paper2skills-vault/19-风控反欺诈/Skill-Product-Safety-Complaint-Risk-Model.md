@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Product Safety Complaint Risk Model — 产品安全投诉风险模型基于历史预测封号概率
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2006.05479
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Product-Safety-Complaint-Risk-Model
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Logistic Regression for Risk Prediction in E-Commerce Platform Enforcement | **年份**：2020
 
 **核心问题**：Amazon 因产品安全投诉封号是母婴卖家最严重的风险场景（封号 = 冻结资金 + 停售 = 数百万损失）。不同于随机封号，安全投诉封号有明显的先兆信号——投诉数量趋势、评论中安全关键词频率、类目整体的合规审查强度。
 
@@ -152,7 +155,6 @@ print(f"主要风险因子: {result['features_contribution']}")
 print("[✓] Product-Safety-Complaint-Risk-Model 测试通过")
 ```
 
-
 ## ④ 技能关联
 
 - 前置技能：[[Skill-Consumer-Complaint-Recall-Prediction]]
@@ -167,3 +169,4 @@ print("[✓] Product-Safety-Complaint-Risk-Model 测试通过")
 - **ROI量化**: 成功规避一次封号，保护冻结资金 200-500 万元
 - **实施难度**: ⭐⭐（数据来自 Seller Central，模型简单但效果显著）
 - **优先级**: ⭐⭐⭐⭐⭐（母婴卖家最高优先级风险防控）
+```

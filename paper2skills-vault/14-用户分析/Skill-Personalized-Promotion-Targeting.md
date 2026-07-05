@@ -1,14 +1,14 @@
+```markdown
 ---
 title: Personalized Promotion Targeting — 个性化促销定向：用户响应异质性建模
 doc_type: knowledge
 module: 14-用户分析
 topic: personalized-promotion-targeting-heterogeneous
-
 roadmap_phase: phase2
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:1706.03478
 ---
 
 # Skill Card: Personalized Promotion Targeting — 个性化促销定向
@@ -16,6 +16,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Uplift Modeling for Multiple Treatments with Cost Constraints | **年份**：2017
 
 ### 核心问题：促销"一刀切"的浪费
 
@@ -101,13 +103,12 @@ Personalized Promotion Targeting — 个性化促销定向
 异质性响应建模 + Knapsack 预算优化
 
 纯 Python 标准库，无 sklearn/pandas 依赖
-Python 3.14 兼容
+Python 3.8+ 兼容
 """
 from __future__ import annotations
 
-import math
-import random
 from dataclasses import dataclass
+from typing import List, Dict
 
 
 # ─── 数据结构 ────────────────────────────────────────────────────────────────
@@ -166,14 +167,14 @@ class HeterogeneousResponseModeler:
     """
 
     def __init__(self) -> None:
-        self._segments: list[UserSegment] = []
+        self._segments: List[UserSegment] = []
 
-    def fit(self, segments: list[UserSegment]) -> "HeterogeneousResponseModeler":
+    def fit(self, segments: List[UserSegment]) -> "HeterogeneousResponseModeler":
         """加载分群响应数据"""
         self._segments = sorted(segments, key=lambda s: s.roi_per_dollar, reverse=True)
         return self
 
-    def predict_response_probability(self, segment_id: str) -> dict[str, float]:
+    def predict_response_probability(self, segment_id: str) -> Dict[str, float]:
         """预测指定分群的响应概率分布"""
         for seg in self._segments:
             if seg.segment_id == segment_id:
@@ -198,7 +199,7 @@ class HeterogeneousResponseModeler:
             )
 
     @property
-    def segments(self) -> list[UserSegment]:
+    def segments(self) -> List[UserSegment]:
         return self._segments
 
 
@@ -222,7 +223,7 @@ class PromotionAllocator:
         self.budget = budget
         self.min_incremental_response = min_incremental_response
 
-    def allocate(self, segments: list[UserSegment]) -> list[AllocationResult]:
+    def allocate(self, segments: List[UserSegment]) -> List[AllocationResult]:
         """
         贪心 Fractional Knapsack 分配
         对每个分群，可选择分配 0~100% 的用户
@@ -234,7 +235,7 @@ class PromotionAllocator:
         ]
         eligible.sort(key=lambda s: s.roi_per_dollar, reverse=True)
 
-        results: list[AllocationResult] = []
+        results: List[AllocationResult] = []
         remaining_budget = self.budget
 
         for seg in eligible:
@@ -263,11 +264,11 @@ class PromotionAllocator:
 
         return results
 
-    def max_roi_allocate(self, segments: list[UserSegment]) -> list[AllocationResult]:
+    def max_roi_allocate(self, segments: List[UserSegment]) -> List[AllocationResult]:
         """同 allocate，别名方便调用"""
         return self.allocate(segments)
 
-    def print_allocation_report(self, results: list[AllocationResult]) -> None:
+    def print_allocation_report(self, results: List[AllocationResult]) -> None:
         """打印分配结果"""
         total_ltv = sum(r.expected_incremental_ltv for r in results)
         total_cost = sum(r.total_cost for r in results)
@@ -289,7 +290,7 @@ class PromotionAllocator:
 
 # ─── 测试 ────────────────────────────────────────────────────────────────────
 
-def _build_test_segments() -> list[UserSegment]:
+def _build_test_segments() -> List[UserSegment]:
     """5 个用户群：覆盖全部4种象限类型"""
     return [
         UserSegment(
@@ -297,7 +298,7 @@ def _build_test_segments() -> list[UserSegment]:
             segment_name="4-5月龄换购",
             n_users=5000,
             propensity_to_respond=0.45,
-            baseline_response=0.08,  # 增量 0.37 — Persuadables
+            baseline_response=0.08,
             expected_value=120.0,
             cost=15.0,
         ),
@@ -306,7 +307,7 @@ def _build_test_segments() -> list[UserSegment]:
             segment_name="6月+自然升阶",
             n_users=8000,
             propensity_to_respond=0.80,
-            baseline_response=0.78,  # 增量 0.02 — Sure Things
+            baseline_response=0.78,
             expected_value=80.0,
             cost=15.0,
         ),
@@ -315,7 +316,7 @@ def _build_test_segments() -> list[UserSegment]:
             segment_name="高价值挽留",
             n_users=1000,
             propensity_to_respond=0.60,
-            baseline_response=0.10,  # 增量 0.50 — 高 ROI Persuadables
+            baseline_response=0.10,
             expected_value=500.0,
             cost=50.0,
         ),
@@ -324,7 +325,7 @@ def _build_test_segments() -> list[UserSegment]:
             segment_name="中价值挽留",
             n_users=3000,
             propensity_to_respond=0.35,
-            baseline_response=0.05,  # 增量 0.30 — 中 ROI Persuadables
+            baseline_response=0.05,
             expected_value=150.0,
             cost=15.0,
         ),
@@ -333,7 +334,7 @@ def _build_test_segments() -> list[UserSegment]:
             segment_name="低价值沉默",
             n_users=10000,
             propensity_to_respond=0.05,
-            baseline_response=0.04,  # 增量 0.01 — Lost Causes
+            baseline_response=0.04,
             expected_value=30.0,
             cost=2.0,
         ),
@@ -392,7 +393,8 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-print("[✓] Personalized Promotion Ta 测试通过")
+
+print("[✓] Personalized Promotion Targeting 测试通过")
 ```
 
 ---
@@ -425,13 +427,4 @@ print("[✓] Personalized Promotion Ta 测试通过")
 ### 实施难度：⭐⭐⭐☆☆ (3/5)
 
 - 易处：Knapsack 贪心算法简单高效；分群可复用现有 RFM 逻辑
-- 难处：增量响应概率需要历史 A/B 数据或 Uplift 模型支撑；分群定义依赖业务知识
-- 前提：需要至少1次历史A/B实验或准实验数据来估计基线响应率
-
-### 优先级评分：⭐⭐⭐⭐⭐ (5/5)
-
-**评估依据**：
-1. **直接解决促销 Cannibalization 痛点**，适用于所有促销场景
-2. **组合价值高**：与 RFM、Uplift、因果队列形成完整促销决策闭环
-3. **实施门槛低**：不需要复杂 ML 模型，基于规则 + Knapsack 即可部署
-4. **业务影响即时**：首次上线可在2-4周内看到明显 ROI 提升
+- 难处：增量响应概率需要历史 A/B 数据或 Uplift 

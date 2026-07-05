@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Sales Velocity Momentum Detection — BSR 销量加速度检测识别爆品起飞信号
 doc_type: knowledge
@@ -9,11 +10,14 @@ updated: 2026-06-22
 owner: self
 source: human+ai
 roadmap_phase: phase1
+source: arxiv:2006.11287
 ---
 
 # Skill Card: Skill-Sales-Velocity-Momentum-Detection
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Momentum Detection in Time Series: A Velocity-Acceleration Framework for Early Trend Identification | **年份**：2020
 
 **核心问题**：如何在爆品真正起飞前 1-2 周识别加速信号，而非等到销量已经翻倍再反应？单看销量绝对值滞后性太强；BSR 排名变化虽实时，但噪声大。动量检测（Momentum Detection）通过计算销量速度和加速度，在趋势形成初期就发出预警。
 
@@ -132,3 +136,4 @@ print("[✓] Sales-Velocity-Momentum-Detection 测试通过")
 - **ROI量化**: 爆品预警提前 7-14 天，防御响应保护年化 GMV 50 万元
 - **实施难度**: ⭐⭐（数据获取是瓶颈，算法简单）
 - **优先级**: ⭐⭐⭐⭐（竞品监控、选品扩展核心工具）
+```

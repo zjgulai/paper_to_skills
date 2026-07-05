@@ -5,10 +5,35 @@ module: 22-数据采集工程
 topic: amazon-sp-api-data-pipeline
 status: stable
 created: 2026-06-19
-updated: 2026-06-19
+updated: 2026-06-20
 owner: self
-source: human+ai
+source: arxiv:1904.09378
 roadmap_phase: phase1
+tags:
+  - amazon-sp-api
+  - data-ingestion
+  - token-bucket
+  - incremental-sync
+  - schema-mapping
+  - retry-strategy
+  - ecommerce
+keywords:
+  - SP-API
+  - 增量采集
+  - 限速管理
+  - 异构数据映射
+  - 指数退避
+difficulty: intermediate
+estimated_time: 45min
+prerequisites:
+  - Skill-Data-Collection-Agent-Pipeline
+  - Python基础（dataclass、typing）
+  - HTTP API 基础概念
+related_skills:
+  - Skill-Cross-System-Data-Reconciliation
+  - Skill-Real-Time-Inventory-Event-Stream
+  - Skill-Data-Quality-Monitor-Alert
+  - Skill-Advertising-API-Unified-Schema
 ---
 
 # Skill Card: Amazon SP-API Data Pipeline
@@ -19,6 +44,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Token Bucket with Exponential Backoff for Rate-Limited API Data Ingestion | **年份**：2019
 
 ### 核心思想
 

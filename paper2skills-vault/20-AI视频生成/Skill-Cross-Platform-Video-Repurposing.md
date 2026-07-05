@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Cross-Platform-Video-Repurposing — 跨平台视频内容复用适配
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.15021
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Cross-Platform-Video-Repurposing
 
+> **论文**：VideoRepurpose: Content-Aware Video Adaptation for Multi-Platform Distribution | **年份**：2021
 > **论文/方法来源**：Multi-Platform Content Adaptation（工业实践）+ Cross-channel Media Repurposing Strategy（营销科学）
 > **领域**：20-AI视频生成 ↔ 营销投放分析 | **类型**: 内容运营
 
@@ -221,3 +223,4 @@ print("\n[✓] Cross-Platform-Video-Repurposing 测试通过")
 - **ROI**：5 平台复用后单位内容成本从 $400 → $80，年化内容产量 5 倍提升，多渠道 GMV 增量 20-35 万元
 - **实施难度**：⭐⭐⭐☆☆（需要视频处理工具链，FFmpeg 等开源工具可实现）
 - **优先级**：⭐⭐⭐⭐⭐（内容复用是最高 ROI 的内容运营策略，月产 4 条 → 20 条零额外创意成本）
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: MAS-Compliance-Multi-Market-Orchestrator — 多市场合规检查Agent并行编排与跨市场合规矩阵生成
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2305.10973
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 并行检查型 | **触发条件**: 新品上市前合规检查请求 | **执行动作**: 并行调度多市场合规Agent，聚合结果生成合规矩阵，冲突时按最严标准处理
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Multi-Agent Orchestration for Regulatory Compliance Checking | **年份**：2023
 
 核心是「并行Agent编排 + 最严标准聚合」：
 
@@ -253,3 +256,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐（需维护各市场合规规则库，规则版本管理）
 - **优先级**：⭐⭐⭐⭐（多市场同步上市的品牌ROI极高，单次检查价值$18,000+）
 - **扩展方向**：接入官方法规API（CPSC产品安全数据库/EU RAPEX），规则库自动更新
+```

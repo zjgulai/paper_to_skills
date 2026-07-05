@@ -1,3 +1,4 @@
+```markdown
 ---
 title: VOC-New-Product-Gap-Scoring — 竞品差评驱动的新品机会评分与选品决策
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1905.03197
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 选品决策型 | **触发条件**: 竞品差评痛点频率≥15次/月 | **执行动作**: 输出新品机会评分排行榜，推荐TOP3选品方向
 
 ## ① 算法原理（≤300字）
+
+> **论文**: Aspect-Based Sentiment Analysis for Product Opportunity Scoring (KDD 2019) | **年份**: 2019
 
 核心是「竞品差评三维评分模型」：
 
@@ -211,3 +214,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词频统计+简单公式，无需ML）
 - **优先级**：⭐⭐⭐⭐⭐（直接影响新品成败，ROI最高的VOC应用场景）
 - **数据要求**：TOP3竞品各≥300条差评，正负评均需
+```

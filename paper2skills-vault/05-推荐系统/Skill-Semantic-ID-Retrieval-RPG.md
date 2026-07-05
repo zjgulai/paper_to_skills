@@ -1,8 +1,9 @@
+```markdown
 ---
 title: Semantic ID Retrieval for Recommendation (RPG)
 module: 05-推荐系统
 topic: semantic-id-retrieval
-
+
 roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
@@ -52,6 +53,11 @@ updated: 2026-05-15
 - 减少多语言维护成本
 - 加速新品发现
 - 支持语音/图片搜索（统一映射到语义ID）
+
+**三轨验证**：
+- **成本**：需构建多语言属性词表（约5-10人月标注），部署MTP模型需GPU推理集群（初期月均$2000-5000），若使用TF-IDF简化版则成本降至$500/月
+- **合规**：语义ID不存储用户PII，符合GDPR要求；但需注意Amazon政策中关于"商品属性描述一致性"的规定，避免因语义ID自动生成导致属性与listing不符
+- **风险**：跨语言映射可能存在文化歧义（如"Milchpumpe"在德语区可能被误解为工业设备），需人工审核高风险品类；新品自动关联可能导致低质商品蹭流量，需设置质量阈值
 
 ---
 
@@ -187,7 +193,6 @@ print("[✓] Semantic ID Retrieval RPG 测试通过")
 
 ---
 
-
 ## ④ 技能关联
 
 ### 前置技能
@@ -205,3 +210,4 @@ print("[✓] Semantic ID Retrieval RPG 测试通过")
 - **ROI**：检索准确率提升25-40%，跨语言运营成本降低50%
 - **难度**：⭐⭐⭐☆☆（3/5）— 概念新颖，但可用TF-IDF/BERT简化实现
 - **优先级**：⭐⭐⭐⭐☆（4/5）— Meta开源，落地路径清晰，但需向量检索基建
+```

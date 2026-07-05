@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 供应商准入认证KPI体系 — 新供应商评估、认证审核与准入门槛量化
 doc_type: knowledge
@@ -77,7 +78,7 @@ roadmap_phase: phase1
 """
 供应商准入认证 KPI 体系
 功能：新供应商评分 / 认证有效期监控 / 合格供应商台账管理
-输入：供应商信息 + 认证台账
+输入：供应商信息 + 认证台账（内置示例数据）
 输出：准入推荐 + 证书到期预警 + 合格供应商KPI报告
 """
 import numpy as np
@@ -88,7 +89,7 @@ warnings.filterwarnings('ignore')
 
 
 def generate_supplier_candidates(seed=42):
-    """生成候选供应商评估数据"""
+    """生成候选供应商评估数据（内置示例，不依赖外部文件）"""
     np.random.seed(seed)
     
     suppliers = [
@@ -177,11 +178,11 @@ def score_supplier_qualification(df_candidates, product_category='电子/吸奶�
 
 
 def monitor_certification_expiry(seed=42):
-    """认证有效期监控 — 三级预警"""
+    """认证有效期监控 — 三级预警（内置示例数据）"""
     np.random.seed(seed)
     today = datetime.now()
     
-    # 生成认证台账数据
+    # 生成认证台账数据（内置，不依赖外部文件）
     certs = []
     suppliers = ['深圳宝美电子', '宁波精工制造', '广州婴优科技', '东莞精密', '杭州新研']
     cert_types = ['FCC', 'CE', 'RoHS', 'ISO9001', 'FDA']
@@ -236,7 +237,7 @@ def monitor_certification_expiry(seed=42):
 
 
 def compute_qualification_kpi_dashboard():
-    """准入KPI仪表盘"""
+    """准入KPI仪表盘（内置示例数据）"""
     print("\n" + "=" * 60)
     print("【供应商准入KPI仪表盘（本季度）】")
     print("=" * 60)
@@ -265,7 +266,7 @@ if __name__ == "__main__":
     monitor_certification_expiry()
     compute_qualification_kpi_dashboard()
     
-    print("\n[✓] 供应商准入KPI体系 测试通过")
+    print("\n[✓] 供应商准入KPI体系测试通过")
     print("    覆盖：准入评分 + 认证到期预警 + 准入KPI仪表盘")
 ```
 
@@ -284,3 +285,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（认证台账建立有初始工作量，后续维护为日常运营）
 - **优先级评分**：⭐⭐⭐⭐⭐（母婴类目FDA/CE/FCC合规是出口必须，准入失误=发货中断）
 - **评估依据**：陈凤霞书中指出母婴品类80%的供应链合规事故源于"未及时更新供应商认证台账"
+```

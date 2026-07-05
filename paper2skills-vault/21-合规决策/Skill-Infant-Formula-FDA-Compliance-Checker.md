@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 婴儿配方奶粉FDA合规检查器 — 自动验证21 CFR Part 107标签合规性
 doc_type: knowledge
@@ -7,14 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 婴儿配方奶粉FDA合规检查器
 
-> **论文**：Automated Regulatory Compliance Verification for Infant Formula Labeling Under 21 CFR Part 107
-> **领域**：母婴产品合规决策 | **类型**：算法工具 | **桥梁**: 21-合规决策 ↔ 22-数据采集工程
+> **论文**：Automated Regulatory Compliance Verification for Infant Formula Labeling Under 21 CFR Part 107 | **年份**：2023
 
 ## ① 算法原理
 
@@ -274,3 +274,4 @@ if __name__ == "__main__":
 - **ROI 预估**：婴儿配方召回事件平均损失约500-2000万元；上架前合规扫描发现1个Critical问题的成本约0（代码工具），防损ROI > 10000%
 - **实施难度**：⭐⭐☆☆☆（规则库维护有持续工作量，算法本身不复杂）
 - **优先级**：⭐⭐⭐⭐⭐（婴儿配方是FDA监管最严格的品类，任何标签违规=直接召回风险，零容忍）
+```

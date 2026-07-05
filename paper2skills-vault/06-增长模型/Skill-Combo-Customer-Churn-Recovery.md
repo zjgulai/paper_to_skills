@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 客户流失预警→挽回 Combo Pattern — 从流失预测到精准干预的 5 步完整链路
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:1603.02754
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 > **触发条件**：客户沉默期 > 45 天 或 月活环比下降 > 15%，自动触发 5 步挽回链路
 
 ## ① 算法原理
+
+> **论文**：XGBoost: A Scalable Tree Boosting System | **年份**：2016
 
 客户流失挽回 Combo Pattern 解决「看到数据掉了却不知道该对谁做什么」的核心痛点。传统方式是一刀切发优惠券，效果差且亏损。本 Combo 实现「人群精准识别 → 时机最优触达 → 内容个性化匹配 → ROI 正向验证」的闭环。
 
@@ -288,3 +291,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要 CRM 数据接口 + 邮件平台 API，2-3 周工程化）
 - **优先级**：⭐⭐⭐⭐☆（复购增长是 DTC 品牌 LTV 最高杠杆点，ROI 极为确定）
 - **适用规模**：月活用户 ≥ 1,000 人，有历史购买数据 ≥ 6 个月
+```

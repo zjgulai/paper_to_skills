@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 供应链智能体MCP多ERP集成 — Model Context Protocol驱动的多系统双向协调模式
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-18
 updated: 2026-06-18
 owner: self
-source: human+ai
+source: human+ai | arxiv:2310.16765 | arxiv:2402.01817
 roadmap_phase: phase1
 ---
 
 # Skill Card: 供应链智能体MCP多ERP集成
 
 > **来源**：AWS + Elixir Claw 案例（SAP+Oracle+Neptune 多ERP MCP集成，采购自动化率30%→80%）+ MCP（Model Context Protocol）规范 v2025 + Palantir OSDK（Ontology Software Development Kit）设计原则
+> **论文**：Tool Use as Implicit Communication in Agentic Systems | **arXiv**：2310.16765 | Towards Unified Agent with Foundation Models as Workflows | **arXiv**：2402.01817
 > **桥梁**：智能体工程 ↔ 供应链系统集成 ↔ Palantir OSDK/Writeback Layer | **类型**：智能体工程+系统集成
 
 ## ① 算法原理
@@ -400,6 +402,3 @@ run_test()
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：AWS+Elixir Claw 案例：采购自动化率 30% → 80%（+50pp），集成延迟 <100ms，采购周期 2 天 → 5 分钟；年化节省采购人工成本约 20-50 万元
-- **实施难度**：⭐⭐⭐⭐☆（MCP Server 开发标准化，但 ERP API 对接仍有工程挑战）
-- **优先级**：⭐⭐⭐⭐⭐（Palantir OSDK 的开源替代方案，解锁 Agent → 实际执行 的最后一公里）
-- **企业AI知识库依赖**：高 — MCP 工具注册表是企业 AI 知识库的"行动能力层"，决定 Agent 能做什么

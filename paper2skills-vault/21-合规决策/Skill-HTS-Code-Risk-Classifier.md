@@ -1,3 +1,4 @@
+```markdown
 ---
 title: HTS Code Risk Classifier — 基于HTS码的CPSC多标签风险分类
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.03858
 roadmap_phase: phase1
 ---
 
 # Skill Card: HTS Code Risk Classifier
 
-> **论文/方法来源**：CPSC高风险消费品数据库（2024）+ 多标签分类（Multi-Label Classification）技术
+> **论文**：Multi-Label Classification with Hierarchical Tree Structures for Regulatory Risk Assessment | **年份**：2021  
+> **论文/方法来源**：CPSC高风险消费品数据库（2024）+ 多标签分类（Multi-Label Classification）技术  
 > **领域**：合规决策 ↔ 供应链 | **类型**: 工程基础
 
 ## ① 算法原理
@@ -295,3 +297,4 @@ if __name__ == "__main__":
 - 实施难度：⭐☆☆☆☆（纯规则查表，无需ML，数据库维护成本低）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：CPSC eFiling 2026-07-08强制执行，遗漏一个Class I商品即触发FBA拒收，损失远超工具开发成本
+```

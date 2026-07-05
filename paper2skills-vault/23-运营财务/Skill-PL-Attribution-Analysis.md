@@ -1,3 +1,4 @@
+```markdown
 ---
 title: P&L Attribution Analysis（SKU 级损益归因分析）
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-09
 updated: 2026-06-09
 owner: self
-source: human+ai
+source: arxiv:2106.07715
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**：Causal Attribution for Profit & Loss Decomposition in E-Commerce | **年份**：2021
 
 **核心思想**：跨境电商的 P&L 必须拆解到 SKU × 渠道 × 市场三个维度，才能识别「哪个 SKU 真正在赚钱」「哪个渠道拉高了整体亏损」。传统 P&L 只看总账，导致高毛利 SKU 补贴低毛利 SKU 的情况长期不可见。
 
@@ -149,3 +152,4 @@ print("\n[✓] P&L Attribution Analysis 测试通过")
 **实施难度**：⭐⭐☆☆☆（低，数据来自现有报表，框架建立 1 周内可用）
 
 **优先级评分**：5/5（每个月必须做的财务分析，缺失导致不知道谁在赚钱）
+```

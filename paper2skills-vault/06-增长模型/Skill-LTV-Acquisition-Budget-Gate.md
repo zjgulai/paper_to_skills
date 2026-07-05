@@ -1,3 +1,4 @@
+```markdown
 ---
 title: LTV-Acquisition-Budget-Gate — LTV/CAC比值驱动的获客预算自动开闸/熔断决策器
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1906.09686
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: LTV预测值与渠道CAC比值突破阈值 | **执行动作**: LTV<CAC×3→暂停该渠道新客投入；LTV>CAC×5→扩增该渠道20%预算
 
 ## ① 算法原理
+
+> **论文**：Deep Bayesian LTV Prediction for E-commerce | **年份**：2019
 
 核心是「LTV/CAC比值实时监控 + 双向阈值熔断/开闸 + 渠道级精细化预算调控」：
 
@@ -258,10 +261,11 @@ for d in result["decisions"]:
 
 ## ④ 技能关联
 - **前置（prerequisite）**：[[Skill-LTV-Prediction-ZILN]]（提供P25/P50/P75三分位LTV估计，是本决策器的核心输入）
-- **延伸（extends）**：[[Skill-CAC-Attribution-Model]]（精确计算各渠道真实CAC，消除多渠道重叠归因误差）
+- **延伸（extends）**：[[Skill-Ad-Attribution-Modeling]]（精确计算各渠道真实CAC，消除多渠道重叠归因误差）
 - **可组合（combinable）**：[[Skill-Bayesian-MMM-Scenario-Action-Plan]]（LTV门控与MMM情景方案联合使用，形成完整的Q+1预算决策体系）
 
 ## ⑤ 商业价值评估
 - **ROI量化**：典型场景下每月识别并停止1-2个低效渠道，释放$5,000-15,000预算；同时扩增高ROI渠道带来增量GMV，综合月度获客效率提升10-25%
 - **实施难度**：⭐⭐☆☆☆（依赖LTV模型上游，但决策逻辑本身规则清晰，实施门槛低）
 - **优先级**：⭐⭐⭐⭐⭐（获客预算是跨境卖家最大可控成本项，LTV/CAC比值优化直接影响盈利能力）
+```

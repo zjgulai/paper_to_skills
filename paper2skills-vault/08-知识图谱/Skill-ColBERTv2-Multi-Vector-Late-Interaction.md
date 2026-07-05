@@ -1,3 +1,4 @@
+```markdown
 ---
 title: ColBERTv2 — 多向量后期交互精细检索
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase2
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2112.01488
 ---
 
 # Skill Card: ColBERTv2 — 多向量后期交互精细检索
@@ -19,6 +20,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction | **年份**：2022
 
 **ColBERT（Contextualized Late Interaction over BERT）** 的核心思想：查询和文档各自独立编码为 token 级多向量，在**检索时**才做轻量交互（late interaction），而非训练时。
 
@@ -210,3 +213,4 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐（复杂长文档知识库的精度瓶颈突破方案）
 
 **生产工具**：`ragatouille`（Stanford 官方封装）、`pylate`（多向量检索库）
+```

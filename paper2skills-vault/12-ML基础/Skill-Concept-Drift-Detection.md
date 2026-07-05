@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Concept Drift Detection — 在线监控模型分布漂移
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2004.05718
 roadmap_phase: phase1
 ---
 
 # Skill Card: Concept Drift Detection（概念漂移检测）
 
-> **论文/方法来源**：Gama et al. (2004) "Learning with Drift Detection (DDM)"；Bifet & Gavalda (2007) "Learning from Time-Changing Data with Adaptive Windowing (ADWIN)"；Mouss et al. (2004) "Test of Page-Hinkley for change detection"
+> **论文**：Learning with Drift Detection (DDM) | **年份**：2004  
+> **论文**：Learning from Time-Changing Data with Adaptive Windowing (ADWIN) | **年份**：2007  
+> **论文**：Test of Page-Hinkley for change detection | **年份**：2004  
 > **领域**：12-ML基础 ↔ 14-用户分析 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -226,3 +229,4 @@ print("[✓] Concept Drift Detection 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需有模型预测日志基础设施，检测器本身轻量）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：跨境母婴行业季节性强（Q4、Prime Day、黑五），漂移是常态；检测器一次部署持续收益
+```

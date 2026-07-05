@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Listing Suppression Detection — Listing 被平台隐藏/降权检测（非账号问题）
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2004.07683
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Listing-Suppression-Detection
 
 ## ① 算法原理（≤300字）
+
+> **论文**：CUSUM for Change Point Detection | **年份**：2020
 
 **核心问题**：Amazon Listing 被隐藏/降权（Suppressed）有时不触发账号警告，而是静默失效——搜索流量骤降、转化率正常但曝光消失。卖家往往 2-3 天后才发现，每天损失销售额数千美元。
 
@@ -135,3 +138,4 @@ print("[✓] Listing-Suppression-Detection 测试通过")
 - **ROI量化**: 检测提前 1.5 天，年化减少 Listing 压制损失 15-30 万元
 - **实施难度**: ⭐⭐（Seller Central API 数据获取，算法简单）
 - **优先级**: ⭐⭐⭐⭐⭐（每个卖家 Listing 监控必备）
+```

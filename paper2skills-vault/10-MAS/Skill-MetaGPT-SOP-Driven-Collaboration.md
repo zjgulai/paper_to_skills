@@ -1,3 +1,4 @@
+```markdown
 ---
 title: MetaGPT — SOP 驱动的多智能体协作框架
 doc_type: knowledge
@@ -146,21 +147,323 @@ QA: 校验数据准确性和结论合理性
 
 ## ③ 代码模板
 
-代码位置：`paper2skills-code/mas/metagent_sop/metagent_sop.py`
+```python
+"""
+MetaGPT — SOP 驱动的多智能体协作框架 (简化模拟版)
+仅依赖标准库 + numpy，演示核心协作流程
+"""
 
-核心组件：
-- `MetaGPTAgent`: 具有特定角色和 SOP 的协作 agent
-- `SOPWorkflow`: SOP 工作流定义（任务、依赖、角色）
-- `SharedMessagePool`: 共享消息池（发布-订阅通信）
-- `MetaGPT`: 主控制器（Agent 招聘、SOP 定义、执行调度）
+import numpy as np
+from typing import Dict, List, Any
+from collections import defaultdict
+import json
 
-运行方式：
+# ============================================================
+# 1. 共享消息池 (发布-订阅模式)
+# ============================================================
+class SharedMessagePool:
+    """所有 agent 通过此池通信，支持按消息类型订阅"""
+    def __init__(self):
+        self.messages = []
+        self.subscribers = defaultdict(list)  # topic -> [callback]
+    
+    def subscribe(self, topic: str, callback):
+        self.subscribers[topic].append(callback)
+    
+    def publish(self, topic: str, content: Any, sender: str):
+        msg = {
+            "topic": topic,
+            "content": content,
+            "sender": sender,
+            "id": len(self.messages)
+        }
+        self.messages.append(msg)
+        # 通知订阅者
+        for cb in self.subscribers.get(topic, []):
+            cb(msg)
+        return msg
+    
+    def get_messages_by_topic(self, topic: str) -> List[Dict]:
+        return [m for m in self.messages if m["topic"] == topic]
+
+# ============================================================
+# 2. 基础 Agent 类
+# ============================================================
+class MetaGPTAgent:
+    """具有角色和 SOP 约束的 agent"""
+    def __init__(self, name: str, role: str, pool: SharedMessagePool):
+        self.name = name
+        self.role = role
+        self.pool = pool
+        self.sop_steps = []  # 该角色负责的 SOP 步骤
+    
+    def add_sop_step(self, step_name: str, input_topics: List[str], output_topic: str):
+        self.sop_steps.append({
+            "step": step_name,
+            "input_topics": input_topics,
+            "output_topic": output_topic
+        })
+    
+    def execute_step(self, step_idx: int, context: Dict[str, Any]) -> Dict:
+        """执行一个 SOP 步骤，返回结构化输出"""
+        if step_idx >= len(self.sop_steps):
+            return {"error": "Step index out of range"}
+        
+        step = self.sop_steps[step_idx]
+        # 收集输入
+        inputs = {}
+        for topic in step["input_topics"]:
+            msgs = self.pool.get_messages_by_topic(topic)
+            if msgs:
+                inputs[topic] = msgs[-1]["content"]  # 取最新消息
+        
+        # 模拟执行（真实场景调用 LLM）
+        output = self._simulate_work(step["step"], inputs, context)
+        
+        # 发布输出
+        self.pool.publish(step["output_topic"], output, self.name)
+        return output
+    
+    def _simulate_work(self, step_name: str, inputs: Dict, context: Dict) -> Dict:
+        """模拟 agent 工作（真实场景替换为 LLM 调用）"""
+        # 根据角色和步骤生成结构化输出
+        if self.role == "Product Manager":
+            if "prd" in step_name.lower():
+                return {
+                    "type": "PRD",
+                    "product": context.get("product", "unknown"),
+                    "requirements": context.get("requirements", []),
+                    "acceptance_criteria": ["criteria_1", "criteria_2"],
+                    "version": "1.0"
+                }
+        elif self.role == "Architect":
+            if "design" in step_name.lower():
+                return {
+                    "type": "Architecture Design",
+                    "components": ["data_ingestion", "analysis_engine", "report_generator"],
+                    "data_flow": ["input → clean → analyze → output"],
+                    "constraints": ["latency < 5s", "throughput > 1000 req/s"]
+                }
+        elif self.role == "Engineer":
+            if "implement" in step_name.lower():
+                return {
+                    "type": "Implementation",
+                    "code_summary": "Implemented analysis pipeline with 3 stages",
+                    "files": ["data_processor.py", "analyzer.py", "reporter.py"],
+                    "test_coverage": 0.85
+                }
+        elif self.role == "QA":
+            if "test" in step_name.lower():
+                return {
+                    "type": "Test Report",
+                    "passed": 15,
+                    "failed": 2,
+                    "coverage": 0.82,
+                    "issues": ["issue_001: edge case in data cleaning"]
+                }
+        
+        # 默认输出
+        return {
+            "type": "generic_output",
+            "step": step_name,
+            "status": "completed"
+        }
+
+# ============================================================
+# 3. SOP 工作流引擎
+# ============================================================
+class SOPWorkflow:
+    """定义和管理 SOP 流程"""
+    def __init__(self, name: str):
+        self.name = name
+        self.steps = []  # [(agent_name, step_name, input_topics, output_topic)]
+    
+    def add_step(self, agent_name: str, step_name: str, 
+                 input_topics: List[str], output_topic: str):
+        self.steps.append({
+            "agent": agent_name,
+            "step": step_name,
+            "inputs": input_topics,
+            "output": output_topic
+        })
+    
+    def get_steps_for_agent(self, agent_name: str) -> List[Dict]:
+        return [s for s in self.steps if s["agent"] == agent_name]
+
+# ============================================================
+# 4. MetaGPT 主控制器
+# ============================================================
+class MetaGPT:
+    """管理 agent 招聘、SOP 定义和任务执行"""
+    def __init__(self):
+        self.pool = SharedMessagePool()
+        self.agents = {}
+        self.workflows = {}
+    
+    def hire_agent(self, name: str, role: str) -> MetaGPTAgent:
+        agent = MetaGPTAgent(name, role, self.pool)
+        self.agents[name] = agent
+        return agent
+    
+    def define_workflow(self, workflow: SOPWorkflow):
+        """为每个 agent 注册 SOP 步骤"""
+        self.workflows[workflow.name] = workflow
+        for step in workflow.steps:
+            agent = self.agents.get(step["agent"])
+            if agent:
+                agent.add_sop_step(
+                    step_name=step["step"],
+                    input_topics=step["inputs"],
+                    output_topic=step["output"]
+                )
+    
+    def run_workflow(self, workflow_name: str, context: Dict[str, Any]) -> List[Dict]:
+        """按顺序执行工作流"""
+        workflow = self.workflows.get(workflow_name)
+        if not workflow:
+            return [{"error": f"Workflow {workflow_name} not found"}]
+        
+        results = []
+        for step in workflow.steps:
+            agent = self.agents.get(step["agent"])
+            if not agent:
+                results.append({"error": f"Agent {step['agent']} not found"})
+                continue
+            
+            # 找到 agent 中对应的 step 索引
+            step_idx = None
+            for i, s in enumerate(agent.sop_steps):
+                if s["step"] == step["step"]:
+                    step_idx = i
+                    break
+            
+            if step_idx is not None:
+                output = agent.execute_step(step_idx, context)
+                results.append({
+                    "agent": step["agent"],
+                    "step": step["step"],
+                    "output": output
+                })
+                print(f"  [{step['agent']}] 完成步骤: {step['step']}")
+            else:
+                results.append({"error": f"Step {step['step']} not found for agent {step['agent']}"})
+        
+        return results
+
+# ============================================================
+# 5. 演示：VOC 分析标准化流水线
+# ============================================================
+def demo_voc_analysis():
+    print("=" * 60)
+    print("MetaGPT SOP 驱动协作演示: VOC 分析流水线")
+    print("=" * 60)
+    
+    # 初始化 MetaGPT
+    metagpt = MetaGPT()
+    
+    # 招聘 agent
+    pm = metagpt.hire_agent("Alice", "Product Manager")
+    architect = metagpt.hire_agent("Bob", "Architect")
+    engineer = metagpt.hire_agent("Charlie", "Engineer")
+    qa = metagpt.hire_agent("Diana", "QA")
+    
+    # 定义 SOP 工作流
+    workflow = SOPWorkflow("VOC Analysis Pipeline")
+    workflow.add_step("Alice", "Write PRD", [], "prd_doc")
+    workflow.add_step("Bob", "Design Architecture", ["prd_doc"], "design_doc")
+    workflow.add_step("Charlie", "Implement Analysis", ["prd_doc", "design_doc"], "implementation")
+    workflow.add_step("Diana", "Run Tests", ["implementation"], "test_report")
+    
+    metagpt.define_workflow(workflow)
+    
+    # 执行工作流
+    context = {
+        "product": "BabyCare Plus",
+        "requirements": [
+            "Analyze customer reviews for sentiment",
+            "Identify top 5 complaints",
+            "Generate weekly report"
+        ]
+    }
+    
+    print("\n开始执行 SOP 工作流...\n")
+    results = metagpt.run_workflow("VOC Analysis Pipeline", context)
+    
+    # 输出最终结果摘要
+    print("\n" + "-" * 40)
+    print("最终交付物摘要:")
+    print("-" * 40)
+    for r in results:
+        if "output" in r:
+            output = r["output"]
+            print(f"\n  [{r['agent']}] {r['step']}:")
+            print(f"    类型: {output.get('type', 'N/A')}")
+            if 'product' in output:
+                print(f"    产品: {output['product']}")
+            if 'components' in output:
+                print(f"    组件: {', '.join(output['components'])}")
+            if 'code_summary' in output:
+                print(f"    代码: {output['code_summary']}")
+            if 'passed' in output:
+                print(f"    测试: {output['passed']} passed, {output['failed']} failed")
+    
+    print("\n" + "=" * 60)
+    print("[✓] MetaGPT SOP 驱动协作测试通过")
+    print("=" * 60)
+    
+    return results
+
+# ============================================================
+# 6. 主程序入口
+# ============================================================
+if __name__ == "__main__":
+    demo_voc_analysis()
+```
+
+**运行方式**：
 ```bash
-cd paper2skills-code/mas/metagent_sop
 python metagent_sop.py
 ```
 
-生产环境建议：
+**预期输出**：
+```
+============================================================
+MetaGPT SOP 驱动协作演示: VOC 分析流水线
+============================================================
+
+开始执行 SOP 工作流...
+
+  [Alice] 完成步骤: Write PRD
+  [Bob] 完成步骤: Design Architecture
+  [Charlie] 完成步骤: Implement Analysis
+  [Diana] 完成步骤: Run Tests
+
+----------------------------------------
+最终交付物摘要:
+----------------------------------------
+
+  [Alice] Write PRD:
+    类型: PRD
+    产品: BabyCare Plus
+
+  [Bob] Design Architecture:
+    类型: Architecture Design
+    组件: data_ingestion, analysis_engine, report_generator
+
+  [Charlie] Implement Analysis:
+    类型: Implementation
+    代码: Implemented analysis pipeline with 3 stages
+
+  [Diana] Run Tests:
+    类型: Test Report
+    测试: 15 passed, 2 failed
+
+============================================================
+[✓] MetaGPT SOP 驱动协作测试通过
+============================================================
+```
+
+**生产环境建议**：
 1. 接入真实 LLM API 生成高质量结构化文档
 2. 使用 MetaGPT 官方实现（`pip install metagpt`）
 3. 为每个角色设计详细的 prompt template（参考官方仓库）
@@ -259,3 +562,4 @@ python metagent_sop.py
 - 标准化、重复性任务用 MetaGPT（质量可控、可复现）
 - 探索性、创新性任务用 AutoGen（灵活、快速迭代）
 - 混合模式：MetaGPT 的 SOP agent 组内用 AutoGen 进行灵活讨论
+```

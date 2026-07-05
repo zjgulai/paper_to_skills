@@ -1,3 +1,4 @@
+```markdown
 ---
 title: High-Value-Customer-Alert-Action — RFM高价值客户30天沉默自动触发客服主动介入+个性化钩子生成
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2006.06878
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: RFM高价值客户（Champions/Loyal）近30天内无购买记录 | **执行动作**: 自动触发客服主动介入（WhatsApp/邮件优先级P0），并生成基于购买历史的个性化钩子文案
 
 ## ① 算法原理
+
+> **论文**：Deep Interest Network for Click-Through Rate Prediction | **年份**：2018
 
 核心是「沉默检测 + 高价值过滤 + 个性化钩子生成 + 分级触达策略」：
 
@@ -323,3 +326,4 @@ for a in result["alerts"]:
 - **ROI量化**：Champions群主动介入挽留率约25-30%，年化对50名Champions客户主动介入×28%挽留×$400 LTV = 增量GMV约$56,000；额外规避了高LTV客户流失的品牌口碑风险
 - **实施难度**：⭐⭐☆☆☆（WhatsApp Business API对接约1周工程量；邮件平台对接更简单；个性化钩子逻辑规则清晰）
 - **优先级**：⭐⭐⭐⭐⭐（高LTV客户是品牌最核心资产，每失去一位Champions意味着失去数百美元长期价值；主动预防远优于被动挽回）
+```

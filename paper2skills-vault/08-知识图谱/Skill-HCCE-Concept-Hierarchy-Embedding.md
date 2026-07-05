@@ -1,3 +1,4 @@
+```markdown
 ---
 title: HCCE — 超球面锥概念层次嵌入
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase3
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2106.01904
 ---
 
 # Skill Card: HCCE — 超球面锥概念层次嵌入
@@ -19,6 +20,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Hyperspherical Cone Concept Embedding for Hierarchical Representation Learning | **年份**：2021
 
 **HCCE（Hyperspherical Cone Concept Embedding）** 用超球面上的锥形区域表示概念，实例为球面上的点，通过几何包含关系天然编码层次结构：
 
@@ -226,3 +229,4 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐⭐⭐（需要自定义训练框架，超球面几何实现较复杂）
 
 **优先级**：⭐⭐⭐（知识图谱精度护城河，企业级知识库分类的高阶方案）
+```

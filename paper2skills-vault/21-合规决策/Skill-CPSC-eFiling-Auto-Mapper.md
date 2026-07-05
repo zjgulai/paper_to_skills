@@ -1,3 +1,4 @@
+```markdown
 ---
 title: CPSC eFiling Auto-Mapper — NLP驱动的电子申报字段自动填充
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1905.06316
 roadmap_phase: phase1
 ---
 
 # Skill Card: CPSC eFiling Auto-Mapper
 
+> **论文**：BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding | **年份**：2019
 > **论文/方法来源**：CPSC eFiling System API文档（2023）+ 信息抽取NLP技术（BERT NER + 规则引擎）
 > **领域**：合规决策 ↔ NLP-VOC | **类型**: 工程基础
 
@@ -21,7 +23,7 @@ roadmap_phase: phase1
 CPSC eFiling要求30+必填字段，涵盖产品类型、年龄段、认证编号、测试实验室资质等维度。手工填写时，操作员需在产品规格书、GCC/CPC文档、测试报告三类文档间反复查找，耗时2小时且错误率达30%。
 
 **技术核心**：基于命名实体识别（NER）+ 正则规则引擎的两阶段抽取：
-1. **NER层**：用预训练模型识别文档中的认证编号（如"CPSC-2022-XXX"）、实验室名（"SGS/BV/Intertek"）、产品代码模式
+1. **NER层**：用预训练模型（BERT-Base, Uncased）识别文档中的认证编号（如"CPSC-2022-XXX"）、实验室名（"SGS/BV/Intertek"）、产品代码模式
 2. **规则映射层**：将抽取结果通过查找表（HTS码→产品类别，ASTM标准号→适用年龄段）映射到eFiling字段
 3. **置信度评分**：对每个字段附上0-1置信分，低于0.7的字段标红提示人工核查
 
@@ -334,3 +336,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐☆☆☆（标准NLP+查找表，无需GPU，本地运行）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：CPSC eFiling 2026-07-08强制执行，15万卖家受影响，7月8日后FBA拒收所有未申报母婴商品，单次滞留损失8-20万元
+```

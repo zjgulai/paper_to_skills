@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Bayesian-MMM-Scenario-Action-Plan — 贝叶斯MMM后验驱动Q+1季度预算三情景决策方案
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2006.06865
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 每季末贝叶斯MMM后验采样完成后触发 | **执行动作**: 生成P10/P50/P90三情景预算分配方案并输出执行建议
 
 ## ① 算法原理
+
+> **论文**：Bayesian Media Mix Modeling for Marketing Budget Allocation | **年份**：2020
 
 核心逻辑是「后验分布采样 + 情景模拟 + 约束优化分配」三段式决策链路：
 
@@ -202,3 +205,4 @@ print(f"  建议: {result['recommendation']}")
 - **ROI量化**：相比固定比例分配法，P50情景优化预测季度GMV提升12-18%；三情景框架帮助CFO量化营销预算的下行风险，避免激进单一决策导致的GMV损失
 - **实施难度**：⭐⭐☆☆☆（需已有贝叶斯MMM模型输出，技术门槛在上游；本执行器逻辑清晰）
 - **优先级**：⭐⭐⭐⭐⭐（季度预算会核心决策，每季使用一次，决策影响金额通常百万级）
+```

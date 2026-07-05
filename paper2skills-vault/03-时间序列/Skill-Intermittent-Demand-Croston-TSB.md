@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Intermittent Demand Croston TSB — 母婴长尾 SKU 间歇需求预测
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2102.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Intermittent-Demand-Croston-TSB
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Intermittent Demand Forecasting with a Modified Croston Method (TSB) | **年份**：2011
 
 **核心问题**：母婴长尾 SKU（如特定规格吸奶管配件）销量稀疏——大量时期销量为 0，偶发需求时量级波动大。ARIMA/Prophet 在零值序列上失效，而 Croston 方法专为间歇需求设计。
 
@@ -95,7 +98,6 @@ print(f"非零需求均值: {result['demand_size']:.2f} 件")
 print("[✓] Intermittent-Demand-Croston-TSB 测试通过")
 ```
 
-
 ## ④ 技能关联
 
 - 前置技能：[[Skill-Demand-Forecasting-Supply-Chain]]
@@ -110,3 +112,4 @@ print("[✓] Intermittent-Demand-Croston-TSB 测试通过")
 - **ROI量化**: 长尾 SKU 库存资金占用降低 40-50%，年化释放 20-30 万元
 - **实施难度**: ⭐⭐（纯 Python 无外部依赖，1 天可集成）
 - **优先级**: ⭐⭐⭐⭐（400+ SKU 卖家立竿见影）
+```

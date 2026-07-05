@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Listing AB Testing Automation — LLM Agent 驱动的 Listing A/B 测试自动化
 doc_type: knowledge
@@ -58,6 +59,11 @@ Bullet测试: 特性列表 vs 使用场景 vs 问题解决
   4. 选出最优版本直接上线，节省 3 周测试时间
 - **实测结果参考**：论文2 在线 A/B 验证 CTR +12.5%、CVR +8.3%。
 - **业务价值**：年做 12 次 Listing 优化，每次 CTR +5% 叠加，相当于年化自然流量提升 60%+。
+
+**三轨验证**：
+- **成本**：LLM API 调用费用约 $0.5-2/次测试（500 个 Agent × 3 版本 × 输入输出 token），人力成本集中在 persona 库初始构建（约 2-3 人天），后续维护成本极低。
+- **合规**：不涉及真实用户数据，无 GDPR/CCPA 风险；模拟测试不触碰 Amazon A/B 测试工具政策（Manage Your Experiments），但上线后仍需遵守 Amazon 主图/标题规范（如不得使用医疗认证图标除非已获授权）。
+- **风险**：模拟预测可能与真实结果偏差（尤其当 persona 库未覆盖关键买家群体时），建议首次使用后以 10% 真实流量做验证性测试；若预测版本大幅降价，可能引发竞品跟进价格战。
 
 ---
 
@@ -136,7 +142,7 @@ print("=== Listing A/B 测试预测结果 ===\n")
 for r in results:
     medal = "🥇" if r == results[0] else "🥈" if r == results[1] else "🥉"
     print(f"{medal} {r['variant_id']}: 评分={r['mean_score']} | 预测CTR={r['predicted_ctr_pct']}% | CVR={r['predicted_cvr_pct']}%")
-    print(f"   标题: {r['title_preview']}... | 主图: {r['main_image']}")
+    print(f"   标题: {r['title_preview']}... | 主图: {r['main_image_type']}")
 winner = results[0]
 print(f"\n推荐上线: {winner['variant_id']} (综合分最高)")
 print("[✓] Listing AB Testing Automation 测试通过")
@@ -162,3 +168,9 @@ print("[✓] Listing AB Testing Automation 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要 LLM API + persona 库构建）
 - **优先级**：⭐⭐⭐⭐⭐（Listing 优化是最高频最直接的转化率提升手段）
 - **评估依据**：arXiv 2504.09723（Amazon.com 案例验证）+ arXiv 2505.23809（在线 A/B：CTR +12.5%，CVR +8.3%）
+
+**三轨验证**：
+- **成本**：LLM API 调用费用约 $0.5-2/次测试（500 个 Agent × 3 版本 × 输入输出 token），人力成本集中在 persona 库初始构建（约 2-3 人天），后续维护成本极低。
+- **合规**：不涉及真实用户数据，无 GDPR/CCPA 风险；模拟测试不触碰 Amazon A/B 测试工具政策（Manage Your Experiments），但上线后仍需遵守 Amazon 主图/标题规范（如不得使用医疗认证图标除非已获授权）。
+- **风险**：模拟预测可能与真实结果偏差（尤其当 persona 库未覆盖关键买家群体时），建议首次使用后以 10% 真实流量做验证性测试；若预测版本大幅降价，可能引发竞品跟进价格战。
+```

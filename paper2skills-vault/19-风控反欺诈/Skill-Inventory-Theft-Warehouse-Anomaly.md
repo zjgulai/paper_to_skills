@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Inventory Theft Warehouse Anomaly — 海外仓库存异常检测盗窃/错发/损耗识别
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1904.04208
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Inventory-Theft-Warehouse-Anomaly
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Anomaly Detection in Time Series with Robust Statistical Baselines | **年份**：2019
 
 **核心问题**：母婴卖家使用海外第三方仓库（3PL）时，库存差异（Inventory Discrepancy）是常见风险——盗窃、错误出库、损耗（破损/过期）、记录错误都可能导致「账面库存 > 实际库存」。每次 FBA 补仓时才发现差异，损失已无法追溯。
 
@@ -152,7 +155,6 @@ assert result['total_discrepancy'] < -100, "应累积明显负差异"
 print("[✓] Inventory-Theft-Warehouse-Anomaly 测试通过")
 ```
 
-
 ## ④ 技能关联
 
 - 前置技能：[[Skill-Transaction-Anomaly-Detection]]
@@ -167,3 +169,4 @@ print("[✓] Inventory-Theft-Warehouse-Anomaly 测试通过")
 - **ROI量化**: 年化发现并预防盗损 10-20 万元
 - **实施难度**: ⭐⭐（需要接入 WMS 系统，数据整合成本中等）
 - **优先级**: ⭐⭐⭐⭐（高价值品品类（奶粉/电器）的必备监控）
+```

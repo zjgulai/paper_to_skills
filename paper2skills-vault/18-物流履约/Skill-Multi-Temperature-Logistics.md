@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Multi-Temperature Logistics — 多温区混合配送成本优化
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2203.04567
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,9 @@ roadmap_phase: phase1
 > **领域**：18-物流履约 ↔ 04-供应链 | **类型**: 算法工具
 
 ## ① 算法原理
+
+> **论文**：Multi-Temperature Vehicle Routing with Time Windows for Cold Chain Logistics | **年份**：2022
+> **来源**：arXiv:2203.04567 (KDD 2022 Workshop on Urban Computing)
 
 母婴跨境出口（有机辅食/益生菌/母乳储存袋等）涉及冷冻（-18°C）、冷藏（2-8°C）、常温三种温区同时配送。多温区配送网络优化（Multi-Temperature VRP）目标是在满足温控约束下最小化综合成本。
 
@@ -200,3 +204,4 @@ print("[✓] Multi-Temperature Logistics 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需要有物流合作方支持混合温区车厢；路径优化可用开源工具）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：有机食品/益生菌/母乳储存类产品是母婴跨境高增长品类，冷链成本是核心竞争壁垒；每降低 1 美元冷链成本直接转化为利润
+```

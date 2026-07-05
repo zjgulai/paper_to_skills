@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Baby Age Aware Recommendation — 基于推断婴儿月龄的实时品类推荐动态切换
 doc_type: knowledge
@@ -84,6 +85,11 @@ $$P(\text{状态}_{t+1} | \text{状态}_t, \text{购买序列}) = \frac{\exp(\bo
 
 **业务价值**：独立站日均 5,000 PV，转化率从 1.2% → 2.8%，客单价不变，日 GMV 增量约 **$720**，月增量 **$21,600**
 
+**三轨验证**：
+- **成本**：需部署 Baby Age Clock 推断模块（约 2 周开发 + 1 周 A/B 测试），月均服务器成本约 $800（AWS Lambda + DynamoDB 按量计费）；需维护月龄-品类优先级矩阵（每月更新一次，约 4 人时/月）。
+- **合规**：浏览行为推断月龄无需用户同意（基于匿名浏览事件，不涉及 PII），符合 GDPR 合法利益条款（Art.6(1)(f)）；购买后精确推断需在隐私政策中明确说明"基于购买历史推断婴儿月龄以优化推荐"。
+- **风险**：月龄推断错误（如 ±3 个月以上）可能导致推荐完全不相关，用户跳出率上升 15-20%；需设置兜底策略（置信度 < 0.5 时回退到热门推荐）。
+
 ### 场景B：TikTok 广告创意 + 月龄定向精准覆盖（不依赖平台人群包）
 
 **业务问题**：TikTok 广告的"母婴"人群包覆盖了所有母婴相关用户，但一条"辅食工具"视频对有 0-3 月龄宝宝的妈妈完全无效（她们的宝宝还不需要辅食），浪费约 40% 的广告预算。
@@ -94,6 +100,11 @@ $$P(\text{状态}_{t+1} | \text{状态}_t, \text{购买序列}) = \frac{\exp(\bo
 3. 创建 Lookalike Audience，专门针对辅食准备期人群投放辅食工具广告
 
 **业务价值**：广告受众精准度提升，对应月龄的 CTR 预估从 1.8% → 4.1%，ROAS 提升约 1.8x，$1 万/月预算节省 **$3,600/月**无效触达
+
+**三轨验证**：
+- **成本**：种子人群包构建需数据工程师 0.5 天/次（SQL 提取 + 哈希处理）；Lookalike 广告系列管理需 2 小时/周；TikTok 广告平台无额外费用。
+- **合规**：上传 Custom Audience 需确保用户已同意数据共享（GDPR Art.7）；种子包仅含哈希后的邮箱/手机号，不含月龄标签（月龄标签仅在内部用于分群逻辑，不上传平台）；需在隐私政策中披露"我们可能与 TikTok 共享匿名化标识符用于广告优化"。
+- **风险**：Lookalike 模型可能放大月龄推断偏差（如种子包中 5% 的误判用户导致 Lookalike 覆盖 30% 非目标人群）；建议每 2 周刷新种子包并监控 Lookalike 的 CTR 衰减曲线。
 
 ---
 
@@ -194,7 +205,7 @@ class BabyAgeAwareRecommender:
         self.item_features: Optional[pd.DataFrame] = None
         self.user_item_matrix: Optional[pd.DataFrame] = None
 
-    def fit(self, items_df: pd.DataFrame, interactions_df: pd.DataFrame) -> 'BabyAwareRecommender':
+    def fit(self, items_df: pd.DataFrame, interactions_df: pd.DataFrame) -> 'BabyAgeAwareRecommender':
         """
         训练推荐模型
 
@@ -320,7 +331,7 @@ def main():
     items_df = generate_catalog_data(200)
     interactions_df = generate_interactions(100, 200)
 
-    rec = BabyAwareRecommender = BabyAgeAwareRecommender()
+    rec = BabyAgeAwareRecommender()
     rec.fit(items_df, interactions_df)
     print(f"\n商品目录: {len(items_df)} 件  交互记录: {len(interactions_df)} 条")
 
@@ -388,4 +399,4 @@ if __name__ == "__main__":
 - **ROI 预估**：月龄感知首页推荐 CTR 从 1.2% → 2.8%（+133%），月 GMV 增量约 $21,600；广告受众精准度提升节省约 $3,600/月，合计年化约 **$30 万**
 - **实施难度**：⭐⭐⭐☆☆（需要整合 Baby Age Clock + Infant Lifecycle Rhythm 两个前置 Skill，以及推荐系统接口，约 3-4 周）
 - **优先级**：⭐⭐⭐⭐⭐（母婴推荐系统的"终极形态"——同时利用月龄（刚需时机）和个性化（品牌/价格偏好）两个维度，竞争壁垒极高）
-- **评估依据**：KDD 2015 淘宝生产验证 CTR 提升 27%；Amazon 专利 US20230245203 证明月龄推断的商业价值已被业界最顶级公司认可；MIT Sloan 案例 +89% 转化率
+- **

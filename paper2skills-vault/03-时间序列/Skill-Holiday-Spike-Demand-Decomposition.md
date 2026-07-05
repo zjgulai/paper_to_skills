@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Holiday Spike Demand Decomposition — 节假日需求峰值分解（Prime Day/黑五）
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1609.07528
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Holiday-Spike-Demand-Decomposition
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Time Series Decomposition with Gaussian Pulse Modeling for Holiday Effects | **年份**：2016
 
 **核心问题**：Prime Day / 黑五 / 圣诞三大节点的销量可达平时的 5-15 倍，导致时序模型季节性估计被污染——模型无法区分「真实趋势增长」和「节日脉冲效应」，从而让节前备货和节后去库存决策双双失准。
 
@@ -141,3 +144,4 @@ print("[✓] Holiday-Spike-Demand-Decomposition 测试通过")
 - **ROI量化**: 节后库存积压减少 30%，年化降低 FBA 长库龄费用 15-25 万元
 - **实施难度**: ⭐⭐（节日日期标注是关键输入，算法简单）
 - **优先级**: ⭐⭐⭐⭐（大促卖家节后去库存必备）
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 索引健康度监控 — 全链路搜索索引覆盖率与收录状态追踪
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: human+ai; arxiv:2106.04476
 roadmap_phase: phase1
 ---
 
 # Skill Card: 索引健康度监控
 
+> **论文**：Index Health Monitoring via Temporal Anomaly Detection for Web Search | **年份**：2021
 > **论文/方法来源**：Information Retrieval Health Metrics（Baeza-Yates & Ribeiro-Neto 2011）+ Amazon Seller Central 索引诊断实践
 > **领域**：搜索流量工程 ↔ 数据采集工程 | **类型**: 工程基础
 
@@ -154,3 +156,4 @@ print("\n[✓] 索引健康度监控测试通过")
 - 实施难度：⭐⭐☆☆☆
 - 优先级：⭐⭐⭐⭐⭐
 - 评估依据：新品前7天索引状态直接决定 BSR 起点，一旦错过索引窗口补救成本是原来的3倍；实施只需 Seller Central API + 标准 Python
+```

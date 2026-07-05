@@ -1,14 +1,14 @@
+```markdown
 ---
 title: Multimodal Table Understanding Agent — 表格理解：规格对比/认证矩阵/价格表
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: multimodal-table-understanding-agent
-
 roadmap_phase: phase2
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2008.03371
 ---
 
 # Skill Card: Multimodal Table Understanding Agent — 表格理解 Agent
@@ -19,6 +19,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：TAT-QA: A Question Answering Benchmark on a Hybrid of Tabular and Textual Content | **年份**：2021
 
 ### 表格理解的两大核心挑战
 
@@ -187,3 +189,4 @@ print("[✓] Multimodal Table Understa 测试通过")
 ---
 
 *参考来源：TableBERT: Learning Contextual Representations for Natural Language Assertions over Structured Tables (2020)；TAT-QA: A Question Answering Benchmark on a Hybrid of Tabular and Textual Content (2021)；Table Meets LLM: Can Large Language Models Understand Structured Table Data? (2024)*
+```

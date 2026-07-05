@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Prophet Forecasting with Seasonality and Holidays
 module: 03-时间序列
@@ -6,11 +7,14 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 roadmap_phase: phase1
+source: arxiv:1703.07793
 ---
 
 # Skill Card: Prophet Forecasting
 
 ## ① 算法原理
+
+> **论文**：Forecasting at Scale | **年份**：2017
 
 **核心问题**：业务时序数据充满"人造季节性"——黑五、Prime Day、圣诞促销让销量暴涨，春节让物流停滞。传统ARIMA难以处理这些不规则的节假日效应，而Prophet专为业务时序设计。
 
@@ -236,7 +240,6 @@ print("[✓] Prophet Forecasting 测试通过")
 
 ---
 
-
 ## ④ 技能关联
 
 ### 前置技能
@@ -254,3 +257,4 @@ print("[✓] Prophet Forecasting 测试通过")
 - **ROI**：节假日预测准确率提升50%+，备货资金效率提升30%
 - **难度**：⭐⭐☆☆☆（2/5）— 现成库（`fbprophet`），调用即可
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 业务时序预测的标准工具
+```

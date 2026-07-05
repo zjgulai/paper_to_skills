@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 婴儿食品过敏原标签验证器 — FALCPA/FASTER Act九大过敏原自动合规校验
 doc_type: knowledge
@@ -7,14 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 婴儿食品过敏原标签验证器
 
-> **论文**：Automated Allergen Declaration Compliance for Infant Food Products: NLP-based FALCPA/FASTER Act Verification
-> **领域**：母婴产品合规决策 | **类型**：算法工具 | **桥梁**: 21-合规决策 ↔ 07-NLP-VOC
+> **论文**：Automated Allergen Declaration Compliance for Infant Food Products: NLP-based FALCPA/FASTER Act Verification | **年份**：2023
 
 ## ① 算法原理
 
@@ -289,3 +289,4 @@ if __name__ == "__main__":
 - **ROI 预估**：漏报一种过敏原导致的召回成本约50-200万元（产品销毁+通知+罚款）；自动化扫描工具开发成本约3万元，单次拦截1个Critical问题ROI > 3000%
 - **实施难度**：⭐⭐☆☆☆（别名库维护有持续工作量，FASTER Act需关注法规更新）
 - **优先级**：⭐⭐⭐⭐⭐（婴儿食品过敏原漏报 = 直接召回风险，是上架前最高优先级合规检查）
+```

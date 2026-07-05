@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Inventory-Carrying-Cost-Model — 库存持有成本模型
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1903.01384
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Inventory-Carrying-Cost-Model
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Economic Order Quantity Model with Inventory Carrying Cost Sensitivity Analysis | **年份**：2019
 
 库存持有成本（Inventory Carrying Cost）是持有库存所产生的全部隐性和显性成本总和，通常占库存货值的 25-35%/年，是卖家最容易忽视的利润黑洞。
 
@@ -170,3 +173,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（库存积压严重时立即触发） |
 | 数据要求 | 平均库存货值 + FBA 月度仓储报告 + 资金成本率 |
 | 典型收益 | 识别 40% 年化持有成本率，通过 EOQ 优化降至 20-25% |
+```

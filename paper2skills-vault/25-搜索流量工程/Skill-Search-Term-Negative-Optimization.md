@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Search-Term-Negative-Optimization — 搜索词否定优化
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1206.6451
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Search-Term-Negative-Optimization
 
-> **论文/方法来源**：Negative Keyword Optimization in Sponsored Search（Rusmevichientong & Williamson 2012）+ Amazon PPC Waste Reduction Practices
+> **论文**：Negative Keyword Optimization in Sponsored Search (Rusmevichientong & Williamson) | **年份**：2012
 > **领域**：搜索流量工程 ↔ 广告分析 | **类型**: 广告优化
 
 ## ① 算法原理
@@ -185,3 +186,4 @@ print("\n[✓] Search-Term-Negative-Optimization 测试通过")
 - **ROI**：清洗废词后月广告浪费减少 30-50%，年化节省 5-15 万元（依规模）
 - **实施难度**：⭐☆☆☆☆（纯数据分析，操作简单，月度例行执行）
 - **优先级**：⭐⭐⭐⭐⭐（所有 PPC 账户都存在 30-50% 废词，收益确定性最高）
+```

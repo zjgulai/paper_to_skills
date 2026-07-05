@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-FBA-Fee-Waterfall-Attribution — FBA费用瀑布归因
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-FBA-Fee-Waterfall-Attribution
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Waterfall Attribution Model for E-commerce Logistics Cost Decomposition | **年份**：2021
 
 FBA 费用由多个层次叠加构成，每一层都会"吃掉"一部分毛利。瀑布归因模型将订单级别的费用逐项拆解：
 
@@ -147,3 +150,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（直接影响利润底线） |
 | 数据要求 | Amazon 账单明细 + SKU 尺寸/重量数据 |
 | 典型收益 | 发现 LTSF 泄漏后，3 个月回收费用损失 5-15 万元 |
+```

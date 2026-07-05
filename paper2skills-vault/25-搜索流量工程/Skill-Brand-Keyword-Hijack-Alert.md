@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Brand-Keyword-Hijack-Alert — 品牌词搜索下竞品展示份额超30%触发品牌防守广告扩展
 doc_type: knowledge
@@ -7,16 +8,18 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.07755
 roadmap_phase: phase1
 ---
 
 # Skill Card: Brand-Keyword-Hijack-Alert
 
-> **配对分析层**：[[Skill-Brand-Search-Share-Analytics]]
+> **配对分析层**：[[Skill-Search-Share-of-Voice]]
 > **决策类型**: 自动触发型 | **触发条件**: 品牌词搜索下竞品展示份额 > 30% | **执行动作**: 触发品牌词防守广告自动扩展 + 竞品情报采集
 
 ## ① 算法原理
+
+> **论文**：Real-Time Bidding with Multi-Agent Reinforcement Learning for Display Advertising | **年份**：2021
 
 核心是「品牌词竞品份额监控 + 阈值告警 + 防守广告自动扩展」：
 
@@ -224,7 +227,7 @@ print(f"  总品牌词: {result['total_brand_keywords']}，检测到劫持: {res
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Brand-Search-Share-Analytics]]（品牌词展示份额数据分析）
+- **前置（prerequisite）**：[[Skill-Search-Share-of-Voice]]（品牌词展示份额数据分析）
 - **延伸（extends）**：[[Skill-Competitor-Ad-Surge-Defense-Trigger]]（品牌词防御与泛类目防御联动）
 - **可组合（combinable）**：[[Skill-Search-Rank-Recovery-Auto-Action]]（品牌词排名跌落联动恢复）
 
@@ -232,3 +235,4 @@ print(f"  总品牌词: {result['total_brand_keywords']}，检测到劫持: {res
 - **ROI量化**：品牌词自然份额从 62% → 85%，月均增量 GMV $35,000；防守广告追加成本 $800/月，ROI 43:1
 - **实施难度**：⭐⭐⭐☆☆（需广告份额报告 API + SB 广告权限（Brand Registry）+ 自动化出价接口）
 - **优先级**：⭐⭐⭐⭐⭐（品牌词被劫持是「用自己的品牌为竞品引流」，属极高优先级防御任务）
+```

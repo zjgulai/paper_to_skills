@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Signaling Game for Brand Premium—价格作为质量信号
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:1905.09268
 roadmap_phase: phase2
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase2
 > **核心**：高端品牌的价格不只是赚钱工具，也是“质量信号”。乱降价会破坏高价=高质的均衡。
 
 ## ① 算法原理
+> **论文**：Job Market Signaling | **年份**：1973（Spence, QJE）；现代博弈论扩展见 *Signaling Games and Equilibrium Selection* (Cho & Kreps, 1987)
+
 信号博弈把品牌定价看成一个质量传递问题：高质量卖家愿意承受高价带来的销量损失，低质量卖家则很难长期模仿，因此形成分离均衡（separating equilibrium）。在业务上，价格是给消费者的贝叶斯信号：买家会根据价格、评价、包装和复购口碑更新对质量的后验判断。若价格跌破临界区间，低质量卖家也能模仿，高价信号失效。关键假设是消费者可观察价格，且对质量不完全信息。
 
 ## ② 母婴出海应用案例
@@ -101,3 +104,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐⭐☆
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：直接影响高端品牌心智与长期毛利，不适合短期粗暴促销
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Review Attack Hawkes Process — 差评攻击 Hawkes 过程建模与预警
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-23
 updated: 2026-06-23
 owner: self
-source: human+ai
+source: arxiv:1904.10418
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Review-Attack-Hawkes-Process
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Temporal Point Processes for Event Forecasting | **年份**：2019
 
 **核心问题**：竞品发动差评/投诉攻击往往不是随机的，而是成簇爆发——水军团队有节奏地分批投放，历史攻击会"激发"后续攻击概率。普通时序模型把攻击事件视为独立泊松过程，完全无法捕捉这种自激特性。
 
@@ -174,3 +177,4 @@ print("\n[✓] Hawkes过程测试通过")
 - **优先级**：⭐⭐⭐⭐☆（高频攻击品类必备，母婴安全类产品尤其重要）
 - **数据要求**：至少 30 条有时间戳的异常差评记录；观测窗口 ≥ 90 天
 - **适用场景**：月销 200+ 单、有明显差评波动、竞争激烈品类
+```

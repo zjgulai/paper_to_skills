@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Product-3D-Visualization-AR-Preview — 产品 3D 可视化与 AR 预览降低退货率
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2003.08934
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Product-3D-Visualization-AR-Preview
 
 ## ① 算法原理
+
+> **论文**：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis | **年份**：2020
 
 核心是「多视角图像重建 + 3D 模型生成 + AR 渲染」三步流水线：
 
@@ -138,3 +141,4 @@ if __name__ == "__main__":
 - **ROI量化**: 退货率降低 40-50%，以年销 5000 台大件商品计算年化节省 $50,000-$80,000
 - **实施难度**: ⭐⭐⭐（中等，需要拍摄设备和重建软件）
 - **优先级**: ⭐⭐⭐⭐（大件/高价母婴产品首选）
+```

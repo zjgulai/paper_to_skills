@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Tax Evasion Risk Signal Monitor — 税务合规风险信号监控（VAT/GST 异常）
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.05274
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Tax-Evasion-Risk-Signal-Monitor
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Tax Evasion Detection via Anomaly Detection on Tax Declaration Data | **年份**：2021
 
 **核心问题**：跨境电商卖家在欧盟（VAT）、英国（UK VAT）、澳大利亚（GST）等地的税务合规是高频风险点——注册阈值、申报周期、OSS 合规规则复杂，漏报会触发税务机关调查和罚款。实时监控销售额是否接近注册阈值、申报数据是否有异常是关键防控手段。
 
@@ -180,3 +183,4 @@ print("[✓] Tax-Evasion-Risk-Signal-Monitor 测试通过")
 - **ROI量化**: 年化规避 VAT 罚款风险 10-50 万元
 - **实施难度**: ⭐⭐（Amazon 销售报告可直接导出，规则逻辑清晰）
 - **优先级**: ⭐⭐⭐⭐⭐（欧洲/英国/澳洲运营卖家合规必备）
+```

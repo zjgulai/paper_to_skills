@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 外汇敞口测量 — 跨境电商货币风险定量分析
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 外汇敞口测量
 
 > **论文**：Currency Risk Measurement and Management in E-Commerce Cross-Border Operations
+> **年份**：2021
 > **领域**：跨境电商财务风险管理 | **类型**：算法工具 | **桥梁**: 23-运营财务 ↔ 17-价格优化
 
 ## ① 算法原理
@@ -231,3 +233,4 @@ if __name__ == "__main__":
 - **ROI 预估**：5000万美元GMV品牌，年均规避汇率损失45-120万美元；工具开发成本约5万元，ROI > 900%
 - **实施难度**：⭐⭐☆☆☆（数据获取是主要挑战，算法本身不复杂）
 - **优先级**：⭐⭐⭐⭐⭐（汇率风险是财务透明度的基础，必须先建立测量能力）
+```

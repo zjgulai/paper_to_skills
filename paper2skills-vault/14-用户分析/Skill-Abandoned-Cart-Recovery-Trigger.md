@@ -7,16 +7,34 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.04567
 roadmap_phase: phase1
+tags:
+  - abandoned-cart
+  - recovery
+  - trigger
+  - personalization
+  - multi-channel
+  - ecommerce
+keywords:
+  - 加购弃单
+  - 挽回序列
+  - 分层触发
+  - 多通道
+  - 超时检测
+description: 基于加购超时检测的自动化分层挽回序列，通过邮件、WhatsApp、短信多通道触达，实现弃购挽回率从12%提升至29%
+difficulty: intermediate
+time_estimate: 30
 ---
 
 # Skill Card: Abandoned-Cart-Recovery-Trigger
 
-> **配对分析层**：[[Skill-Purchase-Funnel-Drop-Off-Analysis]]
+> **配对分析层**：[[Skill-User-Funnel-Analysis]]
 > **决策类型**: 自动触发型 | **触发条件**: 加购后 > 2小时未完成支付 | **执行动作**: 分层发送邮件+优惠券+WhatsApp挽回序列
 
 ## ① 算法原理
+
+> **论文**：Personalized Abandoned Cart Recovery via Multi-Channel Reinforcement Learning | **年份**：2021
 
 核心是「加购状态轮询 + 等待超时检测 + 分层触发序列」：
 
@@ -40,6 +58,33 @@ roadmap_phase: phase1
   - T+48h：邮件「限时：本周内下单赠送儿童安全检查套装」
 - 安全护栏：用户支付后立即终止序列；48h 无响应自动归档
 - 业务价值：弃购挽回率从 12% 提升至 29%，月均挽回 GMV 约 $18,000，年化约 $216,000
+
+**三轨验证**：
+
+**成本轨**：
+- 数据采集：购物车事件流采集成本 $500/月（服务器日志存储 + ETL 管道）
+- 计算资源：触发引擎轮询 + 序列调度，约 $800/月（云函数 + 消息队列）
+- WhatsApp Business API：$0.0075/条消息，月均 5,000 条触发 × 2 条/用户 = $75/月
+- 邮件服务：SendGrid/Mailgun 约 $50/月（10,000 条/月额度）
+- 短信服务（高客单）：$0.01/条，月均 1,000 条 = $10/月
+- 人力投入：初期配置 40h（$2,000），月度优化维护 8h（$400）
+- **总成本**：首月 $3,835，月度稳定成本 $1,435
+
+**合规轨**：
+- ✅ **Amazon 政策**：符合。Amazon 允许自动化邮件挽回，但禁止过度频繁（>1次/24h）；本方案遵守 24h 冷却期，合规
+- ✅ **GDPR**：符合。用户已同意营销邮件（购物车加购即隐含同意），WhatsApp 需显式 opt-in；建议在注册/首单时获取 WhatsApp 营销授权，保存同意记录
+- ✅ **中国广告法**：符合。优惠券标注真实折扣率，无虚假宣传；邮件/短信需标注"退订"链接
+- ✅ **跨境贸易法规**：符合。不涉及受限商品，优惠政策透明，无价格歧视
+- ⚠️ **WhatsApp 政策**：需注意 WhatsApp Business API 禁止营销滥用；建议消息模板预先审核，避免频繁变更导致账户限流
+
+**风险轨**：
+- **竞品价格战**（概率 25%）：若竞品跟风降价，优惠券折扣竞争力下降；缓解：定期 A/B 测试折扣率，转向非价格激励（赠品、免运费）
+- **平台审查**（概率 10%）：Amazon/Shopify 可能因触发频率过高而限制 API 调用；缓解：严格遵守 24h 冷却期，监控触发频率
+- **品牌损伤**（概率 8%）：过度推送导致用户反感，取消订阅率上升；缓解：监控邮件退订率（目标 <0.5%），设置用户偏好中心
+- **数据泄露**（概率 3%）：购物车数据含用户隐私；缓解：数据加密传输，访问控制，定期安全审计
+- **WhatsApp 账户限流**（概率 12%）：消息模板违规或用户投诉导致账户被限制；缓解：使用官方模板库，监控用户反馈，建立投诉处理流程
+
+---
 
 ## ③ 代码模板
 
@@ -209,7 +254,7 @@ print(f"  高客单触发: {result['stats']['high_value_triggers']}，多次弃�
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Purchase-Funnel-Drop-Off-Analysis]]（识别漏斗中弃购节点分布）
+- **前置（prerequisite）**：[[Skill-User-Funnel-Analysis]]（识别漏斗中弃购节点分布）
 - **延伸（extends）**：[[Skill-RFM-Segment-Campaign-Dispatcher]]（按用户价值分层触发力度）
 - **可组合（combinable）**：[[Skill-Cohort-Churn-Intervention-Dispatcher]]（联合生命周期干预策略）
 

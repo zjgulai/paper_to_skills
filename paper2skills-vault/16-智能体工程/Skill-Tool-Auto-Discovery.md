@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Tool Auto Discovery — Agent 工具自动发现：OpenAPI + MCP Schema 自注册
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2309.07892
 roadmap_phase: phase3
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase3
 ---
 
 ## ① 算法原理
+
+> **论文**：ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs | **年份**：2023
 
 ### 核心思想
 
@@ -152,3 +155,4 @@ print("[✓] Tool Auto Discovery 测试通过")
 - ✅ 快速构建 MAS PoC（无需手写工具注册代码）
 - ❌ 内部私有 API（无标准 schema，需手工适配）
 - ❌ 高安全要求场景（自动发现需额外审计）
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Demand Forecasting for Supply Chain
 module: 04-供应链
@@ -6,11 +7,14 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 roadmap_phase: phase1
+source: arxiv:2005.03825
 ---
 
 # Skill Card: Demand Forecasting (Supply Chain)
 
 ## ① 算法原理
+
+> **论文**：Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting | **年份**：2020
 
 **核心问题**：供应链的需求预测不同于通用时序预测——它必须考虑促销日历、竞品行动、渠道库存、季节性生命周期等商业因素。预测不准的代价是：过高→库存积压，过低→断货丢单。
 
@@ -267,3 +271,4 @@ print("[✓] Demand Forecasting Supply 测试通过")
 - **ROI**：缺货率降低50%，库存周转提升50%，年节省库存成本30万+
 - **难度**：⭐⭐⭐☆☆（3/5）
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 供应链决策的起点，没有预测就没有优化
+```

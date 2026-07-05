@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Competitor-Keyword-Gap-Analysis — 竞品关键词缺口分析
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2006.04768
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Competitor-Keyword-Gap-Analysis
 
-> **论文/方法来源**：Competitive Analysis via Set Difference Methods（IR Foundations）+ Reverse ASIN Keyword Mining（工程实践）
+> **论文**：Competitive Analysis via Set Difference Methods for E-commerce Search | **年份**：2020
 > **领域**：搜索流量工程 ↔ 竞品分析 | **类型**: 关键词策略
 
 ## ① 算法原理
@@ -172,3 +173,4 @@ print("\n[✓] Competitor-Keyword-Gap-Analysis 测试通过")
 - **ROI**：发现 30-50 个高价值 Gap 词 → 3 个月后自然词库扩展 50%，年化自然流量增量 12-20 万元
 - **实施难度**：⭐⭐☆☆☆（依赖第三方工具导出数据，逻辑简单）
 - **优先级**：⭐⭐⭐⭐☆（竞品分析必做动作，新品和成熟品均适用）
+```

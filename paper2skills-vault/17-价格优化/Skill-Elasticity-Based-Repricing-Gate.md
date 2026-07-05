@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Elasticity-Based Repricing Gate — 弹性阈值自动触发涨价/降价A/B测试
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1909.09233
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 弹性绝对值>1.5 或 弹性<0.5 | **执行动作**: 触发5%降价或3%提价A/B测试
 
 ## ① 算法原理
+
+> **论文**：Real-Time Bidding with Elasticity-Aware Reserve Prices | **年份**：2019
 
 核心是「弹性阈值分类 + A/B测试设计 + 置信区间门控」：
 
@@ -199,3 +202,4 @@ print(f"  样本不足: {result3['action']}")
 - ROI预估：年化价格优化收益约15-25%毛利提升，每SKU年化$2,000-$8,000
 - 实施难度：⭐⭐☆☆☆（规则明确，需接入弹性估计流水线）
 - 优先级：⭐⭐⭐⭐⭐
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Competitor Negative Campaign Detection — 竞品恶意投诉攻击检测（批量举报模式）
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1906.09209
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Competitor-Negative-Campaign-Detection
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Catching the Fraud: Detecting Anomalous Reviews in E-Commerce via Multi-Dimensional Time Series | **年份**：2019
 
 **核心问题**：竞品可以通过批量购买后差评、批量举报产品安全问题、批量提交虚假侵权投诉来打击竞争对手。这类攻击有显著的模式特征——时间集中、来源账号特征相似、投诉内容高度相似。
 
@@ -173,3 +176,4 @@ print("[✓] Competitor-Negative-Campaign-Detection 测试通过")
 - **ROI量化**: 攻击早期检测，Prime Day 保护 GMV 30-60 万元
 - **实施难度**: ⭐⭐（评论数据已有，文本分析标准工具）
 - **优先级**: ⭐⭐⭐⭐⭐（品牌护城河核心防御工具）
+```

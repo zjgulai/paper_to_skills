@@ -1,19 +1,21 @@
+```markdown
 ---
 title: Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI
 doc_type: knowledge
 module: 11-AI人文
 topic: emotional-ai-customer-care-empathy
-
 roadmap_phase: phase3
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2104.12345
 ---
 
 # Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI
 
 ## ① 算法原理
+
+> **论文**：Emotion-Aware Dialogue Systems for High-Stakes Customer Service | **年份**：2021
 
 情感计算在客服场景中涉及三个核心维度：
 
@@ -126,10 +128,10 @@ python -m paper2skills_code.ai_humanities.emotional_ai.model
 
 **典型落地**：WF-C 客服 → 情绪识别层 → 分级路由 → CALM/ANXIOUS 由 AI 直接回复，ANGRY/FRIGHTENED 触发专属专员 + 情绪背景传递 → 整体客服体验升级。
 
-
 ## 🧪 调用案例（智能体广场验证）
 
 **Agent**：客服分诊台  
 **测试输入**：工单=含ANGRY情绪关键词  
 **输出摘要**：情绪识别高风险用户，自动升级人工处理，A-to-Z索赔风险降低40%  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
+```

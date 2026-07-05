@@ -1,14 +1,15 @@
+```markdown
 ---
 title: Root Cause Analysis Agent for Business Anomalies
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: root-cause-analysis
-
 roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
 owner: self
 source: human+ai
+source: arxiv:2206.01161
 ---
 
 # Skill Card: Root Cause Analysis Agent
@@ -16,6 +17,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Root Cause Analysis in Microservice Systems: A Survey | **年份**：2022
 
 **核心问题**：异常检测告诉你"什么出问题了"，但不告诉你"为什么"。根因分析（RCA）回答"为什么"——是系统Bug、竞品行动、营销活动、还是供应链问题？
 
@@ -356,3 +359,4 @@ print("[✓] Root Cause Analysis Agent 测试通过")
 - **ROI**：故障定位时间 1-2h → 5min，减少损失 80%
 - **难度**：⭐⭐⭐☆☆（3/5）
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 与异常检测形成完整监控闭环
+```

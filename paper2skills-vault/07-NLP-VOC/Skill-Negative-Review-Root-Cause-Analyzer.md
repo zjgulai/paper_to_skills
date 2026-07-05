@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 差评根因分析器 — ABSA方面级情感分析定位产品修复优先级
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1903.07761
 roadmap_phase: phase1
 ---
 
 # Skill Card: 差评根因分析器
 
-> **论文**：Aspect-Based Sentiment Analysis for E-Commerce Product Quality Root Cause Analysis
+> **论文**：Aspect-Based Sentiment Analysis for E-Commerce Product Quality Root Cause Analysis | **年份**：2019
 > **领域**：用户评论NLP分析 | **类型**：算法工具 | **桥梁**: 07-NLP-VOC ↔ 04-供应链
 
 ## ① 算法原理
@@ -277,3 +278,4 @@ if __name__ == "__main__":
 - **ROI 预估**：针对性修复Top 1根因（噪音），可将吸奶器类差评减少40-50%；每0.1星评分提升→销量增5-8%，年均多增加10-20万美元销售额
 - **实施难度**：⭐⭐☆☆☆（规则词典方法直接可用；如需更高准确率，可升级至BERT-based ABSA）
 - **优先级**：⭐⭐⭐⭐⭐（差评累积是不可逆的，早分析早修复是最优策略）
+```

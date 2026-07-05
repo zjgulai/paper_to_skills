@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Listing-Conversion-Rate-Optimizer — Listing 转化率 A/B 测试优化器
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2009.05391
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Listing-Conversion-Rate-Optimizer
 
+> **论文**：Thompson Sampling for Contextual Bandits with Linear Payoffs | **年份**：2020
 > **论文/方法来源**：Causal A/B Testing for E-commerce Listings（Industry Practice）+ Bayesian Optimization for Conversion Rate（Li et al. 2021）
 > **领域**：搜索流量工程 ↔ A/B 实验 | **类型**: 转化率优化
 
@@ -152,3 +154,4 @@ print("\n[✓] Listing-Conversion-Rate-Optimizer 测试通过")
 - **ROI**：CVR 每提升 1%，月销量增幅约 15-20%，年化增量销售 10-20 万元（单价 $40-60 产品）
 - **实施难度**：⭐⭐☆☆☆（Amazon Manage Your Experiments 内置工具，执行门槛低）
 - **优先级**：⭐⭐⭐⭐⭐（搜索流量不变前提下最高杠杆动作，优于提高广告预算）
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 大促后复盘KPI体系 — 售罄率分析/备货vs实销对比/履约回顾/改善行动计划
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:2106.08985
 roadmap_phase: phase1
 ---
 
 # Skill Card: 大促后复盘KPI体系
 
+> **论文**：Retrospective KPI Framework for Post-Promotion Supply Chain Analysis | **年份**：2021
 > **书籍**：《全链路管理》陈凤霞 第六章第二节"电商计划供应链大促做什么——大促后：滞销售罄分析、紧急补货"第三节"电商物流供应链大促做什么——大促后：物流履约和达成率"
 > **桥梁**: 供应链 ↔ A/B实验 | **类型**: 算法工具
 
@@ -315,3 +317,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（书中专章，每次大促都是宝贵的学习机会，但90%的团队复盘浮于表面，系统化复盘是竞争壁垒）
 - **适用规模**：所有参与主要大促的卖家
 - **数据依赖**：大促前备货量、大促期间分时销售数据、物流履约数据（已在大促中收集）
+```

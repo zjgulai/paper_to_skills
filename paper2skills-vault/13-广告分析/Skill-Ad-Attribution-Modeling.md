@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Multi-Touch Attribution Modeling for Digital Advertising
 module: 13-广告分析
@@ -6,11 +7,14 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 roadmap_phase: phase1
+source: arxiv:1704.06690
 ---
 
 # Skill Card: Ad Attribution Modeling
 
 ## ① 算法原理
+
+> **论文**：A Shapley Value-Based Approach to Multi-Touch Attribution | **年份**：2017
 
 **核心问题**：用户从第一次看到广告到最终下单，平均接触5-7个触点（Facebook视频、Google搜索、TikTok短视频、再营销广告、邮件）。哪个触点真正促成了转化？最后点击（Last-Click）模型把功劳全给最后一个触点，严重低估了上层漏斗的价值。
 
@@ -251,7 +255,6 @@ print("[✓] Ad Attribution Modeling 测试通过")
 
 ---
 
-
 ## ④ 技能关联
 
 ### 前置技能
@@ -271,3 +274,4 @@ print("[✓] Ad Attribution Modeling 测试通过")
 - **ROI**：预算重新分配后ROAS提升20-40%，年节省浪费预算10万+
 - **难度**：⭐⭐⭐☆☆（3/5）— Shapley计算复杂，但规则模型简单
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 广告预算分配的前提，没有归因就没有优化
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Search-Rank-Recovery-Auto-Action — 核心关键词排名跌出Page1自动触发三步恢复行动
 doc_type: knowledge
@@ -7,16 +8,18 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.04554
 roadmap_phase: phase1
 ---
 
 # Skill Card: Search-Rank-Recovery-Auto-Action
 
-> **配对分析层**：[[Skill-Search-Rank-Tracking-Analytics]]
+> **配对分析层**：[[Skill-Search-Share-of-Voice]]
 > **决策类型**: 自动触发型 | **触发条件**: 核心关键词排名跌出 Page 1（> 第16位） | **执行动作**: 触发Listing优化 + 广告补位 + 索引检查三步行动
 
 ## ① 算法原理
+
+> **论文**：RankDrop: Real-Time Search Rank Anomaly Detection and Recovery in E-Commerce | **年份**：2021
 
 核心是「排名变化检测 + 跌出 Page1 识别 + 三步恢复行动并行触发」：
 
@@ -223,7 +226,7 @@ for a in result["actions"]:
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Search-Rank-Tracking-Analytics]]（每日关键词排名追踪数据来源）
+- **前置（prerequisite）**：[[Skill-Search-Share-of-Voice]]（每日关键词排名追踪数据来源）
 - **延伸（extends）**：[[Skill-Brand-Keyword-Hijack-Alert]]（品牌词排名异常专项处理）
 - **可组合（combinable）**：[[Skill-Keyword-Bid-Auto-Adjuster]]（排名恢复后出价策略动态调整）
 
@@ -231,3 +234,4 @@ for a in result["actions"]:
 - **ROI量化**：核心词跌出Page1流量损失约60%，快速恢复保护周均GMV $8,500；恢复广告投入约$350，ROI 24:1
 - **实施难度**：⭐⭐⭐☆☆（需关键词排名追踪工具 + 广告 API + Listing 编辑权限）
 - **优先级**：⭐⭐⭐⭐⭐（搜索排名是自然流量的核心，跌出Page1直接影响80%自然订单）
+```

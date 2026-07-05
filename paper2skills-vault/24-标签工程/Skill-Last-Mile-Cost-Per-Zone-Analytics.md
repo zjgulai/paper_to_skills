@@ -43,6 +43,7 @@ roadmap_phase: phase2
 功能：邮编分区映射 / 附加费计算 / 高成本区域识别 / 承运商优化建议
 """
 from dataclasses import dataclass, field
+from collections import Counter
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -55,16 +56,31 @@ ZONE_CONFIG = {
     "EXTREME":      {"base_cost": 5.0, "surcharge": 42.0, "best_carrier": "usps_priority"},
 }
 
+ZONE_MAPPING = {
+    "10001": "URBAN", "10002": "URBAN", "10003": "URBAN",
+    "90210": "SUBURBAN", "90211": "SUBURBAN",
+    "60601": "URBAN", "60602": "URBAN",
+    "59001": "RURAL", "59002": "RURAL", "59003": "RURAL",
+    "99501": "EXTREME", "99502": "EXTREME",
+    "77001": "SUBURBAN", "77002": "SUBURBAN",
+    "19101": "URBAN", "19102": "URBAN",
+    "98001": "REMOTE", "98002": "REMOTE",
+    "85001": "SUBURBAN", "85002": "SUBURBAN",
+}
+
 
 def classify_zip_zone(zip_code: str) -> str:
-    """简化的邮编分区逻辑"""
-    if zip_code[:3] in ["100", "101", "102", "900", "601"]:
+    """邮编分区逻辑：优先查表，否则启发式分类"""
+    if zip_code in ZONE_MAPPING:
+        return ZONE_MAPPING[zip_code]
+    
+    if zip_code[:3] in ["100", "101", "102", "900", "601", "191"]:
         return "URBAN"
-    elif zip_code[:2] in ["90", "10", "60", "77", "19"]:
-        return "SUBURBAN"
     elif zip_code[:3] in ["997", "998", "999"]:
-        return "EXTREME"  # Alaska/Hawaii
-    elif zip_code[0] in ["5", "6", "7"]:
+        return "EXTREME"
+    elif zip_code[:3] in ["590", "980"]:
+        return "REMOTE"
+    elif zip_code[0] in ["5", "6", "7", "8"]:
         return "RURAL"
     else:
         return "SUBURBAN"
@@ -83,6 +99,7 @@ class DeliveryZoneAnalysis:
 
 
 def analyze_delivery_zone(zip_code: str, product_weight_kg: float = 1.0) -> DeliveryZoneAnalysis:
+    """分析单个邮编的配送成本"""
     zone = classify_zip_zone(zip_code)
     config = ZONE_CONFIG[zone]
     weight_adj = product_weight_kg * 0.3
@@ -90,29 +107,37 @@ def analyze_delivery_zone(zip_code: str, product_weight_kg: float = 1.0) -> Deli
 
     tags = {
         "destination.zone_type": zone,
-        "destination.surcharge_usd": config["surcharge"],
+        "destination.surcharge_usd": round(config["surcharge"], 2),
         "order.shipping_cost_usd": round(total, 2),
         "order.high_shipping_cost_flag": total > 15.0,
         "logistics.recommended_carrier": config["best_carrier"],
     }
 
     return DeliveryZoneAnalysis(
-        zip_code=zip_code, zone_type=zone,
-        base_cost_usd=config["base_cost"], surcharge_usd=config["surcharge"],
+        zip_code=zip_code,
+        zone_type=zone,
+        base_cost_usd=config["base_cost"],
+        surcharge_usd=config["surcharge"],
         total_cost_usd=round(total, 2),
         best_carrier=config["best_carrier"],
-        is_high_cost=total > 15.0, tags=tags,
+        is_high_cost=total > 15.0,
+        tags=tags,
     )
 
 
 def batch_zone_analysis(zip_codes: list, weight_kg: float = 1.0) -> dict:
     """批量分析，生成区域成本分布"""
-    from collections import Counter
     analyses = [analyze_delivery_zone(z, weight_kg) for z in zip_codes]
     zone_dist = Counter(a.zone_type for a in analyses)
     high_cost_count = sum(1 for a in analyses if a.is_high_cost)
     avg_cost = sum(a.total_cost_usd for a in analyses) / max(1, len(analyses))
     total_surcharges = sum(a.surcharge_usd for a in analyses)
+    
+    potential_saving = sum(
+        a.surcharge_usd * 0.6 for a in analyses 
+        if a.zone_type in ["RURAL", "REMOTE", "EXTREME"]
+    )
+    
     return {
         "total_orders": len(analyses),
         "zone_distribution": dict(zone_dist),
@@ -120,32 +145,62 @@ def batch_zone_analysis(zip_codes: list, weight_kg: float = 1.0) -> dict:
         "high_cost_pct": round(high_cost_count / max(1, len(analyses)) * 100, 1),
         "avg_shipping_cost": round(avg_cost, 2),
         "total_surcharges": round(total_surcharges, 2),
-        "potential_saving_usps": round(sum(
-            a.surcharge_usd * 0.6 for a in analyses if a.zone_type in ["RURAL", "REMOTE"]
-        ), 2),
+        "potential_saving_usps": round(potential_saving, 2),
     }
 
 
-if __name__ == "__main__":
-    print("【末程分区成本精算系统】\n")
-    sample_zips = ["10001", "90210", "60601", "59001", "99501", "77002",
-                   "59002", "98001", "59003", "99502"]
-
-    print("=" * 60)
-    print("【分区成本明细】")
-    for zip_code in sample_zips[:5]:
-        analysis = analyze_delivery_zone(zip_code, weight_kg=1.2)
+def generate_zone_report(zip_codes: list, weight_kg: float = 1.0) -> str:
+    """生成详细的分区成本报告"""
+    report_lines = []
+    report_lines.append("=" * 70)
+    report_lines.append("【末程分区成本精算系统 - 详细报告】")
+    report_lines.append("=" * 70)
+    
+    report_lines.append("\n【分区成本明细】")
+    for zip_code in zip_codes[:8]:
+        analysis = analyze_delivery_zone(zip_code, weight_kg=weight_kg)
         icon = "🔴" if analysis.is_high_cost else ("⚠️ " if analysis.surcharge_usd > 5 else "✅")
-        print(f"  {icon} {zip_code} [{analysis.zone_type}]: "
-              f"${analysis.total_cost_usd:.2f} (附加费${analysis.surcharge_usd:.0f}) "
-              f"→ {analysis.best_carrier}")
+        report_lines.append(
+            f"  {icon} {zip_code:6s} [{analysis.zone_type:8s}]: "
+            f"${analysis.total_cost_usd:6.2f} "
+            f"(基础${analysis.base_cost_usd:.1f} + 附加${analysis.surcharge_usd:5.1f}) "
+            f"→ {analysis.best_carrier}"
+        )
+    
+    batch = batch_zone_analysis(zip_codes, weight_kg=weight_kg)
+    report_lines.append(f"\n【批量分析统计】")
+    report_lines.append(f"  总订单数: {batch['total_orders']}")
+    report_lines.append(f"  分区分布: {batch['zone_distribution']}")
+    report_lines.append(f"  高成本订单: {batch['high_cost_orders']}件 ({batch['high_cost_pct']:.1f}%)")
+    report_lines.append(f"  平均运费: ${batch['avg_shipping_cost']:.2f}")
+    report_lines.append(f"  总附加费: ${batch['total_surcharges']:.2f}")
+    report_lines.append(f"  USPS优化节省潜力: ${batch['potential_saving_usps']:.2f}")
+    report_lines.append("=" * 70)
+    
+    return "\n".join(report_lines)
 
-    batch = batch_zone_analysis(sample_zips, weight_kg=1.2)
-    print(f"\n  批量分析: {batch['total_orders']}个邮编")
-    print(f"  分区分布: {batch['zone_distribution']}")
-    print(f"  高成本订单: {batch['high_cost_pct']:.0f}%  平均运费: ${batch['avg_shipping_cost']:.2f}")
-    print(f"  改用USPS可节省（农村/偏远）: ${batch['potential_saving_usps']:.2f}")
-    print(f"\n[✓] 末程分区成本精算 测试通过")
+
+if __name__ == "__main__":
+    sample_zips = [
+        "10001", "90210", "60601", "59001", "99501", "77002",
+        "59002", "98001", "59003", "99502", "85001", "19101"
+    ]
+    
+    print(generate_zone_report(sample_zips, weight_kg=1.2))
+    
+    print("\n【单个邮编详细分析示例】")
+    test_zip = "99501"
+    analysis = analyze_delivery_zone(test_zip, weight_kg=1.5)
+    print(f"  邮编: {analysis.zip_code}")
+    print(f"  分区: {analysis.zone_type}")
+    print(f"  基础成本: ${analysis.base_cost_usd:.2f}")
+    print(f"  附加费: ${analysis.surcharge_usd:.2f}")
+    print(f"  总成本: ${analysis.total_cost_usd:.2f}")
+    print(f"  推荐承运商: {analysis.best_carrier}")
+    print(f"  高成本标记: {analysis.is_high_cost}")
+    print(f"  生成标签: {analysis.tags}")
+    
+    print("\n[✓] 末程分区成本精算测试通过")
 ```
 
 ## ④ 技能关联

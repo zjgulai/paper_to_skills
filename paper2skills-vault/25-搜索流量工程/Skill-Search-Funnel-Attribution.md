@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 搜索漏斗分归因 — 搜索→展示→点击→加购→购买各层转化拆解
 doc_type: knowledge
@@ -7,14 +8,14 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1112.1234
 roadmap_phase: phase1
 ---
 
 # Skill Card: 搜索漏斗分归因
 
-> **论文/方法来源**：Multi-Touch Attribution in Search Advertising（Dalessandro et al. 2012）+ E-Commerce Funnel Analytics（Google/Amazon 实践）
-> **领域**：搜索流量工程 ↔ 广告分析 | **类型**: 跨域融合
+> **论文**：Multi-Touch Attribution in Search Advertising | **年份**：2012
+> **来源**：Dalessandro et al., KDD Workshop on Data Mining and Audience Intelligence for Advertising
 
 ## ① 算法原理
 
@@ -132,3 +133,4 @@ print("\n[✓] 搜索漏斗分归因测试通过")
 - 实施难度：⭐⭐☆☆☆
 - 优先级：⭐⭐⭐⭐⭐
 - 评估依据：搜索漏斗分析是广告优化的前提诊断工具，数据来源全部可从 Seller Central 获取，实施门槛极低但业务价值极高
+```

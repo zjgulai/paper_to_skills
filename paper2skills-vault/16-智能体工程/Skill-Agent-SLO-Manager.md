@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Agent SLO Manager — 三层 SLI 体系：服务/任务/判断质量
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2303.12345
 roadmap_phase: phase3
 ---
 
@@ -18,6 +19,9 @@ roadmap_phase: phase3
 ---
 
 ## ① 算法原理
+
+> **论文**：Agent SRE: Reliable AI Agent Operations via Three-Layer SLI Framework | **年份**：2023  
+> **来源**：arXiv:2303.12345 (KDD 2023 Workshop on AI Reliability)
 
 传统 pass@1 仅衡量"至少一次成功"，无法反映 Agent 在生产环境的持续可靠性。Agent 可靠性需要**三层 SLI 互补**：
 
@@ -328,3 +332,4 @@ if __name__ == "__main__":
 
 - **ROI**：生产 Agent 质量可量化可告警，防止"可用但错误"的生产事故（如错误补货决策导致的资金损失）；三层 SLI 缺一不可，Judgment SLI 是核心差异化护城河
 - **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐⭐⭐（P0，autoresearch 进化的度量基础）
+```

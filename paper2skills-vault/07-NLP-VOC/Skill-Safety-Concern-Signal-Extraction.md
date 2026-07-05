@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Safety-Concern-Signal-Extraction — 安全隐患信号提取
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.08798
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Safety-Concern-Signal-Extraction
 
 ## ① 算法原理（≤300字）
+
+> **论文**：A Hierarchical Attention Network for Product Safety Signal Detection from User Reviews | **年份**：2021
 
 从用户评论中提取产品安全隐患信号，是母婴类目合规风控的核心能力。安全信号具有语义稀疏性（占比 < 3%）和高紧迫性（一旦出现需立即响应）的特点，普通情感分析无法有效识别。
 
@@ -173,3 +176,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（母婴类目安全合规红线） |
 | 数据要求 | Amazon 评论数据（API 或 Jungle Scout） |
 | 典型收益 | P0 预警响应从 72h 缩至 4h，安全召回准确率 > 90% |
+```

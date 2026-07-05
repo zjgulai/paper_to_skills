@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 物流计划进销存三维准确率体系 — 入库/存货/销售三层预测准确率量化与根因归因
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 物流计划进销存三维准确率体系
 
 > **书籍**：《全链路管理》陈凤霞 第二章第三节"电商物流计划供应链的KPI——计划和预测的准确率：进、销、存管理"
+> **论文**：Error Propagation in Supply Chain Inventory Forecasting: A Causal Graph Approach | **年份**：2021
 > **桥梁**: 供应链 ↔ 运营财务 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -301,3 +303,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（书中将其列为物流计划供应链KPI第一节，是所有其他KPI的数据基础，数据准不准直接影响所有决策质量）
 - **适用规模**：所有规模，月销售>$3万且有WMS系统的卖家
 - **数据依赖**：WMS入库记录、库存盘点数据、OMS订单数据（三个系统数据对齐是最大挑战）
+```

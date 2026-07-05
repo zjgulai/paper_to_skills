@@ -1,3 +1,4 @@
+```markdown
 ---
 title: High Value Customer Proactive Alert — 高价值客户出现沉默信号时自动触发客服主动联系
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1904.07780
 roadmap_phase: phase1
 ---
 
 # Skill Card: High Value Customer Proactive Alert
 
+> **论文**：Deep Interest Network for Click-Through Rate Prediction | **年份**：2019
 > **配对分析层**：[[Skill-RFM-Customer-Segmentation]]
 > **决策类型**: 自动告警型 | **触发条件**: 高价值客户（R≤7天, F≥3次, M≥5000元）出现14天无活跃沉默信号 | **执行动作**: 自动触发客服主动联系工单
 
@@ -238,3 +240,4 @@ for a in result["alert_list"]:
 - ROI预估：高价值客户主动挽回率提升至50-60%（vs 被动20%），年化减少高LTV流失$60,000-$100,000
 - 实施难度：⭐⭐☆☆☆（规则清晰，需接入CRM和活跃度数据）
 - 优先级：⭐⭐⭐⭐⭐
+```

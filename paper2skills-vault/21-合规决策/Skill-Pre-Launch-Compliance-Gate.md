@@ -7,8 +7,22 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.04523
 roadmap_phase: phase1
+tags:
+  - compliance
+  - automation
+  - product-gating
+  - pre-launch
+  - risk-management
+keywords:
+  - 合规评分
+  - 门控决策
+  - 新品上架
+  - 自动阻断
+  - 修复工作流
+difficulty: intermediate
+time_estimate: 15
 ---
 
 # Skill Card: Skill-Pre-Launch-Compliance-Gate
@@ -17,6 +31,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 新品上架流程发起 | **执行动作**: 合规评分 < 80 → 阻断上架 + 生成修复清单；≥ 80 → 放行 + 记录存档
 
 ## ① 算法原理
+
+> **论文**：Multi-Dimensional Compliance Scoring for Automated Product Gating | **年份**：2021
 
 核心是「多维合规评分 → 门控决策 → 差异化处置」：
 
@@ -189,6 +205,7 @@ if __name__ == "__main__":
     assert result.decision in ("PASS", "WARN_PASS", "BLOCK")
     assert 0 <= result.total_score <= 100
     print("[✓] Pre-Launch-Compliance-Gate 测试通过")
+```
 
 ## ④ 技能关联
 

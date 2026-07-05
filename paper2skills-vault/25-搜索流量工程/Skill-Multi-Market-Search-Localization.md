@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 多市场搜索词本地化 — 多站点关键词迁移与本地语言适配
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1904.09537
 roadmap_phase: phase1
 ---
 
 # Skill Card: 多市场搜索词本地化
 
+> **论文**：Cross-Lingual Transfer Learning for NLP via Multilingual BERT | **年份**：2019
 > **论文/方法来源**：Cross-Lingual Transfer Learning for NLP（Pires et al. 2019 ACL）+ Multilingual Keyword Translation for E-Commerce（Amazon Global Selling 实践）
 > **领域**：搜索流量工程 ↔ NLP-VOC | **类型**: 跨域融合
 
@@ -156,3 +158,4 @@ print("\n[✓] 多市场搜索词本地化测试通过")
 - 实施难度：⭐⭐⭐☆☆
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：跨境电商多站点扩展时，关键词本地化是必须投入的基础工作；使用预训练多语言模型后实施成本低，一次布局长期受益
+```

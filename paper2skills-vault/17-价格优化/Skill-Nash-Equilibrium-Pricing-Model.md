@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 纳什均衡定价模型 — 多卖家竞争价格博弈均衡求解
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2103.01923
 roadmap_phase: phase2
 ---
 
 # Skill Card: 纳什均衡定价模型
 
-> **论文**：Bayesian Nash Equilibrium in Price Competition with Incomplete Information（博弈论经典）
+> **论文**：Bayesian Nash Equilibrium in Price Competition with Incomplete Information | **年份**：2021
 > **来源**：博弈论（Game Theory）经典框架 | **类型**：跨域迁移 | **桥梁**: 经济学博弈论 ↔ 竞争定价策略
 
 ## ① 算法原理
@@ -226,3 +227,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要 30 天历史数据、基本 Python 运行环境，竞品成本需贝叶斯估计）
 - **优先级**：⭐⭐⭐⭐☆（价格战是母婴出海最普遍的利润杀手，具有广泛适用性）
 - **评估依据**：竞争定价博弈在多 SKU 类目（吸奶器/婴儿车/奶瓶）均存在，均衡价格计算一次配置可重复使用；主要难点在于竞品成本估计的精确度
+```

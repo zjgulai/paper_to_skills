@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-A9-Algorithm-Sales-Velocity-Optimization — A9 算法销量速度优化
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1305.2828
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-A9-Algorithm-Sales-Velocity-Optimization
 
+> **论文**：Personalizing Search via Automated Analysis of Interests and Activities | **年份**：2013
 > **论文/方法来源**：Amazon A9 Search Ranking System（McAuley et al. 2013）+ Sales Velocity Boosting in E-commerce（工程实践）
 > **领域**：搜索流量工程 ↔ 供应链 | **类型**: 排名优化
 
@@ -171,3 +173,4 @@ print("\n[✓] A9-Algorithm-Sales-Velocity-Optimization 测试通过")
 - **ROI**：前7天促销投入约 $2,000-3,000 → 拉动年化自然流量价值 15-25 万元（排名 Top 50 后 ACOS 降至 12-15%）
 - **实施难度**：⭐⭐☆☆☆（主要依赖 PPC 和闪购操作，无需复杂技术）
 - **优先级**：⭐⭐⭐⭐⭐（新品上架必做，投入产出比最高的搜索流量工程动作）
+```

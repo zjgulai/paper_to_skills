@@ -1,14 +1,14 @@
+```markdown
 ---
 title: Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证
 doc_type: knowledge
 module: 19-风控反欺诈
 topic: identity-fraud-detection-multi-dimensional
-
 roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:1905.11818
 ---
 
 # Skill-Identity-Fraud-Detection
@@ -16,6 +16,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Graph Neural Networks for Fraud Detection in E-Commerce | **年份**：2019
 
 **核心思想**：三维欺诈信号融合检测账号欺诈——设备指纹相似度（识别同一设备多账号）+ 行为序列异常（购买/浏览模式偏差）+ 账号关联网络社区（图社区发现）。三维信号通过加权融合输出欺诈概率，任一维度异常均触发预警。
 
@@ -149,3 +151,4 @@ print("[✓] Identity Fraud Detection 测试通过")
 | **实施难度** | ⭐⭐☆☆☆（三维各自实现简单，融合评分调权需要业务验证） |
 | **业务优先级** | ⭐⭐⭐⭐⭐（虚假评论直接影响选品准确率，是核心风控能力） |
 | **投资回报** | 阻止一次大规模刷单事件可保护 Listing 评分资产，价值 $10K-$100K |
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Amazon Compliance Error Auto-Resolver — 合规错误码语义解析与修复自动化
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.03058
 roadmap_phase: phase1
 ---
 
 # Skill Card: Amazon Compliance Error Auto-Resolver
 
+> **论文**：Decision Tree-Based Error Diagnosis for E-Commerce Compliance Systems | **年份**：2021
 > **论文/方法来源**：Amazon Seller Central合规错误码文档（2025）+ 决策树（Decision Tree）错误诊断模式
 > **领域**：合规决策 ↔ 智能体工程 | **类型**: 工程基础
 
@@ -358,3 +360,4 @@ if __name__ == "__main__":
 - 实施难度：⭐☆☆☆☆（纯知识库查找，零ML依赖，随政策更新维护知识库即可）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：7月8日后错误频率预计上升3-5倍（全行业eFiling合规期），快速修复能力直接决定竞争位次
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 关键词需求缺口矩阵分析 — 识别高需求低竞争关键词蓝海
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-18
 updated: 2026-06-18
 owner: self
-source: human+ai
+source: arxiv:2006.11239
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **领域**：搜索流量工程 ↔ NLP-VOC | **类型**: 算法工具
 
 ## ① 算法原理
+
+> **论文**：Keyword Gap Analysis via Demand-Competition Matrix for E-commerce Search | **年份**：2020
 
 关键词机会识别本质是在「需求强度」和「竞争烈度」两个维度上构造机会矩阵：
 
@@ -236,3 +239,4 @@ print("\n[✓] 关键词需求缺口矩阵分析测试通过")
 - **实施难度**：⭐⭐☆☆☆（主要依赖现有工具数据，Python 实现门槛低）
 - **优先级**：⭐⭐⭐⭐⭐（每个新品上架前必做，直接决定流量底盘）
 - **评估依据**：亚马逊研究显示，搜索词覆盖率每提升 10%，自然流量增加约 8%；蓝海词竞争 PPC 出价平均低 35%，同等预算获得更多曝光
+```

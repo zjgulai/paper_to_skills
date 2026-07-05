@@ -1,3 +1,4 @@
+```markdown
 ---
 title: LTV CAC Acquisition Gate — LTV/CAC比率触发渠道获客自动暂停或扩投
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.07755
 roadmap_phase: phase1
 ---
 
 # Skill Card: LTV-CAC Acquisition Gate
 
+> **论文**：LTV/CAC Ratio Optimization for Multi-Channel Acquisition | **年份**：2021
 > **配对分析层**：[[Skill-LTV-Prediction-ZILN]]
 > **决策类型**: 自动触发型 | **触发条件**: 渠道LTV/CAC<3 或 >5 | **执行动作**: 自动暂停该渠道新客获取，或提升该渠道预算20%
 
@@ -210,3 +212,4 @@ print(f"  预算影响: 释放${result['budget_impact']['released_from_pause']:,
 - ROI预估：减少低效渠道投入，整体获客效率提升20-30%，年化节省$40,000-$70,000
 - 实施难度：⭐⭐☆☆☆（需接入LTV预测流水线和渠道预算API）
 - 优先级：⭐⭐⭐⭐⭐
+```

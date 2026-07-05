@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Review-Sentiment-Growth-Trigger — 评论情感趋势监控与产品迭代自动触发
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1904.04047
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 阈值触发型 | **触发条件**: 7日滚动情感均值跌破-0.2 | **执行动作**: 自动创建产品迭代工单+触发商品页优化流程
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Temporal Sentiment Analysis for Product Monitoring | **年份**：2019
 
 核心是「情感时序监控 + 多级阈值触发」：
 
@@ -182,3 +185,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词典规则+滚动均值，无需ML模型）
 - **优先级**：⭐⭐⭐⭐（直接保护转化率，对高流量SKU ROI极高）
 - **适用品类**：安全敏感型母婴品（奶嘴/奶瓶/辅食）效果最显著
+```

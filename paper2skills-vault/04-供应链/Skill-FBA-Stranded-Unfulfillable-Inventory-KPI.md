@@ -1,3 +1,4 @@
+```markdown
 ---
 title: FBA滞销不可售库存KPI与处置策略 — 滞销率/仓储过长费预警/移除决策优化
 doc_type: knowledge
@@ -190,7 +191,7 @@ def compute_fba_kpi_summary(df):
     ]
     
     print()
-    for k, v in kpis.items():
+    for k, v in kpis:
         print(f"  {k}: {v}")
 
 
@@ -292,7 +293,7 @@ if __name__ == "__main__":
     ltsf = compute_ltsf_estimate(df)
     run_disposal_decision_tree(df, ltsf)
     
-    print("\n[✓] FBA滞销库存KPI体系 测试通过")
+    print("\n[✓] FBA滞销库存KPI体系测试通过")
     slow_rate = df[df['days_in_storage'] > 90]['inventory_value'].sum() / df['inventory_value'].sum() * 100
     print(f"    滞销率={slow_rate:.1f}%  LTSF月度=${ltsf:.2f}  处置决策树已完成")
 ```
@@ -312,3 +313,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（Amazon Seller Central提供库存报告，主要是分析逻辑）
 - **优先级评分**：⭐⭐⭐⭐⭐（陈凤霞书FBA专章核心：LTSF是直接吞噬利润的"看不见的成本"）
 - **评估依据**：陈凤霞书数据：跨境卖家平均FBA库存健康度评分仅62分，滞销库存费年化占营业额0.5-2%
+```

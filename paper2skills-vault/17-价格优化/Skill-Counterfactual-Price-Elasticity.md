@@ -1,7 +1,9 @@
+```markdown
 ---
 name: counterfactual-price-elasticity
 description: 财务与运营陷入黑五价格战绞杀——引入反事实推演(Do-Calculus)，反直觉切断广告维持高价，利用竞品断货真空期攫取超额溢价。当面临旺季大促、竞品大幅降价、毛利被严重压缩时使用。
 roadmap_phase: phase1
+source: arxiv:1608.00060
 ---
 
 # Skill Card: 反事实动态价格弹性测算 (Counterfactual Price Elasticity via DML)
@@ -9,6 +11,8 @@ roadmap_phase: phase1
 ---
 
 #### ① 算法原理
+> **论文**：Double/Debiased Machine Learning for Treatment and Structural Parameters | **年份**：2016 (Chernozhukov et al., Econometrics Journal)
+
 - **核心思想**：传统的销量预测只找“相关性”，导致“节假日流量暴增”被误认为是“降价带来的增量”。本算法通过双重机器学习（Double Machine Learning, DML）从混杂因子中分离出纯粹的“因果效应”，算出每一块钱降价真正带来的净增单量。
 - **数学直觉**：
   DML 将问题拆分为两个预测模型：
@@ -43,3 +47,4 @@ roadmap_phase: phase1
 - **实施难度**：★★★★☆ (需要构建规整的特征工程，对数据科学基建要求高)
 - **优先级评分**：★★★★★ (红海时代的绝对护城河算法)
 - **评估依据**：该算法将定价权从“平台/竞品逼迫”手中夺回，转交给了“数据推演的绝对确定性”，是存量博弈中利润最大化的顶级战略。
+```

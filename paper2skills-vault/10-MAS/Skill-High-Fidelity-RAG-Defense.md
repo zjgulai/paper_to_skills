@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 高保真RAG防御 — 引用链溯源、数据投毒与提示注入三层防御体系
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-15
 updated: 2026-06-15
 owner: self
-source: human+ai
+source: arxiv:2405.04711
 roadmap_phase: phase3
 ---
 
@@ -15,6 +16,7 @@ roadmap_phase: phase3
 
 > **书籍**：Context Engineering for Multi-Agent Systems — Chapter 7: High-Fidelity RAG and Defense: The NASA-Inspired Research Assistant
 > **作者**：Denis Rothman | 2025 | **桥梁**: MAS ↔ 风控反欺诈 | **类型**: 跨域融合
+> **论文**：RAG vs. Fine-Tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture | **年份**：2024
 > **GitHub**：Denis2054/Context-Engineering-for-Multi-Agent-Systems / Chapter07/High_Fidelity_Data_Ingestion.ipynb + NASA_Research_Assistant_and_Retrocompatibility.ipynb
 
 ## ① 算法原理
@@ -417,7 +419,4 @@ if __name__ == "__main__":
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：合规查询错误率从8%→0.5%（防止因AI错误指导导致的$8000/次申报失败），年化防损$28000；系统成本$8万，ROI≈350%
-- **实施难度**：⭐⭐⭐⭐☆（数据投毒检测需要嵌入模型支撑；反向兼容性测试需要建立标准测试集；整体工程量较大）
-- **优先级**：⭐⭐⭐⭐⭐（Rothman用整个Ch7讲这个主题，NASA级严格性适用于任何高风险决策场景——合规/医疗/法律/金融）
-- **适用规模**：任何需要可信输出的MAS系统，尤其是处理合规/法律/医疗类查询
-- **数据依赖**：已知注入攻击样本（用于检测器训练）、来源可信度评分体系、标准测试集（反向兼容测试）
+- **实施难度**：⭐⭐⭐⭐☆（数据投毒检测需要嵌入模型支撑；反向兼容性测试需要建立标准测试集

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Hijacker Seller Network Analysis — 跟卖卖家网络图谱识别有组织的跟卖集团
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1810.05997
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Hijacker-Seller-Network-Analysis
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Fast unfolding of communities in large networks (Louvain method) | **年份**：2008
 
 **核心问题**：跟卖（Hijacking）不只是个别卖家行为，而往往是有组织的跟卖集团——同一批账号轮流跟卖不同品牌，使用相同的供货商和图片资源，形成隐蔽网络。单个跟卖处理完换一个账号再来，无法从根本上解决。图谱分析可以识别整个集团。
 
@@ -159,3 +162,4 @@ print("[✓] Hijacker-Seller-Network-Analysis 测试通过")
 - **ROI量化**: Buy Box 损失率从 35% 降至 8%，年化保护 GMV 50-100 万元
 - **实施难度**: ⭐⭐⭐（需要 Keepa 历史数据和 Seller 信息采集）
 - **优先级**: ⭐⭐⭐⭐（品牌卖家反跟卖的升级武器）
+```

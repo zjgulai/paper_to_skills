@@ -1,14 +1,14 @@
+```markdown
 ---
 title: AI Explainability for Consumer Trust — AI 推荐可解释性：消费者信任构建
 doc_type: knowledge
 module: 11-AI人文
 topic: ai-explainability-consumer-trust-recommendation
-
 roadmap_phase: phase3
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:1602.04938
 ---
 
 # Skill-AI-Explainability-Consumer-Trust
@@ -16,6 +16,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：“Why Should I Trust You?”: Explaining the Predictions of Any Classifier | **年份**：2016 (KDD)
 
 **为什么"黑盒推荐"损害消费者信任**
 
@@ -391,3 +393,4 @@ if __name__ == "__main__":
 - **Agent 决策接受率**：45% → 78%（可解释报告提升团队对 AI 决策的信任）
 - **实施难度**：⭐⭐☆☆☆（无需复杂模型，规则映射即可快速上线）
 - **优先级**：⭐⭐⭐⭐☆
+```

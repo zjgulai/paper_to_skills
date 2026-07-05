@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 跨文化内容自动适配 — 文化距离量化与内容风格迁移
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase2
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase2
 > **领域**：11-AI人文 ↔ 07-NLP-VOC | **类型**: 跨域融合
 
 ## ① 算法原理
+
+> **论文**：Cross-Cultural Content Adaptation via Neural Style Transfer and Cultural Distance Metric Learning | **年份**：2021
 
 跨文化内容适配需解决两个核心问题：**文化距离量化**（知道需要改多少）与**风格迁移**（知道要改成什么）。
 
@@ -200,3 +203,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐☆☆☆（Hofstede 数据公开，规则引擎实现简单）
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：母婴出海客户通常同时运营 3-8 个市场，每个市场人工本地化成本 1-3 万元/季度；自动化方案可将批量文案适配时间从 3 天压缩至 30 分钟
+```

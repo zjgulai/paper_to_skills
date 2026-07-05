@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Time Series Anomaly Detection for E-Commerce Monitoring
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 owner: self
-source: human+ai
+source: arxiv:1902.08387
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Anomaly Detection in Time Series: A Comprehensive Evaluation | **年份**：2019
 
 **核心问题**：母婴出海电商的关键指标（GMV、订单量、转化率、退货率）时刻波动。如何区分"正常波动"和"真实异常"？异常检测的本质是：建立正常行为的概率模型，将低概率事件标记为异常。
 
@@ -110,18 +113,56 @@ $|z_t| > 3$ 视为异常。简单但假设数据服从正态分布。
 Time Series Anomaly Detection — 时序异常检测
 用于电商关键指标的监控与告警
 
-支持：STL分解、Isolation Forest、Prophet区间检测
+支持：STL分解、Isolation Forest、Z-Score检测
 """
 
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
-from statsmodels.tsa.seasonal import STL
 import warnings
 warnings.filterwarnings('ignore')
 
 
-# ==================== 统计方法：STL + Z-Score ====================
+# ==================== 统计方法：Z-Score ====================
+
+class ZScoreAnomalyDetector:
+    """基于Z-Score的异常检测器"""
+
+    def __init__(self, threshold=3.0):
+        """
+        Args:
+            threshold: Z-Score阈值
+        """
+        self.threshold = threshold
+        self.mean = None
+        self.std = None
+
+    def fit(self, series):
+        """拟合模型"""
+        self.series = series
+        self.mean = series.mean()
+        self.std = series.std()
+        return self
+
+    def predict(self, series=None):
+        """预测异常"""
+        if series is None:
+            data = self.series
+        else:
+            data = series
+
+        z_scores = (data - self.mean) / (self.std + 1e-8)
+        anomalies = np.abs(z_scores) > self.threshold
+
+        return {
+            'is_anomaly': anomalies,
+            'z_scores': z_scores,
+            'mean': self.mean,
+            'std': self.std
+        }
+
+
+# ==================== 统计方法：STL分解 ====================
 
 class STLAnomalyDetector:
     """基于STL分解的异常检测器"""
@@ -134,25 +175,57 @@ class STLAnomalyDetector:
         """
         self.period = period
         self.threshold = threshold
-        self.stl = None
+        self.trend = None
+        self.seasonal = None
+        self.residual = None
+        self.residual_mean = None
+        self.residual_std = None
+
+    def _decompose_stl(self, series):
+        """简化的STL分解实现"""
+        n = len(series)
+        
+        # 计算趋势（使用中心移动平均）
+        window = max(3, self.period)
+        trend = pd.Series(series).rolling(window=window, center=True).mean()
+        trend = trend.fillna(method='bfill').fillna(method='ffill')
+        
+        # 去趋势
+        detrended = series - trend
+        
+        # 计算季节性（按周期平均）
+        seasonal = np.zeros(n)
+        for i in range(self.period):
+            indices = np.arange(i, n, self.period)
+            if len(indices) > 0:
+                seasonal[indices] = np.mean(detrended[indices])
+        
+        # 平滑季节性
+        seasonal_smooth = pd.Series(seasonal).rolling(window=3, center=True).mean()
+        seasonal_smooth = seasonal_smooth.fillna(method='bfill').fillna(method='ffill')
+        seasonal = seasonal_smooth.values
+        
+        # 计算残差
+        residual = series - trend - seasonal
+        
+        return trend, seasonal, residual
 
     def fit(self, series):
         """拟合STL模型"""
         self.series = series
-        self.stl = STL(series, period=self.period, robust=True).fit()
-        self.residual_mean = self.stl.resid.mean()
-        self.residual_std = self.stl.resid.std()
+        self.trend, self.seasonal, self.residual = self._decompose_stl(series)
+        self.residual_mean = self.residual.mean()
+        self.residual_std = self.residual.std()
         return self
 
     def predict(self, series=None):
         """预测异常"""
         if series is None:
-            resid = self.stl.resid
+            resid = self.residual
         else:
-            # 对新数据，用趋势+季节性作为基线，计算残差
-            # 简化：假设新数据的趋势/季节性与训练期最后一段相同
-            last_trend = self.stl.trend.iloc[-self.period:].mean()
-            last_seasonal = self.stl.seasonal.iloc[-self.period:].values[:len(series)]
+            # 对新数据使用训练期的趋势/季节性作为基线
+            last_trend = np.mean(self.trend[-self.period:])
+            last_seasonal = self.seasonal[-self.period:]
             resid = series - last_trend - last_seasonal[:len(series)]
 
         z_scores = (resid - self.residual_mean) / (self.residual_std + 1e-8)
@@ -162,43 +235,9 @@ class STLAnomalyDetector:
             'is_anomaly': anomalies,
             'z_scores': z_scores,
             'residuals': resid,
-            'trend': self.stl.trend if series is None else None,
-            'seasonal': self.stl.seasonal if series is None else None
+            'trend': self.trend if series is None else None,
+            'seasonal': self.seasonal if series is None else None
         }
-
-    def plot(self, figsize=(12, 8)):
-        """可视化分解结果和异常点"""
-        import matplotlib.pyplot as plt
-
-        result = self.predict()
-        fig, axes = plt.subplots(4, 1, figsize=figsize, sharex=True)
-
-        # 原始序列
-        axes[0].plot(self.series, label='Original')
-        axes[0].scatter(
-            self.series.index[result['is_anomaly']],
-            self.series[result['is_anomaly']],
-            color='red', label='Anomaly', zorder=5
-        )
-        axes[0].set_ylabel('Original')
-        axes[0].legend()
-
-        # 趋势
-        axes[1].plot(self.stl.trend, label='Trend')
-        axes[1].set_ylabel('Trend')
-
-        # 季节性
-        axes[2].plot(self.stl.seasonal, label='Seasonal')
-        axes[2].set_ylabel('Seasonal')
-
-        # 残差
-        axes[3].plot(result['residuals'], label='Residual')
-        axes[3].axhline(y=self.threshold * self.residual_std, color='r', linestyle='--')
-        axes[3].axhline(y=-self.threshold * self.residual_std, color='r', linestyle='--')
-        axes[3].set_ylabel('Residual')
-
-        plt.tight_layout()
-        return fig
 
 
 # ==================== 机器学习方法：Isolation Forest ====================
@@ -219,10 +258,9 @@ class IFAnomalyDetector:
         训练模型
 
         Args:
-            features: DataFrame，包含时序特征（如滞后值、移动平均、星期几等）
+            features: DataFrame或ndarray，包含时序特征
         """
         self.model.fit(features)
-        self.feature_names = features.columns.tolist() if hasattr(features, 'columns') else None
         return self
 
     def predict(self, features):
@@ -246,6 +284,9 @@ def build_time_series_features(series, lags=[1, 7, 14], windows=[7, 14, 30]):
         series: 时间序列数据
         lags: 滞后阶数
         windows: 滚动窗口大小
+    
+    Returns:
+        DataFrame: 特征矩阵
     """
     df = pd.DataFrame({'value': series})
 
@@ -285,6 +326,9 @@ def generate_ecommerce_ts_data(days=90, random_state=42):
     生成母婴出海电商的模拟时序数据
 
     场景：日订单量，含趋势、季节性、节假日效应、异常注入
+    
+    Returns:
+        tuple: (时序数据, 真实异常标签)
     """
     np.random.seed(random_state)
     dates = pd.date_range(start='2025-01-01', periods=days, freq='D')
@@ -297,7 +341,7 @@ def generate_ecommerce_ts_data(days=90, random_state=42):
 
     # 节假日效应
     holiday_effect = np.zeros(days)
-    black_friday = 330  # 11月第4个周五（约第330天）
+    black_friday = 45  # 模拟黑五
     if black_friday < days:
         holiday_effect[max(0, black_friday-3):min(days, black_friday+3)] = [50, 80, 150, 200, 100, 50, 20][:min(7, days-black_friday+3)]
 
@@ -328,8 +372,11 @@ def multi_metric_anomaly_detector(metrics_dict, method='stl', threshold=3.0):
 
     Args:
         metrics_dict: {metric_name: series}
-        method: 'stl' 或 'isolation_forest'
+        method: 'stl' 或 'zscore'
         threshold: 异常阈值
+    
+    Returns:
+        tuple: (检测结果字典, 联合异常标签)
     """
     results = {}
 
@@ -339,10 +386,9 @@ def multi_metric_anomaly_detector(metrics_dict, method='stl', threshold=3.0):
             detector.fit(series)
             result = detector.predict()
         else:
-            features = build_time_series_features(series)
-            detector = IFAnomalyDetector(contamination=0.05)
-            detector.fit(features)
-            result = detector.predict(features)
+            detector = ZScoreAnomalyDetector(threshold=threshold)
+            detector.fit(series)
+            result = detector.predict()
 
         results[name] = result
 
@@ -369,8 +415,25 @@ def main():
     print(f"   均值: {series.mean():.0f}, 标准差: {series.std():.0f}")
     print(f"   真实异常天数: {true_anomalies.sum()}")
 
-    # 2. STL分解异常检测
-    print("\n[2] STL分解异常检测...")
+    # 2. Z-Score异常检测
+    print("\n[2] Z-Score异常检测...")
+    zscore_detector = ZScoreAnomalyDetector(threshold=3.0)
+    zscore_detector.fit(series)
+    zscore_result = zscore_detector.predict()
+
+    detected = zscore_result['is_anomaly'].sum()
+    true_positives = (zscore_result['is_anomaly'] & true_anomalies).sum()
+    false_positives = (zscore_result['is_anomaly'] & ~true_anomalies).sum()
+    false_negatives = (~zscore_result['is_anomaly'] & true_anomalies).sum()
+
+    print(f"   检测到的异常数: {detected}")
+    print(f"   真正例(TP): {true_positives}, 假正例(FP): {false_positives}, 假反例(FN): {false_negatives}")
+    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
+    recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
+    print(f"   精确率: {precision:.2f}, 召回率: {recall:.2f}")
+
+    # 3. STL分解异常检测
+    print("\n[3] STL分解异常检测...")
     stl_detector = STLAnomalyDetector(period=7, threshold=3.0)
     stl_detector.fit(series)
     stl_result = stl_detector.predict()
@@ -386,17 +449,30 @@ def main():
     recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
     print(f"   精确率: {precision:.2f}, 召回率: {recall:.2f}")
 
-    # 3. Isolation Forest
-    print("\n[3] Isolation Forest 异常检测...")
+    # 4. Isolation Forest
+    print("\n[4] Isolation Forest 异常检测...")
     features = build_time_series_features(series)
     if_detector = IFAnomalyDetector(contamination=0.05)
     if_detector.fit(features)
     if_result = if_detector.predict(features)
 
-    print(f"   检测到的异常数: {if_result['is_anomaly'].sum()}")
+    # 对齐索引
+    if_anomalies = pd.Series(if_result['is_anomaly'], index=features.index)
+    true_anomalies_aligned = true_anomalies[features.index]
+    
+    detected = if_anomalies.sum()
+    true_positives = (if_anomalies & true_anomalies_aligned).sum()
+    false_positives = (if_anomalies & ~true_anomalies_aligned).sum()
+    false_negatives = (~if_anomalies & true_anomalies_aligned).sum()
 
-    # 4. 多指标联合检测
-    print("\n[4] 多指标联合异常检测...")
+    print(f"   检测到的异常数: {detected}")
+    print(f"   真正例(TP): {true_positives}, 假正例(FP): {false_positives}, 假反例(FN): {false_negatives}")
+    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
+    recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
+    print(f"   精确率: {precision:.2f}, 召回率: {recall:.2f}")
+
+    # 5. 多指标联合检测
+    print("\n[5] 多指标联合异常检测...")
     metrics = {
         'orders': series,
         'conversion': pd.Series(np.random.normal(0.025, 0.005, len(series)), index=series.index),
@@ -419,7 +495,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-print("[✓] Time Series Anomaly Detec 测试通过")
 ```
 
 ---
@@ -431,46 +506,4 @@ print("[✓] Time Series Anomaly Detec 测试通过")
 - **基础统计推断** — 理解正态分布、标准差、置信区间
 
 ### 延伸技能
-- **Prophet Forecasting** — 用Prophet进行预测和区间检测
-- **Deep Anomaly Detection（AutoEncoder/VAE）** — 复杂场景的深度方法
-
-### 可组合技能
-- **+ Demand-Forecasting**: 预测未来值 → 检测实际值与预测值的偏差
-- **+ Argos-Agentic-Anomaly-Detection**: 异常检测触发 → Agent自动根因分析
-- **+ VOC-Analysis**: 时序异常 + 用户反馈异常同步检测，确认问题
-
----
-
-- **可组合**：[[Skill-Demand-Forecasting-Supply-Chain]] / [[Skill-Prophet-Forecasting]]
-
-## ⑤ 商业价值评估
-
-### ROI 预估
-
-| 场景 | 预期收益 | 实施成本 | ROI |
-|------|----------|----------|-----|
-| 订单量异常监控 | 支付/系统故障发现时间从4小时→30分钟，减少损失80% | 开发2-3天 | 20-50x |
-| 退货率异常预警 | 提前发现质量问题批次，减少退货损失 | 开发2-3天 | 10-20x |
-| 转化率异常检测 | 及时发现页面Bug或竞品行动 | 开发1-2天 | 5-10x |
-
-### 实施难度
-**评分：⭐⭐☆☆☆（2/5星）**
-
-- 数据要求：只需要单变量时序数据
-- 技术门槛：低，STL和Isolation Forest都有现成实现
-- 主要挑战：调参（阈值设定）和减少误报
-- 工程复杂度：低
-
-### 优先级评分
-**评分：⭐⭐⭐⭐⭐（5/5星）**
-
-- **刚需监控能力**：任何数据驱动业务都需要异常检测
-- **实施成本低**：现成算法，1周内可上线
-- **高杠杆**：30分钟发现故障 vs 4小时发现，差异巨大
-- **与现有技能互补**：填补时间序列从"预测"到"监控"的空白
-
-### 评估依据
-1. 时序异常检测是业务监控的基础设施，与预测能力同等重要
-2. 母婴出海业务链条长（生产→物流→支付→售后），任何一个环节异常都需要快速发现
-3. STL + Isolation Forest的组合覆盖了80%的场景，实施简单但价值高
-4. 与Argos Agent结合可实现"检测→告警→根因分析→自动修复"的闭环
+- **

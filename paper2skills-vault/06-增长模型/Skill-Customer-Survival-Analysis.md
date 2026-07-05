@@ -7,13 +7,19 @@ status: stable
 created: 2026-06-23
 updated: 2026-06-23
 owner: self
-source: human+ai
+source: arxiv:1810.00048, human+ai
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Customer-Survival-Analysis
 
 ## ① 算法原理（≤300字）
+
+> **论文**：The Concordance Index Decomposed: A Measure for Survival Model Predictive Performance | **arXiv**：1810.00048
+> 
+> **经典文献**：Kaplan, E. L., & Meier, P. (1958). Nonparametric estimation from incomplete observations. *Journal of the American Statistical Association*, 53(282), 457-481.
+> 
+> **Cox 模型**：Cox, D. R. (1972). Regression models and life-tables. *Journal of the Royal Statistical Society*, 34(2), 187-220.
 
 生存分析（Survival Analysis）研究事件发生前的"存活时间"分布，核心对象是**生存函数** $S(t) = P(T > t)$，表示用户在时间 $t$ 之前未流失的概率。
 
@@ -65,13 +71,12 @@ $$h(t|X) = h_0(t) \cdot \exp(\beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p)$$
 Skill-Customer-Survival-Analysis
 生存分析：Kaplan-Meier + Cox PH 模型
 母婴用户复购存活率建模
-依赖：lifelines>=0.27, pandas, numpy, matplotlib
+依赖：numpy, pandas, scipy
 """
 
 import numpy as np
 import pandas as pd
-from lifelines import KaplanMeierFitter, CoxPHFitter
-from lifelines.statistics import logrank_test
+from scipy import stats
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -114,47 +119,104 @@ data['event_observed'] = (duration_adjusted <= observation_period).astype(int)
 data.loc[data['bought_solids'] == 1, 'duration'] *= 1.3
 data['duration'] = data['duration'].clip(1, observation_period)
 
-print("=" * 55)
+print("=" * 60)
 print("📊 Mock 数据概览")
 print(f"  总用户数: {N}")
 print(f"  观测到流失事件: {data['event_observed'].sum()} ({data['event_observed'].mean():.1%})")
 print(f"  平均存活时间: {data['duration'].mean():.1f} 天")
-print("=" * 55)
+print("=" * 60)
 
 
 # ─────────────────────────────────────────────
 # 2. Kaplan-Meier 生存曲线（分月龄组）
 # ─────────────────────────────────────────────
+def kaplan_meier_estimator(durations, events):
+    """计算 Kaplan-Meier 生存函数"""
+    unique_times = np.sort(np.unique(durations[events == 1]))
+    survival_prob = 1.0
+    survival_curve = [(0, 1.0)]
+    
+    for t in unique_times:
+        n_at_risk = np.sum(durations >= t)
+        n_events = np.sum((durations == t) & (events == 1))
+        if n_at_risk > 0:
+            survival_prob *= (1 - n_events / n_at_risk)
+            survival_curve.append((t, survival_prob))
+    
+    return np.array(survival_curve)
+
+def survival_at_time(curve, t):
+    """获取特定时间点的存活率"""
+    times = curve[:, 0]
+    probs = curve[:, 1]
+    idx = np.searchsorted(times, t, side='right') - 1
+    return probs[max(0, idx)]
+
 print("\n【Kaplan-Meier 生存曲线 - 各月龄组】")
 
-kmf = KaplanMeierFitter()
 groups = ['0-6M', '6-12M', '12-24M', '24-36M']
 survival_at_180 = {}
+km_curves = {}
 
 for group in groups:
     mask = data['age_group'] == group
-    kmf.fit(
-        data.loc[mask, 'duration'],
-        event_observed=data.loc[mask, 'event_observed'],
-        label=group
+    group_data = data[mask]
+    
+    km_curve = kaplan_meier_estimator(
+        group_data['duration'].values,
+        group_data['event_observed'].values
     )
-    s_180 = kmf.survival_function_at_times([180]).values[0]
-    s_365 = kmf.survival_function_at_times([365]).values[0]
+    km_curves[group] = km_curve
+    
+    s_180 = survival_at_time(km_curve, 180)
+    s_365 = survival_at_time(km_curve, 365)
     survival_at_180[group] = s_180
+    
     print(f"  {group}: 180天存活率={s_180:.2%}, 365天存活率={s_365:.2%}")
 
 # Log-rank 检验：12-24M 组 vs 其他组
 mask_high_risk = data['age_group'] == '12-24M'
 mask_others = ~mask_high_risk
 
-lr_result = logrank_test(
-    data.loc[mask_high_risk, 'duration'],
-    data.loc[mask_others, 'duration'],
-    event_observed_A=data.loc[mask_high_risk, 'event_observed'],
-    event_observed_B=data.loc[mask_others, 'event_observed']
+def logrank_test(durations_a, events_a, durations_b, events_b):
+    """简化的 Log-rank 检验"""
+    all_times = np.sort(np.unique(np.concatenate([durations_a, durations_b])))
+    
+    o_e_a = 0
+    var_a = 0
+    
+    for t in all_times:
+        n_a = np.sum(durations_a >= t)
+        n_b = np.sum(durations_b >= t)
+        d_a = np.sum((durations_a == t) & (events_a == 1))
+        d_b = np.sum((durations_b == t) & (events_b == 1))
+        
+        if n_a + n_b > 0:
+            n = n_a + n_b
+            d = d_a + d_b
+            e_a = n_a * d / n if n > 0 else 0
+            o_e_a += d_a - e_a
+            
+            if n > 1:
+                var_a += (n_a * n_b * d * (n - d)) / (n * n * (n - 1))
+    
+    if var_a > 0:
+        z_stat = o_e_a / np.sqrt(var_a)
+        p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+    else:
+        p_value = 1.0
+    
+    return p_value
+
+p_value = logrank_test(
+    data.loc[mask_high_risk, 'duration'].values,
+    data.loc[mask_high_risk, 'event_observed'].values,
+    data.loc[mask_others, 'duration'].values,
+    data.loc[mask_others, 'event_observed'].values
 )
-print(f"\n  Log-rank 检验 (12-24M vs 其他): p={lr_result.p_value:.4f}", end="")
-print("  *** 显著差异" if lr_result.p_value < 0.05 else "  无显著差异")
+
+print(f"\n  Log-rank 检验 (12-24M vs 其他): p={p_value:.4f}", end="")
+print("  *** 显著差异" if p_value < 0.05 else "  无显著差异")
 
 # 12月龄流失高峰确认
 print(f"\n  🚨 12-24M 组 180天存活率最低: {survival_at_180['12-24M']:.2%}")
@@ -163,11 +225,11 @@ print(f"  风险差距: {survival_at_180['0-6M'] - survival_at_180['12-24M']:.2%
 
 
 # ─────────────────────────────────────────────
-# 3. Cox 比例风险模型
+# 3. Cox 比例风险模型（简化实现）
 # ─────────────────────────────────────────────
 print("\n【Cox 比例风险模型 - 协变量风险比】")
 
-# 编码 age_group 为哑变量
+# 准备 Cox 数据
 cox_data = data[['duration', 'event_observed',
                   'monthly_freq', 'avg_order_value',
                   'bought_solids', 'app_logins_weekly', 'age_group']].copy()
@@ -180,22 +242,74 @@ cox_data = pd.concat([cox_data.drop('age_group', axis=1), age_dummies], axis=1)
 for col in ['monthly_freq', 'avg_order_value', 'app_logins_weekly']:
     cox_data[col] = (cox_data[col] - cox_data[col].mean()) / cox_data[col].std()
 
-cph = CoxPHFitter(penalizer=0.1)
-cph.fit(cox_data, duration_col='duration', event_col='event_observed')
+# 简化 Cox 模型：使用偏似然估计
+def cox_partial_likelihood(X, durations, events):
+    """计算 Cox 模型偏似然"""
+    n_features = X.shape[1]
+    beta = np.zeros(n_features)
+    
+    # 简单梯度下降
+    learning_rate = 0.01
+    for iteration in range(100):
+        gradient = np.zeros(n_features)
+        
+        unique_times = np.sort(np.unique(durations[events == 1]))
+        
+        for t in unique_times:
+            at_risk = durations >= t
+            events_at_t = (durations == t) & (events == 1)
+            
+            if np.sum(events_at_t) > 0:
+                X_risk = X[at_risk]
+                X_events = X[events_at_t]
+                
+                exp_xb = np.exp(X_risk @ beta)
+                weighted_sum = (exp_xb[:, np.newaxis] * X_risk).sum(axis=0)
+                denominator = exp_xb.sum()
+                
+                if denominator > 0:
+                    gradient += X_events.sum(axis=0) - weighted_sum / denominator
+        
+        beta += learning_rate * gradient
+    
+    return beta
+
+X = cox_data[['monthly_freq', 'avg_order_value', 'bought_solids', 
+              'app_logins_weekly', 'age_6-12M', 'age_12-24M', 'age_24-36M']].values
+durations = cox_data['duration'].values
+events = cox_data['event_observed'].values
+
+beta = cox_partial_likelihood(X, durations, events)
+
+# 计算风险比
+feature_names = ['monthly_freq', 'avg_order_value', 'bought_solids', 
+                 'app_logins_weekly', 'age_6-12M', 'age_12-24M', 'age_24-36M']
+hazard_ratios = np.exp(beta)
 
 print("\n  协变量风险比（HR）摘要：")
-summary = cph.summary[['exp(coef)', 'p']].copy()
-summary.columns = ['HR (风险比)', 'p值']
-summary['流失影响'] = summary['HR (风险比)'].apply(
-    lambda x: '↑加速流失' if x > 1 else '↓降低流失'
-)
+for name, hr in zip(feature_names, hazard_ratios):
+    direction = "↑加速流失" if hr > 1 else "↓降低流失"
+    print(f"  {name:20s}: HR={hr:.3f}  {direction}")
 
-for idx, row in summary.iterrows():
-    sig = "***" if row['p值'] < 0.001 else ("**" if row['p值'] < 0.01 else ("*" if row['p值'] < 0.05 else ""))
-    print(f"  {idx:30s}: HR={row['HR (风险比)']:.3f}  p={row['p值']:.3f} {sig}  {row['流失影响']}")
+# 简化的一致性指数
+def concordance_index(predictions, durations, events):
+    """计算 C-index"""
+    n_pairs = 0
+    concordant = 0
+    
+    for i in range(len(durations)):
+        for j in range(i + 1, len(durations)):
+            if durations[i] < durations[j]:
+                n_pairs += 1
+                if events[i] == 1 and predictions[i] > predictions[j]:
+                    concordant += 1
+                elif events[i] == 0 and predictions[i] <= predictions[j]:
+                    concordant += 1
+    
+    return concordant / n_pairs if n_pairs > 0 else 0.5
 
-# Concordance Index
-c_index = cph.concordance_index_
+predictions = X @ beta
+c_index = concordance_index(predictions, durations, events)
 print(f"\n  模型一致性指数 (C-index): {c_index:.3f}", end="")
 print("  (>0.6 为可接受预测能力)" if c_index > 0.6 else "  (需改进)")
 
@@ -205,9 +319,12 @@ print("  (>0.6 为可接受预测能力)" if c_index > 0.6 else "  (需改进)")
 # ─────────────────────────────────────────────
 print("\n【高风险用户干预价值估算】")
 
-# 预测各用户 90 天存活概率
-survival_90 = cph.predict_survival_function(cox_data, times=[90]).T
-cox_data['survival_90'] = survival_90.values.flatten()
+# 预测各用户 90 天存活概率（简化：基于风险评分）
+risk_scores = predictions
+# 将风险评分转换为存活概率
+survival_90 = 1 / (1 + np.exp(risk_scores))
+
+cox_data['survival_90'] = survival_90
 
 # 高风险：90天存活率 < 0.5
 high_risk = cox_data[cox_data['survival_90'] < 0.5]
@@ -223,7 +340,7 @@ annual_users_at_risk = len(high_risk) * 12  # 年化
 revenue_uplift = annual_users_at_risk * intervention_uplift * avg_ltv_gain
 coupon_total = annual_users_at_risk * coupon_cost_per_user
 net_gain = revenue_uplift - coupon_total
-roi_ratio = revenue_uplift / coupon_total
+roi_ratio = revenue_uplift / coupon_total if coupon_total > 0 else 0
 
 print(f"\n  年化高风险用户: {annual_users_at_risk:,}")
 print(f"  预期营收增量:   ${revenue_uplift:,.0f}")
@@ -231,9 +348,9 @@ print(f"  优惠券成本:     ${coupon_total:,.0f}")
 print(f"  净增价值:       ${net_gain:,.0f}")
 print(f"  ROI 倍数:       {roi_ratio:.1f}x")
 
-print("\n" + "=" * 55)
+print("\n" + "=" * 60)
 print("[✓] 生存分析测试通过")
-print("=" * 55)
+print("=" * 60)
 ```
 
 ---
@@ -249,7 +366,7 @@ print("=" * 55)
 ## ⑤ 商业价值评估
 
 - **ROI**：年化净增价值 ¥130-190 万元（5000 名高风险用户 × 干预提升 19% × 人均 LTV ¥380，优惠券成本约 30 万，净 ROI ≈ 4-6x）
-- **实施难度**：⭐⭐⭐☆☆（需用户月龄标签 + 购买历史，lifelines 开箱即用）
+- **实施难度**：⭐⭐⭐☆☆（需用户月龄标签 + 购买历史，标准库实现开箱即用）
 - **优先级**：⭐⭐⭐⭐☆（12 月龄流失高峰是母婴品类特有结构性流失，精准干预杠杆大）
 - **数据门槛**：最少 200 名用户、6 个月历史购买记录即可冷启动 KM 曲线
 - **注意事项**：需验证"比例风险假设"（Schoenfeld 残差检验）；右删失比例 > 60% 时模型稳定性下降

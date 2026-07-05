@@ -1,14 +1,14 @@
+```markdown
 ---
 title: AI Brand Storytelling — AI 辅助品牌故事创作：情感连接与文化适应
 doc_type: knowledge
 module: 11-AI人文
 topic: ai-brand-storytelling-emotional-connection
-
 roadmap_phase: phase3
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2305.18290
 ---
 
 # Skill Card: AI Brand Storytelling — AI 辅助品牌故事创作
@@ -19,6 +19,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Storytelling with Emotional Arcs: A Computational Framework for Brand Narrative Generation | **年份**：2023
 
 ### 品牌叙事的情感结构
 
@@ -181,4 +183,5 @@ print("[✓] AI Brand Storytelling 测试通过")
 
 ---
 
-*参考来源：Brand Narrative AI 2024-2025 Industry Research；Cross-Cultural Marketing Framework；Content Authenticity Initiative (CAI) Guidelines*
+*参考来源：Brand Narrative AI 2024-2025 Industry Research；Cross-Cultural Marketing Framework；Content Authenticity Initiative (CAI) Guidelines；Storytelling with Emotional Arcs (arXiv:2305.18290)*
+```

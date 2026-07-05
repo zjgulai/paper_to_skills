@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Cross-SKU Demand Correlation Mining — 跨 SKU 需求相关性挖掘组合补货优化
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.07725
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Cross-SKU-Demand-Correlation-Mining
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting | **年份**：2021
 
 **核心问题**：母婴卖家通常有数百个 SKU，各自独立做补货决策效率低且次优。吸奶器+配件、奶瓶+奶嘴、成套产品之间存在强需求相关性——一个 SKU 的需求暴涨往往预示配套 SKU 的需求跟随。挖掘这种相关结构，可以实现组合补货优化。
 
@@ -143,7 +146,6 @@ print(f"Granger 因果最优滞后: {gc_result['best_lag']} 周")
 print("[✓] Cross-SKU-Demand-Correlation-Mining 测试通过")
 ```
 
-
 ## ④ 技能关联
 
 - 前置技能：[[Skill-Demand-Forecasting-Supply-Chain]]
@@ -158,3 +160,4 @@ print("[✓] Cross-SKU-Demand-Correlation-Mining 测试通过")
 - **ROI量化**: 配件缺货率降低 73%，合并订单年化节省 20 万元
 - **实施难度**: ⭐⭐（需要 SKU 级历史数据和物料关联映射）
 - **优先级**: ⭐⭐⭐⭐（多品类卖家补货协同的核心工具）
+```

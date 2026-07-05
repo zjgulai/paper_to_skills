@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Promotional Lift Decomposition — 促销提升分解剥离促销带来的虚假需求
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Promotional-Lift-Decomposition
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Causal Inference for Promotional Lift Decomposition with Post-Promotion Dip | **年份**：2021
 
 **核心问题**：促销期间销量暴涨，但其中一部分是「购买时间前移」（提前购买）或「购买量超用」（囤货），这些并不是真实需求增长——促销结束后往往出现「需求洼地」（post-promotion dip）。如果把促销销量当真实需求用于预测，会严重高估基础需求，导致补货量虚高。
 
@@ -143,3 +146,4 @@ print("[✓] Promotional-Lift-Decomposition 测试通过")
 - **ROI量化**: 避免大促后滞销，年化节省 FBA 处置成本 20-30 万元
 - **实施难度**: ⭐⭐（需要历史促销标记，回归模型简单）
 - **优先级**: ⭐⭐⭐⭐⭐（大促驱动的卖家预测精度核心提升）
+```

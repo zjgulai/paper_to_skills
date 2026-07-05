@@ -1,16 +1,19 @@
+```markdown
 ---
 title: Text-to-SQL Agent for Natural Language Data Query
 module: 09-DataAgent-LLM
 topic: text-to-sql
-
 roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
+source: arxiv:2304.04690
 ---
 
 # Skill Card: Text-to-SQL Agent
 
 ## ① 算法原理
+
+> **论文**：Binding Language Models in Symbolic Languages | **年份**：2023
 
 **核心问题**：业务团队（运营、市场、产品）需要数据但不懂SQL。每次提数需求都要排期给数据团队，平均等待2-3天。Text-to-SQL让非技术用户用自然语言直接查询数据库。
 
@@ -362,3 +365,4 @@ print("[✓] SQL Agent Text to SQL 测试通过")
 - **ROI**：数据团队重复取数工作量减少80%，业务决策速度提升10倍
 - **难度**：⭐⭐⭐☆☆（3/5）— 高频场景用模板，复杂场景用LLM
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 数据民主化的核心基础设施
+```

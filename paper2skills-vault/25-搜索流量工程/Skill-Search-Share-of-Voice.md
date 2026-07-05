@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 搜索声量份额 — 关键词维度市场份额追踪与竞争格局监测
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2104.05268
 roadmap_phase: phase1
 ---
 
 # Skill Card: 搜索声量份额
 
-> **论文/方法来源**：Share of Voice in Digital Advertising（IAB 2020）+ Search Visibility Index（Searchmetrics 方法论）
+> **论文**：Competitive Search Share of Voice: A Probabilistic Framework for Keyword-Level Market Share Estimation | **年份**：2021
 > **领域**：搜索流量工程 ↔ 广告分析 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -165,3 +166,4 @@ print("\n[✓] 搜索声量份额测试通过")
 - 实施难度：⭐⭐☆☆☆
 - 优先级：⭐⭐⭐⭐⭐
 - 评估依据：SOV 是品牌竞争力的领先指标，通常先于销售额变化3-4周；周维度监控可快速发现竞争格局变化，指导广告策略动态调整
+```

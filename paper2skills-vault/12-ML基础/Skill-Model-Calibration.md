@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Model Calibration — 让预测概率真正可信的校准技术
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1706.04599
 roadmap_phase: phase1
 ---
 
 # Skill Card: Model Calibration（概率校准）
 
+> **论文**：On Calibration of Modern Neural Networks | **年份**：2017
 > **论文/方法来源**：Platt (1999) "Probabilistic Outputs for Support Vector Machines"；Niculescu-Mizil & Caruana (2005) "Predicting Good Probabilities With Supervised Learning"；Guo et al. (2017) "On Calibration of Modern Neural Networks"
 > **领域**：12-ML基础 ↔ 19-风控反欺诈 | **类型**: 算法工具
 
@@ -160,3 +162,4 @@ print("[✓] Model Calibration 测试通过")
 - **实施难度**：⭐⭐☆☆☆（仅需在已有模型上做后处理，1 天可完成）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：校准是"零成本提升"——无需重新训练模型，直接提升下游决策质量；退货预测、广告出价等多个业务场景均有收益
+```

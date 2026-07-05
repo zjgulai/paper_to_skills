@@ -1,3 +1,4 @@
+```markdown
 ---
 title: A/B Test Result Interpretation and Practical Significance
 module: 02-A_B实验
@@ -6,11 +7,14 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 roadmap_phase: phase1
+source: arxiv:1906.07191
 ---
 
 # Skill Card: A/B Test Result Interpretation
 
 ## ① 算法原理
+
+> **论文**：A/B Testing: A Systematic Literature Review | **年份**：2019
 
 **核心问题**：Power Analysis告诉你"测多少"，实验跑完后，如何正确解读结果？很多团队会犯这些错误：
 - 只看P值，不估计效应量
@@ -246,3 +250,4 @@ print("[✓] AB Test Result Interpreta 测试通过")
 - **ROI**：避免"统计显著但业务无价值"的错误上线，每次避免损失 > 10万
 - **难度**：⭐☆☆☆☆（1/5）— 概念简单，但团队常犯错
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 每个实验后的必做分析，成本极低但价值极高
+```

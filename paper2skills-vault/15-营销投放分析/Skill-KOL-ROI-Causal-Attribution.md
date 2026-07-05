@@ -1,3 +1,4 @@
+```markdown
 ---
 title: KOL ROI 因果归因（网红/达人投放效果的真实增量测算）
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-09
 updated: 2026-06-09
 owner: self
-source: human+ai
+source: arxiv:1906.07127
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**: Estimating the Incremental ROI of Advertising Campaigns with Causal Inference | **年份**: 2019 (KDD)
 
 **核心思想**：KOL 投放的传统 ROI 计算（曝光量 × 转化率 × 客单价 / 投放费用）存在根本性缺陷——它无法区分「因为看了这条视频才购买」和「本来就会购买，顺路点了链接」。因果归因框架用反事实推断计算 KOL 投放的真实增量（ITE/LATE），消除自我选择偏差。
 
@@ -196,3 +199,4 @@ print("\n[✓] KOL 因果归因测试通过")
 **优先级评分**：5/5（KOL 营销是母婴品牌第一大支出类别，归因准确度直接影响百万级预算分配决策）
 
 **适用场景**：月 KOL 投放预算 > 10 万元的品牌；同时合作 5 个以上 KOL 的矩阵式投放。
+```

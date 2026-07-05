@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Power Analysis and Sample Size Calculation for A/B Testing
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 owner: self
-source: human+ai
+source: arxiv:2002.05798
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Sample Size Determination for A/B Testing in Online Controlled Experiments | **年份**：2020
 
 **核心问题**：A/B测试需要多少样本才能检测出真实的效应？样本太少——检验力不足，假阴性率高（漏掉真实有效的改动）；样本太多——浪费流量和时间，拖慢迭代速度。
 
@@ -343,3 +346,4 @@ print("[✓] Power Analysis Sample Siz 测试通过")
 2. 与现有的AB Experimental Design、MAB形成完整的实验方法论体系
 3. 母婴出海业务流量有限（vs国内大厂），更需要精打细算地使用每一份流量
 4. 实施成本极低，但价值极高——属于"高杠杆"技能
+```

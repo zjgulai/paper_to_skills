@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Schema-Linking感知Text2SQL — 列对齐与表联接推断
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2305.03111
 roadmap_phase: phase2
 ---
 
 # Skill Card: Schema-Linking感知Text2SQL
 
-> **论文/方法来源**：DAIL-SQL: Efficient Prompt Engineering for Large Language Models (Gao et al., 2023) + BRIDGE: Bridging Textual and Tabular Data (Lin et al., 2020) + Schema Linking for Text-to-SQL (Gupta et al., 2022)
+> **论文**：DAIL-SQL: Efficient Prompt Engineering for Large Language Models | **年份**：2023
+> **论文**：BRIDGE: Bridging Textual and Tabular Data | **年份**：2020
+> **论文**：Schema Linking for Text-to-SQL | **年份**：2022
 > **领域**：09-DataAgent-LLM ↔ 22-数据采集工程 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -246,3 +249,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐☆☆（需要维护数据字典和 Schema，外键关系完备是前提）
 - 优先级：⭐⭐⭐⭐⭐
 - 评估依据：母婴出海数据需求量大，运营 daily 需要大量临时查询，降低数据获取门槛是最高频需求之一
+```

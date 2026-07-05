@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Bayesian Structural Time Series — 贝叶斯结构时间序列分离促销/季节/趋势效应
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1606.00142
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Bayesian-Structural-Time-Series
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Bayesian Structural Time Series | **年份**：2016
 
 **核心问题**：运营人员需要知道「这次销量增长，到底是广告投放有效、季节效应、还是自然趋势？」三种效应混杂在一起，传统方法无法分离。贝叶斯结构时间序列（BSTS）通过显式建模每个组分，给出可解释的分解结果。
 
@@ -145,3 +148,4 @@ print("[✓] Bayesian-Structural-Time-Series 测试通过")
 - **ROI量化**: 修正 iROAS 估计，年化节省 20-40 万元无效投放
 - **实施难度**: ⭐⭐⭐（需要 52 周历史数据和协变量，推荐 CausalImpact 包）
 - **优先级**: ⭐⭐⭐⭐（Influencer/促销效果量化的标准工具）
+```

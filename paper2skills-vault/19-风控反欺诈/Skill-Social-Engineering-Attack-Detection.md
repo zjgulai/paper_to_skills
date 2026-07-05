@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Social Engineering Attack Detection — 社会工程攻击检测钓鱼邮件/虚假供应商识别
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.08958
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Social-Engineering-Attack-Detection
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Phishing Detection Using Machine Learning: A Comprehensive Survey | **年份**：2021
 
 **核心问题**：母婴跨境电商卖家是社会工程攻击的高价值目标——攻击者伪装成 Amazon 官方、物流公司、税务机构发送钓鱼邮件，或伪装成供应商骗取预付款/样品费。每次成功攻击的损失从数千到数十万美元不等。
 
@@ -208,3 +211,4 @@ print("[✓] Social-Engineering-Attack-Detection 测试通过")
 - **ROI量化**: 每次识别钓鱼/诈骗避免损失 5-50 万元，年化减少损失 50-100 万元
 - **实施难度**: ⭐（规则库建设简单，主要是人员意识培训）
 - **优先级**: ⭐⭐⭐⭐⭐（每个团队的基础安全防线，零技术门槛）
+```

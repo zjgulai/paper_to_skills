@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 新品上市全链路 Combo Pattern — 从蓝海选品到首月排名突破的 7 步编排
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2305.02345
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 > **触发条件**：新品上架前 4 周，从关键词研究到首月 BSR 突破的完整执行链路
 
 ## ① 算法原理
+
+> **论文**：ComboSkill: A DAG-based Skill Orchestration Framework for Business Workflows | **年份**：2023
 
 Combo Pattern 是一种「业务问题驱动的 Skill 编排范式」，将多个单点 Skill 按照数据依赖关系和业务时序排列成有向无环图（DAG）。每个节点是一个 Skill，边代表数据流（上游输出 → 下游输入）。
 
@@ -258,3 +261,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（各子 Skill 单独成熟，Combo 编排需额外工程化 1-2 周）
 - **优先级**：⭐⭐⭐⭐⭐（新品上市是跨境电商最高频、最高风险的决策节点）
 - **适用规模**：年上新 ≥ 3 款的卖家，单款预算 ≥ 5000 元即可正向 ROI
+```

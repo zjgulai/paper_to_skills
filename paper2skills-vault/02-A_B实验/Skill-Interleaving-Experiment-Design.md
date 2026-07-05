@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Interleaving 实验设计 — 用混排对照替代传统 A/B，提升排序策略评估效率 10 倍
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1208.3671
 roadmap_phase: phase2
 ---
 
 # Skill Card: Interleaving 实验设计
 
-> **论文/方法来源**：Chapelle et al. "Large-scale validation and analysis of interleaved search evaluation" (ACM TOIS 2012)；Netflix "Innovating Faster on Personalization Algorithms" (2017)
+> **论文**：Chapelle et al. "Large-scale validation and analysis of interleaved search evaluation" (ACM TOIS 2012) | **年份**：2012
 > **领域**：A/B实验 ↔ 推荐系统 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -242,3 +243,4 @@ print("\n[✓] Interleaving 实验设计测试通过")
 - **实施难度**：⭐⭐☆☆☆（核心逻辑简单，主要工作是日志打标和归因追踪）
 - **优先级**：⭐⭐⭐⭐☆（搜索/推荐迭代频繁的团队必备，ROI明确）
 - **评估依据**：Netflix/Airbnb等均已将Interleaving作为排序策略的标准评估工具；对于 GMV > $100 万/月的品类，每快一周发现好策略就价值数万美元
+```

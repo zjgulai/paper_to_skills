@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Working-Capital-Cycle-Optimizer — 营运资金周期优化
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.09876
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Working-Capital-Cycle-Optimizer
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Monte Carlo Simulation for Working Capital Optimization in E-Commerce Supply Chains | **年份**：2021
 
 营运资金周期（Working Capital Cycle）衡量企业从支出现金到收回现金的完整循环天数。对跨境电商而言，这个周期由三段构成：
 
@@ -143,3 +146,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（规模增长后资金效率成瓶颈） |
 | 数据要求 | 采购记录、Amazon 结算账单、库存数据 |
 | 典型收益 | WCC 从 60 天压缩至 15 天，资金需求降低 75% |
+```

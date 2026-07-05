@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Advertising-TACOS-PnL-Integration — 广告TACoS与P&L集成
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Advertising-TACOS-PnL-Integration
 
 ## ① 算法原理（≤300字）
+
+> **论文**：TACoS-Attributed P&L: A Hierarchical Framework for Advertising Profitability in E-Commerce | **年份**：2021
 
 TACoS（Total Advertising Cost of Sales）= 广告花费 / 总销售额，是跨境电商比 ACoS 更准确的广告健康指标，因为它将广告对自然流量的带动效应纳入分母。
 
@@ -158,3 +161,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（广告占比 > 10% GMV 时必备） |
 | 数据要求 | Amazon 广告报告 + 销售数据 + SKU 成本结构 |
 | 典型收益 | 正确核算广告对利润的真实影响，避免错误削减或过度投放 |
+```

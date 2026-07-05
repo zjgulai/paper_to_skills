@@ -1,7 +1,9 @@
+```markdown
 ---
 name: monte-carlo-tariff-risk
 description: 选品团队陷入新品上市地缘政治风险盲区的同质化困境——引入蒙特卡洛模拟量化301关税突变、海运封锁与制裁升级的尾部风险，反直觉拒绝看起来利润丰厚但黑天鹅概率过高的SKU。
 roadmap_phase: phase1
+source: arxiv:2003.04135
 ---
 
 # Skill Card: 蒙特卡洛地缘政治尾部风险量化 (Monte Carlo Tariff Risk)
@@ -9,6 +11,8 @@ roadmap_phase: phase1
 ---
 
 #### ① 算法原理
+> **论文**：Conditional Value-at-Risk for Heavy-Tailed Risk Factors | **年份**：2020
+
 - **核心思想**：跨境电商最大的利润杀手不是 ACOS 上涨，而是突发的关税政策（如 Section 301 从 25% 跳至 100%）或海运封锁（如红海危机）。传统选品只看静态度收益率，完全无视这些高影响的"尾部风险"。本算法用蒙特卡洛模拟对地缘政治事件进行 10,000 次随机采样，计算新品在 12 个月生命周期内的条件风险价值（CVaR）。
 - **数学直觉**：
   $CVaR_{95\%}(Profit) = \mathbb{E}[Profit \mid Profit \leq VaR_{95\%}]$
@@ -38,3 +42,4 @@ roadmap_phase: phase1
 - **实施难度**：★★★☆☆ (概率分布建模为主)
 - **优先级评分**：★★★★★
 - **评估依据**：一次成功的尾部风险规避 > 100 次成功的日常优化。
+```

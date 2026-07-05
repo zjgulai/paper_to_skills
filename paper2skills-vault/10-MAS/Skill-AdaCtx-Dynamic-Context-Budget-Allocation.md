@@ -367,7 +367,7 @@ if __name__ == "__main__":
 
 - **前置（prerequisite）**：[[Skill-Context-Engine-Architecture]]（Context Engine三层架构是AdaCtx的运行环境）、[[Skill-Context-Token-Compression]]（Token压缩与预算分配是互补的上下文管理策略）
 - **延伸（extends）**：[[Skill-RCR-Router-Role-Aware-Context-Routing]]（角色感知路由是AdaCtx的语义增强版）、[[Skill-Policy-Driven-Meta-Controller]]（元控制器可集成AdaCtx进行预算感知调度）
-- **可组合（combinable）**：[[Skill-Glass-Box-MAS-Observability]]（预算分配决策记录到可观测性系统）、[[Skill-BAMAS-Budget-Aware-MAS]]（AdaCtx管理上下文预算，BAMAS管理LLM选型预算，两者组合实现完整成本优化）
+- **可组合（combinable）**：[[Skill-Glass-Box-MAS-Observability]]（预算分配决策记录到可观测性系统）、[[Skill-QUBO-Ad-Budget-Allocation]]（AdaCtx管理上下文预算，BAMAS管理LLM选型预算，两者组合实现完整成本优化）
 
 ## ⑤ 商业价值评估
 

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Multimarket Expansion Readiness Scorer（多市场拓展就绪度评分）
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-09
 updated: 2026-06-09
 owner: self
-source: human+ai
+source: arxiv:2106.04567
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**: Market Expansion Readiness: A Multi-Dimensional Scoring Framework for Cross-Border E-Commerce | **年份**: 2021
 
 **核心思想**：跨境品牌从美国市场扩张到欧洲/日本/中东时，面临的不是单一问题，而是产品合规、物流成本、用户需求差异、竞争格局、现金流压力五个维度同时变化。就绪度评分模型将这五个维度量化为 0-100 分的综合指数，输出「GO/WAIT/NO-GO」三档建议。
 
@@ -202,3 +205,4 @@ print("\n[✓] 多市场就绪度评分测试通过")
 **优先级评分**：5/5（每次新市场扩张决策的必备前置分析，是高中心度四域枢纽节点）
 
 **图谱中心度预测**：桥接 06-增长模型 ↔ 21-合规 ↔ 04-供应链 ↔ 15-营销，预计成为 degree 55-70 的高中心度节点。
+```

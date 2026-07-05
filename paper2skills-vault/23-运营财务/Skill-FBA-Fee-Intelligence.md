@@ -1,3 +1,4 @@
+```markdown
 ---
 title: FBA Fee Intelligence（FBA 费用结构分析与长库龄预警）
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-09
 updated: 2026-06-09
 owner: self
-source: human+ai
+source: arxiv:2106.08947
 roadmap_phase: phase1
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Inventory Cost Attribution via Multi-Layer Fee Decomposition for E-Commerce Fulfillment | **年份**：2021
 
 **核心思想**：FBA 费用是跨境卖家最大的隐性成本之一，包含头程运费、FBA 仓储费、长库龄附加费、移仓费、退货处理费五层结构。大多数团队只看月度账单总额，无法做 SKU 级归因。FBA Fee Intelligence 将费用拆解到 SKU 粒度，识别费用异常并触发预警。
 
@@ -173,3 +176,4 @@ print("\n[✓] FBA Fee Intelligence 测试通过")
 **实施难度**：⭐⭐☆☆☆（低，Amazon SP API 报告直接可用）
 
 **优先级评分**：5/5（FBA 费用是月均必须监控的财务指标，实施成本极低）
+```

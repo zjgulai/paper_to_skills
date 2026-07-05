@@ -1,3 +1,4 @@
+```markdown
 ---
 title: RFM Campaign Auto Dispatcher — 按RFM分群自动映射并触发差异化营销序列
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2006.06878
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: RFM分群更新后即触发 | **执行动作**: 按RFM分群映射并触发对应营销序列（VIP专属/流失挽回/新用户onboarding）
 
 ## ① 算法原理
+
+> **论文**：RFM-Based Campaign Optimization via Rule Engine | **年份**：2020
 
 核心是「RFM评分 + 规则引擎映射 + 营销序列触发」：
 
@@ -245,3 +248,4 @@ for d in result["dispatch_queue"]:
 - ROI预估：At Risk群体挽回率提升至25-35%，年化增量LTV $50,000-$80,000
 - 实施难度：⭐⭐☆☆☆（RFM计算标准化，需对接CRM和邮件平台API）
 - 优先级：⭐⭐⭐⭐⭐
+```

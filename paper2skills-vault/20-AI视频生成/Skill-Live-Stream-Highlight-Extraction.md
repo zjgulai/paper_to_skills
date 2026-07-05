@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Live-Stream-Highlight-Extraction — 直播高光片段自动提取与二次传播内容生产
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Live-Stream-Highlight-Extraction
 
 ## ① 算法原理
+
+> **论文**：LiveStreamHighlight: Real-Time Highlight Detection for Live Commerce via Multi-Modal Interaction Signals | **年份**：2021
 
 核心是「互动峰值检测 + 语义重要性评分 + 时间窗口提取」三阶段流水线：
 
@@ -114,3 +117,4 @@ if __name__ == "__main__":
 - **ROI量化**: 3 小时直播生产 10 条短视频，年化节省剪辑工时 300+ 小时，二次内容带来额外 GMV 15-20%
 - **实施难度**: ⭐⭐（容易，主要是互动数据接入）
 - **优先级**: ⭐⭐⭐⭐（高频直播卖家刚需）
+```

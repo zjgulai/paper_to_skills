@@ -373,7 +373,7 @@ if __name__ == "__main__":
 
 - **前置（prerequisite）**：[[Skill-Context-Engine-Architecture]]（CASTER作为Engine层的路由插件）、[[Skill-Tool-Call-Decision-Framework]]（工具调用决策与模型路由决策的互补）
 - **延伸（extends）**：[[Skill-AdaCtx-Dynamic-Context-Budget-Allocation]]（AdaCtx管理Token预算，CASTER管理模型选择，两者协同最优成本）、[[Skill-Policy-Driven-Meta-Controller]]（策略控制器可集成CASTER的路由规则）
-- **可组合（combinable）**：[[Skill-BAMAS-Budget-Aware-MAS]]（BAMAS用ILP选最优LLM组合，CASTER在运行时动态路由，两层次互补）、[[Skill-Glass-Box-MAS-Observability]]（每个路由决策记录到可观测性系统）
+- **可组合（combinable）**：[[Skill-QUBO-Ad-Budget-Allocation]]（BAMAS用ILP选最优LLM组合，CASTER在运行时动态路由，两层次互补）、[[Skill-Glass-Box-MAS-Observability]]（每个路由决策记录到可观测性系统）
 
 ## ⑤ 商业价值评估
 

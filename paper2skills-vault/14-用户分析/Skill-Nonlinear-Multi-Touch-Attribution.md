@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 多触点非线性归因建模 — 跨渠道用户旅程因果归因与预算决策
 doc_type: knowledge
@@ -59,11 +60,21 @@ roadmap_phase: phase2
 - **预期产出**：重新分配后整体ROAS从2.3x提升至3.1x（+35%），TikTok预算效率提升证实其"需求激发"价值
 - **业务价值**：$8万月预算下，ROAS提升0.8x = 月增收$6.4万，年化$76.8万
 
+**三轨验证**：
+- **成本**：数据采集需接入TikTok/Amazon/Google三方API，年费约$1.2万；Shapley计算需GPU服务器（月$800）；人力成本（1名数据工程师+1名分析师，月$1.5万）。首年总成本约$22万。
+- **合规**：Amazon Attribution工具需遵守Amazon广告政策（禁止跨平台用户级数据回传）；GDPR要求用户同意Cookie追踪；TikTok Pixel需符合数据本地化要求（欧洲/东南亚）。建议使用聚合级归因（Aggregated Attribution）规避用户级数据风险。
+- **风险**：① 预算大幅削减Amazon SP可能触发Amazon广告账户审查（因广告花费下降过快）；② TikTok预算增加后若内容质量不匹配，可能导致CPM上涨稀释ROI；③ 归因模型误判（如将自然流量归因于广告）导致预算错配。
+
 **场景B：促销活动归因分析（Prime Day/双11）**
 
 - **业务问题**：Prime Day期间同时投入Deal广告+SP广告+外部TikTok引流，事后难以判断哪个渠道真正贡献了爆发
 - **算法应用**：建立促销期专属归因模型（时间窗口压缩），发现Deal广告是转化"放大器"（将已有购买意向的用户直接转化），而TikTok是"新客户激活器"；两者协同效应（Shapley交互项）贡献了15%的超额转化
 - **预期产出**：下次大促预算决策有数据依据，Deal+TikTok协同配置使大促GMV提升22%
+
+**三轨验证**：
+- **成本**：促销期专属模型需额外数据标注（标记Deal/非Deal流量），外包标注成本约$3000/次；实时归因计算需弹性计算资源（AWS Lambda，大促期间$2000/天）。单次大促总成本约$1.5万。
+- **合规**：Deal广告归因需注意Amazon促销政策（禁止虚假折扣/价格操纵）；TikTok引流内容需符合Amazon品牌注册要求（不得使用Amazon Logo做跳转页）。建议提前审核所有素材。
+- **风险**：① 促销期归因窗口压缩（通常3-7天）可能导致"延迟转化"被遗漏（如Prime Day曝光但7天后才购买）；② 若Deal广告被归因为主要贡献者，可能导致卖家过度依赖折扣（利润侵蚀）；③ 竞品可能通过价格监测工具反向推断卖家策略，引发价格战。
 
 ## ③ 代码模板
 
@@ -356,14 +367,10 @@ if __name__ == "__main__":
 
 ## ④ 技能关联
 
-- **前置（prerequisite）**：[[Skill-Funnel-Analysis]]（漏斗分析基础）、[[Skill-Cohort-Analysis]]（用户群体行为分析）
+- **前置（prerequisite）**：[[Skill-Funnel-Analysis]]（漏斗分析基础）、[[Skill-Cohort-Retention-Analysis]]（用户群体行为分析）
 - **延伸（extends）**：[[Skill-Autobidding-Budget-Allocation-Optimization]]（归因结果驱动广告预算自动分配）、[[Skill-Data-Collection-Causal-Debiasing]]（归因数据因果去偏）
 - **可组合（combinable）**：[[Skill-AIGC-Revenue-Attribution]]（AIGC内容的收入归因）、[[Skill-Causal-Inference-Fundamentals]]（因果图强化归因可信度）
 
 ## ⑤ 商业价值评估
 
-- **ROI 预估**：月广告预算$7万的卖家，通过正确归因后预算重分配，整体ROAS提升20-35%；以ROAS从2.3x→2.9x计，月增收$4.2万，年化$50万；系统建设成本$8万，ROI≈625%
-- **实施难度**：⭐⭐⭐⭐☆（关键难点是跨平台触点数据统一（需UTM追踪+广告API），Shapley计算在渠道数<10时可行）
-- **优先级**：⭐⭐⭐⭐☆（任何多渠道投放（3个渠道以上）的卖家强烈推荐）
-- **适用规模**：月广告预算>$3万且投放3+渠道的卖家
-- **数据依赖**：跨平台用户级别触点数据（需要广告账户API权限 + 用户标识符统一）
+- **ROI 预估**：月广告预算$7万的卖家，通过正确归因后预算重分配，整体ROAS提升20-35%；以ROAS从2.3x→2.9

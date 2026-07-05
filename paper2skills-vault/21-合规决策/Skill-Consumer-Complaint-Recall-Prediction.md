@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测
 doc_type: knowledge
@@ -16,6 +17,9 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Hierarchical Dirichlet Processes for Unsupervised Topic Discovery in Short Texts | **年份**：2012
+> **来源**：arxiv:1205.2678
 
 **核心思想**：从 CPSC/NHTSA 非结构化消费者投诉文本出发，通过半参数主题模型（Hierarchical Dirichlet Process Pitman-Yor, HDPYP）自动提取缺陷主题，预测产品召回发生概率和召回组件类别。与传统 XGBoost/RF 相比，预测准确率提升约 14%（p<0.05），提前约 1 年预警召回事件。
 
@@ -133,3 +137,4 @@ print("[✓] Consumer Complaint Recall 测试通过")
 | **实施难度** | ⭐⭐☆☆☆（中等偏低，主要工作在数据清洗和阈值调优） |
 | **业务优先级** | ⭐⭐⭐⭐⭐（合规失败直接导致下架，高优先级防御能力） |
 | **投资回报** | 一次召回预警成功可规避下架损失，ROI > 10x 工程成本 |
+```

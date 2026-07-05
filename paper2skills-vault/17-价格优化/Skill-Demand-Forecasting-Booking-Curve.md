@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Demand Forecasting via Booking Curve — 酒店预订曲线迁移到电商搜索量超前指标预测
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2006.11287
 roadmap_phase: phase2
 ---
 
 # Skill Card: Demand Forecasting via Booking Curve
 
-> **论文**：Forecasting Hotel Room Demand Using Booking Curves（Weatherford & Kimes, 2003）+ Arrival Rate Estimation from Booking Data（van Ryzin & McGill, 2000）
+> **论文**：Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting | **年份**：2020
 > **领域来源**：酒店收益管理「预订曲线」分析 | **桥梁**: 酒店运营智能 ↔ 跨境电商需求预测 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -340,3 +341,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（数据工程简单，核心是搜索量获取和历史数据积累，算法已封装）
 - **优先级**：⭐⭐⭐⭐⭐（旺季备货决策的核心数据源，所有备货模型的上游输入，优先级最高）
 - **评估依据**：酒店行业预订曲线分析被证明将预测精度从±25%提升到±8%（Cornell Hotel & Restaurant Administration Quarterly，2003）；电商搜索量领先效应（2-4周）已被多个第三方卖家工具验证。
+```

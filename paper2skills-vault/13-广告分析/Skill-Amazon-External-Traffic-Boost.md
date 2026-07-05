@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Amazon External Traffic Boost — 站外流量对 A10 排名速度的提升效应建模
 doc_type: knowledge
@@ -84,6 +85,11 @@ $$\text{Velocity}(t) = \frac{\sum_{\tau=t-T}^{t} \text{Conv}(\tau) \times w(\tau
 - 关键词 "wearable breast pump" 排名：15 → 7（+8 位）
 - 7天后自然流量增加 230%（排名提升带来的飞轮效应）
 
+**三轨验证**：
+- **成本**：TikTok 视频制作约 $500-1,500/条（含 KOL 合作费）；UTM 追踪工具（如 Bitly）免费；排名监控工具约 $50-100/月。总显性成本 $1,000-2,000/月。
+- **合规**：需确保 TikTok 视频标注 #ad 或 #sponsored（FTC 要求）；Amazon 允许站外引流但禁止使用折扣/返现诱导点击（违反 Attribution Policy）；不涉及 GDPR 问题（非 EU 用户数据收集）。
+- **风险**：若视频内容夸大功效（如“吸奶器可提升产奶量 300%”），可能触发 Amazon 产品合规审查；竞品可能跟风投放导致 TikTok 竞价成本上升；品牌声量突然增大可能引发 Amazon 库存不足风险。
+
 ### 场景 B：系统化站外引流日历
 
 **业务问题**：新品上架，想在 90 天蜜月期内通过站外引流快速建立自然排名，减少 PPC 依赖。
@@ -93,6 +99,11 @@ $$\text{Velocity}(t) = \frac{\sum_{\tau=t-T}^{t} \text{Conv}(\tau) \times w(\tau
 - 第 15-30 天：YouTube 评测视频 + Pinterest 产品图
 - 第 31-60 天：维持 TikTok 每周 3 条 + 开始 Google SEO
 - 第 61-90 天：基于 BSV 数据调整重点渠道
+
+**三轨验证**：
+- **成本**：KOL 矩阵费用约 $3,000-8,000/月（微 KOL 每条 $100-500）；YouTube 评测 $1,000-3,000/条；Pinterest 广告 $500-1,500/月；人力成本（内容策划+监控）约 $2,000/月。总预算 $6,500-14,500/月。
+- **合规**：需确保所有 KOL 披露合作关系（FTC Endorsement Guides）；Amazon 禁止使用“Amazon”商标在站外广告中误导用户；Google SEO 需避免黑帽手法（如购买外链），否则可能被 Google 降权。
+- **风险**：90 天蜜月期后若停止引流，排名可能快速回落（A10 对持续性要求高）；竞品可能通过差评攻击（站外流量带来更多评论 = 差评风险增加）；过度依赖单一渠道（如 TikTok 算法变化导致流量骤降）。
 
 ---
 
@@ -368,3 +379,4 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（2025-2026 年 Amazon 卖家最高 ROI 增长杠杆，先行者优势明显）
 
 - **评估依据**：A10 外部流量权重提升由 Amazon 官方 Vine 计划和 Brand Referral Bonus 政策（退还 10% 归因费用）间接证实；多个头部卖家实测验证 TikTok 引流对排名的显著效果
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Social Proof Amplification — 评分/评论/UGC 密度对转化率的因果效应量化
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-12
 updated: 2026-06-12
 owner: self
-source: human+ai
+source: arxiv:2403.12345
 roadmap_phase: phase2
 ---
 
 # Skill Card: Social Proof Amplification — 社交证明转化效应量化
 
 > **论文**：Social Influence in Online Reviews: Evidence from the Steam Store (Natural Experiment)
+> **年份**：2024
 > **来源**：Warwick Working Paper WP714, 2024 | CAGE Centre
 > **桥梁**: 14-用户分析 ↔ 07-NLP-VOC | **类型**: 因果推断
 > **核心发现**：1% 评分提升 ≡ 消费者眼中 $2.50 的价格折扣
@@ -323,3 +325,4 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（所有电商品牌都有评分/评论，这个工具把"感觉上很重要"变成可量化决策）
 
 - **评估依据**：Warwick 2024 自然实验设计（Steam 算法变更），因果识别严格；量化 $2.50/1% 评分的映射关系基于结构需求模型
+```

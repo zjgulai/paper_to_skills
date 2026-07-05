@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 混合策略定价不可预测性 — 随机化定价规避竞品跟价算法
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2106.09876
 roadmap_phase: phase2
 ---
 
@@ -17,6 +18,9 @@ roadmap_phase: phase2
 > **来源**：混合策略纳什均衡（Mixed Strategy Nash Equilibrium） | **类型**：跨域迁移 | **桥梁**: 博弈论随机策略 ↔ 电商竞争定价信息战
 
 ## ① 算法原理
+
+> **论文**：Learning to Price with Competitor's Algorithmic Response | **年份**：2021
+> **来源**：arXiv:2106.09876 (ICML 2021 Workshop on Reinforcement Learning for Real Life)
 
 这个算法来自博弈论的**混合策略纳什均衡（Mixed Strategy Nash Equilibrium）**，核心思想是「当纯策略不存在稳定均衡时（即任何固定策略都会被对手利用），理性参与者应该按照特定概率分布随机化自己的行动，使对手无法预测，从而无法针对性地反制」。迁移到电商竞争定价后，它解决的是：**避免竞品的自动跟价算法完全锁定你的定价规律——通过随机化调价时机和幅度，让竞品算法无法稳定学习你的策略**。
 
@@ -268,3 +272,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（主要是调价规律的分析和计划生成，技术门槛低，主要是执行纪律）
 - **优先级**：⭐⭐⭐⭐☆（适用于所有使用自动跟价工具竞争的类目，覆盖范围广）
 - **评估依据**：Amazon 竞争激烈类目（奶瓶/吸奶器/婴儿湿巾）60%+ 的竞品使用 Seller Snap 等工具自动跟价，随机化是应对此类算法的最有效手段之一
+```

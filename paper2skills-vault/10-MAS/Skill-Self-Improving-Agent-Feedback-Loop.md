@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Self-Refine + RL — 反馈闭环与自进化 Agent
 doc_type: knowledge
@@ -257,3 +258,296 @@ python self_improving_agent.py
     ↓
 [反馈/评估/记忆/再训练] → loop back
 ```
+
+---
+
+## ⑥ 可运行代码实现
+
+```python
+import numpy as np
+from collections import defaultdict
+from typing import List, Dict, Tuple, Optional
+import math
+import random
+
+# ============================================================
+# 1. 数据结构定义
+# ============================================================
+
+class ExecutionTrace:
+    """执行轨迹记录"""
+    def __init__(self, task_input: str, initial_output: str, final_output: str,
+                 feedbacks: List[str], quality_scores: List[float], success: bool):
+        self.task_input = task_input
+        self.initial_output = initial_output
+        self.final_output = final_output
+        self.feedbacks = feedbacks
+        self.quality_scores = quality_scores
+        self.success = success
+
+class Experience:
+    """经验数据结构"""
+    def __init__(self, situation: str, action: str, outcome: str,
+                 lesson: str, success_rate: float, embedding: Optional[np.ndarray] = None):
+        self.situation = situation
+        self.action = action
+        self.outcome = outcome
+        self.lesson = lesson
+        self.success_rate = success_rate
+        self.embedding = embedding if embedding is not None else np.random.randn(10)
+
+    def __repr__(self):
+        return f"Experience(situation='{self.situation}', action='{self.action}', success_rate={self.success_rate:.2f})"
+
+# ============================================================
+# 2. 记忆库 (Memory Bank)
+# ============================================================
+
+class MemoryBank:
+    """经验记忆库：添加、检索、去重、容量控制"""
+    def __init__(self, max_size: int = 100, similarity_threshold: float = 0.8):
+        self.experiences: List[Experience] = []
+        self.max_size = max_size
+        self.similarity_threshold = similarity_threshold
+
+    def add_experience(self, exp: Experience) -> bool:
+        """添加经验，自动去重和容量控制"""
+        # 去重检查：基于 situation 相似度
+        for existing in self.experiences:
+            sim = self._cosine_similarity(exp.embedding, existing.embedding)
+            if sim > self.similarity_threshold:
+                # 更新已有经验的成功率（取平均）
+                existing.success_rate = (existing.success_rate + exp.success_rate) / 2
+                return False
+
+        # 容量控制：如果超过最大容量，移除成功率最低的经验
+        if len(self.experiences) >= self.max_size:
+            min_idx = min(range(len(self.experiences)),
+                         key=lambda i: self.experiences[i].success_rate)
+            self.experiences.pop(min_idx)
+
+        self.experiences.append(exp)
+        # 按成功率排序
+        self.experiences.sort(key=lambda e: e.success_rate, reverse=True)
+        return True
+
+    def retrieve_similar(self, query_embedding: np.ndarray, top_k: int = 3) -> List[Experience]:
+        """检索相似经验"""
+        if not self.experiences:
+            return []
+
+        scores = []
+        for exp in self.experiences:
+            sim = self._cosine_similarity(query_embedding, exp.embedding)
+            score = sim * exp.success_rate  # 结合相似度和成功率
+            scores.append((score, exp))
+
+        scores.sort(key=lambda x: x[0], reverse=True)
+        return [exp for _, exp in scores[:top_k]]
+
+    def get_stats(self) -> Dict:
+        """获取记忆库统计信息"""
+        if not self.experiences:
+            return {"size": 0, "avg_success_rate": 0.0, "max_success_rate": 0.0, "min_success_rate": 0.0}
+
+        success_rates = [e.success_rate for e in self.experiences]
+        return {
+            "size": len(self.experiences),
+            "avg_success_rate": np.mean(success_rates),
+            "max_success_rate": max(success_rates),
+            "min_success_rate": min(success_rates)
+        }
+
+    @staticmethod
+    def _cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
+        """计算余弦相似度"""
+        norm_a = np.linalg.norm(a)
+        norm_b = np.linalg.norm(b)
+        if norm_a == 0 or norm_b == 0:
+            return 0.0
+        return float(np.dot(a, b) / (norm_a * norm_b))
+
+# ============================================================
+# 3. 自我反思引擎 (Self-Refinement Engine)
+# ============================================================
+
+class SelfRefinementEngine:
+    """自我反思引擎：模拟 Feedback-Refine-Iterate 过程"""
+    def __init__(self, max_iterations: int = 5, quality_threshold: float = 0.85):
+        self.max_iterations = max_iterations
+        self.quality_threshold = quality_threshold
+
+    def execute(self, task_input: str, memory_bank: Optional[MemoryBank] = None) -> ExecutionTrace:
+        """
+        执行自我反思迭代
+        模拟：生成初始输出 → 反馈 → 改进 → 迭代
+        """
+        # 模拟初始输出
+        initial_output = self._generate_initial(task_input)
+
+        # 检索相似经验（如果有记忆库）
+        if memory_bank and memory_bank.experiences:
+            query_emb = np.random.randn(10)  # 模拟查询嵌入
+            similar_exps = memory_bank.retrieve_similar(query_emb, top_k=2)
+            if similar_exps:
+                # 利用经验增强初始输出
+                initial_output += f" [增强: 参考经验 '{similar_exps[0].lesson}']"
+
+        current_output = initial_output
+        feedbacks = []
+        quality_scores = []
+        success = False
+
+        for iteration in range(self.max_iterations):
+            # 模拟反馈生成
+            feedback = self._generate_feedback(current_output, task_input)
+            feedbacks.append(feedback)
+
+            # 模拟质量评分
+            quality = self._evaluate_quality(current_output, task_input)
+            quality_scores.append(quality)
+
+            # 检查是否满足质量阈值
+            if quality >= self.quality_threshold:
+                success = True
+                break
+
+            # 模拟改进
+            current_output = self._refine_output(current_output, feedback, task_input)
+
+        return ExecutionTrace(
+            task_input=task_input,
+            initial_output=initial_output,
+            final_output=current_output,
+            feedbacks=feedbacks,
+            quality_scores=quality_scores,
+            success=success
+        )
+
+    def _generate_initial(self, task_input: str) -> str:
+        """模拟初始生成"""
+        # 简单模拟：提取关键词
+        words = task_input.lower().split()
+        entities = [w for w in words if len(w) > 2]
+        return f"分析结果: 识别到实体 {entities[:3]}, 情感: 正面, 置信度: 0.75"
+
+    def _generate_feedback(self, output: str, task_input: str) -> str:
+        """模拟反馈生成"""
+        if "置信度" in output and "0.75" in output:
+            return "反馈: 置信度偏低，建议提高识别精度"
+        if "实体" in output and len(output) < 50:
+            return "反馈: 输出过于简单，缺少详细属性分析"
+        return "反馈: 输出质量良好，可进一步优化细节"
+
+    def _evaluate_quality(self, output: str, task_input: str) -> float:
+        """模拟质量评估"""
+        base_quality = 0.7
+        # 根据输出长度和内容丰富度调整
+        if len(output) > 80:
+            base_quality += 0.1
+        if "置信度" in output:
+            base_quality += 0.05
+        if "属性" in output or "特征" in output:
+            base_quality += 0.1
+        return min(base_quality + random.uniform(-0.05, 0.05), 1.0)
+
+    def _refine_output(self, output: str, feedback: str, task_input: str) -> str:
+        """模拟输出改进"""
+        if "置信度偏低" in feedback:
+            return output.replace("置信度: 0.75", "置信度: 0.85") + "\n[改进] 增强实体识别模型"
+        if "过于简单" in feedback:
+            return output + "\n[改进] 添加属性分析: 静音效果、吸力强度、舒适度"
+        return output + "\n[改进] 优化输出格式"
+
+# ============================================================
+# 4. 反馈闭环编排器 (Feedback Loop Orchestrator)
+# ============================================================
+
+class FeedbackLoopOrchestrator:
+    """反馈闭环编排器：整合记忆库和自我反思引擎"""
+    def __init__(self, memory_bank: MemoryBank, refinement_engine: SelfRefinementEngine):
+        self.memory_bank = memory_bank
+        self.refinement_engine = refinement_engine
+        self.execution_history: List[ExecutionTrace] = []
+
+    def execute_with_feedback(self, task_input: str) -> ExecutionTrace:
+        """完整闭环执行"""
+        # 执行自我反思
+        trace = self.refinement_engine.execute(task_input, self.memory_bank)
+
+        # 根据执行结果创建经验
+        if trace.success:
+            lesson = f"成功处理: {task_input[:20]}..."
+            exp = Experience(
+                situation=task_input[:30],
+                action="实体识别+情感分析",
+                outcome="success",
+                lesson=lesson,
+                success_rate=0.9
+            )
+        else:
+            lesson = f"需要改进: {task_input[:20]}..."
+            exp = Experience(
+                situation=task_input[:30],
+                action="实体识别+情感分析",
+                outcome="failure",
+                lesson=lesson,
+                success_rate=0.3
+            )
+
+        # 存入记忆库
+        self.memory_bank.add_experience(exp)
+
+        # 记录执行历史
+        self.execution_history.append(trace)
+
+        return trace
+
+    def get_performance_stats(self) -> Dict:
+        """获取性能统计"""
+        if not self.execution_history:
+            return {"total_executions": 0, "success_rate": 0.0, "avg_iterations": 0.0}
+
+        total = len(self.execution_history)
+        successes = sum(1 for t in self.execution_history if t.success)
+        avg_iterations = np.mean([len(t.feedbacks) for t in self.execution_history])
+
+        return {
+            "total_executions": total,
+            "success_rate": successes / total,
+            "avg_iterations": avg_iterations,
+            "memory_stats": self.memory_bank.get_stats()
+        }
+
+# ============================================================
+# 5. 主程序：演示完整流程
+# ============================================================
+
+def main():
+    print("=" * 60)
+    print("Self-Refine + RL — 反馈闭环与自进化 Agent 演示")
+    print("=" * 60)
+
+    # 初始化组件
+    memory_bank = MemoryBank(max_size=50)
+    refinement_engine = SelfRefinementEngine(max_iterations=5, quality_threshold=0.85)
+    orchestrator = FeedbackLoopOrchestrator(memory_bank, refinement_engine)
+
+    # 示例任务列表
+    tasks = [
+        "Spectra S1 吸奶器非常好用，静音效果很好",
+        "这款储奶袋密封性不错，但材质偏硬",
+        "婴儿推车折叠方便，但重量有点大",
+        "新品牌贝瑞克吸奶器吸力强，噪音小",
+        "这个奶瓶刻度清晰，宝宝很喜欢"
+    ]
+
+    print("\n开始执行任务...\n")
+
+    # 执行所有任务
+    for i, task in enumerate(tasks, 1):
+        print(f"--- 任务 {i}: {task[:30]}... ---")
+        trace = orchestrator.execute_with_feedback(task)
+
+        print(f"  初始输出: {trace.initial_output[:60]}...")
+        print(f"  最终输出: {trace.final_output[:60]}...")

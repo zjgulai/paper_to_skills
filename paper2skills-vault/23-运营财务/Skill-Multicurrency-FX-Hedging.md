@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Multicurrency FX Hedging — 跨境卖家多货币外汇风险对冲
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2106.04578
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**：Deep Hedging: Learning to Hedge with Deep Reinforcement Learning | **年份**：2021
 
 **核心思想**：母婴跨境卖家同时在美国（USD）、欧洲（EUR/GBP）、日本（JPY）销售，成本以人民币计算，汇率波动直接影响净利润率。EUR/USD 汇率波动 5% 对应利润变化可超过 3pp（在毛利 25% 的品类里影响巨大）。
 
@@ -138,3 +141,4 @@ print("[✓] Multicurrency FX Hedging 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要与银行/外汇平台对接）
 - **优先级**：⭐⭐⭐⭐☆（多市场运营必须面对，汇率风险是隐性利润杀手）
 - **评估依据**：基于企业 FX 对冲经典框架（Granular Corporate Hedging，FMG 2023）和 DRL 动态对冲研究
+```

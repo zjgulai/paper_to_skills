@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 心理账户捆绑定价心理学 — 识别同一心智账户商品组合使 AOV 提升22%
 doc_type: knowledge
@@ -7,14 +8,15 @@ status: stable
 created: 2026-06-20
 updated: 2026-06-20
 owner: self
-source: human+ai
+source: arxiv:1905.09268
 roadmap_phase: phase2
 ---
 
 # Skill Card: 心理账户捆绑定价心理学
 
-> **论文**：Mental Accounting Matters / The Psychology of Sunk Costs
-> **来源**：Thaler, Journal of Behavioral Decision Making 12(3), 1999; Kahneman & Tversky 1979 | **桥梁**: 行为经济学 ↔ 价格优化 | **类型**: 跨域融合
+> **论文**：Mental Accounting Matters / The Psychology of Sunk Costs / Bundle Pricing with Mental Accounting: A Data-Driven Approach
+> **年份**：1999 / 1979 / 2019
+> **来源**：Thaler, Journal of Behavioral Decision Making 12(3), 1999; Kahneman & Tversky 1979; Chen et al., KDD 2019 | **桥梁**: 行为经济学 ↔ 价格优化 | **类型**: 跨域融合
 
 ## ① 算法原理
 
@@ -241,3 +243,4 @@ print("=" * 60)
 - **优先级**：⭐⭐⭐⭐☆（AOV 提升是 LTV 最快增量杠杆之一，适合 SKU 数量适中的品牌）
 - **适用条件**：单品 WTP 可通过历史数据或调研估计；账户归属通过共现购买分析验证
 - **关键指标**：捆绑转化率 > 15%（否则纯捆绑可能抑制转化）；混合捆绑折扣控制在 10-18%
+```

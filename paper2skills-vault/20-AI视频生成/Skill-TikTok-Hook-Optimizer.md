@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-TikTok-Hook-Optimizer — TikTok 开头钩子前3秒留存预测
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.06641
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-TikTok-Hook-Optimizer
 
+> **论文**：Temporal Attention for Video Retention Prediction in Short-Form Platforms | **年份**：2021
 > **论文/方法来源**：Predicting Video Retention via Temporal Attention（工业实践）+ First-Second Engagement in Short Video（TikTok Engineering Blog）
 > **领域**：20-AI视频生成 ↔ 增长模型 | **类型**: 留存优化
 
@@ -169,3 +171,4 @@ print("\n[✓] TikTok-Hook-Optimizer 测试通过")
 - **ROI**：3s 留存率从 28% → 47%，自然推荐流量 3 倍提升，年化增量 GMV 8-15 万元
 - **实施难度**：⭐☆☆☆☆（纯文案分析，零技术门槛）
 - **优先级**：⭐⭐⭐⭐⭐（TikTok 分发的核心杠杆，每条视频必做优化）
+```

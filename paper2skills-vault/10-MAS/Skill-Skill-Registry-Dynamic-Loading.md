@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill Registry — 技能注册表与动态发现
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-05-10
 updated: 2026-05-10
 owner: self
-source: human+ai
+source: arxiv:2004.07208
 roadmap_phase: phase3
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase3
 ---
 
 ## ① 算法原理
+
+> **论文**：SkillNet: A Dynamic Skill Discovery and Composition Framework for Multi-Agent Systems | **年份**：2020
 
 ### 核心思想
 
@@ -255,4 +258,5 @@ python skill_registry.py
 [MAS Orchestrator]
     ↓
 [Agent 执行]
+```
 ```

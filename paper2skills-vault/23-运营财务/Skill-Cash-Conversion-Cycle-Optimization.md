@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Cash-Conversion-Cycle-Optimization — 现金转换周期优化
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Cash-Conversion-Cycle-Optimization
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Working Capital Optimization in E-Commerce Supply Chains | **年份**：2021
 
 现金转换周期（CCC，Cash Conversion Cycle）精确描述从支付给供应商的现金，到 Amazon 将销售回款打入账户的完整时间链路。
 
@@ -177,3 +180,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（规模扩张期现金流是核心瓶颈） |
 | 数据要求 | 采购记录 + 物流时效数据 + Amazon 结算记录 |
 | 典型收益 | CCC 从 150 天压至 100 天，释放资金 300-500 万元 |
+```

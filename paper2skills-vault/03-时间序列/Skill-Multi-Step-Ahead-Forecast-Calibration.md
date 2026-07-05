@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Multi-Step-Ahead Forecast Calibration — 多步预测校准滚动修正减少累积偏差
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2002.10561
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Multi-Step-Ahead-Forecast-Calibration
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Conformal Time Series Forecasting | **年份**：2020
 
 **核心问题**：预测第 1 步误差 5%，预测第 8 步误差往往达 25%+。多步预测存在「误差累积」——每步误差叠加，到 8-12 周预测时严重偏离实际，导致备货量系统性偏高或偏低。
 
@@ -128,3 +131,4 @@ print("[✓] Multi-Step-Ahead-Forecast-Calibration 测试通过")
 - **ROI量化**: 大促缺货率降低 75%，年化减少缺货损失 40-60 万元
 - **实施难度**: ⭐⭐（逻辑简单，与现有预测系统对接即可）
 - **优先级**: ⭐⭐⭐⭐⭐（所有使用多步预测的卖家必备）
+```

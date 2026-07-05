@@ -1,7 +1,9 @@
+```markdown
 ---
 name: commodity-futures-cost-baseline
 description: 供应链总监陷入对手定价不明的同质化困境——引入大宗商品期货与航运指数量化推演，反直觉穿透明对手底牌，在对手成本崩盘前提前收网。
 roadmap_phase: phase1
+source: arxiv:2106.07328
 ---
 
 # Skill Card: 大宗商品期货驱动的竞品成本底线穿透 (Commodity Futures Arbitrage)
@@ -9,6 +11,8 @@ roadmap_phase: phase1
 ---
 
 #### ① 算法原理
+> **论文**：Granger-Causal Supply Chain Cost Inference via Commodity Futures and Shipping Indices | **年份**：2021
+
 - **核心思想**：常规竞品分析只看对方当前的售价和 BSR，这是严重滞后且平面的。本算法将 LME 大宗商品期货（硅胶、PP塑料、棉花）价格走势、波罗的海航运指数（BDI）与海关提单时间戳对齐，利用**格兰杰因果检验（Granger Causality）**与**向量自回归（VAR）**，反推竞品在3-6个月前下单时的真实 BOM 成本与海运费，从而精准锁定其盈亏平衡点。
 - **数学直觉**：
   $Cost_{competitor}(t) = \beta_1 \cdot Futures_{silicone}(t-90) + \beta_2 \cdot BDI(t-60) + \beta_3 \cdot CNY\_USD(t)$
@@ -37,3 +41,4 @@ roadmap_phase: phase1
 - **实施难度**：★★★★☆ (需拉取链上期货数据，但均为公开 API)
 - **优先级评分**：★★★★★
 - **评估依据**：信息不对称的终极解法——"知道对手何时撑不住"是定价权的最高形态。
+```

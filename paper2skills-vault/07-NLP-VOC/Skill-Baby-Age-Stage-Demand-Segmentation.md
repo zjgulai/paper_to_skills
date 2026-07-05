@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Baby-Age-Stage-Demand-Segmentation — 婴儿月龄需求分层
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1905.12698
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Baby-Age-Stage-Demand-Segmentation
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Aspect-Based Sentiment Analysis with Age-Stage Segmentation for Infant Product Reviews | **年份**：2019
 
 婴幼儿产品具有强烈的月龄敏感性——同一类产品在 0-3 个月、4-6 个月、7-12 个月、1-3 岁的使用场景和痛点截然不同。通过评论挖掘月龄信息并分层分析需求，可为 Listing 优化、Bundle 设计和选品扩展提供精准指导。
 
@@ -190,3 +193,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（母婴类目的差异化必杀技） |
 | 数据要求 | 500+ 条含月龄信息的评论（约 10-20% 评论含月龄） |
 | 典型收益 | 识别各月龄段 TOP3 痛点，Listing 精准化后转化率提升 20%+ |
+```

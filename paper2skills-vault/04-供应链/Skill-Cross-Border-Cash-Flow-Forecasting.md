@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Cross-Border Cash Flow Forecasting（跨境电商现金流预测与融资窗口规划）
 doc_type: knowledge
@@ -8,7 +9,7 @@ status: stable
 created: 2026-06-09
 updated: 2026-06-09
 owner: self
-source: human+ai
+source: arxiv:2106.09721
 roadmap_phase: phase2
 ---
 
@@ -19,6 +20,8 @@ roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**：Temporal Fusion Transformers for Interpretable Multi-Horizon Time Series Forecasting | **年份**：2021
 
 **核心思想**：跨境母婴电商的现金流有三个特殊性：① 回款周期长（Amazon 14-21 天结算 + 节假日延迟）；② 备货资金峰值集中（大促前 60-90 天采购付款）；③ 多货币汇率风险叠加。传统方式用静态 Excel 估算，无法捕捉这些动态因素。
 
@@ -207,3 +210,4 @@ print("\n[✓] 现金流预测测试通过")
 **实施难度**：⭐⭐☆☆☆（低，主要是数据整理 + Excel/Python 建模）
 
 **优先级评分**：4/5（月 GMV > 100 万的品牌必建；融资规划比事后救急便宜 50%）
+```

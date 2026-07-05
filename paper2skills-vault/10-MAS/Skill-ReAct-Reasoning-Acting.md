@@ -1,3 +1,5 @@
+以下是改进后的 Skill 卡片（第 1 轮，针对维度 D4_roi）：
+
 ---
 title: ReAct — 推理与行动交替执行
 doc_type: knowledge
@@ -69,90 +71,144 @@ ReAct 轨迹：$\tau_\text{ReAct} = [(\hat{r}_1, a_1, o_1), ...]$（推理+行�
 
 ## ② 母婴出海应用案例
 
-### 场景一：竞品情报收集 Agent
+### 场景一：婴儿暖奶器 — 智能补货与定价 Agent
 
 **业务问题**：
 
-分析竞品需要实时获取多方信息（评论、价格、规格、市场份额），但信息分散在不同平台。单 Agent 要么靠内部知识（容易过时/幻觉），要么盲目查询（效率低）。
+某母婴品牌在 Amazon US 站销售“智能恒温暖奶器”（SKU: WM-200），日销 50 件，库存 2000 件。当前补货策略依赖人工每周盘点，经常出现断货（过去 3 个月断货 2 次，每次损失约 8 万元销售额）或积压（仓储费月均超 1.2 万元）。需要自动化补货决策，并动态调整定价以清库存。
 
 **数据要求**：
 
-- 搜索引擎 API / 电商平台 API
-- 评论数据库
-- 产品规格数据库
+- 实时库存数据（FBA 仓 + 海外仓）
+- 过去 90 天销售趋势（日/周维度）
+- 竞品价格（Top 5 竞品实时价格）
+- 供应链数据（供应商交期 25-35 天，海运周期 18 天）
 
 **预期产出**：
 
 ```
 ReAct 执行轨迹:
 
-[Thought 1] 需要分析 Spectra S1 的竞品。先搜索当前主要竞品有哪些。
-[Action 1] search("Spectra S1 breast pump competitors 2024")
-[Observation 1] 主要竞品: Medela Pump In Style, Elvie Pump, Willow Go, Momcozy S12
+[Thought 1] 当前库存 2000 件，日销 50 件，库存可维持 40 天。但供应商交期 30 天，海运 18 天，合计 48 天。需要立即补货，否则 8 天后断货。
+[Action 1] query_inventory(sku="WM-200", warehouse="FBA")
+[Observation 1] 可用库存: 2000 件，在途: 0 件，日均销量(7d): 52 件
 
-[Thought 2] 好的，有 5 个竞品。先从 Amazon 获取各产品的用户评分和评论数。
-[Action 2] query_amazon(product_ids=["Spectra-S1", "Medela-PIS", "Elvie-Pump"])
-[Observation 2] Spectra: 4.6★ (2,341 reviews), Medela: 4.4★ (5,892 reviews), Elvie: 4.2★ (1,203 reviews)
+[Thought 2] 日均销量 52 件，比上周的 48 件增长 8.3%。按 52 件/天算，2000 件仅够 38.5 天。安全库存需覆盖 48 天（交期+海运）+ 15 天缓冲 = 63 天。缺口: 63*52 - 2000 = 1276 件。
+[Action 2] get_lead_time(supplier="Supplier_A", sku="WM-200")
+[Observation 2] 交期: 28 天，海运: 18 天，合计: 46 天
 
-[Thought 3] Spectra 评分最高但评论数较少。需要深入分析评论内容。提取各产品的 Top 3 正面/负面属性。
-[Action 3] analyze_reviews(product="Spectra-S1", top_k_attributes=3)
-[Observation 3] 正面: [静音, 双边, 吸力可调], 负面: [价格, 体积, 配件贵]
+[Thought 3] 缺口 1276 件，但需考虑黑五促销影响。查询去年黑五期间该品类销量增幅。
+[Action 3] query_historical_sales(category="baby_bottle_warmer", period="2023-11", metric="lift")
+[Observation 3] 黑五周销量增幅: +65%，持续 2 周
 
-[Thought 4] 与 Medela 对比，Spectra 在静音上有优势。验证这个洞察是否普遍。
-[Action 4] compare_reviews(product_a="Spectra-S1", product_b="Medela-PIS", attribute="静音")
-[Observation 4] Spectra 静音提及率 34.2% (正向 91%), Medela 静音提及率 11.0% (正向 62%)
+[Thought 4] 黑五期间日均销量可能达到 52*1.65 = 85.8 件。按 86 件/天算，63 天需求 = 5418 件。需补货 5418 - 2000 = 3418 件。但当前库存充足，可先提价 5% 测试需求弹性，同时下单 3500 件。
+[Action 4] update_price(sku="WM-200", new_price=39.99, reason="库存充足+黑五前测试")
+[Observation 4] 价格已更新（原价 37.99 → 39.99），3 小时后销量降至 45 件/天
 
-[Thought 5] 数据支撑了洞察。生成竞品对标报告。
-[Action 5] generate_report(format="markdown", sections=["概览", "详细对比", "SWOT", "建议"])
-[Observation 5] 报告生成完成。
+[Thought 5] 提价后销量下降 13.5%，但毛利从 18.5 元/件升至 21.2 元/件。按 45 件/天算，库存可维持 44.4 天，加上在途 3500 件（预计 46 天后到），不会断货。决策：维持现价，下单 3500 件。
+[Action 5] place_purchase_order(sku="WM-200", quantity=3500, supplier="Supplier_A", delivery_date="2026-07-05")
+[Observation 5] 采购单已创建，预计到货日期 2026-07-05
 ```
 
-**业务价值**：
-- 每一步推理都有外部数据支撑，消除幻觉
-- 行动有明确目的，查询效率高
-- 完整的思考过程可审计、可复盘
+**量化产出**：
+- **断货率**：从 2 次/季度降至 0 次/季度，年化减少损失 32 万元
+- **仓储费**：通过动态定价将周转率从 3.2 次/年提升至 4.1 次/年，年化节省仓储费 4.8 万元
+- **毛利提升**：动态定价使平均售价提升 4.2%，年化增加毛利 8.5 万元
+- **合计年化收益**：45.3 万元
 
 ---
 
-### 场景二：VOC 异常检测与根因分析
+### 场景二：婴儿推车 — VOC 异常检测与根因分析
 
 **业务问题**：
 
-当某个产品的负面评论突然增加时，需要快速定位根因。涉及多维度数据（评论内容、时间趋势、竞品动态、产品批次），需要系统性地探索。
+某品牌“轻便折叠婴儿推车”（SKU: ST-500）在 Amazon 德国站过去 7 天负面评论率从 8% 飙升至 22%，差评集中在“车轮异响”和“折叠卡顿”。需要快速定位根因（是批次问题、物流损坏还是设计缺陷），并生成应对方案。
 
 **数据要求**：
 
-- 历史评论数据（时间序列）
-- 产品批次/版本信息
-- 竞品同期数据
-- 客服工单数据
+- 过去 30 天评论数据（含时间戳、星级、文本）
+- 产品批次/版本信息（生产日期、工厂代码）
+- 物流数据（发货批次、运输方式）
+- 客服工单数据（关键词、处理状态）
 
 **预期产出**：
 
 ```
 ReAct 根因分析:
 
-[Thought] Spectra S1 本周负面评论率从 12% 上升到 23%。需要找根因。
-[Action] query_trend(product="Spectra-S1", metric="negative_rate", period="30d")
-[Observation] 负面率在 3 天前开始跳升，与某批次发货时间吻合。
+[Thought 1] ST-500 负面率从 8% 升至 22%。先查看时间趋势，确定跳升起点。
+[Action 1] query_review_trend(sku="ST-500", period="30d", sentiment="negative")
+[Observation 1] 负面率在 2026-04-18 从 8% 跳升至 22%，与批次 B20260415 的发货时间吻合。
 
-[Thought] 可能是批次问题。查看该批次的常见负面关键词。
-[Action] extract_keywords(reviews, filter="batch_X202405", sentiment="negative")
-[Observation] 高频词: ["漏奶"(45次), "吸力不足"(32次), "配件松动"(28次)]
+[Thought 2] 锁定批次 B20260415（生产日期 2026-04-10，发货 2026-04-15）。提取该批次负面评论的高频关键词。
+[Action 2] extract_keywords(sku="ST-500", batch="B20260415", sentiment="negative", top_k=10)
+[Observation 2] 高频词: ["车轮异响"(38次), "折叠卡顿"(29次), "螺丝松动"(15次), "包装破损"(12次)]
 
-[Thought] "漏奶"是新品控问题？检查客服工单是否有类似投诉。
-[Action] query_tickets(product="Spectra-S1", keyword="漏奶", period="7d")
-[Observation] 工单增加 3x，主要集中在批次 X202405。
+[Thought 3] "车轮异响"和"螺丝松动"指向装配问题。检查该批次的生产工厂和质检记录。
+[Action 3] query_production_batch(batch="B20260415")
+[Observation 3] 工厂: 东莞厂（代码 DG-03），质检合格率 97.2%（低于标准 99.5%），问题环节: 车轮组装线
 
-[Thought] 根因确认：批次 X202405 的密封圈质量问题导致漏奶。
-建议：暂停该批次销售，启动召回，联系供应商。
-[Action] generate_alert(severity="high", root_cause="批次质量问题", action_items=["暂停销售", "启动召回"])
+[Thought 4] 东莞厂 DG-03 的车轮组装线合格率异常。查看该工厂同期其他批次是否也有问题。
+[Action 4] query_factory_quality(factory="DG-03", period="2026-04")
+[Observation 4] 该工厂 4 月共生产 3 个批次，B20260415 合格率 97.2%，B20260408 合格率 98.5%，B20260401 合格率 99.1%。B20260415 明显异常。
+
+[Thought 5] 根因确认：批次 B20260415 在东莞厂 DG-03 车轮组装线出现质量波动，导致车轮异响和螺丝松动。建议：1）暂停该批次销售；2）对已售 1200 件提供免费维修；3）要求工厂更换车轮组件供应商。
+[Action 5] generate_alert(sku="ST-500", severity="high", root_cause="批次 B20260415 车轮组装线质量波动", action_items=["暂停销售", "启动免费维修计划", "更换供应商"], notify=["supply_chain@brand.com", "quality@brand.com"])
+[Observation 5] 预警已生成并发送，预计 2 小时内启动应对方案。
 ```
 
-**业务价值**：
-- 根因分析从 2-3 天缩短到 10-30 分钟
-- 推理过程可追溯，便于人工复核
-- 自动化生成预警和行动建议
+**量化产出**：
+- **根因定位时间**：从 2-3 天（人工分析）缩短至 15 分钟，效率提升 96%
+- **负面率控制**：48 小时内负面率从 22% 降至 12%，避免差评持续积累导致 listing 降权（预估损失 18 万元/周）
+- **召回成本优化**：精准定位问题批次（1200 件），而非全量召回（5000 件），节省召回成本 11.4 万元
+- **年化收益**：减少差评导致的销量损失 + 优化召回成本，合计约 28 万元
+
+---
+
+### 场景三：有机辅食 — 多平台广告投放优化 Agent
+
+**业务问题**：
+
+某品牌“有机高铁米粉”（SKU: RF-100）同时在 Amazon、Shopify 和 TikTok Shop 销售。广告 ROAS 分别为 3.2、2.8 和 1.5，TikTok 渠道明显偏低。需要分析各渠道广告效果，优化预算分配，并针对 TikTok 调整素材策略。
+
+**数据要求**：
+
+- 各平台广告后台 API（花费、展示、点击、转化）
+- 商品详情页转化率（各平台）
+- 竞品广告策略（关键词、素材类型）
+- 用户评论数据（用于提取卖点）
+
+**预期产出**：
+
+```
+ReAct 执行轨迹:
+
+[Thought 1] 整体 ROAS 2.8，但 TikTok 仅 1.5。先查看各渠道详细数据。
+[Action 1] query_ad_performance(platforms=["Amazon", "Shopify", "TikTok"], sku="RF-100", period="7d")
+[Observation 1] Amazon: 花费 $5,200, 收入 $16,640, ROAS 3.2, 转化率 4.5%; Shopify: 花费 $3,800, 收入 $10,640, ROAS 2.8, 转化率 3.8%; TikTok: 花费 $4,500, 收入 $6,750, ROAS 1.5, 转化率 1.2%
+
+[Thought 2] TikTok 转化率仅 1.2%，远低于 Amazon 的 4.5%。可能原因：1）素材不吸引目标人群；2）落地页加载慢；3）定价不匹配。先分析 TikTok 素材表现。
+[Action 2] query_tiktok_creative_performance(sku="RF-100", period="7d")
+[Observation 2] 素材 A（产品展示）: CTR 0.8%, 转化率 0.9%; 素材 B（宝妈推荐）: CTR 2.1%, 转化率 1.5%; 素材 C（开箱测评）: CTR 1.5%, 转化率 1.1%
+
+[Thought 3] 素材 B（宝妈推荐）CTR 和转化率最高，但整体仍偏低。查看竞品在 TikTok 的素材策略。
+[Action 3] search_competitor_ads(platform="TikTok", category="baby_food", top_ads=5)
+[Observation 3] 竞品 Top 素材类型: 1）宝宝吃播（CTR 3.5%）; 2）营养师讲解（CTR 2.8%）; 3）亲子互动（CTR 2.5%）
+
+[Thought 4] 竞品“宝宝吃播”CTR 3.5%，远高于我们的素材。建议：1）制作 3 条“宝宝吃播”风格素材；2）将 TikTok 预算从 $4,500 降至 $2,000（ROAS 提升后再加投）；3）增加 Amazon 预算 $2,000（ROAS 3.2 最稳定）。
+[Action 4] update_budget(platform_allocations={"Amazon": +2000, "Shopify": +500, "TikTok": -2500}, reason="基于 ROAS 优化预算分配")
+[Observation 4] 预算已调整，预计下周 ROAS 可提升至 3.0+
+
+[Thought 5] 同时，从评论中提取“高铁”“无糖”“易冲泡”等卖点，用于新素材文案。
+[Action 5] extract_review_highlights(sku="RF-100", top_attributes=5)
+[Observation 5] Top 卖点: 高铁含量(提及率 42%), 无添加糖(38%), 易冲泡(35%), 有机认证(30%), 宝宝爱吃(28%)
+```
+
+**量化产出**：
+- **整体 ROAS**：从 2.8 提升至 3.4（+21.4%），年化广告收入增加 38 万元
+- **TikTok 转化率**：从 1.2% 提升至 2.8%（新素材上线后），渠道 ROAS 从 1.5 升至 2.6
+- **预算浪费减少**：停止低效素材投放，年化节省广告费 12 万元
+- **合计年化收益**：50 万元
 
 ---
 
@@ -272,9 +328,9 @@ if __name__ == "__main__":
 
 | 场景 | 预期收益 | 实施成本 | ROI |
 |------|---------|---------|-----|
-| 竞品情报自动收集 | 信息收集时间从 1 天缩短到 30 分钟 | 开发 2-3 周 | 15-20x |
-| 异常根因自动分析 | 响应时间从 2-3 天缩短到 30 分钟 | 开发 2 周 | 20-30x |
-| 多源数据整合分析 | 消除信息孤岛，一次查询覆盖全维度 | 开发 1-2 周 | 10-15x |
+| 暖奶器智能补货与定价 | 年化节省 45.3 万元（断货损失+仓储费+毛利提升） | 开发 2-3 周 | 15-20x |
+| 婴儿推车 VOC 根因分析 | 年化节省 28 万元（差评损失+召回成本优化） | 开发 2 周 | 20-30x |
+| 有机辅食广告投放优化 | 年化增收 50 万元（ROAS 提升+广告费节省） | 开发 1-2 周 | 10-15x |
 
 ### 实施难度
 **评分：⭐⭐⭐☆☆（3/5星）**
@@ -290,7 +346,7 @@ if __name__ == "__main__":
 - **基础性地位**：ReAct 是现代 LLM Agent 的基石范式
 - **广泛适用**：几乎所有需要外部信息的 Agent 场景都适用
 - **与现有框架兼容**：LangChain、AutoGen、OpenAI Function Calling 都基于 ReAct
-- **可落地性强**：1-2 周可完成 MVP
+- **可落地性强**：1-2 周可完成 MVP，3 个月 ROI 超 10 倍
 
 ---
 

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: FastKGE — 增量 LoRA 知识图谱嵌入
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase3
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2405.12345
 ---
 
 # Skill Card: FastKGE — 增量 LoRA 知识图谱嵌入
@@ -19,6 +20,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Fast and Continual Knowledge Graph Embedding via Incremental LoRA | **年份**：2024
 
 **FastKGE** 用影响力分析选出最需要更新的层，再用 LoRA（Low-Rank Adaptation）做增量微调，实现「只动关键层、保留旧知识、速度快 34-49%」：
 
@@ -221,3 +224,4 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐⭐（需要 LoRA 框架，`pip install peft` 即可）
 
 **优先级**：⭐⭐⭐（知识库每日自动更新流水线的核心组件）
+```

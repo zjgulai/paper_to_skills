@@ -13,7 +13,7 @@ roadmap_phase: phase1
 
 # Skill Card: Compliance-Violation-Auto-Escalation
 
-> **配对分析层**：[[Skill-Compliance-Risk-Classification]]
+> **配对分析层**：[[Skill-Compliance-ML-Risk-Scoring]]
 > **决策类型**: 自动触发型 | **触发条件**: 接收到平台合规警告 | **执行动作**: 按严重程度P0/P1/P2自动分级升级响应（P0立即人工介入/P1 24h响应/P2 72h响应）
 
 ## ① 算法原理
@@ -246,7 +246,7 @@ print(f"  分级分布: {result['severity_summary']}")
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Compliance-Risk-Classification]]（违规类型多维度风险评分）
+- **前置（prerequisite）**：[[Skill-Compliance-ML-Risk-Scoring]]（违规类型多维度风险评分）
 - **延伸（extends）**：[[Skill-Pre-Launch-Compliance-Gate]]（主动预防为主，本Skill为被动响应）
 - **可组合（combinable）**：[[Skill-Regulatory-Update-Impact-Dispatcher]]（监管更新 → 提前预防 → 减少违规触发）
 

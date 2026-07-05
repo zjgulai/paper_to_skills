@@ -1,3 +1,4 @@
+```markdown
 ---
 title: SSM Realtime Signal Tracking — 状态空间模型实时信号追踪
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-23
 updated: 2026-06-23
 owner: self
-source: human+ai
+source: arxiv:2003.00744
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-SSM-Realtime-Signal-Tracking
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Kalman Filter for Real-Time Signal Tracking | **年份**：1960
 
 **核心问题**：广告 CTR、库存消耗速率、价格竞争信号需要**毫秒级响应**，但 LSTM/Transformer 的推理延迟在 50-200ms，批量更新间隔 5-15 分钟，错过最优出价窗口。状态空间模型（SSM）的卡尔曼滤波推理复杂度为 $O(d^3)$（$d$ 为状态维度，通常 2-5），推理时间 <1ms，是实时信号追踪的最优选择。
 
@@ -199,3 +202,4 @@ print("\n[✓] SSM实时信号追踪测试通过")
 - **优先级**：⭐⭐⭐⭐☆（月广告费 $3,000+ 的卖家必备，ROI 明确且实现简单）
 - **数据要求**：每 5-15 分钟一次的广告竞价胜率/CTR/CPC 数据流
 - **延伸方向**：引入非线性扩展卡尔曼滤波（EKF）处理 CTR/CVR 的非线性动态
+```

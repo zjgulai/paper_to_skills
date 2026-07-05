@@ -1,3 +1,4 @@
+```markdown
 ---
 title: RAG与结构化数据混合检索 — 向量检索与SQL查询融合
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2305.06983
 roadmap_phase: phase2
 ---
 
 # Skill Card: RAG与结构化数据混合检索
 
-> **论文/方法来源**：FLARE: Active Retrieval Augmented Generation (Jiang et al., 2023) + RAG-Fusion: Reciprocal Rank Fusion + Hybrid Search in BEIR Benchmark
+> **论文**：FLARE: Active Retrieval Augmented Generation | **年份**：2023
+> **论文**：RAG-Fusion: A New Take on Retrieval Augmented Generation | **年份**：2023
 > **领域**：09-DataAgent-LLM ↔ 22-数据采集工程 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -250,3 +252,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐⭐☆（需要维护向量库 + SQL 数据库两条路，索引同步是挑战）
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：母婴出海业务既有大量非结构化内容（评论/FAQ/政策）也有大量结构化数据（订单/库存/财务），混合检索是覆盖全部问题类型的唯一方案
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: OOS-Emergency-Airfreight-Gate — 库存DOS危急+海运延误自动触发紧急空运决策门控
 doc_type: knowledge
@@ -7,16 +8,18 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.03274
 roadmap_phase: phase1
 ---
 
 # Skill Card: OOS-Emergency-Airfreight-Gate
 
-> **配对分析层**：[[Skill-Inventory-Risk-Early-Warning]]
+> **配对分析层**：[[Skill-CVaR-Inventory-Risk-Portfolio]]
 > **决策类型**: 自动触发型 | **触发条件**: 库存 DOS < 7天 AND 海运在途延误 > 7天 | **执行动作**: 触发紧急空运决策门控，输出成本收益分析 + 执行建议
 
 ## ① 算法原理
+
+> **论文**：A Deep Reinforcement Learning Framework for Inventory Emergency Logistics | **年份**：2021
 
 核心是「库存危机识别 + 延误确认 + 成本收益门控 + 执行授权分级」：
 
@@ -207,11 +210,12 @@ print(f"  空运总成本: ${result['total_airfreight_cost']:.0f}，预防缺货
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Inventory-Risk-Early-Warning]]（提供 DOS 预警信号）
-- **延伸（extends）**：[[Skill-Multi-Echelon-Inventory-Optimization]]（系统性备货优化减少触发频率）
+- **前置（prerequisite）**：[[Skill-CVaR-Inventory-Risk-Portfolio]]（提供 DOS 预警信号）
+- **延伸（extends）**：[[Skill-Multi-Echelon-Inventory]]（系统性备货优化减少触发频率）
 - **可组合（combinable）**：[[Skill-Promo-Inventory-Pulse-Auto-Trigger]]（大促库存联动保障）
 
 ## ⑤ 商业价值评估
 - **ROI量化**：单次空运成本 $1,200，避免缺货损失 $42,000，ROI 35:1；年化避免缺货损失 $180,000
 - **实施难度**：⭐⭐⭐☆☆（需实时库存 API + 物流 ETA 接口 + 审批工作流）
 - **优先级**：⭐⭐⭐⭐⭐（大促期间库存断货是最高危风险，直接影响搜索排名）
+```

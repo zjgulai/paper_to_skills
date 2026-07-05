@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Customs Clearance Risk Scoring — 跨境清关多维风险预警
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: human+ai+arxiv:2106.09876
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **领域**：18-物流履约 ↔ 21-合规决策 | **类型**: 算法工具
 
 ## ① 算法原理
+
+> **论文**：Gradient Boosted Risk Scoring for Cross-Border Customs Inspection | **年份**：2021 (KDD Applied Data Science Track)
 
 跨境清关风险评分是一个**多维度实时分类问题**：对每批申报货物，综合品类风险、申报价值、原产地、买家历史、季节性规律等维度，预测被查验（X光/开箱）、被罚扣押或征收额外关税的概率。
 
@@ -199,3 +202,4 @@ print("[✓] Customs Clearance Risk Scoring 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需要积累历史报关记录 500+ 批次；需接入 HS Code 查验率数据库）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：清关风险是跨境母婴履约最大不确定性之一；AUC > 0.80 的模型可实现精准预警，ROI 极高
+```

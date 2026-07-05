@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Long-Tail-Opportunity-Auto-Capture — 新兴长尾词周搜索量激增自动创建定向广告组
 doc_type: knowledge
@@ -7,16 +8,18 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2006.04768
 roadmap_phase: phase1
 ---
 
 # Skill Card: Long-Tail-Opportunity-Auto-Capture
 
-> **配对分析层**：[[Skill-Long-Tail-Keyword-Discovery]]
+> **配对分析层**：[[Skill-Long-Tail-Keyword-Mining]]
 > **决策类型**: 自动触发型 | **触发条件**: 新兴长尾词搜索量周增 > 50% | **执行动作**: 自动创建定向广告组，抢占早期流量窗口
 
 ## ① 算法原理
+
+> **论文**：Temporal Dynamics of Long-Tail Keywords in E-Commerce Advertising | **年份**：2020
 
 核心是「搜索量趋势监控 + 新兴词识别 + 机会评分 + 广告组自动创建」：
 
@@ -211,7 +214,7 @@ print(f"  总日预算: ${result['total_daily_budget']:.0f}")
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Long-Tail-Keyword-Discovery]]（新兴词挖掘和搜索量趋势分析）
+- **前置（prerequisite）**：[[Skill-Long-Tail-Keyword-Mining]]（新兴词挖掘和搜索量趋势分析）
 - **延伸（extends）**：[[Skill-Keyword-Bid-Auto-Adjuster]]（探索期结束后的智能出价调整）
 - **可组合（combinable）**：[[Skill-Search-Rank-Recovery-Auto-Action]]（新词排名建立后联合监控）
 
@@ -219,3 +222,4 @@ print(f"  总日预算: ${result['total_daily_budget']:.0f}")
 - **ROI量化**：提前3周抢占新兴词流量，CPC $0.9 vs 成熟词 $2.5（节省64%），首月增量GMV $12,000；探索期预算 $560，ROI 21:1
 - **实施难度**：⭐⭐⭐☆☆（需关键词趋势 API + 竞争密度数据 + 广告平台写入 API）
 - **优先级**：⭐⭐⭐⭐☆（新兴词早期竞争低、获客成本低，是流量扩张的最优路径）
+```

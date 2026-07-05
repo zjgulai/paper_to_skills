@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Uplift Intervention Queue Optimizer — 在预算约束下按CATE排序生成最优干预名单
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2005.10293
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 优化排序型 | **触发条件**: Uplift模型输出CATE分数后 | **执行动作**: 在预算约束下按CATE从高到低排序，生成最优干预名单和优先级队列
 
 ## ① 算法原理
+
+> **论文**：Uplift Modeling for Multiple Treatments with Cost Constraints | **年份**：2020
 
 核心是「CATE排序 + 预算约束优化 + 干预优先级队列」：
 
@@ -214,3 +217,4 @@ print(f"  层级分布: {result['tier_distribution']}")
 - ROI预估：干预ROI通常达3-5x，相比随机干预节省30-50%干预成本，年化节省$15,000-$30,000
 - 实施难度：⭐⭐☆☆☆（Uplift模型已有输出时接入简单）
 - 优先级：⭐⭐⭐⭐⭐
+```

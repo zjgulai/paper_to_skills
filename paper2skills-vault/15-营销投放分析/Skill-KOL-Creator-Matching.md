@@ -1,3 +1,4 @@
+```markdown
 ---
 title: KOL Creator Matching — KOL/达人精准匹配与 ROI 预测
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2104.12720
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**：InfluencerRank: A Multi-Dimensional Matching Framework for Influencer Marketing | **年份**：2021
 
 **核心思想**：品牌每个月要从数百个 KOL 候选中选出 5-10 个合作，传统方式是看粉丝数 + 主观感觉，导致投入大但 ROI 不稳定——粉丝多不代表带货强，垂直对口才是关键。KOL 精准匹配用多维特征量化「KOL ↔ 品牌」的契合度，结合历史数据预测 ROI，把选人决策从「靠感觉」变为「靠数据」。
 
@@ -165,3 +168,4 @@ print("[✓] KOL Creator Matching 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，数据来自 MCN 提供 + 公开平台数据）
 - **优先级**：⭐⭐⭐⭐☆（KOL 投入是品牌第二大营销支出，选人精准度直接决定 ROI）
 - **评估依据**：多维匹配框架结合 influencer marketing 行业最佳实践，母婴品类历史投放数据验证
+```

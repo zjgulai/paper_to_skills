@@ -1,14 +1,14 @@
+```markdown
 ---
 title: Supply Chain ML Feature Engineering — 供应链 ML 特征工程：时序+图+统计三维
 doc_type: knowledge
 module: 12-ML基础
 topic: supply-chain-ml-feature-engineering
-
 roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2006.09917
 ---
 
 # Skill: Supply Chain ML Feature Engineering — 供应链 ML 特征工程
@@ -18,6 +18,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting | **年份**：2019 (KDD)
 
 ### 供应链数据的特殊性
 
@@ -490,28 +492,4 @@ print("[✓] Supply Chain ML Features 测试通过")
 ### 前置技能
 - **[[Skill-Feature-Engineering]]** — ML 特征工程通用基础
 - **[[Skill-Cross-Validation-Strategies]]** — 时序数据的正确交叉验证（Walk-Forward）
-- **[[Skill-Demand-Forecasting-Supply-Chain]]** — 需求预测建模基础
-
-### 延伸技能
-- **[[Skill-Supply-Chain-Causal-SCM-Attribution]]** — 供应链因果归因（使用本 Skill 的风险特征）
-- **[[Skill-EventCast-LLM-Event-Forecasting]]** — LLM 驱动的事件感知预测
-
-### 可组合技能
-- **[[Skill-AIM-RM-LLM-Inventory-MAS-Memory]]** — LLM 驱动的库存多智能体
-- **[[Skill-Safety-Stock-Replenishment]]** — 安全库存计算（使用本 Skill 的交货期特征）
-- **[[Skill-Promotion-Demand-Decomposition]]** — 促销需求分解（使用本 Skill 的促销特征）
-
----
-
-## ⑤ 商业价值
-
-| 维度 | 评估 |
-|------|------|
-| 核心收益 | 供应链 ML 模型准确率提升 15-20%，减少缺货/积压成本 |
-| 实现难度 | ⭐⭐☆☆☆ |
-| 商业优先级 | ⭐⭐⭐⭐☆ |
-| 工程成本 | 低（纯 Python，无 GPU，易于集成） |
-| 适用场景 | 补货量预测、交货期风险评估、促销需求拆解、供应商风险评分 |
-
-**关键收益**：统一特征工程规范后，不同 ML 团队/模型可复用同一特征集，降低维护成本。
-- **跨域**：[[Skill-Inventory-Health-Aging-Attribution]]
+- **[[Skill-Demand-Forecasting-Supp

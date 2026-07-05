@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Social-VOC-Viral-Potential-Score — 社媒UGC传播特征分析与爆品传播潜力评分
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.05281
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 预警备货型 | **触发条件**: 传播潜力分≥0.65 | **执行动作**: 向供应链触发紧急备货工单，3-5天前预警断货风险
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Viral Prediction via Social Media Content Features | **年份**：2021
 
 核心是「三维传播潜力模型」，从UGC文本中提取爆单前置信号：
 
@@ -196,7 +199,7 @@ if __name__ == "__main__":
 - **前置**：[[Skill-Reddit-Community-Signal-Mining]] — Reddit社区信号挖掘，提供UGC原始数据
 - **前置**：[[Skill-VOC-Aspect-Sentiment-Extraction]] — 拆解UGC情感来源，丰富E维度
 - **延伸**：[[Skill-VOC-Churn-Signal-Extraction]] — 传播预警触发同时检查是否有负面流失风险
-- **可组合**：[[Skill-FLOWR-Supply-Chain-MAS]] — 传播预警直接触发多仓补货MAS协调
+- **可组合**：[[Skill-Flowr-Supply-Chain-MAS]] — 传播预警直接触发多仓补货MAS协调
 
 ## ⑤ 商业价值评估
 
@@ -205,3 +208,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词典规则，接入UGC文本流即可运行）
 - **优先级**：⭐⭐⭐⭐⭐（对爆品品牌ROI极高，断货损失远超建设成本）
 - **适用场景**：Instagram/TikTok/小红书引流为主的视觉系母婴品（辅食餐具/玩具/服装）
+```

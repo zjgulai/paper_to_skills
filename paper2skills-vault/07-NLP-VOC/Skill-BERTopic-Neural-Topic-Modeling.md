@@ -1,3 +1,4 @@
+```markdown
 ---
 title: BERTopic — 神经主题模型与动态知识分类
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase1
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2203.05794
 ---
 
 # Skill Card: BERTopic — 神经主题模型与动态知识分类
@@ -19,6 +20,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：BERTopic: Neural topic modeling with a class-based TF-IDF procedure | **年份**：2022
 
 **BERTopic** 把句子嵌入、降维、聚类、主题词提取四个步骤串成一个可解释的神经主题模型：
 
@@ -286,3 +289,4 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐（知识库分类自动化 + VOC 分析升级的双重价值）
 
 **对标参考**：BERTopic GitHub 14k+ stars，Cohere/Huggingface 内置支持
+```

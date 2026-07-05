@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Seasonal-Keyword-Rotation-Strategy — 季节性关键词轮换策略
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.07700
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Skill-Seasonal-Keyword-Rotation-Strategy
 
+> **论文**：STL: A Seasonal-Trend Decomposition Procedure Based on LOESS | **年份**：1990
 > **论文/方法来源**：Seasonal Demand Forecasting for E-commerce Keywords（工业实践）+ Time-series Decomposition for Search Volume（Hyndman & Athanasopoulos 2021）
 > **领域**：搜索流量工程 ↔ 时间序列 | **类型**: 时序预测
 
@@ -188,3 +190,4 @@ print("\n[✓] Seasonal-Keyword-Rotation-Strategy 测试通过")
 - **ROI**：旺季提前布局可将峰值期 ACOS 降低 20-30%，年化增量 GMV 8-15 万元/主力品
 - **实施难度**：⭐⭐⭐☆☆（需要历史数据支撑，建议提前 6 个月规划）
 - **优先级**：⭐⭐⭐⭐⭐（母婴品季节性极强，提前布局 vs 临时冲量差距巨大）
+```

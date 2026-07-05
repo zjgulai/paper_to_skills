@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Multi-Market-VOC-Cross-Analysis — 多市场VOC交叉分析
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2104.08678
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Multi-Market-VOC-Cross-Analysis
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Cross-Cultural Sentiment Analysis for Product Reviews | **年份**：2021
 
 不同市场（美国、英国、德国、日本）的消费者对同一产品有截然不同的关注维度，体现在评论语言、痛点侧重和文化偏好上的系统性差异。多市场 VOC 交叉分析通过对比不同站点评论的语义分布，识别市场差异化需求，为本地化运营提供数据依据。
 
@@ -218,3 +221,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（多站点运营后必装） |
 | 数据要求 | 各市场 300+ 条评论（小类目可降至 100 条） |
 | 典型收益 | 识别德国/日本市场特有痛点，本地化改造后月销翻倍 |
+```

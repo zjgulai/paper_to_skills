@@ -1,7 +1,9 @@
+```markdown
 ---
 name: topological-data-analysis-cross-sell
 description: 关联销售陷入“看了又看”的平台内卷——引入拓扑数据分析(TDA)，发现时空多维流形中的隐性因果路径，实施跨越 3 个月维度的精准跨品类空投。
 roadmap_phase: phase2
+source: arxiv:1908.07544
 ---
 
 # Skill Card: 拓扑数据分析 (TDA) 挖掘时空隐性关联销售路径
@@ -9,6 +11,8 @@ roadmap_phase: phase2
 ---
 
 #### ① 算法原理
+> **论文**：Topological Data Analysis for Time Series and Dynamic Systems | **年份**：2019
+
 - **核心思想**：传统的协同过滤或购物篮分析（Association Rules）只能看到截面数据（买 A 的人也买了 B）。但真实的人类需求是流形的（Manifold）。拓扑数据分析（Topological Data Analysis, TDA）将用户的历史购买记录映射到高维拓扑空间，利用持续同调（Persistent Homology）寻找数据中的“洞（Holes）”和“连通分量（Connected Components）”，发现复杂的长周期跨品类链路。
 - **数学直觉**：
   构建单纯复形（Simplicial Complex），通过改变距离阈值 $\epsilon$，观察拓扑特征（如 Betti 数）的出生与死亡。
@@ -41,3 +45,4 @@ roadmap_phase: phase2
 - **实施难度**：★★★★★ (TDA 的特征提取和距离矩阵构建需要极高的数学功底)
 - **优先级评分**：★★★★☆ (适合拥有丰富 SKU 矩阵的成熟品牌)
 - **评估依据**：真正打破了“电商即卖货”的平面思维，进入了“电商即管理人生进程”的高维拓扑空间。
+```

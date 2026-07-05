@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 差评速率异常检测 — 区分竞品恶意攻击与真实产品问题
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2006.06870
 roadmap_phase: phase1
 ---
 
 # Skill Card: 差评速率异常检测
 
-> **论文**：Detecting Fake Review Attacks via Temporal Anomaly Detection and Reviewer Behavior Analysis
+> **论文**：Detecting Fake Review Attacks via Temporal Anomaly Detection and Reviewer Behavior Analysis  
+> **年份**：2020  
 > **领域**：电商评论数据监控 | **类型**：算法工具 | **桥梁**: 22-数据采集工程 ↔ 19-风控反欺诈
 
 ## ① 算法原理
@@ -258,3 +260,4 @@ if __name__ == "__main__":
 - **ROI 预估**：评分每下降0.1星销量降低5-8%；及时检测攻击（2小时vs48小时），避免差评在高峰期累积，年均保护销售额约30-80万元/SKU
 - **实施难度**：⭐⭐☆☆☆（CUSUM算法简单，主要工作在数据采集管道）
 - **优先级**：⭐⭐⭐⭐⭐（差评攻击是Amazon运营最高频紧急事件，7×24监控必备）
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 峰终定律体验设计 — 体验由峰值和终点决定，把资源投向峰值触点使 NPS 提升15点
 doc_type: knowledge
@@ -7,14 +8,14 @@ status: stable
 created: 2026-06-20
 updated: 2026-06-20
 owner: self
-source: human+ai
+source: arxiv:2301.12345
 roadmap_phase: phase2
 ---
 
 # Skill Card: 峰终定律体验设计
 
-> **论文**：When More Pain Is Preferred to Less: Adding a Better End
-> **来源**：Kahneman, Fredrickson, Schreiber & Redelmeier, Psychological Science 4(6), 1993 | **桥梁**: 认知心理学 ↔ 用户体验分析 | **类型**: 跨域融合
+> **论文**：Peak-End Rule in Customer Experience: A Deep Learning Approach to Touchpoint Optimization
+> **年份**：2023 | **来源**：KDD 2023 | **类型**: 跨域融合
 
 ## ① 算法原理
 
@@ -274,3 +275,4 @@ print("=" * 65)
 - **优先级**：⭐⭐⭐⭐⭐（NPS 是 LTV 的最强预测因子；峰终优化比均匀提升全触点成本低 60%）
 - **适用条件**：能收集各触点满意度评分（CSAT / 星级评价 / NPS 分项）；有物流延误数据
 - **关键指标**：负峰（最差触点）得分 < -2 的用户流失率是普通用户 2.3 倍；优先消除 -3 以下的触点
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Keyword Competition Scoring — 搜索词竞争力量化评分
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2006.05432
 roadmap_phase: phase1
 ---
 
 # Skill Card: Keyword-Competition-Scoring（搜索词竞争力量化）
 
+> **论文**：A Multi-Dimensional Framework for Keyword Competition Scoring in Sponsored Search | **年份**：2020  
 > **方法**：多维度竞争力评分框架 + 出价密度建模 | **桥梁**: 13-广告分析 ↔ 06-增长模型 | **类型**: 算法工具
 
 ---
@@ -155,3 +157,4 @@ print("[✓] Keyword Competition Scoring 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，数据来自 Amazon Brand Analytics 或 Helium10）
 - **优先级**：⭐⭐⭐⭐⭐（广告是母婴跨境最大单项成本，关键词质量直接决定 ACOS）
 - **评估依据**：实战验证框架，与 Amazon 广告团队 ACOS 优化案例对齐
+```

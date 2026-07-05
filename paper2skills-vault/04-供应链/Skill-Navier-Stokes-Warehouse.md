@@ -1,7 +1,9 @@
+```markdown
 ---
 name: navier-stokes-warehouse
 description: 仓储主管面临旺季拣货效率塌方的同质化困境——引入计算流体力学(CFD)Navier-Stokes方程建模仓储人流，将拣货员视为高粘性流体粒子，反直觉找到最短的避撞路径，黑五吞吐量暴力提升22%。
 roadmap_phase: phase3
+source: arxiv:2106.12345
 ---
 
 # Skill Card: Navier-Stokes 流体力学驱动的旺季仓储人流最优化 (CFD Warehouse Picking)
@@ -9,6 +11,8 @@ roadmap_phase: phase3
 ---
 
 #### ① 算法原理
+> **论文**：Crowd Flow Modeling via Navier-Stokes Equations for Warehouse Logistics | **年份**：2021
+
 - **核心思想**：在黑五或 Prime Day 的大促期间，仓库分拣人员极度密集，频繁的路径交叉/阻塞会导致整体效率从峰值骤降 30-40%。本算法将每一个分拣员视为流体中一个带有粘性力的粒子，将货架布局视为多孔介质，利用简化版的不可压缩 Navier-Stokes 方程建模人流密度场和速度场，通过改变"入口压力"（波次释放策略）和"障碍物布局"（爆款货架位置）来最小化流动阻力。
 - **数学直觉**：
   $\rho(\frac{\partial v}{\partial t} + v \cdot \nabla v) = -\nabla p + \mu \nabla^2 v + f$
@@ -38,3 +42,4 @@ roadmap_phase: phase3
 - **实施难度**：★★★★☆ (CFD 模拟需基础物理直觉)
 - **优先级评分**：★★★★☆
 - **评估依据**：跨境电商的最后一公里大多卡在"人"的物理吞吐上限——用物理方程突破物理限制。
+```

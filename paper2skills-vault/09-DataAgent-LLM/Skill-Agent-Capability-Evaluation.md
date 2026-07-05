@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Agent能力评估基准 — 任务完成率与工具调用准确率评测
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2308.03688
 roadmap_phase: phase2
 ---
 
 # Skill Card: Agent能力评估基准
 
-> **论文/方法来源**：AgentBench: Evaluating LLMs as Agents (Liu et al., 2023) + ToolBench: Facilitating Large Language Models to Master 16000+ Real-world APIs (Qin et al., 2023) + GAIA Benchmark (Mialon et al., 2023)
+> **论文**：AgentBench: Evaluating LLMs as Agents | **年份**：2023
+> **论文**：ToolBench: Facilitating Large Language Models to Master 16000+ Real-world APIs | **年份**：2023
+> **论文**：GAIA: A General AI Assistant Benchmark | **年份**：2023
 > **领域**：09-DataAgent-LLM ↔ 16-智能体工程 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -294,3 +297,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐☆☆（需要构建标准测试集，评测框架本身开发 2-3 天）
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：任何上生产的 Agent 都需要持续评测，没有评测就没有迭代方向；5D 框架覆盖 Agent 特有的失败模式（幻觉/冗余/不鲁棒）
+```

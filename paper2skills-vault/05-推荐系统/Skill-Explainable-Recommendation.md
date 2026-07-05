@@ -1,17 +1,20 @@
+```markdown
 ---
 title: Explainable Recommendation for Business Trust
 doc_type: knowledge
 module: 05-推荐系统
 topic: explainable-recommendation
-
 roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
+source: arxiv:1905.09237
 ---
 
 # Skill Card: Explainable Recommendation
 
 ## ① 算法原理
+
+> **论文**：Explainable Recommendation: A Survey and New Perspectives | **年份**：2019
 
 **核心问题**：黑盒推荐系统给用户推了"吸奶器"，用户会问"为什么给我推这个？"如果无法解释，用户不信任、不点击、甚至反感。业务方也不理解模型逻辑，无法优化。
 
@@ -297,3 +300,4 @@ print("[✓] Explainable Recommendatio 测试通过")
 - **ROI**：推荐点击率提升25-40%，用户信任度显著提升
 - **难度**：⭐⭐☆☆☆（2/5）— 关联规则简单，NLG需要LLM
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 推荐系统从"能用"到"可信"的关键一步
+```

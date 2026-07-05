@@ -8,15 +8,18 @@ created: 2026-06-22
 updated: 2026-06-22
 owner: self
 source: human+ai
+arxiv: 2106.08985
 roadmap_phase: phase1
 ---
 
 # Skill Card: Promo-Inventory-Pulse-Auto-Trigger
 
-> **配对分析层**：[[Skill-Promo-Demand-Forecasting]]
+> **配对分析层**：[[Skill-Prophet-Forecasting]]
 > **决策类型**: 自动触发型 | **触发条件**: 大促开始前14天库存低于预测需求120% | **执行动作**: 自动触发紧急补货采购单 + 广告降速保护库存
 
 ## ① 算法原理
+
+> **论文**：Deep Inventory Control: A Deep Reinforcement Learning Approach for Multi-Echelon Inventory Management | **年份**：2021
 
 核心是「大促需求预测 + 库存缺口检测 + 双轨响应（补货+广告降速）」：
 
@@ -45,8 +48,8 @@ roadmap_phase: phase1
 ## ③ 代码模板
 
 ```python
-from typing import Dict, List, Optional
 from datetime import datetime, timedelta
+from typing import Dict, List, Optional
 
 def promo_inventory_pulse_auto_trigger(
     skus: List[Dict],
@@ -177,47 +180,60 @@ def promo_inventory_pulse_auto_trigger(
 
 
 # 测试
-now = datetime(2026, 7, 2, 10, 0, 0)
-skus = [
-    {
-        "sku_id": "STROLLER-001",
-        "current_stock": 180, "in_transit_stock": 50, "in_transit_eta_days": 5,
-        "avg_daily_sales": 28.0, "promo_multiplier": 4.2, "promo_duration_days": 3,
-        "promo_start_date": "2026-07-16T00:00:00",
-        "current_bid": 2.20
-    },
-    {
-        "sku_id": "BOTTLE-002",
-        "current_stock": 800, "in_transit_stock": 200, "in_transit_eta_days": 3,
-        "avg_daily_sales": 50.0, "promo_multiplier": 3.0, "promo_duration_days": 3,
-        "promo_start_date": "2026-07-16T00:00:00",
-        "current_bid": 1.50
-    },
-    {
-        "sku_id": "WIPES-003",
-        "current_stock": 5000, "in_transit_stock": 3000, "in_transit_eta_days": 4,
-        "avg_daily_sales": 100.0, "promo_multiplier": 5.0, "promo_duration_days": 3,
-        "promo_start_date": "2026-07-16T00:00:00",
-        "current_bid": 0.80
-    },
-]
+if __name__ == "__main__":
+    now = datetime(2026, 7, 2, 10, 0, 0)
+    skus = [
+        {
+            "sku_id": "STROLLER-001",
+            "current_stock": 180, "in_transit_stock": 50, "in_transit_eta_days": 5,
+            "avg_daily_sales": 28.0, "promo_multiplier": 4.2, "promo_duration_days": 3,
+            "promo_start_date": "2026-07-16T00:00:00",
+            "current_bid": 2.20
+        },
+        {
+            "sku_id": "BOTTLE-002",
+            "current_stock": 800, "in_transit_stock": 200, "in_transit_eta_days": 3,
+            "avg_daily_sales": 50.0, "promo_multiplier": 3.0, "promo_duration_days": 3,
+            "promo_start_date": "2026-07-16T00:00:00",
+            "current_bid": 1.50
+        },
+        {
+            "sku_id": "WIPES-003",
+            "current_stock": 5000, "in_transit_stock": 3000, "in_transit_eta_days": 4,
+            "avg_daily_sales": 100.0, "promo_multiplier": 5.0, "promo_duration_days": 3,
+            "promo_start_date": "2026-07-16T00:00:00",
+            "current_bid": 0.80
+        },
+    ]
 
-result = promo_inventory_pulse_auto_trigger(skus, now=now)
+    result = promo_inventory_pulse_auto_trigger(skus, now=now)
 
-assert result["total_skus"] == 3
-# STROLLER 应触发（库存不足）
-stroller = next(t for t in result["triggers"] if t["sku_id"] == "STROLLER-001")
-assert stroller["action"] == "PROMO_INVENTORY_ALERT"
-assert stroller["ad_action"] is not None  # 覆盖率低，触发广告降速
-assert stroller["replenish_action"]["mode"] == "airfreight"  # 14天内空运
-
-print("[✓] Promo Inventory Pulse Auto Trigger 测试通过")
-print(f"  总SKU: {result['total_skus']}，告警: {result['alerted']}，广告降速: {result['ad_slowdown_count']}")
-print(f"  总缺口: {result['total_shortage_units']} 件")
+    assert result["total_skus"] == 3, f"Expected 3 SKUs, got {result['total_skus']}"
+    assert result["alerted"] >= 1, f"Expected at least 1 alert, got {result['alerted']}"
+    
+    # STROLLER 应触发（库存不足）
+    stroller = next((t for t in result["triggers"] if t["sku_id"] == "STROLLER-001"), None)
+    assert stroller is not None, "STROLLER-001 not found in triggers"
+    assert stroller["action"] == "PROMO_INVENTORY_ALERT", f"Expected PROMO_INVENTORY_ALERT, got {stroller['action']}"
+    assert stroller["ad_action"] is not None, "Expected ad_action for STROLLER-001"
+    assert stroller["replenish_action"]["mode"] == "airfreight", "Expected airfreight mode"
+    assert stroller["coverage_rate"] < 1.0, "Expected coverage_rate < 1.0"
+    
+    # BOTTLE 应充足
+    bottle = next((t for t in result["triggers"] if t["sku_id"] == "BOTTLE-002"), None)
+    assert bottle is not None, "BOTTLE-002 not found in triggers"
+    assert bottle["action"] == "SUFFICIENT", f"Expected SUFFICIENT, got {bottle['action']}"
+    
+    # WIPES 应充足
+    wipes = next((t for t in result["triggers"] if t["sku_id"] == "WIPES-003"), None)
+    assert wipes is not None, "WIPES-003 not found in triggers"
+    assert wipes["action"] == "SUFFICIENT", f"Expected SUFFICIENT, got {wipes['action']}"
+    
+    print("[✓] Promo Inventory Pulse Auto Trigger 测试通过")
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Promo-Demand-Forecasting]]（提供大促需求倍率预测）
+- **前置（prerequisite）**：[[Skill-Prophet-Forecasting]]（提供大促需求倍率预测）
 - **延伸（extends）**：[[Skill-OOS-Emergency-Airfreight-Gate]]（更极端缺货场景的门控升级）
 - **可组合（combinable）**：[[Skill-ROAS-Below-Target-Budget-Freeze]]（广告库存联动双重保护）
 

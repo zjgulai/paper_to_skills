@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Cultural Adaptation Agent — 跨文化适应：母婴跨境的本地化 AI 策略
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase3
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase3
 ---
 
 ## ① 算法原理
+
+> **论文**：CultureLLM: Incorporating Cultural Differences into Large Language Models via Prompt Engineering | **年份**：2023
 
 ### 核心思想
 
@@ -145,3 +148,4 @@ print("[✓] Cultural Adaptation Agent 测试通过")
 - ⚠️ **代际差异**：Z 世代的消费价值观与传统 Hofstede 分数有偏差
 - ⚠️ **监管合规**：日本、德国的广告措辞有严格法规要求，适配前需经合规审查
 - ✅ **验证驱动**：所有适配策略必须通过 A/B 测试验证，不能仅靠文化假设上线
+```

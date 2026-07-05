@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Diffusion Model Product Image Generation — 扩散模型产品图生成：AI 主图替代专业摄影
 doc_type: knowledge
@@ -59,6 +60,12 @@ Stable Diffusion（去噪扩散）：
 | 生活场景图 | "mother holding baby, living room, warm light, using [product]" | Inpainting |
 | 功能说明图 | "product cutaway, showing internal motor, diagram style" | 精确控制 |
 | 多角度展示 | "product from above/side/front" | ControlNet + 深度图 |
+
+### 非共识迁移
+
+**非共识迁移**：该算法原本来自 **统计物理学**（非平衡热力学中的扩散过程）和 **计算机视觉**（图像去噪）。
+
+传统跨境电商运营者会 **依赖专业摄影团队，按照“拍摄-修图-审核”的线性流程，每张图都是独立的手工活，成本高且无法规模化**，而该算法通过 **将图像生成建模为“从噪声中逐步恢复结构”的逆向扩散过程，并利用 ControlNet 引入产品形状的硬约束**，反直觉地解决了 **“既要保持产品真实形状，又要无限变化场景/光线/角度”** 这一看似矛盾的需求，实现了"降维打击"：**将原本需要摄影师、灯光师、修图师、场地、道具的复杂系统工程，简化为一个文本提示词 + 一张参考照片的数学问题，让图片生成从“手工作坊”变成“自动化工厂”**。
 
 ---
 
@@ -301,3 +308,4 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（AI生图是 2024-2025 年最热门的 DTC 运营工具；完全空白；桥接 AI视频↔知识图谱↔广告分析 三域）
 
 - **评估依据**：DiffProduct (arXiv 2504.07823) 在电商产品图生成的 FID 和人工评分均达到接近专业摄影水平；Midjourney/DALL-E 已被大量 DTC 品牌用于主图生成；AI图片 CTR vs 专业摄影的 A/B 测试显示差距 <5%
+```

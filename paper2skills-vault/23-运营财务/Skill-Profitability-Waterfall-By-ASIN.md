@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Profitability-Waterfall-By-ASIN — 单品盈利瀑布分析
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.07715
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Profitability-Waterfall-By-ASIN
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Waterfall: A Scalable Framework for Profit Attribution in E-Commerce | **年份**：2021
 
 单品盈利瀑布（Profitability Waterfall）是将 GMV 逐步扣除各类成本，直到净利润的可视化分析框架。每个"瀑布段"代表一类成本对利润的侵蚀，让卖家一眼看出哪个环节是最大利润泄漏点。
 
@@ -168,3 +171,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（SKU 超过 10 个时立即启用） |
 | 数据要求 | Amazon 账单 + 商品成本 + 广告花费（ASIN 级） |
 | 典型收益 | 发现 20% 的 ASIN 贡献负利润，止损后利润率提升 5-15 个点 |
+```

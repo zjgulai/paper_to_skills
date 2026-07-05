@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 业务问题→Skill 检索 — Sentence-BERT + RRF 多路召回引擎
 doc_type: knowledge
@@ -42,6 +43,10 @@ roadmap_phase: phase3
 - **数据要求**：726 个 Skill 的 problem_solved 字段文本（约 50KB），一次性离线建索引；查询为运营的自然语言描述
 - **预期产出**：返回 Top-3 Skill：`Skill-Dynamic-ABC-Stratification`（相似度 0.87）、`Skill-Markdown-Optimization`（0.82）、`Skill-Demand-Forecasting-Supply-Chain`（0.79），附带每个 Skill 的应用步骤摘要
 - **业务价值**：运营找对方法的时间从平均 45 分钟（翻文档）→ 30 秒（语义搜索），年化节省 60 人·天/人，全团队 10 人合计 600 人·天 ≈ 30 万元
+- **三轨验证**：
+  - **成本**：离线建索引需 1 台 4 核 8G 服务器运行 2 小时（约 20 元）；在线推理每次查询约 0.05 元（CPU 推理，无 GPU 需求）
+  - **合规**：不触碰 Amazon 政策红线；不涉及用户隐私数据（仅检索内部 Skill 文档）；GDPR 合规（无个人数据处理）
+  - **风险**：若检索结果偏差可能导致运营误用不匹配的 Skill（如将库存问题匹配到广告优化），需在输出中附带置信度阈值（<0.6 时提示人工复核）
 
 **场景B：新员工快速上手**
 
@@ -49,6 +54,10 @@ roadmap_phase: phase3
 - **数据要求**：同上，Skill 向量库已建好，查询为新人描述
 - **预期产出**：返回广告相关 Skill 链路：`Skill-Multi-Touch-Attribution`→`Skill-ROAS-Optimization`→`Skill-Bid-Adjustment`，附带学习路径建议
 - **业务价值**：新员工独立上手时间从 2 周 → 3 天，招聘成本降低 40%，年化节省培训费用约 8 万元
+- **三轨验证**：
+  - **成本**：无需新增数据采集；学习路径生成需额外调用 GPT API（每次约 0.02 元），年化成本约 200 元
+  - **合规**：学习路径建议不涉及广告法红线；不触碰 Amazon 政策（仅内部知识检索）；GDPR 合规（无个人数据）
+  - **风险**：若 Skill 链路推荐错误（如将 ACOS 问题归因到库存优化），可能导致新人学习方向偏差；需在输出中标注"建议与导师确认"的免责提示
 
 ---
 
@@ -218,3 +227,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（仅需 sentence-transformers + numpy，无需 GPU；离线建索引一次性）
 - **优先级**：⭐⭐⭐⭐⭐（可立即上线，依赖 problem_solved 字段已存在的 726 个 Skill）
 - **评估依据**：核心依赖已有数据（Skill 库），无冷启动问题；TF-IDF 降级方案保证零依赖运行
+```

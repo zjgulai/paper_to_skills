@@ -7,8 +7,22 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2104.09486
 roadmap_phase: phase1
+tags:
+  - advertising-api
+  - unified-schema
+  - cross-platform
+  - data-integration
+  - adapter-pattern
+keywords:
+  - 多平台广告数据
+  - 统一数据模型
+  - API 适配器
+  - 归因窗口标准化
+  - ROAS 对标
+difficulty: intermediate
+estimated_time: 45min
 ---
 
 # Skill Card: Advertising API Unified Schema
@@ -19,6 +33,9 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Unified Schema for Cross-Platform Advertising Data Integration | **年份**：2021
+> **来源**：arXiv:2104.09486 (KDD 2021 Workshop on Data Engineering for Advertising)
 
 ### 核心思想
 

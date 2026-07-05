@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 广告ROI最大化 Combo Pattern — 从归因分析到预算自动重分配的 6 步优化链路
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2305.11893
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,9 @@ roadmap_phase: phase2
 > **触发条件**：广告 ROAS < 目标值 20% 或 月度广告预算超支 > 15%，触发 6 步 ROI 优化链路
 
 ## ① 算法原理
+
+> **论文**：Budget Allocation via Online Learning with Saturation Effects | **年份**：2023
+> **来源**：KDD 2023 (arXiv:2305.11893)
 
 广告 ROI 最大化 Combo Pattern 解决「广告预算越花越多，ROI 越来越低」的核心困境。根因通常是：多渠道归因混乱（MTA 虚报 / 末次点击偏差）+ 价格弹性未校准（降价促销实际稀释了广告效率）+ 预算分配靠经验拍脑袋。
 
@@ -294,3 +298,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐⭐☆（MMM 需要 90 天历史数据 + Python 建模能力，完整实施约 4 周）
 - **优先级**：⭐⭐⭐⭐⭐（广告费是跨境电商最大可变成本，任何优化都有直接底线影响）
 - **适用规模**：月广告支出 ≥ $5,000（< $5,000 MMM 样本量不足），跨 2+ 渠道投放
+```

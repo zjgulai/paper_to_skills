@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Account Association Risk Detection — 电商多账户关联风险检测
 doc_type: knowledge
@@ -9,6 +10,7 @@ updated: 2026-06-10
 owner: self
 source: human+ai
 roadmap_phase: phase1
+source: arxiv:2103.13342
 ---
 
 # Skill Card: Account-Association-Risk-Detection（账号关联风险检测）
@@ -18,6 +20,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Graph Neural Networks for Fraud Detection in E-Commerce | **年份**：2021
 
 **核心思想**：Amazon 严禁同一主体运营多个卖家账号，一旦被认定关联即可全部封禁（连坐）。但很多卖家因为历史原因（员工离职带走账号、IP 共享、银行卡关联）不知道自己的账号已经"被关联"。账号关联风险检测通过多维信号图分析，提前识别关联风险并指导隔离操作。
 
@@ -162,3 +166,4 @@ print("[✓] Account Association Risk Detection 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是数据整理 + 图算法）
 - **优先级**：⭐⭐⭐⭐⭐（账号是跨境卖家最核心资产，关联封禁是毁灭性风险）
 - **评估依据**：Amazon 关联封禁真实案例普遍存在，多维信号图分析是业界标准方法
+```

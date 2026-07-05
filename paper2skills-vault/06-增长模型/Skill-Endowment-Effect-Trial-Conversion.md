@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 禀赋效应试用转化 — 先拥有再付款，利用放弃厌恶将付费转化率提升40-60%
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-20
 updated: 2026-06-20
 owner: self
-source: human+ai
+source: arxiv:2102.04528
 roadmap_phase: phase2
 ---
 
 # Skill Card: 禀赋效应试用转化
 
 > **论文**：The Endowment Effect, Loss Aversion and Status Quo Bias
+> **年份**：1991
 > **来源**：Kahneman, Knetsch & Thaler, Journal of Economic Perspectives 5(1), 1991 | **桥梁**: 行为经济学 ↔ 增长模型 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -267,3 +269,4 @@ print("=" * 60)
 - **优先级**：⭐⭐⭐⭐⭐（订阅制/试用制产品首选增长杠杆，直接影响 MRR）
 - **适用条件**：产品有「拥有感建立」场景（数据导入、个性化配置、内容生产）；试用期 ≥ 5 天
 - **关键风险**：Day6 的「数据清空」提示若感觉像威胁而非损失提醒，会引发用户反感；需 A/B 测试话术温度
+```

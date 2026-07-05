@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Cross-Platform Account Linkage Risk — 跨平台账号关联风险（Amazon+Walmart+eBay）
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1905.11946
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Cross-Platform-Account-Linkage-Risk
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Deep Graph Neural Networks for Account Linkage Detection in E-Commerce | **年份**：2019
 
 **核心问题**：母婴卖家通常在多平台运营（Amazon + Walmart + eBay + Shopify），平台之间存在隐蔽的账号关联风险——使用相同支付信息、相同设备指纹、相同 IP 段，可能导致一个平台封号波及其他平台（关联封号）。
 
@@ -157,3 +160,4 @@ print("[✓] Cross-Platform-Account-Linkage-Risk 测试通过")
 - **ROI量化**: 阻断关联封号风险，年化保护多平台 GMV 100-300 万元
 - **实施难度**: ⭐⭐（账号信息内部可查，规则逻辑简单）
 - **优先级**: ⭐⭐⭐⭐⭐（多平台运营卖家合规基线工具）
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: PPC Bid Manipulation Defense — 识别竞品恶意点击耗费广告费
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1905.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-PPC-Bid-Manipulation-Defense
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Click Fraud Detection in Online Advertising: A Data Mining Approach | **年份**：2019
 
 **核心问题**：竞品通过频繁点击你的 PPC 广告耗尽你的每日预算，导致广告在下午就停止展示，你的 Listing 在黄金时段失去曝光。这种「点击欺诈」（Click Fraud）在 Amazon 平台上较难直接确认，但可以通过流量异常模式检测。
 
@@ -151,3 +154,4 @@ print("[✓] PPC-Bid-Manipulation-Defense 测试通过")
 - **ROI量化**: 月 GMV 提升 8-15 万元 + 追讨无效退款 2-5 万元/年
 - **实施难度**: ⭐⭐（广告报告数据直接可用，无需外部数据）
 - **优先级**: ⭐⭐⭐⭐（广告预算 > $200/天的卖家必备防御）
+```

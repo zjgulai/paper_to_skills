@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Tag驱动动态承运商选择引擎 — 基于实时标签的末程承运商智能匹配与成本优化
 doc_type: knowledge
@@ -142,7 +143,7 @@ class DynamicCarrierSelectionEngine:
         if not feasible:
             return CarrierSelection(order_id, "NO_CARRIER", "无可用承运商",
                                     0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                                    rejection_reasons=rejected)
+                                    exclusion_reasons=rejected)
 
         scored = []
         for cid, carrier in feasible.items():
@@ -157,7 +158,7 @@ class DynamicCarrierSelectionEngine:
             if carrier.capacity_warning:
                 rel_s *= 0.85
                 tag_adj.append("产能预警-降可靠性15%")
-            if sku_tags.get("destination_zone") == "rural" and "postal" in carrier.service_types:
+            if destination_zone == "domestic_rural" and "postal" in carrier.service_types:
                 cost_s = min(1.0, cost_s * 1.3)
                 tag_adj.append("偏远区域+邮政优先30%")
 
@@ -181,22 +182,22 @@ class DynamicCarrierSelectionEngine:
 def build_demo_carriers() -> list:
     return [
         CarrierProfile("UPS", "UPS Express", ["express", "ground"],
-            ["domestic", "international"], True, False,
+            ["domestic_urban", "domestic_rural", "international"], True, False,
             {"domestic_urban": 6.5, "domestic_rural": 14.5, "international": 25.0},
             {"domestic_urban": 2, "domestic_rural": 3, "international": 7},
             reliability_score=0.95),
         CarrierProfile("FEDEX", "FedEx Ground", ["express", "ground"],
-            ["domestic", "international"], True, True,
+            ["domestic_urban", "domestic_rural", "international"], True, True,
             {"domestic_urban": 5.8, "domestic_rural": 12.0, "international": 22.0},
             {"domestic_urban": 2, "domestic_rural": 4, "international": 8},
             reliability_score=0.93, delay_active=False),
         CarrierProfile("USPS", "USPS Priority", ["postal"],
-            ["domestic", "rural"], False, False,
+            ["domestic_urban", "domestic_rural", "international"], False, False,
             {"domestic_urban": 4.5, "domestic_rural": 5.5, "international": 18.0},
             {"domestic_urban": 3, "domestic_rural": 4, "international": 10},
             reliability_score=0.88),
         CarrierProfile("XPO", "XPO Freight", ["freight"],
-            ["domestic"], False, True,
+            ["domestic_urban", "domestic_rural"], False, True,
             {"domestic_urban": 35.0, "domestic_rural": 45.0},
             {"domestic_urban": 4, "domestic_rural": 5},
             reliability_score=0.90),
@@ -229,7 +230,7 @@ if __name__ == "__main__":
         if result.tag_adjustments:
             print(f"     Tag调整: {', '.join(result.tag_adjustments)}")
 
-    print("\n[✓] Tag驱动承运商选择引擎 测试通过")
+    print("\n[✓] Tag驱动动态承运商选择引擎测试通过")
 ```
 
 ## ④ 技能关联
@@ -249,3 +250,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要承运商API集成和实时Tag更新，主要工程量在API对接）
 - **优先级评分**：⭐⭐⭐⭐⭐（物流成本是P&L第二大成本项，每次发货都有优化机会）
 - **评估依据**：Amazon研究：动态承运商选择比固定承运商平均降低17%末程成本
+```

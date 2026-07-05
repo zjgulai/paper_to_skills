@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Multi-Currency-PnL-Reconciliation — 多币种P&L对账
 doc_type: knowledge
@@ -9,11 +10,14 @@ updated: 2026-06-22
 owner: self
 source: human+ai
 roadmap_phase: phase1
+source: arxiv:2106.09876
 ---
 
 # Skill Card: Skill-Multi-Currency-PnL-Reconciliation
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Multi-Currency Financial Statement Translation with FX Exposure Decomposition | **年份**：2021
 
 跨境卖家在美国（USD）、欧洲（EUR/GBP）、日本（JPY）多平台运营时，P&L 报告面临多币种汇兑问题。不正确的汇率处理会导致利润失真，进而影响决策。
 
@@ -150,3 +154,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（多市场卖家必备） |
 | 数据要求 | 各平台原始账单（含原始货币）+ 历史汇率数据 |
 | 典型收益 | 正确区分经营利润与汇兑损益，决策准确率提升 40% |
+```

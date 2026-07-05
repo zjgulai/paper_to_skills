@@ -1,14 +1,14 @@
+```markdown
 ---
 title: Supplier Lead Time Buffer — 供应商交货期缓冲：非正态分布下的安全库存
 doc_type: knowledge
 module: 18-物流履约
 topic: supplier-lead-time-buffer-safety-stock
-
 roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2106.08978
 ---
 
 # Skill-Supplier-Lead-Time-Buffer
@@ -16,6 +16,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Nonparametric Safety Stock Estimation for Heavy-Tailed Lead Times in Supply Chains | **年份**：2021
 
 **为什么正态假设会低估交货期风险**
 
@@ -376,3 +378,4 @@ if __name__ == "__main__":
 - **库存精准度**：非参数分位数 vs 正态假设，极端延误预测误差降低 40%
 - **实施难度**：⭐⭐☆☆☆（仅需历史交货期记录，无复杂模型）
 - **优先级**：⭐⭐⭐⭐☆（对跨境母婴补货影响直接）
+```

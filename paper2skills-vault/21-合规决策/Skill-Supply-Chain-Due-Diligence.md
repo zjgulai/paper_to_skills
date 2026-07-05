@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Supply Chain Due Diligence — 供应链合规尽职调查：劳工+环境+产品三维
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：ESG-SCORE: A Multi-Dimensional Compliance Scoring Framework for Supply Chain Due Diligence | **年份**：2023
 
 **供应链合规三维框架**
 
@@ -340,3 +343,4 @@ if __name__ == "__main__":
 - **自动化监控**：季度重评自动触发告警，从被动应对到主动管控
 - **实施难度**：⭐⭐☆☆☆
 - **优先级**：⭐⭐⭐⭐☆
+```

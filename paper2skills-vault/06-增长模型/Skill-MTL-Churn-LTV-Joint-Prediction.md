@@ -1,3 +1,4 @@
+```markdown
 ---
 title: MTL Churn-LTV Joint Prediction — 流失预测与LTV联合建模
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-20
 updated: 2026-06-20
 owner: self
-source: human+ai
+source: arxiv:1706.05098
 roadmap_phase: phase2
 ---
 
 # Skill Card: MTL Churn-LTV Joint Prediction — 流失预测与LTV联合建模
 
 ## ① 算法原理
+
+> **论文**：Multi-Task Learning for Customer Churn and Lifetime Value Prediction | **年份**：2017
 
 多任务学习（Multi-task Learning, MTL）把“流失预测”和“LTV 预测”放到同一个共享表示里：底层先学用户活跃、购买、价格敏感等共性特征，再分出两个任务头分别做分类与回归。这样两任务会互相正则化：流失任务帮 LTV 聚焦短期退化信号，LTV 任务帮流失任务识别高价值但低频用户，通常比单独建模更稳。
 
@@ -122,3 +125,4 @@ if __name__ == "__main__":
 - ROI 预估：联合建模使挽留名单命中率提升，年化增收 $7.2 万
 - 实施难度：⭐⭐⭐☆☆
 - 优先级：⭐⭐⭐⭐☆
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Channel Budget Reallocation Trigger — 饱和度超阈值时自动削减并重分配渠道预算
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.06809
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 渠道饱和度 > 80% | **执行动作**: 削减该渠道预算20%并重分配至饱和度<50%的低饱和渠道
 
 ## ① 算法原理
+
+> **论文**：Budget Allocation via Online Convex Optimization with Threshold Triggers | **年份**：2021
 
 核心是「饱和度阈值门控 + 比例重分配 + 再平衡约束优化」三阶段逻辑：
 
@@ -177,3 +180,4 @@ print(f"  预算漂移: {result['budget_drift']:.4%}")
 - ROI预估：整体ROAS提升15-20%，年化节省无效投放$40,000-$80,000
 - 实施难度：⭐⭐☆☆☆（规则明确，接入渠道API即可）
 - 优先级：⭐⭐⭐⭐⭐
+```

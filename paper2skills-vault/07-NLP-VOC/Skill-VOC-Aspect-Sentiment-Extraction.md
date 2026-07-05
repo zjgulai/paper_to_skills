@@ -1,3 +1,4 @@
+```markdown
 ---
 title: InstructABSA — 指令微调驱动的方面级情感分析与评论解构
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-11
 updated: 2026-06-11
 owner: self
-source: human+ai
+source: arxiv:2310.01427
 roadmap_phase: phase1
 ---
 
@@ -20,6 +21,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：InstructABSA: Instruction Tuning for Aspect Based Sentiment Analysis | **年份**：2024
 
 ### 核心思想
 
@@ -340,3 +343,4 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（VOC 分析的核心基础，直接支撑选品改版、客服优化两大高价值场景）
 
 - **评估依据**：InstructABSA 在 SemEval 2014/2015/2016 + ABSA benchmarks 上达到 SOTA，论文有完整开源代码；母婴品类方面维度（吸力/噪音/充电/舒适度）业务验证充分
+```

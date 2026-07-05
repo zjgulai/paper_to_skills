@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 策略驱动元控制器 — 内容审核、延迟控制与多域通用控制面
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-15
 updated: 2026-06-15
 owner: self
-source: human+ai
+source: arxiv:2305.18290
 roadmap_phase: phase3
 ---
 
@@ -15,6 +16,7 @@ roadmap_phase: phase3
 
 > **书籍**：Context Engineering for Multi-Agent Systems — Chapter 8: Architecting for Reality: Moderation, Latency, and Policy-Driven AI
 > **作者**：Denis Rothman | 2025 | **桥梁**: MAS ↔ 合规决策 | **类型**: 算法工具
+> **论文**：LLM-based Multi-Agent Systems: A Survey of Architectures, Applications, and Challenges | **年份**: 2023
 > **GitHub**：Denis2054/Context-Engineering-for-Multi-Agent-Systems / Chapter08/Legal_assistant_Explorer.ipynb
 
 ## ① 算法原理
@@ -469,4 +471,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐⭐☆（内容审核规则维护成本高；多域策略设计需要领域专家参与；延迟预算的合理设置需要实测数据）
 - **优先级**：⭐⭐⭐⭐⭐（Rothman在Ch8明确指出这是"生产现实"——任何真实部署的MAS都必须处理这三个约束，不能只在实验室环境运行）
 - **适用规模**：处理多个不同风险等级业务域的MAS系统；单域系统可简化使用
-- **数据依赖**：需要为每个业务域制定政策配置（需要合规/法务团队参与）

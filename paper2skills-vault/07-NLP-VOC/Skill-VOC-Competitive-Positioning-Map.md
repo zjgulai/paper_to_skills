@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-VOC-Competitive-Positioning-Map — VOC竞争定位地图
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1905.03197
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-VOC-Competitive-Positioning-Map
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Aspect-Based Sentiment Analysis for Competitive Positioning | **年份**：2019
 
 通过系统性分析竞品评论和自家评论的词频差异，构建二维竞争定位矩阵，识别品牌感知的差异化锚点。
 
@@ -185,3 +188,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（新品上线前和广告优化时必用） |
 | 数据要求 | 自家 + 3-5 个竞品各 500+ 条评论 |
 | 典型收益 | 识别差异化卖点，广告素材重构后 CTR 提升 25%+ |
+```

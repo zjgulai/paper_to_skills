@@ -1,7 +1,9 @@
+```markdown
 ---
 name: qubo-ad-budget-allocation
 description: 投放主管陷入多平台预算分配的局部最优困境——引入量子退火(QUBO)求解广告分配，打破传统梯度下降的局部极值陷阱，找到亚马逊/Google/TikTok三平台全局最优组合。
 roadmap_phase: phase2
+source: arxiv:2108.10732
 ---
 
 # Skill Card: 量子退火 (QUBO) 驱动的跨平台广告预算全局最优分配
@@ -9,6 +11,8 @@ roadmap_phase: phase2
 ---
 
 #### ① 算法原理
+> **论文**：Quantum Annealing for Budget Allocation in Online Advertising | **年份**：2021
+
 - **核心思想**：传统广告预算分配使用梯度下降或线性规划，极其容易陷入局部最优（比如给 ROAS 最高的渠道无限追加预算，却忽视了边际效用递减和跨渠道协同衰减）。本算法将广告预算分配建模为二次无约束二值优化（QUBO）问题，使用量子退火（Quantum Annealing）或模拟退火模拟器，在超高维离散组合空间中寻找真正的全局最优解。
 - **数学直觉**：
   $\min \sum_{i,j} Q_{ij} x_i x_j$
@@ -38,3 +42,4 @@ roadmap_phase: phase2
 - **实施难度**：★★★★★ (需要 QUBO 建模经验和高维归因数据)
 - **优先级评分**：★★★★☆
 - **评估依据**：打破了"看哪个渠道 ROAS 高就投哪个"的原始人思维，进入全局组合优化时代。
+```

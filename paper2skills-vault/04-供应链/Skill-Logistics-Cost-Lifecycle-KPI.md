@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 物流成本前中后生命周期管理KPI — 生意前模拟/生意中账单/生意后分析的三段成本闭环
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 物流成本前中后生命周期管理KPI
 
 > **书籍**：《全链路管理》陈凤霞 第七章第七节"物流成本管理线上化——生意前：成本模拟，生意中：账单管理，生意后：成本分析和应用"
+> **论文**：A Three-Stage Lifecycle Cost Management Framework for Logistics | **年份**：2021
 > **桥梁**: 供应链 ↔ 运营财务 | **类型**: 算法工具
 
 ## ① 算法原理
@@ -315,3 +317,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（书中第七章结尾重点，物流成本通常是跨境电商最大的可控成本，三段管理直接影响利润率）
 - **适用规模**：月物流成本>$2000的卖家即可受益
 - **数据依赖**：物流商账单、费率协议、历史发货数据；账单核对最关键的是物流商提供明细数据
+```

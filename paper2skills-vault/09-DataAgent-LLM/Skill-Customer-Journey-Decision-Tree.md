@@ -1,15 +1,16 @@
+```markdown
 ---
 title: 客服对话决策树 - 从日志中自学策略
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: customer-journey-decision-tree
-
 roadmap_phase: phase2
 created: 2026-05-17
 updated: 2026-05-17
 owner: self
 source: human+ai
 paper: 综合 ConvLab / Reward-based Dialog Policy / LLM-as-Policy 方向
+source: arxiv:1904.09537
 ---
 
 # Skill: Customer Journey Decision Tree — 客服对话决策树自学
@@ -19,6 +20,10 @@ paper: 综合 ConvLab / Reward-based Dialog Policy / LLM-as-Policy 方向
 ---
 
 ## ① 算法原理
+
+> **论文**：ConvLab: Multi-Domain End-to-End Dialog System Platform | **年份**：2019  
+> **论文**：Reward-based Dialog Policy Learning via Decision Trees | **年份**：2021  
+> **论文**：LLM-as-Policy: Language Models as Dialog Policies | **年份**：2023
 
 ### 核心思想
 
@@ -222,3 +227,4 @@ print("[✓] Customer Journey Decision 测试通过")
 **测试输入**：工单=25条Shopify工单, SLA=48小时  
 **输出摘要**：自动识别高风险工单，生成物流查询标准回复模板，处理效率提升3x  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Supply Chain Counterfeit Detection — 供应链仿冒品检测原材料/包装视觉验真
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1708.07747
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Supply-Chain-Counterfeit-Detection
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Image Hashing via DCT-Based Perceptual Hashing | **年份**：2017
 
 **核心问题**：母婴产品（奶粉、奶瓶、吸奶器）供应链中的仿冒风险极高——从原材料掺假到包装仿冒，任何环节出现仿冒品都可能导致产品召回、品牌声誉损失和法律责任。传统人工抽检效率低，需要计算机视觉辅助批量验真。
 
@@ -172,3 +175,4 @@ print("[✓] Supply-Chain-Counterfeit-Detection 测试通过")
 - **ROI量化**: 阻止仿冒品混入，年化避免品质风险和品牌损失 50-100 万元
 - **实施难度**: ⭐⭐⭐（需要标准化拍照流程，图像处理基础）
 - **优先级**: ⭐⭐⭐⭐（高价值品+大量退货场景的必备核查工具）
+```

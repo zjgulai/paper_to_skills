@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 账号健康预警系统 — ODR/LSR/VTR多指标趋势监控与早期预警
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 账号健康预警系统
 
-> **论文**：Predictive Account Health Monitoring for E-Commerce Platforms: Multi-Metric Early Warning Systems
+> **论文**：Predictive Account Health Monitoring for E-Commerce Platforms: Multi-Metric Early Warning Systems | **年份**：2021
 > **领域**：账号合规运营 | **类型**：算法工具 | **桥梁**: 19-风控反欺诈 ↔ 03-时间序列
 
 ## ① 算法原理
@@ -357,3 +358,4 @@ if __name__ == "__main__":
 - **ROI 预估**：账号被暂停1个月的损失约50-200万元（含销售损失+排名恢复成本）；提前15-30天预警可避免95%以上的暂停事件，年均防损价值约50-200万元
 - **实施难度**：⭐⭐☆☆☆（指标数据通过SP-API可获取，监控逻辑标准化）
 - **优先级**：⭐⭐⭐⭐⭐（账号是最核心资产，健康监控是运营的基础设施，不可或缺）
+```

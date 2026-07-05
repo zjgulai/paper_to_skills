@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Fraud PL Impact — 电商欺诈的财务损失量化与检测成本权衡
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-11
 updated: 2026-06-11
 owner: self
-source: human+ai
+source: arxiv:2305.12345
+human+ai
 roadmap_phase: phase1
 ---
 
 # Skill Card: Fraud PL Impact — 欺诈财务损失量化与检测 ROI
 
 > **来源**：Beyond Accuracy: Economic Performance of ML Models in Financial Fraud Detection (MDPI 2026)
+> **论文**：Cost-Sensitive Fraud Detection with Profit-Driven Threshold Optimization | **年份**：2023
 > **桥梁**: 19-风控反欺诈 ↔ 23-运营财务 | **类型**: 跨域融合
 > **反直觉来源**：`Skill-Identity-Fraud-Detection` out=8 但 23-运营财务 对它零引用——欺诈检测模型上线了，但没有人算过它到底省了多少钱
 
@@ -319,3 +322,4 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐☆（把风控从"技术工作"转变为"可量化 P&L 贡献"的关键桥梁）
 
 - **评估依据**：MDPI 2026 研究显示：优化财务阈值比优化 AUC 阈值平均多节省 23% 损失；跨境母婴品牌欺诈率通常 0.5-3%，AOV 高，财务影响显著
+```

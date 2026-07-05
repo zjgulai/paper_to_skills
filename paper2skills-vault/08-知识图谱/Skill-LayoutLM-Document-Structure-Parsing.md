@@ -1,3 +1,4 @@
+```markdown
 ---
 title: LayoutLM — 文档版面理解与结构化解析
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase2
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2204.08387
 ---
 
 # Skill Card: LayoutLM — 文档版面理解与结构化解析
@@ -19,6 +20,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：LayoutLMv3: Pre-training for Document AI with Unified Text and Image Masking | **年份**：2022
 
 **LayoutLMv3** 把文本语义、视觉外观、空间坐标三路信息联合建模：
 
@@ -232,3 +235,4 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐⭐（需要 GPU 推理，但 HuggingFace 有预训练权重）
 
 **优先级**：⭐⭐⭐（知识蒸馏质量的入口端优化，论文库扩展时必须）
+```

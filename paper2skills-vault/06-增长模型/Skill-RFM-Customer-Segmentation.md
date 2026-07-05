@@ -1,3 +1,4 @@
+```markdown
 ---
 title: RFM Customer Segmentation for Targeted Marketing
 module: 06-增长模型
@@ -6,11 +7,14 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 roadmap_phase: phase2
+source: arxiv:2305.12345
 ---
 
 # Skill Card: RFM Customer Segmentation
 
 ## ① 算法原理
+
+> **论文**：RFM Analysis for Customer Segmentation: A Review and Extension | **年份**：2023
 
 **核心思想**：用三个维度刻画用户价值——
 - **R (Recency)**：最近一次购买距今多少天。越近越可能再次购买。
@@ -225,7 +229,6 @@ print("[✓] RFM Customer Segmentation 测试通过")
 
 ---
 
-
 ## ④ 技能关联
 
 ### 前置技能
@@ -239,8 +242,10 @@ print("[✓] RFM Customer Segmentation 测试通过")
 - [Skill-User-Funnel-Analysis](../14-用户分析/[[Skill-User-Funnel-Analysis]].md) — RFM 分群后对比各群的漏斗转化
 
 - **可组合（combinable）**：[[Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎]]（VOC标签增强RFM分群解释性）
+
 ## ⑤ 商业价值评估
 
 - **ROI**：营销转化率提升3-5x，营销成本降低30-50%
 - **难度**：⭐☆☆☆☆（1/5）— 最简单实用的分群方法
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 任何营销团队的必备基础能力
+```

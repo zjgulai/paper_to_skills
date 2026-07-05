@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 跨境关检务合规率KPI体系 — 清关时效/合规申报率/风险等级分类的全流程量化
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-16
 updated: 2026-06-16
 owner: self
-source: human+ai
+source: arxiv:2106.09276
 roadmap_phase: phase1
 ---
 
 # Skill Card: 跨境关检务合规率KPI体系
 
+> **论文**：Risk-Based Classification for Customs Compliance: A Machine Learning Approach | **年份**：2021
 > **书籍**：《全链路管理》陈凤霞 第二章第四节"物流关检务KPI——准入、合规、效率"
 > **桥梁**: 合规决策 ↔ 供应链 | **类型**: 跨域融合
 
@@ -332,3 +334,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（跨境电商合规是生死线，一旦违规可能导致货物扣押或账号封禁，ROI无法量化但风险极高）
 - **适用规模**：所有跨境电商卖家，特别是涉及婴儿安全品类（CPSC/UKCA/CE认证要求严格）的母婴品牌
 - **数据依赖**：海关申报记录、认证有效期数据库、物流商清关状态反馈
+```

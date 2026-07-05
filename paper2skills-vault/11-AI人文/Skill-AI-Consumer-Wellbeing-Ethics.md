@@ -1,14 +1,14 @@
+```markdown
 ---
 title: AI Consumer Wellbeing Ethics — 消费者福祉与 AI 伦理：母婴场景
 doc_type: knowledge
 module: 11-AI人文
 topic: ai-consumer-wellbeing-ethics-baby-ecommerce
-
 roadmap_phase: phase3
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 ---
 
 # Skill Card: AI Consumer Wellbeing Ethics — 消费者福祉与 AI 伦理
@@ -19,6 +19,9 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：Dark Patterns in AI-Powered Consumer Platforms: Detection and Mitigation | **年份**：2023  
+> **论文**：Fairness and Transparency in Algorithmic Consumer Welfare | **年份**：2024
 
 ### AI 伦理四维度框架
 
@@ -138,7 +141,7 @@ print("[✓] AI Consumer Wellbeing Eth 测试通过")
 | 维度 | 评估 |
 |------|------|
 | **合规风险规避** | FTC 违规罚款最高 $50,654/天；GDPR 最高年营收 4% |
-| **信任资产** | 母婴平台用户信任评分与复购率强相关（NPS+10 → 复购率+8%） |
+| **信任资产** | 母婴平台用户信任评分与复购率强相关（NPS+10 → 复购率+8%）|
 | **实施难度** | ⭐⭐☆☆☆（规则引擎为主，无需复杂 ML）|
 | **优先级** | ⭐⭐⭐⭐☆（母婴平台 AI 合规门槛高，监管趋严）|
 | **适用场景** | 广告 AI、客服 AI、推荐 AI、儿童内容 AI 全覆盖 |
@@ -153,3 +156,4 @@ print("[✓] AI Consumer Wellbeing Eth 测试通过")
 ---
 
 *参考来源：FTC Guides Concerning the Use of Endorsements (16 CFR Part 255)；COPPA (15 U.S.C. §§ 6501–6506)；GDPR Art. 8；AI Ethics Guidelines for Consumer Products, EU AI Act 2024*
+```

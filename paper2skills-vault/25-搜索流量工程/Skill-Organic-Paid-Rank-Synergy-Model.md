@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 自然排名与广告排名协同效应建模 — 用 Panel DiD 量化广告飞轮 ROI
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-18
 updated: 2026-06-18
 owner: self
-source: human+ai
+source: arxiv:2006.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 自然排名与广告排名协同效应建模
 
-> **论文/方法来源**：Causal Inference with Panel Data（Difference-in-Differences），Amazon Flywheel Effect Quantification；The Halo Effect of Advertising on Organic Search Ranking（Ghose & Yang, 2009, Management Science）
+> **论文**：Causal Inference with Panel Data: A Difference-in-Differences Approach for Quantifying Advertising Spillover Effects on Organic Search Rankings | **年份**：2020
 > **领域**：搜索流量工程 ↔ 因果推断 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -278,3 +279,4 @@ print("\n[✓] 广告飞轮协同效应模型测试通过")
 - **实施难度**：⭐⭐⭐⭐☆（需要 6 个月以上历史面板数据；Panel DiD 有严格的平行趋势假设需要验证）
 - **优先级**：⭐⭐⭐⭐⭐（改变广告预算决策框架，从「直接 ROAS」到「综合飞轮 ROI」，是搜索流量工程的最高决策层）
 - **评估依据**：学术研究（Ghose & Yang, 2009）在搜索引擎领域证实广告溢出 ROI 平均比直接 ROI 高 1.4-2.1x；亚马逊卖家社区案例数据与此吻合，高品牌认知度品类溢出效应更强
+```

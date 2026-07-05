@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Temporal Fusion Transformer Inventory — TFT 多变量时序库存补货决策
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1912.09363
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Temporal-Fusion-Transformer-Inventory
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting | **年份**：2019
 
 **核心问题**：库存补货决策需要融合多种异质信号——过去销量、广告投放计划、节假日、竞品价格、评论数等。传统 ARIMA/Prophet 只建模单变量；LSTM 虽可多变量但无可解释性，难以调试。TFT（Temporal Fusion Transformer）同时解决多变量融合和可解释性。
 
@@ -103,7 +106,6 @@ print(f"变量重要性: {result['var_importance']}")
 print("[✓] Temporal-Fusion-Transformer-Inventory 测试通过")
 ```
 
-
 ## ④ 技能关联
 
 - 前置技能：[[Skill-Temporal-Fusion-Transformer]]
@@ -118,3 +120,4 @@ print("[✓] Temporal-Fusion-Transformer-Inventory 测试通过")
 - **ROI量化**: 8 周预测误差降低 57%，库存成本年化节省 30-50 万元
 - **实施难度**: ⭐⭐⭐（需要 pytorch-forecasting，调参成本较高）
 - **优先级**: ⭐⭐⭐⭐⭐（多变量场景的最优方案）
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 长尾关键词挖掘 — NLP词频+竞品反查+搜索建议词三路融合
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2005.00065
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **领域**：搜索流量工程 ↔ NLP-VOC | **类型**: 跨域融合
 
 ## ① 算法原理
+
+> **论文**：YAKE! Keyword Extraction from Single Documents using Multiple Local Features | **年份**：2020
 
 长尾关键词挖掘（Long-Tail Keyword Mining）综合三路信号，覆盖用户真实搜索意图：
 
@@ -181,3 +184,4 @@ print("\n[✓] 长尾关键词挖掘测试通过")
 - 实施难度：⭐⭐⭐☆☆
 - 优先级：⭐⭐⭐⭐⭐
 - 评估依据：长尾词竞争度低、CPC 低，是 ROI 最高的流量获取方式；三路融合比单路挖掘准确率高 30-40%
+```

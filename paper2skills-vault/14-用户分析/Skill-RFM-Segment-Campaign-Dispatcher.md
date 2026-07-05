@@ -1,3 +1,4 @@
+```markdown
 ---
 title: RFM-Segment-Campaign-Dispatcher — RFM分群结果自动触发差异化营销序列调度器
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.04519
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: RFM分群标签更新后每周自动调度 | **执行动作**: 高价值→VIP礼遇序列；流失风险→挽回邮件；沉默→唤醒推送
 
 ## ① 算法原理
+
+> **论文**：Multi-Touch Attribution and Campaign Optimization via Reinforcement Learning | **年份**：2021
 
 核心是「RFM分群标签读取 + 多路分流调度 + 差异化营销序列生成」：
 
@@ -283,3 +286,4 @@ for seg, plan in result["dispatch_plan"].items():
 - **ROI量化**：At-Risk群挽回率约10-15%，年化4季度×160人×12%挽回×$220 LTV = 年增量GMV约$16,896；Champions群VIP序列复购率提升约8%，年化LTV增量约$30,000
 - **实施难度**：⭐⭐☆☆☆（主要工作是对接邮件/短信平台API，业务规则简洁明确）
 - **优先级**：⭐⭐⭐⭐⭐（母婴复购率是核心增长指标，RFM调度是存量运营的标配基础设施）
+```

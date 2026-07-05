@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Review-Helpfulness-Ranking-Model — 评论有用性排序模型
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1809.04038
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Review-Helpfulness-Ranking-Model
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Learning to Rank Reviews with Deep Neural Networks | **年份**：2018
 
 评论有用性（Review Helpfulness）是指评论对潜在买家决策的参考价值。Amazon 提供"Helpful"投票数，但大量高价值评论因发布时间短或可见性低而投票稀少。
 
@@ -189,3 +192,4 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（有大量评论时优先启用） |
 | 数据要求 | 500+ 条评论 + 评分 + Verified Purchase 标记 |
 | 典型收益 | 2000 条评论中自动识别 TOP50 高价值评论，效率提升 24 倍 |
+```

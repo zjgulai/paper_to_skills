@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Perishable Inventory Markdown Optimization — 超市易腐品定价运筹学迁移到母婴临期/过季商品
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:1905.12345
 roadmap_phase: phase2
 ---
 
 # Skill Card: Perishable Inventory Markdown Optimization
 
-> **论文**：Optimal Pricing of Perishable Items（Bitran & Mondschein, 1997）+ Dynamic Pricing Under Finite Inventories（Gallego & van Ryzin, 1994）
+> **论文**：Optimal Pricing of Perishable Items（Bitran & Mondschein, 1997）+ Dynamic Pricing Under Finite Inventories（Gallego & van Ryzin, 1994） | **年份**：1994/1997
 > **领域来源**：超市/食品行业易腐品定价运筹学 | **桥梁**: 食品零售运筹学 ↔ 跨境电商清仓定价 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -300,3 +301,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要历史促销转化数据，DP求解有一定工程复杂度，但代码模板已封装完整）
 - **优先级**：⭐⭐⭐⭐☆（有保质期/强季节性的SKU必须上，优先级极高）
 - **评估依据**：超市行业文献（IGD, 2019）显示最优动态降价策略比固定时间促销多回收12-22%价值；母婴跨境电商FBA仓储成本高（旺季罚款），过期/过季损失尤其严重。
+```

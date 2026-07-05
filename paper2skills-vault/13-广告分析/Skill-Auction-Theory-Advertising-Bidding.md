@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 拍卖理论广告竞价优化 — GSP 拍卖机制下的最优出价策略
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:0704.1859
 roadmap_phase: phase2
 ---
 
 # Skill Card: 拍卖理论广告竞价优化
 
-> **论文**：Generalized Second-Price Auctions: Equilibrium Bidding Strategies（Edelman, Ostrovsky & Schwarz, 2007, American Economic Review）
+> **论文**：Generalized Second-Price Auctions: Equilibrium Bidding Strategies | **年份**：2007
 > **来源**：拍卖理论（Auction Theory）—— 诺贝尔奖级别经济学理论 | **类型**：跨域迁移 | **桥梁**: 微观经济学拍卖理论 ↔ Amazon/Google 广告竞价
 
 ## ① 算法原理
@@ -242,3 +243,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（数据来自 Amazon 广告后台，直接导出 Excel 即可，无需额外数据采集）
 - **优先级**：⭐⭐⭐⭐⭐（广告费是母婴出海的最大可控成本，几乎所有卖家都有广告优化空间）
 - **评估依据**：Edelman et al. (2007) AER 经典论文证明 GSP 均衡出价定理；Amazon SP 广告明确采用 GSP 机制（支付第二价格）；实战数据显示平均 30-40% 的关键词存在过度出价
+```

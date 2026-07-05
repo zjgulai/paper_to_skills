@@ -1,3 +1,4 @@
+```markdown
 ---
 title: TikTok Live Audience Repurchase—直播首购用户复购转化
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:1906.04711
 roadmap_phase: phase2
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase2
 > **核心**：直播首购和搜索首购不是同一类用户。前者冲动强、窗口短；后者理性强、复购节奏更慢。
 
 ## ① 算法原理
+> **论文**：Survival Analysis for Customer Repurchase Prediction | **年份**：2019
+
 复购分析要先分流量来源，再看复购曲线。直播首购用户通常在 7 天内出现首个复购窗口，之后留存曲线下降更快；搜索首购用户的决策更谨慎，但一旦复购，长期留存更稳。这里用生存分析/留存曲线对比两组用户的首次复购时间分布，再设计差异化触达序列。关键假设是首购渠道可准确识别，且订单时间戳完整。
 
 ## ② 母婴出海应用案例
@@ -92,3 +95,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐☆☆
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：能快速放大短周期直播流量的价值，见效快
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-Review-Keyword-Mining-SEO — 评论关键词挖掘 SEO
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1105.3875
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **领域**：搜索流量工程 ↔ NLP-VOC | **类型**: 文本挖掘
 
 ## ① 算法原理
+
+> **论文**：Mining and Summarizing Customer Reviews（KDD 2004） | **年份**：2004
 
 评论关键词挖掘 SEO（Review Keyword Mining SEO）从买家真实评论中提取高频且高搜索价值的词汇，直接用于优化 Listing 标题、Bullet Points 和 A+ 内容，本质是一种"镜像消费者语言"的 SEO 策略。
 
@@ -193,3 +196,4 @@ print("\n[✓] Review-Keyword-Mining-SEO 测试通过")
 - **ROI**：从评论挖掘新词后 Listing 改版，自然曝光量提升 15-25%，年化增量销售 8-15 万元
 - **实施难度**：⭐⭐☆☆☆（纯 NLP 文本挖掘，无需外部 API）
 - **优先级**：⭐⭐⭐⭐☆（评论是最接近消费者真实语言的数据源，词库质量高）
+```

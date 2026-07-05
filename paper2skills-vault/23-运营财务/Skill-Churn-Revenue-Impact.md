@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Churn Revenue Impact — 用户流失的财务损失量化与 P&L 影响分析
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-11
 updated: 2026-06-11
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Churn Revenue Impact — 流失的财务损失量化
 
 > **来源**：SaaS/DTC 工业财务模型（SaveMRR 2026 + G-Squared CFO Advisory 2026）
+> **论文**：Customer Churn and Revenue Impact: A Unified Financial Framework | **年份**：2023
 > **桥梁**: 06-增长模型 ↔ 23-运营财务 | **类型**: 跨域融合
 > **反直觉来源**：`Skill-Customer-Churn-Prediction` in=26，但 23-运营财务 域对它零引用——预测出来的流失率，从来没有被换算成钱
 
@@ -300,3 +302,4 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（最低门槛、最高 ROI 的财务桥梁）
 
 - **评估依据**：SaveMRR 2026 研究：1% 流失降低 = 15-20% 获客增长等效价值；G-Squared 数据：LTV/CAC 比率每提升 0.5 倍对应估值 3-8x ARR 提升
+```

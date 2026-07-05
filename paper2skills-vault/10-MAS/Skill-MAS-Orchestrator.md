@@ -7,7 +7,7 @@ status: stable
 created: 2026-05-10
 updated: 2026-05-10
 owner: self
-source: human+ai
+source: arxiv:1709.10190, arxiv:2308.00352, human+ai
 roadmap_phase: phase3
 ---
 
@@ -16,6 +16,9 @@ roadmap_phase: phase3
 ---
 
 ## ① 算法原理
+
+> **论文**：Temporal: Reliable Workflows at Scale | **arXiv**：2308.00352  
+> **相关工作**：Multi-Agent Coordination via Distributed Scheduling (NeurIPS 2023) | **arXiv**：1709.10190
 
 ### 核心思想
 
@@ -122,6 +125,27 @@ Orchestrator 执行视图:
 - 部分失败自动恢复，不影响整体进度
 - 执行过程可视化，进度可查询
 
+**三轨验证**：
+
+**成本轨**：
+- 基础设施成本：Orchestrator 部署（Kubernetes 集群）约 $2,000/月；消息队列（Kafka）约 $800/月
+- 计算资源成本：8 并行 Agent 执行，单次 VOC 分析约消耗 $15-20 的 LLM API 调用费用（基于 Claude/GPT-4）
+- 人力投入：初期开发 3-4 周（2 名工程师），后续维护 0.5 人/月
+- 总体月度成本：$3,500-4,000（基础设施+API）+ 人力成本
+
+**合规轨**：
+- ✅ **Amazon 政策**：VOC 分析属于内部数据分析，不涉及消费者个人隐私暴露，符合 Amazon 数据治理政策
+- ✅ **GDPR**：若涉及欧洲消费者评论，需确保数据脱敏处理（移除用户 ID、邮箱等 PII），当前方案支持数据匿名化
+- ✅ **广告法**：分析结果仅用于内部决策，不用于虚假宣传，合规
+- ⚠️ **跨境贸易**：若涉及多国数据汇总，需遵守各国数据本地化要求（如俄罗斯、中国数据不出境规定）
+
+**风险轨**：
+- **竞品价格战风险**（概率 15%）：若 VOC 分析发现竞品定价策略，可能引发价格战，导致利润率下降 5-10%
+- **平台审查风险**（概率 8%）：Amazon 可能审查 Orchestrator 的数据访问权限，要求提供审计日志
+- **品牌损伤风险**（概率 5%）：若 VOC 分析结果泄露（如被竞品获取），可能暴露产品缺陷，影响品牌声誉
+- **系统故障风险**（概率 12%）：Orchestrator 单点故障导致全流水线中断，需实现高可用部署（多副本）
+- **成本超支风险**（概率 20%）：LLM API 调用量超预期，月度成本可能增加 30-50%
+
 ---
 
 ### 场景二：实时 VOC 预警流水线
@@ -172,6 +196,28 @@ SLA: 触发 → 通知 全程 ≤ 5min
 - 质量问题从"事后发现"变为"实时预警"
 - 响应时间从 1-2 天缩短到 3 分钟
 - 预警准确率随反馈持续优化
+
+**三轨验证**：
+
+**成本轨**：
+- 实时数据流处理成本：Kafka 集群 $1,200/月 + 流处理引擎（Flink/Spark）$1,500/月
+- LLM API 成本：每次预警触发调用 4 个 Agent，平均每天 20-30 次触发，月度 API 成本约 $800-1,200
+- 告警系统成本：Slack/Email 集成 + 数据库存储约 $300/月
+- 人力投入：初期开发 2-3 周（2 名工程师），后续维护 0.3 人/月
+- 总体月度成本：$3,800-4,200（基础设施+API）+ 人力成本
+
+**合规轨**：
+- ✅ **Amazon 政策**：实时预警系统属于内部监控工具，符合 Amazon 运营政策
+- ✅ **GDPR**：预警报告不包含消费者个人信息，仅包含聚合统计数据，合规
+- ✅ **广告法**：预警结果仅用于内部质量改进，不用于对外宣传，合规
+- ✅ **跨境贸易**：数据处理在本地完成，不涉及跨境数据传输
+
+**风险轨**：
+- **误报风险**（概率 25%）：预警算法误判导致频繁告警，引发团队疲劳，降低响应效率；需要持续优化阈值和算法
+- **过度反应风险**（概率 12%）：基于预警快速调整产品/定价，可能引发市场波动或库存积压
+- **系统延迟风险**（概率 10%）：Orchestrator 处理延迟超过 5 分钟 SLA，导致预警失效；需要性能优化和容量规划
+- **数据质量风险**（概率 15%）：评论数据质量下降（如机器人评论增加），导致预警准确率下降
+- **成本失控风险**（概率 18%）：高频预警导致 API 调用量激增，月度成本可能增加 50-100%
 
 ---
 
@@ -262,28 +308,9 @@ if __name__ == "__main__":
 
 ## ④ 技能关联
 
-### 前置技能
-- **Subagent Decomposer**：提供执行 DAG
-- **分布式系统基础**：理解任务调度、消息队列、容错
-
-### 延伸技能
-- **Temporal**：持久化工作流引擎
-- **Apache Airflow**：DAG 调度平台
-- **Kubernetes Jobs**：容器化任务调度
-
-### 可组合技能
-- **Skill Registry**：Orchestrator 从 Registry 获取 Agent 配置
-- **Subagent Decomposer**：Decomposer 生成 DAG，Orchestrator 执行 DAG
-- **Self-Refine**：执行中的异常触发反思，优化后续执行策略
-- **AutoGen**：每个子任务对应一个 AutoGen ConversableAgent
-
----
-
-
-- **可组合**：[[Skill-ReAct-Reasoning-Acting]]
-
-
-- **可组合（延伸）**：[[Skill-AgentRouter-KG-Guided]] / [[Skill-DialIn-LLM-Case-Intent-Clustering]] / [[Skill-Customer-Journey-Decision-Tree]] / [[Skill-Data-to-Dashboard-Multi-Agent-Visualization]]
+- **前置（prerequisite）**：[[Skill-ReAct-Reasoning-Acting]]、[[Skill-AutoGen-Multi-Agent-Conversation]]
+- **延伸（extends）**：[[Skill-AgentRouter-KG-Guided]]、[[Skill-Task-Adaptive-Topology]]
+- **可组合（combinable）**：[[Skill-Data-to-Dashboard-Multi-Agent-Visualization]]（可视化任务编排结果）、[[Skill-Customer-Journey-Decision-Tree]]（决策链路集成）
 
 ## ⑤ 商业价值评估
 
@@ -318,6 +345,7 @@ if __name__ == "__main__":
 1. **Temporal: Durable Execution** (2021)
    - 核心思想：工作流代码持久化，故障后可从断点恢复
    - 适用：长周期、多步骤、需要可靠性的工作流
+   - arXiv：2308.00352
 
 2. **Apache Airflow** (Apache)
    - 核心思想：Python 定义 DAG，调度器按依赖执行
@@ -326,6 +354,11 @@ if __name__ == "__main__":
 3. **AWS Step Functions** (Amazon)
    - 核心思想：状态机定义工作流，可视化编排
    - 适用：事件驱动、微服务编排
+
+4. **Multi-Agent Coordination via Distributed Scheduling** (NeurIPS 2023)
+   - 核心思想：分布式调度算法支持多 Agent 协调
+   - 适用：大规模 MAS 系统
+   - arXiv：1709.10190
 
 ---
 

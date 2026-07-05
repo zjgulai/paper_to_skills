@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Instrumental Variables (IV) for Causal Inference with Endogeneity
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-05-15
 updated: 2026-05-15
 owner: self
-source: human+ai
+source: arxiv:1710.11299
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Deep IV: A Flexible Approach for Instrumental Variables with Deep Learning | **年份**：2017
 
 **核心思想**：当解释变量（如价格）与误差项相关时（内生性），直接回归会产生偏误。工具变量法是找一个"只通过影响解释变量来影响结果"的外生变量（工具变量），用它的变异来剥离出解释变量的"干净"部分，从而估计真实的因果效应。
 
@@ -463,6 +466,4 @@ print("[✓] IV Instrumental Variables 测试通过")
 
 ### 评估依据
 1. 价格策略是电商最核心的决策之一，IV是估计价格弹性的标准工具
-2. 与DiD形成互补：DiD评估政策/平台规则的效应，IV估计价格/投放等内生决策的效应
-3. 加上Uplift Modeling（可控实验）和Causal Forest（异质性），形成完整的因果推断工具链
-4. 实施成本低，但业务价值极高——一个准确的弹性系数可以改变整年的定价策略
+2. 与DiD形成互补：DiD评估政策/平台规则的

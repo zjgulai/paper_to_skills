@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Supplier Performance Scorecard — 供应商绩效量化追踪系统
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2006.05679
 roadmap_phase: phase2
 ---
 
 # Skill Card: Supplier-Performance-Scorecard（供应商绩效追踪）
 
+> **论文**：Temporal KPI Monitoring with Changepoint Detection for Supply Chain Risk Management | **年份**：2020
 > **方法**：多维 KPI 积分卡 + 时序趋势预警 | **桥梁**: 04-供应链 ↔ 23-运营财务 | **类型**: 算法工具
 
 ---
@@ -175,3 +177,4 @@ print("[✓] Supplier Performance Scorecard 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是采购数据整理 + KPI 计算）
 - **优先级**：⭐⭐⭐⭐☆（核心供应商数量有限（5-15 家），建立追踪系统一次性投入小收益大）
 - **评估依据**：供应商 KPI 积分卡是供应链管理行业标准，时序预警是 Lean 制造中成熟实践
+```

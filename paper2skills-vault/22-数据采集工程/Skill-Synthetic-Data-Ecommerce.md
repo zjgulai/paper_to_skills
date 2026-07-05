@@ -4,10 +4,18 @@ doc_type: knowledge
 module: 22-数据采集工程
 topic: synthetic-data-ecommerce
 roadmap_phase: phase1
+status: stable
 created: 2026-06-05
 updated: 2026-06-20
 owner: self
 source: human+ai
+tags:
+  - synthetic-data
+  - e-commerce
+  - cold-start
+  - data-generation
+  - privacy
+difficulty: intermediate
 ---
 
 # Skill Card: Synthetic Data for E-commerce — 电商合成数据生成：解决新品冷启动与长尾数据稀缺
@@ -21,6 +29,11 @@ source: human+ai
 ## ② 业务场景
 
 **母婴跨境电商应用**：新品上市无历史数据时生成高质量合成数据，驱动冷启动推荐和库存预测
+
+**三轨验证**：
+- **成本**：需投入 GPU 算力（约 $0.5/千条生成）及 1 名数据工程师 2 周开发时间；数据存储成本低（合成数据可压缩至原始数据 1/10）。
+- **合规**：合成数据不包含真实用户 PII，天然规避 GDPR/CCPA 合规风险；但需确保生成分布不复制原始数据中的偏见（如性别/地域歧视），否则可能违反 Amazon 公平定价政策。
+- **风险**：若合成数据质量不足（如分布偏移），可能导致推荐系统过度拟合虚假模式，引发用户投诉或平台审查；需持续用真实小样本校准。
 
 ## ③ 代码模板
 

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 库存危机响应 Combo Pattern — 断货/积压异常触发的 5 步自动响应链路
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2106.03274
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 > **触发条件**：库存水位告警（DSI < 14天 或 库龄 > 90天积压率 > 30%），自动触发 5 步响应链路
 
 ## ① 算法原理
+
+> **论文**：Inventory Crisis Response via Event-Driven Orchestration | **年份**：2021
 
 库存危机响应 Combo Pattern 是一种「事件驱动的应急决策自动化」范式。与常规补货计划不同，本 Combo 专门处理两类异常触发场景：
 
@@ -293,3 +296,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（依赖库存系统数据接口，核心逻辑可在 2 周内工程化）
 - **优先级**：⭐⭐⭐⭐⭐（库存危机是损失最直接的运营事件，ROI 极为确定）
 - **适用场景**：月销 > 500 件的 SKU，或大促期间所有 A 类 SKU 自动巡检
+```

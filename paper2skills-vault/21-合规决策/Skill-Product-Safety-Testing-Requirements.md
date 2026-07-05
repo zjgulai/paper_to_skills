@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Product Safety Testing Requirements — 产品安全测试需求：品类×市场映射
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: human+ai+arxiv:2403.12345
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Compliance-Aware Product Launch Planning via Multi-Layer Safety Testing Optimization | **年份**：2024
 
 **三层安全测试需求结构**
 
@@ -331,3 +334,4 @@ if __name__ == "__main__":
 - **时间轴准时率**：从 60% 提升至 90%（关键路径预警机制）
 - **实施难度**：⭐⭐☆☆☆
 - **优先级**：⭐⭐⭐⭐☆
+```

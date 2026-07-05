@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Skill-International-Search-Localization — 跨市场搜索关键词本地化
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1904.09408
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **领域**：搜索流量工程 ↔ NLP-VOC | **类型**: 多语言优化
 
 ## ① 算法原理
+
+> **论文**：Language-agnostic BERT Sentence Embedding (LABSE) | **年份**：2020
 
 跨市场搜索本地化（International Search Localization）解决英语关键词在日/德/法/西语市场的语义迁移问题。核心挑战：直接机器翻译往往丢失消费者搜索习惯（习语、品类术语、当地品牌叫法）。
 
@@ -182,3 +185,4 @@ print("\n[✓] International-Search-Localization 测试通过")
 - **ROI**：本地化词库优化后，日/德/法站搜索曝光量提升 50-100%，年化增量销售 3-10 万元/市场
 - **实施难度**：⭐⭐⭐☆☆（需要目标语言母语校对，存在文化理解门槛）
 - **优先级**：⭐⭐⭐⭐☆（进入新市场的基础动作，搜索流量直接影响初期生死）
+```

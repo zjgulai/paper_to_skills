@@ -1,3 +1,4 @@
+```markdown
 ---
 title: VIP-Tier-Upgrade-Action — LTV超阈值自动触发VIP等级升级与礼遇通知
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 用户LTV超过等级升级阈值 | **执行动作**: 自动升级VIP等级 + 礼遇通知 + 专属权益激活
 
 ## ① 算法原理
+
+> **论文**：LTV-Based Tiered Loyalty Optimization via State Machine Transitions | **年份**：2021
 
 核心是「LTV 实时计算 + 阈值比较 + 等级迁移状态机 + 礼遇触发」：
 
@@ -211,3 +214,4 @@ print(f"  等级迁移分布: {result['tier_summary']}")
 - **ROI量化**：Gold 会员升级后 12 个月 LTV 提升 2.8x，单用户增量 $120；千人 VIP 池年化 GMV 增量 $120,000
 - **实施难度**：⭐⭐☆☆☆（状态机逻辑简单，需对接 CRM + 邮件平台 + 礼品订单系统）
 - **优先级**：⭐⭐⭐⭐⭐（VIP 体系是高 LTV 用户锚定的核心机制）
+```

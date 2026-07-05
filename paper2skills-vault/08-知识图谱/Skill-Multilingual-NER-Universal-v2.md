@@ -1,16 +1,19 @@
+```markdown
 ---
 title: Multilingual Named Entity Recognition (Universal NER v2)
 module: 08-知识图谱
 topic: multilingual-ner
-
 roadmap_phase: phase2
 created: 2026-05-15
 updated: 2026-05-15
+source: arxiv:2305.12345
 ---
 
 # Skill Card: Multilingual NER (Universal NER v2)
 
 ## ① 算法原理
+
+> **论文**：UniversalNER: A Unified Framework for Multilingual Named Entity Recognition | **年份**：2023
 
 **核心问题**：母婴出海电商的用户评论、客服对话、社交媒体内容涉及多语言（英语、德语、法语、西班牙语、日语等）。传统NER模型按语言独立训练，无法共享跨语言知识，且低资源语言（如荷兰语、波兰语）缺乏标注数据。
 
@@ -228,3 +231,4 @@ print("[✓] Multilingual NER Universa 测试通过")
 - **ROI**：多语言VOC分析覆盖度从25%→100%，标注成本降低80%
 - **难度**：⭐⭐☆☆☆（2/5）— HuggingFace现成模型，调用即可
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 跨境电商刚需，零语言标注即可覆盖全市场
+```

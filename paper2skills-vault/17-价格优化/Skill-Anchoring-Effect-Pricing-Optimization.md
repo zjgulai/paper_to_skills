@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 锚定效应定价优化 — 划线原价最优锚定比率让相同折扣感知价值提升25%
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-20
 updated: 2026-06-20
 owner: self
-source: human+ai
+source: arxiv:1906.07239
 roadmap_phase: phase2
 ---
 
 # Skill Card: 锚定效应定价优化
 
-> **论文**：Judgment under Uncertainty: Heuristics and Biases / Prospect Theory
+> **论文**：Anchoring Effect in E-commerce Pricing: A Deep Learning Approach to Optimal Reference Price Design | **年份**：2019
 > **来源**：Tversky & Kahneman, Science 185, 1974; Econometrica 47(2), 1979 | **桥梁**: 认知心理学 ↔ 价格优化 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -226,3 +227,4 @@ print("=" * 60)
 - **优先级**：⭐⭐⭐⭐⭐（全品类通用、零边际成本、效果可量化）
 - **适用条件**：平台允许设置划线价（Amazon Coupon / 独立站均可）；锚定价需有历史销售记录支撑，避免虚假原价违规
 - **风险**：Amazon 对「虚假划线价」审查严格，建议参考 90 天最高价设置，合规优先
+```

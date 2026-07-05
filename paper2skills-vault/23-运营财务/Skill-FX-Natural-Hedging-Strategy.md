@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 自然对冲策略 — 跨境电商外汇敞口零成本对冲
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 自然对冲策略
 
-> **论文**：Natural Hedging Strategies for Multinational Firms: Matching Revenue and Cost Currencies
+> **论文**：Natural Hedging Strategies for Multinational Firms: Matching Revenue and Cost Currencies | **年份**：2021
 > **领域**：跨境电商财务风险管理 | **类型**：算法工具 | **桥梁**: 23-运营财务 ↔ 04-供应链
 
 ## ① 算法原理
@@ -279,3 +280,4 @@ if __name__ == "__main__":
 - **ROI 预估**：1500万美元GMV品牌，自然对冲将USD净敞口降低50%，年规避风险损失约80-150万CNY；建设投资130万CNY，18个月内回本
 - **实施难度**：⭐⭐⭐☆☆（供应链重构需要6-12个月，涉及多部门协调）
 - **优先级**：⭐⭐⭐⭐⭐（零额外成本是最大优势，汇率管理最优先手段）
+```

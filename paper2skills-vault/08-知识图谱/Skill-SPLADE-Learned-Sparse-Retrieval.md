@@ -1,3 +1,4 @@
+```markdown
 ---
 title: SPLADE — 学习式稀疏检索与语义倒排索引
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase1
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2107.05720
 ---
 
 # Skill Card: SPLADE — 学习式稀疏检索与语义倒排索引
@@ -19,6 +20,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking | **年份**：2021
 
 **SPLADE（Sparse Lexical AnD Expansion）** 用 BERT 的 MLM（Masked Language Model）头学习稀疏权重向量，使每个文档/查询在词汇表空间（~30,522维）上有稀疏、可解释的表示：
 
@@ -232,3 +235,4 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐（中英混合知识库必备，解决同义词/跨语言检索失效）
 
 **开源资源**：`naver/splade` GitHub，HuggingFace 上有 `naver/splade-cocondenser-ensembledistil` 预训练权重
+```

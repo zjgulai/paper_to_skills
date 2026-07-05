@@ -1,3 +1,4 @@
+```markdown
 ---
 title: GP New Product Demand — 高斯过程新品冷启动需求预测
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-23
 updated: 2026-06-23
 owner: self
-source: human+ai
+source: arxiv:2009.10862
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-GP-New-Product-Demand
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Gaussian Processes for Time Series Forecasting | **年份**：2020
 
 **核心问题**：新品上线后前 4-8 周数据极少（<50个数据点），神经网络和 GBM 需要大量数据才能有效训练。高斯过程回归（GPR）是小样本场景的最优选择——它不学习参数，而是直接建模函数的先验分布，用贝叶斯更新将先验与少量观测融合。
 
@@ -153,3 +156,4 @@ print("\n[✓] 高斯过程新品预测测试通过")
 - **优先级**：⭐⭐⭐⭐☆（所有新品上线必备，尤其适合客单价 $30+ 的母婴品类）
 - **数据要求**：最少 4 周销量数据即可使用，6-8 周效果更佳
 - **替代方案对比**：数据量 <50 用 GPR，50-500 用 LightGBM，>500 用 TFT
+```

@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 算法定价公平性审计 — 群体公平指标与价格歧视检测
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1104.3919
 roadmap_phase: phase2
 ---
 
 # Skill Card: 算法定价公平性审计
 
-> **论文/方法来源**：Algorithmic Pricing and Price Discrimination (Dwork et al., 2012 公平性框架) + Fairness in Machine Learning (Hardt et al., 2016) + EU AI Act Article 10 定价合规
+> **论文**：Fairness Through Awareness (Dwork et al., 2012) | **年份**：2012  
+> **论文**：Equality of Opportunity in Supervised Learning (Hardt et al., 2016) | **年份**：2016  
+> **论文**：Price Discrimination in Algorithmic Pricing (Shiller, 2014) | **年份**：2014  
 > **领域**：11-AI人文 ↔ 17-价格优化 | **类型**: 跨域融合
 
 ## ① 算法原理
@@ -220,3 +223,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐☆☆（需要有群体标签数据，检验方法成熟）
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：欧美市场对算法定价公平性监管趋严，母婴品类涉及弱势群体（孕产期妇女），合规审计是入市前置条件
+```

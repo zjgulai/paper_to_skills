@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Seller Rating Attack Pattern — 卖家评分攻击模式识别恶意 A-to-Z 索赔检测
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1905.11622
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Seller-Rating-Attack-Pattern
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Temporal Anomaly Detection in E-Commerce Rating Systems | **年份**：2019
 
 **核心问题**：竞品或恶意买家可能通过提交虚假 A-to-Z 索赔来压低卖家评分（ODR 上升 → 账号风险增加）。A-to-Z 索赔与差评不同——它直接影响 Order Defect Rate（ODR），ODR > 1% 将触发账号调查，ODR > 2% 可能导致销售权暂停。
 
@@ -158,3 +161,4 @@ print("[✓] Seller-Rating-Attack-Pattern 测试通过")
 - **ROI量化**: ODR 控制在 1% 以下，年化保护 GMV 80-200 万元
 - **实施难度**: ⭐⭐（Seller Central 数据直接可用，分析逻辑简单）
 - **优先级**: ⭐⭐⭐⭐⭐（ODR 超限是最直接的账号停售风险）
+```

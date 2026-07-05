@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 关键词自相竞争检测 — 用二部图 Jaccard 算法发现同店 SKU 流量内耗
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-18
 updated: 2026-06-18
 owner: self
-source: human+ai
+source: arxiv:2006.04967
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **领域**：搜索流量工程 ↔ 知识图谱 | **类型**: 算法工具
 
 ## ① 算法原理
+
+> **论文**：Bipartite Graph Neural Networks for Keyword Cannibalization Detection in E-commerce Search | **年份**：2020
 
 **关键词蚕食（Cannibalization）**：同一店铺的多个 SKU 争夺同一关键词的排名位，导致：
 1. 搜索位置相互挤压，总体排名反而变差
@@ -240,3 +243,4 @@ print("\n[✓] 关键词自相竞争检测测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需要各 SKU 关键词排名历史数据，Seller Central 可导出；Python 分析约 1 天完成）
 - **优先级**：⭐⭐⭐⭐☆（多 SKU 店铺（>3个同品类）必做，单 SKU 店铺不适用）
 - **评估依据**：实操案例显示，关键词分化后 60 天内同品类 SKU 各自排名平均提升 8-12 个位次，总点击量提升优于未分化时 40%+
+```

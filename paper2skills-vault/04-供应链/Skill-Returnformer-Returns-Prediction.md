@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Returnformer Returns Prediction — 图 Transformer 电商退货预测
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: Returnformer-Returns-Prediction（退货风险预测）
 
 > **论文**：Returnformer: A Graph Transformer-Based Model for Predicting Product Returns in E-Commerce
+> **年份**：2023
 > **DOI**：10.3390/e28010072 | MDPI Entropy 2025-01 | **桥梁**: 04-供应链 ↔ 08-知识图谱 ↔ 14-用户分析 | **类型**: 跨域融合
 
 ---
@@ -124,3 +126,4 @@ print("[✓] Returnformer 退货预测测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，特征工程 + 简单 ML 模型即可实现 MVP）
 - **优先级**：⭐⭐⭐⭐⭐（跨境退货成本极高，是边际利润的最大侵蚀因素之一）
 - **评估依据**：论文 AUC=0.84，超越 4 种 ML 基线
+```

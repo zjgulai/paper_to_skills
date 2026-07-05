@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Omnichannel Inventory Sync — 跨站多平台库存实时同步
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2006.14786
 roadmap_phase: phase2
 ---
 
@@ -18,6 +19,8 @@ roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**：Inventory Management with Multi-Channel Demand and Real-Time Synchronization | **年份**：2020
 
 **核心思想**：母婴品牌通常同时运营 Amazon（FBA + FBM）、TikTok Shop、独立站（Shopify）三个或更多销售渠道。每个渠道有独立的库存管理系统，当一个渠道大卖时，其他渠道可能仍显示充足库存并继续接单 → **超卖**（无法履约）→ 差评 + 订单取消 + 账号处罚。
 
@@ -173,3 +176,4 @@ print("[✓] Omnichannel Inventory Sync 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要接入各渠道 API + 构建事件队列）
 - **优先级**：⭐⭐⭐⭐☆（多渠道运营必须面对，超卖一次可能永久损害账号健康）
 - **评估依据**：事件驱动库存同步是业界标准方案，多家 ERP 系统（Linnworks/Brightpearl）的核心功能
+```

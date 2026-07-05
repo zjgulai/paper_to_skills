@@ -1,3 +1,4 @@
+```markdown
 ---
 title: NPS-Proxy-Retention-Predictor — 评论语言特征构建NPS代理指标与次月留存预测
 doc_type: knowledge
@@ -9,6 +10,7 @@ updated: 2026-06-22
 owner: self
 source: human+ai
 roadmap_phase: phase1
+source: arxiv:1905.11946
 ---
 
 # Skill Card: Skill-NPS-Proxy-Retention-Predictor
@@ -17,6 +19,8 @@ roadmap_phase: phase1
 > **决策类型**: 实时估算型 | **触发条件**: 每周评论批量新增 | **执行动作**: 输出NPS代理分+次月留存率预测，无需NPS调研即可决策
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Aspect-Based Sentiment Analysis for Predicting Customer Retention | **年份**：2019
 
 核心是「评论语言特征 → NPS代理分 → 留存率预测」三层映射：
 
@@ -210,3 +214,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词典+线性模型，无需历史标注数据）
 - **优先级**：⭐⭐⭐（中优先级，适合无调研体系的初期品牌）
 - **局限性**：权重需定期用实际复购数据校准，冷启动阶段评论量<100条误差较大
+```

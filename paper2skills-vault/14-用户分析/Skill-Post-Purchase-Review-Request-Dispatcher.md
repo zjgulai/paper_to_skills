@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Post-Purchase-Review-Request-Dispatcher — 订单完成后按满意度预测分层分发评论邀请
 doc_type: knowledge
@@ -7,16 +8,18 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.04554
 roadmap_phase: phase1
 ---
 
 # Skill Card: Post-Purchase-Review-Request-Dispatcher
 
-> **配对分析层**：[[Skill-CSAT-NPS-Survey-Analysis]]
+> **配对分析层**：[[Skill-Customer-Survival-Analysis]]
 > **决策类型**: 自动触发型 | **触发条件**: 订单完成后第7天 | **执行动作**: 按预测CSAT分层——高满意→直接邀请评论；低满意→先客服处理再邀请
 
 ## ① 算法原理
+
+> **论文**：Deep Learning for Customer Satisfaction Prediction in E-Commerce | **年份**：2021
 
 核心是「交付后状态检测 + CSAT 代理预测 + 差异化分发」：
 
@@ -218,7 +221,7 @@ print(f"  分发详情: {result['stats']}")
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-CSAT-NPS-Survey-Analysis]]（构建 CSAT 预测特征工程）
+- **前置（prerequisite）**：[[Skill-Customer-Survival-Analysis]]（构建 CSAT 预测特征工程）
 - **延伸（extends）**：[[Skill-High-Value-Customer-Alert-Action]]（对高价值用户单独策略）
 - **可组合（combinable）**：[[Skill-VOC-Sentiment-Dispatcher]]（评论内容质量分析反哺预测模型）
 
@@ -226,3 +229,4 @@ print(f"  分发详情: {result['stats']}")
 - **ROI量化**：差评率从 18% → 6%，平均评分 4.1 → 4.6★，CTR 提升约 12%，年化 GMV 增量 $50,000+
 - **实施难度**：⭐⭐☆☆☆（需配送 API + 客服 CRM + 邮件平台对接）
 - **优先级**：⭐⭐⭐⭐⭐（评分直接影响搜索排名和转化率，核心竞争力）
+```

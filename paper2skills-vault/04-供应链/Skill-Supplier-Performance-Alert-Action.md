@@ -13,7 +13,7 @@ roadmap_phase: phase1
 
 # Skill Card: Supplier-Performance-Alert-Action
 
-> **配对分析层**：[[Skill-Supplier-Scorecard-Analytics]]
+> **配对分析层**：[[Skill-Supplier-Performance-Scorecard]]
 > **决策类型**: 自动触发型 | **触发条件**: 供应商 OTIF < 85% 连续3周 | **执行动作**: 触发备选供应商激活流程 + 主供应商预警通知
 
 ## ① 算法原理
@@ -228,9 +228,9 @@ print(f"  严重程度分布: {result['severity_summary']}")
 ```
 
 ## ④ 技能关联
-- **前置（prerequisite）**：[[Skill-Supplier-Scorecard-Analytics]]（计算多维供应商评分，OTIF 是核心指标之一）
+- **前置（prerequisite）**：[[Skill-Supplier-Performance-Scorecard]]（计算多维供应商评分，OTIF 是核心指标之一）
 - **延伸（extends）**：[[Skill-OOS-Emergency-Airfreight-Gate]]（供应商履约失败 → 触发紧急补货门控）
-- **可组合（combinable）**：[[Skill-Multi-Echelon-Inventory-Optimization]]（备选供应商激活后重新优化备货策略）
+- **可组合（combinable）**：[[Skill-Multi-Echelon-Inventory]]（备选供应商激活后重新优化备货策略）
 
 ## ⑤ 商业价值评估
 - **ROI量化**：供应链中断风险从 28% → 6%，年化避免缺货损失 $85,000；备选供应商激活成本约 $5,000/次

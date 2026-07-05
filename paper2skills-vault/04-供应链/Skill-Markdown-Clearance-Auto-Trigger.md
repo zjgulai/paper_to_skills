@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Markdown Clearance Auto Trigger — 库龄超标且库存积压时自动触发降价清仓阶梯
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.03274
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 库龄>45天 AND 库存>目标库存×1.5 | **执行动作**: 按预设降价阶梯（-10%/-20%/-30%）自动触发清仓
 
 ## ① 算法原理
+
+> **论文**：Dynamic Pricing and Inventory Management with Demand Learning | **年份**：2021
 
 核心是「库龄分级 + 库存超比检测 + 降价阶梯策略 + 收益预测」：
 
@@ -233,3 +236,4 @@ print(f"  摘要: {result['summary']}")
 - ROI预估：减少库存报废损失15-25%，提升库存周转率0.8-1.5次，年化价值$20,000-$50,000
 - 实施难度：⭐⭐☆☆☆（规则明确，需接入WMS库龄数据和定价系统）
 - 优先级：⭐⭐⭐⭐⭐
+```

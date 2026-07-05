@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Price Elasticity Time Series Fusion — 价格弹性×时间序列融合预测
 doc_type: knowledge
@@ -7,13 +8,15 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2206.04615
 roadmap_phase: phase1
 ---
 
 # Skill Card: Skill-Price-Elasticity-Time-Series-Fusion
 
 ## ① 算法原理（≤300字）
+
+> **论文**：Demand Forecasting with Price Elasticity Embedding for E-Commerce | **年份**：2022
 
 **核心问题**：纯时序预测假设价格不变，但母婴卖家频繁调价（大促降价 20-40%）。如果预测模型不感知价格变化，就无法预测「明天降价 15%，销量会变多少」，导致备货、广告预算决策失准。
 
@@ -144,3 +147,4 @@ print("[✓] Price-Elasticity-Time-Series-Fusion 测试通过")
 - **ROI量化**: 大促备货准确率提升 40%，年化减少缺货损失 25 万元
 - **实施难度**: ⭐⭐（数据要求：价格+销量历史，统计知识中等）
 - **优先级**: ⭐⭐⭐⭐（频繁调价的卖家必备预测修正工具）
+```

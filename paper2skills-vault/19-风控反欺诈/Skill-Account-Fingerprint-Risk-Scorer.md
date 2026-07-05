@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 账号指纹风险评分器 — 量化多账号关联被检测风险
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:2106.04520
 roadmap_phase: phase1
 ---
 
 # Skill Card: 账号指纹风险评分器
 
-> **论文**：Multi-Dimensional Account Fingerprinting and Risk Scoring for E-Commerce Platform Compliance
+> **论文**：Multi-Dimensional Account Fingerprinting and Risk Scoring for E-Commerce Platform Compliance | **年份**：2021
 > **领域**：账号合规风控 | **类型**：算法工具 | **桥梁**: 19-风控反欺诈 ↔ 16-智能体工程
 
 ## ① 算法原理
@@ -261,3 +262,4 @@ if __name__ == "__main__":
 - **ROI 预估**：单账号被封禁损失约50-300万元（重建期3-6个月）；提前识别中风险并整改，规避封号概率降低80%，年均规避损失价值约100-600万元
 - **实施难度**：⭐⭐☆☆☆（需要采集多维操作日志，技术中等）
 - **优先级**：⭐⭐⭐⭐⭐（多品牌运营的基础合规工具，开设新账号前必须评估）
+```

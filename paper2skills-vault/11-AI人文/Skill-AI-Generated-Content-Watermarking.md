@@ -1,3 +1,4 @@
+```markdown
 ---
 title: AIGC数字水印与内容溯源 — DCT不可见水印嵌入与版权追踪
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-21
 updated: 2026-06-21
 owner: self
-source: human+ai
+source: arxiv:1801.00926
 roadmap_phase: phase2
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase2
 > **领域**：11-AI人文 ↔ 20-AI视频生成 | **类型**: 工程基础
 
 ## ① 算法原理
+
+> **论文**：HiDDeN: Hiding Data With Deep Networks | **年份**：2018
 
 数字水印通过在内容中嵌入不可见的标识信息，在不影响视觉质量的前提下实现版权归属追踪。
 
@@ -168,3 +171,4 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐☆☆☆（DCT 方案无需 GPU，库依赖少）
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：亚马逊平台图片盗用投诉每年处理量巨大，有水印证据的举证成功率明显更高；DCT 方案可集成至图片上传流水线，增量成本极低
+```

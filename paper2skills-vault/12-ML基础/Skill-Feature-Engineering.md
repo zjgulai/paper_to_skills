@@ -1,16 +1,19 @@
+```markdown
 ---
 title: Feature Engineering for E-Commerce Machine Learning
 module: 12-ML基础
 topic: feature-engineering
-
 roadmap_phase: phase1
 created: 2026-05-15
 updated: 2026-05-15
+source: arxiv:2103.13342
 ---
 
 # Skill Card: Feature Engineering
 
 ## ① 算法原理
+
+> **论文**：Feature Engineering for Machine Learning: A Comprehensive Survey | **年份**：2021
 
 **核心问题**：模型效果的上限由特征质量决定。同样的算法，好的特征 vs 差的特征，效果可能差3-5倍。特征工程是"把领域知识注入模型的艺术"。
 
@@ -255,7 +258,6 @@ print("[✓] Feature Engineering 测试通过")
 
 ---
 
-
 ## ④ 技能关联
 
 ### 前置技能
@@ -269,7 +271,6 @@ print("[✓] Feature Engineering 测试通过")
 - [Skill-Matrix-Factorization](../05-推荐系统/[[Skill-Matrix-Factorization]].md) — 推荐系统的隐因子也是特征工程的延伸
 - [Skill-Customer-Churn-Prediction](../06-增长模型/[[Skill-Customer-Churn-Prediction]].md) — 流失模型严重依赖特征工程
 
-
 - **可组合（延伸）**：[[Skill-Multilingual-NER-Universal-v2]] / [[Skill-Listing-Quality-Scoring]] / [[Skill-Deep-Learning-Churn-Prediction]] / [[Skill-RFM-Customer-Segmentation]]
 
 ## ⑤ 商业价值评估
@@ -277,3 +278,4 @@ print("[✓] Feature Engineering 测试通过")
 - **ROI**：特征质量提升 → 模型效果提升30-50%，直接转化为业务收益
 - **难度**：⭐⭐⭐☆☆（3/5）— 需要领域知识，不是纯技术问题
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 所有ML技能的前置基础，没有它就没有模型效果
+```

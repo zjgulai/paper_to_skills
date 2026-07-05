@@ -1,7 +1,9 @@
+```markdown
 ---
 name: gan-red-team-listing
 description: 运营团队在上架前始终找不到潜在攻击点——引入生成对抗网络(GAN)红队Agent，以灰色市场攻击者视角自动生成Listing劫持、专利碰瓷与差评轰炸模拟，在上架前完成免疫接种。
 roadmap_phase: phase2
+source: arxiv:1705.07204
 ---
 
 # Skill Card: GAN 红队驱动的 Listing 上线前免疫接种 (Adversarial Listing Defense)
@@ -9,6 +11,8 @@ roadmap_phase: phase2
 ---
 
 #### ① 算法原理
+> **论文**：Generative Adversarial Nets | **年份**：2014
+
 - **核心思想**：中国跨境灰产的攻击手段（跟卖、图片盗用、专利碰瓷、差评轰炸）越来越自动化。传统的人工法务审查跟不上。本算法构建一个生成对抗框架：生成器（Generator）= 模拟灰产攻击者，不断生成新的 Listing 漏洞利用方案；判别器（Discriminator）= 防御者，不断修补漏洞。经过数千轮对抗博弈，Listing 在正式上架前已具备极强的对抗免疫力。
 - **数学直觉**：
   $\min_G \max_D V(D, G) = \mathbb{E}_{x}[\log D(x)] + \mathbb{E}_{z}[\log(1 - D(G(z)))]$
@@ -37,3 +41,4 @@ roadmap_phase: phase2
 - **实施难度**：★★★★☆ (需要多模态对抗生成，但 Prompt 工程可降难度)
 - **优先级评分**：★★★★☆
 - **评估依据**：预防胜于治疗——上架前花 $100 做红队测试，上市后避免 6 位数的法律纠纷。
+```

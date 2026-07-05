@@ -1,3 +1,4 @@
+```markdown
 ---
 title: HippoRAG — 多跳推理检索与知识图谱路径规划
 doc_type: knowledge
@@ -8,7 +9,7 @@ roadmap_phase: phase2
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
-source: human+ai
+source: arxiv:2405.14831
 ---
 
 # Skill Card: HippoRAG — 多跳推理检索与知识图谱路径规划
@@ -19,6 +20,8 @@ source: human+ai
 ---
 
 ## ① 算法原理
+
+> **论文**：HippoRAG: Long-term Memory for Large Language Models | **年份**：2024
 
 **HippoRAG** 受人类海马记忆（Hippocampus）启发：大脑通过索引（海马体）把分散存储的片段记忆（皮层）联系起来。HippoRAG 用知识图谱模拟这个机制：
 
@@ -279,3 +282,4 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐（复杂跨域诊断问题的突破方案，paper2skills diagnostic 页面的核心升级方向）
 
 **参考实现**：`FalkorDB/hipporag`（官方开源实现，支持 Neo4j + Qdrant 后端）
+```

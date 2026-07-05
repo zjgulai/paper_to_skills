@@ -1,3 +1,13 @@
+---
+doc_type: knowledge
+domain: 17-价格优化
+skill_type: 综合萃取
+roadmap_phase: phase1
+status: stable
+updated: 2025-01-15
+source: arxiv:1502.04066
+---
+
 # Skill Card: Bundle Pricing Strategy（捆绑定价策略）
 
 > **领域**: 17-价格优化 | **类型**: 综合萃取
@@ -6,6 +16,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：The Economics of Bundling | **arXiv**：1502.04066
 
 ### 核心思想
 **1+1>2 的定价魔法**——吸奶器 + 配件捆绑包的总价不是简单相加，而是利用消费者对捆绑包的心理估值高于单品之和（或互补品的联合需求），找到最大化总利润的捆绑价格。

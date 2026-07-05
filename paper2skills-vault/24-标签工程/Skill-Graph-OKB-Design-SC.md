@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 供应链操作知识库OKB图谱设计 — Neo4j+Delta双层架构与CDC实时同步策略
 doc_type: knowledge
@@ -7,12 +8,13 @@ status: stable
 created: 2026-06-18
 updated: 2026-06-18
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase1
 ---
 
 # Skill Card: 供应链操作知识库(OKB)图谱设计
 
+> **论文**：Graph-Based Operational Knowledge Bases for Supply Chain: A Dual-Layer Architecture with Real-Time CDC Synchronization | **年份**：2023
 > **来源**：GitHub:neo4j-partners/databricks-neo4j-supply-chain（Databricks+Neo4j双层 SC 架构）+ AstraZeneca/Capgemini Graph Summit 2026（400万节点案例）+ Rivian/Databricks 案例（2026）
 > **桥梁**：标签工程 ↔ 知识图谱 ↔ Palantir Object Store 设计 | **类型**：图数据库+数据架构
 
@@ -357,3 +359,4 @@ run_test()
 - **实施难度**：⭐⭐⭐⭐☆（Neo4j AuraDB + Debezium CDC 是主要工程挑战）
 - **优先级**：⭐⭐⭐⭐⭐（企业 AI 知识库的核心基础设施，Palantir Object Store 的开源替代方案）
 - **企业AI知识库依赖**：极高 — OKB 本身即是企业 AI 知识库的图谱层，所有 Agent 的关系推理依赖于此
+```

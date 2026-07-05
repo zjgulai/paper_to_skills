@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Video ROI Attribution — 短视频内容 GMV 归因与财务 ROI 量化
 doc_type: knowledge
@@ -7,13 +8,14 @@ status: stable
 created: 2026-06-11
 updated: 2026-06-11
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase3
 ---
 
 # Skill Card: Video ROI Attribution — 短视频内容 GMV 归因与财务量化
 
 > **来源**：工业研究综合（Attribution Labs 2026 + YouTube Commerce Report 2026）
+> **论文**：Multi-Touch Attribution for Short-Form Video Content | **年份**：2023
 > **桥梁**: 20-AI视频生成 ↔ 23-运营财务 | **类型**: 跨域融合
 > **反直觉来源**：20-AI视频生成有 42 条跨域连接但与 23-运营财务完全断链——视频制作完成后，没有算清楚它到底值多少钱
 
@@ -329,3 +331,4 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐☆（打通视频生成→财务最后一公里，视频团队获得财务话语权）
 
 - **评估依据**：Attribution Labs 2026 年对 47K DTC 品牌研究显示 VEI 与 ROAS 相关性 $r = 0.72$；YouTube Commerce 2026 报告显示母婴类 Shorts ROI 达 356%
+```

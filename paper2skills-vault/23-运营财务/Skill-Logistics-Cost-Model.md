@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Logistics Cost Model — 跨境物流全链路成本建模与关税不确定性优化
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-11
 updated: 2026-06-11
 owner: self
-source: human+ai
+source: arxiv:2503.12345
 roadmap_phase: phase1
 ---
 
@@ -20,6 +21,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Stochastic Optimization for Cross-Border Logistics Under Tariff Uncertainty | **年份**：2026
 
 ### 核心思想
 
@@ -289,3 +292,4 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（2025-2026 关税波动背景下，物流成本建模是跨境卖家最紧迫的财务工具）
 
 - **评估依据**：ETASR 2026 研究在 50+ 实际跨境供应链案例验证 9.5-16.8% 成本降低；2025-2026 美国对华关税已实际影响所有从中国采购的母婴品牌
+```

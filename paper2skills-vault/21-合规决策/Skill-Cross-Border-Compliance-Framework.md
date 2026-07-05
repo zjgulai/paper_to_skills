@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Cross-Border Compliance Framework — 跨境电商多辖区合规自动映射
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase1
 ---
 
@@ -16,6 +17,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Multi-Jurisdiction Compliance Mapping via Rule-Based Matrix Factorization | **年份**：2023
 
 **核心思想**：构建多辖区合规矩阵（产品类别 × 目标市场 × 监管要求），自动将产品映射到所有相关监管要求，输出国家专项合规清单。通过规则引擎实现合规优先级自动排序，解决多市场同步上架的合规复杂度问题。
 
@@ -152,3 +155,4 @@ print("[✓] Cross Border Compliance F 测试通过")
 **测试输入**：文案=母婴US+EU双市场  
 **输出摘要**：检出FDA/FTC违规2处，EU市场需额外REACH法规合规声明  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
+```

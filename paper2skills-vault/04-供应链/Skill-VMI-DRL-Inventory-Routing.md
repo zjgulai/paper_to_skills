@@ -1,3 +1,4 @@
+```markdown
 ---
 title: VMI DRL Inventory Routing — VMI 模式下库存补货与配送路径联合 DRL 优化
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase2
 ---
 
 # Skill Card: VMI-DRL-Inventory-Routing（VMI 库存路径联合优化）
 
-> **论文**：Enhanced multi-task deep reinforcement learning for the integrated inventory-routing problem under VMI mode
+> **论文**：Enhanced multi-task deep reinforcement learning for the integrated inventory-routing problem under VMI mode | **年份**：2025
 > **DOI**：10.1007/s44176-025-00053-2 | Springer 2025 | **桥梁**: 04-供应链 ↔ 18-物流履约 | **类型**: 跨域融合
 
 ---
@@ -142,3 +143,4 @@ print("[✓] VMI DRL 库存路径优化测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要 RL 框架或调用云服务）
 - **优先级**：⭐⭐⭐☆☆（有多城市自营仓的品牌优先级高，纯 FBA 品牌次之）
 - **评估依据**：论文在真实场景实验验证，相比启发式方法成本降低 15-20%
+```

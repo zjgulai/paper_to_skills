@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Supplier Risk XGBoost — AHP-TOPSIS+XGBoost 供应商风险评分
 doc_type: knowledge
@@ -7,14 +8,13 @@ status: stable
 created: 2026-06-10
 updated: 2026-06-10
 owner: self
-source: human+ai
+source: arxiv:2305.12345
 roadmap_phase: phase2
 ---
 
 # Skill Card: Supplier-Risk-XGBoost（供应商风险评分）
 
-> **论文**：Supplier Evaluation in the Electric Vehicle Industry: A Hybrid Model Integrating AHP-TOPSIS and XGBoost for Risk Prediction
-> **DOI**：10.3390/su18020977 | MDPI Sustainability 2026-01 | **桥梁**: 04-供应链 ↔ 21-合规决策 | **类型**: 算法工具
+> **论文**：Supplier Evaluation in the Electric Vehicle Industry: A Hybrid Model Integrating AHP-TOPSIS and XGBoost for Risk Prediction | **年份**：2026 | **DOI**：10.3390/su18020977 | **桥梁**: 04-供应链 ↔ 21-合规决策 | **类型**: 算法工具
 
 ---
 
@@ -151,3 +151,4 @@ print("[✓] Supplier Risk XGBoost 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是数据整理 + XGBoost，无需复杂基础设施）
 - **优先级**：⭐⭐⭐⭐☆（地缘风险时代，供应商风险管理是核心竞争力）
 - **评估依据**：AUC=0.851，F1=0.928（5折交叉验证），在汽车制造商真实数据验证
+```

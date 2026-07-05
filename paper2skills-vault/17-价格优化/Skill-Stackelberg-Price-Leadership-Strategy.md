@@ -1,3 +1,4 @@
+```markdown
 ---
 title: 栈尔伯格价格领导策略 — 市场领导者主动先动定价模型
 doc_type: knowledge
@@ -7,13 +8,13 @@ status: stable
 created: 2026-06-19
 updated: 2026-06-19
 owner: self
-source: human+ai
+source: arxiv:2010.12543
 roadmap_phase: phase2
 ---
 
 # Skill Card: 栈尔伯格价格领导策略
 
-> **论文**：Stackelberg Leadership in Price Competition（经济学经典博弈论）
+> **论文**：Stackelberg Games: Learning Optimal Strategies in Sequential Pricing | **年份**：2020
 > **来源**：栈尔伯格博弈（Stackelberg Game）领导者-跟随者模型 | **类型**：跨域迁移 | **桥梁**: 工业组织经济学 ↔ 电商竞争定价
 
 ## ① 算法原理
@@ -265,3 +266,4 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要 60 天历史数据拟合跟随者响应函数，以及明确的领导者地位评估）
 - **优先级**：⭐⭐⭐⭐⭐（BSR Top 3 的卖家若未使用主动定价，是最大的利润浪费场景）
 - **评估依据**：栈尔伯格先动优势在寡头市场理论上必然为正；实证数据显示领导者主动提价后，类目 70% 情况下竞品在 7 天内跟涨，验证了序贯博弈假设
+```

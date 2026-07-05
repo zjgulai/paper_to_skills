@@ -1,3 +1,4 @@
+```markdown
 ---
 title: CC-OR-Net条件级联有序残差网络LTV预测 — 结构分解破解零膨胀长尾分布的鲸鱼用户精准预测
 doc_type: knowledge
@@ -56,10 +57,20 @@ roadmap_phase: phase2
   3. 精准分层：P99+预测用户→专属客服+提前大促通知；P90-P99→专属优惠券；P50-P90→常规运营
 - **预期产出**：鲸鱼用户识别准确率从40%提升至约75%，VIP营销ROI提升约60%
 
+**三轨验证**：
+- **成本**：数据采集需整合订单、浏览、客服记录，约2人月开发；模型训练需GPU实例（约$500/月）；人力成本含1名ML工程师+1名运营，约$4万/年
+- **合规**：用户分层需符合GDPR/CCPA，不得基于敏感信息（种族、健康）做差异化定价；Amazon平台禁止对VIP用户公开显示不同价格，仅限私域触达
+- **风险**：过度识别鲸鱼用户可能导致竞品定向挖角；若VIP权益泄露，可能引发普通用户投诉"歧视"；需设置分层透明度与申诉机制
+
 **场景B：广告竞价LTV优化**
 
 - **业务问题**：Amazon SP广告出价策略基于"平均订单价值"，对高LTV用户出价不足（获客成本与LTV不匹配），对低LTV用户出价过高（浪费预算）
 - **CC-OR-Net出价集成**：以预测LTV替代平均AOV作为出价依据，对P99+预测用户提高出价上限（值得多花钱获客），对P10以下预测用户降低出价
+
+**三轨验证**：
+- **成本**：需接入Amazon广告API实时出价，开发约1人月；模型推理延迟需<50ms，建议部署轻量ONNX版本；竞价预算增加约20%（因高LTV用户出价提高）
+- **合规**：Amazon广告政策禁止基于用户画像（如预测LTV）做差异化出价，仅允许基于关键词/商品/受众属性；需改用"商品-用户组合特征"间接建模，避免直接使用用户ID
+- **风险**：若所有卖家都用LTV出价，高价值用户竞价成本可能被推高至无利可图；需设置出价上限（不超过LTV的30%）；平台可能审查异常出价模式
 
 ## ③ 代码模板
 
@@ -300,7 +311,7 @@ if __name__ == "__main__":
 
 ## ④ 技能关联
 
-- **前置（prerequisite）**：[[Skill-User-LTV-Prediction]]（基础LTV模型，本Skill改进了分布假设）、[[Skill-RFM-Analysis]]（RFM特征是CC-OR-Net的主要输入）
+- **前置（prerequisite）**：[[Skill-LTV-Prediction-ZILN]]（基础LTV模型，本Skill改进了分布假设）、[[Skill-RFM-Analysis]]（RFM特征是CC-OR-Net的主要输入）
 - **延伸（extends）**：[[Skill-CASE-Cadence-Aware-Repurchase-Prediction]]（复购节奏预测+LTV预测双驱动增长运营）、[[Skill-Customer-Churn-Prediction]]（流失预测与LTV联动：高LTV且高流失风险→优先挽留）
 - **可组合（combinable）**：[[Skill-Autobidding-Budget-Allocation-Optimization]]（LTV驱动的广告竞价预算分配）、[[Skill-KLong-Long-Horizon-Agent-Training]]（超长时域训练用于LTV的长期价值预测）
 
@@ -311,3 +322,4 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（LTV是所有增长运营的核心指标，精准识别高价值用户是ROI最高的运营杠杆）
 - **适用规模**：有至少6个月购买历史的10万+用户平台；数据量越大，分布越稳定，模型越准
 - **数据依赖**：用户购买历史（金额/频率/时间）、RFM特征；零LTV用户也要包含在内（模拟真实分布）
+```

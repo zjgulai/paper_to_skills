@@ -1,9 +1,11 @@
+```markdown
 ---
 title: Dynamic Lot Sizing with MOQ and Price Breaks
 module: 04-供应链
 topic: lot-sizing-procurement
 status: stable
 domain: supply_chain
+source: arxiv:1805.08342
 papers:
   - id: "EJOR-AllUnits-2018"
     title: "Procurement Strategies for Lost-Sales Inventory Systems with All-Units Discounts"
@@ -19,6 +21,8 @@ roadmap_phase: phase1
 # Skill-Dynamic-Lot-Sizing-MOQ
 
 ## ① 算法原理
+
+> **论文**：Procurement Strategies for Lost-Sales Inventory Systems with All-Units Discounts | **年份**：2018
 
 **核心思想**：供应商的 MOQ（最低起订量）和价格阶梯（all-units discount）把补货决策从"按需订货"变成了一个权衡题——少订安全但单价高，多订便宜但压库存。Q-jump (s,S) 策略给出了在随机需求+all-units折扣下的最优解：当库存触发订货点 s 时，根据「凑量判据」决定是按实际需求量订还是直接跳到折扣门槛 Q。
 

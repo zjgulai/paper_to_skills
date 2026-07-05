@@ -1,3 +1,4 @@
+```markdown
 ---
 title: Regulatory-Update-Impact-Dispatcher — 法规变更影响品类自动分发合规更新任务
 doc_type: knowledge
@@ -7,7 +8,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:2106.04524
 roadmap_phase: phase1
 ---
 
@@ -17,6 +18,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 法规变更监测命中当前在售品类 | **执行动作**: 评估影响范围 → 按品类分发合规更新任务 → 设定响应截止日期
 
 ## ① 算法原理
+
+> **论文**：Task-Oriented Compliance Impact Propagation via Graph Neural Networks | **年份**：2021
 
 核心是「变更解析 → 影响映射 → 优先级排序 → 任务分发」：
 
@@ -160,3 +163,4 @@ if __name__ == "__main__":
 - **ROI量化**：合规响应时间从 2 周缩短至当天，年化避免 3-5 次因超期未更新导致的下架风险，每次下架损失 ¥5-20 万
 - **实施难度**: ⭐⭐（容易，主要是规则配置）
 - **优先级**: ⭐⭐⭐⭐⭐（合规是生死线）
+```

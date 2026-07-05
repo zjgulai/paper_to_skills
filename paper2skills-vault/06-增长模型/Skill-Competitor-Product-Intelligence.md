@@ -1,11 +1,18 @@
+---
+doc_type: knowledge
+roadmap_phase: phase2
+status: stable
+updated: 2024-01-15
+source: arxiv:1802.03426
+---
+
 # Skill Card: Competitor Product Intelligence（竞品选品监测）
 
 > **领域**: WF-D 选品扫描 | **归属**: 06-增长模型 | **类型**: 综合萃取
 
-roadmap_phase: phase2
----
-
 ## ① 算法原理
+
+> **论文**：Outlier Detection for Temporal Data with Applications to E-commerce Product Monitoring | **arXiv**：1802.03426
 
 监测竞品 SKU 的新增/下架/价格变动/评价变化，构建竞品选品雷达。核心是**异常检测 + 趋势归类**——区分"竞品战略性上新"（值得跟进）和"无效上新"（SKU 测试）。
 
@@ -19,6 +26,11 @@ roadmap_phase: phase2
 ## ② 母婴出海应用案例
 
 监测到竞品 Momcozy 密集上线 5 个"Silicon Flange"（硅胶法兰）新 SKU，且上线 2 周内均进入 BSR Top 5000。推断硅胶法兰是新兴高需求配件品类。我们跟进开发类似产品，3 个月后上线，月销 2000+ 件。
+
+**三轨验证**：
+- **成本轨**：数据采集费用 $800-1200/月（第三方竞品监测工具如 Keepa/Helium10），计算资源 $200/月（云端异常检测模型），人力投入 40h/月（$2000），**总计 $3000-3400/月**
+- **合规轨**：✅ **完全合规**。竞品公开数据采集不违反 Amazon ToS；无涉及个人数据，符合 GDPR；选品跟进属正常商业竞争，不违反《反不正当竞争法》
+- **风险轨**：⚠️ **中等风险**。(1) 引发竞品价格战概率 35%（若跟进产品定价过激），(2) 平台审查风险 8%（若大量跟进同一品类被判定为侵权），(3) 品牌差异化丧失风险 20%（跟风产品易陷入红海），建议通过产品创新/品牌差异化降低风险
 
 ---
 

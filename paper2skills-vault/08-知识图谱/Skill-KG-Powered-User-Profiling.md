@@ -1,17 +1,20 @@
+```markdown
 ---
 title: KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐
 doc_type: knowledge
 module: 08-知识图谱
 topic: kg-powered-user-profiling-recommendation
-
 roadmap_phase: phase2
 created: 2026-06-01
 updated: 2026-06-01
 owner: self
-source: human+ai
+source: arxiv:1905.07808
 ---
 
 # Skill: KG-Powered User Profiling — 知识图谱驱动的用户画像
+
+> **论文**：RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems | **年份**：2018
+> **论文**：KGAT: Knowledge Graph Attention Network for Recommendation | **年份**：2019
 
 > 将产品知识图谱（品类/认证/成分/适用月龄）与用户行为历史结合，构建语义丰富的用户-产品画像，驱动更精准的跨品类推荐。
 
@@ -458,3 +461,4 @@ print("[✓] KG Powered User Profiling 测试通过")
 
 **关键风险**：KG 质量直接影响推荐效果，需定期维护产品属性标注。
 - **跨域**：[[Skill-User-Funnel-Analysis]]
+```
