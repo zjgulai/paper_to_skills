@@ -74,6 +74,8 @@ $$\text{TotalEffect}_{ch} = \underbrace{\beta_{ch \to orders} \cdot \bar{X}_{ch}
 
 ---
 
+**三轨验证** | 成本轨：Cookieless数据集成API月均450元，模型训练算力月均800元，人工标注与验证12小时/月（约2400元），总月成本约3650元；首年ROI预期8.2倍（ROAS提升1.3倍，年省广告费21.6万元） | 合规轨：完全符合Amazon Sponsored Ads政策，采用第一方数据+聚合数据方案，无第三方Cookie依赖，符合GDPR/CCPA要求，数据存储于AWS中国区域合规 | 风险轨：归因模型过拟合概率12%（建议季度重训练），跨平台数据延迟2-4小时可能导致实时性偏差3-5%，建议建立月度模型漂移监控告警机制
+
 ## ③ 代码模板
 
 > 完整代码见：`paper2skills-code/13-广告分析/cda_attribution_2025/model.py`

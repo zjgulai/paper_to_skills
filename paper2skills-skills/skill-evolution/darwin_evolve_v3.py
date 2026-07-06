@@ -343,10 +343,19 @@ def targeted_patch(skill_path: Path, patch_type: str) -> str:
             timeout=60
         )
         raw = resp.json()["choices"][0]["message"]["content"]
-        m = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
-        if not m:
-            return ""
-        data = json.loads(m.group(0))
+        raw = re.sub(r'^```(?:json)?\s*', '', raw.strip())
+        raw = re.sub(r'\s*```$', '', raw)
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError:
+            m1 = re.search(r'"scenario1_track"\s*:\s*"((?:[^"\\]|\\.)*)"', raw, re.DOTALL)
+            m2 = re.search(r'"scenario2_track"\s*:\s*"((?:[^"\\]|\\.)*)"', raw, re.DOTALL)
+            if not m1:
+                return ""
+            data = {
+                "scenario1_track": m1.group(1).replace('\\"', '"'),
+                "scenario2_track": m2.group(1).replace('\\"', '"') if m2 else "",
+            }
         track1 = data.get("scenario1_track", "")
         track2 = data.get("scenario2_track", "")
         if not track1:
