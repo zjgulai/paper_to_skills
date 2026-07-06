@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Baby Age Aware Recommendation — 基于推断婴儿月龄的实时品类推荐动态切换
 doc_type: knowledge

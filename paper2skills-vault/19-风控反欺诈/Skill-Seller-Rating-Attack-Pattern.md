@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Seller Rating Attack Pattern — 卖家评分攻击模式识别恶意 A-to-Z 索赔检测
 doc_type: knowledge
@@ -161,4 +160,3 @@ print("[✓] Seller-Rating-Attack-Pattern 测试通过")
 - **ROI量化**: ODR 控制在 1% 以下，年化保护 GMV 80-200 万元
 - **实施难度**: ⭐⭐（Seller Central 数据直接可用，分析逻辑简单）
 - **优先级**: ⭐⭐⭐⭐⭐（ODR 超限是最直接的账号停售风险）
-```

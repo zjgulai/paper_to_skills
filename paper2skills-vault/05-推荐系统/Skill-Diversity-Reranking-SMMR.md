@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Diversity-Aware Reranking with SMMR
 module: 05-推荐系统
@@ -204,4 +203,3 @@ print("[✓] Diversity Reranking SMMR 测试通过")
 - **ROI**：长尾GMV提升15-30%，新品冷启动周期缩短50%
 - **难度**：⭐⭐☆☆☆（2/5）— 轻量后处理，A/B测试友好
 - **优先级**：⭐⭐⭐⭐☆（4/5）— 直接替换现有重排模块，落地快
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Agent ROI 测量框架 — 量化 AI Agent 实际商业价值的三维评估体系
 doc_type: knowledge
@@ -274,4 +273,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（主要是数据打通，工程量小）
 - **优先级**：⭐⭐⭐⭐⭐（CEO/CFO 必看，是所有 Agent 项目立项和续投的前置条件）
 - **典型输出**：季度 Agent ROI 汇报 PPT 的核心数据页，格式：「投入 $X 万 → 产出 $Y 万 → 净 ROI Z%」
-```

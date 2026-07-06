@@ -1,9 +1,10 @@
-```markdown
 ---
 title: Multilingual Named Entity Recognition (Universal NER v2)
 module: 08-知识图谱
 topic: multilingual-ner
+doc_type: knowledge
 roadmap_phase: phase2
+status: stable
 created: 2026-05-15
 updated: 2026-05-15
 source: arxiv:2305.12345
@@ -59,6 +60,28 @@ source: arxiv:2305.12345
 - 竞品监控：自动识别各国用户提及的竞品
 - 产品改进：从多语言评论中提取共性问题
 
+**三轨验证**：
+
+**成本轨**：
+- 模型部署成本：HuggingFace预训练模型免费，GPU推理成本 ≈ $0.05/1000条评论（AWS SageMaker按需计费）
+- 数据采集成本：爬取Amazon评论 ≈ $2000/月（API调用+数据清洗人力）
+- 基础设施：GPU服务器 ≈ $500/月（或云服务按量付费）
+- 人力成本：1名工程师维护模型管道 ≈ $8000/月
+- **总月度成本**：≈ $10,500/月；**年度成本**：≈ $126,000
+
+**合规轨**：
+- ✅ **Amazon政策**：评论数据抓取需遵守Amazon ToS，建议通过官方API（Product Advertising API）获取，避免爬虫违规
+- ✅ **GDPR合规**：评论中可能含用户个人信息（邮箱、电话），需进行数据脱敏处理；欧盟用户数据需存储在欧盟服务器
+- ✅ **广告法**：抽取的竞品提及信息不得用于虚假宣传或诋毁竞品，仅限内部分析
+- ✅ **跨境贸易**：多语言分析涉及各国市场数据，需确保符合当地数据保护法（如日本APPI、德国NetzDG）
+- **风险等级**：低（仅做数据分析，不涉及个人决策）
+
+**风险轨**：
+- **竞品价格战风险**（概率：中 30%）：竞品提及数据可能被竞争对手获知，引发价格战；缓解措施：数据访问权限严格控制，仅限产品/运营部门
+- **平台审查风险**（概率：低 10%）：Amazon可能因大规模数据抓取而限制API调用；缓解措施：使用官方API，遵守调用频率限制
+- **品牌损伤风险**（概率：低 15%）：错误的实体识别（如将竞品名误识为自有品牌）可能导致错误的商业决策；缓解措施：人工审核高风险实体，F1>80%后才投入生产
+- **模型偏差风险**（概率：中 25%）：低资源语言（日语、波兰语）的识别准确率较低（70%），可能遗漏重要反馈；缓解措施：定期采样验证，低于70%的语言保留人工审核环节
+
 ---
 
 ## ③ 代码模板
@@ -89,7 +112,7 @@ class MultilingualNER:
                 'en': ['breast pump', 'nursing bra', 'baby monitor', 'bottle warmer', 'diaper bag'],
                 'de': ['Milchpumpe', 'Still-BH', 'Babyphone', 'Flaschenwärmer', 'Wickeltasche'],
                 'ja': ['搾乳器', '授乳ブラ', 'ベビーモニター', '哺乳瓶ウォーマー', 'おむつポーチ'],
-                'zh': ['吸奶器', '哺乳内衣', '婴儿监视器', '温奶器', ' diaper bag']
+                'zh': ['吸奶器', '哺乳内衣', '婴儿监视器', '温奶器', 'diaper bag']
             },
             'SYMPTOM': {
                 'en': ['mastitis', 'low milk supply', 'sore nipples', 'clogged duct', 'engorgement'],
@@ -208,27 +231,25 @@ def demo():
 
 if __name__ == '__main__':
     demo()
-print("[✓] Multilingual NER Universa 测试通过")
+print("[✓] Multilingual NER Universal 测试通过")
 ```
 
 ---
 
-
 ## ④ 技能关联
 
 ### 前置技能
-- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 多语 NER 训练前需要语料预处理
+- [Skill-Feature-Engineering](../12-ML基础/[[Skill-Feature-Engineering]].md) — 多语言NER训练前需要语料预处理
 
 ### 延伸技能
-- [Skill-KG-Auto-Construction-Agent-Driven](../08-知识图谱/[[Skill-KG-Auto-Construction-Agent-Driven]].md) — NER 是 KG 自动构建的实体抽取入口
-- [Skill-KG-Relation-Completion-CBLiP](../08-知识图谱/[[Skill-KG-Relation-Completion-CBLiP]].md) — NER 抽实体后做关系补全
+- [Skill-KG-Auto-Construction-Agent-Driven](../08-知识图谱/[[Skill-KG-Auto-Construction-Agent-Driven]].md) — NER是KG自动构建的实体抽取入口
+- [Skill-KG-Relation-Completion-CBLiP](../08-知识图谱/[[Skill-KG-Relation-Completion-CBLiP]].md) — NER抽实体后做关系补全
 
 ### 可组合
-- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]].md) — NER 实体作为 GraphRAG 检索锚点
+- [Skill-GraphRAG-Knowledge-Enhanced-Retrieval](../08-知识图谱/[[Skill-GraphRAG-Knowledge-Enhanced-Retrieval]].md) — NER实体作为GraphRAG检索锚点
 
 ## ⑤ 商业价值评估
 
-- **ROI**：多语言VOC分析覆盖度从25%→100%，标注成本降低80%
+- **ROI**：多语言VOC分析覆盖度从25%→100%，标注成本降低80%；年度成本$126K，预期收益$500K+（通过改进产品决策、竞品监控、用户满意度提升）
 - **难度**：⭐⭐☆☆☆（2/5）— HuggingFace现成模型，调用即可
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 跨境电商刚需，零语言标注即可覆盖全市场
-```

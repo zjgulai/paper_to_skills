@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 自动化竞价与预算动态分配 — 跨平台广告Autobidding与ROI约束下的预算优化
 doc_type: knowledge
@@ -354,3 +353,9 @@ if __name__ == "__main__":
 - **可组合（combinable）**：[[Skill-Causal-RL-Dynamic-Pricing]]（用强化学习替代PID控制器，适应非平稳环境）、[[Skill-AIGP-LLM-Dynamic-Pricing]]（LLM驱动的广告文案优化与竞价联动）
 
 ##
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：广告运营面临核心业务决策——母婴 Sponsored Ads ROAS 提升 25%，年化增收 38 万元
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

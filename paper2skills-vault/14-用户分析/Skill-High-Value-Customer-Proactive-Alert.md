@@ -1,4 +1,3 @@
-```markdown
 ---
 title: High Value Customer Proactive Alert — 高价值客户出现沉默信号时自动触发客服主动联系
 doc_type: knowledge
@@ -240,4 +239,3 @@ for a in result["alert_list"]:
 - ROI预估：高价值客户主动挽回率提升至50-60%（vs 被动20%），年化减少高LTV流失$60,000-$100,000
 - 实施难度：⭐⭐☆☆☆（规则清晰，需接入CRM和活跃度数据）
 - 优先级：⭐⭐⭐⭐⭐
-```

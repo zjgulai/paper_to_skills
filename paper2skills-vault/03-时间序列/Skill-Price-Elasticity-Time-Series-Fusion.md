@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Price Elasticity Time Series Fusion — 价格弹性×时间序列融合预测
 doc_type: knowledge
@@ -147,4 +146,3 @@ print("[✓] Price-Elasticity-Time-Series-Fusion 测试通过")
 - **ROI量化**: 大促备货准确率提升 40%，年化减少缺货损失 25 万元
 - **实施难度**: ⭐⭐（数据要求：价格+销量历史，统计知识中等）
 - **优先级**: ⭐⭐⭐⭐（频繁调价的卖家必备预测修正工具）
-```

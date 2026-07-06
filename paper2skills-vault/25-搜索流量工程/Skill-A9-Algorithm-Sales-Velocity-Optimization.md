@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-A9-Algorithm-Sales-Velocity-Optimization — A9 算法销量速度优化
 doc_type: knowledge
@@ -173,4 +172,3 @@ print("\n[✓] A9-Algorithm-Sales-Velocity-Optimization 测试通过")
 - **ROI**：前7天促销投入约 $2,000-3,000 → 拉动年化自然流量价值 15-25 万元（排名 Top 50 后 ACOS 降至 12-15%）
 - **实施难度**：⭐⭐☆☆☆（主要依赖 PPC 和闪购操作，无需复杂技术）
 - **优先级**：⭐⭐⭐⭐⭐（新品上架必做，投入产出比最高的搜索流量工程动作）
-```

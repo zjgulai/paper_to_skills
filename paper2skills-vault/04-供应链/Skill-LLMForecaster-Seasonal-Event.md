@@ -1,4 +1,3 @@
-```markdown
 ---
 title: LLMForecaster Seasonal Event — LLM 增强的季节性事件需求预测
 doc_type: knowledge
@@ -142,4 +141,3 @@ print("[✓] LLMForecaster 季节性事件预测测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，无需训练模型，接入 LLM API 即可）
 - **优先级**：⭐⭐⭐⭐⭐（大促备货是母婴跨境最高频、最高风险的决策场景）
 - **评估依据**：论文在大型零售商数据上验证 MAPE 降低 15-23%
-```

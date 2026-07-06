@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Hijacker Seller Network Analysis — 跟卖卖家网络图谱识别有组织的跟卖集团
 doc_type: knowledge
@@ -162,4 +161,3 @@ print("[✓] Hijacker-Seller-Network-Analysis 测试通过")
 - **ROI量化**: Buy Box 损失率从 35% 降至 8%，年化保护 GMV 50-100 万元
 - **实施难度**: ⭐⭐⭐（需要 Keepa 历史数据和 Seller 信息采集）
 - **优先级**: ⭐⭐⭐⭐（品牌卖家反跟卖的升级武器）
-```

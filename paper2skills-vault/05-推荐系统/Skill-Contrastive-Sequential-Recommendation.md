@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Contrastive Sequential Recommendation — 对比学习序列推荐：高质量自监督训练
 doc_type: knowledge
@@ -269,4 +268,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（2025-2026 推荐算法最活跃方向；完全空白；填补推荐系统↔ML基础↔用户分析 三域弱连接）
 
 - **评估依据**：QMPCL (arXiv 2605.11707, 2026) 在 Amazon/Yelp 数据集超越 SASRec 8-15%；对比学习在数据稀疏电商场景的优越性已被 SimCLR4Rec 等多篇论文验证
-```

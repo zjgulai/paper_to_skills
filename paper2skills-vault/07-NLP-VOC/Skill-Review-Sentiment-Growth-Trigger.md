@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Review-Sentiment-Growth-Trigger — 评论情感趋势监控与产品迭代自动触发
 doc_type: knowledge
@@ -185,4 +184,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词典规则+滚动均值，无需ML模型）
 - **优先级**：⭐⭐⭐⭐（直接保护转化率，对高流量SKU ROI极高）
 - **适用品类**：安全敏感型母婴品（奶嘴/奶瓶/辅食）效果最显著
-```

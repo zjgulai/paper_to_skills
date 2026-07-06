@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Adaptive Crawl Scheduling — 自适应爬取调度：Sleeping Bandit + 神经质量优先级
 doc_type: knowledge

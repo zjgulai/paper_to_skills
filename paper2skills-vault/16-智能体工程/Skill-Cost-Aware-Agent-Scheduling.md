@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: Cost-Aware Agent Scheduling（成本感知智能体调度）
 
 > **领域**: 16-智能体工程 | **类型**: 综合萃取 | **难度**: ⭐⭐⭐☆☆

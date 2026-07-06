@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-FBA-Fee-Waterfall-Attribution — FBA费用瀑布归因
 doc_type: knowledge
@@ -150,4 +149,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（直接影响利润底线） |
 | 数据要求 | Amazon 账单明细 + SKU 尺寸/重量数据 |
 | 典型收益 | 发现 LTSF 泄漏后，3 个月回收费用损失 5-15 万元 |
-```

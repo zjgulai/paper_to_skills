@@ -1,4 +1,3 @@
-```markdown
 ---
 title: FActScore — 原子声明级事实核查流水线
 doc_type: knowledge
@@ -276,4 +275,3 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐⭐（知识库质量的最后防线，入库流水线 P0 必做）
 
 **延伸**：结合 PIVE 迭代修正，可将 FActScore 从评测工具升级为自动纠错系统
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Graph Neural Lookalike Propagation — 知识图谱关系传播扩展高质量相似受众
 doc_type: knowledge

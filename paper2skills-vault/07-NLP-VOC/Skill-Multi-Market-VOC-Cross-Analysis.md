@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Multi-Market-VOC-Cross-Analysis — 多市场VOC交叉分析
 doc_type: knowledge
@@ -6,10 +5,18 @@ module: 07-NLP-VOC
 topic: multi-market-voc-cross-analysis
 status: stable
 created: 2026-06-22
-updated: 2026-06-22
+updated: 2024-12-19
 owner: self
 source: arxiv:2104.08678
-roadmap_phase: phase1
+roadmap_phase: phase2
+tags:
+  - voc
+  - cross-market
+  - nlp
+  - localization
+  - sentiment-analysis
+difficulty: intermediate
+estimated_time: 45min
 ---
 
 # Skill Card: Skill-Multi-Market-VOC-Cross-Analysis
@@ -221,4 +228,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（多站点运营后必装） |
 | 数据要求 | 各市场 300+ 条评论（小类目可降至 100 条） |
 | 典型收益 | 识别德国/日本市场特有痛点，本地化改造后月销翻倍 |
-```

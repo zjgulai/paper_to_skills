@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RFM Campaign Auto Dispatcher — 按RFM分群自动映射并触发差异化营销序列
 doc_type: knowledge
@@ -248,4 +247,3 @@ for d in result["dispatch_queue"]:
 - ROI预估：At Risk群体挽回率提升至25-35%，年化增量LTV $50,000-$80,000
 - 实施难度：⭐⭐☆☆☆（RFM计算标准化，需对接CRM和邮件平台API）
 - 优先级：⭐⭐⭐⭐⭐
-```

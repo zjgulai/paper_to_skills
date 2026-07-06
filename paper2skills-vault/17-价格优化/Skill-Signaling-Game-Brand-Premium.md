@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Signaling Game for Brand Premium—价格作为质量信号
 doc_type: knowledge
@@ -104,4 +103,3 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐⭐☆
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：直接影响高端品牌心智与长期毛利，不适合短期粗暴促销
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: SmartVector自感知向量嵌入 — 时间感知+置信度衰减+关系感知的活嵌入框架
 doc_type: knowledge

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Amazon A10 Algorithm Ranking — 亚马逊搜索排名因子建模与 Listing 可见度优化
 doc_type: knowledge
@@ -343,4 +342,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（Amazon 仍是最大跨境流量来源，A10 理解是核心竞争力）
 
 - **评估依据**：PP-GLAM 在 Amazon Shopping Queries 公开数据集验证 F1 提升 20-28%；COSMO 在 SIGMD 2024 发表，Amazon 内部 A/B 验证 +60% 相关性提升
-```

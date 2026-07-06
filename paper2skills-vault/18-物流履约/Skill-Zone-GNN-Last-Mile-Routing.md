@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Zone-GNN — 区域化最后一公里路径优化：GNN + 指针网络
 doc_type: knowledge
@@ -315,4 +314,3 @@ if __name__ == "__main__":
   - 纯 FBA 卖家优先级低（Amazon 已有路径优化）
 
 - **评估依据**：论文在 Amazon Last Mile Routing Research Challenge 数据集上，Zone-based 方法相比纯 GNN 提升路径质量 8.3%，相比启发式方法提升 15.7%
-```

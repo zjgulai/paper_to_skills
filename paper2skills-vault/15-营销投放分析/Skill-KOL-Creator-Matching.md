@@ -1,4 +1,3 @@
-```markdown
 ---
 title: KOL Creator Matching — KOL/达人精准匹配与 ROI 预测
 doc_type: knowledge
@@ -168,4 +167,3 @@ print("[✓] KOL Creator Matching 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，数据来自 MCN 提供 + 公开平台数据）
 - **优先级**：⭐⭐⭐⭐☆（KOL 投入是品牌第二大营销支出，选人精准度直接决定 ROI）
 - **评估依据**：多维匹配框架结合 influencer marketing 行业最佳实践，母婴品类历史投放数据验证
-```

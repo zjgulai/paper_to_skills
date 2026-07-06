@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: Multi-Armed Bandit Algorithm for Mother-Baby Cross-Border E-commerce
 
 roadmap_phase: phase1

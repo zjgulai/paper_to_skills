@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Email Sequence RL Optimizer — 邮件序列强化学习优化：自动发现最优营养序列
 doc_type: knowledge
@@ -312,4 +311,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（独立站邮件营销是 DTC 最重要的保留渠道；RL 优化比 A/B 测试更有效；桥接 营销↔增长模型↔智能体工程）
 
 - **评估依据**：RL 邮件序列优化在 Netflix/Spotify 等平台有实际部署验证；静态规则→RL 的 CTR 提升 20-35% 已有多个 DTC 品牌案例
-```

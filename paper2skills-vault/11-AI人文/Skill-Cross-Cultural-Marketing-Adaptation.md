@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Cross-Cultural Marketing Adaptation — 多语言 CAM 嵌入驱动的跨文化营销适配
 doc_type: knowledge
@@ -231,4 +230,3 @@ print(f"[✓] CAM 跨语言嵌入测试通过 — 匹配准确率 {acc_cam:.1%}�
 - **实施难度**：⭐⭐⭐☆☆（需调用预训练嵌入 API 或本地部署 FP8 量化模型，无需从头训练）
 - **优先级**：⭐⭐⭐⭐☆（东南亚电商增速 > 30%/年，先发优势明显）
 - **关键前提**：需要目标语言关键词库（可从 Shopee/Lazada 后台导出），无需标注数据
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: VOC-Churn-Signal-Extraction — 差评文本语义流失信号提取与流失概率预测
 doc_type: knowledge
@@ -198,4 +197,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词典维护+TF-IDF，无需GPU）
 - **优先级**：⭐⭐⭐⭐（直接接入复购运营系统，ROI清晰）
 - **数据要求**：月均≥200条1-3星评论，用户ID可关联
-```

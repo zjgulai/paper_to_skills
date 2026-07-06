@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill Registry — 技能注册表与动态发现
 doc_type: knowledge
@@ -258,5 +257,4 @@ python skill_registry.py
 [MAS Orchestrator]
     ↓
 [Agent 执行]
-```
 ```

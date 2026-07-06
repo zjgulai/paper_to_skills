@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI
 doc_type: knowledge
@@ -134,4 +133,3 @@ python -m paper2skills_code.ai_humanities.emotional_ai.model
 **测试输入**：工单=含ANGRY情绪关键词  
 **输出摘要**：情绪识别高风险用户，自动升级人工处理，A-to-Z索赔风险降低40%  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
-```

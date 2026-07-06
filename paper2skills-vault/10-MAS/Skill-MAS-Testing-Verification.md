@@ -568,3 +568,9 @@ if __name__ == "__main__":
 - **延伸（extends）**：[[Skill-Compliance-Scored-Guardrail-Orchestration]]（测试验证结果驱动合规护栏策略）
 - **延伸（extends）**：[[Skill-MAS-Resource-Scheduling]]（Agent 测试后的资源调度优化）
 - **可组合（combinable）**：[[Skill-ReliabilityBench-Agent-Reliability]]（组合：可靠性基准测试 + 测试验证框架覆盖 Agent 质量全面评估）
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：AI 工程师面临核心业务决策——MAS 自动化率提升 70%，年化节省运营人力 42 万元
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

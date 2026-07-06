@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Causal Mediation Analysis — Decomposing "Why It Works"
 doc_type: knowledge

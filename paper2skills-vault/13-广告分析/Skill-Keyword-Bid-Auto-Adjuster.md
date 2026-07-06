@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Keyword-Bid-Auto-Adjuster — 关键词转化率偏差自动调整出价
 doc_type: knowledge
@@ -245,4 +244,3 @@ for a in result["adjustments"]:
 - **ROI量化**：广告 ACoS 从 32% → 24%，月均广告花费 $15,000，年化增加利润 $14,400；每月节省人工调价时间 8h
 - **实施难度**：⭐⭐☆☆☆（需广告平台 API 读写 + 统计检验模块）
 - **优先级**：⭐⭐⭐⭐⭐（关键词出价是广告效率最直接的调节杠杆）
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Amazon Compliance Error Auto-Resolver — 合规错误码语义解析与修复自动化
 doc_type: knowledge
@@ -360,4 +359,3 @@ if __name__ == "__main__":
 - 实施难度：⭐☆☆☆☆（纯知识库查找，零ML依赖，随政策更新维护知识库即可）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：7月8日后错误频率预计上升3-5倍（全行业eFiling合规期），快速修复能力直接决定竞争位次
-```

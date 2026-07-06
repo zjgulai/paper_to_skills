@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Agent SLO Manager — 三层 SLI 体系：服务/任务/判断质量
 doc_type: knowledge
@@ -6,10 +5,24 @@ module: 16-智能体工程
 topic: agent-slo-manager-sli-reliability
 status: stable
 created: 2026-06-01
-updated: 2026-06-01
+updated: 2026-12-19
 owner: self
 source: arxiv:2303.12345
 roadmap_phase: phase3
+tags:
+  - agent-reliability
+  - slo-sli
+  - production-engineering
+  - error-budget
+  - quality-assurance
+keywords:
+  - Agent SLO
+  - 三层 SLI 体系
+  - 判断质量
+  - BurnRate 告警
+  - ExhaustionAction
+difficulty: ⭐⭐☆☆☆
+priority: ⭐⭐⭐⭐⭐
 ---
 
 # Skill Card: Agent SLO Manager（三层 SLI 体系）
@@ -332,4 +345,3 @@ if __name__ == "__main__":
 
 - **ROI**：生产 Agent 质量可量化可告警，防止"可用但错误"的生产事故（如错误补货决策导致的资金损失）；三层 SLI 缺一不可，Judgment SLI 是核心差异化护城河
 - **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐⭐⭐（P0，autoresearch 进化的度量基础）
-```

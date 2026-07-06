@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Dual-Tower Lookalike Modeling — 双塔自建相似受众扩展脱离平台黑箱
 doc_type: knowledge
@@ -344,4 +343,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要自建数据管道 + 用户特征工程，约 6-8 周）
 - **优先级**：⭐⭐⭐⭐⭐（Lookalike 是跨境广告核心投放工具，脱离黑箱即可实现可控扩量）
 - **评估依据**：MetaHeac 在微信营销实验中 AUC +3.2%，转化率 +15%；UniMatch 在阿里 QuickAudience 中节省 94% 模型训练成本同时效果持平
-```

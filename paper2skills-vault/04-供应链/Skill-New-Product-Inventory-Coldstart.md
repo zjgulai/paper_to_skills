@@ -1,4 +1,3 @@
-```markdown
 ---
 title: New Product Inventory Cold Start
 module: 04-供应链
@@ -391,4 +390,3 @@ code_path: paper2skills-code/supply_chain/new_product_inventory_coldstart/
 review_score: 8.0/10
 wf_coverage: [WF-A, WF-D]
 created: 2026-05-25
-```

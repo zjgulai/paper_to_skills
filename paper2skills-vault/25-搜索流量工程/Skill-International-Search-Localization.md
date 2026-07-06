@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-International-Search-Localization — 跨市场搜索关键词本地化
 doc_type: knowledge
@@ -185,4 +184,3 @@ print("\n[✓] International-Search-Localization 测试通过")
 - **ROI**：本地化词库优化后，日/德/法站搜索曝光量提升 50-100%，年化增量销售 3-10 万元/市场
 - **实施难度**：⭐⭐⭐☆☆（需要目标语言母语校对，存在文化理解门槛）
 - **优先级**：⭐⭐⭐⭐☆（进入新市场的基础动作，搜索流量直接影响初期生死）
-```

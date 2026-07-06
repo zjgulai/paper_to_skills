@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Review-Keyword-Mining-SEO — 评论关键词挖掘 SEO
 doc_type: knowledge
@@ -196,4 +195,3 @@ print("\n[✓] Review-Keyword-Mining-SEO 测试通过")
 - **ROI**：从评论挖掘新词后 Listing 改版，自然曝光量提升 15-25%，年化增量销售 8-15 万元
 - **实施难度**：⭐⭐☆☆☆（纯 NLP 文本挖掘，无需外部 API）
 - **优先级**：⭐⭐⭐⭐☆（评论是最接近消费者真实语言的数据源，词库质量高）
-```

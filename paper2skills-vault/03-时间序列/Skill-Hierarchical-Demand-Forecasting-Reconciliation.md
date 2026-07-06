@@ -1,4 +1,3 @@
-```markdown
 ---
 title: HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性
 doc_type: knowledge
@@ -269,4 +268,3 @@ print("[✓] Hierarchical Demand Forec 测试通过")
 3. **APE 最大降低 92.9%**(末层),业绩显著
 4. **关键 P0 缺口**:解决 WF-A 补货工作流的"各层不一致"硬阻塞,直接解锁生产上线
 5. **Nixtla 开源即用**,工程化路径最短
-```

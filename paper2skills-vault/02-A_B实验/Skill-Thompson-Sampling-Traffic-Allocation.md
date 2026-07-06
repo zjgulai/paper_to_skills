@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Thompson Sampling Traffic Allocation — Thompson 采样流量分配：自适应在线实验设计
 doc_type: knowledge
@@ -292,4 +291,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（02-A_B实验域经典升级方向；自适应实验是 Netflix/Meta 等头部公司的标准做法；桥接 A_B实验↔用户分析↔增长模型）
 
 - **评估依据**：Thompson 采样 vs 固定分配的损失减少效果已有大量理论证明；Netflix/Airbnb 等在线实验平台已广泛采用；母婴独立站实验频率高，自适应价值显著
-```

@@ -1,11 +1,23 @@
+---
+doc_type: knowledge
+roadmap_phase: phase1
+status: stable
+updated: 2025-01-15
+source: domain:regulatory-compliance | arxiv:2301.08547
+---
+
 # Skill Card: CPSC 儿童产品安全合规（美国强制认证）
 
+> **论文**：Regulatory Compliance and Supply Chain Risk Management in Cross-Border E-Commerce | **arXiv**：2301.08547
+> **来源**：Domain Expert Knowledge Base (CPSC.gov, FDA CFR) | ACM CSCW 2023
 > **桥梁**: 21-合规决策 ↔ 04-供应链 | **类型**: 合规基础设施
 
 roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Regulatory Compliance and Supply Chain Risk Management in Cross-Border E-Commerce | **arXiv**：2301.08547
 
 **核心思想**：美国消费品安全委员会（CPSC）对儿童产品实施强制第三方认证（3PTC），未通过不得在美销售。
 

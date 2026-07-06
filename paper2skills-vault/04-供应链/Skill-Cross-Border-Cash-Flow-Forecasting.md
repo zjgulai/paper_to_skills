@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Cross-Border Cash Flow Forecasting（跨境电商现金流预测与融资窗口规划）
 doc_type: knowledge
@@ -210,4 +209,3 @@ print("\n[✓] 现金流预测测试通过")
 **实施难度**：⭐⭐☆☆☆（低，主要是数据整理 + Excel/Python 建模）
 
 **优先级评分**：4/5（月 GMV > 100 万的品牌必建；融资规划比事后救急便宜 50%）
-```

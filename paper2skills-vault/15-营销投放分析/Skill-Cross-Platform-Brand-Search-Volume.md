@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Cross-Platform Brand Search Volume — 品牌搜索量作为营销效果领先指标
 doc_type: knowledge
@@ -350,4 +349,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐☆（领先指标的价值在于"早知道早行动"，与 GEO + SOV 形成完整 AI 时代流量监测体系）
 
 - **评估依据**：Prophet (Facebook 2017) 被全球数千企业使用；Causal Impact (Brodersen 2015) 是标准营销效果测量工具；BSV 作为 GMV 领先指标已被 Google/Amazon 内部分析团队验证
-```

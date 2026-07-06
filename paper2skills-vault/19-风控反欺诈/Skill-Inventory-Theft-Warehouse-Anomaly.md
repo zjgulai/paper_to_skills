@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Inventory Theft Warehouse Anomaly — 海外仓库存异常检测盗窃/错发/损耗识别
 doc_type: knowledge
@@ -169,4 +168,3 @@ print("[✓] Inventory-Theft-Warehouse-Anomaly 测试通过")
 - **ROI量化**: 年化发现并预防盗损 10-20 万元
 - **实施难度**: ⭐⭐（需要接入 WMS 系统，数据整合成本中等）
 - **优先级**: ⭐⭐⭐⭐（高价值品品类（奶粉/电器）的必备监控）
-```

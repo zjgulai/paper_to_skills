@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Agentic RAG主动检索 — 自主规划多轮检索的知识增强Agent
 doc_type: knowledge
@@ -279,4 +278,3 @@ print('\n[✓] Agentic RAG主动检索 测试通过')
 - **实施难度**：⭐⭐⭐☆☆（FLARE实现约80行代码；Self-RAG完整实现需要微调LLM；轻量级版本接入标准RAG系统约1周）
 - **优先级**：⭐⭐⭐⭐⭐（填补09-DataAgent重要方法盲区；客服知识库更新频繁，按需精准检索是核心需求）
 - **评估依据**：EMNLP 2023 FLARE和ICLR 2024 Self-RAG均是检索增强生成的顶级论文；Langchain/LlamaIndex均已内置Agentic RAG框架；Anthropic的工业实践显示Self-RAG将幻觉率降低45%
-```

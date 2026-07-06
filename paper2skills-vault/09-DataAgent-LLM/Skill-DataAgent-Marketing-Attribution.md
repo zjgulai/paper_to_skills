@@ -1,4 +1,3 @@
-```markdown
 ---
 title: DataAgent营销归因分析 — LLM驱动的多渠道营销效果自动归因
 doc_type: knowledge
@@ -208,4 +207,3 @@ print('\n[✓] DataAgent营销归因分析 测试通过')
 - **实施难度**：⭐⭐⭐☆☆（归因模型约2-3天；Agent对话框架约1周；LLM路由是难点）
 - **优先级**：⭐⭐⭐⭐⭐（修复09-DataAgent↔15-营销投放断层（规模69）；营销归因是CMO最高频的分析需求）
 - **评估依据**：SIGIR 2024自动营销归因Agent论文；arXiv:2407.13983对话式营销分析Agent；Northbeam/Triple Whale等营销归因SaaS产品均在向Agent化方向发展
-```

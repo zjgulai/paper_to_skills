@@ -7,12 +7,13 @@ status: stable
 created: 2026-06-18
 updated: 2026-06-18
 owner: self
-source: human+ai
+source: arxiv:1805.06358 + human+ai
 roadmap_phase: phase1
 ---
 
 # Skill Card: 供应链实时特征存储架构
 
+> **论文**：Feast: A Feature Store for Machine Learning | **arXiv**：1805.06358
 > **来源**：Zalando Engineering Blog 2025（Inventory Optimisation System：500万SKU特征管道）+ SageMaker Feature Store 设计文档 + Feast（开源特征存储）最佳实践
 > **桥梁**：标签工程 ↔ 数据工程 ↔ Palantir OKB Layer | **类型**：数据工程+特征工程
 

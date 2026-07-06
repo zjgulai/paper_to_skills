@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Safety-Concern-Signal-Extraction — 安全隐患信号提取
 doc_type: knowledge
@@ -176,4 +175,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（母婴类目安全合规红线） |
 | 数据要求 | Amazon 评论数据（API 或 Jungle Scout） |
 | 典型收益 | P0 预警响应从 72h 缩至 4h，安全召回准确率 > 90% |
-```

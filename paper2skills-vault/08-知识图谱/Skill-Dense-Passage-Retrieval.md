@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Dense Passage Retrieval — 密集段落检索：超越关键词的语义搜索基础设施
 doc_type: knowledge
@@ -294,4 +293,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（独立站搜索是 DTC 的核心基础设施；BM25→DPR 是搜索技术的代际升级；桥接 知识图谱↔推荐系统↔广告分析 三域）
 
 - **评估依据**：DPR (EMNLP 2020) 在多个基准超越 BM25 25-40%；Amazon/Alibaba 等电商搜索已全面采用密集检索；开源实现成熟（sentence-transformers + FAISS）
-```

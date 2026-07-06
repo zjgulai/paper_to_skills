@@ -1,4 +1,3 @@
-```markdown
 ---
 title: PPC Bid Manipulation Defense — 识别竞品恶意点击耗费广告费
 doc_type: knowledge
@@ -154,4 +153,3 @@ print("[✓] PPC-Bid-Manipulation-Defense 测试通过")
 - **ROI量化**: 月 GMV 提升 8-15 万元 + 追讨无效退款 2-5 万元/年
 - **实施难度**: ⭐⭐（广告报告数据直接可用，无需外部数据）
 - **优先级**: ⭐⭐⭐⭐（广告预算 > $200/天的卖家必备防御）
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Post-Purchase-Review-Request-Dispatcher — 订单完成后按满意度预测分层分发评论邀请
 doc_type: knowledge
@@ -10,6 +9,14 @@ updated: 2026-06-22
 owner: self
 source: arxiv:2106.04554
 roadmap_phase: phase1
+tags:
+  - customer-satisfaction
+  - review-management
+  - post-purchase
+  - csat-prediction
+  - layered-dispatch
+difficulty: intermediate
+time_estimate: 45min
 ---
 
 # Skill Card: Post-Purchase-Review-Request-Dispatcher
@@ -229,4 +236,3 @@ print(f"  分发详情: {result['stats']}")
 - **ROI量化**：差评率从 18% → 6%，平均评分 4.1 → 4.6★，CTR 提升约 12%，年化 GMV 增量 $50,000+
 - **实施难度**：⭐⭐☆☆☆（需配送 API + 客服 CRM + 邮件平台对接）
 - **优先级**：⭐⭐⭐⭐⭐（评分直接影响搜索排名和转化率，核心竞争力）
-```

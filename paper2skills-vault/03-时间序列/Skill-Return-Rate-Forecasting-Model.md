@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Return Rate Forecasting Model — 退货率时序预测节后退货浪潮提前量化
 doc_type: knowledge
@@ -156,4 +155,3 @@ print("[✓] Return-Rate-Forecasting-Model 测试通过")
 - **ROI量化**: 节后过剩库存减少 20%，年化降低 FBA 存储费用 10-15 万元
 - **实施难度**: ⭐⭐（FBA 退货报告直接提供数据，建模简单）
 - **优先级**: ⭐⭐⭐⭐（大促后库存管理的必备风险防控工具）
-```

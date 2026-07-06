@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Cash-Conversion-Cycle-Optimization — 现金转换周期优化
 doc_type: knowledge
@@ -6,10 +5,17 @@ module: 23-运营财务
 topic: cash-conversion-cycle-optimization
 status: stable
 created: 2026-06-22
-updated: 2026-06-22
+updated: 2026-12-19
 owner: self
 source: arxiv:2106.12345
-roadmap_phase: phase1
+roadmap_phase: phase2
+tags:
+  - working-capital
+  - cash-flow
+  - supply-chain
+  - cross-border-ecommerce
+difficulty: intermediate
+estimated_time: 45min
 ---
 
 # Skill Card: Skill-Cash-Conversion-Cycle-Optimization
@@ -180,4 +186,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（规模扩张期现金流是核心瓶颈） |
 | 数据要求 | 采购记录 + 物流时效数据 + Amazon 结算记录 |
 | 典型收益 | CCC 从 150 天压至 100 天，释放资金 300-500 万元 |
-```

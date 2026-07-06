@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Early Stopping and Regularization — 防止过拟合的训练控制技术
 doc_type: knowledge
@@ -205,4 +204,3 @@ print("[✓] Early Stopping and Regularization 测试通过")
 - **实施难度**：⭐⭐☆☆☆（sklearn 原生支持，不需要额外依赖；GBM 加 validation_fraction 参数即可）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：过拟合是初期建模的头号问题；Early Stopping + Elastic Net 是工程上最稳定可靠的组合，几乎无副作用
-```

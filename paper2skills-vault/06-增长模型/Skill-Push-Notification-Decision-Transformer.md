@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 推送通知优化 — Decision Transformer多目标时机预测
 doc_type: knowledge
@@ -297,4 +296,3 @@ if __name__ == "__main__":
 | 优先级 | ⭐⭐⭐⭐☆（高ROI，LinkedIn已验证可复制性） |
 | 数据门槛 | 需要≥6个月推送日志，每用户≥20次推送历史 |
 | 合规注意 | GDPR/CCPA下推送须用户明确opt-in，月龄数据属于敏感个人信息需加密存储 |
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AI Consumer Wellbeing Ethics — 消费者福祉与 AI 伦理：母婴场景
 doc_type: knowledge
@@ -156,4 +155,3 @@ print("[✓] AI Consumer Wellbeing Eth 测试通过")
 ---
 
 *参考来源：FTC Guides Concerning the Use of Endorsements (16 CFR Part 255)；COPPA (15 U.S.C. §§ 6501–6506)；GDPR Art. 8；AI Ethics Guidelines for Consumer Products, EU AI Act 2024*
-```

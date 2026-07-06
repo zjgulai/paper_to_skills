@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Cross-Border Last Mile Routing — 跨境最后一公里路由优化：时效×成本双目标决策
 doc_type: knowledge
@@ -236,4 +235,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（物流是跨境电商最大变量成本来源之一；大促路由决策是运营体系缺口）
 
 - **评估依据**：Zone-GNN（arXiv 2309.07648）在 Amazon 物流数据验证了区域感知路由的优越性；大促期路由切换的 ROI 来自多家跨境卖家实战数据
-```

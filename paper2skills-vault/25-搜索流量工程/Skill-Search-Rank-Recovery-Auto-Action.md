@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Search-Rank-Recovery-Auto-Action — 核心关键词排名跌出Page1自动触发三步恢复行动
 doc_type: knowledge
@@ -10,6 +9,14 @@ updated: 2026-06-22
 owner: self
 source: arxiv:2106.04554
 roadmap_phase: phase1
+tags:
+  - search-rank
+  - auto-recovery
+  - listing-optimization
+  - paid-search
+  - e-commerce
+difficulty: intermediate
+time_to_implement: 3-5days
 ---
 
 # Skill Card: Search-Rank-Recovery-Auto-Action
@@ -234,4 +241,3 @@ for a in result["actions"]:
 - **ROI量化**：核心词跌出Page1流量损失约60%，快速恢复保护周均GMV $8,500；恢复广告投入约$350，ROI 24:1
 - **实施难度**：⭐⭐⭐☆☆（需关键词排名追踪工具 + 广告 API + Listing 编辑权限）
 - **优先级**：⭐⭐⭐⭐⭐（搜索排名是自然流量的核心，跌出Page1直接影响80%自然订单）
-```

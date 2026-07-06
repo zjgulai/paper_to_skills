@@ -1,4 +1,3 @@
-```markdown
 ---
 title: GenAI Advertising — 无 Cookie 生成式受众定向 & LLM 原生广告拍卖
 doc_type: knowledge
@@ -165,4 +164,3 @@ python3 paper2skills-code/15-营销投放分析/generative_audience_2025/model.p
 | 规则型意图推断准确率有限 | 接入真实 LLM API 替换规则映射，准确率可提升至 85%+ |
 | SKU 相关度评分依赖人工标注 | 用 text-embedding 计算 SKU 描述与意图 tag 的余弦相似度，自动化标注 |
 | 原生广告透明度监管风险 | 在 LLM 回答中显式标注"商品推荐"标签，合规呈现 |
-```

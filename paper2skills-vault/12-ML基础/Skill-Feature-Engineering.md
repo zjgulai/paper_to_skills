@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Feature Engineering for E-Commerce Machine Learning
 module: 12-ML基础
@@ -278,4 +277,3 @@ print("[✓] Feature Engineering 测试通过")
 - **ROI**：特征质量提升 → 模型效果提升30-50%，直接转化为业务收益
 - **难度**：⭐⭐⭐☆☆（3/5）— 需要领域知识，不是纯技术问题
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 所有ML技能的前置基础，没有它就没有模型效果
-```

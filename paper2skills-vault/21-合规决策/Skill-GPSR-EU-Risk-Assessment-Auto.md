@@ -1,4 +1,3 @@
-```markdown
 ---
 title: GPSR EU Risk Assessment Auto — 欧盟GPSR风险评估自动化
 doc_type: knowledge
@@ -363,4 +362,3 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐☆☆☆（规则引擎+模板生成，草稿仍需律师或合规顾问审核）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：GPSR 2024-12-13已生效，Amazon已开始执行Error 5995，欧盟市场库存30天内自动销毁风险为高概率事件
-```

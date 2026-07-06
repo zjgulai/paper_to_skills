@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Tag-Driven Ad Audience Segmentation — 标签工程驱动广告受众精准分割
 doc_type: knowledge
@@ -289,4 +288,3 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐☆（广告预算大的 SKU 优先，ROI 回收周期 1-2 个月）
 - **数据门槛**：需要 ≥3 个月用户行为数据，SKU 属性完整度 ≥90%
 - **风险**：标签覆盖率不足时受众包过小（<1000人），需要扩展标签维度或放宽条件
-```

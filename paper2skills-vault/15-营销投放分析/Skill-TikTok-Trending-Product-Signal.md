@@ -1,4 +1,3 @@
-```markdown
 ---
 title: TikTok爆款商品信号挖掘 — 话题标签增速分析提前发现下一个爆款品类
 doc_type: knowledge
@@ -304,4 +303,3 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（TikTok Shop 增速全球最快，话题驱动选品是母婴跨境核心 alpha）
 - **数据依赖**：TikTok Research API / 第三方数据（Kalodata、Tolstoy）+ 每日话题增量数据
 - **最佳实践**：设置品类关注清单（30-50个话题），每周一扫描输出选品会议素材
-```

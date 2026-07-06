@@ -1,4 +1,3 @@
-```markdown
 ---
 title: SD+ControlNet商品场景图生成 — 白底转场景化主图的AI摄影替代
 doc_type: knowledge
@@ -383,4 +382,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐⭐☆（4/5）— 需要 GPU 推理环境（HuggingFace Space 或自部署），工程复杂度中等
 - **优先级**：⭐⭐⭐⭐☆（4/5）— ROI 极高但工程门槛略高，建议第二阶段引入
 - **评估依据**：ControlNet 是 2023 年 ICCV Best Paper，技术成熟；SAM 分割精度对白底图几乎完美；GPU 成本持续下降
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Regulatory Change Monitoring — 法规变更自动监控：受影响品类实时映射
 doc_type: knowledge

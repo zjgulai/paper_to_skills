@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 多模态外部信号新品销量预测 — Google Trends + 图片融合预测
 doc_type: knowledge
@@ -307,4 +306,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（pytrends API 免费易获取；ResNet50 推理本地可跑；完整模型开源）
 - **优先级**：⭐⭐⭐⭐☆（外部信号是差异化竞争力；开源代码可直接复用；Google Trends 是免费高质量信号）
 - **评估依据**：论文 VISUELLE 数据集 5577 款真实新品验证；GTM-Transformer 代码开源可直接部署
-```

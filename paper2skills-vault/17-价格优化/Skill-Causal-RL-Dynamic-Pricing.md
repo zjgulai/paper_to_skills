@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Causal RL Dynamic Pricing — 因果强化学习动态定价：可信赖的自适应价格策略
 doc_type: knowledge
@@ -315,4 +314,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（桥接 17-价格优化 ↔ 01-因果推断 ↔ 02-A_B实验 三域弱连接；因果 RL 是解决纯 RL 定价"泡沫破灭"问题的关键方法）
 
 - **评估依据**：Causal RL Survey (arXiv 2512.18135) 综述验证因果 RL 在定价场景的优越性；Double ML (DoubleML Python 库) 已在多个电商大厂生产验证；因果定价 vs 纯 RL 的优势在 A/B 实验中有明确数据支撑
-```

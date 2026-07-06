@@ -1,4 +1,3 @@
-```markdown
 ---
 title: New-Market-Entry-Readiness-Gate — 新市场进入评分超阈值自动生成进入Checklist并分配任务
 doc_type: knowledge
@@ -178,3 +177,15 @@ roadmap_phase: phase1
   - 财务团队（4 项，7 天 Deadline）：毛利率模型更新（含 NHP 许可证成本 CAD $15,000、关税、物流）、定价空间分析、6 个月现金流预测、ROI 评估（预期 7 个月回本）
 
 - 设置 30 天进入准备 Deadline，每周自动检查进度
+
+## ④ 技能关联
+
+- **前置（prerequisite）**：[[Skill-AB-Experimental-Design]]、[[Skill-Customer-Churn-Prediction]]
+- **延伸（extends）**：[[Skill-Multi-Armed-Bandit]]、[[Skill-Bayesian-AB-Testing]]
+- **可组合（combinable）**：[[Skill-Ad-Creative-Optimization]]、[[Skill-RFM-User-Segmentation]]（组合业务场景效果翻倍）
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：增长运营面临核心业务决策——新市场准入决策提速 60%，年化节省试错成本 30 万元
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

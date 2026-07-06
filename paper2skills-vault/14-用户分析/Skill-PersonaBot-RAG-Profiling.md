@@ -1,4 +1,3 @@
-```markdown
 ---
 title: PersonaBot RAG画像生成 - LLM+RAG驱动的客户画像落地工具
 doc_type: knowledge

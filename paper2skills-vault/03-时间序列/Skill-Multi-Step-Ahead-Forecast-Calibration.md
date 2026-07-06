@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Multi-Step-Ahead Forecast Calibration — 多步预测校准滚动修正减少累积偏差
 doc_type: knowledge
@@ -131,4 +130,3 @@ print("[✓] Multi-Step-Ahead-Forecast-Calibration 测试通过")
 - **ROI量化**: 大促缺货率降低 75%，年化减少缺货损失 40-60 万元
 - **实施难度**: ⭐⭐（逻辑简单，与现有预测系统对接即可）
 - **优先级**: ⭐⭐⭐⭐⭐（所有使用多步预测的卖家必备）
-```

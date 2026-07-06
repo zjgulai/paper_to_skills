@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Zero-Click Search Optimization — 零点击搜索时代的流量保全与特色摘要抢占
 doc_type: knowledge
@@ -380,4 +379,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐☆（零点击趋势不可逆，早优化早受益；与 GEO 形成完整 AI 搜索流量防御体系）
 
 - **评估依据**：Walk&Retrieve 在 STaRK 基准测试验证 SOTA 检索准确率；研究显示 FAQ Schema 标记页面被 Google AI Overview 引用率提升 3.2×
-```

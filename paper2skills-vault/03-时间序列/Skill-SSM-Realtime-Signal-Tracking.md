@@ -1,4 +1,3 @@
-```markdown
 ---
 title: SSM Realtime Signal Tracking — 状态空间模型实时信号追踪
 doc_type: knowledge
@@ -202,4 +201,3 @@ print("\n[✓] SSM实时信号追踪测试通过")
 - **优先级**：⭐⭐⭐⭐☆（月广告费 $3,000+ 的卖家必备，ROI 明确且实现简单）
 - **数据要求**：每 5-15 分钟一次的广告竞价胜率/CTR/CPC 数据流
 - **延伸方向**：引入非线性扩展卡尔曼滤波（EKF）处理 CTR/CVR 的非线性动态
-```

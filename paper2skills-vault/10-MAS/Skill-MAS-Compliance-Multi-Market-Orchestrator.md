@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MAS-Compliance-Multi-Market-Orchestrator — 多市场合规检查Agent并行编排与跨市场合规矩阵生成
 doc_type: knowledge
@@ -256,4 +255,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐（需维护各市场合规规则库，规则版本管理）
 - **优先级**：⭐⭐⭐⭐（多市场同步上市的品牌ROI极高，单次检查价值$18,000+）
 - **扩展方向**：接入官方法规API（CPSC产品安全数据库/EU RAPEX），规则库自动更新
-```

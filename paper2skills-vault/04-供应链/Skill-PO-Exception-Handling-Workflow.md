@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 采购异常处理工作流 — PO延误/取消/变更的Tag驱动自动处置与升级机制
 doc_type: knowledge
@@ -10,6 +9,14 @@ updated: 2026-06-17
 owner: self
 source: human+ai
 roadmap_phase: phase1
+tags:
+  - procurement
+  - exception-handling
+  - workflow-automation
+  - supply-chain
+  - tag-driven
+difficulty: intermediate
+estimated_time: 45min
 ---
 
 # Skill Card: 采购异常处理工作流
@@ -142,4 +149,3 @@ if __name__ == "__main__":
 - **ROI预估**：PO异常自动处理将响应时间从"1-2天人工"→"4小时内自动"；减少因处理延迟导致的断货损失，年化约5-10万元
 - **实施难度**：⭐⭐☆☆☆（规则清晰，主要是采购系统集成）
 - **优先级评分**：⭐⭐⭐⭐☆（采购异常是日常最高频的供应链中断事件，自动化处理价值高）
-```

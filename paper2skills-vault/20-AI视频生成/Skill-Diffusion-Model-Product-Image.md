@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Diffusion Model Product Image Generation — 扩散模型产品图生成：AI 主图替代专业摄影
 doc_type: knowledge
@@ -308,4 +307,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（AI生图是 2024-2025 年最热门的 DTC 运营工具；完全空白；桥接 AI视频↔知识图谱↔广告分析 三域）
 
 - **评估依据**：DiffProduct (arXiv 2504.07823) 在电商产品图生成的 FID 和人工评分均达到接近专业摄影水平；Midjourney/DALL-E 已被大量 DTC 品牌用于主图生成；AI图片 CTR vs 专业摄影的 A/B 测试显示差距 <5%
-```

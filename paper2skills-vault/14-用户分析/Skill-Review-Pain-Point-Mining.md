@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: Review Pain-Point Mining（竞品差评痛点挖掘）
 
 > **论文**: Painsight: An Extendable Opinion Mining Framework for Detecting Pain Points Based on Online Customer Reviews  
@@ -364,4 +363,3 @@ if __name__ == '__main__':
 **测试输入**：评论=147条英文，1-3星52条  
 **输出摘要**：TOP3痛点：吸盘失效38次/颜色褪色29次/尺寸偏小21次，P0建议吸盘结构升级  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
-```

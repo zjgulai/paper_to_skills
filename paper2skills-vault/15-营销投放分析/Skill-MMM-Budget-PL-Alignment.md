@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MMM Budget PL Alignment — 营销预算分配与利润约束下的 ROI 优化
 doc_type: knowledge
@@ -365,4 +364,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（打通营销投放→财务最关键的桥梁，直接影响 CFO 批预算的逻辑）
 
 - **评估依据**：arXiv 2604.25977 在真实广告平台验证 Hindsight Regret 框架；行业实践显示从 ROAS 优化切换到利润优化平均净利润提升 12-18%（McKinsey 2026 MarTech 报告）
-```

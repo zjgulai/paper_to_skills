@@ -1,4 +1,3 @@
-```markdown
 ---
 title: ProRCA — 因果图路径溯源根因分析
 name: Skill-ProRCA-Business-Analysis
@@ -209,4 +208,3 @@ print("[✓] ProRCA Business Analysis 测试通过")
 **测试输入**：月销售额=$18000, 广告=$5400（ACoS 30%）  
 **输出摘要**：广告ACoS超标12pp，月节省空间$2160，优先行动：否定低效词组  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
-```

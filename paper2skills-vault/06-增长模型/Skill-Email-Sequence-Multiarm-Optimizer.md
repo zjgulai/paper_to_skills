@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Email Sequence Multiarm Optimizer — Thompson Sampling 驱动的邮件序列多臂老虎机优化
 doc_type: knowledge
@@ -311,4 +310,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐☆☆☆☆（纯统计算法，100 行 Python 即可实现，接入 Klaviyo webhook 是主要工程量）
 - **优先级**：⭐⭐⭐⭐☆（每个做邮件营销的 DTC 品牌都应有的基础能力，替换人工 A/B 轮换的最简单方案）
 - **评估依据**：Thompson Sampling 已被 LinkedIn、GitHub、Yelp 等验证可降低 A/B 测试遗憾（regret）50-70%；母婴 DTC 品牌邮件列表通常 3,000-20,000，规模下效果最显著
-```

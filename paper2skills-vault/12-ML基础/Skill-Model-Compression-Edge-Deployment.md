@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 模型压缩与边缘部署 — INT8 量化 + 结构化剪枝 + ONNX 导出
 doc_type: knowledge
@@ -242,4 +241,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（sklearn-onnx / onnxruntime 库易安装；量化需在目标硬件上验证精度；ARM 部署需交叉编译）
 - **优先级**：⭐⭐⭐⭐☆（有云端 API 成本的项目立即可做；部署链路准备好后 1-2 天即可完成）
 - **评估依据**：INT8 量化在树模型上精度损失通常 < 2%；ONNX 在 CPU 上比 sklearn 原生 predict 快 3-5×，实测数据充分
-```

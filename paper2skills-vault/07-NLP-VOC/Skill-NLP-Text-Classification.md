@@ -1,4 +1,3 @@
-```markdown
 ---
 title: NLP Text Classification — 跨品类零样本评论分类与客服工单智能分流
 doc_type: knowledge
@@ -387,4 +386,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（零样本能力解决跨品类扩张的 NLP 瓶颈，是 VOC 体系的基础设施）
 
 - **评估依据**：论文在 SemEval-2015 Task 12 上达到 92% 准确率；LLM 零样本分类在实际电商场景已被广泛验证（Amazon、Shopify 等平台的 AI 客服均采用类似方案）
-```

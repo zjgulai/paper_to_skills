@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Customs Clearance Risk Scoring — 跨境清关多维风险预警
 doc_type: knowledge
@@ -202,4 +201,3 @@ print("[✓] Customs Clearance Risk Scoring 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需要积累历史报关记录 500+ 批次；需接入 HS Code 查验率数据库）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：清关风险是跨境母婴履约最大不确定性之一；AUC > 0.80 的模型可实现精准预警，ROI 极高
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知
 doc_type: knowledge
@@ -280,4 +279,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（填补 19-风控反欺诈 ↔ 03-时间序列 弱连接；零样本泛化是解决新品/新市场监控的关键；ChronosAD 2026年最新论文）
 
 - **评估依据**：ChronosAD (arXiv 2606.01300, 2026) 在时序异常检测基准上超越传统方法；基础模型零样本泛化到电商场景的有效性已在 ICML 2024 验证
-```

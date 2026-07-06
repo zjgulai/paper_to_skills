@@ -1,4 +1,3 @@
-```markdown
 ---
 title: LLM Session Personalization Cache — LLM 驱动的会话意图缓存与千人千面推荐
 doc_type: knowledge
@@ -296,4 +295,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（千人千面是电商个性化的核心基础设施；SPRINT 的缓存架构解决了 LLM 推理延迟问题，工程可行性高；图谱中推荐系统域有16个 Skill 但缺乏 LLM 增强的会话推荐）
 
 - **评估依据**：arXiv 2508.00570 SPRINT 在公开数据集（Amazon、Yelp）上相比 BERT4Rec 提升 7-12% NDCG；LLM 用户画像增强推荐的生产验证来自多家大厂（Meta RecSys 2024、阿里 PAI-REC）；千人千面 CTR/CVR 提升数据来自行业 A/B 实验基准
-```

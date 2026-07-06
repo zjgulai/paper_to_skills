@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Multi-SKU Procurement Budget Allocation
 module: 04-供应链
@@ -340,4 +339,3 @@ code_path: paper2skills-code/supply_chain/multi_sku_budget_allocation/
 review_score: 8.5/10
 wf_coverage: [WF-A]
 created: 2026-05-25
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RFM-Segment-Campaign-Dispatcher — RFM分群结果自动触发差异化营销序列调度器
 doc_type: knowledge
@@ -286,4 +285,3 @@ for seg, plan in result["dispatch_plan"].items():
 - **ROI量化**：At-Risk群挽回率约10-15%，年化4季度×160人×12%挽回×$220 LTV = 年增量GMV约$16,896；Champions群VIP序列复购率提升约8%，年化LTV增量约$30,000
 - **实施难度**：⭐⭐☆☆☆（主要工作是对接邮件/短信平台API，业务规则简洁明确）
 - **优先级**：⭐⭐⭐⭐⭐（母婴复购率是核心增长指标，RFM调度是存量运营的标配基础设施）
-```

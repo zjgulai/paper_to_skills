@@ -1,4 +1,3 @@
-```markdown
 ---
 title: PPC Keyword Bid Automation — PPC 关键词出价自动化：ML 驱动的竞价优化引擎
 doc_type: knowledge
@@ -249,4 +248,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（PPC 是跨境卖家最大的可控支出；自动化出价是行业发展方向；完全空白的高价值场景；桥接 广告分析↔A_B实验↔价格优化三域）
 
 - **评估依据**：Contextual Thompson Sampling 在广告出价场景的优越性已有大量验证；Amazon 官方 ROAS 竞价功能背后的原理类似；第三方 PPC 工具（Perpetua/Zon.Tools 等）验证自动化出价 ACOS 降低 15-30%
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Privacy-Preserving Federated Collection — 隐私保护联邦采集：差分隐私预算与联邦推荐
 doc_type: knowledge
@@ -541,3 +540,9 @@ if __name__ == "__main__":
 
 ### 延伸技能（Extends）
 - [[Skill-Homomorphic-Encryption-For-
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：数据工程师面临核心业务决策——数据采集覆盖率提升至 99%，年化节省人工 25 万元
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Intermittent Demand Croston TSB — 母婴长尾 SKU 间歇需求预测
 doc_type: knowledge
@@ -112,4 +111,3 @@ print("[✓] Intermittent-Demand-Croston-TSB 测试通过")
 - **ROI量化**: 长尾 SKU 库存资金占用降低 40-50%，年化释放 20-30 万元
 - **实施难度**: ⭐⭐（纯 Python 无外部依赖，1 天可集成）
 - **优先级**: ⭐⭐⭐⭐（400+ SKU 卖家立竿见影）
-```

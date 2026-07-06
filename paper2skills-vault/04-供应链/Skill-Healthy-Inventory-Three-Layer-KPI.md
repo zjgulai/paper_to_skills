@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 健康库存三层数字化KPI体系 — 可视层/分析层/应用层的量化指标与联通机制
 doc_type: knowledge
@@ -10,6 +9,23 @@ updated: 2026-06-16
 owner: self
 source: arxiv:2106.09278
 roadmap_phase: phase1
+tags:
+  - 库存管理
+  - 数字化KPI
+  - 三层架构
+  - 供应链决策
+  - 母婴出海
+keywords:
+  - 健康库存
+  - 可视层
+  - 分析层
+  - 应用层
+  - DOI
+  - 库龄管理
+  - 缺货风险
+  - 积压风险
+difficulty: intermediate
+time_to_learn: 45
 ---
 
 # Skill Card: 健康库存三层数字化KPI体系
@@ -351,4 +367,3 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐⭐（书中第七章收官之作，是所有供应链数字化的终极形态；是从"KPI追踪"到"数字化决策支持"的质的跨越）
 - **适用规模**：月GMV>$10万、SKU数>30个的卖家；越大越有价值
 - **数据依赖**：多系统数据整合（OMS+WMS+财务）；数据质量是最大挑战
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Shoppable-Video-CTA-Optimizer — 可购物视频 CTA 时机与文案优化
 doc_type: knowledge
@@ -196,4 +195,3 @@ print("\n[✓] Shoppable-Video-CTA-Optimizer 测试通过")
 - **ROI**：CTA 优化后视频购买转化 2.5 倍提升，年化 TikTok 渠道 GMV 增量约 10-20 万元
 - **实施难度**：⭐⭐☆☆☆（主要是数据分析 + 文案优化，视频剪辑工具即可）
 - **优先级**：⭐⭐⭐⭐⭐（可购物视频是 TikTok Shop 最直接的变现工具）
-```

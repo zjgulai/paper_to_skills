@@ -1,4 +1,3 @@
-```markdown
 ---
 title: CAR — Agent步骤因果Shapley归因：多步交互效应定量拆解
 doc_type: knowledge
@@ -417,4 +416,3 @@ if __name__ == "__main__":
   - **反直觉价值**：当前图谱有80个Agent/MAS Skills，却没有"评估这些Agent决策是否真的有效"的严格因果工具——这个空白会随着Agent规模化而从"锦上添花"变为"不可或缺"
 
 - **评估依据**：CAR在Who&When基准上将逐步归因准确率从14%（LLM-judge基线）提升至理论最优的结构因果模型精度；Shapley效率性质保证"所有步骤贡献之和等于总效果"，避免双重计算
-```

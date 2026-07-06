@@ -1,4 +1,3 @@
-```markdown
 ---
 title: GPLR 用户人群标签生成 - 购买行为到可解释 Persona 的低成本桥接
 doc_type: knowledge

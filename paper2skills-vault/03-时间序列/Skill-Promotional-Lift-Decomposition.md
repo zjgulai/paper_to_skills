@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Promotional Lift Decomposition — 促销提升分解剥离促销带来的虚假需求
 doc_type: knowledge
@@ -146,4 +145,3 @@ print("[✓] Promotional-Lift-Decomposition 测试通过")
 - **ROI量化**: 避免大促后滞销，年化节省 FBA 处置成本 20-30 万元
 - **实施难度**: ⭐⭐（需要历史促销标记，回归模型简单）
 - **优先级**: ⭐⭐⭐⭐⭐（大促驱动的卖家预测精度核心提升）
-```

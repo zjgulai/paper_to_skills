@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Search-Term-Negative-Optimization — 搜索词否定优化
 doc_type: knowledge
@@ -186,4 +185,3 @@ print("\n[✓] Search-Term-Negative-Optimization 测试通过")
 - **ROI**：清洗废词后月广告浪费减少 30-50%，年化节省 5-15 万元（依规模）
 - **实施难度**：⭐☆☆☆☆（纯数据分析，操作简单，月度例行执行）
 - **优先级**：⭐⭐⭐⭐⭐（所有 PPC 账户都存在 30-50% 废词，收益确定性最高）
-```

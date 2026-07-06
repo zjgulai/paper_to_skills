@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Amazon External Traffic Boost — 站外流量对 A10 排名速度的提升效应建模
 doc_type: knowledge
@@ -379,4 +378,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（2025-2026 年 Amazon 卖家最高 ROI 增长杠杆，先行者优势明显）
 
 - **评估依据**：A10 外部流量权重提升由 Amazon 官方 Vine 计划和 Brand Referral Bonus 政策（退还 10% 归因费用）间接证实；多个头部卖家实测验证 TikTok 引流对排名的显著效果
-```

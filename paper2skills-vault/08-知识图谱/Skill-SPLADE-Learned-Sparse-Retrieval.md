@@ -1,11 +1,10 @@
-```markdown
 ---
 title: SPLADE — 学习式稀疏检索与语义倒排索引
 doc_type: knowledge
 module: 08-知识图谱
 topic: splade-learned-sparse-retrieval-semantic-inverted-index
-
 roadmap_phase: phase1
+status: stable
 created: 2026-06-25
 updated: 2026-06-25
 owner: self
@@ -235,4 +234,3 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐（中英混合知识库必备，解决同义词/跨语言检索失效）
 
 **开源资源**：`naver/splade` GitHub，HuggingFace 上有 `naver/splade-cocondenser-ensembledistil` 预训练权重
-```

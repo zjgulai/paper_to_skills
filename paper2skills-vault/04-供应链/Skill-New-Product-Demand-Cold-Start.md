@@ -1,4 +1,3 @@
-```markdown
 ---
 title: New Product Demand Cold Start — 新品需求预测：零历史数据的条件扩散模型
 doc_type: knowledge
@@ -368,4 +367,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（每个新品上架都会用到；时序域 15 个 Skill 无一覆盖这个场景）
 
 - **评估依据**：CDLF (arXiv 2604.20370) 在 Intel 处理器 SKU 和 LLM 仓库数据上均优于 Bass diffusion、贝叶斯更新、Transformer 等基线；ZODIAC 在 42M 件跨境电商数据生产验证
-```

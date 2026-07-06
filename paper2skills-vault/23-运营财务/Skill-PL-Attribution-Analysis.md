@@ -1,4 +1,3 @@
-```markdown
 ---
 title: P&L Attribution Analysis（SKU 级损益归因分析）
 doc_type: knowledge
@@ -152,4 +151,3 @@ print("\n[✓] P&L Attribution Analysis 测试通过")
 **实施难度**：⭐⭐☆☆☆（低，数据来自现有报表，框架建立 1 周内可用）
 
 **优先级评分**：5/5（每个月必须做的财务分析，缺失导致不知道谁在赚钱）
-```

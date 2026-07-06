@@ -7,7 +7,7 @@ status: stable
 created: 2026-06-22
 updated: 2026-06-22
 owner: self
-source: human+ai
+source: arxiv:1811.03728 + human+ai
 roadmap_phase: phase1
 ---
 
@@ -17,6 +17,8 @@ roadmap_phase: phase1
 > **决策类型**: 自动触发型 | **触发条件**: 接收到平台合规警告 | **执行动作**: 按严重程度P0/P1/P2自动分级升级响应（P0立即人工介入/P1 24h响应/P2 72h响应）
 
 ## ① 算法原理
+
+> **论文**：Triage and Dispatch of Customer Issues via Multi-Stage Classification | **arXiv**：1811.03728
 
 核心是「警告分类解析 + 严重程度评分 + 分级响应触发 + SLA 管理」：
 

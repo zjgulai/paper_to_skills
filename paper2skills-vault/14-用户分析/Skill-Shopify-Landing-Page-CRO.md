@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Shopify Landing Page CRO — 独立站落地页转化率优化：ML驱动的A/B测试与个性化元素配置
 doc_type: knowledge
@@ -326,4 +325,3 @@ print("[✓] Shopify Landing Page CRO 测试通过")
 | **优先级评分** | 9/10 — 独立站卖家最高ROI杠杆之一，且效果可在2周内验证 |
 | **适用场景** | Shopify独立站月UV>5000、广告预算>$3000/月的DTC卖家 |
 | **典型收益** | CVR提升50-150%，ROAS提升0.5-2x |
-```

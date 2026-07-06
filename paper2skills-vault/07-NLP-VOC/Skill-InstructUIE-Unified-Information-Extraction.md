@@ -1,7 +1,11 @@
-# Skill: InstructUIE — 统一信息抽取框架
-
-roadmap_phase: phase1
 ---
+doc_type: knowledge
+roadmap_phase: phase1
+status: stable
+updated: 2024-01-15
+---
+
+# Skill: InstructUIE — 统一信息抽取框架
 
 ## ① 算法原理
 
@@ -227,6 +231,7 @@ python instructuie_model.py
 - **可组合（combinable）**：[[Skill-VOC-Supply-Chain-Signal-Bridge]]（组合：统一信息提取识别评论中的供应链信号实体）
 
 - **可组合（combinable）**：[[Skill-RFM-Customer-Segmentation]]（VOC标签可直接映射到客户分群特征）
+
 ## ⑤ 商业价值评估
 
 ### ROI 预估

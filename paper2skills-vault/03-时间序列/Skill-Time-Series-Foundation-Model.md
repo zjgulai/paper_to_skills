@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Time Series Foundation Model — 时序基础模型：零样本跨品类需求预测
 doc_type: knowledge
@@ -288,4 +287,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（03-时间序列16个Skill的范式升级；填补新品冷启动场景的时序预测空白；2024年最重要的时序领域突破之一）
 
 - **评估依据**：Chronos (ICML 2024, Amazon Science) 在电商数据集零样本预测中超越有监督基线；TimesFM (ICML 2024, Google Research) 在 M4/ETT 等标准集达到 SOTA
-```

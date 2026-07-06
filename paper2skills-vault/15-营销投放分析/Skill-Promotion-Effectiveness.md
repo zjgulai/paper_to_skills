@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Promotion Effectiveness Evaluation with Causal ML
 module: 15-营销投放分析
@@ -407,4 +406,3 @@ print("[✓] Promotion Effectiveness 测试通过")
 - **ROI**：识别无效促销支出后，可削减20-40%的促销浪费，年节省数十万
 - **难度**：⭐⭐⭐⭐☆（4/5）— 因果推断概念门槛高，DML实现复杂
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 避免"促销幻觉"，确保每一分折扣都产生真实增量
-```

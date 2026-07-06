@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MAS-Pricing-Coalition-Stability — 多SKU联合定价纳什均衡检测与联合体稳定性维持
 doc_type: knowledge
@@ -198,4 +197,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐（Shapley计算指数复杂度，SKU数>10需近似算法）
 - **优先级**：⭐⭐⭐（适合有3-8个关联SKU的捆绑销售场景）
 - **扩展方向**：SKU数>8时用近似Shapley（采样版）替换精确计算
-```

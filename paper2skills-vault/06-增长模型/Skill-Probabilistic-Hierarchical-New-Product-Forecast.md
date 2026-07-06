@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 概率层次预测 DPMN — 品类→子类→SKU 一致性联合预测
 doc_type: knowledge
@@ -327,4 +326,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（层次树构建需 SKU 分类体系；DPMN 核心逻辑可用 statsforecast 库快速实现）
 - **优先级**：⭐⭐⭐⭐☆（多 SKU 同时上市时必需；层次一致性是供应链计划的基础要求）
 - **评估依据**：论文在 Amazon 内部 Favorita 杂货零售数据验证 CRPS 改善 8.1%；层次一致性是 Amazon 供应链预测的生产要求
-```

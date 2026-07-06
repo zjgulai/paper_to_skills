@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "Skill Card: Imbalanced Data Handling in Mother-Baby Cross-Border E-commerce"
 slug: skill-imbalanced-data-handling

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Visual Product Search — 视觉商品搜索：以图搜货与相似款发现
 doc_type: knowledge
@@ -280,4 +279,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（完全空白场景；DTC 独立站的下一代搜索功能；桥接 知识图谱↔AI视频↔广告分析 三域）
 
 - **评估依据**：Pinterest 视觉搜索已被证明转化率高于文字搜索；CLIP 在电商视觉搜索的 recall@K 超过 85%；竞品图分析工具需求在卖家社区高度热门
-```

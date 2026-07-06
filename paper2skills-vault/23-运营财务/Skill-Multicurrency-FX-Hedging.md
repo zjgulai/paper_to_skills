@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Multicurrency FX Hedging — 跨境卖家多货币外汇风险对冲
 doc_type: knowledge
@@ -10,6 +9,17 @@ updated: 2026-06-10
 owner: self
 source: arxiv:2106.04578
 roadmap_phase: phase2
+tags:
+  - fx-hedging
+  - multicurrency
+  - cross-border
+  - risk-management
+  - drl
+difficulty: intermediate
+time_to_master: 4-6 weeks
+prerequisites:
+  - Skill-Cross-Border-Cash-Flow-Forecasting
+  - Skill-PL-Attribution-Analysis
 ---
 
 # Skill Card: Multicurrency-FX-Hedging（多货币外汇风险对冲）
@@ -141,4 +151,3 @@ print("[✓] Multicurrency FX Hedging 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要与银行/外汇平台对接）
 - **优先级**：⭐⭐⭐⭐☆（多市场运营必须面对，汇率风险是隐性利润杀手）
 - **评估依据**：基于企业 FX 对冲经典框架（Granular Corporate Hedging，FMG 2023）和 DRL 动态对冲研究
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Dynamic Lot Sizing with MOQ and Price Breaks
 module: 04-供应链
@@ -411,4 +410,3 @@ code_path: paper2skills-code/supply_chain/dynamic_lot_sizing_moq/
 review_score: 8.5/10
 wf_coverage: [WF-A]
 created: 2026-05-25
-```

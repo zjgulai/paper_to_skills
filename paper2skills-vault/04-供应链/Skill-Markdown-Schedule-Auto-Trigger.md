@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Markdown-Schedule-Auto-Trigger — Amazon FBA 滞销库存库龄触发三阶段自动降价序列
 doc_type: knowledge
@@ -247,4 +246,3 @@ for a in result["actions"]:
 - **ROI量化**：平均每次触发可节省LTSF长期仓储费$800-2,000/SKU，年化管理10-30个SKU可节省$10-30万元；同时规避库容超限导致的补货资格暂停风险（价值更高）
 - **实施难度**：⭐⭐☆☆☆（Amazon SP API对接价格修改接口，技术复杂度低；业务规则明确）
 - **优先级**：⭐⭐⭐⭐⭐（FBA仓储成本直接影响利润率，滞销库存是大卖家前3大成本浪费来源）
-```

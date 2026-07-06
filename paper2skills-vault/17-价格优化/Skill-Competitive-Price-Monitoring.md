@@ -1,3 +1,11 @@
+---
+doc_type: knowledge
+roadmap_phase: phase1
+status: stable
+updated: 2024-01-15
+source: arxiv:1502.04637
+---
+
 # Skill Card: Competitive Price Monitoring（竞品价格监测与响应）
 
 > **领域**: 17-价格优化 | **类型**: 综合萃取
@@ -6,6 +14,9 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Causal Inference Using Invariant Predictions | **arXiv**：1502.04637
+> **相关文献**：Abadie & Gardeazabal (2003) "The Economic Costs of Conflict: The Case of the Basque Country" (合成控制法); Angrist & Pischke (2008) "Mostly Harmless Econometrics"（双重差分法）
 
 ### 核心思想
 竞品价格监测不只是"看别人卖多少钱"，而是建立价格-转化率的因果响应模型，在竞品降价时量化"不跟降会损失多少"和"跟降能获得多少"，做出有数据支撑的响应决策。

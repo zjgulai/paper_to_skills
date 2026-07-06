@@ -1,10 +1,33 @@
+---
+doc_type: knowledge
+roadmap_phase: phase2
+status: stable
+updated: 2025-01-15
+title: CausalRAG - 因果图驱动的检索增强生成
+tags:
+  - 知识图谱
+  - 因果推断
+  - 检索增强生成
+  - 智能体工程
+  - 售后服务
+  - 质量管理
+domain:
+  - 08-知识图谱
+  - 01-因果推断
+  - 16-智能体工程
+paper_arxiv: "2503.19878"
+paper_venue: "ACL 2025 Findings"
+difficulty: intermediate
+business_value: high
+implementation_weeks: 4-6
+---
+
 # Skill Card: CausalRAG - 因果图驱动的检索增强生成
 
 > **论文**: CausalRAG: Integrating Causal Graphs into Retrieval-Augmented Generation  
 > **来源**: arXiv:2503.19878 | Findings of ACL 2025  
 > **领域**: 08-知识图谱 / 01-因果推断 / 16-智能体工程
 
-roadmap_phase: phase2
 ---
 
 ## ① 算法原理

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Price-Sensitive Personalized Recommendation — 价格感知个性化推荐：弹性×用户偏好协同
 doc_type: knowledge
@@ -226,4 +225,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（同时修复价格优化↔推荐系统↔NLP-VOC 三个弱连接；价格感知是推荐系统最重要的未接入信号）
 
 - **评估依据**：Price-aware recommendation (RecSys 2024) 验证 CVR 提升 8-15%；价格感知推荐在高端 DTC 品牌的实践中 LTV 提升显著
-```

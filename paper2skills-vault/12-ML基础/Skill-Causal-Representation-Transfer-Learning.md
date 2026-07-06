@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 因果表示学习跨域迁移 — 从源域提取不变因果特征用于目标域零样本适配
 doc_type: knowledge

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Tax Evasion Risk Signal Monitor — 税务合规风险信号监控（VAT/GST 异常）
 doc_type: knowledge
@@ -183,4 +182,3 @@ print("[✓] Tax-Evasion-Risk-Signal-Monitor 测试通过")
 - **ROI量化**: 年化规避 VAT 罚款风险 10-50 万元
 - **实施难度**: ⭐⭐（Amazon 销售报告可直接导出，规则逻辑清晰）
 - **优先级**: ⭐⭐⭐⭐⭐（欧洲/英国/澳洲运营卖家合规必备）
-```

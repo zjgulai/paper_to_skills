@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Delivery Promise Optimization — 时效承诺优化：转化率与准时率的帕累托
 doc_type: knowledge
@@ -177,4 +176,3 @@ print("[✓] Delivery Promise Optimiza 测试通过")
 ---
 
 *参考来源：Amazon Delivery Promise Experience (2024)；JD.com 配送承诺优化技术报告；Operations Research in E-commerce Logistics, 2024-2025*
-```

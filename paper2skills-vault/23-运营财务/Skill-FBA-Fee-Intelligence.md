@@ -1,4 +1,3 @@
-```markdown
 ---
 title: FBA Fee Intelligence（FBA 费用结构分析与长库龄预警）
 doc_type: knowledge
@@ -176,4 +175,3 @@ print("\n[✓] FBA Fee Intelligence 测试通过")
 **实施难度**：⭐⭐☆☆☆（低，Amazon SP API 报告直接可用）
 
 **优先级评分**：5/5（FBA 费用是月均必须监控的财务指标，实施成本极低）
-```

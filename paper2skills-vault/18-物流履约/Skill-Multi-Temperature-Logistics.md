@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Multi-Temperature Logistics — 多温区混合配送成本优化
 doc_type: knowledge
@@ -204,4 +203,3 @@ print("[✓] Multi-Temperature Logistics 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需要有物流合作方支持混合温区车厢；路径优化可用开源工具）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：有机食品/益生菌/母乳储存类产品是母婴跨境高增长品类，冷链成本是核心竞争壁垒；每降低 1 美元冷链成本直接转化为利润
-```

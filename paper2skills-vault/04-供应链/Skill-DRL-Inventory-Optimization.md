@@ -1,4 +1,3 @@
-```markdown
 ---
 title: DRL Inventory Optimization — 深度强化学习库存优化：端到端自适应补货决策
 doc_type: knowledge
@@ -297,4 +296,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（04-供应链已有33个Skill但全是启发式规则；DRL 是下一代供应链优化方法；桥接 供应链↔MAS↔智能体工程 三域）
 
 - **评估依据**：DRL 库存优化在大型零售商（Walmart/JD.com 等）生产验证显示成本降低 15-25%；NeurIPS 2024 论文在标准库存基准上超越传统规则 15-30%
-```

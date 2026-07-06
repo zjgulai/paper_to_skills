@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Repurchase Trigger Timing Model — 生存分析驱动的最佳复购触达时间窗预测
 doc_type: knowledge
@@ -298,4 +297,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（仅需购买记录，无需复杂特征工程）
 - **优先级**：⭐⭐⭐⭐⭐（消耗品品类必备，复购驱动 LTV 的核心杠杆点）
 - **评估依据**：生存分析已在 Chewy、Dollar Shave Club 等订阅制电商验证，核心依赖购买时间序列，母婴消耗品天然适配，数据质量要求低
-```

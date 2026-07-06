@@ -1,4 +1,3 @@
-```markdown
 ---
 title: LTV Prediction BTYD — BG/NBD + Gamma-Gamma 客户生命周期价值预测
 doc_type: knowledge
@@ -336,4 +335,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（图谱中28个 Skill 引用 LTV 但基础 Skill 不存在；是用户运营链的基础底层；所有"高价值用户"运营策略都需要 CLV 量化支撑）
 
 - **评估依据**：BG/NBD 模型（Fader et al. 2005）在非合约场景的 CLV 预测已成为行业标准；arXiv 2501.04719 验证 BG-NBD 在金融场景的实施细节；跨境电商 CLV 提升 ROI 来源于多个 DTC 品牌案例
-```

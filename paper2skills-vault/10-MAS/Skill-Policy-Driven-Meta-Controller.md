@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 策略驱动元控制器 — 内容审核、延迟控制与多域通用控制面
 doc_type: knowledge

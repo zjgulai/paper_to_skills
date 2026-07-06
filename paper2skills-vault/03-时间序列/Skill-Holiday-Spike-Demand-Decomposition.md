@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Holiday Spike Demand Decomposition — 节假日需求峰值分解（Prime Day/黑五）
 doc_type: knowledge
@@ -144,4 +143,3 @@ print("[✓] Holiday-Spike-Demand-Decomposition 测试通过")
 - **ROI量化**: 节后库存积压减少 30%，年化降低 FBA 长库龄费用 15-25 万元
 - **实施难度**: ⭐⭐（节日日期标注是关键输入，算法简单）
 - **优先级**: ⭐⭐⭐⭐（大促卖家节后去库存必备）
-```

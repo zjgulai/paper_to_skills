@@ -1,4 +1,3 @@
-```markdown
 ---
 title: SEO Organic Ranking Optimization — 电商 SEO 自然排名元数据优化
 doc_type: knowledge
@@ -189,4 +188,3 @@ print("[✓] SEO Organic Ranking Optimization 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，关键词数据公开，元数据优化无需技术门槛）
 - **优先级**：⭐⭐⭐⭐⭐（自然流量是利润率最高的流量来源，SEO 是长期竞争力的基础）
 - **评估依据**：arXiv 2510.01523，MetaSynth 多智能体元数据优化，真实电商搜索平台 A/B 验证
-```

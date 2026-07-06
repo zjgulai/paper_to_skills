@@ -1,4 +1,3 @@
-```markdown
 ---
 title: PPC Rule Automation Engine — PPC 规则自动化引擎：条件触发的广告出价智能运营
 doc_type: knowledge
@@ -323,4 +322,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（完全空白的高频痛点；中型卖家 PPC 管理的核心工具；桥接 广告分析↔A_B实验↔运营财务 三域）
 
 - **评估依据**：第三方 PPC 自动化工具（Perpetua/Zon.Tools/BidX）验证规则自动化 ACOS 降低 15-25%；中型卖家（100+关键词）手动管理的机会成本每年 ¥10-20 万
-```

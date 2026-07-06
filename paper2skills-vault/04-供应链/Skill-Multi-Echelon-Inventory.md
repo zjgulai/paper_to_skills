@@ -1,10 +1,16 @@
-```markdown
-# Skill Card: Multi-Echelon Inventory Optimization (多阶库存优化)
-
+---
+doc_type: knowledge
 roadmap_phase: phase1
+status: stable
+updated: 2024-01-15
+source: arxiv:1502.01592
 ---
 
+# Skill Card: Multi-Echelon Inventory Optimization (多阶库存优化)
+
 ## ① 算法原理
+
+> **论文**：Optimal Inventory Management in Multi-Echelon Supply Chains with Stochastic Demand | **arXiv**：1502.01592
 
 ### 核心思想
 多阶库存优化解决的核心问题是：**如何在供应链的多个节点（工厂→仓库→配送中心→门店）之间分配库存，使得总成本最低的同时保证服务水平**。与单点库存管理不同，多阶优化需要考虑节点间的依赖关系、订货提前期和需求传递效应。
@@ -67,7 +73,7 @@ $$SS = z \times \sigma_L = z \times \sqrt{\sum_{i}(L_i \times \sigma_{D_i}^2)}$$
 ### 场景二：婴儿推车爆款动态备货
 
 **业务问题**：
-母婴出海品牌推出一款轻便婴儿推车（SKU: ST-500），上市 3 个月销量快速增长（月环比增长 35%），但传统固定安全库存策略无法适应趋势变化。当前采用“月均销量 × 1.5”的固定备货策略，导致 6 月大促期间缺货 12 天，损失约 900 单。需要根据销售趋势动态调整库存。
+母婴出海品牌推出一款轻便婴儿推车（SKU: ST-500），上市 3 个月销量快速增长（月环比增长 35%），但传统固定安全库存策略无法适应趋势变化。当前采用"月均销量 × 1.5"的固定备货策略，导致 6 月大促期间缺货 12 天，损失约 900 单。需要根据销售趋势动态调整库存。
 
 **数据要求**：
 - 实时销量数据：近 30 天滚动销量（当前日销 85 件，30 天前日销 52 件）
@@ -77,7 +83,7 @@ $$SS = z \times \sigma_L = z \times \sqrt{\sum_{i}(L_i \times \sigma_{D_i}^2)}$$
 
 **预期产出**：
 - 动态安全库存建议：当前安全库存从 450 件上调至 780 件（趋势因子 1.63）
-- 预警清单：ST-500 进入“紧急补货”状态，建议立即追加 1500 件空运（成本 $3.2/件，7 天到货）
+- 预警清单：ST-500 进入"紧急补货"状态，建议立即追加 1500 件空运（成本 $3.2/件，7 天到货）
 - 补货优先级排序：ST-500 优先级 A（缺货风险高、利润率高），其他 SKU 按缺货概率排序
 
 **业务价值**：
@@ -356,7 +362,7 @@ def main():
 
 if __name__ == '__main__':
     optimizer = main()
-print("[✓] Multi Echelon Inventory 测试通过")
+    print("[✓] Multi Echelon Inventory 测试通过")
 ```
 
 ---
@@ -377,7 +383,6 @@ print("[✓] Multi Echelon Inventory 测试通过")
 - **Uplift Modeling**：识别高价值 SKU，优先保障库存
 - **时间序列预测**：预测爆款趋势，动态调整安全库存
 - **选品决策**：结合库存策略选择新品
-
 
 - **可组合**：[[Skill-Demand-Forecasting-Supply-Chain]] / [[Skill-Safety-Stock-Replenishment]]
 
@@ -411,4 +416,3 @@ print("[✓] Multi Echelon Inventory 测试通过")
 2. 库存优化 ROI 高，每投入 1 元可节省 8-12 元
 3. 与现有 ERP 系统对接相对简单
 4. 可从单一 SKU 试点，逐步扩展到全品类
-```

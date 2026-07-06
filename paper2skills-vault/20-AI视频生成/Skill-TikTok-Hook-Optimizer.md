@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-TikTok-Hook-Optimizer — TikTok 开头钩子前3秒留存预测
 doc_type: knowledge
@@ -171,4 +170,3 @@ print("\n[✓] TikTok-Hook-Optimizer 测试通过")
 - **ROI**：3s 留存率从 28% → 47%，自然推荐流量 3 倍提升，年化增量 GMV 8-15 万元
 - **实施难度**：⭐☆☆☆☆（纯文案分析，零技术门槛）
 - **优先级**：⭐⭐⭐⭐⭐（TikTok 分发的核心杠杆，每条视频必做优化）
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AutoML 流水线设计 — Optuna TPE + FLAML 自动化建模
 doc_type: knowledge
@@ -243,4 +242,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要 optuna 库，搜索时间随 n_trials 增加；本地 CPU 50 trials 约 5-15 分钟）
 - **优先级**：⭐⭐⭐⭐⭐（通用性极强，所有需要建模的 Skill 都可受益；一次实现多处复用）
 - **评估依据**：FLAML 论文在多个 benchmark 上比手工调优平均提升 15-30%；母婴供应链场景数据量适中（103 万 SKU），AutoML 完全可行
-```

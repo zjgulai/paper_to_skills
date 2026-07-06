@@ -1,4 +1,3 @@
-```markdown
 ---
 title: TikTok达人直播ROI归因 — PSM分离主播效应与流量效应
 doc_type: knowledge
@@ -309,4 +308,3 @@ simulate_creator_attribution()
 - **实施难度**：⭐⭐⭐⭐☆（需要TikTok Shop后台的流量来源数据，部分市场数据获取有限制）
 - **优先级**：⭐⭐⭐⭐☆（KOL是TikTok母婴品牌主要获客渠道，归因精准化直接影响预算分配）
 - **量化指标**：PSM匹配率 >60%，匹配后协变量标准化差异 <0.1，ATT 95% CI 不含0则效应显著
-```

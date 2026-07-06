@@ -1,12 +1,12 @@
-```markdown
 ---
 title: KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐
 doc_type: knowledge
 module: 08-知识图谱
 topic: kg-powered-user-profiling-recommendation
 roadmap_phase: phase2
+status: stable
 created: 2026-06-01
-updated: 2026-06-01
+updated: 2026-12-19
 owner: self
 source: arxiv:1905.07808
 ---
@@ -453,12 +453,4 @@ print("[✓] KG Powered User Profiling 测试通过")
 
 | 维度 | 评估 |
 |------|------|
-| 核心收益 | 跨品类推荐 CTR 提升 18%，用户 LTV 增加，冷启动转化率提升 |
-| 实现难度 | ⭐⭐⭐☆☆ |
-| 商业优先级 | ⭐⭐⭐⭐☆ |
-| 工程成本 | 中（需维护产品 KG，无需 GPU） |
-| 适用场景 | 母婴品类丰富的平台；DTC 站个性化推荐；新用户冷启动 |
-
-**关键风险**：KG 质量直接影响推荐效果，需定期维护产品属性标注。
-- **跨域**：[[Skill-User-Funnel-Analysis]]
-```
+| 核心收益 | 跨品类推荐 CTR 提升 18%，用户 LTV 增

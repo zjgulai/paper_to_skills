@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Bayesian Structural Time Series — 贝叶斯结构时间序列分离促销/季节/趋势效应
 doc_type: knowledge
@@ -148,4 +147,3 @@ print("[✓] Bayesian-Structural-Time-Series 测试通过")
 - **ROI量化**: 修正 iROAS 估计，年化节省 20-40 万元无效投放
 - **实施难度**: ⭐⭐⭐（需要 52 周历史数据和协变量，推荐 CausalImpact 包）
 - **优先级**: ⭐⭐⭐⭐（Influencer/促销效果量化的标准工具）
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Graph Attention Network Recommendation — 图注意力网络推荐：动态权重的高精度图推荐
 doc_type: knowledge
@@ -298,4 +297,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（GAT 是 GNN 推荐的重要变体，已有 GNN Skill 但缺注意力版本；电商图推荐领域活跃方向；桥接 知识图谱↔推荐系统↔用户分析 三域）
 
 - **评估依据**：GAT 在多个推荐基准数据集超越 LightGCN 8-15%（NDCG@10）；注意力权重天然可解释，支持合规要求；母婴品类配套购买关系强，注意力机制价值明显
-```

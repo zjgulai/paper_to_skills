@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Popularity-Aware Meta-Learning for Cold-Start Recommendation
 module: 05-推荐系统
@@ -224,4 +223,3 @@ print("[✓] Cold Start Meta Learning  测试通过")
 - **ROI**：新品GMV提升50-100%，试错周期缩短60%
 - **难度**：⭐⭐⭐☆☆（3/5）— 元学习概念门槛，但实现可模块化
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 母婴品类迭代快，冷启动是刚需痛点
-```

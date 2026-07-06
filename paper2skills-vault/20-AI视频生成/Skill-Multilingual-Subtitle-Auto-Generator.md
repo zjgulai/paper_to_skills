@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Multilingual-Subtitle-Auto-Generator — 多语言字幕自动生成
 doc_type: knowledge
@@ -10,6 +9,17 @@ updated: 2026-06-22
 owner: self
 source: arxiv:2212.04356
 roadmap_phase: phase1
+tags:
+  - multilingual
+  - subtitle
+  - ASR
+  - machine-translation
+  - video-localization
+  - whisper
+  - nllb
+category: AI视频生成
+difficulty: intermediate
+estimated_time: 30min
 ---
 
 # Skill Card: Skill-Multilingual-Subtitle-Auto-Generator
@@ -61,6 +71,28 @@ Every parent knows this struggle.
   - 输出 SRT 文件 + 烧录字幕视频
 - **量化产出**：字幕生成时间从 2.5h/条 → 5 分钟/条，月节省 37.5 小时
 - **业务价值**：月翻译成本从 $900 → $15（API 费用），年化节省约 10,600 元
+
+**三轨验证**：
+
+- **成本轨**：
+  - Whisper API 调用：$0.006/分钟音频（OpenAI），月均 15 条视频×5 分钟均长 = $4.50
+  - NLLB 翻译 API（Google Translate/DeepL）：$0.50/百万字符，月均 3 语言×15 条×2,000 字 = $4.50
+  - 字幕烧录工具（FFmpeg 本地部署）：0 元
+  - **月度显性成本合计：$9/月**（相比人工翻译 $900/月，节省 99%）
+  - 初期投入：模型微调数据标注 $500-800（一次性）
+
+- **合规轨**：
+  - ✅ **Amazon 政策**：字幕生成不涉及虚假宣传，符合 A9 搜索政策；多语言字幕属于内容本地化，无违规风险
+  - ✅ **GDPR**：字幕文本不含个人数据，翻译 API 选择 EU 数据中心（如 DeepL 德国服务器）可完全合规
+  - ✅ **广告法**：字幕内容需与原视频一致，不得擅自修改产品声称；建议建立审核流程（人工 QA 抽检 10%）
+  - ✅ **跨境贸易**：字幕仅为辅助内容，不涉及商品描述变更，无需额外报关/认证
+  - ⚠️ **平台政策**：TikTok/YouTube 字幕需符合各平台社区准则，避免敏感词汇；建议使用平台官方字幕 API（TikTok Creator Studio 支持自动字幕）
+
+- **风险轨**：
+  - **竞品价格战**（概率 15%）：低成本字幕生成可能引发竞品跟风降价，但母婴品类品牌差异大，风险可控；建议强化产品差异化（如专业词汇库、行业认证）
+  - **平台审查**（概率 8%）：AI 生成字幕若存在翻译错误可能触发平台审查（如医疗声称误译）；风险缓解：建立翻译质量门槛（BLEU ≥ 0.35）+ 人工 QA 抽检
+  - **品牌损伤**（概率 5%）：字幕翻译不当导致文化冒犯（如日语敬语使用错误）；风险缓解：邀请当地母语使用者审核关键字幕，建立反馈机制
+  - **技术故障**（概率 12%）：Whisper 识别错误率 6.1%（中文），可能导致字幕不准确；风险缓解：对高价值视频（>10K 播放预期）启用人工二审，成本 $5-10/条
 
 ## ③ 代码模板
 
@@ -252,4 +284,3 @@ print("\n[✓] Multilingual-Subtitle-Auto-Generator 测试通过")
 - **ROI**：翻译成本从 $900/月 → $15/月（API 费），年化节省约 10,600 元，同时支持更多市场进入
 - **实施难度**：⭐⭐☆☆☆（Whisper 开源可本地部署，翻译 API 成熟）
 - **优先级**：⭐⭐⭐⭐⭐（视频出海的基础能力，多语言字幕直接影响非英语市场转化率）
-```

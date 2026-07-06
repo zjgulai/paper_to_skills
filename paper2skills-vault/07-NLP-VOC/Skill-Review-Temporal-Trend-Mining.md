@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Review 时序趋势挖掘 — LDA 滑动窗口演化分析
 doc_type: knowledge
@@ -309,4 +308,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（LDA 需要一定调参经验；每月 50+ 条 Review 才能稳定运行；代码已封装，直接调用 `analyze_temporal_trends` 即可）
 - **优先级**：⭐⭐⭐⭐☆（有 Review 历史数据的 ASIN 立即可用，无冷启动问题）
 - **评估依据**：LDA 是 VOC 分析标准方法，行业验证充分；时序窗口方法已在电商质量监控中广泛应用；问题提前发现的 ROI 显著
-```

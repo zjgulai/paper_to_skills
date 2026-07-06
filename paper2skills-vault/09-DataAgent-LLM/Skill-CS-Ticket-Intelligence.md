@@ -1,4 +1,3 @@
-```markdown
 ---
 title: CS Ticket Intelligence — 客服工单智能分诊：自动分类路由与优先级排序
 doc_type: knowledge
@@ -289,4 +288,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（完全空白的高频刚需；小型卖家最普遍的运营痛点；桥接 DataAgent↔NLP-VOC↔风控 三域）
 
 - **评估依据**：客服自动化工具（Freshdesk/Zendesk AI）已验证效率提升 3-5x；差评预警早响应的转化率来自多个卖家实操数据；LLM 分类在客服工单场景的准确率 85-92%
-```

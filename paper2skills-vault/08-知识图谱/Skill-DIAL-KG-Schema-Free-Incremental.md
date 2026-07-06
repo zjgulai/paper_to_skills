@@ -1,4 +1,3 @@
-```markdown
 ---
 title: DIAL-KG无Schema增量知识图谱构建 — 动态Schema归纳+治理裁决+增量演化闭环
 doc_type: knowledge

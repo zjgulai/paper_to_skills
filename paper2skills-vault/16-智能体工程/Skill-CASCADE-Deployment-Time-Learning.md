@@ -1,4 +1,3 @@
-```markdown
 ---
 title: CASCADE — 案例推理部署时学习：Contextual Bandit 无参数自适应
 doc_type: knowledge

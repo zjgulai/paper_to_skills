@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Instrumental Variables (IV) for Causal Inference with Endogeneity
 doc_type: knowledge

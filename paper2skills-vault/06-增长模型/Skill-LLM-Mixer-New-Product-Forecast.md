@@ -1,4 +1,3 @@
-```markdown
 ---
 title: LLM-Mixer 多尺度时序新品销量预测 — LLM 增强多分辨率分解
 doc_type: knowledge
@@ -347,4 +346,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐⭐☆（需要 LLM 访问权限/本地部署；Qwen-7B/LLaMA-3-8B 可本地运行；开发周期 2-4 周）
 - **优先级**：⭐⭐⭐☆☆（LLM 推理成本较高；适合高单价新品或战略性新品；中等优先级）
 - **评估依据**：论文超越 TimesNet/PatchTST 等 SOTA；2024年新成果；LLM 时序预测趋势明确；Qwen 系列开源可本地部署控制成本
-```

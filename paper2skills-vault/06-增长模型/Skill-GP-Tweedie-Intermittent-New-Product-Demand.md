@@ -1,4 +1,3 @@
-```markdown
 ---
 title: GP+Tweedie 间歇稀疏新品需求预测 — 零膨胀冷启动概率预测
 doc_type: knowledge
@@ -333,4 +332,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐⭐☆（Tweedie MLE 参数估计需调参；贝叶斯 GP 后验推断需 GPyTorch/PyMC；但轻量近似版本可快速落地）
 - **优先级**：⭐⭐⭐☆☆（优先解决高销量新品；小众品类数量多但单品影响小，综合优先级中等）
 - **评估依据**：论文在数千条间歇时序实验，TweedieGP 高分位数（P90+）显著优于 Croston、iETS、NegBinGP；2025年最新成果，竞争优势显著
-```

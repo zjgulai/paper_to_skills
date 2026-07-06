@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Recommendation Finance — 推荐系统 GMV 贡献归因与毛利影响量化
 doc_type: knowledge
@@ -312,4 +311,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐☆（推荐系统×财务是超高 ROI 的未开发桥梁）
 
 - **评估依据**：GFlowGR 在 Taobao 生产验证 +0.43% GMV；Kuaishou OneMall 验证 +14.7% GMV（product-card 场景）
-```

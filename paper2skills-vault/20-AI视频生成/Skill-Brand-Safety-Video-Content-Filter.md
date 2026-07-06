@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Brand-Safety-Video-Content-Filter — 品牌安全视频内容过滤
 doc_type: knowledge
@@ -206,4 +205,3 @@ print("\n[✓] Brand-Safety-Video-Content-Filter 测试通过")
 - **ROI**：自动过滤 70% UGC，人工审核时间减少 80%，避免品牌安全事故（年化保护价值 10-50 万元）
 - **实施难度**：⭐⭐☆☆☆（规则引擎即可实现 80% 场景，开发周期 1 天）
 - **优先级**：⭐⭐⭐⭐☆（有 UGC 挑战赛/合作 KOL 的品牌必备，合规风险不可忽视）
-```

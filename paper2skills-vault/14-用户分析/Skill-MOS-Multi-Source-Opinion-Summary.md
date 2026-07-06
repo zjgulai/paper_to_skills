@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MOS Multi-Source Opinion Summary — LLM 多源评论整合摘要
 doc_type: knowledge
@@ -161,4 +160,3 @@ print("[✓] MOS 多源评论整合摘要测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，LLM API 调用 + 数据采集管道）
 - **优先级**：⭐⭐⭐⭐⭐（多平台运营是母婴跨境标配，多源 VOC 整合是高频刚需）
 - **评估依据**：IJCNLP 2025，人类判断一致性 ρ=0.74，用户研究 87% 偏好 M-OS 摘要
-```

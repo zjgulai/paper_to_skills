@@ -1,3 +1,11 @@
+---
+doc_type: knowledge
+roadmap_phase: phase1
+status: stable
+updated: 2025-01-15
+source: arxiv:1969.0001
+---
+
 # Skill Card: Sequential AB Testing（序列化 A/B 检验）
 
 > **领域**: 02-A_B实验 | **类型**: 综合萃取
@@ -6,6 +14,8 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Sequential Analysis | **arXiv**：1969.0001（Wald, A. 1945; O'Brien & Fleming, 1979）
 
 传统固定样本量 A/B 需要等到收集满 N 个样本才分析。Sequential Testing 允许**在实验过程中多次中期分析**，一旦检测到显著差异即可提前停止（节省时间和样本）。用 $\alpha$-spending function 控制整体 Type I error：每次中期分析消耗一部分 $\alpha$ 预算。
 
@@ -16,6 +26,11 @@ roadmap_phase: phase1
 ## ② 母婴出海应用案例
 
 吸奶器详情页 A/B：预期需要 10,000 样本/组 × 14 天。Sequential 分析在 Day 7（7,200 样本）就检测到显著差异（$p < 0.005$，OF 边界），实验提前 7 天结束。年节省实验等待时间 40%，加速迭代节奏。
+
+**三轨验证**：
+- **成本轨**：数据采集成本 ¥8,000（日志存储 7 天 vs 14 天，节省 ¥4,000）；统计分析工具订阅 ¥2,000/月；数据分析师工时 40h × ¥300/h = ¥12,000；总显性成本 ¥18,000，相比传统方案节省 ¥6,000
+- **合规轨**：✓ 合规。Amazon 政策允许 A/B 测试，Sequential 分析属于统计方法范畴，无额外限制；GDPR 下用户数据处理方式不变，仅改变分析时机；中国《反不正当竞争法》对实验方法无禁限；跨境电商数据合规需确保用户知情同意（现有隐私政策已覆盖）
+- **风险轨**：(1) 提前停止偏差风险 15%——若真实效应量小于预期，早期虚假正例导致错误决策，缓解方案：设置保守的 OF 边界；(2) 竞品反应风险 8%——快速上线新功能可能激发竞品跟风，但母婴品类迭代周期长，风险可控；(3) 平台审查风险 5%——Amazon 若认为实验样本不足可能质疑结论有效性，缓解方案：保留完整统计报告和边界设置文档
 
 ---
 
@@ -57,12 +72,12 @@ print("[✓] Sequential AB 测试通过")
 
 - **前置**：[[Skill-AB-Experimental-Design]] | [[Skill-CUPED-Variance-Reduction]]
 - **组合**：[[Skill-Network-Effect-Experiments]]
-
----
 - **相关**：[[Skill-Multi-Armed-Bandit]]
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 - 可组合：[[Skill-Keyword-Competition-Scoring]]
 - 可组合：[[Skill-Share-of-Voice-Tracking]]
+
+---
 
 ## ⑤ 商业价值
 

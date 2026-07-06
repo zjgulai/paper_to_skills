@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Reddit Community Signal Mining — Reddit 社区信号挖掘与品牌口碑监测
 doc_type: knowledge
@@ -370,4 +369,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐☆（Reddit 是 AI 搜索引擎最重要的内容来源之一，品牌在 Reddit 的存在感直接影响 AI 推荐）
 
 - **评估依据**：arXiv 2505.20185 验证情感同质性 0.198-0.228；研究显示 Reddit 高票帖在 ChatGPT 2026 年引用中占 23% 的非官网内容来源
-```

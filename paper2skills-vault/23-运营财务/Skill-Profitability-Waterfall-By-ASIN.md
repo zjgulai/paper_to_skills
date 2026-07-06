@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Profitability-Waterfall-By-ASIN — 单品盈利瀑布分析
 doc_type: knowledge
@@ -171,4 +170,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（SKU 超过 10 个时立即启用） |
 | 数据要求 | Amazon 账单 + 商品成本 + 广告花费（ASIN 级） |
 | 典型收益 | 发现 20% 的 ASIN 贡献负利润，止损后利润率提升 5-15 个点 |
-```

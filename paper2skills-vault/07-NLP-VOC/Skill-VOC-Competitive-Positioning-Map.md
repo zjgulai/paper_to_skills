@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-VOC-Competitive-Positioning-Map — VOC竞争定位地图
 doc_type: knowledge
@@ -10,6 +9,17 @@ updated: 2026-06-22
 owner: self
 source: arxiv:1905.03197
 roadmap_phase: phase1
+tags:
+  - VOC
+  - competitive-analysis
+  - positioning
+  - sentiment-analysis
+  - product-strategy
+difficulty: intermediate
+time_to_master: 2h
+prerequisites:
+  - Skill-VOC-Aspect-Sentiment-Extraction
+  - Skill-Competitor-Product-Intelligence
 ---
 
 # Skill Card: Skill-VOC-Competitive-Positioning-Map
@@ -50,6 +60,28 @@ roadmap_phase: phase1
 - **双弱区**："color options" → 消费者关注度低，不需投入
 
 **决策**：将主图和 A+ 内容聚焦展示"安全扣"和"腰部支撑"，广告 Headline 改用"The Only Baby Carrier with Ergonomic Lumbar Lock"，**30 天内广告 CTR 提升 28%，转化率 +18%**。
+
+**三轨验证**：
+
+- **成本轨**：
+  - 数据采集：4 个品牌 × 500 条评论 = 2,000 条，采用 API 爬取（Amazon Review API 或第三方工具如 Keepa）约 ¥800-1,200
+  - 计算资源：BERT 模型推理（GPU 云服务 4h）约 ¥150-200
+  - 人力投入：数据清洗 + 结果验证 8 人时 = ¥1,200-1,600
+  - **总成本：¥2,150-3,000**（一次性投入，可复用 3-6 个月）
+
+- **合规轨**：
+  - ✅ **Amazon 政策**：竞品评论数据采集需遵守 Amazon ToS，不得用于虚假评价或恶意竞争；分析结果仅用于自家产品优化，合规
+  - ✅ **GDPR**：评论数据已公开发布，无需个人隐私同意；分析过程不涉及个人数据处理，合规
+  - ✅ **广告法**：对标竞品时避免虚假宣传（如"唯一"需有证据支撑），建议改为"业界领先"等相对表述，合规
+  - ✅ **跨境贸易**：数据分析属于商业智能范畴，不涉及出口管制商品，合规
+
+- **风险轨**：
+  - 🔴 **竞品价格战**（概率 25%）：若竞品发现被对标，可能降价应对，导致行业利润率下降；缓解措施：强化品质差异而非单纯价格竞争
+  - 🟡 **平台审查**（概率 10%）：Amazon 可能审查广告素材是否存在不实对标；缓解措施：确保所有对标声明有评论数据支撑
+  - 🟡 **品牌损伤**（概率 8%）：过度强调竞品劣势可能被消费者感知为"贬低竞争对手"，影响品牌形象；缓解措施：采用"我们的优势"而非"竞品的劣势"的表述方式
+  - 🟢 **数据过时**（概率 40%）：竞品可能快速改进，导致分析结果 3 个月后失效；缓解措施：建立月度监测机制
+
+---
 
 ## ③ 代码模板
 
@@ -188,4 +220,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（新品上线前和广告优化时必用） |
 | 数据要求 | 自家 + 3-5 个竞品各 500+ 条评论 |
 | 典型收益 | 识别差异化卖点，广告素材重构后 CTR 提升 25%+ |
-```

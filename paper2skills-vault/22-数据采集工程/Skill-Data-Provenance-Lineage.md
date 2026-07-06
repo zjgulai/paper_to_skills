@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Data Provenance & Lineage — 数据血缘追踪：LLM 训练数据溯源与 AI 法规合规
 doc_type: knowledge

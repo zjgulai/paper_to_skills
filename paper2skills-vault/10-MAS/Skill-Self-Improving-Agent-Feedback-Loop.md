@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Self-Refine + RL — 反馈闭环与自进化 Agent
 doc_type: knowledge
@@ -194,11 +193,9 @@ python self_improving_agent.py
 - **AutoGen**：Self-Refinement 可以作为 AutoGen Agent 的内部机制
 - **MetaGPT**：经验记忆可以作为共享知识库注入 SOP 流程
 - **语义蓝图编译器**：质量评估可以基于语义蓝图的结构化约束
+- **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
 
 ---
-
-
-- **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
 
 ## ⑤ 商业价值评估
 
@@ -353,9 +350,9 @@ class MemoryBank:
         success_rates = [e.success_rate for e in self.experiences]
         return {
             "size": len(self.experiences),
-            "avg_success_rate": np.mean(success_rates),
-            "max_success_rate": max(success_rates),
-            "min_success_rate": min(success_rates)
+            "avg_success_rate": float(np.mean(success_rates)),
+            "max_success_rate": float(max(success_rates)),
+            "min_success_rate": float(min(success_rates))
         }
 
     @staticmethod
@@ -428,8 +425,8 @@ class SelfRefinementEngine:
         """模拟初始生成"""
         # 简单模拟：提取关键词
         words = task_input.lower().split()
-        entities = [w for w in words if len(w) > 2]
-        return f"分析结果: 识别到实体 {entities[:3]}, 情感: 正面, 置信度: 0.75"
+        entities = [w for w in words if len(w) > 2][:3]
+        return f"分析结果: 识别到实体 {entities}, 情感: 正面, 置信度: 0.75"
 
     def _generate_feedback(self, output: str, task_input: str) -> str:
         """模拟反馈生成"""
@@ -449,7 +446,7 @@ class SelfRefinementEngine:
             base_quality += 0.05
         if "属性" in output or "特征" in output:
             base_quality += 0.1
-        return min(base_quality + random.uniform(-0.05, 0.05), 1.0)
+        return float(min(base_quality + random.uniform(-0.05, 0.05), 1.0))
 
     def _refine_output(self, output: str, feedback: str, task_input: str) -> str:
         """模拟输出改进"""
@@ -468,86 +465,4 @@ class FeedbackLoopOrchestrator:
     def __init__(self, memory_bank: MemoryBank, refinement_engine: SelfRefinementEngine):
         self.memory_bank = memory_bank
         self.refinement_engine = refinement_engine
-        self.execution_history: List[ExecutionTrace] = []
-
-    def execute_with_feedback(self, task_input: str) -> ExecutionTrace:
-        """完整闭环执行"""
-        # 执行自我反思
-        trace = self.refinement_engine.execute(task_input, self.memory_bank)
-
-        # 根据执行结果创建经验
-        if trace.success:
-            lesson = f"成功处理: {task_input[:20]}..."
-            exp = Experience(
-                situation=task_input[:30],
-                action="实体识别+情感分析",
-                outcome="success",
-                lesson=lesson,
-                success_rate=0.9
-            )
-        else:
-            lesson = f"需要改进: {task_input[:20]}..."
-            exp = Experience(
-                situation=task_input[:30],
-                action="实体识别+情感分析",
-                outcome="failure",
-                lesson=lesson,
-                success_rate=0.3
-            )
-
-        # 存入记忆库
-        self.memory_bank.add_experience(exp)
-
-        # 记录执行历史
-        self.execution_history.append(trace)
-
-        return trace
-
-    def get_performance_stats(self) -> Dict:
-        """获取性能统计"""
-        if not self.execution_history:
-            return {"total_executions": 0, "success_rate": 0.0, "avg_iterations": 0.0}
-
-        total = len(self.execution_history)
-        successes = sum(1 for t in self.execution_history if t.success)
-        avg_iterations = np.mean([len(t.feedbacks) for t in self.execution_history])
-
-        return {
-            "total_executions": total,
-            "success_rate": successes / total,
-            "avg_iterations": avg_iterations,
-            "memory_stats": self.memory_bank.get_stats()
-        }
-
-# ============================================================
-# 5. 主程序：演示完整流程
-# ============================================================
-
-def main():
-    print("=" * 60)
-    print("Self-Refine + RL — 反馈闭环与自进化 Agent 演示")
-    print("=" * 60)
-
-    # 初始化组件
-    memory_bank = MemoryBank(max_size=50)
-    refinement_engine = SelfRefinementEngine(max_iterations=5, quality_threshold=0.85)
-    orchestrator = FeedbackLoopOrchestrator(memory_bank, refinement_engine)
-
-    # 示例任务列表
-    tasks = [
-        "Spectra S1 吸奶器非常好用，静音效果很好",
-        "这款储奶袋密封性不错，但材质偏硬",
-        "婴儿推车折叠方便，但重量有点大",
-        "新品牌贝瑞克吸奶器吸力强，噪音小",
-        "这个奶瓶刻度清晰，宝宝很喜欢"
-    ]
-
-    print("\n开始执行任务...\n")
-
-    # 执行所有任务
-    for i, task in enumerate(tasks, 1):
-        print(f"--- 任务 {i}: {task[:30]}... ---")
-        trace = orchestrator.execute_with_feedback(task)
-
-        print(f"  初始输出: {trace.initial_output[:60]}...")
-        print(f"  最终输出: {trace.final_output[:60]}...")
+        self

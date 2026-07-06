@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Channel Budget Reallocation Trigger — 饱和度超阈值时自动削减并重分配渠道预算
 doc_type: knowledge
@@ -180,4 +179,3 @@ print(f"  预算漂移: {result['budget_drift']:.4%}")
 - ROI预估：整体ROAS提升15-20%，年化节省无效投放$40,000-$80,000
 - 实施难度：⭐⭐☆☆☆（规则明确，接入渠道API即可）
 - 优先级：⭐⭐⭐⭐⭐
-```

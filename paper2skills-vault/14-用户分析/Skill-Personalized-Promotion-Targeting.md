@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Personalized Promotion Targeting — 个性化促销定向：用户响应异质性建模
 doc_type: knowledge

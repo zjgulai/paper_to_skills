@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Account Association Risk Detection — 电商多账户关联风险检测
 doc_type: knowledge
@@ -166,4 +165,3 @@ print("[✓] Account Association Risk Detection 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是数据整理 + 图算法）
 - **优先级**：⭐⭐⭐⭐⭐（账号是跨境卖家最核心资产，关联封禁是毁灭性风险）
 - **评估依据**：Amazon 关联封禁真实案例普遍存在，多维信号图分析是业界标准方法
-```

@@ -1,4 +1,14 @@
-以下是改进后的 Skill 卡片：
+---
+doc_type: knowledge
+roadmap_phase: phase3
+status: stable
+updated: 2025-01-15
+title: Aquarius — Brand Video Generation（品牌营销视频生成）
+paper: Aquarius: A Family of Industry-Level Video Generation Models for Marketing Scenarios
+arxiv: 2505.10584
+category: 20-AI视频生成
+scenario: 品牌推广
+---
 
 # Skill Card: Aquarius — Brand Video Generation（品牌营销视频生成）
 
@@ -7,7 +17,6 @@
 > **代码**: 🔄 数据管线即将开源 (Aquarius-Datapipe/Aquarius-Raydata)  
 > **领域**: 20-AI视频生成 | **场景**: 品牌推广
 
-roadmap_phase: phase3
 ---
 
 ## ① 算法原理

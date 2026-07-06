@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Semantic ID Retrieval for Recommendation (RPG)
 module: 05-推荐系统
@@ -210,4 +209,3 @@ print("[✓] Semantic ID Retrieval RPG 测试通过")
 - **ROI**：检索准确率提升25-40%，跨语言运营成本降低50%
 - **难度**：⭐⭐⭐☆☆（3/5）— 概念新颖，但可用TF-IDF/BERT简化实现
 - **优先级**：⭐⭐⭐⭐☆（4/5）— Meta开源，落地路径清晰，但需向量检索基建
-```

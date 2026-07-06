@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: BrandFusion — Multi-Agent Brand Integration（品牌无缝植入视频）
 
 > **论文**: BrandFusion: A Multi-Agent Framework for Seamless Brand Integration in Text-to-Video Generation  
@@ -120,4 +119,3 @@ if __name__ == '__main__':
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值：45 万元/年（人工节省）+ 28% 周转率提升 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐⭐⭐☆
-```

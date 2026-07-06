@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 客户流失预警→挽回 Combo Pattern — 从流失预测到精准干预的 5 步完整链路
 doc_type: knowledge
@@ -10,6 +9,21 @@ updated: 2026-06-19
 owner: self
 source: arxiv:1603.02754
 roadmap_phase: phase2
+tags:
+  - combo-pattern
+  - customer-retention
+  - churn-prediction
+  - rfm-segmentation
+  - marketing-automation
+  - dtc-growth
+keywords:
+  - 客户流失预警
+  - 挽回链路
+  - RFM分层
+  - 触达时机优化
+  - 激励ROI建模
+difficulty: intermediate
+estimated_time_minutes: 45
 ---
 
 # Skill Card: 客户流失预警→挽回 Combo Pattern
@@ -291,4 +305,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（需要 CRM 数据接口 + 邮件平台 API，2-3 周工程化）
 - **优先级**：⭐⭐⭐⭐☆（复购增长是 DTC 品牌 LTV 最高杠杆点，ROI 极为确定）
 - **适用规模**：月活用户 ≥ 1,000 人，有历史购买数据 ≥ 6 个月
-```

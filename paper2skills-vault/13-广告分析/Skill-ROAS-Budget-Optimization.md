@@ -1,4 +1,3 @@
-```markdown
 ---
 title: ROAS Optimization and Ad Budget Allocation
 module: 13-广告分析
@@ -252,4 +251,3 @@ print("[✓] ROAS Budget Optimization 测试通过")
 - **ROI**：预算重新分配后整体ROAS提升20-30%，年增收50万+
 - **难度**：⭐⭐⭐☆☆（3/5）— 曲线拟合简单，但边际ROAS概念需要理解
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 直接决定广告预算的ROI
-```

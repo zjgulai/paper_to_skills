@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AIGC Revenue Attribution — AI内容生成 ROI 财务归因：从内容投入到 GMV 的量化路径
 doc_type: knowledge
@@ -270,4 +269,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（填补 11-AI人文 ↔ 23-运营财务 完全断链；AIGC 使用量大但缺乏 ROI 证明是所有跨境品牌的普遍痛点）
 
 - **评估依据**：因果归因框架已在 e-commerce 内容效果评估中广泛使用；AI 生成内容与人工内容的 CTR/CVR 对比研究在 2024-2025 年已有多项实证研究支撑
-```

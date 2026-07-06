@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Automated Causal Discovery — 自动化因果发现：从数据自动识别业务驱动因素
 doc_type: knowledge

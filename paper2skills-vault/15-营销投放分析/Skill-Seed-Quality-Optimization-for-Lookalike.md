@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Seed Quality Optimization for Lookalike — 种子净化自动剔除噪声用户提升 Lookalike 质量上限
 doc_type: knowledge
@@ -384,4 +383,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（L1 规则 3 天，L2 孤立森林 1 周，L3 代理分类器 1 周，总计约 2-3 周）
 - **优先级**：⭐⭐⭐⭐⭐（种子质量是 Lookalike 效果天花板，净化收益立竿见影，且无需改动广告平台配置）
 - **评估依据**：Walmart arXiv:2301.03147 生产系统显示，种子质量过滤后 Lookalike 精度大幅提升；Alibaba ICDMW 2016 证明种子集纯度与 Lookalike AUC 强正相关；实际案例中种子净化可使 ROAS 提升 40-80%
-```

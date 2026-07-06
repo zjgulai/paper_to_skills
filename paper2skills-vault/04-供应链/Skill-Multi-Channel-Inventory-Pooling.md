@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: Multi-Channel Inventory Pooling（多渠道库存池化）
 
 > **论文**: Deep RL for Inventory Networks: HDPO (arXiv:2306.11246, 2023)  
@@ -197,4 +196,3 @@ if __name__ == '__main__':
 - **实施难度**：⭐⭐⭐☆☆（3 星）— GNN + DRL 有一定工程复杂度，贪心简化版可快速上线
 - **优先级评分**：⭐⭐⭐⭐☆（4 星）— 多渠道场景下 ROI 极高，WF-A P7 核心能力
 - **评估依据**：HDPO 论文含完整开源代码（transshipment_backlogged 环境），IBM 论文真实零售链数据验证
-```

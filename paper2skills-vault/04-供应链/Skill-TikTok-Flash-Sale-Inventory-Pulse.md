@@ -1,4 +1,3 @@
-```markdown
 ---
 title: TikTok直播闪购库存脉冲管理 — 泊松实时估计 + EWMA动态补货触发
 doc_type: knowledge
@@ -311,4 +310,3 @@ simulate_flash_sale()
 - **实施难度**：⭐⭐☆☆☆（纯Python实现，接入订单WebSocket即可）
 - **优先级**：⭐⭐⭐⭐⭐（供应链断货是TikTok母婴品牌最高频痛点之一，立竿见影）
 - **量化指标**：告警响应时间 <30秒，预测误差 ≤ 20%，断货率目标 <10%
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: DARA - LLM+RL 双阶段广告预算分配 Agent
 doc_type: knowledge
@@ -206,4 +205,3 @@ print("[✓] DARA Agentic MMM Optimize 测试通过")
 **测试输入**：平台=TikTok Ads, 月花费=$6000, 目标ROAS=4x  
 **输出摘要**：识别广告疲劳信号，动态预算再分配，预估ROAS提升0.8x  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
-```

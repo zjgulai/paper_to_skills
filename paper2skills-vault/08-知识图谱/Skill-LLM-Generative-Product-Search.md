@@ -1,4 +1,3 @@
-```markdown
 ---
 title: LLM Generative Product Search — LLM 生成式商品搜索：超越关键词的意图理解
 doc_type: knowledge
@@ -247,4 +246,3 @@ if __name__ == '__main__':
 - **实施难度**：⭐⭐⭐☆☆（LLM API 调用 2-3 周；需要 API 成本预算）
 - **优先级评分**：⭐⭐⭐⭐⭐（生成式搜索是 2024-2026 搜索技术最重要范式转变；填补 知识图谱↔智能体↔广告 桥梁）
 - **评估依据**：LLMSearch (arXiv 2408.09826) 在电商搜索基准超越 DPR 20-30%；ChatGPT Shopping 模式已验证生成式搜索的商业可行性
-```

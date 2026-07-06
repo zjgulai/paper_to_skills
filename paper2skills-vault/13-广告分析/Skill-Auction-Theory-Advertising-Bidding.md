@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 拍卖理论广告竞价优化 — GSP 拍卖机制下的最优出价策略
 doc_type: knowledge
@@ -10,6 +9,21 @@ updated: 2026-06-19
 owner: self
 source: arxiv:0704.1859
 roadmap_phase: phase2
+tags:
+  - auction-theory
+  - advertising-bidding
+  - gsp-mechanism
+  - amazon-advertising
+  - optimization
+difficulty: intermediate
+time_to_master: 4-6h
+prerequisites:
+  - price-elasticity-estimation
+  - conversion-rate-analysis
+related_skills:
+  - dynamic-pricing-elasticity
+  - competitive-price-monitoring
+  - contextual-dynamic-pricing
 ---
 
 # Skill Card: 拍卖理论广告竞价优化
@@ -110,16 +124,17 @@ def calculate_position_marginal_value(
         extra_clicks_per_1k = ctr_diff * 1000 / 100  # CTR 是百分比
         extra_profit_per_1k = extra_clicks_per_1k * conversion_rate * gross_profit_per_sale
 
+        max_extra_cpc = 0.0
+        if extra_clicks_per_1k > 0.001:
+            max_extra_cpc = extra_profit_per_1k / extra_clicks_per_1k
+
         results.append({
             "from_position": pos_worse,
             "to_position": pos_better,
             "ctr_improvement_pct": round(ctr_diff, 2),
             "extra_clicks_per_1k_impressions": round(extra_clicks_per_1k, 1),
             "extra_profit_per_1k_impressions": round(extra_profit_per_1k, 2),
-            "max_extra_cpc_for_upgrade": round(
-                (extra_clicks_per_1k * conversion_rate * gross_profit_per_sale) /
-                max(extra_clicks_per_1k + 0.001, 0.001), 2
-            )
+            "max_extra_cpc_for_upgrade": round(max_extra_cpc, 2)
         })
 
     return results
@@ -140,7 +155,8 @@ def audit_keyword_bids(keyword_data: pd.DataFrame,
     
     # GSP 均衡出价 = 真实价值 × 关键词质量因子（CVR relative to baseline）
     baseline_cvr = df["conversion_rate"].median()
-    df["quality_factor"] = df["conversion_rate"] / baseline_cvr.clip(lower=0.001)
+    baseline_cvr = max(baseline_cvr, 0.001)
+    df["quality_factor"] = df["conversion_rate"] / baseline_cvr
     df["optimal_bid"] = (true_value_per_click * df["quality_factor"]).round(2)
     
     # 出价状态判断
@@ -202,9 +218,10 @@ if __name__ == "__main__":
         gross_profit_per_sale=value_result["gross_profit_per_sale"]
     )
     for mv in marginal_values:
+        extra_profit_cny = mv['extra_profit_per_1k_impressions'] * 6.9
         print(f"  {mv['from_position']}→{mv['to_position']}位: "
               f"CTR+{mv['ctr_improvement_pct']}%, "
-              f"额外价值 ${mv['max_extra_cpc_for_upgrade']}/千次展示值 ¥{mv['extra_profit_per_1k_impressions']*6.9:.0f}")
+              f"额外价值 ${mv['max_extra_cpc_for_upgrade']}/千次展示值 ¥{extra_profit_cny:.0f}")
 
     # 3. 关键词出价审计
     keywords_data = pd.DataFrame({
@@ -227,7 +244,7 @@ if __name__ == "__main__":
     print(f"\n月广告费可节省: ¥{total_monthly_saving:,.0f}")
     print(f"年化广告费节省: ¥{total_monthly_saving * 12:,.0f}")
 
-    print("\n[✓] 拍卖理论广告竞价优化 测试通过")
+    print("\n[✓] 拍卖理论广告竞价优化测试通过")
 ```
 
 ## ④ 技能关联
@@ -243,4 +260,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（数据来自 Amazon 广告后台，直接导出 Excel 即可，无需额外数据采集）
 - **优先级**：⭐⭐⭐⭐⭐（广告费是母婴出海的最大可控成本，几乎所有卖家都有广告优化空间）
 - **评估依据**：Edelman et al. (2007) AER 经典论文证明 GSP 均衡出价定理；Amazon SP 广告明确采用 GSP 机制（支付第二价格）；实战数据显示平均 30-40% 的关键词存在过度出价
-```

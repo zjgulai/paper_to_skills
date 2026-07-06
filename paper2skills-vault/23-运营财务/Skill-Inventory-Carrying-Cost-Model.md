@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Inventory-Carrying-Cost-Model — 库存持有成本模型
 doc_type: knowledge
@@ -173,4 +172,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（库存积压严重时立即触发） |
 | 数据要求 | 平均库存货值 + FBA 月度仓储报告 + 资金成本率 |
 | 典型收益 | 识别 40% 年化持有成本率，通过 EOQ 优化降至 20-25% |
-```

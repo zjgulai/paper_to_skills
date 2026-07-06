@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Listing AB Testing Automation — LLM Agent 驱动的 Listing A/B 测试自动化
 doc_type: knowledge
@@ -173,4 +172,3 @@ print("[✓] Listing AB Testing Automation 测试通过")
 - **成本**：LLM API 调用费用约 $0.5-2/次测试（500 个 Agent × 3 版本 × 输入输出 token），人力成本集中在 persona 库初始构建（约 2-3 人天），后续维护成本极低。
 - **合规**：不涉及真实用户数据，无 GDPR/CCPA 风险；模拟测试不触碰 Amazon A/B 测试工具政策（Manage Your Experiments），但上线后仍需遵守 Amazon 主图/标题规范（如不得使用医疗认证图标除非已获授权）。
 - **风险**：模拟预测可能与真实结果偏差（尤其当 persona 库未覆盖关键买家群体时），建议首次使用后以 10% 真实流量做验证性测试；若预测版本大幅降价，可能引发竞品跟进价格战。
-```

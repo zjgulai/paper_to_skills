@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Keyword Competition Scoring — 搜索词竞争力量化评分
 doc_type: knowledge
@@ -157,4 +156,3 @@ print("[✓] Keyword Competition Scoring 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，数据来自 Amazon Brand Analytics 或 Helium10）
 - **优先级**：⭐⭐⭐⭐⭐（广告是母婴跨境最大单项成本，关键词质量直接决定 ACOS）
 - **评估依据**：实战验证框架，与 Amazon 广告团队 ACOS 优化案例对齐
-```

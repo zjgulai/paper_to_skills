@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Brand Registry Infringement Tracker — 品牌注册侵权追踪自动监控 EUIPO/USPTO
 doc_type: knowledge
@@ -196,4 +195,3 @@ print("[✓] Brand-Registry-Infringement-Tracker 测试通过")
 - **ROI量化**: 阻止商标抢注，年化保护品牌价值 100-500 万元
 - **实施难度**: ⭐⭐（商标文字比对算法简单，图形比对需额外工具）
 - **优先级**: ⭐⭐⭐⭐（品牌注册后必须持续监控，非注册卖家优先注册）
-```

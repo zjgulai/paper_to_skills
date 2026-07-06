@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Switchback 实验设计 - 数据驱动的双边市场实验
 doc_type: knowledge
@@ -237,4 +236,3 @@ print("[✓] Switchback Experiment Des 测试通过")
 2. **方法新颖**:四因子分解 + Empirical Bayes 设计是 2024 年新工作
 3. **填补图谱缺口**:02-A_B实验 内首个针对"双边市场"场景的 Skill,填补结构性盲区
 4. **限制**:对历史数据要求较高,小公司初期难以收集足够 CEC
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Supply Chain Finance Risk Modeling — 供应链金融风险建模：跨境贸易融资信用评估
 doc_type: knowledge
@@ -279,4 +278,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（★★ 修复图谱最后一个断链：运营财务↔数据采集工程；跨境卖家融资难是普遍痛点；桥接 运营财务↔数据采集↔风控 三域）
 
 - **评估依据**：Amazon Lending、Payoneer Funding 等平台已基于销售数据授信；OFX/Clearco 等供应链金融平台的算法模型与本 Skill 框架相同；跨境卖家年融资需求估计超过 2000 亿美元
-```

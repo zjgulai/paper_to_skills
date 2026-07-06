@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Cross-Platform Account Linkage Risk — 跨平台账号关联风险（Amazon+Walmart+eBay）
 doc_type: knowledge
@@ -160,4 +159,3 @@ print("[✓] Cross-Platform-Account-Linkage-Risk 测试通过")
 - **ROI量化**: 阻断关联封号风险，年化保护多平台 GMV 100-300 万元
 - **实施难度**: ⭐⭐（账号信息内部可查，规则逻辑简单）
 - **优先级**: ⭐⭐⭐⭐⭐（多平台运营卖家合规基线工具）
-```

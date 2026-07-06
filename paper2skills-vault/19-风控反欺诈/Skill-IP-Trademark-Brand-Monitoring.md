@@ -1,4 +1,3 @@
-```markdown
 ---
 title: IP Trademark Brand Monitoring — 知识产权主动监控：商标侵权自动检测与预警
 doc_type: knowledge
@@ -285,4 +284,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（完全空白的高价值场景；知识产权侵权是跨境品牌卖家的核心痛点之一；桥接 风控↔知识图谱↔AI视频 三域）
 
 - **评估依据**：跨境电商仿冒品问题每年造成全球 5000 亿美元损失；多模态 IP 侵权检测在大型平台（阿里/京东）已有成熟实践；Amazon Brand Registry 提供 API 支持自动化举报
-```

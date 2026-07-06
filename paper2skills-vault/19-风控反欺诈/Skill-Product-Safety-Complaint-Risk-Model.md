@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Product Safety Complaint Risk Model — 产品安全投诉风险模型基于历史预测封号概率
 doc_type: knowledge
@@ -169,4 +168,3 @@ print("[✓] Product-Safety-Complaint-Risk-Model 测试通过")
 - **ROI量化**: 成功规避一次封号，保护冻结资金 200-500 万元
 - **实施难度**: ⭐⭐（数据来自 Seller Central，模型简单但效果显著）
 - **优先级**: ⭐⭐⭐⭐⭐（母婴卖家最高优先级风险防控）
-```

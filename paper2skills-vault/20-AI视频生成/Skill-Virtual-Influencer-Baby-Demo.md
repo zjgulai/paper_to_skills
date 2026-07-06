@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Virtual-Influencer-Baby-Demo — 虚拟 KOL 母婴演示视频生成
 doc_type: knowledge
@@ -206,4 +205,3 @@ print("\n[✓] Virtual-Influencer-Baby-Demo 测试通过")
 - **ROI**：视频生成成本从 $1,200 → $80/条（节省 93%），年化内容产量 5-10 倍提升
 - **实施难度**：⭐⭐⭐⭐☆（依赖 DiT 推理服务，技术门槛较高）
 - **优先级**：⭐⭐⭐⭐☆（KOL 合作成本高企背景下的高价值替代方案）
-```

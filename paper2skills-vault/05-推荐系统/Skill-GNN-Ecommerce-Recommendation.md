@@ -1,4 +1,3 @@
-```markdown
 ---
 title: GNN Ecommerce Recommendation — 图神经网络电商推荐：用户-商品图谱深度学习
 doc_type: knowledge
@@ -291,4 +290,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（推荐系统域平均出度最低(4.8)；GNN 是现代推荐系统的核心方法；桥接 推荐系统↔知识图谱↔用户分析 三域）
 
 - **评估依据**：E2E-GRec (arXiv 2511.20564) 端到端联合训练在多个电商数据集超越 LightGCN；LightGCN 等 GNN 推荐已是 Amazon/Alibaba 生产系统核心组件
-```

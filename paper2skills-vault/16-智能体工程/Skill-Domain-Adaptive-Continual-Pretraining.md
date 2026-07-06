@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Domain Adaptive Continual Pretraining — 领域持续预训练
 doc_type: knowledge
@@ -311,4 +310,3 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐（长期护城河——专属领域模型是不可复制的竞争壁垒）
 
 **工具链**：Unsloth（QLoRA 加速 2x）+ vLLM（推理服务）+ Ollama（本地部署）
-```

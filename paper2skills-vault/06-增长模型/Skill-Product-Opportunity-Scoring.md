@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: Product Opportunity Scoring（新品机会评分卡）
 
 > **领域**: WF-D 选品扫描 | **归属**: 06-增长模型 | **类型**: 综合萃取
@@ -114,4 +113,3 @@ print("[✓] Product Opportunity Scoring 测试通过")
 
 - **ROI**：系统化选品减少试错成本 50%+；年化 **40-80 万元**
 - **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐⭐⭐（5 星）
-```

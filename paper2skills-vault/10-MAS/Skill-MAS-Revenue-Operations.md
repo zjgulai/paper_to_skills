@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MAS运营财务协同 — 多智能体驱动的P&L实时归因与决策
 doc_type: knowledge
@@ -179,4 +178,3 @@ print('\n[✓] MAS运营财务协同 测试通过')
 - **实施难度**：⭐⭐⭐☆☆（各Agent逻辑简单；主要挑战是数据接入标准化和Agent输出格式统一）
 - **优先级**：⭐⭐⭐⭐⭐（修复10-MAS↔23-运营财务断层（1→10+边），高频使用且ROI明确）
 - **评估依据**：ICLR 2024 Workshop验证多Agent财务分析的可行性；Salesforce Einstein Finance Agent已商业化；金融MAS是2024-2026年最活跃的工业应用方向之一
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Demand Forecasting for Supply Chain
 module: 04-供应链
@@ -271,4 +270,3 @@ print("[✓] Demand Forecasting Supply 测试通过")
 - **ROI**：缺货率降低50%，库存周转提升50%，年节省库存成本30万+
 - **难度**：⭐⭐⭐☆☆（3/5）
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 供应链决策的起点，没有预测就没有优化
-```

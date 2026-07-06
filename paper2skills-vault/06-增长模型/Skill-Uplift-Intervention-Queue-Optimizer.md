@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Uplift Intervention Queue Optimizer — 在预算约束下按CATE排序生成最优干预名单
 doc_type: knowledge
@@ -217,4 +216,3 @@ print(f"  层级分布: {result['tier_distribution']}")
 - ROI预估：干预ROI通常达3-5x，相比随机干预节省30-50%干预成本，年化节省$15,000-$30,000
 - 实施难度：⭐⭐☆☆☆（Uplift模型已有输出时接入简单）
 - 优先级：⭐⭐⭐⭐⭐
-```

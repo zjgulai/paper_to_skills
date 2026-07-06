@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Prophet Forecasting with Seasonality and Holidays
 module: 03-时间序列
@@ -257,4 +256,3 @@ print("[✓] Prophet Forecasting 测试通过")
 - **ROI**：节假日预测准确率提升50%+，备货资金效率提升30%
 - **难度**：⭐⭐☆☆☆（2/5）— 现成库（`fbprophet`），调用即可
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 业务时序预测的标准工具
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Tax Compliance VAT GST — 跨境电商增值税/GST 自动合规
 doc_type: knowledge
@@ -185,4 +184,3 @@ print("[✓] Tax Compliance VAT/GST 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是税率数据库维护 + LLM 分类集成）
 - **优先级**：⭐⭐⭐⭐⭐（多市场运营必须面对，VAT 合规是欧洲市场准入门槛）
 - **评估依据**：arXiv 2408.05874，LLM 商品分类 EMNLP 2024 Workshop 验证，直接支撑税务分类自动化
-```

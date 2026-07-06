@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 增长DataAgent分析 — LLM驱动的用户增长全链路智能诊断
 doc_type: knowledge
@@ -247,4 +246,3 @@ print('\n[✓] 增长DataAgent分析 测试通过')
 - **实施难度**：⭐⭐⭐☆☆（异常检测简单；假设树和验证逻辑需要业务领域知识积累；接入LLM约1周）
 - **优先级**：⭐⭐⭐⭐⭐（修复06-增长↔09-DataAgent断层（1→10+边）；增长是业务最核心关注点）
 - **评估依据**：KDD 2024多个增长DataAgent实验验证；arXiv:2408.05061 AutoAnalysis在真实数据集上超越人工分析准确率；Amplitude/Mixpanel均在推进AI自动分析功能
-```

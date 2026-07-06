@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 可解释评论真伪裁决 — 证据图+LLM推理
 doc_type: knowledge
@@ -320,4 +319,3 @@ if __name__ == "__main__":
 | **实施难度** | ⭐⭐⭐☆☆（需要建设历史刷评样本库；生产环境需接入真实 Embedding 模型） |
 | **优先级** | ⭐⭐⭐⭐☆（Amazon 反刷评政策持续收紧，可解释证据的申诉材料价值显著提升） |
 | **论文来源** | arXiv:2602.12941 — JARVIS: Evidence-Grounded Review Adjudication System |
-```

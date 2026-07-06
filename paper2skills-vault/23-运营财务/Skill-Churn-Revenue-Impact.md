@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Churn Revenue Impact — 用户流失的财务损失量化与 P&L 影响分析
 doc_type: knowledge
@@ -302,4 +301,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（最低门槛、最高 ROI 的财务桥梁）
 
 - **评估依据**：SaveMRR 2026 研究：1% 流失降低 = 15-20% 获客增长等效价值；G-Squared 数据：LTV/CAC 比率每提升 0.5 倍对应估值 3-8x ARR 提升
-```

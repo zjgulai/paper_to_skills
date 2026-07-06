@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AutoQual Review Quality Assessment — LLM Agent 自动化评论质量评估
 doc_type: knowledge
@@ -149,4 +148,3 @@ print("[✓] AutoQual 评论质量评估测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是特征工程 + 轻量分类器）
 - **优先级**：⭐⭐⭐⭐⭐（评论质量直接影响 Listing 转化，是最高频优化场景）
 - **评估依据**：EMNLP 2025 工业 Track，亿级用户平台 A/B 测试验证转化率 +0.27%
-```

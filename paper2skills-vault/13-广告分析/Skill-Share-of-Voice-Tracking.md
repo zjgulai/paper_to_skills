@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Share of Voice Tracking — AI 时代跨平台品牌可见度份额测量
 doc_type: knowledge
@@ -354,4 +353,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（AI 搜索时代的核心监测工具，没有 SOV 数据就无法判断 GEO 效果）
 
 - **评估依据**：arXiv 2604.07585 证明单次采样误差 ±40%，30 次采样可将误差压缩到 ±8%；arXiv 2606.10907 追踪了 AI 推荐 → 购买的完整路径
-```

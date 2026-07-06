@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AI Brand Storytelling — AI 辅助品牌故事创作：情感连接与文化适应
 doc_type: knowledge
@@ -184,4 +183,3 @@ print("[✓] AI Brand Storytelling 测试通过")
 ---
 
 *参考来源：Brand Narrative AI 2024-2025 Industry Research；Cross-Cultural Marketing Framework；Content Authenticity Initiative (CAI) Guidelines；Storytelling with Emotional Arcs (arXiv:2305.18290)*
-```

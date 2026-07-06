@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Omnichannel Inventory Sync — 跨站多平台库存实时同步
 doc_type: knowledge
@@ -176,4 +175,3 @@ print("[✓] Omnichannel Inventory Sync 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要接入各渠道 API + 构建事件队列）
 - **优先级**：⭐⭐⭐⭐☆（多渠道运营必须面对，超卖一次可能永久损害账号健康）
 - **评估依据**：事件驱动库存同步是业界标准方案，多家 ERP 系统（Linnworks/Brightpearl）的核心功能
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Procurement Email Extraction — 采购邮件结构化提取：多供应商报价聚合与合规验证
 doc_type: knowledge
@@ -511,3 +510,9 @@ if __name__ == '__main__':
 ### 前置（Prerequisite）
 - [[Skill-NLP-Entity-Extraction]] — 基础 NER 能力，提供实体识别的理论基础
 - [[Skill-Regex-Pattern-Matching
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：数据工程师面临核心业务决策——数据采集覆盖率提升至 99%，年化节省人工 25 万元
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

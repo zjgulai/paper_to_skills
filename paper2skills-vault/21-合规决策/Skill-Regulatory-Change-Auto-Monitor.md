@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Regulatory Change Auto-Monitor — 合规法规变更自动监控：实时追踪政策更新的预警系统
 doc_type: knowledge
@@ -276,4 +275,3 @@ if __name__ == '__main__':
 - **实施难度**：⭐⭐⭐☆☆（爬虫+变更检测+LLM分类；约 3-4 周；需要维护监控源列表）
 - **优先级评分**：⭐⭐⭐⭐⭐（完全空白的高频合规需求；EU CBAM/Amazon ToS 实施迫切；桥接 合规↔数据采集↔智能体 三域）
 - **评估依据**：Amazon ToS 月均 2-3 次更新；EU CBAM 2026 实施；FDA 指南年均 50+ 条更新；人工监控覆盖率通常 < 50%
-```

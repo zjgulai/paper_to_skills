@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Diffusion Model Recommendation — 扩散模型推荐：生成式推荐的范式革命
 doc_type: knowledge
@@ -233,4 +232,3 @@ if __name__ == '__main__':
 - **实施难度**：⭐⭐⭐⭐⭐（需要 GPU + PyTorch + DDPM；约 8-12 周）
 - **优先级评分**：⭐⭐⭐⭐⭐（2024年推荐领域最重要范式转变；填补推荐↔AI视频生成↔智能体工程 桥梁）
 - **评估依据**：DiffRec (SIGIR 2023)、DreamRec (NeurIPS 2023) 均在标准基准超越最优判别式方法
-```

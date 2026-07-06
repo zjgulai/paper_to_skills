@@ -1,4 +1,3 @@
-```markdown
 ---
 title: ColBERTv2 — 多向量后期交互精细检索
 doc_type: knowledge
@@ -213,4 +212,3 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐（复杂长文档知识库的精度瓶颈突破方案）
 
 **生产工具**：`ragatouille`（Stanford 官方封装）、`pylate`（多向量检索库）
-```

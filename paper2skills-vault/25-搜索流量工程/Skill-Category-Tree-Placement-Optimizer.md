@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Category-Tree-Placement-Optimizer — 品类树节点竞争密度优化
 doc_type: knowledge
@@ -169,4 +168,3 @@ print("\n[✓] Category-Tree-Placement-Optimizer 测试通过")
 - **ROI**：获得细分品类 BSR 徽章 → CTR 提升 8-12% → 年化流量增量 5-10 万元
 - **实施难度**：⭐⭐☆☆☆（主要是调研和 Case 申请，无技术门槛）
 - **优先级**：⭐⭐⭐⭐☆（新品必做，成熟品若无 BSR 也应执行）
-```

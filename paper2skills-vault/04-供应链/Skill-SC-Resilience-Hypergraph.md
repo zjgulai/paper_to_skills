@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Supply Chain Resilience Hypergraph — 超图神经网络供应链韧性推断
 doc_type: knowledge
@@ -151,4 +150,3 @@ print("[✓] SC-Resilience-Hypergraph 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要整理供应关系数据）
 - **优先级**：⭐⭐⭐⭐☆（地缘风险上升背景下，供应链韧性是战略级议题）
 - **评估依据**：AAAI 2026，超图模型比传统图模型韧性推断精度提升显著
-```

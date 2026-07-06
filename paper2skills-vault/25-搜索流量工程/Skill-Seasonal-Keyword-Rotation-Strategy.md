@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Seasonal-Keyword-Rotation-Strategy — 季节性关键词轮换策略
 doc_type: knowledge
@@ -190,4 +189,3 @@ print("\n[✓] Seasonal-Keyword-Rotation-Strategy 测试通过")
 - **ROI**：旺季提前布局可将峰值期 ACOS 降低 20-30%，年化增量 GMV 8-15 万元/主力品
 - **实施难度**：⭐⭐⭐☆☆（需要历史数据支撑，建议提前 6 个月规划）
 - **优先级**：⭐⭐⭐⭐⭐（母婴品季节性极强，提前布局 vs 临时冲量差距巨大）
-```

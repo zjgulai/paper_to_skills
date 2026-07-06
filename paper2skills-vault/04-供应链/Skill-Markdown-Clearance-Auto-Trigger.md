@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Markdown Clearance Auto Trigger — 库龄超标且库存积压时自动触发降价清仓阶梯
 doc_type: knowledge
@@ -236,4 +235,3 @@ print(f"  摘要: {result['summary']}")
 - ROI预估：减少库存报废损失15-25%，提升库存周转率0.8-1.5次，年化价值$20,000-$50,000
 - 实施难度：⭐⭐☆☆☆（规则明确，需接入WMS库龄数据和定价系统）
 - 优先级：⭐⭐⭐⭐⭐
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Listing Suppression Detection — Listing 被平台隐藏/降权检测（非账号问题）
 doc_type: knowledge
@@ -138,4 +137,3 @@ print("[✓] Listing-Suppression-Detection 测试通过")
 - **ROI量化**: 检测提前 1.5 天，年化减少 Listing 压制损失 15-30 万元
 - **实施难度**: ⭐⭐（Seller Central API 数据获取，算法简单）
 - **优先级**: ⭐⭐⭐⭐⭐（每个卖家 Listing 监控必备）
-```

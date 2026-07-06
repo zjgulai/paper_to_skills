@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Competitor Negative Campaign Detection — 竞品恶意投诉攻击检测（批量举报模式）
 doc_type: knowledge
@@ -176,4 +175,3 @@ print("[✓] Competitor-Negative-Campaign-Detection 测试通过")
 - **ROI量化**: 攻击早期检测，Prime Day 保护 GMV 30-60 万元
 - **实施难度**: ⭐⭐（评论数据已有，文本分析标准工具）
 - **优先级**: ⭐⭐⭐⭐⭐（品牌护城河核心防御工具）
-```

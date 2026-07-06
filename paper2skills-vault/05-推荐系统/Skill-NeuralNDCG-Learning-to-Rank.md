@@ -1,4 +1,3 @@
-```markdown
 ---
 title: NeuralNDCG — 可微分排序优化与Learning to Rank
 name: Skill-NeuralNDCG-Learning-to-Rank
@@ -339,4 +338,3 @@ python neural_ndcg.py
 - REVISION 解决"用户搜什么"（意图识别）
 - NeuralNDCG 解决"结果怎么排"（排序优化）
 - 两者结合形成完整的智能搜索链路：意图理解 → 候选召回 → 精排优化 → 结果展示
-```

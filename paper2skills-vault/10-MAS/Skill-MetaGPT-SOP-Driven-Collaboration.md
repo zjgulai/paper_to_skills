@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MetaGPT — SOP 驱动的多智能体协作框架
 doc_type: knowledge
@@ -562,4 +561,3 @@ MetaGPT SOP 驱动协作演示: VOC 分析流水线
 - 标准化、重复性任务用 MetaGPT（质量可控、可复现）
 - 探索性、创新性任务用 AutoGen（灵活、快速迭代）
 - 混合模式：MetaGPT 的 SOP agent 组内用 AutoGen 进行灵活讨论
-```

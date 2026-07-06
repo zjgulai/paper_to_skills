@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Cultural Adaptation Agent — 跨文化适应：母婴跨境的本地化 AI 策略
 doc_type: knowledge
@@ -6,10 +5,19 @@ module: 16-智能体工程
 topic: cultural-adaptation-agent-cross-border
 status: stable
 created: 2026-06-01
-updated: 2026-06-01
+updated: 2026-12-19
 owner: self
 source: arxiv:2305.12345
 roadmap_phase: phase3
+tags:
+  - cultural-adaptation
+  - cross-border-ecommerce
+  - llm-agent
+  - mother-baby
+  - hofstede-dimensions
+  - content-localization
+difficulty: intermediate
+time_to_master: 4-6h
 ---
 
 # Skill Card: Cultural Adaptation Agent — 跨文化适应 Agent
@@ -148,4 +156,3 @@ print("[✓] Cultural Adaptation Agent 测试通过")
 - ⚠️ **代际差异**：Z 世代的消费价值观与传统 Hofstede 分数有偏差
 - ⚠️ **监管合规**：日本、德国的广告措辞有严格法规要求，适配前需经合规审查
 - ✅ **验证驱动**：所有适配策略必须通过 A/B 测试验证，不能仅靠文化假设上线
-```

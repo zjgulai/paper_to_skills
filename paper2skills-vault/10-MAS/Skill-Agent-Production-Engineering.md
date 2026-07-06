@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "Skill Card: Agent Production Engineering（Agent 生产化工程）"
 description: "MAS算法层与智能体工程层的桥梁，将Demo级Agent转化为生产级系统"

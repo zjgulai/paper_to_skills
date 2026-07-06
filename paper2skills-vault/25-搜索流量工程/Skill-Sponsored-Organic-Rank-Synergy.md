@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Sponsored-Organic-Rank-Synergy — 广告-自然排名协同模型
 doc_type: knowledge
@@ -161,4 +160,3 @@ print("\n[✓] Sponsored-Organic-Rank-Synergy 测试通过")
 - **ROI**：广告-自然协同后 ACOS 从 42% → 18%，年化节省广告费约 2-5 万元/品
 - **实施难度**：⭐⭐⭐☆☆（需要 12-16 周耐心执行，监控体系要完备）
 - **优先级**：⭐⭐⭐⭐⭐（成熟品高 ACOS 的核心解法，投入产出比极高）
-```

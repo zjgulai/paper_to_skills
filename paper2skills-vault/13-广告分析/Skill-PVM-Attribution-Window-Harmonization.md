@@ -1,4 +1,3 @@
-```markdown
 ---
 title: PVM 跨平台广告归因窗口统一化 - 母婴跨境多渠道 ROAS 去偏
 doc_type: knowledge
@@ -282,4 +281,3 @@ print("[✓] PVM Attribution Window Ha 测试通过")
 **测试输入**：平台=Amazon SB/SD, 月花费=$8500  
 **输出摘要**：SB/SD归因窗口不统一告警，建议统一7天点击，预估节省$1200/月  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
-```

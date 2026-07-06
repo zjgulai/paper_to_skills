@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Sales Velocity Momentum Detection — BSR 销量加速度检测识别爆品起飞信号
 doc_type: knowledge
@@ -136,4 +135,3 @@ print("[✓] Sales-Velocity-Momentum-Detection 测试通过")
 - **ROI量化**: 爆品预警提前 7-14 天，防御响应保护年化 GMV 50 万元
 - **实施难度**: ⭐⭐（数据获取是瓶颈，算法简单）
 - **优先级**: ⭐⭐⭐⭐（竞品监控、选品扩展核心工具）
-```

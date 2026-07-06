@@ -1,4 +1,3 @@
-```markdown
 ---
 title: BERTopic — 神经主题模型与动态知识分类
 doc_type: knowledge
@@ -289,4 +288,3 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐（知识库分类自动化 + VOC 分析升级的双重价值）
 
 **对标参考**：BERTopic GitHub 14k+ stars，Cohere/Huggingface 内置支持
-```

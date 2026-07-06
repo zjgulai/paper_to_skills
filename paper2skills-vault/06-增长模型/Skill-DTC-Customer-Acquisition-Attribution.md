@@ -1,4 +1,3 @@
-```markdown
 ---
 title: DTC Customer Acquisition Attribution — 独立站全渠道获客归因：从首触到首单的因果追踪
 doc_type: knowledge
@@ -304,4 +303,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（DTC 独立站的预算分配核心决策依据；填补现有 87 个 DTC 相关 Skill 散落各域的整合缺口）
 
 - **评估依据**：APEX (KDD 2023) 在真实电商多触点数据验证 Shapley 归因比 Last-Click 更准确；DTC 品牌切换归因模型后 ROAS 提升 20-40% 来自行业实践
-```

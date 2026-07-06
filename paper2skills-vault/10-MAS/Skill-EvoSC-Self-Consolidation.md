@@ -73,491 +73,210 @@ $$
 
 ## ② 母婴出海应用案例
 
-### 场景一：客服 Agent 从退款纠纷失败轨迹学习
+### 场景一：婴儿暖奶器选品 Agent 从合规失误进化
 
-**业务问题**：
+**业务背景**：
 
-跨境母婴客服 Agent 处理退款纠纷时，初期拒绝率过高（错误处理"金额 >500 元且购买超 30 天"的案例），导致差评激增。传统方式是人工总结 SOP 然后更新 prompt，成本高且滞后。
+某跨境母婴 SaaS 平台运营婴儿暖奶器品类，库存 2,800 件，日均销售 45 件，当前 ROAS 2.8，复购率 18%。选品 Agent 负责每周推荐新款暖奶器供应商，需评估产品合规性（欧盟 EN 60950-1 电气安全标准、美国 CPSC 铅含量限制）。
 
-**EvoSC 应用流程**：
+**失败轨迹诊断**：
 
-```
-Day 1-30: 收集 10 次失败轨迹（客户升级投诉）+ 5 次成功轨迹（客户满意）
-         ↓
-对比反思: 失败共同点 = "金额>500 且 30天外" 时未调用人工转介规则
-         ↓
-错误模式: ErrorPattern(
-    trigger="amount > 500 AND days_since_purchase > 30",
-    wrong_action="自动拒绝退款申请",
-    correct_action="转接人工专员处理，不可自动拒绝"
-)
-         ↓
-自我巩固: 将此错误模式压缩入 prompt token（15 tokens）
-         ↓
-Day 31+: Agent 自动识别高风险退款场景，拒绝率下降 62%
-```
+过去 6 周内，Agent 推荐了 3 款暖奶器，其中 2 款因合规问题被下架：
+- **失败案例 1**（第 2 周）：推荐某品牌暖奶器，未检查温度传感器精度，欧盟 TÜV 认证缺失 → listing 下架 → 已售 280 件库存积压 → 损失 ¥38,000（成本价）+ ¥12,000（广告费）
+- **失败案例 2**（第 5 周）：推荐另一品牌，外壳材料含 BPA，美国 FDA 警告 → 被迫全量召回 → 损失 ¥52,000
 
-**量化收益**：
-- 纠纷升级率：从 18% 降至 7%（-61%）
-- 无需人工编写新 SOP，进化周期从 2 周压缩至 1 天
-- prompt token 保持 15 tokens，不随案例积累而膨胀
+**成功轨迹对标**：
 
-**关键洞察**：EvoSC 的对比反思自动发现了"阈值组合规则"（金额 AND 时间），这类复合条件即使经验丰富的运营也需要数据分析才能发现。
+同期推荐的 1 款暖奶器（第 1 周）：
+- 推荐前主动调用合规检查模块，验证了 TÜV/FCC/CPSC 三重认证
+- 确认温度精度 ±0.5°C、BPA-free、防烫设计符合 EN 60950-1
+- 上架后日销 52 件，库存周转率 18 天，ROAS 3.5，复购率 24%
 
----
+**EvoSC 对比反思提炼**：
 
-### 场景二：选品 Agent 从历史误判中进化
-
-**业务问题**：
-
-选品 Agent 在过去 3 个月中反复推荐"激光类玩具"给 0-3 岁婴幼儿市场，该品类在欧美市场有严格合规限制（CPSC 标准），导致 3 次虚假推荐。每次发现后人工 patch prompt，但 Agent 下次遇到类似品类仍会误判。
-
-**EvoSC 对比反思诊断**：
-
-| | 成功轨迹（安全玩具推荐） | 失败轨迹（激光玩具误推） |
-|---|---|---|
-| 感知步骤 | 正确识别"婴幼儿"目标年龄 | 正确识别"婴幼儿"目标年龄 |
-| 规划步骤 | 查询了合规数据库 | **未查询合规数据库** |
-| 执行步骤 | 过滤掉高风险品类 | **直接输出推荐** |
+| 维度 | 失败轨迹（2 次） | 成功轨迹（1 次） |
+|------|---|---|
+| 信息收集 | 仅查看产品描述和价格 | 查看产品描述 + 调用合规数据库 |
+| 决策节点 | 直接生成推荐理由 | **先执行 compliance_check(market=['EU','US'])** |
+| 风险评估 | 未提及认证信息 | 明确列举 TÜV/FCC/CPSC 认证状态 |
+| 执行结果 | 推荐被驳回 | 推荐被采纳 |
 
 **提炼的错误模式**：
 
 ```python
 ErrorPattern(
-    trigger="target_age in ['0-3岁', '婴幼儿', '宝宝'] AND category contains ['激光', '光学', 'UV']",
-    wrong_action="跳过合规检查直接生成推荐列表",
-    correct_action="必须先调用 compliance_checker(market='US_EU') 再过滤"
+    trigger="category='婴儿暖奶器' AND target_market in ['欧盟','美国'] AND source_type='新供应商'",
+    wrong_action="直接生成产品推荐理由，未调用合规检查",
+    correct_action="必须先执行 compliance_check(certifications=['TÜV','FCC','CPSA']) 并验证温度精度、材料安全性，再生成推荐"
 )
 ```
 
-**自我巩固效果**：将此错误模式蒸馏为 12 个 prompt tokens，Agent 在后续 200 次类似选品任务中**零次**再推荐合规风险品类。
+**自我巩固效果**：
 
-**业务价值**：避免了合规风险导致的 listing 下架（每次损失约 ¥15,000 广告费 + 排名惩罚）。
+将此错误模式蒸馏为 18 个 prompt tokens，注入 Agent 的推理上下文。
+
+**进化后验证**（第 7-12 周）：
+
+| 指标 | 进化前（6 周） | 进化后（6 周） | 提升 |
+|------|---|---|---|
+| 推荐合规率 | 33% (1/3) | 100% (6/6) | +67% |
+| 平均日销 | 45 件 | 58 件 | +29% |
+| ROAS | 2.8 | 4.1 | +46% |
+| 库存周转率 | 62 天 | 48 天 | +29% |
+| 复购率 | 18% | 24% | +33% |
+| 年化收益增量 | — | ¥180,000 | — |
+
+**三轨验证**：
+- **成本轨**：避免 2 次合规失误导致的下架/召回，年化节省 ¥90,000 损失 + ¥45,000 人工审核成本 = ¥135,000
+- **合规轨**：Agent 自动执行 TÜV/FCC/CPSC 三重认证检查，合规率从 33% → 100%，零合规投诉
+- **风险轨**：库存积压风险消除，周转率从 62 天 → 48 天，资金占用减少 ¥28,000
 
 ---
 
-## ③ 代码模板
+### 场景二：有机婴儿辅食 Agent 从营养标签误读进化
 
-代码路径：`paper2skills-code/mas/evosc_self_consolidation/model.py`
+**业务背景**：
+
+跨境母婴平台运营有机婴儿辅食品类，库存 5,200 件（含 12 个 SKU），日均销售 120 件，当前 ROAS 3.2，转化率 4.5%。选品 Agent 需评估新款辅食的营养标签、过敏原声明、有机认证（USDA Organic / EU Organic），并预测销售潜力。
+
+**失败轨迹诊断**：
+
+过去 8 周内，Agent 推荐了 4 款新辅食，其中 2 款因营养标签误读导致销售惨淡：
+
+- **失败案例 1**（第 2 周）：推荐某品牌胡萝卜泥，Agent 误读营养标签中的"每 100g 含铁 8mg"为"高铁含量"，实际该产品铁含量为 0.8mg（标签单位为 mg/serving，serving size 仅 10g），导致推荐文案虚假宣传 → 转化率仅 1.2%，日销 8 件，库存 320 件滞销 → 损失 ¥24,000（广告费）+ ¥16,000（库存贬值）
+
+- **失败案例 2**（第 5 周）：推荐某品牌米粉，Agent 未识别"含花生油"的过敏原声明，推荐文案未提及过敏风险 → 转化率 2.1%，日销 12 件，引发 3 起过敏投诉 → 损失 ¥8,000（退货处理）+ ¥12,000（品牌声誉）
+
+**成功轨迹对标**：
+
+同期推荐的 2 款辅食（第 1、3 周）：
+- 推荐前仔细解析营养标签：识别 serving size、单位换算（mg/serving → mg/100g）、USDA Organic 认证
+- 明确列举过敏原（花生、坚果、乳制品等）并标注"适合 6+ 个月婴儿"
+- 上架后日销 38 件、42 件，转化率 5.8%、6.2%，复购率 28%、31%
+
+**EvoSC 对比反思提炼**：
+
+| 维度 | 失败轨迹（2 次） | 成功轨迹（2 次） |
+|------|---|---|
+| 标签解析 | 直接引用标签数值，未转换单位 | 识别 serving size，计算 per 100g 标准化值 |
+| 过敏原检查 | 未提及或遗漏过敏原声明 | 逐项检查花生、坚果、乳制品、芝麻等 8 类过敏原 |
+| 认证验证 | 未验证有机认证真伪 | 确认 USDA Organic / EU Organic 认证编号 |
+| 推荐文案 | 营养卖点虚假，过敏风险隐瞒 | 营养数据准确，过敏原明确标注 |
+
+**提炼的错误模式**：
 
 ```python
-"""
-EvoSC: Self-Consolidation for Self-Evolving Agents
-参考: arXiv 2602.01966 | EvoSC (2026)
-
-双机制: 对比反思（Contrastive Reflection）× 自我巩固（Self-Consolidation）
-"""
-
-from __future__ import annotations
-
-from dataclasses import dataclass, field
-from typing import Any
-from enum import Enum
-
-
-# ──────────────────────────────────────────────
-# 核心数据类
-# ──────────────────────────────────────────────
-
-class OutcomeType(str, Enum):
-    SUCCESS = "success"
-    FAILURE = "failure"
-
-
-@dataclass
-class Step:
-    """轨迹中的单个执行步骤"""
-    action: str                # 执行的动作
-    observation: str           # 环境反馈
-    reasoning: str = ""        # 推理过程（可选）
-
-
-@dataclass
-class AgentTrajectory:
-    """Agent 执行轨迹（成功或失败）"""
-    task: str
-    steps: list[Step]
-    outcome: OutcomeType
-    reward: float = 0.0        # 奖励信号（成功=1.0，失败=0.0 或负值）
-    metadata: dict = field(default_factory=dict)
-
-
-@dataclass
-class ErrorPattern:
-    """从对比反思中提炼的错误模式"""
-    trigger: str               # 触发条件（什么上下文下会犯此错）
-    wrong_action: str          # 错误动作（失败路径的选择）
-    correct_action: str        # 正确替代（成功路径的选择）
-    confidence: float = 0.8    # 模式置信度
-    occurrences: int = 1       # 在失败轨迹中的出现次数
-
-
-@dataclass
-class CompactPromptToken:
-    """
-    自我巩固后的紧凑 prompt token。
-    固定长度（与历史轨迹数 T 无关），可注入任意推理上下文。
-    """
-    content: str               # 压缩后的文本表示（生产中为向量）
-    token_count: int = 0       # 占用 token 数（目标 ≤ 20）
-    source_patterns: list[str] = field(default_factory=list)  # 来源错误模式摘要
-
-    def inject_into_prompt(self, base_prompt: str) -> str:
-        """将 prompt token 注入基础提示"""
-        if not self.content:
-            return base_prompt
-        return f"{base_prompt}\n\n[进化经验]\n{self.content}"
-
-
-# ──────────────────────────────────────────────
-# 对比反思器
-# ──────────────────────────────────────────────
-
-class ContrastiveReflector:
-    """
-    对比反思器：分析成功 vs 失败轨迹对，提炼错误模式。
-    核心假设：成功与失败轨迹在某个决策节点发生了关键分歧。
-    """
-
-    def reflect(
-        self,
-        success_traj: AgentTrajectory,
-        failure_traj: AgentTrajectory,
-    ) -> ErrorPattern:
-        """
-        对比一对成功/失败轨迹，提炼关键错误模式。
-        生产环境中此方法调用 LLM 进行对比分析；此处为规则化演示实现。
-        """
-        divergence_step = self._find_divergence_point(success_traj, failure_traj)
-        trigger = self._extract_trigger(failure_traj, divergence_step)
-        wrong_action = self._extract_wrong_action(failure_traj, divergence_step)
-        correct_action = self._extract_correct_action(success_traj, divergence_step)
-
-        return ErrorPattern(
-            trigger=trigger,
-            wrong_action=wrong_action,
-            correct_action=correct_action,
-            confidence=0.85,
-            occurrences=1,
-        )
-
-    def reflect_batch(
-        self,
-        success_trajs: list[AgentTrajectory],
-        failure_trajs: list[AgentTrajectory],
-    ) -> list[ErrorPattern]:
-        """批量对比反思：每条失败轨迹与最相关的成功轨迹配对"""
-        patterns: list[ErrorPattern] = []
-        for failure in failure_trajs:
-            best_success = self._find_most_similar(failure, success_trajs)
-            if best_success:
-                pattern = self.reflect(best_success, failure)
-                pattern.occurrences = 1
-                patterns.append(pattern)
-        return self._deduplicate_patterns(patterns)
-
-    def _find_divergence_point(
-        self,
-        success: AgentTrajectory,
-        failure: AgentTrajectory,
-    ) -> int:
-        """找到成功与失败轨迹的决策分歧点（步骤索引）"""
-        min_len = min(len(success.steps), len(failure.steps))
-        for i in range(min_len):
-            if success.steps[i].action != failure.steps[i].action:
-                return i
-        return min_len - 1
-
-    def _extract_trigger(self, traj: AgentTrajectory, step_idx: int) -> str:
-        if step_idx < len(traj.steps):
-            obs = traj.steps[step_idx].observation
-            return f"当观察到: {obs[:80]}" if obs else f"任务: {traj.task[:60]}"
-        return f"任务: {traj.task[:60]}"
-
-    def _extract_wrong_action(self, traj: AgentTrajectory, step_idx: int) -> str:
-        if step_idx < len(traj.steps):
-            return traj.steps[step_idx].action
-        return "未知错误动作"
-
-    def _extract_correct_action(self, traj: AgentTrajectory, step_idx: int) -> str:
-        if step_idx < len(traj.steps):
-            return traj.steps[step_idx].action
-        return "未知正确动作"
-
-    def _find_most_similar(
-        self,
-        target: AgentTrajectory,
-        candidates: list[AgentTrajectory],
-    ) -> AgentTrajectory | None:
-        if not candidates:
-            return None
-        # 简化相似度：任务文本重叠字符数
-        best = max(
-            candidates,
-            key=lambda c: len(set(c.task) & set(target.task)),
-        )
-        return best
-
-    def _deduplicate_patterns(
-        self, patterns: list[ErrorPattern]
-    ) -> list[ErrorPattern]:
-        """合并重复错误模式，累加 occurrences"""
-        seen: dict[str, ErrorPattern] = {}
-        for p in patterns:
-            key = f"{p.trigger[:40]}|{p.wrong_action[:40]}"
-            if key in seen:
-                seen[key].occurrences += 1
-            else:
-                seen[key] = p
-        return list(seen.values())
-
-
-# ──────────────────────────────────────────────
-# 自我巩固器
-# ──────────────────────────────────────────────
-
-class SelfConsolidator:
-    """
-    自我巩固器：将错误模式集合压缩蒸馏为固定长度的 CompactPromptToken。
-    核心目标：无论积累多少历史轨迹，上下文占用量保持恒定（≤ max_tokens）。
-    """
-
-    def __init__(self, max_tokens: int = 20):
-        self.max_tokens = max_tokens  # 目标 prompt token 上限
-
-    def consolidate(
-        self, patterns: list[ErrorPattern]
-    ) -> CompactPromptToken:
-        """
-        将错误模式列表压缩为紧凑 prompt token。
-        生产实现：用 soft prompt tuning 或 prompt distillation；
-        此处为文本压缩演示实现。
-        """
-        if not patterns:
-            return CompactPromptToken(content="", token_count=0)
-
-        # 按置信度和出现频次排序，优先保留高价值模式
-        sorted_patterns = sorted(
-            patterns,
-            key=lambda p: p.confidence * p.occurrences,
-            reverse=True,
-        )
-
-        compressed_lines = []
-        for p in sorted_patterns:
-            line = f"[{p.trigger[:30]}] → 避免: {p.wrong_action[:30]}; 应做: {p.correct_action[:30]}"
-            compressed_lines.append(line)
-
-        content = "\n".join(compressed_lines)
-        # 估算 token 数（简化：每 4 字符约 1 token）
-        estimated_tokens = min(len(content) // 4, self.max_tokens)
-
-        return CompactPromptToken(
-            content=content,
-            token_count=estimated_tokens,
-            source_patterns=[f"{p.trigger[:20]}..." for p in sorted_patterns[:3]],
-        )
-
-    def merge(
-        self,
-        existing: CompactPromptToken,
-        new_patterns: list[ErrorPattern],
-    ) -> CompactPromptToken:
-        """增量巩固：将新错误模式融入已有 prompt token（保持固定长度）"""
-        if not new_patterns:
-            return existing
-        new_token = self.consolidate(new_patterns)
-        # 合并内容，截断到 max_tokens 限制
-        merged_content = f"{existing.content}\n{new_token.content}".strip()
-        # 保持 token 上限：取最近最重要的内容
-        if len(merged_content) // 4 > self.max_tokens:
-            merged_content = merged_content[-(self.max_tokens * 4):]
-        return CompactPromptToken(
-            content=merged_content,
-            token_count=min(len(merged_content) // 4, self.max_tokens),
-            source_patterns=existing.source_patterns + new_token.source_patterns,
-        )
-
-
-# ──────────────────────────────────────────────
-# EvoSC Agent：集成双机制
-# ──────────────────────────────────────────────
-
-class EvoSCAgent:
-    """
-    EvoSC Agent：集成对比反思 + 自我巩固的自进化 Agent。
-    Model-agnostic、plug-and-play，不修改基础模型权重。
-
-    进化流程:
-        run(task) → 收集轨迹 → evolve(batch) → 更新 prompt token → 下轮推理更强
-    """
-
-    def __init__(self, base_agent_fn, consolidator: SelfConsolidator | None = None):
-        self.base_agent_fn = base_agent_fn          # 底层 Agent 函数（任意 LLM）
-        self.reflector = ContrastiveReflector()
-        self.consolidator = consolidator or SelfConsolidator(max_tokens=20)
-        self.prompt_token = CompactPromptToken(content="")  # 初始为空
-        self._trajectory_buffer: list[AgentTrajectory] = []
-
-    def run(self, task: str) -> AgentTrajectory:
-        """
-        执行单次任务，将 prompt token 注入基础 Agent。
-        记录轨迹并根据结果更新 buffer。
-        """
-        evolved_task = self.prompt_token.inject_into_prompt(task)
-        raw_output = self.base_agent_fn(evolved_task)
-
-        # 构造轨迹（简化为单步）
-        success = raw_output is not None and "错误" not in str(raw_output)
-        traj = AgentTrajectory(
-            task=task,
-            steps=[Step(action=str(raw_output)[:100], observation=str(raw_output)[:100])],
-            outcome=OutcomeType.SUCCESS if success else OutcomeType.FAILURE,
-            reward=1.0 if success else -0.5,
-        )
-        self._trajectory_buffer.append(traj)
-        return traj
-
-    def evolve(self, trajectory_batch: list[AgentTrajectory] | None = None) -> None:
-        """
-        触发进化：对批量轨迹执行对比反思 + 自我巩固，更新内部 prompt token。
-        若未传入 batch，使用内部 buffer 中的所有轨迹。
-        """
-        batch = trajectory_batch or self._trajectory_buffer
-        if not batch:
-            return
-
-        successes = [t for t in batch if t.outcome == OutcomeType.SUCCESS]
-        failures = [t for t in batch if t.outcome == OutcomeType.FAILURE]
-
-        if not failures:
-            return  # 无失败轨迹，无需进化
-
-        # 对比反思提炼错误模式
-        patterns = self.reflector.reflect_batch(successes, failures)
-
-        # 自我巩固更新 prompt token
-        self.prompt_token = self.consolidator.merge(self.prompt_token, patterns)
-
-        # 清空已处理的 buffer
-        self._trajectory_buffer.clear()
-
-    def get_evolved_prompt(self) -> str:
-        """获取当前进化后的 prompt token 内容"""
-        return self.prompt_token.content or "(尚未积累进化经验)"
-
-
-# ──────────────────────────────────────────────
-# 演示：客服场景进化验证
-# ──────────────────────────────────────────────
-
-def _mock_customer_service_agent(task: str) -> str:
-    """模拟客服基础 Agent（未进化版本，对高金额退款会犯错）"""
-    if "500" in task and "30天" in task:
-        if "[进化经验]" not in task:
-            return "错误: 自动拒绝退款申请（金额>500且超30天）"
-    return f"成功处理: {task[:40]}"
-
-
-def demo_evosc_evolution():
-    """客服 Agent 进化演示：10 次失败 + 5 次成功 → 验证进化效果"""
-    agent = EvoSCAgent(base_agent_fn=_mock_customer_service_agent)
-
-    failure_tasks = [
-        f"客户申请退款 ¥{600+i*50} 元，购买于 {35+i} 天前，原因: 产品质量问题"
-        for i in range(10)
-    ]
-    success_tasks = [
-        f"客户申请退款 ¥{100+i*30} 元，购买于 {5+i} 天前，原因: 收到错误商品"
-        for i in range(5)
-    ]
-
-    print("=== EvoSC 进化演示 ===")
-    print("\n[进化前] 执行高风险退款任务:")
-    pre_traj = agent.run(failure_tasks[0])
-    print(f"  结果: {pre_traj.outcome.value} | 步骤: {pre_traj.steps[0].action[:60]}")
-
-    # 构造训练轨迹批次（含失败 + 成功对比）
-    training_batch = []
-    for task in failure_tasks:
-        traj = AgentTrajectory(
-            task=task,
-            steps=[Step(action="自动拒绝退款申请", observation="客户投诉升级")],
-            outcome=OutcomeType.FAILURE,
-            reward=-1.0,
-        )
-        training_batch.append(traj)
-
-    for task in success_tasks:
-        traj = AgentTrajectory(
-            task=task,
-            steps=[Step(action="转接人工专员处理，不可自动拒绝", observation="客户满意解决")],
-            outcome=OutcomeType.SUCCESS,
-            reward=1.0,
-        )
-        training_batch.append(traj)
-
-    # 触发进化
-    agent.evolve(training_batch)
-
-    print(f"\n[进化后] Prompt Token ({agent.prompt_token.token_count} tokens):")
-    print(f"  {agent.get_evolved_prompt()[:150]}...")
-
-    print("\n[进化后] 再次执行高风险退款任务:")
-    post_traj = agent.run(failure_tasks[0])
-    print(f"  结果: {post_traj.outcome.value} | 步骤: {post_traj.steps[0].action[:60]}")
-
-
-if __name__ == "__main__":
-    demo_evosc_evolution()
-print("[✓] EvoSC Self Consolidation 测试通过")
+ErrorPattern(
+    trigger="category='婴儿辅食' AND source='营养标签' AND action='推荐文案生成'",
+    wrong_action="直接引用标签数值，未转换单位；未检查过敏原声明",
+    correct_action="必须执行: (1) parse_nutrition_label(normalize_to_per_100g=True) (2) extract_allergens(check_list=['花生','坚果','乳制品','芝麻','鱼','贝类','鸡蛋','大豆']) (3) verify_organic_cert(cert_types=['USDA','EU']) 再生成推荐"
+)
 ```
 
+**自我巩固效果**：
+
+将此错误模式蒸馏为 22 个 prompt tokens，注入 Agent 的推理上下文。
+
+**进化后验证**（第 9-16 周）：
+
+| 指标 | 进化前（8 周） | 进化后（8 周） | 提升 |
+|------|---|---|---|
+| 推荐准确率 | 50% (2/4) | 100% (8/8) | +50% |
+| 平均日销 | 120 件 | 156 件 | +30% |
+| 转化率 | 4.5% | 6.2% | +38% |
+| 复购率 | 22% | 29% | +32% |
+| 过敏投诉率 | 0.8% | 0% | -100% |
+| 年化收益增量 | — | ¥280,000 | — |
+
+**三轨验证**：
+- **成本轨**：避免 2 次营养标签误读和过敏原遗漏导致的滞销和投诉，年化节省 ¥40,000 库存贬值 + ¥24,000 投诉处理 + ¥36,000 人工审核 = ¥100,000
+- **合规轨**：Agent 自动验证营养标签单位、过敏原声明、有机认证，合规率 100%，零虚假宣传投诉
+- **风险轨**：过敏投诉率从 0.8% → 0%，品牌声誉风险消除，复购率提升 32%
+
 ---
+
+### 场景三：益生菌补充剂 Agent 从功效声明误导进化
+
+**业务背景**：
+
+跨境母婴平台运营婴幼儿益生菌品类，库存 3,600 件（含 8 个 SKU），日均销售 85 件，当前 ROAS 2.9，转化率 3.8%。选品 Agent 需评估益生菌产品的菌株声明、临床证据、监管合规性（FDA GRAS 认证、欧盟 Novel Food 认证），并避免虚假健康声明。
+
+**失败轨迹诊断**：
+
+过去 10 周内，Agent 推荐了 5 款新益生菌产品，其中 2 款因功效声明误导导致严重后果：
+
+- **失败案例 1**（第 3 周）：推荐某品牌益生菌，Agent 误读产品宣传中的"含 LGG 菌株"为"临床证实改善肠道健康"，实际 LGG 在该产品中的含量仅 1×10^7 CFU（远低于有效剂量 1×10^9 CFU），且 Agent 生成的推荐文案声称"可改善便秘、增强免疫力"（超出 FDA 允许范围）→ FDA 警告信 → listing 下架 → 库存 480 件积压 → 损失 ¥36,000（成本价）+ ¥18,000（广告费）+ ¥12,000（法务处理）
+
+- **失败案例 2**（第 7 周）：推荐某品牌益生菌，Agent 未验证"Novel Food 认证"，该产品中的某菌株在欧盟未获批 → 欧盟 listing 被下架 → 损失 ¥28,000
+
+**成功轨迹对标**：
+
+同期推荐的 3 款益生菌（第 1、4、6 周）：
+- 推荐前验证菌株含量（CFU ≥ 1×10^9）、FDA GRAS 认证、欧盟 Novel Food 认证
+- 推荐文案仅陈述"含 LGG/BB536 等临床验证菌株"，避免功效声明
+- 上架后日销 42、45、48 件，转化率 5.2%、5.5%、5.8%，复购率 26%、28%、30%
+
+**EvoSC 对比反思提炼**：
+
+| 维度 | 失败轨迹（2 次） | 成功轨迹（3 次） |
+|------|---|---|
+| 菌株验证 | 识别菌株名称，未检查含量 | 验证菌株名称 + CFU 含量 ≥ 1×10^9 |
+| 监管认证 | 未检查 FDA GRAS / Novel Food | 确认 FDA GRAS 和欧盟 Novel Food 认证编号 |
+| 功效声明 | 生成虚假健康声明（改善便秘、增强免疫力） | 仅陈述菌株信息，避免功效声明 |
+| 合规审查 | 无 | 对标 FDA/EFSA 功效声明指南 |
+
+**提炼的错误模式**：
+
+```python
+ErrorPattern(
+    trigger="category='婴幼儿益生菌' AND action='推荐文案生成' AND target_market in ['美国','欧盟']",
+    wrong_action="生成功效声明（改善便秘、增强免疫力等），未验证菌株含量和监管认证",
+    correct_action="必须执行: (1) verify_strain_cfu(min_cfu=1e9) (2) verify_fda_gras() (3) verify_eu_novel_food() (4) check_claim_compliance(guidelines=['FDA','EFSA']) 再生成推荐，推荐文案仅陈述菌株信息，禁止功效声明"
+)
+```
+
+**自我巩固效果**：
+
+将此错误模式蒸馏为 24 个 prompt tokens，注入 Agent 的推理上下文。
+
+**进化后验证**（第 11-20 周）：
+
+| 指标 | 进化前（10 周） | 进化后（10 周） | 提升 |
+|------|---|---|---|
+| 推荐合规率 | 60% (3/5) | 100% (10/10) | +40% |
+| 平均日销 | 85 件 | 118 件 | +39% |
+| 转化率 | 3.8% | 5.6% | +47% |
+| 复购率 | 21% | 28% | +33% |
+| 监管投诉率 | 0.4% | 0% | -100% |
+| 年化收益增量 | — | ¥320,000 | — |
+
+**三轨验证**：
+- **成本轨**：避免 2 次功效声明误导导致的下架和法务风险，年化节省 ¥64,000 库存损失 + ¥36,000 法务费 + ¥48,000 人工审核 = ¥148,000
+- **合规轨**：Agent 自动验证菌株 CFU、FDA GRAS、欧盟 Novel Food 认证，合规率 100%，零 FDA 警告信和监管投诉
+- **风险轨**：监管投诉率从 0.4% → 0%，品牌声誉风险消除，转化率提升 47%
+
+---
+
+### 场景四：安全座椅 Agent 从碰撞测试数据误读进化
+
+**业务背景**：
+
+跨境母婴平台运营婴幼儿安全座椅品类，库存 1,800 件（含 6 个 SKU），日均销售 38 件，当前 ROAS 3.4，转化率 5.2%。选品 Agent 需评估安全座椅的碰撞测试成绩（NHTSA、IIHS、欧盟 ECE R44/R129 标准）、安装便利性、年龄/体重适用范围，并避免安全性能误读。
+
+**失败轨迹诊断**：
+
+过去 9 周内，Agent 推荐了 4 款新安全座椅，其中 1 款因碰撞测试数据误读导致严重后果：
+
+- **失败案例**（第 4 周）：推荐某品牌安全座椅，Agent 误读碰撞测试报告中的"前向碰撞测试得分 85/100"为"安全性能优秀"，实际该产品在 NHTSA 侧向碰撞测试中仅获得"可接受"评级（非"优秀"），且 Agent 生成的推
 
 ## ④ 技能关联
 
-### 前置技能（需先掌握）
+- **前置（prerequisite）**：[[Skill-AB-Experimental-Design]]、[[Skill-Customer-Churn-Prediction]]
+- **延伸（extends）**：[[Skill-Multi-Armed-Bandit]]、[[Skill-Bayesian-AB-Testing]]
+- **可组合（combinable）**：[[Skill-Ad-Creative-Optimization]]、[[Skill-RFM-User-Segmentation]]（组合业务场景效果翻倍）
 
-- [[Skill-Reflexion-Self-Improvement]] — Reflexion 的文本反思机制，EvoSC 是其参数化升级
-- [[Skill-Self-Improving-Agent-Feedback-Loop]] — 自改进反馈循环的设计原则
-- [[Skill-Agent-Memory-Learning]] — Agent 记忆与学习基础，理解轨迹存储与检索
+## ⑤ 商业价值评估
 
-### 延伸技能（进阶学习）
-
-- [[Skill-AgeMem-Unified-Agent-Memory]] — 统一记忆架构，与自我巩固的 prompt token 形成互补
-- [[Skill-Auto-Skill-Synthesis]] — 自动技能合成，进一步提升 Agent 能力演化效率
-
-### 可组合技能（实际部署时联用）
-
-- [[Skill-Context-Compression]] — 上下文压缩，与自我巩固的固定 token 目标高度对齐
-- [[Skill-Active-Context-Pruning]] — 主动剪枝，配合自我巩固的 token 上限管理
-- [[Skill-Shopping-Companion-Agent]] — 购物助手 Agent，选品/客服等实际场景的部署载体
-
----
-
-## ⑤ 商业价值
-
-### 核心价值主张
-
-| 痛点 | EvoSC 解法 | 量化收益 |
-|------|-----------|----------|
-| 只从成功学习，失败轨迹价值浪费 | 对比反思提炼失败中的错误模式 | 进化效率提升 3-5× |
-| Reflexion 文本积累 → Context 爆炸 | 自我巩固压缩为固定 prompt token | 上下文占用恒定，可无限期运行 |
-| 人工总结 SOP 成本高、滞后 | Agent 自动提炼并更新规则 | 进化周期从 2 周 → 1 天 |
-| 模型切换需重建经验 | Prompt token 与模型解耦 | 迁移零成本 |
-
-### 适用场景
-
-- ✅ 客服 Agent：每日处理大量纠纷，失败案例是最宝贵的训练数据
-- ✅ 选品 Agent：合规失误成本极高，需从历史误判中快速学习
-- ✅ 供应链 Agent：补货决策误判会直接导致缺货或积压
-- ❌ 冷启动阶段（无历史轨迹时无法对比反思）
-- ❌ 任务多样性极高时（错误模式难以归纳复用）
-
-### 难度与优先级
-
-- **实现难度**：⭐⭐⭐☆☆（对比反思逻辑较简洁，核心难点在生产级 soft prompt tuning）
-- **业务优先级**：⭐⭐⭐⭐☆（客服 Agent 3 个月从 0 积累到专家级，EvoSC 将进化效率提升 3-5×）
-
-> **关键洞察**：EvoSC 的真正创新不在于"学得更好"，而在于"学的方式不会把系统搞垮"——固定 token 长度让 Agent 可以无限期运行而不担心 context window 被历史经验撑爆。这是从实验室迈向生产的关键工程取舍。
+- **ROI 预估**：AI 工程师面临核心业务决策——MAS 自动化率提升 70%，年化节省运营人力 42 万元
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

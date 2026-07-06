@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RankGPT — LLM 驱动 Listwise 重排序
 doc_type: knowledge
@@ -235,4 +234,3 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐（调用 LLM API 即可，无需训练）
 
 **优先级**：⭐⭐⭐⭐（补全检索流水线最后一公里，直接提升用户感知质量）
-```

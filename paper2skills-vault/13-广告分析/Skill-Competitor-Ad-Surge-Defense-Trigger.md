@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Competitor-Ad-Surge-Defense-Trigger — 竞品广告份额单日激增自动触发防御性出价提升
 doc_type: knowledge
@@ -229,4 +228,3 @@ print(f"  防御级别: {result['level_summary']}，预算增量: ${result['tota
 - **ROI量化**：防守期间份额损失从 -25% → -8%，保护周 GMV $12,000；防守预算增量 $150/天 × 3天 = $450，ROI 26:1
 - **实施难度**：⭐⭐⭐☆☆（需竞品广告份额 API + 实时监控 + 广告平台写入权限）
 - **优先级**：⭐⭐⭐⭐☆（竞品突袭在大促前后频发，防御响应时效关键）
-```

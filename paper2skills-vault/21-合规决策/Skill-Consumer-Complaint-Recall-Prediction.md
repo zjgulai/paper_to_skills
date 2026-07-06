@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Consumer Complaint Recall Prediction — 消费者投诉驱动的召回风险预测
 doc_type: knowledge
@@ -137,4 +136,3 @@ print("[✓] Consumer Complaint Recall 测试通过")
 | **实施难度** | ⭐⭐☆☆☆（中等偏低，主要工作在数据清洗和阈值调优） |
 | **业务优先级** | ⭐⭐⭐⭐⭐（合规失败直接导致下架，高优先级防御能力） |
 | **投资回报** | 一次召回预警成功可规避下架损失，ROI > 10x 工程成本 |
-```

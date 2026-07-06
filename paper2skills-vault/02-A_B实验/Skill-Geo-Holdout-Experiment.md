@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Geo Holdout实验 — 地理区域控制实验消除网络效应偏差
 doc_type: knowledge
@@ -216,4 +215,3 @@ print('\n[✓] Geo Holdout实验 测试通过')
 - **实施难度**：⭐⭐⭐☆☆（配对匹配和DiD约100行代码；主要挑战在获取地区级历史销售数据和协调广告平台分区投放）
 - **优先级**：⭐⭐⭐⭐☆（02-AB实验域盲区填补；当用户级A/B无法实施时的唯一严格评估方法）
 - **评估依据**：Google 2015 JMR论文奠定方法论基础，引用量800+；P&G/Unilever/Amazon均使用Geo实验评估品牌广告；Meta/Google均提供Geo实验工具（Brand Lift）
-```

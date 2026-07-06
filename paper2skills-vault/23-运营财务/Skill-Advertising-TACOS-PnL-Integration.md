@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Advertising-TACOS-PnL-Integration — 广告TACoS与P&L集成
 doc_type: knowledge
@@ -161,4 +160,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐⭐（广告占比 > 10% GMV 时必备） |
 | 数据要求 | Amazon 广告报告 + 销售数据 + SKU 成本结构 |
 | 典型收益 | 正确核算广告对利润的真实影响，避免错误削减或过度投放 |
-```

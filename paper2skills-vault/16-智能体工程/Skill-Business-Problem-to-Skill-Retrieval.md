@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 业务问题→Skill 检索 — Sentence-BERT + RRF 多路召回引擎
 doc_type: knowledge
@@ -227,4 +226,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（仅需 sentence-transformers + numpy，无需 GPU；离线建索引一次性）
 - **优先级**：⭐⭐⭐⭐⭐（可立即上线，依赖 problem_solved 字段已存在的 726 个 Skill）
 - **评估依据**：核心依赖已有数据（Skill 库），无冷启动问题；TF-IDF 降级方案保证零依赖运行
-```

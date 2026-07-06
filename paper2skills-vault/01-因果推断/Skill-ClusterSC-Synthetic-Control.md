@@ -1,4 +1,3 @@
-```markdown
 ---
 title: ClusterSC - 聚类合成控制法
 doc_type: knowledge
@@ -227,4 +226,3 @@ print("[✓] ClusterSC Synthetic Contr 测试通过")
 3. **业务场景直接匹配**：母婴品牌区域广告投放归因是高频痛点，ROI 核算需求刚性
 4. **工程门槛适中**：不依赖商业软件或 GPU，2-3 名数据科学家 2-4 周可完成生产部署
 5. **减 1 星原因**：供体池同质性验证需要较强业务 domain knowledge，自动化程度相对较低
-```

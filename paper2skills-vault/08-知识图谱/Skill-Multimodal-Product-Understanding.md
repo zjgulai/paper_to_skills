@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Multimodal Product Understanding — 多模态商品理解：图文统一表示驱动搜索与推荐
 doc_type: knowledge

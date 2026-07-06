@@ -1,4 +1,3 @@
-```markdown
 ---
 title: DML Cohort 因果效应 - 群体异质性 HTE 估计
 doc_type: knowledge
@@ -202,4 +201,3 @@ print("[✓] DML Cohort Causal Effect 测试通过")
 2. **ECML PKDD 顶会**,EconML 开源代码完整
 3. **核心桥梁**:14-用户分析 ↔ 01-因果推断 ↔ 06-增长模型 三领域交汇
 4. **方法学新颖**:Neyman 正交性 + cohort 特征化是 2023+ 因果 ML 主流范式
-```

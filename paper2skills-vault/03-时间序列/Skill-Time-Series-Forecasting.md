@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "Skill Card: 时间序列预测 (Time Series Forecasting)"
 description: "母婴出海电商销量/库存预测的核心决策工具，支持周级/月级多步预测"

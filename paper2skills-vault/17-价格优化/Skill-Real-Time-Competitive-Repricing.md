@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Real-Time Competitive Repricing — 竞品价格监测与深度强化学习自动重定价
 doc_type: knowledge
@@ -365,4 +364,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（Amazon 竞争烈度持续上升，手动重定价根本跟不上，自动化是必选项）
 
 - **评估依据**：arXiv 1912.02572 Alibaba Tmall 多月字段实验，DRL 显著优于人工专家；Thompson Sampling (arXiv 1802.03050) 在 Amazon 内部验证有效
-```

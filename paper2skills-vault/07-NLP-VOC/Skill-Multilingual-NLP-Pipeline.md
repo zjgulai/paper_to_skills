@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 多语言 NLP 管道 — mBERT Zero-Shot 跨语言情感/实体提取
 doc_type: knowledge
@@ -274,4 +273,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（字符级 TF-IDF 方案零依赖可运行；生产方案需 HuggingFace transformers + GPU 微调，但预训练模型已公开免费）
 - **优先级**：⭐⭐⭐⭐⭐（品牌已运营 4+ 站点，每天产生多语言 Review，一个模型覆盖全站是刚需）
 - **评估依据**：XLM-R 在 XNLI 跨语言基准上 DE/FR/ES 精度 > 80%，JP > 75%；ROI 来自覆盖面扩展而非单站精度提升
-```

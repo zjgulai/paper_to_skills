@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RL Dynamic Promotion Optimization — 强化学习动态促销优化：时机×力度×对象的联合决策
 doc_type: knowledge

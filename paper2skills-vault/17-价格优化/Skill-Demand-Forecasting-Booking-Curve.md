@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Demand Forecasting via Booking Curve — 酒店预订曲线迁移到电商搜索量超前指标预测
 doc_type: knowledge
@@ -341,4 +340,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（数据工程简单，核心是搜索量获取和历史数据积累，算法已封装）
 - **优先级**：⭐⭐⭐⭐⭐（旺季备货决策的核心数据源，所有备货模型的上游输入，优先级最高）
 - **评估依据**：酒店行业预订曲线分析被证明将预测精度从±25%提升到±8%（Cornell Hotel & Restaurant Administration Quarterly，2003）；电商搜索量领先效应（2-4周）已被多个第三方卖家工具验证。
-```

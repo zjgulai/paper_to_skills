@@ -1,4 +1,3 @@
-```markdown
 ---
 title: SCRABLE Review Response Generation — RAG+LLM 自优化差评回复生成
 doc_type: knowledge
@@ -168,4 +167,3 @@ print("[✓] SCRABLE 差评回复生成测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，RAG + LLM API，无需训练模型）
 - **优先级**：⭐⭐⭐⭐⭐（差评未回复是 Amazon 账号健康的直接风险因素）
 - **评估依据**：LREC-COLING 2024，ROUGE-L +8.5%，人工评估可接受率 +15%
-```

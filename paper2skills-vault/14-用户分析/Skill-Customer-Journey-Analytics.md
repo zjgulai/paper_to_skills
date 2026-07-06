@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Customer Journey Analytics — 用户旅程分析：全链路转化漏斗诊断与优化
 doc_type: knowledge
@@ -314,4 +313,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（用户旅程分析是转化率优化的基础工具；完全空白；桥接 用户分析↔数据采集↔广告分析 三域）
 
 - **评估依据**：旅程分析工具（Mixpanel/Amplitude）在 DTC 品牌中已被广泛验证；精准找到瓶颈的 A/B 测试效率是随机测试的 3-5 倍；SIGIR 2024 论文验证旅程建模对转化预测的有效性
-```

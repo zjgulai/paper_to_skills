@@ -1,4 +1,3 @@
-```markdown
 ---
 title: High-Value-Customer-Alert-Action — RFM高价值客户30天沉默自动触发客服主动介入+个性化钩子生成
 doc_type: knowledge
@@ -326,4 +325,3 @@ for a in result["alerts"]:
 - **ROI量化**：Champions群主动介入挽留率约25-30%，年化对50名Champions客户主动介入×28%挽留×$400 LTV = 增量GMV约$56,000；额外规避了高LTV客户流失的品牌口碑风险
 - **实施难度**：⭐⭐☆☆☆（WhatsApp Business API对接约1周工程量；邮件平台对接更简单；个性化钩子逻辑规则清晰）
 - **优先级**：⭐⭐⭐⭐⭐（高LTV客户是品牌最核心资产，每失去一位Champions意味着失去数百美元长期价值；主动预防远优于被动挽回）
-```

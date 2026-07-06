@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill Card API Serving — 将 Skill 代码模板包装为参数化 REST 微服务
 doc_type: knowledge

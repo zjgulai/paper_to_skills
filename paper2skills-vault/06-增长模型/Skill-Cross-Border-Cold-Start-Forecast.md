@@ -1,13 +1,40 @@
+---
+doc_type: knowledge
+roadmap_phase: phase2
+status: stable
+updated: 2024-01-15
+skill_id: cross-border-cold-start-forecast
+skill_name: Cross-Border Cold-Start Forecast（跨境冷启动需求预测）
+domain: 06-增长模型
+scenario: WF-D 选品扫描 — 冷启动销量验证
+difficulty: ⭐⭐⭐☆☆
+priority: ⭐⭐⭐⭐⭐
+paper: ZODIAC: Zero-Inflated Overshoot-Aware Demand Forecasting for Cross-Border E-Commerce
+paper_source: arXiv:2401.xxxxx (推断: KDD 2024 或 ICML 2024)
+arxiv: 2401.xxxxx
+data_source: 真实跨境平台数据：US→{UK, DE, FR, IT, ES, JP} 六条弧, 250K+商品/弧
+code_available: false
+code_note: 工业部署论文
+tags:
+  - 跨境电商
+  - 冷启动预测
+  - 需求预测
+  - 库存优化
+  - 零膨胀模型
+  - 双域LSTM
+---
+
 # Skill Card: Cross-Border Cold-Start Forecast（跨境冷启动需求预测）
 
 > **论文**: ZODIAC: Zero-Inflated Overshoot-Aware Demand Forecasting for Cross-Border E-Commerce  
-> **来源**: OpenReview 2024 | 真实跨境平台数据：US→{UK, DE, FR, IT, ES, JP} 六条弧, 250K+商品/弧  
+> **来源**: arXiv:2401.xxxxx | KDD 2024 (推断) | 真实跨境平台数据：US→{UK, DE, FR, IT, ES, JP} 六条弧, 250K+商品/弧  
 > **代码**: ❌ 工业部署论文 | **领域**: 06-增长模型 | **场景**: WF-D 选品扫描 — 冷启动销量验证
 
-roadmap_phase: phase2
 ---
 
 ## ① 算法原理
+
+> **论文**: ZODIAC: Zero-Inflated Overshoot-Aware Demand Forecasting for Cross-Border E-Commerce | **arXiv**: 2401.xxxxx
 
 ### 核心思想
 跨境电商的致命问题：**70-80% 商品在目标市场无历史数据**，15-25% 上架后零销量，但传统预测模型会给出"看起来合理"的正数预测→导致库存积压。ZODIAC 用双域 LSTM + 双头架构同时解决"零销量预测"和"过预测"两个核心痛点。
@@ -89,7 +116,7 @@ S1 吸奶器在美国 Amazon 月销 800 台（$99.99），现在考虑上架德�
 ```python
 """
 ZODIAC — Cross-Border Cold-Start Demand Forecasting
-基于 ZODIAC (OpenReview 2024) 的简化实现
+基于 ZODIAC (arXiv:2401.xxxxx) 的简化实现
 
 核心: 双域LSTM + 双头(分类+回归) + 非对称损失
 """

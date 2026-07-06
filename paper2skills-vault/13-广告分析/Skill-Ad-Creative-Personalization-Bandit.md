@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Ad Creative Personalization Bandit — 上下文 Bandit 动态为不同人群选最优广告创意
 doc_type: knowledge

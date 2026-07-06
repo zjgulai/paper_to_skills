@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Marketing Mix Modeling (MMM) for Macro Budget Allocation
 module: 15-营销投放分析
@@ -399,3 +398,9 @@ if __name__ == '__main__':
 ### 延伸技能
 - [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — MMM 渠道层结果驱动促销因果验证
 - [Skill-ROAS-Budget-Optimization](../13
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：营销分析师面临核心业务决策——MMM 优化预算分配，ROAS 提升 31%，年化增收 55 万元
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

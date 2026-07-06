@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Infant Lifecycle Purchase Rhythm — 婴儿 0-24 月龄标准消费品类时序图谱建模
 doc_type: knowledge
@@ -412,4 +411,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（品类-月龄映射表建立 1 周，需求预测模型接入 2 周，总计约 3 周）
 - **优先级**：⭐⭐⭐⭐⭐（母婴电商独有的"时间武器"——竞品如果没有月龄感知能力，在触达时机上天然处于劣势）
 - **评估依据**：PCIC 在 Target 亿级用户验证，NDCG 提升 16%，Recall 提升 2%；MIT Sloan 母婴 App 案例显示月龄感知推荐转化率 +89%（vs 最热门推荐）
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Tag-Enhanced Personalized Recommendation — 标签感知的个性化推荐系统
 doc_type: knowledge
@@ -354,4 +353,3 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐☆（推荐系统改进回报快，品类扩展期 ROI 最高）
 - **数据门槛**：商品标签覆盖率 ≥90%，每用户平均 ≥3 条购买记录
 - **风险**：标签质量差时 Hybrid 退化为纯标签推荐，定期执行 Tag Quality KPI 监控
-```

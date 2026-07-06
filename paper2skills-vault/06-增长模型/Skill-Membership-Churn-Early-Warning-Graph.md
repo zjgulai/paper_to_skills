@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Membership Churn Early Warning Graph — 图神经网络会员流失预警比行为序列早 15-30 天识别风险
 doc_type: knowledge
@@ -382,4 +381,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（图构建需要用户关系数据，静态图版本 2-3 周；动态图 Neural ODE 需要额外 4-6 周）
 - **优先级**：⭐⭐⭐⭐☆（流失比获客成本低 5-7x，高价值用户流失尤其值得提前预警）
 - **评估依据**：TempODEGraphNet 在 NCSOFT 10,000 用户游戏数据上 F1 显著优于 static GNN 和 LSTM；TGN 银行流失预测比 LSTM/GCN 基线准确率提升 12-18%，客户 CLV 提升 14%
-```

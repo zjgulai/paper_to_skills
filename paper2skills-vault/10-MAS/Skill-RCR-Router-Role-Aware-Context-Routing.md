@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RCR-Router角色感知上下文路由 — Token预算约束下的多Agent记忆子集动态分配
 doc_type: knowledge

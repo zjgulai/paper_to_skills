@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: Conformal Prediction Demand UQ（需求预测不确定性量化）
 
 > **论文**: Conformal PID Control for Time Series Prediction (arXiv:2307.16895, NeurIPS 2023)  
@@ -200,4 +199,3 @@ if __name__ == '__main__':
 - **实施难度**：⭐⭐☆☆☆（2 星）— PID Conformal 有开源实现，即插即用
 - **优先级评分**：⭐⭐⭐☆☆（3 星）— 需求预测的第二阶能力（先有点估计，再要区间估计）
 - **评估依据**：NeurIPS 2023 顶级团队（Angelopoulos/Candès/Tibshirani），代码已开源 pip 可用
-```

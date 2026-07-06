@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "Skill Card: Text-to-Edit — MLLM母婴视频广告智能剪辑"
 paper: "Text-to-Edit: Controllable End-to-End Video Ad Creation via Multimodal LLMs"

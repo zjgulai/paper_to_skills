@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Inventory Financing Optimization — 库存融资与供应链金融决策优化
 doc_type: knowledge
@@ -151,4 +150,3 @@ print("[✓] Inventory Financing Optimization 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（中等，需要与多个融资渠道对接）
 - **优先级**：⭐⭐⭐⭐⭐（资金效率是规模化品牌的核心竞争力，融资成本直接影响净利润）
 - **评估依据**：arXiv 2511.00166，DRL 供应链融资优化，真实商业验证
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AGRS 属性引导评论摘要 - 大规模零幻觉 Review 摘要 pipeline
 doc_type: knowledge
@@ -298,4 +297,3 @@ print("[✓] AGRS Aspect Guided Review 测试通过")
 **测试输入**：评论=100条英文，产品=硅胶餐具  
 **输出摘要**：提取广告金句，转化率估算+15%，生成P0-P2迭代优先级清单  
 **验证状态**：✅ 本地计算通过 | 2026-06-11
-```

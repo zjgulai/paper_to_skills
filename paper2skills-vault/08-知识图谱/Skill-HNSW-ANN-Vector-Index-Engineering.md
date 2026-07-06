@@ -1,4 +1,3 @@
-```markdown
 ---
 title: HNSW — 向量索引工程与 ANN 检索优化
 doc_type: knowledge
@@ -229,4 +228,3 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐⭐（知识库规模化的基础设施，Skill 数量超过 1 万时 P0 必须）
 
 **工程选型**：Qdrant（开源自托管）> Weaviate > Milvus > Pinecone（SaaS）
-```

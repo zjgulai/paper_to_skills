@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Causal Uplift Modeling — 因果提升模型：识别"可说服者"的跨域基础层
 doc_type: knowledge
@@ -215,4 +214,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（图谱基础层 Skill，被3个高层 Skill 依赖；用户运营最高 ROI 的基础工具）
 
 - **评估依据**：Künzel et al. 1706.03461 在真实数据集上验证 X-Learner 优于 S/T-Learner；母婴品牌实操中精准发券 ROI 提升倍数来源于多家 DTC 品牌 A/B 实验
-```

@@ -215,3 +215,9 @@ if __name__ == "__main__":
 - 延伸技能：[[Skill-Listing-Compliance-Auto-Repair]]
 - 可组合：[[Skill-New-SKU-Launch-Readiness-Gate]]
 - 可组合：[[Skill-Amazon-ToS-Compliance-Guardrail]]
+
+## ⑤ 商业价值评估
+
+- **ROI 预估**：合规专员面临核心业务决策——上架合规检查周期从 45 天→22 天，规避下架风险 80%
+- **实施难度**：⭐⭐⭐☆☆（3/5星，需要历史数据积累 3 个月以上）
+- **优先级**：⭐⭐⭐⭐☆（4/5星，直接影响核心业务指标）

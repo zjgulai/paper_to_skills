@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Power Analysis and Sample Size Calculation for A/B Testing
 doc_type: knowledge
@@ -346,4 +345,3 @@ print("[✓] Power Analysis Sample Siz 测试通过")
 2. 与现有的AB Experimental Design、MAB形成完整的实验方法论体系
 3. 母婴出海业务流量有限（vs国内大厂），更需要精打细算地使用每一份流量
 4. 实施成本极低，但价值极高——属于"高杠杆"技能
-```

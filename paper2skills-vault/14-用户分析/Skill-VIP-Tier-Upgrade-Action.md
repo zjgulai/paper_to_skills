@@ -1,4 +1,3 @@
-```markdown
 ---
 title: VIP-Tier-Upgrade-Action — LTV超阈值自动触发VIP等级升级与礼遇通知
 doc_type: knowledge
@@ -214,4 +213,3 @@ print(f"  等级迁移分布: {result['tier_summary']}")
 - **ROI量化**：Gold 会员升级后 12 个月 LTV 提升 2.8x，单用户增量 $120；千人 VIP 池年化 GMV 增量 $120,000
 - **实施难度**：⭐⭐☆☆☆（状态机逻辑简单，需对接 CRM + 邮件平台 + 礼品订单系统）
 - **优先级**：⭐⭐⭐⭐⭐（VIP 体系是高 LTV 用户锚定的核心机制）
-```

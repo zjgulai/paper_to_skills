@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护
 doc_type: knowledge
@@ -115,4 +114,3 @@ python -m paper2skills_code.ai_humanities.aigc_detection.model
 | **优先级** | ⭐⭐⭐⭐☆ |
 
 **典型落地**：WF-E 竞品监控 → 评论净化前置层 → 净化后输入 Aspect 分析 → 输出可信竞品口碑报告。
-```

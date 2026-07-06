@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Tool Auto Discovery — Agent 工具自动发现：OpenAPI + MCP Schema 自注册
 doc_type: knowledge
@@ -155,4 +154,3 @@ print("[✓] Tool Auto Discovery 测试通过")
 - ✅ 快速构建 MAS PoC（无需手写工具注册代码）
 - ❌ 内部私有 API（无标准 schema，需手工适配）
 - ❌ 高安全要求场景（自动发现需额外审计）
-```

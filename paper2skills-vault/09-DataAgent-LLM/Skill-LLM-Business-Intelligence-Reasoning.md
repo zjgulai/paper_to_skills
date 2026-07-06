@@ -1,4 +1,3 @@
-```markdown
 ---
 title: LLM Business Intelligence Reasoning — LLM 商业智能推理：从数据到决策的 CoT 分析
 doc_type: knowledge
@@ -288,4 +287,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（09-DataAgent 出度最低(5.4)；LLM CoT for BI 是运营数字化的最后一公里；桥接 DataAgent↔智能体↔运营财务 三域）
 
 - **评估依据**：CoT prompting 在业务分析任务中的准确率提升已在 GPT-4 系列研究中验证；自动化 BI 报告生成在企业级应用中节省时间 60-80% 已有多个案例
-```

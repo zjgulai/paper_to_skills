@@ -1,4 +1,3 @@
-```markdown
 ---
 title: HTS Code Risk Classifier — 基于HTS码的CPSC多标签风险分类
 doc_type: knowledge
@@ -297,4 +296,3 @@ if __name__ == "__main__":
 - 实施难度：⭐☆☆☆☆（纯规则查表，无需ML，数据库维护成本低）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：CPSC eFiling 2026-07-08强制执行，遗漏一个Class I商品即触发FBA拒收，损失远超工具开发成本
-```

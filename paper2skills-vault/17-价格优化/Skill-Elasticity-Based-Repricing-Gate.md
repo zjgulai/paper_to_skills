@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Elasticity-Based Repricing Gate — 弹性阈值自动触发涨价/降价A/B测试
 doc_type: knowledge
@@ -202,4 +201,3 @@ print(f"  样本不足: {result3['action']}")
 - ROI预估：年化价格优化收益约15-25%毛利提升，每SKU年化$2,000-$8,000
 - 实施难度：⭐⭐☆☆☆（规则明确，需接入弹性估计流水线）
 - 优先级：⭐⭐⭐⭐⭐
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证
 doc_type: knowledge
@@ -151,4 +150,3 @@ print("[✓] Identity Fraud Detection 测试通过")
 | **实施难度** | ⭐⭐☆☆☆（三维各自实现简单，融合评分调权需要业务验证） |
 | **业务优先级** | ⭐⭐⭐⭐⭐（虚假评论直接影响选品准确率，是核心风控能力） |
 | **投资回报** | 阻止一次大规模刷单事件可保护 Listing 评分资产，价值 $10K-$100K |
-```

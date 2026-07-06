@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Product-Unboxing-Video-Generator — AI 产品开箱视频合成
 doc_type: knowledge
@@ -220,4 +219,3 @@ print("\n[✓] Product-Unboxing-Video-Generator 测试通过")
 - **ROI**：生成成本从 $400 → $30/条，PDP 有视频 CVR 提升约 35%，年化增量销售约 15-25 万元
 - **实施难度**：⭐⭐⭐☆☆（需要图片处理 + 视频合成工具链）
 - **优先级**：⭐⭐⭐⭐⭐（Amazon PDP 视频直接影响 CVR，所有 SKU 必须有视频）
-```

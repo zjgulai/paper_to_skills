@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Listing-Conversion-Rate-Optimizer — Listing 转化率 A/B 测试优化器
 doc_type: knowledge
@@ -154,4 +153,3 @@ print("\n[✓] Listing-Conversion-Rate-Optimizer 测试通过")
 - **ROI**：CVR 每提升 1%，月销量增幅约 15-20%，年化增量销售 10-20 万元（单价 $40-60 产品）
 - **实施难度**：⭐⭐☆☆☆（Amazon Manage Your Experiments 内置工具，执行门槛低）
 - **优先级**：⭐⭐⭐⭐⭐（搜索流量不变前提下最高杠杆动作，优于提高广告预算）
-```

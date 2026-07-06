@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Dynamic DAG Orchestration — 运行时动态调整工作流拓扑
 doc_type: knowledge

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Supply Chain Due Diligence — 供应链合规尽职调查：劳工+环境+产品三维
 doc_type: knowledge
@@ -343,4 +342,3 @@ if __name__ == "__main__":
 - **自动化监控**：季度重评自动触发告警，从被动应对到主动管控
 - **实施难度**：⭐⭐☆☆☆
 - **优先级**：⭐⭐⭐⭐☆
-```

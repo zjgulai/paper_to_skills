@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Knowledge Graph Relation Completion with CBLiP
 module: 08-知识图谱
@@ -312,4 +311,3 @@ print("[✓] KG Relation Completion CB 测试通过")
 - **ROI**：关系覆盖率提升40%，人工维护成本降低70%，搜索长尾query召回+30%
 - **难度**：⭐⭐⭐☆☆（3/5）— 图神经网络概念门槛，但可用简化版实现
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 知识图谱是推荐、搜索、客服的底层基建，关系补全是核心能力
-```

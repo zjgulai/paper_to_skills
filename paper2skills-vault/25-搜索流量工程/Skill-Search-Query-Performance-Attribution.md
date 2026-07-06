@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Search-Query-Performance-Attribution — 搜索词业绩归因
 doc_type: knowledge
@@ -162,4 +161,3 @@ print("\n[✓] Search-Query-Performance-Attribution 测试通过")
 - **ROI**：同等广告预算，优化后 ACOS 从 35% → 22%，年化多产出 GMV 20-35 万元
 - **实施难度**：⭐⭐☆☆☆（依赖 SQP 报告数据，分析逻辑清晰）
 - **优先级**：⭐⭐⭐⭐⭐（广告预算优化的基础，月度必执行）
-```

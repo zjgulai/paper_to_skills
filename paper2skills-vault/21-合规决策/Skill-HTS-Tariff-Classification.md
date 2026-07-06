@@ -1,4 +1,3 @@
-```markdown
 ---
 title: HTS 关税编码分类与优化（跨境电商关税合规）
 doc_type: knowledge
@@ -288,5 +287,4 @@ print("[✓] HTS 关税编码分类工具测试通过")
 优先级 2（本月）: 对税率 > 5% 的 SKU 申请 CBP Binding Ruling 确认
 优先级 3（本季度）: 对来自中国的高税率品类，评估越南/孟加拉产地转移 ROI
 优先级 4（持续）: 订阅 USTR Section 301 排除清单更新，每季度核查新豁免项
-```
 ```

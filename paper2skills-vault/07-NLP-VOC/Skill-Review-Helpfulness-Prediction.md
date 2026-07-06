@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Review Helpfulness Prediction — 评论有用性预测：识别高说服力评论提升转化
 doc_type: knowledge
@@ -277,4 +276,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（07-NLP-VOC 域的高价值场景；完全空白；桥接 NLP-VOC↔用户分析↔广告分析 三域）
 
 - **评估依据**：评论展示优化对转化率的影响在多个 A/B 实验中验证（10-25%）；Amazon 的"Top reviews"功能背后使用类似算法；高有用性评论被用户阅读率高 3-5 倍于普通评论
-```

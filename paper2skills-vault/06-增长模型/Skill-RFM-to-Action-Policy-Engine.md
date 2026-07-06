@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RFM to Action Policy Engine — RFM 分层驱动的自动化触达策略决策引擎
 doc_type: knowledge
@@ -345,4 +344,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（核心逻辑纯 Python，接入 Klaviyo/Mailchimp API 为主要工程量）
 - **优先级**：⭐⭐⭐⭐⭐（打通「数据分析→运营执行」闭环，是私域运营自动化的核心基础设施）
 - **评估依据**：ε-greedy 是 Starbucks、Netflix 等成熟电商的标配决策层，实现成本极低，但收益与用户量正相关——月活 < 500 时效果有限
-```

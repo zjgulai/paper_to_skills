@@ -1,4 +1,3 @@
-```markdown
 ---
 title: GCC/CPC Document Validator — 合规认证文档完整性自动验证
 doc_type: knowledge

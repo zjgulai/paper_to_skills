@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MAS视频内容优化 — 多智能体协同的短视频全链路运营
 doc_type: knowledge
@@ -204,4 +203,3 @@ print('\n[✓] MAS视频内容优化 测试通过')
 - **实施难度**：⭐⭐⭐⭐☆（各Agent逻辑约100行；工程难点在多个API（TikTok+视频生成工具）的稳定集成）
 - **优先级**：⭐⭐⭐⭐⭐（修复10-MAS↔20-视频最大断层（规模102）；视频电商是增长最快的母婴渠道）
 - **评估依据**：WWW 2024 MAS电商视频优化论文；arXiv:2406.11545 AutoCreator多Agent创作验证；TikTok Official已发布商业化AI创作助手
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Multi-Touch Attribution Modeling for Digital Advertising
 module: 13-广告分析
@@ -274,4 +273,3 @@ print("[✓] Ad Attribution Modeling 测试通过")
 - **ROI**：预算重新分配后ROAS提升20-40%，年节省浪费预算10万+
 - **难度**：⭐⭐⭐☆☆（3/5）— Shapley计算复杂，但规则模型简单
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 广告预算分配的前提，没有归因就没有优化
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 多触点非线性归因建模 — 跨渠道用户旅程因果归因与预算决策
 doc_type: knowledge

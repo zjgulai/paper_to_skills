@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Multimarket Expansion Readiness Scorer（多市场拓展就绪度评分）
 doc_type: knowledge
@@ -205,4 +204,3 @@ print("\n[✓] 多市场就绪度评分测试通过")
 **优先级评分**：5/5（每次新市场扩张决策的必备前置分析，是高中心度四域枢纽节点）
 
 **图谱中心度预测**：桥接 06-增长模型 ↔ 21-合规 ↔ 04-供应链 ↔ 15-营销，预计成为 degree 55-70 的高中心度节点。
-```

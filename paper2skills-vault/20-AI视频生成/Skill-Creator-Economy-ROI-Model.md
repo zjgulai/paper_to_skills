@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Creator Economy ROI Model — KOL 分级评估、内容衰减曲线与 GMV 净贡献量化
 doc_type: knowledge
@@ -347,4 +346,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（反直觉洞察改变 KOL 策略，高频重复使用场景）
 
 - **评估依据**：Journal of Marketing 2024 顶刊，1.88M 真实购买数据 + 3 个田野实验；微 KOL 优势被多个行业报告独立验证（IZEA 2026, Linqia 2026）
-```

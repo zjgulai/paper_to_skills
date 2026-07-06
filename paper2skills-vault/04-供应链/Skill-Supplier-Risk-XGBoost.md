@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Supplier Risk XGBoost — AHP-TOPSIS+XGBoost 供应商风险评分
 doc_type: knowledge
@@ -151,4 +150,3 @@ print("[✓] Supplier Risk XGBoost 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是数据整理 + XGBoost，无需复杂基础设施）
 - **优先级**：⭐⭐⭐⭐☆（地缘风险时代，供应商风险管理是核心竞争力）
 - **评估依据**：AUC=0.851，F1=0.928（5折交叉验证），在汽车制造商真实数据验证
-```

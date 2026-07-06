@@ -1,4 +1,3 @@
-```markdown
 ---
 title: A+Content模板引擎 — VOC驱动的A+内容自动排版生成
 doc_type: knowledge

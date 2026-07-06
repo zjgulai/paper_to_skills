@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Property Graph Query Optimization — 属性图查询工程
 doc_type: knowledge
@@ -294,4 +293,3 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐（添加索引是 DDL，APOC 插件安装即用）
 
 **优先级**：⭐⭐⭐⭐（直接决定知识图谱功能能否上线的工程门槛）
-```

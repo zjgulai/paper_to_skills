@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "Skill Card: Ensemble Methods（集成学习方法）"
 description: "母婴跨境电商中的多模型集成决策框架，通过Bagging/Boosting/Stacking降低预测误差，提升销量预测精度与流失预测召回率"

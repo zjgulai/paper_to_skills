@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 供应链智能体MCP多ERP集成 — Model Context Protocol驱动的多系统双向协调模式
 doc_type: knowledge

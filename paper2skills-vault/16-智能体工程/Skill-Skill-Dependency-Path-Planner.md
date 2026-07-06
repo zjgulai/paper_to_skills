@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill 依赖路径规划器 — BFS/Dijkstra 学习路径导航
 doc_type: knowledge
@@ -270,4 +269,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐☆☆☆（纯 Python 标准库，无外部依赖；图构建需解析 Skill 的 prerequisite 字段）
 - **优先级**：⭐⭐⭐⭐☆（依赖 Skill 关联数据已存在，实现成本极低）
 - **评估依据**：算法本身（BFS + 拓扑排序）是经典图论，O(V+E) 时间复杂度，726 个 Skill 毫秒级完成
-```

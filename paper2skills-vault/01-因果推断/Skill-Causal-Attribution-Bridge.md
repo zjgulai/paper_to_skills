@@ -1,4 +1,3 @@
-```markdown
 # Skill Card: Causal Attribution Bridge（因果归因桥梁）
 
 > **桥梁**: 01-因果推断 ↔ 13-广告分析 | **类型**: 跨域融合  
@@ -68,4 +67,3 @@ print("[✓] Causal Attribution Bridge 测试通过")
 ## ⑤ 商业价值
 
 - **ROI**：45 万元/年 | **难度**：⭐⭐⭐☆☆ | **优先级**：⭐⭐⭐⭐☆
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: VOC Price Signal Analysis — 评论价格信号分析：用户定价反馈驱动定价策略优化
 doc_type: knowledge
@@ -287,4 +286,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（填补价格优化 ↔ NLP-VOC 完全断链；定价决策与用户声音的连接是长期缺失的关键环节）
 
 - **评估依据**：Price perception mining from reviews 已在学术界有充分验证（arXiv 2403.08920）；WTP 代理模型从评论信号的准确性在 Amazon 数据上约 0.65-0.75 相关性
-```

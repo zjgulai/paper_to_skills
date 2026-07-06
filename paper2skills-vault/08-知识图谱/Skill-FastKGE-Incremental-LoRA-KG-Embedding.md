@@ -1,4 +1,3 @@
-```markdown
 ---
 title: FastKGE — 增量 LoRA 知识图谱嵌入
 doc_type: knowledge
@@ -224,4 +223,3 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐⭐（需要 LoRA 框架，`pip install peft` 即可）
 
 **优先级**：⭐⭐⭐（知识库每日自动更新流水线的核心组件）
-```

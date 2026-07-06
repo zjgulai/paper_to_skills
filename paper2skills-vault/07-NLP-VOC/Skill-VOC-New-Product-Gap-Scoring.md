@@ -1,4 +1,3 @@
-```markdown
 ---
 title: VOC-New-Product-Gap-Scoring — 竞品差评驱动的新品机会评分与选品决策
 doc_type: knowledge
@@ -214,4 +213,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词频统计+简单公式，无需ML）
 - **优先级**：⭐⭐⭐⭐⭐（直接影响新品成败，ROI最高的VOC应用场景）
 - **数据要求**：TOP3竞品各≥300条差评，正负评均需
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Web Page Change Detection — 网页变化检测：VLM 视觉差异识别与 DOM 原子性保护
 doc_type: knowledge

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Live Commerce Stream Algorithm — 直播电商算法建模与互动信号优化
 doc_type: knowledge
@@ -372,4 +371,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（TikTok Shop 直播是 2025-2026 增长最快的母婴销售渠道，全图完全缺失）
 
 - **评估依据**：OneRetrieval 在 Kuaishou（快手，直播电商第二大平台）生产验证；TikTok Shop 2026 年直播 GMV 增速超过短视频 GMV 增速 3×
-```

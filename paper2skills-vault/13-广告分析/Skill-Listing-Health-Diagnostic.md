@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Listing Health Diagnostic — Listing 快诊：多维度评分驱动的上架质量诊断
 doc_type: knowledge
@@ -354,4 +353,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（小型卖家最常见的上架决策支持需求；完全空白；桥接 广告分析↔NLP-VOC↔合规决策 三域）
 
 - **评估依据**：Listing 质量是 A10 排名的关键因子（亚马逊官方确认）；第三方工具（Helium10/Jungle Scout）的 Listing 评分功能验证了用户需求；多维度评分对曝光和转化的影响已有大量实测数据
-```

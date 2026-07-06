@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Bayesian-MMM-Scenario-Action-Plan — 贝叶斯MMM后验驱动Q+1季度预算三情景决策方案
 doc_type: knowledge
@@ -205,4 +204,3 @@ print(f"  建议: {result['recommendation']}")
 - **ROI量化**：相比固定比例分配法，P50情景优化预测季度GMV提升12-18%；三情景框架帮助CFO量化营销预算的下行风险，避免激进单一决策导致的GMV损失
 - **实施难度**：⭐⭐☆☆☆（需已有贝叶斯MMM模型输出，技术门槛在上游；本执行器逻辑清晰）
 - **优先级**：⭐⭐⭐⭐⭐（季度预算会核心决策，每季使用一次，决策影响金额通常百万级）
-```

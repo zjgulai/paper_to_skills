@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Video ROI Attribution — 短视频内容 GMV 归因与财务 ROI 量化
 doc_type: knowledge
@@ -331,4 +330,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐☆（打通视频生成→财务最后一公里，视频团队获得财务话语权）
 
 - **评估依据**：Attribution Labs 2026 年对 47K DTC 品牌研究显示 VEI 与 ROAS 相关性 $r = 0.72$；YouTube Commerce 2026 报告显示母婴类 Shorts ROI 达 356%
-```

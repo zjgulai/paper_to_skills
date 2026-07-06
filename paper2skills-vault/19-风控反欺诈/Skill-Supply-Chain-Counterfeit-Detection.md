@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Supply Chain Counterfeit Detection — 供应链仿冒品检测原材料/包装视觉验真
 doc_type: knowledge
@@ -175,4 +174,3 @@ print("[✓] Supply-Chain-Counterfeit-Detection 测试通过")
 - **ROI量化**: 阻止仿冒品混入，年化避免品质风险和品牌损失 50-100 万元
 - **实施难度**: ⭐⭐⭐（需要标准化拍照流程，图像处理基础）
 - **优先级**: ⭐⭐⭐⭐（高价值品+大量退货场景的必备核查工具）
-```

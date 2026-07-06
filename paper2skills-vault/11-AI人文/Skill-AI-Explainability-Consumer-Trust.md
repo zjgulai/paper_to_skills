@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AI Explainability for Consumer Trust — AI 推荐可解释性：消费者信任构建
 doc_type: knowledge
@@ -393,4 +392,3 @@ if __name__ == "__main__":
 - **Agent 决策接受率**：45% → 78%（可解释报告提升团队对 AI 决策的信任）
 - **实施难度**：⭐⭐☆☆☆（无需复杂模型，规则映射即可快速上线）
 - **优先级**：⭐⭐⭐⭐☆
-```

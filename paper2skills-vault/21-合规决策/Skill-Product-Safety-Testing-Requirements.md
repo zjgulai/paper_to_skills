@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Product Safety Testing Requirements — 产品安全测试需求：品类×市场映射
 doc_type: knowledge
@@ -334,4 +333,3 @@ if __name__ == "__main__":
 - **时间轴准时率**：从 60% 提升至 90%（关键路径预警机制）
 - **实施难度**：⭐⭐☆☆☆
 - **优先级**：⭐⭐⭐⭐☆
-```

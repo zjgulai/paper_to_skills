@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RAGAS — RAG 质量自动化评估框架
 doc_type: knowledge
@@ -228,4 +227,3 @@ if __name__ == "__main__":
 **优先级**：⭐⭐⭐⭐⭐（知识库商业化的质量门控，P0 必做）
 
 **对标参考**：RAGAS GitHub 10k+ stars，Cohere/LangChain/LlamaIndex 均原生集成
-```

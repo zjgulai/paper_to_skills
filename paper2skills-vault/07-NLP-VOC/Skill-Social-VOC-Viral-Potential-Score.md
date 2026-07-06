@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Social-VOC-Viral-Potential-Score — 社媒UGC传播特征分析与爆品传播潜力评分
 doc_type: knowledge
@@ -208,4 +207,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐（词典规则，接入UGC文本流即可运行）
 - **优先级**：⭐⭐⭐⭐⭐（对爆品品牌ROI极高，断货损失远超建设成本）
 - **适用场景**：Instagram/TikTok/小红书引流为主的视觉系母婴品（辅食餐具/玩具/服装）
-```

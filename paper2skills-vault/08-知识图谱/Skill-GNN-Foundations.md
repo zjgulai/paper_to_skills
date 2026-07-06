@@ -1,4 +1,13 @@
-```markdown
+---
+doc_type: knowledge
+domain: 08-知识图谱
+card_type: 综合萃取
+roadmap_phase: phase2
+status: stable
+updated: 2025-01-15
+source: arxiv:1609.02907, arxiv:1710.10903, arxiv:1706.02216
+---
+
 # Skill Card: GNN Foundations（图神经网络基础）
 
 > **领域**: 08-知识图谱 | **类型**: 综合萃取
@@ -8,13 +17,17 @@ roadmap_phase: phase2
 
 ## ① 算法原理
 
+> **论文**：Semi-Supervised Classification with Graph Convolutional Networks | **arXiv**：1609.02907
+> **论文**：Graph Attention Networks | **arXiv**：1710.10903
+> **论文**：Inductive Representation Learning on Large Graphs | **arXiv**：1706.02216
+
 GNN 三大基础架构的统一入门：GCN（图卷积，邻居特征加权平均 $\mathbf{h}_v^{(l+1)} = \sigma(\mathbf{W}^{(l)} \sum_{u \in N(v)} \frac{\mathbf{h}_u^{(l)}}{\sqrt{d_v d_u}})$）→ GAT（加注意力权重）→ GraphSAGE（归纳式采样聚合，适合大规模图）。
 
 ---
 
 ## ② 母婴出海应用案例
 
-**场景**：某母婴品牌在亚马逊美国站运营，SKU 池包含婴儿暖奶器（库存 2000 件，日销 50 件）、婴儿推车（库存 800 件，日销 12 件）、有机辅食（库存 5000 件，日销 200 件）。构建产品共购图：节点=SKU，边=同时购买频率。GCN 学习节点嵌入后，发现“婴儿暖奶器”与“有机辅食”在嵌入空间高度接近（距离 0.12），而传统协同过滤因无直接共购记录（仅 3 次同时购买）未能捕获。实际分析发现：购买暖奶器的用户中，65% 在 2 周内购买了有机辅食，且用户画像高度重叠（25-35 岁、高收入、注重便利性）。
+**场景**：某母婴品牌在亚马逊美国站运营，SKU 池包含婴儿暖奶器（库存 2000 件，日销 50 件）、婴儿推车（库存 800 件，日销 12 件）、有机辅食（库存 5000 件，日销 200 件）。构建产品共购图：节点=SKU，边=同时购买频率。GCN 学习节点嵌入后，发现"婴儿暖奶器"与"有机辅食"在嵌入空间高度接近（距离 0.12），而传统协同过滤因无直接共购记录（仅 3 次同时购买）未能捕获。实际分析发现：购买暖奶器的用户中，65% 在 2 周内购买了有机辅食，且用户画像高度重叠（25-35 岁、高收入、注重便利性）。
 
 **产出量化**：
 - 基于 GCN 嵌入的推荐系统上线后，暖奶器与辅食的交叉销售转化率从 1.2% 提升至 4.5%
@@ -58,4 +71,3 @@ print("[✓] GNN Foundations 测试通过")
 - **相关**：[[Skill-Demand-Forecasting-Supply-Chain]]
 
 ## ⑤ 商业价值：45 万元 | **难度**：⭐⭐⭐⭐☆ | **优先级**：⭐⭐⭐☆☆
-```

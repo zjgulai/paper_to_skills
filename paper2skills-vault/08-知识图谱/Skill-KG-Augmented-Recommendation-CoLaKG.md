@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 知识图谱增强推荐 - CoLaKG (LLM × KG)
 doc_type: knowledge
@@ -200,4 +199,3 @@ print("[✓] KG Augmented Recommendati 测试通过")
 2. **官方完整开源代码**,工程化路径清晰
 3. **+7.8% / +13.7% / +15.7% Recall** 提升幅度大
 4. **关键桥梁**:08-知识图谱 ↔ 05-推荐系统 直接连通,是图谱缺口高优先级填补项
-```

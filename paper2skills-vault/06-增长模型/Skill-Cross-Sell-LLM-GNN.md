@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 交叉销售LLM+GNN — 三阶段粗到精检索框架
 doc_type: knowledge
@@ -364,4 +363,3 @@ if __name__ == "__main__":
 | **实施难度** | ⭐⭐⭐⭐☆（需要 PyTorch + torch_geometric 环境；LLM API 成本；图数据构建管道） |
 | **优先级** | ⭐⭐⭐⭐☆（母婴产品生命周期性强，交叉销售时机明确，是 LTV 提升的高确定性路径） |
 | **论文来源** | arXiv:2506.17281 — CORONA: Coarse-to-Fine LLM+GNN Cross-Sell Framework，开源：BUPT-GAMMA/CORONA |
-```

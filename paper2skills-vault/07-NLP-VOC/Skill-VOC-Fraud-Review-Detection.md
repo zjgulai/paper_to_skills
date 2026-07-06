@@ -1,4 +1,3 @@
-```markdown
 ---
 title: VOC Fraud Review Detection — 评论质量与虚假评论识别：NLP-VOC×风控桥梁
 doc_type: knowledge
@@ -322,4 +321,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（封号风险是跨境卖家存亡级别的风险；填补 NLP-VOC ↔ 风控反欺诈完全断链）
 
 - **评估依据**：FraudSquad (arXiv 2404.05961) 在 Amazon 评论数据集验证 LLM 判别器 F1 > 0.89；竞品差评恶意刷量是 Amazon 高频申诉场景，成功率约 40-60%
-```

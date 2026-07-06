@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Amazon Payment Cycle Forecast — Amazon 回款周期预测与现金流规划
 doc_type: knowledge
@@ -156,4 +155,3 @@ print("[✓] Amazon Payment Cycle Forecast 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是账户数据整合 + 规则引擎）
 - **优先级**：⭐⭐⭐⭐⭐（大促周期的现金流管理是生死线，每个有规模的卖家必备）
 - **评估依据**：arXiv 2511.03631，SME 应收账款 + 现金流预测系统真实部署验证
-```

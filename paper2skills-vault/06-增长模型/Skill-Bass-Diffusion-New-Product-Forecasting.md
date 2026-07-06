@@ -1,4 +1,3 @@
-```markdown
 ---
 title: GEANN + Bass 新品冷启动需求预测 - 母婴跨境新品备货
 doc_type: knowledge
@@ -338,4 +337,3 @@ print("[✓] Bass Diffusion New Produc 测试通过")
 3. **Bass + GNN 组合**:经典理论 + 现代深度学习,鲁棒性强
 4. **Pyc-Marketing 开源**:Bass 部分工程化路径成熟
 5. **与 HiFoReAd + Gen-QOT 形成完整 WF-A 供应链闭环**
-```

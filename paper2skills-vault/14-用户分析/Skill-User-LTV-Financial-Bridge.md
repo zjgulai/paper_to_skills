@@ -1,4 +1,3 @@
-```markdown
 ---
 title: User LTV Financial Bridge — 用户生命周期价值预测驱动财务规划
 doc_type: knowledge

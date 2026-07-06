@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 图因果预测GCF — 时空GNN+Synthetic Control估计Listing删除的隐性需求
 doc_type: knowledge
@@ -305,4 +304,3 @@ run_test()
 - **实施难度**：⭐⭐⭐☆☆（主要是数据处理 + scipy 优化，无复杂 DL 依赖）
 - **优先级**：⭐⭐⭐⭐☆（Listing 断货是跨境电商常态，此方法论独特价值高）
 - **企业AI知识库依赖**：中 — 需要同品类对照 SKU 历史数据 + 干预事件记录
-```

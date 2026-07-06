@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Tag-Driven Marketing Attribution — 营销渠道标签驱动MMM三维归因
 doc_type: knowledge
@@ -318,4 +317,3 @@ if __name__ == "__main__":
 - **优先级**：⭐⭐⭐⭐☆（营销预算优化 ROI 高，季度 review 周期驱动）
 - **数据门槛**：≥3个月跨渠道时序数据，每日颗粒度，内容类型标签覆盖率 ≥80%
 - **风险**：多重共线性（各渠道投放高度相关），需 Ridge 正则化或结合贝叶斯 MMM 处理
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Working-Capital-Cycle-Optimizer — 营运资金周期优化
 doc_type: knowledge
@@ -146,4 +145,3 @@ if __name__ == '__main__':
 | 优先级 | ⭐⭐⭐⭐（规模增长后资金效率成瓶颈） |
 | 数据要求 | 采购记录、Amazon 结算账单、库存数据 |
 | 典型收益 | WCC 从 60 天压缩至 15 天，资金需求降低 75% |
-```

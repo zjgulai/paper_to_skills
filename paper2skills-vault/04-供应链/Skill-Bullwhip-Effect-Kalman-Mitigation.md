@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Bullwhip Effect Kalman Mitigation—用 Kalman Filter 消除牛鞭效应
 doc_type: knowledge
@@ -95,4 +94,3 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐⭐☆☆
 - 优先级：⭐⭐⭐⭐☆
 - 评估依据：直接减少上游过量备货和缺货风险，收益可量化
-```

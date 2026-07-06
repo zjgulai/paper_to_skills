@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Skill-Competitor-Keyword-Gap-Analysis — 竞品关键词缺口分析
 doc_type: knowledge
@@ -173,4 +172,3 @@ print("\n[✓] Competitor-Keyword-Gap-Analysis 测试通过")
 - **ROI**：发现 30-50 个高价值 Gap 词 → 3 个月后自然词库扩展 50%，年化自然流量增量 12-20 万元
 - **实施难度**：⭐⭐☆☆☆（依赖第三方工具导出数据，逻辑简单）
 - **优先级**：⭐⭐⭐⭐☆（竞品分析必做动作，新品和成熟品均适用）
-```

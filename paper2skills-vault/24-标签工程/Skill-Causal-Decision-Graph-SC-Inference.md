@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 供应链因果决策图推理 — 从相关性到因果性，Palantir分析→行动的核心跨越
 doc_type: knowledge
@@ -408,4 +407,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐⭐☆（需要领域专家协助构建DAG，算法本身可靠；最大挑战是"混杂变量识别"需要业务知识）
 - **优先级评分**：⭐⭐⭐⭐⭐（Palantir Ontology成功的"灵魂"——Airbus和Merck案例均强调：不是收集了更多数据，而是从相关性升级到因果性，才实现了决策质量的根本改变）
 - **评估依据**：Palantir AIP白皮书："Causal inference is not an advanced feature—it is the minimum requirement for trustworthy decision automation"
-```

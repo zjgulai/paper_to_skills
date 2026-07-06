@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 因果时间序列预测 - GCF 反事实需求建模
 doc_type: knowledge
@@ -205,4 +204,3 @@ print("[✓] Causal Time Series Foreca 测试通过")
 2. **AAAI 2025 顶会**论文,方法学严谨
 3. **75.3% MAPE 降低 / +1399 bps 浏览提升** 业绩巨大
 4. **跨领域桥梁**:01-因果推断 ↔ 03-时间序列 ↔ 08-知识图谱 三领域交汇,价值密度高
-```

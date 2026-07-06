@@ -1,4 +1,3 @@
-```markdown
 ---
 title: CPSC eFiling Auto-Mapper — NLP驱动的电子申报字段自动填充
 doc_type: knowledge
@@ -336,4 +335,3 @@ if __name__ == "__main__":
 - 实施难度：⭐⭐☆☆☆（标准NLP+查找表，无需GPU，本地运行）
 - 优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）
 - 评估依据：CPSC eFiling 2026-07-08强制执行，15万卖家受影响，7月8日后FBA拒收所有未申报母婴商品，单次滞留损失8-20万元
-```

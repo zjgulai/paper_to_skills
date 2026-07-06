@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MetaIE — 统一信息抽取蒸馏框架
 doc_type: knowledge
@@ -214,4 +213,3 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐⭐（需要 LLM 合成标注数据，但 HuggingFace 有预训练权重）
 
 **优先级**：⭐⭐⭐（知识蒸馏流水线的核心 IE 引擎）
-```

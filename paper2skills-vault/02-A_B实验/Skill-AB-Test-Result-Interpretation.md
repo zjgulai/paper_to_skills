@@ -1,4 +1,3 @@
-```markdown
 ---
 title: A/B Test Result Interpretation and Practical Significance
 module: 02-A_B实验
@@ -250,4 +249,3 @@ print("[✓] AB Test Result Interpreta 测试通过")
 - **ROI**：避免"统计显著但业务无价值"的错误上线，每次避免损失 > 10万
 - **难度**：⭐☆☆☆☆（1/5）— 概念简单，但团队常犯错
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 每个实验后的必做分析，成本极低但价值极高
-```

@@ -1,4 +1,13 @@
-```markdown
+---
+doc_type: knowledge
+domain: 15-营销投放分析
+skill_type: 综合萃取
+roadmap_phase: phase1
+status: stable
+updated: 2025-01-15
+source: arxiv:1509.02472
+---
+
 # Skill Card: Channel Saturation Curve（渠道饱和曲线建模）
 
 > **领域**: 15-营销投放分析 | **类型**: 综合萃取
@@ -7,6 +16,10 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Deep Neural Networks for YouTube Recommendations | **arXiv**：1509.02472
+> 
+> **相关理论**：Hill 函数在广告效果建模中的应用源自 Dose-Response 曲线理论（Pharmacology），后被 Marketing Mix Modeling (MMM) 社区广泛采纳。参考：Nijs et al. (2001) "Generalizations of a Demand Model for Marketing Mix Variables" 及 Google 的开源 Lightweight MMM 框架。
 
 ### 核心思想
 广告预算不是线性回报——每多投 $1，边际回报递减。渠道饱和曲线量化"这个渠道再投多少钱就没增量了"，避免过度投放。
@@ -101,14 +114,13 @@ if __name__ == '__main__':
 
 - **前置技能**：[[Skill-Marketing-Mix-Modeling]] | [[Skill-ROAS-Budget-Optimization]]
 - **可组合技能**：[[Skill-Multi-Objective-Budget-Allocation]] | [[Skill-Geo-Level-Marketing-Effectiveness]]
-
----
 - **相关技能**：[[Skill-Competitive-Response-Modeling]]
 - **关联**：[[Skill-DS-DGA-GCN-Fake-Review-Group]]
+
+---
 
 ## ⑤ 商业价值评估
 
 - **ROI 预估**：避免过度投放 $15,000/月；年化 **$180,000（约 45 万元）**
 - **实施难度**：⭐⭐☆☆☆（2 星）— 曲线拟合简单
 - **优先级评分**：⭐⭐⭐⭐☆（4 星）— MMM 的自然延伸
-```

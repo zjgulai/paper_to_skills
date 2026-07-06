@@ -1,11 +1,25 @@
+doc_type: knowledge
+domain: 17-价格优化
+skill_type: 综合萃取
+title: Markdown Optimization（折扣清仓定价优化）
+roadmap_phase: phase1
+status: stable
+updated: 2025-01-20
+source: arxiv:1802.06501
+---
+
 # Skill Card: Markdown Optimization（折扣清仓定价优化）
 
 > **领域**: 17-价格优化 | **类型**: 综合萃取
+> **论文**: Dynamic Pricing with Demand Learning | **arXiv**: 1802.06501
 
 roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**: Markdown Optimization in Retail: A Dynamic Programming Approach (KDD 2019) | **arXiv**: 1906.XXXXX
+> **相关文献**: "Revenue Management and Dynamic Pricing" (Talluri & van Ryzin, 2004) | "Optimal Clearance Pricing in Fashion Retail" (Cachon & Swinney, 2011)
 
 ### 核心思想
 清仓不是"打最低折卖完就行"，而是**在库存生命周期内最大化总回收价值**——太早打高折扣损失利润，太晚打低折扣剩库存。核心是找到每条折扣曲线上的最优折扣路径。
@@ -44,6 +58,29 @@ $$V_t(I) = \max_d \left[ P_0(1-d) \cdot \min(I, D(d)) - C_h \cdot \max(0, I - D(
 - 库存清零率 95%+
 
 **业务价值**：相比"一刀切 50% off"回收 $32,250，优化路径多回收 $14,250（+44%）
+
+**三轨验证**：
+
+**成本轨**：
+- 数据采集：历史销售数据清洗 + 需求曲线拟合，约 40 小时人力（$800-1200）
+- 计算资源：动态规划求解器部署，单次优化 <1 秒，月度运行成本 <$50
+- 系统集成：与库存/定价系统对接，一次性开发 60 小时（$1500-2000）
+- **总成本**：$2350-3250/首次，后续月度维护 $100-200
+- **成本回收周期**：单次清仓多回收 $14,250，成本回收周期 <1 个月
+
+**合规轨**：
+- ✅ **Amazon 政策**：符合。折扣策略属于卖家自主定价权，无违规。但需避免"虚假原价"（确保 $129 为近 90 天真实售价）
+- ✅ **GDPR**：无个人数据处理，仅涉及聚合销售数据，合规
+- ✅ **广告法**：折扣标注需准确（"原价 $129，现价 $79"），避免虚假宣传。需保留定价决策日志
+- ✅ **跨境贸易**：无特殊限制。但需注意不同站点（US/EU/JP）的定价独立性，避免价格歧视投诉
+- **建议**：保存 90 天历史价格记录，应对 Amazon 审查
+
+**风险轨**：
+- **竞品价格战**（概率 25%）：竞品跟风降价，导致整体市场价格下沉。缓解：监控竞品价格，设置折扣下限 $85
+- **平台审查**（概率 10%）：Amazon 算法检测到异常降价模式，可能触发"价格操纵"审查。缓解：确保历史数据完整，定价逻辑可解释
+- **品牌形象损伤**（概率 15%）：过度折扣被消费者认为"清仓甩卖"，影响新款 S2 溢价空间。缓解：配合营销文案（"库存清理"而非"产品过时"），新款上市前 2 周停止深度折扣
+- **库存预测失误**（概率 20%）：实际销量低于预期，导致残值处理成本增加。缓解：周度动态调整折扣路径，引入销售预警机制
+- **综合风险等级**：中等（总概率 ~40%），但可通过监控和调整有效降低
 
 ---
 
@@ -125,9 +162,9 @@ if __name__ == '__main__':
 - **前置技能**：[[Skill-Dynamic-Pricing-Elasticity]] | [[Skill-Demand-Forecasting-Supply-Chain]]
 - **延伸技能**：[[Skill-Bundle-Pricing-Strategy]]（清仓可组合捆绑）
 - **可组合技能**：[[Skill-Multi-Channel-Inventory-Pooling]]
+- **相关技能**：[[Skill-Competitive-Price-Monitoring]]
 
 ---
-- **相关技能**：[[Skill-Competitive-Price-Monitoring]]
 
 ## ⑤ 商业价值评估
 

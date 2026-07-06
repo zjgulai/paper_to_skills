@@ -1,4 +1,3 @@
-```markdown
 ---
 title: In-Context Learning表格数据 — 无需训练的少样本电商数据分析
 doc_type: knowledge
@@ -201,4 +200,3 @@ print('\n[✓] In-Context Learning表格数据 测试通过')
 - **实施难度**：⭐⭐☆☆☆（pip install tabpfn即可；LLM-ICL只需API调用；无需训练基础设施）
 - **优先级**：⭐⭐⭐⭐☆（填补12-ML基础重要方向盲区；快速扩张阶段每个新品类/新市场都是少样本场景）
 - **评估依据**：ICLR 2023 TabPFN在18个基准数据集上超越AutoML（AutoSklearn/H2O）；NeurIPS 2022 Zero-shot Chain-of-Thought奠定ICL理论基础；Kaggle竞赛TabPFN已广泛应用于小数据集问题
-```

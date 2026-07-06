@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Reflexion — 言语强化学习与自我反思
 doc_type: knowledge
@@ -330,5 +329,4 @@ if __name__ == "__main__":
 [Reflexion] 生成反思并存入记忆
     ↓
 （下一个任务）
-```
 ```

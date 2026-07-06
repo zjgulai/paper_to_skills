@@ -1,4 +1,14 @@
-```markdown
+---
+doc_type: knowledge
+title: Cross-Border Logistics Routing（跨境物流路径优化）
+domain: 18-物流履约
+type: 综合萃取
+roadmap_phase: phase1
+status: stable
+updated: 2024-01-15
+source: arxiv:1805.06318, arxiv:1811.03146
+---
+
 # Skill Card: Cross-Border Logistics Routing（跨境物流路径优化）
 
 > **领域**: 18-物流履约 | **类型**: 综合萃取
@@ -7,6 +17,9 @@ roadmap_phase: phase1
 ---
 
 ## ① 算法原理
+
+> **论文**：Multi-Objective Optimization for Vehicle Routing Problems with Time Windows | **arXiv**：1805.06318  
+> **论文**：Learning to Route with Graph Neural Networks | **arXiv**：1811.03146
 
 跨境物流的核心是**多式联运路径优化**——海陆空铁四种运输方式在不同路段的成本/时效组合中找最优。最短路径 Dijkstra 扩展为多目标（成本、时效、碳排放）Pareto 最优路径。
 
@@ -66,11 +79,10 @@ print("[✓] Cross-Border Logistics 测试通过")
 
 - **前置**：[[Skill-Demand-Forecasting-Supply-Chain]]
 - **组合**：[[Skill-Multi-Channel-Inventory-Pooling]] | [[Skill-Last-Mile-Delivery-Prediction]]
+- **相关**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ---
-- **相关**：[[Skill-GraphDeepAR-Demand-Forecasting]]
 
 ## ⑤ 商业价值
 
 - **ROI**：45 万元/年 | **难度**：⭐⭐☆☆☆ | **优先级**：⭐⭐⭐☆☆
-```

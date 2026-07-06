@@ -1,4 +1,3 @@
-```markdown
 ---
 title: 高保真RAG防御 — 引用链溯源、数据投毒与提示注入三层防御体系
 doc_type: knowledge

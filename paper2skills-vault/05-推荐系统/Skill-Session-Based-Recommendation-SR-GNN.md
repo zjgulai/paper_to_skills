@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Session-Based Recommendation with SR-GNN
 doc_type: knowledge
@@ -354,4 +353,3 @@ if __name__ == "__main__":
 
 - **评估依据**:
   SR-GNN 解决母婴电商匿名用户无法做用户级协同过滤的痛点。品类购买决策链短、连带性强，session 图结构天然适合建模同一购物任务内的多品类跳转。
-```

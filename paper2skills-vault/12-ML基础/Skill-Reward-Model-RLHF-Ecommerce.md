@@ -1,4 +1,3 @@
-```markdown
 ---
 title: RLHF奖励模型电商 — 人类偏好对齐的电商AI质量提升
 doc_type: knowledge
@@ -228,4 +227,3 @@ print('\n[✓] RLHF奖励模型 测试通过')
 - **实施难度**：⭐⭐⭐⭐☆（需要收集100+偏好标注对（1-2周人工）；奖励模型训练约1天；RL优化需要PyTorch）
 - **优先级**：⭐⭐⭐⭐☆（填补12-ML基础RLHF盲区；AI内容生成质量对齐是所有AIGC应用的共同需求）
 - **评估依据**：NeurIPS 2022 InstructGPT奠定RLHF工业基础；ICLR 2024 RM Ensemble解决过优化问题；Anthropic/OpenAI均公开了RLHF在内容质量提升上的显著效果
-```

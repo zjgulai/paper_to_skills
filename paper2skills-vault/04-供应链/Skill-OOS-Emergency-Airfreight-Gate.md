@@ -1,4 +1,3 @@
-```markdown
 ---
 title: OOS-Emergency-Airfreight-Gate — 库存DOS危急+海运延误自动触发紧急空运决策门控
 doc_type: knowledge
@@ -218,4 +217,3 @@ print(f"  空运总成本: ${result['total_airfreight_cost']:.0f}，预防缺货
 - **ROI量化**：单次空运成本 $1,200，避免缺货损失 $42,000，ROI 35:1；年化避免缺货损失 $180,000
 - **实施难度**：⭐⭐⭐☆☆（需实时库存 API + 物流 ETA 接口 + 审批工作流）
 - **优先级**：⭐⭐⭐⭐⭐（大促期间库存断货是最高危风险，直接影响搜索排名）
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Long-Tail-Opportunity-Auto-Capture — 新兴长尾词周搜索量激增自动创建定向广告组
 doc_type: knowledge
@@ -222,4 +221,3 @@ print(f"  总日预算: ${result['total_daily_budget']:.0f}")
 - **ROI量化**：提前3周抢占新兴词流量，CPC $0.9 vs 成熟词 $2.5（节省64%），首月增量GMV $12,000；探索期预算 $560，ROI 21:1
 - **实施难度**：⭐⭐⭐☆☆（需关键词趋势 API + 竞争密度数据 + 广告平台写入 API）
 - **优先级**：⭐⭐⭐⭐☆（新兴词早期竞争低、获客成本低，是流量扩张的最优路径）
-```

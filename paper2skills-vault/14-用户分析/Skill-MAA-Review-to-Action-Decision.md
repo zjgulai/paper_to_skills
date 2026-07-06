@@ -1,4 +1,3 @@
-```markdown
 ---
 title: MAA 多 Agent 行动建议 - 从评论到产品改进决策链
 doc_type: knowledge
@@ -292,4 +291,3 @@ print("[✓] MAA Review to Action Deci 测试通过")
 2. **跨市场天然适配**(论文实验 Yelp 三领域,本质就是不同市场/品类)
 3. **AGRS + MAA 双 Skill 组合** = WF-E Review 健康度的核心闭环
 4. **SRAC 评分客观可比**,降低对资深 PM 经验依赖,新人接手不衰退
-```

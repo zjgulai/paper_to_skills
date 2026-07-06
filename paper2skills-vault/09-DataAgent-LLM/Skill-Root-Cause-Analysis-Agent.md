@@ -1,15 +1,15 @@
-```markdown
 ---
 title: Root Cause Analysis Agent for Business Anomalies
 doc_type: knowledge
 module: 09-DataAgent-LLM
 topic: root-cause-analysis
 roadmap_phase: phase2
+status: stable
 created: 2026-05-15
 updated: 2026-05-15
 owner: self
 source: human+ai
-source: arxiv:2206.01161
+source_paper: arxiv:2206.01161
 ---
 
 # Skill Card: Root Cause Analysis Agent
@@ -359,4 +359,3 @@ print("[✓] Root Cause Analysis Agent 测试通过")
 - **ROI**：故障定位时间 1-2h → 5min，减少损失 80%
 - **难度**：⭐⭐⭐☆☆（3/5）
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 与异常检测形成完整监控闭环
-```

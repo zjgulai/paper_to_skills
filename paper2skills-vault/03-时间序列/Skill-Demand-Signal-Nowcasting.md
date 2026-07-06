@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Demand Signal Nowcasting — 用搜索词/评论量实时修正需求预测
 doc_type: knowledge
@@ -147,4 +146,3 @@ print("[✓] Demand-Signal-Nowcasting 测试通过")
 - **ROI量化**: 病毒事件提前 3 天响应，避免缺货损失 10-15 万元/次
 - **实施难度**: ⭐⭐⭐（需接入搜索量 API，数据管道建设成本高）
 - **优先级**: ⭐⭐⭐⭐（社媒驱动销量的母婴品牌核心竞争力）
-```

@@ -1,4 +1,3 @@
-```markdown
 ---
 title: KG Application Patterns — 知识图谱下游应用：从构建到推荐/搜索/冷启动
 doc_type: knowledge
@@ -348,4 +347,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（填补知识图谱领域最大缺口：构建完的 KG 终于有使用方式）
 
 - **评估依据**：论文 2606.11583 在电商场景图上验证；LLM-GNN Co-Teaching 在 NeurIPS/KDD 多次验证冷启动效果提升 15-25%
-```

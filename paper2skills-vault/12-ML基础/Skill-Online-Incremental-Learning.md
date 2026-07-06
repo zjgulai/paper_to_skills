@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Online Incremental Learning — 在线增量学习：模型无需重训即可适应数据漂移
 doc_type: knowledge
@@ -298,4 +297,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐☆（12-ML基础域补充，同时修复 ML基础↔时间序列↔推荐系统的弱连接；在线学习是所有实时 ML 系统的基础设施）
 
 - **评估依据**：在线学习在电商 CTR 预测已是工业标准（Google、Alibaba、Amazon 均采用 FTRL）；漂移检测算法（ADWIN 等）已在开源库 River 中生产验证
-```

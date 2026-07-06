@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Real-Time Inventory Event Stream — FBA 库存事件溯源架构（Event Sourcing + CQRS）
 doc_type: knowledge
@@ -394,4 +393,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（Event Sourcing 概念需要团队学习，但实现不复杂）
 - **优先级评分**：⭐⭐⭐⭐☆（库存是跨境业务核心数据，实时准确的库存是所有供应链 Skill 的基础）
 - **评估依据**：传统快照模式无法回答「为什么」，只能看到「现在是什么」；Event Sourcing 模式赋予系统完整的历史可视性，是智能化运营的数据基础
-```

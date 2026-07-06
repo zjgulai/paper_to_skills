@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Concept Drift Detection — 在线监控模型分布漂移
 doc_type: knowledge
@@ -229,4 +228,3 @@ print("[✓] Concept Drift Detection 测试通过")
 - **实施难度**：⭐⭐⭐☆☆（需有模型预测日志基础设施，检测器本身轻量）
 - **优先级**：⭐⭐⭐⭐☆
 - **评估依据**：跨境母婴行业季节性强（Q4、Prime Day、黑五），漂移是常态；检测器一次部署持续收益
-```

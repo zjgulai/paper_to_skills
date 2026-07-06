@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Brand-Keyword-Hijack-Alert — 品牌词搜索下竞品展示份额超30%触发品牌防守广告扩展
 doc_type: knowledge
@@ -10,6 +9,15 @@ updated: 2026-06-22
 owner: self
 source: arxiv:2106.07755
 roadmap_phase: phase1
+tags:
+  - brand-protection
+  - search-advertising
+  - competitive-defense
+  - amazon-ads
+  - mother-baby-ecommerce
+priority: critical
+difficulty: intermediate
+estimated_time: 45min
 ---
 
 # Skill Card: Brand-Keyword-Hijack-Alert
@@ -32,6 +40,10 @@ roadmap_phase: phase1
    - 出价提升至「Top of Search 优先」
 5. **竞品情报**：记录抢占品牌词的竞品 ASIN，触发价格/评分/Listing 对比分析。
 6. **品牌词保护注册**：若品牌已注册 Amazon Brand Registry，可申请「Brand Keyword Protection」。
+
+### **非共识迁移**
+
+本算法源自**流行病学中的「疾病传播阈值模型」**（SIR 模型）。传统跨境电商运营者会被动应对竞品投放，等待品牌词份额下滑后才反应。而该算法通过**将竞品展示份额视为「感染率」，设置30%为「流行病爆发临界点」，在竞品"传播"达到阈值前主动触发防守级联**，反直觉地将防御从被动应急转为主动预警。实现「降维打击」：**阈值预警 + 自动扩展 + 情报联动，品牌词保护从人工决策转为算法自治**。
 
 ## ② 母婴出海应用案例
 
@@ -235,4 +247,3 @@ print(f"  总品牌词: {result['total_brand_keywords']}，检测到劫持: {res
 - **ROI量化**：品牌词自然份额从 62% → 85%，月均增量 GMV $35,000；防守广告追加成本 $800/月，ROI 43:1
 - **实施难度**：⭐⭐⭐☆☆（需广告份额报告 API + SB 广告权限（Brand Registry）+ 自动化出价接口）
 - **优先级**：⭐⭐⭐⭐⭐（品牌词被劫持是「用自己的品牌为竞品引流」，属极高优先级防御任务）
-```

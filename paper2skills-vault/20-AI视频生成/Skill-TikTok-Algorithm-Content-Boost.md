@@ -1,4 +1,3 @@
-```markdown
 ---
 title: TikTok Algorithm Content Boost — FYP 算法建模与内容传播速度优化
 doc_type: knowledge
@@ -318,4 +317,3 @@ if __name__ == "__main__":
 - **优先级评分**：⭐⭐⭐⭐⭐（TikTok Shop 2026 年 GMV 超 500 亿美元，算法理解是核心竞争力）
 
 - **评估依据**：arXiv 2503.20231 在 9.2M 真实推荐数据上验证；完播率 70% 阈值已被多个 TikTok 营销从业者独立验证
-```

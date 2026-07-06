@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Long Tail Search Embedding SEO — 双塔嵌入模型驱动的电商长尾搜索词排名优化
 doc_type: knowledge
@@ -296,4 +295,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（SEO 是持续复利的流量来源，一次优化长期受益；长尾词方向是现有 SEO Skill 的关键补充，直接对应 13-广告分析域的实操层）
 
 - **评估依据**：Best Buy 生产系统 arXiv 2505.01946 验证双塔模型在长尾词场景的显著提升；Amazon 官方数据显示长尾词占搜索量 60-70%；Search Terms 优化的 ROI 来自多家 AMZ 卖家实际数据
-```

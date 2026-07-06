@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Listing 语义相关性评分 — 用 Sentence-BERT 诊断 SEO 缺口
 doc_type: knowledge
@@ -237,4 +236,3 @@ print("\n[✓] Listing 语义相关性评分测试通过")
 - **实施难度**：⭐⭐☆☆☆（轻量 TF-IDF 版当天可上线；SBERT 版需安装 sentence-transformers，M1 Mac 约 5 分钟完成推理）
 - **优先级**：⭐⭐⭐⭐⭐（新品上架前必做，存量产品季度性复查）
 - **评估依据**：Amazon 官方披露 Listing 相关性权重在 A9 信号中占约 20%；头部卖家 Listing 优化报告显示，专项语义优化 6 周内平均提升搜索曝光量 38%
-```

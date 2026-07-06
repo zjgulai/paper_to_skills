@@ -1,4 +1,3 @@
-```markdown
 ---
 title: WhatsApp Private Domain Analytics — Shapley Value 多渠道归因与私域触达效率分析
 doc_type: knowledge
@@ -319,4 +318,3 @@ if __name__ == "__main__":
 - **实施难度**：⭐⭐⭐☆☆（Shapley 计算逻辑清晰，但需要跨渠道触点数据采集管道，是主要工程门槛）
 - **优先级**：⭐⭐⭐⭐☆（进入多渠道运营（WhatsApp + Email + SMS）后必做，单渠道品牌可跳过）
 - **评估依据**：WhatsApp Business 在德国、荷兰、东南亚的 DTC 品牌已成标配，但「WhatsApp 是否真的有效」的量化争议持续，Shapley 是解决这一争议的最公认方法；渠道数≤4 时计算成本极低
-```

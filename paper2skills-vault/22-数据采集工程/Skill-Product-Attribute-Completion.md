@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Product Attribute Completion — 商品属性自动补全：AI 填补 Listing 属性空白
 doc_type: knowledge
@@ -300,4 +299,3 @@ if __name__ == '__main__':
 - **优先级评分**：⭐⭐⭐⭐⭐（完全空白的高频痛点；属性完整度是 Amazon 排名的直接因素；桥接 数据采集↔广告分析↔知识图谱 三域）
 
 - **评估依据**：IndustryBench-MIPU (arXiv 2606.14383, 2026) 最新基准验证多图属性提取效果；Amazon A10 文档明确属性完整度影响排名；卖家实测属性完整度提升后搜索曝光 20-35%
-```

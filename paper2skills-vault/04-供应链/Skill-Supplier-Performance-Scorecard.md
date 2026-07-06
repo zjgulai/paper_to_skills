@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Supplier Performance Scorecard — 供应商绩效量化追踪系统
 doc_type: knowledge
@@ -177,4 +176,3 @@ print("[✓] Supplier Performance Scorecard 测试通过")
 - **实施难度**：⭐⭐☆☆☆（低，主要是采购数据整理 + KPI 计算）
 - **优先级**：⭐⭐⭐⭐☆（核心供应商数量有限（5-15 家），建立追踪系统一次性投入小收益大）
 - **评估依据**：供应商 KPI 积分卡是供应链管理行业标准，时序预警是 Lean 制造中成熟实践
-```

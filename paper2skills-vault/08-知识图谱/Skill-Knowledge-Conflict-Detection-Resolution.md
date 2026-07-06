@@ -1,4 +1,3 @@
-```markdown
 ---
 title: Knowledge Conflict Detection — 知识冲突检测与消解
 doc_type: knowledge
@@ -251,4 +250,3 @@ if __name__ == "__main__":
 **实施难度**：⭐⭐（规则层简单，NLI 层需要预训练模型）
 
 **优先级**：⭐⭐⭐（知识库生产化的质量保证基础设施）
-```

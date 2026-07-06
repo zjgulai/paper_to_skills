@@ -1,9 +1,10 @@
-```markdown
 ---
 title: Text-to-SQL Agent for Natural Language Data Query
 module: 09-DataAgent-LLM
 topic: text-to-sql
+doc_type: knowledge
 roadmap_phase: phase2
+status: stable
 created: 2026-05-15
 updated: 2026-05-15
 source: arxiv:2304.04690
@@ -365,4 +366,3 @@ print("[✓] SQL Agent Text to SQL 测试通过")
 - **ROI**：数据团队重复取数工作量减少80%，业务决策速度提升10倍
 - **难度**：⭐⭐⭐☆☆（3/5）— 高频场景用模板，复杂场景用LLM
 - **优先级**：⭐⭐⭐⭐⭐（5/5）— 数据民主化的核心基础设施
-```

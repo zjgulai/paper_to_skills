@@ -1,4 +1,3 @@
-```markdown
 ---
 title: PromoGuardian — 促销欺诈多关系图神经网络检测
 doc_type: knowledge
@@ -394,4 +393,3 @@ if __name__ == "__main__":
   - 直接保护平台补贴投入的 ROI
 
 - **评估依据**：Multi-Relation GNN 在真实电商数据上相比单关系 GNN 精确率提升 12-15pp，相比规则系统提升 25pp+
-```
