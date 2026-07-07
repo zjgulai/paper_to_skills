@@ -1640,7 +1640,108 @@ pre code {
   padding-top: 8px;
 }
 
-/* ── 卡片入场动画 ── */
+/* ── 场景手册 gallery 卡片 ── */
+.pb-gallery-card {
+  height: 220px;
+}
+.pb-gallery-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--card-color, #555);
+  opacity: .75;
+  margin-bottom: 6px;
+}
+.pb-gallery-icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+  transition: transform .2s ease;
+}
+.pb-gallery-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.gallery-card:hover .pb-gallery-icon {
+  transform: scale(1.1);
+}
+.pb-gallery-tag {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--card-color, #555);
+  opacity: .7;
+  margin-top: 4px;
+  letter-spacing: .5px;
+}
+.pb-gallery-prog {
+  width: 100%;
+  height: 2px;
+  background: rgba(0,0,0,.07);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+/* ── 总览页业务场景 gallery 卡片 ── */
+.biz-entry-card {
+  height: 230px;
+}
+.biz-entry-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--card-color, #555);
+  opacity: .7;
+  margin-bottom: 6px;
+}
+.biz-entry-icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 8px;
+  transition: transform .2s ease;
+}
+.biz-entry-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.gallery-card:hover .biz-entry-icon {
+  transform: scale(1.1);
+}
+.biz-entry-desc {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-top: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.biz-entry-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--card-color, #555);
+  background: rgba(0,0,0,.04);
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid currentColor;
+  opacity: .8;
+}
+.biz-entry-arrow {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--card-color, #555);
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+}
+.gallery-card:hover .biz-entry-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+
 .gallery-card {
   animation: fadeInUp .35s ease both;
 }

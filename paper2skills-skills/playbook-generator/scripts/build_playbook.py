@@ -36,7 +36,10 @@ from config.agents_data import AGENT_CATALOG
 # ─────────────────────────────────────────────────────────────────────────────
 
 GA4_MEASUREMENT_ID = "G-N9HJR3G0MR"
-FEISHU_WEBHOOK_URL = os.environ.get("P2S_FEISHU_WEBHOOK_URL", "")
+FEISHU_WEBHOOK_URL = os.environ.get(
+    "P2S_FEISHU_WEBHOOK_URL",
+    "https://open.feishu.cn/open-apis/bot/v2/hook/a32b3ab7-6cfb-498d-bc3f-91d9f48b47e9"
+)
 
 
 # ---------------------------------------------------------------------------
@@ -101,6 +104,61 @@ TOPIC_RULES = {
     "ESG与绿色供应链": ["esg", "carbon", "sustainability", "green supply", "epr", "cbam", "carbon footprint", "climate", "resp", "cold chain", "冷链", "碳排放", "carbon emission", "green logistics", "drone delivery", "uav", "carrier selection", "onsible sourcing", "碳足迹", "绿色", "可持续"],
 }
 
+
+
+# ── 全局：Playbook卡片配置 ──
+PB_CARD_CONFIG = {
+    # 广告/内容类
+    "pb-tiktok-shop":          {"color": "#7c3aed", "pattern": "wave",    "num": "01"},
+    "pb-content-factory":      {"color": "#be185d", "pattern": "wave",    "num": "07"},
+    "pb-attribution-unification":{"color": "#dc2626","pattern": "dots",   "num": "15"},
+    "pb-search-traffic-growth":{"color": "#0369a1", "pattern": "wave",    "num": "24"},
+    "pb-asin-traffic-diagnosis":{"color": "#0891b2", "pattern": "dots",   "num": "31"},
+    "pb-video-ecommerce":      {"color": "#6d28d9", "pattern": "wave",    "num": "34"},
+
+    # 供应链/库存类
+    "pb-inventory-festival":   {"color": "#15803d", "pattern": "hex",     "num": "02"},
+    "pb-fba-operations":       {"color": "#047857", "pattern": "hex",     "num": "14"},
+    "pb-supply-chain-pl":      {"color": "#065f46", "pattern": "hex",     "num": "17"},
+    "pb-supply-chain-tagging-ontology":{"color":"#0f766e","pattern":"hex","num": "19"},
+    "pb-supply-chain-intelligence":{"color":"#15803d","pattern":"circuit","num": "20"},
+    "pb-supply-chain-decision-bridge":{"color":"#14532d","pattern":"circuit","num":"28"},
+    "pb-cross-border-logistics":{"color": "#0369a1", "pattern": "hex",    "num": "26"},
+
+    # 定价/财务类
+    "pb-pricing-engine":       {"color": "#b45309", "pattern": "grid",    "num": "08"},
+    "pb-game-theory-pricing":  {"color": "#92400e", "pattern": "grid",    "num": "21"},
+    "pb-behavioral-pricing":   {"color": "#c2410c", "pattern": "dots",    "num": "22"},
+    "pb-fx-tariff-hedging":    {"color": "#065f46", "pattern": "circuit", "num": "30"},
+
+    # 用户/增长类
+    "pb-new-product-launch":   {"color": "#059669", "pattern": "grid",    "num": "03"},
+    "pb-user-growth":          {"color": "#0891b2", "pattern": "dots",    "num": "04"},
+    "pb-ltv-retention":        {"color": "#1d4ed8", "pattern": "dots",    "num": "16"},
+    "pb-dtc-growth":           {"color": "#be185d", "pattern": "grid",    "num": "18"},
+    "pb-d2c-brand-building":   {"color": "#7c3aed", "pattern": "dots",    "num": "33"},
+
+    # 数据/AI类
+    "pb-data-foundation":      {"color": "#1e40af", "pattern": "circuit", "num": "05"},
+    "pb-agent-replace":        {"color": "#1d4ed8", "pattern": "circuit", "num": "06"},
+    "pb-agent-ops-automation": {"color": "#6d28d9", "pattern": "circuit", "num": "25"},
+    "pb-cross-domain-algorithm-innovation":{"color":"#7c3aed","pattern":"circuit","num":"23"},
+    "pb-mas-ai-agent-ops":     {"color": "#1d4ed8", "pattern": "circuit", "num": "36"},
+    "pb-causal-intelligence":  {"color": "#7c3aed", "pattern": "grid",    "num": "35"},
+    "pb-tag-data-intelligence":{"color": "#6d28d9", "pattern": "circuit", "num": "37"},
+
+    # 合规/风控类
+    "pb-risk-defense":         {"color": "#dc2626", "pattern": "circuit", "num": "09"},
+    "pb-tariff-response":      {"color": "#b91c1c", "pattern": "dots",    "num": "10"},
+    "pb-compliance":           {"color": "#92400e", "pattern": "grid",    "num": "11"},
+    "pb-cpsc-efiling-emergency":{"color": "#dc2626","pattern": "circuit", "num": "27"},
+    "pb-multi-account-risk-defense":{"color":"#b91c1c","pattern":"circuit","num":"32"},
+
+    # 运营/VOC类
+    "pb-voc-product-loop":     {"color": "#0f766e", "pattern": "dots",    "num": "12"},
+    "pb-customer-service-agent":{"color":"#0891b2", "pattern": "wave",    "num": "13"},
+    "pb-review-defense":       {"color": "#dc2626", "pattern": "dots",    "num": "29"},
+}
 
 # ── 全局：工作流卡片配置 ──
 
@@ -550,102 +608,144 @@ DOMAIN_BUSINESS_CONTEXT: dict[str, dict[str, Any]] = {
 # ---------------------------------------------------------------------------
 BUSINESS_ENTRIES = [
     {
-        "icon": "AG",
+        "num": "01",
         "label": "防御竞品攻击 / 平台封号预防",
         "desc": "广告刷量、虚假差评、AI 推荐注入、合规封号——四条战线主动防御",
         "href": "playbooks/pb-risk-defense.html",
         "tag": "风险防御",
+        "color": "#b91c1c",
+        "pattern": "circuit",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
     },
     {
-        "icon": "TR",
+        "num": "02",
         "label": "关税冲击 / 贸易政策应对",
         "desc": "72 小时内输出完整行动清单：定价调整 + 库存处置 + 供应链转移方案",
         "href": "playbooks/pb-tariff-response.html",
         "tag": "关税响应",
+        "color": "#c2410c",
+        "pattern": "dots",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L4 7v10l8 4 8-4V7z"/><path d="M12 3v18M4 7l8 4 8-4"/></svg>',
     },
     {
-        "icon": "CL",
+        "num": "03",
         "label": "上架合规 / 关税编码优化",
         "desc": "新品上架前合规预扫描 + HTS 关税编码精准分类 + 封号风险防御三合一",
         "href": "playbooks/pb-compliance.html",
         "tag": "合规手册",
+        "color": "#0369a1",
+        "pattern": "grid",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>',
     },
     {
-        "icon": "PL",
+        "num": "04",
         "label": "提升广告 ROI / 归因准确性",
         "desc": "识别无效预算、纠正渠道归因偏差、实现因果驱动的广告优化",
         "href": "workflows/wf-b-广告优化.html",
-        "tag": "WF-B 广告优化",
+        "tag": "广告优化",
+        "color": "#7c3aed",
+        "pattern": "wave",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
     },
     {
-        "icon": "SC",
+        "num": "05",
         "label": "FBA 库存健康 / 头程优化",
         "desc": "长库龄清仓 + 头程路线成本优化 + 旺季备货计划，库存周转天数降 30%",
         "href": "playbooks/pb-fba-operations.html",
         "tag": "FBA 运营",
+        "color": "#15803d",
+        "pattern": "hex",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
     },
     {
-        "icon": "VP",
+        "num": "06",
         "label": "竞品差评 → 新品机会挖掘",
         "desc": "竞品 1-3 星差评是最好的免费 R&D，新品成功率从 30% 提升到 50%",
         "href": "playbooks/pb-voc-product-loop.html",
         "tag": "竞品情报",
+        "color": "#be185d",
+        "pattern": "wave",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
     },
     {
-        "icon": "CS",
+        "num": "07",
         "label": "客服 24h 自动化 / 差评防御",
         "desc": "70% 工单全自动处理，多语言覆盖，INR 欺诈退货从 35% 降至 5%",
         "href": "playbooks/pb-customer-service-agent.html",
         "tag": "客服售后",
+        "color": "#0891b2",
+        "pattern": "dots",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
     },
     {
-        "icon": "VO",
+        "num": "08",
         "label": "分析用户评价 / 发现产品痛点",
         "desc": "多语言 VOC 挖掘、差评根因归类、产品改进信号提取",
         "href": "workflows/wf-c-客服分诊.html",
         "tag": "WF-C 客服",
+        "color": "#6d28d9",
+        "pattern": "wave",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
     },
     {
-        "icon": "NP",
+        "num": "09",
         "label": "评估新品 / 新市场机会",
         "desc": "市场规模估算、竞品情报采集、选品可行性综合评分",
         "href": "workflows/wf-d-选品扫描.html",
         "tag": "WF-D 选品",
+        "color": "#059669",
+        "pattern": "grid",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
     },
     {
-        "icon": "UG",
+        "num": "10",
         "label": "预测用户流失 / 提升 LTV",
         "desc": "Uplift 建模识别可干预用户，精准发券减少无效留存成本",
         "href": "domains/14-用户分析.html",
         "tag": "用户分析",
+        "color": "#1d4ed8",
+        "pattern": "dots",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
     },
     {
-        "icon": "AI",
+        "num": "11",
         "label": "AI Agent 替代重复性岗位",
         "desc": "供应链对账、数据分析提数、广告出价——三类岗位 70% 重复工作 Agent 覆盖",
         "href": "playbooks/pb-agent-replace.html",
         "tag": "Agent 替人",
+        "color": "#0f766e",
+        "pattern": "circuit",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>',
     },
     {
-        "icon": "PR",
+        "num": "12",
         "label": "动态定价 / A/B 实测 GMV +13%",
         "desc": "LLM 动态定价引擎，定价是乘数——精准定价 1% 比多投广告 15% 更高效",
         "href": "playbooks/pb-pricing-engine.html",
         "tag": "定价引擎",
+        "color": "#b45309",
+        "pattern": "grid",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
     },
     {
-        "icon": "NP",
+        "num": "13",
         "label": "新品冷启动备货 / 预测",
         "desc": "零历史数据下的扩散曲线预测，跨市场迁移学习",
         "href": "playbooks/pb-new-product-launch.html",
         "tag": "新品冷启动",
+        "color": "#7c3aed",
+        "pattern": "wave",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
     },
     {
-        "icon": "CR",
+        "num": "14",
         "label": "广告归因打架 / 渠道预算分配",
         "desc": "PVM 窗口统一 480万/年，Bayesian MMM 1000万——让四份报告说一个真相",
         "href": "playbooks/pb-attribution-unification.html",
         "tag": "全渠道归因",
+        "color": "#dc2626",
+        "pattern": "dots",
+        "svg_icon": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>',
     },
 ]
 
@@ -2089,86 +2189,175 @@ catBtns.forEach(btn => {{
 def render_agent_report_page() -> str:
     agent_names_js = json.dumps(
         {ag["id"]: ag["name"] for ag in AGENT_CATALOG}, ensure_ascii=False)
+    agent_icons_js = json.dumps(
+        {ag["id"]: ag.get("svg_icon", "") for ag in AGENT_CATALOG}, ensure_ascii=False)
+    agent_cat_class_js = json.dumps(
+        {ag["id"]: ag.get("cat_class", "cat-supply") for ag in AGENT_CATALOG}, ensure_ascii=False)
     agent_categories_js = json.dumps(
          {ag["id"]: ag.get("category","") for ag in AGENT_CATALOG}, ensure_ascii=False)
     filter_buttons = "".join(
         f'<button class="rpt-filter" data-agent="{ag["id"]}" onclick="setAgentFilter(\'{ag["id"]}\')">{ag["name"]}</button>'
-        for ag in AGENT_CATALOG[:18])
+        for ag in AGENT_CATALOG[:21])
     body = f"""
+<!-- 报告详情 Modal -->
+<div id="rpt-detail-overlay" class="rpt-detail-overlay" role="dialog" aria-modal="true" style="display:none">
+  <div class="rpt-detail-modal">
+    <div class="rpt-detail-header">
+      <div class="rpt-detail-header-left">
+        <div class="rpt-detail-icon-wrap" id="rpt-detail-icon"></div>
+        <div>
+          <div class="rpt-detail-agent-name" id="rpt-detail-agent-name"></div>
+          <div class="rpt-detail-ts" id="rpt-detail-ts"></div>
+        </div>
+      </div>
+      <button class="rpt-detail-close" onclick="closeRptDetail()" aria-label="关闭">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="rpt-detail-inputs" id="rpt-detail-inputs"></div>
+    <div class="rpt-detail-body" id="rpt-detail-body"></div>
+    <div class="rpt-detail-footer">
+      <button class="rpt-detail-btn rpt-detail-btn-feishu" id="rpt-detail-feishu-btn" onclick="pushDetailToFeishu()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        推送飞书
+      </button>
+      <button class="rpt-detail-btn" onclick="copyCurrentRpt()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        复制报告
+      </button>
+      <button class="rpt-detail-btn rpt-detail-btn-del" onclick="deleteCurrentRpt()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+        删除
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="rpt-page">
+  <!-- 头部 -->
   <div class="rpt-header">
     <div class="rpt-header-left">
-      <h1 class="rpt-title">智能体运行报告台</h1>
+      <h1 class="rpt-title">智能体报告台</h1>
       <p class="rpt-subtitle">Agent Analytics Dashboard</p>
     </div>
     <div class="rpt-header-actions">
-      <button onclick="exportReports()" class="rpt-btn rpt-btn-outline">导出报告</button>
+      <button onclick="exportReports()" class="rpt-btn rpt-btn-outline">导出全部</button>
       <button onclick="clearReports()" class="rpt-btn rpt-btn-ghost">清空记录</button>
     </div>
   </div>
+
+  <!-- 统计栏 -->
   <div class="rpt-summary-bar">
-    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-total">0</span><span class="rpt-metric-label">总运行次数</span></div>
-    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-agents">0</span><span class="rpt-metric-label">调用智能体</span></div>
-    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-today">0</span><span class="rpt-metric-label">今日运行</span></div>
-    <div class="rpt-metric"><span class="rpt-metric-value" id="rpt-latest">—</span><span class="rpt-metric-label">最近运行</span></div>
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-total">0</span>
+      <span class="rpt-metric-label">总运行次数</span>
+    </div>
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-agents">0</span>
+      <span class="rpt-metric-label">调用智能体</span>
+    </div>
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-today">0</span>
+      <span class="rpt-metric-label">今日运行</span>
+    </div>
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-latest">—</span>
+      <span class="rpt-metric-label">最近运行</span>
+    </div>
   </div>
+
+  <!-- 过滤栏 -->
   <div class="rpt-filter-bar">
     <button class="rpt-filter active" data-agent="all" onclick="setAgentFilter('all')">全部</button>
     {filter_buttons}
   </div>
-  <div id="rpt-list" class="rpt-list"></div>
+
+  <!-- 报告卡片网格 -->
+  <div id="rpt-list" class="rpt-cards-grid"></div>
 </div>
+
 <style>
-.rpt-page{{max-width:1100px;margin:0 auto;padding:32px 24px}}
-.rpt-header{{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid #E5E5E5}}
-.rpt-title{{margin:0;font-size:24px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-.5px}}
-.rpt-subtitle{{margin:4px 0 0;font-size:12px;color:#999;font-family:monospace;text-transform:uppercase;letter-spacing:.5px}}
+/* ── 页面骨架 ── */
+.rpt-page{{max-width:1200px;margin:0 auto;padding:32px 24px}}
+.rpt-header{{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line,#E5E5E5)}}
+.rpt-title{{margin:0;font-size:22px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-.5px}}
+.rpt-subtitle{{margin:3px 0 0;font-size:11px;color:#999;font-family:monospace;text-transform:uppercase;letter-spacing:.8px}}
 .rpt-header-actions{{display:flex;gap:8px}}
-.rpt-btn{{height:36px;padding:0 16px;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}}
-.rpt-btn-outline{{background:#fff;border:1px solid #E5E5E5;color:var(--ink,#0C0C0C)}}
-.rpt-btn-outline:hover{{border-color:#0C0C0C}}
-.rpt-btn-ghost{{background:transparent;border:1px solid transparent;color:#999}}
+.rpt-btn{{height:34px;padding:0 14px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .15s}}
+.rpt-btn-outline{{background:#fff;border:1px solid var(--line,#E5E5E5);color:var(--ink,#0C0C0C)}}
+.rpt-btn-outline:hover{{border-color:var(--ink,#0C0C0C)}}
+.rpt-btn-ghost{{background:transparent;border:1px solid transparent;color:#aaa}}
 .rpt-btn-ghost:hover{{color:var(--accent,#B5323E)}}
-.rpt-summary-bar{{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E5E5E5;border:1px solid #E5E5E5;border-radius:8px;overflow:hidden;margin-bottom:24px}}
-.rpt-metric{{background:#fff;padding:20px 24px}}
-.rpt-metric-value{{display:block;font-size:28px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-1px}}
-.rpt-metric-label{{display:block;font-size:12px;color:#888;margin-top:4px}}
+
+/* ── 统计栏 ── */
+.rpt-summary-bar{{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line,#E5E5E5);border:1px solid var(--line,#E5E5E5);border-radius:10px;overflow:hidden;margin-bottom:24px}}
+.rpt-metric{{background:#fff;padding:18px 20px}}
+.rpt-metric-value{{display:block;font-size:26px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-1px}}
+.rpt-metric-label{{display:block;font-size:11.5px;color:#888;margin-top:3px}}
+
+/* ── 过滤栏 ── */
 .rpt-filter-bar{{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #F0F0F0}}
-.rpt-filter{{height:30px;padding:0 12px;border:1px solid #E5E5E5;border-radius:4px;background:#FAFAFA;color:#555;font-size:12px;cursor:pointer;transition:all .15s}}
-.rpt-filter.active{{background:var(--ink,#0C0C0C);border-color:var(--ink,#0C0C0C);color:#fff}}
+.rpt-filter{{height:28px;padding:0 11px;border:1px solid var(--line,#E5E5E5);border-radius:20px;background:#fff;color:#666;font-size:12px;cursor:pointer;transition:all .15s;white-space:nowrap}}
+.rpt-filter.active{{background:var(--ink,#0C0C0C);border-color:var(--ink,#0C0C0C);color:#fff;font-weight:600}}
 .rpt-filter:hover:not(.active){{border-color:#999;color:var(--ink,#0C0C0C)}}
-.rpt-list{{display:flex;flex-direction:column;gap:16px}}
-.rpt-card{{border:1px solid #E5E5E5;border-radius:8px;background:#fff;overflow:hidden}}
-.rpt-card-header{{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #F0F0F0;background:#FAFAFA}}
-.rpt-card-title{{font-size:14px;font-weight:600;color:var(--ink,#0C0C0C)}}
-.rpt-card-meta{{display:flex;align-items:center;gap:10px}}
-.rpt-card-agent{{font-size:11px;color:#555;background:#F0F0F0;padding:3px 8px;border-radius:3px;font-family:monospace}}
-.rpt-card-ts{{font-size:11px;color:#999;font-family:monospace}}
-.rpt-card-body{{padding:16px 20px}}
-body {{padding:20px}}
-.rpt-inputs{{margin-bottom:14px}}
-.rpt-inputs-title{{font-size:10px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}}
-.rpt-inputs-grid{{display:flex;flex-wrap:wrap;gap:6px}}
-.rpt-input-chip{{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:3px;font-size:12px}}
-.rpt-input-key{{color:#888}}
-.rpt-input-val{{color:var(--ink,#0C0C0C);font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
-.rpt-kpi-row{{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}}
-.rpt-kpi{{flex:1;min-width:110px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px}}
- .rpt-kpi-label{{font-size:11px;color:#888;margin-bottom:4px}}
- .rpt-kpi-value{{font-size:18px;font-weight:700;color:var(--ink,#0C0C0C)}}
- .rpt-kpi-value.warn{{color:var(--accent,#B5323E)}}
- .rpt-kpi-value.ok{{color:#059669}}
- .rpt-output{{font-family:monospace;font-size:12.5px;color:#334155;background:#FAFAFA;border:1px solid #F0F0F0;border-radius:4px;padding:16px;white-space:pre-wrap;line-height:1.7;max-height:380px;overflow-y:auto}}
- .rpt-output .rpt-warn{{color:var(--accent,#B5323E);font-weight:600}}
- .rpt-output .rpt-ok{{color:#059669;font-weight:600}}
- .rpt-output .rpt-info{{color:#0369a1}}
- .rpt-output .rpt-section{{font-weight:700;color:var(--ink,#0C0C0C)}}
- .rpt-card-footer{{padding:10px 20px;border-top:1px solid #F0F0F0;display:flex;gap:8px}}
- .rpt-action-btn{{height:28px;padding:0 12px;font-size:12px;border-radius:3px;cursor:pointer;border:1px solid #E5E5E5;background:#fff;color:#555;transition:all .15s}}
- .rpt-action-btn:hover{{border-color:var(--ink,#0C0C0C);color:var(--ink,#0C0C0C)}}
- .rpt-seeded-badge{{font-size:10px;color:#888;margin-left:auto;padding:2px 6px;border:1px solid #E5E5E5;border-radius:3px}}
- @media(max-width:640px){{.rpt-summary-bar{{grid-template-columns:repeat(2,1fr)}};.rpt-header{{flex-direction:column;align-items:flex-start;gap:16px}}}}
-/* ── Structured Report Renderer ── */
+
+/* ── 报告卡片网格 ── */
+.rpt-cards-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}}
+@media(max-width:1100px){{.rpt-cards-grid{{grid-template-columns:repeat(2,1fr)}}}}
+@media(max-width:640px){{.rpt-cards-grid{{grid-template-columns:1fr}};.rpt-summary-bar{{grid-template-columns:repeat(2,1fr)}}}}
+
+/* ── 摘要卡片 ── */
+.rpt-card{{background:#fff;border:1px solid var(--line,#E5E5E5);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s;display:flex;flex-direction:column}}
+.rpt-card:hover{{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.08);border-color:var(--ink,#0C0C0C)}}
+.rpt-card-top{{padding:16px 18px 14px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid #F5F5F5}}
+.rpt-card-icon-wrap{{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}}
+.rpt-card-icon-wrap svg{{width:20px;height:20px}}
+.rpt-card-info{{flex:1;min-width:0}}
+.rpt-card-agent-name{{font-size:13.5px;font-weight:700;color:var(--ink,#0C0C0C);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.rpt-card-ts{{font-size:11px;color:#999;margin-top:2px;font-family:monospace}}
+.rpt-card-mid{{padding:12px 18px;flex:1}}
+.rpt-card-inputs-preview{{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}}
+.rpt-card-input-chip{{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:3px;font-size:11px;max-width:180px;overflow:hidden}}
+.rpt-card-input-key{{color:#94a3b8;flex-shrink:0}}
+.rpt-card-input-val{{color:#475569;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.rpt-card-kpi-row{{display:flex;gap:8px;flex-wrap:wrap}}
+.rpt-card-kpi{{flex:1;min-width:80px;padding:7px 10px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px}}
+.rpt-card-kpi-label{{font-size:10px;color:#94a3b8;margin-bottom:2px}}
+.rpt-card-kpi-val{{font-size:15px;font-weight:700;color:var(--ink,#0C0C0C)}}
+.rpt-card-kpi-val.warn{{color:var(--accent,#B5323E)}}
+.rpt-card-kpi-val.ok{{color:#059669}}
+.rpt-card-result-preview{{font-size:12px;color:#64748b;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}
+.rpt-card-footer{{padding:10px 18px;border-top:1px solid #F5F5F5;display:flex;align-items:center;gap:6px}}
+.rpt-card-cat-badge{{font-size:10px;color:#64748b;background:#F1F5F9;padding:2px 7px;border-radius:3px;border:1px solid #E2E8F0}}
+.rpt-card-view-btn{{margin-left:auto;font-size:11.5px;color:#64748b;display:flex;align-items:center;gap:3px;transition:color .15s}}
+.rpt-card:hover .rpt-card-view-btn{{color:var(--ink,#0C0C0C)}}
+.rpt-card-seeded{{font-size:10px;color:#94a3b8;padding:2px 6px;border:1px solid #E2E8F0;border-radius:3px}}
+
+/* ── 详情 Modal ── */
+.rpt-detail-overlay{{position:fixed;inset:0;z-index:2000;background:rgba(12,12,12,.45);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px}}
+.rpt-detail-modal{{background:#fff;border-radius:14px;width:100%;max-width:760px;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.16)}}
+.rpt-detail-header{{padding:18px 22px;border-bottom:1px solid var(--line,#E5E5E5);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}}
+.rpt-detail-header-left{{display:flex;align-items:center;gap:12px}}
+.rpt-detail-icon-wrap{{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}}
+.rpt-detail-icon-wrap svg{{width:22px;height:22px}}
+.rpt-detail-agent-name{{font-size:15px;font-weight:700;color:var(--ink,#0C0C0C)}}
+.rpt-detail-ts{{font-size:11.5px;color:#94a3b8;font-family:monospace;margin-top:2px}}
+.rpt-detail-close{{background:none;border:none;cursor:pointer;color:#94a3b8;padding:4px;border-radius:6px;display:flex;align-items:center;transition:color .15s,background .15s}}
+.rpt-detail-close:hover{{color:var(--ink,#0C0C0C);background:#F1F5F9}}
+.rpt-detail-inputs{{padding:14px 22px;background:#FAFAFA;border-bottom:1px solid #F0F0F0;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}}
+.rpt-detail-input-chip{{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#fff;border:1px solid #E2E8F0;border-radius:4px;font-size:12px}}
+.rpt-detail-input-key{{color:#94a3b8}}
+.rpt-detail-input-val{{color:#374151;font-weight:500;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.rpt-detail-body{{flex:1;overflow-y:auto;padding:20px 22px}}
+.rpt-detail-footer{{padding:14px 22px;border-top:1px solid var(--line,#E5E5E5);display:flex;gap:8px;flex-shrink:0;background:#fff}}
+.rpt-detail-btn{{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid var(--line,#E5E5E5);background:#fff;color:var(--ink,#0C0C0C);transition:all .15s}}
+.rpt-detail-btn:hover{{border-color:var(--ink,#0C0C0C)}}
+.rpt-detail-btn-feishu{{background:#00b96b;border-color:#00b96b;color:#fff}}
+.rpt-detail-btn-feishu:hover{{background:#009a5a;border-color:#009a5a}}
+.rpt-detail-btn-del{{margin-left:auto;color:#dc2626;border-color:#fecaca}}
+.rpt-detail-btn-del:hover{{background:#fef2f2;border-color:#dc2626}}
+
+/* ── 结构化报告渲染 ── */
 .rr-body{{padding:4px 0;font-size:13px;color:#1e293b;line-height:1.7}}
 .rr-spacer{{height:6px}}
 .rr-section{{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#F1F5F9 0%,#FAFAFA 100%);border-left:3px solid var(--ink,#0C0C0C);padding:8px 12px;margin:14px 0 6px;font-size:12.5px;font-weight:700;color:var(--ink,#0C0C0C);border-radius:0 4px 4px 0;letter-spacing:.3px;text-transform:uppercase}}
@@ -2176,33 +2365,59 @@ body {{padding:20px}}
 .rr-warn{{display:flex;align-items:flex-start;gap:8px;background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#991B1B;font-weight:500}}
 .rr-ok{{display:flex;align-items:flex-start;gap:8px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:6px;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#166534;font-weight:500}}
 .rr-action{{display:flex;align-items:flex-start;gap:8px;background:#EFF6FF;border-left:3px solid #3B82F6;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#1E40AF;font-weight:500;border-radius:0 4px 4px 0}}
-.rr-priority{{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12.5px;color:#334155}}
-.rr-p0{{background:var(--accent,#B5323E);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
-.rr-p1{{background:#F59E0B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
-.rr-p2{{background:#64748B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
-.rr-row{{display:flex;align-items:baseline;gap:8px;padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;margin-bottom:2px}}
-.rr-row-plain{{padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;color:#475569}}
-.rr-row-key{{color:#64748B;font-size:12px;flex-shrink:0;min-width:100px}}
-.rr-row-sep{{color:#CBD5E1;margin:0 2px}}
 .rr-kv{{display:flex;align-items:baseline;gap:6px;padding:3px 0;font-size:12.5px}}
 .rr-kv-key{{color:#64748B;font-size:12px;flex-shrink:0}}
 .rr-kv-sep{{color:#CBD5E1}}
 .rr-val{{font-weight:700;color:var(--ink,#0C0C0C);font-variant-numeric:tabular-nums}}
+.rr-row{{display:flex;align-items:baseline;gap:8px;padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;margin-bottom:2px}}
+.rr-row-plain{{padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;color:#475569}}
+.rr-row-key{{color:#64748B;font-size:12px;flex-shrink:0;min-width:80px}}
+.rr-row-sep{{color:#CBD5E1;margin:0 2px}}
+.rr-priority{{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12.5px;color:#334155}}
+.rr-p0{{background:var(--accent,#B5323E);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
+.rr-p1{{background:#F59E0B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
+.rr-p2{{background:#64748B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}}
 .rr-line{{padding:2px 0;font-size:12.5px;color:#334155}}
 .rr-num{{font-weight:700;color:#0C0C0C;font-variant-numeric:tabular-nums}}
 .rr-pct{{font-weight:600;color:#0369a1;font-size:12px}}
-/* ── Pagination ── */
-.rpt-pagination{{display:flex;justify-content:center;align-items:center;gap:4px;padding:24px 0 8px;flex-wrap:wrap}}
-.rpt-page-btn{{min-width:32px;height:32px;padding:0 10px;border:1px solid #E5E5E5;border-radius:4px;background:#fff;color:#555;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}}
+
+/* ── 分页 ── */
+.rpt-pagination{{display:flex;justify-content:center;align-items:center;gap:4px;padding:28px 0 8px;flex-wrap:wrap}}
+.rpt-page-btn{{min-width:32px;height:32px;padding:0 10px;border:1px solid var(--line,#E5E5E5);border-radius:6px;background:#fff;color:#555;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}}
 .rpt-page-btn:hover:not([disabled]){{border-color:var(--ink,#0C0C0C);color:var(--ink,#0C0C0C)}}
 .rpt-page-btn.active{{background:var(--ink,#0C0C0C);border-color:var(--ink,#0C0C0C);color:#fff;font-weight:600}}
 .rpt-page-btn[disabled]{{opacity:.35;cursor:not-allowed}}
 .rpt-page-info{{font-size:12px;color:#888;padding:0 8px}}
+
+/* ── 空状态 ── */
+.rpt-empty{{grid-column:1/-1;text-align:center;padding:80px 40px}}
+.rpt-empty-icon{{width:56px;height:56px;margin:0 auto 16px;opacity:.2}}
+.rpt-empty-title{{font-size:16px;font-weight:600;color:#555;margin-bottom:6px}}
+.rpt-empty-desc{{font-size:13px;color:#888}}
+.rpt-empty-cta{{display:inline-flex;align-items:center;gap:6px;margin-top:20px;padding:9px 18px;background:var(--ink,#0C0C0C);color:#fff;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;transition:opacity .15s}}
+.rpt-empty-cta:hover{{opacity:.85}}
 </style>
+
 <script>
 const _AGENT_NAMES={agent_names_js};
+const _AGENT_ICONS={agent_icons_js};
+const _AGENT_CAT_CLASS={agent_cat_class_js};
 const _AGENT_CATS={agent_categories_js};
+
+// 颜色映射（与 agents.html 一致）
+const _CAT_COLORS={{
+  'cat-supply':'#15803d','cat-ad':'#7c3aed','cat-voc':'#0891b2',
+  'cat-attribution':'#b45309','cat-competitor':'#be185d','cat-listing':'#0369a1',
+  'cat-pricing':'#c2410c','cat-risk':'#b91c1c','cat-analytics':'#1d4ed8',
+  'cat-content':'#6d28d9','cat-tag':'#0f766e','cat-cs':'#0891b2',
+  'cat-selection':'#059669',
+}};
+function _catColor(id){{return _CAT_COLORS[_AGENT_CAT_CLASS[id]]||'#555';}}
+
 let _activeFilter='all';
+let _currentRptIdx=-1;
+const _FEISHU_HOOK_RPT=typeof _FEISHU_HOOK!=='undefined'?_FEISHU_HOOK:'';
+
 function _initSeeds(){{
   try{{
     var ex=JSON.parse(localStorage.getItem('agentReports')||'[]');
@@ -2215,145 +2430,182 @@ function _initSeeds(){{
     }}
   }}catch(e){{}}
 }}
+
 function _loadR(){{try{{return JSON.parse(localStorage.getItem('agentReports')||'[]')}}catch(e){{return[]}}}}
-function setAgentFilter(id){{_activeFilter=id;document.querySelectorAll('.rpt-filter').forEach(b=>b.classList.toggle('active',b.dataset.agent===id));_renderR();}}
+
+function setAgentFilter(id){{
+  _activeFilter=id;
+  document.querySelectorAll('.rpt-filter').forEach(b=>b.classList.toggle('active',b.dataset.agent===id));
+  const list=document.getElementById('rpt-list');
+  list.dataset.page='1';
+  _renderR();
+}}
+
 function _extractKPIs(result){{
   const kpis=[];
   const pats=[
-    {{rx:new RegExp('\u5269\u4f59\u53ef\u552e\u5929\u6570[:]+([0-9.]+)[ ]*\u5929'),label:'\u53ef\u552e\u5929\u6570',suffix:'\u5929',warnBelow:14}},
-    {{rx:new RegExp('\u51c0\u5229\u6da6[:]+[+]?[$]([0-9,.]+)'),label:'\u51c0\u5229\u6da6',prefix:'$'}},
-    {{rx:new RegExp('\u51c0\u5229\u7387[:]+([0-9.]+)%'),label:'\u51c0\u5229\u7387',suffix:'%',warnBelow:8}},
-    {{rx:new RegExp('ACoS[:]+([0-9.]+)%'),label:'ACoS',suffix:'%',warnAbove:25}},
-    {{rx:new RegExp('\u6708\u8282\u7701\u5408\u8ba1[:]+[$]([0-9,.]+)'),label:'\u6708\u8282\u7701',prefix:'$'}},
-    {{rx:new RegExp('\u8bc4\u5206[:]+([0-9]+)/100'),label:'\u8bc4\u5206',suffix:'/100',warnBelow:60}},
+    {{rx:/可售天数[：:]\\s*([\\d.]+)\\s*天/,label:'可售天数',suffix:'天',warnBelow:14}},
+    {{rx:/净利润率[：:]\\s*([\\d.]+)%/,label:'净利润率',suffix:'%',warnBelow:8}},
+    {{rx:/ACoS[：:]\\s*([\\d.]+)%/,label:'ACoS',suffix:'%',warnAbove:25}},
+    {{rx:/ROAS[：:]\\s*([\\d.]+)/,label:'ROAS'}},
+    {{rx:/机会评分[：:]\\s*(\\d+)\/100/,label:'机会评分',suffix:'/100',warnBelow:60}},
+    {{rx:/综合评分[：:]\\s*(\\d+)\/100/,label:'综合评分',suffix:'/100',warnBelow:60}},
+    {{rx:/账号健康[^:：]*[：:]\\s*(\\d+)/,label:'账号健康',suffix:'分',warnBelow:60}},
+    {{rx:/退货率[：:]\\s*([\\d.]+)%/,label:'退货率',suffix:'%',warnAbove:15}},
+    {{rx:/净利润[：:]\\s*\\$?([\\d,.]+)/,label:'净利润',prefix:'$'}},
   ];
   for(const p of pats){{
-    const m=result.match(p.rx);
+    const m=(result||'').match(p.rx);
     if(m){{
       const n=parseFloat(m[1].replace(/,/g,''));
-      const w=(p.warnBelow&&n<p.warnBelow)||(p.warnAbove&&n>p.warnAbove);
+      const w=(p.warnBelow!=null&&n<p.warnBelow)||(p.warnAbove!=null&&n>p.warnAbove);
       kpis.push({{label:p.label,value:(p.prefix||'')+m[1]+(p.suffix||''),warn:w}});
+      if(kpis.length>=2)break;
     }}
-    if(kpis.length>=3)break;
   }}
   return kpis;
 }}
- function _colorize(txt){{
-   return txt.replace(/</g,'&lt;').replace(/>/g,'&gt;')
-     .replace(/\[WARN\]|\[!\]/g,'<span class="rpt-warn">[!]</span>')
-      .replace(/\[OK\]/g,'<span class="rpt-ok">[OK]</span>')
-      .replace(/\[>\]/g,'<span class="rpt-info">[>]</span>')
-      .replace(/(\u2501\u2501[^\\n]+\u2501\u2501)/g,'<span class="rpt-section">$1</span>');
- }}
+
 function _renderReport(raw){{
   if(!raw)return'';
   const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const lines=raw.split('\\n');
-  let html='',inSection=false;
+  const lines=raw.split(String.fromCharCode(10));
+  let html='';
   for(let i=0;i<lines.length;i++){{
-    const l=lines[i];
-    const trim=l.trim();
+    const l=lines[i],trim=l.trim();
     if(!trim){{html+='<div class="rr-spacer"></div>';continue;}}
-
-    // ━━ Section Header ━━
-    if(/^\u2501\u2501.+\u2501\u2501$/.test(trim)){{
-      const title=trim.replace(/^\u2501+\s*/,'').replace(/\s*\u2501+$/,'');
-      html+=`<div class="rr-section"><span class="rr-section-dot"></span>${{esc(title)}}</div>`;
+    if(/^━━.+━━$/.test(trim)){{
+      const title=trim.replace(/^━+\\s*/,'').replace(/\\s*━+$/,'');
+      html+=`<div class="rr-section"><span class="rr-section-dot"></span>${{esc(title)}}</div>`;continue;
+    }}
+    if(/^\\[!\\]|^\\[WARN\\]/.test(trim)){{
+      html+=`<div class="rr-warn">⚠ ${{esc(trim.replace(/^\\[!\\]\\s*|\\[WARN\\]\\s*/,''))}}</div>`;continue;
+    }}
+    if(/^\\[OK\\]/.test(trim)){{
+      html+=`<div class="rr-ok">✓ ${{esc(trim.replace(/^\\[OK\\]\\s*/,''))}}</div>`;continue;
+    }}
+    if(/^\\[>\\]/.test(trim)){{
+      html+=`<div class="rr-action">→ ${{esc(trim.replace(/^\\[>\\]\\s*/,''))}}</div>`;continue;
+    }}
+    if(/^[├└]─/.test(trim)){{
+      const msg=trim.replace(/^[├└]─+\\s*/,'');
+      const vm=msg.match(/^(.+?):\\s*(.+)$/);
+      if(vm){{
+        const isNum=/[\\$\\d,%\\+\-]+/.test(vm[2]);
+        const val=isNum?`<span class="rr-val">${{esc(vm[2])}}</span>`:esc(vm[2]);
+        html+=`<div class="rr-row"><span class="rr-row-key">${{esc(vm[1])}}</span><span class="rr-row-sep">:</span>${{val}}</div>`;
+      }}else{{html+=`<div class="rr-row-plain">${{esc(msg)}}</div>`;}}
       continue;
     }}
-    // [!] Warning
-    if(/^\[!\]|^\[WARN\]/.test(trim)){{
-      const msg=trim.replace(/^\[!\]\s*|\[WARN\]\s*/,'');
-      html+=`<div class="rr-warn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>${{esc(msg)}}</div>`;
-      continue;
+    if(/^P[0-3][（（(]/.test(trim)||/^P[0-3]:/.test(trim)){{
+      const p=trim.match(/^(P\\d)/)?.[1]||'P1';
+      const pc=p==='P0'?'rr-p0':p==='P1'?'rr-p1':'rr-p2';
+      html+=`<div class="rr-priority"><span class="${{pc}}">${{p}}</span>${{esc(trim.replace(/^P\\d[^\\s]*/,'').trim())}}</div>`;continue;
     }}
-    // [OK]
-    if(/^\[OK\]/.test(trim)){{
-      const msg=trim.replace(/^\[OK\]\s*/,'');
-      html+=`<div class="rr-ok"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${{esc(msg)}}</div>`;
-      continue;
-    }}
-    // [>] Action
-    if(/^\[>\]/.test(trim)){{
-      const msg=trim.replace(/^\[>\]\s*/,'');
-      html+=`<div class="rr-action"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>${{esc(msg)}}</div>`;
-      continue;
-    }}
-    // ├─ └─ tree line
-    if(/^[\u251c\u2514]\u2500/.test(trim)){{
-      const msg=trim.replace(/^[\u251c\u2514]\u2500+\s*/,'');
-      // Check if it contains a number value after colon
-      const valMatch=msg.match(/^(.+?):\s*(.+)$/);
-      if(valMatch){{
-        const isNum=/[\$\d,%\+\-]+/.test(valMatch[2]);
-        const val=isNum?`<span class="rr-val">${{esc(valMatch[2])}}</span>`:esc(valMatch[2]);
-        html+=`<div class="rr-row"><span class="rr-row-key">${{esc(valMatch[1])}}</span><span class="rr-row-sep">:</span>${{val}}</div>`;
-      }}else{{
-        html+=`<div class="rr-row-plain">${{esc(msg)}}</div>`;
-      }}
-      continue;
-    }}
-    // P0/P1/P2 priority
-    if(/^P[0-3][\u00ef\uff08（(]/.test(trim)||/^P[0-3]:/.test(trim)){{
-      const p=trim.match(/^(P\d)/)?.[1]||'P1';
-      const pClass=p==='P0'?'rr-p0':p==='P1'?'rr-p1':'rr-p2';
-      html+=`<div class="rr-priority"><span class="${{pClass}}">${{p}}</span>${{esc(trim.replace(/^P\d[^\s]*/,'').trim())}}</div>`;
-      continue;
-    }}
-    // Key: Value line
-    const kvMatch=trim.match(/^(.{2,20})[：:]\s*(.{1,200})$/);
-    if(kvMatch&&!trim.startsWith('http')){{
-      const numRaw=kvMatch[2];
-      const hasNum=/[\$\d,%]+/.test(numRaw)&&numRaw.length<60;
+    const kv=trim.match(/^(.{{2,20}})[：:]\\s*(.{{1,200}})$/);
+    if(kv&&!trim.startsWith('http')){{
+      const numRaw=kv[2],hasNum=/[\\$\\d,%]+/.test(numRaw)&&numRaw.length<60;
       const val=hasNum?`<span class="rr-val">${{esc(numRaw)}}</span>`:esc(numRaw);
-      html+=`<div class="rr-kv"><span class="rr-kv-key">${{esc(kvMatch[1])}}</span><span class="rr-kv-sep">:</span>${{val}}</div>`;
-      continue;
+      html+=`<div class="rr-kv"><span class="rr-kv-key">${{esc(kv[1])}}</span><span class="rr-kv-sep">:</span>${{val}}</div>`;continue;
     }}
-    // Default text line
-    let styled=esc(trim)
-      .replace(/(\$[\d,]+(?:\.\d+)?)/g,'<span class="rr-num">$1</span>')
-      .replace(/([\d.]+%)/g,'<span class="rr-pct">$1</span>');
+    let styled=esc(trim).replace(/(\\$[\\d,]+(?:\.\\d+)?)/g,'<span class="rr-num">$1</span>').replace(/([\\d.]+%)/g,'<span class="rr-pct">$1</span>');
     html+=`<div class="rr-line">${{styled}}</div>`;
   }}
   return html;
 }}
+
 function _fmtTs(ts){{
   if(!ts)return'—';
   const d=new Date(ts.replace(' ','T'));
-  return isNaN(d)?ts:d.toLocaleDateString('zh-CN',{{month:'2-digit',day:'2-digit'}})+' '+d.toLocaleTimeString('zh-CN',{{hour:'2-digit',minute:'2-digit'}});
+  if(isNaN(d))return ts;
+  const today=new Date();
+  const isToday=d.toDateString()===today.toDateString();
+  if(isToday)return'今天 '+d.toLocaleTimeString('zh-CN',{{hour:'2-digit',minute:'2-digit'}});
+  return d.toLocaleDateString('zh-CN',{{month:'2-digit',day:'2-digit'}})+' '+d.toLocaleTimeString('zh-CN',{{hour:'2-digit',minute:'2-digit'}});
 }}
-function _renderCard(r,idx){{
+
+function _renderSummaryCard(r,globalIdx){{
   const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  const catClass=_AGENT_CAT_CLASS[r.id]||'';
+  const color=_catColor(r.id);
+  const icon=_AGENT_ICONS[r.id]||'';
   const ts=_fmtTs(r.ts);
+  const category=_AGENT_CATS[r.id]||'';
   const kpis=_extractKPIs(r.result||'');
-  const chips=Object.entries(r.inputs||{{}}).slice(0,5).map(([k,v])=>
-    `<span class="rpt-input-chip"><span class="rpt-input-key">${{k}}:</span><span class="rpt-input-val" title="${{v}}">${{v.length>30?v.slice(0,28)+'…':v}}</span></span>`
+
+  // 输入参数摘要（最多2个）
+  const inputEntries=Object.entries(r.inputs||{{}}).slice(0,2);
+  const chips=inputEntries.map(([k,v])=>
+    `<span class="rpt-card-input-chip">
+      <span class="rpt-card-input-key">${{k}}</span>
+      <span class="rpt-card-input-val" title="${{v.replace(/"/g,"'")}}">
+        ${{v.length>25?v.slice(0,23)+'…':v}}
+      </span>
+    </span>`
   ).join('');
-  const kpiRow=kpis.length?`<div class="rpt-kpi-row">${{kpis.map(k=>`<div class="rpt-kpi"><div class="rpt-kpi-label">${{k.label}}</div><div class="rpt-kpi-value ${{k.warn?'warn':'ok'}}">${{k.value}}</div></div>`).join('')}}</div>`:'';
-  const seededBadge=r.seeded?'<span class="rpt-seeded-badge">预置示例</span>':'';
-  const reportBody=_renderReport(r.result||'');
-  return`<div class="rpt-card"><div class="rpt-card-header"><span class="rpt-card-title">分析报告 #${{idx+1}} — ${{name}}</span><div class="rpt-card-meta"><span class="rpt-card-agent">${{name}}</span><span class="rpt-card-ts">${{ts}}</span>${{seededBadge}}</div></div><div class="rpt-card-body">${{chips?`<div class="rpt-inputs"><div class="rpt-inputs-title">输入参数</div><div class="rpt-inputs-grid">${{chips}}</div></div>`:''}}<div>${{kpiRow}}</div><div class="rr-body">${{reportBody}}</div></div><div class="rpt-card-footer"><button class="rpt-action-btn" onclick="copyRpt(${{idx}})">复制报告</button><button class="rpt-action-btn" onclick="delRpt(${{idx}})">删除</button></div></div>`;
+
+  // KPI 亮点
+  const kpiHtml=kpis.length?`<div class="rpt-card-kpi-row">${{
+    kpis.map(k=>`<div class="rpt-card-kpi">
+      <div class="rpt-card-kpi-label">${{k.label}}</div>
+      <div class="rpt-card-kpi-val ${{k.warn?'warn':'ok'}}">${{k.value}}</div>
+    </div>`).join('')
+  }}</div>`:'';
+
+  // 结果文字预览（去掉格式符）
+  const preview=(r.result||'').replace(/━+|\\[OK\\]|\\[!\\]|\\[>\\]/g,'').replace(/\\n+/g,' ').trim().slice(0,120);
+
+  const seededBadge=r.seeded?'<span class="rpt-card-seeded">示例</span>':'';
+
+  return `<div class="rpt-card" onclick="openRptDetail(${{globalIdx}})">
+    <div class="rpt-card-top">
+      <div class="rpt-card-icon-wrap" style="background:${{color}}">${{icon}}</div>
+      <div class="rpt-card-info">
+        <div class="rpt-card-agent-name">${{name}}</div>
+        <div class="rpt-card-ts">${{ts}}</div>
+      </div>
+    </div>
+    <div class="rpt-card-mid">
+      ${{chips?`<div class="rpt-card-inputs-preview">${{chips}}</div>`:''}}
+      ${{kpiHtml||`<div class="rpt-card-result-preview">${{preview}}</div>`}}
+    </div>
+    <div class="rpt-card-footer">
+      ${{category?`<span class="rpt-card-cat-badge">${{category}}</span>`:''}}
+      ${{seededBadge}}
+      <span class="rpt-card-view-btn">查看详情
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </span>
+    </div>
+  </div>`;
 }}
+
 function _updateSummary(reports){{
   const today=new Date().toDateString();
-  const todayN=reports.filter(r=>r.ts&&new Date(r.ts.replace(' ','T')).toDateString()===today).length;
-  const agents=new Set(reports.map(r=>r.id)).size;
-  const latest=reports.length?_fmtTs(reports[reports.length-1].ts):'—';
   document.getElementById('rpt-total').textContent=reports.length;
-  document.getElementById('rpt-agents').textContent=agents;
-  document.getElementById('rpt-today').textContent=todayN;
-  document.getElementById('rpt-latest').textContent=latest;
+  document.getElementById('rpt-agents').textContent=new Set(reports.map(r=>r.id)).size;
+  document.getElementById('rpt-today').textContent=reports.filter(r=>r.ts&&new Date(r.ts.replace(' ','T')).toDateString()===today).length;
+  const last=reports[reports.length-1];
+  document.getElementById('rpt-latest').textContent=last?_fmtTs(last.ts):'—';
 }}
+
 function _renderR(){{
   const reports=_loadR();
   _updateSummary(reports);
   const filtered=_activeFilter==='all'?reports:reports.filter(r=>r.id===_activeFilter);
   const list=document.getElementById('rpt-list');
   if(!filtered.length){{
-    list.innerHTML='<div style="text-align:center;padding:80px 40px;"><p style="font-size:16px;color:#555;font-weight:500;">暂无报告记录</p><p style="font-size:13px;color:#888;">前往 <a href=\"agents.html\" style=\"color:var(--accent,#B5323E);text-decoration:none\">智能体广场</a> 运行分析后，报告将自动保存至此。</p></div>';
+    list.innerHTML=`<div class="rpt-empty">
+      <svg class="rpt-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <div class="rpt-empty-title">暂无报告记录</div>
+      <div class="rpt-empty-desc">前往智能体广场运行分析，报告将自动保存到这里</div>
+      <a href="agents.html" class="rpt-empty-cta">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        前往智能体广场
+      </a>
+    </div>`;
     return;
   }}
-  const PAGE_SIZE=6;
+  const PAGE_SIZE=9;
   const reversed=[...filtered].reverse();
   const totalPages=Math.ceil(reversed.length/PAGE_SIZE);
   let curPage=parseInt(list.dataset.page||'1');
@@ -2362,7 +2614,14 @@ function _renderR(){{
   list.dataset.page=curPage;
   const start=(curPage-1)*PAGE_SIZE;
   const pageItems=reversed.slice(start,start+PAGE_SIZE);
-  const cards=pageItems.map((r,i)=>_renderCard(r,filtered.length-1-start-i)).join('');
+
+  // 计算 globalIdx（在完整 reports 数组中的真实索引）
+  const cards=pageItems.map((r,i)=>{{
+    const fi=filtered.length-1-start-i;
+    const gi=reports.indexOf(filtered[fi]);
+    return _renderSummaryCard(r,gi);
+  }}).join('');
+
   const pager=totalPages<=1?'':(() => {{
     let btns=`<button class="rpt-page-btn" onclick="_goPage(${{curPage-1}})" ${{curPage<=1?'disabled':''}}>‹</button>`;
     for(let p=1;p<=totalPages;p++){{
@@ -2373,50 +2632,139 @@ function _renderR(){{
       btns+=`<button class="rpt-page-btn ${{p===curPage?'active':''}}" onclick="_goPage(${{p}})">${{p}}</button>`;
     }}
     btns+=`<button class="rpt-page-btn" onclick="_goPage(${{curPage+1}})" ${{curPage>=totalPages?'disabled':''}}>›</button>`;
-    btns+=`<span class="rpt-page-info">${{start+1}}-${{Math.min(start+PAGE_SIZE,filtered.length)}} / ${{filtered.length}} 条</span>`;
+    btns+=`<span class="rpt-page-info">${{start+1}}-${{Math.min(start+PAGE_SIZE,filtered.length)}}/${{filtered.length}}条</span>`;
     return`<div class="rpt-pagination">${{btns}}</div>`;
   }})();
+
   list.innerHTML=cards+pager;
 }}
+
 function _goPage(p){{
   const list=document.getElementById('rpt-list');
   list.dataset.page=p;
   _renderR();
   list.scrollIntoView({{behavior:'smooth',block:'start'}});
 }}
-function copyRpt(idx){{
-  const r=_loadR()[idx];if(!r)return;
-  navigator.clipboard.writeText(`[${{r.name||r.id}}] ${{r.ts||''}}\\n\\n输入:\\n${{JSON.stringify(r.inputs,null,2)}}\\n\\n结果:\\n${{r.result||''}}`).then(()=>alert('报告已复制'));
+
+/* ── 详情 Modal ── */
+function openRptDetail(idx){{
+  const r=_loadR()[idx];
+  if(!r)return;
+  _currentRptIdx=idx;
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  const color=_catColor(r.id);
+  const icon=_AGENT_ICONS[r.id]||'';
+
+  document.getElementById('rpt-detail-icon').innerHTML=icon;
+  document.getElementById('rpt-detail-icon').style.background=color;
+  document.getElementById('rpt-detail-agent-name').textContent=name;
+  document.getElementById('rpt-detail-ts').textContent=_fmtTs(r.ts);
+
+  // 输入参数
+  const inputChips=Object.entries(r.inputs||{{}}).map(([k,v])=>
+    `<span class="rpt-detail-input-chip">
+      <span class="rpt-detail-input-key">${{k}}:</span>
+      <span class="rpt-detail-input-val" title="${{v.replace(/"/g,"'")}}">${{v.length>40?v.slice(0,38)+'…':v}}</span>
+    </span>`
+  ).join('');
+  const inputsEl=document.getElementById('rpt-detail-inputs');
+  inputsEl.style.display=inputChips?'flex':'none';
+  inputsEl.innerHTML=inputChips;
+
+  document.getElementById('rpt-detail-body').innerHTML=`<div class="rr-body">${{_renderReport(r.result||'')}}</div>`;
+
+  const overlay=document.getElementById('rpt-detail-overlay');
+  overlay.style.display='flex';
+  document.body.style.overflow='hidden';
 }}
-function delRpt(idx){{
-  if(!confirm('确认删除这条报告记录？'))return;
-  const rs=_loadR();rs.splice(idx,1);localStorage.setItem('agentReports',JSON.stringify(rs));_renderR();
+
+function closeRptDetail(){{
+  document.getElementById('rpt-detail-overlay').style.display='none';
+  document.body.style.overflow='';
+  _currentRptIdx=-1;
 }}
+
+function copyCurrentRpt(){{
+  if(_currentRptIdx<0)return;
+  const r=_loadR()[_currentRptIdx];
+  if(!r)return;
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  navigator.clipboard.writeText(`[${{name}}] ${{r.ts||''}}\\\n\\\n输入:\\\n${{JSON.stringify(r.inputs,null,2)}}\\\n\\\n结果:\\\n${{r.result||''}}`).then(()=>{{
+    const btn=document.querySelector('.rpt-detail-btn:nth-child(2)');
+    if(btn){{const orig=btn.innerHTML;btn.innerHTML='✓ 已复制';setTimeout(()=>btn.innerHTML=orig,1800);}}
+  }});
+}}
+
+function deleteCurrentRpt(){{
+  if(_currentRptIdx<0||!confirm('确认删除这条报告记录？'))return;
+  const rs=_loadR();
+  rs.splice(_currentRptIdx,1);
+  localStorage.setItem('agentReports',JSON.stringify(rs));
+  closeRptDetail();
+  _renderR();
+}}
+
+function pushDetailToFeishu(){{
+  if(_currentRptIdx<0)return;
+  const r=_loadR()[_currentRptIdx];
+  if(!r||!_FEISHU_HOOK_RPT){{alert('飞书推送未配置');return;}}
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  const btn=document.getElementById('rpt-detail-feishu-btn');
+  if(btn){{btn.textContent='推送中…';btn.disabled=true;}}
+  const inpLines=Object.entries(r.inputs||{{}}).map(([k,v])=>k+': '+v).join(String.fromCharCode(10));
+  const resultText=(r.result||'').replace(/\\*\\*/g,'').replace(/#+\\s/g,'').trim().slice(0,1800);
+  const body=JSON.stringify({{
+    msg_type:'interactive',
+    card:{{
+      header:{{title:{{tag:'plain_text',content:'📊 '+name+' — 报告推送'}},template:'green'}},
+      elements:[
+        {{tag:'div',text:{{tag:'plain_text',content:'时间: '+r.ts+(inpLines?'\\\n\\\n输入:\\\n'+inpLines:'')}}}},
+        {{tag:'hr'}},
+        {{tag:'div',text:{{tag:'plain_text',content:resultText}}}}
+      ]
+    }}
+  }});
+  fetch(_FEISHU_HOOK_RPT,{{method:'POST',headers:{{'Content-Type':'application/json'}},body}})
+    .then(()=>{{if(btn){{btn.innerHTML='✓ 已推送';setTimeout(()=>{{btn.innerHTML='推送飞书';btn.disabled=false;}},2000);}};}})
+    .catch(()=>{{if(btn){{btn.textContent='推送失败';btn.disabled=false;}};}});
+}}
+
+// ESC 关闭
+document.addEventListener('keydown',e=>{{if(e.key==='Escape')closeRptDetail();}});
+document.getElementById('rpt-detail-overlay').addEventListener('click',e=>{{
+  if(e.target===document.getElementById('rpt-detail-overlay'))closeRptDetail();
+}});
+
+function exportReports(){{
+  const rs=_loadR();if(!rs.length){{alert('暂无报告记录');return;}}
+  const txt=rs.map((r,i)=>`=== 报告 #${{i+1}} | ${{r.name||r.id}} | ${{r.ts||''}} ===\\\n输入:\\\n${{JSON.stringify(r.inputs,null,2)}}\\\n\\\n结果:\\\n${{r.result||''}}\\\n`).join('\\\n');
+  const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='agent-reports-'+new Date().toISOString().slice(0,10)+'.txt';a.click();
+}}
+
 function clearReports(){{
   if(!confirm('确认清空全部运行记录？此操作不可撤销。'))return;
   localStorage.removeItem('agentReports');_renderR();
 }}
-function exportReports(){{
-  const rs=_loadR();if(!rs.length){{alert('暂无报告记录');return;}}
-  const txt=rs.map((r,i)=>`=== 报告 #${{i+1}} | ${{r.name||r.id}} | ${{r.ts||''}} ===\\n输入:\\n${{JSON.stringify(r.inputs,null,2)}}\\n\\n结果:\\n${{r.result||''}}\\n`).join('\\n');
-  const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='agent-reports-'+new Date().toISOString().slice(0,10)+'.txt';a.click();
-}}
-document.addEventListener('DOMContentLoaded',function(){{_initSeeds();_renderR();_loadRemoteReports();}});
+
 function _loadRemoteReports(){{
   (async function(){{
     try{{
-      const remote=await fetch('/api/reports?session_key='+_sessionKey()+'&limit=20').then(function(r){{return r.json();}});
+      if(typeof _sessionKey!=='function')return;
+      const remote=await fetch('/api/reports?session_key='+_sessionKey()+'&limit=20').then(r=>r.json());
       if(remote&&remote.length){{
         const local=_loadR();
-        const seen=new Set(local.map(function(r){{return r.id||r.ts;}}) );
-        const merged=remote.filter(function(r){{return !seen.has(r.id)&&!seen.has(r.created_at);}})
-          .map(function(r){{return {{id:r.agent_id,name:r.agent_name,result:r.result,ts:r.created_at,inputs:JSON.parse(r.inputs||'{{}}')}}; }})
+        const seen=new Set(local.map(r=>r.id+'|'+(r.ts||'')));
+        const merged=remote
+          .filter(r=>!seen.has((r.agent_id||'')+'|'+(r.created_at||'')))
+          .map(r=>{{return{{id:r.agent_id,name:r.agent_name,result:r.result,ts:r.created_at,inputs:JSON.parse(r.inputs||'{{}}')}};}})
           .concat(local).slice(0,50);
         if(remote.length&&!local.length){{localStorage.setItem('agentReports',JSON.stringify(merged));_renderR();}}
       }}
     }}catch(e){{}}
   }})();
 }}
+
+document.addEventListener('DOMContentLoaded',function(){{_initSeeds();_renderR();_loadRemoteReports();}});
 window.addEventListener('storage',e=>{{if(e.key==='agentReports')_renderR();}});
 </script>
 """
@@ -3262,6 +3610,7 @@ def html_page(title: str, body: str, nav: str = "", active_nav: str = "") -> str
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{html.escape(title)} · paper2skills</title>
   <link rel="stylesheet" href="{nav}assets/style.css">{ga4_snippet}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -3420,6 +3769,140 @@ def link_list(items: list[str], nav: str = "", skill_ids: set[str] | None = None
     return "<ul>" + "".join(rows) + "</ul>"
 
 
+_EVO_CACHE: dict[str, float] = {}
+
+def _load_evo_score(skill_id: str, root: Path) -> float:
+    if skill_id in _EVO_CACHE:
+        return _EVO_CACHE[skill_id]
+    evo_path = root / ".evo" / f"{skill_id}.jsonl"
+    score = 0.0
+    if evo_path.exists():
+        try:
+            lines = [l for l in evo_path.read_text(encoding="utf-8").strip().split("\n") if l.strip()]
+            records = [json.loads(l) for l in lines]
+            score = max(r.get("best", r.get("score", 0)) for r in records)
+        except Exception:
+            pass
+    _EVO_CACHE[skill_id] = score
+    return score
+
+
+def _compute_skill_radar(skill_id: str, content: str, root: Path) -> dict:
+    total = _load_evo_score(skill_id, root)
+    mods = sum(1 for h in ["## ①", "## ②", "## ③", "## ④", "## ⑤"] if h in content)
+    has_fm = content.startswith("---\n") and "roadmap_phase:" in content[:600] and "doc_type:" in content[:600]
+    has_paper = bool(re.search(r'arXiv|arxiv|\b(NeurIPS|ICML|KDD|ICLR|AAAI|WWW|SIGIR|CIKM|WSDM)\b', content))
+    v_sec = content[content.find("## ⑤"):content.find("## ⑤") + 800] if "## ⑤" in content else content[-800:]
+    has_roi = bool(re.search(r'\d+\s*(?:万|%|元|亿|\$)', v_sec))
+    links = len(re.findall(r'\[\[Skill-[^\]]+\]\]', content))
+    has_code = bool(re.search(r'```python\n', content))
+
+    d1 = round(mods / 5 * 8, 1)
+    d2 = 5.0 if has_fm else (3.0 if content.startswith("---") else 0.0)
+    d3 = 10.0 if has_paper else 0.0
+    d4 = 8.0 if has_roi else 0.0
+    d5 = min(links / 2 * 4, 4.0)
+    d6 = 10.0 if has_code else 0.0
+    rule_sum = d1 + d2 + d3 + d4 + d5 + d6
+
+    llm_total = max(total - rule_sum, 0) if total > 0 else 28.0
+    llm_weights = {"D7": 15, "D8": 10, "D9": 15, "D10": 10, "D11": 5}
+    w_sum = sum(llm_weights.values())
+    d7 = round(llm_total * llm_weights["D7"] / w_sum, 1)
+    d8 = round(llm_total * llm_weights["D8"] / w_sum, 1)
+    d9 = round(llm_total * llm_weights["D9"] / w_sum, 1)
+    d10 = round(llm_total * llm_weights["D10"] / w_sum, 1)
+    d11 = round(llm_total * llm_weights["D11"] / w_sum, 1)
+
+    final_total = round(d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8 + d9 + d10 + d11, 1)
+    return {
+        "total": final_total if total == 0 else round(total, 1),
+        "D1": d1, "D2": d2, "D3": d3, "D4": d4, "D5": d5,
+        "D6": d6, "D7": d7, "D8": d8, "D9": d9, "D10": d10, "D11": d11,
+    }
+
+
+def _render_radar_panel(scores: dict) -> str:
+    total = scores["total"]
+    quality = "优质" if total >= 85 else ("良好" if total >= 75 else ("中等" if total >= 65 else "待改进"))
+    badge_color = "#16a34a" if total >= 85 else ("#ca8a04" if total >= 75 else ("#dc2626" if total < 65 else "#2563eb"))
+
+    labels = ["结构完整\nD1", "规范完整\nD2", "论文引用\nD3", "ROI量化\nD4",
+              "图谱关联\nD5", "代码可执行\nD6", "算法深度\nD7", "代码论文对应\nD8",
+              "场景具体\nD9", "三轨验证\nD10", "跨学科迁移\nD11"]
+    maxes = [8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5]
+    vals = [scores["D1"], scores["D2"], scores["D3"], scores["D4"], scores["D5"],
+            scores["D6"], scores["D7"], scores["D8"], scores["D9"], scores["D10"], scores["D11"]]
+
+    pcts = [round(v / m * 100, 1) for v, m in zip(vals, maxes)]
+    weakest_idx = min(range(len(pcts)), key=lambda i: pcts[i])
+    weakest_label = labels[weakest_idx].replace("\n", " ")
+
+    labels_js = json.dumps([l.replace("\n", " ") for l in labels])
+    vals_js = json.dumps(pcts)
+    scores_js = json.dumps([round(v, 1) for v in vals])
+    maxes_js = json.dumps(maxes)
+    names_js = json.dumps(["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi",
+                            "D5_links", "D6_code", "D7_code_depth", "D8_algo",
+                            "D9_scenario", "D10_three_track", "D11_crossdomain"])
+
+    weak_tip = f"最弱维度：{weakest_label}（{pcts[weakest_idx]:.0f}%）" if pcts[weakest_idx] < 70 else ""
+
+    return f"""<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:{badge_color};color:#fff">{quality} · {total:.0f}分</span>
+  </div>
+  {"<div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ " + weak_tip + "</div>" if weak_tip else ""}
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-{scores['D1']:.0f}{scores['D3']:.0f}{scores['D6']:.0f}" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){{
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){{
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }}
+    var labels={labels_js};
+    var pcts={vals_js};
+    var scores={scores_js};
+    var maxes={maxes_js};
+    var names={names_js};
+    var colors=pcts.map(function(p){{return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';}});
+    new Chart(c,{{
+      type:'radar',
+      data:{{
+        labels:labels,
+        datasets:[{{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }}]
+      }},
+      options:{{
+        scales:{{r:{{min:0,max:100,ticks:{{display:false,stepSize:25}},grid:{{color:'rgba(0,0,0,0.06)'}},pointLabels:{{font:{{size:10}},color:'#475569'}}}}}},
+        plugins:{{
+          legend:{{display:false}},
+          tooltip:{{callbacks:{{label:function(ctx){{
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}}}}
+        }},
+        responsive:false,
+        animation:{{duration:600}}
+      }}
+    }});
+  }})();
+  </script>
+</div>"""
+
+
 def render_skill_page(skill: PlaybookSkill) -> str:
     nav = "../"
 
@@ -3572,6 +4055,22 @@ def render_skill_page(skill: PlaybookSkill) -> str:
     except Exception:
         pass
 
+    _radar_html = ""
+    try:
+        _root = Path(__file__).parent.parent.parent.parent
+        _raw_content = ""
+        for _cp in [Path(skill.path),
+                    Path("paper2skills-vault") / skill.path,
+                    _root / "paper2skills-vault" / skill.path]:
+            if _cp.exists():
+                _raw_content = _cp.read_text(encoding="utf-8", errors="replace")
+                break
+        if _raw_content:
+            _scores = _compute_skill_radar(skill.skill_id, _raw_content, _root)
+            _radar_html = _render_radar_panel(_scores)
+    except Exception:
+        pass
+
     body = f"""
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/{slugify(skill.domain_dir)}.html">{html.escape(skill.domain_dir)}</a> / {html.escape(skill.skill_id)}</nav>
 <div class="skill-toc">
@@ -3590,6 +4089,7 @@ def render_skill_page(skill: PlaybookSkill) -> str:
 <div class="tag-row anim-fade-in-up anim-delay-1">{''.join(f"<span class='tag'>{html.escape(t)}</span>" for t in skill.tags + skill.topics + skill.workflows)}</div>
 {handbook_uplinks}
 {roi_meta}
+{_radar_html}
 {biz_panel}
 <div class="two-col">
   <section>
@@ -3713,16 +4213,17 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
     )
 
     business_cards = "".join(
-        f"<a class='biz-card' href='{e['href']}'>"
-        f"<div class='biz-card-header'>"
-        f"<span class='biz-icon'>{e['icon']}</span>"
-        f"<div class='biz-body'>"
-        f"<div class='biz-card-meta'>"
-        f"<strong>{html.escape(e['label'])}</strong>"
+        f"<a class='gallery-card biz-entry-card' href='{e['href']}' style='--card-color:{e['color']}'>"
+        f"<div class='gallery-card-bg' style='background-image:{svg_to_css_bg(make_pattern_svg(e['pattern'], e['color']))}'></div>"
+        f"<div class='gallery-card-body'>"
+        f"<div class='biz-entry-num'>{e['num']}</div>"
+        f"<div class='biz-entry-icon' style='color:{e['color']}'>{e['svg_icon']}</div>"
+        f"<div class='gallery-card-title'>{html.escape(e['label'])}</div>"
+        f"<div class='biz-entry-desc'>{html.escape(e['desc'])}</div>"
         f"</div>"
-        f"<p>{html.escape(e['desc'])}</p>"
-        f"<div class='biz-card-footer'><span class='biz-tag'>{html.escape(e['tag'])}</span></div>"
-        f"</div>"
+        f"<div class='gallery-card-footer'>"
+        f"<span class='biz-entry-tag'>{html.escape(e['tag'])}</span>"
+        f"<span class='biz-entry-arrow'>→</span>"
         f"</div>"
         f"</a>"
         for e in BUSINESS_ENTRIES
@@ -3775,7 +4276,7 @@ def render_index(skill_count: int, domain_count: int, edge_count: int, domains: 
 <div class="tab-panel active" id="tab-biz">
   <h2>从业务问题出发</h2>
   <p class="muted">选择你正在面对的挑战，直达对应的 Skill 路径与工作流。</p>
-  <div class="biz-grid">
+  <div class="gallery-grid">
     {business_cards}
   </div>
 </div>
@@ -4246,7 +4747,7 @@ def render_settings_page() -> str:
     )
 
 
-def render_pricing_page(skill_count: int = 1037) -> str:
+def render_pricing_page(skill_count: int = 0) -> str:
     return html_page(
         "升级 Pro",
         f"""
@@ -6217,6 +6718,7 @@ def render_pages(
         "按主题",
         "<h1>按主题浏览</h1><p class='page-lead'>按业务主题聚合的 AI 技能索引，快速定位你关心的场景。</p><div class='gallery-grid'>" + "".join(topic_cards) + "</div>",
         "../",
+        active_nav="topics",
     ))
     # ── Workflow pages (Phase 2B: YAML-first, keyword fallback) ──
     skill_lookup = {s.skill_id: s for s in skills}
@@ -6275,6 +6777,7 @@ def render_pages(
         "<h1>业务工作流</h1><p class='page-lead'>端到端业务决策路径，每条工作流包含分步决策树和推荐 Skill 组合。</p>"
         "<div class='gallery-grid'>" + "".join(workflow_cards) + "</div>",
         "../",
+        active_nav="workflows",
     ))
 
     # ── Skills Graph (Phase 3D: D3 visualisation) ──
@@ -6298,27 +6801,36 @@ def render_pages(
             render_tob_playbook(pb, skill_lookup),
         )
     def _pb_card(pb: dict) -> str:
-        tag = html.escape(pb.get("tag", ""))
         pb_id = pb["id"]
-        name = html.escape(pb["name"])
-        icon = pb.get("svg_icon") or pb["icon"]
-        biz_tag = html.escape(pb["tag"])
-        desc = html.escape(pb["desc"])
+        name  = html.escape(pb["name"])
+        tag   = html.escape(pb.get("tag", ""))
+        desc  = html.escape(pb["desc"])
         total_steps = len(pb.get("steps", []))
+
+        # Gallery卡片配置
+        cfg  = PB_CARD_CONFIG.get(pb_id, {"color": "#555", "pattern": "dots", "num": "??"})
+        c    = cfg["color"]
+        num  = cfg["num"]
+        pat  = cfg["pattern"]
+        bg_svg = svg_to_css_bg(make_pattern_svg(pat, c))
+
+        # 使用现有 svg_icon（已是 24px SVG）
+        icon_svg = pb.get("svg_icon", "")
+
         return (
-            f"<a class='biz-card' href='{pb_id}.html' data-tag='{tag}'>"
-            f"<div class='biz-card-header'>"
-            f"<span class='biz-icon'>{icon}</span>"
-            f"<div class='biz-body'>"
-            f"<div class='biz-card-meta'>"
-            f"<strong>{name}</strong>"
+            f"<a class='gallery-card pb-gallery-card' href='{pb_id}.html' "
+            f"data-tag='{tag}' style='--card-color:{c}'>"
+            f"<div class='gallery-card-bg' style='background-image:{bg_svg}'></div>"
+            f"<div class='gallery-card-body'>"
+            f"<div class='pb-gallery-num'>{num}</div>"
+            f"<div class='pb-gallery-icon' style='color:{c}'>{icon_svg}</div>"
+            f"<div class='gallery-card-title'>{name}</div>"
+            f"<div class='pb-gallery-tag'>{tag}</div>"
             f"</div>"
-            f"<p>{desc}</p>"
-            f"<div class='biz-card-footer'>"
-            f"<span class='biz-tag'>{biz_tag}</span>"
-            f"<div id='prog-{pb_id}' style='margin-left:auto;font-size:11px;color:#94a3b8'></div>"
-            f"</div>"
-            f"</div>"
+            f"<div class='gallery-card-footer'>"
+            f"<span class='gallery-card-count'>{total_steps}</span>"
+            f"<span class='gallery-card-unit'>步骤</span>"
+            f"<div id='prog-{pb_id}' class='pb-gallery-prog'></div>"
             f"</div>"
             f"</a>"
             f"<script>(function(){{"
@@ -6326,10 +6838,10 @@ def render_pages(
             f"var el=document.getElementById('prog-{pb_id}');"
             f"if(el&&done.length>0){{"
             f"var pct=Math.round(done.length/{total_steps}*100);"
-            f"el.innerHTML='<div style=\"display:flex;align-items:center;gap:5px\"><div style=\"background:#e2e8f0;border-radius:4px;height:4px;overflow:hidden;width:40px\"><div style=\"background:#059669;height:100%;width:'+pct+'%;transition:width .3s\"></div></div>'"
-            f"+'<span style=\"color:#059669;font-weight:600\">'+done.length+'/{total_steps}</span></div>';}}"
-            f"}})();</script>"
+            f"el.innerHTML='<div style=\"width:'+pct+'%;height:2px;background:{c};border-radius:2px\"></div>';"
+            f"}}}})();</script>"
         )
+
     tob_index_cards = "".join(_pb_card(pb) for pb in TOB_PLAYBOOKS)
     pb_search_bar = """<div style='margin:12px 0 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center'>
   <input id='pb-search' placeholder='搜索手册名称…' autocomplete='off'
@@ -6352,9 +6864,12 @@ def render_pages(
 </div>
 <script>
 (function(){
-  var bizCards = document.querySelectorAll('.biz-grid .biz-card');
+  var bizCards = [];
   var searchInput = document.getElementById('pb-search');
   var currentTag = '';
+  function initCards() {
+    bizCards = Array.from(document.querySelectorAll('.gallery-grid .pb-gallery-card'));
+  }
   function applyFilter() {
     var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
     bizCards.forEach(function(c) {
@@ -6374,6 +6889,10 @@ def render_pages(
     applyFilter();
   };
   if(searchInput) searchInput.addEventListener('input', applyFilter);
+  document.addEventListener('DOMContentLoaded', function() {
+    initCards();
+  });
+  if(document.readyState !== 'loading') initCards();
 })();
 </script>"""
     write_file(out / "playbooks" / "index.html", html_page(
@@ -6389,8 +6908,9 @@ def render_pages(
         "  <span class='pq-tag'>搜索流量</span>"
         "</div>"
         f"{pb_search_bar}"
-        f"<div class='biz-grid'>{tob_index_cards}</div>",
+        f"<div class='gallery-grid'>{tob_index_cards}</div>",
         "../",
+        active_nav="playbooks",
     ))
 
     write_file(out / "playbooks" / "progress.html", _render_playbook_progress_page(TOB_PLAYBOOKS))
@@ -6527,11 +7047,11 @@ def _post_build_patch(out: "Path") -> None:
 'agent-cold-start-advisor':'你是新品冷启动策略专家，专注跨境电商。输出格式：\\n【冷启动诊断】当前阶段（0-7天/1-4周/1-3月）及核心障碍\\n【流量获取方案】前30天具体推广策略（广告类型+预算分配%）\\n【定价策略】冷启动期建议价格 + 提价时间节点\\n【首评获取】获取前20条真实评价的3个具体操作\\n【里程碑目标】D7/D30/D90的可量化目标（排名/评价数/日销）。',
 'agent-festival-replenishment':'你是大促补货决策专家，专注跨境电商旺季。输出格式：\\n【大促需求预测】基于历史数据的需求倍率区间（P50/P80/P95）\\n【安全库存计算】建议备货量 = 预测需求×安全系数，给出具体件数\\n【资金占用评估】备货总成本 + 滞销风险敞口（超卖/断货各自损失估算）\\n【物流时间线】最晚下单时间 + 各运输方式到仓时间\\n【清仓预案】大促后剩余库存>30%的降价处理方案。'
 
-,'agent-video-content-mas':'你是视频电商内容专家，擅长TikTok/Reels母婴内容策略。\n输出格式：\n【热点话题】3个当前趋势（含预测爆款率）\n【脚本方案A】开场Hook + 核心内容 + CTA（字数限制60秒）\n【脚本方案B】不同角度的替代方案\n【商品标签建议】视频中应展示的SKU + 购物链接策略\n【发布策略】最优时间 + 标签 + 跨平台建议\n【预测指标】首日播放量范围 + 爆款概率 + ROI预估\n严格控制在母婴安全红线内，不发布任何医疗建议。'
-,'agent-causal-pricing-advisor':'你是因果定价专家，使用DML和X-Learner方法估计真实价格弹性。\n输出格式：\n【弹性诊断】OLS估计值 vs DML去偏估计值 + 偏差来源分析\n【用户分群弹性】高/中/低弹性用户群体划分 + 每群弹性值\n【定价建议】全量降价ROI vs 精准发券ROI对比\n【行动方案】3步精准定价策略：目标人群+优惠形式+预期效果\n【风险提示】定价操纵合规检查 + 竞品跟价风险\n数据驱动，用具体数字，禁止"可能"等模糊词。'
-,'agent-growth-diagnostics':'你是增长分析专家，专注用户激活率/复购率/ROAS等核心增长指标的根因诊断。\n输出格式：\n【异常确认】统计检验结果（p值 + z分数）+ 是否显著异常\n【假设树】5个候选根因（按概率排序）\n【数据验证】每个假设对应的数据查询和验证结果\n【根因定位】主因（置信度>80%）+ 次因（如有）\n【行动清单】P0行动（今日执行）+ P1行动（本周内）+ 预计恢复时间\n严格基于数据，不做主观猜测，每个结论附数据支撑。'
-,'agent-search-mas-monitor':'你是Amazon搜索排名专家，擅长多Agent协同监控和根因诊断。\n输出格式：\n【排名扫描】已监控关键词数量 + 发现异常关键词列表\n【根因矩阵】库存/评分/广告/竞品4个维度的影响评估\n【优先级排序】P0/P1/P2行动，每个行动的预期恢复天数和排名回升幅度\n【协同建议】广告出价调整 × 自然排名优化的协同策略\n【监控设置】建议的告警阈值和监控频率\n输出具体数字，不接受"可能""大概"等模糊表达。'
-,'agent-xai-compliance-auditor':'你是AI合规专家，专注EU AI Act、GDPR和算法公平性审计。\n输出格式：\n【合规级别】高风险/中风险/低风险 + 判定依据（引用具体法规条款）\n【歧视检测】各受保护属性的差异冲击比(DI) + 是否通过80%规则\n【可解释性评估】SHAP特征分析 + 个体解释能力 + 反事实解释\n【合规差距清单】已满足/待补充/未满足三栏对比\n【整改路线图】3个优先级行动 + 工程工时估算 + 合规风险量化\n以监管机构视角评审，不为企业利益辩护。'};
+,'agent-video-content-mas':'你是视频电商内容专家，擅长TikTok/Reels母婴内容策略。\\n输出格式：\\n【热点话题】3个当前趋势（含预测爆款率）\\n【脚本方案A】开场Hook + 核心内容 + CTA（字数限制60秒）\\n【脚本方案B】不同角度的替代方案\\n【商品标签建议】视频中应展示的SKU + 购物链接策略\\n【发布策略】最优时间 + 标签 + 跨平台建议\\n【预测指标】首日播放量范围 + 爆款概率 + ROI预估\\n严格控制在母婴安全红线内，不发布任何医疗建议。'
+,'agent-causal-pricing-advisor':'你是因果定价专家，使用DML和X-Learner方法估计真实价格弹性。\\n输出格式：\\n【弹性诊断】OLS估计值 vs DML去偏估计值 + 偏差来源分析\\n【用户分群弹性】高/中/低弹性用户群体划分 + 每群弹性值\\n【定价建议】全量降价ROI vs 精准发券ROI对比\\n【行动方案】3步精准定价策略：目标人群+优惠形式+预期效果\\n【风险提示】定价操纵合规检查 + 竞品跟价风险\\n数据驱动，用具体数字，禁止"可能"等模糊词。'
+,'agent-growth-diagnostics':'你是增长分析专家，专注用户激活率/复购率/ROAS等核心增长指标的根因诊断。\\n输出格式：\\n【异常确认】统计检验结果（p值 + z分数）+ 是否显著异常\\n【假设树】5个候选根因（按概率排序）\\n【数据验证】每个假设对应的数据查询和验证结果\\n【根因定位】主因（置信度>80%）+ 次因（如有）\\n【行动清单】P0行动（今日执行）+ P1行动（本周内）+ 预计恢复时间\\n严格基于数据，不做主观猜测，每个结论附数据支撑。'
+,'agent-search-mas-monitor':'你是Amazon搜索排名专家，擅长多Agent协同监控和根因诊断。\\n输出格式：\\n【排名扫描】已监控关键词数量 + 发现异常关键词列表\\n【根因矩阵】库存/评分/广告/竞品4个维度的影响评估\\n【优先级排序】P0/P1/P2行动，每个行动的预期恢复天数和排名回升幅度\\n【协同建议】广告出价调整 × 自然排名优化的协同策略\\n【监控设置】建议的告警阈值和监控频率\\n输出具体数字，不接受"可能""大概"等模糊表达。'
+,'agent-xai-compliance-auditor':'你是AI合规专家，专注EU AI Act、GDPR和算法公平性审计。\\n输出格式：\\n【合规级别】高风险/中风险/低风险 + 判定依据（引用具体法规条款）\\n【歧视检测】各受保护属性的差异冲击比(DI) + 是否通过80%规则\\n【可解释性评估】SHAP特征分析 + 个体解释能力 + 反事实解释\\n【合规差距清单】已满足/待补充/未满足三栏对比\\n【整改路线图】3个优先级行动 + 工程工时估算 + 合规风险量化\\n以监管机构视角评审，不为企业利益辩护。'};
 const CHAINS=[{id:'supply-decision',name:'供应链全链路决策',agents:['agent-supply-sentinel','agent-pnl-analyzer','agent-pricing-advisor']},{id:'growth-analysis',name:'增长归因分析',agents:['agent-ad-attribution','agent-competitor-radar','agent-product-radar']},{id:'brand-protection',name:'品牌合规防御',agents:['agent-listing-doctor','agent-brand-guardian','agent-account-guardian']}];
 const ADISP={'agent-supply-sentinel':'供应链哨兵','agent-pricing-advisor':'动态定价顾问','agent-pnl-analyzer':'P&L透视镜','agent-ad-attribution':'广告归因侦探','agent-listing-doctor':'Listing医生','agent-voc-decoder':'用户之声解码器','agent-cs-triage':'客服分诊台','agent-account-guardian':'账号风险卫士','agent-brand-guardian':'品牌合规卫士','agent-product-radar':'选品雷达','agent-tiktok-content':'TikTok内容官','agent-competitor-radar':'竞品雷达站','agent-sku-tag-scanner':'SKU标签质量扫描器','agent-compliance-matrix':'多市场合规矩阵','agent-return-analyzer':'退货根因分析师','agent-margin-calculator':'SKU利润归因计算器','agent-geopolitical-risk':'地缘风险评估仪','agent-epr-calculator':'EPR合规费用测算','agent-dml-counterfactual-pricing':'反事实定价引擎','agent-cold-start-advisor':'新品冷启动顾问','agent-festival-replenishment':'大促补货决策师'};
 function getMode(id){const r=document.querySelector('input[name="mode-'+id+'"]:checked');return r?r.value:'local';}
@@ -6648,8 +7168,11 @@ async function runChain(chainId){
 }"""
                 agents_html = agents_html[:start] + NEW_RUNAGENT + agents_html[func_end+1:]
 
-        # 注入 AI 引擎到 catBtns 前
-        if 'const catBtns' in agents_html and 'AGENT_PROMPTS' not in agents_html:
+        # 注入 AI 引擎到 catBtns 前（始终替换，确保最新版本）
+        if 'const catBtns' in agents_html:
+            if 'AGENT_PROMPTS' in agents_html:
+                import re as _re
+                agents_html = _re.sub(r'const AGENT_PROMPTS=.*?(?=const catBtns)', '', agents_html, flags=_re.DOTALL)
             agents_html = agents_html.replace('const catBtns', AI_ENGINE + '\nconst catBtns', 1)
 
         # 插入链式调用Banner到 agent-grid 前
