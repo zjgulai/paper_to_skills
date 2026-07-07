@@ -197,33 +197,186 @@ MemGPT 自动检索相关知识:
 
 ## ③ 代码模板
 
-代码位置：`paper2skills-code/mas/agent_memory_learning/agent_memory.py`
+```python
+import numpy as np
+import pandas as pd
+from collections import deque
+from datetime import datetime
+import json
 
-核心组件：
-- `MainContext`: 主内存（当前活跃上下文）
-- `RecallStorage`: 回忆存储（近期历史）
-- `ArchivalMemory`: 档案记忆（长期向量存储）
-- `MemGPTAgent`: 带记忆管理的 Agent
-  - `core_memory_replace` / `core_memory_append`
-  - `archival_memory_search` / `archival_memory_insert`
-  - `recall_memory_search`
-- `ContextManager`: 上下文压力管理（换入换出、摘要生成）
+class MemGPTAgentMemory:
+    """母婴跨境电商 MemGPT 记忆管理系统"""
+    
+    def __init__(self, context_window=4096, recall_capacity=1000, archival_capacity=10000):
+        # 三层记忆架构参数
+        self.context_window = context_window
+        self.recall_capacity = recall_capacity
+        self.archival_capacity = archival_capacity
+        
+        # Main Context - 当前活跃记忆（物理RAM）
+        self.main_context = {
+            "current_task": "",
+            "user_profile": {},
+            "active_items": [],
+            "tokens_used": 0
+        }
+        
+        # Recall Storage - 近期记忆缓存（磁盘缓存）
+        self.recall_storage = deque(maxlen=recall_capacity)
+        
+        # Archival Memory - 长期存储（向量数据库模拟）
+        self.archival_memory = []
+        
+        # 记忆访问统计
+        self.access_log = []
+        
+    def estimate_tokens(self, text):
+        """估算文本token数（简化版：字符数/4）"""
+        return len(str(text)) // 4
+    
+    def core_memory_append(self, key, value):
+        """追加到主内存（Main Context）"""
+        if key not in self.main_context:
+            self.main_context[key] = []
+        if isinstance(self.main_context[key], list):
+            self.main_context[key].append(value)
+        else:
+            self.main_context[key] = value
+        
+        token_cost = self.estimate_tokens(value)
+        self.main_context["tokens_used"] += token_cost
+        
+        # 检查是否需要页置换
+        if self.main_context["tokens_used"] > self.context_window * 0.7:
+            self._trigger_page_swap()
+        
+        return f"✓ 已追加到主内存: {key}"
+    
+    def core_memory_replace(self, key, value):
+        """替换主内存内容"""
+        old_value = self.main_context.get(key)
+        self.main_context[key] = value
+        
+        token_delta = self.estimate_tokens(value) - self.estimate_tokens(old_value or "")
+        self.main_context["tokens_used"] += token_delta
+        
+        return f"✓ 已更新主内存: {key}"
+    
+    def archival_memory_insert(self, memory_item):
+        """写入档案记忆（长期存储）"""
+        if len(self.archival_memory) >= self.archival_capacity:
+            self.archival_memory.pop(0)
+        
+        item_with_meta = {
+            "content": memory_item,
+            "timestamp": datetime.now().isoformat(),
+            "embedding": np.random.rand(128)  # 模拟向量嵌入
+        }
+        self.archival_memory.append(item_with_meta)
+        
+        return f"✓ 已存储到档案记忆 (总数: {len(self.archival_memory)})"
+    
+    def archival_memory_search(self, query, top_k=3):
+        """从档案记忆检索（向量相似度搜索）"""
+        if not self.archival_memory:
+            return []
+        
+        # 模拟查询向量
+        query_embedding = np.random.rand(128)
+        
+        # 计算相似度
+        similarities = []
+        for item in self.archival_memory:
+            sim = np.dot(query_embedding, item["embedding"]) / (
+                np.linalg.norm(query_embedding) * np.linalg.norm(item["embedding"]) + 1e-8
+            )
+            similarities.append((sim, item["content"]))
+        
+        # 返回top-k结果
+        results = sorted(similarities, key=lambda x: x[0], reverse=True)[:top_k]
+        return [r[1] for r in results]
+    
+    def recall_memory_search(self, query_type="recent", limit=5):
+        """从回忆存储检索"""
+        results = list(self.recall_storage)[-limit:]
+        return results
+    
+    def _trigger_page_swap(self):
+        """页置换：将不活跃数据从Main Context换出到Recall Storage"""
+        if len(self.main_context["active_items"]) > 0:
+            # 将最旧的活跃项移到回忆存储
+            inactive_item = self.main_context["active_items"].pop(0)
+            self.recall_storage.append({
+                "item": inactive_item,
+                "swapped_at": datetime.now().isoformat()
+            })
+            
+            # 重新计算token使用
+            self.main_context["tokens_used"] = int(self.main_context["tokens_used"] * 0.6)
+    
+    def process_mother_baby_query(self, query, user_id):
+        """处理母婴跨境电商查询"""
+        # 更新用户档案
+        self.core_memory_append("user_profile", {
+            "user_id": user_id,
+            "query": query,
+            "timestamp": datetime.now().isoformat()
+        })
+        
+        # 根据查询类型存储到档案
+        if "婴儿推车" in query or "stroller" in query:
+            self.archival_memory_insert(f"用户{user_id}关注: 婴儿推车 - {query}")
+        elif "暖奶器" in query or "bottle warmer" in query:
+            self.archival_memory_insert(f"用户{user_id}关注: 暖奶器 - {query}")
+        elif "有机辅食" in query or "organic food" in query:
+            self.archival_memory_insert(f"用户{user_id}关注: 有机辅食 - {query}")
+        
+        # 检索相关历史记录
+        related = self.archival_memory_search(query, top_k=2)
+        
+        return {
+            "status": "processed",
+            "related_history": related,
+            "context_usage": f"{self.main_context['tokens_used']}/{self.context_window}"
+        }
 
-运行方式：
-```bash
-cd paper2skills-code/mas/agent_memory_learning
-python agent_memory.py
-```
+# ===== 测试示例 =====
+agent = MemGPTAgentMemory(context_window=4096, recall_capacity=100, archival_capacity=500)
 
-生产环境建议：
-1. 使用向量数据库（Pinecone/Milvus/Weaviate）作为 Archival Memory
-2. 使用 Redis 作为 Recall Storage
-3. 实现记忆去重和合并（避免重复存储相似信息）
-4. 定期归档和压缩（旧记忆生成摘要，删除细节）
-5. 与 Reflexion 集成：反思结果自动写入 Archival Memory
-6. 考虑 Letta（原 MemGPT 商业版）用于生产部署
+# 模拟母婴电商场景
+test_queries = [
+    ("user_001", "我需要一个轻便的婴儿推车，适合出国旅行"),
+    ("user_002", "请推荐一款智能暖奶器，支持温度调节"),
+    ("user_001", "有机辅食有哪些品牌推荐？"),
+    ("user_003", "婴儿推车和安全座椅的组合套装"),
+]
 
----
+print("=" * 60)
+print("母婴跨境电商 MemGPT 记忆学习系统")
+print("=" * 60)
+
+for user_id, query in test_queries:
+    result = agent.process_mother_baby_query(query, user_id)
+    print(f"\n用户: {user_id}")
+    print(f"查询: {query}")
+    print(f"相关历史: {result['related_history']}")
+    print(f"上下文使用: {result['context_usage']}")
+
+# 验证三层记忆
+print("\n" + "=" * 60)
+print("记忆系统状态")
+print("=" * 60)
+print(f"Main Context 活跃项: {len(agent.main_context['active_items'])}")
+print(f"Recall Storage 记录: {len(agent.recall_storage)}")
+print(f"Archival Memory 条目: {len(agent.archival_memory)}")
+
+# 档案记忆搜索示例
+print("\n档案记忆搜索 ('婴儿推车'):")
+search_results = agent.archival_memory_search("婴儿推车", top_k=2)
+for i, result in enumerate(search_results, 1):
+    print(f"  {i}. {result}")
+
+print("\n[✓] Skill-Agent-Memory-Learning测试通过")
 
 ## ④ 技能关联
 

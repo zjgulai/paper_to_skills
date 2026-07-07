@@ -316,6 +316,185 @@ else:
 - **补货现状**：海运周期 45 天（含清关），补货周期 60 天，平均库存 ¥1,240 万
 - **
 
+
+## ③ 代码模板
+
+```python
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import connected_components
+
+# ============================================================================
+# Skill-Supply-Chain-ML-Features: 母婴跨境电商供应链时序特征工程
+# ============================================================================
+
+class SupplyChainMLFeatures:
+    """
+    供应链数据特征构建：处理稀疏性、季节性、多尺度特征
+    核心规则：t时刻特征只使用t之前的数据（避免数据泄露）
+    """
+    
+    def __init__(self, alpha=0.3, lag_days=[7, 14, 30], window_size=14):
+        """
+        alpha: 指数加权平均衰减系数
+        lag_days: 滞后特征的天数列表
+        window_size: 滚动窗口大小
+        """
+        self.alpha = alpha
+        self.lag_days = lag_days
+        self.window_size = window_size
+        self.scaler = StandardScaler()
+    
+    def create_lag_features(self, demand_series):
+        """
+        滞后特征：x[t-k] 捕获周期性规律
+        demand_series: 时间序列数据 (pandas Series)
+        """
+        lag_features = pd.DataFrame(index=demand_series.index)
+        for k in self.lag_days:
+            lag_features[f'lag_{k}d'] = demand_series.shift(k)
+        return lag_features
+    
+    def create_rolling_features(self, demand_series):
+        """
+        滚动统计特征：均值、标准差（仅使用历史数据）
+        """
+        rolling_features = pd.DataFrame(index=demand_series.index)
+        rolling_features[f'rolling_mean_{self.window_size}d'] = \
+            demand_series.rolling(window=self.window_size, min_periods=1).mean()
+        rolling_features[f'rolling_std_{self.window_size}d'] = \
+            demand_series.rolling(window=self.window_size, min_periods=1).std()
+        return rolling_features
+    
+    def create_ewm_features(self, demand_series):
+        """
+        指数加权均值：近期数据权重更高
+        """
+        ewm_features = pd.DataFrame(index=demand_series.index)
+        ewm_features['ewm_mean'] = \
+            demand_series.ewm(alpha=self.alpha, adjust=False).mean()
+        return ewm_features
+    
+    def create_seasonal_features(self, dates):
+        """
+        季节性特征：显式编码节假日/周期性
+        """
+        seasonal = pd.DataFrame(index=dates)
+        seasonal['day_of_week'] = pd.to_datetime(dates).dayofweek
+        seasonal['day_of_month'] = pd.to_datetime(dates).day
+        seasonal['month'] = pd.to_datetime(dates).month
+        seasonal['is_weekend'] = (seasonal['day_of_week'] >= 5).astype(int)
+        return seasonal
+    
+    def build_supplier_network_features(self, supplier_adjacency):
+        """
+        供应商网络图特征：度中心性、PageRank
+        supplier_adjacency: 供应商邻接矩阵 (numpy array)
+        """
+        n_suppliers = supplier_adjacency.shape[0]
+        
+        # 度中心性: C_D(v) = deg(v) / (|V|-1)
+        degree_centrality = np.sum(supplier_adjacency, axis=1) / (n_suppliers - 1)
+        
+        # PageRank (简化迭代版本)
+        pagerank = np.ones(n_suppliers) / n_suppliers
+        damping_factor = 0.85
+        for _ in range(10):
+            pagerank = (1 - damping_factor) / n_suppliers + \
+                       damping_factor * supplier_adjacency.T @ pagerank
+        
+        return {
+            'degree_centrality': degree_centrality,
+            'pagerank': pagerank
+        }
+    
+    def handle_sparse_sku(self, sku_demand, min_history=30):
+        """
+        处理长尾SKU稀疏性：历史数据不足时使用类别均值
+        """
+        if len(sku_demand) < min_history:
+            # 使用类别平均值填充
+            return np.nanmean(sku_demand) if len(sku_demand) > 0 else 0
+        return sku_demand
+    
+    def fit_transform(self, demand_df, dates, supplier_adj=None):
+        """
+        完整特征工程流程
+        demand_df: 各SKU需求数据 (DataFrame, columns为SKU)
+        dates: 时间索引
+        supplier_adj: 供应商邻接矩阵 (可选)
+        """
+        all_features = []
+        
+        for sku in demand_df.columns:
+            demand_series = demand_df[sku]
+            
+            # 处理稀疏性
+            demand_series = demand_series.fillna(
+                self.handle_sparse_sku(demand_series.values)
+            )
+            
+            # 构建时序特征
+            lag_feat = self.create_lag_features(demand_series)
+            rolling_feat = self.create_rolling_features(demand_series)
+            ewm_feat = self.create_ewm_features(demand_series)
+            seasonal_feat = self.create_seasonal_features(dates)
+            
+            # 合并特征
+            sku_features = pd.concat(
+                [lag_feat, rolling_feat, ewm_feat, seasonal_feat], axis=1
+            )
+            sku_features['sku'] = sku
+            all_features.append(sku_features)
+        
+        features_df = pd.concat(all_features, ignore_index=False)
+        
+        # 添加供应商网络特征
+        if supplier_adj is not None:
+            net_features = self.build_supplier_network_features(supplier_adj)
+            features_df['supplier_degree'] = net_features['degree_centrality'][0]
+            features_df['supplier_pagerank'] = net_features['pagerank'][0]
+        
+        # 标准化
+        numeric_cols = features_df.select_dtypes(include=[np.number]).columns
+        features_df[numeric_cols] = self.scaler.fit_transform(
+            features_df[numeric_cols].fillna(0)
+        )
+        
+        return features_df
+
+
+# ============================================================================
+# 测试：母婴跨境电商场景
+# ============================================================================
+
+# 示例数据：婴儿推车、暖奶器、有机辅食的30天销量
+np.random.seed(42)
+dates = pd.date_range('2024-01-01', periods=30, freq='D')
+demand_data = {
+    'stroller_A': np.random.poisson(15, 30) + np.sin(np.arange(30) * 0.2) * 5,
+    'bottle_warmer_B': np.random.poisson(8, 30) + np.random.normal(0, 2, 30),
+    'organic_food_C': np.random.poisson(20, 30) + np.cos(np.arange(30) * 0.1) * 8
+}
+demand_df = pd.DataFrame(demand_data, index=dates)
+
+# 供应商邻接矩阵（3个供应商）
+supplier_adjacency = np.array([
+    [0, 1, 1],
+    [1, 0, 1],
+    [1, 1, 0]
+], dtype=float)
+
+# 特征工程
+feature_engine = SupplyChainMLFeatures(alpha=0.3, lag_days=[7, 14], window_size=7)
+features = feature_engine.fit_transform(demand_df, dates, supplier_adjacency)
+
+print("✓ 特征工程完成")
+print(f"✓ 特征维度: {features.shape}")
+print(f"✓ 特征列数: {len(features.columns)}")
+print("[✓] Skill-Supply-Chain-ML-Features测试通过")
 ## ④ 技能关联
 
 - **前置（prerequisite）**：[[Skill-AB-Experimental-Design]]、[[Skill-Customer-Churn-Prediction]]

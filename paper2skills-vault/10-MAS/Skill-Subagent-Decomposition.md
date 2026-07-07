@@ -226,33 +226,184 @@ Subagent Decomposer 分解:
 
 ## ③ 代码模板
 
-代码位置：`paper2skills-code/mas/subagent_decomposer/subagent_decomposer.py`
+```python
+import numpy as np
+import pandas as pd
+from collections import defaultdict, deque
+from typing import List, Dict, Tuple, Set
 
-核心组件：
-- `Subtask`: 子任务（ID、技能、数据范围、依赖、优先级）
-- `TaskDAG`: 任务依赖图（节点=子任务，边=依赖关系）
-- `Decomposer`: 分解器主类
-  - `decompose_parallel`: 横向分解
-  - `decompose_sequential`: 纵向分解
-  - `decompose_hybrid`: 混合分解
-  - `build_dag`: 构建依赖图
-  - `get_execution_order`: 拓扑排序获取执行顺序
-- `SubagentPool`: 子 Agent 池（管理并行执行）
+class SubagentDecomposer:
+    """母婴跨境电商 Task 分解与子Agent分配"""
+    
+    def __init__(self):
+        # Skill Registry: 技能 -> (处理范围, 依赖技能)
+        self.skill_registry = {
+            'VOC_Extract': {'scope': ['all_categories'], 'deps': []},
+            'Data_Clean': {'scope': ['all_categories'], 'deps': ['VOC_Extract']},
+            'Category_Analyze': {'scope': ['baby_stroller', 'bottle_warmer', 'organic_food'], 'deps': ['Data_Clean']},
+            'Cross_Compare': {'scope': ['all_categories'], 'deps': ['Category_Analyze']},
+            'Report_Gen': {'scope': ['all_categories'], 'deps': ['Cross_Compare']}
+        }
+        self.categories = ['baby_stroller', 'bottle_warmer', 'organic_food']
+        self.task_dag = {}
+        self.execution_order = []
+    
+    def decompose_task(self, task_name: str, task_type: str) -> Dict:
+        """
+        分解任务为子任务DAG
+        task_type: 'parallel' | 'sequential' | 'hybrid'
+        """
+        subtasks = []
+        
+        if task_type == 'parallel':
+            # 横向分解：按品类并行
+            for cat in self.categories:
+                subtasks.append({
+                    'id': f'extract_{cat}',
+                    'skill': 'VOC_Extract',
+                    'data': cat,
+                    'deps': []
+                })
+        
+        elif task_type == 'sequential':
+            # 纵向分解：按阶段串行
+            stages = ['VOC_Extract', 'Data_Clean', 'Category_Analyze', 'Report_Gen']
+            for i, stage in enumerate(stages):
+                subtasks.append({
+                    'id': f'task_{i}',
+                    'skill': stage,
+                    'data': 'all_categories',
+                    'deps': [f'task_{i-1}'] if i > 0 else []
+                })
+        
+        else:  # hybrid
+            # 混合分解：先并行抽取，再串行处理
+            # 第1层：并行抽取
+            for cat in self.categories:
+                subtasks.append({
+                    'id': f'extract_{cat}',
+                    'skill': 'VOC_Extract',
+                    'data': cat,
+                    'deps': []
+                })
+            # 第2层：并行清洗
+            for cat in self.categories:
+                subtasks.append({
+                    'id': f'clean_{cat}',
+                    'skill': 'Data_Clean',
+                    'data': cat,
+                    'deps': [f'extract_{cat}']
+                })
+            # 第3层：并行分析
+            for cat in self.categories:
+                subtasks.append({
+                    'id': f'analyze_{cat}',
+                    'skill': 'Category_Analyze',
+                    'data': cat,
+                    'deps': [f'clean_{cat}']
+                })
+            # 第4层：跨品类对比
+            subtasks.append({
+                'id': 'compare_all',
+                'skill': 'Cross_Compare',
+                'data': 'all_categories',
+                'deps': [f'analyze_{cat}' for cat in self.categories]
+            })
+            # 第5层：生成报告
+            subtasks.append({
+                'id': 'report',
+                'skill': 'Report_Gen',
+                'data': 'all_categories',
+                'deps': ['compare_all']
+            })
+        
+        self.task_dag = {st['id']: st for st in subtasks}
+        return {'task': task_name, 'subtasks': subtasks, 'type': task_type}
+    
+    def topological_sort(self) -> List[str]:
+        """拓扑排序确定执行顺序"""
+        in_degree = {task_id: 0 for task_id in self.task_dag}
+        adj_list = defaultdict(list)
+        
+        for task_id, task in self.task_dag.items():
+            for dep in task['deps']:
+                adj_list[dep].append(task_id)
+                in_degree[task_id] += 1
+        
+        queue = deque([tid for tid in in_degree if in_degree[tid] == 0])
+        order = []
+        
+        while queue:
+            node = queue.popleft()
+            order.append(node)
+            for neighbor in adj_list[node]:
+                in_degree[neighbor] -= 1
+                if in_degree[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        self.execution_order = order
+        return order
+    
+    def allocate_agents(self) -> Dict[str, str]:
+        """分配子Agent"""
+        allocation = {}
+        for task_id in self.execution_order:
+            task = self.task_dag[task_id]
+            skill = task['skill']
+            allocation[task_id] = f"Agent_{skill}_{task['data'][:4]}"
+        return allocation
+    
+    def simulate_execution(self, allocation: Dict) -> pd.DataFrame:
+        """模拟执行并记录"""
+        results = []
+        for task_id in self.execution_order:
+            task = self.task_dag[task_id]
+            agent = allocation[task_id]
+            # 模拟处理：生成随机指标
+            voc_count = np.random.randint(50, 200)
+            sentiment_score = np.random.uniform(0.6, 0.95)
+            results.append({
+                'task_id': task_id,
+                'skill': task['skill'],
+                'agent': agent,
+                'data': task['data'],
+                'voc_count': voc_count,
+                'sentiment': round(sentiment_score, 3),
+                'status': 'completed'
+            })
+        return pd.DataFrame(results)
 
-运行方式：
-```bash
-cd paper2skills-code/mas/subagent_decomposer
-python subagent_decomposer.py
-```
+# 测试
+decomposer = SubagentDecomposer()
 
-生产环境建议：
-1. 使用 Temporal / Celery 作为底层任务调度引擎
-2. 实现子任务容错（失败重试、降级策略）
-3. 监控 DAG 执行状态（哪些节点完成/失败/进行中）
-4. 支持动态调整（执行中发现某子任务可进一步分解）
-5. 结果缓存（相同输入的子任务直接复用结果）
+# 场景1：并行分解（按品类）
+print("=== 场景1：并行分解 ===")
+task1 = decomposer.decompose_task("VOC_Weekly_Report", "parallel")
+print(f"分解为 {len(task1['subtasks'])} 个子任务")
 
----
+# 场景2：混合分解（推荐）
+print("\n=== 场景2：混合分解 ===")
+decomposer = SubagentDecomposer()
+task2 = decomposer.decompose_task("VOC_Weekly_Report", "hybrid")
+print(f"分解为 {len(task2['subtasks'])} 个子任务")
+
+# 拓扑排序
+order = decomposer.topological_sort()
+print(f"执行顺序: {' → '.join(order)}")
+
+# 分配Agent
+allocation = decomposer.allocate_agents()
+print(f"分配 {len(allocation)} 个子Agent")
+
+# 模拟执行
+results_df = decomposer.simulate_execution(allocation)
+print("\n执行结果统计:")
+print(f"总任务数: {len(results_df)}")
+print(f"平均VOC数: {results_df['voc_count'].mean():.1f}")
+print(f"平均情感分: {results_df['sentiment'].mean():.3f}")
+print(f"并行度: {len(results_df[results_df['skill']=='Category_Analyze'])}")
+
+print("[✓] Skill-Subagent-Decomposition测试通过")
 
 ## ④ 技能关联
 

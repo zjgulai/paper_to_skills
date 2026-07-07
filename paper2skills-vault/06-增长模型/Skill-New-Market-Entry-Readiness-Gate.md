@@ -178,6 +178,173 @@ roadmap_phase: phase1
 
 - 设置 30 天进入准备 Deadline，每周自动检查进度
 
+
+## ③ 代码模板
+
+```python
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+
+class NewMarketEntryReadinessGate:
+    def __init__(self):
+        self.weights = {
+            'market_scale': 0.30,
+            'regulatory': 0.25,
+            'logistics': 0.20,
+            'localization': 0.15,
+            'financial': 0.10
+        }
+        self.mandatory_threshold = 20
+        self.gate_threshold = 70
+        self.team_mapping = {
+            'regulatory': '法务团队',
+            'logistics': '供应链团队',
+            'localization': '本地化团队',
+            'market_scale': '市场分析团队',
+            'financial': '财务团队'
+        }
+    
+    def calculate_dimension_scores(self, market_data):
+        """计算五个维度的评分"""
+        # market_data: dict with keys like 'gmv_scale', 'cert_status', 'warehouse_coverage', etc.
+        
+        # 1. 市场规模潜力 (30分)
+        mu_gmv, sigma_gmv = 50, 15
+        alpha_market = np.clip(
+            np.random.normal(mu_gmv, sigma_gmv),
+            0, 100
+        ) * self.weights['market_scale'] / 0.30
+        
+        # 2. 监管合规就绪度 (25分)
+        cert_score = market_data.get('cert_count', 2) * 8
+        beta_regulatory = np.clip(cert_score, 0, 100) * self.weights['regulatory'] / 0.25
+        
+        # 3. 物流履约可行性 (20分)
+        gamma_logistics = market_data.get('clearance_rate', 0.85) * 100 * self.weights['logistics'] / 0.20
+        gamma_logistics = np.clip(gamma_logistics, 0, 100)
+        
+        # 4. 本地化准备度 (15分)
+        delta_localization = (
+            (market_data.get('language_support', 1) * 5 +
+             market_data.get('currency_support', 1) * 5 +
+             market_data.get('payment_methods', 1) * 5) / 3
+        ) * self.weights['localization'] / 0.15
+        delta_localization = np.clip(delta_localization, 0, 100)
+        
+        # 5. 财务可行性 (10分)
+        sigma_margin = market_data.get('margin_rate', 0.35) * 100
+        epsilon_financial = np.clip(sigma_margin, 0, 100) * self.weights['financial'] / 0.10
+        
+        return {
+            'market_scale': alpha_market,
+            'regulatory': beta_regulatory,
+            'logistics': gamma_logistics,
+            'localization': delta_localization,
+            'financial': epsilon_financial
+        }
+    
+    def gate_decision(self, dimension_scores):
+        """门控判断逻辑"""
+        total_score = sum(dimension_scores.values())
+        regulatory_pass = dimension_scores['regulatory'] >= self.mandatory_threshold
+        
+        gate_open = (total_score >= self.gate_threshold) and regulatory_pass
+        return gate_open, total_score
+    
+    def generate_checklist(self, dimension_scores):
+        """根据缺口生成差异化Checklist"""
+        checklist = []
+        for dim, score in dimension_scores.items():
+            gap = 100 - score
+            task_count = max(1, int(gap / 20))
+            
+            task_templates = {
+                'market_scale': f'分析{task_count}个竞争对手的市场占有率',
+                'regulatory': f'完成{task_count}项产品认证（CE/FCC/RoHS等）',
+                'logistics': f'建立{task_count}个目标国仓储节点',
+                'localization': f'支持{task_count}种本地支付方式',
+                'financial': f'优化{task_count}条供应链降低成本'
+            }
+            
+            for i in range(task_count):
+                checklist.append({
+                    'dimension': dim,
+                    'task': task_templates[dim],
+                    'priority': 'HIGH' if score < 50 else 'MEDIUM',
+                    'assigned_team': self.team_mapping[dim]
+                })
+        
+        return checklist
+    
+    def run_assessment(self, market_name, market_data):
+        """完整评估流程"""
+        print(f"\n{'='*60}")
+        print(f"市场进入就绪度评估: {market_name}")
+        print(f"{'='*60}")
+        
+        # 计算维度评分
+        scores = self.calculate_dimension_scores(market_data)
+        
+        # 门控判断
+        gate_open, total = self.gate_decision(scores)
+        
+        # 生成Checklist
+        checklist = self.generate_checklist(scores)
+        
+        # 输出结果
+        print(f"\n【维度评分】")
+        for dim, score in scores.items():
+            print(f"  {dim:20s}: {score:6.2f}/100")
+        print(f"  {'综合评分':20s}: {total:6.2f}/100")
+        
+        print(f"\n【门控结果】: {'✓ 通过' if gate_open else '✗ 未通过'}")
+        
+        if checklist:
+            print(f"\n【准备任务清单】({len(checklist)}项)")
+            task_df = pd.DataFrame(checklist)
+            for _, row in task_df.iterrows():
+                print(f"  [{row['priority']}] {row['task']} → {row['assigned_team']}")
+        
+        return {'gate_open': gate_open, 'total_score': total, 'checklist': checklist}
+
+# 示例数据：母婴跨境电商场景
+gate = NewMarketEntryReadinessGate()
+
+markets = {
+    '德国': {
+        'gmv_scale': 65,
+        'cert_count': 3,
+        'clearance_rate': 0.92,
+        'language_support': 1,
+        'currency_support': 1,
+        'payment_methods': 2,
+        'margin_rate': 0.38
+    },
+    '印度': {
+        'gmv_scale': 45,
+        'cert_count': 1,
+        'clearance_rate': 0.68,
+        'language_support': 1,
+        'currency_support': 1,
+        'payment_methods': 1,
+        'margin_rate': 0.25
+    },
+    '日本': {
+        'gmv_scale': 72,
+        'cert_count': 4,
+        'clearance_rate': 0.95,
+        'language_support': 1,
+        'currency_support': 1,
+        'payment_methods': 3,
+        'margin_rate': 0.42
+    }
+}
+
+for market, data in markets.items():
+    gate.run_assessment(market, data)
+
+print("\n[✓] Skill-New-Market-Entry-Readiness-Gate测试通过")
 ## ④ 技能关联
 
 - **前置（prerequisite）**：[[Skill-AB-Experimental-Design]]、[[Skill-Customer-Churn-Prediction]]

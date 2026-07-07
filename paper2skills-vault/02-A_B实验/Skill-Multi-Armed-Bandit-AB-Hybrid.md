@@ -45,155 +45,145 @@ $$\text{策略选择} = \begin{cases} \epsilon_t \cdot \text{随机臂} + (1-\ep
 
 ## ③ 代码模板
 
+```python
 import numpy as np
 import pandas as pd
-from scipy.stats import beta, norm
-from datetime import datetime, timedelta
+from scipy.stats import beta as beta_dist
+from scipy.special import xlogy
 
-class MABHybridABTest:
-    def __init__(self, n_arms=4, initial_epsilon=0.3, decay_rate=0.95):
-        self.n_arms = n_arms
-        self.epsilon = initial_epsilon
-        self.decay_rate = decay_rate
-        self.t = 0
-        
-        # Thompson Sampling: Beta分布参数
-        self.alpha = np.ones(n_arms)
-        self.beta_param = np.ones(n_arms)
-        
-        # UCB参数
-        self.arm_counts = np.zeros(n_arms)
-        self.arm_rewards = np.zeros(n_arms)
-        
-        # 策略切换阈值
-        self.strategy_switch_threshold = 100
-        self.current_strategy = 'epsilon_greedy'
-        
-    def select_arm_epsilon_greedy(self):
-        """Epsilon-greedy策略：衰减探索率"""
-        if np.random.random() < self.epsilon:
-            return np.random.randint(0, self.n_arms)
-        else:
-            return np.argmax(self.arm_rewards / (self.arm_counts + 1e-10))
+class MABHybridFramework:
+    """多臂老虎机与A/B测试混合框架 - 母婴跨境电商场景"""
     
-    def select_arm_thompson(self):
-        """Thompson Sampling：从后验Beta分布采样"""
-        samples = np.array([
+    def __init__(self, n_arms=3, epsilon_0=0.3, strategy='thompson'):
+        """
+        初始化MAB混合框架
+        Args:
+            n_arms: 臂数（产品SKU数）
+            epsilon_0: 初始探索率
+            strategy: 'epsilon_greedy'|'thompson'|'ucb'
+        """
+        self.n_arms = n_arms
+        self.epsilon_0 = epsilon_0
+        self.strategy = strategy
+        self.t = 0  # 时间步
+        
+        # Beta分布参数（Thompson Sampling）
+        self.alpha = np.ones(n_arms)  # 成功计数
+        self.beta_param = np.ones(n_arms)  # 失败计数
+        
+        # 收益统计
+        self.mu = np.zeros(n_arms)  # 均值
+        self.sigma = np.ones(n_arms)  # 标准差
+        self.n_pulls = np.zeros(n_arms)  # 每臂拉取次数
+        self.rewards = [[] for _ in range(n_arms)]
+        
+        # 产品映射（母婴跨境电商）
+        self.products = ['婴儿推车', '暖奶器', '有机辅食'][:n_arms]
+    
+    def epsilon_greedy_decay(self):
+        """Epsilon-greedy衰减策略"""
+        epsilon_t = self.epsilon_0 / np.sqrt(max(self.t, 1))
+        if np.random.rand() < epsilon_t:
+            return np.random.randint(self.n_arms)  # 随机探索
+        else:
+            return np.argmax(self.mu)  # 利用最优臂
+    
+    def thompson_sampling(self):
+        """Thompson Sampling - 从后验Beta分布采样"""
+        theta_samples = np.array([
             np.random.beta(self.alpha[i], self.beta_param[i]) 
             for i in range(self.n_arms)
         ])
-        return np.argmax(samples)
+        return np.argmax(theta_samples)
     
-    def select_arm_ucb(self):
-        """UCB策略：上置信界"""
-        ucb_values = np.array([
-            (self.arm_rewards[i] / (self.arm_counts[i] + 1e-10)) + 
-            np.sqrt(np.log(self.t + 1) / (2 * (self.arm_counts[i] + 1)))
-            for i in range(self.n_arms)
-        ])
+    def ucb_strategy(self):
+        """UCB上置信界策略"""
+        ucb_values = self.mu + np.sqrt(np.log(max(self.t, 1)) / (2 * np.maximum(self.n_pulls, 1)))
         return np.argmax(ucb_values)
     
     def select_arm(self):
-        """自适应策略切换"""
-        if self.t < self.strategy_switch_threshold:
-            self.current_strategy = 'epsilon_greedy'
-            return self.select_arm_epsilon_greedy()
-        elif self.t < 2 * self.strategy_switch_threshold:
-            self.current_strategy = 'thompson'
-            return self.select_arm_thompson()
-        else:
-            self.current_strategy = 'ucb'
-            return self.select_arm_ucb()
+        """根据策略选择臂"""
+        if self.strategy == 'epsilon_greedy':
+            return self.epsilon_greedy_decay()
+        elif self.strategy == 'thompson':
+            return self.thompson_sampling()
+        elif self.strategy == 'ucb':
+            return self.ucb_strategy()
     
     def update(self, arm, reward):
-        """更新臂的奖励和后验分布"""
+        """更新臂的收益信息"""
         self.t += 1
-        self.arm_counts[arm] += 1
-        self.arm_rewards[arm] += reward
+        self.n_pulls[arm] += 1
+        self.rewards[arm].append(reward)
         
-        # 更新Thompson Sampling的Beta分布
-        if reward == 1:
+        # 更新均值和标准差
+        self.mu[arm] = np.mean(self.rewards[arm])
+        if len(self.rewards[arm]) > 1:
+            self.sigma[arm] = np.std(self.rewards[arm])
+        
+        # Thompson Sampling: 更新Beta分布参数
+        if reward > 0.5:  # 转化成功
             self.alpha[arm] += 1
         else:
             self.beta_param[arm] += 1
-        
-        # 衰减epsilon
-        self.epsilon = self.epsilon * self.decay_rate
     
-    def get_stats(self):
-        """获取当前统计信息"""
-        conversion_rates = self.arm_rewards / (self.arm_counts + 1e-10)
-        return {
-            'arm_counts': self.arm_counts,
-            'conversion_rates': conversion_rates,
-            'current_strategy': self.current_strategy,
-            'epsilon': self.epsilon,
-            'total_trials': self.t
-        }
-
-# 模拟场景：婴儿推车listing 4个变体测试
-np.random.seed(42)
-mab = MABHybridABTest(n_arms=4, initial_epsilon=0.3)
-
-# 真实转化率（未知）
-true_rates = np.array([0.08, 0.12, 0.10, 0.09])
-
-# 模拟7天测试（每天1000次访问）
-results = []
-for day in range(7):
-    for _ in range(1000):
-        selected_arm = mab.select_arm()
-        reward = np.random.binomial(1, true_rates[selected_arm])
-        mab.update(selected_arm, reward)
+    def run_experiment(self, n_rounds=1000, true_rewards=None):
+        """运行MAB实验"""
+        if true_rewards is None:
+            true_rewards = np.array([0.12, 0.15, 0.10])  # 真实转化率
         
-        results.append({
-            'day': day + 1,
-            'arm': selected_arm,
-            'reward': reward,
-            'strategy': mab.current_strategy,
-            'trial': mab.t
+        history = []
+        for _ in range(n_rounds):
+            arm = self.select_arm()
+            # 模拟伯努利奖励（转化事件）
+            reward = 1.0 if np.random.rand() < true_rewards[arm] else 0.0
+            self.update(arm, reward)
+            history.append({'round': self.t, 'arm': arm, 'reward': reward})
+        
+        return pd.DataFrame(history)
+    
+    def get_traffic_allocation(self):
+        """计算动态流量分配（MAB vs 固定A/B）"""
+        total_pulls = np.sum(self.n_pulls)
+        mab_allocation = self.n_pulls / total_pulls if total_pulls > 0 else np.ones(self.n_arms) / self.n_arms
+        ab_allocation = np.ones(self.n_arms) / self.n_arms  # 固定50%-50%-...
+        
+        return pd.DataFrame({
+            'Product': self.products,
+            'MAB_Allocation': mab_allocation,
+            'AB_Fixed_Allocation': ab_allocation,
+            'Pulls': self.n_pulls.astype(int),
+            'Conversion_Rate': self.mu
         })
 
-results_df = pd.DataFrame(results)
-
-# 分析结果
-print("=" * 60)
-print("MAB×A/B混合实验 - 婴儿推车变体测试")
-print("=" * 60)
-print(f"\n总试验次数: {mab.t}")
-print(f"最终策略: {mab.current_strategy}")
-print(f"\n各臂表现:")
-stats = mab.get_stats()
-for i in range(mab.n_arms):
-    print(f"  变体{i}: 样本数={int(stats['arm_counts'][i])}, "
-          f"转化率={stats['conversion_rates'][i]:.2%}, "
-          f"真实率={true_rates[i]:.2%}")
-
-# 流量分配分析
-print(f"\n流量分配效率:")
-optimal_arm = np.argmax(true_rates)
-optimal_traffic = stats['arm_counts'][optimal_arm] / mab.t
-print(f"  最优臂流量占比: {optimal_traffic:.2%}")
-print(f"  相比均分提升: {(optimal_traffic - 0.25) / 0.25 * 100:.1f}%")
-
-# 日均转化率趋势
-daily_stats = results_df.groupby('day').agg({
-    'reward': ['sum', 'count']
-}).reset_index()
-daily_stats.columns = ['day', 'conversions', 'trials']
-daily_stats['conversion_rate'] = daily_stats['conversions'] / daily_stats['trials']
-print(f"\n日均转化率趋势:")
-for _, row in daily_stats.iterrows():
-    print(f"  第{int(row['day'])}天: {row['conversion_rate']:.2%} "
-          f"({int(row['conversions'])}/{int(row['trials'])})")
-
-# 后验分布可视化数据
-print(f"\n后验Beta分布参数 (Thompson Sampling):")
-for i in range(mab.n_arms):
-    print(f"  变体{i}: α={mab.alpha[i]:.0f}, β={mab.beta_param[i]:.0f}, "
-          f"后验均值={(mab.alpha[i]/(mab.alpha[i]+mab.beta_param[i])):.2%}")
-
-print("\n[✓] Skill-Multi-Armed-Bandit-AB-Hybrid测试通过")
+# ============ 测试与演示 ============
+if __name__ == '__main__':
+    np.random.seed(42)
+    
+    # 初始化三个策略框架
+    mab_thompson = MABHybridFramework(n_arms=3, strategy='thompson')
+    mab_ucb = MABHybridFramework(n_arms=3, strategy='ucb')
+    mab_epsilon = MABHybridFramework(n_arms=3, strategy='epsilon_greedy')
+    
+    # 真实转化率（母婴产品）
+    true_conversion = np.array([0.12, 0.15, 0.10])
+    
+    # 运行实验
+    print("=" * 60)
+    print("多臂老虎机与A/B测试混合框架 - 母婴跨境电商")
+    print("=" * 60)
+    
+    for framework, name in [(mab_thompson, 'Thompson Sampling'),
+                             (mab_ucb, 'UCB'),
+                             (mab_epsilon, 'Epsilon-Greedy')]:
+        framework.run_experiment(n_rounds=500, true_rewards=true_conversion)
+        print(f"\n【{name}】流量分配结果:")
+        print(framework.get_traffic_allocation().to_string(index=False))
+        print(f"最优臂: {framework.products[np.argmax(framework.mu)]} "
+              f"(转化率: {np.max(framework.mu):.4f})")
+    
+    print("\n" + "=" * 60)
+    print("[✓] Skill-Multi-Armed-Bandit-AB-Hybrid测试通过")
 
 ## ④ 技能关联
 

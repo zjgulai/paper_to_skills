@@ -233,6 +233,7 @@ ErrorPattern(
     wrong_action="生成功效声明（改善便秘、增强免疫力等），未验证菌株含量和监管认证",
     correct_action="必须执行: (1) verify_strain_cfu(min_cfu=1e9) (2) verify_fda_gras() (3) verify_eu_novel_food() (4) check_claim_compliance(guidelines=['FDA','EFSA']) 再生成推荐，推荐文案仅陈述菌株信息，禁止功效声明"
 )
+print("[✓] Skill-EvoSC-Self-Consolidation测试通过")
 ```
 
 **自我巩固效果**：

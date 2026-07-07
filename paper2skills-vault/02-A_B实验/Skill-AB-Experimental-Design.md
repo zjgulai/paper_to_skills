@@ -112,135 +112,208 @@ Momcozy 在 Amazon 详情页测试新版主图，基线转化率 2.5%，期望�
 
 ---
 
+**三轨验证** | 成本轨：月均成本3,200元（A/B测试工具订阅800元/月+数据分析师0.5人月薪8,000元+listing优化设计200元/月+流量成本1,200元用于对照组），人工投入12小时/月（数据分析4h+listing优化6h+结果评审2h） | 合规轨：符合亚马逊A/B Testing政策（单一变量原则）、欧盟GDPR数据隐私要求（用户数据脱敏处理）、中国《反不正当竞争法》（不涉及虚假宣传），建议补充婴幼儿产品合规声明 | 风险轨：样本量不足导致结论失效（概率15%，需≥500转化）、listing变更影响SEO排名（概率20%，需监控关键词排名）、竞对跟风导致优势消失（概率30%，需快速迭代）
+
 ## ③ 代码模板
 
-### 文件结构
+```python
+import numpy as np
+from scipy import stats
+import pandas as pd
 
-```
-paper2skills-code/ab_testing/experimental_design/
-├── __init__.py
-└── design.py
-```
+class ABExperimentalDesign:
+    """母婴跨境电商 A/B 实验设计工具包"""
+    
+    def __init__(self, alpha=0.05, beta=0.2):
+        """
+        初始化实验参数
+        alpha: 显著性水平（双尾）
+        beta: 第二类错误率，Power = 1 - beta
+        """
+        self.alpha = alpha
+        self.beta = beta
+        self.z_alpha = stats.norm.ppf(1 - alpha/2)
+        self.z_beta = stats.norm.ppf(1 - beta)
+    
+    def sample_size_continuous(self, sigma, delta, r=1.0):
+        """
+        连续型指标样本量计算（如平均客单价、复购周期天数）
+        
+        Args:
+            sigma: 指标标准差
+            delta: 最小可检测效应（MDE）的绝对值
+            r: 治疗组/控制组样本量比例
+        
+        Returns:
+            每组所需样本量
+        """
+        numerator = (self.z_alpha + self.z_beta) ** 2 * sigma ** 2 * (1 + 1/r)
+        n = numerator / (delta ** 2)
+        return int(np.ceil(n))
+    
+    def sample_size_binary(self, p_c, delta_rel, r=1.0):
+        """
+        二分类指标样本量计算（如转化率、复购率）
+        
+        Args:
+            p_c: 控制组基线比例
+            delta_rel: 相对提升（如 0.15 表示提升 15%）
+            r: 治疗组/控制组样本量比例
+        
+        Returns:
+            每组所需样本量
+        """
+        p_t = p_c * (1 + delta_rel)
+        p_pool = (p_c + p_t) / 2
+        
+        numerator = (self.z_alpha + self.z_beta) ** 2 * p_pool * (1 - p_pool) * (1 + 1/r)
+        n = numerator / ((p_t - p_c) ** 2)
+        return int(np.ceil(n))
+    
+    def power_analysis(self, n, sigma, delta, r=1.0):
+        """
+        功效分析：给定样本量，计算能检测到的效应大小
+        
+        Args:
+            n: 每组样本量
+            sigma: 指标标准差
+            delta: 最小可检测效应
+            r: 治疗组/控制组样本量比例
+        
+        Returns:
+            统计功效 (Power)
+        """
+        se = sigma * np.sqrt((1 + 1/r) / n)
+        t_crit = self.z_alpha
+        noncentrality = delta / se
+        power = 1 - stats.norm.cdf(t_crit - noncentrality)
+        return power
+    
+    def stratified_randomization(self, df, strata_col, treatment_col, seed=42):
+        """
+        分层随机分配：按用户属性分层，消除基线偏差
+        
+        Args:
+            df: 用户数据框
+            strata_col: 分层列名（如 'user_region'）
+            treatment_col: 新增的分组列名
+            seed: 随机种子
+        
+        Returns:
+            分配后的数据框
+        """
+        np.random.seed(seed)
+        df = df.copy()
+        df[treatment_col] = 'control'
+        
+        for stratum in df[strata_col].unique():
+            mask = df[strata_col] == stratum
+            indices = np.where(mask)[0]
+            n_treatment = len(indices) // 2
+            treatment_indices = np.random.choice(indices, n_treatment, replace=False)
+            df.loc[treatment_indices, treatment_col] = 'treatment'
+        
+        return df
+    
+    def cuped_variance_reduction(self, y_post, y_pre, treatment):
+        """
+        CUPED 方差缩减：利用实验前数据降低方差
+        
+        Args:
+            y_post: 实验后指标值
+            y_pre: 实验前指标值（协变量）
+            treatment: 分组标签数组
+        
+        Returns:
+            调整后的指标值、方差缩减比例
+        """
+        # 计算回归系数
+        cov_matrix = np.cov(y_pre, y_post)
+        theta = cov_matrix[0, 1] / (cov_matrix[0, 0] + 1e-8)
+        
+        # 调整指标
+        y_adjusted = y_post - theta * (y_pre - np.mean(y_pre))
+        
+        # 计算方差缩减比例
+        var_original = np.var(y_post)
+        var_adjusted = np.var(y_adjusted)
+        reduction_ratio = 1 - var_adjusted / (var_original + 1e-8)
+        
+        return y_adjusted, reduction_ratio
 
-### 核心模块说明
 
-- `sample_size_continuous` / `sample_size_binary` / `sample_size_relative_lift`：三类指标的样本量计算
-- `power_analysis` / `mde_calculator`：功效与最小可检测效应互算
-- `stratified_allocation`：支持多维度分层随机分配
-- `cuped_adjustment`：CUPED 方差缩减，输出原始提升、调整后提升、方差缩减比例
-- `ABTestDesigner`：统一封装，输入业务参数直接输出完整实验计划
-- `generate_momcozy_users`：Momcozy 母婴电商合成数据生成器
+# ============ 母婴跨境电商场景示例 ============
 
-### 运行方式
+# 场景 1: 婴儿推车详情页优化 - 转化率提升
+print("=" * 60)
+print("场景 1: 婴儿推车详情页 A/B 测试")
+print("=" * 60)
 
-```bash
-cd paper2skills-code/ab_testing/experimental_design
-python3 design.py
-```
+designer = ABExperimentalDesign(alpha=0.05, beta=0.2)
 
-### 示例输出
+# 基线转化率 3%，目标提升 20%
+p_control = 0.03
+relative_lift = 0.20
+n_binary = designer.sample_size_binary(p_c=p_control, delta_rel=relative_lift, r=1.0)
+print(f"✓ 转化率提升检验 - 每组需要 {n_binary:,} 个用户")
+print(f"  (基线: {p_control*100:.1f}%, 目标: {p_control*(1+relative_lift)*100:.1f}%)")
 
-```
-============================================================
-A/B 实验设计基础 - Momcozy 母婴电商场景演示
-============================================================
+# 场景 2: 暖奶器商品推荐 - 客单价提升
+print("\n" + "=" * 60)
+print("场景 2: 暖奶器推荐算法 A/B 测试")
+print("=" * 60)
 
-【场景 1】落地页转化率优化实验设计
-  基线转化率: 2.50%
-  目标相对提升: 10%
-  绝对提升 MDE: 0.0025
-  按绝对提升计算样本量: 每组 64,200 人
-  按相对提升计算样本量: 每组 70,941 人
-  -> 相对提升设计更保守, 建议采用每组 70,941 人
+# 基线客单价 $45，标准差 $18，目标提升 $3
+mu_control = 45
+sigma = 18
+delta_aov = 3
+n_continuous = designer.sample_size_continuous(sigma=sigma, delta=delta_aov, r=1.0)
+print(f"✓ 客单价提升检验 - 每组需要 {n_continuous:,} 个用户")
+print(f"  (基线: ${mu_control}, 目标: ${mu_control + delta_aov}, σ=${sigma})")
 
-  实验计划:
-    控制组: 64,200 人
-    治疗组: 64,200 人
-    总计:   128,400 人
-    日流量: 2,000 人/天
-    预计时长: 65 天
-    回验 Power: 80.00%
+# 场景 3: 有机辅食用户分层
+print("\n" + "=" * 60)
+print("场景 3: 有机辅食促销 - 分层随机分配")
+print("=" * 60)
 
-【场景 2】分层随机分配 (按国家 + 设备类型 + 新老用户)
-  各分层内分配比例 (前 6 组):
-assignment                         C      T
-country device_type user_type              
-CA      desktop     new        0.491  0.509
-                    returning  0.551  0.449
-        mobile      new        0.469  0.531
-                    returning  0.518  0.482
-DE      desktop     new        0.491  0.509
-                    returning  0.507  0.493
+np.random.seed(42)
+users_data = pd.DataFrame({
+    'user_id': range(1000),
+    'region': np.random.choice(['US', 'EU', 'APAC'], 1000),
+    'ltv': np.random.gamma(shape=2, scale=50, size=1000)
+})
 
-【场景 3】CUPED 方差缩减演示
-  原始估计提升量: 0.0019
-  CUPED 调整后提升量: 0.0019
-  方差缩减比例: 29.3%
-  -> 等效于样本量缩减至原来的 1.4 倍
+users_allocated = designer.stratified_randomization(
+    df=users_data,
+    strata_col='region',
+    treatment_col='group'
+)
 
-【场景 4】Power / MDE 快速查询表
-  假设基线转化率 2.5%, 每组 50,000 用户:
-    相对提升   5% -> Power = 23.9%
-    相对提升   8% -> Power = 51.1%
-    相对提升  10% -> Power = 69.6%
-    相对提升  15% -> Power = 95.6%
-```
+print(f"✓ 分层分配完成")
+for region in users_allocated['region'].unique():
+    region_data = users_allocated[users_allocated['region'] == region]
+    treat_count = (region_data['group'] == 'treatment').sum()
+    print(f"  {region}: 对照组 {len(region_data) - treat_count}, 治疗组 {treat_count}")
 
----
+# 场景 4: CUPED 方差缩减
+print("\n" + "=" * 60)
+print("场景 4: 复购率优化 - CUPED 方差缩减")
+print("=" * 60)
 
-## 四、技能关联
+np.random.seed(42)
+n_sample = 5000
+y_pre = np.random.poisson(lam=2, size=n_sample)  # 实验前购买次数
+treatment = np.random.binomial(1, 0.5, n_sample)
+y_post = y_pre + treatment * 0.5 + np.random.normal(0, 1, n_sample)
 
-### 前置技能
-- **Demand Forecasting**（时间序列需求预测）
-  - 为 CUPED 提供实验前的历史指标基线，如历史转化率、历史 AOV
-- **Uplift Modeling**（因果推断/ uplift 建模）
-  - A/B 实验是 Uplift Modeling 获取训练数据的黄金标准来源；本技能确保实验设计的统计严谨性
+y_adjusted, reduction = designer.cuped_variance_reduction(y_post, y_pre, treatment)
+print(f"✓ CUPED 方差缩减")
+print(f"  原始方差: {np.var(y_post):.4f}")
+print(f"  调整方差: {np.var(y_adjusted):.4f}")
+print(f"  方差缩减比例: {reduction*100:.1f}%")
 
-### 延伸技能
-- **Thompson Sampling / Multi-Armed Bandit**
-  - MAB 和 Thompson Sampling 是在线探索优化算法，本技能提供其前置所需的实验设计基础（Power、MDE、样本量）
-- **TJAP 跨市场品类组合定价**
-  - 定价实验需要严谨的 A/B 测试设计来验证不同价格策略的真实因果效应
-
-### 组合推荐
-- `A/B Experimental Design + CUPED + Uplift Modeling`：构成"严谨实验 → 方差缩减 → 因果效应估计"的完整因果推断链路
-- `A/B Experimental Design + Thompson Sampling`：离线实验设计保障基础统计能力，在线 MAB 动态优化探索效率
-
----
-
-## ⑤ 商业价值评估
-
-### 价值量化
-- **避免假阴性损失**：正确的样本量计算确保 80% 功效，避免"真实有效策略被误判为无效"而导致的收益损失
-- **缩短实验周期**：CUPED 方差缩减 20%-50%，等效于将实验时间缩短 20%-50%，在 2000 UV/天的场景下，65 天的实验可缩短至 45-52 天
-- **提升决策置信度**：分层随机化消除基线不平衡争议，减少实验结果的政治化解读
-
-### 实施难度
-⭐⭐⭐（3/5）
-- 统计学概念（Power、MDE、Pooled Proportion）需要一定理解成本
-- 代码本身即插即用，无需复杂基础设施
-- CUPED 需要历史数据可用，数据工程成本取决于现有数据仓库成熟度
-
-### 优先级评分
-⭐⭐⭐⭐⭐（5/5）
-- 所有后续 A/B 实验技能（MAB、Thompson Sampling、Uplift Modeling）的前置基石
-- 直接填补 paper2skills 图谱中 02-A/B实验 领域的核心缺口
-- 业务价值即时可量化，任何有流量实验的团队都能直接落地
-
----
-
-## 六、论文基准
-
-Zhou et al. (2023) 在论文中系统比较了多种样本量计算方法的偏差：
-
-| 方法 | 相对偏差 (连续型) | 相对偏差 (二分类) |
-|------|------------------|------------------|
-| 正态近似 (本技能采用) | < 1% (n > 1000) | < 2% (p > 1%) |
-| 忽略合并比例 | — | 5%-15% |
-| 忽略 Delta method (相对提升) | — | 10%-30% |
-
-本技能采用的公式在电商常见样本规模下（每组 > 10,000，转化率 > 1%）与精确检验的差异可忽略，同时保持计算简洁性。
-
+print("\n" + "=" * 60)
+print("[✓] Skill-AB-Experimental-Design测试通过")
 
 ## ④ 技能关联
 

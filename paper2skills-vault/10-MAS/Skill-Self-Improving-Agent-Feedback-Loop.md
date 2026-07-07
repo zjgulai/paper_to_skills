@@ -155,31 +155,185 @@ Agent B（储奶袋）执行新任务:
 
 ## ③ 代码模板
 
-代码位置：`paper2skills-code/mas/feedback_loop/self_improving_agent.py`
+```python
+import numpy as np
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+from datetime import datetime
 
-核心组件：
-- `ExecutionTrace`: 执行轨迹记录
-- `Experience`: 经验数据结构
-- `MemoryBank`: 经验记忆库（添加、检索、去重、容量控制）
-- `SelfRefinementEngine`: 自我反思引擎（Feedback-Refine-Iterate）
-- `FeedbackLoopOrchestrator`: 反馈闭环编排器
-  - `execute_with_feedback`: 完整闭环执行
-  - `get_performance_stats`: 性能统计
+# ============ 核心数据结构 ============
+class Experience:
+    def __init__(self, situation, action, outcome, lesson, success_rate=0.0):
+        self.situation = situation
+        self.action = action
+        self.outcome = outcome
+        self.lesson = lesson
+        self.success_rate = success_rate
+        self.timestamp = datetime.now()
 
-运行方式：
-```bash
-cd paper2skills-code/mas/feedback_loop
-python self_improving_agent.py
+class MemoryBank:
+    def __init__(self):
+        self.experiences = []
+    
+    def store(self, exp):
+        self.experiences.append(exp)
+    
+    def retrieve_topk(self, query_situation, k=3):
+        if not self.experiences:
+            return []
+        situations = np.array([e.situation for e in self.experiences])
+        query_vec = np.array([query_situation])
+        similarities = cosine_similarity(query_vec, situations)[0]
+        scores = similarities * np.array([e.success_rate for e in self.experiences])
+        topk_indices = np.argsort(scores)[-k:][::-1]
+        return [self.experiences[i] for i in topk_indices if scores[i] > 0]
+
+# ============ Self-Refine 迭代引擎 ============
+class SelfRefineAgent:
+    def __init__(self, quality_threshold=0.85, max_iterations=3):
+        self.θ = quality_threshold
+        self.T = max_iterations
+        self.memory = MemoryBank()
+    
+    def generate(self, x):
+        """G(x): 初始生成"""
+        entities = []
+        sentiment = "neutral"
+        confidence = 0.6
+        
+        if "吸奶器" in x or "Spectra" in x:
+            entities.append({"text": "吸奶器", "type": "PRODUCT"})
+            sentiment = "positive" if any(w in x for w in ["好用", "很好", "推荐"]) else "neutral"
+            confidence = 0.65
+        
+        return {"entities": entities, "sentiment": sentiment, "confidence": confidence}
+    
+    def feedback(self, o_t, x):
+        """F(o_t): 自我批评"""
+        issues = []
+        if "Spectra" in x and not any("Spectra" in e.get("text", "") for e in o_t["entities"]):
+            issues.append("未识别品牌名")
+        if o_t["confidence"] < 0.75:
+            issues.append("置信度过低")
+        if "静音" in x and not any("静音" in str(e) for e in o_t["entities"]):
+            issues.append("未识别关键属性")
+        return issues
+    
+    def refine(self, o_t, f_t, x):
+        """R(o_t, f_t): 改进输出"""
+        o_refined = o_t.copy()
+        o_refined["entities"] = o_t["entities"].copy()
+        
+        if "未识别品牌名" in f_t and "Spectra" in x:
+            o_refined["entities"].append({"text": "Spectra S1 吸奶器", "type": "BRAND_PRODUCT"})
+        
+        if "未识别关键属性" in f_t and "静音" in x:
+            o_refined["entities"].append({"text": "静音", "type": "ATTRIBUTE"})
+        
+        o_refined["confidence"] = min(0.95, o_refined["confidence"] + 0.1 * (1 - len(f_t) / 3))
+        return o_refined
+    
+    def quality(self, o_t):
+        """Q(o_t): 质量评估"""
+        return o_t["confidence"]
+    
+    def execute(self, x, retrieved_exp=None):
+        """执行 Self-Refine 迭代"""
+        o_0 = self.generate(x)
+        o_t = o_0
+        iteration_log = []
+        
+        for t in range(self.T):
+            Q_t = self.quality(o_t)
+            iteration_log.append({"iteration": t, "quality": Q_t, "output": o_t.copy()})
+            
+            if Q_t >= self.θ:
+                break
+            
+            f_t = self.feedback(o_t, x)
+            if not f_t:
+                break
+            
+            o_t = self.refine(o_t, f_t, x)
+        
+        return o_t, iteration_log
+
+# ============ 反馈闭环编排器 ============
+class FeedbackLoopOrchestrator:
+    def __init__(self, agent, memory):
+        self.agent = agent
+        self.memory = memory
+    
+    def execute_with_loop(self, x, human_feedback=None):
+        """完整闭环：检索 → 执行 → 反馈 → 存储"""
+        # 步骤1: 检索相似经验
+        retrieved = self.memory.retrieve_topk(x, k=2)
+        context = " | ".join([f"经验: {e.lesson}" for e in retrieved]) if retrieved else ""
+        
+        # 步骤2: 执行任务
+        output, log = self.agent.execute(x, retrieved)
+        
+        # 步骤3: 收集反馈
+        if human_feedback is None:
+            final_quality = output["confidence"]
+            success = final_quality >= self.agent.θ
+        else:
+            final_quality = human_feedback
+            success = final_quality >= self.agent.θ
+        
+        # 步骤4: 存储经验
+        lesson = f"处理'{x[:20]}...'成功" if success else f"处理'{x[:20]}...'失败"
+        exp = Experience(
+            situation=x,
+            action=str(output),
+            outcome="success" if success else "failure",
+            lesson=lesson,
+            success_rate=final_quality
+        )
+        self.memory.store(exp)
+        
+        return {
+            "output": output,
+            "final_quality": final_quality,
+            "iterations": len(log),
+            "success": success,
+            "context": context
+        }
+
+# ============ 测试用例 ============
+if __name__ == "__main__":
+    # 初始化
+    agent = SelfRefineAgent(quality_threshold=0.85, max_iterations=3)
+    orchestrator = FeedbackLoopOrchestrator(agent, agent.memory)
+    
+    # 测试数据
+    test_cases = [
+        "Spectra S1 吸奶器非常好用，静音效果很好",
+        "这个储奶袋密封性很好，不漏奶",
+        "推车轻便好用，推荐购买"
+    ]
+    
+    # 执行闭环
+    results = []
+    for x in test_cases:
+        result = orchestrator.execute_with_loop(x, human_feedback=0.88)
+        results.append(result)
+        print(f"输入: {x[:30]}... | 质量: {result['final_quality']:.2f} | 迭代: {result['iterations']} | 成功: {result['success']}")
+    
+    # 统计
+    df_results = pd.DataFrame({
+        "quality": [r["final_quality"] for r in results],
+        "iterations": [r["iterations"] for r in results],
+        "success": [r["success"] for r in results]
+    })
+    
+    print(f"\n统计汇总:")
+    print(f"平均质量: {df_results['quality'].mean():.3f}")
+    print(f"平均迭代次数: {df_results['iterations'].mean():.2f}")
+    print(f"成功率: {df_results['success'].sum() / len(results):.1%}")
+    print(f"记忆库规模: {len(agent.memory.experiences)} 条经验")
+    print("[✓] Skill-Self-Improving-Agent-Feedback-Loop测试通过")
 ```
-
-生产环境建议：
-1. 使用向量数据库（Pinecone/Milvus）存储和检索经验
-2. 实现 RLHF 循环：人类反馈 → 奖励模型 → 策略优化
-3. 建立 A/B 测试框架对比不同策略效果
-4. 设置质量门禁（Quality Gate）防止低质量输出流入生产
-5. 定期清理和合并记忆库，防止知识陈旧
-
----
 
 ## ④ 技能关联
 

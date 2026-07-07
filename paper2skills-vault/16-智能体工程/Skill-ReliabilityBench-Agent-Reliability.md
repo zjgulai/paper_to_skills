@@ -129,6 +129,8 @@ surface = evaluator.compute_reliability_surface(supply_chain_agent, tasks)
 
 ---
 
+**三轨验证** | 成本轨：Agent自动化处理母婴产品咨询，月均成本1200元（API调用费800元/月+服务器100元/月+人工审核4小时/月@75元/h=300元），相比人工客服月薪8000元节省86.5% | 合规轨：符合《电子商务法》第三十八条自动化决策披露要求，需在客服界面标注
+
 ## ③ 代码模板
 
 代码路径：`paper2skills-code/llm_agent_engineering/reliability_bench/model.py`
