@@ -594,6 +594,7 @@ print("[✓] LTV Prediction ZILN 测试通过")
 - **可组合**：[[Skill-RFM-Customer-Segmentation]]
 
 - **可组合**：[[Skill-Customer-Churn-Prediction]]
+- **延伸（extends）**：[[Skill-Uplift-Churn-Prediction]]
 
 ## ⑤ 商业价值评估
 

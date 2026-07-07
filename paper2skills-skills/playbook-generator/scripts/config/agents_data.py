@@ -14,7 +14,7 @@ AGENT_CATALOG = [
         "cat_class": "cat-supply",
         "desc": "输入品类关键词，输出 Amazon/速卖通市场机会评分、竞争密度、需求趋势和推荐切入角度。",
         "roi": "选品决策周期 14天→2天",
-        "linked_skills": ['Skill-Market-Size-Estimation', 'Skill-New-Product-Opportunity-Mining', 'Skill-Category-Trend-Forecasting'],
+        "linked_skills": ["Skill-New-Product-Opportunity-Mining", "Skill-Market-Size-Estimation", "Skill-Category-Trend-Forecasting", "Skill-VOC-Trend-Signal-Forecasting", "Skill-Demand-Quantile-Forecast", "Skill-Review-Driven-Growth-Opportunity-Scorer", "Skill-Demand-Forecasting-Supply-Chain", "Skill-Demand-Forecasting-Booking-Curve", "Skill-VOC-New-Product-Gap-Scoring", "Skill-Product-Safety-Testing-Requirements", "Skill-Product-Category-Opportunity-Scoring", "Skill-Streaming-Data-Forecasting", "Skill-Operating-Cash-Flow-Forecast", "Skill-OT-Cross-Market-Demand-Transfer", "Skill-New-Product-Demand-Cold-Start", "Skill-Lead-Time-Demand-Integration-Model", "Skill-LLMForecaster-Seasonal-Event", "Skill-Inventory-Demand-Sensing", "Skill-Intermittent-Demand-Croston-TSB", "Skill-Holiday-Spike-Demand-Decomposition"],
         "inputs": [{'id': 'keyword', 'label': '品类关键词', 'type': 'text', 'placeholder': '例：硅胶婴儿餐具（或点击下方快速选择）'}, {'id': 'market', 'label': '目标市场', 'type': 'select', 'options': ['US', 'UK', 'DE', 'AU', 'JP']}, {'id': 'budget', 'label': '预算区间', 'type': 'select', 'options': ['<$5k', '$5-20k', '>$20k']}],
         "demo_output": """[OK] 机会评分: 78/100（强力推荐）
 
@@ -45,7 +45,7 @@ BSR TOP10 均价: $18.9 | 您的成本带: $6-8
         "cat_class": "cat-ad",
         "desc": "粘贴现有 Listing，输出逐字诊断报告和重写版本，精准命中 Amazon A10 算法关键因子。",
         "roi": "Listing 优化平均带动 GMV +12%",
-        "linked_skills": ['Skill-Listing-AI-Copywriting', 'Skill-Listing-Quality-Scoring', 'Skill-Negative-Keyword-Safe-Guard'],
+        "linked_skills": ["Skill-Negative-Keyword-Safe-Guard", "Skill-Listing-Quality-Scoring", "Skill-Listing-AI-Copywriting", "Skill-Long-Tail-Search-Embedding-SEO", "Skill-Listing-Conversion-Rate-Optimizer", "Skill-Causal-SEO-Search-Attribution", "Skill-Amazon-A10-Algorithm-Ranking", "Skill-SEO-Organic-Ranking-Optimization", "Skill-Search-Conversion-Rate-Predictor", "Skill-Search-Ad-Budget-ROI-Integration", "Skill-Amazon-Search-Ranking-Factor-Model", "Skill-TikTok-Shop-Content-Commerce-Funnel", "Skill-Review-Keyword-Mining-SEO", "Skill-MAS-Search-Optimization", "Skill-Listing-Semantic-Relevance-Scoring", "Skill-GEO-Generative-Engine-Optimization", "Skill-A9-Algorithm-Sales-Velocity-Optimization", "Skill-A-Plus-Content-Video-Embedding", "Skill-Cross-Platform-Listing-Sync-Optimizer", "Skill-Voice-Search-Optimization-Amazon"],
         "inputs": [{'id': 'title', 'label': '当前 Title', 'type': 'textarea', 'placeholder': '粘贴当前商品标题...'}, {'id': 'bullets', 'label': 'Bullet Points', 'type': 'textarea', 'placeholder': '粘贴5条 Bullet（每行一条）...'}, {'id': 'keywords', 'label': '目标核心词 Top3', 'type': 'text', 'placeholder': '例：silicone baby plate, BPA free'}],
         "demo_output": """[!] 当前 Listing 诊断（62/100）
 
@@ -77,7 +77,7 @@ Tested 10,000+ bends without cracking — Made from 100% FDA-compliant food-grad
         "cat_class": "cat-voc",
         "desc": "批量导入竞品评论，自动聚类痛点/爽点，输出产品迭代优先级矩阵和广告素材金句库。",
         "roi": "VOC 驱动迭代，退货率平均下降 2-4%",
-        "linked_skills": ['Skill-Review-Pain-Point-Mining', 'Skill-LACA-CrossLingual-ABSA', 'Skill-AGRS-Aspect-Guided-Review-Summarization'],
+        "linked_skills": ["Skill-Review-Pain-Point-Mining", "Skill-LACA-CrossLingual-ABSA", "Skill-AGRS-Aspect-Guided-Review-Summarization", "Skill-NLP-Sentiment-ML-Pipeline", "Skill-Video-Sentiment-Analysis-VOC", "Skill-VOC-NPS-Retention-Predictor", "Skill-VOC-Returns-Cost-Driver", "Skill-VOC-Fraud-Review-Detection", "Skill-VOC-Driven-Recommendation-Signal", "Skill-VOC-Compliance-Signal-Mining", "Skill-VOC-Churn-Signal-Extraction", "Skill-VOC-Churn-Early-Warning-Signal", "Skill-Review-Sentiment-Growth-Trigger", "Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎", "Skill-VOC-Aspect-Sentiment-Extraction", "Skill-VOC-Trend-Signal-Forecasting", "Skill-VOC-Supply-Chain-Signal-Bridge", "Skill-VOC-Product-Iteration-Signal-Extractor", "Skill-VOC-New-Product-Gap-Scoring", "Skill-NPS-Proxy-Retention-Predictor"],
         "inputs": [{'id': 'reviews', 'label': '评论文本（每行一条）', 'type': 'textarea', 'placeholder': '粘贴 20-200 条评论...'}, {'id': 'asin', 'label': '竞品 ASIN（可选）', 'type': 'text', 'placeholder': '例：B08XYZ1234'}, {'id': 'lang', 'label': '语言', 'type': 'select', 'options': ['英语', '英语+德语', '英语+日语', '多语言']}],
         "demo_output": """分析了 147 条评论（1-3星: 52条 | 4-5星: 95条）
 
@@ -112,7 +112,7 @@ P2: 加强洗碗机染色防护工艺""",
         "cat_class": "cat-ad",
         "desc": "上传广告报告，自动识别无效花费、归因漏洞、预算分配错误，输出可立即执行的调优清单。",
         "roi": "识别 25-35% 广告浪费，$10k预算节省 $2,500-3,500/月",
-        "linked_skills": ['Skill-PVM-Attribution-Window-Harmonization', 'Skill-Identified-Bayesian-MMM', 'Skill-DARA-Agentic-MMM-Optimizer'],
+        "linked_skills": ["Skill-PVM-Attribution-Window-Harmonization", "Skill-Identified-Bayesian-MMM", "Skill-DARA-Agentic-MMM-Optimizer", "Skill-Ad-Spend-Time-Series-Attribution", "Skill-Advertising-TACOS-PnL-Integration", "Skill-KOL-ROI-Causal-Attribution", "Skill-Counterfactual-Ad-Attribution-Debiasing", "Skill-Constrained-Multi-Objective-Ad-Delivery", "Skill-TikTok-Shop-Content-Attribution", "Skill-ROAS-Below-Target-Budget-Freeze", "Skill-PPC-Rule-Automation-Engine", "Skill-Organic-Content-Causal-Attribution", "Skill-Instagram-Reels-Commerce-Attribution", "Skill-Video-ROI-Attribution", "Skill-Tag-Driven-Marketing-Attribution", "Skill-Search-Query-Performance-Attribution", "Skill-PPC-Bid-Manipulation-Defense", "Skill-PL-Attribution-Analysis", "Skill-Logistics-Cost-PL-Attribution", "Skill-KG-Supply-Chain-Cost-Attribution"],
         "inputs": [{'id': 'platform', 'label': '广告平台', 'type': 'select', 'options': ['Amazon SP', 'Amazon SB/SD', 'TikTok Ads', 'Meta Ads', 'Google Ads']}, {'id': 'spend', 'label': '月广告花费（$）', 'type': 'text', 'placeholder': '例：12400'}, {'id': 'target_acos', 'label': '目标 ACoS/ROAS', 'type': 'text', 'placeholder': '例：ACoS 18% 或 ROAS 5x'}, {'id': 'data', 'label': '广告数据（可选，粘贴 CSV）', 'type': 'textarea', 'placeholder': '粘贴关键词报告数据...'}],
         "demo_output": """广告浪费诊断（过去30天）
 总花费: $12,400 | 有效转化花费: $8,100
@@ -144,7 +144,7 @@ SB广告 impression 12万 → 无再营销链路，损失中端漏斗流量
         "cat_class": "cat-ops",
         "desc": "输入竞品 ASIN 列表，追踪价格/排名/评论/Listing 变化，异常时生成智能预警和响应建议。",
         "roi": "广告截流策略平均提升转化率 8-12%",
-        "linked_skills": ['Skill-Competitive-Price-Monitoring', 'Skill-Review-Fraud-Detection', 'Skill-Competitive-Response-Modeling'],
+        "linked_skills": ["Skill-Review-Fraud-Detection", "Skill-Competitive-Response-Modeling", "Skill-Competitive-Price-Monitoring", "Skill-Stackelberg-Equilibrium-Competitive-Pricing", "Skill-Real-Time-Competitive-Repricing", "Skill-Competitor-SKU-Ontology", "Skill-Competitor-Price-Intelligence", "Skill-Competitor-New-Product-Detection", "Skill-Competitor-Negative-Campaign-Detection", "Skill-Competitor-Keyword-Gap-Analysis", "Skill-Competitor-Ad-Surge-Defense-Trigger", "Skill-Shopee-Lazada-SEA-Market-Intelligence", "Skill-Search-Share-of-Voice", "Skill-Product-Category-Opportunity-Scoring", "Skill-MAS-Competitive-Intelligence-Agent", "Skill-UCB-LDP-Dynamic-Pricing", "Skill-Tag-Informed-Dynamic-Pricing", "Skill-Personalized-ML-Pricing", "Skill-Nash-Equilibrium-Pricing-Model", "Skill-Mixed-Strategy-Pricing-Unpredictability"],
         "inputs": [{'id': 'asins', 'label': '竞品 ASIN 列表（每行一个）', 'type': 'textarea', 'placeholder': 'B08XYZ1234\nB09ABC5678\nB07DEF9012'}, {'id': 'period', 'label': '监控周期', 'type': 'select', 'options': ['过去7天', '过去14天', '过去30天']}, {'id': 'metrics', 'label': '监控维度', 'type': 'select', 'options': ['全部', '价格+BSR', '评论动态', 'Listing变更']}],
         "demo_output": """[ALERT] 竞品异动报告（过去7天）
 
@@ -175,7 +175,7 @@ P2: 竞品B更新Listing → 检查是否使用你的核心卖点词汇""",
         "cat_class": "cat-supply",
         "desc": "接入库存/销速数据，预测断货风险和过库存风险，给出补货建议时间表和海运/空运决策。",
         "roi": "避免一次断货可保护 $4,000-15,000 BSR 回弹成本",
-        "linked_skills": ['Skill-Safety-Stock-Replenishment', 'Skill-Lead-Time-Distribution-Risk-GenQOT', 'Skill-Promotion-Logistics-Surge-Forecast'],
+        "linked_skills": ["Skill-Safety-Stock-Replenishment", "Skill-Promotion-Logistics-Surge-Forecast", "Skill-Lead-Time-Distribution-Risk-GenQOT", "Skill-FBA-Cost-Forecast-Adjustment", "Skill-Supplier-Lead-Time-Buffer", "Skill-FBA-Stranded-Unfulfillable-Inventory-KPI", "Skill-Operating-Cash-Flow-Forecast", "Skill-Demand-Quantile-Forecast", "Skill-Adaptive-Forecast-Accuracy-Optimization", "Skill-VMI-DRL-Inventory-Routing", "Skill-TikTok-Flash-Sale-Inventory-Pulse", "Skill-Supply-Chain-Network-Design", "Skill-State-Space-Inventory-Signal-Smoothing", "Skill-Replenishment-Parameter-Calibration", "Skill-Promo-Stocktaking-SOP-Automation", "Skill-Promo-ROI-Attribution-Supply-Side", "Skill-Promo-Inventory-Pulse-Auto-Trigger", "Skill-Markdown-Schedule-Auto-Trigger", "Skill-Lead-Time-Safety-Stock-Auto-Adjuster", "Skill-ITO-Three-Phase-Health-Tracking"],
         "inputs": [{'id': 'stock', 'label': '当前库存量（件）', 'type': 'text', 'placeholder': '例：340'}, {'id': 'velocity', 'label': '日均销速（件/天）', 'type': 'text', 'placeholder': '例：28'}, {'id': 'lead_time', 'label': '供货周期（天）', 'type': 'text', 'placeholder': '例：21（海运）或7（空运）'}, {'id': 'channel', 'label': '渠道类型', 'type': 'select', 'options': ['Amazon FBA', '自发货', 'FBA+海外仓混合']}],
         "demo_output": """[!] 断货风险评级: 高危
 
@@ -210,7 +210,7 @@ P2: 竞品B更新Listing → 检查是否使用你的核心卖点词汇""",
         "cat_class": "cat-voc",
         "desc": "批量导入工单，自动分类优先级、识别高风险工单（A-to-Z/差评威胁），生成文化适配回复模板。",
         "roi": "处理效率提升 3x，A-to-Z 索赔率降低 40%",
-        "linked_skills": ['Skill-DialIn-LLM-Case-Intent-Clustering', 'Skill-Customer-Journey-Decision-Tree', 'Skill-Emotional-AI-Customer-Care'],
+        "linked_skills": ["Skill-Emotional-AI-Customer-Care", "Skill-DialIn-LLM-Case-Intent-Clustering", "Skill-Customer-Journey-Decision-Tree", "Skill-Causal-Churn-Retention-Attribution", "Skill-CS-Ticket-Intelligence", "Skill-NLP-Text-Classification", "Skill-CS-Supply-Chain-Feedback-Loop-Tag", "Skill-VOC-Churn-Signal-Extraction", "Skill-VOC-Churn-Early-Warning-Signal", "Skill-Uplift-Churn-Prediction", "Skill-NPS-Proxy-Retention-Predictor", "Skill-Membership-Churn-Early-Warning-Graph", "Skill-MTL-Churn-LTV-Joint-Prediction", "Skill-Deep-Learning-Churn-Prediction", "Skill-Customer-Churn-Prediction", "Skill-Cohort-Retention-Analysis", "Skill-Cohort-Churn-Intervention-Dispatcher", "Skill-Churn-Revenue-Impact", "Skill-VOC-Returns-Cost-Driver", "Skill-Reverse-Logistics-Disposition-Optimization"],
         "inputs": [{'id': 'tickets', 'label': '工单文本（每行一条）', 'type': 'textarea', 'placeholder': '粘贴 10-100 条客服工单...'}, {'id': 'platform', 'label': '平台来源', 'type': 'select', 'options': ['Amazon', 'Shopify', 'eBay', '混合']}, {'id': 'sla', 'label': 'SLA 要求', 'type': 'select', 'options': ['24小时', '48小时', '72小时']}],
         "demo_output": """分诊报告（63条工单）
 
@@ -243,7 +243,7 @@ If you haven't received it by [DATE+3], please reply and we'll send a replacemen
         "cat_class": "cat-ops",
         "desc": "分析竞品价格带、成本结构和当前排名，给出最优定价策略和分季节的促销节奏建议。",
         "roi": "合理溢价策略平均提升净利润率 4-8个百分点",
-        "linked_skills": ['Skill-AIGP-LLM-Dynamic-Pricing', 'Skill-Dynamic-Pricing-Elasticity', 'Skill-Markdown-Optimization'],
+        "linked_skills": ["Skill-Markdown-Optimization", "Skill-Dynamic-Pricing-Elasticity", "Skill-AIGP-LLM-Dynamic-Pricing", "Skill-Price-Elasticity-Estimation", "Skill-Price-Sensitive-Recommendation", "Skill-VOC-Price-Signal-Analysis", "Skill-Price-Sensitive-Personalized-Recommendation", "Skill-Price-Fence-Segmentation-Ecommerce", "Skill-EMSR-Bid-Price-Inventory-Control", "Skill-Price-Elasticity-Time-Series-Fusion", "Skill-Monodense-单品价格弹性估计", "Skill-MAPPO-GAT-Dynamic-Pricing", "Skill-Causal-RL-Dynamic-Pricing", "Skill-Stackelberg-Price-Leadership-Strategy", "Skill-Revenue-Per-Available-SKU-REVPAS", "Skill-Price-Signal-Collection", "Skill-Perishable-Inventory-Markdown-Optimization", "Skill-Competitor-Price-Intelligence", "Skill-RTB-Realtime-Bidding-Optimization", "Skill-RL-Dynamic-Promotion-Optimization"],
         "inputs": [{'id': 'price', 'label': '当前售价（$）', 'type': 'text', 'placeholder': '例：19.99'}, {'id': 'cost', 'label': '综合成本（货值+头程+FBA，$）', 'type': 'text', 'placeholder': '例：7.80'}, {'id': 'comp_range', 'label': '竞品价格区间', 'type': 'text', 'placeholder': '例：$15-$22'}, {'id': 'bsr', 'label': '当前 BSR', 'type': 'text', 'placeholder': '例：234'}],
         "demo_output": """定价策略分析
 
@@ -277,7 +277,7 @@ Week 2: 若转化率降幅 <15%，升至 $21.99
         "cat_class": "cat-risk",
         "desc": "扫描账号操作记录和 Listing 合规性，提前识别封号/下架风险，生成整改清单和申诉模板。",
         "roi": "预防式合规管理，避免封号损失（平均 $20,000-50,000）",
-        "linked_skills": ['Skill-Amazon-ToS-Compliance-Guardrail', 'Skill-Consumer-Complaint-Recall-Prediction', 'Skill-Compliance-Scored-Guardrail-Orchestration'],
+        "linked_skills": ["Skill-Consumer-Complaint-Recall-Prediction", "Skill-Compliance-Scored-Guardrail-Orchestration", "Skill-Amazon-ToS-Compliance-Guardrail", "Skill-Identity-Fraud-Detection", "Skill-Cross-Border-Payment-Fraud-Detection", "Skill-Return-Fraud-Detection", "Skill-Ad-Fraud-IVT-Detection", "Skill-VOC-Fraud-Review-Detection", "Skill-Logistics-Fraud-Detection", "Skill-Listing-Suppression-Detection", "Skill-Anomaly-Detection-Foundation-Model", "Skill-Account-Association-Risk-Detection", "Skill-Review-Fraud-Detection", "Skill-FraudSquad-LLM-Review-Detection", "Skill-Click-Fraud-Detection", "Skill-Tax-Evasion-Risk-Signal-Monitor", "Skill-Product-Safety-Complaint-Risk-Model", "Skill-Multi-Account-Operational-Isolation", "Skill-Account-Fingerprint-Risk-Scorer", "Skill-AI-Fake-Review-Detection"],
         "inputs": [{'id': 'notice', 'label': '近期异常通知（粘贴邮件内容）', 'type': 'textarea', 'placeholder': '粘贴 Amazon 警告邮件或 Account Health 异常通知...'}, {'id': 'asins', 'label': '需检查的 ASIN 列表', 'type': 'textarea', 'placeholder': '每行一个 ASIN'}, {'id': 'health', 'label': '当前账号健康状态', 'type': 'select', 'options': ['绿色（正常）', '黄色（预警）', '红色（高危）']}],
         "demo_output": """账号风险评分: 6.8/10（中等风险）
 
@@ -313,7 +313,7 @@ P2（下月）: 申请 Brand Registry 加强品牌保护
         "cat_class": "cat-ops",
         "desc": "输入销售数据，自动计算真实净利润率（含所有隐性成本），识别利润漏洞并给出量化改善路径。",
         "roi": "平均识别 35-50% 的利润改善空间",
-        "linked_skills": ['Skill-DeepAnalyze-Autonomous-Data-Science-Agent', 'Skill-ProRCA-Business-Analysis', 'Skill-NL2Dashboard-Automation'],
+        "linked_skills": ["Skill-ProRCA-Business-Analysis", "Skill-NL2Dashboard-Automation", "Skill-DeepAnalyze-Autonomous-Data-Science-Agent", "Skill-Temu-Consignment-Analytics", "Skill-GMROI-Inventory-Investment-Efficiency", "Skill-Churn-Revenue-Impact", "Skill-Agent-Finance-Autopilot", "Skill-MAS-Revenue-Operations", "Skill-Logistics-Cost-PL-Attribution", "Skill-Combo-Ad-ROI-Maximizer", "Skill-Video-ROI-Attribution", "Skill-Tariff-FX-FBA-Cost-Dynamics", "Skill-Refund-Rate-Financial-Impact", "Skill-Promo-ROI-Attribution-Supply-Side", "Skill-PL-Attribution-Analysis", "Skill-Fraud-PL-Impact", "Skill-Forecast-to-PL-Bridge", "Skill-MMM-Budget-PL-Alignment", "Skill-VOC-Returns-Cost-Driver", "Skill-TikTok-Creator-ROI-Attribution"],
         "inputs": [{'id': 'revenue', 'label': '月销售额（$）', 'type': 'text', 'placeholder': '例：32400'}, {'id': 'cogs', 'label': '商品成本（$）', 'type': 'text', 'placeholder': '例：9200'}, {'id': 'fba', 'label': 'FBA 费用（$）', 'type': 'text', 'placeholder': '例：5800'}, {'id': 'ads', 'label': '广告花费（$）', 'type': 'text', 'placeholder': '例：6500'}, {'id': 'return_rate', 'label': '退货率（%）', 'type': 'text', 'placeholder': '例：4'}],
         "demo_output": """P&L 透视报告（月度）
 
@@ -347,7 +347,7 @@ P2（下月）: 申请 Brand Registry 加强品牌保护
         "cat_class": "cat-risk",
         "desc": "扫描品牌文案，进行 FDA/FTC/Amazon TOS 三轨合规检查，输出违规词清单和逐句合规改写建议。",
         "roi": "预防 FTC 警告和产品下架，单次违规处罚可达 $50,000",
-        "linked_skills": ['Skill-Compliance-Scored-Guardrail-Orchestration', 'Skill-Amazon-ToS-Compliance-Guardrail', 'Skill-Cross-Border-Compliance-Framework'],
+        "linked_skills": ["Skill-Cross-Border-Compliance-Framework", "Skill-Compliance-Scored-Guardrail-Orchestration", "Skill-Amazon-ToS-Compliance-Guardrail", "Skill-IP-Trademark-Brand-Monitoring", "Skill-Regulatory-Graph-Compliance-Monitor", "Skill-Compliance-ML-Risk-Scoring", "Skill-Brand-Registry-Infringement-Tracker", "Skill-Regulatory-Change-Auto-Monitor", "Skill-VAT-GST-Compliance-Automation", "Skill-Pre-Launch-Compliance-Gate", "Skill-Listing-Compliance-Auto-Repair", "Skill-LLM-Contract-Compliance-Review", "Skill-Compliance-Violation-Auto-Escalation", "Skill-Amazon-Compliance-Error-Auto-Resolver", "Skill-VOC-Compliance-Signal-Mining", "Skill-Tax-Compliance-VAT-GST", "Skill-MAS-Compliance-Multi-Market-Orchestrator", "Skill-Cross-Platform-Brand-Search-Volume", "Skill-Brand-Video-Generation", "Skill-Brand-Safety-Video-Content-Filter"],
         "inputs": [{'id': 'copy', 'label': '品牌文案（Listing/广告语/包装文字）', 'type': 'textarea', 'placeholder': '粘贴需要检查的文案内容...'}, {'id': 'category', 'label': '产品品类', 'type': 'select', 'options': ['母婴', '健康保健', '食品饮料', '消费电子', '美妆个护']}, {'id': 'market', 'label': '目标市场', 'type': 'select', 'options': ['US', 'UK/EU', 'AU', '全球']}],
         "demo_output": """合规扫描报告（母婴品类 US 市场）
 综合合规评分: 64/100 → 整改后预计: 94/100
@@ -385,7 +385,7 @@ P2（下月）: 申请 Brand Registry 加强品牌保护
         "cat_class": "cat-ad",
         "desc": "输入产品和受众画像，输出 TikTok/Reels 爆款选题矩阵、脚本框架和话题标签策略，降低内容生产成本。",
         "roi": "系统化内容输出降低 CPM 40%，自然流量占比提升至 30%+",
-        "linked_skills": ['Skill-DAWN-Talking-Head-Review', 'Skill-AnchorCrafter-Virtual-Anchor-Demo', 'Skill-Creative-Fatigue-Detection'],
+        "linked_skills": ["Skill-DAWN-Talking-Head-Review", "Skill-Creative-Fatigue-Detection", "Skill-AnchorCrafter-Virtual-Anchor-Demo", "Skill-TikTok-Shop-Content-Commerce-Funnel", "Skill-TikTok-Shop-Content-Attribution", "Skill-Video-ROI-Attribution", "Skill-TikTok-Content-Lifecycle-Analytics", "Skill-TikTok-Algorithm-Content-Boost", "Skill-Short-Video-Commerce-Attribution", "Skill-SIR-Viral-Product-Adoption-Forecasting", "Skill-MAS-Video-Content-Optimization", "Skill-UGC-Viral-Content-Potential-Scorer", "Skill-TikTok-Creator-ROI-Attribution", "Skill-Social-VOC-Viral-Potential-Score", "Skill-Social-Proof-Amplification", "Skill-Social-Network-Viral-Growth-Simulation", "Skill-Multimodal-UGC-Cross-Platform-Fusion", "Skill-KOL-ROI-Causal-Attribution", "Skill-KOL-Creator-Matching", "Skill-Virtual-Influencer-Baby-Demo"],
         "inputs": [{'id': 'product', 'label': '产品名称/描述', 'type': 'text', 'placeholder': '例：硅胶婴儿餐具套装'}, {'id': 'audience', 'label': '目标受众画像', 'type': 'text', 'placeholder': '例：0-2岁宝妈，关注辅食/育儿'}, {'id': 'style', 'label': '内容风格偏好', 'type': 'select', 'options': ['教程/攻略', '痛点反转', '生活记录', '对比测评', 'UGC种草']}, {'id': 'freq', 'label': '周更新频次', 'type': 'select', 'options': ['3条/周', '5条/周', '每日更新']}],
         "demo_output": """本周 TikTok 选题矩阵（硅胶婴儿餐具）
 
@@ -421,7 +421,7 @@ Day 5（周五）— UGC 素人合作
         "cat_class": "cat-ops",
         "desc": "基于 DML (双重机器学习) 计算反事实基线，对抗大盘流量的降价内卷幻觉。支持 MAS 跨部门财务/供应链博弈测算，给出真实的净利润率最优解。",
         "roi": "告别无效价格战，通过反事实预判提升净利润率 15%-40%",
-        "linked_skills": ['Skill-Counterfactual-Price-Elasticity', 'Skill-Cross-Domain-Orthogonal-Signals', 'Skill-Agentic-Nash-Equilibrium-Debate'],
+        "linked_skills": ["Skill-Counterfactual-Price-Elasticity", "Skill-Causal-Churn-Retention-Attribution", "Skill-CausalFlow-Agent-Failure-Repair", "Skill-Causal-RL-Dynamic-Pricing", "Skill-DiD-Difference-in-Differences", "Skill-Counterfactual-Ad-Attribution-Debiasing", "Skill-Causal-Uplift-Modeling", "Skill-Causal-Time-Series-CausalImpact", "Skill-Causal-Cohort-Analysis", "Skill-Automated-Causal-Discovery", "Skill-Organic-Content-Causal-Attribution", "Skill-Delayed-Conversion-Causal-MTL", "Skill-Data-Collection-Causal-Debiasing", "Skill-CausalRAG-Knowledge-Retrieval", "Skill-CausalRAG-Causal-Graph-Retrieval", "Skill-Causal-Time-Series-Forecasting-GCF", "Skill-Causal-ML-Feature-Engineering", "Skill-Mediation-Causal-Mechanism-Analysis", "Skill-LLM-Causal-Discovery", "Skill-Intelligent-Attribution-Causal-Forest"],
         "inputs": [{'id': 'current_price', 'label': '我方当前售价（$）', 'type': 'text', 'placeholder': '例：49.0'}, {'id': 'comp_price', 'label': '主要竞品最新售价（$）', 'type': 'text', 'placeholder': '例：38.0 (跳水降价)'}, {'id': 'comp_stockout_risk', 'label': '竞品断货风险系数 (0-1)', 'type': 'select', 'options': ['0.1 (库存充足)', '0.5 (库存预警)', '0.9 (极度高危/即将断货)']}, {'id': 'seasonality', 'label': '大盘流量因子', 'type': 'select', 'options': ['1.0 (平季)', '1.4 (旺季/黑五)']}],
         "demo_output": """[执行阶段] 启动 DML - Reality Checker 测算引擎
 --------------------------------------------------
@@ -456,7 +456,7 @@ Day 5（周五）— UGC 素人合作
         "cat_class": "cat-supply",
         "desc": "输入SKU列表和目标市场，扫描标签覆盖率/时效性/准确率，识别质量缺口并生成修复优先级清单。",
         "roi": "标签质量提升后断货识别延迟 8h→15min",
-        "linked_skills": ['Skill-Tag-Quality-Coverage-KPI', 'Skill-Tag-Schema-Engineering-Lifecycle', 'Skill-Auto-Tagging-Pipeline-Rule-ML-LLM'],
+        "linked_skills": ["Skill-Tag-Schema-Engineering-Lifecycle", "Skill-Tag-Quality-Coverage-KPI", "Skill-Auto-Tagging-Pipeline-Rule-ML-LLM", "Skill-Tag-Optimized-Logistics-Routing", "Skill-Tag-Informed-Dynamic-Pricing", "Skill-SKU-Level-Margin-Attribution-Ontology", "Skill-SKU-Entity-Unified-ID-Tagging", "Skill-Ontology-Schema-Design", "Skill-Competitor-SKU-Ontology", "Skill-Tag-Propagation-Supply-Chain", "Skill-Tag-Enhanced-Personalized-Recommendation", "Skill-Tag-Driven-VOC-Signal-Routing", "Skill-Tag-Driven-User-Growth-Trigger", "Skill-Tag-Driven-User-Behavior-Analytics", "Skill-Tag-Driven-Marketing-Attribution", "Skill-Tag-Driven-Ad-Audience-Segmentation", "Skill-Supplier-Ontology-Capability-Map", "Skill-Shipment-Risk-Tag-Realtime-Tracker", "Skill-Return-Fraud-Detection-Tag-Engine", "Skill-Dynamic-Carrier-Selection-Tag-Driven"],
         "inputs": [{'id': 'sku_list', 'label': 'SKU列表（每行一个）', 'type': 'textarea', 'placeholder': 'SKU-001\nSKU-002\nSKU-003\n...'}, {'id': 'tag_types', 'label': '重点检查标签类型', 'type': 'select', 'options': ['全部标签', '库存状态标签', '合规认证标签', '预测风险标签', '财务利润标签']}, {'id': 'market', 'label': '目标市场', 'type': 'select', 'options': ['US', 'EU', 'JP', 'AU', '全球多市场']}],
         "demo_output": """[SKU标签质量扫描器] 分析结果
 
@@ -510,7 +510,7 @@ predicted_stockout_7d 超时（>24h未更新）: 8个SKU 🔴
         "cat_class": "cat-ad",
         "desc": "输入产品信息和目标市场，自动扫描US/EU/JP/AU合规要求缺口，生成上市准入评估和整改优先级。",
         "roi": "新品上市合规扫描 2周→10分钟，防扣押损失5-15万/次",
-        "linked_skills": ['Skill-Multi-Market-Compliance-Matrix-Ontology', 'Skill-EPR-Extended-Producer-Responsibility-Tag', 'Skill-Regulatory-Change-Impact-Propagation'],
+        "linked_skills": ["Skill-Regulatory-Change-Impact-Propagation", "Skill-Multi-Market-Compliance-Matrix-Ontology", "Skill-EPR-Extended-Producer-Responsibility-Tag", "Skill-Infant-Formula-FDA-Compliance-Checker", "Skill-AI-Product-Safety-Certification", "Skill-EU-AI-Act-Compliance-Framework", "Skill-VAT-GST-Compliance-Automation", "Skill-Regulatory-Update-Impact-Dispatcher", "Skill-Regulatory-Change-Auto-Monitor", "Skill-Platform-Policy-Change-Adaptive-Monitor", "Skill-LLM-Contract-Compliance-Review", "Skill-HTS-Tariff-Classification", "Skill-Cross-Border-Compliance-Framework", "Skill-XAI-Regulatory-Compliance", "Skill-Tax-Compliance-VAT-GST", "Skill-Privacy-Preserving-Lookalike-FL", "Skill-MAS-Cross-Market-Compliance-Orchestrator", "Skill-MAS-Compliance-Multi-Market-Orchestrator", "Skill-GPSR-EU-Risk-Assessment-Auto", "Skill-Data-Provenance-Lineage"],
         "inputs": [{'id': 'product_name', 'label': '产品名称', 'type': 'text', 'placeholder': '例：Momcozy S12 Pro 双边吸奶器'}, {'id': 'product_type', 'label': '产品类型', 'type': 'select', 'options': ['母婴电子设备', '配方奶粉/食品', '婴儿洗护用品', '婴儿玩具', '其他母婴用品']}, {'id': 'target_markets', 'label': '目标市场（多选）', 'type': 'text', 'placeholder': '例：US, DE, FR, JP（逗号分隔）'}],
         "demo_output": """[多市场合规矩阵] 扫描结果 — Momcozy S12 Pro 双边吸奶器
 
@@ -560,7 +560,7 @@ P2（持续）: 监控EU REACH成分变化通知""",
         "cat_class": "cat-voc",
         "desc": "输入退货记录和评论数据，三层归因分析（客诉→运营原因→供应链根因），输出改善闭环行动方案。",
         "roi": "根因修复后退货率降低40-60%，年化减少退货成本8万+",
-        "linked_skills": ['Skill-Return-Root-Cause-Attribution-Graph', 'Skill-Returnformer-Returns-Prediction', 'Skill-Cross-Border-Return-Rate-By-Country-KPI'],
+        "linked_skills": ["Skill-Returnformer-Returns-Prediction", "Skill-Return-Root-Cause-Attribution-Graph", "Skill-Cross-Border-Return-Rate-By-Country-KPI", "Skill-VOC-Returns-Cost-Driver", "Skill-Predictive-Returns-Management", "Skill-Reverse-Logistics-Disposition-Optimization", "Skill-Returns-Reverse-Logistics", "Skill-Predictive-Batch-Returns-Routing", "Skill-Supplier-Delivery-Quality-Rate-KPI", "Skill-Returns-Quality-Grading-Engine", "Skill-User-Analytics-Logistics-Bridge", "Skill-Traffic-Source-Analysis", "Skill-TikTok-Trending-Product-Signal", "Skill-StaR-Review-Statement-Ranking", "Skill-Short-Video-Commerce-Attribution", "Skill-Seed-Quality-Optimization-for-Lookalike", "Skill-Listing-Health-Diagnostic", "Skill-LACA-CrossLingual-ABSA", "Skill-Customer-Journey-Analytics", "Skill-Creative-Fatigue-Detection"],
         "inputs": [{'id': 'return_data', 'label': '退货记录（原因 + 数量，每行一条）', 'type': 'textarea', 'placeholder': '到货破损, 23\n与描述不符, 45\n质量问题, 18\n改变主意, 12'}, {'id': 'sku_id', 'label': 'SKU ID / 产品名称', 'type': 'text', 'placeholder': '例：SKU-S12Pro 或 吸奶器旗舰款'}, {'id': 'market', 'label': '市场', 'type': 'select', 'options': ['US', 'DE', 'UK', 'JP', '全部市场']}],
         "demo_output": """[退货根因分析师] 三层归因报告 — SKU-S12Pro / DE市场
 
@@ -611,7 +611,7 @@ P2（持续）: 监控EU REACH成分变化通知""",
         "cat_class": "cat-ad",
         "desc": "输入SKU销售和成本数据，生成全链路P&L瀑布图，识别利润漏点，给出可操作的提利行动建议。",
         "roi": "发现亏损SKU后调价/优化，年化利润率提升3-8pp",
-        "linked_skills": ['Skill-SKU-Level-Margin-Attribution-Ontology', 'Skill-Supply-Chain-Total-Cost-TCO-Model', 'Skill-GMROI-Inventory-Investment-Efficiency'],
+        "linked_skills": ["Skill-Supply-Chain-Total-Cost-TCO-Model", "Skill-SKU-Level-Margin-Attribution-Ontology", "Skill-GMROI-Inventory-Investment-Efficiency", "Skill-Logistics-Cost-PL-Attribution", "Skill-PL-Attribution-Analysis", "Skill-Video-ROI-Attribution", "Skill-Promo-ROI-Attribution-Supply-Side", "Skill-KG-Supply-Chain-Cost-Attribution", "Skill-AIGC-Revenue-Attribution", "Skill-TikTok-Creator-ROI-Attribution", "Skill-KOL-ROI-Causal-Attribution", "Skill-TikTok-Shop-Content-Attribution", "Skill-Tariff-Impact-Margin-Stress-Test", "Skill-Tag-Driven-Marketing-Attribution", "Skill-Search-Revenue-Attribution", "Skill-Search-Query-Performance-Attribution", "Skill-SKU-Level-PL-Dashboard", "Skill-Organic-Content-Causal-Attribution", "Skill-Instagram-Reels-Commerce-Attribution", "Skill-FBA-Fee-Waterfall-Attribution"],
         "inputs": [{'id': 'sku_id', 'label': 'SKU / 产品名称', 'type': 'text', 'placeholder': '例：吸奶器S12 Pro'}, {'id': 'gmv', 'label': '月销售额（元）', 'type': 'text', 'placeholder': '例：150000'}, {'id': 'costs', 'label': '成本明细（格式: 项目=金额，每行一条）', 'type': 'textarea', 'placeholder': '采购成本=45000\nFBA费用=18000\n广告费用=22500\n退货成本=6000\n物流头程=9000'}],
         "demo_output": """[SKU利润归因计算器] P&L 瀑布分析 — 吸奶器S12 Pro
 
@@ -663,7 +663,7 @@ FBA费率 12%：✅ 正常
         "cat_class": "cat-supply",
         "desc": "输入供应商信息和物流路线，评估关税/港口/汇率/出口管制多维地缘风险，生成应急预案建议。",
         "roi": "提前14天预警延误，避免空运附加费$8,000+/次",
-        "linked_skills": ['Skill-Geopolitical-Risk-Tag-Supply-Impact', 'Skill-Black-Swan-Scenario-Simulation-Tag', 'Skill-SC-Resilience-Hypergraph'],
+        "linked_skills": ["Skill-SC-Resilience-Hypergraph", "Skill-Geopolitical-Risk-Tag-Supply-Impact", "Skill-Black-Swan-Scenario-Simulation-Tag", "Skill-MonteCarlo-Tariff-Risk", "Skill-Tariff-Impact-Margin-Stress-Test", "Skill-Cross-Border-Tax-Tariff-Modeling", "Skill-ATLAS-HTS-Tariff-Classification", "Skill-Supply-Chain-Resilience-Modeling", "Skill-Supply-Chain-Finance-Risk-Modeling", "Skill-Tariff-FX-FBA-Cost-Dynamics", "Skill-HTS-Tariff-Classification", "Skill-HTS-Agentic-Tariff-Classification", "Skill-VOC-Supply-Chain-Signal-Bridge", "Skill-Tax-Evasion-Risk-Signal-Monitor", "Skill-Tag-Fraud-Risk-Intelligence", "Skill-Supply-Chain-Resilience-Stress-Test", "Skill-Supply-Chain-ML-Features", "Skill-Supply-Chain-Finance-Risk-Tag", "Skill-Supply-Chain-Due-Diligence", "Skill-Supply-Chain-Counterfeit-Detection"],
         "inputs": [{'id': 'supplier_country', 'label': '供应商所在国家/地区', 'type': 'select', 'options': ['中国大陆', '台湾', '越南', '印度', '马来西亚', '墨西哥', '其他']}, {'id': 'target_market', 'label': '目标销售市场', 'type': 'select', 'options': ['美国', '欧盟', '英国', '日本', '澳大利亚', '多市场']}, {'id': 'logistics_route', 'label': '主要物流路线', 'type': 'text', 'placeholder': '例：上海→洛杉矶（苏伊士运河）或 宁波→汉堡（红海航线）'}],
         "demo_output": """[地缘风险评估仪] 风险评估报告
 
@@ -717,7 +717,7 @@ FBA费率 12%：✅ 正常
         "cat_class": "cat-ad",
         "desc": "输入产品包装信息，自动计算欧盟德/法/奥等市场EPR注册要求和年度费用，生成注册优先级清单。",
         "roi": "EPR合规成本仅违规罚款的0.2%，提前注册ROI无限大",
-        "linked_skills": ['Skill-EPR-Extended-Producer-Responsibility-Tag', 'Skill-Multi-Market-Compliance-Matrix-Ontology', 'Skill-Climate-ESG-Supply-Chain-Tag'],
+        "linked_skills": ["Skill-Multi-Market-Compliance-Matrix-Ontology", "Skill-EPR-Extended-Producer-Responsibility-Tag", "Skill-Climate-ESG-Supply-Chain-Tag", "Skill-Green-Supply-Chain-Carbon-Footprint", "Skill-Green-Logistics-Carbon-Optimization", "Skill-Real-Time-Competitive-Repricing", "Skill-Multi-Task-User-Representation", "Skill-Elasticity-Based-Repricing-Gate", "Skill-VAT-GST-Compliance-Automation", "Skill-Supply-Chain-Due-Diligence", "Skill-Regulatory-Update-Impact-Dispatcher", "Skill-Regulatory-Graph-Compliance-Monitor", "Skill-Regulatory-Change-Auto-Monitor", "Skill-Pre-Launch-Compliance-Gate", "Skill-Platform-Policy-Change-Adaptive-Monitor", "Skill-LLM-Contract-Compliance-Review", "Skill-Infant-Formula-FDA-Compliance-Checker", "Skill-HTS-Tariff-Classification", "Skill-GCC-CPC-Document-Validator", "Skill-Cross-Border-Compliance-Framework"],
         "inputs": [{'id': 'product_name', 'label': '产品名称', 'type': 'text', 'placeholder': '例：吸奶器S12 Pro'}, {'id': 'packaging_weight', 'label': '包装总重量（克）', 'type': 'text', 'placeholder': '例：480（含内衬+外箱+泡棉）'}, {'id': 'packaging_material', 'label': '主要包装材料', 'type': 'select', 'options': ['纸板+泡棉', '纸板+塑料', '全纸板', '混合材料']}, {'id': 'eu_markets', 'label': 'EU目标市场', 'type': 'text', 'placeholder': '例：DE, FR, AT, NL（逗号分隔）'}, {'id': 'annual_units', 'label': '年销售量（件）', 'type': 'text', 'placeholder': '例：5000'}],
         "demo_output": """[EPR合规费用测算] 报告 — 吸奶器S12 Pro
 
@@ -780,7 +780,7 @@ EU目标市场: DE, FR, AT  年销量: 5,000件
         "cat_class": "cat-supply",
         "desc": "新品上架前72小时：需求预测 + 备货建议 + 关键词矩阵 + 冷启动打法一站式决策",
         "roi": "冷启动备货准确率+30%，首批资金浪费降低50%",
-        "linked_skills": ['Skill-Real-Options-Product-Launch-Timing', 'Skill-Cross-Border-Cold-Start-Forecast', 'Skill-SIR-Viral-Product-Adoption-Forecasting', 'Skill-Long-Tail-Keyword-Mining', 'Skill-Index-Health-Monitoring'],
+        "linked_skills": ["Skill-SIR-Viral-Product-Adoption-Forecasting", "Skill-Real-Options-Product-Launch-Timing", "Skill-Long-Tail-Keyword-Mining", "Skill-Index-Health-Monitoring", "Skill-Cross-Border-Cold-Start-Forecast", "Skill-New-Product-Demand-Cold-Start", "Skill-GP-New-Product-Demand", "Skill-Contrastive-Time-Series-Cold-Start", "Skill-Pre-Launch-Compliance-Gate", "Skill-Synthetic-Data-Ecommerce", "Skill-New-Product-Inventory-Coldstart", "Skill-MTL-Cold-Start-SKU-Demand", "Skill-GP-Tweedie-Intermittent-New-Product-Demand", "Skill-DS-DGA-GCN-Fake-Review-Group", "Skill-Competitor-New-Product-Detection", "Skill-CSDM-Diffusion-ColdStart", "Skill-Bass-Diffusion-New-Product-Forecasting", "Skill-Profitability-Waterfall-By-ASIN", "Skill-New-SKU-Launch-Readiness-Gate", "Skill-Identity-Fragmentation-Debiasing"],
         "inputs": [{'id': 'category', 'label': '品类关键词', 'type': 'text', 'placeholder': '例：electric breast pump'}, {'id': 'launch_budget', 'label': '首批备货预算（USD）', 'type': 'text', 'placeholder': '例：5000'}, {'id': 'target_market', 'label': '目标市场', 'type': 'select', 'options': ['Amazon US', 'Amazon EU', 'TikTok Shop', 'Shopee']}, {'id': 'competitors', 'label': 'TOP3竞品ASIN（逗号分隔）', 'type': 'text', 'placeholder': '例：B0XXXXX,B0YYYYY'}],
         "demo_output": """[OK] 新品冷启动决策报告 — electric breast pump
 
@@ -822,7 +822,7 @@ Week 4: 评估点击率/转化率，调整出价策略
         "cat_class": "cat-supply",
         "desc": "Prime Day/黑五/双十一：需求预测+库存风险+补货时间线+资金占用优化的全链路大促备货方案",
         "roi": "大促备货准确率+20%，断货损失年化减少30-50万元",
-        "linked_skills": ['Skill-CVaR-Inventory-Risk-Portfolio', 'Skill-Demand-Forecasting-Supply-Chain', 'Skill-Safety-Stock-Replenishment', 'Skill-Seasonal-Search-Trend-Modeling', 'Skill-Lead-Time-Safety-Stock-Auto-Adjuster'],
+        "linked_skills": ["Skill-Seasonal-Search-Trend-Modeling", "Skill-Safety-Stock-Replenishment", "Skill-Lead-Time-Safety-Stock-Auto-Adjuster", "Skill-Demand-Forecasting-Supply-Chain", "Skill-CVaR-Inventory-Risk-Portfolio", "Skill-Promotion-Logistics-Surge-Forecast", "Skill-Promo-Stocktaking-SOP-Automation", "Skill-Promo-Inventory-Pulse-Auto-Trigger", "Skill-Operating-Cash-Flow-Forecast", "Skill-Demand-Quantile-Forecast", "Skill-Adaptive-Forecast-Accuracy-Optimization", "Skill-VMI-DRL-Inventory-Routing", "Skill-TikTok-Flash-Sale-Inventory-Pulse", "Skill-Temporal-Fusion-Transformer-Inventory", "Skill-Sell-Through-Rate-Promo-Inventory", "Skill-Replenishment-Parameter-Calibration", "Skill-Promo-ROI-Attribution-Supply-Side", "Skill-Pre-Promo-Stocktaking-KPI", "Skill-PostPromo-Retrospective-KPI", "Skill-MAS-Multi-Warehouse-Replenishment-Consensus"],
         "inputs": [{'id': 'festival', 'label': '大促类型', 'type': 'select', 'options': ['Prime Day', 'Black Friday', '双十一', 'Prime Big Deal Days']}, {'id': 'skus', 'label': '核心SKU列表（ASIN，逗号分隔）', 'type': 'text', 'placeholder': '例：B0XXXXX,B0YYYYY'}, {'id': 'current_inventory', 'label': '当前库存天数', 'type': 'text', 'placeholder': '例：45'}, {'id': 'budget_constraint', 'label': '备货预算上限（USD）', 'type': 'text', 'placeholder': '例：50000'}],
         "demo_output": """[OK] 大促备货决策方案 — Prime Day
 
@@ -863,7 +863,7 @@ ROI预测: 大促期间额外GMV $142,000，净利润率18%，投资回报率5.4
         "cat_class": "cat-ad",
         "desc": "输入产品和目标受众，MAS多智能体自动完成趋势选题→脚本生成→A/B对比→最优推荐，爆款率从5%提升至18%。",
         "roi": "爆款率5%→18%，年化GMV增量约150万元",
-        "linked_skills": ["Skill-MAS-Video-Content-Optimization", "Skill-Tag-Video-Commerce-Tagging", "Skill-AI-Content-Marketing-Growth"],
+        "linked_skills": ["Skill-Tag-Video-Commerce-Tagging", "Skill-MAS-Video-Content-Optimization", "Skill-AI-Content-Marketing-Growth", "Skill-MAS-VOC-Multi-Agent-Analysis", "Skill-MAS-Testing-Verification", "Skill-MAS-Search-Optimization", "Skill-MAS-Scale-Management", "Skill-MAS-Revenue-Operations", "Skill-MAS-Resource-Scheduling", "Skill-MAS-Orchestrator", "Skill-MAS-Dynamic-Trust", "Skill-MAS-Dynamic-KG-Collaboration", "Skill-MAS-Consensus-Mechanism", "Skill-MAS-Adversarial-Defense", "Skill-AgenTracer-MAS-Failure-Attribution", "Skill-AI-Video-Script-Generation", "Skill-AI-Product-Video-Script-Generator", "Skill-Omnichannel-Order-Orchestration-MAS", "Skill-MAS-Collaborative-Recommendation", "Skill-ResMAS-Resilience-Topology-Optimization"],
         "inputs": [
             {"id": "product", "label": "产品名称/品类", "type": "text", "placeholder": "例：婴儿推车轻便折叠款"},
             {"id": "target_age", "label": "宝宝月龄", "type": "select", "options": ["0-3月", "3-6月", "6-12月", "12-24月", "全龄段"]},
@@ -899,7 +899,7 @@ ROI预测: 大促期间额外GMV $142,000，净利润率18%，投资回报率5.4
         "cat_class": "cat-supply",
         "desc": "用DML双重去偏机器学习估计真实价格弹性（去除季节/促销混淆），给出降价/提价的预测ROI和差异化定价建议。",
         "roi": "定价精准度提升，年化GMV优化约120万元",
-        "linked_skills": ["Skill-Double-Debiased-ML-Price", "Skill-Heterogeneous-Treatment-Effect-XLearner", "Skill-Dynamic-Pricing-Elasticity"],
+        "linked_skills": ["Skill-Heterogeneous-Treatment-Effect-XLearner", "Skill-Dynamic-Pricing-Elasticity", "Skill-Double-Debiased-ML-Price", "Skill-Causal-Uplift-Modeling", "Skill-Price-Elasticity-Estimation", "Skill-Causal-Churn-Retention-Attribution", "Skill-CausalFlow-Agent-Failure-Repair", "Skill-Causal-RL-Dynamic-Pricing", "Skill-Price-Elasticity-Time-Series-Fusion", "Skill-Counterfactual-Price-Elasticity", "Skill-Causal-Time-Series-CausalImpact", "Skill-Causal-Cohort-Analysis", "Skill-Automated-Causal-Discovery", "Skill-VOC-Price-Signal-Analysis", "Skill-Price-Sensitive-Recommendation", "Skill-Price-Fence-Segmentation-Ecommerce", "Skill-Organic-Content-Causal-Attribution", "Skill-Experiment-Data-Quality-Guard", "Skill-EMSR-Bid-Price-Inventory-Control", "Skill-Delayed-Conversion-Causal-MTL"],
         "inputs": [
             {"id": "sku", "label": "SKU/ASIN", "type": "text", "placeholder": "例：B07ABC123"},
             {"id": "current_price", "label": "当前售价 ($)", "type": "text", "placeholder": "例：89.99"},
@@ -936,7 +936,7 @@ DML去偏估计: -1.68（95%CI: [-2.01, -1.35]）
         "cat_class": "cat-supply",
         "desc": "输入增长指标异常（激活率/复购率/ROAS），Agent 5分钟自动完成根因诊断，输出根因排查结果和优先行动清单。",
         "roi": "诊断时间2天→5分钟，年化价值约120万元",
-        "linked_skills": ["Skill-Growth-DataAgent-Analytics", "Skill-Multi-Step-Reasoning-BI", "Skill-Streaming-Analytics-Agent"],
+        "linked_skills": ["Skill-Streaming-Analytics-Agent", "Skill-Multi-Step-Reasoning-BI", "Skill-Growth-DataAgent-Analytics", "Skill-DataAgent-Marketing-Attribution", "Skill-LLM-Business-Intelligence-Reasoning", "Skill-Data-Collection-Agent-Pipeline", "Skill-Agentic-ETL-Data-Pipeline", "Skill-LLM-Uncertainty-Quantification-BI", "Skill-Data-to-Dashboard-Multi-Agent-Visualization", "Skill-LLM-Code-Generation-Data-Pipeline", "Skill-DeepAnalyze-Autonomous-Data-Science-Agent", "Skill-Agent-Finance-Autopilot", "Skill-ReliabilityBench-Agent-Reliability", "Skill-LLM-SC-MultiAgent-Consensus-Replenishment", "Skill-LLM-Negotiation-Conversion-Agent", "Skill-LLM-Hallucination-Detection-BI", "Skill-LLM-AutoBidding-MAS", "Skill-LACA-CrossLingual-ABSA", "Skill-Agent-Observability-Tracing", "Skill-Agent-Capability-Evaluation"],
         "inputs": [
             {"id": "metric", "label": "异常指标", "type": "select", "options": ["用户激活率", "7日复购率", "广告ROAS", "搜索转化率", "退货率", "平均客单价"]},
             {"id": "change", "label": "变化幅度", "type": "text", "placeholder": "例：下降12%（本周vs上周）"},
@@ -971,7 +971,7 @@ P1 (本周): TikTok引流用户单独建模，调整激活策略
         "cat_class": "cat-ad",
         "desc": "输入ASIN和关键词，多Agent自动完成排名监控→根因诊断→行动建议，响应时间从次日→5分钟，年化流量保护约80万元。",
         "roi": "排名响应时间次日→5分钟，年化流量保护80万元",
-        "linked_skills": ["Skill-MAS-Search-Optimization", "Skill-Causal-SEO-Search-Attribution", "Skill-Amazon-A10-Algorithm-Ranking"],
+        "linked_skills": ["Skill-MAS-Search-Optimization", "Skill-Causal-SEO-Search-Attribution", "Skill-Amazon-A10-Algorithm-Ranking", "Skill-Long-Tail-Search-Embedding-SEO", "Skill-Search-Organic-Growth-Attribution", "Skill-Search-Rank-Recovery-Auto-Action", "Skill-SEO-Organic-Ranking-Optimization", "Skill-International-Search-Localization", "Skill-Amazon-Search-Ranking-Factor-Model", "Skill-Zero-Click-Search-Optimization", "Skill-Personalized-Search-Ranking", "Skill-LLM-Generative-Product-Search", "Skill-Voice-Search-Optimization-Amazon", "Skill-Sponsored-Organic-Rank-Synergy", "Skill-Search-Term-Negative-Optimization", "Skill-Search-Tag-Keyword-Auto-Mapping", "Skill-Search-Share-of-Voice", "Skill-Search-Revenue-Attribution", "Skill-Search-Query-Performance-Attribution", "Skill-Search-Conversion-Rate-Predictor"],
         "inputs": [
             {"id": "asin", "label": "ASIN 或产品名", "type": "text", "placeholder": "例：B07ABC123 或 婴儿推车"},
             {"id": "keywords", "label": "核心关键词 (逗号分隔)", "type": "textarea", "placeholder": "例：lightweight baby stroller, foldable baby stroller"},
@@ -1007,7 +1007,7 @@ P1 [本周]: 提高核心词广告出价至$2.8
         "cat_class": "cat-risk",
         "desc": "输入AI模型类型，自动完成EU AI Act合规审计：特征歧视检测+偏差量化+个体解释能力评估，生成监管报告。",
         "roi": "EU AI Act违规罚款最高7%营业额，合规建设ROI约7:1",
-        "linked_skills": ["Skill-XAI-Regulatory-Compliance", "Skill-SHAP-Shapley-Feature-Attribution", "Skill-Responsible-AI-Red-Teaming"],
+        "linked_skills": ["Skill-XAI-Regulatory-Compliance", "Skill-SHAP-Shapley-Feature-Attribution", "Skill-Responsible-AI-Red-Teaming", "Skill-EU-AI-Act-Compliance-Framework", "Skill-AI-Transparency-Explanation", "Skill-AI-Explainability-Consumer-Trust", "Skill-AI-Algorithmic-Bias-Audit", "Skill-Decision-Audit-Trail-Ontology", "Skill-Identity-Fragmentation-Debiasing", "Skill-Data-Collection-Causal-Debiasing", "Skill-Counterfactual-Ad-Attribution-Debiasing", "Skill-Algorithmic-Fairness-in-Pricing", "Skill-AI-Ethics-Fairness-Audit", "Skill-VAT-GST-Compliance-Automation", "Skill-Supply-Chain-Due-Diligence", "Skill-Regulatory-Update-Impact-Dispatcher", "Skill-Regulatory-Graph-Compliance-Monitor", "Skill-Regulatory-Change-Auto-Monitor", "Skill-Pre-Launch-Compliance-Gate", "Skill-Platform-Policy-Change-Adaptive-Monitor"],
         "inputs": [
             {"id": "model_type", "label": "AI系统类型", "type": "select", "options": ["推荐系统", "动态定价", "欺诈风控", "内容生成", "客服AI"]},
             {"id": "market", "label": "目标市场", "type": "select", "options": ["欧盟 (EU AI Act)", "美国 (FTC)", "中国 (算法推荐管理)", "全球"]},

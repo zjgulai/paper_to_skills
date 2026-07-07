@@ -274,6 +274,7 @@ python subagent_decomposer.py
 ---
 
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
+- **延伸（extends）**：[[Skill-Tree-of-Thoughts-Planning]]
 
 ## ⑤ 商业价值评估
 

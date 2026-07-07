@@ -398,6 +398,7 @@ if __name__ == '__main__':
 ### 延伸技能
 - [Skill-Promotion-Effectiveness](../15-营销投放分析/[[Skill-Promotion-Effectiveness]].md) — MMM 渠道层结果驱动促销因果验证
 - [Skill-ROAS-Budget-Optimization](../13
+- **延伸（extends）**：[[Skill-Marketing-Data-Pipeline]]
 
 ## ⑤ 商业价值评估
 

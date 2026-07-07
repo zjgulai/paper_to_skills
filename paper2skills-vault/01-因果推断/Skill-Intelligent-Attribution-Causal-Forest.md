@@ -487,6 +487,7 @@ print("[✓] Intelligent Attribution C 测试通过")
 
 
 - **可组合**：[[Skill-Uplift-Modeling]] / [[Skill-DML-Cohort-Causal-Effect]]
+- **延伸（extends）**：[[Skill-Causal-Sentiment-Attribution]]
 
 ## ⑤ 商业价值评估
 

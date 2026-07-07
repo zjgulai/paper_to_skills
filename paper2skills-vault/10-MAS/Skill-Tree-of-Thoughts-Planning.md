@@ -201,6 +201,7 @@ python tot_planner.py
 
 
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
+- **延伸（extends）**：[[Skill-TokenPilot-Lifecycle-Context-Eviction]]
 
 ## ⑤ 商业价值评估
 

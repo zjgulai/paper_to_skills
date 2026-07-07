@@ -494,6 +494,7 @@ MetaGPT SOP 驱动协作演示: VOC 分析流水线
 
 
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
+- **延伸（extends）**：[[Skill-Policy-Driven-Meta-Controller]]
 
 ## ⑤ 商业价值评估
 

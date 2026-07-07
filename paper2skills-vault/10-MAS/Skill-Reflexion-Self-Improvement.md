@@ -267,6 +267,7 @@ if __name__ == "__main__":
 
 
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
+- **延伸（extends）**：[[Skill-Self-Improving-Agent-Feedback-Loop]]
 
 ## ⑤ 商业价值评估
 

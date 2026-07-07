@@ -268,6 +268,7 @@ print("[✓] Deep Learning Recommendat 测试通过")
 
 
 - **可组合**：[[Skill-Matrix-Factorization]] / [[Skill-Session-Based-Recommendation-SR-GNN]]
+- **延伸（extends）**：[[Skill-Sequential-Recommendation-Transformer]]
 
 ## ⑤ 商业价值评估
 

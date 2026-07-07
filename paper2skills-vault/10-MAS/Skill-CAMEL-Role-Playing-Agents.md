@@ -205,6 +205,7 @@ python camel_agent.py
 
 
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
+- **延伸（extends）**：[[Skill-RCR-Router-Role-Aware-Context-Routing]]
 
 ## ⑤ 商业价值评估
 

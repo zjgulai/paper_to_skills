@@ -452,6 +452,7 @@ print("[✓] Mediation Causal Mechanis 测试通过")
 - **+ VOC-Analysis**: VOC挖掘发现用户反馈主题 → 中介分析验证哪些主题确实是转化驱动因素
 
 ---
+- **延伸（extends）**：[[Skill-Causal-Cohort-Analysis]]
 
 ## ⑤ 商业价值评估
 

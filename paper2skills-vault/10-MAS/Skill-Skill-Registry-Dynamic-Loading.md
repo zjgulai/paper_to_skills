@@ -197,6 +197,7 @@ python skill_registry.py
 
 
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
+- **延伸（extends）**：[[Skill-MAS-Dynamic-Trust]]
 
 ## ⑤ 商业价值评估
 

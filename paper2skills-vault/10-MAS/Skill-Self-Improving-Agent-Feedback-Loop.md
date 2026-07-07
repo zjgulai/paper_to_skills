@@ -200,6 +200,7 @@ python self_improving_agent.py
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
 
 ---
+- **延伸（extends）**：[[Skill-Reflexion-Self-Improvement]]
 
 ## ⑤ 商业价值评估
 

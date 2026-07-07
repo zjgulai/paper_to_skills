@@ -385,6 +385,7 @@ if __name__ == '__main__':
 - **选品决策**：结合库存策略选择新品
 
 - **可组合**：[[Skill-Demand-Forecasting-Supply-Chain]] / [[Skill-Safety-Stock-Replenishment]]
+- **延伸（extends）**：[[Skill-Two-Echelon-Inventory-DRL]]
 
 ## ⑤ 商业价值评估
 

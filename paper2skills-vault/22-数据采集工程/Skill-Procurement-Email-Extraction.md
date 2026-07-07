@@ -510,6 +510,8 @@ if __name__ == '__main__':
 ### 前置（Prerequisite）
 - [[Skill-NLP-Entity-Extraction]] — 基础 NER 能力，提供实体识别的理论基础
 - [[Skill-Regex-Pattern-Matching
+- **延伸（extends）**：[[Skill-Web-Page-Change-Detection]]
+- **延伸（extends）**：[[Skill-Weak-Supervision-Data-Labeling]]
 
 ## ⑤ 商业价值评估
 

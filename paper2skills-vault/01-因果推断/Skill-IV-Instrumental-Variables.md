@@ -436,6 +436,7 @@ print("[✓] IV Instrumental Variables 测试通过")
 - **+ Demand-Forecasting**: IV估计弹性参数 → 代入需求预测模型做情景分析
 
 ---
+- **延伸（extends）**：[[Skill-SSBC-Small-Sample-Conformal]]
 
 ## ⑤ 商业价值评估
 

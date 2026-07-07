@@ -459,6 +459,7 @@ AutoGen 多智能体对话编排框架 - 功能测试
 
 
 - **可组合**：[[Skill-MAS-Orchestrator]] / [[Skill-ReAct-Reasoning-Acting]]
+- **延伸（extends）**：[[Skill-Multi-Agent-Skill-Composition]]
 
 ## ⑤ 商业价值评估
 

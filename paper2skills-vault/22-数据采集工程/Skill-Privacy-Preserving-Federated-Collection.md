@@ -540,6 +540,7 @@ if __name__ == "__main__":
 
 ### 延伸技能（Extends）
 - [[Skill-Homomorphic-Encryption-For-
+- **延伸（extends）**：[[Skill-Realtime-Feature-Collection]]
 
 ## ⑤ 商业价值评估
 
