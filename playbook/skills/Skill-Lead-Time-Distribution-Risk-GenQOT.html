@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Gen-QOT 提前期分布建模 - 动态安全库存防海运延误 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
@@ -39,11 +64,67 @@
   <a href="#s-relations">⑤ 关联</a>
   <a href="#s-value">⑥ 价值</a>
 </div>
-<h1>Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</h1>
-<p class="muted">Skill-Lead-Time-Distribution-Risk-GenQOT · 04-供应链</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>fraud_detection</span><span class='tag'>供应链与补货</span><span class='tag'>风控与合规</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-N 库存危机响应</span></div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">04-供应链</div>
+  <h1 class="skill-main-title">Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</h1>
+  <p class="skill-skill-id">Skill-Lead-Time-Distribution-Risk-GenQOT</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>跨境物流与履约</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>时序预测</span><span class='tag'>AI伦理与治理</span><span class='tag'>逆向物流与退货</span><span class='tag'>仓储运营效率</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-N 库存危机响应</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-agent-replace.html'>AI Agent 替人手册</a><a class='hb-uplink' href='../playbooks/pb-tariff-response.html'>关税冲击 72h 响应手册</a><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营全链路手册</a></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>200-500 万/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>200-500 万/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
 <div class="two-col">
   <section>
@@ -52,13 +133,13 @@
     <h2 id="s-algo">2. 核心算法逻辑</h2>
     <p>母婴跨境海运提前期(Lead Time, LT)在 2550 天剧烈波动(苏伊士事件/港口拥堵). 传统安全库存假设 LT 固定,实际服务水平远低于设定值(设 95% 实际只有 85%). GenQOT 用深度自回归生成模型对 LT 进行分布式建模(不假设参数分布),并把&quot;订单整批到货&quot;扩展为分批随机到达(QOT, QuantityOverTime),精确建模拼箱拆批到港行为. 动态安全库存自适应季节性 + 港口拥堵期.</p>
     <h2 id="s-scenario">3. 业务应用场景</h2>
-    <p>- 业务问题:苏伊士运河拥堵 / 巴拿马运河旱季 / 港口积压时,Momcozy 海运 LT 从均值 30 天变成 50+ 天,预警通常滞后 2-3 周才发现库存紧张. 单次缺货损失 BSR 排名(恢复需 3-6 月)+ 直接销售损失,单产品月损失约 30-80 万元 - 数据要求:历史 PO 到货时序(至少 200 条) + 当前在途订单 + 港口拥堵实时指数(可选) - Gen-QOT 配置: - GluonTS DeepAR 拟合 LT 经验分布,输出 P10/P50/P90 分位数 - 实时监控 $P_{90}(LT) - P_{10}(LT)$ 跨度,&gt; 20 天触发预警 - 自动提</p><p>- 业务问题:Momcozy 双 11 期间需求和 LT 同时方差扩大,传统全年固定安全库存系数导致旺季前 6 周安全库存严重不足 + 旺季后 4 周积压. 旺季前估计 SS 不足 30-40% 导致大促爆款断货,旺季后积压占用 FBA 长期仓储费(月均 $0.15/立方英尺) - 数据要求:历史季节性需求 + 旺季 LT 数据 + 大促日历 - Gen-QOT 配置: - 按季节性 / 大促窗口条件化 Gen-QOT - 旺季前 6 周:$SS_{dynamic}$ 提升 40-70%(自适应) - 旺季后 4 周:$SS_{dynamic}$ 自动收缩 30% - 业务价值: - 旺季缺货</p>
+    <p>- 业务问题:苏伊士运河拥堵 / 巴拿马运河旱季 / 港口积压时,Momcozy 海运 LT 从均值 30 天变成 50+ 天,预警通常滞后 2-3 周才发现库存紧张. 单次缺货损失 BSR 排名(恢复需 3-6 月)+ 直接销售损失,单产品月损失约 30-80 万元 - 数据要求:历史 PO 到货时序(至少 200 条) + 当前在途订单 + 港口拥堵实时指数(可选) - Gen-QOT 配置: - GluonTS DeepAR 拟合 LT 经验分布,输出 P10/P50/P90 分位数 - 实时监控 $P_{90}(LT) - P_{10}(LT)$ 跨度,&gt; 20 天触发预警 - 自动提</p><p>三轨验证： - 成本：数据采集需对接 ERP 系统 PO 到货时间戳，初期开发约 15-20 万元；GluonTS 模型训练需 GPU 实例（约 2000 元/月）；人力投入 1 名数据工程师 + 0.5 名供应链分析师，年人力成本约 40 万元。 - 合规：不涉及用户隐私数据，无 GDPR 风险；预警系统为内部决策工具，不触碰 Amazon 政策红线；港口拥堵指数使用公开 API（如 Clarksons）无合规问题。 - 风险：过度依赖预警可能导致人工判断弱化；若模型误报（假阳性）导致提前下单过多，可能增加库存持有成本 10-20%；需设置人工复核机制防止自动化误操作。</p><p>- 业务问题:Momcozy 双 11 期间需求和 LT 同时方差扩大,传统全年固定安全库存系数导致旺季前 6 周安全库存严重不足 + 旺季后 4 周积压. 旺季前估计 SS 不足 30-40% 导致大促爆款断货,旺季后积压占用 FBA 长期仓储费(月均 $0.15/立方英尺) - 数据要求:历史季节性需求 + 旺季 LT 数据 + 大促日历 - Gen-QOT 配置: - 按季节性 / 大促窗口条件化 Gen-QOT - 旺季前 6 周:$SS_{dynamic}$ 提升 40-70%(自适应) - 旺季后 4 周:$SS_{dynamic}$ 自动收缩 30% - 业务价值: - 旺季缺货</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>易处:Silver-Meal 扩展公式有解析解,简单部署</li><li>易处:GluonTS DeepAR / MQ-CNN 开源,工程化路径成熟</li><li>难处:<strong>Amazon 主论文未开源</strong>,Gen-QOT 完整深度模型需自行实现</li><li>难处:LT 历史数据质量要求高(PO 到货时间戳精确)</li><li>难处:QOT 拼箱拆批数据采集需要 ERP 系统对接</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：paper2skills-code/supply_chain/lead_time_distribution_risk_genqot</p>
-    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
 Gen-QOT 提前期分布建模 + 动态安全库存最小骨架
 论文 arXiv:2310.17168 (Amazon, 2024)
 生产替换: GluonTS DeepAR / MQ-CNN 学习 LT 分布
@@ -142,6 +223,7 @@ function copyCode(btn) {
   navigator.clipboard.writeText(text).then(function() {
     btn.textContent = '已复制 ✓';
     btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Lead-Time-Distribution-Risk-GenQOT',skill_domain:'04-供应链'});
     setTimeout(function() {
       btn.textContent = '复制';
       btn.classList.remove('copied');
@@ -151,6 +233,7 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = '复制'; }, 1500);
   });
 }
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Lead-Time-Distribution-Risk-GenQOT',skill_domain:'04-供应链',skill_difficulty:'⭐⭐⭐⭐☆'});
 </script>
 <div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 供应链哨兵</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
 <div style='margin-top:24px;padding:16px 20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px'><div style='font-size:13px;font-weight:700;color:#065f46;margin-bottom:10px'>智能体广场调用案例</div><p style='margin:4px 0'><strong>Agent</strong>：供应链哨兵</p>
@@ -160,7 +243,7 @@ function copyCode(btn) {
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -175,6 +258,39 @@ function copyCode(btn) {
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

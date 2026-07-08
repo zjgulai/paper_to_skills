@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>19-风控反欺诈 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content"><h1>19-风控反欺诈</h1><p>Fake review detection, transaction anomaly, click fraud</p>
@@ -83,186 +108,211 @@
   });
   document.addEventListener('DOMContentLoaded',applyPage);
 })();
-</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Account-Association-Risk-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ATO-Spatio-Temporal-Graph.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">账号盗用时空图检测 — GraphSAGE+因果标签传播</h3>
+  <p class="sc-desc">风控面临账号异常检出率低——时空图神经网络将ATO欺诈检测率从62%提升至91%，年化挽回损失35万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Account-Association-Risk-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Account Association Risk Detection — 电商多账户关联风险检测</h3>
   <p class="sc-desc">新员工设备、共享 IP、旧供应商账号形成隐性关联，被 Amazon 认定即全部封禁损失 50-500 万元——多维信号图分析（银行卡/设备/IP/行为）提前 30 天识别关联风险，建议隔离操作防止连坐</p>
   <div class='sc-footer'><span class='sc-roi'>50-500 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Account-Fingerprint-Risk-Scorer.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Account-Fingerprint-Risk-Scorer.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">账号指纹风险评分器 — 量化多账号关联被检测风险</h3>
   <p class="sc-desc">多品牌运营总监面临&quot;两品牌账号被Amazon识别为关联账号的风险等级未知&quot;——指纹相似度评分将关联风险从定性判断变为0-1量化，提前整改规避封号损失50-300万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-300万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Account-Health-Early-Warning-System.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Account-Health-Early-Warning-System.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">账号健康预警系统 — ODR/LSR/VTR多指标趋势监控与早期预警</h3>
   <p class="sc-desc">亚马逊账号运营面临&quot;ODR悄悄接近1%暂停红线但无预警机制&quot;——多指标趋势预警在暂停前15-30天发出告警，年均防止账号被封损失约50-200万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-200万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Account-Health-Proactive-Monitor.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Account-Health-Proactive-Monitor.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Account Health Proactive Monitor — 账号健康主动监控：从被动处罚到提前预防</h3>
   <p class="sc-desc">去年黑五账号ODR从0.6%升至1.2%接到Amazon警告广告暂停48小时损失15万但事前无任何预警——账号健康主动监控提前7-14天发现趋势恶化并联动降低广告预算年化避免封号损失30-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-100 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Ad-Fraud-IVT-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-Fraud-IVT-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Ad Fraud IVT Detection — 行为图 + GNN 无效流量实时检测</h3>
   <p class="sc-desc">母婴品牌 TikTok/Google 广告月均 30 万投放中 15-25% 为无效点击（Bot/竞品刷量），ROAS 被高估 30%——行为图 WTG + DGCNN 将 IVT 识别率提升至 95%+，年化节省无效广告支出 5-15 万元，并为平台申诉提供量化证据</p>
   <div class='sc-footer'><span class='sc-roi'>30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</h3>
   <p class="sc-desc">运营每天需手动检查35个SKU×8个指标共280个时序数据点是否异常——时序基础模型零样本异常检测1小时内自动发现全域异常按优先级排队处理，提前发现缺货/竞品攻击/点击欺诈年化挽回20-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Brand-Hijacking-Realtime-Monitor.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Hijacking-Realtime-Monitor.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Buy Box劫持实时监控 — 品牌跟卖检测与自动预警</h3>
   <p class="sc-desc">品牌负责人面临&quot;跟卖者在ASIN上挂Offer劫持Buy Box发现总是延迟1-3天&quot;——轮询+Z-score异常检测将跟卖发现时间从3天压缩至15分钟，年化避损$3.2万</p>
   <div class='sc-footer'><span class='sc-roi'>3.2 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Brand-Listing-Hijacking-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Listing-Hijacking-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Brand Listing Hijacking Detection — 电商品牌 Listing 劫持网络检测</h3>
   <p class="sc-desc">竞品在品牌方ASIN下挂载劣质品蹭流量，人工发现需 2 周、BSR 损失严重——product-reviewer 二部图网络聚类特征早期检测劫持卖家，发现时间压缩至 24-48h，年化保护 GMV 20-100 万元</p>
   <div class='sc-footer'><span class='sc-roi'>20-100 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Brand-Registry-Infringement-Tracker.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Registry-Infringement-Tracker.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Brand Registry Infringement Tracker — 品牌注册侵权追踪自动监控 EUIPO/USPTO</h3>
   <p class="sc-desc">品牌运营面临&quot;竞品在欧洲以近似商标抢注3个月后才发现错过Opposition窗口&quot;——商标相似度自动扫描每周监控EUIPO/USPTO新申请，提前3个月提交Opposition，年化保护品牌价值100-500万元</p>
   <div class='sc-footer'><span class='sc-roi'>100-500 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Click-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Click-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Click Fraud Detection（广告刷量检测）</h3>
   <p class="sc-desc">竞品对母婴广告发动 IVT 攻击，FB 广告 CTR 虚高 8.5% 但转化率跌至 0.1%，月广告预算 30% 被无效点击消耗——时序异常检测实时识别刷量 IP 并向平台申请退款，年均挽回 6-15 万元</p>
   <div class='sc-footer'><span class='sc-roi'>6-15 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Competitor-Negative-Campaign-Detection.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Competitor-Negative-Campaign-Detection.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Competitor Negative Campaign Detection — 竞品恶意投诉攻击检测（批量举报模式）</h3>
   <p class="sc-desc">运营面临&quot;Prime Day前2周突然23条1星差评全是新账号文本高度相似但不确定是否是攻击&quot;——三维度恶意差评攻击检测识别攻击并向Amazon举报，Star Rating恢复保护Prime Day GMV 30-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>30-60 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Counterfeit-Product-Visual-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Counterfeit-Product-Visual-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">假冒商品视觉检测 — 感知哈希批量比对竞品图识别疑似仿品</h3>
   <p class="sc-desc">知识产权团队面临&quot;不知道市面上是否有产品在视觉上仿造自己的外观设计&quot;——感知哈希批量比对将疑似仿品识别效率提升8倍，年化节省维权调查费$2.8万</p>
   <div class='sc-footer'><span class='sc-roi'>2.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Border-Payment-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Payment-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Cross-Border Payment Fraud Detection — 跨境支付欺诈检测：多源信号图谱风险建模</h3>
   <p class="sc-desc">独立站支付欺诈率3-8%每月因拒付损失3000美元以上但传统规则只能拦截60-70%——图神经网络多跳关联分析发现盗刷信用卡团伙，检测率提升至85-90%年化避免欺诈损失25-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥25-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Platform-Account-Linkage-Risk.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Platform-Account-Linkage-Risk.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Cross-Platform Account Linkage Risk — 跨平台账号关联风险（Amazon+Walmart+eBay）</h3>
   <p class="sc-desc">跨平台运营面临&quot;Amazon账号封号后Walmart账号当日也收到限制警告&quot;——跨平台账号关联风险评分识别硬软关联并启动隔离，年化保护多平台GMV 100-300万元</p>
   <div class='sc-footer'><span class='sc-roi'>100 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Crypto-Anomaly-Review-Fraud.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Crypto-Anomaly-Review-Fraud.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">区块链女巫攻击检测驱动的虚假评论清洗 (Crypto Sybil Review Detection)</h3>
   <p class="sc-desc">品牌方惨遭竞品虚假评论攻击导致BSR排名坍塌——引入区块链女巫攻击(Sybil Attack)检测算法识别对手刷单的句法指纹与时间模式异常，生成精准举报证据包向Amazon提交，一次性清退黑帽竞品的虚假评分，恢复20-40%流量下跌。</p>
   
-</a><a class="card skill-card" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</h3>
   <p class="sc-desc">业务问题：新款奶瓶（ASIN B0XXXX）上架后 6 小时内突现 38 条 5 星评论，评论者账号注册时间集中在近 7 天、互相之间都购买过同一批产品</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">DS-DGA-GCN假评论群体检测 — 多样性与自相似性感知的动态图注意力GCN</h3>
   <p class="sc-desc">竞争对手有组织的恶意差评攻击让新品评分在7天内从4.8崩至3.6——DS-DGA-GCN通过多样性与自相似性感知的动态图注意力识别假评论群体，Amazon数据集准确率89.8%（2026 arXiv:2603.08332）</p>
   <div class='sc-footer'><span class='sc-roi'>20-50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Fraud-Signal-Collection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Explainable-Review-Adjudication.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">可解释评论真伪裁决 — 证据图+LLM推理</h3>
+  <p class="sc-desc">合规面临评论真实性鉴别成本高——可解释裁定引擎将差评过滤准确率提升至96%，年化节省人工审核22万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Fraud-Signal-Collection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</h3>
   <p class="sc-desc">风控分析师面临欺诈线索散乱——欺诈信号采集将线索覆盖率提38%，年化省12万元</p>
   <div class='sc-footer'><span class='sc-roi'>48 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-FraudSquad-LLM-Review-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FraudSquad-LLM-Review-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换器</h3>
   <p class="sc-desc">业务问题：竞品通过 ChatGPT 批量生成高质量 5 星好评（语言自然流畅、细节丰富），注入自家 listing 的同时给我们的 listing 刷低评，导致： 1. 竞品 BSR 飙升 → 抢占 Featured Offer 2. 我们 listing 评分下降 → 转化率下滑 10-25% 3. Amazon 算法降权 → 广告 CVR 下降</p>
-  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Hijacker-Seller-Network-Analysis.html" data-domain="19-风控反欺诈" data-diff="">
+  <div class='sc-footer'><span class='sc-roi'>2万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GNN-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">图神经网络欺诈检测 — 关系图结构感知的电商欺诈识别</h3>
+  <p class="sc-desc">风控团队面临&quot;欺诈团伙通过设备/地址/IP共享组织刷单但传统规则只能发现15%&quot;——图神经网络传播使团伙召回率从15%提升至72%，年化减少欺诈损失约80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hijacker-Seller-Network-Analysis.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Hijacker Seller Network Analysis — 跟卖卖家网络图谱识别有组织的跟卖集团</h3>
   <p class="sc-desc">品牌方面临&quot;跟卖处理完一个3天后换号再来无法从根源解决&quot;——跟卖集团图谱分析一次性向Amazon举报12人集团，Buy Box损失率从35%降至8%，年化保护GMV 50-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-100 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-IP-Trademark-Brand-Monitoring.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-IP-Trademark-Brand-Monitoring.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">IP Trademark Brand Monitoring — 知识产权主动监控：商标侵权自动检测与预警</h3>
   <p class="sc-desc">竞品上架与我品牌名95%相似的仿冒品抢走流量但人工发现需要数周——多模态IP监控24小时内检测品牌名/Logo/图片侵权并生成证据包，快速举报保护品牌GMV年化避损20-80万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-80 万（以品牌保护为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Identity-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Identity-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Identity Fraud Detection — 多维账号欺诈检测：设备+行为+网络三重验证</h3>
   <p class="sc-desc">业务问题：某婴儿推车 Listing 在 48 小时内收到 12 条五星评论，怀疑是刷单行为</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Inventory-Theft-Warehouse-Anomaly.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Inventory-Theft-Warehouse-Anomaly.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Inventory Theft Warehouse Anomaly — 海外仓库存异常检测盗窃/错发/损耗识别</h3>
   <p class="sc-desc">仓储管理面临&quot;奶粉海外仓3个月内220件差异到年底对账才发现每罐$50合计损失$11000&quot;——CUSUM库存偏差检测在第2周触发告警，年化发现并预防盗损10-20万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-20 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-Suppression-Detection.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Review-Manipulation-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">LLM刷评检测 — 门控图Transformer+语言模型嵌入</h3>
+  <p class="sc-desc">2026年，LLM生成的虚假评论在语言质量上已全面超越真实评论——语法自然、情感真实、细节丰富，传统基于词频/情感/长度的NLP特征几乎完全失效，误判率接近随机猜测水平。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Suppression-Detection.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Listing Suppression Detection — Listing 被平台隐藏/降权检测（非账号问题）</h3>
   <p class="sc-desc">运营面临&quot;Listing被算法静默压制2-3天后才发现每天损失数千美元&quot;——CUSUM流量解耦检测将发现时间从3天压缩至1.5天，年化减少Listing压制损失15-30万元</p>
   <div class='sc-footer'><span class='sc-roi'>15-30 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multi-Account-Operational-Isolation.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Account-Operational-Isolation.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">多账号操作隔离规范 — 风险传染模型与安全运营SOP</h3>
   <p class="sc-desc">跨境电商COO面临&quot;一账号被暂停后担心传染至其他品牌店铺&quot;——风险传染模型将传染概率量化并输出24小时整改SOP，防止多账号连带损失约150-500万元</p>
   <div class='sc-footer'><span class='sc-roi'>150-500万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-PPC-Bid-Manipulation-Defense.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PPC-Bid-Manipulation-Defense.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">PPC Bid Manipulation Defense — 识别竞品恶意点击耗费广告费</h3>
   <p class="sc-desc">广告运营面临&quot;$300/天广告预算在上午11点就被耗尽黄金时段失去曝光&quot;——PPC点击欺诈检测+分时预算分配，月GMV提升8-15万元并追讨无效点击退款2-5万元/年</p>
   <div class='sc-footer'><span class='sc-roi'>8-15 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Product-Safety-Complaint-Risk-Model.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Safety-Complaint-Risk-Model.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Product Safety Complaint Risk Model — 产品安全投诉风险模型基于历史预测封号概率</h3>
   <p class="sc-desc">运营面临&quot;收到3起Buyer Message提及宝宝摔落事故不知道封号风险有多高&quot;——安全投诉风险逻辑回归将封号概率量化并触发合规预警，成功规避封号保护冻结资金200-500万元</p>
   <div class='sc-footer'><span class='sc-roi'>200-500 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-PromoGuardian-Promotion-Fraud-GNN.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PromoGuardian-Promotion-Fraud-GNN.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">PromoGuardian — 促销欺诈多关系图神经网络检测</h3>
   <p class="sc-desc">促销运营负责人面临大促期优惠券被批量套利日损数万元——多关系图神经网络同时捕获设备/地址/时序三维欺诈信号，促销套利损失减少60-70%，年化节省100-500万元</p>
   <div class='sc-footer'><span class='sc-roi'>$144,000-$672,000</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Return-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Return-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Return Fraud Detection — 退货欺诈识别：GNN 检测虚假退货与促销滥用</h3>
   <p class="sc-desc">某款299美元婴儿推车退货率18%但工厂QC合格率99.5%怀疑有组织欺诈却无法证明——账号关联图谱识别共享地址设备的欺诈团伙，拦截30-50%欺诈退货年化节省10-40万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥10-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Review-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Attack-Hawkes-Process.html" data-domain="19-风控反欺诈" data-diff="">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Review Attack Hawkes Process — 差评攻击 Hawkes 过程建模与预警</h3>
+  <p class="sc-desc">运营面临&quot;竞品差评攻击被动响应导致排名损失&quot;——Hawkes过程预测攻击窗口提前72h，主动防御将排名损失从-35%降至-8%，年化保护GMV35-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>35-50 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Review Fraud Detection（虚假评论检测）</h3>
   <p class="sc-desc">审核主管面临刷评识别太慢——刷评检测将误放率从14%降到3%，年化省15万元</p>
-  <div class='sc-footer'><span class='sc-roi'>5-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Seller-Rating-Attack-Pattern.html" data-domain="19-风控反欺诈" data-diff="">
+  <div class='sc-footer'><span class='sc-roi'>96 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Seller-Rating-Attack-Pattern.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Seller Rating Attack Pattern — 卖家评分攻击模式识别恶意 A-to-Z 索赔检测</h3>
   <p class="sc-desc">运营面临&quot;8起A-to-Z索赔全来自7天内新账号ODR从0.3%升至1.8%接近危险线&quot;——恶意A-to-Z攻击模式识别+证据申诉，ODR回落至0.5%，年化保护账号GMV 80-200万元</p>
   <div class='sc-footer'><span class='sc-roi'>80-200 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Social-Engineering-Attack-Detection.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Social-Engineering-Attack-Detection.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Social Engineering Attack Detection — 社会工程攻击检测钓鱼邮件/虚假供应商识别</h3>
   <p class="sc-desc">运营团队面临&quot;伪装Amazon官方邮件诱导账号验证和虚假供应商价格低40%诱导预付款&quot;——钓鱼邮件+供应商欺诈多维度评分识别攻击，年化减少社会工程攻击损失50-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>5-50 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Counterfeit-Detection.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Counterfeit-Detection.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Supply Chain Counterfeit Detection — 供应链仿冒品检测原材料/包装视觉验真</h3>
   <p class="sc-desc">品控面临&quot;FBA退货中混入包装高度相似的仿冒品难以人工识别&quot;——pHash视觉指纹比对批量核查识别8件仿冒包装，年化避免品质投诉和品牌损失50-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-100 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Tax-Evasion-Risk-Signal-Monitor.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tax-Evasion-Risk-Signal-Monitor.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Tax Evasion Risk Signal Monitor — 税务合规风险信号监控（VAT/GST 异常）</h3>
   <p class="sc-desc">财务合规面临&quot;欧洲FBA销售额快速增长不知道何时触发VAT注册义务&quot;——VAT/GST阈值滚动监控提前6周发出预警完成合规注册，年化规避未申报罚款10-50万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-50 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Transaction-Anomaly-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Transaction-Anomaly-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Transaction Anomaly Detection（异常交易检测）</h3>
   <p class="sc-desc">同一 IP 在 10 分钟内下 5 单跨州发货使用 5 张信用卡，人工审核滞后导致盗刷损失 $5000——Isolation Forest 实时异常交易检测在毫秒内触发 hold 订单，年化止损 3-8 万元</p>
-  <div class='sc-footer'><span class='sc-roi'>3-8 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+  <div class='sc-footer'><span class='sc-roi'>45 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -277,6 +327,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

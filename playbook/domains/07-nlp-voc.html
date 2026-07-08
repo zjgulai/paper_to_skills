@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>07-NLP-VOC · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content"><h1>07-NLP-VOC</h1><p>已迁至 ../ai_nlp_voc/,本仓库保留代码模板</p>
@@ -83,182 +108,192 @@
   });
   document.addEventListener('DOMContentLoaded',applyPage);
 })();
-</script><div class='cards'><a class="card skill-card" href="../skills/Skill-BERT-SRL-Event-Frame-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-BERT-SRL-Event-Frame-Extraction.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
-  <h3 class="sc-title">BERT-SRL + 事件框架 — 语义角色标注与事件抽取</h3>
+  <h3 class="sc-title">Skill: BERT-SRL + 事件框架 — 母婴出海评论语义结构化抽取</h3>
   <p class="sc-desc">语义分析师面临评论事件抽取慢——SRL将抽取工时从6小时降到40分，年化省9万元</p>
-  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Baby-Age-Stage-Demand-Segmentation.html" data-domain="07-NLP-VOC" data-diff="">
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-BERTopic-Neural-Topic-Modeling.html" data-domain="07-NLP-VOC" data-diff="">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">BERTopic — 神经主题模型与动态知识分类</h3>
+  <p class="sc-desc">运营面临&quot;5000条评论无法快速发现新兴主题和知识缺口&quot;——BERTopic将VOC主题覆盖率从68%提升至94%，自动发现安全性等预警主题，漏报率下降38%</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Baby-Age-Stage-Demand-Segmentation.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill-Baby-Age-Stage-Demand-Segmentation — 婴儿月龄需求分层</h3>
   <p class="sc-desc">运营面临&quot;婴儿玩具垫Listing写&#x27;适合0-3岁&#x27;但4-6月龄关键词排名第12位始终无法提升&quot;——月龄需求分层从1200条评论挖掘各阶段专属痛点，Listing精准化后目标关键词排名升至第4位，转化率+22%</p>
   <div class='sc-footer'><span class='sc-roi'>5-20 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Few-Shot-Review-Classification.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Few-Shot-Review-Classification.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">少样本评论分类 — Prototypical Networks 从英语迁移到新市场语言</h3>
   <p class="sc-desc">多语言运营面临&quot;德语法语日语评论只有少量标注数据无法建立分类模型&quot;——Prototypical Networks少样本分类将新市场VOC分析启动时间从3个月压缩至2周，年化$2.8万</p>
   <div class='sc-footer'><span class='sc-roi'>2.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-InstructUIE-Unified-Information-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-InstructUIE-Unified-Information-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill: InstructUIE — 统一信息抽取框架</h3>
   <p class="sc-desc">母婴出海平台每天数十万条多语言评论需同时抽取产品实体、品牌关系、属性对比，为每类任务单独训练模型成本极高——统一 IE 框架用单一模型一次推理完成 NER+RE+EE，标注成本降低 70%，评论结构化处理吞吐量提升 5 倍</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-LLM-Review-Structured-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Review-Structured-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">LLM Review Structured Extraction — 方面情感 JSON 批量提取与语义聚类</h3>
   <p class="sc-desc">母婴运营每季度面对 3 万条吸奶器评论却无从下手——LLM JSON 批量提取将评论结构化时间压缩至 2 小时，自动生成 Top10 差评维度排行，年化节省人力约 18 万元并加速产品迭代 4 周</p>
   <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Live-Script-Optimization-NLP.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Live-Script-Optimization-NLP.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">直播话术优化NLP — 情感曲线+格兰杰因果挖掘高转化话术模式</h3>
   <p class="sc-desc">直播团队面临&quot;不知道哪些话术能最快触发购买只能靠主播个人经验&quot;——格兰杰因果检验识别最高转化话术，成交触发时间压缩38%，年化GMV增量$9.8万</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multi-Market-VOC-Cross-Analysis.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MetaIE-Unified-Information-Extraction-Distillation.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">MetaIE — 统一信息抽取蒸馏框架</h3>
+  <p class="sc-desc">数据分析师面临&quot;NER/关系抽取/事件抽取需要维护多个专用模型&quot;——MetaIE统一蒸馏框架将6类IE任务合并为一个模型，F1提升17%，部署成本降低80%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Market-VOC-Cross-Analysis.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill-Multi-Market-VOC-Cross-Analysis — 多市场VOC交叉分析</h3>
   <p class="sc-desc">跨站卖家面临&quot;同款婴儿监视器美国4.3星欧洲3.7星不知道差异根因是什么&quot;——多市场VOC交叉分析识别德国CE认证缺失和德语说明书问题，补全后3个月评分升至4.2星月销量+65%</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multilingual-NLP-Pipeline.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-NLP-Pipeline.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">多语言 NLP 管道 — mBERT Zero-Shot 跨语言情感/实体提取</h3>
   <p class="sc-desc">多语言运营面临&quot;德语法语日语评论无法做情感分析只能看英语&quot;——mBERT零样本跨语言迁移将多语言VOC分析覆盖率从20%提升至100%，年化节省翻译费$3.6万</p>
   <div class='sc-footer'><span class='sc-roi'>15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-NLP-Sentiment-ML-Pipeline.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NLP-Sentiment-ML-Pipeline.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">NLP Sentiment ML Pipeline — 评论情感→ML 特征工程桥梁：将 VOC 转化为可训练信号</h3>
   <p class="sc-desc">NLP提取了丰富评论情感信号但ML预测模型从未使用这些领先指标——评论情感特征工程标准化管道将情感信号转化为ML可用特征矩阵，需求预测精度提升8-15%补全图谱唯一剩余NLP-VOC↔ML基础断链</p>
   <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-NLP-Text-Classification.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NLP-Text-Classification.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">NLP Text Classification — 跨品类零样本评论分类与客服工单智能分流</h3>
   <p class="sc-desc">客服工单人工分类耗时 4-6 小时/周且跨品类不可复用——LLM 零样本分类将分类一致性从 78% 提升至 93%，新品类 15 分钟投入使用，年化节省人力 ¥6-12 万</p>
   <div class='sc-footer'><span class='sc-roi'>30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-NPS-Proxy-Retention-Predictor.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NPS-Proxy-Retention-Predictor.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">NPS-Proxy-Retention-Predictor — 评论语言特征构建NPS代理指标与次月留存预测</h3>
   <p class="sc-desc">运营面临无NPS调研数据无法判断用户满意度、复购激励预算盲目投放——评论语言特征构建NPS代理分替代季度调研，年化节省调研成本$36,000+减少无效促销浪费$8,000</p>
   
-</a><a class="card skill-card" href="../skills/Skill-Negative-Review-Root-Cause-Analyzer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Negative-Review-Root-Cause-Analyzer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">差评根因分析器 — ABSA方面级情感分析定位产品修复优先级</h3>
   <p class="sc-desc">产品经理面临&quot;吸奶器150条差评分散在多维度不知先修复什么&quot;——ABSA根因分析输出优先级修复清单，针对噪音问题改进后差评率降低72%，评分从3.8→4.3星</p>
   <div class='sc-footer'><span class='sc-roi'>10-20万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Reddit-Community-Signal-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Reddit-Community-Signal-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Reddit Community Signal Mining — Reddit 社区信号挖掘与品牌口碑监测</h3>
   <p class="sc-desc">竞品的 Reddit 弱点从未被系统发掘——情感同质性模型（同质性 0.198-0.228）挖掘 r/beyondthebump 真实声音，发现竞品 Elvie 高票投诉集中在&quot;App 蓝牙断连&quot;，精准制定差异化策略</p>
   <div class='sc-footer'><span class='sc-roi'>20-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Review-Driven-Growth-Opportunity-Scorer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Driven-Growth-Opportunity-Scorer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">跨竞品评论选品机会评分 — 从未满足需求到量化机会得分</h3>
   <p class="sc-desc">选品负责人面临&quot;新品方向不确定&quot;——跨竞品评论机会评分将选品研究周期从3个月→3天，每个新品节省试错成本50-150万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-200万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Review-Helpfulness-Prediction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Helpfulness-Prediction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Review Helpfulness Prediction — 评论有用性预测：识别高说服力评论提升转化</h3>
   <p class="sc-desc">产品页默认展示最新评论但很多是无信息的&#x27;Great!&#x27;类评论转化率低——评论有用性预测模型识别最有说服力的评论展示在首位，转化率提升10-20%年化GMV增益5-20万元同时快速识别最有影响力的差评</p>
   <div class='sc-footer'><span class='sc-roi'>¥5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Review-Helpfulness-Ranking-Model.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Helpfulness-Ranking-Model.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill-Review-Helpfulness-Ranking-Model — 评论有用性排序模型</h3>
   <p class="sc-desc">品牌运营面临&quot;2000条评论中人工筛选优质评论做A+素材耗时20h且主观随机&quot;——评论有用性自动排序从2000条中精准提取TOP50高参考价值评论，A+内容转化率提升11%，年化增量GMV约79万元</p>
   <div class='sc-footer'><span class='sc-roi'>30-80 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Review-Sentiment-Growth-Trigger.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Sentiment-Growth-Trigger.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Review-Sentiment-Growth-Trigger — 评论情感趋势监控与产品迭代自动触发</h3>
   <p class="sc-desc">运营面临评分从4.2跌至3.7却不知何时该启动优化、客诉爆发后3个月才改版——7日滚动情感均值触发机制将响应时间从90天压缩到28天，年化保护转化率贡献GMV约$77,000</p>
   
-</a><a class="card skill-card" href="../skills/Skill-Review-Temporal-Trend-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Temporal-Trend-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Review 时序趋势挖掘 — LDA 滑动窗口演化分析</h3>
   <p class="sc-desc">产品负责人面临&quot;最近新出现的用户投诉点淹没在历史评论里发现太慢&quot;——LDA时序滑动窗口将新兴问题发现时效从季度回顾压缩至周级预警，年化避免差评损失$7.2万</p>
   <div class='sc-footer'><span class='sc-roi'>20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Safety-Concern-Signal-Extraction.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Safety-Concern-Signal-Extraction.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill-Safety-Concern-Signal-Extraction — 安全隐患信号提取</h3>
   <p class="sc-desc">母婴卖家面临&quot;800条月评论中安全投诉被淹没在好评里客服发现时已有5条1星&quot;——三级安全信号自动提取将P0预警响应从72h压缩至4h，预防CPSC投诉升级账号价值保护超200万元</p>
   <div class='sc-footer'><span class='sc-roi'>100-500 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Semantic-Blueprint-Compiler.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Semantic-Blueprint-Compiler.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Schema-Guided Generation — 语义蓝图编译器</h3>
   <p class="sc-desc">产品经理面临需求文档难转结构——语义蓝图编译将需求返工率从20%降到6%，年化省10万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Social-VOC-Viral-Potential-Score.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Social-VOC-Viral-Potential-Score.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Social-VOC-Viral-Potential-Score — 社媒UGC传播特征分析与爆品传播潜力评分</h3>
   <p class="sc-desc">运营面临TikTok爆单前3天无预警导致断货损失$28,000/次——UGC三维传播潜力分（情感强度×可分享性×视觉密度）提前3-5天触发备货，年化减少断货损失约$168,000</p>
   
-</a><a class="card skill-card" href="../skills/Skill-UGC-Viral-Content-Potential-Scorer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-UGC-Viral-Content-Potential-Scorer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">UGC病毒传播潜力评分 — 识别可引发病毒扩散的高潜力内容</h3>
   <p class="sc-desc">内容运营面临&quot;不知道哪个UGC值得推广&quot;——病毒潜力评分将内容放大精准度提升至70%+，同等预算曝光量提升3-5倍</p>
   <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Aspect-Sentiment-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Aspect-Sentiment-Extraction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">InstructABSA — 指令微调驱动的方面级情感分析与评论解构</h3>
   <p class="sc-desc">母婴品类改版方向不明——InstructABSA 方面级情感分析将差评维度拆解从 2 周人工 → 2 小时自动完成，精准定位高差评方面（噪音/尺寸），避免错误改版投入 ¥5 万+ MOQ 成本</p>
   <div class='sc-footer'><span class='sc-roi'>50-150 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Churn-Early-Warning-Signal.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Churn-Early-Warning-Signal.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC流失预警信号提取 — 从评论/客服文本捕获用户流失早期信号</h3>
   <p class="sc-desc">运营面临&quot;用户流失却无预警&quot;——VOC信号将流失预测窗口从销量下滑后1-2周提前至4-8周，年化挽回留存价值30-50万元</p>
   <div class='sc-footer'><span class='sc-roi'>30-80万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Churn-Signal-Extraction.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Churn-Signal-Extraction.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC-Churn-Signal-Extraction — 差评文本语义流失信号提取与流失概率预测</h3>
   <p class="sc-desc">运营面临差评区出现大量「换品牌」「推荐竞品」信号但行为数据滞后45天——双通道语义流失信号提取将流失预警时间从45天压缩到19天，挽回高危用户年化GMV约$98,400</p>
   
-</a><a class="card skill-card" href="../skills/Skill-VOC-Competitive-Positioning-Map.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Competitive-Positioning-Map.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill-VOC-Competitive-Positioning-Map — VOC竞争定位地图</h3>
   <p class="sc-desc">品牌运营面临&quot;凭感觉认为质量最好但广告转化率持续比竞品低15%&quot;——VOC竞争定位矩阵识别差异化优势属性重构广告素材，30天后CTR提升28%转化率+18%，年化广告效率增值30万元</p>
   <div class='sc-footer'><span class='sc-roi'>30 万元</span><span class='sc-diff'>⭐⭐⭐</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Compliance-Signal-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Compliance-Signal-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC Compliance Signal Mining — 评论合规信号挖掘：NLP-VOC×合规决策桥梁</h3>
   <p class="sc-desc">婴儿推车收到5条「夹扣突然断裂」评论但卖家不知道是否触发CPSC召回门槛——评论合规信号挖掘自动分类安全事故/宣传违规/化学风险并实时预警，提前4-8周发现召回风险避免损失100-500万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥50-200 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Driven-Recommendation-Signal.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Driven-Recommendation-Signal.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC-Driven Recommendation Signal — 评论语义驱动的推荐增强：NLP-VOC×推荐系统桥梁</h3>
   <p class="sc-desc">推荐系统对静音敏感用户推了嘈杂的热销吸奶器导致退货率高——方面情感向量注入协同过滤将静音型产品从第8位升至第2位，推荐CVR提升8-15%，年化GMV增益20-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Fraud-Review-Detection.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Fraud-Review-Detection.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC Fraud Review Detection — 评论质量与虚假评论识别：NLP-VOC×风控桥梁</h3>
   <p class="sc-desc">竞品在黑五前刷20条1星差评导致BSR暴跌但卖家无法证明是恶意——三层虚假评论检测（文本+行为+网络团伙）生成申诉证据包，成功删除恶意差评保护旺季GMV20-80万元，同时扫描自有评论防封号</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-NPS-Retention-Predictor.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-NPS-Retention-Predictor.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC代理NPS留存预测 — 无需问卷从评论语言预测用户留存率</h3>
   <p class="sc-desc">增长团队面临&quot;无NPS数据却需预测留存&quot;——评论代理NPS将留存预测提前21天给出，同等干预预算下留存提升效率提升30%</p>
   <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-New-Product-Gap-Scoring.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-New-Product-Gap-Scoring.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC-New-Product-Gap-Scoring — 竞品差评驱动的新品机会评分与选品决策</h3>
   <p class="sc-desc">运营面临新品方向靠人工主观判断导致40%新品失败——竞品差评三维评分（痛点频率×竞品解决率×市场规模）将新品失败率降低40%，单次选品价值年化GMV约$180,000</p>
   
-</a><a class="card skill-card" href="../skills/Skill-VOC-Product-Iteration-Signal-Extractor.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Product-Iteration-Signal-Extractor.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC产品迭代信号提取 — 从差评到优先级排序的产品改进需求清单</h3>
   <p class="sc-desc">产品团队面临&quot;千条差评不知从哪改起&quot;——优先级评分将差评分析时间从1周→2小时，精准修复后星级提升0.2-0.3星年化增收50-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-100万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Skill: VOC Proxy NPS × AIPL 统一标签萃取引擎</h3>
   <p class="sc-desc">用户研究员面临VOC指标口径不一——统一萃取将NPS偏差从15分压到4分，年化省12万元</p>
-  <div class='sc-footer'><span class='sc-roi'>300万/年</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Returns-Cost-Driver.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+  <div class='sc-footer'><span class='sc-roi'>597万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Returns-Cost-Driver.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC Returns Cost Driver — 退货原因 NLP 分析：从评论挖掘退货成本驱动因子</h3>
   <p class="sc-desc">婴儿枕头18%退货率产生月1500美元逆向物流成本但不知道多少是可修复的——退货原因NLP四分类（质量/期望/使用/不可避免）识别可修复退货根因，针对性优化后退货率降至10%年化节省10-40万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥10-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Supply-Chain-Signal-Bridge.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Supply-Chain-Signal-Bridge.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC Supply Chain Signal Bridge — 用户评论信号驱动供应链决策的跨域桥梁</h3>
   <p class="sc-desc">库存系统显示健康但用户评论里缺货投诉已连续3周攀升——评论信号DPI指数比销量数据提前4周触发补货预警，避免旺季断货损失年化40-120万元同时捕获竞品迁移信号追回流失用户</p>
   <div class='sc-footer'><span class='sc-roi'>¥40-120 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VOC-Trend-Signal-Forecasting.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Trend-Signal-Forecasting.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">VOC Trend Signal Forecasting — 评论趋势信号预测：用用户声音预测未来需求拐点</h3>
   <p class="sc-desc">圣诞节前推车需求高峰时间每年不固定用历史销量预测总缺货或积压——评论情感领先指标（提前7-14天）增强时序预测精度8-15%，提前准确识别高峰备货减少缺货损失年化25-80万元</p>
@@ -267,7 +302,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -282,6 +317,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

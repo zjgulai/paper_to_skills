@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>方案库 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html" aria-current="page" class="active"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html" aria-current="page" class="active"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
@@ -34,8 +59,8 @@
   <h1>方案库</h1>
   <p class="muted">从 Palantir 方法论到可落地的 AI 决策系统方案，每个方案含完整架构设计、分阶段路线图、核心 Skill 索引</p>
   <div class="sol-hero-stats">
-    <span><strong>12</strong> 个方案</span>
-    <span><strong>1010</strong> 个 Skills 支撑</span>
+    <span><strong>19</strong> 个方案</span>
+    <span><strong>1202</strong> 个 Skills 支撑</span>
     <span><strong>24</strong> 个知识域覆盖</span>
   </div>
 </div>
@@ -282,6 +307,146 @@
     </div>
   </div>
 </a>
+<a class="sol-card" href="sol-cdp-lookalike-full-stack.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#0ea5e920;color:#0ea5e9;border:1.5px solid #0ea5e940">CDP</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">CDP & 广告技术</span>
+      <span class="sol-updated">更新 2026-06-24</span>
+    </div>
+  </div>
+  <h3 class="sol-title">CDP 全链路：身份统一 → 种子净化 → Lookalike 扩展</h3>
+  <p class="sol-subtitle">从碎片化多平台数据到高质量广告受众的完整架构</p>
+  <p class="sol-summary">解决母婴跨境卖家最核心的数据碎片化问题：Amazon/TikTok/独立站同一用户三套 ID，导致 Lookalike 种子质量差、广告重复触达、归因失真。三层 CDP 架构彻底打通，ROAS 从 1.9x 恢复到 3.5x+。…</p>
+  <div class="sol-roi">广告 ROAS 提升 40-80%，年化增效 20-40 万元，GDPR 合规零风险</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">CDP</span><span class="sol-tag">Lookalike</span><span class="sol-tag">身份统一</span><span class="sol-tag">广告投放</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-member-growth-system.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#8b5cf620;color:#8b5cf6;border:1.5px solid #8b5cf640">MEM</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">会员运营 AI</span>
+      <span class="sol-updated">更新 2026-06-24</span>
+    </div>
+  </div>
+  <h3 class="sol-title">会员增长体系：等级设计 → 生命周期干预 → 裂变归因</h3>
+  <p class="sol-subtitle">从零搭建母婴跨境 DTC 完整会员运营闭环</p>
+  <p class="sol-summary">为母婴 DTC 品牌提供从等级体系设计到运营执行的完整 AI 方案。Markov CLV 优化等级门槛，RL 序列干预精准触达，裂变网络价值精算激励额度，积分负债精算控制财务风险。…</p>
+  <div class="sol-roi">会员 CLV 提升 15-25%，干预成本降低 30%，年化增收 50-150 万元</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">会员体系</span><span class="sol-tag">LTV</span><span class="sol-tag">生命周期</span><span class="sol-tag">裂变</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-privacy-safe-advertising.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#10b98120;color:#10b981;border:1.5px solid #10b98140">PPA</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">隐私合规 & 广告技术</span>
+      <span class="sol-updated">更新 2026-06-24</span>
+    </div>
+  </div>
+  <h3 class="sol-title">隐私合规广告架构：联邦 Lookalike + 洁净室 + 因果去偏</h3>
+  <p class="sol-subtitle">Cookie 消亡时代的跨境广告精准投放全栈解决方案</p>
+  <p class="sol-summary">GDPR/CCPA/PIPL 三法叠加的合规压力下，传统广告方法论正在失效。本方案提供「数据不出境 + 归因不失真 + 受众不泄露」的完整技术栈，在最严苛的隐私约束下维持广告效果。…</p>
+  <div class="sol-roi">欧盟/北美市场广告合规零风险，ROAS 提升 12-20%，规避最高 4% 全球营收罚款</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">隐私合规</span><span class="sol-tag">GDPR</span><span class="sol-tag">联邦学习</span><span class="sol-tag">归因去偏</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-causal-intelligence-pricing.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#7c3aed20;color:#7c3aed;border:1.5px solid #7c3aed40">CI</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">定价策略 AI</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">因果智能定价体系</h3>
+  <p class="sol-subtitle">DML去偏弹性 × 异质用户定价 × 市场准入评估</p>
+  <p class="sol-summary">传统OLS价格弹性估计因季节/促销混淆存在50%+偏差——甚至出现错误方向。本方案用双重去偏机器学习(DML)获得无偏弹性，X-Learner识别异质用户群差异，合成控制法评估新市场准入ROI，形成因果驱动的完整定价决策体系。…</p>
+  <div class="sol-roi">弹性估计偏差1.57→0.12，年化定价优化GMV约120万元</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">因果推断</span><span class="sol-tag">价格弹性</span><span class="sol-tag">DML</span><span class="sol-tag">X-Learner</span></div>
+    <div class="sol-stats">
+      <span>3 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-video-commerce-intelligence.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#ec489920;color:#ec4899;border:1.5px solid #ec489940">VC</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">内容营销 AI</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">视频电商全链路智能化</h3>
+  <p class="sol-subtitle">MAS自动内容 × 商品标签化 × 因果ROI归因</p>
+  <p class="sol-summary">视频电商面临三大痛点：内容产量不足（手工3h/篇）、商品关联率低（人工打标错误15%）、ROI归因不清（平台报告高估30%）。本方案用MAS多智能体自动化内容生产，多模态LLM实现视频商品标签化，Geo实验+因果方法获得真实增量ROI。…</p>
+  <div class="sol-roi">爆款率5%→18%，年化GMV增量约150万元，内容成本降低97%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">视频电商</span><span class="sol-tag">MAS</span><span class="sol-tag">TikTok</span><span class="sol-tag">RLHF</span></div>
+    <div class="sol-stats">
+      <span>3 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-logistics-intelligence-esg.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#10b98120;color:#10b981;border:1.5px solid #10b98140">LI</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">物流履约 AI</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">物流智能化2.0 × ESG合规</h3>
+  <p class="sol-subtitle">动态路由 × 冷链合规 × 碳足迹优化 × 智能承运商选择</p>
+  <p class="sol-summary">2025-2026年欧盟CBAM和ESG信披要求使跨境物流从纯成本问题升级为合规+效率+可持续的三维挑战。本方案提供从冷链FDA合规到碳排放优化再到ML智能承运商选择的完整物流智能化升级路径。…</p>
+  <div class="sol-roi">冷链FDA通关率85%→98%，物流成本降低8%，年化综合ROI约245万元</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">物流智能化</span><span class="sol-tag">冷链</span><span class="sol-tag">ESG</span><span class="sol-tag">碳排放</span></div>
+    <div class="sol-stats">
+      <span>3 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-ai-engineering-acceleration.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#f59e0b20;color:#f59e0b;border:1.5px solid #f59e0b40">AE</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">AI工程 基础设施</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">AI工程效率加速体系</h3>
+  <p class="sol-subtitle">推理加速 × 主动检索 × 少样本学习 × 持续学习</p>
+  <p class="sol-summary">随着AI Agent系统规模扩大，工程效率成为核心瓶颈：推理延迟高（Agent每次8秒）、RAG噪声多（固定检索准确率85%）、新品类无训练数据（少样本困境）、模型季节退化（无持续学习）。本方案提供4个维度的AI工程效率提升路径。…</p>
+  <div class="sol-roi">Agent延迟降低50-63%，年化GPU成本节省约45万元，客服准确率85%→95%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">推理加速</span><span class="sol-tag">Agentic RAG</span><span class="sol-tag">ICL</span><span class="sol-tag">持续学习</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
 </div>
 
 <div class="sol-coming-soon">
@@ -345,7 +510,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -360,6 +525,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

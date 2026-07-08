@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>跨境风险防御作战室 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,14 +36,28 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 跨境风险防御作战室</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>AG</span>
+  <span class='pb-icon'><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l7.5 3v6c0 4.5-3.5 7.5-7.5 8.5C3.5 18.5 3 15.5 3 11V5L11 2z"/><path d="M11 8v4M11 15v.5" stroke-width="2"/></svg></span>
   <div>
     <h1>跨境风险防御作战室</h1>
     <p class='lead'>竞品用 AI 攻击你的广告、评分和排名——你需要 AI 来守门。封号预防 800 万/年 vs 防御投入 30 万</p>
@@ -42,13 +67,17 @@
 <div class='pb-roi-callout'>不防御：一次封号<span class='pb-roi-val'>30-80 万 GMV 损失</span></div><div class='pb-roi-callout'>防御投入：年度成本<span class='pb-roi-val'>约 30 万</span></div><div class='pb-roi-callout'>净收益差值<span class='pb-roi-val'>&gt; 800 万/年 · ROI 26:1</span></div>
 <div class='pb-intro'>跨境电商的竞争已经进入「AI 对抗」阶段。今天大多数卖家还在用人工方式应对：人工监控评分、人工处理差评、人工核查合规——这三件事加起来每月消耗 2-3 名运营人员的大量精力，但仍然有盲区。竞品已在用 AI 对你发动三条战线：① 广告刷量消耗你的预算；② 虚假差评拉低你的评分；③ AI 注入攻击你的推荐排名。一次封号损失 30-80 万 GMV，一次召回损失 500 万+，但防御投入只需约 30 万——ROI 26:1。本手册提供从欺诈信号采集到合规预警的完整防御体系。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 广告 IVT 从 8% 降至 2%，月均挽回 6-15 万</li><li>[OK] 竞品刷评攻击检测率 &gt; 90%，Listing 评分保护</li><li>[OK] 合规检查从滞后 90 天→实时预警，封号风险降低 70%</li><li>[OK] 主动召回比被动召回节省 80% 成本，一次预防 = 500 万保障</li><li>[OK] AI 推荐注入攻击防御：保护自然流量不被操控</li></ul></div>
+<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+  <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-risk-defense">0</strong> / 6 步</span>
+  <button onclick="pbShareFeishu('pb-risk-defense','跨境风险防御作战室',6)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
+</div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 1：欺诈信号采集与基线建立</h3>
     <p class='pb-problem'>不知道自己正在被攻击——竞品刷评、广告 IVT、刷单行为悄无声息地侵蚀 ROI，发现时已损失数周</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Fraud-Signal-Collection.html' class='pb-skill-name'>Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</a><div class='pb-skill-badges'><span class='roi-badge'>48 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 主动采集刷单行为、虚假评论、异常流量信号，建立欺诈监控基线，同时向平台举报竞品（ROI 48万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Transaction-Anomaly-Detection.html' class='pb-skill-name'>Transaction Anomaly Detection（异常交易检测）</a><div class='pb-skill-badges'><span class='roi-badge'>3-8 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ Isolation Forest 检测异常交易模式（订单金额/IP/支付方式异常组合），拦截盗刷订单（ROI 3-8万/月）</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Fraud-Signal-Collection.html' class='pb-skill-name'>Fraud Signal Collection — 欺诈信号数据采集（刷单行为、虚假评论、异常流量）</a><div class='pb-skill-badges'><span class='roi-badge'>48 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 主动采集刷单行为、虚假评论、异常流量信号，建立欺诈监控基线，同时向平台举报竞品（ROI 48万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Transaction-Anomaly-Detection.html' class='pb-skill-name'>Transaction Anomaly Detection（异常交易检测）</a><div class='pb-skill-badges'><span class='roi-badge'>45 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ Isolation Forest 检测异常交易模式（订单金额/IP/支付方式异常组合），拦截盗刷订单（ROI 3-8万/月）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：订单流水、广告点击日志、评论数据（近 90 天）</div>
     <div class="pb-output"><strong>输出结果：</strong>欺诈信号基线报告 + 异常事件告警规则</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -150,7 +179,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 3：Listing 评论生态保护</h3>
     <p class='pb-problem'>新品上架 6 小时内被刷评团伙集中攻击；或竞品 ChatGPT 批量生成高质量虚假好评拉高自己</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Fraud-Detection.html' class='pb-skill-name'>Review Fraud Detection（虚假评论检测）</a><div class='pb-skill-badges'><span class='roi-badge'>5-15 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 评论者-产品-评分关系图检测刷评团伙，向 Amazon 举报并保护自身 listing（ROI 5-15万/月）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html' class='pb-skill-name'>DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 动态图 GCN 检测冷启动新品上架 6 小时内的刷评冲击，防止新品评分被操控</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FraudSquad-LLM-Review-Detection.html' class='pb-skill-name'>FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换器</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ LM 嵌入 + 门控图变换器检测 ChatGPT 生成的高质量虚假好评（2025 年最新攻击方式）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AIGC-Content-Detection.html' class='pb-skill-name'>AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 鉴别 AI 生成内容，保护自身 Review 生态可信度，防止 VOC 分析被污染</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Review-Fraud-Detection.html' class='pb-skill-name'>Review Fraud Detection（虚假评论检测）</a><div class='pb-skill-badges'><span class='roi-badge'>96 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 评论者-产品-评分关系图检测刷评团伙，向 Amazon 举报并保护自身 listing（ROI 5-15万/月）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html' class='pb-skill-name'>DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 动态图 GCN 检测冷启动新品上架 6 小时内的刷评冲击，防止新品评分被操控</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FraudSquad-LLM-Review-Detection.html' class='pb-skill-name'>FraudSquad — LLM 生成虚假评论检测：LM 嵌入 + 门控图变换器</a><div class='pb-skill-badges'><span class='roi-badge'>2万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ LM 嵌入 + 门控图变换器检测 ChatGPT 生成的高质量虚假好评（2025 年最新攻击方式）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AIGC-Content-Detection.html' class='pb-skill-name'>AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 鉴别 AI 生成内容，保护自身 Review 生态可信度，防止 VOC 分析被污染</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：Listing 评论历史、评论者行为序列</div>
     <div class="pb-output"><strong>输出结果：</strong>刷评团伙举报名单 + 评论质量评分 + 告警规则</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -252,7 +281,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 5：合规预警与封号防御</h3>
     <p class='pb-problem'>平台政策每季度更新，人工合规检查平均滞后 90 天，一次封号损失 30-80 万 GMV + BSR 排名恢复 2-6 周</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Regulatory-Change-Monitoring.html' class='pb-skill-name'>Regulatory Change Monitoring — 法规变更自动监控：受影响品类实时映射</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 监管机构（FDA/CPSC/EU GPS）法规更新自动映射到受影响 SKU，提前 90 天预警</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cross-Border-Compliance-Framework.html' class='pb-skill-name'>Cross-Border Compliance Framework — 跨境电商多辖区合规自动映射</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ US+EU+UK 三维合规矩阵自动映射，新市场进入合规核查从 3 个月压缩到 2 周</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Product-Safety-Testing-Requirements.html' class='pb-skill-name'>Product Safety Testing Requirements — 产品安全测试需求：品类×市场映射</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 品类×市场安全测试需求自动生成，选品阶段前置合规成本估算，避免选错品</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Compliance-Scored-Guardrail-Orchestration.html' class='pb-skill-name'>Compliance-Scored Guardrail Orchestration — 合规评分 Best-of-N 守护编排</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ AI 生成 Listing 文案的合规门控（Best-of-N 评分），防止 ChatGPT 写出违规声明被 Amazon 下架</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Regulatory-Change-Monitoring.html' class='pb-skill-name'>Regulatory Change Monitoring — 法规变更自动监控：受影响品类实时映射</a><div class='pb-skill-badges'><span class='roi-badge'>1200-1800 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 监管机构（FDA/CPSC/EU GPS）法规更新自动映射到受影响 SKU，提前 90 天预警</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cross-Border-Compliance-Framework.html' class='pb-skill-name'>Cross-Border Compliance Framework — 跨境电商多辖区合规自动映射</a><div class='pb-skill-badges'></div></div><p class='pb-skill-why'>→ US+EU+UK 三维合规矩阵自动映射，新市场进入合规核查从 3 个月压缩到 2 周</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Product-Safety-Testing-Requirements.html' class='pb-skill-name'>Product Safety Testing Requirements — 产品安全测试需求：品类×市场映射</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 品类×市场安全测试需求自动生成，选品阶段前置合规成本估算，避免选错品</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Compliance-Scored-Guardrail-Orchestration.html' class='pb-skill-name'>Compliance-Scored Guardrail Orchestration — 合规评分 Best-of-N 守护编排</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ AI 生成 Listing 文案的合规门控（Best-of-N 评分），防止 ChatGPT 写出违规声明被 Amazon 下架</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：全部在售 SKU 信息、目标销售市场列表</div>
     <div class="pb-output"><strong>输出结果：</strong>合规风险评分矩阵 + 高风险 SKU 预警 + Listing 文案合规检测</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -371,7 +400,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -386,6 +415,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

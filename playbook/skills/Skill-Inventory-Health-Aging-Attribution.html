@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Business Metric-Aware Forecasting for Inventory Management · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
@@ -39,11 +64,67 @@
   <a href="#s-relations">⑤ 关联</a>
   <a href="#s-value">⑥ 价值</a>
 </div>
-<h1>Business Metric-Aware Forecasting for Inventory Management</h1>
-<p class="muted">Skill-Inventory-Health-Aging-Attribution · 04-供应链</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-N 库存危机响应</span></div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">04-供应链</div>
+  <h1 class="skill-main-title">Business Metric-Aware Forecasting for Inventory Management</h1>
+  <p class="skill-skill-id">Skill-Inventory-Health-Aging-Attribution</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>跨境物流与履约</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>时序预测</span><span class='tag'>ML基础与可解释性</span><span class='tag'>供应商管理与博弈</span><span class='tag'>KPI运营指标体系</span><span class='tag'>仓储运营效率</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-N 库存危机响应</span><span class='tag'>WF-S 跨境数据合规</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a><a class='hb-uplink' href='../playbooks/pb-fba-operations.html'>FBA 运营全链路手册</a></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 98分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：规范完整 D2（60%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 60.0, 100.0, 100.0, 100.0, 100.0, 150.0, 66.7, 100.0, 100.0, 100.0];
+    var scores=[8.0, 3.0, 10.0, 8.0, 4.0, 10.0, 15.0, 10.0, 15.0, 10.0, 5.0];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>供应链负责人<span class='biz-ctx-secondary'> · 采购负责人 · CEO / 运营 VP</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon FBA · 海外仓 · 多国仓位（美/欧/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>库存周转率低，资金压在海外仓出不来；SKU 断货紧急空运，物流成本吃掉毛利；多仓库存分布不均</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>库存周转天数从 90 天降到 60 天，断货率 &lt;3%，海外仓综合成本降低 15-25%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>库存周转天数太长资金压死了</span><span class='biz-pain-tag'>断货了只能空运救急成本爆了</span><span class='biz-pain-tag'>多市场库存分配不均</span></div></div></div></div>
 <div class="two-col">
   <section>
@@ -52,13 +133,13 @@
     <h2 id="s-algo">2. 核心算法逻辑</h2>
     <p>核心思想：库存健康诊断不是&quot;某个 SKU 库存多少&quot;，而是回答三个问题：① 这批货还能动吗（FSN分级）？② 过多还是过少（Over/Under stock 三态）？③ 为什么和计划不一样（供应计划方差归因到4类根因）。同时严格区分「预测准确率（Forecast Accuracy）」和「计划准确率（Plan Accuracy）」——两者可以完全脱钩。</p>
     <h2 id="s-scenario">3. 业务应用场景</h2>
-    <p>- 业务问题：10 个在售 SKU，哪些是死库高风险？哪些已经过库？ - 预期产出：</p><p>- 业务问题：618 大促结束后，某 SKU 实际期末库存比计划低 800 件，导致大促期间断货 3 天。是需求预测问题、还是供应商没按时交货？ - 归因输出：</p>
+    <p>- 业务问题：10 个在售 SKU，哪些是死库高风险？哪些已经过库？ - 预期产出：</p><p>- 业务问题：618 大促结束后，某 SKU 实际期末库存比计划低 800 件，导致大促期间断货 3 天。是需求预测问题、还是供应商没按时交货？ - 归因输出：</p><p>三轨验证 | 成本轨：AI库存预测模型月均成本3,500元（云服务2,000元+数据标注1,500元），人工干预8小时/月，年化成本42,000元；相比缺货损失（年化45万）和过度备货成本（估算月均15,000元），ROI达10.7倍 | 合规轨：符合《跨境电商进出口商品质量安全监督管理办法》库存管理要求；FBA备货需符合亚马逊库存政策（IPI评分≥400），AI预测结果可追溯审计；满足进出口食品安全法规 | 风险轨：模型偏差风险（概率15%，季节性需求预测不准导致库存波动）；数据质量风险（概率8%，历史销售数据缺失或异常）；供应链中断风险（概率12%，物流延迟影响补货周期）</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>FBA 库龄费优化：识别 Steam-Old 类高价值死库，提前 60 天清仓可节省 $890/月×3 月 = $2,670</li><li>供应计划归因精度提升：快速定位主因后，下次大促的缺口可减少约 50%，对应保护 BSR 排名价值约 $20,000-$50,000</li><li>Forecast vs Plan Accuracy 对齐：将 MAPE 优化改为 TC 优化，按 Google Research 实测可降低库存成本 30-54%</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（2/5）— 规则+统计，可接入现有 ERP/数据仓库</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（5/5）— 每月必做的运营诊断，且是供应计划优化的起点</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
     <p class="muted">代码块数量：9 · 路径：paper2skills-code/supply_chain/inventory_health_aging_attribution</p>
-    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
 Skill-Inventory-Health-Aging-Attribution
 基于 JSCDM 2024 (FSN+ML) + OSCM Forum 2023 (Gradient Boosting) +
     ACM ICGAIB 2025 (慢动库+库龄) + arXiv:2404.07523 (供应计划归因) +
@@ -128,9 +209,9 @@ class SKUInventory:
       <span class="edge-dot combo" style="margin-left:8px"></span>组合
       <span class="edge-dot ext" style="margin-left:8px"></span>延伸
     </div>
-    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><span class='muted'>相关技能</span></li></ul>
-    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><span class='muted'>相关技能</span></li></ul>
-    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Safety-Stock-Replenishment.html'>Skill-Safety-Stock-Replenishment</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Data-Drift-Detection.html'>Skill-Data-Drift-Detection</a></li><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Model-Performance-Monitor.html'>Skill-Model-Performance-Monitor</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html'>Skill-Lead-Time-Distribution-Risk-GenQOT</a></li><li><a href='../skills/Skill-Promotion-Demand-Decomposition.html'>Skill-Promotion-Demand-Decomposition</a></li><li><a href='../skills/Skill-Supply-Chain-Causal-SCM-Attribution.html'>Skill-Supply-Chain-Causal-SCM-Attribution</a></li></ul>
   </aside>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
@@ -142,6 +223,7 @@ function copyCode(btn) {
   navigator.clipboard.writeText(text).then(function() {
     btn.textContent = '已复制 ✓';
     btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Inventory-Health-Aging-Attribution',skill_domain:'04-供应链'});
     setTimeout(function() {
       btn.textContent = '复制';
       btn.classList.remove('copied');
@@ -151,13 +233,14 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = '复制'; }, 1500);
   });
 }
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Inventory-Health-Aging-Attribution',skill_domain:'04-供应链',skill_difficulty:'⭐⭐☆☆☆'});
 </script>
 
 </section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -172,6 +255,39 @@ function copyCode(btn) {
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

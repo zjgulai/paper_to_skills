@@ -3,8 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CUPED Variance Reduction（方差缩减） · paper2skills</title>
+  <title>Skill Card: CUPED 方差缩减法——母婴跨境电商 A/B 实验加速器 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
@@ -39,43 +64,141 @@
   <a href="#s-relations">⑤ 关联</a>
   <a href="#s-value">⑥ 价值</a>
 </div>
-<h1>CUPED Variance Reduction（方差缩减）</h1>
-<p class="muted">Skill-CUPED-Variance-Reduction · 02-A_B实验</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>其他</span><span class='tag'>WF-G Listing内容优化</span></div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">02-A_B实验</div>
+  <h1 class="skill-main-title">Skill Card: CUPED 方差缩减法——母婴跨境电商 A/B 实验加速器</h1>
+  <p class="skill-skill-id">Skill-CUPED-Variance-Reduction</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>搜索流量与SEO</span><span class='tag'>时序预测</span><span class='tag'>ML基础与可解释性</span><span class='tag'>KPI运营指标体系</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-user-growth.html'>用户增长决策手册</a><a class='hb-uplink' href='../playbooks/pb-new-product-launch.html'>新品冷启动手册</a></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>加速实验迭代，隐性价值</span></div></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>40-120 万元</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 82分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：论文引用 D3（0%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-8010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 60.0, 0.0, 100.0, 100.0, 100.0, 134.0, 59.3, 89.3, 89.0, 90.0];
+    var scores=[8.0, 3.0, 0.0, 8.0, 4.0, 10.0, 13.4, 8.9, 13.4, 8.9, 4.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 产品经理<span class='biz-ctx-secondary'> · 广告优化师 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Listing · TikTok 广告素材 · DTC 落地页</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>改了主图/标题/价格，不确定销量变化是改动导致的还是流量波动；两个方案团队各持己见，需要数据裁决</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每次改动都有 ≥95% 置信度的数据结论，好的改动快速全量，坏的及时止损</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>改了主图感觉好多了但不确定</span><span class='biz-pain-tag'>小范围测试结果好全量后没效果</span><span class='biz-pain-tag'>测试周期短结论不可靠</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2 id="s-problem">1. 解决的问题</h2>
     <p>数据分析师面临样本波动太大——CUPED将方差降35%，年化省11万元</p>
     <h2 id="s-algo">2. 核心算法逻辑</h2>
-    <p>CUPED (Controlledexperiment Using PreExperiment Data) 用实验前数据作为协变量，减少实验组间方差，使同样的样本量能检测到更小的效应量。核心公式：$Y_{cuped} = \bar{Y}  \theta(\bar{X}  \mu_X)$，其中 $X$ 是实验前同一用户的指标值，$\theta = \text{Cov}(Y,X)/\text{Var}(X)$。方差缩减率 $\approx </p>
+    <p>CUPED（Controlledexperiment Using PreExperiment Data）通过引入实验前的用户历史数据作为协变量，消除用户个体差异对实验结果的噪声干扰，在相同样本量下检测更小的效应量，或用更少样本量达到相同统计功效——本质是用历史信息降低实验方差，加速收敛。</p>
     <h2 id="s-scenario">3. 业务应用场景</h2>
-    <p>A/B 测试吸奶器新详情页——实验前 14 天用户浏览时长作为协变量 $\rho=0.65$→方差缩减 42%→所需样本量从 10,000 降至 5,800。测试周期从 2 周缩短到 10 天。</p><p>年化：加速实验迭代，隐性价值 20-40 万元。</p>
+    <p>业务问题： 某跨境卖家在亚马逊美站运营高端婴儿推车（客单价 $299，月销 800 台）。产品经理发现竞品 Listing 中包含&quot;一键折叠收纳&quot;视频演示，假设加入此视频可提升转化率 3-5%。传统 A/B 实验需 28 天，成本高且周期长。</p><p>实验设置： - 日均流量：5,000 UV/天（日均 150 订单） - 历史数据：实验前 30 天同一用户的购买转化行为 - 相关系数：$\rho = 0.72$（用户购买习惯稳定） - 目标效应量：3% 转化率提升</p><p>CUPED 优化效果： - 方差缩减率：$1 - 0.72^2 = 48.2\%$ - 所需样本量：从 4,200 订单 → 2,184 订单（降低 48%） - 实验周期：从 28 天 → 14 天 - 流量成本节省：14 天 × 5,000 UV × $0.8 CPC = $56,000（约 40 万元） - 实验结论：转化率提升 4.2%（p&lt;0.01），年化 GMV 增长 180 万元 - ROI：40 万元投入 → 180 万元收益，ROI = 350%</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2 id="s-value">6. 业务价值 / ROI</h2><p>加速实验迭代，隐性价值</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>直接成本节省</strong>：实验周期压缩 50-75%，流量成本降低 <strong>40-120 万元/年</strong></li><li><strong>决策加速收益</strong>：提前 2-3 周上线优化方案，年化 GMV 增长 <strong>200-500 万元</strong></li><li><strong>统计功效提升</strong>：在相同样本量下检测更小效应量（从 3% → 1.5%），发现更多优化机会</li><li><strong>总 ROI</strong>：<strong>500-800%</strong>（以 50 万元年度投入计）</li><li>需要 14-30 天历史数据完整性（通常已有）</li><li>代码集成 &lt;1 周（仅需调用 CUPED 函数）</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：paper2skills-code/ab_testing/cuped_variance_reduction</p>
-    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>import numpy as np
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+import pandas as pd
+from scipy import stats
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
 
-def cuped_adjust(Y_treatment, Y_control, X_treatment, X_control):
-    theta = np.cov(np.concatenate([Y_treatment, Y_control]), 
-                   np.concatenate([X_treatment, X_control]))[0,1] / np.var(np.concatenate([X_treatment, X_control]))
-    Yt_adj = Y_treatment - theta * (X_treatment - np.mean(X_treatment))
-    Yc_adj = Y_control - theta * (X_control - np.mean(X_control))
-    var_reduction = 1 - np.var(Yt_adj - Yc_adj) / np.var(Y_treatment - Y_control)
-    return {&#x27;adj_diff&#x27;: np.mean(Yt_adj)-np.mean(Yc_adj), &#x27;var_reduction&#x27;: var_reduction}
-
-np.random.seed(42)
-X = np.random.normal(100,20,2000)
-Yt = X*0.7 + np.random.normal(105,8,1000)
-Yc = X*0.7 + np.random.normal(100,8,1000)
-r = cuped_adjust(Yt, Yc, X[:1000], X[1000:])
-print(f&quot;Variance reduction: {r[&#x27;var_reduction&#x27;]:.0%}&quot;)
-assert r[&#x27;var_reduction&#x27;] &gt; 0.3
-print(&quot;[✓] CUPED 测试通过&quot;)</code></pre></div>
+class CUPEDVarianceReducer:
+    &quot;&quot;&quot;
+    CUPED 方差缩减实现
+    用实验前数据作为协变量，降低实验噪声，加速 A/B 实验
+    
+    应用场景：母婴跨境电商 A/B 实验加速
+    - 输入：实验前用户指标、实验期用户指标、分组标签
+    - 输出：调整后的指标、方差缩减率、统计功效提升
+    &quot;&quot;&quot;
+    
+    def __init__(self, pre_experiment_data, experiment_data, treatment_mask):
+        &quot;&quot;&quot;
+        初始化 CUPED 缩减器
+        
+        Args:
+            pre_experiment_data: array-like，实验前用户指标（如历史客单价）
+            experiment_data: array-like，实验期用户指标（如实验期客单价）
+            treatment_mask: boolean array，True 表示实验组，False 表示对照组
+        &quot;&quot;&quot;
+        self.X = np.array(pre_experiment_data).flatten()  # 历史指标
+        self.Y = np.array(experiment_data).flatten()      # 实验期指标
+        self.treatment_mask = np.array(treatment_mask)
+        self.control_mask = ~self.treatment_mask
+        
+        # 验证数据长度一致
+        assert len(self.X) == len(self.Y) == len(self.treatment_mask), \
+            &quot;数据长度不一致&quot;
+        
+        self.theta = None
+        self.Y_adjusted = None
+        self.variance_reduction_ratio = None
+        
+    def compute_theta(self):
+        &quot;&quot;&quot;
+        计算回归系数 θ = Cov(Y,X) / Var(X)
+        衡量历史指标对当期指标的预测能力
+        &quot;&quot;&quot;
+        covariance = np.cov(self.Y, self.X)[0, 1]
+        variance_x = np.var(self.X, ddof=1)
+        
+        if variance_x &gt; 1e-10:
+            self.theta = covariance / variance_x
+        else:
+            self.theta = 0
+            print(&quot;[⚠] 警告：历史指标方差过小，θ 设为 0&quot;)
+        
+        return self.theta
+    
+    def adjust_metrics(self):
+        &quot;&quot;&quot;
+        调整指标：Y_cuped = Y - θ(X - mean(X))
+        消除用户个体差异对实验结果的噪声干扰
+        &quot;&quot;&quot;
+        if self.theta is None:</code></pre></div>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel" id="s-relations">
@@ -86,9 +209,9 @@ print(&quot;[✓] CUPED 测试通过&quot;)</code></pre></div>
       <span class="edge-dot combo" style="margin-left:8px"></span>组合
       <span class="edge-dot ext" style="margin-left:8px"></span>延伸
     </div>
-    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AB-Experimental-Design.html'>Skill-AB-Experimental-Design</a></li><li><a href='../skills/Skill-Multi-Armed-Bandit.html'>Skill-Multi-Armed-Bandit</a></li><li><a href='../skills/Skill-Network-Effect-Experiments.html'>Skill-Network-Effect-Experiments</a></li><li><a href='../skills/Skill-Sequential-AB-Testing.html'>Skill-Sequential-AB-Testing</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>相关技能</span></li><li><span class='muted'>组合</span></li></ul>
-    <h3>延伸技能</h3><p class='muted'>暂无</p>
-    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Multi-Armed-Bandit.html'>Skill-Multi-Armed-Bandit</a></li><li><a href='../skills/Skill-Network-Effect-Experiments.html'>Skill-Network-Effect-Experiments</a></li><li><a href='../skills/Skill-Sequential-AB-Testing.html'>Skill-Sequential-AB-Testing</a></li><li><a href='../skills/Skill-Uplift-Modeling.html'>Skill-Uplift-Modeling</a></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>前置技能</h3><ul><li><span class='muted'>Skill-A/B实验基础设计</span></li><li><span class='muted'>Skill-用户行为数据建模</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Skill-因果推断与倾向得分</span></li><li><span class='muted'>Skill-多臂老虎机算法</span></li><li><span class='muted'>Skill-贝叶斯 A/B 实验</span></li></ul>
+    <h3>可组合技能</h3><p class='muted'>暂无</p>
   </aside>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
@@ -100,6 +223,7 @@ function copyCode(btn) {
   navigator.clipboard.writeText(text).then(function() {
     btn.textContent = '已复制 ✓';
     btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-CUPED-Variance-Reduction',skill_domain:'02-A_B实验'});
     setTimeout(function() {
       btn.textContent = '复制';
       btn.classList.remove('copied');
@@ -109,13 +233,14 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = '复制'; }, 1500);
   });
 }
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-CUPED-Variance-Reduction',skill_domain:'02-A_B实验',skill_difficulty:''});
 </script>
 
 </section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -130,6 +255,39 @@ function copyCode(btn) {
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

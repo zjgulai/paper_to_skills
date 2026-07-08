@@ -15,6 +15,8 @@
   function md(text){return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.+?)\*\*/gs,'<strong>$1</strong>').replace(/\*([^*\n]+)\*/g,'<em>$1</em>').replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/^#{1,3}\s+(.+)$/gm,'<strong style="font-size:15px">$1</strong>').replace(/^[-•]\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">• $1</span>').replace(/^\d+\.\s+(.+)$/gm,'<span style="display:block;padding-left:14px;margin:2px 0">$&</span>').replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');}
   const _idx=[];let _built=false;
   function buildSkillIndex(){if(_built)return;const DATA=window.PLAYBOOK_DATA||{};(DATA.skills||[]).forEach(s=>{const t=[s.skill_id||'',s.title||'',s.problem_solved||'',s.algorithm_summary||'',s.biz_trigger||'',s.biz_outcome||'',(s.tags||[]).join(' '),(s.topics||[]).join(' ')].join(' ').toLowerCase();_idx.push({s,t});});_built=true;}
+  let _skillIdx=null;async function _loadSkillIdx(){if(_skillIdx)return _skillIdx;try{_skillIdx=await fetch('/assets/skill-index.json').then(r=>r.json());}catch(e){_skillIdx=[];}return _skillIdx;}
+  async function _retrieveSkills(query,topK){topK=topK||5;const idx=await _loadSkillIdx();if(!idx||!idx.length)return[];const tokens=query.toLowerCase().replace(/[^\u4e00-\u9fa5a-z0-9\s]/g,' ').split(/\s+/).filter(t=>t.length>1);if(!tokens.length)return[];const scored=idx.map(function(s){const text=(s.summary+' '+s.keywords.join(' ')).toLowerCase();const score=tokens.reduce(function(n,t){return n+(text.includes(t)?1:0);},0);return{s,score};}).filter(x=>x.score>0);scored.sort((a,b)=>b.score-a.score);return scored.slice(0,topK).map(x=>x.s);}
   function searchSkills(query,k){k=k||8;buildSkillIndex();const words=query.toLowerCase().split(/\s+/).filter(w=>w.length>1);if(!words.length)return[];return _idx.map(item=>{let sc=0;words.forEach(w=>{const tf=item.t.split(w).length-1;if(tf>0)sc+=tf*(w.length>3?2:1);});return{skill:item.s,sc};}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,k).map(x=>x.skill);}
   function buildRAGContext(query){const top=searchSkills(query,10);if(!top.length){return(window.PLAYBOOK_DATA&&window.PLAYBOOK_DATA.skills||[]).slice(0,60).map(s=>s.skill_id+': '+(s.problem_solved||s.algorithm_summary||'').slice(0,140)).join('\n');}return top.map(s=>{const p=[s.skill_id,s.title];if(s.problem_solved)p.push('解决: '+s.problem_solved.slice(0,120));if(s.biz_trigger)p.push('触发: '+s.biz_trigger.slice(0,100));if(s.roi_figure)p.push('ROI: '+s.roi_figure);return p.join(' | ');}).join('\n');}
   function renderSkillCards(text){const DATA=window.PLAYBOOK_DATA||{};const map={};(DATA.skills||[]).forEach(s=>{map[s.skill_id]=s;});const found=[],seen={};[/\[\[?(Skill-[\w-]+)\]?\]/g,/\*\*(Skill-[\w-]+)\*\*/g].forEach(pat=>{let m;while((m=pat.exec(text))!==null){if(map[m[1]]&&!seen[m[1]]){seen[m[1]]=1;found.push(map[m[1]]);}}});if(!found.length)return'';const esc=t=>(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');const cards=found.map(s=>'<a href="skills/'+s.skill_id+'.html" target="_blank" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--panel-2,#f8fafc);border:1px solid var(--line,#e2e8f0);border-radius:8px;text-decoration:none;color:inherit;margin-top:6px;transition:box-shadow .15s" onmouseover="this.style.boxShadow=\'0 2px 8px rgba(0,0,0,.08)\'" onmouseout="this.style.boxShadow=\'none\'">'+'<div style="flex-shrink:0;width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700">S</div>'+'<div style="min-width:0"><div style="font-size:12px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc((s.title||s.skill_id).slice(0,60))+'</div>'+'<div style="font-size:11.5px;color:#64748b;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+esc((s.problem_solved||s.biz_trigger||'').slice(0,90))+'</div>'+(s.roi_figure?'<span style="font-size:11px;color:#059669;font-weight:600;margin-top:4px;display:block">ROI: '+esc(s.roi_figure)+'</span>':'')+'</div></a>').join('');return'<div style="margin-top:10px;border-top:1px solid var(--line,#e2e8f0);padding-top:10px"><div style="font-size:11.5px;color:#64748b;font-weight:600;margin-bottom:6px">知识库 相关技能</div>'+cards+'</div>';}
@@ -81,7 +83,16 @@
   const matchedEvent = matchRiskEvent(text);
   let matchedEventText = null;
   
-  let sys=`你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 ${window.PLAYBOOK_DATA && window.PLAYBOOK_DATA.skills ? window.PLAYBOOK_DATA.skills.length : 800}+ 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n当前时间：${new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'})}`;
+  const roleSelect = document.getElementById('role-select');
+  const roleVal = roleSelect ? roleSelect.value : 'ops';
+  const rolePrompts = {
+    ops: '当前用户是电商运营，关注具体操作步骤、SOP 执行、数据指标改善，回答要简洁可执行。',
+    analyst: '当前用户是数据分析师，关注算法原理、统计方法、代码实现，回答要有技术深度，可附公式。',
+    ceo: '当前用户是 CEO，关注战略决策、ROI 全局、竞争壁垒，回答要高度概括、突出商业价值。',
+  };
+  const roleCtx = rolePrompts[roleVal] || rolePrompts.ops;
+  
+  let sys=`你是 paper2skills 知识库的专业 AI 问答助手，专注于母婴跨境电商 AI 决策。\n知识库现有 ${window.PLAYBOOK_DATA && window.PLAYBOOK_DATA.skills ? window.PLAYBOOK_DATA.skills.length : 800}+ 个从顶会论文萃取的可落地业务技能。\n回答规范：优先引用知识库中的具体 Skill，格式：[[Skill-具体名称]]；给出可操作具体建议。\n${roleCtx}\n当前时间：${new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'})}`;
   
   if (matchedEvent) {
     sys += `\n\n当前诊断场景：${matchedEvent.event_name}\n严重程度：${matchedEvent.severity}`;
@@ -91,6 +102,7 @@
   } else {
     const ragSkills=searchSkills(text,10),ragCtx=buildRAGContext(text),ragCount=ragSkills.length;
     ctxMsg=ragCount>0?'\n\n【知识库相关技能（检索到'+ragCount+'条）】\n'+ragCtx:'\n\n【知识库摘要（前60条）】\n'+ragCtx;
+    const _idxSkills=await _retrieveSkills(text,5);if(_idxSkills.length){ctxMsg+='\n\n【知识库检索结果 — 请优先引用这些 Skill ID 回答】\n'+_idxSkills.map(function(s){return'['+s.id+'] '+s.title+': '+s.summary.slice(0,120);}).join('\n');}
   }
   
   const messages=[{role:'system',content:sys+ctxMsg},...history.slice(-8)];try{const body={model:'deepseek-chat',messages,max_tokens:1500,temperature:0.55,stream:false};if(webSearchOn){body.tools=[{type:'function',function:{name:'web_search',description:'Search the web',parameters:{type:'object',properties:{query:{type:'string'}},required:['query']}}}];body.tool_choice='auto';}const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await res.json();const choice=data&&data.choices&&data.choices[0];let answer=(choice&&choice.message&&choice.message.content||'').trim();if(!answer&&choice&&choice.finish_reason==='tool_calls')answer='（联网搜索触发中…）\n\n'+((choice.message.tool_calls[0]&&choice.message.tool_calls[0].function.arguments)||'');answer=answer||'抱歉，暂时无法获取回答，请稍后重试。';typing.remove();
@@ -99,6 +111,7 @@
       const ragSkills = searchSkills(text, 10);
       ragCountToPass = ragSkills.length > 0 ? ragSkills.length : null;
   }
-  addMsg(answer,'bot',{webBadge:webSearchOn, eventBadge: matchedEventText, ragBadge: ragCountToPass});
+  const _msgResult=addMsg(answer,'bot',{webBadge:webSearchOn, eventBadge: matchedEventText, ragBadge: ragCountToPass});
+  if (!matchedEvent){_retrieveSkills(text,5).then(function(idxSkills){if(!idxSkills.length)return;const citDiv=document.createElement('div');citDiv.style.cssText='font-size:11px;color:#94a3b8;margin-top:6px;padding-top:6px;border-top:1px solid #f1f5f9';citDiv.innerHTML='\u53c2\u8003 Skill: '+idxSkills.map(function(s){return'<a href="/skills/'+s.id+'.html" target="_blank" style="color:#6366f1;text-decoration:none">'+s.title+'</a>';}).join(' \u00b7 ');if(_msgResult&&_msgResult.bubble)_msgResult.bubble.appendChild(citDiv);});}
   history.push({role:'assistant',content:answer});_saveH();}catch(e){typing.remove();addMsg('网络请求失败，请检查连接后重试。','bot');}finally{sendBtn.disabled=false;textarea.focus();}}
 })();

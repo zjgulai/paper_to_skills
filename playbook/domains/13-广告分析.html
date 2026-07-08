@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>13-广告分析 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content"><h1>13-广告分析</h1><p>Ad attribution, ROAS, Listing quality, cross-device, delayed CVR</p>
@@ -83,252 +108,282 @@
   });
   document.addEventListener('DOMContentLoaded',applyPage);
 })();
-</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Ad-Attribution-Modeling.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-Attribution-Modeling.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Multi-Touch Attribution Modeling for Digital Advertising</h3>
   <p class="sc-desc">投放经理面临渠道归因失真——Attribution Modeling将ROAS偏差24%压到9%，年化省45万元</p>
   <div class='sc-footer'><span class='sc-roi'>10万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Ad-Spend-Inventory-Sync.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-Creative-Personalization-Bandit.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Ad Creative Personalization Bandit — 上下文 Bandit 动态为不同人群选最优广告创意</h3>
+  <p class="sc-desc">广告投手面临&quot;18种创意组合靠经验固定选择、A/B测试需6周才能收敛&quot;——LinUCB上下文Bandit 2周收敛至最优创意，CTR从1.8%→2.6%，年化广告效率增益约30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-Spend-Inventory-Sync.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Ad Spend Inventory Sync — 广告投放与库存联动的协同优化</h3>
   <p class="sc-desc">母婴品牌大促前加大广告投放却因库存不足导致缺货差评——广告-库存联动优化将广告预算分配与 FBA 可发货量硬绑定，将缺货率从 12% 降至 4%，年化减少缺货损失 20-60 万元</p>
   <div class='sc-footer'><span class='sc-roi'>20-40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Ad-Spend-Time-Series-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-Spend-Time-Series-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Ad Spend Time Series Attribution — Adstock 衰减 + 因果 MMM 广告效果归因</h3>
   <p class="sc-desc">母婴跨境运营黑五大促后不知道广告效果是当周还是前 6 周积累所致，导致次日关停广告恰是最高 ROI 时段——Adstock 时序衰减模型识别各渠道 carryover 窗口，ROAS 计算准确率提升 40%，年化避免错误关停损失 20-80 万元</p>
   <div class='sc-footer'><span class='sc-roi'>20-80 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Ad-to-Behavior-Funnel.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-to-Behavior-Funnel.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Ad-to-Behavior Funnel（广告→用户行为漏斗）</h3>
   <p class="sc-desc">FB 吸奶器广告点击后：35% 进详情页 → 12% 加购 → 5% 首购 → 2% 复购</p>
   <div class='sc-footer'><span class='sc-roi'>15-25 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Amazon-A10-Algorithm-Ranking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Amazon-A10-Algorithm-Ranking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Amazon A10 Algorithm Ranking — 亚马逊搜索排名因子建模与 Listing 可见度优化</h3>
   <p class="sc-desc">Listing 排名从第 18 跌到 25 位但不知道哪里出了问题——PP-GLAM 可解释排名模型揭示 A10 外部流量权重大幅提升，针对性优化可将自然排名提升 8-12 位，广告 ACOS 降低 30-40%</p>
   <div class='sc-footer'><span class='sc-roi'>50-200 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Amazon-External-Traffic-Boost.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Amazon-External-Traffic-Boost.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Amazon External Traffic Boost — 站外流量对 A10 排名速度的提升效应建模</h3>
   <p class="sc-desc">新品上架 90 天仍靠昂贵 PPC 维持排名——A10 Velocity 模型揭示 TikTok 外部转化的权重是站内的 3.2×，每天 20 个外部转化可将关键词排名从第 15 位推升至第 7 位，自然流量增加 2-3×</p>
   <div class='sc-footer'><span class='sc-roi'>60-200 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Amazon-ToS-Compliance-Guardrail.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Amazon-ToS-Compliance-Guardrail.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Amazon ToS Compliance Guardrail（亚马逊合规护栏）</h3>
   <p class="sc-desc">业务问题：运营用 ChatGPT 生成吸奶器 listing 文案，但 LLM 可能产出违规声明——&quot;clinically proven to increase milk supply&quot;&quot;FDA approved design&quot;&quot;guaranteed results in 7 days&quot;——这些在 Amazon 上都是红线</p>
   <div class='sc-footer'><span class='sc-roi'>5-10 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Auction-Theory-Advertising-Bidding.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Auction-Theory-Advertising-Bidding.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">拍卖理论广告竞价优化 — GSP 拍卖机制下的最优出价策略</h3>
   <p class="sc-desc">广告投手面临&quot;Amazon广告竞价全靠经验和感觉导致出价系统性偏高&quot;——GSP拍卖理论最优出价公式将广告费节省18-25%，年化$9.6万</p>
   <div class='sc-footer'><span class='sc-roi'>1.2-2 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Autobidding-Budget-Allocation-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Autobidding-Budget-Allocation-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">自动化竞价与预算动态分配 — 跨平台广告Autobidding与ROI约束下的预算优化</h3>
   <p class="sc-desc">手动竞价耗时8小时/周且ROAS仅2.1x——KKT最优竞价+PID预算控制将ROAS提升至3.2x并节省30%低效广告支出，月化$1.5万节省</p>
-  <div class='sc-footer'><span class='sc-roi'>4.5万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-CABB-Cross-Category-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+  <div class='sc-footer'><span class='sc-roi'>38 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CABB-Cross-Category-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Click A Buy B 跨品类归因去偏 - 点击与购买商品不一致的归因修正</h3>
   <p class="sc-desc">用户点击吸奶器广告，进入品牌店铺后转而购买了储奶袋和奶瓶</p>
   <div class='sc-footer'><span class='sc-roi'>100 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-CDA-Cookieless-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CDA-Cookieless-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">CDA（Causal-Driven Attribution）— 无用户级数据的因果驱动归因</h3>
   <p class="sc-desc">业务问题：出海独立站在欧美市场同时投放 Facebook 视频广告（漏斗上层）和 Google 搜索广告（漏斗下层）</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Competitor-Ad-Surge-Defense-Trigger.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Competitor-Ad-Surge-Defense-Trigger.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Competitor-Ad-Surge-Defense-Trigger — 竞品广告份额单日激增自动触发防御性出价提升</h3>
   <p class="sc-desc">广告负责人面临&quot;竞品突然加大投放截流品牌词流量&quot;——展示份额日增15%自动触发防御出价将品牌词曝光损失从35%降至8%，年化保护流量价值30万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Content-ROI-Budget-Shift-Trigger.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Constrained-Multi-Objective-Ad-Delivery.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Constrained Multi-Objective Ad Delivery — 约束多目标广告投放同时满足 ROAS + 品牌 + 预算硬约束</h3>
+  <p class="sc-desc">广告负责人面临&quot;ROAS/品牌曝光/预算/库存清仓四个约束无法同时满足&quot;——Lagrangian对偶乘子动态出价将整体ROAS从2.8x提升至3.4x，年化增收约21.6万美元</p>
+  <div class='sc-footer'><span class='sc-roi'>21.6万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Content-ROI-Budget-Shift-Trigger.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Content ROI Budget Shift Trigger — 内容ROI连续低于目标时自动削减并转向高ROI内容类型</h3>
   <p class="sc-desc">内容团队面临&quot;低ROI内容类型持续消耗预算无自动纠偏&quot;——3天滑动窗口检测将内容投放效率提升25%，月节省无效投放$5,000</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Creative-Fatigue-Detection.html" data-domain="13-广告分析" data-diff="⭐☆☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Creative-Fatigue-Detection.html" data-domain="13-广告分析" data-diff="⭐☆☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</h3>
   <p class="sc-desc">业务背景：某母婴品牌在 Meta Ads 投放婴儿奶瓶广告，上线 5 款素材（主图+短视频各类型）</p>
   <div class='sc-footer'><span class='sc-diff'>⭐☆☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Platform-Listing-Sync-Optimizer.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Platform-Listing-Sync-Optimizer.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">多平台 Listing 差异化同步优化器 — Amazon / TikTok Shop / Shopee 参数矩阵建模</h3>
   <p class="sc-desc">多平台卖家面临&quot;同一款品在Amazon和TikTok Shop用同一套Listing效果差很多&quot;——平台规格矩阵优化将各平台Listing适配度提升至最优参数，整体CTR提升18%</p>
   <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-FrontDoor-Causal-MTA.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FrontDoor-Causal-MTA.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">ALM-MTA 前门因果多触点归因 - 剔除隐藏混淆的广告真实 ROI 剥离</h3>
   <p class="sc-desc">孕晚期用户购买周期 6-8 周，在&quot;下定决心买推车&quot;后主动搜索并点击所有重定向短信/DPA 广告</p>
   <div class='sc-footer'><span class='sc-roi'>150-300 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-GraphTrack-Cross-Device-Tracking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Generative-Bidding-MoE.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">生成式广告竞价 — MoE路由+因果Transformer</h3>
+  <p class="sc-desc">广告投手面临出价策略失效——生成式混合专家出价将ROAS从2.4提升至3.9，年化节省广告费28万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Geo-Incrementality-DML.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Geo-Level增量效果测量 — 面板DML vs 合成控制法</h3>
+  <p class="sc-desc">地理级增量实验（Geo-Level Incrementality Test）是将不同地理区域（州/城市/邮编）随机分配为实验组/对照组，在排除平台归因偏差后，估计广告投放对销量/收入的真实因果增量。</p>
+  <div class='sc-footer'><span class='sc-roi'>30-50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GraphTrack-Cross-Device-Tracking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">图基跨设备追踪 - 无监督IP-Domain图谱用户拼接</h3>
   <p class="sc-desc">母婴用户在 TikTok 看到吸奶器短视频种草，切换到 Safari 搜索品牌名进独立站下单</p>
   <div class='sc-footer'><span class='sc-roi'>600-1200 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-HGNN-Cross-Device-Matching.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HGNN-Cross-Device-Matching.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">层次图神经网络跨设备用户匹配 - 无ID的跨端行为拼接</h3>
   <p class="sc-desc">业务问题：母婴 DTC 站在 Instagram 投广告，用户在手机看到广告、到电脑搜索品牌词下单</p>
   <div class='sc-footer'><span class='sc-roi'>⭐⭐⭐⭐☆</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-HMMCB-Cross-Channel-Bidding.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HMMCB-Cross-Channel-Bidding.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">HMMCB — 跨渠道广告竞价 MARL：CPC 约束下最大化总点击（美团真实 A/B）</h3>
   <p class="sc-desc">母婴 DTC 品牌（如储奶袋/吸奶器）同时在 Google Ads（搜索意图强）、Meta（品牌认知+再营销）、TikTok Shop（内容种草+购买）三个渠道投放</p>
   <div class='sc-footer'><span class='sc-roi'>500 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Hierarchical-Search-Intent-Classification.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hierarchical-Search-Intent-Classification.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">电商搜索层次化意图分类 - 母婴跨境广告自动词分类</h3>
   <p class="sc-desc">搜索运营面临意图分桶混乱——Intent Classification将误分类率15%压到4%，年化省17万元</p>
   <div class='sc-footer'><span class='sc-roi'>800-1000 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Identity-Fragmentation-Debiasing.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Identity-Fragmentation-Debiasing.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Identity Fragmentation Debiasing（身份碎片化纠偏）</h3>
   <p class="sc-desc">业务问题：女装独立站通过 Instagram（手机端）大量投放信息流广告</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Joint-Ads-Recommendation-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Joint-Ads-Recommendation-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Joint Ads Recommendation Optimization — 广告推荐联合优化：消除目标冲突的统一框架</h3>
   <p class="sc-desc">广告推荐系统分别优化导致高出价低质广告占据最佳位置整体GMV反而下降——统一排序框架让广告和有机推荐在同一评分体系竞争，消除目标冲突整体GMV提升10-18%年化20-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Keyword-Bid-Auto-Adjuster.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Keyword-Bid-Auto-Adjuster.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Keyword-Bid-Auto-Adjuster — 关键词转化率偏差自动调整出价</h3>
   <p class="sc-desc">广告负责人面临&quot;关键词出价调整滞后错失流量或浪费预算&quot;——转化率自动触发±15/20%出价调整将整体广告ROI提升22%，年化增收40万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Keyword-Competition-Scoring.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Keyword-Competition-Scoring.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Keyword Competition Scoring — 搜索词竞争力量化评分</h3>
   <p class="sc-desc">广告预算 60% 集中在搜索量大但竞争极高的词（ACOS 45%），高意图低竞争词几乎未投——多维竞争力评分（需求×竞争×转化×出价效率）矩阵重分配预算，ACOS 从 45% 降至 30%，年化增收 30-120 万元</p>
   <div class='sc-footer'><span class='sc-roi'>30-120 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-AB-Testing-Automation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-AB-Testing-Automation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Listing AB Testing Automation — LLM Agent 驱动的 Listing A/B 测试自动化</h3>
   <p class="sc-desc">主图/标题/Bullet 哪个版本更好需要 3 周真实流量测试，期间低效版本持续损耗转化——LLM Agent 模拟 500 个买家 persona 零流量预测最优版本，CTR+12.5%/CVR+8.3%，年化自然流量提升 60%+</p>
   <div class='sc-footer'><span class='sc-roi'>30-150 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-AI-Copywriting.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-AI-Copywriting.html" data-domain="13-广告分析" data-diff="">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Amazon Listing 文案 AI 生成（标题+Bullet+描述全套）</h3>
   <p class="sc-desc">某母婴品牌每月新品 8-12 个 SKU，人工撰写一套完整 Listing（标题+5条Bullet+描述+后台ST）需要 2-3 小时/SKU，月均耗时 20-30 小时</p>
-  <div class='sc-footer'><span class='sc-roi'>18-192 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-Health-Diagnostic.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class='sc-footer'><span class='sc-roi'>16-40 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Health-Diagnostic.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Listing Health Diagnostic — Listing 快诊：多维度评分驱动的上架质量诊断</h3>
   <p class="sc-desc">小型卖家不知道Listing哪里有问题Amazon排名持续低迷——五维度评分（SEO/内容/图片/合规/竞争力）给出0-100分并附具体修改建议，15分钟诊断上架质量提升后搜索曝光增加15-25%年化10-30万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-Quality-Scoring.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Quality-Scoring.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Skill-Listing-Quality-Scoring</h3>
   <p class="sc-desc">业务问题：baby sterilizer 新品上架前，无法量化判断 Listing 质量是否达到投放标准</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Long-Tail-Search-Embedding-SEO.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Long-Tail-Search-Embedding-SEO.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Long Tail Search Embedding SEO — 双塔嵌入模型驱动的电商长尾搜索词排名优化</h3>
   <p class="sc-desc">母婴卖家把90%SEO精力投在「breast pump」等头部词上却发现竞争激烈ROI低——双塔嵌入模型挖掘高转化低竞争长尾词（如「quiet double electric breast pump for office」），通过自然搜索流量提升20-40%，年化GMV增益30-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-MTL-Multi-Objective-Ad-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MTL-Multi-Objective-Ad-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">MTL 广告多目标联合优化 — ROAS/排名/曝光 Pareto 最优分配</h3>
   <p class="sc-desc">广告优化师面临&quot;ROAS/自然排名/品牌曝光三个目标无法联合优化只能顾此失彼&quot;——多目标MTL Pareto最优解将综合效益提升23%，年化$8.4万</p>
   <div class='sc-footer'><span class='sc-roi'>8.4 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multilingual-Listing-Localization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-Listing-Localization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Multilingual Listing Localization — LLM 驱动的多语言 Listing 本地化与文化适配</h3>
   <p class="sc-desc">M5 吸奶器打算进 Amazon.de，Google 翻译的 Listing 德国搜索流量几乎为零——神经机器翻译 + 母语者语料微调将德语 Listing 自然搜索排名从首页底部提升至 Top 5，转化率提升 30-60%</p>
   <div class='sc-footer'><span class='sc-roi'>30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Negative-Keyword-Safe-Guard.html" data-domain="13-广告分析" data-diff="⭐☆☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Negative-Keyword-Safe-Guard.html" data-domain="13-广告分析" data-diff="⭐☆☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Negative Keyword Safe Guard — 贝叶斯小样本负关键词安全过滤</h3>
   <p class="sc-desc">广告优化师面临无效词烧钱——Negative Keyword将浪费点击率20%压到6%，年化省24万元</p>
   <div class='sc-footer'><span class='sc-roi'>$432（18% → 3.2%无关消耗）</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-PIE-Experimental-MTA.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PIE-Experimental-MTA.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">PIE 实验增量预测多触点归因 - Amazon MTA 框架落地</h3>
   <p class="sc-desc">Momcozy / Graco 等大牌同投 Google Search + Facebook DPA + TikTok Shop</p>
   <div class='sc-footer'><span class='sc-roi'>200 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-PPC-Keyword-Bid-Automation.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PPC-Keyword-Bid-Automation.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">PPC Keyword Bid Automation — PPC 关键词出价自动化：ML 驱动的竞价优化引擎</h3>
   <p class="sc-desc">Amazon PPC 200个关键词每周手动调价4小时规则不一致导致ACOS偏高15%——贝叶斯Thompson采样每日自动更新所有关键词出价，ACOS降低15-25%年化节省广告费25-60万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥25-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-PPC-Rule-Automation-Engine.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PPC-Rule-Automation-Engine.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">PPC Rule Automation Engine — PPC 规则自动化引擎：条件触发的广告出价智能运营</h3>
   <p class="sc-desc">中型卖家每周花6小时手动调整200个关键词出价规则不一致还有遗漏——条件触发规则引擎7×24小时自动执行高ACOS降价/无转化暂停/低曝光提价，ACOS降低15-20%运营时间节省80%年化20-50万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-PVM-Attribution-Window-Harmonization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PVM-Attribution-Window-Harmonization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">PVM 跨平台广告归因窗口统一化 - 母婴跨境多渠道 ROAS 去偏</h3>
   <p class="sc-desc">投放分析师面临窗口口径打架——PVM将归因差异18%压到5%，年化省20万元</p>
   <div class='sc-footer'><span class='sc-roi'>480 万/年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-QUBO-Ad-Budget-Allocation.html" data-domain="13-广告分析" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Privacy-Preserving-Ad-Measurement.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">隐私保护广告测量 — OPRF+差分隐私跨平台归因</h3>
+  <p class="sc-desc">苹果ATT、GDPR、谷歌Privacy Sandbox三重冲击后，广告平台与商家无法直接共享用户ID来匹配&quot;谁点了广告又完成了购买&quot;，传统像素归因失效，30-50%的转化事件归因断裂。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-QUBO-Ad-Budget-Allocation.html" data-domain="13-广告分析" data-diff="">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">量子退火 (QUBO) 驱动的跨平台广告预算全局最优分配</h3>
   <p class="sc-desc">投放主管陷入亚马逊/Google/TikTok三平台预算分配的局部最优陷阱——引入量子退火(QUBO)求解跨平台广告预算全局最优组合，打破传统梯度下降的局部极值，反直觉说服团队砍掉表面ROAS最高的亚马逊预算转投TikTok新客增量，年化ROAS综合提升15-25%。</p>
-  
-</a><a class="card skill-card" href="../skills/Skill-RELATE-RL-Ad-Text-Generation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+  <div class='sc-footer'><span class='sc-roi'>10-20 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RELATE-RL-Ad-Text-Generation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">RELATE强化学习广告文案生成 — RL端到端优化CTCVR的LLM广告创意框架</h3>
   <p class="sc-desc">AI生成的&quot;流畅专业&quot;广告文案转化率提升不明显因为优化了语言质量而非真实转化——RELATE用RL直接把CTCVR作为奖励信号端到端训练LLM，在线部署CTCVR提升+9.19%（2026 arXiv:2602.11780）</p>
   <div class='sc-footer'><span class='sc-roi'>4.6万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-ROAS-Below-Target-Budget-Freeze.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ROAS-Below-Target-Budget-Freeze.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">ROAS-Below-Target-Budget-Freeze — ROAS连续3天低于目标自动冻结广告组预算触发创意审查</h3>
   <p class="sc-desc">广告负责人面临&quot;低效广告组持续消耗预算&quot;——ROAS连续3天低于目标自动冻结预算将广告浪费降低35%，年化节省广告费20万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-ROAS-Budget-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ROAS-Budget-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">ROAS Optimization and Ad Budget Allocation</h3>
   <p class="sc-desc">媒体经理面临预算分配拍脑袋——ROAS优化将获客成本降19%，年化省52万元</p>
   <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-RTB-Realtime-Bidding-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RTB-Realtime-Bidding-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">RTB Realtime Bidding Optimization — 生成式自动出价与多约束实时竞价优化</h3>
   <p class="sc-desc">母婴品牌 Amazon DSP/TikTok 广告按固定 CPA 出价，旺季预算提前耗尽或错过峰值时段——生成式 RTB 自动出价（Decision Transformer + Critics 投票）在预算约束下动态优化每次竞价，ROI 提升 3-5%，黑五大促 GMV 增量 15-20%，年化增量 GMV 30-100 万元</p>
   <div class='sc-footer'><span class='sc-roi'>30-100 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Review-Defense-Vine-Optimizer.html" data-domain="13-广告分析" data-diff="⭐☆☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Retail-Media-LP-Ranking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">零售媒体LP赞助商品排名优化</h3>
+  <p class="sc-desc">运营面临站内广告位ROI低——LP排序算法将零售媒体点击收益提升37%，年化增收50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>1800万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Defense-Vine-Optimizer.html" data-domain="13-广告分析" data-diff="⭐☆☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Vine评论防御优化器 — 贝叶斯建模计算最优Vine投入对冲差评影响</h3>
   <p class="sc-desc">品牌运营面临&quot;评分被攻击后跌破Amazon Choice阈值4.4星&quot;——Vine贝叶斯投入优化将20单位成本760美元恢复评分0.3星，30天内回本年化ROI约1390%</p>
   <div class='sc-footer'><span class='sc-diff'>⭐☆☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-SEO-Organic-Ranking-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SEO-Organic-Ranking-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">SEO Organic Ranking Optimization — 电商 SEO 自然排名元数据优化</h3>
   <p class="sc-desc">吸奶器主词排名第 8，每天自然点击 20 次，Top 3 竞品标题里有&quot;hospital grade/quiet/rechargeable&quot;等词我们完全缺失——多智能体元数据差距分析 + 关键词优化，排名 Top 3 后自然流量增加 3-5 倍</p>
   <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Share-of-Voice-Tracking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Share-of-Voice-Tracking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Share of Voice Tracking — AI 时代跨平台品牌可见度份额测量</h3>
   <p class="sc-desc">AI 搜索引擎单次测量误差高达 ±40% 无法可靠监测品牌曝光——稳定性感知 SOV 框架通过 30 次多采样将误差压缩到 ±8%，揭示 Momcozy 在 ChatGPT 的引用份额与竞品 Elvie 差 17%，指明 GEO 优化方向</p>
   <div class='sc-footer'><span class='sc-roi'>30-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Short-Video-Commerce-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Short-Video-Commerce-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">短视频内容归因建模 — 视频特征 XGBoost 驱动转化分析</h3>
   <p class="sc-desc">内容运营面临&quot;短视频哪些特征真正带来转化靠直觉判断效率极低&quot;——XGBoost内容特征归因将爆款视频特征提炼准确率提升至83%，内容ROI提升41%</p>
   <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TESLA-NetCVR-Cascade.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TESLA-NetCVR-Cascade.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">级联延迟净转化建模 - 扣除退款的真实转化桑基图</h3>
   <p class="sc-desc">广告经理面临CVR预测不稳——TESLA-NetCVR将转化误差17%压到6%，年化增31万元</p>
   <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TRACE-Delayed-CVR.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TRACE-Delayed-CVR.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">轨迹条件延迟转化建模 - 不等归因窗口即可实时更新CVR</h3>
   <p class="sc-desc">投放分析师面临延迟转化漏记——TRACE将回收率62%提到91%，年化增26万元</p>
   <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TikTok-Creator-ROI-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Creator-ROI-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">TikTok达人直播ROI归因 — PSM分离主播效应与流量效应</h3>
   <p class="sc-desc">品牌负责人面临&quot;达人带货的ROI里不知道多少是主播影响力多少是投流效果&quot;——倾向得分匹配将主播净贡献与流量效果精确拆分，年化广告预算优化$7.4万</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TikTok-Shop-Content-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Shop-Content-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">TikTok Shop Content Attribution — 短视频带货兴趣图谱归因</h3>
   <p class="sc-desc">短视频运营面临内容带货说不清——内容归因将素材误判率21%压到7%，年化省23万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Zero-Click-Search-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Zero-Click-Search-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Zero-Click Search Optimization — 零点击搜索时代的流量保全与特色摘要抢占</h3>
   <p class="sc-desc">60% 的搜索零点击结束但品牌曝光为零——FAQ Schema 标记+权威内容结构将 AI Overview 引用概率提升 3.2×，把零点击流量损失转化为品牌认知收益</p>
@@ -337,7 +392,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -352,6 +407,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

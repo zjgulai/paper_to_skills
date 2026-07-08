@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>DTC 独立站增长手册 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,14 +36,28 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / DTC 独立站增长手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>DG</span>
+  <span class='pb-icon'><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11h4M16 11h4M11 2v4M11 16v4"/><path d="M5 5l3 3M14 14l3 3M5 17l3-3M14 8l3-3"/><circle cx="11" cy="11" r="3"/></svg></span>
   <div>
     <h1>DTC 独立站增长手册</h1>
     <p class='lead'>从多触点获客归因到个性化推荐再到成交 Agent 的独立站增长全链路</p>
@@ -42,13 +67,17 @@
 
 <div class='pb-intro'>DTC 独立站运营的核心困境：TikTok ROAS 看起来亏损，Google ROAS 看起来盈利——于是砍掉 TikTok 后整体流量暴跌，因为 TikTok 是 Google 搜索的上游触发器。独立站有别于亚马逊的核心挑战是「全链路归因 + 个性化体验 + 成交转化」三个环节缺一不可，而这三个环节在大多数品牌中都是孤立运转的。本手册将它们打通，从用户看到第一个广告到最终付款，每一步都有数据驱动的决策支撑。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 多触点归因后预算重分配：真实 ROAS 提升 20-40%，月增利润 ¥5-20 万</li><li>[OK] 千人千面首页 CTR 从 2.3% 提升到 4-5%：月增 UV 转化 +50-80%</li><li>[OK] 成交 Agent 私域成交率从 12% → 22-28%：年化 GMV 增益 ¥50-150 万</li><li>[OK] CLV 驱动复购激活：营销 ROI 提升 2-3x，年化节省无效促销 ¥15-40 万</li></ul></div>
+<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+  <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-dtc-growth">0</strong> / 4 步</span>
+  <button onclick="pbShareFeishu('pb-dtc-growth','DTC 独立站增长手册',4)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
+</div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 1 — 多触点获客归因（知道真正的流量来源）</h3>
     <p class='pb-problem'>Last-Click 归因把所有功劳给了最后一步，导致预算错误分配——切掉上漏斗渠道后整个增长体系崩塌</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html' class='pb-skill-name'>DTC Customer Acquisition Attribution — 独立站全渠道获客归因：从首触到首单的因果追踪</a><div class='pb-skill-badges'><span class='roi-badge'>¥50-150 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ Shapley 多触点归因揭示 TikTok/Google/Email 各自的真实贡献，避免「砍上漏斗」的致命错误</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html' class='pb-skill-name'>KOL ROI 因果归因（网红/达人投放效果的真实增量测算）</a><div class='pb-skill-badges'><span class='roi-badge'>30 万/月</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ KOL 带货归因：PSM+DiD 区分「因 KOL 才购买」和「本来就会买」，避免 KOL 预算浪费</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Channel-Saturation-Curve.html' class='pb-skill-name'>Channel Saturation Curve（渠道饱和曲线建模）</a><div class='pb-skill-badges'><span class='roi-badge'>18-25 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 每个渠道都有边际效益递减拐点，饱和曲线告诉你什么时候该停止加投</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DTC-Customer-Acquisition-Attribution.html' class='pb-skill-name'>DTC Customer Acquisition Attribution — 独立站全渠道获客归因：从首触到首单的因果追踪</a><div class='pb-skill-badges'><span class='roi-badge'>¥50-150 万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ Shapley 多触点归因揭示 TikTok/Google/Email 各自的真实贡献，避免「砍上漏斗」的致命错误</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-KOL-ROI-Causal-Attribution.html' class='pb-skill-name'>KOL ROI 因果归因（网红/达人投放效果的真实增量测算）</a><div class='pb-skill-badges'><span class='roi-badge'>30 万/月</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ KOL 带货归因：PSM+DiD 区分「因 KOL 才购买」和「本来就会买」，避免 KOL 预算浪费</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Channel-Saturation-Curve.html' class='pb-skill-name'>Channel Saturation Curve（渠道饱和曲线建模）</a><div class='pb-skill-badges'><span class='roi-badge'>45 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 每个渠道都有边际效益递减拐点，饱和曲线告诉你什么时候该停止加投</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：UTM 埋点数据 + Shopify 订单（用户级触点路径）+ 各渠道广告花费</div>
     <div class="pb-output"><strong>输出结果：</strong>各渠道真实 ROAS（Shapley 归因）+ 最优预算分配建议 + 「切掉某渠道」的影响模拟</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -269,7 +298,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -284,6 +313,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

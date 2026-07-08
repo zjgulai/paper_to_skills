@@ -6,11 +6,17 @@ paper2skills 飞书回调服务
 - POST /api/reports          保存 Agent 运行报告
 - GET  /api/reports          查询 Agent 运行报告（按 session_key）
 - DELETE /api/reports/{id}   删除单条报告
+- GET  /api/v1/skills/search 搜索 Skill（REST API，需 API Key）
+- GET  /api/v1/skills/{id}   获取 Skill 详情
+- POST /api/mas/run          触发 MAS 工作流
+- GET  /api/mas/run/{run_id} 查询 MAS 工作流状态
+- POST /api/mas/approve/{run_id} HITL 审批
+- POST /api/mas/reject/{run_id}  HITL 拒绝
 """
-import os, json, requests
-import sqlite3, uuid
+import os, json, requests, time
+import sqlite3, uuid, re, asyncio, threading
 from datetime import datetime, timezone
-from fastapi import FastAPI, Request, BackgroundTasks
+from fastapi import FastAPI, Request, BackgroundTasks, Query, Header
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -277,6 +283,332 @@ async def _run_daily_inspect(skus: list):
         push_feishu_text(f"🚨 每日巡检异常 — {len(alerts)}项", summary + "\n\n" + detail, "red")
     except Exception:
         push_feishu_text(f"🚨 每日巡检异常 — {len(alerts)}项", summary, "red")
+
+
+# ── REST API v1 ──────────────────────────────────────────────────────────────
+
+SKILL_INDEX_PATH = os.environ.get(
+    "P2S_SKILL_INDEX",
+    "/opt/paper2skills/html/assets/skill-index.json"
+)
+_skill_index_cache: list[dict] = []
+_skill_index_mtime: float = 0.0
+
+
+def _load_skill_index() -> list[dict]:
+    global _skill_index_cache, _skill_index_mtime
+    try:
+        mtime = os.path.getmtime(SKILL_INDEX_PATH)
+        if mtime != _skill_index_mtime:
+            with open(SKILL_INDEX_PATH, encoding="utf-8") as f:
+                _skill_index_cache = json.load(f)
+            _skill_index_mtime = mtime
+    except Exception:
+        pass
+    return _skill_index_cache
+
+
+def _check_api_key(authorization: str | None) -> bool:
+    if not authorization:
+        return False
+    parts = authorization.split(" ", 1)
+    if len(parts) != 2 or parts[0].lower() != "bearer":
+        return False
+    key = parts[1].strip()
+    return key.startswith("p2s_") and len(key) >= 16
+
+
+@app.get("/api/v1/skills/search")
+async def v1_skills_search(
+    q: str = Query(default="", description="搜索关键词"),
+    domain: str = Query(default="", description="按领域过滤"),
+    limit: int = Query(default=20, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+    authorization: str | None = Header(default=None),
+):
+    if not _check_api_key(authorization):
+        return JSONResponse(
+            {"error": "unauthorized", "message": "需要 Pro API Key。格式：Authorization: Bearer p2s_xxx"},
+            status_code=401,
+        )
+    skills = _load_skill_index()
+    if not skills:
+        return JSONResponse({"error": "skill_index_unavailable"}, status_code=503)
+
+    q_lower = q.lower()
+    domain_lower = domain.lower()
+
+    def _match(s: dict) -> bool:
+        if domain_lower and domain_lower not in s.get("domain", "").lower():
+            return False
+        if not q_lower:
+            return True
+        title = s.get("title", "").lower()
+        ps = s.get("problem_solved", "").lower()
+        skill_id = s.get("id", "").lower()
+        return q_lower in title or q_lower in ps or q_lower in skill_id
+
+    matched = [s for s in skills if _match(s)]
+    total = len(matched)
+    page = matched[offset : offset + limit]
+    return {
+        "total": total,
+        "offset": offset,
+        "limit": limit,
+        "results": page,
+    }
+
+
+@app.get("/api/v1/skills/{skill_id}")
+async def v1_skill_detail(
+    skill_id: str,
+    authorization: str | None = Header(default=None),
+):
+    if not _check_api_key(authorization):
+        return JSONResponse(
+            {"error": "unauthorized", "message": "需要 Pro API Key。"},
+            status_code=401,
+        )
+    skills = _load_skill_index()
+    for s in skills:
+        if s.get("id", "").lower() == skill_id.lower():
+            return s
+    return JSONResponse({"error": "not_found", "skill_id": skill_id}, status_code=404)
+
+
+# ── 使用量追踪（Freemium）────────────────────────────────────────────────────
+
+FREE_MONTHLY_LIMIT = int(os.environ.get("P2S_FREE_MONTHLY_LIMIT", "10"))
+
+
+def _get_or_create_session_usage(session_key: str) -> dict:
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS session_usage (
+                session_key TEXT NOT NULL,
+                month TEXT NOT NULL,
+                count INTEGER DEFAULT 0,
+                PRIMARY KEY (session_key, month)
+            )
+        """)
+        month = datetime.now(timezone.utc).strftime("%Y-%m")
+        row = conn.execute(
+            "SELECT count FROM session_usage WHERE session_key=? AND month=?",
+            (session_key, month),
+        ).fetchone()
+        return {"count": row[0] if row else 0, "month": month}
+
+
+def _increment_session_usage(session_key: str) -> int:
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS session_usage (
+                session_key TEXT NOT NULL,
+                month TEXT NOT NULL,
+                count INTEGER DEFAULT 0,
+                PRIMARY KEY (session_key, month)
+            )
+        """)
+        month = datetime.now(timezone.utc).strftime("%Y-%m")
+        conn.execute("""
+            INSERT INTO session_usage(session_key, month, count) VALUES(?,?,1)
+            ON CONFLICT(session_key, month) DO UPDATE SET count=count+1
+        """, (session_key, month))
+        conn.commit()
+        row = conn.execute(
+            "SELECT count FROM session_usage WHERE session_key=? AND month=?",
+            (session_key, month),
+        ).fetchone()
+        return row[0] if row else 1
+
+
+class AgentRunRequest(BaseModel):
+    session_key: str
+    agent_id: str
+    inputs: dict = {}
+    skip_limit_check: bool = False
+
+
+@app.post("/api/agent/check-limit")
+async def agent_check_limit(body: AgentRunRequest):
+    usage = _get_or_create_session_usage(body.session_key)
+    remaining = max(0, FREE_MONTHLY_LIMIT - usage["count"])
+    return {
+        "session_key": body.session_key,
+        "monthly_used": usage["count"],
+        "monthly_limit": FREE_MONTHLY_LIMIT,
+        "remaining": remaining,
+        "can_proceed": remaining > 0 or body.skip_limit_check,
+        "upgrade_url": "/pricing.html",
+    }
+
+
+@app.post("/api/agent/record-usage")
+async def agent_record_usage(body: AgentRunRequest):
+    new_count = _increment_session_usage(body.session_key)
+    remaining = max(0, FREE_MONTHLY_LIMIT - new_count)
+    if remaining == 0 and new_count > FREE_MONTHLY_LIMIT:
+        return JSONResponse({
+            "error": "monthly_limit_reached",
+            "message": f"免费版每月 {FREE_MONTHLY_LIMIT} 次 Agent 调用已用完",
+            "monthly_used": new_count,
+            "monthly_limit": FREE_MONTHLY_LIMIT,
+            "upgrade_url": "/pricing.html",
+        }, status_code=429)
+    return {
+        "monthly_used": new_count,
+         "monthly_limit": FREE_MONTHLY_LIMIT,
+         "remaining": remaining,
+     }
+
+
+# ── MAS 工作流 ───────────────────────────────────────────────────────────────
+
+MAS_ROOT = os.environ.get("MAS_ROOT", "/opt/paper2skills/mas")
+_mas_instance = None
+_mas_lock = threading.Lock()
+_mas_runs: dict = {}
+
+
+def _get_mas():
+    global _mas_instance
+    if _mas_instance is not None:
+        return _mas_instance
+    with _mas_lock:
+        if _mas_instance is not None:
+            return _mas_instance
+        import sys
+        mas_parent = os.path.dirname(MAS_ROOT)
+        if mas_parent not in sys.path:
+            sys.path.insert(0, mas_parent)
+        try:
+            from mas.main import MAS
+            _mas_instance = MAS()
+        except Exception:
+            _mas_instance = None
+    return _mas_instance
+
+
+def _run_mas_background(run_id: str, workflow_type: str, payload: dict, operator_id: str):
+    _mas_runs[run_id]["status"] = "running"
+    mas = _get_mas()
+    if mas is None:
+        _mas_runs[run_id].update({"status": "failed", "error": "MAS not available on this server"})
+        return
+    try:
+        result = mas.trigger(
+            workflow_type=workflow_type,
+            payload=payload,
+            operator_id=operator_id,
+            workflow_id=run_id,
+        )
+        pending = result.get("pending_approval")
+        if pending:
+            _mas_runs[run_id].update({
+                "status": "hitl_required",
+                "result": result,
+                "hitl_actions": ["approve", "reject"],
+                "pending_approval": pending,
+            })
+            push_feishu_card_with_buttons(
+                f"🔍 MAS 工作流待审批 — {workflow_type}",
+                f"工作流 {run_id}\n预估成本: {pending.get('estimated_cost', '?')}\n操作: {operator_id}",
+                {"run_id": run_id, "workflow_type": workflow_type},
+                "yellow",
+            )
+        else:
+            _mas_runs[run_id].update({"status": "completed", "result": result})
+    except Exception as e:
+        _mas_runs[run_id].update({"status": "failed", "error": str(e)})
+
+
+class MASRunRequest(BaseModel):
+    workflow_type: str
+    payload: dict = {}
+    operator_id: str = "anonymous"
+    session_key: str = ""
+
+
+@app.post("/api/mas/run")
+async def mas_run(body: MASRunRequest, background: BackgroundTasks):
+    mas = _get_mas()
+    if mas is None:
+        return JSONResponse({"error": "MAS not available"}, status_code=503)
+    if body.workflow_type not in mas.available_workflows():
+        return JSONResponse(
+            {"error": "unknown_workflow", "available": mas.available_workflows()},
+            status_code=400,
+        )
+    run_id = f"wf-{body.workflow_type}-{uuid.uuid4().hex[:8]}"
+    _mas_runs[run_id] = {
+        "run_id": run_id,
+        "status": "pending",
+        "workflow_type": body.workflow_type,
+        "operator_id": body.operator_id,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "result": None,
+        "error": None,
+    }
+    background.add_task(
+        _run_mas_background, run_id, body.workflow_type, body.payload, body.operator_id
+    )
+    return {"run_id": run_id, "status": "pending", "workflow_type": body.workflow_type}
+
+
+@app.get("/api/mas/run/{run_id}")
+async def mas_run_status(run_id: str):
+    if run_id not in _mas_runs:
+        return JSONResponse({"error": "not_found", "run_id": run_id}, status_code=404)
+    run = _mas_runs[run_id]
+    out = {k: v for k, v in run.items() if k != "result"}
+    if run["status"] in ("completed", "failed", "hitl_required"):
+        out["result"] = run.get("result")
+    return out
+
+
+class MASApprovalRequest(BaseModel):
+    note: str = ""
+
+
+@app.post("/api/mas/approve/{run_id}")
+async def mas_approve(run_id: str, body: MASApprovalRequest):
+    mas = _get_mas()
+    if mas is None:
+        return JSONResponse({"error": "MAS not available"}, status_code=503)
+    if run_id not in _mas_runs:
+        return JSONResponse({"error": "not_found"}, status_code=404)
+    result = mas.resume(run_id, "approve", body.note)
+    if result is None:
+        return JSONResponse({"error": "resume_failed"}, status_code=400)
+    _mas_runs[run_id].update({"status": "completed", "result": result})
+    return {"run_id": run_id, "status": "completed"}
+
+
+@app.post("/api/mas/reject/{run_id}")
+async def mas_reject(run_id: str, body: MASApprovalRequest):
+    mas = _get_mas()
+    if mas is None:
+        return JSONResponse({"error": "MAS not available"}, status_code=503)
+    if run_id not in _mas_runs:
+        return JSONResponse({"error": "not_found"}, status_code=404)
+    result = mas.resume(run_id, "reject", body.note)
+    if result is None:
+        return JSONResponse({"error": "resume_failed"}, status_code=400)
+    _mas_runs[run_id].update({"status": "rejected", "result": result})
+    return {"run_id": run_id, "status": "rejected"}
+
+
+@app.get("/api/mas/workflows")
+async def mas_workflows():
+    mas = _get_mas()
+    if mas is None:
+        return JSONResponse({"error": "MAS not available"}, status_code=503)
+    return {
+        "workflows": mas.available_workflows(),
+        "runtime_modes": mas.runtime_modes,
+        "pending_approvals": mas.list_pending_approvals(),
+    }
+
 
 if __name__ == "__main__":
     import uvicorn

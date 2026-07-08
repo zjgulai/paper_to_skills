@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>StaR 观点语句排序 - 排序而非生成的可解释评论分析 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
@@ -39,11 +64,67 @@
   <a href="#s-relations">⑤ 关联</a>
   <a href="#s-value">⑥ 价值</a>
 </div>
-<h1>StaR 观点语句排序 - 排序而非生成的可解释评论分析</h1>
-<p class="muted">Skill-StaR-Review-Statement-Ranking · 14-用户分析</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-M 新品上市全链路</span></div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">14-用户分析</div>
+  <h1 class="skill-main-title">StaR 观点语句排序 - 排序而非生成的可解释评论分析</h1>
+  <p class="skill-skill-id">Skill-StaR-Review-Statement-Ranking</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>LLM数据分析</span><span class='tag'>ML基础与可解释性</span><span class='tag'>逆向物流与退货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span><span class='tag'>WF-W 退货根因修复</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-voc-product-loop.html'>竞品情报→产品迭代加速器</a></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>80-150 万/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>80-150 万/年</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 83分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（46%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 104.0, 46.0, 69.3, 69.0, 70.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 10.4, 6.9, 10.4, 6.9, 3.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
 <div class="two-col">
   <section>
@@ -52,13 +133,13 @@
     <h2 id="s-algo">2. 核心算法逻辑</h2>
     <p>传统可解释推荐让 LLM 生成自由文本解释,有 3 大问题:① 幻觉(生成评论中不存在的属性)、② 难以评估(自由文本只能用主观打分)、③ 粒度不可控. StaR 把任务重构为对评论中真实出现的&quot;原子语句(statement)&quot;做排序,只输出真实存在的内容,可用 IR 指标客观评估.</p>
     <h2 id="s-scenario">3. 业务应用场景</h2>
-    <p>- 业务问题:Momcozy 暖奶器在 Amazon US/DE 各 5000+ 评论,差评包含细碎复合表达(如&quot;加热慢又不均匀,温控也不准&quot;). 传统 ABSA 把整句标注为&quot;加热问题&quot;,丢失了 3 个独立改进点;直接用 LLM 总结容易生成评论中不存在的属性(如&quot;接口设计差&quot;) - 数据要求:Amazon Review API 双市场评论 - StaR 配置: - Step 1 Candidate Extract(高召回): &quot;加热慢又不均匀,温控也不准&quot; → [&quot;加热速度慢&quot;,&quot;加热不均匀&quot;,&quot;温控不准确&quot;] - Step 2 Verify(过滤虚构语句) - Step 3 语义聚类:&quot;</p><p>- 业务问题:三市场(US/DE/CN)的用户痛点分布完全不同,但传统差评分析只能产出&quot;差评列表&quot;,无法量化比较&quot;德国用户对噪音的敏感度 vs 美国用户的便携性偏好&quot; - 数据要求:三市场评论 + StaR 提取结果 - StaR 配置: - 各市场分别跑 StaR pipeline → 各得 Top 50 statements - 跨市场用 BGE-M3 多语种 embedding 做语义对齐 - 输出&quot;跨市场差异矩阵&quot;:同义 statement 在各市场的频率/排名差异 - 业务价值: - 选品决策:发现新品 SKU 在哪个市场最具竞争力(德国注重静音 = 主推静音吸奶器) - 营销 li</p>
+    <p>- 业务问题:Momcozy 暖奶器在 Amazon US/DE 各 5000+ 评论,差评包含细碎复合表达(如&quot;加热慢又不均匀,温控也不准&quot;). 传统 ABSA 把整句标注为&quot;加热问题&quot;,丢失了 3 个独立改进点;直接用 LLM 总结容易生成评论中不存在的属性(如&quot;接口设计差&quot;) - 数据要求:Amazon Review API 双市场评论 - StaR 配置: - Step 1 Candidate Extract(高召回): &quot;加热慢又不均匀,温控也不准&quot; → [&quot;加热速度慢&quot;,&quot;加热不均匀&quot;,&quot;温控不准确&quot;] - Step 2 Verify(过滤虚构语句) - Step 3 语义聚类:&quot;</p><p>- 业务问题:三市场(US/DE/CN)的用户痛点分布完全不同,但传统差评分析只能产出&quot;差评列表&quot;,无法量化比较&quot;德国用户对噪音的敏感度 vs 美国用户的便携性偏好&quot; - 数据要求:三市场评论 + StaR 提取结果 - StaR 配置: - 各市场分别跑 StaR pipeline → 各得 Top 50 statements - 跨市场用 BGE-M3 多语种 embedding 做语义对齐 - 输出&quot;跨市场差异矩阵&quot;:同义 statement 在各市场的频率/排名差异 - 业务价值: - 选品决策:发现新品 SKU 在哪个市场最具竞争力(德国注重静音 = 主推静音吸奶器) - 营销 li</p><p>**三轨验证** | 成本轨：RFM分层模型月均成本约800元（数据标签工具200元+分析师工时12小时/月@50元/小时=600元+系统维护200元），年度成本9600元 | 合规轨：符合《个人信息保护法》第四条数据分类处理要求，RFM标签属于衍生数据范畴，需获得用户隐私授权；符合跨境电商数据出境规范，涉及境外用户数据需签署DPA协议 | 风险轨：①数据泄露风险（概率15%）导致用户隐私纠纷，罚款50-100万；②RFM模型偏差风险（概率25%）造成高价值客户误分类，影响复购转化；③跨境数据合规风险（概率20%）因标签数据不当传输被监管部门处罚</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>易处:无需 LLM 生成(避免幻觉),只需 embedding + 排序</li><li>易处:可用经典 IR 指标(P@k/NDCG@k)做训练监督</li><li>难处:Verify 阶段需要训练判别器(可用 cross-encoder 微调)</li><li>难处:跨语言 statement 对齐依赖高质量多语种 embedding(BGE-M3 / E5-multilingual)</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：paper2skills-code/user_analytics/star_review_statement_ranking</p>
-    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
 StaR Statement-level Ranking 最小骨架
 论文 arXiv:2604.03724
 完整实现见 paper2skills-code/nlp_voc/star_statement_ranking/model.py
@@ -142,6 +223,7 @@ function copyCode(btn) {
   navigator.clipboard.writeText(text).then(function() {
     btn.textContent = '已复制 ✓';
     btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-StaR-Review-Statement-Ranking',skill_domain:'14-用户分析'});
     setTimeout(function() {
       btn.textContent = '复制';
       btn.classList.remove('copied');
@@ -151,13 +233,14 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = '复制'; }, 1500);
   });
 }
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-StaR-Review-Statement-Ranking',skill_domain:'14-用户分析',skill_difficulty:'⭐⭐⭐☆☆'});
 </script>
-
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 退货根因分析师</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
 </section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -172,6 +255,39 @@ function copyCode(btn) {
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>大促备货决策手册 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,14 +36,28 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 大促备货决策手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>SC</span>
+  <span class='pb-icon'><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h16M5 18V9l6-6 6 6v9"/><rect x="8.5" y="12" width="5" height="6" rx=".8"/><path d="M17 5l2-2M19 7l1-3" opacity=".7"/></svg></span>
   <div>
     <h1>大促备货决策手册</h1>
     <p class='lead'>双十一 / Prime Day / Black Friday 前 8 周的库存决策完整路线图</p>
@@ -42,13 +67,17 @@
 
 <div class='pb-intro'>大促备货最大的风险：备多了积压，备少了断货。今天大多数团队的备货方式是：拿历史销量乘以经验系数——这个方法在大促销速是平日 3-10 倍的情况下，误差率高达 40%。两种错误的年化损失都可能超过 300 万。本手册提供从 T-8 周到大促当日的分阶段决策节点。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 需求预测 MAPE 降低 20-35%</li><li>[OK] 库存积压减少 15-25%</li><li>[OK] 断货率从 8% → 3%</li><li>[OK] 年化节省 50-200 万元</li></ul></div>
+<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+  <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-inventory-festival">0</strong> / 3 步</span>
+  <button onclick="pbShareFeishu('pb-inventory-festival','大促备货决策手册',3)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
+</div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>T-8 周 — 需求预测基线</h3>
     <p class='pb-problem'>大促期间需求是平日的 3-10 倍，历史数据如何泛化到极端场景？</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html' class='pb-skill-name'>Demand Forecasting for Supply Chain</a><div class='pb-skill-badges'><span class='roi-badge'>30万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 结合促销日历、竞品价格、渠道库存的供应链专用预测</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Promotion-Demand-Decomposition.html' class='pb-skill-name'>Demand Forecasting During Grand Promotion for Online Retailing (JD.com)</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 将大促需求拆解为：基础需求 + 促销增量 + 渠道转移</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html' class='pb-skill-name'>Conformal Prediction Demand UQ（需求预测不确定性量化）</a><div class='pb-skill-badges'><span class='roi-badge'>30-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 输出置信区间（P10/P50/P90），为保守/激进备货方案提供概率支撑</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html' class='pb-skill-name'>Demand Forecasting for Supply Chain</a><div class='pb-skill-badges'><span class='roi-badge'>30万</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 结合促销日历、竞品价格、渠道库存的供应链专用预测</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Promotion-Demand-Decomposition.html' class='pb-skill-name'>Demand Forecasting During Grand Promotion for Online Retailing (JD.com)</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 将大促需求拆解为：基础需求 + 促销增量 + 渠道转移</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Conformal-Prediction-Demand-UQ.html' class='pb-skill-name'>Conformal Prediction Demand UQ（需求预测不确定性量化）</a><div class='pb-skill-badges'><span class='roi-badge'>5 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 输出置信区间（P10/P50/P90），为保守/激进备货方案提供概率支撑</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：近 2 年同类大促历史销售、促销方案草案、竞品去年大促价格</div>
     <div class="pb-output"><strong>输出结果：</strong>SKU 级需求预测 + 90% 置信区间</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -99,7 +128,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>T-4 周 — 补货策略锁定</h3>
     <p class='pb-problem'>如何在 MOQ 约束和海外仓容积限制下，制定最优补货计划？</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Safety-Stock-Replenishment.html' class='pb-skill-name'>Safety Stock and Replenishment Strategy</a><div class='pb-skill-badges'><span class='roi-badge'>20-40万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 动态安全库存计算，考虑供应商交期波动</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Dynamic-Lot-Sizing-MOQ.html' class='pb-skill-name'>Efficient Algorithms for the Joint Replenishment Problem with Minimum Order Quantities</a><div class='pb-skill-badges'><span class='roi-badge'>3×$800 - $1,200 = $1,200/批次，年节省约 $8,000</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 最小起订量约束下的动态批量优化，避免超额采购</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html' class='pb-skill-name'>Multi-Channel Inventory Pooling（多渠道库存池化）</a><div class='pb-skill-badges'><span class='roi-badge'>200-400 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨 Amazon/独立站/TikTok 动态调拨，防止 A 仓过剩 B 仓断货</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Safety-Stock-Replenishment.html' class='pb-skill-name'>Safety Stock and Replenishment Strategy</a><div class='pb-skill-badges'><span class='roi-badge'>20-40万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 动态安全库存计算，考虑供应商交期波动</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Dynamic-Lot-Sizing-MOQ.html' class='pb-skill-name'>Efficient Algorithms for the Joint Replenishment Problem with Minimum Order Quantities</a><div class='pb-skill-badges'><span class='roi-badge'>3×$800 - $1,200 = $1,200/批次，年节省约 $8,000</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 最小起订量约束下的动态批量优化，避免超额采购</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html' class='pb-skill-name'>Multi-Channel Inventory Pooling（多渠道库存池化）</a><div class='pb-skill-badges'><span class='roi-badge'>45 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨 Amazon/独立站/TikTok 动态调拨，防止 A 仓过剩 B 仓断货</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Promo-Inventory-Pulse-Auto-Trigger.html' class='pb-skill-name'>Promo-Inventory-Pulse-Auto-Trigger — 大促前14天库存不足自动触发紧急补货与广告降速保护</a><div class='pb-skill-badges'><span class='roi-badge'>5万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 大促库存脉冲自动触发：实时销速×剩余库存天数达到阈值，自动触发紧急补货和仓间调拨（断货率降低40%）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：供应商 lead time 分布、各仓容积上限、各渠道历史分单比例</div>
     <div class="pb-output"><strong>输出结果：</strong>分渠道补货计划 + 调拨策略</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -218,7 +247,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -233,6 +262,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

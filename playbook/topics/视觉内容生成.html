@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>视觉内容生成 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,473 +36,570 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
-    <section class="content"><h1>视觉内容生成</h1><input id='topic-search' placeholder='在 视觉内容生成 中搜索…'
-  style='max-width:320px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;margin:10px 0 16px;display:block'>
-<script>(function(){var inp=document.getElementById('topic-search');var cards=document.querySelectorAll('.cards .skill-card');if(!inp)return;inp.addEventListener('input',function(){var q=this.value.trim().toLowerCase();cards.forEach(function(c){var t=(c.textContent||'').toLowerCase()+(c.href||'').toLowerCase();c.style.display=(!q||t.includes(q))?'':'none';})});})();</script><div class='cards'><a class="card skill-card" href="../skills/Skill-Contrastive-Time-Series-Cold-Start.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+    <section class="content"><h1>视觉内容生成</h1><input id='topic-search' placeholder='在 视觉内容生成 中搜索…' style='max-width:320px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;margin:10px 0 16px;display:block'><script>(function(){var inp=document.getElementById('topic-search');var cs=document.querySelectorAll('.cards .skill-card');if(!inp)return;inp.addEventListener('input',function(){var q=this.value.trim().toLowerCase();cs.forEach(function(c){c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';});});})()</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Contrastive-Time-Series-Cold-Start.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">03-时间序列</div>
   <h3 class="sc-title">Contrastive Time Series Cold Start — 对比学习驱动的新品需求冷启动预测</h3>
   <p class="sc-desc">母婴选品运营面临新品上市零历史销售数据——对比学习冷启动预测通过找5个最相似历史SKU迁移需求模式，新品首月备货误差从±65%降至±28%，避免缺货/压库损失年化30-80万元</p>
   <div class='sc-footer'><span class='sc-roi'>40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-New-SKU-Launch-Readiness-Gate.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Time-Series-Foundation-Model-Zero-Shot.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">时序基础模型零样本预测 — 无需训练的跨域需求预测</h3>
+  <p class="sc-desc">新品运营面临&quot;仅45天历史数据需求预测MAPE高达38%备货失误严重&quot;——零样本时序基础模型无需训练直接预测新品需求，MAPE降至23%，年化节省首批积压约180万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Navier-Stokes-Warehouse.html" data-domain="04-供应链" data-diff="">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">Navier-Stokes 流体力学驱动的旺季仓储人流最优化 (CFD Warehouse Picking)</h3>
+  <p class="sc-desc">仓储主管在旺季面临拣货员密集拥堵导致效率塌方——引入计算流体力学Navier-Stokes方程建模仓储人流，将拣货员视为高粘性流体粒子，反直觉重构爆款货架分区与波次释放策略，黑五吞吐量暴力提升22%。</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-New-SKU-Launch-Readiness-Gate.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">04-供应链</div>
   <h3 class="sc-title">新品上市准入门控 — 从选品到发布的全量检查清单与Tag驱动的上市就绪评估</h3>
   <p class="sc-desc">运营面临&quot;新品上市后才发现合规缺失被海关扣押&quot;——5维门控检查将上市前风险完全暴露，防止货到港扣押损失5-15万元</p>
   <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-CSDM-Diffusion-ColdStart.html" data-domain="05-推荐系统" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CSDM-Diffusion-ColdStart.html" data-domain="05-推荐系统" data-diff="">
   <div class="sc-domain">05-推荐系统</div>
   <h3 class="sc-title">扩散模型冷启动CTR - 新品零交互时的转化潜力预热</h3>
   <p class="sc-desc">业务问题 跨境母婴电商每周上新 200-500 个 SKU（Momcozy 双泵吸奶器、有机棉连体衣、婴儿推车配件等）</p>
   <div class='sc-footer'><span class='sc-roi'>10万</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Diffusion-Model-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐⭐">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Diffusion-Model-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐⭐">
   <div class="sc-domain">05-推荐系统</div>
   <h3 class="sc-title">Diffusion Model Recommendation — 扩散模型推荐：生成式推荐的范式革命</h3>
   <p class="sc-desc">传统推荐从候选集中选最好的但新品上架当天没有候选历史数据——扩散模型生成式推荐直接生成用户理想商品嵌入向量不受候选集限制，新品上架第一天即可被推荐年化GMV增益10-30万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Blue-Ocean-Category-Discovery.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Blue-Ocean-Category-Discovery.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">Blue Ocean Category Discovery — AI 驱动的蓝海品类机会识别与先验测试</h3>
   <p class="sc-desc">季度选品靠人工看 BSR 耗时 1 周且频繁陷入红海——需求-竞争矩阵算法系统识别「高搜索低满足」蓝海细分，新品命中率 30%→60%+，年化节省开发成本 20-80 万元</p>
   <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multimodal-New-Product-Sales-Forecast.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-New-Product-Sales-Forecast.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">06-增长模型</div>
   <h3 class="sc-title">多模态外部信号新品销量预测 — Google Trends + 图片融合预测</h3>
   <p class="sc-desc">跨境电商新品运营面临上架前无销售数据的备货难题——Google Trends热度曲线+产品图片多模态融合，将新品12周销量预测WAPE降低8-12%，Prime Day断货率从30%降至10%</p>
   <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Social-VOC-Viral-Potential-Score.html" data-domain="07-NLP-VOC" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-BERTopic-Neural-Topic-Modeling.html" data-domain="07-NLP-VOC" data-diff="">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">BERTopic — 神经主题模型与动态知识分类</h3>
+  <p class="sc-desc">运营面临&quot;5000条评论无法快速发现新兴主题和知识缺口&quot;——BERTopic将VOC主题覆盖率从68%提升至94%，自动发现安全性等预警主题，漏报率下降38%</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Social-VOC-Viral-Potential-Score.html" data-domain="07-NLP-VOC" data-diff="">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">Social-VOC-Viral-Potential-Score — 社媒UGC传播特征分析与爆品传播潜力评分</h3>
   <p class="sc-desc">运营面临TikTok爆单前3天无预警导致断货损失$28,000/次——UGC三维传播潜力分（情感强度×可分享性×视觉密度）提前3-5天触发备货，年化减少断货损失约$168,000</p>
   
-</a><a class="card skill-card" href="../skills/Skill-UGC-Viral-Content-Potential-Scorer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-UGC-Viral-Content-Potential-Scorer.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">07-NLP-VOC</div>
   <h3 class="sc-title">UGC病毒传播潜力评分 — 识别可引发病毒扩散的高潜力内容</h3>
   <p class="sc-desc">内容运营面临&quot;不知道哪个UGC值得推广&quot;——病毒潜力评分将内容放大精准度提升至70%+，同等预算曝光量提升3-5倍</p>
   <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AutoPKG-Multimodal-Product-Attribute-KG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AutoPKG-Multimodal-Product-Attribute-KG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">AutoPKG — 多模态产品属性图谱自动构建：文本+图片→GMV提升</h3>
   <p class="sc-desc">母婴跨境团队面临&quot;商品属性人工填写耗时且不标准导致推荐失准&quot;——多模态多Agent自动构建产品属性图谱，属性填充率从60%→96%，Search GMV+5.32%（Lazada生产A/B实测）</p>
   <div class='sc-footer'><span class='sc-roi'>1,000万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Hierarchical-Product-KG-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hierarchical-Product-KG-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">层级商品知识图谱自动构建（图片→KG）</h3>
   <p class="sc-desc">业务问题:出海卖家上架 1 万件母婴新品到 Amazon US,需逐 SKU 填写品类路径(`Baby &gt; Feeding &gt; Baby Formula &gt; Infant Formula 0-6m`)、净重(g)、包装材质、适用月龄等 10+ 个强制属性</p>
   <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multimodal-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LayoutLM-Document-Structure-Parsing.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">LayoutLM — 文档版面理解与结构化解析</h3>
+  <p class="sc-desc">知识库运营面临&quot;PDF论文文本提取后图表说明污染正文导致Skill萃取质量差&quot;——LayoutLM联合文本+坐标+视觉将内容污染率从23%降至4%，萃取质量评分提升1.2分</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">UniECS — 统一多模态电商搜索与商品匹配</h3>
   <p class="sc-desc">选品分析师看到竞品图但叫不出名字——多模态统一搜索引擎同时理解图文意图，竞品雷达覆盖率提升60%，年化节省调研工时18万元</p>
   <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multimodal-Product-Understanding.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Product-Understanding.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Multimodal Product Understanding — 多模态商品理解：图文统一表示驱动搜索与推荐</h3>
   <p class="sc-desc">买家上传竞品图片询问有没有类似产品但文本搜索无法处理图片查询——多模态商品理解将图文统一为单一向量支持以图搜货和图文一致性检测，搜索CVR提升5-10%并发现Listing图文不符风险年化GMV增益15-50万元</p>
-  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multimodal-RAG.html" data-domain="08-知识图谱" data-diff="">
+  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-RAG.html" data-domain="08-知识图谱" data-diff="">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Multimodal RAG - 图文混合多模态检索增强生成</h3>
   <p class="sc-desc">内容审核面临图文视频信息混杂——多模态RAG将审核漏检率降30%，年化省13万元</p>
   
-</a><a class="card skill-card" href="../skills/Skill-Visual-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VideoRAG-Video-Knowledge-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">VideoRAG — 视频知识库检索增强生成</h3>
+  <p class="sc-desc">运营团队面临TikTok直播回放内容无法检索——VideoRAG视频知识库使100场回放可精准检索，内容复用率+300%，年化内容价值42万元</p>
+  <div class='sc-footer'><span class='sc-roi'>58万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Visual-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">08-知识图谱</div>
   <h3 class="sc-title">Visual Product Search — 视觉商品搜索：以图搜货与相似款发现</h3>
   <p class="sc-desc">用户在社交媒体看到竞品同款想找相似但更便宜的款式文字搜索效果差——CLIP视觉搜索让用户上传图片直接找相似商品，搜索转化率提升8-15%同时帮助卖家发现视觉差异化空间年化增益10-30万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Data-to-Dashboard-Multi-Agent-Visualization.html" data-domain="09-DataAgent-LLM" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-to-Dashboard-Multi-Agent-Visualization.html" data-domain="09-DataAgent-LLM" data-diff="">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Data-to-Dashboard — 多Agent智能可视化生成</h3>
   <p class="sc-desc">经营管理者面临报表分散看不全——多Agent可视化将看数时间从40分降到8分，年化省10万元</p>
-  <div class='sc-footer'><span class='sc-roi'>8.6万</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multimodal-Table-Understanding.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Table-Understanding.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">Multimodal Table Understanding Agent — 表格理解：规格对比/认证矩阵/价格表</h3>
   <p class="sc-desc">分析师面临表格截图难读——多模态表理解将录入错误率从12%降到3%，年化省8万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-NL2Dashboard-Automation.html" data-domain="09-DataAgent-LLM" data-diff="">
-  <div class="sc-domain">09-DataAgent-LLM</div>
-  <h3 class="sc-title">NL2Dashboard Automation（自然语言→仪表盘）</h3>
-  <p class="sc-desc">运营询问&quot;美德两国周销量对比加趋势线&quot;需等 BI 工程师排期 3-5 天——NL2Dashboard 将自然语言直接转为可视化图表，BI 需求响应从天级压缩到秒级，节省开发人力 15-25 万元/年</p>
-  <div class='sc-footer'><span class='sc-roi'>节省 BI 开发人力</span></div>
-</a><a class="card skill-card" href="../skills/Skill-ProRCA-Business-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ProRCA-Business-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">09-DataAgent-LLM</div>
   <h3 class="sc-title">ProRCA — 因果图路径溯源根因分析</h3>
   <p class="sc-desc">运营总监面临业绩下滑原因说不清——ProRCA将定位时间从3天缩到6小时，年化省15万元</p>
   <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-RAG-Enhanced-Data-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="">
-  <div class="sc-domain">09-DataAgent-LLM</div>
-  <h3 class="sc-title">RAG-Enhanced Data Analysis（RAG 增强数据分析）</h3>
-  <p class="sc-desc">&quot;为什么德国站吸奶器转化率下降&quot;→ RAG 检索到上月分析&quot;德国站转化率下降是因为欧元贬值导致价格上涨 8%&quot;→本次发现同样模式→自动引用历史结论+实时数据验证</p>
-  <div class='sc-footer'><span class='sc-roi'>减少重复分析 50%，节省分析人力</span></div>
-</a><a class="card skill-card" href="../skills/Skill-ContextRL-Contrastive-Context-Selection.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ContextRL-Contrastive-Context-Selection.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">10-MAS</div>
   <h3 class="sc-title">ContextRL对比上下文选择强化学习 — 细粒度上下文锚定训练突破长时域推理瓶颈</h3>
   <p class="sc-desc">标准RL只奖励最终答案让Agent学会猜测而非识别关键证据——ContextRL辅助对比上下文选择目标使Agent真正学会细粒度证据锚定，长时域Benchmark平均+2.2%（2026 arXiv:2606.17053）</p>
   <div class='sc-footer'><span class='sc-roi'>12万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Graph-Grounded-MAS-Protocol.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Graph-Grounded-MAS-Protocol.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">10-MAS</div>
   <h3 class="sc-title">G²CP — 图结构 MAS 通信协议：消除级联幻觉</h3>
   <p class="sc-desc">数据产品经理面临知识源引用失真——Graph-Grounded Protocol将错引率9%降到1%，年化省14万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-ParaManager-Parallel-Orchestration.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Video-Content-Optimization.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS视频内容优化 — 多智能体协同的短视频全链路运营</h3>
+  <p class="sc-desc">内容团队面临&quot;TikTok内容每天3小时制作爆款率仅5%无法规模化&quot;——多智能体自动化内容流水线每日3篇爆款率提升至18%，年化GMV增量约150万元</p>
+  <div class='sc-footer'><span class='sc-roi'>150万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ParaManager-Parallel-Orchestration.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">10-MAS</div>
   <h3 class="sc-title">ParaManager — 小模型主编排：Agent-as-Tool 并行子任务分解</h3>
   <p class="sc-desc">运营专员面临多任务串行拖慢时效——ParaManager将处理时长4小时压到50分钟，年化省18万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Fake-Review-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Fake-Review-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI Fake Review Detection — 多模态虚假评论检测与可解释风控</h3>
   <p class="sc-desc">母婴跨境卖家竞品批量刷好评、自品被刷 AI 差评难以举报——多模态 BERT+ResNet-50 虚假评论检测器准确率 93%+，SHAP 触发词证据报告将差评举报成功率从 30% 提升至 65%，年化保护 GMV 损失 5-30 万元</p>
   <div class='sc-footer'><span class='sc-roi'>1-5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Generated-Content-Watermarking.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Generated-Content-Watermarking.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AIGC数字水印与内容溯源 — DCT不可见水印嵌入与版权追踪</h3>
   <p class="sc-desc">品牌运营面临&quot;原创产品主图被竞品搬运、版权举证成功率仅40%&quot;——DCT数字水印将侵权举证成功率从40%提升至92%，年化保护品牌资产价值50万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-80 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AIGC-Authenticity-Trust-Framework.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Authenticity-Trust-Framework.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AIGC Authenticity Trust Framework — 图文双轨 AIGC 真实性检测与消费者信任管理</h3>
   <p class="sc-desc">母婴卖家大量使用 AI 生图/文案后不知是否触发平台检测或被消费者察觉，信任危机导致评分骤降——双轨真实性检测（图像 Patch 不连续性 + 文本 TTR/重复率）预先标记高风险内容，避免上架后信任危机导致年化 50-200 万元 GMV 损失</p>
   <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AIGC-Revenue-Attribution.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Content-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</h3>
+  <p class="sc-desc">内容审核员面临AI稿混入人工库——AIGC检测将误放率从15%降到2%，年化省9万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Copyright-Revenue-Sharing.html" data-domain="11-AI人文" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AIGC版权分配 — AI生成内容的创作者收益模型</h3>
+  <p class="sc-desc">内容团队面临AI生成素材版权归属不清——Shapley分配框架实现95%版权溯源准确率，KOL合作纠纷减少80%</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Revenue-Attribution.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AIGC Revenue Attribution — AI内容生成 ROI 财务归因：从内容投入到 GMV 的量化路径</h3>
   <p class="sc-desc">品牌每月花2000美元请摄影师但不知道AI图片50美元能否替代——DiD+A/B双轨归因量化AIGC内容对GMV的真实贡献，验证AI图CVR差距若小于5%可全面替换年化节省内容成本17万元以上</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Embedding-Fundamentals.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Affective-Computing-Maternal-Anxiety.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">情感计算×母婴焦虑 — 多模态情绪识别与干预</h3>
+  <p class="sc-desc">运营面临母婴APP用户流失率高——情感计算引擎将焦虑用户识别准确率提升至89%，干预后留存率+18%，年化LTV增加42万元</p>
+  <div class='sc-footer'><span class='sc-roi'>700万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cognitive-Load-UX-Optimizer.html" data-domain="11-AI人文" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">认知负荷UX优化器 — 信息架构与注意力资源管理</h3>
+  <p class="sc-desc">产品团队面临母婴APP首页转化率低——认知负荷优化将CTR从2.3%提升至3.8%，年化GMV增量65万元</p>
+  <div class='sc-footer'><span class='sc-roi'>320万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Fake-Review-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">多模态伪造评论检测 — 图文联合的AI生成评论识别</h3>
+  <p class="sc-desc">店铺面临&quot;竞争对手AI生成多模态差评评分从4.8降至4.3&quot;——CLIP图文一致性+行为图检测伪造评论F1达0.83，加速申诉恢复评分，年化防御损失约180万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Embedding-Fundamentals.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">12-ML基础</div>
   <h3 class="sc-title">Embedding Fundamentals — 嵌入表示学习基础：从 ID 映射到多模态语义对齐</h3>
   <p class="sc-desc">跨境平台上架 50 款新款婴儿车，无任何历史购买数据，纯 ID 嵌入无法初始化，导致新品在推荐系统中几乎不曝光（冷启动问题）</p>
   <div class='sc-footer'><span class='sc-roi'>15-50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Platform-Listing-Sync-Optimizer.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-Creative-Personalization-Bandit.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Ad Creative Personalization Bandit — 上下文 Bandit 动态为不同人群选最优广告创意</h3>
+  <p class="sc-desc">广告投手面临&quot;18种创意组合靠经验固定选择、A/B测试需6周才能收敛&quot;——LinUCB上下文Bandit 2周收敛至最优创意，CTR从1.8%→2.6%，年化广告效率增益约30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Platform-Listing-Sync-Optimizer.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">多平台 Listing 差异化同步优化器 — Amazon / TikTok Shop / Shopee 参数矩阵建模</h3>
   <p class="sc-desc">多平台卖家面临&quot;同一款品在Amazon和TikTok Shop用同一套Listing效果差很多&quot;——平台规格矩阵优化将各平台Listing适配度提升至最优参数，整体CTR提升18%</p>
   <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-HGNN-Cross-Device-Matching.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HGNN-Cross-Device-Matching.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">层次图神经网络跨设备用户匹配 - 无ID的跨端行为拼接</h3>
   <p class="sc-desc">业务问题：母婴 DTC 站在 Instagram 投广告，用户在手机看到广告、到电脑搜索品牌词下单</p>
   <div class='sc-footer'><span class='sc-roi'>⭐⭐⭐⭐☆</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-AB-Testing-Automation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-AB-Testing-Automation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Listing AB Testing Automation — LLM Agent 驱动的 Listing A/B 测试自动化</h3>
   <p class="sc-desc">主图/标题/Bullet 哪个版本更好需要 3 周真实流量测试，期间低效版本持续损耗转化——LLM Agent 模拟 500 个买家 persona 零流量预测最优版本，CTR+12.5%/CVR+8.3%，年化自然流量提升 60%+</p>
   <div class='sc-footer'><span class='sc-roi'>30-150 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-Health-Diagnostic.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Health-Diagnostic.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Listing Health Diagnostic — Listing 快诊：多维度评分驱动的上架质量诊断</h3>
   <p class="sc-desc">小型卖家不知道Listing哪里有问题Amazon排名持续低迷——五维度评分（SEO/内容/图片/合规/竞争力）给出0-100分并附具体修改建议，15分钟诊断上架质量提升后搜索曝光增加15-25%年化10-30万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-Quality-Scoring.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Quality-Scoring.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">Skill-Listing-Quality-Scoring</h3>
   <p class="sc-desc">业务问题：baby sterilizer 新品上架前，无法量化判断 Listing 质量是否达到投放标准</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-RELATE-RL-Ad-Text-Generation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RELATE-RL-Ad-Text-Generation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">RELATE强化学习广告文案生成 — RL端到端优化CTCVR的LLM广告创意框架</h3>
   <p class="sc-desc">AI生成的&quot;流畅专业&quot;广告文案转化率提升不明显因为优化了语言质量而非真实转化——RELATE用RL直接把CTCVR作为奖励信号端到端训练LLM，在线部署CTCVR提升+9.19%（2026 arXiv:2602.11780）</p>
   <div class='sc-footer'><span class='sc-roi'>4.6万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Short-Video-Commerce-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Short-Video-Commerce-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">短视频内容归因建模 — 视频特征 XGBoost 驱动转化分析</h3>
   <p class="sc-desc">内容运营面临&quot;短视频哪些特征真正带来转化靠直觉判断效率极低&quot;——XGBoost内容特征归因将爆款视频特征提炼准确率提升至83%，内容ROI提升41%</p>
   <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TikTok-Shop-Content-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Shop-Content-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">13-广告分析</div>
   <h3 class="sc-title">TikTok Shop Content Attribution — 短视频带货兴趣图谱归因</h3>
   <p class="sc-desc">短视频运营面临内容带货说不清——内容归因将素材误判率21%压到7%，年化省23万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Abandoned-Cart-Recovery-ML.html" data-domain="14-用户分析" data-diff="⭐⭐⭐">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Abandoned-Cart-Recovery-ML.html" data-domain="14-用户分析" data-diff="⭐⭐⭐">
   <div class="sc-domain">14-用户分析</div>
   <h3 class="sc-title">Abandoned Cart Recovery ML — 弃购挽回机器学习：预测意图×序列触达×个性化优惠</h3>
   <p class="sc-desc">当月弃购订单超过200个时，ML将弃购用户分为比价型/摩擦型/犹豫型/意外型并分别触达——挽回率从统一发折扣的3%提升到12%，同时减少对比价型用户的无效折扣损耗。</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Instagram-Reels-Commerce-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Instagram-Reels-Commerce-Attribution.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">Instagram Reels Commerce Attribution — Reels 商品发现链路归因与转化量化</h3>
   <p class="sc-desc">Instagram Reels 投入 $3000/月但 CFO 问不出 GMV 贡献——时间衰减多触点归因模型打通 Reels 商品标签→Amazon 购买的跨平台链路，将 ROAS 盲区变成可量化的 4.2x</p>
   <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TikTok-Algorithm-Traffic-Amplification.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Algorithm-Traffic-Amplification.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">15-营销投放分析</div>
   <h3 class="sc-title">TikTok推流算法流量放大 — 逆向工程完播率/互动率临界点识别</h3>
   <p class="sc-desc">运营负责人面临&quot;视频发出去推流量忽高忽低不知道算法触发放量的临界点&quot;——算法临界指标识别将触发推流放量的概率从32%提升至71%，年化流量成本节省$6.2万</p>
   <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Agentic-Workflow-Compilation.html" data-domain="16-智能体工程" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Shop-Content-Commerce-Funnel.html" data-domain="15-营销投放分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">TikTok Shop 内容电商漏斗建模 — 短视频→直播→下单三段式转化率优化</h3>
+  <p class="sc-desc">TikTok Shop运营面临&quot;短视频和直播都在做但不知道哪个环节流失最多&quot;——Markov Chain三段式漏斗将关键流失环节定位精度提升至91%，GMV转化率提升23%</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-Workflow-Compilation.html" data-domain="16-智能体工程" data-diff="">
   <div class="sc-domain">16-智能体工程</div>
   <h3 class="sc-title">Subterranean Agent — 将工作流 SOP 编译进 LLM 权重</h3>
   <p class="sc-desc">每日需要上架数百个 SKU，每个 SKU 经过「标题优化→图片描述生成→合规检查→关键词填写」4 步 SOP，当前用 LangGraph 编排，frontier 模型成本约 $0.15/SKU × 1000 SKU = $150/天</p>
   <div class='sc-footer'><span class='sc-roi'>$150/天 → 约 $0.5–1.2/天（按 128–462× 节省比例）</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Combo-New-Product-Launch-Playbook.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Combo-New-Product-Launch-Playbook.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">16-智能体工程</div>
   <h3 class="sc-title">新品上市全链路 Combo Pattern — 从蓝海选品到首月排名突破的 7 步编排</h3>
   <p class="sc-desc">新品负责人面临&quot;新品上市要协调SEO/合规/图文/广告多个团队流程混乱且各自为战&quot;——7步Skill执行链路将新品从开发到首页排名的时间从3个月压缩至6周，首月GMV提升$2.8万</p>
   <div class='sc-footer'><span class='sc-roi'>1.5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-DAG-Task-Decomposition-Planning.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DAG-Task-Decomposition-Planning.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">16-智能体工程</div>
   <h3 class="sc-title">TDP — DAG 任务解耦规划：82% Token 节省 + 错误隔离</h3>
   <p class="sc-desc">业务场景：Amazon FBA 补货决策，需要综合需求预测、安全库存、MOQ 约束三路计算</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-LMM-Searcher-Multimodal-Context.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GAN-Red-Team-Listing.html" data-domain="16-智能体工程" data-diff="">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">GAN 红队驱动的 Listing 上线前免疫接种 (Adversarial Listing Defense)</h3>
+  <p class="sc-desc">运营团队在爆款上架前始终找不到潜在攻击点——引入生成对抗网络(GAN)红队Agent，以灰色市场攻击者视角自动生成Listing劫持与专利碰瓷模拟，在上架前完成免疫接种，防止爆款上架2周即被恶意跟卖摧毁。</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LMM-Searcher-Multimodal-Context.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">16-智能体工程</div>
   <h3 class="sc-title">LMM-Searcher — 长链多模态 Agent：UID 占位符按需加载图片</h3>
   <p class="sc-desc">运营分析师面临图文资料检索低效——LMM Searcher将检索命中率58%提到86%，年化省13万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-MCP-A2A-Protocol-Stack.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MCP-A2A-Protocol-Stack.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">16-智能体工程</div>
   <h3 class="sc-title">MCP + A2A 双协议栈 — Orchestrated Multi-Agent 企业架构</h3>
   <p class="sc-desc">平台架构师面临Agent对接协议碎片化——MCP A2A Stack将接入周期10天压到2天，年化省22万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-VLM-Ecommerce-Adaptation.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PromptGuard-Injection-Defense.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">PromptGuard — Agent Prompt注入攻击防御</h3>
+  <p class="sc-desc">安全团队面临竞品在评论中植入恶意prompt劫持Agent——PromptGuard将注入攻击拦截率96%，保护知识库Agent安全，年化保护品牌价值100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>690万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VLM-Ecommerce-Adaptation.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">16-智能体工程</div>
   <h3 class="sc-title">VLM E-commerce Adaptation — 大规模视觉语言模型电商适配</h3>
   <p class="sc-desc">电商运营面临视觉判图不准——VLM适配将商品误判率11%降到2%，年化省18万元</p>
   <div class='sc-footer'><span class='sc-roi'>1.6 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-XSkill-Multimodal-Self-Improvement.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-XSkill-Multimodal-Self-Improvement.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">16-智能体工程</div>
   <h3 class="sc-title">XSkill — 多模态 Agent 双流自进化：经验+技能协同积累</h3>
   <p class="sc-desc">业务问题：婴儿奶粉主图审核 Agent 每次处理新品时独立工作，无法积累&quot;什么样的主图点击率高&quot;的视觉经验</p>
   <div class='sc-footer'><span class='sc-roi'>5-10 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AR-Logistics-Visualization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AR-Logistics-Visualization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">18-物流履约</div>
   <h3 class="sc-title">AR Logistics Visualization — 增强现实包裹可视化追踪：跨境物流透明化与客服AI视频答复</h3>
   <p class="sc-desc">业务背景：某母婴品牌黑五期间发货 12,000 件婴儿推车至美国，FBA 舱容紧张，部分走 FBM 直邮，预计清关延误率 23%</p>
   <div class='sc-footer'><span class='sc-roi'>12.7 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Border-Last-Mile-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Last-Mile-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">18-物流履约</div>
   <h3 class="sc-title">Cross-Border Last Mile Routing — 跨境最后一公里路由优化：时效×成本双目标决策</h3>
   <p class="sc-desc">黑五大促FedEx在Zone7-8时效从5天延到9天但运营不知道该切换哪个carrier——多目标路由评分模型实时监测准时率自动切换最优carrier，减少延迟差评率30-50%，年化综合ROI30-80万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Counterfeit-Product-Visual-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Returns-Quality-Grading-Engine.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">退货品质分级引擎 — 计算机视觉驱动的再销售路径决策</h3>
+  <p class="sc-desc">仓储团队面临退货分级人工成本高——CV分级引擎将人工审核减少80%，二次销售率提升至65%，年化增收43万元</p>
+  <div class='sc-footer'><span class='sc-roi'>4万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Counterfeit-Product-Visual-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">假冒商品视觉检测 — 感知哈希批量比对竞品图识别疑似仿品</h3>
   <p class="sc-desc">知识产权团队面临&quot;不知道市面上是否有产品在视觉上仿造自己的外观设计&quot;——感知哈希批量比对将疑似仿品识别效率提升8倍，年化节省维权调查费$2.8万</p>
   <div class='sc-footer'><span class='sc-roi'>2.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Hijacker-Seller-Network-Analysis.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hijacker-Seller-Network-Analysis.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Hijacker Seller Network Analysis — 跟卖卖家网络图谱识别有组织的跟卖集团</h3>
   <p class="sc-desc">品牌方面临&quot;跟卖处理完一个3天后换号再来无法从根源解决&quot;——跟卖集团图谱分析一次性向Amazon举报12人集团，Buy Box损失率从35%降至8%，年化保护GMV 50-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-100 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-IP-Trademark-Brand-Monitoring.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-IP-Trademark-Brand-Monitoring.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">IP Trademark Brand Monitoring — 知识产权主动监控：商标侵权自动检测与预警</h3>
   <p class="sc-desc">竞品上架与我品牌名95%相似的仿冒品抢走流量但人工发现需要数周——多模态IP监控24小时内检测品牌名/Logo/图片侵权并生成证据包，快速举报保护品牌GMV年化避损20-80万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-80 万（以品牌保护为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Supply-Chain-Counterfeit-Detection.html" data-domain="19-风控反欺诈" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Counterfeit-Detection.html" data-domain="19-风控反欺诈" data-diff="">
   <div class="sc-domain">19-风控反欺诈</div>
   <h3 class="sc-title">Supply Chain Counterfeit Detection — 供应链仿冒品检测原材料/包装视觉验真</h3>
   <p class="sc-desc">品控面临&quot;FBA退货中混入包装高度相似的仿冒品难以人工识别&quot;——pHash视觉指纹比对批量核查识别8件仿冒包装，年化避免品质投诉和品牌损失50-100万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-100 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-A-Plus-Content-Template-Engine.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-A-Plus-Content-Template-Engine.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">A+Content模板引擎 — VOC驱动的A+内容自动排版生成</h3>
   <p class="sc-desc">品牌运营面临&quot;A+Content制作外包贵且来回修改周期长&quot;——RAG+模板引擎将A+内容从创意到成稿压缩至2小时，CTR提升12%，年化节省制作费$2.4万</p>
-  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-A-Plus-Content-Video-Embedding.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-A-Plus-Content-Video-Embedding.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-A-Plus-Content-Video-Embedding — A+ 内容视频嵌入转化率优化</h3>
   <p class="sc-desc">运营面临&quot;A+内容无视频导致转化率低&quot;——视频嵌入位置优化将PDP转化率从8%提升至12%，年化增收40万元</p>
   <div class='sc-footer'><span class='sc-roi'>25-35 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Product-Video-Script-Generator.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Product-Video-Script-Generator.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-AI-Product-Video-Script-Generator — AI 母婴产品视频脚本自动生成</h3>
   <p class="sc-desc">内容创作面临&quot;母婴产品视频脚本耗时耗力&quot;——VOC痛点驱动自动生成将视频生产效率提升5倍，月均多产出20条内容</p>
-  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Video-Script-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class='sc-footer'><span class='sc-roi'>2万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Video-Script-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">AI Video Script Generation — 分层 CoT 电商短视频脚本自动生成</h3>
   <p class="sc-desc">TikTok母婴广告运营面临脚本产能瓶颈——分层CoT三阶段脚本引擎（卖点映射→叙事弧→分镜配音）将每条脚本生产从2.5小时压缩至3分钟，A/B测试变体从每周5条扩展到40+条，CTR平均提升15-25%，年化内容制作成本节省12-18万元</p>
   <div class='sc-footer'><span class='sc-roi'>12-18 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）</h3>
   <p class="sc-desc">在 TikTok 美国站推吸奶器，需要大量真人主播演示视频——但海外主播贵（$200-500/条），中文主播语言不通，且更换主播需重新拍摄</p>
   <div class='sc-footer'><span class='sc-roi'>50-100 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Aquarius-Brand-Video-Generation.html" data-domain="20-AI视频生成" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Aquarius-Brand-Video-Generation.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Aquarius — Brand Video Generation（品牌营销视频生成）</h3>
   <p class="sc-desc">母婴品牌需要在美/德/英/日 4 个市场投放品牌视频广告——每个市场需要不同模特、不同语言字幕、不同节日主题（美国感恩节/德国圣诞节/日本新年）</p>
-  <div class='sc-footer'><span class='sc-roi'>80-150 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Brand-Safety-Video-Content-Filter.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Safety-Video-Content-Filter.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-Brand-Safety-Video-Content-Filter — 品牌安全视频内容过滤</h3>
   <p class="sc-desc">品牌负责人面临&quot;UGC内容中出现品牌违规场景&quot;——语义过滤将品牌违规内容识别率从60%提升至95%，年化规避合规风险10起</p>
   <div class='sc-footer'><span class='sc-roi'>10-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Brand-Video-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Video-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Brand Video Generation — AI品牌视频生成：从文本/图像到高保真营销视频的全链路技术</h3>
   <p class="sc-desc">品牌经理面临视频产能跟不上投放——品牌视频生成将产出周期从5天缩到6小时，年化省18万元</p>
   <div class='sc-footer'><span class='sc-roi'>4.5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-BrandFusion-Multi-Agent.html" data-domain="20-AI视频生成" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-BrandFusion-Multi-Agent.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">BrandFusion — Multi-Agent Brand Integration（品牌无缝植入视频）</h3>
   <p class="sc-desc">创意总监面临品牌素材风格不统一——BrandFusion将返工率从24%降到8%，年化省12万元</p>
-  <div class='sc-footer'><span class='sc-roi'>50-80 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Creator-Economy-ROI-Model.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Creator-Economy-ROI-Model.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Creator Economy ROI Model — KOL 分级评估、内容衰减曲线与 GMV 净贡献量化</h3>
   <p class="sc-desc">花 $4000 签大 KOL ROAS 不如 $500 签 10 个微 KOL——Journal of Marketing 2024 田野实验证明 5K-50K 粉丝的垂直微 KOL ROI 高出一个数量级，内容衰减曲线指导最优发帖频率</p>
   <div class='sc-footer'><span class='sc-roi'>50-200 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Market-Content-Localization.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Market-Content-Localization.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">文化感知内容本地化 — 跨市场文化风险识别与自动替换</h3>
   <p class="sc-desc">出海运营面临&quot;进入新市场内容文化风险词不知道有哪些导致差评&quot;——文化知识图谱LLM风险检测将上架前文化误区发现率提升至98%，避免封号损失</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Platform-Video-Repurposing.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Platform-Video-Repurposing.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-Cross-Platform-Video-Repurposing — 跨平台视频内容复用适配</h3>
   <p class="sc-desc">运营面临&quot;TikTok视频无法直接用于其他平台&quot;——自动适配将跨平台发布效率提升8倍，单内容触达用户数增加300%</p>
   <div class='sc-footer'><span class='sc-roi'>20-35 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-DAWN-Talking-Head-Review.html" data-domain="20-AI视频生成" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DAWN-Talking-Head-Review.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">DAWN — Talking-Head Review Video（AI口播Review视频）</h3>
   <p class="sc-desc">审核主管面临口播视频不合规——DAWN审核将下架率从9%降到1%，年化省10万元</p>
   <div class='sc-footer'><span class='sc-roi'>30-60 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Diffusion-Model-Product-Image.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Diffusion-Model-Product-Image.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Diffusion Model Product Image Generation — 扩散模型产品图生成：AI 主图替代专业摄影</h3>
   <p class="sc-desc">新款吸奶器需要12张产品图专业摄影报价2400美元等7天——Stable Diffusion ControlNet基于一张真实产品照片2小时生成50张候选图，成本降低90%大促前快速迭代年化节省20-50万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-E-Commerce-Video-Benchmark.html" data-domain="20-AI视频生成" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-E-Commerce-Video-Benchmark.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">E-Commerce Video Benchmark（电商视频质量评估基准）</h3>
   <p class="sc-desc">内容运营面临爆款视频标准不清——视频基准将完播率提14%，年化增收16万元</p>
-  
-</a><a class="card skill-card" href="../skills/Skill-Live-Commerce-Stream-Algorithm.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Live-Commerce-Stream-Algorithm.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Live Commerce Stream Algorithm — 直播电商算法建模与互动信号优化</h3>
   <p class="sc-desc">直播开播前 15 分钟是算法分流关键期，团队不知道该做什么来提升在线人数增速和加购率进入大流量池——针对算法决定期的预热策略将平均在线人数峰值提升 3-5 倍，场均 GMV 从 1 万增至 3-8 万元</p>
   <div class='sc-footer'><span class='sc-roi'>100-500 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Live-Stream-Highlight-Extraction.html" data-domain="20-AI视频生成" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Live-Stream-Highlight-Extraction.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Live-Stream-Highlight-Extraction — 直播高光片段自动提取与二次传播内容生产</h3>
   <p class="sc-desc">内容团队面临&quot;3小时直播素材无法快速转为短视频&quot;——互动峰值自动提取将剪辑工时从6h缩短至5分钟，二次发布带来额外GMV贡献15-20%</p>
   
-</a><a class="card skill-card" href="../skills/Skill-Multilingual-Listing-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-Listing-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">LLM多语言Listing批量生成 — 1小时完成5语言新品入驻</h3>
   <p class="sc-desc">跨境运营面临&quot;新品进入德国日本市场人工翻译需2周且成本高&quot;——LLM Few-shot多语言生成将5语言Listing制作从14天压缩至1小时，单SKU节省$1,200</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multilingual-Live-Virtual-Anchor-Clone.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐⭐">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-Live-Virtual-Anchor-Clone.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐⭐">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">多语言直播虚拟主播实时克隆 — 跨语言直播带货数字人生成与实时驱动</h3>
   <p class="sc-desc">美国TikTok Shop黄金时段（本地晚7-10点）无法派驻中国主播——多语言数字人实现24/7英语直播，月运营成本$800替代$5000真人主播，月GMV增加$1.5-3万</p>
   <div class='sc-footer'><span class='sc-roi'>1.5-3万</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multilingual-Subtitle-Auto-Generator.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-Subtitle-Auto-Generator.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-Multilingual-Subtitle-Auto-Generator — 多语言字幕自动生成</h3>
   <p class="sc-desc">内容团队面临&quot;多市场字幕翻译周期长成本高&quot;——AI自动生成将字幕制作时间从3天缩短至30分钟，年化节省翻译费20万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Phantom-Product-Showcase-I2V.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Phantom-Product-Showcase-I2V.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Phantom — Product Showcase I2V（商品主体一致性视频生成）</h3>
   <p class="sc-desc">商品运营面临静图卖点展示弱——I2V将详情页停留时长从45秒提到72秒，年化增收20万元</p>
   <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Product-3D-Visualization-AR-Preview.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-3D-Visualization-AR-Preview.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Product-3D-Visualization-AR-Preview — 产品 3D 可视化与 AR 预览降低退货率</h3>
   <p class="sc-desc">运营面临&quot;大件母婴产品退货率高因尺寸感知偏差&quot;——AR预览将退货率从18%降至9%，年化节省退货处理成本约$67,500</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Product-Background-Scene-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Background-Scene-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">SD+ControlNet商品场景图生成 — 白底转场景化主图的AI摄影替代</h3>
   <p class="sc-desc">摄影预算有限的卖家面临&quot;每个SKU拍多场景图成本极高&quot;——SD Inpainting+ControlNet将场景化主图成本从$200/SKU降至$8/SKU，年化节省$28.8万</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Product-Image-Quality-Assessment.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Image-Quality-Assessment.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">CLIP商品主图质量评分 — 上新门控自动化评估引擎</h3>
   <p class="sc-desc">运营团队面临&quot;主图质量良莠不齐上架前无法快速筛选&quot;——CLIP多维评分将低质主图拦截率提升至92%，每月避免因主图差导致的CTR损失折合$3,600</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Product-Unboxing-Video-Generator.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Unboxing-Video-Generator.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-Product-Unboxing-Video-Generator — AI 产品开箱视频合成</h3>
   <p class="sc-desc">运营面临&quot;开箱视频制作需要专业拍摄团队&quot;——AI合成将开箱视频产出成本降低80%，月均多产出15条SKU级内容</p>
   <div class='sc-footer'><span class='sc-roi'>15-25 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Shoppable-Video-CTA-Optimizer.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Shoppable-Video-CTA-Optimizer.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-Shoppable-Video-CTA-Optimizer — 可购物视频 CTA 时机与文案优化</h3>
   <p class="sc-desc">运营面临&quot;视频CTA点击率低带货效果差&quot;——最优呼吁时机预测将视频带货转化率从1.2%提升至2.8%，年化增收60万元</p>
   <div class='sc-footer'><span class='sc-roi'>10-20 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Text-to-Edit-Video-Ad.html" data-domain="20-AI视频生成" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Text-to-Edit-Video-Ad.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
-  <h3 class="sc-title">Text-to-Edit — Video Ad Auto-Editing（MLLM广告自动剪辑）</h3>
+  <h3 class="sc-title">Skill Card: Text-to-Edit — MLLM母婴视频广告智能剪辑</h3>
   <p class="sc-desc">运营提交&quot;把产品视频第 5-8 秒换成使用场景&quot;的需求，人工剪辑需 2 天、外包成本 $500+——Text-to-Edit 视频编辑将自然语言指令直接执行，从&quot;需求到成品&quot;缩短到 10 分钟，广告素材迭代成本降低 90%</p>
   
-</a><a class="card skill-card" href="../skills/Skill-TikTok-Algorithm-Content-Boost.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Algorithm-Content-Boost.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">TikTok Algorithm Content Boost — FYP 算法建模与内容传播速度优化</h3>
   <p class="sc-desc">TikTok 视频完播率只有 35% 导致流量熔断、每条视频曝光不足 500——FYP 信号评分模型精确诊断卡点，完播率优化到 70% 后进入扩大测试池，曝光提升 20×</p>
   <div class='sc-footer'><span class='sc-roi'>50-150 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TikTok-Content-Lifecycle-Analytics.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Content-Lifecycle-Analytics.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">TikTok内容生命周期分析 — 指数衰减建模与二次投流最佳时机</h3>
   <p class="sc-desc">内容运营面临&quot;视频发出去不知道什么时候二次推流效果最好错过流量窗口&quot;——指数衰减模型+二次上升信号识别将视频总播放量提升2.3倍，年化节省$3.6万</p>
   <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-TikTok-Hook-Optimizer.html" data-domain="20-AI视频生成" data-diff="⭐☆☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Hook-Optimizer.html" data-domain="20-AI视频生成" data-diff="⭐☆☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-TikTok-Hook-Optimizer — TikTok 开头钩子前3秒留存预测</h3>
   <p class="sc-desc">内容创作面临&quot;短视频前3秒流失率高算法不推流&quot;——留存率预测模型将完播率从28%提升至45%，自然流量增加2倍</p>
   <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Video-ROI-Attribution.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Video-ROI-Attribution.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Video ROI Attribution — 短视频内容 GMV 归因与财务 ROI 量化</h3>
   <p class="sc-desc">视频创作团队和 CFO 说不同语言——VEI 指数将完播率/互动率转化为归因 GMV 和净利润贡献，预算效率提升 40-60%，视频团队获得财务话语权</p>
   <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Video-Sentiment-Analysis-VOC.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Video-Sentiment-Analysis-VOC.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-Video-Sentiment-Analysis-VOC — 视频弹幕/评论情感实时监控</h3>
   <p class="sc-desc">运营面临&quot;直播/短视频评论情感趋势无法实时监控&quot;——实时情感监控将负面舆情响应时间从24h缩短至2h，年化减少危机处理成本15万元</p>
   <div class='sc-footer'><span class='sc-roi'>5-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Virbo-Multilingual-Avatar-UGC.html" data-domain="20-AI视频生成" data-diff="">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Virbo-Multilingual-Avatar-UGC.html" data-domain="20-AI视频生成" data-diff="">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</h3>
   <p class="sc-desc">月省 $3,000-5,000，年化 35-60 万元</p>
   <div class='sc-footer'><span class='sc-roi'>35-60 万元</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Virtual-Influencer-Baby-Demo.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Virtual-Influencer-Baby-Demo.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Skill-Virtual-Influencer-Baby-Demo — 虚拟 KOL 母婴演示视频生成</h3>
   <p class="sc-desc">内容团队面临&quot;真人KOL拍摄成本高周期长&quot;——AI虚拟宝妈演示将内容生产成本降低70%，ROI从1.5x提升至4x</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Visual-Data-Collection.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Visual-Data-Collection.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">20-AI视频生成</div>
   <h3 class="sc-title">Visual Data Collection — 电商图文视频数据采集与 AI 视频生成素材库构建</h3>
   <p class="sc-desc">研究助理面临图片标注采集慢——视觉采集将标注工时降55%，年化省9万元</p>
   <div class='sc-footer'><span class='sc-roi'>380 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Compliance-Violation-Auto-Escalation.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Compliance-Violation-Auto-Escalation.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">21-合规决策</div>
   <h3 class="sc-title">Compliance-Violation-Auto-Escalation — 平台合规警告按严重程度自动分级升级响应</h3>
   <p class="sc-desc">合规负责人面临&quot;平台警告响应不及时导致升级为封号&quot;——按P0/P1/P2自动分级响应将合规警告处理时效从48h缩短至4h，年化避免封号损失100万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Document-Intelligence-Parsing.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Document-Intelligence-Parsing.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">22-数据采集工程</div>
   <h3 class="sc-title">Document Intelligence Parsing — LLM 驱动的文档智能解析：图文统一 OCR、跨页表格恢复、布局感知推理</h3>
   <p class="sc-desc">每季度收到 20 家供应商 PDF 报价单，人工录入 SKU/价格/MOQ 需 3-4 天且错误率 8%——Layout-aware LLM 解析实现 PDF→结构化数据全自动，人工录入工时归零，错误率降至 1% 以下</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Multimodal-UGC-Cross-Platform-Fusion.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-UGC-Cross-Platform-Fusion.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">22-数据采集工程</div>
   <h3 class="sc-title">跨平台UGC多模态融合采集 — 图文视频评论统一信号采集与去噪</h3>
   <p class="sc-desc">品牌质量问题在TikTok已爆发而Amazon评分仍正常——跨平台多模态UGC融合将质量预警提前6周，保护年销$500万SKU避免$50-80万评分下滑损失</p>
   <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Product-Attribute-Completion.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Attribute-Completion.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">22-数据采集工程</div>
   <h3 class="sc-title">Product Attribute Completion — 商品属性自动补全：AI 填补 Listing 属性空白</h3>
   <p class="sc-desc">新款吸奶器需要填写42个属性字段人工填写1.5小时但30-40%属性空白导致搜索排名下降——AI从标题/要点/图片自动提取属性值5分钟完成，属性完整度60%提升到90%搜索曝光增加20-35%年化15-40万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-SKU-Master-Data-Golden-Record.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Web-Page-Change-Detection.html" data-domain="22-数据采集工程" data-diff="">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Web Page Change Detection — 网页变化检测：VLM 视觉差异识别与 DOM 原子性保护</h3>
+  <p class="sc-desc">母婴跨境电商应用：仅在竞品价格/库存/图片发生变化时触发全量抓取，减少 70% 无效爬取</p>
+  <div class='sc-footer'><span class='sc-roi'>2.58 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Real-Time-Supply-Chain-Drift-Detection.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链信号漂移实时检测 — 从概念漂移到Tag失效预警的在线检测体系</h3>
+  <p class="sc-desc">数据团队面临&quot;模型准确率悄悄下降但无法感知&quot;——流式漂移检测将数据质量问题发现从月度审计→5分钟实时预警，防止错误预测导致的断货超卖</p>
+  <div class='sc-footer'><span class='sc-roi'>2-8万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SKU-Master-Data-Golden-Record.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
   <div class="sc-domain">24-标签工程</div>
   <h3 class="sc-title">SKU主数据黄金记录治理 — MDM体系、主键统一与多源冲突消解</h3>
   <p class="sc-desc">运营面临&quot;Amazon/Shopify/TikTok/ERP四套SKU编码跨渠道数据孤岛&quot;——MDM黄金记录将跨渠道库存准确率从74%提升至99%，新品上市从3天降至4小时</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Tag-Driven-Marketing-Attribution.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tag-Driven-Marketing-Attribution.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">24-标签工程</div>
   <h3 class="sc-title">Tag-Driven Marketing Attribution — 营销渠道标签驱动MMM三维归因</h3>
   <p class="sc-desc">营销分析师面临&quot;MMM归因只能到渠道级无法细分到内容类型和标签维度&quot;——标签作为MMM控制变量将归因粒度从渠道级升级至标签-渠道-内容三维，年化归因准确度提升33万元</p>
   <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Listing-Conversion-Rate-Optimizer.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tag-Video-Commerce-Tagging.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">视频商品标签化 — AI驱动的短视频商品识别与自动标签体系</h3>
+  <p class="sc-desc">视频电商团队面临&quot;每天50个达人视频需手工4小时识别商品并关联SKU&quot;——多模态LLM自动标签化准确率88%节省75%人工，新增购物链接驱动年化GMV增量约50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Conversion-Rate-Optimizer.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">25-搜索流量工程</div>
   <h3 class="sc-title">Skill-Listing-Conversion-Rate-Optimizer — Listing 转化率 A/B 测试优化器</h3>
   <p class="sc-desc">运营面临&quot;Listing转化率远低于品类均值&quot;——A/B测试驱动迭代将CVR从6.8%提升至9.5%，年化增收50万元</p>
@@ -500,7 +608,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -515,6 +623,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

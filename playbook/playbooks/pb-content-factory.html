@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>AI 内容工厂手册 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,14 +36,28 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / AI 内容工厂手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>TC</span>
+  <span class='pb-icon'><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h16M3 9h12M3 13h8"/><path d="M15 14l3.5 3.5-1.5 1.5L13.5 15.5"/><circle cx="18" cy="12" r="3.5"/></svg></span>
   <div>
     <h1>AI 内容工厂手册</h1>
     <p class='lead'>从人工内容团队到 AI 批量生产的 4 步迁移路线图，部分能力今日可用，视频生成接入中</p>
@@ -42,6 +67,10 @@
 
 <div class='pb-intro'>内容工厂的核心矛盾：进入德国、日本市场需要本地化内容，但人工方案每条视频 $2000+、周期 3-4 周、语言门槛高。今天大多数团队的做法是：先只做英语，等「资源够了」再做多语言——结果是永远没有足够资源，非英语市场的转化率长期低 25-35%。本手册提供分步落地路径：Step 1/3/4 今天就能带来 ROI，Step 2（视频生成）接入中，逐步释放内容产能 5-10 倍。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] Step 1+3+4 今天就能带来 ROI，Step 2 是未来的乘数</li><li>[OK] 本地化视频成本降低 80%，生产周期 3 周 → 3 天（Step 2 接入后）</li><li>[OK] 内容创作从「靠感觉迭代」升级为「数据驱动选题」</li><li>[OK] 素材库规模 10x，多语言市场同步覆盖</li></ul></div>
+<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+  <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-content-factory">0</strong> / 4 步</span>
+  <button onclick="pbShareFeishu('pb-content-factory','AI 内容工厂手册',4)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
+</div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
@@ -99,7 +128,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 2 【实验接入中】AI 批量内容生成</h3>
     <p class='pb-problem'>进入德/日/韩市场需要本地化视频，人工方案成本 $2000+/条、周期 3-4 周</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html' class='pb-skill-name'>AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>50-100 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 虚拟主播带货视频生成，HOI 交互保持商品真实感（ROI 50-100万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DAWN-Talking-Head-Review.html' class='pb-skill-name'>DAWN — Talking-Head Review Video（AI口播Review视频）</a><div class='pb-skill-badges'><span class='roi-badge'>30-60 万元</span></div></div><p class='pb-skill-why'>→ AI 口播 Review 视频，批量生成不同语言/形象的真人测评风格（ROI 30-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Virbo-Multilingual-Avatar-UGC.html' class='pb-skill-name'>Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</a><div class='pb-skill-badges'><span class='roi-badge'>35-60 万元</span></div></div><p class='pb-skill-why'>→ 多语言虚拟人 UGC 批量生产，100+ 语言 TTS + 对口型（ROI 35-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html' class='pb-skill-name'>Aquarius — Brand Video Generation（品牌营销视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>80-150 万元</span></div></div><p class='pb-skill-why'>→ 品牌营销视频生成，2B 参数模型，多主题批量（ROI 80-150万）— 实验接入中</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html' class='pb-skill-name'>AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>50-100 万元</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 虚拟主播带货视频生成，HOI 交互保持商品真实感（ROI 50-100万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DAWN-Talking-Head-Review.html' class='pb-skill-name'>DAWN — Talking-Head Review Video（AI口播Review视频）</a><div class='pb-skill-badges'><span class='roi-badge'>30-60 万元</span></div></div><p class='pb-skill-why'>→ AI 口播 Review 视频，批量生成不同语言/形象的真人测评风格（ROI 30-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Virbo-Multilingual-Avatar-UGC.html' class='pb-skill-name'>Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）</a><div class='pb-skill-badges'><span class='roi-badge'>35-60 万元</span></div></div><p class='pb-skill-why'>→ 多语言虚拟人 UGC 批量生产，100+ 语言 TTS + 对口型（ROI 35-60万）— 实验接入中</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html' class='pb-skill-name'>Aquarius — Brand Video Generation（品牌营销视频生成）</a><div class='pb-skill-badges'><span class='roi-badge'>5 万元</span></div></div><p class='pb-skill-why'>→ 品牌营销视频生成，2B 参数模型，多主题批量（ROI 80-150万）— 实验接入中</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：品牌素材包（Logo/色调/产品图）、脚本模板、目标语言列表</div>
     <div class="pb-output"><strong>输出结果：</strong>批量本地化营销视频（预计 Q3 完整上线）</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -150,7 +179,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 3 【今日可用】内容质量评估</h3>
     <p class='pb-problem'>AI 生成视频质量参差不齐，商品保真度和品牌一致性无客观评分标准</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-E-Commerce-Video-Benchmark.html' class='pb-skill-name'>E-Commerce Video Benchmark（电商视频质量评估基准）</a><div class='pb-skill-badges'></div></div><p class='pb-skill-why'>→ 电商域专用 Benchmark，PCF/LTP/MN 三维度量化评估，驱动工具选型与质检 SOP</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Creative-Fatigue-Detection.html' class='pb-skill-name'>Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 素材疲劳生命周期监测，生存分析识别 CTR/CVR 衰减，触发素材更新信号</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-E-Commerce-Video-Benchmark.html' class='pb-skill-name'>E-Commerce Video Benchmark（电商视频质量评估基准）</a><div class='pb-skill-badges'><span class='roi-badge'>5 万元</span></div></div><p class='pb-skill-why'>→ 电商域专用 Benchmark，PCF/LTP/MN 三维度量化评估，驱动工具选型与质检 SOP</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Creative-Fatigue-Detection.html' class='pb-skill-name'>Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</a><div class='pb-skill-badges'><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 素材疲劳生命周期监测，生存分析识别 CTR/CVR 衰减，触发素材更新信号</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：已生成视频文件、历史广告表现数据</div>
     <div class="pb-output"><strong>输出结果：</strong>视频质量评分报告 + 素材更换优先级</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -269,7 +298,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -284,6 +313,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

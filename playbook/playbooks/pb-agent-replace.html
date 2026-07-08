@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>AI Agent 替人手册 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,14 +36,28 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / AI Agent 替人手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>AI</span>
+  <span class='pb-icon'><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="12" height="10" rx="2"/><path d="M9 9h4M9 12h2"/><path d="M8 14v2l-2 2h10l-2-2v-2"/><circle cx="9.5" cy="7.5" r=".8" fill="currentColor" stroke="none"/><circle cx="12.5" cy="7.5" r=".8" fill="currentColor" stroke="none"/></svg></span>
   <div>
     <h1>AI Agent 替人手册</h1>
     <p class='lead'>三类岗位的核心重复性工作，逐步交给 AI Agent 执行，释放人力专注高价值决策</p>
@@ -42,13 +67,17 @@
 
 <div class='pb-intro'>AI 替代的不是岗位，是岗位里的「重复性决策」——每天都要做、做法固定、但规模超出人力上限的那部分。今天的现状是：供应链负责人每月花 2-3 天纯人工对账三层 Excel（SKU→仓库→市场），数据分析师 80% 时间在取数而非分析，客服团队因无法覆盖德语/日语工单导致旺季 Buy Box 丢失 35%。这三条业务线加起来消耗了 5-8 名运营人员的大量精力，但仍然有盲区、有滞后、有错误。本手册从供应链出发，提供三条独立的替代路径，每条路径都可以单独落地，合计年化 ROI 可达 2000 万+。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 供应链人工对账工作量从 2-3 天/月 → 接近零</li><li>[OK] 数据分析提数响应从 2-3 天 → 5 分钟</li><li>[OK] 广告无关消耗从 18% → 3.2%，冷启动 ROAS +15-30%</li><li>[OK] 三类岗位重复性工作 Agent 覆盖率 &gt; 70%，人力聚焦高价值决策</li></ul></div>
+<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+  <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-agent-replace">0</strong> / 3 步</span>
+  <button onclick="pbShareFeishu('pb-agent-replace','AI Agent 替人手册',3)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
+</div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Chapter 1：供应链全链路 Agent（主角）</h3>
     <p class='pb-problem'>15 个 Excel 联动地狱：SKU×仓库×市场三层预测加总不一致，月底 2-3 天纯人工对账；大促定价和补货是两个团队各自决策，无法实时联动</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html' class='pb-skill-name'>HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</a><div class='pb-skill-badges'><span class='roi-badge'>800-1500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 分层预测调和，数学保证 SKU→仓库→市场三层一致，月底对账人力清零（ROI 800-1500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Event-Driven-Demand-MAS.html' class='pb-skill-name'>Event-Driven Demand MAS — 事件感知补货 MAS：大促/季节自动触发</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 事件感知补货 MAS：大促信号触发自动备货，告别「排期跑批已来不及」（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FSDA-DRL.html' class='pb-skill-name'>FSDA-DRL 快慢双智能体动态定价与补货联合优化</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 快慢双 Agent 联动定价与补货：大促全周期利润最优，替代供应链+运营协调会（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html' class='pb-skill-name'>Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</a><div class='pb-skill-badges'><span class='roi-badge'>200-500 万/年</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 海运延误动态安全库存：苏伊士/巴拿马运河异常时自动预警并提前采购（ROI 200-500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html' class='pb-skill-name'>Multi-Channel Inventory Pooling（多渠道库存池化）</a><div class='pb-skill-badges'><span class='roi-badge'>200-400 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨渠道动态调拨：Amazon缺货+独立站积压同时存在时自动平衡（ROI 200-400万）</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html' class='pb-skill-name'>HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</a><div class='pb-skill-badges'><span class='roi-badge'>800-1500 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 分层预测调和，数学保证 SKU→仓库→市场三层一致，月底对账人力清零（ROI 800-1500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Event-Driven-Demand-MAS.html' class='pb-skill-name'>Event-Driven Demand MAS — 事件感知补货 MAS：大促/季节自动触发</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 事件感知补货 MAS：大促信号触发自动备货，告别「排期跑批已来不及」（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-FSDA-DRL.html' class='pb-skill-name'>FSDA-DRL 快慢双智能体动态定价与补货联合优化</a><div class='pb-skill-badges'><span class='roi-badge'>5000 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 快慢双 Agent 联动定价与补货：大促全周期利润最优，替代供应链+运营协调会（ROI 5000万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html' class='pb-skill-name'>Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</a><div class='pb-skill-badges'><span class='roi-badge'>200-500 万/年</span><span class='diff-badge'>⭐⭐⭐⭐☆</span></div></div><p class='pb-skill-why'>→ 海运延误动态安全库存：苏伊士/巴拿马运河异常时自动预警并提前采购（ROI 200-500万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Multi-Channel-Inventory-Pooling.html' class='pb-skill-name'>Multi-Channel Inventory Pooling（多渠道库存池化）</a><div class='pb-skill-badges'><span class='roi-badge'>45 万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 跨渠道动态调拨：Amazon缺货+独立站积压同时存在时自动平衡（ROI 200-400万）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：60天+销售历史、多仓库存快照、大促日历、供应商交货记录</div>
     <div class="pb-output"><strong>输出结果：</strong>自动化补货计划 + 大促定价策略 + 海运风险预警 + 跨渠道调拨指令</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -99,7 +128,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Chapter 2：数据分析师 Agent</h3>
     <p class='pb-problem'>提数需求排期 2-3 天，分析师 80% 时间在取数不在分析；GMV 异常时人工排查根因需要 1-2 小时，节假日无人监控</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html' class='pb-skill-name'>Text-to-SQL Agent for Natural Language Data Query</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 自然语言→SQL：业务同学直接用中文查数据库，消灭 BI 提数排期</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-NL2Dashboard-Automation.html' class='pb-skill-name'>NL2Dashboard Automation（自然语言→仪表盘）</a><div class='pb-skill-badges'><span class='roi-badge'>节省 BI 开发人力</span></div></div><p class='pb-skill-why'>→ 自然语言→仪表盘自动生成，运营自助分析，节省 BI 开发人力</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html' class='pb-skill-name'>DeepAnalyze — 自主数据科学Agent</a><div class='pb-skill-badges'><span class='roi-badge'>20万</span></div></div><p class='pb-skill-why'>→ 自主数据科学 Agent：多平台数据周报 4-6 小时人工 → 5 分钟 Agent 自动生成（ROI 20万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-ProRCA-Business-Analysis.html' class='pb-skill-name'>ProRCA — 因果图路径溯源根因分析</a><div class='pb-skill-badges'><span class='roi-badge'>100 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 因果图根因分析：GMV 暴跌 1-2 小时人工排查 → 0.5 秒锁定根因路径（ROI 100万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-CAR-Agent-Causal-Shapley.html' class='pb-skill-name'>CAR — Agent步骤因果Shapley归因：多步交互效应定量拆解</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ Agent 步骤因果 Shapley 归因：当 Agent 系统决策失效时，通过结构因果模型精确定位哪步贡献最大，MTTR 从 3 天降至 0.5 天（ROI 50-150万）</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html' class='pb-skill-name'>Text-to-SQL Agent for Natural Language Data Query</a><div class='pb-skill-badges'><span class='roi-badge'>5万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 自然语言→SQL：业务同学直接用中文查数据库，消灭 BI 提数排期</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-NL2Dashboard-Automation.html' class='pb-skill-name'>NL2Dashboard Automation（自然语言→智能仪表盘）</a><div class='pb-skill-badges'><span class='roi-badge'>18-30万元</span><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ 自然语言→仪表盘自动生成，运营自助分析，节省 BI 开发人力</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html' class='pb-skill-name'>DeepAnalyze — 自主数据科学Agent</a><div class='pb-skill-badges'><span class='roi-badge'>20万</span></div></div><p class='pb-skill-why'>→ 自主数据科学 Agent：多平台数据周报 4-6 小时人工 → 5 分钟 Agent 自动生成（ROI 20万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-ProRCA-Business-Analysis.html' class='pb-skill-name'>ProRCA — 因果图路径溯源根因分析</a><div class='pb-skill-badges'><span class='roi-badge'>100 万</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 因果图根因分析：GMV 暴跌 1-2 小时人工排查 → 0.5 秒锁定根因路径（ROI 100万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-CAR-Agent-Causal-Shapley.html' class='pb-skill-name'>CAR — Agent步骤因果Shapley归因：多步交互效应定量拆解</a><div class='pb-skill-badges'><span class='diff-badge'>⭐⭐⭐☆☆</span></div></div><p class='pb-skill-why'>→ Agent 步骤因果 Shapley 归因：当 Agent 系统决策失效时，通过结构因果模型精确定位哪步贡献最大，MTTR 从 3 天降至 0.5 天（ROI 50-150万）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：数据仓库连接权限、历史报表模板、异常阈值定义、Agent 执行轨迹日志</div>
     <div class="pb-output"><strong>输出结果：</strong>自助查询接口 + 自动周报 + 实时异常根因诊断 + Agent 决策因果归因报告</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -466,7 +495,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -481,6 +510,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

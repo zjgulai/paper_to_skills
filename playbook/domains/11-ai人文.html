@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>11-AI人文 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content"><h1>11-AI人文</h1><p>AI × Humanities: cross-modal transfer, LoRA</p>
@@ -83,111 +108,181 @@
   });
   document.addEventListener('DOMContentLoaded',applyPage);
 })();
-</script><div class='cards'><a class="card skill-card" href="../skills/Skill-AI-Algorithmic-Bias-Audit.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Algorithmic-Bias-Audit.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI Algorithmic Bias Audit — AI 算法偏见审计：跨境电商推荐公平性检测</h3>
   <p class="sc-desc">品牌向欧洲市场扩张时推荐系统对德国vs法国用户存在系统性差异可能违反EU AI Act——因果公平性审计框架检测算法偏见并生成合规文档，避免最高30M美元罚款同时提升欧洲市场CVR5-10%</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-200 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Brand-Storytelling.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Brand-Storytelling.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI Brand Storytelling — AI 辅助品牌故事创作：情感连接与文化适应</h3>
   <p class="sc-desc">品牌经理面临卖点讲不透——品牌叙事将点击率从2.1%提到3.4%，年化增收18万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Consumer-Wellbeing-Ethics.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Carbon-Footprint-Optimizer.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">母婴出海AI碳足迹优化器 — 绿色供应链的能耗与排放量化</h3>
+  <p class="sc-desc">技术团队面临AI系统碳排放无法量化——碳足迹优化器将推理能耗降低35%，年化减碳120吨CO2eq，ESG评级提升至B+</p>
+  <div class='sc-footer'><span class='sc-roi'>19.2万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Consumer-Wellbeing-Ethics.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI Consumer Wellbeing Ethics — 消费者福祉与 AI 伦理：母婴场景</h3>
   <p class="sc-desc">合规负责人面临内容伤害用户信任——伦理筛查将投诉率从6%降到1%，年化省10万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Ethics-Fairness-Audit.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Content-Marketing-Growth.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI内容营销增长 — AIGC驱动的内容→用户增长因果链路</h3>
+  <p class="sc-desc">内容团队面临&quot;人工撰写内容每月仅20篇无法覆盖5000+母婴关键词&quot;——AIGC内容矩阵每月产出200篇成本仅12元/篇，年化内容营销ROI约7倍</p>
+  <div class='sc-footer'><span class='sc-roi'>240万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Ethics-Fairness-Audit.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI 公平性审计 — 推荐/定价/广告系统偏差溯源与修复</h3>
   <p class="sc-desc">合规负责人面临&quot;AI推荐系统是否对不同用户群体存在隐性歧视无法验证&quot;——DP/EO公平性指标审计将算法偏差识别率提升至96%，提前规避FTC监管风险</p>
   <div class='sc-footer'><span class='sc-roi'>50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Explainability-Consumer-Trust.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Explainability-Consumer-Trust.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI Explainability for Consumer Trust — AI 推荐可解释性：消费者信任构建</h3>
   <p class="sc-desc">产品经理面临推荐黑盒引发质疑——可解释性将拒单率降20%，年化增收12万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Fake-Review-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Fake-Review-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI Fake Review Detection — 多模态虚假评论检测与可解释风控</h3>
   <p class="sc-desc">母婴跨境卖家竞品批量刷好评、自品被刷 AI 差评难以举报——多模态 BERT+ResNet-50 虚假评论检测器准确率 93%+，SHAP 触发词证据报告将差评举报成功率从 30% 提升至 65%，年化保护 GMV 损失 5-30 万元</p>
   <div class='sc-footer'><span class='sc-roi'>1-5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Generated-Content-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Generated-Content-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI 生成内容检测 — Perplexity/Burstiness 统计特征分类器</h3>
   <p class="sc-desc">运营面临&quot;平台刷AI生成虚假Review干扰选品决策和评分&quot;——Perplexity/Burstiness统计检测将AI生成Review识别准确率提升至89%，无需付费API</p>
   <div class='sc-footer'><span class='sc-roi'>50-200 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Generated-Content-Watermarking.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Generated-Content-Watermarking.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AIGC数字水印与内容溯源 — DCT不可见水印嵌入与版权追踪</h3>
   <p class="sc-desc">品牌运营面临&quot;原创产品主图被竞品搬运、版权举证成功率仅40%&quot;——DCT数字水印将侵权举证成功率从40%提升至92%，年化保护品牌资产价值50万元</p>
   <div class='sc-footer'><span class='sc-roi'>50-80 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Humanities-Healing-Cards.html" data-domain="11-AI人文" data-diff="⭐☆☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Humanities-Healing-Cards.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
-  <h3 class="sc-title">AI技术概念 × 疗愈哲理金句卡片库</h3>
+  <h3 class="sc-title">AI情感陪伴 × 母婴育儿焦虑缓解决策卡片库</h3>
   <p class="sc-desc">场景：跨境创业者/运营人员面对不确定性时，用 AI 技术的哲理类比获得心理支持与灵感</p>
-  <div class='sc-footer'><span class='sc-diff'>⭐☆☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AI-Transparency-Explanation.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class='sc-footer'><span class='sc-roi'>28 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Social-Impact-Measurement.html" data-domain="11-AI人文" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI Social Impact Measurement</h3>
+  <p class="sc-desc">AI团队面临无法量化算法对就业/公平影响——社会影响量化框架将合规风险识别率提升至92%，规避监管处罚风险年化价值80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-6万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Transparency-Explanation.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AI决策透明度与可解释性 — LIME/SHAP合规说明生成</h3>
   <p class="sc-desc">合规运营面临&quot;推荐和定价算法缺乏可解释性、EU AI Act高风险系统合规审查无法通过&quot;——SHAP解释引擎将算法决策透明度达标，解锁欧盟市场准入资格</p>
   <div class='sc-footer'><span class='sc-roi'>2 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AIGC-Authenticity-Trust-Framework.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Authenticity-Trust-Framework.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AIGC Authenticity Trust Framework — 图文双轨 AIGC 真实性检测与消费者信任管理</h3>
   <p class="sc-desc">母婴卖家大量使用 AI 生图/文案后不知是否触发平台检测或被消费者察觉，信任危机导致评分骤降——双轨真实性检测（图像 Patch 不连续性 + 文本 TTR/重复率）预先标记高风险内容，避免上架后信任危机导致年化 50-200 万元 GMV 损失</p>
   <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AIGC-Content-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Content-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AIGC Content Detection — AI生成内容鉴别：母婴评论真实性保护</h3>
   <p class="sc-desc">内容审核员面临AI稿混入人工库——AIGC检测将误放率从15%降到2%，年化省9万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-AIGC-Revenue-Attribution.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Copyright-Revenue-Sharing.html" data-domain="11-AI人文" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AIGC版权分配 — AI生成内容的创作者收益模型</h3>
+  <p class="sc-desc">内容团队面临AI生成素材版权归属不清——Shapley分配框架实现95%版权溯源准确率，KOL合作纠纷减少80%</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Revenue-Attribution.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">AIGC Revenue Attribution — AI内容生成 ROI 财务归因：从内容投入到 GMV 的量化路径</h3>
   <p class="sc-desc">品牌每月花2000美元请摄影师但不知道AI图片50美元能否替代——DiD+A/B双轨归因量化AIGC内容对GMV的真实贡献，验证AI图CVR差距若小于5%可全面替换年化节省内容成本17万元以上</p>
   <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Algorithmic-Fairness-in-Pricing.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Affective-Computing-Maternal-Anxiety.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">情感计算×母婴焦虑 — 多模态情绪识别与干预</h3>
+  <p class="sc-desc">运营面临母婴APP用户流失率高——情感计算引擎将焦虑用户识别准确率提升至89%，干预后留存率+18%，年化LTV增加42万元</p>
+  <div class='sc-footer'><span class='sc-roi'>700万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Algorithmic-Fairness-in-Pricing.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">算法定价公平性审计 — 群体公平指标与价格歧视检测</h3>
   <p class="sc-desc">合规运营面临&quot;动态定价算法存在隐性歧视风险、EU AI Act合规存在潜在6%营收罚款&quot;——群体公平审计将歧视率降至阈值以下，年化规避法律风险50万元+</p>
   <div class='sc-footer'><span class='sc-roi'>50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Cultural-Content-Adaptation.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cognitive-Load-UX-Optimizer.html" data-domain="11-AI人文" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">认知负荷UX优化器 — 信息架构与注意力资源管理</h3>
+  <p class="sc-desc">产品团队面临母婴APP首页转化率低——认知负荷优化将CTR从2.3%提升至3.8%，年化GMV增量65万元</p>
+  <div class='sc-footer'><span class='sc-roi'>320万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Cultural-AI-Bias-Correction.html" data-domain="11-AI人文" data-diff="">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">Cross Cultural AI Bias Correction</h3>
+  <p class="sc-desc">运营团队面临东南亚/欧美市场推荐算法偏见导致转化差异达40%——跨文化偏见修正将各市场CTR差异收窄至8%以内，年化GMV提升55万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Cultural-Content-Adaptation.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">跨文化内容自动适配 — 文化距离量化与内容风格迁移</h3>
   <p class="sc-desc">跨境运营面临&quot;多市场文案靠人工本地化、每季度人工成本2万元/市场&quot;——文化距离量化适配将本地化效率提升30倍，年化节省本地化成本8-15万元</p>
   <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Cultural-Marketing-Adaptation.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Cultural-Marketing-Adaptation.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">Cross-Cultural Marketing Adaptation — 多语言 CAM 嵌入驱动的跨文化营销适配</h3>
   <p class="sc-desc">母婴跨境品牌进入东南亚（TH/VN/ID）时英文 Listing 直接机翻，本地用户搜索无法匹配——Compass-Embedding v4 CAM 多语言嵌入将跨语言产品匹配准确率从 11% 提升至 88%，Top-3 关键词召回率提升 70pp，东南亚自然流量翻倍，年化增量 GMV 20-60 万元</p>
   <div class='sc-footer'><span class='sc-roi'>20-60 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cross-Cultural-VOC-Alignment.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Cultural-VOC-Alignment.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">Cross-Cultural VOC Alignment — 跨文化用户声音对齐：消除翻译偏差的多语言评论分析</h3>
   <p class="sc-desc">德国市场吸奶器平均4.2星低于美国4.6星于是投入资源改进产品实际是文化误读——德国4.2星校准后等于美国4.7星，跨文化VOC对齐避免基于误读信号的产品改进浪费年化5-20万元</p>
   <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Cultural-Data-Collection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cultural-Data-Collection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">Cultural Data Collection — 跨文化 UGC 采集与母婴消费文化差异识别</h3>
   <p class="sc-desc">市场研究员面临本地文化样本不足——文化采集将洞察覆盖率提35%，年化省8万元</p>
   <div class='sc-footer'><span class='sc-roi'>280 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Emotional-AI-Customer-Care.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Differential-Privacy-Recommendation.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">差分隐私推荐系统 — 本地化隐私保护下的个性化</h3>
+  <p class="sc-desc">数据团队面临GDPR合规与个性化精度的矛盾——LDP差分隐私将推荐准确率保留92%同时实现ε&lt;1隐私保护，年化合规成本节省35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2000万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-EU-AI-Act-Compliance-Framework.html" data-domain="11-AI人文" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">EU AI Act合规框架 — 高风险AI系统的透明度与问责制</h3>
+  <p class="sc-desc">合规团队面临EU AI Act高风险系统注册要求——透明度框架将合规审计周期从45天压缩至12天，规避罚款风险最高3000万欧元</p>
+  <div class='sc-footer'><span class='sc-roi'>2000万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Emotional-AI-Customer-Care.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">Emotional AI Customer Care — 情感感知客服：高压场景的同理心 AI</h3>
   <p class="sc-desc">客服主管面临高压客诉难安抚——情绪AI将升级工单率从14%降到5%，年化省11万元</p>
   <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
-</a><a class="card skill-card" href="../skills/Skill-Human-AI-Collaborative-Decision.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Human-AI-Calibrated-Trust.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">人机信任校准 — 防止过度依赖与自动化偏见的决策框架</h3>
+  <p class="sc-desc">决策团队面临AI建议过度依赖导致错误备货——信任校准框架将人工审核介入率优化至18%，备货误差率降低31%，年化节省库存损失28万元</p>
+  <div class='sc-footer'><span class='sc-roi'>216万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Human-AI-Collaborative-Decision.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
   <div class="sc-domain">11-AI人文</div>
   <h3 class="sc-title">人机协作决策框架 — 最优介入时机识别与置信阈值路由</h3>
   <p class="sc-desc">客服运营面临&quot;客服机器人对复杂投诉乱答引发客户愤怒、CSAT持续下滑&quot;——置信阈值路由将人工介入量减少40%同时CSAT提升12分，年化节省客服人力8万元</p>
   <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Fake-Review-Detection.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">多模态伪造评论检测 — 图文联合的AI生成评论识别</h3>
+  <p class="sc-desc">店铺面临&quot;竞争对手AI生成多模态差评评分从4.8降至4.3&quot;——CLIP图文一致性+行为图检测伪造评论F1达0.83，加速申诉恢复评分，年化防御损失约180万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Privacy-Preserving-Personalization.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">隐私保护个性化 — 差分隐私下的用户偏好学习</h3>
+  <p class="sc-desc">母婴App面临&quot;用户担心月龄信息被滥用导致个性化授权率仅40%&quot;——LDP差分隐私让用户安心授权月龄，推荐准确率保持70%，GDPR合规+年化价值约120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Responsible-AI-Red-Teaming.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">负责任AI红队测试 — 母婴AI助手的安全边界系统化审计</h3>
+  <p class="sc-desc">AI团队面临&quot;母婴客服AI上线前不知道是否会给出错误医疗建议或被越狱&quot;——系统化红队测试将医疗越界ASR从23%降至5%，避免法律风险&gt;100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>100万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-XAI-Regulatory-Compliance.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">XAI监管合规 — AI决策可解释性的监管报告自动化</h3>
+  <p class="sc-desc">AI团队面临&quot;欧盟AI法案要求推荐/定价系统提供可解释性违规罚款最高7%营业额&quot;——XAI合规自动审计满足EU AI Act Article 13，年化避免法律风险约70万元</p>
+  <div class='sc-footer'><span class='sc-roi'>1000万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
 </a></div></section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -202,6 +297,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

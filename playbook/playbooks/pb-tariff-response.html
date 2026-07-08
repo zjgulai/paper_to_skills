@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>关税冲击 72h 响应手册 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,14 +36,28 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
 <nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../playbooks/index.html">场景手册</a> / 关税冲击 72h 响应手册</nav>
 <div class='pb-hero'>
-  <span class='pb-icon'>TR</span>
+  <span class='pb-icon'><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8.5"/><path d="M11 6v5l3.5 2" stroke-width="2"/><path d="M6.5 3.5L4 2M15.5 3.5L18 2" opacity=".6"/></svg></span>
   <div>
     <h1>关税冲击 72h 响应手册</h1>
     <p class='lead'>关税涨 10 个点 = 利润腰斩。你有 72 小时决定怎么做——AI 给你完整行动清单</p>
@@ -42,6 +67,10 @@
 
 <div class='pb-intro'>2025 年跨境电商面临的最大不确定性：关税政策随时变动。今天大多数团队面对关税冲击的响应方式是：开会讨论、人工拉数据、各部门各自决策——这个流程通常需要 3-5 天，而关税政策生效后的前 72 小时是争夺市场份额的黄金窗口。某母婴品牌在 2025 年关税调整中，因响应慢了 2 周，损失了 BSR 前 10 排名并花了 3 个月才恢复。没有 AI 的团队靠开会讨论，有 AI 的团队 72 小时内拿到完整行动清单并已在执行。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 72 小时内输出完整行动清单，替代 3 天团队讨论</li><li>[OK] 定价响应精准化：弹性低的 SKU 维价，弹性高的提前清仓</li><li>[OK] 供应链转移决策有数据支撑：不靠直觉，知道转移到哪里、什么时候、成本差多少</li><li>[OK] 关税冲击期间广告预算不盲目暂停，基于饱和曲线做有依据的调整</li><li>[OK] 一次关税冲击响应提速 = 保护 3-6 个月 BSR 排名稳定</li></ul></div>
+<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+  <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-tariff-response">0</strong> / 4 步</span>
+  <button onclick="pbShareFeishu('pb-tariff-response','关税冲击 72h 响应手册',4)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
+</div>
 <div class='pb-steps'>
 <div class='pb-step'>
   <div class='pb-step-num'>Step 1</div>
@@ -99,7 +128,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 2 【4-24h】定价响应决策</h3>
     <p class='pb-problem'>吸收多少关税、转嫁多少给消费者——不同 SKU 的价格弹性差异巨大，统一处理必然错误</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cross-Border-Price-Harmonization.html' class='pb-skill-name'>Cross-Border Price Harmonization（跨境价格协调）</a><div class='pb-skill-badges'><span class='roi-badge'>8-15 万元</span><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 跨境价格协调：US/EU/JP 三市场同时调价时防止价差过大引发 Amazon 最低价政策违规（ROI 8-15万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html' class='pb-skill-name'>AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）</a><div class='pb-skill-badges'><span class='roi-badge'>1,321 万元</span></div></div><p class='pb-skill-why'>→ LLM 跨周期定价优化：考虑关税冲击期间品牌溢价保护 vs 短期销量最大化的权衡（A/B 实测 GMV +13%）</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Cross-Border-Price-Harmonization.html' class='pb-skill-name'>Cross-Border Price Harmonization（跨境价格协调）</a><div class='pb-skill-badges'><span class='roi-badge'>45 万元</span><span class='diff-badge'>⭐☆☆☆☆</span></div></div><p class='pb-skill-why'>→ 跨境价格协调：US/EU/JP 三市场同时调价时防止价差过大引发 Amazon 最低价政策违规（ROI 8-15万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-AIGP-LLM-Dynamic-Pricing.html' class='pb-skill-name'>AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）</a><div class='pb-skill-badges'><span class='roi-badge'>1,321 万元</span></div></div><p class='pb-skill-why'>→ LLM 跨周期定价优化：考虑关税冲击期间品牌溢价保护 vs 短期销量最大化的权衡（A/B 实测 GMV +13%）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：各 SKU 价格弹性估算、竞品实时价格监控数据</div>
     <div class="pb-output"><strong>输出结果：</strong>SKU 级定价调整方案（吸收 / 部分转嫁 / 全转嫁 三档建议）</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -150,7 +179,7 @@
   <div class='pb-step-body'>
     <h3 class='pb-step-title'>Step 3 【24-48h】库存与广告决策</h3>
     <p class='pb-problem'>现有库存是清仓套现还是维价等待？广告是暂停还是继续投？两个决策相互影响</p>
-    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Markdown-Optimization.html' class='pb-skill-name'>Markdown Optimization（折扣清仓定价优化）</a><div class='pb-skill-badges'><span class='roi-badge'>20-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 库存生命周期清仓定价优化：关税冲击后高速清库存，多回收 15-40%（ROI 20-50万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Channel-Saturation-Curve.html' class='pb-skill-name'>Channel Saturation Curve（渠道饱和曲线建模）</a><div class='pb-skill-badges'><span class='roi-badge'>18-25 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 渠道饱和曲线：价格波动期广告效率评估，判断是否应暂停广告等价格稳定后再恢复（ROI 18-25万）</p></div></div>
+    <div class='pb-skills'><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Markdown-Optimization.html' class='pb-skill-name'>Markdown Optimization（折扣清仓定价优化）</a><div class='pb-skill-badges'><span class='roi-badge'>20-50 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 库存生命周期清仓定价优化：关税冲击后高速清库存，多回收 15-40%（ROI 20-50万）</p></div><div class='pb-skill'><div class='pb-skill-header'><a href='../skills/Skill-Channel-Saturation-Curve.html' class='pb-skill-name'>Channel Saturation Curve（渠道饱和曲线建模）</a><div class='pb-skill-badges'><span class='roi-badge'>45 万元</span><span class='diff-badge'>⭐⭐☆☆☆</span></div></div><p class='pb-skill-why'>→ 渠道饱和曲线：价格波动期广告效率评估，判断是否应暂停广告等价格稳定后再恢复（ROI 18-25万）</p></div></div>
     <div class="pb-data"><strong>所需数据：</strong>需要：各 SKU 库存水位、广告当前 ACOS/TACOS、历史清仓速度</div>
     <div class="pb-output"><strong>输出结果：</strong>库存处置方案（清仓/维价/转渠道）+ 广告预算调整建议</div>
     <div style='margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'>
@@ -269,7 +298,7 @@
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -284,6 +313,39 @@
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

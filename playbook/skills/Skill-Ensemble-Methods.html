@@ -3,8 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Ensemble Methods（集成学习方法） · paper2skills</title>
+  <title>Skill Card: Ensemble Methods（集成学习方法） · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
@@ -39,85 +64,141 @@
   <a href="#s-relations">⑤ 关联</a>
   <a href="#s-value">⑥ 价值</a>
 </div>
-<h1>Ensemble Methods（集成学习方法）</h1>
-<p class="muted">Skill-Ensemble-Methods · 12-ML基础</p>
-<div class="tag-row"><span class='tag'>forecasting</span><span class='tag'>广告与投放</span><span class='tag'>MAS与智能体工程</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-O 广告ROI最大化</span></div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">12-ML基础</div>
+  <h1 class="skill-main-title">Skill Card: Ensemble Methods（集成学习方法）</h1>
+  <p class="skill-skill-id">Skill-Ensemble-Methods</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>时序预测</span><span class='tag'>ML基础与可解释性</span><span class='tag'>AI伦理与治理</span><span class='tag'>KPI运营指标体系</span><span class='tag'>仓储运营效率</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-N 库存危机响应</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-AD 标签驱动实验设计</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-data-foundation.html'>数据治理基础手册</a><a class='hb-uplink' href='../playbooks/pb-inventory-festival.html'>大促备货决策手册</a></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>40-80 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>180 万</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#2563eb;color:#fff">中等 · 73分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：论文引用 D3（0%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-8010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 60.0, 0.0, 100.0, 100.0, 100.0, 109.0, 48.7, 72.7, 73.0, 72.0];
+    var scores=[8.0, 3.0, 0.0, 8.0, 4.0, 10.0, 10.9, 7.3, 10.9, 7.3, 3.6];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 数据工程师<span class='biz-ctx-secondary'> · 运营负责人 · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>选品评分 · 差评预测 · 用户流失预警 · 广告出价预测</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想用机器学习解决业务问题，但不知道该选什么模型；模型上线后效果越来越差不知道为什么</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>选对算法工具减少 50% 试错时间，模型上线后可监控可解释，数据团队和业务团队建立共同语言</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道该用什么模型</span><span class='biz-pain-tag'>模型准确率不稳定</span><span class='biz-pain-tag'>业务不相信模型结果</span><span class='biz-pain-tag'>模型黑盒说不清为什么这么预测</span></div></div></div></div>
 <div class="two-col">
   <section>
     <h2 id="s-problem">1. 解决的问题</h2>
     <p>单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78</p>
     <h2 id="s-algo">2. 核心算法逻辑</h2>
-    <p>三个臭皮匠胜过诸葛亮——将多个弱学习器组合成强学习器，通过&quot;群体智慧&quot;降低偏差（Boosting）或方差（Bagging），获得比任何单一模型更好的预测性能。</p>
+    <p>一个模型的盲点，多个模型互补弥补——通过组合多个学习器的预测，利用&quot;群体智慧&quot;消除单一模型的系统性偏差或随机波动，在母婴电商的销量预测、流失预测中获得 1525% 的误差降低。</p>
     <h2 id="s-scenario">3. 业务应用场景</h2>
-    <p>业务问题：单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78。希望进一步提升到 0.85+ 以提升挽留策略精度。</p><p>数据要求：100K 用户特征 + 流失标签。第一层：XGBoost + LightGBM + CatBoost + Random Forest，第二层：Logistic Regression</p><p>预期产出：Stacking 集成后 AUC=0.86（+0.04），Recall 在相同 Precision 下提升 5pp。相比单一最优模型可多识别 75 个流失用户/月</p>
+    <p>业务问题 某母婴跨境电商平台销售婴儿纸尿裤（SKU 数 500+），需预测未来 4 周销量以优化备货。单一 LightGBM 模型 RMSE=2,850 件/SKU，导致： - 畅销品缺货率 12%（损失销售额） - 滞销品积压率 18%（占用仓储成本 ¥8 万/月）</p><p>数据规模 - 训练集：36 个月历史销售数据，500 SKU × 156 周 = 78K 样本 - 特征：商品属性（品牌、规格、价格）+ 时间特征（周期、节假日）+ 平台特征（库存、评分、促销） - 基模型：XGBoost + LightGBM + CatBoost（处理类别特征）</p><p>量化产出 - Boosting 集成后 RMSE=2,180 件（↓23.4%） - 缺货率降至 6.2%（↓48%），额外销售额 ¥42 万/季度 - 积压率降至 9.1%（↓49%），仓储成本节省 ¥12 万/年 - 年化商业价值：¥168 万（销售额增长）+ ¥12 万（成本节省）= ¥180 万</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
-    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：Stacking 在流失/广告场景可提升 AUC 3-5pp，对应月增收 $40,000-50,000。实施成本低（仅代码集成，无需新数据/新系统）。年化贡献 <strong>40-80 万元</strong>。</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（3 星）— 需要理解 Bagging/Boosting/Stacking 的区别和适用场景</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆（4 星）— XGBoost/LightGBM 是 Kaggle 和工业界的事实标准，所有预测模型几乎都会用到</li><li><strong>评估依据</strong>：ML 基础层的高阶技能。学会了可以让已有模型无痛提升 3-5% 性能</li></ul>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>销量预测：缺货率↓48% 增收 ¥168 万/年 + 积压率↓49% 节省 ¥12 万/年</li><li>流失预测：额外识别 120 用户/月 × 15% 挽留率 × ¥200 客单价 × 12 月 = ¥432 万/年</li><li>实施成本：GPU 训练 + 工程开发 ¥7 万一次性投入</li><li>✓ <strong>易</strong>：代码实现相对标准化，sklearn/XGBoost 库成熟</li><li>需要 5-10K 样本量支撑多模型训练（母婴电商中小卖家可能数据不足）</li><li>线上推理延迟增加 50-100ms（需优化模型部署架构）</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：paper2skills-code/ml_fundamentals/ensemble_methods</p>
-    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
-Ensemble Methods Toolkit
-集成学习工具集 — Bagging / Boosting / Stacking / Blending
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Ensemble Methods Toolkit for Mother-Baby E-commerce
+母婴电商集成学习工具集 — Bagging / Boosting / Stacking
 &quot;&quot;&quot;
 
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, BaggingClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import StratifiedKFold, cross_val_score
-from sklearn.metrics import roc_auc_score
-from xgboost import XGBClassifier
-from lightgbm import LGBMClassifier
-from typing import Dict, List, Tuple
+from sklearn.metrics import roc_auc_score, recall_score, precision_score, roc_curve
+from sklearn.preprocessing import StandardScaler
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
 
 
-def stacking_cv(
-    X: np.ndarray,
-    y: np.ndarray,
-    base_models: Dict[str, object],
-    meta_model=None,
-    n_folds: int = 5,
-    random_state: int = 42
-) -&gt; Tuple[object, np.ndarray]:
+# ============================================================================
+# 1. 生成母婴电商模拟数据（用户流失预测）
+# ============================================================================
+
+def generate_motherbaby_data(n_samples=5000, random_state=42):
     &quot;&quot;&quot;
-    Stacking with cross-validation (防过拟合)
+    生成母婴平台用户流失预测数据集
     
-    Step 1: K-Fold 训练每个基模型，收集 out-of-fold 预测
-    Step 2: 用 out-of-fold 预测训练元模型
+    特征：
+    - user_tenure: 用户注册时长（月）
+    - purchase_frequency: 购买频率（次/月）
+    - avg_order_value: 客单价（元）
+    - browsing_hours: 月浏览时长（小时）
+    - product_rating_avg: 购买产品平均评分
+    - repurchase_rate: 复购率（%）
+    - days_since_last_purchase: 距离最后购买天数
     
-    Args:
-        X: 特征矩阵
-        y: 标签
-        base_models: {模型名: 模型实例}
-        meta_model: 元模型（默认 LogisticRegression）
-        n_folds: 折数
-    
-    Returns:
-        (trained_meta_model, stacking_features) 
+    标签：churn（1=流失，0=活跃）
     &quot;&quot;&quot;
-    meta_model = meta_model or LogisticRegression(max_iter=1000)
-    skf = StratifiedKFold(n_splits=n_folds, shuffle=True, random_state=random_state)
+    np.random.seed(random_state)
     
-    # 存储每个基模型的 out-of-fold 预测
-    oof_predictions = np.zeros((len(y), len(base_models)))
+    n = n_samples
+    data = {
+        &#x27;user_tenure&#x27;: np.random.exponential(scale=12, size=n) + 1,  # 1-50月
+        &#x27;purchase_frequency&#x27;: np.random.gamma(shape=2, scale=1.5, size=n),  # 0-10次/月
+        &#x27;avg_order_value&#x27;: np.random.normal(loc=150, scale=80, size=n),  # 50-300元
+        &#x27;browsing_hours&#x27;: np.random.exponential(scale=5, size=n),  # 0-30小时
+        &#x27;product_rating_avg&#x27;: np.random.normal(loc=4.5, scale=0.6, size=n),  # 2-5分
+        &#x27;repurchase_rate&#x27;: np.random.beta(a=5, b=2, size=n) * 100,  # 0-100%
+        &#x27;days_since_last_purchase&#x27;: np.random.exponential(scale=20, size=n),  # 0-100天
+    }
     
-    # 存储训练好的基模型（用于后续 full fit）
-    trained_base_models = {name: [] for name in base_models}
+    X = pd.DataFrame(data)
     
-    for fold, (train_idx, val_idx) in enumerate(skf.split(X, y)):
-        X_train, X_val = X[train_idx], X[val_idx]
-        y_train, y_val = y[train_idx], y[val_idx]
-        
-        for i, (name, model) in enumerate(base_models.items()):
-            m = clone_model(model, random_state + fold)
-            m.fit(X_train, y_train)
-            oof_predictions[val_idx, i] = m.predict_proba(X_val)[:, 1]
-            trained_base_models[name].append(m)
-    
-    # 训练元模型</code></pre></div>
+    # 生成流失标签（逻辑：长时间未购买 + 低购买频率 → 高流失风险）
+    churn_prob = (
+        0.3 * (X[&#x27;days_since_last_purchase&#x27;] &gt; 60).astype(int) +
+        0.25 * (X[&#x27;purchase_frequency&#x27;] &lt; 1).astype(int) +
+        0.2 * (X[&#x27;user_tenure&#x27;] &lt; 3).astype(int) -
+        0.15 * (X[&#x27;repurchase_rate&#x27;] &gt; 70).astype(int)
+    )
+    churn_prob = np.clip(churn_prob, 0, 1)
+    y = (np.random.random(n) &lt; churn_prob).astype(int)</code></pre></div>
     <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
   </section>
   <aside class="relation-panel" id="s-relations">
@@ -128,9 +209,9 @@ def stacking_cv(
       <span class="edge-dot combo" style="margin-left:8px"></span>组合
       <span class="edge-dot ext" style="margin-left:8px"></span>延伸
     </div>
-    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Validation-Strategies.html'>Skill-Cross-Validation-Strategies</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Feature-Selection.html'>Skill-Feature-Selection</a></li><li><a href='../skills/Skill-Hyperparameter-Optimization.html'>Skill-Hyperparameter-Optimization</a></li><li><a href='../skills/Skill-Imbalanced-Data-Handling.html'>Skill-Imbalanced-Data-Handling</a></li><li><a href='../skills/Skill-Model-Evaluation-Metrics.html'>Skill-Model-Evaluation-Metrics</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>相关技能</span></li></ul>
-    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Feature-Selection.html'>Skill-Feature-Selection</a></li><li><a href='../skills/Skill-Hyperparameter-Optimization.html'>Skill-Hyperparameter-Optimization</a></li><li><a href='../skills/Skill-Imbalanced-Data-Handling.html'>Skill-Imbalanced-Data-Handling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>相关技能</span></li></ul>
-    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Feature-Selection.html'>Skill-Feature-Selection</a></li><li><a href='../skills/Skill-Imbalanced-Data-Handling.html'>Skill-Imbalanced-Data-Handling</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li><li><span class='muted'>相关技能</span></li></ul>
+    <h3>前置技能</h3><ul><li><span class='muted'>Skill-Cross-Validation-Techniques</span></li><li><span class='muted'>Skill-Supervised-Learning-Fundamentals</span></li></ul>
+    <h3>延伸技能</h3><ul><li><span class='muted'>Skill-Feature-Engineering-for-Ecommerce</span></li><li><span class='muted'>Skill-Hyperparameter-Tuning</span></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Skill-Anomaly-Detection</span></li><li><a href='../skills/Skill-Time-Series-Forecasting.html'>Skill-Time-Series-Forecasting</a></li></ul>
   </aside>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
@@ -142,6 +223,7 @@ function copyCode(btn) {
   navigator.clipboard.writeText(text).then(function() {
     btn.textContent = '已复制 ✓';
     btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Ensemble-Methods',skill_domain:'12-ML基础'});
     setTimeout(function() {
       btn.textContent = '复制';
       btn.classList.remove('copied');
@@ -151,13 +233,14 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = '复制'; }, 1500);
   });
 }
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Ensemble-Methods',skill_domain:'12-ML基础',skill_difficulty:''});
 </script>
 
 </section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -172,6 +255,39 @@ function copyCode(btn) {
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>

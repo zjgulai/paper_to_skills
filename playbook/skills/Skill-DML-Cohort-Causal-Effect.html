@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>DML Cohort 因果效应 - 群体异质性 HTE 估计 · paper2skills</title>
   <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,11 @@
     <div class="topbar-right">
       <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
       <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
     </div>
   </header>
   <div id="search-results" class="search-results hidden" role="listbox"></div>
@@ -25,8 +36,22 @@
   <main class="layout">
     <aside class="sidebar" id="sidebar">
        <div class="sb-top">
-         <div class="sb-section"><p class="sb-label">主导航</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
          <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
       </div>
     </aside>
     <section class="content">
@@ -39,11 +64,67 @@
   <a href="#s-relations">⑤ 关联</a>
   <a href="#s-value">⑥ 价值</a>
 </div>
-<h1>DML Cohort 因果效应 - 群体异质性 HTE 估计</h1>
-<p class="muted">Skill-DML-Cohort-Causal-Effect · 01-因果推断</p>
-<div class="tag-row"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>定价与利润</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span></div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">01-因果推断</div>
+  <h1 class="skill-main-title">DML Cohort 因果效应 - 群体异质性 HTE 估计</h1>
+  <p class="skill-skill-id">Skill-DML-Cohort-Causal-Effect</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>时序预测</span><span class='tag'>ML基础与可解释性</span><span class='tag'>KPI运营指标体系</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-AC 因果定价决策</span></div>
 <div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-pricing-engine.html'>AI 定价引擎手册</a><a class='hb-uplink' href='../playbooks/pb-tariff-response.html'>关税冲击 72h 响应手册</a></div>
-<div class='roi-panel'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>1500-2500 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>1500-2500 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
 <div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>增长负责人 / CMO<span class='biz-ctx-secondary'> · 数据分析师 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · Meta Ads · DTC 独立站</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告预算花了，但不确定哪个渠道真的带来新客；做了大促，不知道销量增长是促销效果还是季节规律</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>能区分「真实增量」和「自然购买」，砍掉虚假归因渠道后同等预算 ROI 提升 20-40%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>钱花出去了不知道有没有用</span><span class='biz-pain-tag'>各渠道报告都说自己贡献最大</span><span class='biz-pain-tag'>怎么向老板证明这笔钱值得花</span></div></div></div></div>
 <div class="two-col">
   <section>
@@ -52,13 +133,13 @@
     <h2 id="s-algo">2. 核心算法逻辑</h2>
     <p>电商场景中&quot;促销/拉新/订阅&quot;等干预对不同用户群体(cohort)效应差异巨大,但传统 A/B 难以分群估计。DML(Double Machine Learning)通过双稳健残差化消除高维混杂,Neyman 正交性保证 ML 估计偏差对因果参数为二阶小量,PCA+Kmeans cohort 特征化给出每个客户的个体 CATE。</p>
     <h2 id="s-scenario">3. 业务应用场景</h2>
-    <p>- 业务问题:平台对所有新妈妈用户统一发放&quot;新生儿满减券&quot;,ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分 - 数据要求:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理) - DML 配置: - 第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$ - PCA 降维至 10 维,K-means K=5 群体(囤货型/品牌敏感型/价格敏感型/全品类型/跨境首购型) - 输出每个 cohort 的 CATE β_k - 业务价值:识别&quot;0-3 月龄高客单价用户响应最强 (CATE 75</p><p>- 业务问题:评估&quot;首单立减&quot;对不同孕/育阶段用户 12 月 LTV 的因果效应,以确定是按月龄分层投放还是统一投放 - 数据要求:用户月龄分段 + 12 月消费 LTV + 高维控制变量 - BGATE 配置(扩展):平衡协变量分布消除&quot;用户质量差异&quot;,分离纯月龄效应 - 业务价值:发现 7-12 月龄用户 LTV CATE 最高(刚需密集期),集中投放该群体使首单优惠 ROI 提升 40-60%;年化拉新成本节省 800-1200 万元</p>
+    <p>- 业务问题:平台对所有新妈妈用户统一发放&quot;新生儿满减券&quot;,ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分 - 数据要求:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理) - DML 配置: - 第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$ - PCA 降维至 10 维,K-means K=5 群体(囤货型/品牌敏感型/价格敏感型/全品类型/跨境首购型) - 输出每个 cohort 的 CATE β_k - 业务价值:识别&quot;0-3 月龄高客单价用户响应最强 (CATE 75</p><p>三轨验证： - 成本：数据采集需接入用户注册信息及 2000 维行为日志，数据清洗与特征工程约 2 人月；计算资源需 Spark 集群（日均 500 核时），人力含 1 名数据科学家 + 1 名工程师，年成本约 80-120 万元。 - 合规：需确保用户注册信息（宝宝生日）采集获得明确授权，符合《个人信息保护法》及 GDPR 关于儿童数据保护的特殊规定；促销券发放不得涉及虚假宣传或价格欺诈，需符合《广告法》及 Amazon 平台公平定价政策。 - 风险：若过度聚焦高 CATE 群体（0-3 月龄高客单价用户），可能导致该群体促销疲劳，引发用户反感或投诉；竞品可能针对性跟进，引发局部价格战；平台</p><p>- 业务问题:评估&quot;首单立减&quot;对不同孕/育阶段用户 12 月 LTV 的因果效应,以确定是按月龄分层投放还是统一投放 - 数据要求:用户月龄分段 + 12 月消费 LTV + 高维控制变量 - BGATE 配置(扩展):平衡协变量分布消除&quot;用户质量差异&quot;,分离纯月龄效应 - 业务价值:发现 7-12 月龄用户 LTV CATE 最高(刚需密集期),集中投放该群体使首单优惠 ROI 提升 40-60%;年化拉新成本节省 800-1200 万元</p>
     <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
     <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
     <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>易处:EconML 开源 + sklearn,工程实现成熟</li><li>难处:需要严格保证 SUTVA、unconfoundedness,业务团队需要因果推断 sense</li><li>难处:亿级数据需要 Spark 分布式实现(EconML 单机可跑千万级)</li></ul>
     <h2 id="s-code">7. 代码模板</h2>
     <p class="muted">代码块数量：1 · 路径：paper2skills-code/causal_inference/dml_cohort_causal_effect</p>
-    <div class='code-wrap'><button class='copy-btn' onclick='copyCode(this)' title='复制代码'>复制</button><pre class='code-preview'><code>&quot;&quot;&quot;
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
 DML Cohort CATE 最小骨架
 论文 arXiv:2409.02332 (Amazon, ECML PKDD 2023)
 基于 EconML (开源) + sklearn
@@ -142,6 +223,7 @@ function copyCode(btn) {
   navigator.clipboard.writeText(text).then(function() {
     btn.textContent = '已复制 ✓';
     btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-DML-Cohort-Causal-Effect',skill_domain:'01-因果推断'});
     setTimeout(function() {
       btn.textContent = '复制';
       btn.classList.remove('copied');
@@ -151,13 +233,14 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = '复制'; }, 1500);
   });
 }
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-DML-Cohort-Causal-Effect',skill_domain:'01-因果推断',skill_difficulty:'⭐⭐⭐⭐☆'});
 </script>
 
 </section>
   </main>
 
   <!-- AI Chat Panel -->
-  <script src="../assets/playbook-data.js?v=20260622231129"></script>
+  <script src="../assets/playbook-data.js?v=20260708015141"></script>
   <script src="../assets/search.js"></script>
   <script>
   const hbtn = document.getElementById('hamburger');
@@ -172,6 +255,39 @@ function copyCode(btn) {
   }
   hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
   overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
   </script>
 </body>
 </html>
