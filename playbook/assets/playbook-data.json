@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-08T01:51:41",
+  "generated_at": "2026-07-08T02:12:21",
   "stats": {
-    "skill_count": 1202,
+    "skill_count": 1210,
     "domain_count": 25,
     "edge_count": 12818
   },
@@ -35237,6 +35237,153 @@
       "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
     },
     {
+      "skill_id": "Skill-CodeRAG-Repository-Level-Retrieval",
+      "title": "Skill-CodeRAG-Repository-Level-Retrieval",
+      "domain_key": "knowledge_graph",
+      "domain_dir": "08-知识图谱",
+      "path": "paper2skills-vault/08-知识图谱/Skill-CodeRAG-Repository-Level-Retrieval.md",
+      "algorithm_summary": "代码RAG在软件仓库级别做检索增强代码补全，核心解决\"跨文件上下文\"问题——函数调用另一个文件的类方法时，LLM需要检索相关代码。",
+      "problem_solved": "开发者面临\"1200个Skill代码模板无法语义检索只能手动翻找\"——CodeRAG(EMNLP2025)将Skill代码复用率从10%提升至65%，每次代码开发节省2-4小时，年化节省开发成本30万元",
+      "business_scenarios": [
+        "检索02-A/B实验域：`Skill-AB-Test-Sequential-Analysis.md`代码片段",
+        "检索04-供应链域：`Skill-Safety-Stock-Replenishment.md`代码",
+        "检索03-时间序列域：`Skill-Demand-Quantile-Forecast.md`代码"
+      ],
+      "scenario_paragraphs": [
+        "场景1：Skill代码模板智能检索 用户：\"我需要写一个结合A/B测试和时间序列预测的库存优化脚本\"",
+        "CodeRAG检索： - 检索02-A/B实验域：`Skill-AB-Test-Sequential-Analysis.md`代码片段 - 检索04-供应链域：`Skill-Safety-Stock-Replenishment.md`代码 - 检索03-时间序列域：`Skill-Demand-Quantile-Forecast.md`代码 → 组合三个模板生成完整脚本，节省4小时",
+        "**场景2：错误代码智能修复** 运营反馈代码报错 → CodeRAG找同类Skill的正确实现 → 对比差异修复"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "Skill代码复用率：无检索约10% → CodeRAG约65%",
+        "开发效率：每次代码开发节省2-4小时",
+        "paper2skills 1200+代码模板的激活价值：从静态库 → 智能检索",
+        "Agent调用代码能力提升：从写死 → 动态检索组装"
+      ],
+      "roi_figure": "",
+      "difficulty": "⭐⭐⭐",
+      "priority": "⭐⭐⭐",
+      "papers": [],
+      "code_path": null,
+      "code_blocks": 4,
+      "code_preview": "\"\"\"\nCodeRAG: 代码仓库级检索增强\n用于Skill代码模板的智能检索和复用\n\"\"\"\nimport os\nimport re\nimport ast\nfrom typing import List, Dict, Tuple, Optional\nimport hashlib\n\nclass SkillCodeIndex:\n    \"\"\"\n    Skill代码模板索引\n    从paper2skills的Markdown文件中提取代码块\n    \"\"\"\n    \n    def __init__(self, vault_path: str):\n        self.vault_path = vault_path\n        self.code_chunks: List[Dict] = []\n        self.function_index: Dict[str, List[Dict]] = {}  # 函数名 -> 代码块列表\n    \n    def index_vault(self) -> Dict:\n        \"\"\"扫描Vault，提取所有代码块\"\"\"\n        total_skills = 0\n        total_functions = 0\n        \n        for domain_dir in os.listdir(self.vault_path):\n            full_dir = os.path.join(self.vault_path, domain_dir)\n            if not os.path.isdir(full_dir):\n                continue\n            \n            for fname in os.listdir(full_dir):\n                if not fname.endswith(\".md\") or not fname.startswith(\"Skill-\"):\n                    continue\n                \n                fpath = os.path.join(full_dir, fname)\n                skill_id = fname.replace(\".md\", \"\")\n                \n                with open(fpath, \"r\", encoding=\"utf-8\") as f:\n                    content = f.read()\n                \n                # 提取Python代码块\n                code_blocks = re.findall(r'",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "causal",
+        "experiment",
+        "forecasting",
+        "optimization",
+        "recommendation",
+        "rag",
+        "knowledge_graph"
+      ],
+      "topics": [
+        "供应链与补货",
+        "推荐与搜索",
+        "知识图谱与RAG",
+        "实验与因果推断",
+        "搜索流量与SEO",
+        "时序预测",
+        "LLM数据分析",
+        "AI伦理与治理",
+        "逆向物流与退货"
+      ],
+      "workflows": [
+        "WF-A 智能补货",
+        "WF-F 动态定价",
+        "WF-G Listing内容优化",
+        "WF-L 内容营销增长",
+        "WF-M 新品上市全链路",
+        "WF-R Amazon SEO优化",
+        "WF-W 退货根因修复"
+      ],
+      "biz_role": "选品负责人 / 运营负责人",
+      "biz_role2": "数据分析师 · 供应链负责人",
+      "biz_trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+      "biz_outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+      "biz_pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+      "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
+    },
+    {
+      "skill_id": "Skill-CodeXEmbed-Code-Semantic-Embedding",
+      "title": "Skill-CodeXEmbed-Code-Semantic-Embedding",
+      "domain_key": "knowledge_graph",
+      "domain_dir": "08-知识图谱",
+      "path": "paper2skills-vault/08-知识图谱/Skill-CodeXEmbed-Code-Semantic-Embedding.md",
+      "algorithm_summary": "代码语义嵌入将代码片段编码为语义向量，支持自然语言→代码、代码→代码的检索，突破关键词匹配的局限。",
+      "problem_solved": "技术团队面临\"关键词检索漏掉38%的语义相关Skill代码导致重复开发\"——CodeXEmbed(NeurIPS2024)代码语义嵌入将检索准确率提升至72%，Agent代码生成准确率+25%",
+      "business_scenarios": [
+        "`Skill-Seasonal-Search-Trend-Modeling.md`（含seasonality decomposition）",
+        "`Skill-Demand-Quantile-Forecast.md`（含quantile regression for seasonal）",
+        "`Skill-Temporal-Fusion-Transformer-Inventory.md`（含TFT seasonal handling）"
+      ],
+      "scenario_paragraphs": [
+        "场景1：Skill代码语义搜索 paper2skills 1200个Skill，每个含Python代码模板。用户输入：",
+        "\"我需要一个能处理季节性需求波动的库存预测代码\"",
+        "语义匹配（关键词会漏）： - `Skill-Seasonal-Search-Trend-Modeling.md`（含seasonality decomposition） - `Skill-Demand-Quantile-Forecast.md`（含quantile regression for seasonal） - `Skill-Temporal-Fusion-Transformer-Inventory.md`（含TFT seasonal handling）"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "paper2skills代码模板检索准确率：关键词38% → 语义嵌入72%（+34%）",
+        "代码复用时节省时间：每次2-4小时",
+        "Agent代码生成质量：找到更相关参考代码后，准确率提升25%",
+        "年化开发成本节省：约30万元（频繁Skill代码检索）"
+      ],
+      "roi_figure": "0万元",
+      "difficulty": "⭐⭐⭐",
+      "priority": "⭐⭐⭐",
+      "papers": [
+        "2411.12644"
+      ],
+      "code_path": null,
+      "code_blocks": 2,
+      "code_preview": "\"\"\"\nCodeXEmbed-style Code Semantic Embedding\n代码语义嵌入：自然语言→代码检索\n\"\"\"\nimport re\nimport ast\nfrom typing import List, Dict, Optional, Union\nimport numpy as np\n\nclass CodeSemanticEmbedder:\n    \"\"\"\n    代码语义嵌入器\n    基于CodeXEmbed/CodeR思路的代码检索\n    \"\"\"\n    \n    def __init__(\n        self,\n        model_type: str = \"text\",  # \"text\" | \"code\" | \"hybrid\"\n        embedding_dim: int = 768\n    ):\n        self.model_type = model_type\n        self.embedding_dim = embedding_dim\n        self.code_index: List[Dict] = []\n    \n    def preprocess_code(self, code: str, language: str = \"python\") -> str:\n        \"\"\"\n        代码预处理：提取语义信号\n        - 函数签名 + 文档字符串（最重要）\n        - 去除注释中的无关内容\n        - 标准化变量名\n        \"\"\"\n        lines = code.split(\"\\n\")\n        \n        # 提取关键语义部分\n        semantic_parts = []\n        \n        # 1. 模块级文档字符串\n        module_doc = re.search(r'^\"\"\"([^\"]+)\"\"\"', code, re.MULTILINE)\n        if module_doc:\n            semantic_parts.append(\"DESCRIPTION: \" + module_doc.group(1).strip()[:200])\n        \n        # 2. 函数签名和文档字符串\n        try:\n            tree = ast.parse(code)\n            for node in ast.walk(tree):\n                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):\n                    # 函数签名\n                    args = [a.arg for a in node.args.args]\n                    sig = f\"FUNCTION {node.name}({', '.join(args)})\"\n                    semantic_parts.append(sig)\n                    \n                    # 函数文档字符串\n                    if (node.body and isinstance(node.body[0], ast.Expr) and\n                        isinstance(node.body[0].value, ast.Constant)):\n                        docstring = node.body[0].value.value\n                        if isinstance(docstring, str):\n                            semantic_parts.append(\"DOC: \" + docstring[:100])\n        except SyntaxError:\n            # 降级处理\n            func_matches = re.findall(r'def (\\w+)\\(([^)]*?)\\)', code)",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "causal",
+        "forecasting",
+        "rag",
+        "knowledge_graph",
+        "multi_agent"
+      ],
+      "topics": [
+        "供应链与补货",
+        "推荐与搜索",
+        "知识图谱与RAG",
+        "MAS与智能体工程",
+        "实验与因果推断",
+        "搜索流量与SEO",
+        "时序预测",
+        "LLM数据分析",
+        "逆向物流与退货",
+        "ESG与绿色供应链"
+      ],
+      "workflows": [
+        "WF-A 智能补货",
+        "WF-I 智能体工程",
+        "WF-L 内容营销增长",
+        "WF-R Amazon SEO优化",
+        "WF-W 退货根因修复"
+      ],
+      "biz_role": "选品负责人 / 运营负责人",
+      "biz_role2": "数据分析师 · 供应链负责人",
+      "biz_trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+      "biz_outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+      "biz_pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+      "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
+    },
+    {
       "skill_id": "Skill-ColBERTv2-Multi-Vector-Late-Interaction",
       "title": "ColBERTv2 — 多向量后期交互精细检索",
       "domain_key": "knowledge_graph",
@@ -36219,6 +36366,79 @@
         "WF-M 新品上市全链路",
         "WF-N 库存危机响应",
         "WF-R Amazon SEO优化",
+        "WF-S 跨境数据合规",
+        "WF-W 退货根因修复"
+      ],
+      "biz_role": "选品负责人 / 运营负责人",
+      "biz_role2": "数据分析师 · 供应链负责人",
+      "biz_trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+      "biz_outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+      "biz_pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+      "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
+    },
+    {
+      "skill_id": "Skill-DocRE-Document-Level-Relation-Extraction",
+      "title": "Skill-DocRE-Document-Level-Relation-Extraction",
+      "domain_key": "knowledge_graph",
+      "domain_dir": "08-知识图谱",
+      "path": "paper2skills-vault/08-知识图谱/Skill-DocRE-Document-Level-Relation-Extraction.md",
+      "algorithm_summary": "文档级关系抽取（DocRE）处理跨越多个句子的实体关系，需要推理能力。与句子级RE不同，DocRE需要：",
+      "problem_solved": "合规团队面临\"FDA 200页文件跨句关系人工梳理需2天\"——文档级关系抽取（GREP/ACL2025）将合规文档处理提速96倍至30分钟，跨句关系覆盖率从40%提升至85%",
+      "business_scenarios": [
+        "第3页提及\"婴儿配方奶粉\"",
+        "第87页描述\"铅含量限制<0.01ppm\"",
+        "第156页规定\"检测机构必须持有ISO 17025认证\"",
+        "交货期、质量标准、违约条款间的因果链关系",
+        "供应商→产品→认证→有效期的完整链路"
+      ],
+      "scenario_paragraphs": [
+        "场景1：合规监管文档关系抽取 FDA长达200页的产品安全指南中： - 第3页提及\"婴儿配方奶粉\" - 第87页描述\"铅含量限制<0.01ppm\" - 第156页规定\"检测机构必须持有ISO 17025认证\"",
+        "DocRE抽取跨文档关系： (婴儿配方奶粉, 铅含量上限, <0.01ppm) (铅检测, 资质要求, ISO 17025认证)",
+        "**场景2：供应商技术协议关系网络** 从供应合同（多章节）自动抽取： - 交货期、质量标准、违约条款间的因果链关系 - 供应商→产品→认证→有效期的完整链路 建立供应链KG，风险溯源时间从2天→2小时"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "合规文档处理速度：人工2天/份 → 自动化30分钟/份，提升96x",
+        "跨句关系覆盖率：句子级RE覆盖40% → DocRE覆盖85%的真实关系",
+        "供应链风险溯源：从2天缩短至2小时",
+        "年化合规审查成本节省：约120万元"
+      ],
+      "roi_figure": "0万元",
+      "difficulty": "⭐⭐⭐⭐",
+      "priority": "⭐⭐⭐⭐⭐",
+      "papers": [],
+      "code_path": null,
+      "code_blocks": 2,
+      "code_preview": "\"\"\"\nDocRE: Document-Level Relation Extraction\n基于GREP/ATLOP思路的文档级关系抽取\n\"\"\"\nfrom typing import List, Dict, Tuple, Set\nimport numpy as np\n\nclass DocREExtractor:\n    \"\"\"\n    文档级关系抽取器\n    支持跨句子多跳推理\n    \"\"\"\n    \n    def __init__(self, model_name: str = \"ATLOP-bert-base\"):\n        self.model_name = model_name\n        self.relation_types = []\n        self.na_label = \"NA\"\n    \n    def build_entity_graph(\n        self, \n        sentences: List[str],\n        entities: List[Dict]  # [{\"text\": ..., \"sentence_idx\": ..., \"span\": ...}]\n    ) -> Dict:\n        \"\"\"\n        构建实体关系图（跨句子）\n        \n        Returns:\n            entity_graph: 包含节点和边的图结构\n        \"\"\"\n        nodes = []\n        for ent in entities:\n            nodes.append({\n                \"id\": ent[\"text\"],\n                \"sentence\": ent[\"sentence_idx\"],\n                \"mentions\": [ent],  # 同一实体可能多次出现\n                \"context\": sentences[ent[\"sentence_idx\"]] if ent[\"sentence_idx\"] < len(sentences) else \"\"\n            })\n        \n        # 跨句子共指合并（同名实体视为同一节点）\n        merged_nodes = {}\n        for node in nodes:\n            key = node[\"id\"].lower()\n            if key not in merged_nodes:\n                merged_nodes[key] = node\n            else:\n                merged_nodes[key][\"mentions\"].extend(node[\"mentions\"])\n        \n        return {\n            \"nodes\": list(merged_nodes.values()),\n            \"node_count\": len(merged_nodes)\n        }\n    \n    def extract_evidence_sentences(\n        self,\n        entity_a: str,\n        entity_b: str, \n        sentences: List[str],\n        max_evidence: int = 3\n    ) -> List[str]:\n        \"\"\"",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "causal",
+        "experiment",
+        "forecasting",
+        "knowledge_graph"
+      ],
+      "topics": [
+        "供应链与补货",
+        "知识图谱与RAG",
+        "风控与合规",
+        "实验与因果推断",
+        "合规与关税决策",
+        "标签工程与决策触发",
+        "时序预测",
+        "LLM数据分析",
+        "逆向物流与退货",
+        "ESG与绿色供应链"
+      ],
+      "workflows": [
+        "WF-A 智能补货",
+        "WF-G Listing内容优化",
+        "WF-K 全域风险防御",
+        "WF-L 内容营销增长",
         "WF-S 跨境数据合规",
         "WF-W 退货根因修复"
       ],
@@ -40364,6 +40584,76 @@
       "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
     },
     {
+      "skill_id": "Skill-MTEB-Embedding-Benchmark-Selection",
+      "title": "Skill-MTEB-Embedding-Benchmark-Selection",
+      "domain_key": "knowledge_graph",
+      "domain_dir": "08-知识图谱",
+      "path": "paper2skills-vault/08-知识图谱/Skill-MTEB-Embedding-Benchmark-Selection.md",
+      "algorithm_summary": "MTEB（Massive Text Embedding Benchmark）是嵌入模型选型的工业标准基准，涵盖8大任务类型和1000+数据集，使AI团队能基于数据驱动的方式选择最适合业务场景的嵌入模型。",
+      "problem_solved": "AI工程师面临\"嵌入模型选型拍脑袋导致查询准确率低15%且API成本超标10倍\"——MTEB/MMTEB(ICLR2025)基准评测3天科学选型，避免模型迁移成本50万元，中英双语检索准确率最优",
+      "business_scenarios": [],
+      "scenario_paragraphs": [
+        "场景1：电商搜索嵌入模型选型 需求：Amazon母婴商品语义搜索，中英双语，百万级商品库",
+        "决策：bge-m3（中英双语最优，成本可控）",
+        "**场景2：多语言合规文档检索** 覆盖中/英/马来/印尼语的东南亚市场，用MMTEB多语言任务评测。"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "嵌入模型选型失误成本：错选API模型 vs 本地模型，百万次查询成本差10-100倍",
+        "基于MTEB科学选型：避免盲目选型，决策时间从2周压缩至3天",
+        "准确率提升：最优模型vs随机选型，检索准确率平均差15-25%",
+        "年化ROI：避免模型迁移成本约50万元"
+      ],
+      "roi_figure": "避免模型迁移成本约50万元",
+      "difficulty": "",
+      "priority": "⭐⭐⭐⭐",
+      "papers": [
+        "2210.07316",
+        "2502.13595"
+      ],
+      "code_path": null,
+      "code_blocks": 3,
+      "code_preview": "\"\"\"\nMTEB-guided Embedding Model Selection\n基于MTEB的嵌入模型选型与评估框架\n\"\"\"\nfrom typing import List, Dict, Tuple\nimport numpy as np\nimport time\n\nclass EmbeddingModelEvaluator:\n    \"\"\"\n    基于MTEB思路的嵌入模型评估器\n    用于母婴跨境场景的模型选型\n    \"\"\"\n    \n    def __init__(self):\n        self.results = {}\n        self.model_registry = {\n            \"bge-m3\": {\"dim\": 1024, \"lang\": [\"zh\",\"en\",\"multilingual\"], \"size_mb\": 2200},\n            \"multilingual-e5-large\": {\"dim\": 1024, \"lang\": [\"multilingual\"], \"size_mb\": 1400},\n            \"bge-small-en-v1.5\": {\"dim\": 384, \"lang\": [\"en\"], \"size_mb\": 130},\n            \"text-embedding-3-small\": {\"dim\": 1536, \"lang\": [\"multilingual\"], \"size_mb\": 0},  # API\n        }\n    \n    def evaluate_retrieval(\n        self,\n        model_name: str,\n        embed_fn,\n        queries: List[str],\n        corpus: List[Dict],  # [{\"id\": ..., \"text\": ...}]\n        relevant_docs: Dict[str, List[str]],  # query_id -> [relevant_doc_ids]\n        k_values: List[int] = [1, 5, 10]\n    ) -> Dict:\n        \"\"\"\n        评估检索任务（NDCG@k, Recall@k, MRR@k）\n        \"\"\"\n        # 编码语料库\n        start = time.time()\n        corpus_embeddings = np.array([embed_fn(doc[\"text\"]) for doc in corpus])\n        corpus_embeddings = corpus_embeddings / np.linalg.norm(corpus_embeddings, axis=1, keepdims=True)\n        corpus_time = time.time() - start\n        \n        # 评估每个查询\n        ndcg_scores = {k: [] for k in k_values}\n        recall_scores = {k: [] for k in k_values}\n        \n        for q_idx, query in enumerate(queries):\n            q_embed = np.array(embed_fn(query))\n            q_embed = q_embed / np.linalg.norm(q_embed)\n            \n            # 计算相似度\n            scores = corpus_embeddings @ q_embed\n            ranked_indices = np.argsort(-scores)\n            \n            # 获取相关文档\n            q_id = f\"q{q_idx}\"\n            rel_docs = set(relevant_docs.get(q_id, []))\n            \n            for k in k_values:\n                top_k = [corpus[i][\"id\"] for i in ranked_indices[:k]]\n                ",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "causal",
+        "recommendation",
+        "rag",
+        "knowledge_graph",
+        "multi_agent"
+      ],
+      "topics": [
+        "推荐与搜索",
+        "知识图谱与RAG",
+        "MAS与智能体工程",
+        "风控与合规",
+        "实验与因果推断",
+        "合规与关税决策",
+        "运营财务与P&L",
+        "搜索流量与SEO",
+        "ML基础与可解释性",
+        "KPI运营指标体系",
+        "逆向物流与退货"
+      ],
+      "workflows": [
+        "WF-I 智能体工程",
+        "WF-K 全域风险防御",
+        "WF-S 跨境数据合规",
+        "WF-W 退货根因修复"
+      ],
+      "biz_role": "选品负责人 / 运营负责人",
+      "biz_role2": "数据分析师 · 供应链负责人",
+      "biz_trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+      "biz_outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+      "biz_pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+      "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
+    },
+    {
       "skill_id": "Skill-Matryoshka-Representation-Learning",
       "title": "Matryoshka表示学习 — 嵌套多尺度嵌入压缩",
       "domain_key": "knowledge_graph",
@@ -40553,6 +40843,73 @@
         "WF-K 全域风险防御",
         "WF-M 新品上市全链路",
         "WF-S 跨境数据合规",
+        "WF-W 退货根因修复"
+      ],
+      "biz_role": "选品负责人 / 运营负责人",
+      "biz_role2": "数据分析师 · 供应链负责人",
+      "biz_trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+      "biz_outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+      "biz_pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+      "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
+    },
+    {
+      "skill_id": "Skill-MinHash-LSH-Knowledge-Dedup",
+      "title": "Skill-MinHash-LSH-Knowledge-Dedup",
+      "domain_key": "knowledge_graph",
+      "domain_dir": "08-知识图谱",
+      "path": "paper2skills-vault/08-知识图谱/Skill-MinHash-LSH-Knowledge-Dedup.md",
+      "algorithm_summary": "MinHash + LSH（Locality Sensitive Hashing）是近似去重的工业标准方法，用于在大规模知识库中检测和删除近似重复文档，时间复杂度从O(n²)降至O(n)。",
+      "problem_solved": "数据工程师面临\"知识库30%重复文档导致RAG返回冗余且向量存储浪费\"——MinHash-LSH近似去重在O(n)时间处理50万文档，RAG精度+23%，向量存储成本节省36%",
+      "business_scenarios": [
+        "RAG检索返回冗余内容",
+        "知识图谱出现重复实体",
+        "Jaccard阈值0.8，检测出15万对近似重复",
+        "保留最完整版本，删除18万重复文档",
+        "RAG精度提升23%，向量存储成本降低36%"
+      ],
+      "scenario_paragraphs": [
+        "场景1：商品知识库去重 Amazon母婴品类知识库：50万条商品描述，30%为轻微改写的近似重复（不同卖家相同产品）",
+        "问题：重复文档导致： - RAG检索返回冗余内容 - 知识图谱出现重复实体 - 嵌入空间资源浪费",
+        "MinHash去重： - Jaccard阈值0.8，检测出15万对近似重复 - 保留最完整版本，删除18万重复文档 - RAG精度提升23%，向量存储成本降低36%"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "知识库去重率：典型电商场景30-40%文档为重复",
+        "RAG精度提升：去重后+23%（减少冗余干扰）",
+        "向量存储成本节省：去重后节省36%存储和计算",
+        "处理速度：10万文档<60秒（vs 暴力O(n²)需要数小时）"
+      ],
+      "roi_figure": "10万",
+      "difficulty": "",
+      "priority": "⭐⭐⭐⭐⭐",
+      "papers": [],
+      "code_path": null,
+      "code_blocks": 2,
+      "code_preview": "\"\"\"\nMinHash-LSH 知识库近似去重\n支持大规模电商知识库去重\n\"\"\"\nfrom typing import List, Dict, Tuple, Set\nimport hashlib\nimport re\nfrom collections import defaultdict\n\nclass MinHashLSHDeduplicator:\n    \"\"\"\n    MinHash + LSH 近似去重器\n    时间复杂度: O(n) vs 暴力O(n^2)\n    \"\"\"\n    \n    def __init__(\n        self,\n        num_perm: int = 128,        # MinHash签名维度\n        threshold: float = 0.8,      # Jaccard相似度阈值\n        ngram_size: int = 3,         # n-gram大小\n        num_bands: int = 32          # LSH band数\n    ):\n        self.num_perm = num_perm\n        self.threshold = threshold\n        self.ngram_size = ngram_size\n        self.num_bands = num_bands\n        self.rows_per_band = num_perm // num_bands\n        \n        # 哈希函数参数（大素数）\n        import random\n        random.seed(42)\n        p = (1 << 31) - 1  # 梅森素数\n        self.hash_params = [\n            (random.randint(1, p), random.randint(0, p), p)\n            for _ in range(num_perm)\n        ]\n        \n        self.buckets = defaultdict(list)  # band_id+hash -> [doc_ids]\n        self.signatures = {}  # doc_id -> minhash signature\n    \n    def _tokenize(self, text: str) -> Set[str]:\n        \"\"\"文本n-gram分词\"\"\"\n        # 预处理：小写+去特殊字符\n        text = re.sub(r'[^\\w\\s]', ' ', text.lower())\n        tokens = text.split()\n        \n        # n-gram\n        ngrams = set()\n        for i in range(len(tokens) - self.ngram_size + 1):\n            ngram = ' '.join(tokens[i:i+self.ngram_size])\n            ngrams.add(ngram)\n        \n        # 也加入unigram保证短文本有特征\n        ngrams.update(tokens)\n        return ngrams\n    \n    def _compute_minhash(self, tokens: Set[str]) -> List[int]:\n        \"\"\"计算MinHash签名\"\"\"\n        signature = [float('inf')] * self.num_perm\n        ",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "causal",
+        "rag",
+        "knowledge_graph"
+      ],
+      "topics": [
+        "知识图谱与RAG",
+        "数据采集与治理",
+        "实验与因果推断",
+        "运营财务与P&L",
+        "搜索流量与SEO",
+        "AI伦理与治理",
+        "逆向物流与退货"
+      ],
+      "workflows": [
+        "WF-E Review监控",
+        "WF-L 内容营销增长",
+        "WF-R Amazon SEO优化",
         "WF-W 退货根因修复"
       ],
       "biz_role": "选品负责人 / 运营负责人",
@@ -41390,6 +41747,77 @@
         "WF-N 库存危机响应",
         "WF-Q 标签驱动决策",
         "WF-S 跨境数据合规"
+      ],
+      "biz_role": "选品负责人 / 运营负责人",
+      "biz_role2": "数据分析师 · 供应链负责人",
+      "biz_trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+      "biz_outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+      "biz_pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+      "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
+    },
+    {
+      "skill_id": "Skill-OpenRE-LLM-Knowledge-Extraction",
+      "title": "Skill-OpenRE-LLM-Knowledge-Extraction",
+      "domain_key": "knowledge_graph",
+      "domain_dir": "08-知识图谱",
+      "path": "paper2skills-vault/08-知识图谱/Skill-OpenRE-LLM-Knowledge-Extraction.md",
+      "algorithm_summary": "开放关系抽取（Open Relation Extraction, OpenRE）在无预定义关系类型前提下，从文本中自动发现实体对间的关系。2025年最新进展转向LLM驱动的范式：",
+      "problem_solved": "运营面临\"需要人工标注50万条商品描述的实体关系耗时3个月\"——LLM-OREF三阶段开放关系抽取将标注时间压缩至2天，关系类型覆盖从30种扩展至150+种，年化节省标注人力60万元",
+      "business_scenarios": [
+        "(Pampers, 适用体重范围, 0-5kg)",
+        "(Pampers, 产品等级, Grade A)",
+        "(ultra-thin, 材质特性, ?)",
+        "(成分X, 受监管于, EU Regulation 2023/xxx)",
+        "(检测方法Y, 适用标准, EN71-3)"
+      ],
+      "scenario_paragraphs": [
+        "场景1：产品属性关系自动抽取 从Amazon listing文本（\"Pampers Grade A diapers for newborns, 0-5kg, ultra-thin\"）无监督抽取： - (Pampers, 适用体重范围, 0-5kg) - (Pampers, 产品等级, Grade A) - (ultra-thin, 材质特性, ?)",
+        "输入：商品listing/评论/手册文本，10万条 产出：自动发现50+关系类型，KG节点覆盖率提升3倍，无需人工标注Ontology",
+        "**场景2：合规文件关系图谱** 从FDA/CE/REACH合规文档抽取： - (成分X, 受监管于, EU Regulation 2023/xxx) - (检测方法Y, 适用标准, EN71-3) 年化减少合规律师审查时间60%"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "产品KG构建时间：人工标注3个月 → OpenRE自动构建2天，**效率提升45x**",
+        "关系类型覆盖：预定义30种 → 自动发现150+种，覆盖率提升5倍",
+        "年化节省标注人力：约60万元（3名标注员/年）",
+        "合规图谱构建：从无到有，监管风险预警提前30天"
+      ],
+      "roi_figure": "0万元",
+      "difficulty": "⭐⭐⭐",
+      "priority": "⭐⭐⭐⭐⭐",
+      "papers": [],
+      "code_path": null,
+      "code_blocks": 2,
+      "code_preview": "\"\"\"\nOpenRE for E-commerce Knowledge Graph Construction\n基于LLM-OREF框架的开放关系抽取\n\"\"\"\nfrom typing import List, Tuple, Dict\nimport re\n\ndef extract_relations_llm_oref(\n    text: str,\n    entities: List[str],\n    llm_client,\n    n_samples: int = 3,\n    consistency_threshold: float = 0.6\n) -> List[Tuple[str, str, str]]:\n    \"\"\"\n    LLM-OREF三阶段开放关系抽取\n    \n    Args:\n        text: 输入文本（产品描述/评论/合规文档）\n        entities: 已识别实体列表\n        llm_client: LLM客户端（支持OpenAI接口）\n        n_samples: 自洽采样次数\n        consistency_threshold: 一致性过滤阈值\n    \n    Returns:\n        List of (subject, relation, object) triples\n    \"\"\"\n    # Stage 1: 候选关系生成\n    prompt_template = \"\"\"\n    给定文本：\"{text}\"\n    已知实体：{entities}\n    \n    请抽取实体间的关系，以三元组格式输出：\n    (主体, 关系, 客体)\n    \n    要求：\n    - 关系用简洁动词短语描述（2-5个词）\n    - 只抽取文本中有明确依据的关系\n    - 输出JSON格式：{{\"triples\": [[\"实体A\", \"关系\", \"实体B\"]]}}\n    \"\"\"\n    \n    # 多次采样\n    candidates = []\n    for _ in range(n_samples):\n        response = llm_client.chat([{\n            \"role\": \"user\",\n            \"content\": prompt_template.format(\n                text=text, entities=\", \".join(entities)\n            )\n        }])\n        try:\n            import json\n            result = json.loads(response)\n            candidates.extend(result.get(\"triples\", []))\n        except:\n            pass\n    \n    # Stage 2: 自洽过滤（基于频次）\n    from collections import Counter\n    triple_counts = Counter(",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "causal",
+        "knowledge_graph"
+      ],
+      "topics": [
+        "知识图谱与RAG",
+        "风控与合规",
+        "实验与因果推断",
+        "合规与关税决策",
+        "标签工程与决策触发",
+        "LLM数据分析",
+        "逆向物流与退货",
+        "ESG与绿色供应链"
+      ],
+      "workflows": [
+        "WF-D 选品扫描",
+        "WF-G Listing内容优化",
+        "WF-K 全域风险防御",
+        "WF-L 内容营销增长",
+        "WF-M 新品上市全链路",
+        "WF-Q 标签驱动决策",
+        "WF-S 跨境数据合规",
+        "WF-W 退货根因修复"
       ],
       "biz_role": "选品负责人 / 运营负责人",
       "biz_role2": "数据分析师 · 供应链负责人",
@@ -43617,6 +44045,74 @@
         "WF-S 跨境数据合规",
         "WF-W 退货根因修复",
         "WF-AA 多渠道协同增长"
+      ],
+      "biz_role": "选品负责人 / 运营负责人",
+      "biz_role2": "数据分析师 · 供应链负责人",
+      "biz_trigger": "品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清",
+      "biz_outcome": "建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向",
+      "biz_pain": "品类太多不知道先做哪个 · 竞品关系理不清楚 · 不知道用户买了奶瓶还会买什么 · 类目扩张没有逻辑",
+      "biz_platform": "Amazon 品类体系 · 竞品 ASIN 网络分析"
+    },
+    {
+      "skill_id": "Skill-TableRAG-Structured-Data-Retrieval",
+      "title": "Skill-TableRAG-Structured-Data-Retrieval",
+      "domain_key": "knowledge_graph",
+      "domain_dir": "08-知识图谱",
+      "path": "paper2skills-vault/08-知识图谱/Skill-TableRAG-Structured-Data-Retrieval.md",
+      "algorithm_summary": "表格检索解决LLM处理大规模结构化数据（价格表/库存表/规格表）的核心挑战：Token限制与表格理解的双重瓶颈。",
+      "problem_solved": "运营面临\"50万行库存表超Token无法用LLM直接查询\"——TableRAG双路检索将大表查询成功率从0%提升至95%，答案准确率+29%，人工筛选30分钟缩至15秒",
+      "business_scenarios": [],
+      "scenario_paragraphs": [
+        "场景1：Amazon价格/库存大表查询 库存表：500,000行 × 50列（ASIN/价格/库存/FBA费/毛利率...）",
+        "用户查询：\"哪些婴儿纸尿裤产品在旺季前30天库存不足且毛利率>30%？\"",
+        "TableRAG处理： 1. Schema检索：定位\"库存天数\"\"毛利率\"\"品类\"列 2. 单元格检索：找婴儿纸尿裤相关行 3. 精准注入：只提取~200行相关数据给LLM 4. 输出：结构化答案 + SQL查询语句"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "大表查询成功率：超Token报错100% → TableRAG成功率95%",
+        "答案准确率：全表截断法58% → TableRAG 87%（+29%）",
+        "查询响应时间：人工Excel筛选30分钟 → 自动化15秒",
+        "年化节省运营人力：约80万元（每日大量数据查询）"
+      ],
+      "roi_figure": "0万元",
+      "difficulty": "⭐⭐⭐",
+      "priority": "⭐⭐⭐⭐⭐",
+      "papers": [],
+      "code_path": null,
+      "code_blocks": 2,
+      "code_preview": "\"\"\"\nTableRAG: 大规模表格的RAG检索与理解\n母婴跨境电商场景实现\n\"\"\"\nimport pandas as pd\nimport numpy as np\nfrom typing import List, Dict, Any, Optional\nimport json\n\nclass TableRAGSystem:\n    \"\"\"\n    TableRAG核心系统\n    支持百万行级别的结构化数据检索\n    \"\"\"\n    \n    def __init__(self, embedding_fn=None, token_budget: int = 4000):\n        self.embedding_fn = embedding_fn or self._default_embedding\n        self.token_budget = token_budget\n        self.schema_index = {}   # 列级索引\n        self.cell_index = {}     # 行级索引\n        self.tables = {}\n    \n    def index_table(self, table_name: str, df: pd.DataFrame) -> Dict:\n        \"\"\"\n        对DataFrame建立双路索引\n        \n        Args:\n            table_name: 表名\n            df: 数据表\n        Returns:\n            索引统计\n        \"\"\"\n        self.tables[table_name] = df\n        \n        # Schema索引：列级别\n        schema_docs = []\n        for col in df.columns:\n            dtype = str(df[col].dtype)\n            sample_vals = df[col].dropna().head(3).tolist()\n            # 数值列统计\n            stats = \"\"\n            if df[col].dtype in [np.float64, np.int64]:\n                stats = f\"range:[{df[col].min():.2f},{df[col].max():.2f}]\"\n            \n            schema_doc = {\n                \"table\": table_name,\n                \"column\": col,\n                \"dtype\": dtype,\n                \"samples\": str(sample_vals[:3]),\n                \"stats\": stats,\n                \"text\": f\"表:{table_name} 列:{col} 类型:{dtype} 示例:{sample_vals[:2]} {stats}\"\n            }\n            schema_docs.append(schema_doc)\n        \n        self.schema_index[table_name] = schema_docs\n        \n        # Cell索引：行级别（采样索引，避免全量）\n        # 对大表进行分层采样\n        sample_size = min(len(df), 10000)\n        sample_df = df.sample(n=sample_size, random_state=42) if len(df) > sample_size else df",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "experiment",
+        "rag",
+        "knowledge_graph",
+        "multi_agent",
+        "pricing"
+      ],
+      "topics": [
+        "供应链与补货",
+        "推荐与搜索",
+        "知识图谱与RAG",
+        "MAS与智能体工程",
+        "定价与利润",
+        "跨境物流与履约",
+        "运营财务与P&L",
+        "搜索流量与SEO",
+        "LLM数据分析",
+        "逆向物流与退货"
+      ],
+      "workflows": [
+        "WF-A 智能补货",
+        "WF-F 动态定价",
+        "WF-I 智能体工程",
+        "WF-L 内容营销增长",
+        "WF-R Amazon SEO优化",
+        "WF-W 退货根因修复"
       ],
       "biz_role": "选品负责人 / 运营负责人",
       "biz_role2": "数据分析师 · 供应链负责人",
@@ -78983,6 +79479,90 @@
         "WF-K 全域风险防御",
         "WF-M 新品上市全链路",
         "WF-S 跨境数据合规",
+        "WF-W 退货根因修复"
+      ],
+      "biz_role": "CTO / 技术负责人",
+      "biz_role2": "产品经理 · 数据工程师",
+      "biz_trigger": "想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题",
+      "biz_outcome": "AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 >85%",
+      "biz_pain": "LLM 返回结果不稳定不可靠 · AI 幻觉导致业务决策错误 · Agent 任务失败了不知道哪步出问题 · AI 调用成本控制不住",
+      "biz_platform": "跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent"
+    },
+    {
+      "skill_id": "Skill-KB-RBAC-Access-Control",
+      "title": "Skill-KB-RBAC-Access-Control",
+      "domain_key": "llm_agent_engineering",
+      "domain_dir": "16-智能体工程",
+      "path": "paper2skills-vault/16-智能体工程/Skill-KB-RBAC-Access-Control.md",
+      "algorithm_summary": "企业级知识库的细粒度权限控制，确保不同角色只能访问其授权知识，同时不影响RAG检索性能。",
+      "problem_solved": "企业知识库面临\"运营专员意外访问供应商成本数据导致竞争泄密风险\"——KB-RBAC细粒度Pre-filter权限控制将越权访问事故降低90%，满足GDPR合规要求，风险价值保护500万元/次",
+      "business_scenarios": [
+        "运营专员：返回\"该信息您暂无访问权限\"",
+        "采购经理：返回精确成本数据",
+        "安全拦截：防止越权获取竞争敏感信息"
+      ],
+      "scenario_paragraphs": [
+        "一个查询\"这个产品的采购成本是多少？\"： - 运营专员：返回\"该信息您暂无访问权限\" - 采购经理：返回精确成本数据 - 安全拦截：防止越权获取竞争敏感信息",
+        "**场景2：多租户知识库隔离** SaaS场景：品牌A的知识库数据绝不泄露给品牌B"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "roi": [
+        "数据泄露风险：无权限控制时，供应商成本被竞争对手获取损失约500万/次",
+        "合规要求：GDPR/CCPA要求数据访问可审计，满足合规避免罚款",
+        "实施成本：2周工程工作，vs 数据泄露事故损失百倍",
+        "年化风险降低：权限控制减少90%内部数据泄露事故"
+      ],
+      "roi_figure": "500万",
+      "difficulty": "⭐⭐⭐",
+      "priority": "⭐⭐⭐⭐",
+      "papers": [],
+      "code_path": null,
+      "code_blocks": 3,
+      "code_preview": "\"\"\"\nKB-RBAC: 知识库细粒度访问控制\n企业级RAG权限管理\n\"\"\"\nfrom typing import List, Dict, Set, Optional\nfrom dataclasses import dataclass, field\nimport hashlib\n\n@dataclass\nclass Permission:\n    \"\"\"权限定义\"\"\"\n    resource_type: str   # \"document\" | \"section\" | \"field\"\n    resource_id: str     # 资源ID或通配符(*)\n    actions: Set[str]    # {\"read\", \"write\", \"admin\"}\n\n@dataclass  \nclass Role:\n    \"\"\"角色定义\"\"\"\n    role_id: str\n    name: str\n    permissions: List[Permission] = field(default_factory=list)\n    parent_roles: List[str] = field(default_factory=list)  # 角色继承\n\n@dataclass\nclass KBChunk:\n    \"\"\"知识块，附带权限标签\"\"\"\n    chunk_id: str\n    content: str\n    embedding: Optional[List[float]] = None\n    allowed_roles: Set[str] = field(default_factory=set)  # 哪些角色可访问\n    allowed_users: Set[str] = field(default_factory=set)\n    metadata: Dict = field(default_factory=dict)\n\nclass KBRBACController:\n    \"\"\"\n    知识库RBAC访问控制器\n    支持Pre-filter检索策略\n    \"\"\"\n    \n    def __init__(self):\n        self.roles: Dict[str, Role] = {}\n        self.user_roles: Dict[str, Set[str]] = {}  # user -> roles\n        self.chunks: Dict[str, KBChunk] = {}\n        \n        # 预设角色\n        self._init_default_roles()\n    \n    def _init_default_roles(self):\n        \"\"\"初始化默认角色层次\"\"\"\n        self.roles = {\n            \"admin\": Role(\"admin\", \"管理员\", [\n                Permission(\"*\", \"*\", {\"read\", \"write\", \"admin\"})\n            ]),\n            \"procurement\": Role(\"procurement\", \"采购经理\", [\n                Permission(\"document\", \"supplier_*\", {\"read\"}),\n                Permission(\"field\", \"cost_*\", {\"read\"}),\n                Permission(\"document\", \"product_*\", {\"read\"}),\n            ]),\n            \"ops\": Role(\"ops\", \"运营专员\", [\n                Permission(\"document\", \"product_*\", {\"read\"}),",
+      "relations": {
+        "prerequisite": [],
+        "extends": [],
+        "combinable": []
+      },
+      "tags": [
+        "causal",
+        "forecasting",
+        "recommendation",
+        "rag",
+        "knowledge_graph"
+      ],
+      "topics": [
+        "广告与投放",
+        "供应链与补货",
+        "客服与VOC",
+        "推荐与搜索",
+        "知识图谱与RAG",
+        "风控与合规",
+        "实验与因果推断",
+        "合规与关税决策",
+        "运营财务与P&L",
+        "标签工程与决策触发",
+        "搜索流量与SEO",
+        "时序预测",
+        "AI伦理与治理",
+        "供应商管理与博弈",
+        "逆向物流与退货"
+      ],
+      "workflows": [
+        "WF-A 智能补货",
+        "WF-B 广告优化",
+        "WF-C 客服分诊",
+        "WF-D 选品扫描",
+        "WF-E Review监控",
+        "WF-G Listing内容优化",
+        "WF-I 智能体工程",
+        "WF-K 全域风险防御",
+        "WF-L 内容营销增长",
+        "WF-M 新品上市全链路",
+        "WF-R Amazon SEO优化",
+        "WF-S 跨境数据合规",
+        "WF-V 供应商降本博弈",
         "WF-W 退货根因修复"
       ],
       "biz_role": "CTO / 技术负责人",
