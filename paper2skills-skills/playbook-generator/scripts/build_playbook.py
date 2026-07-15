@@ -2448,8 +2448,8 @@ function _extractKPIs(result){{
     {{rx:/净利润率[：:]\\s*([\\d.]+)%/,label:'净利润率',suffix:'%',warnBelow:8}},
     {{rx:/ACoS[：:]\\s*([\\d.]+)%/,label:'ACoS',suffix:'%',warnAbove:25}},
     {{rx:/ROAS[：:]\\s*([\\d.]+)/,label:'ROAS'}},
-    {{rx:/机会评分[：:]\\s*(\\d+)\/100/,label:'机会评分',suffix:'/100',warnBelow:60}},
-    {{rx:/综合评分[：:]\\s*(\\d+)\/100/,label:'综合评分',suffix:'/100',warnBelow:60}},
+    {{rx:/机会评分[：:]\\s*(\\d+)\\/100/,label:'机会评分',suffix:'/100',warnBelow:60}},
+    {{rx:/综合评分[：:]\\s*(\\d+)\\/100/,label:'综合评分',suffix:'/100',warnBelow:60}},
     {{rx:/账号健康[^:：]*[：:]\\s*(\\d+)/,label:'账号健康',suffix:'分',warnBelow:60}},
     {{rx:/退货率[：:]\\s*([\\d.]+)%/,label:'退货率',suffix:'%',warnAbove:15}},
     {{rx:/净利润[：:]\\s*\\$?([\\d,.]+)/,label:'净利润',prefix:'$'}},
@@ -2491,7 +2491,7 @@ function _renderReport(raw){{
       const msg=trim.replace(/^[├└]─+\\s*/,'');
       const vm=msg.match(/^(.+?):\\s*(.+)$/);
       if(vm){{
-        const isNum=/[\\$\\d,%\\+\-]+/.test(vm[2]);
+        const isNum=/[\\$\\d,%\\+\\-]+/.test(vm[2]);
         const val=isNum?`<span class="rr-val">${{esc(vm[2])}}</span>`:esc(vm[2]);
         html+=`<div class="rr-row"><span class="rr-row-key">${{esc(vm[1])}}</span><span class="rr-row-sep">:</span>${{val}}</div>`;
       }}else{{html+=`<div class="rr-row-plain">${{esc(msg)}}</div>`;}}
@@ -2508,7 +2508,7 @@ function _renderReport(raw){{
       const val=hasNum?`<span class="rr-val">${{esc(numRaw)}}</span>`:esc(numRaw);
       html+=`<div class="rr-kv"><span class="rr-kv-key">${{esc(kv[1])}}</span><span class="rr-kv-sep">:</span>${{val}}</div>`;continue;
     }}
-    let styled=esc(trim).replace(/(\\$[\\d,]+(?:\.\\d+)?)/g,'<span class="rr-num">$1</span>').replace(/([\\d.]+%)/g,'<span class="rr-pct">$1</span>');
+    let styled=esc(trim).replace(/(\\$[\\d,]+(?:\\.\\d+)?)/g,'<span class="rr-num">$1</span>').replace(/([\\d.]+%)/g,'<span class="rr-pct">$1</span>');
     html+=`<div class="rr-line">${{styled}}</div>`;
   }}
   return html;

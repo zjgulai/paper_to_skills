@@ -3,7 +3,7 @@ roadmap_phase: phase2
 created: 2026-07-07
 skill_id: Skill-HELMET-LongContext-RAG-Evaluation
 domain: 08-知识图谱
-paper: HELMET: How to Evaluate Long-Context Language Models Effectively
+paper: "HELMET: How to Evaluate Long-Context Language Models Effectively"
 authors: Yen et al.
 venue: ICLR 2025
 arxiv: 2410.02694

@@ -9,8 +9,8 @@ domain: 06-增长模型
 scenario: WF-D 选品扫描 — 冷启动销量验证
 difficulty: ⭐⭐⭐☆☆
 priority: ⭐⭐⭐⭐⭐
-paper: ZODIAC: Zero-Inflated Overshoot-Aware Demand Forecasting for Cross-Border E-Commerce
-paper_source: arXiv:2401.xxxxx (推断: KDD 2024 或 ICML 2024)
+paper: "ZODIAC: Zero-Inflated Overshoot-Aware Demand Forecasting for Cross-Border E-Commerce"
+paper_source: "arXiv:2401.xxxxx (推断: KDD 2024 或 ICML 2024)"
 arxiv: 2401.xxxxx
 data_source: 真实跨境平台数据：US→{UK, DE, FR, IT, ES, JP} 六条弧, 250K+商品/弧
 code_available: false

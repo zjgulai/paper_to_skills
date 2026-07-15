@@ -3,7 +3,7 @@ title: GraphDeepAR — 图神经网络概率需求预测：商品关联 + 退货
 doc_type: knowledge
 module: 18-物流履约
 topic: graphdeepar-gnn-probabilistic-demand-forecasting
-
+
 roadmap_phase: phase1
 created: 2026-06-01
 updated: 2026-06-01

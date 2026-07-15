@@ -3,7 +3,7 @@ roadmap_phase: phase2
 created: 2026-07-08
 skill_id: Skill-Query-Intent-Classification-Routing
 domain: 08-知识图谱
-paper: FLARE: Active Retrieval Augmented Generation
+paper: "FLARE: Active Retrieval Augmented Generation"
 authors: Jiang et al.
 conference: EMNLP 2023
 arxiv: 2305.06983

@@ -3,7 +3,7 @@ title: 稀疏+稠密混合检索 — BM25 与向量检索融合
 doc_type: knowledge
 module: 08-知识图谱
 topic: hybrid-search-bm25-vector
-
+
 roadmap_phase: phase2
 created: 2026-06-06
 updated: 2026-06-06

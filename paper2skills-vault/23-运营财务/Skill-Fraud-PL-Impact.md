@@ -7,8 +7,7 @@ status: stable
 created: 2026-06-11
 updated: 2026-06-11
 owner: self
-source: arxiv:2305.12345
-human+ai
+source: "arxiv:2305.12345 human+ai"
 roadmap_phase: phase1
 ---
 

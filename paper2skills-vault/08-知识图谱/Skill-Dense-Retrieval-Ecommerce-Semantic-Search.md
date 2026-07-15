@@ -3,7 +3,7 @@ title: 面向电商的稠密检索与语义排序
 doc_type: knowledge
 module: 08-知识图谱
 topic: dense-retrieval-ecommerce-semantic-search
-
+
 roadmap_phase: phase2
 created: 2026-05-01
 updated: 2026-05-01

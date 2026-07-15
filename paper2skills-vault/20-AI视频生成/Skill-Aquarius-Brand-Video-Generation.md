@@ -4,7 +4,7 @@ roadmap_phase: phase3
 status: stable
 updated: 2025-01-15
 title: Aquarius — Brand Video Generation（品牌营销视频生成）
-paper: Aquarius: A Family of Industry-Level Video Generation Models for Marketing Scenarios
+paper: "Aquarius: A Family of Industry-Level Video Generation Models for Marketing Scenarios"
 arxiv: 2505.10584
 category: 20-AI视频生成
 scenario: 品牌推广

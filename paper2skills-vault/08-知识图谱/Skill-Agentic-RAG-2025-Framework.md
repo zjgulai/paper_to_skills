@@ -3,7 +3,7 @@ roadmap_phase: phase2
 created: 2026-07-08
 skill_id: Skill-Agentic-RAG-2025-Framework
 domain: 08-知识图谱
-paper: Agentic RAG: Turning Retrieval Into Agency, Wu et al., arXiv 2025
+paper: "Agentic RAG: Turning Retrieval Into Agency, Wu et al., arXiv 2025"
 arxiv: 2501.09139
 year: 2025
 ---

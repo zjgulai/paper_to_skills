@@ -7,29 +7,30 @@ This file provides guidance to AI agents (OpenCode/Codex) working with this repo
 **paper2skills** — 将顶刊学术论文转化为可落地的母婴跨境电商 AI 决策 Skill 卡片系统，并通过 Playbook、Agent 市场、飞书集成，形成从「知识库」到「日常决策基础设施」的完整闭环。
 
 4 步内容流水线：论文筛选 → Skill 萃取 → 质量审核 → 同步发布。
-产品形态：静态 Playbook 网站 + 21 个真实 AI Agent + 飞书双向集成 + 每日自动巡检。
+产品形态：静态 Playbook 网站 + 26 个真实 AI Agent + 飞书双向集成 + 每日自动巡检。
 
 **Live Playbook**: https://skills.lute-tlz-dddd.top
 
 ---
 
-## Current State (2026-06-25)
+## Current State (2026-07-15)
 
 | Metric | Value |
 |--------|-------|
-| Skill pages | **1037** |
+| Skill pages | **1210**（线上）/ 1371 vault 文件（含79个无frontmatter、65个已修复yaml错误） |
 | Domains | **25** |
-| Graph edges | **11,577**（有效边，两端节点均在图谱内） |
-| Agents | **21** 个真实 AI Agent（默认 DeepSeek，有结构化 prompt） |
+| Graph edges | **12,818**（有效边，两端节点均在图谱内） |
+| Agents | **26** 个真实 AI Agent（AGENT_CATALOG，默认 DeepSeek，有结构化 prompt） |
 | Solutions | **15** published |
-| ps_override entries | **1037** (100% coverage) |
-| Playbooks | **33** scene handbooks（每个含「推送到飞书」按钮） |
+| ps_override entries | **1202** (1210 Skill 覆盖率 99.3%) |
+| Playbooks | **37**（TOB_PLAYBOOKS）scene handbooks（每个含「推送到飞书」按钮） |
 | Workflows | **27** business workflows |
 | Topics | **32** topic pages |
-| Risk Ontology | **17 events / 193 Skill mappings** (diagnostic.html) |
+| Risk Ontology | **21 events / 219 phase-Skill refs** (diagnostic.html) |
 | VOID Framework | **运行中** — Q2-2026 Session 完成，8 个问题入库，1 个原型 Skill |
 | GA4 | **G-N9HJR3G0MR**（全站埋点：skill_view / skill_code_copy / agent_run） |
 | 飞书集成 | **双向** — Agent 报告推送 + Playbook 进度推送 + 每日巡检 + 卡片按钮回调 |
+| SSH 密钥 | **DDDD.pem**（项目根目录，替换了旧的 ai_video.pem） |
 
 ---
 
@@ -221,9 +222,9 @@ systemd 服务：p2s-service.service（开机自启，崩溃自动重启）
 | `/` | index.html | 总览仪表盘（含 Freemium 升级 CTA） |
 | `/diagnostic.html` | 业务诊断中心 | 症状→Skill链 + BFS路径规划器 + 风险事件 Ontology |
 | `/chat.html` | AI知识库对话 | DeepSeek RAG + 角色分层（运营/分析师/CEO）+ 症状路由 |
-| `/playbooks/` | 场景手册 (33个) | 可执行业务手册 + 飞书进度推送按钮 |
+| `/playbooks/` | 场景手册 (37个) | 可执行业务手册 + 飞书进度推送按钮 |
 | `/solutions/` | 方案库 (15个) | 系统架构方案 |
-| `/agents.html` | 智能体广场 | 21 个真实 AI Agent（默认 DeepSeek，结果推飞书） |
+| `/agents.html` | 智能体广场 | 26 个真实 AI Agent（默认 DeepSeek，结果推飞书） |
 | `/agent-report.html` | 智能体报告 | localStorage 持久化历史报告 |
 | `/ai-roadmap.html` | AI 能力路线图 | CEO-facing 白皮书 |
 | `/skills/` | 全部 Skills (1037个) | 每 Skill 独立详情页（GA4 skill_view 埋点） |
@@ -249,9 +250,9 @@ cd playbook && tar -czf /tmp/pb.tar.gz \
   *.html build-report.json README.md
 
 # 3. 上传 + 解压
-rsync -avz --timeout=60 -e "ssh -i ../ai_video.pem -o StrictHostKeyChecking=no" \
+rsync -avz --timeout=60 -e "ssh -i ../DDDD.pem -o StrictHostKeyChecking=no" \
   /tmp/pb.tar.gz ubuntu@101.34.52.232:/tmp/
-ssh -i ../ai_video.pem -o StrictHostKeyChecking=no ubuntu@101.34.52.232 \
+ssh -i ../DDDD.pem -o StrictHostKeyChecking=no ubuntu@101.34.52.232 \
   "rm -rf /opt/paper2skills/html/* && tar -xzf /tmp/pb.tar.gz -C /opt/paper2skills/html/ && rm /tmp/pb.tar.gz"
 
 # 4. 验证
@@ -282,7 +283,7 @@ print(f'✅ {r[\"skill_pages\"]} Skills / {r[\"domains\"]}域 / {r[\"edges\"]}�
 
 ---
 
-## Agent Marketplace（21个，全部真实 AI）
+## Agent Marketplace（26个，全部真实 AI）
 
 | 分类 | Agent ID | 名称 |
 |------|---------|------|
@@ -382,31 +383,31 @@ python3 paper2skills-skills/diagnostic-sop/diagnose.py \
 
 | 中文目录 | 域 | Skills |
 |---------|-----|--------|
-| 01-因果推断 | Causal inference, uplift modeling | 21 |
-| 02-A_B实验 | A/B testing, multi-armed bandits | 20 |
-| 03-时间序列 | Demand forecasting | 38 |
-| 04-供应链 | Inventory, SC optimization | 129 |
-| 05-推荐系统 | Recommendation systems | 27 |
-| 06-增长模型 | Churn, LTV, growth | 59 |
-| 07-NLP-VOC | Sentiment, VOC mining | 36 |
-| 08-知识图谱 | KG, GNN, hyperbolic | 52 |
-| 09-DataAgent-LLM | Data agent, LLM analytics | 20 |
-| 10-MAS | Multi-agent systems | 65 |
-| 11-AI人文 | AI ethics, AIGC | 20 |
-| 12-ML基础 | ML fundamentals | 20 |
-| 13-广告分析 | Ad attribution, ROAS | 52 |
-| 14-用户分析 | Funnel, cohort, RFM | 52 |
-| 15-营销投放分析 | MMM, promo effectiveness | 42 |
-| 16-智能体工程 | LLM Agent engineering | 66 |
+| 01-因果推断 | Causal inference, uplift modeling | 30 |
+| 02-A_B实验 | A/B testing, multi-armed bandits | 27 |
+| 03-时间序列 | Demand forecasting | 39 |
+| 04-供应链 | Inventory, SC optimization | 130 |
+| 05-推荐系统 | Recommendation systems | 32 |
+| 06-增长模型 | Churn, LTV, growth | 63 |
+| 07-NLP-VOC | Sentiment, VOC mining | 38 |
+| 08-知识图谱 | KG, GNN, hyperbolic | 116 |
+| 09-DataAgent-LLM | Data agent, LLM analytics | 31 |
+| 10-MAS | Multi-agent systems | 69 |
+| 11-AI人文 | AI ethics, AIGC | 34 |
+| 12-ML基础 | ML fundamentals | 32 |
+| 13-广告分析 | Ad attribution, ROAS | 57 |
+| 14-用户分析 | Funnel, cohort, RFM | 55 |
+| 15-营销投放分析 | MMM, promo effectiveness | 43 |
+| 16-智能体工程 | LLM Agent engineering | 81 |
 | 17-价格优化 | Dynamic pricing | 36 |
-| 18-物流履约 | Cross-border logistics | 20 |
-| 19-风控反欺诈 | Fraud detection | 36 |
-| 20-AI视频生成 | Virtual anchor, brand video | 35 |
+| 18-物流履约 | Cross-border logistics | 34 |
+| 19-风控反欺诈 | Fraud detection | 40 |
+| 20-AI视频生成 | Virtual anchor, brand video | 36 |
 | 21-合规决策 | Compliance decisions | 31 |
-| 22-数据采集工程 | Data collection, quality | 26 |
-| 23-运营财务 | FBA finance, P&L, tariff | 35 |
-| 24-标签工程 | Tag engineering, Palantir ontology, action triggers | 61 |
-| 25-搜索流量工程 | Search traffic, SEO, A9 algorithm | 35 |
+| 22-数据采集工程 | Data collection, quality | 28 |
+| 23-运营财务 | FBA finance, P&L, tariff | 36 |
+| 24-标签工程 | Tag engineering, Palantir ontology, action triggers | 66 |
+| 25-搜索流量工程 | Search traffic, SEO, A9 algorithm | 38 |
 
 ---
 

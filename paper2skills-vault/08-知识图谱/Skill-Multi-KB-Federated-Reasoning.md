@@ -3,7 +3,7 @@ skill_id: Skill-Multi-KB-Federated-Reasoning
 domain: 08-知识图谱
 roadmap_phase: phase3
 created: 2026-07-08
-paper: BRIGHT: Reasoning-Intensive Retrieval Benchmark, Su et al., NeurIPS 2024
+paper: "BRIGHT: Reasoning-Intensive Retrieval Benchmark, Su et al., NeurIPS 2024"
 arxiv: 2407.12883
 year: 2025
 ---

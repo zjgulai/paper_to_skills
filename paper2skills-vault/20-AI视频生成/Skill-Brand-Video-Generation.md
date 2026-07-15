@@ -3,7 +3,7 @@ title: Brand Video Generation — AI品牌视频生成：从文本/图像到高�
 doc_type: knowledge
 module: 20-AI视频生成
 topic: brand-video-generation-text-to-video
-
+
 roadmap_phase: phase3
 created: 2026-06-06
 updated: 2026-06-06

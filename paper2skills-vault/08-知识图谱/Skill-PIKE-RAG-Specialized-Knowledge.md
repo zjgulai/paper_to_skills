@@ -3,7 +3,7 @@ title: Skill-PIKE-RAG-Specialized-Knowledge
 domain: 08-知识图谱
 roadmap_phase: phase2
 created: 2026-07-07
-paper: PIKE-RAG: sPecIalized KnowledgE and Rationale Augmented Generation
+paper: "PIKE-RAG: sPecIalized KnowledgE and Rationale Augmented Generation"
 authors: Shi et al.
 arxiv: 2501.11551
 year: 2025

@@ -3,13 +3,13 @@ title: 用户行为轨迹模式挖掘与预测 - 变阶马尔可夫模型
 doc_type: knowledge
 module: 14-用户分析
 topic: trajectory-pattern-mining
-
+
 roadmap_phase: phase2
 created: 2026-05-20
 updated: 2026-05-20
 owner: self
 source: human+ai
-paper: PLOS One 2025 (DOI: 10.1371/journal.pone.0320772)
+paper: "PLOS One 2025 (DOI: 10.1371/journal.pone.0320772)"
 ---
 
 # Skill: Trajectory Pattern Mining — 用户行为轨迹模式挖掘与变阶马尔可夫预测

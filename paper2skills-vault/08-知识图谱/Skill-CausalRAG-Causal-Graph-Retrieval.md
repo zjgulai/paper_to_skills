@@ -3,7 +3,7 @@ title: CausalRAG — 因果图增强检索：语义相似 + 因果链路双轨 R
 doc_type: knowledge
 module: 08-知识图谱
 topic: causalrag-causal-graph-retrieval-augmented-generation
-
+
 roadmap_phase: phase2
 created: 2026-06-01
 updated: 2026-06-01
