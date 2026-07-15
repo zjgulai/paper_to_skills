@@ -946,7 +946,7 @@ def render_agent_report_page(_html_page=None) -> str:
          {ag["id"]: ag.get("category","") for ag in AGENT_CATALOG}, ensure_ascii=False)
     filter_buttons = "".join(
         f'<button class="rpt-filter" data-agent="{ag["id"]}" onclick="setAgentFilter(\'{ag["id"]}\')">{ag["name"]}</button>'
-        for ag in AGENT_CATALOG[:21])
+        for ag in AGENT_CATALOG)
     body = f"""
 <!-- 报告详情 Modal -->
 <div id="rpt-detail-overlay" class="rpt-detail-overlay" role="dialog" aria-modal="true" style="display:none">
