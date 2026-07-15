@@ -1,3 +1,18 @@
+---
+title: Cross Cultural AI Bias Correction
+doc_type: knowledge
+module: 11-AI人文
+topic: cross-cultural-ai-bias-correction
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 跨文化AI偏见修正基于Hofstede文化维度理论（权力距离、个人主义、不确定性规避、长期导向等5维）与对抗性去偏差相结合。核心思想：不同文化背景下，用户对推荐、定价、内容的公平性认知存在系统差异。通过构建文化维度向量C∈ℝ⁵，将其作为条件变量注入推荐模型，使用Adversarial Debiasi
+problem_solved: 节省/提升 年化新增GMV 280万元
+---
+
 Skill: Skill-Cross-Cultural-AI-Bias-Correction | 域: 11-AI人文 | 算法: 文化维度理论(Hofstede)×算法偏见检测，Adversarial Debiasing + Reweighting联合修正，跨文化迁移学习
 
 ---

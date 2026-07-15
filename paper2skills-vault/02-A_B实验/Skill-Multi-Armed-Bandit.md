@@ -1,3 +1,17 @@
+---
+title: Multi-Armed Bandit Algorithm for Mother-Baby Cross-Border E-commerce
+doc_type: knowledge
+module: 02-A_B实验
+topic: multi-armed-bandit
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Multi-Armed Bandit Algorithm for Mother-Baby Cross-Border E-commerce
 
 roadmap_phase: phase1

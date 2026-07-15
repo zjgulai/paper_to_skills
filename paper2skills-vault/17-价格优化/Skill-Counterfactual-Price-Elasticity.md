@@ -143,3 +143,8 @@ print("[✓] Skill-Counterfactual-Price-Elasticity测试通过")
 - **实施难度**：★★★★☆ (需要构建规整的特征工程，对数据科学基建要求高)
 - **优先级评分**：★★★★★ (红海时代的绝对护城河算法)
 - **评估依据**：该算法将定价权从“平台/竞品逼迫”手中夺回，转交给了“数据推演的绝对确定性”，是存量博弈中利润最大化的顶级战略。
+
+## ④ 技能关联
+- **前置**：[[Skill-Price-Elasticity-Estimation]]（价格弹性基础估计）
+- **延伸**：[[Skill-Dynamic-Pricing-Elasticity]]（动态定价进阶）
+- **组合**：[[Skill-Causal-RL-Dynamic-Pricing]]（因果强化学习动态定价）

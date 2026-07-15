@@ -1,3 +1,18 @@
+---
+title: Forecast-Driven Inventory（预测驱动库存优化）
+doc_type: knowledge
+module: 03-时间序列
+topic: forecast-driven-inventory
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 打通需求预测和库存决策——不是先预测再独立决策，而是将预测不确定性直接编码为库存策略参数。核心：服务水平优化——给定预测分布 $N(\hat{\mu}, \hat{\sigma})$，安全库存 $SS = z_\alpha \cdot \hat{\sigma} \cdot \sqrt{LT}$，其中
+problem_solved: 节省/提升 年化：**8-12 万元
+---
+
 # Skill Card: Forecast-Driven Inventory（预测驱动库存优化）
 
 > **桥梁**: 03-时间序列 ↔ 04-供应链 | **类型**: 跨域融合

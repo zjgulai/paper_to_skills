@@ -1,3 +1,17 @@
+---
+title: 'Skill: BERT-SRL + 事件框架 — 母婴出海评论语义结构化抽取'
+doc_type: knowledge
+module: 07-NLP-VOC
+topic: bert-srl-event-frame-extraction
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+---
+
 ```markdown
 ---
 title: BERT-SRL + 事件框架 — 母婴出海评论语义结构化抽取

@@ -1,3 +1,18 @@
+---
+title: Markdown Optimization（折扣清仓定价优化）
+doc_type: knowledge
+module: 17-价格优化
+topic: markdown-optimization
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: '论文: Markdown Optimization in Retail: A Dynamic Programming Approach (KDD 2019) | arXiv: 1906.XXXXX'
+problem_solved: 节省/提升 年化 **20-50 万元
+---
+
 doc_type: knowledge
 domain: 17-价格优化
 skill_type: 综合萃取

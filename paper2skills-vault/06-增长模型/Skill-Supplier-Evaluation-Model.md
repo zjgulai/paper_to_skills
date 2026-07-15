@@ -1,3 +1,18 @@
+---
+title: Supplier Evaluation Model（供应商评估模型）
+doc_type: knowledge
+module: 06-增长模型
+topic: supplier-evaluation-model
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 多准则决策（MCDM）——TOPSIS 方法评估供应商。综合质量、价格、交期、合规、沟通五个维度。
+problem_solved: 节省/提升 年化节省：因交期缩短减少空运补货成本约18万元
+---
+
 # Skill Card: Supplier Evaluation Model（供应商评估模型）
 
 > **领域**: WF-D 选品扫描 | **归属**: 06-增长模型 | **类型**: 综合萃取

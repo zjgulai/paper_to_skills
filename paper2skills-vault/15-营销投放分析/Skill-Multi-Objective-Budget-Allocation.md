@@ -1,3 +1,18 @@
+---
+title: Multi-Objective Budget Allocation（多目标预算分配）
+doc_type: knowledge
+module: 15-营销投放分析
+topic: multi-objective-budget-allocation
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化隐性品牌资产增值 **50-80万元
+---
+
 # Skill Card: Multi-Objective Budget Allocation（多目标预算分配）
 
 > **领域**: 15-营销投放分析 | **类型**: 综合萃取 | **难度**: ⭐⭐⭐☆☆

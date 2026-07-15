@@ -1,3 +1,17 @@
+---
+title: Skill-Category-Compliance-Prescan
+doc_type: knowledge
+module: 21-合规决策
+topic: category-compliance-prescan
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：在决定进入新品类之前，用 NLP + 向量聚类对历史召回数据库（CPSC/RAPEX）做自动扫描，计算该品类的「召回风险密度」和「危害类型分布」，输出风险等级（低/中/高）+ 合规成本估算，作为 WF-D 选品扫描的进入前否决门。
+---
+
 # Skill-Category-Compliance-Prescan
 
 roadmap_phase: phase1

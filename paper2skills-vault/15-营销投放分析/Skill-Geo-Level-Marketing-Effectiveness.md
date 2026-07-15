@@ -1,3 +1,18 @@
+---
+title: Geo-Level Marketing Effectiveness（地理级营销效果）
+doc_type: knowledge
+module: 15-营销投放分析
+topic: geo-level-marketing-effectiveness
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 论文：Inferring causal impact using Bayesian structural time-series models | arXiv：1906.00563
+problem_solved: 节省/提升 年化额外利润 = (78-50) 件/天 × ($49.99-$18.00) 单件利润 × 365 天 ≈ 45.2 万元
+---
+
 # Skill Card: Geo-Level Marketing Effectiveness（地理级营销效果）
 
 > **领域**: 15-营销投放分析 | **类型**: 综合萃取

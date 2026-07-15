@@ -1,3 +1,17 @@
+---
+title: Hyperparameter Optimization（超参调优）
+doc_type: knowledge
+module: 12-ML基础
+topic: hyperparameter-optimization
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Hyperparameter Optimization（超参调优）
 
 roadmap_phase: phase1

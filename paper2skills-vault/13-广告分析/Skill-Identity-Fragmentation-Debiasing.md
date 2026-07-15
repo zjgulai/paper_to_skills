@@ -1,3 +1,17 @@
+---
+title: Identity Fragmentation Debiasing（身份碎片化纠偏）
+doc_type: knowledge
+module: 13-广告分析
+topic: identity-fragmentation-debiasing
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：用户在多设备间切换（手机看广告、电脑下单）导致底层 Cookie/IDFA 无法跨端串联，同一真实用户被拆分为多个"碎片化身份"。这使得广告平台看到的 ROAS 严重失真——有的记录"只有曝光没有购买"，有的记录"只有购买没有广告"。算法通过 Stratified Aggregation（
+---
+
 # Skill Card: Identity Fragmentation Debiasing（身份碎片化纠偏）
 
 > **论文来源**: arXiv:2008.12849 · 2020-08  

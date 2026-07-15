@@ -1,3 +1,17 @@
+---
+title: Skill-Data-Drift-Detection
+doc_type: knowledge
+module: 12-ML基础
+topic: data-drift-detection
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：生产 ML 模型上线后，输入数据的分布会随时间偏移（用户行为变化、季节性、竞品冲击），导致模型悄然失效。数据漂移检测通过持续监控特征分布（统计漂移）和预测误差（性能漂移）两条并行轨道，在模型失效前触发告警和重训——区别于异常检测，漂移检测关注的是系统性、持续性的分布偏移，而非偶发性异常点。
+---
+
 # Skill-Data-Drift-Detection
 
 roadmap_phase: phase1

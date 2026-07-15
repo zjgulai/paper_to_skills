@@ -1,3 +1,17 @@
+---
+title: 'Skill: Temporal Fusion Transformer (TFT) 多水平时序预测'
+doc_type: knowledge
+module: 03-时间序列
+topic: temporal-fusion-transformer
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：TFT 是一种多源特征融合的深度学习架构，通过可解释的注意力机制，同时处理静态特征（产品属性）、已知时变特征（促销计划）和未知时变特征（历史销量），输出分位数预测和特征重要性排名，特别适合母婴产品的多SKU、多周期、多约束的库存决策。
+---
+
 # Skill: Temporal Fusion Transformer (TFT) 多水平时序预测
 
 roadmap_phase: phase1

@@ -1,3 +1,18 @@
+---
+title: Causal Attribution Bridge（因果归因桥梁）
+doc_type: knowledge
+module: 01-因果推断
+topic: causal-attribution-bridge
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 传统广告归因是相关性的（"点了广告→买了"），因果归因是反事实的（"如果没有这个广告→还会买吗"）。核心：用增量因果效应替代 naive 归因比例。
+problem_solved: 节省/提升 年化节省广告浪费：$120K（约 85 万元
+---
+
 # Skill Card: Causal Attribution Bridge（因果归因桥梁）
 
 > **桥梁**: 01-因果推断 ↔ 13-广告分析 | **类型**: 跨域融合  

@@ -1,3 +1,17 @@
+---
+title: GraphRAG - 知识图谱增强检索生成
+doc_type: knowledge
+module: 08-知识图谱
+topic: graphrag-knowledge-enhanced-retrieval
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: GraphRAG - 知识图谱增强检索生成
 
 roadmap_phase: phase2

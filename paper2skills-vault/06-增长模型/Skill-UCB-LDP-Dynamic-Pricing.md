@@ -1,3 +1,17 @@
+---
+title: UCB-LDP Dynamic Pricing（上下文动态定价）
+doc_type: knowledge
+module: 06-增长模型
+topic: ucb-ldp-dynamic-pricing
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: UCB-LDP Dynamic Pricing（上下文动态定价）
 
 > **论文来源**：Minimax Optimality in Contextual Dynamic Pricing with General Valuation Models（arXiv: 2406.17184, 2025年8月修订）  

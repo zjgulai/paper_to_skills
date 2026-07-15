@@ -1,3 +1,18 @@
+---
+title: FSDA-DRL 快慢双智能体动态定价与补货联合优化
+doc_type: knowledge
+module: 04-供应链
+topic: fsda-drl
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化节省45万元
+---
+
 # Skill Card: FSDA-DRL 快慢双智能体动态定价与补货联合优化
 
 > **来源论文**: Dual-Agent Deep Reinforcement Learning for Dynamic Pricing and Replenishment (arXiv: 2410.21109, 2024-10)

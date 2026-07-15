@@ -1,3 +1,18 @@
+---
+title: BrandFusion — Multi-Agent Brand Integration（品牌无缝植入视频）
+doc_type: knowledge
+module: 20-AI视频生成
+topic: brandfusion-multi-agent
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化节省人工修图成本 45 万元
+---
+
 # Skill Card: BrandFusion — Multi-Agent Brand Integration（品牌无缝植入视频）
 
 > **论文**: BrandFusion: A Multi-Agent Framework for Seamless Brand Integration in Text-to-Video Generation  

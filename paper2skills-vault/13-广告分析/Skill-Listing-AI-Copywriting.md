@@ -1,3 +1,17 @@
+---
+title: Amazon Listing 文案 AI 生成（标题+Bullet+描述全套）
+doc_type: knowledge
+module: 13-广告分析
+topic: listing-ai-copywriting
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：将商品属性（品类/材质/功能/目标用户）通过属性引导的条件文本生成（Attribute-Guided Prompt Tuning, APGT）转化为符合 Amazon 合规格式的完整 Listing 文案，同时通过集成梯度（Integrated Gradients）反向追踪每个词对转化率的
+---
+
 # Skill Card: Amazon Listing 文案 AI 生成（标题+Bullet+描述全套）
 
 ---

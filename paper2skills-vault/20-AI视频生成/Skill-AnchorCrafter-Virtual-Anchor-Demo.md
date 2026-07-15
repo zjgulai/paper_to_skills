@@ -1,3 +1,18 @@
+---
+title: AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）
+doc_type: knowledge
+module: 20-AI视频生成
+topic: anchorcrafter-virtual-anchor-demo
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化 ROI：**50-100 万元
+---
+
 # Skill Card: AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）
 
 > **论文**: AnchorCrafter: Animate Cyber-Anchors Selling Your Products via Human-Object Interacting Video Generation  

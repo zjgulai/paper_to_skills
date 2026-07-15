@@ -1,3 +1,17 @@
+---
+title: STAN 用户生命周期自适应建模
+doc_type: knowledge
+module: 06-增长模型
+topic: user-lifecycle-stan
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: STAN 用户生命周期自适应建模
 
 **论文来源**: STAN: Stage-Adaptive Network for Multi-Task Recommendation by Learning User Lifecycle-Based Representation  

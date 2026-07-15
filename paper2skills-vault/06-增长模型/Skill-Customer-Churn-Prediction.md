@@ -1,3 +1,17 @@
+---
+title: Customer Churn Prediction (用户流失预测)
+doc_type: knowledge
+module: 06-增长模型
+topic: customer-churn-prediction
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Customer Churn Prediction (用户流失预测)
 
 roadmap_phase: phase2

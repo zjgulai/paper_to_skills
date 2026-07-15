@@ -1,3 +1,18 @@
+---
+title: Customer Journey Prototype Detection 客户旅程序列原型检测
+doc_type: knowledge
+module: 06-增长模型
+topic: customer-journey-prototype
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想（一句话）
+problem_solved: 节省/提升 年化增收**：3600 × 150 × 12 = **648万元
+---
+
 # Skill Card: Customer Journey Prototype Detection 客户旅程序列原型检测
 
 **论文来源**: Analysis of Customer Journeys Using Prototype Detection and Counterfactual Explanations for Sequential Data  

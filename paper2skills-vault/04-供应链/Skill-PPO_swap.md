@@ -1,3 +1,18 @@
+---
+title: PPO-swap（图上设施选址强化学习）
+doc_type: knowledge
+module: 04-供应链
+topic: ppo_swap
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化节省约 **45 万元
+---
+
 以下是改进后的 Skill 卡片（第 1 轮，针对维度 D2_frontmatter）：
 
 # Skill Card: PPO-swap（图上设施选址强化学习）

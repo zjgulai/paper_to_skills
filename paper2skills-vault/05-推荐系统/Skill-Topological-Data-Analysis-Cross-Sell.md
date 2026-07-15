@@ -242,3 +242,8 @@ if cross_sell_chains:
     print(f"[TDA] Top链: {cross_sell_chains[0]['from']} → {cross_sell_chains[0]['to']} (置信度: {cross_sell_chains[0]['confidence']:.2f})")
 print(f"[TDA] 用户推荐数: {len(recommendations)}")
 print("[✓] Skill-Topological-Data-Analysis-Cross-Sell测试通过")
+
+## ④ 技能关联
+- **前置**：[[Skill-GNN-Ecommerce-Recommendation]]（图神经网络基础）
+- **延伸**：[[Skill-Sequential-User-Behavior-Modeling]]（序列行为建模）
+- **组合**：[[Skill-Session-Based-Recommendation-SR-GNN]]（结合会话推荐发现跨品类路径）

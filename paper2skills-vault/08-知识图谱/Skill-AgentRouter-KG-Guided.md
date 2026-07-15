@@ -1,3 +1,18 @@
+---
+title: AgentRouter — 知识图谱引导的多智能体路由器
+doc_type: knowledge
+module: 08-知识图谱
+topic: agentrouter-kg-guided
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化 **1900 万元
+---
+
 # Skill Card: AgentRouter — 知识图谱引导的多智能体路由器
 
 roadmap_phase: phase2

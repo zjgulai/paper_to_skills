@@ -1,3 +1,17 @@
+---
+title: Compliant Dynamic Pricing Guard（合规-定价双约束优化）
+doc_type: knowledge
+module: 17-价格优化
+topic: compliant-dynamic-pricing-guard
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：跨境动态定价不能只优化利润，必须同时满足多个合规约束，违规定价可能触发 MAP 违规、Amazon 最低价政策、或反倾销诉讼。
+---
+
 # Skill Card: Compliant Dynamic Pricing Guard（合规-定价双约束优化）
 
 > **桥梁**: 17-价格优化 ↔ 21-合规决策 | **类型**: 跨域融合

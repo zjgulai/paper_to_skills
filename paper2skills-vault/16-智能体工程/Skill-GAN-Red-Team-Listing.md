@@ -201,3 +201,8 @@ if __name__ == '__main__':
     print(f"\n【建议】{report['recommendation']}")
     print("="*60)
     print("[✓] Skill-GAN-Red-Team-Listing测试通过")
+
+## ④ 技能关联
+- **前置**：[[Skill-Listing-Health-Diagnostic]]（Listing健康诊断基础）
+- **延伸**：[[Skill-Brand-Listing-Hijacking-Detection]]（品牌跟卖检测）
+- **组合**：[[Skill-Listing-Compliance-Auto-Repair]]（合规检测+红队防御双保险）

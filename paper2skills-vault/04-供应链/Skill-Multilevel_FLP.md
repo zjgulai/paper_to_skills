@@ -1,3 +1,17 @@
+---
+title: Multilevel Facility Location Optimization (多级设施选址优化)
+doc_type: knowledge
+module: 04-供应链
+topic: multilevel_flp
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Multilevel Facility Location Optimization (多级设施选址优化)
 
 > **论文来源**: arXiv: 2406.07382 | Multilevel Facility Location Optimization: A Novel Integer Programming Formulation and Approaches to Heuristic Solutions (2024-06, Last revised 2025-04)

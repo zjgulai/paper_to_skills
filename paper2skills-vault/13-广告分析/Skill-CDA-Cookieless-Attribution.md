@@ -1,3 +1,17 @@
+---
+title: CDA（Causal-Driven Attribution）— 无用户级数据的因果驱动归因
+doc_type: knowledge
+module: 13-广告分析
+topic: cda-cookieless-attribution
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：仅用聚合级别的每日广告曝光量与总订单数，无需任何 User ID 或 Cookie 追踪数据，通过时序因果图谱量化各渠道对转化的真实贡献比例。
+---
+
 # Skill Card: CDA（Causal-Driven Attribution）— 无用户级数据的因果驱动归因
 
 > **论文来源**: arXiv:2512.21211 · 2025-12  

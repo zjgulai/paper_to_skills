@@ -1,3 +1,18 @@
+---
+title: Dynamic Pricing with Demand Elasticity（动态定价与需求弹性）
+doc_type: knowledge
+module: 17-价格优化
+topic: dynamic-pricing-elasticity
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 论文：Deep Reinforcement Learning for Trading | arXiv：1811.02395
+problem_solved: 节省/提升 年化 ROI：**50-80 万元
+---
+
 doc_type: knowledge
 domain: 17-价格优化
 card_type: 综合萃取

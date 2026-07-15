@@ -1,3 +1,18 @@
+---
+title: Network Effect Experiments（网络效应实验）
+doc_type: knowledge
+module: 02-A_B实验
+topic: network-effect-experiments
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：传统A/B实验假设用户独立（SUTVA），但社交电商中用户行为相互影响，导致实验偏差。通过Cluster Randomization（簇随机化）将相关用户分组到同一treatment，消除跨组干扰。
+problem_solved: 节省/提升 年化产出：$1920 × 52 = **99.8万元
+---
+
 # Skill Card: Network Effect Experiments（网络效应实验）
 
 > **领域**: 02-A/B实验 | **类型**: 综合萃取 | **更新**: 2026-07-05

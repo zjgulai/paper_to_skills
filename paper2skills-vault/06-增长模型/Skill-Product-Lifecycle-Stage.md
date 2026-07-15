@@ -1,3 +1,17 @@
+---
+title: Skill-Product-Lifecycle-Stage
+doc_type: knowledge
+module: 06-增长模型
+topic: product-lifecycle-stage
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想：把一个 SKU 或品类的销量时间序列，分解为趋势+季节+残差三层信号，通过微分分析（斜率变化率）自动定位「成长→成熟→衰退」的阶段边界，并用年龄-销量矩（AVM）作为阶段状态的低成本代理特征，最终输出四阶段标签（引入/成长/成熟/衰退）+ 进入时机决策建议。
+---
+
 # Skill-Product-Lifecycle-Stage
 
 roadmap_phase: phase2

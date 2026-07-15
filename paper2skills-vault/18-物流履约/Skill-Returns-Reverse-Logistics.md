@@ -1,3 +1,18 @@
+---
+title: Returns Reverse Logistics（退货逆向物流）
+doc_type: knowledge
+module: 18-物流履约
+topic: returns-reverse-logistics
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 预测退货概率 + 优化退货处理路径。退货概率用 XGBoost 建模（产品类别、价格、用户历史退货率、配送时长），退货处理用规则+成本优化——退货到 FBA vs 第三方仓 vs 弃置。
+problem_solved: 节省/提升 年化：**6-10 万元
+---
+
 # Skill Card: Returns Reverse Logistics（退货逆向物流）
 
 > **领域**: 18-物流履约 | **类型**: 综合萃取

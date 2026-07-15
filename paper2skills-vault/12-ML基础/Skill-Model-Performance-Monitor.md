@@ -1,3 +1,17 @@
+---
+title: Skill-Model-Performance-Monitor
+doc_type: knowledge
+module: 12-ML基础
+topic: model-performance-monitor
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：数据漂移检测（[[Skill-Data-Drift-Detection]]）解决的是"输入变了吗"，模型性能监控解决的是"输出还准吗"。两者共同构成生产 ML 模型的完整健康体系。性能监控通过滑动窗口持续评估 AUC/MAPE 等指标，配合 Shadow Mode（新模型静默跑）和 Cha
+---
+
 # Skill-Model-Performance-Monitor
 
 ---

@@ -1,3 +1,17 @@
+---
+title: Knowledge Graph for Skills Management（知识图谱驱动的技能管理）
+doc_type: knowledge
+module: 08-知识图谱
+topic: knowledge-graph-for-skills-management
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Knowledge Graph for Skills Management（知识图谱驱动的技能管理）
 
 roadmap_phase: phase2

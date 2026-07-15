@@ -1,3 +1,18 @@
+---
+title: Agent Safety Guardrails（Agent 安全对抗护栏）
+doc_type: knowledge
+module: 16-智能体工程
+topic: agent-safety-guardrails
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 核心思想：通过多层次防护（输入检测→工具验证→输出审计）阻止 LLM Agent 在跨境电商场景中泄露商业敏感数据（成本价、真实库存、用户隐私）。
+problem_solved: 节省/提升 年化节省成本压价损失**：若泄露导致平均议价 8%，月销 1500 件 × $15.5 毛利 × 8% × 12 月 = **约 22.3 万元
+---
+
 # Skill Card: Agent Safety Guardrails（Agent 安全对抗护栏）
 
 > **领域**: 16-智能体工程 | **类型**: 综合萃取

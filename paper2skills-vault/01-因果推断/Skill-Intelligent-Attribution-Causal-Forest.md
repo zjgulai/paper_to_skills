@@ -1,3 +1,18 @@
+---
+title: 智能归因 - 因果森林 (Causal Forest)
+doc_type: knowledge
+module: 01-因果推断
+topic: intelligent-attribution-causal-forest
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化48.6万元
+---
+
 # Skill Card: 智能归因 - 因果森林 (Causal Forest)
 
 roadmap_phase: phase1

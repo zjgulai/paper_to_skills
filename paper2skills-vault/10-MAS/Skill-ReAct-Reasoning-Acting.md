@@ -1,3 +1,18 @@
+---
+title: 'Skill: ReAct — 推理与行动交替执行'
+doc_type: knowledge
+module: 10-MAS
+topic: react-reasoning-acting
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化减少损失 32 万元
+---
+
 以下是改进后的 Skill 卡片（第 1 轮，针对维度 D4_roi）：
 
 ---

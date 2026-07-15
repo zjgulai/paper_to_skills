@@ -1,3 +1,17 @@
+---
+title: 'Skill: Deep Learning for Customer Churn Prediction'
+doc_type: knowledge
+module: 06-增长模型
+topic: deep-learning-churn-prediction
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想：通过多层神经网络自动学习用户RFM行为的非线性特征表示，预测用户在未来14-30天内停止购买的概率。相比传统逻辑回归，深度学习能捕获复杂特征交互（如"低频+高金额+长沉默"的组合信号），在跨境母婴电商中识别"正常沉默"vs"真实流失"。
+---
+
 # Skill: Deep Learning for Customer Churn Prediction
 
 roadmap_phase: phase2

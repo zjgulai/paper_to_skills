@@ -1,3 +1,18 @@
+---
+title: Feature Selection（特征选择）
+doc_type: knowledge
+module: 12-ML基础
+topic: feature-selection
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化贡献 **30-60 万元
+---
+
 # Skill Card: Feature Selection（特征选择）
 
 roadmap_phase: phase1

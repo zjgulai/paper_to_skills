@@ -1,3 +1,17 @@
+---
+title: Last-Mile Delivery Prediction（最后一公里配送时效预测）
+doc_type: knowledge
+module: 18-物流履约
+topic: last-mile-delivery-prediction
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：通过生存分析（Survival Analysis）建立"包裹到达目的国仓库→用户签收"的时长预测模型，在右删失数据（未签收包裹）场景下，量化承运商、地理位置、季节因素对配送时效的影响，支持动态承运商选择和时效承诺。
+---
+
 # Skill Card: Last-Mile Delivery Prediction（最后一公里配送时效预测）
 
 > **领域**: 18-物流履约 | **类型**: 综合萃取

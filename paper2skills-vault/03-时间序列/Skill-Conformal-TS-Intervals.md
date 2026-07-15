@@ -1,3 +1,18 @@
+---
+title: Conformal TS Intervals（时序 Conformal 预测区间）
+doc_type: knowledge
+module: 03-时间序列
+topic: conformal-ts-intervals
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 论文：Predictive Inference with the Jackknife+ | arXiv：1905.03754
+problem_solved: 节省/提升 年化节省：€1,850 × 12 × 35% = €7,770（约 6.2 万元
+---
+
 # Skill Card: Conformal TS Intervals（时序 Conformal 预测区间）
 
 > **领域**: 03-时间序列 | **类型**: 综合萃取

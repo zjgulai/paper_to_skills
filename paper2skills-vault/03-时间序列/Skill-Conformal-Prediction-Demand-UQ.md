@@ -1,3 +1,18 @@
+---
+title: Conformal Prediction Demand UQ（需求预测不确定性量化）
+doc_type: knowledge
+module: 03-时间序列
+topic: conformal-prediction-demand-uq
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化节省：**约 22 万元
+---
+
 # Skill Card: Conformal Prediction Demand UQ（需求预测不确定性量化）
 
 > **论文**: Conformal PID Control for Time Series Prediction (arXiv:2307.16895, NeurIPS 2023)  

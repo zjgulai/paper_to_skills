@@ -1,3 +1,17 @@
+---
+title: Amazon ToS Compliance Guardrail（亚马逊合规护栏）
+doc_type: knowledge
+module: 13-广告分析
+topic: amazon-tos-compliance-guardrail
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Amazon ToS Compliance Guardrail（亚马逊合规护栏）
 
 > **论文**: SAFE-AGENT-L: Legal Compliance Framework for LLM Agents in Retail (OpenReview, AAAI 2026 Bridge Workshop 2025)  

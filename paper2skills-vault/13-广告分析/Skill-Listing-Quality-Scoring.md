@@ -1,3 +1,17 @@
+---
+title: Skill-Listing-Quality-Scoring
+doc_type: knowledge
+module: 13-广告分析
+topic: listing-quality-scoring
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：把 Amazon Listing 的「吸引力」分解为文本质量 + 图像质量两个可量化维度，用神经网络预测每个内容位置（标题/主图/描述/bullet points）对转化成功率的贡献，并反向输出"改哪里能提升最多"的可操作建议。
+---
+
 # Skill-Listing-Quality-Scoring
 
 roadmap_phase: phase1

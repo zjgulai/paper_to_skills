@@ -1,3 +1,17 @@
+---
+title: 'Skill: VOC Proxy NPS × AIPL 统一标签萃取引擎'
+doc_type: knowledge
+module: 07-NLP-VOC
+topic: voc-proxy-nps-aipl-统一萃取引擎
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill: VOC Proxy NPS × AIPL 统一标签萃取引擎
 
 ---

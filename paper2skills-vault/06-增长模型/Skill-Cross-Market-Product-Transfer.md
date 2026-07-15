@@ -1,3 +1,18 @@
+---
+title: Cross-Market Product Transfer（跨市场产品适配性预测）
+doc_type: knowledge
+module: 06-增长模型
+topic: cross-market-product-transfer
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化节省：避免 2-3 次类似失败选品，年化节省 **45 万元
+---
+
 以下是改进后的 Skill 卡片（第 1 轮，针对维度 D2_frontmatter）：
 
 # Skill Card: Cross-Market Product Transfer（跨市场产品适配性预测）

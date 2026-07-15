@@ -1,3 +1,17 @@
+---
+title: HGT — 异构图 Transformer 表示学习
+doc_type: knowledge
+module: 08-知识图谱
+topic: hgt-heterogeneous-graph-transformer
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: HGT — 异构图 Transformer 表示学习
 
 roadmap_phase: phase2

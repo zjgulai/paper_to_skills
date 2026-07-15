@@ -1,3 +1,18 @@
+---
+title: Category Trend Forecasting（品类趋势预测）
+doc_type: knowledge
+module: 06-增长模型
+topic: category-trend-forecasting
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 论文：Robust Trend Filtering and Segmentation via Approximate Message Passing | arXiv：1809.07421
+problem_solved: 节省/提升 年化隐性价值 **50-100 万元
+---
+
 doc_type: knowledge
 title: Category Trend Forecasting（品类趋势预测）
 domain: WF-D 选品扫描

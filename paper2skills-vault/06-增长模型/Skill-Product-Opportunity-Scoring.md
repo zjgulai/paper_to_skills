@@ -1,3 +1,18 @@
+---
+title: Product Opportunity Scoring（新品机会评分卡）
+doc_type: knowledge
+module: 06-增长模型
+topic: product-opportunity-scoring
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 多维度加权评分卡，综合评估新品机会：
+problem_solved: 节省/提升 年化节省选品试错成本约 45 万元
+---
+
 # Skill Card: Product Opportunity Scoring（新品机会评分卡）
 
 > **领域**: WF-D 选品扫描 | **归属**: 06-增长模型 | **类型**: 综合萃取

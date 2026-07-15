@@ -1,3 +1,18 @@
+---
+title: Review Pain-Point Mining（竞品差评痛点挖掘）
+doc_type: knowledge
+module: 14-用户分析
+topic: review-pain-point-mining
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化节省**：因差评减少而节省的退货处理成本约 45 万元
+---
+
 # Skill Card: Review Pain-Point Mining（竞品差评痛点挖掘）
 
 > **论文**: Painsight: An Extendable Opinion Mining Framework for Detecting Pain Points Based on Online Customer Reviews  

@@ -1,3 +1,18 @@
+---
+title: DAWN — Talking-Head Review Video（AI口播Review视频）
+doc_type: knowledge
+module: 20-AI视频生成
+topic: dawn-talking-head-review
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化 **30-60 万元
+---
+
 # Skill Card: DAWN — Talking-Head Review Video（AI口播Review视频）
 
 > **论文**: DAWN: Dynamic Frame Avatar with Non-autoregressive Diffusion Framework for Talking Head Video Generation  

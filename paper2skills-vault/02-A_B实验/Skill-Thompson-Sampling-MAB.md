@@ -1,3 +1,18 @@
+---
+title: Thompson Sampling for Multi-Armed Bandit
+doc_type: knowledge
+module: 02-A_B实验
+topic: thompson-sampling-mab
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化增收约 42 万元
+---
+
 # Skill Card: Thompson Sampling for Multi-Armed Bandit
 
 roadmap_phase: phase1

@@ -1,3 +1,18 @@
+---
+title: Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）
+doc_type: knowledge
+module: 20-AI视频生成
+topic: virbo-multilingual-avatar-ugc
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 完整多语言短视频生成系统：角色图像 → 空间变形+特征解码器 → 对口型 talking avatar → 多语言 TTS（百余语言）→ 特效渲染。
+problem_solved: 节省/提升 年化 **35-60 万元
+---
+
 # Skill Card: Virbo — Multilingual Avatar UGC（多语言虚拟人UGC批量生产）
 
 > **论文**: Virbo: Multimodal Multilingual Avatar Video Generation in Digital Marketing  

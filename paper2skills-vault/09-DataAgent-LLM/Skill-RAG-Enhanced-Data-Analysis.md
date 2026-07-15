@@ -1,3 +1,18 @@
+---
+title: RAG-Enhanced Data Analysis（RAG 增强数据分析）
+doc_type: knowledge
+module: 09-DataAgent-LLM
+topic: rag-enhanced-data-analysis
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想：通过检索增强生成（RAG）将历史分析知识库与实时业务数据融合，使 LLM Agent 在数据分析决策中避免幻觉、提升准确性和一致性。
+problem_solved: 节省/提升 年化节省分析人力成本 **38 万元
+---
+
 # Skill Card: RAG-Enhanced Data Analysis（RAG 增强数据分析）
 
 > **领域**: 09-DataAgent-LLM | **类型**: 综合萃取

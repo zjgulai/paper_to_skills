@@ -1,3 +1,17 @@
+---
+title: Cost-Aware Agent Scheduling（成本感知智能体调度）
+doc_type: knowledge
+module: 16-智能体工程
+topic: cost-aware-agent-scheduling
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 核心思想：根据任务复杂度动态路由至最优成本模型，避免用 GPT-4 处理简单分类任务，通过分层模型架构（SLM→Medium→LLM）实现成本与性能的帕累托最优。
+---
+
 # Skill Card: Cost-Aware Agent Scheduling（成本感知智能体调度）
 
 > **领域**: 16-智能体工程 | **类型**: 综合萃取 | **难度**: ⭐⭐⭐☆☆

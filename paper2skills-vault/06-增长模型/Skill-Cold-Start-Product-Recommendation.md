@@ -1,3 +1,17 @@
+---
+title: Cold-Start Product Recommendation (冷启动商品推荐)
+doc_type: knowledge
+module: 06-增长模型
+topic: cold-start-product-recommendation
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Cold-Start Product Recommendation (冷启动商品推荐)
 
 roadmap_phase: phase2

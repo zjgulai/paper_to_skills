@@ -1,3 +1,18 @@
+---
+title: Cross-Border Price Harmonization（跨境价格协调）
+doc_type: knowledge
+module: 17-价格优化
+topic: cross-border-price-harmonization
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化收益**：减少跨市场投诉 70%（从 23 起/季降至 7 起/季），避免因汇率误判导致的利润损失 $5,000/月，合计年化节省 **$72,000（约 45 万元
+---
+
 # Skill Card: Cross-Border Price Harmonization（跨境价格协调）
 
 > **领域**: 17-价格优化 | **类型**: 综合萃取

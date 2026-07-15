@@ -1,3 +1,17 @@
+---
+title: Review Fraud Detection（虚假评论检测）
+doc_type: knowledge
+module: 19-风控反欺诈
+topic: review-fraud-detection
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：通过异构图神经网络（Heterogeneous GNN）识别评论网络中的异常子图结构，将虚假评论团伙的"集体作案特征"（账户关联、评分极端、时间聚集、文本相似）转化为图拓扑异常，实现比单条评论文本分析高 15-20% 的检测准确率。
+---
+
 # Skill Card: Review Fraud Detection（虚假评论检测）
 
 > **领域**: 19-风控反欺诈 | **类型**: 综合萃取 | **更新**: 2026-07-05

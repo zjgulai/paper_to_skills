@@ -1,3 +1,18 @@
+---
+title: Phantom — Product Showcase I2V（商品主体一致性视频生成）
+doc_type: knowledge
+module: 20-AI视频生成
+topic: phantom-product-showcase-i2v
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化 ROI：**$9,600（拍摄节省）+ $129,600（年化 GMV 增量）= $139,200（约 100 万元
+---
+
 以下是改进后的完整 Skill 卡片：
 
 # Skill Card: Phantom — Product Showcase I2V（商品主体一致性视频生成）

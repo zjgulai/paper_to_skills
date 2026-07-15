@@ -1,3 +1,17 @@
+---
+title: LTV预测 - 零膨胀对数正态模型 (ZILN)
+doc_type: knowledge
+module: 06-增长模型
+topic: ltv-prediction-ziln
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: LTV预测 - 零膨胀对数正态模型 (ZILN)
 
 roadmap_phase: phase2

@@ -1,3 +1,18 @@
+---
+title: Multi-Channel Inventory Pooling（多渠道库存池化）
+doc_type: knowledge
+module: 04-供应链
+topic: multi-channel-inventory-pooling
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化净节省：$24,000 - $17,280 + $39,600 - $8,500 = **$37,820（约 45 万元
+---
+
 # Skill Card: Multi-Channel Inventory Pooling（多渠道库存池化）
 
 > **论文**: Deep RL for Inventory Networks: HDPO (arXiv:2306.11246, 2023)  

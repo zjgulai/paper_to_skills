@@ -1,3 +1,17 @@
+---
+title: Multivariate Cointegration（多变量协整 VECM）
+doc_type: knowledge
+module: 03-时间序列
+topic: multivariate-cointegration
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想：通过向量误差修正模型（VECM）识别多个关联商品销量间的长期均衡关系，在短期波动中捕捉动态调整路径，实现关联品类的精准补货预测。
+---
+
 # Skill Card: Multivariate Cointegration（多变量协整 VECM）
 
 > **领域**: 03-时间序列 | **类型**: 综合萃取 | **updated**: 2026-07-06

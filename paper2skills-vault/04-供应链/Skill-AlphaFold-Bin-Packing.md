@@ -178,3 +178,8 @@ if __name__ == "__main__":
     result, util = packer.pack_items(skus)
     packer.visualize_result(result, util)
     print("[✓] Skill-AlphaFold-Bin-Packing测试通过")
+
+## ④ 技能关联
+- **前置**：[[Skill-3D-Bin-Packing-Optimization]]（基础装箱算法）
+- **延伸**：[[Skill-DRL-Inventory-Optimization]]（强化学习库存优化）
+- **组合**：[[Skill-Dynamic-Lot-Sizing-MOQ]]（与最小订货量联合优化装载效率）

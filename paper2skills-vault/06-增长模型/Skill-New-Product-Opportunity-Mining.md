@@ -1,3 +1,17 @@
+---
+title: New Product Opportunity Mining (新品机会挖掘模型)
+doc_type: knowledge
+module: 06-增长模型
+topic: new-product-opportunity-mining
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: New Product Opportunity Mining (新品机会挖掘模型)
 
 ---

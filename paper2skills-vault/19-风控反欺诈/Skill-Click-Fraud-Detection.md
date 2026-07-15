@@ -1,3 +1,18 @@
+---
+title: Click Fraud Detection（广告刷量检测）
+doc_type: knowledge
+module: 19-风控反欺诈
+topic: click-fraud-detection
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 检测广告点击中的无效流量（IVT）——Bot 点击、竞品恶意点击、重复点击。用时间序列异常 + 行为模式识别。
+problem_solved: 节省/提升 年化：**6-15 万元
+---
+
 # Skill Card: Click Fraud Detection（广告刷量检测）
 
 > **领域**: 19-风控反欺诈 | **类型**: 综合萃取

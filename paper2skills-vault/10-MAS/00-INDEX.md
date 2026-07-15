@@ -1,3 +1,16 @@
+---
+title: 10-MAS 多智能体系统 (Multi-Agent Systems) 技能索引
+doc_type: knowledge
+module: 10-MAS
+topic: 00-index
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+---
+
 # 10-MAS 多智能体系统 (Multi-Agent Systems) 技能索引
 
 ---

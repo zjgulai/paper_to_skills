@@ -1,3 +1,17 @@
+---
+title: Skill-Market-Size-Estimation
+doc_type: knowledge
+module: 06-增长模型
+topic: market-size-estimation
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想：在选品决策前量化「这个品类有多大、能拿多少」，避免「市场很大」的模糊判断。用两条互相校验的路径（Top-down 和 Bottom-up）估算 TAM/SAM/SOM，并通过 Google Trends 校准和 Monte Carlo 模拟将点估计扩展为置信区间，输出可进入 ROI 模型的
+---
+
 # Skill-Market-Size-Estimation
 
 roadmap_phase: phase2

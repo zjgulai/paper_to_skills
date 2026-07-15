@@ -1,3 +1,18 @@
+---
+title: Agentic SCKG Risk Analyzer — 供应链知识图谱智能风险分析框架
+doc_type: knowledge
+module: 08-知识图谱
+topic: agentic-sckg-risk
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化节省约 45 万元
+---
+
 以下是改进后的完整 Skill 卡片：
 
 # Skill Card: Agentic SCKG Risk Analyzer — 供应链知识图谱智能风险分析框架

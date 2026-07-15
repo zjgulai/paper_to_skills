@@ -1,3 +1,17 @@
+---
+title: NL2Dashboard Automation（自然语言→智能仪表盘）
+doc_type: knowledge
+module: 09-DataAgent-LLM
+topic: nl2dashboard-automation
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想：通过多层级意图识别与自适应图表映射，将自然语言运营需求实时转化为可交互的BI仪表盘，无需SQL编写。
+---
+
 # Skill Card: NL2Dashboard Automation（自然语言→智能仪表盘）
 
 > **领域**: 09-DataAgent-LLM | **类型**: 综合萃取 | **updated**: 2026-07-05

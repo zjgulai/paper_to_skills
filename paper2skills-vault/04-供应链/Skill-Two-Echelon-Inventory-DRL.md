@@ -1,3 +1,18 @@
+---
+title: Deep RL for Two-Echelon Inventory Optimization
+doc_type: knowledge
+module: 04-供应链
+topic: two-echelon-inventory-drl
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化72.6万元
+---
+
 # Skill Card: Deep RL for Two-Echelon Inventory Optimization
 
 roadmap_phase: phase1

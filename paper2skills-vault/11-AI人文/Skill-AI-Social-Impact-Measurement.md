@@ -1,3 +1,18 @@
+---
+title: AI Social Impact Measurement
+doc_type: knowledge
+module: 11-AI人文
+topic: ai-social-impact-measurement
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase3
+algorithm_summary: 'AI社会影响量化通过三轨综合评估框架量化AI系统对就业、公平性和隐私的实际影响。劳动替代率(IAI)衡量AI自动化对岗位的替代程度：IAI = (自动化任务占比 × 岗位消失概率) / 总岗位数。算法公平指标包括机会平等(EO: P(ŷ=1|y=1,A=0)=P(ŷ=1|y=1,A=1))、人口均等'
+problem_solved: '节省/提升 年化ROI: 800万元'
+---
+
 Skill: Skill-AI-Social-Impact-Measurement | 域: 11-AI人文 | 算法: AI影响多维量化：劳动替代率(IAI)、算法公平指标(EO/DP/CA)、隐私风险评分(PRS)三轨综合评估
 
 ---

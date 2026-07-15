@@ -1,3 +1,17 @@
+---
+title: Deep Learning Recommendation with Heterogeneous Inference
+doc_type: knowledge
+module: 05-推荐系统
+topic: deep-learning-recommendation-hi
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase2
+algorithm_summary: 核心思想
+---
+
 # Skill Card: Deep Learning Recommendation with Heterogeneous Inference
 
 roadmap_phase: phase2

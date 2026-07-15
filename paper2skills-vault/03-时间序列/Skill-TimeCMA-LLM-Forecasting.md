@@ -1,3 +1,17 @@
+---
+title: TimeCMA - LLM-Empowered Multivariate Time Series Forecasting via Cross-Modality Alignment
+doc_type: knowledge
+module: 03-时间序列
+topic: timecma-llm-forecasting
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+---
+
 # Skill Card: TimeCMA - LLM-Empowered Multivariate Time Series Forecasting via Cross-Modality Alignment
 
 roadmap_phase: phase1

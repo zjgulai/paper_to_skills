@@ -1,3 +1,17 @@
+---
+title: 智能预测 - 双重稳健估计 (Doubly Robust Estimation)
+doc_type: knowledge
+module: 03-时间序列
+topic: intelligent-prediction-doubly-robust
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+---
+
 # Skill Card: 智能预测 - 双重稳健估计 (Doubly Robust Estimation)
 
 roadmap_phase: phase1

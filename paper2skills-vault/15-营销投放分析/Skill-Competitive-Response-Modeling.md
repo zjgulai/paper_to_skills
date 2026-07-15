@@ -1,3 +1,18 @@
+---
+title: Competitive Response Modeling（竞争响应建模）
+doc_type: knowledge
+module: 15-营销投放分析
+topic: competitive-response-modeling
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 竞品投放会劫持我们的广告效果（尤其是同一品类的搜索广告）。竞争响应建模量化"竞品加投 $X 导致我们损失多少"，并设计最优反制策略。
+problem_solved: 节省/提升 年化价值：**15-30 万元
+---
+
 # Skill Card: Competitive Response Modeling（竞争响应建模）
 
 > **领域**: 15-营销投放分析 | **类型**: 综合萃取

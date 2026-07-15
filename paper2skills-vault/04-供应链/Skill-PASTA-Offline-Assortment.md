@@ -1,3 +1,18 @@
+---
+title: PASTA - 离线悲观选品框架
+doc_type: knowledge
+module: 04-供应链
+topic: pasta-offline-assortment
+status: stable
+created: '2026-07-15'
+updated: '2026-07-15'
+owner: self
+source: human+ai
+roadmap_phase: phase1
+algorithm_summary: 核心思想
+problem_solved: 节省/提升 年化规避风险 25-100 万元
+---
+
 # Skill Card: PASTA - 离线悲观选品框架
 
 > 论文来源: arXiv 2510.01693 | PASTA: A Unified Framework for Offline Assortment Learning
