@@ -240,6 +240,7 @@ class SessionDataset(Dataset):
 def collate_fn(batch):
     sessions, targets = zip(*batch)
     return list(sessions), list(targets)
+```
 ---
 
 ## ④ 技能关联

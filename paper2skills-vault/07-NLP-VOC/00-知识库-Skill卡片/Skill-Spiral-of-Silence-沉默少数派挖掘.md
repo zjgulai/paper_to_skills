@@ -16,19 +16,19 @@
 ### 数学直觉
 
 **意见分歧检测（K-means聚类）**：
-```
+```python
 C = KMeans(embeddings, n_clusters=5)
 ```
 将评论按语义聚类，识别不同的观点群体
 
 **少数派判定**：
-```
+```python
 stance = 'minority' if size_ratio < 0.3 else 'majority'
 ```
 占比小于30%的群体判定为少数派
 
 **沉默概率估算**：
-```
+```pseudocode
 silence_likelihood = base_rate(72.1% for minority) + adjustments
 ```
 - 基础沉默率：少数派72.1%，多数派40%
@@ -85,7 +85,7 @@ silence_likelihood = base_rate(72.1% for minority) + adjustments
 如何构建完整的"用户声音洞察"体系？从搜索 → 评论 → 情感 → 分群 → 运营的全链路闭环。
 
 **数据流**
-```
+```pseudocode
 用户搜索"敏感肌纸尿裤"但无点击
 ↓ REVISION识别: 意图=安全关注型
 ↓ 系统响应: 推送敏感肌专区
@@ -95,16 +95,14 @@ silence_likelihood = base_rate(72.1% for minority) + adjustments
 ↓ 运营动作: 推送无香型新品预告+早鸟优惠
 ↓ 效果: 将"被沉默的需求"转化为"新产品机会"
 ```
-
 **组合标签**
-```
+```yaml
 搜索意图: 安全关注型（REVISION）
 产品反馈: 希望无香型（被沉默的少数派意见）
 情感分群: 高满意-成分敏感型（CSK）
 运营策略: 新品预告+早鸟优惠
 业务价值: 从用户反馈中发现产品创新机会
 ```
-
 **业务价值**
 - 用户声音完整度：85% → 95%
 - 产品迭代精准度：+40%
@@ -153,7 +151,7 @@ python3 model.py
 | **Marketing Automation** | 综合标签 | 运营动作 | 精准触达 |
 
 **组合效果**：
-```
+```yaml
 输入: 用户搜索"适合敏感肌的纸尿裤"但无点击
 ↓ REVISION: 识别意图 = 安全关注型
 ↓ 系统响应: 推送敏感肌专区
@@ -164,7 +162,6 @@ python3 model.py
 ↓ 运营动作: 推送无香型新品预告
 预期效果: 用户声音完整度 85% → 95%
 ```
-
 ---
 
 ## ⑤ 商业价值评估

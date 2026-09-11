@@ -30,7 +30,7 @@ source: human+ai
 
 不同于单 agent trajectory(token + tool call + observation),orchestration trace 是**时序事件图**:
 
-```
+```yaml
 事件类型: spawn / delegate / communicate / tool_use / return / aggregate / stop
 
 示例 trace:
@@ -42,7 +42,6 @@ source: human+ai
   t=5: aggregate(inputs=[agent_1_output, agent_2_output], method="merge")
   t=6: stop(final_answer="结论")
 ```
-
 ### 三维框架详解
 
 **维度一:Reward Design — 8 个家族(R1-R8)**
@@ -62,7 +61,7 @@ source: human+ai
 
 **Kimi PARL 的奖励分解**(典范案例):
 
-```
+```pseudocode
 r_orch = r_perf + λ₁·r_parallel + λ₂·r_finish
 
 - r_perf: 下游任务结果 (R1)
@@ -73,15 +72,13 @@ r_orch = r_perf + λ₁·r_parallel + λ₂·r_finish
   → 早期作为 transient scaffold 帮助探索并行调度
   → 后期移除,最终策略只优化主任务目标
 ```
-
 **维度二:Credit Assignment — 8 个层级**
 
-```
+```pseudocode
 team(团队结果) → orchestrator(spawn/delegate) → role(planner/critic/exec)
   → agent(哪个子 agent) → turn(哪一轮) → message(哪条 utterance)
   → tool(哪次调用) → token(哪个 span)
 ```
-
 **各层级研究密度**(论文 §7.1):
 - team/agent: 密集(继承自 MARL)
 - role/turn: 中等
@@ -144,7 +141,7 @@ Kimi PARL 是目前论文池中最清晰的**已训练编排器**公开案例。
 
 **RL via Orchestration Traces 落地方案**:
 
-```
+```yaml
 1. Trace 记录:
    每次工单处理记录完整 orchestration trace:
    - spawn 事件: 哪个 agent 被创建, role 是什么
@@ -178,7 +175,6 @@ Kimi PARL 是目前论文池中最清晰的**已训练编排器**公开案例。
    O4 aggregate: 多个 agent 冲突输出时仲裁策略
    O5 stop: 预期边际收益 < 成本时终止 (首创)
 ```
-
 **业务价值**:
 
 - 简单工单处理成本: -40% (减少不必要的 agent spawn)
@@ -196,7 +192,7 @@ Kimi PARL 是目前论文池中最清晰的**已训练编排器**公开案例。
 
 **R7 Orchestration Reward 落地方案**:
 
-```
+```yaml
 借鉴 Kimi PARL 的三项 reward:
 
 r_orch = r_perf + λ₁·r_parallel + λ₂·r_finish
@@ -212,7 +208,6 @@ r_orch = r_perf + λ₁·r_parallel + λ₂·r_finish
 - role-specific: 不同 role 的 agent 有不同的 communication budget
 - debate reward: 多个 agent 意见一致时加分,不一致时启动仲裁
 ```
-
 **业务价值**:
 
 - 资源利用率: +50% (动态 spawn/terminate)

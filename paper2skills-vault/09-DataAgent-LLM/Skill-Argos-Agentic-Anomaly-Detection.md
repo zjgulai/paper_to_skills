@@ -106,7 +106,7 @@ Top-k规则选择：每次Detection Agent提出多条候选规则，只选最优
 
 核心实现：`anomaly_detector.py`
 
-```python
+````python
 """
 Argos-inspired Agentic Time-Series Anomaly Detection
 基于三Agent协作的简化版实现
@@ -495,7 +495,7 @@ def test_argos():
 
 if __name__ == "__main__":
     test_argos()
-```
+````
 
 运行测试：
 

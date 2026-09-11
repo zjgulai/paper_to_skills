@@ -55,7 +55,7 @@ $$R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$$
 
 ## ③ 代码模板
 
-```python
+```pseudocode
 """
 大规模消费者评论方面情感分析
 Hybrid ABSA: LLM for aspect identification + ML for sentiment classification
@@ -97,7 +97,7 @@ class AspectIdentifier:
 
     def __init__(self, model_name: str = "gpt-3.5-turbo"):
         self.model_name = model_name
-        self._ Aspects = None
+        self._aspects = None
 
     def identify_aspects(self, sample_reviews: List[Review], n_aspects: int = 10) -> List[str]:
         """
@@ -370,7 +370,6 @@ if __name__ == "__main__":
     print("\n输出数据预览:")
     print(result.head())
 ```
-
 ---
 
 ## ④ 技能关联

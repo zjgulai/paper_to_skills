@@ -28,10 +28,9 @@ source: human+ai
 ### 三阶段 Pipeline
 
 **Stage 1: 可控属性 Prompt Engineering**
-```
+```python
 Prompt = 角色设定 + 用户画像上下文 + 产品上下文 + 风格控制 + 输出格式
 ```
-
 可控属性维度:
 | 属性 | 选项 | 控制效果 |
 |------|------|----------|
@@ -48,10 +47,9 @@ Prompt = 角色设定 + 用户画像上下文 + 产品上下文 + 风格控制 +
 **Stage 3: 多目标评估与筛选**
 
 评估维度:
-```
+```python
 Overall = w1 * Relevance + w2 * Coverage + w3 * CTA + w4 * Diversity
 ```
-
 - **Relevance**: 文案覆盖用户核心需求/痛点的程度
 - **Coverage**: 产品特性在文案中的提及比例
 - **CTA Effectiveness**: 行动号召的完整性和紧迫感
@@ -80,7 +78,7 @@ Momcozy S12 Pro 吸奶器要上架 Amazon US、Shopee 东南亚、天猫国际�
 如何用同一套产品信息生成三套差异化详情页文案？
 
 **解决方案**
-```python
+```pseudocode
 # 北美职场妈妈
 attributes = CopyAttributes(
     tone="professional", language="en",
@@ -102,7 +100,6 @@ attributes = CopyAttributes(
 )
 # → "大牌平替库存有限！千元品质百元价格。"
 ```
-
 **业务价值**
 - 一套产品信息 → 多套市场文案，内容生产效率提升 5-10 倍
 - 不同市场用不同叙事，转化率提升 12-15%（参考论文 A/B 测试结果）
@@ -113,7 +110,7 @@ attributes = CopyAttributes(
 运营团队想做邮件营销的 AB 测试，同一批"职场背奶妈妈"用户，测试 professional vs friendly 两种语气的打开率和点击率。人工写 2 套文案要半天，如果要测 4 种语气 × 3 个产品 = 12 套呢？
 
 **解决方案**
-```python
+```pseudocode
 for tone in ["professional", "friendly", "warm", "urgent"]:
     best, candidates, _ = pipeline.generate(
         persona=working_mom,
@@ -122,7 +119,6 @@ for tone in ["professional", "friendly", "warm", "urgent"]:
     )
     # 自动输出 12 套差异化文案
 ```
-
 **业务价值**
 - AB 测试素材从"人工逐条撰写"变为"一键批量生成"
 - 测试迭代周期从周级缩短到天级
@@ -138,7 +134,7 @@ for tone in ["professional", "friendly", "warm", "urgent"]:
 
 **解决方案**
 基于用户画像标签自动匹配文案属性：
-```python
+```pseudocode
 # 高价值用户 → 专属感
 CopyAttributes(tone="warm", urgency_level="low", cta_type="learn_more")
 
@@ -148,7 +144,6 @@ CopyAttributes(tone="urgent", urgency_level="high", cta_type="limited_offer")
 # 流失风险 → 关怀感
 CopyAttributes(tone="friendly", emoji_level="moderate", cta_type="join_community")
 ```
-
 **业务价值**
 - 从"一条群发文案"到"千人千面触达"
 - 短信打开率从 3% 提升至 7-9%
@@ -198,7 +193,7 @@ python3 model.py
 
 ### 技能联动（营销全链路）
 
-```
+```pseudocode
 ┌─────────────────────────────────────────────────────────────┐
 │                     数据输入层                              │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
@@ -230,7 +225,6 @@ python3 model.py
 │  └─────────────┘  └─────────────┘  └─────────────┘         │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## ⑤ 商业价值评估

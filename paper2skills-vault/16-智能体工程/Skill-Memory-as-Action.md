@@ -51,7 +51,7 @@ Standard RL for LLM (GRPO/PPO) 假设 **prefix 累积**:每个 context 是前一
 
 Memory action 打破这个假设:
 
-```
+```yaml
 传统 trajectory:    [x₀] → [x₀, a₁, o₁] → [x₀, a₁, o₁, a₂, o₂] → ...
                     ↑      ↑              ↑
                     prefix prefix         prefix (累积)
@@ -61,7 +61,6 @@ MemAct trajectory:  [x₀] → [x₀, a₁, o₁] → [x₀, summary_of_(a₁,o�
                     prefix prefix         ❌ 不再是前一步的 prefix
                                           (trajectory fracture)
 ```
-
 直接应用 GRPO 会产生 **mismatched context**,梯度计算错误 → 训练不稳定。
 
 ### DCPO:Dynamic Context Policy Optimization
@@ -70,12 +69,11 @@ MemAct trajectory:  [x₀] → [x₀, a₁, o₁] → [x₀, summary_of_(a₁,o�
 
 **Segmentation**:让 $t_1^{\text{mem}},\ldots,t_K^{\text{mem}}$ 是 memory action 发生的时刻。每个 segment $\sigma_i$ 是 $(t_i^{\text{mem}}, t_{i+1}^{\text{mem}}]$ 之间的子序列,共享 prefix $H_{t_i^{\text{mem}}}$:
 
-```
+```pseudocode
 Segment σ₀: prefix=H_0, generated=(y_1,...,y_{t₁})
 Segment σ₁: prefix=H_{t₁} (post-memory-edit), generated=(y_{t₁+1},...,y_{t₂})
 ...
 ```
-
 **Trajectory-level Advantage**(GRPO 风格):
 
 $$
@@ -96,7 +94,7 @@ $$
 
 ### 训练流程
 
-```
+```yaml
 1. Cold-Start SFT:
    - DeepSeek-V3.1 模拟 MemAct 风格生成 800 条轨迹
    - 用 segmented SFT(loss masking)训练 7B/14B 模型
@@ -108,16 +106,14 @@ $$
    - lr=1e-6, batch=128, max_turns=35
    - GRPO-compatible
 ```
-
 ### prune_context Tool 设计
 
-```python
+```pseudocode
 prune_context(
     summary: str,        # 模型生成的关键信息总结
     ids_to_prune: list[str],  # 要删除的历史记录 id 列表
 ) -> None
 ```
-
 每个 tool call 输出都有唯一 ID 作为 handle,模型决定保留哪些 / 删除哪些 + 写一段 summary 替换。
 
 ### 关键实证结果
@@ -184,7 +180,7 @@ RL 后,不同模型大小自动学到不同策略:
 
 **MemAct 落地方案**:
 
-```
+```yaml
 1. Cold-Start SFT:
    - 用 Claude Opus 4.6 模拟 MemAct 风格,生成 1000 条客服多目标轨迹
    - 每条轨迹标注: task_action 序列 + prune_context 调用时机 + summary
@@ -204,7 +200,6 @@ RL 后,不同模型大小自动学到不同策略:
 - Tokens/Round: 8,625 → 3,447 (-60%)
 - 推理成本: 同等准确率下 -50 ~ -70%
 ```
-
 **业务价值**:
 
 - 模型成本:从 Haiku 4.5 ($1/Mtok output) 切到自训 Qwen2.5-7B ($0.1/Mtok 自建) = -90%
@@ -225,7 +220,7 @@ RL 后,不同模型大小自动学到不同策略:
 
 **MemAct 落地方案**:
 
-```
+```yaml
 对应论文 Multi-Objective QA 实验设置:
 - 训练数据: 历史选品决策记录 (500 单)
 - 训练: 同上 cold-start SFT + DCPO RL
@@ -236,7 +231,6 @@ RL 后,不同模型大小自动学到不同策略:
 - MemAct-14B-RL: accuracy 59-65%, tokens 80k
 - 改进: +9 ~ +15pp accuracy + -60% tokens
 ```
-
 **业务价值**:
 
 - 选品决策准确率:50% → 65% (+15pp) = 每 100 单选品多 15 单选对

@@ -41,12 +41,11 @@ $$
 
 ### 生命周期 7 阶段
 
-```
+```pseudocode
 Discovery → Practice/Refinement → Distillation → Storage 
    ↑                                                    ↓
 Evaluation/Update ← Execution ← Retrieval/Composition
 ```
-
 虚线反馈:Evaluation → Practice(失败时);Retrieval → Storage(索引失效);Execution → Discovery(运行时缺失)。
 
 ### 7 个设计模式
@@ -148,7 +147,7 @@ skill_contract:
 
 **预期产出**:
 
-```
+```yaml
 Skill 库审计报告 (2026-05):
 
 P1 Metadata-Driven (主体): 80+ Skill 卡均符合, 用 description 触发
@@ -167,7 +166,6 @@ P7 Marketplace: 尚未开放, 但 GitHub repo 已对外
   风险: PR 投毒 (恶意 Skill 卡 + 隐藏 prompt injection)
   缓解: PR review 强制 require trust tier + 4 元组校验
 ```
-
 **业务价值**:
 
 - 安全前置:发现"description 多语言一致性"是高风险,提前缓解

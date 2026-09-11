@@ -115,12 +115,11 @@ Momcozy 在 Amazon 详情页测试新版主图，基线转化率 2.5%，期望�
 
 ### 文件结构
 
-```
+```pseudocode
 paper2skills-code/ab_testing/experimental_design/
 ├── __init__.py
 └── design.py
 ```
-
 ### 核心模块说明
 
 - `sample_size_continuous` / `sample_size_binary` / `sample_size_relative_lift`：三类指标的样本量计算
@@ -139,7 +138,7 @@ python3 design.py
 
 ### 示例输出
 
-```
+```pseudocode
 ============================================================
 A/B 实验设计基础 - Momcozy 母婴电商场景演示
 ============================================================
@@ -184,7 +183,6 @@ DE      desktop     new        0.491  0.509
     相对提升  10% -> Power = 69.6%
     相对提升  15% -> Power = 95.6%
 ```
-
 ---
 
 ## 四、技能关联

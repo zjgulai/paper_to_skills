@@ -16,7 +16,7 @@
 ### 数学直觉
 
 **观点单元定义**：
-```
+```pseudocode
 Opinion Unit = (label, excerpt, sentiment_score)
 ```
 - label: 主题标签（如"吸力", "噪音", "便携性"）
@@ -24,13 +24,13 @@ Opinion Unit = (label, excerpt, sentiment_score)
 - sentiment_score: 1-10的情感分数（1=非常负面，10=非常正面）
 
 **主题建模（BERTopic）**：
-```
+```pseudocode
 Topics = BERTopic(Opinion Units, n_clusters=K)
 ```
 对观点单元进行聚类，而非对完整评论聚类，提高主题 coherence。
 
 **主题-评分回归**：
-```
+```pseudocode
 Star Rating = β₀ + Σ(βₖ × sentiment_score_k)
 ```
 量化每个主题对整体评分的贡献度。
@@ -84,7 +84,7 @@ Momcozy吸奶器评论量大（10万+），但传统分析只能给出"好评率
 好评如潮的S12型号（4.8星）近期出现退货率上升。如何通过评论分析提前发现隐患？
 
 **数据流**
-```
+```pseudocode
 全部评论
     ↓ Spiral of Silence挖掘
 识别出占比12%的"沉默少数派"
@@ -98,7 +98,6 @@ Momcozy吸奶器评论量大（10万+），但传统分析只能给出"好评率
     ↓ 预警
 提前发现服务体验隐患，避免口碑危机
 ```
-
 **关键发现**
 - 配件相关负面观点在好评评论中也存在（隐性不满）
 - "说明书"问题在退货用户的早期评论中已出现信号

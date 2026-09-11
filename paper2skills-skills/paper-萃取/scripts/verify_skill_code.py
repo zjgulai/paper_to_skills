@@ -232,38 +232,111 @@ class Result:
 # ---------------------------------------------------------------------------
 # 抽取
 # ---------------------------------------------------------------------------
+def iter_fences(text: str):
+    """按 CommonMark 规则迭代围栏代码块，支持 **3 个及以上反引号**。
+
+    ⚠️ 为什么必须支持变长围栏（实测教训）：
+    卡片里存在「代码块内容本身包含 ``` 」的情况 —— 例如
+    `fix_prompt = f\"\"\"...\n\\`\\`\\`python\n{code}\n\\`\\`\\`\n...\"\"\"`。
+    此时必须用 **4 个反引号**做外层围栏（Markdown 标准做法）。
+    只认 3 个反引号的正则会：① 在嵌套处提前闭栏，把一块代码截成两半；
+    ② 把 4 反引号的外层围栏整个漏掉（表现为"这张卡片没有代码块"）。
+
+    ⚠️ 为什么不用非贪婪正则 `\\`\\`\\`(.*?)\\`\\`\\``：
+    它同样会在嵌套处提前闭栏。必须按「开栏长度 == 闭栏长度」严格配对。
+
+    yield (info_string, body)
+    """
+    lines = text.split("\n")
+    i, n = 0, len(lines)
+    while i < n:
+        m = re.match(r"^(`{3,})\s*([^\n`]*)$", lines[i])
+        if not m:
+            i += 1
+            continue
+        ticks, info = m.group(1), m.group(2).strip()
+        body: list[str] = []
+        i += 1
+        while i < n:
+            close = re.match(r"^(`{3,})\s*$", lines[i])
+            if close and len(close.group(1)) >= len(ticks):
+                break
+            body.append(lines[i])
+            i += 1
+        yield info, "\n".join(body)
+        i += 1
+
+
 def extract_python_blocks(text: str) -> list[str]:
-    """从 markdown 中取出所有 ```python 围栏块（按围栏奇偶位切分，避免正则误吞）。"""
-    parts = FENCE_RE.split(text)
-    blocks: list[str] = []
-    # split 后：parts[0] 是正文，之后依次是 info-line+body / 正文 / info-line+body ...
-    # 使用 finditer 更稳妥地保留 info 行
-    for m in re.finditer(r"^```([^\n`]*)\n(.*?)^```\s*$", text, re.M | re.S):
-        info = m.group(1).strip().lower()
-        if info in ("python", "py", "python3"):
-            blocks.append(m.group(2))
-    return blocks
+    """取出所有标注为 python 的围栏块（支持 3+ 反引号）。"""
+    return [body for info, body in iter_fences(text)
+            if info.lower() in ("python", "py", "python3")]
 
 
 def looks_like_python(body: str) -> bool:
-    """未标注语言的围栏块，用启发式判断是否是 Python（保留旧卡片的兼容性）。"""
-    if re.search(r"^\s*(import|from|def|class)\s+\w", body, re.M):
+    """未标注语言的围栏块，用启发式判断是否是 Python。
+
+    ⚠️ 为什么必须"从严"（实测教训）：
+    首轮全量门禁报出 8 个「语法错误」，逐个人工核对后发现 **全部是假阳性** ——
+    它们是**未标注语言的围栏块**里的文档内容（ASCII 框图、YAML 契约、伪代码签名），
+    被宽松启发式（`if re.search(r"^\\s*(print|return|for |while |if )", ...)`）误判为 Python。
+    例：`Orchestrator 执行循环:` 因含 `if`/`→` 被当成代码；`skill_contract:` 被当成代码。
+
+    误判的代价不只是噪声：它会让 K1 报告出现"8 个语法错误"这种**看起来像代码缺陷、
+    实则文档标注问题**的结论，从而掩盖真实缺陷。故此处改为**保守策略**：
+
+      ① 只有出现明确的 Python 语法结构（import / def / class / lambda / 装饰器 /
+         `if __name__` / 赋值语句 / 明显的 Python 调用）才认；
+      ② 命中"明显不是 Python"的信号（YAML 键、ASCII 框线、伪代码签名、纯表格）直接否决。
+    """
+    lines = [l for l in body.splitlines() if l.strip()]
+    if not lines:
+        return False
+
+    # --- 否决信号：看着就不像 Python ---
+    head = "\n".join(lines[:15])
+    if re.match(r"^\s*[\w\-\u4e00-\u9fff]+\s*:\s*(\S.*)?$", lines[0]) and not lines[0].lstrip().startswith("#"):
+        # 首行形如 `key:` 或 `key: value` → YAML / 伪模式定义
+        return False
+    if any(ch in head for ch in ("═", "─", "┌", "└", "│", "├", "┌", "→", "↓", "↓", "⇒")):
+        return False
+    if re.search(r"[【】〔〕①②③④⑤]", head):
+        return False
+    if lines[0].rstrip().endswith("(") and not re.search(r"\bdef\b|\bclass\b", head):
+        # 首行形如 `fn_name(` 且全块无 def/class → 伪代码签名
+        # （唯一定义处也是 def 开头，那种情况下面会命中 Python 结构）
+        if not re.search(r"\breturn\b|\bself\b", head):
+            return False
+    if re.match(r"^\s*\|", lines[0]):        # markdown 表格
+        return False
+
+    # --- 准入信号：明确的 Python 结构 ---
+    if re.search(r"^\s*(import|from)\s+[A-Za-z_]", body, re.M):
         return True
-    if re.search(r"^\s*(print|return|for |while |if )", body, re.M):
+    if re.search(r"^\s*(def|class)\s+[A-Za-z_]\w*", body, re.M):
+        return True
+    if re.search(r"^\s*@\w+", body, re.M):                       # 装饰器
+        return True
+    if re.search(r"^\s*(if|for|while|with|try|elif|else)\b.*:\s*$", body, re.M):
+        return True
+    if re.search(r"^\s*[A-Za-z_]\w*\s*(:[^=]+)?=\s*[^=]", body, re.M):   # 赋值
         return True
     return False
 
 
 def extract_all_python(text: str) -> list[str]:
-    """先取标注为 python 的块；若一个都没有，再对未标注块做启发式回退。"""
+    """先取标注为 python 的块；若一个都没有，再对未标注块做启发式回退。
+
+    ⚠️ 修复记录：原实现写成
+        `re.finditer(r"^```[^\\n`]*\\n(.*?)^```\\s*$", ...)` 然后 `looks_like_python(m.group(1))`
+    —— `group(1)` 是**块内容**没错，但该正则不支持变长围栏，且会在嵌套 ``` 处提前闭栏。
+    现统一走 `iter_fences()`（支持 3+ 反引号、严格配对），逻辑一致但不再漏块/截块。
+    """
     blocks = extract_python_blocks(text)
     if blocks:
         return blocks
-    out = []
-    for m in re.finditer(r"^```[^\n`]*\n(.*?)^```\s*$", text, re.M | re.S):
-        if looks_like_python(m.group(1)):
-            out.append(m.group(1))
-    return out
+    return [body for info, body in iter_fences(text)
+            if info == "" and looks_like_python(body)]
 
 
 def stitch_blocks(blocks: list[str]) -> str:

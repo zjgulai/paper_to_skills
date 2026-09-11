@@ -22,7 +22,7 @@
 
 ### 1.2 统一萃取框架
 
-```
+```pseudocode
 单条 VOC 文本输入
     │
     ├──→ 品线过滤：只加载该 VOC 所属品线的标签种子
@@ -45,7 +45,6 @@
            ├── [产品问题] + 负向 → Detractor
            └── 无标签 + 5星 → Promoter（默认）
 ```
-
 ### 1.3 关键设计决策
 
 | 决策 | 选择 | 原因 |
@@ -130,7 +129,7 @@ class VOCLabelExtraction:
 
 ### 2.2 指标看板：Proxy NPS × AIPL 漏斗
 
-```python
+```pseudocode
 # 生成指标看板
 dashboard = DashboardGenerator().build(extractions)
 
@@ -161,10 +160,9 @@ dashboard = DashboardGenerator().build(extractions)
   }
 }
 ```
-
 ### 2.3 四路数据源统一处理
 
-```python
+```pseudocode
 # 退货留言 (212,746条) → 规则标注为主
 # 客服工单 (124,928条) → ALCHEmist + 规则
 # 商品评论 (15,418条) → ABSA + 画像
@@ -174,7 +172,6 @@ dashboard = DashboardGenerator().build(extractions)
 workflow = VOCProxyNPSWorkflow(tag_dict_path="tag_seeds.csv")
 results = workflow.run(all_voc_records)
 ```
-
 ---
 
 ## 3. 代码模板
@@ -638,7 +635,7 @@ if __name__ == "__main__":
 
 ### 4.3 技能联动流程
 
-```
+```pseudocode
 VOC 原始数据
     ↓
 【ReviewQuality】质量筛选
@@ -655,7 +652,6 @@ VOC 原始数据
     【Kano-Mapper】需求分类
     【GPLR】营销人群包
 ```
-
 ---
 
 ## 5. 业务价值评估
@@ -691,7 +687,7 @@ VOC 原始数据
 
 ## 6. 与现有 VOC 技能的衔接
 
-```
+```pseudocode
 完整链路:
 
 【VOC 数据层】
@@ -709,7 +705,6 @@ Proxy NPS / AIPL 漏斗 / 驱动分析 / 画像交叉
 【决策输出层】
 策略包路由 → 产品中心/客户服务部/品牌营销部...
 ```
-
 ---
 
 **文档版本**: v1.0
