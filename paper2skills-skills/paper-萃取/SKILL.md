@@ -54,63 +54,76 @@ version: 0.1.0
 
 ### Step 5: 代码一致性验证（关键步骤 - 强制执行）
 
-**每次生成 Skill 后必须运行代码验证，这是强制流程。未通过验证的 Skill 不得进行 Step 6 保存操作。**
+**每次生成 Skill 后必须运行 K1 门禁，这是强制流程。未通过验证的 Skill 不得进行 Step 6 保存操作。**
 
-#### 5.1 验证前置检查
+> **2026-09-12 升级**：验证从「人工描述 + `pytest model.py`」改为**调用统一脚本**。
+> 原因：`AutoReproduce`(arXiv:2505.20662) 实测，LLM 评审认为"很好"的生成代码
+> **执行率仅 17.94%**；`ResearchCodeBench` 附录 G 显示新代码失败中 **58.6% 是语义错误**
+> （能跑但算错）。人工判断无法替代执行凭证。
 
-在执行验证前，检查以下条件：
-
-- [ ] 代码文件已生成且非空
-- [ ] 代码语法正确（可通过 `python -m py_compile` 检查）
-- [ ] 必要的依赖已在代码中声明
-
-#### 5.2 提取代码模板
-
-从生成的 Skill 卡片中提取代码部分。
-
-#### 5.3 自动生成测试用例
-
-根据代码模板，生成以下测试用例：
-
-- 基本功能测试
-- 边界条件测试
-- 典型输入输出测试
-
-#### 5.4 运行代码验证
+#### 5.1 运行 K1 门禁（一条命令）
 
 ```bash
-cd <REPO_ROOT>/paper2skills-code/[领域]/[算法]/
-python -m pytest model.py -v
+python3 <REPO_ROOT>/paper2skills-skills/paper-萃取/scripts/verify_skill_code.py \
+  --card <REPO_ROOT>/paper2skills-vault/<领域>/<Skill-卡片>.md
 ```
 
-**验证失败处理（强制约束）**：
-- 如果代码运行失败，记录错误信息到 `verification_errors.md`
-- 标记 Skill 卡片状态为"待验证 - 验证失败"
-- **必须**停止后续流程，不得执行 Step 6 保存操作
-- 需要修复代码后重新执行 Step 5 验证
-- 只有验证通过后才能进入 Step 6
+脚本自动完成五级验证：`L1 ast.parse` → `L2 py_compile` → `L3 import 探针`
+→ `L4 作为脚本执行` → `L5 pytest 断言`。
 
-#### 5.5 生成验证报告
+#### 5.2 按判定处置（四类，不可混淆）
 
-#### 5.4 生成验证报告
+| 判定 | 含义 | 处置 |
+|------|------|------|
+| ✅ `PASS` | 真正跑通（L4 执行成功 或 L5 断言全绿） | 可进入 Step 6 |
+| 🟡 `ENV_BLOCKED` | 本机缺第三方依赖/凭证（**缺依赖 ≠ 代码正确**） | 可保存但**必须在卡片中标注"未验证"**并补 `requirements`；不得声称已验证 |
+| 🔴 `ORPHAN_DEP` | 卡片 `import` 了**仓库内不存在的本地模块** | **必须修复**（补实现或改 import），禁止保存 |
+| ❌ `FAIL` | 语法/编译/导入/运行期真实错误 | **必须修复**，禁止保存；错误写入 `07-资源库/审核问题库.md` |
 
-验证通过后，生成验证报告：
+#### 5.3 两条必须遵守的使用约束（实测踩出来的坑）
+
+1. **默认按卡片拼接验证，不要用 `--per-block`** —— 卡片是「block1 定义类 → block3 使用」的
+   递进结构，逐块独立导入必然 `NameError`（首轮实测 44 个 L3 失败里 **19 个是假阳性**）。
+   `--per-block` 仅用于定位报错块号。
+2. **脚本已在断网语义下运行** —— 内置 socket 拦截 + `HF_HUB_OFFLINE=1`，
+   使 `from_pretrained()` / `requests.get()` **立即失败并归因为 `ENV_BLOCKED`**，
+   而不是挂在网络重试上（首轮实测：挂 30 分钟而 CPU 时间仅 2.2 秒）。
+   若卡片确实需要联网或外部数据，请在卡片中显式声明为 `ENV_BLOCKED` 情形。
+
+#### 5.4 归档验证报告（不要手写结论）
+
+```bash
+python3 .../verify_skill_code.py --card <卡片> \
+  --json-out <REPO_ROOT>/paper2skills-research/data/verification/k1_<卡片名>.json
+```
+
+---
+
+### Step 5b: 生成 evidence.md（G2 事实溯源凭证，必做）
+
+对照 `MasterPrompt-v2.md` 的 R1–R5 规则，把卡片中每个「高价值断言」数字的
+**逐字原文出处**写入同目录 `evidence.md`。这是通过 K2/G2 门禁的唯一途径。
+
+**背景**：全库实测 **13,868 个数字 vs 仅 3 行**原文引用块，G2 通过率仅 43.8%。
+这是硬门禁，不是锦上添花。
 
 ```markdown
-## 代码验证报告
+# evidence.md — <Skill 卡片名>
 
-- **验证时间**: YYYY-MM-DD HH:MM
-- **验证状态**: ✅ 通过 / ❌ 失败
-- **测试用例数**: N
-- **覆盖率**: XX%
-- **执行时间**: XXms
-
-### 测试结果
-
-| 测试用例 | 状态 | 耗时 |
-|---------|------|------|
-| test_xxx | ✅ | 1ms |
+| # | 卡片中的数字 | 原文逐字摘录 | 出处 |
+|---|-------------|-------------|------|
+| 1 | 蚕食率 −15pp | "…cannibalization rate dropped by 15 percentage points…" | arXiv:2606.26690 §4.2 (p.7) |
+| 2 | +7.20% | "…yielding a 7.20% improvement in…" | arXiv:2608.10182 Table 3 |
 ```
+
+### Step 5c: 运行 K2 三合一门禁
+
+```bash
+python3 <REPO_ROOT>/paper2skills-skills/paper-审核/scripts/gate_check.py \
+  --card <REPO_ROOT>/paper2skills-vault/<领域>/<Skill-卡片>.md
+```
+
+G1 代码 / G2 事实 / G3 业务**三项全绿**才可进入 Step 6。任一红灯须修复后重跑。
 
 ### Step 6: 保存输出（验证通过后）
 
