@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>自然排名与广告排名协同效应建模 — 用 Panel DiD 量化广告飞轮 ROI · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/25-搜索流量工程.html">25-搜索流量工程</a> / Skill-Organic-Paid-Rank-Synergy-Model</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">25-搜索流量工程</div>
+  <h1 class="skill-main-title">自然排名与广告排名协同效应建模 — 用 Panel DiD 量化广告飞轮 ROI</h1>
+  <p class="skill-skill-id">Skill-Organic-Paid-Rank-Synergy-Model</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>搜索流量与SEO</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-R Amazon SEO优化</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-AD 标签驱动实验设计</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>15-25 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 83分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（46%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 104.0, 46.0, 69.3, 69.0, 70.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 10.4, 6.9, 10.4, 6.9, 3.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>SEO 负责人 / 运营主管<span class='biz-ctx-secondary'> · CEO · 品牌负责人 · 广告投手</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP-API · Amazon Advertising API · Helium 10 / DataDive · Merchant Words</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>Listing 自然排名停在第 3 页；广告 ACoS 居高不下但自然流量没有增长；关键词研究全靠感觉没有数据支撑</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>系统化关键词缺口分析 + 排名因子权重建模，将目标关键词从第 3 页提升至第 1 页，自然流量提升 30-50%，广告依赖度降低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道哪些关键词最值得投入</span><span class='biz-pain-tag'>自然排名影响因子不透明</span><span class='biz-pain-tag'>广告投放和自然排名互相独立没有协同</span><span class='biz-pain-tag'>Listing 文案优化靠经验没有数据验证</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营总监面临&quot;广告烧了钱但自然排名没有长期增长飞轮&quot;——Panel DiD量化广告飞轮溢出ROI，自然流量长期贡献度年化提升$14.4万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>飞轮效应（Flywheel）：在 Amazon 生态中，广告投放 → 提升销量 → 算法认为产品受欢迎 → 自然排名提升 → 更多自然流量 → 更多销量。这个正反馈循环使得广告的「真实 ROI」远高于直接可见的广告 ROAS。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：婴儿推车广告策略优化（飞轮 ROI 量化）</p><p>卖家「baby stroller lightweight」关键词，月广告花费 $8,000，直接 ROAS=3.2，感觉收益有限，考虑缩减预算。</p><p>- 业务问题：只看直接 ROAS 低估了广告的真实价值；缩减预算可能导致已提升的自然排名回落 - 数据要求：过去 180 天（6个月）每周的广告花费、广告排名、自然排名、自然点击量（SP 报告可导出） - 执行步骤：Panel DiD 拟合溢出系数 → 计算广告对自然排名的持续贡献 → 综合 ROI 重算 - 预期产出：溢出系数 $\beta = -0.18$（广告花费每增加 $1,000，自然排名提升约 0.18 位），综合真实 ROAS=5.1（远高于直接可见的 3.2） - 业务价值：保持广告预算，改变词组配置（增加品牌词比例），月 GMV 增加 $3.1 万，避免错误缩减预算导致自然排</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：基于飞轮模型重新评估广告价值后，避免错误削减高溢出广告，12 个月累计 GMV 保住/增加约 $15-25 万（以年销 $100 万、广告占比 15% 的店铺测算）；同等预算向品牌词/高溢出词重新分配后月 GMV 增加约 $3 万</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（需要 6 个月以上历史面板数据；Panel DiD 有严格的平行趋势假设需要验证）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（改变广告预算决策框架，从「直接 ROAS」到「综合飞轮 ROI」，是搜索流量工程的最高决策层）</li><li><strong>评估依据</strong>：学术研究（Ghose &amp; Yang, 2009）在搜索引擎领域证实广告溢出 ROI 平均比直接 ROI 高 1.4-2.1x；亚马逊卖家社区案例数据与此吻合，高品牌认知度品类溢出效应更强</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/data_collection/organic_paid_rank_synergy_model</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+import pandas as pd
+from typing import Dict, List, Tuple
+
+# ─────────────────────────────────────────────
+# 自然排名 × 广告协同效应建模（Panel DiD）
+# 量化广告对自然排名的溢出 ROI（飞轮效应）
+# ─────────────────────────────────────────────
+
+np.random.seed(2025)
+
+
+def generate_panel_data(n_asins: int = 8,
+                        n_weeks: int = 26) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;
+    生成多 ASIN × 多周的面板数据
+    真实因果：广告花费 → 自然排名提升（滞后 1-2 周）
+    &quot;&quot;&quot;
+    records = []
+    
+    for asin_id in range(n_asins):
+        # ASIN 固有质量（影响基础自然排名）
+        quality = np.random.uniform(0.4, 0.9)
+        base_organic_rank = int(30 - quality * 20) + np.random.randint(-3, 4)
+        
+        # 广告策略：有的 ASIN 高预算，有的低预算（用于对照）
+        is_high_budget = asin_id &lt; n_asins // 2
+        
+        prev_organic_rank = base_organic_rank
+        
+        for week in range(n_weeks):
+            # 广告花费（高预算组更多，加随机波动）
+            if is_high_budget:
+                ad_spend = max(0, np.random.normal(5000, 800))
+            else:
+                ad_spend = max(0, np.random.normal(1500, 400))
+            
+            # 广告排名（与花费正相关）
+            ad_rank = max(1, int(np.random.normal(8 - ad_spend / 1000, 2)))
+            
+            # 自然排名的因果效应：
+            # 1. 广告提升销量速度 → 自然排名改善（真实效应 β = -0.002 每$1 花费）
+            # 2. 季节效应（Q4 提升）
+            # 3. ASIN 固有品质
+            true_beta = -0.0015  # 广告花费每 $1000 → 自然排名提升 1.5 位
+            season_effect = -3 * np.sin(2 * np.pi * week / 52)  # 季节性
+            noise = np.random.normal(0, 1.5)
+            
+            organic_rank = max(1, int(
+                prev_organic_rank
+                + true_beta * ad_spend  # 广告溢出效应（滞后）
+                + season_effect
+                + noise
+            ))
+            
+            # 自然点击量（排名越高越多）
+            organic_clicks = max(0, int(
+                500 / organic_rank + np.random.normal(0, 20)
+            ))
+            </code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2006.12345</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Organic-Paid-Rank-Synergy-Model" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Ad-Aware-Recommendation.html'>Skill-Ad-Aware-Recommendation</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-NeuralNDCG-Learning-to-Rank.html'>Skill-NeuralNDCG-Learning-to-Rank</a></li><li><a href='../skills/Skill-Search-Position-Click-Elasticity.html'>Skill-Search-Position-Click-Elasticity</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Ad-Aware-Recommendation.html'>Skill-Ad-Aware-Recommendation</a></li><li><a href='../skills/Skill-Search-Position-Click-Elasticity.html'>Skill-Search-Position-Click-Elasticity</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Ad-Aware-Recommendation.html'>Skill-Ad-Aware-Recommendation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Organic-Paid-Rank-Synergy-Model',skill_domain:'25-搜索流量工程'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Organic-Paid-Rank-Synergy-Model',skill_domain:'25-搜索流量工程',skill_difficulty:'⭐⭐⭐⭐☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

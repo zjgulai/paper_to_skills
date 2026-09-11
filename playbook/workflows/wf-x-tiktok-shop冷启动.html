@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-X TikTok Shop冷启动 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-X TikTok Shop冷启动</nav>
+<h1>WF-X TikTok Shop冷启动</h1>
+<p class="lead">从账号破零到稳定GMV的TikTok Shop端到端冷启动决策链。反直觉核心：TikTok Shop算法与亚马逊A9本质不同——亚马逊奖励销售历史，TikTok奖励内容互动率。新卖家反而比老卖家有优势，内容质量决定流量而非广告费。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>新兴渠道运营负责人</span><span class='tag'>内容营销团队</span><span class='tag'>品牌增长负责人</span><span class='tag'>创始人/渠道负责人</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你在TikTok Shop上最大的障碍是什么？0销售破零？流量不稳定？还是找不到合适的创作者？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">账号与内容基建</div>
+  <div class="wf-question">TikTok Shop账号和内容生产体系是否就位？</div>
+  <div class="wf-context">反直觉：TikTok Shop的流量分配不依赖账号粉丝数，而是依赖单条视频的完播率和互动率。没有粉丝的新账号发布高质量内容，算法会主动推流，这与Amazon的历史销量逻辑完全相反。</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">从零开始，没有内容积累</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Live-Commerce-Stream-Algorithm.html"><span class="chip-name">Live Commerce Stream Algorithm — 直播电商算法建模与互动信号优化</span><span class="chip-role">直播电商算法建模，理解TikTok完播率/互动率/购买率三层算法逻辑</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-TikTok-Algorithm-Content-Boost.html"><span class="chip-name">TikTok Algorithm Content Boost — FYP 算法建模与内容传播速度优化</span><span class="chip-role">TikTok算法内容加速，识别触发大规模推流的内容特征（前3秒钩子/情绪弧/CTA）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-AI-Video-Script-Generation.html"><span class="chip-name">AI Video Script Generation — 分层 CoT 电商短视频脚本自动生成</span><span class="chip-role">AI视频脚本生成，批量生产符合TikTok格式的产品展示/测评/故事脚本</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">已有内容，但播放量低</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-E-Commerce-Video-Benchmark.html"><span class="chip-name">E-Commerce Video Benchmark（电商视频质量评估基准）</span><span class="chip-role">电商视频基准测评，对比同品类头部视频的关键指标找差距</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Creative-Fatigue-Detection.html"><span class="chip-name">Creative Fatigue Detection — 生存分析驱动的广告素材疲劳检测</span><span class="chip-role">素材疲劳检测，识别已失效的内容模板，强制迭代新创意</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">达人/创作者合作策略</div>
+  <div class="wf-question">自播还是达人带货？如何找到ROI最高的创作者？</div>
+  <div class="wf-context">反直觉：粉丝量10万以下的微达人，带货转化率通常比百万大V高3-5倍（粉丝信任度更高，品类垂直）。母婴品类尤其如此——宝妈信任有相同经历的普通用户，而非明星。</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">预算有限，优先微达人矩阵</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-KOL-Creator-Matching.html"><span class="chip-name">KOL Creator Matching — KOL/达人精准匹配与 ROI 预测</span><span class="chip-role">KOL/创作者匹配，用互动率/受众重叠度/品类相关性而非粉丝量选人</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-KOL-ROI-Causal-Attribution.html"><span class="chip-name">KOL ROI 因果归因（网红/达人投放效果的真实增量测算）</span><span class="chip-role">KOL合作ROI因果归因，区分达人带来的增量销售vs自然销售</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Creator-Economy-ROI-Model.html"><span class="chip-name">Creator Economy ROI Model — KOL 分级评估、内容衰减曲线与 GMV 净贡献量化</span><span class="chip-role">创作者经济ROI模型，计算不同达人合作形式（佣金/固定费/置换）的预期回报</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">预算充足，需要快速放量</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-TikTok-Shop-Content-Attribution.html"><span class="chip-name">TikTok Shop Content Attribution — 短视频带货兴趣图谱归因</span><span class="chip-role">TikTok Shop内容归因，追踪每条视频/每个达人的实际销售贡献</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Organic-Content-Causal-Attribution.html"><span class="chip-name">Organic Content Causal Attribution — 无用户数据的有机内容因果归因 (CDA)</span><span class="chip-role">自然内容因果归因，分离广告流量vs内容自然流量</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">直播间运营优化</div>
+  <div class="wf-question">是否已开启直播带货？直播间留存率和GPM是否健康？</div>
+  <div class="wf-context">TikTok Shop的复利效应来自直播——直播算法看的是直播间人均停留时长（&gt;60秒为健康），互动率（评论+分享&gt;5%），和GPM（千次展示成交额&gt;$X）。这三个指标决定算法是否给你加流量。</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Live-Stream-Highlight-Extraction.html"><span class="chip-name">Live-Stream-Highlight-Extraction — 直播高光片段自动提取与二次传播内容生产</span><span class="chip-role">直播高光提取，自动剪辑直播最高转化时段转为短视频扩散流量</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Multilingual-Live-Virtual-Anchor-Clone.html"><span class="chip-name">多语言直播虚拟主播实时克隆 — 跨语言直播带货数字人生成与实时驱动</span><span class="chip-role">多语言虚拟主播克隆，24小时不间断直播提升直播间权重</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html"><span class="chip-name">AnchorCrafter — Virtual Anchor Product Demo（虚拟主播带货视频生成）</span><span class="chip-role">虚拟主播产品演示，AI生成真实感产品使用场景演示视频</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">TikTok-Amazon飞轮协同</div>
+  <div class="wf-question">TikTok流量是否在为Amazon自然排名输送信号？</div>
+  <div class="wf-context">反直觉：TikTok Shop产生的外部流量进入Amazon Listing，是Amazon A10算法中权重最高的外部流量信号之一。从TikTok引流到Amazon会触发算法的排名加速，形成双平台飞轮。</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Amazon-External-Traffic-Boost.html"><span class="chip-name">Amazon External Traffic Boost — 站外流量对 A10 排名速度的提升效应建模</span><span class="chip-role">Amazon外部流量加速，量化TikTok/社交流量对Amazon自然排名的提升系数</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-TikTok-Creator-ROI-Attribution.html"><span class="chip-name">TikTok达人直播ROI归因 — PSM分离主播效应与流量效应</span><span class="chip-role">TikTok创作者ROI归因，追踪TikTok流量在Amazon的转化路径</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Cross-Platform-Brand-Search-Volume.html"><span class="chip-name">Cross-Platform Brand Search Volume — 品牌搜索量作为营销效果领先指标</span><span class="chip-role">跨平台品牌搜索量监控，TikTok曝光带来的Amazon品牌词搜索量提升是飞轮效应的关键证据</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

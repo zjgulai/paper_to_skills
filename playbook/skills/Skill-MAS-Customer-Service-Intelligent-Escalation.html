@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAS客服智能升级路由 — 首答Agent/人工升级/风控三者协作路由机制 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-MAS-Customer-Service-Intelligent-Escalation</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">10-MAS</div>
+  <h1 class="skill-main-title">MAS客服智能升级路由 — 首答Agent/人工升级/风控三者协作路由机制</h1>
+  <p class="skill-skill-id">Skill-MAS-Customer-Service-Intelligent-Escalation</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>跨境物流与履约</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>LLM数据分析</span><span class='tag'>逆向物流与退货</span><span class='tag'>AI搜索与GEO</span><span class='tag'>多渠道协同增长</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-AA 多渠道协同增长</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>1.5万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>客服团队面临&quot;AI和人工分工不清处理效率低&quot;——智能路由将AI处理量从30%→70%，年化节省人力成本36万元并降低差评率20%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>母婴客服的核心挑战：不同类型问题需要完全不同的处理策略，单一AI或单一人工都无法高效覆盖。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>典型问题分类： - AI首答（70%）：订单状态查询、使用说明、配件型号确认、物流跟踪 - 人工升级（25%）：产品故障申报（需照片/视频核实）、长期未解决问题、情绪激动的投诉 - 风控介入（5%）：声称未收货但物流显示签收、多次申请退款并保留产品、账号异常</p><p>- 数据要求：客服工单历史（问题类型+解决结果+处理时长），用于校准路由模型 - 预期产出：自动分流，AI处理量从30%提升至70%，人工响应速度从8小时→2小时（专注高价值问题） - 业务价值：人工客服成本降低40-50%，约 15-25万元/年；同时高价值客诉响应时间减半，预计减少差评率 20%</p><p>**三轨验证**： - **成本**：数据采集需接入客服系统API（约2-3人周开发量），情绪检测依赖VADER/LLM推理（日均约0.5元/万条消息），风控信号需对接订单/账号数据库（维护成本约1万元/年） - **合规**：情绪分析涉及用户隐私（需在隐私政策中明确告知），风控信号中的IP/行为数据需符合GDPR（欧洲用户需匿名化处理），Amazon平台禁止使用非官方API抓取用户数据 - **风险**：误将正常用户路由至风控可能引发投诉（需设置人工复核机制），情绪阈值过低导致人工升级率飙升（需A/B测试校准），风控规则过严可能误伤高价值客户（建议设置白名单）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：AI处理量从30%→70%，假设人工客服月薪1.5万元/人，减少2名专职客服，年节省约 <strong>36万元</strong>；同时高价值客诉响应时间减半，差评率降低15-20%，对应转化率提升约 <strong>3%</strong>，年化增量营收 <strong>15-30万元</strong></li><li><strong>母婴场景特殊性</strong>：母婴用户情绪敏感度高（宝宝安全相关投诉必须快速响应），错误路由成本更高，智能分级价值更大</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（基于规则的路由快速可部署，后期可接入LLM优化）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（高频运营场景，直接影响用户满意度和运营成本）</li><li><strong>成本</strong>：规则引擎部署成本约5万元（含开发），LLM升级版本需额外GPU推理费用（约0.02元/次），人工复核机制需增加1名质检人员（年薪约10万元）</li><li><strong>合规</strong>：情绪分析需符合《个人信息保护法》（中国）和GDPR（欧洲），风控数据不得用于其他商业目的，Amazon平台禁止对买家进行欺诈预判标签化</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import re
+from dataclasses import dataclass
+from enum import Enum
+
+class EscalationLevel(Enum):
+    AI_FIRST_RESPONSE = &quot;AI首答&quot;
+    HUMAN_ESCALATION = &quot;人工升级&quot;
+    RISK_CONTROL = &quot;风控介入&quot;
+
+@dataclass
+class CustomerTicket:
+    ticket_id: str
+    customer_message: str
+    customer_id: str
+    order_id: str = None
+    historical_refund_count: int = 0
+    account_age_days: int = 365
+
+class FAQMatcher:
+    &quot;&quot;&quot;简化FAQ匹配（生产环境用向量检索）&quot;&quot;&quot;
+    def __init__(self):
+        self.faq_patterns = {
+            &#x27;订单状态&#x27;: [&#x27;where is my order&#x27;, &#x27;tracking&#x27;, &#x27;delivery&#x27;, &#x27;订单状态&#x27;, &#x27;物流&#x27;, &#x27;发货&#x27;],
+            &#x27;使用说明&#x27;: [&#x27;how to use&#x27;, &#x27;instructions&#x27;, &#x27;setup&#x27;, &#x27;怎么用&#x27;, &#x27;使用方法&#x27;, &#x27;安装&#x27;],
+            &#x27;配件型号&#x27;: [&#x27;which parts&#x27;, &#x27;accessories&#x27;, &#x27;compatible&#x27;, &#x27;配件&#x27;, &#x27;型号&#x27;, &#x27;适配&#x27;],
+            &#x27;退换货流程&#x27;: [&#x27;return&#x27;, &#x27;refund process&#x27;, &#x27;exchange&#x27;, &#x27;退货流程&#x27;, &#x27;换货&#x27;, &#x27;退款流程&#x27;],
+        }
+    
+    def match_score(self, text: str) -&gt; float:
+        &quot;&quot;&quot;返回FAQ匹配得分（0=完全无匹配，1=完全匹配）&quot;&quot;&quot;
+        text_lower = text.lower()
+        max_match = 0
+        for category, keywords in self.faq_patterns.items():
+            matches = sum(1 for kw in keywords if kw.lower() in text_lower)
+            match_ratio = matches / len(keywords)
+            max_match = max(max_match, match_ratio)
+        return max_match
+
+class EmotionSignalDetector:
+    &quot;&quot;&quot;情绪信号检测&quot;&quot;&quot;
+    def __init__(self):
+        self.anger_signals = [
+            &#x27;unacceptable&#x27;, &#x27;outrageous&#x27;, &#x27;furious&#x27;, &#x27;terrible&#x27;, &#x27;worst&#x27;, &#x27;scam&#x27;,
+            &#x27;hate&#x27;, &#x27;disgusting&#x27;, &#x27;useless&#x27;, &#x27;气死了&#x27;, &#x27;太差了&#x27;, &#x27;骗人&#x27;, &#x27;投诉&#x27;, 
+            &#x27;差评&#x27;, &#x27;退款&#x27;, &#x27;无耻&#x27;, &#x27;垃圾&#x27;, &#x27;不负责任&#x27;
+        ]
+        self.escalation_phrases = [
+            &#x27;speak to manager&#x27;, &#x27;supervisor&#x27;, &#x27;legal action&#x27;, &#x27;report to&#x27;,
+            &#x27;amazon complaint&#x27;, &#x27;投诉亚马逊&#x27;, &#x27;联系平台&#x27;, &#x27;法律途径&#x27;, &#x27;媒体曝光&#x27;
+        ]
+    
+    def compute_emotion_risk(self, text: str) -&gt; float:
+        text_lower = text.lower()
+        
+        # 愤怒关键词
+        anger_count = sum(1 for s in self.anger_signals if s.lower() in text_lower)
+        # 升级请求
+        escalation_count = sum(1 for p in self.escalation_phrases if p.lower() in text_lower)
+        # 标点密度（感叹号）
+        exclamation_density = min(text.count(&#x27;!&#x27;) / max(len(text.split()), 1) * 5, 1.0)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2404.19331</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MAS-Customer-Service-Intelligent-Escalation" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AgenTracer-MAS-Failure-Attribution.html'>Skill-AgenTracer-MAS-Failure-Attribution</a></li><li><a href='../skills/Skill-MAS-Customer-Journey-Orchestration.html'>Skill-MAS-Customer-Journey-Orchestration</a></li><li><a href='../skills/Skill-MAS-Dynamic-Pricing-Coalition.html'>Skill-MAS-Dynamic-Pricing-Coalition</a></li><li><a href='../skills/Skill-MAS-Orchestrator.html'>Skill-MAS-Orchestrator</a></li><li><a href='../skills/Skill-RCR-Router-Role-Aware-Context-Routing.html'>Skill-RCR-Router-Role-Aware-Context-Routing</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li><li><a href='../skills/Skill-VOC-Churn-Early-Warning-Signal.html'>Skill-VOC-Churn-Early-Warning-Signal</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AgenTracer-MAS-Failure-Attribution.html'>Skill-AgenTracer-MAS-Failure-Attribution</a></li><li><a href='../skills/Skill-MAS-Customer-Journey-Orchestration.html'>Skill-MAS-Customer-Journey-Orchestration</a></li><li><a href='../skills/Skill-MAS-Dynamic-Pricing-Coalition.html'>Skill-MAS-Dynamic-Pricing-Coalition</a></li><li><a href='../skills/Skill-RCR-Router-Role-Aware-Context-Routing.html'>Skill-RCR-Router-Role-Aware-Context-Routing</a></li><li><a href='../skills/Skill-VOC-Churn-Early-Warning-Signal.html'>Skill-VOC-Churn-Early-Warning-Signal</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-MAS-Dynamic-Pricing-Coalition.html'>Skill-MAS-Dynamic-Pricing-Coalition</a></li><li><a href='../skills/Skill-RCR-Router-Role-Aware-Context-Routing.html'>Skill-RCR-Router-Role-Aware-Context-Routing</a></li><li><a href='../skills/Skill-VOC-Churn-Early-Warning-Signal.html'>Skill-VOC-Churn-Early-Warning-Signal</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-MAS-Customer-Service-Intelligent-Escalation',skill_domain:'10-MAS'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-MAS-Customer-Service-Intelligent-Escalation',skill_domain:'10-MAS',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

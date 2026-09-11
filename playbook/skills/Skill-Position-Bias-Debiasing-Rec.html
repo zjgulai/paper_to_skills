@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Position Bias Debiasing Recommendation — 位置偏差去偏公平推荐 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Position-Bias-Debiasing-Rec</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">05-推荐系统</div>
+  <h1 class="skill-main-title">Position Bias Debiasing Recommendation — 位置偏差去偏公平推荐</h1>
+  <p class="skill-skill-id">Skill-Position-Bias-Debiasing-Rec</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>搜索流量与SEO</span><span class='tag'>时序预测</span><span class='tag'>AI伦理与治理</span><span class='tag'>逆向物流与退货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-P 关税危机应对</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>NDCG@10 提升 10-15%，新品流量公平化减少广告依</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#2563eb;color:#fff">中等 · 73分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（34%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 76.0, 34.0, 50.7, 51.0, 50.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 7.6, 5.1, 7.6, 5.1, 2.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营面临&quot;老ASIN因历史曝光多CTR虚高持续霸屏、新品流量&lt;老品1/10&quot;——IPS逆倾向去偏将模型NDCG@10提升12%、新品前10位占比从8%升至18%，年化广告节省约30万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>位置偏差（Position Bias） 是推荐系统中最普遍的系统性偏差：用户点击行为受商品展示位置强烈影响，排名靠前的商品获得更多点击，无论其真实质量如何。这导致训练数据中的点击信号&quot;因果混淆&quot;——我们观测到的是&quot;被曝光后点击&quot;，而非&quot;真实偏好&quot;。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景1：Amazon Search 结果位置去偏，改善新品排名公平性 - 业务问题：Search 推荐模型用原始 CTR 训练，老 ASIN 因历史曝光多、CTR 虚高持续霸屏，新品即使质量更好也难以获得流量；新品曝光机会 &lt; 老品 1/10 - 数据要求：Search 曝光日志（ASIN、位置 k、用户 ID、是否点击）、最近 90 天数据 - 预期产出：去偏后模型 NDCG@10 提升 12%，新品（上线 &lt;30 天）在前 10 位的占比从 8% 提升至 18% - 业务价值：新品孵化效率提升，减少对外部广告投入的依赖，年化广告节省约 30 万元</p><p>场景2：Listing 详情页&quot;相关推荐&quot;位置公平化 - 业务问题：Listing 页推荐栏中，曝光位置 1-3 的点击率是 7-10 位的 5-8 倍，但点击不一定是真实偏好，导致推荐越来越同质化 - 数据要求：商品详情页推荐曝光日志（位置、点击、后续购买）、商品特征向量 - 预期产出：基于去偏模型的推荐与实际购买相关性（AUROC）从 0.72 提升至 0.81 - 业务价值：推荐质量提升减少&quot;看了不买&quot;，Session CVR 提升 8%，年化约 40 万元</p><p>**三轨验证**： - 成本：IPS 去偏仅修改训练损失函数，无需改变推理架构；额外计算开销 &lt;5% - 合规：去偏不影响用户隐私；若用随机实验估计倾向分数，需确保随机策略不损害用户体验 - 风险：倾向分数估计偏差会放大 IPS 方差；需定期重估（月度），防止位置-点击分布漂移</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>ROI：NDCG@10 提升 10-15%，新品流量公平化减少广告依赖，年化综合价值约 50-80 万元（广告节省+推荐质量提升）</li><li>实施难度：⭐⭐☆☆☆（仅需修改训练损失函数，对现有推荐架构侵入最小）</li><li>优先级：⭐⭐⭐⭐☆</li><li>评估依据：实施成本极低（改损失函数），但效果显著；尤其对新品孵化场景，是性价比最高的推荐优化手段之一</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+
+# ============================================================
+# Position Bias Debiasing（IPS + DR 去偏推荐训练）
+# ============================================================
+
+def estimate_propensity_scores(
+    click_logs: list[dict], n_positions: int = 10
+) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    从点击日志估计各位置倾向分数 p(click | position)
+    click_logs: [{&quot;position&quot;: int, &quot;clicked&quot;: bool}, ...]
+    &quot;&quot;&quot;
+    impressions = np.zeros(n_positions)
+    clicks = np.zeros(n_positions)
+    for log in click_logs:
+        pos = min(log[&quot;position&quot;], n_positions - 1)
+        impressions[pos] += 1
+        if log[&quot;clicked&quot;]:
+            clicks[pos] += 1
+    # 防止除零
+    propensity = clicks / (impressions + 1e-9)
+    return propensity
+
+def ips_loss(predictions: np.ndarray, labels: np.ndarray,
+             propensities: np.ndarray, clip_min: float = 0.01) -&gt; float:
+    &quot;&quot;&quot;
+    IPS（逆倾向分数）加权损失
+    predictions: 模型预测分数 [0,1]
+    labels: 真实点击标签 {0,1}
+    propensities: 每条样本对应的倾向分数
+    &quot;&quot;&quot;
+    propensities = np.clip(propensities, clip_min, 1.0)
+    weights = np.where(labels == 1, 1.0 / propensities, 1.0 / (1.0 - propensities + 1e-9))
+    # 二元交叉熵
+    eps = 1e-7
+    pred = np.clip(predictions, eps, 1 - eps)
+    bce = -(labels * np.log(pred) + (1 - labels) * np.log(1 - pred))
+    weighted_loss = np.mean(weights * bce)
+    return float(weighted_loss)
+
+def doubly_robust_loss(predictions: np.ndarray, labels: np.ndarray,
+                       direct_model_preds: np.ndarray,
+                       propensities: np.ndarray,
+                       clip_min: float = 0.01) -&gt; float:
+    &quot;&quot;&quot;
+    DR-IPS 双鲁棒损失
+    direct_model_preds: 直接估计模型的预测（可用简单线性模型）
+    &quot;&quot;&quot;
+    propensities = np.clip(propensities, clip_min, 1.0)
+    eps = 1e-7
+    pred = np.clip(predictions, eps, 1 - eps)
+    dm_pred = np.clip(direct_model_preds, eps, 1 - eps)
+
+    # 直接估计项
+    dm_loss = -(labels * np.log(dm_pred) + (1 - labels) * np.log(1 - dm_pred))
+
+    # IPS 修正项
+    actual_loss = -(labels * np.log(pred) + (1 - labels) * np.log(1 - pred))
+    ips_correction = (labels - direct_model_preds) / propensities * (actual_loss - dm_loss)</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2401.06195</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Position-Bias-Debiasing-Rec" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-CAGED-Debiased-Rec.html'>Skill-CAGED-Debiased-Rec</a></li><li><a href='../skills/Skill-Causal-Deconfounded-Recommendation.html'>Skill-Causal-Deconfounded-Recommendation</a></li><li><a href='../skills/Skill-Contextual-Bandits-Rec.html'>Skill-Contextual-Bandits-Rec</a></li><li><a href='../skills/Skill-NeuralNDCG-Learning-to-Rank.html'>Skill-NeuralNDCG-Learning-to-Rank</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Contextual-Bandits-Rec.html'>Skill-Contextual-Bandits-Rec</a></li><li><a href='../skills/Skill-NeuralNDCG-Learning-to-Rank.html'>Skill-NeuralNDCG-Learning-to-Rank</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Contextual-Bandits-Rec.html'>Skill-Contextual-Bandits-Rec</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><a href='../skills/Skill-ROAS-Budget-Optimization.html'>Skill-ROAS-Budget-Optimization</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Position-Bias-Debiasing-Rec',skill_domain:'05-推荐系统'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Position-Bias-Debiasing-Rec',skill_domain:'05-推荐系统',skill_difficulty:'⭐⭐☆☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

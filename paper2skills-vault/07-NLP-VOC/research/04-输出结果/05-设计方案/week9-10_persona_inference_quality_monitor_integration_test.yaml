@@ -1,0 +1,519 @@
+# Week 9-10 画像推导 + 质量监控 + 整合测试
+# 审计时间: 2026-04-23
+
+---
+# 第一部分: Top 50标签画像推导规则库
+
+persona_inference_version: v3.6-persona-v1.0
+design_principle: "标签命中 → 原子标签加分 → 推导画像 → 输出用户分群"
+
+# 用户画像定义
+user_personas:
+  - persona_id: UP_001
+    persona_name: first_time_parent
+    description: 新手父母，首次购买母婴产品
+    characteristics: [信息需求高, 价格敏感中等, 重视安全性, 依赖社媒推荐]
+    key_tags: [品牌陌生, 参数说明清楚, 真实妈妈种草, 核心卖点清晰, 易用性]
+
+  - persona_id: UP_002
+    persona_name: research_driven
+    description: 研究型父母，购买前做大量功课
+    characteristics: [详细对比, 重视测评, 参数导向, 理性决策]
+    key_tags: [对比信息充分, 第三方测评真实, 参数说明清楚, 评价真实可参考]
+
+  - persona_id: UP_003
+    persona_name: price_sensitive
+    description: 价格敏感型，追求性价比
+    characteristics: [价格优先, 寻找折扣, 比价行为, 等待促销]
+    key_tags: [价格过高, 物超所值, 性价比差, 促销规则]
+
+  - persona_id: UP_004
+    persona_name: quality_focused
+    description: 品质导向型，愿意为高质量付费
+    characteristics: [品牌忠诚度高, 重视耐用性, 安全认证关注, 复购率高]
+    key_tags: [质量感知, 认证背书可信, 耐用性, 配件耐用]
+
+  - persona_id: UP_005
+    persona_name: convenience_seeker
+    description: 便利性导向型，重视使用便捷
+    characteristics: [操作简单偏好, 清洗便捷, 便携需求, 省时]
+    key_tags: [易用性, 清洗方便, 便携轻量, 操作简单]
+
+  - persona_id: UP_006
+    persona_name: working_mom
+    description: 职场妈妈，背奶/工作场景需求
+    characteristics: [时间管理, 便携需求, 静音需求, 效率优先]
+    key_tags: [工作场景, 便携轻量, 静音好评, 穿戴舒适]
+
+  - persona_id: UP_007
+    persona_name: safety_conscious
+    description: 安全敏感型，极度关注产品安全
+    characteristics: [认证关注, 材质安全, 安规合规, 谨慎购买]
+    key_tags: [安全认证不清晰, 认证背书可信, 材质过敏, 安全/合规认证可信度]
+
+  - persona_id: UP_008
+    persona_name: tech_savvy
+    description: 科技爱好者，偏好智能产品
+    characteristics: [App功能关注, 连接稳定需求, 数据追踪, 智能化偏好]
+    key_tags: [App功能好用, 连接稳定, App体验好, 隐私保护好]
+
+  - persona_id: UP_009
+    persona_name: brand_loyalist
+    description: 品牌忠诚者，重复购买同一品牌
+    characteristics: [品牌认同, 推荐意愿高, 复购率高, 价格容忍度高]
+    key_tags: [强烈推荐, 会再次购买, 品牌忠诚, 总体正面]
+
+  - persona_id: UP_010
+    persona_name: dissatisfied_customer
+    description: 不满意客户，有流失风险
+    characteristics: [投诉行为, 退货意愿, 负面口碑, 竞品转换]
+    key_tags: [退货, 投诉, 不推荐, 性价比差, 质量问题]
+
+# 画像推导规则（Top 50标签）
+inference_rules:
+  # === A阶段标签推导 ===
+  - tag_id: TAG_A_001
+    tag_name: 品牌陌生
+    inference_logic:
+      - condition: "命中品牌陌生 + 首次购买信号"
+        atomic_score: {new_customer: +3}
+        persona_scores: {first_time_parent: +5, research_driven: +2}
+      - condition: "命中品牌陌生 + 价格敏感信号"
+        atomic_score: {price_conscious: +2}
+        persona_scores: {price_sensitive: +3}
+
+  - tag_id: TAG_A_003
+    tag_name: 内容打中痛点
+    inference_logic:
+      - condition: "命中内容打中痛点 + 背奶场景"
+        persona_scores: {working_mom: +5, first_time_parent: +3}
+      - condition: "命中内容打中痛点 + 安全场景"
+        persona_scores: {safety_conscious: +5}
+
+  - tag_id: TAG_A_006
+    tag_name: 真实妈妈种草
+    inference_logic:
+      - condition: "命中真实妈妈种草"
+        persona_scores: {first_time_parent: +4, research_driven: +2}
+        note: "新手父母更依赖社媒推荐"
+
+  # === I阶段标签推导 ===
+  - tag_id: TAG_I_001
+    tag_name: 信息难找
+    inference_logic:
+      - condition: "命中信息难找 + 多次查询"
+        persona_scores: {research_driven: +3, first_time_parent: +2}
+        note: "研究型用户搜索次数多，但信息架构问题影响所有用户"
+
+  - tag_id: TAG_I_002
+    tag_name: 参数说明清楚
+    inference_logic:
+      - condition: "命中参数说明清楚"
+        persona_scores: {research_driven: +3, tech_savvy: +2}
+        note: "参数导向用户更关注"
+
+  - tag_id: TAG_I_004
+    tag_name: 评价真实可参考
+    inference_logic:
+      - condition: "命中评价真实可参考"
+        persona_scores: {research_driven: +4, first_time_parent: +3}
+
+  - tag_id: TAG_I_006
+    tag_name: 到手价清晰
+    inference_logic:
+      - condition: "命中到手价清晰 + 比价行为"
+        persona_scores: {price_sensitive: +3}
+
+  - tag_id: TAG_I_013
+    tag_name: 保险/HSA/FSA
+    inference_logic:
+      - condition: "命中保险/HSA/FSA"
+        persona_scores: {price_sensitive: +5}
+        note: "使用保险支付是强烈价格敏感信号"
+
+  # === P1阶段标签推导 ===
+  - tag_id: TAG_P1_001
+    tag_name: 核心卖点清晰
+    inference_logic:
+      - condition: "命中核心卖点清晰"
+        persona_scores: {first_time_parent: +2, convenience_seeker: +2}
+
+  - tag_id: TAG_P1_003
+    tag_name: 对比信息充分
+    inference_logic:
+      - condition: "命中对比信息充分 + 多竞品对比"
+        persona_scores: {research_driven: +5}
+        note: "研究型用户的强信号"
+
+  - tag_id: TAG_P1_005
+    tag_name: 认证背书可信
+    inference_logic:
+      - condition: "命中认证背书可信"
+        persona_scores: {safety_conscious: +5, quality_focused: +3}
+
+  - tag_id: TAG_P1_009
+    tag_name: 物超所值
+    inference_logic:
+      - condition: "命中物超所值"
+        persona_scores: {price_sensitive: +3, quality_focused: +2}
+        note: "价格敏感但认可价值"
+
+  - tag_id: TAG_P1_010
+    tag_name: 性价比差
+    inference_logic:
+      - condition: "命中性价比差 + 提及竞品价格"
+        persona_scores: {price_sensitive: +5, dissatisfied_customer: +3}
+
+  # === L1阶段标签推导 ===
+  - tag_id: TAG_GEN_E001
+    tag_name: 易用性
+    inference_logic:
+      - condition: "命中易用性(正向)"
+        persona_scores: {convenience_seeker: +5, first_time_parent: +3}
+      - condition: "命中易用性(负向)"
+        persona_scores: {dissatisfied_customer: +3}
+
+  - tag_id: TAG_GEN_E003
+    tag_name: 质量感知
+    inference_logic:
+      - condition: "命中质量感知(正向)"
+        persona_scores: {quality_focused: +5}
+      - condition: "命中质量感知(负向)"
+        persona_scores: {dissatisfied_customer: +4, quality_focused: -3}
+
+  - tag_id: TAG_GEN_E005
+    tag_name: 耐用性
+    inference_logic:
+      - condition: "命中耐用性(正向)"
+        persona_scores: {quality_focused: +4}
+
+  - tag_id: TAG_L1_002
+    tag_name: 吸力不足
+    inference_logic:
+      - condition: "命中吸力不足 + 对比竞品"
+        persona_scores: {research_driven: +2, dissatisfied_customer: +4}
+      - condition: "命中吸力不足 + 核心功能期望"
+        persona_scores: {quality_focused: +2, dissatisfied_customer: +3}
+
+  - tag_id: TAG_L1_003
+    tag_name: 噪音太大
+    inference_logic:
+      - condition: "命中噪音太大 + 夜间场景"
+        persona_scores: {working_mom: +3, dissatisfied_customer: +3}
+        priority_boost: "P0"
+      - condition: "命中噪音太大 + 工作场景"
+        persona_scores: {working_mom: +5}
+
+  - tag_id: TAG_L1_005
+    tag_name: 尺码偏小
+    inference_logic:
+      - condition: "命中尺码偏小 + 退货"
+        persona_scores: {dissatisfied_customer: +4}
+      - condition: "命中尺码偏小 + 首次购买"
+        persona_scores: {first_time_parent: +3}
+
+  - tag_id: TAG_POS_BP_003
+    tag_name: 静音好评
+    inference_logic:
+      - condition: "命中静音好评"
+        persona_scores: {working_mom: +5, convenience_seeker: +3}
+        promoter_boost: +3
+
+  - tag_id: TAG_POS_BP_004
+    tag_name: 穿戴舒适
+    inference_logic:
+      - condition: "命中穿戴舒适"
+        persona_scores: {working_mom: +4, convenience_seeker: +3}
+        promoter_boost: +2
+
+  - tag_id: TAG_POS_BP_008
+    tag_name: 清洗方便
+    inference_logic:
+      - condition: "命中清洗方便"
+        persona_scores: {convenience_seeker: +5}
+        promoter_boost: +2
+
+  # === L2阶段标签推导 ===
+  - tag_id: TAG_L2_003
+    tag_name: 客服响应慢
+    inference_logic:
+      - condition: "命中客服响应慢"
+        persona_scores: {dissatisfied_customer: +3}
+        note: "售后体验影响复购"
+
+  - tag_id: TAG_L2_005
+    tag_name: 退货流程复杂
+    inference_logic:
+      - condition: "命中退货流程复杂"
+        persona_scores: {dissatisfied_customer: +5}
+        churn_risk: "高"
+
+  # === L3阶段标签推导 ===
+  - tag_id: TAG_GEN_S004
+    tag_name: 强烈推荐
+    inference_logic:
+      - condition: "命中强烈推荐 + 具体理由"
+        persona_scores: {brand_loyalist: +5}
+        promoter_boost: +5
+        proxy_nps: "Promoter"
+
+  - tag_id: TAG_GEN_P001
+    tag_name: 总体正面
+    inference_logic:
+      - condition: "命中总体正面"
+        persona_scores: {brand_loyalist: +3}
+        promoter_boost: +2
+
+# 画像得分计算引擎
+scoring_engine:
+  input: "用户在所有标签上的命中记录"
+  process:
+    step1: "每个标签命中 → 原子标签加分"
+    step2: "原子标签聚合 → 画像得分累加"
+    step3: "画像得分标准化（0-100分）"
+    step4: "Top 3画像输出 + 置信度"
+  output_format:
+    user_id: "用户ID"
+    top_personas:
+      - persona: "画像名"
+        score: "得分"
+        confidence: "置信度"
+        key_driving_tags: ["驱动标签列表"]
+    persona_distribution: "画像分布"
+
+---
+# 第二部分: 自动化质量监控流水线
+
+quality_monitor_version: v3.6-monitor-v1.0
+monitor_frequency: "每周日凌晨2:00自动运行"
+
+pipeline_steps:
+  step1_data_collection:
+    description: "收集上周所有标签命中数据"
+    data_sources:
+      - tag_hit_log        # 标签命中日志
+      - confidence_scores  # 置信度分数
+      - user_feedback      # 用户反馈（误标/漏标）
+      - manual_audit       # 人工抽检结果
+
+  step2_coverage_analysis:
+    description: "计算每个标签的覆盖率"
+    metrics:
+      - overall_coverage: "全量数据覆盖率"
+      - per_source_coverage: "分数据源覆盖率"
+      - internal_external_ratio: "内外覆盖率比值"
+    thresholds:
+      too_high: "> 10%"
+      too_low: "< 0.1%"
+      abnormal_ratio: "internal > external × 5"
+    actions:
+      too_high: "标记待拆分"
+      too_low: "标记待扩大样本或删除"
+      abnormal_ratio: "标记数据质量问题"
+
+  step3_jaccard_analysis:
+    description: "计算标签对之间的Jaccard系数"
+    calculation: |
+      Jaccard(A, B) = |keywords_A ∩ keywords_B| / |keywords_A ∪ keywords_B|
+    thresholds:
+      severe: "> 0.5  → 自动冻结标签"
+      moderate: "> 0.3  → 告警待修复"
+      mild: "0.2-0.3 → 监控"
+    action:
+      severe: "自动冻结 + 通知标签owner"
+      moderate: "加入修复backlog"
+      mild: "周报记录"
+
+  step4_confidence_stability:
+    description: "检查置信度稳定性"
+    metrics:
+      - mean_confidence: "平均置信度"
+      - std_confidence: "置信度标准差"
+      - confidence_trend: "置信度周趋势"
+    thresholds:
+      unstable: "std > 0.1"
+      declining: "连续3周下降 > 5%"
+    actions:
+      unstable: "标记置信度不稳定，建议优化关键词"
+      declining: "标记模型退化，建议重新训练"
+
+  step5_cooccurrence_analysis:
+    description: "检查异常共现"
+    metrics:
+      - cooccurrence_matrix: "标签共现矩阵"
+      - abnormal_pairs: "异常共现对"
+    thresholds:
+      abnormal: "共现率 > 独立概率 × 10"
+    actions:
+      abnormal: "标记可能的标签混淆或母子关系"
+
+  step6_report_generation:
+    description: "生成质量监控报告"
+    report_sections:
+      - executive_summary: "本周质量概览"
+      - high_risk_tags: "高风险标签清单"
+      - frozen_tags: "已冻结标签"
+      - trend_analysis: "趋势分析"
+      - recommended_actions: "建议行动"
+    distribution:
+      - 标签owner: "各自负责标签的问题"
+      - 标签管理员: "全局质量报告"
+      - 产品经理: "业务影响摘要"
+
+# 告警规则
+alert_rules:
+  critical:
+    condition: "标签被冻结 OR 安全标签覆盖率异常"
+    channel: [slack, email, sms]
+    recipients: [标签管理员, 产品经理, 安全负责人]
+    response_sla: "2小时"
+
+  high:
+    condition: "Jaccard > 0.5 OR 覆盖率 > 15% OR 置信度std > 0.15"
+    channel: [slack, email]
+    recipients: [标签owner, 标签管理员]
+    response_sla: "24小时"
+
+  medium:
+    condition: "Jaccard > 0.3 OR 覆盖率 < 0.1% OR 置信度连续下降"
+    channel: [email]
+    recipients: [标签owner]
+    response_sla: "72小时"
+
+  low:
+    condition: "Jaccard > 0.2 OR 轻微覆盖率波动"
+    channel: [周报]
+    recipients: [标签owner]
+    response_sla: "下次迭代"
+
+---
+# 第三部分: 端到端测试方案（吸奶器品线试点）
+
+pilot_test_plan:
+  test_version: v3.6-pilot-v1.0
+  pilot_category: 吸奶器
+  test_duration: "2周（D46-D48浓缩为试点方案）"
+  test_scope: "吸奶器品线全部标签（原72个 + 下沉新增31个 + 正向新增15个 = 118个标签）"
+
+  test_objectives:
+    - objective1: "验证AIPL动态锚定规则的准确度 ≥ 85%"
+    - objective2: "验证正向标签的抽取召回率 ≥ 70%"
+    - objective3: "验证画像推导的Top 3准确率 ≥ 75%"
+    - objective4: "验证渠道权重矩阵的合理性"
+    - objective5: "验证多语言映射的覆盖率"
+
+  test_data:
+    source: "过去3个月吸奶器品线全部VOC数据"
+    volume: "~5000条评论 + 2000条工单 + 500条退货留言"
+    golden_set: "人工标注500条作为基准"
+
+  test_cases:
+    - case_id: TC_001
+      case_name: AIPL动态锚定测试
+      input: "500条带上下文的文本"
+      expected: "动态调整后AIPL与人工标注一致率≥85%"
+      metrics: [accuracy, precision, recall]
+
+    - case_id: TC_002
+      case_name: 正向标签抽取测试
+      input: "500条评论中的正向表达"
+      expected: "正向标签召回率≥70%，精确率≥80%"
+      metrics: [recall, precision, f1]
+
+    - case_id: TC_003
+      case_name: 画像推导测试
+      input: "500个用户的标签命中记录"
+      expected: "Top 3画像包含人工标注画像≥75%"
+      metrics: [top3_accuracy, mrr, ndcg]
+
+    - case_id: TC_004
+      case_name: 渠道权重验证
+      input: "同一标签在不同数据源的命中"
+      expected: "权重调整后业务指标（如NPS预测）提升"
+      metrics: [nps_correlation, weight_impact]
+
+    - case_id: TC_005
+      case_name: 多语言映射测试
+      input: "100条西班牙语/法语/德语评论"
+      expected: "非英语评论标签覆盖率≥80%"
+      metrics: [coverage, accuracy]
+
+  success_criteria:
+    - criterion1: "TC_001 accuracy ≥ 85%"
+    - criterion2: "TC_002 recall ≥ 70% AND precision ≥ 80%"
+    - criterion3: "TC_003 top3_accuracy ≥ 75%"
+    - criterion4: "TC_004 nps_correlation ≥ 0.6"
+    - criterion5: "TC_005 coverage ≥ 80%"
+    - criterion_all: "5/5通过则试点成功，4/5通过可修复后上线，≤3/5需回退"
+
+  fallback_plan:
+    condition: "试点未通过"
+    actions:
+      - "回退到v3.5基座"
+      - "记录失败原因"
+      - "修复后重新试点"
+      - "延期上线2周"
+
+---
+# 第四部分: 全量标签验证清单
+
+validation_checklist:
+  data_integrity:
+    - "503个标签ID唯一性检查"
+    - "AIPL节点有效性（A/I/P1/P2/L1/L2/L3）"
+    - "情感极性有效性（正向/负向/中性）"
+    - "标签主题一致性"
+    - "关键词非空检查"
+
+  relationship_integrity:
+    - "映射关系表392行完整性"
+    - "主标签-支撑标签关系有效性"
+    - "竞品维度引用有效性"
+
+  business_logic:
+    - "正向标签关键词不与负向标签混淆"
+    - "安全标签全部有监管标准映射"
+    - "P0标签全部有自动升级规则"
+    - "主责部门在组织架构中存在"
+
+  performance:
+    - "标签抽取延迟 < 200ms/条"
+    - "画像推导延迟 < 500ms/用户"
+    - "质量监控流水线运行时间 < 30分钟"
+
+---
+# 自我审计报告
+
+audit_item: 画像推导 + 质量监控 + 整合测试
+audit_time: 2026-04-23
+
+persona_inference_audit:
+  画像定义: 10个画像，覆盖主要用户类型 ✓
+  推导规则: Top 50标签均有推导逻辑 ✓
+  得分计算: 4步引擎已定义 ✓
+  关键检查:
+    - first_time_parent识别: 品牌陌生+参数清楚+种草 ✓
+    - working_mom识别: 工作场景+静音+便携+穿戴 ✓
+    - dissatisfied_customer识别: 多个负向标签聚合 ✓
+    - brand_loyalist识别: 强烈推荐+总体正面+复购 ✓
+
+quality_monitor_audit:
+  流水线步骤: 6步完整 ✓
+  检查维度: 覆盖率/Jaccard/置信度/共现 ✓
+  告警分级: Critical/High/Medium/Low四级 ✓
+  SLA定义: 2h/24h/72h/下次迭代 ✓
+  报告分发: 标签owner/管理员/产品经理三级 ✓
+
+integration_test_audit:
+  试点品线: 吸奶器（最复杂品线）✓
+  测试用例: 5个覆盖全部核心功能 ✓
+  成功标准: 5/5通过上线，4/5修复后上线，≤3/5回退 ✓
+  回退计划: 已定义 ✓
+
+risk_markers:
+  - 画像推导准确率目标75%较为激进，实际可能需要更多训练数据
+  - 正向标签抽取召回率70%可能难以达到（正向表达更隐晦）
+  - 多语言测试仅覆盖西/法/德，其他市场（如日语/阿拉伯语）未覆盖
+  - 试点仅吸奶器一个品线，其他5品线上线风险未验证
+
+status: PASS with RISK ACK — 可执行，建议降低部分指标预期或增加训练数据

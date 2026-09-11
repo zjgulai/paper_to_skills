@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-U P&amp;L 健康度诊断 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-U P&amp;L 健康度诊断</nav>
+<h1>WF-U P&amp;L 健康度诊断</h1>
+<p class="lead">从毛利率拆解到 FBA 成本优化再到现金流预测的端到端财务健康诊断链，帮助跨境电商在复杂费用结构中找到真实利润漏洞并系统修复。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>财务负责人/CFO</span><span class='tag'>运营总监</span><span class='tag'>供应链/采购负责人</span><span class='tag'>创始人/CEO</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的 P&amp;L 当前最大的痛点是：算不清楚利润？还是知道亏钱但找不到原因？还是利润正常但现金流紧张？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">单品 P&amp;L 精算</div>
+  <div class="wf-question">是否清楚每个 SKU 的真实利润？</div>
+  <div class="wf-context">跨境 P&amp;L 的特殊性在于费用项极多（FBA 费/退款/汇损/头程/广告/平台佣金），任何一项算错都会导致整体判断失真</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">从零建立 P&amp;L 核算体系</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-FBA-Cost-Decomposition</span><span class="chip-role">FBA 成本分解，精确拆解存储费/配送费/退货处理费/长期仓储费等8项费用</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Unit-Economics-DTC</span><span class="chip-role">单品经济模型，构建&quot;收入-变动成本-固定成本分摊&quot;的标准 P&amp;L 模板</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-PnL-Attribution-Decomposition</span><span class="chip-role">P&amp;L 归因拆解，识别哪个费用项变化导致了利润波动</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">已有 P&amp;L，需深度诊断</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Margin-Waterfall-Analysis</span><span class="chip-role">利润瀑布分析，从毛利→净利逐层拆解每个费用的侵蚀幅度</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-SKU-Portfolio-Profitability-Segmentation</span><span class="chip-role">SKU 组合盈利分层，识别利润贡献 80/20（哪些 SKU 在拖累整体利润）</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">FBA 成本优化</div>
+  <div class="wf-question">FBA 各项费用中哪些有优化空间？</div>
+  <div class="wf-context">FBA 成本通常占收入的 25-35%，每降低 1 个百分点对净利润的影响极大，且大部分费用都有可优化空间</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">存储费/长期仓储费过高</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Inventory-Health-Aging-Attribution.html"><span class="chip-name">Business Metric-Aware Forecasting for Inventory Management</span><span class="chip-role">库存老化归因，识别积压根因（预测偏差/促销失败/竞争冲击）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Markdown-Optimization.html"><span class="chip-name">Markdown Optimization（折扣清仓定价优化）</span><span class="chip-role">清仓降价优化，在最小利润损失下快速清理滞销库存</span></a>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Multi-Echelon-Inventory-Optimization</span><span class="chip-role">多级库存优化，降低超量备货率，减少长期存储费触发</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">退货率/退款成本过高</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Return-Root-Cause-Analysis</span><span class="chip-role">退货根因分析，区分产品质量/描述不符/竞品诱导退货的不同根因</span></span>
+        <a class="wf-skill-chip" href="../skills/Skill-Review-Fraud-Detection.html"><span class="chip-name">Review Fraud Detection（虚假评论检测）</span><span class="chip-role">竞品诱导退货识别，检测异常退货模式</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">配送费/头程成本过高</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Logistics-Route-Optimization</span><span class="chip-role">物流路由优化，海运/空运/快递的最优选择模型</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Total-Landed-Cost-Optimization</span><span class="chip-role">全链路到岸成本优化，含头程+清关+FBA 入仓的综合最优方案</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">汇率风险与对冲</div>
+  <div class="wf-question">汇率波动对利润的影响是否已被纳入 P&amp;L 管理？</div>
+  <div class="wf-context">跨境业务天然面临多币种风险——美元结算、人民币采购成本、欧元/英镑/日元收入的汇率敞口不对冲可能使利润大幅波动</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-FX-Exposure-Measurement.html"><span class="chip-name">外汇敞口测量 — 跨境电商货币风险定量分析</span><span class="chip-role">汇率敞口测量，量化各币种的净敞口规模和 P&amp;L 敏感度</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">现金流预测与优化</div>
+  <div class="wf-question">未来3-6个月的现金流是否可预见？</div>
+  <div class="wf-context">跨境电商的现金流特殊性：Amazon 账期延迟（2周）+旺季大额备货+退款冻结，现金流管理不善会导致即使盈利也资金链断裂</div>
+  <div class="wf-branch-skills">
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

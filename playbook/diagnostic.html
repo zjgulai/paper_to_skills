@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>业务诊断中心 — paper2skills</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.diag-wrap{display:flex;gap:0;min-height:calc(100vh - var(--topbar-height,52px));background:var(--bg,#F6F6F6)}
+.diag-left{
+  width:320px;min-width:280px;flex-shrink:0;
+  background:var(--panel,#fff);
+  border-right:1px solid var(--line,#e4e4e4);
+  padding:0;
+  display:flex;flex-direction:column;
+  position:sticky;top:var(--topbar-height,52px);
+  height:calc(100vh - var(--topbar-height,52px));
+  overflow-y:auto;overflow-x:hidden;
+}
+.diag-left::-webkit-scrollbar{width:3px}
+.diag-left::-webkit-scrollbar-track{background:transparent}
+.diag-left::-webkit-scrollbar-thumb{background:var(--line-strong,#ccc);border-radius:2px}
+.diag-left-head{
+  padding:20px 16px 14px;
+  border-bottom:1px solid var(--line,#e4e4e4);
+  flex-shrink:0;
+}
+.diag-left-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted,#888);
+  margin-bottom:5px;
+}
+.diag-title{font-size:15px;font-weight:700;color:var(--ink,#1A1A2E);letter-spacing:-.02em;line-height:1.3}
+.diag-sub{font-size:12px;color:var(--muted,#888);line-height:1.5;margin-top:3px}
+.diag-search-wrap{padding:12px 16px;border-bottom:1px solid var(--line,#e4e4e4);flex-shrink:0}
+.diag-input-row{display:flex;gap:7px}
+.diag-input{
+  flex:1;padding:8px 12px;
+  border:1.5px solid var(--line,#e4e4e4);
+  border-radius:var(--r-md,6px);
+  font-size:13px;font-family:var(--font);
+  outline:none;color:var(--ink);
+  background:var(--bg,#F6F6F6);
+  transition:border-color var(--t),background var(--t);
+}
+.diag-input:focus{border-color:var(--accent,#B5323E);background:#fff;box-shadow:0 0 0 3px rgba(181,50,62,.08)}
+.diag-input::placeholder{color:var(--muted,#888);font-size:12.5px}
+.diag-btn{
+  padding:8px 14px;
+  background:var(--accent,#B5323E);color:#fff;
+  border:none;border-radius:var(--r-md,6px);
+  font-size:12.5px;font-weight:600;cursor:pointer;
+  white-space:nowrap;font-family:var(--font);
+  transition:background var(--t);flex-shrink:0;
+}
+.diag-btn:hover{background:var(--accent-dark,#8C2530)}
+.diag-section-label{
+  font-size:10px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted,#888);
+  padding:12px 16px 6px;
+  user-select:none;
+}
+.diag-events{display:flex;flex-direction:column;gap:1px;padding:0 8px 8px}
+.diag-event-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;
+  background:transparent;
+  border:none;border-radius:var(--r-md,6px);
+  cursor:pointer;text-align:left;font-family:var(--font);
+  transition:background var(--t),color var(--t);
+  position:relative;width:100%;
+}
+.diag-event-btn:hover{background:var(--panel-2,#f3f3f3)}
+.diag-event-btn.active{
+  background:var(--accent-bg,#FDF0F1);
+}
+.diag-event-btn.active::before{
+  content:'';position:absolute;left:0;top:6px;bottom:6px;
+  width:2px;border-radius:0 2px 2px 0;
+  background:var(--accent,#B5323E);
+}
+.diag-event-info{min-width:0;flex:1}
+.diag-event-name{font-size:12.5px;font-weight:500;color:var(--ink,#1A1A2E);line-height:1.35}
+.diag-event-btn.active .diag-event-name{font-weight:600;color:var(--accent,#B5323E)}
+.diag-event-sev{
+  font-size:10px;padding:1px 6px;border-radius:3px;
+  display:inline-block;margin-top:3px;font-weight:600;
+  letter-spacing:.02em;
+}
+.sev-critical{background:#fef2f2;color:#991b1b}
+.sev-high{background:#fff7ed;color:#c2410c}
+.sev-medium{background:#eff6ff;color:#1d4ed8}
+.sev-low{background:#f0fdf4;color:#166534}
+.diag-right{flex:1;padding:28px 28px;overflow-y:auto}
+.diag-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--muted,#888);text-align:center;gap:12px}
+.diag-empty-icon{font-size:40px;opacity:.5}
+.diag-empty-text{font-size:14px;line-height:1.6;max-width:300px}
+.diag-result{display:none}
+.diag-result.visible{display:block}
+.diag-result-header{background:#fff;border:1px solid var(--line,#e5e7eb);border-radius:10px;padding:20px 22px;margin-bottom:16px}
+.diag-result-title{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.diag-result-icon{font-size:24px}
+.diag-result-name{font-size:17px;font-weight:700;color:var(--ink)}
+.diag-result-summary{font-size:13px;color:var(--muted);line-height:1.6}
+.diag-phases{display:flex;flex-direction:column;gap:12px}
+.diag-phase{background:#fff;border:1px solid var(--line,#e5e7eb);border-radius:10px;overflow:hidden}
+.diag-phase-header{padding:12px 18px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line,#e5e7eb)}
+.diag-phase-diagnose .diag-phase-header{background:#f0f9ff;color:#0369a1}
+.diag-phase-treat .diag-phase-header{background:#fff7ed;color:#b45309}
+.diag-phase-prevent .diag-phase-header{background:#f0fdf4;color:#166534}
+.diag-skill-list{padding:8px 0}
+.diag-skill-item{display:flex;align-items:flex-start;gap:10px;padding:9px 18px;border-bottom:1px solid #f3f4f6;transition:background .12s}
+.diag-skill-item:last-child{border-bottom:none}
+.diag-skill-item:hover{background:#f9fafb}
+.diag-skill-num{font-size:11px;font-weight:700;color:#9ca3af;flex-shrink:0;padding-top:2px;min-width:16px}
+.diag-skill-body{min-width:0}
+.diag-skill-link{font-size:12.5px;font-weight:600;color:var(--accent,#B5323E);text-decoration:none;display:block}
+.diag-skill-link:hover{text-decoration:underline}
+.diag-skill-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.diag-agent-btn{font-size:11px;font-weight:600;color:#fff;background:var(--accent,#B5323E);padding:2px 8px;border-radius:4px;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:opacity .12s}
+.diag-agent-btn:hover{opacity:.82}
+.diag-skill-role{font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px}
+.diag-skill-cond{font-size:11px;background:#fef9c3;color:#854d0e;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:3px}
+.diag-related{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.diag-related-title{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.diag-related-links{display:flex;flex-wrap:wrap;gap:6px}
+.diag-related-link{font-size:12px;padding:4px 10px;background:var(--bg);border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:all .12s}
+.diag-related-link:hover{border-color:var(--accent);color:var(--accent)}
+.path-finder{
+  margin:8px 8px;
+  border:1px solid var(--line,#e4e4e4);
+  border-radius:var(--r-lg,8px);overflow:hidden;
+  flex-shrink:0;
+}
+.path-finder-header{
+  padding:10px 14px;font-size:12.5px;font-weight:600;
+  color:var(--ink-2);cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--panel-2,#f3f3f3);
+  transition:background var(--t);user-select:none;
+}
+.path-finder-header:hover{background:var(--panel-3,#ececec)}
+.path-finder-arrow{font-size:10px;color:var(--muted);transition:transform var(--t)}
+.path-finder-header.open .path-finder-arrow{transform:rotate(90deg)}
+.path-finder-body{padding:12px 14px;display:none;border-top:1px solid var(--line)}
+.path-finder-body.open{display:block}
+.path-select{
+  width:100%;padding:7px 10px;
+  border:1.5px solid var(--line);
+  border-radius:var(--r-md,6px);
+  font-size:12.5px;font-family:var(--font);
+  margin-bottom:7px;outline:none;
+  background:var(--bg);color:var(--ink);
+  transition:border-color var(--t);
+}
+.path-select:focus{border-color:var(--accent)}
+.path-run-btn{width:100%;padding:8px;background:var(--accent);color:#fff;border:none;border-radius:var(--r-md,6px);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font);transition:background var(--t)}
+.path-run-btn:hover{background:var(--accent-dark)}
+.path-result{margin-top:14px}
+.path-step{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6}
+.path-step:last-child{border-bottom:none}
+.path-step-num{font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.path-step-link{font-size:12.5px;font-weight:600;color:var(--accent);text-decoration:none;display:block}
+.path-step-link:hover{text-decoration:underline}
+.path-step-domain{font-size:11px;color:var(--muted);margin-top:1px}
+.path-edge-type{font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle}
+.pet-prerequisite{background:#f0f9ff;color:#0369a1}.pet-extension{background:#f0fdf4;color:#166534}.pet-combinable{background:#fef3c7;color:#92400e}
+@media(max-width:768px){.diag-wrap{flex-direction:column}.diag-left{width:100%;position:static;height:auto;border-right:none;border-bottom:1px solid var(--line)}.diag-right{padding:16px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="hamburger" id="hamburger-diag" aria-label="菜单" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <a class="brand" href="index.html">
+    <span class="brand-icon">P</span>
+    <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+  </a>
+  <div class="topbar-right">
+    <input id="global-search-diag" placeholder="搜索技能 / 场景…" autocomplete="off"
+      style="width:min(220px,18vw);padding:6px 12px 6px 30px;border-radius:var(--r-sm);border:1px solid #2E2E2E;background:#1A1A1A url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23555%22 stroke-width=%222%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%228%22/%3E%3Cpath d=%22m21 21-4.35-4.35%22/%3E%3C/svg%3E') no-repeat 10px center;color:#CCCCCC;font-size:12.5px;font-family:var(--font)">
+    <span class="topbar-stat">1338 Skills</span>
+    <a href="pricing.html" class="topbar-cta">升级 Pro →</a>
+    <div id="p2s-auth-widget" style="margin-left:4px;display:flex;align-items:center;gap:8px">
+      <span id="p2s-user-avatar-d" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+      <a id="p2s-login-btn-d" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+    </div>
+  </div>
+</header>
+<div class="diag-wrap">
+  <aside class="diag-left">
+    <div class="diag-left-head">
+      <div class="diag-left-eyebrow">paper2skills · 诊断中心</div>
+      <div class="diag-title">症状 → Skill 链</div>
+      <div class="diag-sub">描述业务问题，匹配「诊断→处置→预防」三层技能</div>
+    </div>
+    <div class="diag-search-wrap">
+      <div class="diag-input-row">
+        <input class="diag-input" id="diag-input" placeholder="例：ASIN 流量下降、广告 ACoS 过高…" />
+        <button class="diag-btn" onclick="runDiag()">诊断</button>
+      </div>
+    </div>
+    <div class="diag-section-label">风险症状</div>
+    <div class="diag-events" id="diag-events"></div>
+    <div class="path-finder">
+      <div class="path-finder-header" id="pf-header" onclick="togglePathFinder()">
+        <span>Skill 路径规划</span>
+        <span class="path-finder-arrow" id="pf-arrow">▸</span>
+      </div>
+      <div class="path-finder-body" id="path-finder-body">
+        <select class="path-select" id="pf-from" title="起点 Skill"></select>
+        <select class="path-select" id="pf-to" title="目标 Skill"></select>
+        <button class="path-run-btn" onclick="runPathFinder()">查找路径 →</button>
+      </div>
+    </div>
+  </aside>
+  <main class="diag-right" id="diag-right">
+    <div class="diag-empty" id="diag-empty">
+      <div class="diag-empty-icon">—</div>
+      <div class="diag-empty-title" style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px">症状 → 诊断链 → 行动方案</div>
+      <div class="diag-empty-text">点击左侧症状，获取「诊断→处置→预防」三层 Skill 链</div>
+      <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:400px;text-align:left">
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">诊断层</div>找出根因的算法技能
+        </div>
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">处置层</div>立即执行的行动 Skill
+        </div>
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">预防层</div>长效防范的系统 Skill
+        </div>
+        <div style="padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink-2)">
+          <div style="font-weight:700;margin-bottom:3px">手册</div>配套可执行场景手册
+        </div>
+      </div>
+    </div>
+    <div class="diag-result" id="diag-result"></div>
+  </main>
+</div>
+<script src="assets/risk-events.js?v=20260720193818"></script>
+<script>
+(function(){
+  const SEV_CLASS={'critical':'sev-critical','high':'sev-high','medium':'sev-medium','low':'sev-low'};
+  const SEV_LABEL={'critical':'紧急','high':'高风险','medium':'中风险','low':'低风险'};
+  const PHASE_CFG={
+    diagnose:{label:'第一步：诊断根因',cls:'diag-phase-diagnose'},
+    treat:{label:'第二步：处置行动',cls:'diag-phase-treat'},
+    prevent:{label:'第三步：长效预防',cls:'diag-phase-prevent'}
+  };
+  const SKILL_AGENT_MAP={"Skill-New-Product-Opportunity-Mining": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Market-Size-Estimation": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Category-Trend-Forecasting": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-VOC-Trend-Signal-Forecasting": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Demand-Quantile-Forecast": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Review-Driven-Growth-Opportunity-Scorer": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Demand-Forecasting-Supply-Chain": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Demand-Forecasting-Booking-Curve": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-VOC-New-Product-Gap-Scoring": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Product-Safety-Testing-Requirements": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Product-Category-Opportunity-Scoring": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Streaming-Data-Forecasting": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Operating-Cash-Flow-Forecast": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-OT-Cross-Market-Demand-Transfer": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-New-Product-Demand-Cold-Start": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Lead-Time-Demand-Integration-Model": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-LLMForecaster-Seasonal-Event": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Inventory-Demand-Sensing": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Intermittent-Demand-Croston-TSB": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Holiday-Spike-Demand-Decomposition": {"id": "agent-product-radar", "name": "选品雷达"}, "Skill-Negative-Keyword-Safe-Guard": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Listing-Quality-Scoring": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Listing-AI-Copywriting": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Long-Tail-Search-Embedding-SEO": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Listing-Conversion-Rate-Optimizer": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Causal-SEO-Search-Attribution": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Amazon-A10-Algorithm-Ranking": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-SEO-Organic-Ranking-Optimization": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Search-Conversion-Rate-Predictor": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Search-Ad-Budget-ROI-Integration": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Amazon-Search-Ranking-Factor-Model": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-TikTok-Shop-Content-Commerce-Funnel": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Review-Keyword-Mining-SEO": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-MAS-Search-Optimization": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Listing-Semantic-Relevance-Scoring": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-GEO-Generative-Engine-Optimization": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-A9-Algorithm-Sales-Velocity-Optimization": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-A-Plus-Content-Video-Embedding": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Cross-Platform-Listing-Sync-Optimizer": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Voice-Search-Optimization-Amazon": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-GraphRAG-Knowledge-Enhanced-Retrieval": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Query-Intent-Classification-Routing": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-BGE-M3-Multilingual-Embedding": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-SDPM-Semantic-Chunking": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-MTEB-Embedding-Benchmark-Selection": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-CodeXEmbed-Code-Semantic-Embedding": {"id": "agent-listing-doctor", "name": "Listing 医生"}, "Skill-Review-Pain-Point-Mining": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-LACA-CrossLingual-ABSA": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-AGRS-Aspect-Guided-Review-Summarization": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-NLP-Sentiment-ML-Pipeline": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-Video-Sentiment-Analysis-VOC": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-NPS-Retention-Predictor": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Returns-Cost-Driver": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Fraud-Review-Detection": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Driven-Recommendation-Signal": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Compliance-Signal-Mining": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Churn-Signal-Extraction": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Churn-Early-Warning-Signal": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-Review-Sentiment-Growth-Trigger": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Aspect-Sentiment-Extraction": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Supply-Chain-Signal-Bridge": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-VOC-Product-Iteration-Signal-Extractor": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-NPS-Proxy-Retention-Predictor": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-MultiTurn-RAG-Context-Management": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-Hybrid-SQL-Vector-RAG": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-PersonaRAG-User-Persona-Retrieval": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-OpenRE-LLM-Knowledge-Extraction": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-DocRE-Document-Level-Relation-Extraction": {"id": "agent-voc-decoder", "name": "用户之声解码器"}, "Skill-PVM-Attribution-Window-Harmonization": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Identified-Bayesian-MMM": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-DARA-Agentic-MMM-Optimizer": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Ad-Spend-Time-Series-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Advertising-TACOS-PnL-Integration": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-KOL-ROI-Causal-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Counterfactual-Ad-Attribution-Debiasing": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Constrained-Multi-Objective-Ad-Delivery": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-TikTok-Shop-Content-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-ROAS-Below-Target-Budget-Freeze": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-PPC-Rule-Automation-Engine": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Organic-Content-Causal-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Instagram-Reels-Commerce-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Video-ROI-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Tag-Driven-Marketing-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Search-Query-Performance-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-PPC-Bid-Manipulation-Defense": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-PL-Attribution-Analysis": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Logistics-Cost-PL-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-KG-Supply-Chain-Cost-Attribution": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-SQL-Agent-Text-to-SQL": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Agentic-RAG-2025-Framework": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-RAG-CoT-Interleaved-Reasoning": {"id": "agent-ad-attribution", "name": "广告归因侦探"}, "Skill-Review-Fraud-Detection": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitive-Response-Modeling": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitive-Price-Monitoring": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Stackelberg-Equilibrium-Competitive-Pricing": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Real-Time-Competitive-Repricing": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitor-SKU-Ontology": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitor-Price-Intelligence": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitor-New-Product-Detection": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitor-Negative-Campaign-Detection": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitor-Keyword-Gap-Analysis": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Competitor-Ad-Surge-Defense-Trigger": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Shopee-Lazada-SEA-Market-Intelligence": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Search-Share-of-Voice": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-MAS-Competitive-Intelligence-Agent": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-UCB-LDP-Dynamic-Pricing": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Tag-Informed-Dynamic-Pricing": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Personalized-ML-Pricing": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Nash-Equilibrium-Pricing-Model": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Mixed-Strategy-Pricing-Unpredictability": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-KG-Auto-Construction-Agent-Driven": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-StreamingRAG-Realtime-Knowledge": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-OmniThink-Knowledge-Boundary-Expansion": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Multi-KB-Federated-Reasoning": {"id": "agent-competitor-radar", "name": "竞品雷达站"}, "Skill-Safety-Stock-Replenishment": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Promotion-Logistics-Surge-Forecast": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Lead-Time-Distribution-Risk-GenQOT": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-FBA-Cost-Forecast-Adjustment": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Supplier-Lead-Time-Buffer": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-FBA-Stranded-Unfulfillable-Inventory-KPI": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Adaptive-Forecast-Accuracy-Optimization": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-VMI-DRL-Inventory-Routing": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-TikTok-Flash-Sale-Inventory-Pulse": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Supply-Chain-Network-Design": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-State-Space-Inventory-Signal-Smoothing": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Replenishment-Parameter-Calibration": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Promo-Stocktaking-SOP-Automation": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Promo-ROI-Attribution-Supply-Side": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Promo-Inventory-Pulse-Auto-Trigger": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Markdown-Schedule-Auto-Trigger": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Lead-Time-Safety-Stock-Auto-Adjuster": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-ITO-Three-Phase-Health-Tracking": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-VectorDB-Production-Engineering": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Semantic-Cache-RAG-Acceleration": {"id": "agent-supply-sentinel", "name": "供应链哨兵"}, "Skill-Emotional-AI-Customer-Care": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-DialIn-LLM-Case-Intent-Clustering": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Customer-Journey-Decision-Tree": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Causal-Churn-Retention-Attribution": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-CS-Ticket-Intelligence": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-NLP-Text-Classification": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-CS-Supply-Chain-Feedback-Loop-Tag": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Uplift-Churn-Prediction": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Membership-Churn-Early-Warning-Graph": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-MTL-Churn-LTV-Joint-Prediction": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Deep-Learning-Churn-Prediction": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Customer-Churn-Prediction": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Cohort-Retention-Analysis": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Cohort-Churn-Intervention-Dispatcher": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Churn-Revenue-Impact": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Reverse-Logistics-Disposition-Optimization": {"id": "agent-cs-triage", "name": "客服分诊台"}, "Skill-Markdown-Optimization": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Dynamic-Pricing-Elasticity": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-AIGP-LLM-Dynamic-Pricing": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Price-Elasticity-Estimation": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Price-Sensitive-Recommendation": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-VOC-Price-Signal-Analysis": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Price-Sensitive-Personalized-Recommendation": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Price-Fence-Segmentation-Ecommerce": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-EMSR-Bid-Price-Inventory-Control": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Price-Elasticity-Time-Series-Fusion": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Monodense-单品价格弹性估计": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-MAPPO-GAT-Dynamic-Pricing": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Causal-RL-Dynamic-Pricing": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Stackelberg-Price-Leadership-Strategy": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Revenue-Per-Available-SKU-REVPAS": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Price-Signal-Collection": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Perishable-Inventory-Markdown-Optimization": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-RTB-Realtime-Bidding-Optimization": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-RL-Dynamic-Promotion-Optimization": {"id": "agent-pricing-advisor", "name": "动态定价顾问"}, "Skill-Consumer-Complaint-Recall-Prediction": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Compliance-Scored-Guardrail-Orchestration": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Amazon-ToS-Compliance-Guardrail": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Identity-Fraud-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Cross-Border-Payment-Fraud-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Return-Fraud-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Ad-Fraud-IVT-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Logistics-Fraud-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Listing-Suppression-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Anomaly-Detection-Foundation-Model": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Account-Association-Risk-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-FraudSquad-LLM-Review-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Click-Fraud-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Tax-Evasion-Risk-Signal-Monitor": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Product-Safety-Complaint-Risk-Model": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Multi-Account-Operational-Isolation": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-Account-Fingerprint-Risk-Scorer": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-AI-Fake-Review-Detection": {"id": "agent-account-guardian", "name": "账号风险卫士"}, "Skill-ProRCA-Business-Analysis": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-NL2Dashboard-Automation": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-DeepAnalyze-Autonomous-Data-Science-Agent": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Temu-Consignment-Analytics": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-GMROI-Inventory-Investment-Efficiency": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Agent-Finance-Autopilot": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-MAS-Revenue-Operations": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Combo-Ad-ROI-Maximizer": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Tariff-FX-FBA-Cost-Dynamics": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Refund-Rate-Financial-Impact": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Fraud-PL-Impact": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Forecast-to-PL-Bridge": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-MMM-Budget-PL-Alignment": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-TikTok-Creator-ROI-Attribution": {"id": "agent-pnl-analyzer", "name": "P&L 透视镜"}, "Skill-Cross-Border-Compliance-Framework": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-IP-Trademark-Brand-Monitoring": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Regulatory-Graph-Compliance-Monitor": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Compliance-ML-Risk-Scoring": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Brand-Registry-Infringement-Tracker": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Regulatory-Change-Auto-Monitor": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-VAT-GST-Compliance-Automation": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Pre-Launch-Compliance-Gate": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Listing-Compliance-Auto-Repair": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-LLM-Contract-Compliance-Review": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Compliance-Violation-Auto-Escalation": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Amazon-Compliance-Error-Auto-Resolver": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Tax-Compliance-VAT-GST": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-MAS-Compliance-Multi-Market-Orchestrator": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Cross-Platform-Brand-Search-Volume": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Brand-Video-Generation": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Brand-Safety-Video-Content-Filter": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-PoisonedRAG-Knowledge-Poisoning-Defense": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-PromptGuard-Injection-Defense": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-Knowledge-Base-Version-Control": {"id": "agent-brand-guardian", "name": "品牌合规卫士"}, "Skill-DAWN-Talking-Head-Review": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Creative-Fatigue-Detection": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-AnchorCrafter-Virtual-Anchor-Demo": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-TikTok-Content-Lifecycle-Analytics": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-TikTok-Algorithm-Content-Boost": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Short-Video-Commerce-Attribution": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-SIR-Viral-Product-Adoption-Forecasting": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-MAS-Video-Content-Optimization": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-UGC-Viral-Content-Potential-Scorer": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Social-VOC-Viral-Potential-Score": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Social-Proof-Amplification": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Social-Network-Viral-Growth-Simulation": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Multimodal-UGC-Cross-Platform-Fusion": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-KOL-Creator-Matching": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Virtual-Influencer-Baby-Demo": {"id": "agent-tiktok-content", "name": "TikTok 内容官"}, "Skill-Counterfactual-Price-Elasticity": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-CausalFlow-Agent-Failure-Repair": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-DiD-Difference-in-Differences": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Causal-Uplift-Modeling": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Causal-Time-Series-CausalImpact": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Causal-Cohort-Analysis": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Automated-Causal-Discovery": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Delayed-Conversion-Causal-MTL": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Data-Collection-Causal-Debiasing": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-CausalRAG-Knowledge-Retrieval": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-CausalRAG-Causal-Graph-Retrieval": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Causal-Time-Series-Forecasting-GCF": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Causal-ML-Feature-Engineering": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Mediation-Causal-Mechanism-Analysis": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-LLM-Causal-Discovery": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Intelligent-Attribution-Causal-Forest": {"id": "agent-dml-counterfactual-pricing", "name": "反事实定价策略 Agent"}, "Skill-Tag-Schema-Engineering-Lifecycle": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Quality-Coverage-KPI": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Auto-Tagging-Pipeline-Rule-ML-LLM": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Optimized-Logistics-Routing": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-SKU-Level-Margin-Attribution-Ontology": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-SKU-Entity-Unified-ID-Tagging": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Ontology-Schema-Design": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Propagation-Supply-Chain": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Enhanced-Personalized-Recommendation": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Driven-VOC-Signal-Routing": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Driven-User-Growth-Trigger": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Driven-User-Behavior-Analytics": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Tag-Driven-Ad-Audience-Segmentation": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Supplier-Ontology-Capability-Map": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Shipment-Risk-Tag-Realtime-Tracker": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Return-Fraud-Detection-Tag-Engine": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Dynamic-Carrier-Selection-Tag-Driven": {"id": "agent-sku-tag-scanner", "name": "SKU标签质量扫描器"}, "Skill-Regulatory-Change-Impact-Propagation": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Multi-Market-Compliance-Matrix-Ontology": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-EPR-Extended-Producer-Responsibility-Tag": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Infant-Formula-FDA-Compliance-Checker": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-AI-Product-Safety-Certification": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-EU-AI-Act-Compliance-Framework": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Regulatory-Update-Impact-Dispatcher": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Platform-Policy-Change-Adaptive-Monitor": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-HTS-Tariff-Classification": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-XAI-Regulatory-Compliance": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Privacy-Preserving-Lookalike-FL": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-MAS-Cross-Market-Compliance-Orchestrator": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-GPSR-EU-Risk-Assessment-Auto": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Data-Provenance-Lineage": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Knowledge-Conflict-Detection-LLM": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Corrective-RAG-CRAG": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-KB-RBAC-Access-Control": {"id": "agent-compliance-matrix", "name": "多市场合规矩阵"}, "Skill-Returnformer-Returns-Prediction": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Return-Root-Cause-Attribution-Graph": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Cross-Border-Return-Rate-By-Country-KPI": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Predictive-Returns-Management": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Returns-Reverse-Logistics": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Predictive-Batch-Returns-Routing": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Supplier-Delivery-Quality-Rate-KPI": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Returns-Quality-Grading-Engine": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-User-Analytics-Logistics-Bridge": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Traffic-Source-Analysis": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-TikTok-Trending-Product-Signal": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-StaR-Review-Statement-Ranking": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Seed-Quality-Optimization-for-Lookalike": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Listing-Health-Diagnostic": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Customer-Journey-Analytics": {"id": "agent-return-analyzer", "name": "退货根因分析师"}, "Skill-Supply-Chain-Total-Cost-TCO-Model": {"id": "agent-margin-calculator", "name": "SKU利润归因计算器"}, "Skill-AIGC-Revenue-Attribution": {"id": "agent-margin-calculator", "name": "SKU利润归因计算器"}, "Skill-Tariff-Impact-Margin-Stress-Test": {"id": "agent-margin-calculator", "name": "SKU利润归因计算器"}, "Skill-Search-Revenue-Attribution": {"id": "agent-margin-calculator", "name": "SKU利润归因计算器"}, "Skill-SKU-Level-PL-Dashboard": {"id": "agent-margin-calculator", "name": "SKU利润归因计算器"}, "Skill-FBA-Fee-Waterfall-Attribution": {"id": "agent-margin-calculator", "name": "SKU利润归因计算器"}, "Skill-SC-Resilience-Hypergraph": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Geopolitical-Risk-Tag-Supply-Impact": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Black-Swan-Scenario-Simulation-Tag": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-MonteCarlo-Tariff-Risk": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Cross-Border-Tax-Tariff-Modeling": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-ATLAS-HTS-Tariff-Classification": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Supply-Chain-Resilience-Modeling": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Supply-Chain-Finance-Risk-Modeling": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-HTS-Agentic-Tariff-Classification": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Tag-Fraud-Risk-Intelligence": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Supply-Chain-Resilience-Stress-Test": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Supply-Chain-ML-Features": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Supply-Chain-Finance-Risk-Tag": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Supply-Chain-Due-Diligence": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Supply-Chain-Counterfeit-Detection": {"id": "agent-geopolitical-risk", "name": "地缘风险评估仪"}, "Skill-Climate-ESG-Supply-Chain-Tag": {"id": "agent-epr-calculator", "name": "EPR合规费用测算"}, "Skill-Green-Supply-Chain-Carbon-Footprint": {"id": "agent-epr-calculator", "name": "EPR合规费用测算"}, "Skill-Green-Logistics-Carbon-Optimization": {"id": "agent-epr-calculator", "name": "EPR合规费用测算"}, "Skill-Multi-Task-User-Representation": {"id": "agent-epr-calculator", "name": "EPR合规费用测算"}, "Skill-Elasticity-Based-Repricing-Gate": {"id": "agent-epr-calculator", "name": "EPR合规费用测算"}, "Skill-GCC-CPC-Document-Validator": {"id": "agent-epr-calculator", "name": "EPR合规费用测算"}, "Skill-Real-Options-Product-Launch-Timing": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Long-Tail-Keyword-Mining": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Index-Health-Monitoring": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Cross-Border-Cold-Start-Forecast": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-GP-New-Product-Demand": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Contrastive-Time-Series-Cold-Start": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Synthetic-Data-Ecommerce": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-New-Product-Inventory-Coldstart": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-MTL-Cold-Start-SKU-Demand": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-GP-Tweedie-Intermittent-New-Product-Demand": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-DS-DGA-GCN-Fake-Review-Group": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-CSDM-Diffusion-ColdStart": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Bass-Diffusion-New-Product-Forecasting": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Profitability-Waterfall-By-ASIN": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-New-SKU-Launch-Readiness-Gate": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Identity-Fragmentation-Debiasing": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-RAG-vs-Finetuning-Decision-Framework": {"id": "agent-cold-start-advisor", "name": "新品冷启动助手"}, "Skill-Seasonal-Search-Trend-Modeling": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-CVaR-Inventory-Risk-Portfolio": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-Temporal-Fusion-Transformer-Inventory": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-Sell-Through-Rate-Promo-Inventory": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-Pre-Promo-Stocktaking-KPI": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-PostPromo-Retrospective-KPI": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-MAS-Multi-Warehouse-Replenishment-Consensus": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-TableRAG-Structured-Data-Retrieval": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-MinHash-LSH-Knowledge-Dedup": {"id": "agent-festival-replenishment", "name": "大促备货决策Agent"}, "Skill-Tag-Video-Commerce-Tagging": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-AI-Content-Marketing-Growth": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-VOC-Multi-Agent-Analysis": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Testing-Verification": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Scale-Management": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Resource-Scheduling": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Orchestrator": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Dynamic-Trust": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Dynamic-KG-Collaboration": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Consensus-Mechanism": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Adversarial-Defense": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-AgenTracer-MAS-Failure-Attribution": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-AI-Video-Script-Generation": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-AI-Product-Video-Script-Generator": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-Omnichannel-Order-Orchestration-MAS": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-MAS-Collaborative-Recommendation": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-ResMAS-Resilience-Topology-Optimization": {"id": "agent-video-content-mas", "name": "视频内容MAS优化师"}, "Skill-Heterogeneous-Treatment-Effect-XLearner": {"id": "agent-causal-pricing-advisor", "name": "因果定价顾问"}, "Skill-Double-Debiased-ML-Price": {"id": "agent-causal-pricing-advisor", "name": "因果定价顾问"}, "Skill-Experiment-Data-Quality-Guard": {"id": "agent-causal-pricing-advisor", "name": "因果定价顾问"}, "Skill-Streaming-Analytics-Agent": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Multi-Step-Reasoning-BI": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Growth-DataAgent-Analytics": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-DataAgent-Marketing-Attribution": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-LLM-Business-Intelligence-Reasoning": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Data-Collection-Agent-Pipeline": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Agentic-ETL-Data-Pipeline": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-LLM-Uncertainty-Quantification-BI": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Data-to-Dashboard-Multi-Agent-Visualization": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-LLM-Code-Generation-Data-Pipeline": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-ReliabilityBench-Agent-Reliability": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-LLM-SC-MultiAgent-Consensus-Replenishment": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-LLM-Negotiation-Conversion-Agent": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-LLM-Hallucination-Detection-BI": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-LLM-AutoBidding-MAS": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Agent-Observability-Tracing": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Agent-Capability-Evaluation": {"id": "agent-growth-diagnostics", "name": "增长DataAgent诊断师"}, "Skill-Search-Organic-Growth-Attribution": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-Search-Rank-Recovery-Auto-Action": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-International-Search-Localization": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-Zero-Click-Search-Optimization": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-Personalized-Search-Ranking": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-LLM-Generative-Product-Search": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-Sponsored-Organic-Rank-Synergy": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-Search-Term-Negative-Optimization": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-Search-Tag-Keyword-Auto-Mapping": {"id": "agent-search-mas-monitor", "name": "搜索MAS监控站"}, "Skill-SHAP-Shapley-Feature-Attribution": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}, "Skill-Responsible-AI-Red-Teaming": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}, "Skill-AI-Transparency-Explanation": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}, "Skill-AI-Explainability-Consumer-Trust": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}, "Skill-AI-Algorithmic-Bias-Audit": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}, "Skill-Decision-Audit-Trail-Ontology": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}, "Skill-Algorithmic-Fairness-in-Pricing": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}, "Skill-AI-Ethics-Fairness-Audit": {"id": "agent-xai-compliance-auditor", "name": "XAI合规审计师"}};
+
+  function initButtons(){
+    const events=(window.RISK_EVENTS||{}).events||[];
+    const container=document.getElementById('diag-events');
+    container.innerHTML='';
+    events.forEach(ev=>{
+      const btn=document.createElement('button');
+      btn.className='diag-event-btn';
+      btn.dataset.id=ev.event_id;
+      const sevCls=SEV_CLASS[ev.severity]||'sev-medium';
+      const sevLabel=SEV_LABEL[ev.severity]||ev.severity;
+      btn.innerHTML=`<div class="diag-event-info"><div class="diag-event-name">${ev.event_name}</div><span class="diag-event-sev ${sevCls}">${sevLabel}</span></div>`;
+      btn.addEventListener('click',()=>showEvent(ev.event_id));
+      container.appendChild(btn);
+    });
+  }
+
+  function matchEvent(query){
+    const events=(window.RISK_EVENTS||{}).events||[];
+    const q=query.toLowerCase();
+    let best=null,top=0;
+    events.forEach(ev=>{
+      let sc=0;
+      (ev.symptom_keywords||[]).forEach(kw=>{if(q.includes(kw.toLowerCase()))sc++;});
+      if(sc>top){top=sc;best=ev;}
+    });
+    return top>0?best:null;
+  }
+
+  function showEvent(eventId){
+    const events=(window.RISK_EVENTS||{}).events||[];
+    const ev=events.find(e=>e.event_id===eventId);
+    if(!ev)return;
+    document.querySelectorAll('.diag-event-btn').forEach(b=>b.classList.remove('active'));
+    const btn=document.querySelector(`.diag-event-btn[data-id="${eventId}"]`);
+    if(btn)btn.classList.add('active');
+    const sevCls=SEV_CLASS[ev.severity]||'sev-medium';
+    const sevLabel=SEV_LABEL[ev.severity]||ev.severity;
+    let html=`<div class="diag-result-header"><div class="diag-result-title"><span class="diag-result-name">${ev.event_name}</span><span class="diag-event-sev ${sevCls}" style="margin-left:8px">${sevLabel}</span></div><div class="diag-result-summary">${ev.summary||''}</div></div><div class="diag-phases">`;
+    ['diagnose','treat','prevent'].forEach(phase=>{
+      const skills=(ev.phases||{})[phase]||[];
+      if(!skills.length)return;
+      const cfg=PHASE_CFG[phase];
+      let items='';
+      skills.forEach((sk,i)=>{
+        const cond=sk.condition?`<span class="diag-skill-cond">触发条件：${sk.condition}</span>`:'';
+        const title=sk.title?` — ${sk.title.split('—')[0].trim()}`:'';
+        const agentInfo=SKILL_AGENT_MAP[sk.skill_id];
+        const agentBtn=agentInfo?`<a class="diag-agent-btn" href="agents.html#${agentInfo.id}" title="运行 ${agentInfo.name}">▶ ${agentInfo.name}</a>`:'';
+        items+=`<div class="diag-skill-item"><span class="diag-skill-num">${i+1}</span><div class="diag-skill-body"><div class="diag-skill-top"><a class="diag-skill-link" href="skills/${sk.skill_id}.html" target="_blank">${sk.skill_id}</a>${agentBtn}</div><div class="diag-skill-role">${sk.role||''}</div>${cond}</div></div>`;
+      });
+      html+=`<div class="diag-phase ${cfg.cls}"><div class="diag-phase-header">${cfg.label}<span style="margin-left:auto;font-size:11px;font-weight:400;opacity:.7">${skills.length} 个 Skills</span></div><div class="diag-skill-list">${items}</div></div>`;
+    });
+    html+='</div>';
+    const pbs=(ev.related_playbooks||[]);
+    if(pbs.length){
+      const links=pbs.map(id=>`<a class="diag-related-link" href="playbooks/${id}.html" target="_blank">${id.replace('pb-','').replace(/-/g,' ')}</a>`).join('');
+      html+=`<div class="diag-related"><div class="diag-related-title">相关手册</div><div class="diag-related-links">${links}</div></div>`;
+    }
+    document.getElementById('diag-empty').style.display='none';
+    const res=document.getElementById('diag-result');
+    res.innerHTML=html;
+    res.className='diag-result visible';
+  }
+
+  window.runDiag=function(){
+    const q=document.getElementById('diag-input').value.trim();
+    if(!q)return;
+    const ev=matchEvent(q);
+    if(ev){showEvent(ev.event_id);}
+    else{
+      document.getElementById('diag-empty').style.display='none';
+      document.getElementById('diag-result').className='diag-result visible';
+      document.getElementById('diag-result').innerHTML='<div class="diag-empty"><div class="diag-empty-icon">—</div><div class="diag-empty-text">未匹配到具体风险场景<br>请尝试点击左侧症状按钮，或前往 <a href="chat.html">AI对话</a> 获取帮助</div></div>';
+    }
+  };
+
+  document.getElementById('diag-input').addEventListener('keydown',e=>{if(e.key==='Enter')window.runDiag();});
+  if(window.RISK_EVENTS)initButtons();
+  else window.addEventListener('load',initButtons);
+})();
+
+(function(){
+  let gNodes={}, gAdj={};
+
+  function loadGraph(cb){
+    if(Object.keys(gNodes).length){cb();return;}
+    fetch('assets/graph-data.json').then(r=>r.json()).then(d=>{
+      d.nodes.forEach(n=>{gNodes[n.id]={id:n.id,domain:n.domain,title:n.title};gAdj[n.id]=[];});
+      d.links.forEach(l=>{if(gAdj[l.source])gAdj[l.source].push({to:l.target,type:l.type});});
+      const from=document.getElementById('pf-from'),to=document.getElementById('pf-to');
+      const sorted=d.nodes.slice().sort((a,b)=>a.id.localeCompare(b.id));
+      sorted.forEach(n=>{
+        const o1=document.createElement('option');o1.value=n.id;o1.textContent=n.id;from.appendChild(o1);
+        const o2=document.createElement('option');o2.value=n.id;o2.textContent=n.id;to.appendChild(o2);
+      });
+      cb();
+    }).catch(()=>{});
+  }
+
+  function bfs(startId,endId){
+    if(startId===endId)return [{id:startId,edgeType:''}];
+    const visited={[startId]:true},queue=[{id:startId,path:[{id:startId,edgeType:''}]}];
+    while(queue.length){
+      const {id,path}=queue.shift();
+      for(const nb of(gAdj[id]||[])){
+        if(visited[nb.to])continue;
+        visited[nb.to]=true;
+        const np=[...path,{id:nb.to,edgeType:nb.type}];
+        if(nb.to===endId)return np;
+        if(np.length<7)queue.push({id:nb.to,path:np});
+      }
+    }
+    return null;
+  }
+
+   window.togglePathFinder=function(){
+    const body=document.getElementById('path-finder-body');
+    const header=document.getElementById('pf-header');
+    const arrow=document.getElementById('pf-arrow');
+    const open=body.classList.toggle('open');
+    if(header)header.classList.toggle('open',open);
+    arrow.textContent=open?'▾':'▸';
+    if(open)loadGraph(()=>{});
+  };
+
+  window.runPathFinder=function(){
+    const fromId=document.getElementById('pf-from').value;
+    const toId=document.getElementById('pf-to').value;
+    if(!fromId||!toId)return;
+    loadGraph(()=>{
+      const path=bfs(fromId,toId);
+      const empty=document.getElementById('diag-empty');
+      const res=document.getElementById('diag-result');
+      empty.style.display='none';
+      if(!path){
+        res.className='diag-result visible';
+        res.innerHTML=`<div class="diag-result-header"><div class="diag-result-name">未找到路径</div><div class="diag-result-summary">从 ${fromId} 到 ${toId} 在当前图谱中无可达路径（跳数≤6）。</div></div>`;
+        return;
+      }
+      const edgeLabel={'prerequisite':'前置','extension':'延伸','combinable':'可组合'};
+      const edgeCls={'prerequisite':'pet-prerequisite','extension':'pet-extension','combinable':'pet-combinable'};
+      let steps='';
+      path.forEach((node,i)=>{
+        const n=gNodes[node.id]||{};
+        const badge=node.edgeType?`<span class="path-edge-type ${edgeCls[node.edgeType]||''}">${edgeLabel[node.edgeType]||node.edgeType}</span>`:'';
+        steps+=`<div class="path-step"><span class="path-step-num">${i+1}</span><div><a class="path-step-link" href="skills/${node.id}.html" target="_blank">${node.id}</a><div class="path-step-domain">${n.domain||''}${badge}</div></div></div>`;
+      });
+      res.className='diag-result visible';
+      res.innerHTML=`<div class="diag-result-header"><div class="diag-result-title"><span class="diag-result-name">Skill 路径：${fromId} → ${toId}</span></div><div class="diag-result-summary">${path.length} 步路径（${path.length-1} 条边）</div></div><div class="path-result">${steps}</div>`;
+    });
+  };
+})();
+</script>
+<script src="assets/search.js"></script>
+<script src="assets/playbook-data.js?v=20260720193818"></script>
+<script>
+(function(){
+  const hbtn=document.getElementById('hamburger-diag');
+  if(hbtn){
+    hbtn.addEventListener('click',function(){
+      const open=hbtn.getAttribute('aria-expanded')!=='true';
+      hbtn.setAttribute('aria-expanded',open);
+      hbtn.classList.toggle('open',open);
+    });
+  }
+  fetch('/auth/me',{credentials:'include',cache:'no-store'}).then(function(r){return r.json();}).then(function(u){
+    if(u&&u.name){
+      var av=document.getElementById('p2s-user-avatar-d');
+      var lb=document.getElementById('p2s-login-btn-d');
+      if(av){av.textContent=String(u.name).slice(0,1);av.style.display='inline-flex';}
+      if(lb){lb.textContent=u.name;lb.href='/settings.html';lb.style.background='transparent';lb.style.color='#94a3b8';lb.style.border='1px solid rgba(255,255,255,.15)';}
+    }
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>

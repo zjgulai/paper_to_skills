@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>设置 · API Key · paper2skills</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="index.html"><span class="sbl-text">总览</span></a><a href="diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="agents.html"><span class="sbl-text">智能体广场</span></a><a href="agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<style>
+.settings-wrap{max-width:760px;margin:0 auto;padding:40px 20px 60px}
+.settings-wrap h1{font-size:1.5rem;font-weight:800;color:var(--ink);margin:0 0 6px}
+.settings-wrap .sub{font-size:14px;color:var(--muted);margin-bottom:32px}
+.scard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px 28px;margin-bottom:24px}
+.scard h2{font-size:14px;font-weight:700;color:var(--ink);margin:0 0 16px;letter-spacing:.03em;text-transform:uppercase}
+.key-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.key-row input{flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:monospace;background:#f8fafc;color:var(--ink)}
+.key-row button{padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff;border:none}
+.btn-secondary{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn-primary:hover{opacity:.88}
+.btn-secondary:hover{border-color:var(--ink)}
+.usage-bar{background:#e2e8f0;border-radius:4px;height:8px;overflow:hidden;margin:8px 0}
+.usage-fill{background:var(--accent);height:100%;transition:width .3s}
+.usage-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+.tag-free{display:inline-block;padding:2px 8px;background:#f1f5f9;color:#64748b;border-radius:20px;font-size:11px;font-weight:600}
+.tag-pro{display:inline-block;padding:2px 8px;background:#fef2f2;color:var(--accent);border-radius:20px;font-size:11px;font-weight:700}
+#key-status{font-size:12.5px;margin-top:6px;min-height:20px}
+</style>
+<div class="settings-wrap">
+  <h1>设置</h1>
+  <p class="sub">管理 API Key、查看使用量、升级账户</p>
+
+  <div class="scard">
+    <h2>使用量</h2>
+    <div class="usage-row">
+      <span>本月 Agent 调用</span>
+      <span id="usage-count">加载中…</span>
+    </div>
+    <div class="usage-bar"><div class="usage-fill" id="usage-fill" style="width:0%"></div></div>
+    <div style="font-size:12px;color:var(--muted)">免费版每月 <strong>10 次</strong>。<a href="pricing.html" style="color:var(--accent);font-weight:600">升级 Pro</a> 获取无限次数。</div>
+  </div>
+
+  <div class="scard">
+    <h2>API Key <span class="tag-pro">Pro</span></h2>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 14px">用于程序化调用 <code>/api/v1/skills/search</code> 等接口。格式：<code>Authorization: Bearer p2s_xxx</code></p>
+    <div class="key-row">
+      <input type="password" id="api-key-display" value="••••••••••••••••" readonly placeholder="升级 Pro 后可生成 API Key">
+      <button class="btn-secondary" onclick="toggleKeyVisibility()">显示</button>
+      <button class="btn-primary" onclick="generateApiKey()">生成新 Key</button>
+    </div>
+    <div id="key-status"></div>
+    <div style="font-size:12px;color:#94a3b8;margin-top:8px">Key 只显示一次，请妥善保存</div>
+  </div>
+
+  <div class="scard">
+    <h2>浏览器指纹（Session Key）</h2>
+    <div class="key-row">
+      <input type="text" id="session-key-display" readonly value="加载中…" style="font-family:monospace;font-size:12px">
+      <button class="btn-secondary" onclick="copySessionKey()">复制</button>
+    </div>
+    <div style="font-size:12px;color:#94a3b8">这是当前浏览器的匿名标识，用于追踪免费用量。清除 localStorage 会重置。</div>
+  </div>
+
+  <div class="scard">
+    <h2>快速接入示例</h2>
+    <pre style="background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:14px;font-size:12.5px;overflow-x:auto;color:#374151">curl -H "Authorization: Bearer &lt;your-api-key&gt;" \
+  "https://skills.lute-tlz-dddd.top/api/v1/skills/search?q=供应链&limit=5"</pre>
+  </div>
+</div>
+
+<script>
+(function(){
+  function _sessionKey(){
+    let k=localStorage.getItem('p2s_session');
+    if(!k){k='sk-'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('p2s_session',k);}
+    return k;
+  }
+  const sk=_sessionKey();
+  document.getElementById('session-key-display').value=sk;
+
+  fetch('/api/agent/check-limit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_key:sk,agent_id:''})})
+    .then(r=>r.json()).then(d=>{
+      const used=d.monthly_used||0,limit=d.monthly_limit||10;
+      document.getElementById('usage-count').textContent=used+' / '+limit+' 次';
+      document.getElementById('usage-fill').style.width=Math.min(100,used/limit*100)+'%';
+      document.getElementById('usage-fill').style.background=used>=limit?'#ef4444':used/limit>0.7?'#f59e0b':'var(--accent)';
+    }).catch(()=>{document.getElementById('usage-count').textContent='--';});
+
+  let _storedKey=localStorage.getItem('p2s_api_key')||'';
+  if(_storedKey){document.getElementById('api-key-display').value='••••••••••••••••';}
+
+  window.toggleKeyVisibility=function(){
+    const el=document.getElementById('api-key-display');
+    if(el.type==='password'){el.type='text';el.value=_storedKey||'（尚未生成）';}
+    else{el.type='password';el.value='••••••••••••••••';}
+  };
+
+  window.generateApiKey=function(){
+    const tier=localStorage.getItem('p2s_tier')||'free';
+    if(tier!=='pro'){
+      document.getElementById('key-status').innerHTML='<span style="color:#b91c1c">需要升级 Pro 才能生成 API Key。<a href="pricing.html" style="color:var(--accent);font-weight:700">立即升级 →</a></span>';
+      return;
+    }
+    const newKey='p2s_sk_'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+    _storedKey=newKey;
+    localStorage.setItem('p2s_api_key',newKey);
+    const el=document.getElementById('api-key-display');
+    el.type='text';el.value=newKey;
+    document.getElementById('key-status').innerHTML='<span style="color:#059669">✓ 已生成并保存到本地（仅本设备可见）</span>';
+    setTimeout(()=>{el.type='password';el.value='••••••••••••••••';},10000);
+  };
+
+  window.copySessionKey=function(){
+    navigator.clipboard.writeText(sk).then(()=>{document.getElementById('session-key-display').select();});
+  };
+})();
+</script>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="assets/playbook-data.js?v=20260720193818"></script>
+  <script src="assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

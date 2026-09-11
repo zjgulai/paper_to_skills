@@ -1,0 +1,144 @@
+/* NLP-VOC Presentation · Print
+ * Two PDF flavors share this stylesheet:
+ *   1) main:       body[data-pdf="main"]  — speaker notes hidden
+ *   2) with-notes: body[data-pdf="notes"] — speaker notes visible (each on its own page)
+ */
+
+@media print {
+  :root {
+    --gap-section: 24px;
+    --pad-x: 20px;
+    --w-max: 100%;
+  }
+
+  html, body {
+    background: #ffffff;
+    color: #111827;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .site-header,
+  .site-footer,
+  .showcase-header,
+  .showcase-footer,
+  .site-nav {
+    display: none !important;
+  }
+
+  main {
+    padding: 0;
+  }
+
+  .section {
+    page-break-before: always;
+    break-before: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-top: 0;
+    min-height: 0;
+  }
+
+  .section:first-of-type {
+    page-break-before: auto;
+    break-before: auto;
+  }
+
+  .section.cover {
+    padding-top: 80px;
+  }
+
+  .section-header {
+    margin-bottom: 24px;
+  }
+
+  .lead {
+    font-size: 18px;
+    margin-top: 8px;
+  }
+
+  .kpi {
+    padding: 18px 16px;
+    gap: 4px;
+  }
+
+  .kpi-value {
+    font-size: 44px;
+  }
+
+  .kpi-bar {
+    margin-top: 4px;
+  }
+
+  .chart-panel,
+  .diagram,
+  .card,
+  .callout,
+  .quote,
+  .mockup {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .chart-canvas {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    height: 240px;
+  }
+
+  a {
+    border-bottom: 0;
+    color: inherit;
+  }
+
+  .timeline {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+
+  .four-col {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .three-col {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+
+  body[data-pdf="main"] .notes {
+    display: none !important;
+  }
+
+  body[data-pdf="notes"] .notes {
+    display: block;
+    page-break-before: always;
+    break-before: page;
+    margin-top: 24px;
+    padding: 32px;
+    border-left-width: 4px;
+    background: #fafbfc;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  body[data-pdf="notes"] .notes p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #111827;
+  }
+
+  body[data-pdf="notes"] .notes-label {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  @page {
+    size: A3 landscape;
+    margin: 12mm;
+  }
+}

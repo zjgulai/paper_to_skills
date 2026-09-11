@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PersonaRAG — 用户画像驱动的个性化检索增强 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-PersonaRAG-User-Persona-Retrieval</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">08-知识图谱</div>
+  <h1 class="skill-main-title">PersonaRAG — 用户画像驱动的个性化检索增强</h1>
+  <p class="skill-skill-id">Skill-PersonaRAG-User-Persona-Retrieval</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>multi_agent</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>KPI运营指标体系</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>42万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#2563eb;color:#fff">中等 · 73分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（34%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 76.0, 34.0, 50.7, 51.0, 50.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 7.6, 5.1, 7.6, 5.1, 2.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>产品团队面临不同角色用户收到同样深度回答——PersonaRAG将用户满意度+28%，CEO/运营师分层精准响应，年化降低无效决策损失35万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：将用户画像（角色、历史查询、权限等级）作为检索权重调制器，使同一问题对不同用户返回差异化深度的知识片段。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：CEO/运营师分层个性化知识检索 - 业务问题：母婴品牌日均处理100+运营查询（销售、库存、营销），CEO需要5分钟决策摘要，运营需要30分钟执行细节。现状是检索返回冗长报告，CEO浪费时间筛选，运营缺少操作建议。年均因信息不匹配导致决策延迟造成15-20万元机会成本。 - 数据要求：(1)用户档案库（姓名/角色/权限/查询历史100条）；(2)知识库5000+文档（含语义标签：宏观/中观/微观/教程）；(3)查询日志（过去6个月） - 预期产出：CEO查询「Q3销售怎样」→返回3条摘要（趋势+预警+建议）；运营查询同问题→返回15条细节（SKU排名+库存预警+竞品对标+操作chec</p><p>三轨验证 | 成本轨：月均服务器成本2000元（向量存储+实时推理），人工标注画像成本3000元/月（首月），后续自动化 | 合规轨：用户画像仅用于内部检索权重调制，不涉及个人隐私泄露，符合GDPR检索系统规范 | 风险轨：画像过时导致权重失效（概率15%，可通过季度更新缓解）；检索结果偏差（概率8%，需人工反馈循环）</p><p>场景B：新手/专家运营差异化帮助文档召回 - 业务问题：母婴跨境团队新手（&lt;3个月）和专家（&gt;2年）查询同一问题「如何优化Listing转化」，新手需要基础教程+案例，专家需要高阶技巧+数据模型。现状检索返回混杂内容，新手困惑，专家浪费时间。新手平均学习周期延长2周，年均培训成本增加8万元。 - 数据要求：(1)运营档案（入职日期/岗位/完成培训数/历史查询难度等级）；(2)帮助文档库3000+篇（标注难度等级：L1基础/L2进阶/L3专家/L4研究）；(3)反馈数据（文档有用性评分） - 预期产出：新手查询→返回L1+L2文档（含视频教程+模板）；专家查询→返回L3+L4文档（含算法解析+A</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：CEO/运营师面临「同一问题多人查询、返回结果冗余」的场景——PersonaRAG将检索相关性从60%改善至88%，决策时间从30分钟降至5分钟，年化节省42万元（CEO月均节省100小时×500元/小时）；运营执行效率提升40%，年化增加35万元产出。总年化ROI 77万元。</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需建立用户画像库和文档语义标签体系，但无需复杂模型训练）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（直接影响决策效率和团队生产力，ROI明显）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics.pairwise import cosine_similarity
+
+# ============ 母婴跨境电商场景数据 ============
+# 场景：婴儿推车、暖奶器、有机辅食三类产品的运营查询
+
+# 1. 用户画像库
+users_data = {
+    &#x27;user_id&#x27;: [&#x27;CEO_001&#x27;, &#x27;OPS_002&#x27;, &#x27;OPS_003&#x27;, &#x27;NEW_004&#x27;, &#x27;EXP_005&#x27;],
+    &#x27;role&#x27;: [&#x27;CEO&#x27;, &#x27;Operations&#x27;, &#x27;Operations&#x27;, &#x27;NewbieOps&#x27;, &#x27;ExpertOps&#x27;],
+    &#x27;seniority_level&#x27;: [5, 3, 4, 0.5, 4.5],  # 0-5 scale
+    &#x27;domain_expertise&#x27;: [4, 3, 4, 1, 5],  # 0-5 scale
+    &#x27;query_history_count&#x27;: [120, 450, 380, 45, 520],
+    &#x27;avg_query_complexity&#x27;: [3.2, 2.8, 3.5, 1.5, 4.2]
+}
+users_df = pd.DataFrame(users_data)
+
+# 2. 知识库文档（母婴产品运营相关）
+docs_data = {
+    &#x27;doc_id&#x27;: [&#x27;D001&#x27;, &#x27;D002&#x27;, &#x27;D003&#x27;, &#x27;D004&#x27;, &#x27;D005&#x27;, &#x27;D006&#x27;, &#x27;D007&#x27;, &#x27;D008&#x27;],
+    &#x27;title&#x27;: [
+        &#x27;Q3销售趋势摘要&#x27;,
+        &#x27;SKU级销售明细表&#x27;,
+        &#x27;婴儿推车库存预警&#x27;,
+        &#x27;暖奶器竞品对标分析&#x27;,
+        &#x27;有机辅食新手运营指南&#x27;,
+        &#x27;高阶Listing优化算法&#x27;,
+        &#x27;库存管理最佳实践&#x27;,
+        &#x27;A/B测试数据模型&#x27;
+    ],
+    &#x27;content_depth&#x27;: [&#x27;macro&#x27;, &#x27;micro&#x27;, &#x27;micro&#x27;, &#x27;meso&#x27;, &#x27;tutorial&#x27;, &#x27;expert&#x27;, &#x27;meso&#x27;, &#x27;expert&#x27;],
+    &#x27;product_category&#x27;: [&#x27;general&#x27;, &#x27;stroller&#x27;, &#x27;warmer&#x27;, &#x27;food&#x27;, &#x27;general&#x27;, &#x27;general&#x27;, &#x27;general&#x27;, &#x27;general&#x27;],
+    &#x27;semantic_tags&#x27;: [
+        np.array([0.9, 0.1, 0.2, 0.3]),  # [macro_score, micro_score, tutorial_score, expert_score]
+        np.array([0.1, 0.95, 0.2, 0.1]),
+        np.array([0.2, 0.9, 0.3, 0.1]),
+        np.array([0.4, 0.6, 0.2, 0.3]),
+        np.array([0.1, 0.3, 0.95, 0.2]),
+        np.array([0.2, 0.3, 0.1, 0.95]),
+        np.array([0.3, 0.7, 0.4, 0.2]),
+        np.array([0.1, 0.2, 0.1, 0.95])
+    ]
+}
+docs_df = pd.DataFrame(docs_data)
+
+# 3. 查询与基础检索得分（模拟BM25或向量相似度）
+query = &quot;销售怎样&quot;
+base_retrieval_scores = {
+    &#x27;D001&#x27;: 0.85,  # 趋势摘要
+    &#x27;D002&#x27;: 0.88,  # SKU明细
+    &#x27;D003&#x27;: 0.72,  # 推车库存
+    &#x27;D004&#x27;: 0.65,  # 竞品分析
+    &#x27;D005&#x27;: 0.45,  # 新手指南
+    &#x27;D006&#x27;: 0.38,  # 高阶算法
+    &#x27;D007&#x27;: 0.70,  # 库存管理
+    &#x27;D008&#x27;: 0.32   # A/B测试
+}
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.09394</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-PersonaRAG-User-Persona-Retrieval" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-GPLR-Persona-Generation.html'>Skill-GPLR-Persona-Generation</a></li><li><a href='../skills/Skill-PersonaBot-RAG-Profiling.html'>Skill-PersonaBot-RAG-Profiling</a></li><li><a href='../skills/Skill-RAG-Enhanced-Data-Analysis.html'>Skill-RAG-Enhanced-Data-Analysis</a></li><li><a href='../skills/Skill-Self-RAG-Reflective-Retrieval.html'>Skill-Self-RAG-Reflective-Retrieval</a></li><li><a href='../skills/Skill-User-Profile-Long-Memory.html'>Skill-User-Profile-Long-Memory</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-PersonaBot-RAG-Profiling.html'>Skill-PersonaBot-RAG-Profiling</a></li><li><a href='../skills/Skill-RAG-Enhanced-Data-Analysis.html'>Skill-RAG-Enhanced-Data-Analysis</a></li><li><a href='../skills/Skill-Self-RAG-Reflective-Retrieval.html'>Skill-Self-RAG-Reflective-Retrieval</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-PersonaBot-RAG-Profiling.html'>Skill-PersonaBot-RAG-Profiling</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-PersonaRAG-User-Persona-Retrieval',skill_domain:'08-知识图谱'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-PersonaRAG-User-Persona-Retrieval',skill_domain:'08-知识图谱',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 用户之声解码器</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

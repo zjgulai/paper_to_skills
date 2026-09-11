@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-T 用户分层精细运营 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-T 用户分层精细运营</nav>
+<h1>WF-T 用户分层精细运营</h1>
+<p class="lead">从 RFM 分层到 Uplift 建模再到精准干预的端到端用户精细化运营链，通过科学分层识别可干预用户，最大化干预 ROI，避免资源浪费在无效用户上。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>用户增长负责人</span><span class='tag'>CRM/会员运营</span><span class='tag'>数据分析师</span><span class='tag'>营销团队负责人</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>当前用户运营最大的痛点是：不知道对谁干预？还是干预效果不好？还是干预成本太高？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">用户价值分层</div>
+  <div class="wf-question">是否已有系统化的用户价值分层？</div>
+  <div class="wf-context">母婴用户有明确的生命周期阶段（备孕→孕期→0-1岁→1-3岁），不同阶段的需求和价值完全不同，统一运营是最大的资源浪费</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">建立基础分层（从零开始）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-RFM-Customer-Segmentation.html"><span class="chip-name">RFM Customer Segmentation for Targeted Marketing</span><span class="chip-role">RFM 三维分层，将用户分成冠军/忠诚/高潜/流失等8类，每类对应明确策略</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-User-Lifecycle-STAN.html"><span class="chip-name">STAN 用户生命周期自适应建模</span><span class="chip-role">时空注意力生命周期模型，判断用户所在阶段（备孕/婴儿/幼儿），实现阶段化运营</span></a>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-CLV-Prediction-BG-NBD</span><span class="chip-role">BG/NBD + Gamma-Gamma LTV 预测，识别未来高价值用户，提前布局</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">已有分层，需精细化升级</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-LTV-Prediction-ZILN.html"><span class="chip-name">LTV预测 - 零膨胀对数正态模型 (ZILN)</span><span class="chip-role">零膨胀 LTV 预测，更精准识别低消费量级中的高潜力用户</span></a>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Behavioral-Sequence-Modeling</span><span class="chip-role">行为序列建模，基于浏览/购买/评价序列的深度用户画像</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">流失识别与预警</div>
+  <div class="wf-question">哪些用户正在流失？哪些是可干预的流失？</div>
+  <div class="wf-context">母婴用户存在大量&quot;自然毕业&quot;流失（孩子长大了）——必须区分&quot;自然流失&quot;和&quot;可干预流失&quot;，前者不值得投入资源</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">个体级精准流失预测</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Uplift-Churn-Prediction.html"><span class="chip-name">Uplift Modeling for Churn Prediction</span><span class="chip-role">Uplift 流失建模，同时预测&quot;会否流失&quot;和&quot;是否可干预&quot;，只对可说服者投入资源</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Customer-Churn-Prediction.html"><span class="chip-name">Customer Churn Prediction (用户流失预测)</span><span class="chip-role">深度学习流失预测，捕捉复杂行为序列中的流失信号</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">群体级流失规律分析</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Cohort-Retention-Analysis.html"><span class="chip-name">Cohort Retention Analysis for User Lifecycle</span><span class="chip-role">队列留存分析，发现复购黄金时间窗口（如首单后14天是母婴最关键节点）</span></a>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Survival-Analysis-Customer</span><span class="chip-role">生存分析，估算不同用户群的预期留存时长和最优干预时机</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">精准干预策略设计</div>
+  <div class="wf-question">选择干预方式？</div>
+  <div class="wf-context">四象限干预框架：确定留存者（不需要干预）→可说服者（精准干预）→睡狗（干预会加速流失）→确定流失者（放弃）</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">发券/促销干预（预算敏感场景）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Guardrailed-CATE-NBA.html"><span class="chip-name">Guardrailed CATE-NBA</span><span class="chip-role">预算约束下的最优行动(NBA)，在 ROI 护栏约束下自动输出最优干预名单</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Personalized-Promotion-Targeting.html"><span class="chip-name">Personalized Promotion Targeting — 个性化促销定向：用户响应异质性建模</span><span class="chip-role">个性化促销定向，识别对券/折扣/满减哪种形式响应最强</span></a>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Propensity-Score-Matching</span><span class="chip-role">倾向分匹配，构建干预组/对照组，确保促销效果归因准确</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">内容/触达干预（非价格手段）</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Next-Best-Content-Recommendation</span><span class="chip-role">最优内容推荐，基于用户阶段推送最相关的育儿内容提升粘性</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Push-Notification-Optimization</span><span class="chip-role">推送通知优化，最优发送时机+频次+内容组合，减少骚扰提升 CTR</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">干预效果评估与策略迭代</div>
+  <div class="wf-question">干预是否真的有效？ROI 是否达标？</div>
+  <div class="wf-context">没有严格的因果效果评估，就无法知道干预是真的有效还是&quot;挑了本来就会复购的用户&quot;——幸存者偏差是 CRM 最常见的误区</div>
+  <div class="wf-branch-skills">
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

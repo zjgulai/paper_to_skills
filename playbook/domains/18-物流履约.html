@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>18-物流履约 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>18-物流履约</h1><p>Cross-border routing, last-mile prediction, returns/reverse logistics</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 18-物流履约 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-3D-Bin-Packing-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">3D Bin Packing Optimization — 3D 装箱优化：集装箱/货架空间利用率最大化</h3>
+  <p class="sc-desc">跨境卖家海运集装箱人工装载率只有65-70%每次多花一个柜子运费18000元——3D装箱优化算法智能排列商品箱子将利用率提升到85%，全年海运4-6批年化节省集装箱费用10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AR-Logistics-Visualization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">AR Logistics Visualization — 增强现实包裹可视化追踪：跨境物流透明化与客服AI视频答复</h3>
+  <p class="sc-desc">业务背景：某母婴品牌黑五期间发货 12,000 件婴儿推车至美国，FBA 舱容紧张，部分走 FBM 直邮，预计清关延误率 23%</p>
+  <div class='sc-footer'><span class='sc-roi'>12.7 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Bonded-Warehouse-Inventory-Intelligence.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">保税仓智能库存 — 监管合规×资金效率双优化</h3>
+  <p class="sc-desc">财务团队面临保税仓资金占用高——智能库存模型将转仓时机精准度提升40%，年化资金占用成本节省61万元</p>
+  <div class='sc-footer'><span class='sc-roi'>120万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Bonded-Zone-Compliance-Auto.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Bonded Zone Compliance Auto — 保税区合规自动化（保税仓入出区监管）</h3>
+  <p class="sc-desc">物流团队面临&quot;保税仓手工申报单错误率高且耗时导致海关罚款&quot;——保税区合规自动化将申报错误率从8%降至0.2%，年化节省罚款和人工成本15-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>减少申报错误和人工成本，年化节省运营成本+罚款风险15-30</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Carrier-Selection-ML.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">承运商智能选择 — ML驱动的跨境配送商优化决策</h3>
+  <p class="sc-desc">物流团队面临&quot;惯性选FedEx但UPS在部分航线便宜15%且DHL罢工无法快速切换&quot;——ML承运商智能选择年化节省物流成本19万+降低客诉节省10万约29万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cold-Chain-Temperature-Monitoring.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">冷链温控全程监测 — 母婴辅食物流的温度合规智能预警</h3>
+  <p class="sc-desc">跨境运营面临&quot;益生菌冷链温度记录不完整导致FDA扣押年均3次损失45万&quot;——IoT+ML全程监测MKT合规验证，通关率从85%提升至98%，年化节省65万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Last-Mile-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Cross-Border Last Mile Routing — 跨境最后一公里路由优化：时效×成本双目标决策</h3>
+  <p class="sc-desc">黑五大促FedEx在Zone7-8时效从5天延到9天但运营不知道该切换哪个carrier——多目标路由评分模型实时监测准时率自动切换最优carrier，减少延迟差评率30-50%，年化综合ROI30-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Logistics-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Cross-Border Logistics Routing（跨境物流路径优化）</h3>
+  <p class="sc-desc">旺季（Q4）缺货成本 $5000/天→空运；淡季持有成本低→海运</p>
+  <div class='sc-footer'><span class='sc-roi'>45 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Returns-Cost-Model.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Cross-Border Returns Cost Model — 跨境退货成本建模</h3>
+  <p class="sc-desc">运营面临&quot;欧洲市场高退货率的真实成本在PnL中被低估导致利润虚高&quot;——跨境退货全成本建模将利润率核算准确率提升90%，年化避免高退货SKU持续备货损失20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>修复退货成本核算后年化避免高退货SKU持续备货损失20-40</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CrossBorder-Logistics-Mode-Selection.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">跨境物流模式动态选择 — 需求预测驱动的保税仓与直邮模式联合优化框架</h3>
+  <p class="sc-desc">凭经验选保税仓或直邮导致旺季爆仓或淡季仓储成本浪费——注意力增强Seq2Seq需求预测+退货率量化+多目标优化实现动态模式切换，总物流成本降低约15%（IJSSO 2026）</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Crowdsourced-Last-Mile-AI-Dispatch.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">众包最后一公里AI调度 — 动态定价与配送网络优化</h3>
+  <p class="sc-desc">运营团队面临东南亚大促配送成本激增——众包AI调度将配送成本降低28%、时效提升1.2天，年化节省配送成本47万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2747万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Customs-Clearance-Risk-Scoring.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Customs Clearance Risk Scoring — 跨境清关多维风险预警</h3>
+  <p class="sc-desc">清关合规团队面临&quot;婴配粉/CE产品查验扣押率25%、年均8-12次被扣损失20-80万元&quot;——多维风险评分模型AUC=0.81将高风险批次召回率提升至85%，年化减损20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Delivery-Promise-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Delivery Promise Optimization — 时效承诺优化：转化率与准时率的帕累托</h3>
+  <p class="sc-desc">履约经理面临承诺时效不敢报——交付承诺优化将延迟率从13%降到5%，年化省21万元</p>
+  <div class='sc-footer'><span class='sc-roi'>95%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Drone-UAV-Last-Mile-Delivery.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">无人机末端配送调度 — UAV最后一公里的路径规划</h3>
+  <p class="sc-desc">跨境运营面临&quot;郊区最后一公里配送成本高达12元/件且急需品时效慢&quot;——无人机调度规划降低配送成本至3元/件，30分钟配送留存率+15%，规模化后年化ROI约125万元</p>
+  <div class='sc-footer'><span class='sc-roi'>45万元</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-First-Mile-Pickup-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">首公里取货路径优化 — 国内工厂到货代的调度算法</h3>
+  <p class="sc-desc">货代运营面临&quot;多工厂取货路线重叠车辆调度低效首公里成本虚高&quot;——VRP路径优化将首公里运费降低40%，年化节省物流成本15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>对 10-20 个供应商规模的货代，年化节省燃油+人力成本</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-First-Mile-Pickup-Route-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">First Mile Pickup Route Optimization — 首公里取货路径优化</h3>
+  <p class="sc-desc">物流团队面临&quot;多工厂取货路线重叠导致首公里成本虚高&quot;——CVRP路径优化节省取货运费40%，年化节省物流成本15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>取货路线优化节省运费约40%，年化节省物流成本15-25万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GraphDeepAR-Demand-Forecasting.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">GraphDeepAR — 图神经网络概率需求预测：商品关联 + 退货预测</h3>
+  <p class="sc-desc">预测工程师面临多SKU联动难学——GraphDeepAR将MAPE从21%降到12%，年化省23万元</p>
+  <div class='sc-footer'><span class='sc-roi'>25%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Green-Logistics-Carbon-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">碳最优物流路径规划 — ESG合规与成本的多目标优化</h3>
+  <p class="sc-desc">跨境运营面临&quot;欧盟CBAM碳合规压力和ESG采购要求无量化工具&quot;——多目标碳最优路径规划降低碳排放40%，碳税成本节省+满足ESG要求，年化ROI约245万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HS-Code-Auto-Classification.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">HS编码自动分类 — 跨境关税智能核算引擎</h3>
+  <p class="sc-desc">物流团队面临HS编码人工分类错误率高达12%——BERT自动分类将准确率提升至97%，年化节省关税纠纷损失38万元</p>
+  <div class='sc-footer'><span class='sc-roi'>18.5万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Inventory-Demand-Sensing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Inventory Demand Sensing — 库存需求感知：实时信号融合驱动智能补货</h3>
+  <p class="sc-desc">吸奶器旺季等到销量上升才补货Lead Time 45天导致旺季缺货两周——搜索趋势+广告CTR多信号感知比纯销量触发提前7-14天补货，旺季缺货减少40-60%年化GMV保护25-65万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥25-65 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Inventory-Positioning-Multi-DC.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Inventory Positioning Multi-DC — 多仓库存定位优化（FBA+海外仓+自营仓协同）</h3>
+  <p class="sc-desc">供应链团队面临&quot;FBA断货和海外仓积压并存说明多仓库存定位失衡&quot;——随机库存定位模型优化后断货率降低30%仓储成本降低20%，年化节省25-45万元</p>
+  <div class='sc-footer'><span class='sc-roi'>优化库存分配后断货率降低30%仓储成本降低20%，年化节省2</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Last-Mile-Delivery-Prediction.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Last-Mile Delivery Prediction（最后一公里配送时效预测）</h3>
+  <p class="sc-desc">跨境母婴订单选择快递时仅凭经验判断，东海岸送 FedEx、西海岸送 USPS——最后一公里时效预测模型基于历史配送数据精准选路，每单节省 $1.2，年化 3000 单 = 节省 36 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>3.08 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Last-Mile-Network-Planning.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Last Mile Network Planning — VRP变体+海外仓选址末端网络优化</h3>
+  <p class="sc-desc">物流战略团队面临&quot;仅LA单仓导致东海岸2日达覆盖率仅12%、流失率18%&quot;——VRP选址优化增设NJ仓后2日达覆盖率提升至87%，年化节省配送成本55万元+间接增收20-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Anomaly-Fraud-Signal.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Anomaly Fraud Signal — 物流轨迹异常作为欺诈信号特征工程</h3>
+  <p class="sc-desc">风控团队面临&quot;竞品刷单物流轨迹与真实订单难以区分&quot;——15类物流特征欺诈评分将刷单识别召回率从52%提升至87%，年化通过举报恢复BSR保护价值30-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>成功识别并举报竞品刷单后，BSR 恢复带来年化增收 30-8</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Carbon-Scope3-Tracker.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">物流碳排放Scope3追踪 — 全链路碳足迹核算引擎</h3>
+  <p class="sc-desc">ESG团队面临Scope3碳排放核算难——逐单CO2eq核算将ESG报告准确率提升至99%，Amazon CPF认证通过率100%</p>
+  <div class='sc-footer'><span class='sc-roi'>150-200万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Cost-PL-Attribution.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Cost PL Attribution — 物流成本 P&amp;L 归因：每单头程+FBA+退货的利润拆解</h3>
+  <p class="sc-desc">母婴卖家月度账面毛利22%但实际某款婴儿枕头退货率18%、真实净利润为负——物流成本五层ABC拆解（L1货值到L5退货）到SKU粒度，发现隐性亏损SKU并停止无效广告，年化节省3-8万美元并优化退货成本</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Fraud-Detection.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Fraud Detection — 物流链路欺诈检测：虚假收货、刷单物流与地址篡改的识别与拦截</h3>
+  <p class="sc-desc">&quot;Item Not Received&quot;（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%</p>
+  <div class='sc-footer'><span class='sc-roi'>月均 -$3,200</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-SLA-Causal-Impact.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">物流SLA变更的因果影响 — 时效承诺对复购率的DiD分析</h3>
+  <p class="sc-desc">管理层对物流时效升级投入80万元但无法量化净复购率提升——引入 DiD 因果推断剥离季节性与自然增长，净复购率提升准确估计 +4.2%，投入产出决策依据从主观判断升级为严格因果证据，置信区间精度 95%。</p>
+  <div class='sc-footer'><span class='sc-roi'>每次 SLA 升级投资（物流成本增量）对应可量化的复购 LT</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Temperature-Logistics.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Multi-Temperature Logistics — 多温区混合配送成本优化</h3>
+  <p class="sc-desc">物流运营面临&quot;有机婴儿辅食冷冻/冷藏/常温独立温区配送成本$12/箱超出利润空间&quot;——共用车厢+VRP优化将混合配送成本降至$7.5/箱，年化节省冷链成本120-190万元</p>
+  <div class='sc-footer'><span class='sc-roi'>6 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multicarrier-Parcel-Tracking-Fusion.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">多承运商包裹追踪融合 — 跨境物流可见性引擎</h3>
+  <p class="sc-desc">客服团队面临跨境包裹查询效率低——多承运商融合追踪将异常件主动预警率提升至94%，客诉率降低45%，年化节省人工18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>268万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Parcel-Damage-Prediction.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Parcel Damage Prediction — 包裹破损预测（物流轨迹+特征联合模型）</h3>
+  <p class="sc-desc">物流团队面临&quot;大件母婴产品破损导致高退货率但无法提前预警&quot;——物流轨迹破损预测将高风险包裹识别准确率提升到75%，年化节省退货处理成本20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>主动处理高风险包裹后退货率降低30%，年化节省退货处理成本2</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Port-Congestion-ETA-Prediction.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">港口拥堵ETA预测 — 多因子动态到港时间估计</h3>
+  <p class="sc-desc">采购团队面临港口拥堵导致旺季缺货——ETA预测精度达到±3天置信区间85%，年化避免缺货损失52万元</p>
+  <div class='sc-footer'><span class='sc-roi'>45万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Predictive-Batch-Returns-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">退货批量逆向路由预测 — 跨境退货智能分拣与逆向物流优化</h3>
+  <p class="sc-desc">跨境卖家面临高退货率（15-25%）——退货概率预测+批量逆向路由将逆向物流成本从$15/件降至$5/件，年化节省$24万（月均2000件退货规模）</p>
+  <div class='sc-footer'><span class='sc-roi'>24万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Predictive-Returns-Management.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Predictive Returns Management — 退货量预测与主动处理：降低逆向物流成本</h3>
+  <p class="sc-desc">黑五后两周退货洪峰超出处理能力3倍导致FBA延迟8天产生23个差评——韦布尔分布拟合退货时序提前预测每日退货量P10/P90分位数，提前预约逆向物流容量年化节省15-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Real-Time-Fleet-Dynamic-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">实时车队动态重路由 — 突发事件下的物流路径自适应优化</h3>
+  <p class="sc-desc">物流团队面临&quot;大促期间新订单涌入导致配送路径静态规划失效&quot;——插入启发式实时重路由节省91%绕路里程，配送成本超支从25%降至8%，年化节省约75万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Returns-Quality-Grading-Engine.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">退货品质分级引擎 — 计算机视觉驱动的再销售路径决策</h3>
+  <p class="sc-desc">仓储团队面临退货分级人工成本高——CV分级引擎将人工审核减少80%，二次销售率提升至65%，年化增收43万元</p>
+  <div class='sc-footer'><span class='sc-roi'>4万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Returns-Reverse-Logistics.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Returns Reverse Logistics（退货逆向物流）</h3>
+  <p class="sc-desc">预测模型识别高风险订单（新用户+特大号法兰+延迟配送=退货率 22%），提前触发&quot;确认尺寸&quot;邮件，退货率降至 15%</p>
+  <div class='sc-footer'><span class='sc-roi'>6-10 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Smart-Packaging-Optimizer.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">智能包装优化器 — 包材选择与填充率最大化</h3>
+  <p class="sc-desc">物流团队面临包装成本过高且破损率8%——智能包装优化将材料成本降低22%、破损率降至2.1%，年化节省29万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2545万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supplier-Lead-Time-Buffer.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Supplier Lead Time Buffer — 供应商交货期缓冲：非正态分布下的安全库存</h3>
+  <p class="sc-desc">采购经理面临供应商交期波动大——交期缓冲将断供率从9%降到2%，年化省19万元</p>
+  <div class='sc-footer'><span class='sc-roi'>95%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Resilience-Stress-Test.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">供应链弹性压力测试 — 中断情景模拟与备用路由</h3>
+  <p class="sc-desc">风控团队面临供应链中断风险盲目——弹性压力测试将风险敞口量化准确率达87%，年化避免断货损失80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>800万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Warehouse-Location-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Warehouse Location Optimization — 仓储选址优化：多仓库布局最优化决策</h3>
+  <p class="sc-desc">月均2000单60%在美东用加州单仓发货运费Zone 7-8超贵——混合整数规划选址优化找到美东+美西双仓最优方案，配送成本降低15-25%年化节省10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Warehouse-Slotting-AI-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">仓库货位AI优化 — 婴儿产品拣货效率最大化</h3>
+  <p class="sc-desc">仓储运营面临&quot;仓库货位人工规划效率低下拣货时间超行业均值50%&quot;——AI货位分配优化将拣货时间降低30%，年化节省仓储人工成本20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>单仓年节省人力 15-25 万元，错拣损失减少 5-8 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Warehouse-Slotting-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Warehouse Slotting Optimization — 仓库货位智能分配（拣货路径最短化）</h3>
+  <p class="sc-desc">仓储运营面临&quot;仓库货位不合理导致拣货效率低下人工成本高&quot;——货位智能分配将拣货效率提升30%，年化节省仓储人工成本20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>拣货效率提升30%，年化节省仓储人工成本20-40万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Zone-GNN-Last-Mile-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Zone-GNN — 区域化最后一公里路径优化：GNN + 指针网络</h3>
+  <p class="sc-desc">跨境卖家自营海外仓配送路线靠人工排线效率低下——区域化GNN+指针网络学习历史驾驶偏好，日均里程减少10-14%，2辆车年化节省8-18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

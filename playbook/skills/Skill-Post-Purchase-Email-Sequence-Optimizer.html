@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Post-Purchase Email Sequence Optimizer（购后邮件序列优化） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Post-Purchase-Email-Sequence-Optimizer</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">15-营销投放分析</div>
+  <h1 class="skill-main-title">Post-Purchase Email Sequence Optimizer（购后邮件序列优化）</h1>
+  <p class="skill-skill-id">Skill-Post-Purchase-Email-Sequence-Optimizer</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>fraud_detection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>营销分析与预算</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>时序预测</span><span class='tag'>LLM数据分析</span><span class='tag'>逆向物流与退货</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>多渠道协同增长</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-O 广告ROI最大化</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AB 视频电商全链路</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-attribution-unification.html'>全渠道归因统一手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50-200 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 85分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（49%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 109.0, 48.7, 72.7, 73.0, 72.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 10.9, 7.3, 10.9, 7.3, 3.6];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>私域运营面临邮件跟进打不开——邮件序列优化将复购率从8%提到12%，年化增收13万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：购后邮件序列（PostPurchase Email Flow）是 DTC 品牌成本最低、ROI 最高的 LTV 工具。但大多数团队发送的是时间驱动的固定序列（下单后 D+3/D+7/D+30 自动发），而非行为驱动的个性化路径。基于强化学习的邮件序列优化，通过 Contextual Bandit 算法动态选择每个用户的最优触达时机、主题和内容组合。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景 A：吸奶器购后序列（首购用户 LTV 激活）</p><p>场景 B：奶粉订阅用户（复购提醒 + 换月龄引导）</p><p>- 奶粉有自然的「月龄换段」节点（1段→2段→3段→4段） - 系统基于购买日期 + 儿童年龄预测下次换段时机 - 提前 2 周发送「你的宝宝快到换段年龄了」邮件 + 新段产品推荐 - 复购率可比随机发送提升 35-50%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>DTC 独立站：接入 Klaviyo/Attentive，规则引擎 2 周上线</li><li>Amazon 店铺：受限于平台邮件规范（只能发 Buyer-Seller Messaging），合规版本</li><li>Bandit 模型：需要 3-6 个月数据积累，前期建议纯规则引擎</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：6 · 路径：paper2skills-code/marketing/post_purchase_email_sequence_optimizer</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>from dataclasses import dataclass, field
+from typing import Literal, Optional
+import random
+import math
+
+# 邮件类型定义
+EmailType = Literal[
+    &quot;review_request&quot;, &quot;cross_sell&quot;, &quot;educational&quot;,
+    &quot;reorder_prompt&quot;, &quot;loyalty_invite&quot;, &quot;discount_offer&quot;, &quot;silence&quot;
+]
+
+@dataclass
+class UserState:
+    user_id: str
+    days_since_purchase: int
+    product_category: str       # &quot;breast_pump&quot; / &quot;formula&quot; / &quot;toy&quot;
+    purchase_count: int          # 1=首购, 2+=复购
+    last_email_action: str      # &quot;open&quot; / &quot;click&quot; / &quot;ignore&quot; / &quot;unsubscribe&quot;
+    rfm_segment: str            # &quot;champion&quot; / &quot;at_risk&quot; / &quot;hibernating&quot;
+    predicted_ltv: float        # 预测 LTV（美元）
+    is_near_reorder: bool       # 消耗品是否接近复购时间
+
+@dataclass
+class EmailConfig:
+    email_type: EmailType
+    subject_template: str
+    personalization_vars: list[str]
+    optimal_send_time: str      # &quot;morning_9am&quot; / &quot;evening_8pm&quot; / &quot;weekend_11am&quot;
+    max_frequency_days: int     # 该类型邮件最小间隔天数
+
+# 规则优先引擎（确定性规则 + bandit 兜底）
+EMAIL_RULES = [
+    # 规则 1：有 unsubscribe 迹象 → 立即静默
+    {&quot;condition&quot;: lambda s: s.last_email_action == &quot;unsubscribe&quot;,
+     &quot;action&quot;: &quot;silence&quot;, &quot;priority&quot;: 1},
+    
+    # 规则 2：使用第 7 天 + 上封邮件有打开 → 请求评论黄金窗口
+    {&quot;condition&quot;: lambda s: 5 &lt;= s.days_since_purchase &lt;= 10 
+                            and s.last_email_action in [&quot;open&quot;, &quot;click&quot;],
+     &quot;action&quot;: &quot;review_request&quot;, &quot;priority&quot;: 2},
+    
+    # 规则 3：奶粉/消耗品接近复购周期 → 复购提醒
+    {&quot;condition&quot;: lambda s: s.is_near_reorder and s.product_category == &quot;formula&quot;,
+     &quot;action&quot;: &quot;reorder_prompt&quot;, &quot;priority&quot;: 3},
+    
+    # 规则 4：高 LTV 用户 30 天未复购 → 忠诚度邀请
+    {&quot;condition&quot;: lambda s: s.predicted_ltv &gt; 200 
+                            and s.days_since_purchase &gt; 30 
+                            and s.purchase_count == 1,
+     &quot;action&quot;: &quot;loyalty_invite&quot;, &quot;priority&quot;: 4},
+    
+    # 规则 5：流失风险用户（rfm + 长时间无响应）→ 折扣激活
+    {&quot;condition&quot;: lambda s: s.rfm_segment == &quot;at_risk&quot; 
+                            and s.days_since_purchase &gt; 45,
+     &quot;action&quot;: &quot;discount_offer&quot;, &quot;priority&quot;: 5},
+]
+
+class LinUCBEmailBandit:
+    &quot;&quot;&quot;线性 UCB Contextual Bandit，用于剩余场景的动态选择。&quot;&quot;&quot;
+    </code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Post-Purchase-Email-Sequence-Optimizer" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li><li><a href='../skills/Skill-Personalized-Promotion-Targeting.html'>Skill-Personalized-Promotion-Targeting</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-Uplift-Churn-Prediction.html'>Skill-Uplift-Churn-Prediction</a></li><li><a href='../skills/Skill-User-Lifecycle-STAN.html'>Skill-User-Lifecycle-STAN</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li><li><a href='../skills/Skill-Personalized-Promotion-Targeting.html'>Skill-Personalized-Promotion-Targeting</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-MAA-Review-to-Action-Decision.html'>Skill-MAA-Review-to-Action-Decision</a></li><li><a href='../skills/Skill-Personalized-Promotion-Targeting.html'>Skill-Personalized-Promotion-Targeting</a></li><li><a href='../skills/Skill-Session-Intent-Shift.html'>Skill-Session-Intent-Shift</a></li><li><a href='../skills/Skill-Uplift-Churn-Prediction.html'>Skill-Uplift-Churn-Prediction</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Post-Purchase-Email-Sequence-Optimizer',skill_domain:'15-营销投放分析'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Post-Purchase-Email-Sequence-Optimizer',skill_domain:'15-营销投放分析',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

@@ -1,0 +1,1896 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>知识图谱与RAG · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>知识图谱与RAG</h1><input id='topic-search' placeholder='在 知识图谱与RAG 中搜索…' style='max-width:320px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;margin:10px 0 16px;display:block'><script>(function(){var inp=document.getElementById('topic-search');var cs=document.querySelectorAll('.cards .skill-card');if(!inp)return;inp.addEventListener('input',function(){var q=this.value.trim().toLowerCase();cs.forEach(function(c){c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';});});})()</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Cohort-Analysis.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Cohort Analysis — 因果队列分析：促销干预的长期用户行为效应</h3>
+  <p class="sc-desc">增长经理面临留存变化找不到真因——因果队列将误判率从28%降到9%，年化增收18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200-500 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-EPICSCORE-Uncertainty.html" data-domain="01-因果推断" data-diff="">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">认知不确定性共形评分 - 数据稀疏区域自适应区间加宽</h3>
+  <p class="sc-desc">桑基图中每条边代表一条用户路径转化，观测量差异极大</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Guardrailed-Uplift-Targeting.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Guardrailed Uplift Targeting — 约束优化 CATE：业务护栏驱动的精准干预</h3>
+  <p class="sc-desc">当前做法是向所有&quot;高流失风险&quot;用户统一发&quot;免费延长30天&quot;优惠券，ROI 极低——很多用户即使不发券也会续订</p>
+  <div class='sc-footer'><span class='sc-roi'>25-28万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Causal-Discovery.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">LLM辅助因果图发现 — 用语言模型先验加速因果结构学习</h3>
+  <p class="sc-desc">数据团队面临&quot;广告→销量的因果路径不清晰无法确定优化策略&quot;——LLM先验+统计方法构建因果DAG，识别排名路径贡献62%，策略优化后ROAS提升20%，年化增量约40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SSBC-Small-Sample-Conformal.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">小样本Beta修正共形预测 - 50个样本也能保证覆盖</h3>
+  <p class="sc-desc">业务问题：日本市场刚上线，只收集了50条带标签的转化数据做校准</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Forest-HTE-Experiments.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">Causal Forest for HTE in Experiments — 实验数据的异质处理效应估计</h3>
+  <p class="sc-desc">运营面临&quot;全量用户施相同促销政策导致高价值用户被补贴浪费&quot;——因果森林HTE将促销精准度提升40%，年化节省无效促销预算50-90万元</p>
+  <div class='sc-footer'><span class='sc-roi'>精准优惠券投放节省约 60% 分发成本（仅向高 CATE 用</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NLP-Copy-AB-Test-Optimizer.html" data-domain="02-A_B实验" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">02-A_B实验</div>
+  <h3 class="sc-title">NLP Copy AB Test Optimizer — CTR 加权偏好优化 + 遗传算法的文案 A/B 测试闭环</h3>
+  <p class="sc-desc">母婴运营面临 Amazon Listing 主标题靠拍脑袋、手动 A/B 测试周期 2 周且变体有限——NLP 文案 A/B 闭环系统自动生成 10+ 高质量标题变体并用 Thompson Sampling MAB 快速收敛最优文案，CTR 提升 4-15%，年化增量 GMV 20-80 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Time-Series-Forecasting-GCF.html" data-domain="03-时间序列" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">因果时间序列预测 - GCF 反事实需求建模</h3>
+  <p class="sc-desc">平台在大促期对核心母婴 SKU(纸尿裤、婴儿车)做搜索权重提升 + 首页 Banner 曝光,需要回答&quot;如果没做促销,需求应该是多少&quot;——避免把自然增长功劳归到促销 - 数据要求:全品类销量历史 + 促销标记 + 商品图谱(同类竞品关系) - GCF 配置:节点=SKU,边=同品类竞品,干预=促销曝光,合成控制=未受促销的同类 - 业务价值:促销 ROI 计算精度提升 30-50%,避免</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-Prediction-Demand-UQ.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Conformal Prediction Demand UQ（需求预测不确定性量化）</h3>
+  <p class="sc-desc">供应链经理面临需求预测没把握——共形预测将库存缺口从18%降至6%，年化省20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-Time-Series-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Conformal Time Series Forecasting — 共形时序预测：有覆盖保证的需求预测区间</h3>
+  <p class="sc-desc">计划经理面临预测区间不可信——共形时序将超卖率降30%，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Demand-Quantile-Forecast.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Demand Quantile Forecast — 需求分位数预测：备货决策的置信区间框架</h3>
+  <p class="sc-desc">供应链面临&quot;均值备货导致断货率8%或大量积压&quot;——分位数回归P50/P85/P95三级备货策略将缺货率降至3%，年化节省断货+积压损失20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-STL-Seasonal-Decomposition.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">STL Seasonal Decomposition — STL 季节性分解：时间序列趋势×季节×残差三层分离</h3>
+  <p class="sc-desc">16个时序Skill居然没有STL季节性分解导致备货计划无法量化圣诞季高多少——STL将时序分解为趋势×季节×残差三层，季节性指数精确量化后备货误差降低30%异常检测误报率降低60%年化减少备货失误10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Streaming-Data-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Streaming Data Forecasting — 流式采集数据驱动的实时需求预测：采集→特征→预测端到端</h3>
+  <p class="sc-desc">运营经理面临实时数据来不及算——流式预测将响应延迟从30分降到2分，年化省12万元</p>
+  <div class='sc-footer'><span class='sc-roi'>60 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AlphaFold-Bin-Packing.html" data-domain="04-供应链" data-diff="">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">蛋白质折叠启发的异形 SKU 极限装箱 (AlphaFold Bin-Packing)</h3>
+  <p class="sc-desc">物流经理面临FBA头程40尺柜装载率仅78%的同质化瓶颈——引入蛋白质折叠算法(AlphaFold)的三维异形装箱优化，将单柜装载率暴力提升至94%，年化节省海运头程费用5-15万美元，用计算生物学的物理直觉打败传统运筹学的贪心求解。</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Commodity-Futures-Cost-Baseline.html" data-domain="04-供应链" data-diff="">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">大宗商品期货驱动的竞品成本底线穿透 (Commodity Futures Arbitrage)</h3>
+  <p class="sc-desc">供应链总监陷入对手定价不明的同质化困境——引入大宗商品期货与航运指数反推竞品真实BOM成本底线，当对手售价跌破盈亏平衡点时发出&quot;失血速杀&quot;红色预警，反直觉保持原价等待对手现金流失血退市，年化避免无效价格战损失8-15万美元。</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Competitor-SKU-Ontology.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">竞品SKU本体 — 竞争关系图谱建模、差异化标签与定价策略连接</h3>
+  <p class="sc-desc">运营面临&quot;竞品价格变动要1周后才知道&quot;——竞品本体实时监控将价格响应从1周→实时，抓住提价窗口年化增收5-8万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-8万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Dynamic-Payment-Terms-Tag-Engine.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">动态账期标签引擎 — 基于现金流预测的供应商账期智能优化与动态调整</h3>
+  <p class="sc-desc">财务面临&quot;现金流紧张但账期还是固定Net30&quot;——现金流驱动的动态账期决策，紧张时延长释放5万元资金，充裕时早付获折扣1万元/年</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FBA-Stranded-Unfulfillable-Inventory-KPI.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">FBA滞销不可售库存KPI与处置策略 — 滞销率/仓储过长费预警/移除决策优化</h3>
+  <p class="sc-desc">FBA运营面临&quot;仓储过长费持续蚕食利润&quot;——库龄×销速四象限处置决策节省年化LTSF约$18,000，同时追回Amazon赔款$2,000+</p>
+  <div class='sc-footer'><span class='sc-roi'>3万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Green-Supply-Chain-Carbon-Footprint.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">Green Supply Chain Carbon Footprint — 绿色供应链碳足迹：ESG合规与可持续运营优化</h3>
+  <p class="sc-desc">欧盟CBAM2026年强制实施进口商品需申报碳含量但跨境卖家完全没有碳足迹数据——全生命周期碳足迹核算从制造到配送量化每个SKU的CO₂排放，欧洲市场ESG合规+绿色品牌溢价年化ROI10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万（避损+溢价）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Inventory-Aging-Cost-Management.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">库龄分段管理与资金成本化 — 库存账龄结构诊断、持有成本精算与阶梯清仓触发</h3>
+  <p class="sc-desc">卖家只看&quot;总库存量&quot;不知道其中多少是&quot;时间炸弹&quot;——四段库龄成本精算将90天+高危库存年额外持有成本$9.2/件可视化，主动清仓比被动等待多回收$4250/批（250件规模）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Cost-Lifecycle-KPI.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">物流成本前中后生命周期管理KPI — 生意前模拟/生意中账单/生意后分析的三段成本闭环</h3>
+  <p class="sc-desc">物流账单每月不核对平均损失3-8%（$300-800）且物流方案选择拍脑袋——前中后三段管理（生意前成本模拟/生意中账单核对/生意后按渠道SKU分析），账单核对追回多收+生意前模拟选最优物流方案</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Cost-Structure-Decomposition.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">全链路物流成本结构分解 — 进存销三段成本拆解与降本杠杆识别</h3>
+  <p class="sc-desc">卖家只知道&quot;物流贵&quot;却不知道哪贵——进-存-销三段ABC成本拆解将物流费率从9.2%降至7.5%，月节省$8500（$50万GMV规模）</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MOQ-Payment-Terms-Optimization.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">MOQ与账期联动优化决策 — 最小起订量与付款条件的现金流效益模型</h3>
+  <p class="sc-desc">采购谈判时面临&quot;单看价格忽视持有成本+账期价值&quot;——联合优化模型量化账期延长30天=0.5%折扣等价，避免系统性次优决策</p>
+  <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Channel-Inventory-Sync.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">Multi-Channel Inventory Sync — 多渠道库存协同：Amazon+独立站+TikTok联动库存管理</h3>
+  <p class="sc-desc">Amazon独立站TikTok三渠道各自独立备货导致总备货650件但最优只需450件且大促时超卖风险高——统一库存池+蒙特卡洛优化动态分配，总备货量减少20%大促缺货率降低年化节省15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Factory-Capacity-Allocation.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">多工厂产能分配算法 — OEM/ODM多厂商协同下的弹性产能调度优化</h3>
+  <p class="sc-desc">供应链面临&quot;单一工厂依赖70%，停工即断供&quot;——多工厂分配算法将集中度从70%降至40%，防止单点故障损失约20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-New-Product-Demand-Cold-Start.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">New Product Demand Cold Start — 新品需求预测：零历史数据的条件扩散模型</h3>
+  <p class="sc-desc">UV-C+蒸汽双模消毒器等全新品类没有历史销售数据，工厂 MOQ 1000 件备少黑五缺货备多 Q1 压库——协同过滤迁移学习将首批备货预测误差从 ±60% 压缩至 ±25%，避免压库金额 20-50 万元/年</p>
+  <div class='sc-footer'><span class='sc-roi'>10-40 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-New-SKU-Launch-Readiness-Gate.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">新品上市准入门控 — 从选品到发布的全量检查清单与Tag驱动的上市就绪评估</h3>
+  <p class="sc-desc">运营面临&quot;新品上市后才发现合规缺失被海关扣押&quot;——5维门控检查将上市前风险完全暴露，防止货到港扣押损失5-15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-OOS-Emergency-Airfreight-Gate.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">OOS-Emergency-Airfreight-Gate — 库存DOS危急+海运延误自动触发紧急空运决策门控</h3>
+  <p class="sc-desc">供应链负责人面临&quot;海运延误叠加断货风险&quot;——DOS&lt;7天+在途延误自动触发空运决策门控将断货期从8天缩短至2天，年化避损60万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Order-Splitting-Merging-Optimizer.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">订单拆合单优化器 — 多仓多渠道场景下拆单合单的成本-时效平衡决策</h3>
+  <p class="sc-desc">多仓运营面临&quot;多包裹发货增加运费和客户差评&quot;——智能拆合单减少10%运费支出，同一客户合并发货减少Split-delivery差评</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PASTA-Offline-Assortment.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">PASTA - 离线悲观选品框架</h3>
+  <p class="sc-desc">选品经理面临线下陈列选品靠感觉——离线组合优化将滞销率降20%，年化省16万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Promo-Inventory-Pulse-Auto-Trigger.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">Promo-Inventory-Pulse-Auto-Trigger — 大促前14天库存不足自动触发紧急补货与广告降速保护</h3>
+  <p class="sc-desc">运营面临&quot;大促前备货不足导致爆单断货&quot;——14天前自动触发紧急补货+广告降速将大促断货率从18%降至5%，年化多增GMV120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Purchase-Sales-Inventory-3D-Tracking.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">进销存三维动态追踪 — 进货/销售/库存联动监控与比率预警体系</h3>
+  <p class="sc-desc">每周4小时手工汇总进销存且无法发现异常——P/S比率CUSUM检测将缺货/积压信号提前3-5天发现，年化防损$10-15万，报告时间从4小时降至10分钟</p>
+  <div class='sc-footer'><span class='sc-roi'>10-15万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Replenishment-Parameter-Calibration.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">补货系统4参数动态校准 — 前置期/安全库存/补货点/最大库存的精准化维护体系</h3>
+  <p class="sc-desc">补货系统6个月前设置的参数从未更新导致前置期漂移10天缺货率从5%升至18%——4参数（前置期/安全库存/ROP/最大库存）+3变量季节指数的动态校准，季度一次维护防损ROI达1800%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Returnformer-Returns-Prediction.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">Returnformer Returns Prediction — 图 Transformer 电商退货预测</h3>
+  <p class="sc-desc">跨境退货成本极高（运费+清关每单 $30-50），不知道哪些订单会退——图 Transformer 支付前输出退货风险分，精准触发主动客服干预，退货率降低 1-2pp、年化节省 20-50 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SC-Resilience-Hypergraph.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">Supply Chain Resilience Hypergraph — 超图神经网络供应链韧性推断</h3>
+  <p class="sc-desc">80% 硅胶配件来自同一东莞工厂但无法量化停产 2 周的影响烈度——超图神经网络识别单点故障节点和级联风险传播路径，提前建立双供应商体系，中断事件损失降低 50-70%</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SPOT-Freight-Consolidation.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">SPOT Freight Consolidation — 时空模式挖掘的货运拼箱优化</h3>
+  <p class="sc-desc">月均 50 票 LCL 散货头程成本 $120-180/CBM，无法与同路货主智能拼箱——时空聚类+频繁模式挖掘识别拼箱组合，头程成本降低 30-50%、年化节省 20-80 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supplier-Capacity-Booking-Engine.html" data-domain="04-供应链" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">供应商产能预订引擎 — 旺季弹性产能锁定与长期产能保障协议管理</h3>
+  <p class="sc-desc">采购面临&quot;旺季前竞争对手抢光工厂产能导致断货&quot;——双期权策略(硬预订+软期权)提前锁定产能，防止旺季断货损失35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>35万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supplier-Development-Roadmap-Tracking.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">供应商发展路线图追踪 — 改进计划执行跟踪与供应商升降级Tag管理</h3>
+  <p class="sc-desc">采购面临&quot;供应商管理只有评分没有培育路径&quot;——阶梯式发展路线图将战略供应商比例从10%提升至25%，年采购降本20-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-30万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Network-Design.html" data-domain="04-供应链" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">跨境供应链网络设计 — P-Median 选址 + MIP 库存分配优化</h3>
+  <p class="sc-desc">供应链规划师面临&quot;海外仓选址靠直觉不知道哪个城市组合总成本最低&quot;——P-Median+MIP选址优化将头程+仓储+关税总成本降低18%，年化节省物流成本$23万</p>
+  <div class='sc-footer'><span class='sc-roi'>2 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Warehouse-Capacity-Efficiency-Planning.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">仓容管理与仓储效率规划 — 仓容测算、仓储效率模拟与精细化5步运营</h3>
+  <p class="sc-desc">FBA旺季爆仓被强制移除或淡季空仓租金白付——仓容测算+双方案模拟将FBA利用率控制在82%，年化避免强制移除损失$5-8万</p>
+  <div class='sc-footer'><span class='sc-roi'>5-8万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Warehouse-Cost-Per-Unit-KPI.html" data-domain="04-供应链" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">04-供应链</div>
+  <h3 class="sc-title">仓储单位成本与费效比KPI — FBA/自营仓单件成本分解与效率提升量化</h3>
+  <p class="sc-desc">财务面临&quot;FBA vs 自营仓决策拍脑袋&quot;——单件全成本对比（含Q4仓储费3.2倍）给出临界点月出货2000件，年化节省仓储成本10-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CAGED-Debiased-Rec.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">因果图聚合权重去偏推荐 - CAGED</h3>
+  <p class="sc-desc">Momcozy 吸奶器爆款 SKU 占全部流量的 60%+，200 余款配件（替换配件、特殊尺码）几乎零曝光</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conjoint-Analysis-Product-Design.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">联合分析产品设计 — 用CBC+层次贝叶斯量化消费者属性偏好</h3>
+  <p class="sc-desc">产品负责人面临&quot;新品属性组合（有机/BPA-free/价格区间）靠感觉定不知道哪个最重要&quot;——联合分析量化消费者属性权重，新品成功率提升28%，年化节省无效研发投入$4.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>80-150 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Explainable-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Explainable Recommendation for Business Trust</h3>
+  <p class="sc-desc">商家运营面临推荐结果说不清——可解释推荐将申诉率5%压到1%，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-roi'>35%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GNN-Ecommerce-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">GNN Ecommerce Recommendation — 图神经网络电商推荐：用户-商品图谱深度学习</h3>
+  <p class="sc-desc">独立站关联推荐只显示同品类热销榜CTR仅2%未利用婴儿推车用户60%会购买安全座椅的配套关系——LightGCN图神经网络消息传递捕捉高阶配套效应，关联推荐CTR从2%提升到5-8%AOV提升15-25%年化增益20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Graph-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Knowledge Graph Enhanced Recommendation — 知识图谱增强推荐</h3>
+  <p class="sc-desc">运营面临&quot;奶粉推荐只推替代品、关联购买率仅8%&quot;——成分-认证知识图谱路径推理将关联购买率提升至18%、欧洲市场转化率提升1.9%，年化GMV增量约200-300万元</p>
+  <div class='sc-footer'><span class='sc-roi'>关联购买率提升 10-15%，推荐可解释性使欧洲/北美高客单</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Collaborative-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">MAS Collaborative Recommendation — 多智能体协同个性化推荐：LLM Agent 异构协作框架</h3>
+  <p class="sc-desc">业务背景：跨境母婴电商选品需要同时考虑：① 当前趋势（TikTok热词）② 安全认证（FDA/CE）③ 价格竞争力 ④ 用户历史偏好</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Social-Proof-Viral-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Social Proof Viral Recommendation — 社交证明病毒式推荐</h3>
+  <p class="sc-desc">运营面临&quot;KOL推荐后24h内流量峰值未被利用、错失转化窗口&quot;——KOL背书+UGC时效融合将当日CVR提升25%、退货率从18%降至11%，年化综合贡献约200-350万元</p>
+  <div class='sc-footer'><span class='sc-roi'>KOL 背书时效利用提升 CVR 20-30%，UGC 时效</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Competitor-New-Product-Detection.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Competitor New Product Detection — 竞品新品预测：提前发现竞品动向的信号挖掘</h3>
+  <p class="sc-desc">竞品上市后才发现已经晚了2-4周——多源信号（专利/关键词竞价/社交媒体）综合预警比竞品上市提前4-8周发出预警，提前准备备货和广告防御策略年化保护GMV 15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Market-Product-Transfer.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Cross-Market Product Transfer（跨市场产品适配性预测）</h3>
+  <p class="sc-desc">一款吸奶器在京东月销 5000+ 台（¥399），需要判断是否引入 Amazon US（$59.99）、Amazon DE（€54.99）、Amazon UK（£49.99）</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Loyalty-Program-ROI-Modeling.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Loyalty Program ROI Modeling — 双重差分评估会员积分体系 LTV 增量价值</h3>
+  <p class="sc-desc">CFO面临&quot;积分会员体系成本越来越高但到底有没有提升LTV不清楚&quot;——DiD净增量建模将积分体系ROI精确量化，避免积分负债超过收益的$15万/年损失</p>
+  <div class='sc-footer'><span class='sc-roi'>35%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Membership-Churn-Early-Warning-Graph.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Membership Churn Early Warning Graph — 图神经网络会员流失预警比行为序列早 15-30 天识别风险</h3>
+  <p class="sc-desc">会员运营面临&quot;RFM流失预警太滞后（用户已45天未购买）、挽留成本高&quot;——动态图神经网络从社群关系衰减提前15-20天识别高风险用户，干预成本从25元降至15元，年化节省约4.8万元</p>
+  <div class='sc-footer'><span class='sc-roi'>4.8 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-New-Market-Entry-Readiness-Gate.html" data-domain="06-增长模型" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">New-Market-Entry-Readiness-Gate — 新市场进入评分超阈值自动生成进入Checklist并分配任务</h3>
+  <p class="sc-desc">CEO面临&quot;新市场进入决策缺乏系统性评估框架&quot;——自动生成市场进入清单并量化就绪度评分将新市场首年盈亏平衡周期缩短4个月</p>
+  <div class='sc-footer'><span class='sc-roi'>30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Opportunity-Scoring.html" data-domain="06-增长模型" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">06-增长模型</div>
+  <h3 class="sc-title">Product Opportunity Scoring（新品机会评分卡）</h3>
+  <p class="sc-desc">产品总监面临机会排序混乱——Opportunity Scoring将误判率28%压到9%，年化省19万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40-80 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MetaIE-Unified-Information-Extraction-Distillation.html" data-domain="07-NLP-VOC" data-diff="⭐⭐⭐">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">MetaIE — 统一信息抽取蒸馏框架</h3>
+  <p class="sc-desc">数据分析师面临&quot;NER/关系抽取/事件抽取需要维护多个专用模型&quot;——MetaIE统一蒸馏框架将6类IE任务合并为一个模型，F1提升17%，部署成本降低80%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Helpfulness-Prediction.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">Review Helpfulness Prediction — 评论有用性预测：识别高说服力评论提升转化</h3>
+  <p class="sc-desc">产品页默认展示最新评论但很多是无信息的&#x27;Great!&#x27;类评论转化率低——评论有用性预测模型识别最有说服力的评论展示在首位，转化率提升10-20%年化GMV增益5-20万元同时快速识别最有影响力的差评</p>
+  <div class='sc-footer'><span class='sc-roi'>¥5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Helpfulness-Ranking-Model.html" data-domain="07-NLP-VOC" data-diff="">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">Skill-Review-Helpfulness-Ranking-Model — 评论有用性排序模型</h3>
+  <p class="sc-desc">品牌运营面临&quot;2000条评论中人工筛选优质评论做A+素材耗时20h且主观随机&quot;——评论有用性自动排序从2000条中精准提取TOP50高参考价值评论，A+内容转化率提升11%，年化增量GMV约79万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30-80 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-Compliance-Signal-Mining.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">VOC Compliance Signal Mining — 评论合规信号挖掘：NLP-VOC×合规决策桥梁</h3>
+  <p class="sc-desc">婴儿推车收到5条「夹扣突然断裂」评论但卖家不知道是否触发CPSC召回门槛——评论合规信号挖掘自动分类安全事故/宣传违规/化学风险并实时预警，提前4-8周发现召回风险避免损失100-500万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥50-200 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VOC-NPS-Retention-Predictor.html" data-domain="07-NLP-VOC" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">07-NLP-VOC</div>
+  <h3 class="sc-title">VOC代理NPS留存预测 — 无需问卷从评论语言预测用户留存率</h3>
+  <p class="sc-desc">增长团队面临&quot;无NPS数据却需预测留存&quot;——评论代理NPS将留存预测提前21天给出，同等干预预算下留存提升效率提升30%</p>
+  <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ARES-RAG-Evaluation.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">ARES — 自动化RAG系统评测框架</h3>
+  <p class="sc-desc">AI团队面临知识库质量缺乏自动化评测——ARES将人工评测成本降低90%，评测周期从2周→2小时，年化节省评测成本25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>65%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Adaptive-RAG-Query-Routing.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Adaptive-RAG — 自适应查询复杂度路由</h3>
+  <p class="sc-desc">运营团队面临知识库查询成本高且延迟不稳定——自适应路由将简单查询成本降低70%，整体API成本-35%，年化节省28万元</p>
+  <div class='sc-footer'><span class='sc-roi'>60%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AgentRouter-KG-Guided.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">AgentRouter — 知识图谱引导的多智能体路由器</h3>
+  <p class="sc-desc">大促高峰期每日 5 万条跨领域工单，正确路由率从 61% → 82%，每天减少约 10,500 条二次转单 - 单条转单处理成本约 5 元，节约运营成本 5.25 万元/天；年化 1900 万元 - 用户 CSAT 评分从 3.8 → 4.3（满分 5），复购意愿提升可观</p>
+  <div class='sc-footer'><span class='sc-roi'>1900 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-RAG-2025-Framework.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-Agentic-RAG-2025-Framework</h3>
+  <p class="sc-desc">运营面临&quot;单次检索答不对多跳问题导致Agent决策频繁出错&quot;——Agentic RAG将检索升级为可迭代推理的Agency机制，多跳QA准确率提升38%，Agent决策失误率降低45%，母婴跨境Agent可用性显著提升</p>
+  <div class='sc-footer'><span class='sc-roi'>445万</span><span class='sc-diff'>⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-SCKG-Risk.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Agentic SCKG Risk Analyzer — 供应链知识图谱智能风险分析框架</h3>
+  <p class="sc-desc">手动 ERP 排查可能要 2-3 周，到时候竞争对手早把备货扫空了</p>
+  <div class='sc-footer'><span class='sc-roi'>45 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Audience-Knowledge-Graph.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill Card: Audience Knowledge Graph（广告受众知识图谱）</h3>
+  <p class="sc-desc">FB/TikTok Lookalike 受众精准度不足，基于购买行为的种子人群太窄、扩展效果差——受众知识图谱通过互补品购买+跨域行为构建 140% 受众扩展，ROAS 从 2.1 提升到 3.4</p>
+  <div class='sc-footer'><span class='sc-roi'>25-35 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AutoPKG-Multimodal-Product-Attribute-KG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">AutoPKG — 多模态产品属性图谱自动构建：文本+图片→GMV提升</h3>
+  <p class="sc-desc">母婴跨境团队面临&quot;商品属性人工填写耗时且不标准导致推荐失准&quot;——多模态多Agent自动构建产品属性图谱，属性填充率从60%→96%，Search GMV+5.32%（Lazada生产A/B实测）</p>
+  <div class='sc-footer'><span class='sc-roi'>1,000万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-BGE-M3-Multilingual-Embedding.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-BGE-M3-Multilingual-Embedding</h3>
+  <p class="sc-desc">数据工程师面临多语言知识库维护四套模型成本高——BGE-M3单套替代四套，月成本¥7200→¥1800，年化节省64.8万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CRAG-Comprehensive-RAG-Benchmark.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">CRAG — 综合RAG评测基准</h3>
+  <p class="sc-desc">数据团队面临知识库质量无法量化——CRAG综合评测将质检周期从2周→2小时，识别高幻觉问题类别准确率93%</p>
+  <div class='sc-footer'><span class='sc-roi'>38-52万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CausalRAG-Causal-Graph-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">CausalRAG — 因果图增强检索：语义相似 + 因果链路双轨 RAG</h3>
+  <p class="sc-desc">研究经理面临知识检索只会相关不会因果——因果检索将方案误判率降35%，年化省10万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CausalRAG-Knowledge-Retrieval.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">CausalRAG - 因果图驱动的检索增强生成</h3>
+  <p class="sc-desc">用户反馈&quot;机器转了两圈突然停下并闪红灯&quot;，传统 FAQ 机器人把所有带&quot;红灯&quot;的内容（充电时亮红灯/故障码等）全部返回，答非所问，最终用户申请退货</p>
+  <div class='sc-footer'><span class='sc-roi'>120-200 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CodeRAG-Repository-Level-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-CodeRAG-Repository-Level-Retrieval</h3>
+  <p class="sc-desc">开发者面临&quot;1200个Skill代码模板无法语义检索只能手动翻找&quot;——CodeRAG(EMNLP2025)将Skill代码复用率从10%提升至65%，每次代码开发节省2-4小时，年化节省开发成本30万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CodeXEmbed-Code-Semantic-Embedding.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-CodeXEmbed-Code-Semantic-Embedding</h3>
+  <p class="sc-desc">技术团队面临&quot;关键词检索漏掉38%的语义相关Skill代码导致重复开发&quot;——CodeXEmbed(NeurIPS2024)代码语义嵌入将检索准确率提升至72%，Agent代码生成准确率+25%</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ColBERTv2-Multi-Vector-Late-Interaction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">ColBERTv2 — 多向量后期交互精细检索</h3>
+  <p class="sc-desc">数据分析师面临&quot;单向量检索在长尾复杂查询上精度不足&quot;——ColBERT token级MaxSim将Recall@10从DPR的72%提升至89%，接近Cross-encoder精度但速度快100x</p>
+  <div class='sc-footer'><span class='sc-roi'>20%</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Context-Kubernetes-KB-Orchestration.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识库声明式编排治理 — Context Kubernetes：右知识×右Agent×右权限×右新鲜度</h3>
+  <p class="sc-desc">无治理的多Agent知识系统在26.5%的查询中返回幽灵内容或发生跨域泄露——Context Kubernetes声明式YAML配置+调谐循环+三层权限模型将此降为0，新鲜度检测延迟仅0.65ms（2026 arXiv:2604.11623）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Corrective-RAG-CRAG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Corrective-RAG — 纠错式检索增强生成</h3>
+  <p class="sc-desc">运营面临知识库过期文档导致合规建议错误——Corrective-RAG自动纠错将过期文档误用率从22%→3%，年化避免合规风险40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>90万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DECRL-Temporal-KG-Evolution-Prediction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">DECRL — 深度进化聚类时序知识图谱表示学习</h3>
+  <p class="sc-desc">分析师面临&quot;只能看当前竞品格局无法预测6个月后的竞争威胁&quot;——DECRL时序进化聚类将竞品格局预警提前2个季度，准确率78%，比人工判断提前14天</p>
+  <div class='sc-footer'><span class='sc-roi'>29%</span><span class='sc-diff'>⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DIAL-KG-Schema-Free-Incremental.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">DIAL-KG无Schema增量知识图谱构建 — 动态Schema归纳+治理裁决+增量演化闭环</h3>
+  <p class="sc-desc">传统KG构建需要2周人工设计Schema且无法应对快速演化的领域知识——DIAL-KG双轨提取+治理裁决+动态Schema归纳完全无需预定义，KG质量和Schema质量双SOTA，支持增量更新无需重建（2026 arXiv:2603.20059）</p>
+  <div class='sc-footer'><span class='sc-roi'>60%</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DeepRAG-Step-by-Step-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">DeepRAG — 逐步推理驱动的原子检索决策</h3>
+  <p class="sc-desc">合规团队面临多步查询推理链错误传播——DeepRAG逐步检索决策将链式错误率从25%→6%，token消耗-30%，年化合规决策价值65万元</p>
+  <div class='sc-footer'><span class='sc-roi'>4万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DeepSeek-R1-RAG-Reasoning.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">DeepSeek-R1 RAG推理增强 — 逐步推理驱动的自主检索决策</h3>
+  <p class="sc-desc">技术团队面临RAG幻觉率高达18%——DeepSeek-R1推理增强将幻觉率降至3%，复杂合规决策准确率+34%，年化避免错误决策损失60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>374万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Demand-Driven-KB-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">需求驱动知识库构建 — Agent失败即信号：用任务失败驱动最小化知识摄入</h3>
+  <p class="sc-desc">传统预先规划知识库耗时3个月且充满无用冗余——DDC让Agent在真实任务中失败，用失败信号驱动最小化摄入，20-30个问题周期后知识库收敛，覆盖所有真正需要的知识（零冗余）（2025 arXiv:2603.14057）</p>
+  <div class='sc-footer'><span class='sc-roi'>58%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Dense-Passage-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Dense Passage Retrieval — 密集段落检索：超越关键词的语义搜索基础设施</h3>
+  <p class="sc-desc">独立站搜索「安静吸奶器」找不到「low noise breast pump」的产品因为BM25只做关键词匹配——DPR密集向量检索捕捉语义相似度，搜索Recall@10提升25-40%长尾查询和多语言搜索大幅改善年化GMV增益15-45万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-45 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">面向电商的稠密检索与语义排序</h3>
+  <p class="sc-desc">运营分析师面临商品语义搜不到——稠密检索将命中率从62%提至86%，年化省8万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DocRE-Document-Level-Relation-Extraction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-DocRE-Document-Level-Relation-Extraction</h3>
+  <p class="sc-desc">合规团队面临&quot;FDA 200页文件跨句关系人工梳理需2天&quot;——文档级关系抽取（GREP/ACL2025）将合规文档处理提速96倍至30分钟，跨句关系覆盖率从40%提升至85%</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Domain-Adaptive-RAG-Ecommerce.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">电商领域自适应RAG — 垂直领域知识注入优化</h3>
+  <p class="sc-desc">数据团队面临通用RAG在电商专有名词处理准确率低——领域自适应RAG将垂直场景准确率+28%，母婴专业决策质量显著提升，年化价值42万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2000-5000万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Entity-Resolution-KG-Dedup.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG 实体消歧与去重（Entity Resolution &amp; Deduplication）</h3>
+  <p class="sc-desc">业务背景：某母婴出海品牌同时运营亚马逊、独立站、天猫国际三个渠道，SKU 数据由不同团队维护，同一款&quot;Spectra S1 双边电动吸奶器&quot;在三个平台分别叫： - Amazon：`Spectra - S1 Plus Electric Breast Pump` - 独立站：`Spectra S1+ 双边吸奶器` - 天猫：`贝瑞克S1Plus吸奶器双边电动`</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FActScore-Claim-Verification-Pipeline.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">FActScore — 原子声明级事实核查流水线</h3>
+  <p class="sc-desc">知识库运营面临&quot;萃取的Skill卡片参数可能存在幻觉污染知识图谱&quot;——FActScore原子声明级核查将入库错误率从未知→可量化，人工审核成本降低95%</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FRAMES-RAG-Factuality-Multihop.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-FRAMES-RAG-Factuality-Multihop</h3>
+  <p class="sc-desc">质量团队面临多跳场景幻觉漏检率高——FRAMES专项评测灵敏度比RAGAS+60%，识别FDA+CE+亚马逊三轨同查薄弱点，年化合规保障40万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FastKGE-Incremental-LoRA-KG-Embedding.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">FastKGE — 增量 LoRA 知识图谱嵌入</h3>
+  <p class="sc-desc">技术负责人面临&quot;每日新增Skill需要重训图谱嵌入导致2小时更新延迟&quot;——FastKGE增量LoRA将知识库更新延迟从2小时降至5分钟，旧知识保留率99%+</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FlashRAG-Efficient-RAG-Toolkit.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">FlashRAG — 高效模块化RAG研究工具包</h3>
+  <p class="sc-desc">工程团队面临RAG技术选型需2周对比实验——FlashRAG将对比周期压缩至1天，检索吞吐量×10，年化技术迭代效率提升价值40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>186万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GNN-Foundations.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">GNN Foundations（图神经网络基础）</h3>
+  <p class="sc-desc">GCN 学习节点嵌入→发现&quot;硅胶法兰&quot;和&quot;乳头霜&quot;在嵌入空间接近（同一用户群购买），但传统协同过滤未能捕获——因为这两个产品没有共同购买者但有相似的购买者画像</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Graph-Attention-Network-Recommendation.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph Attention Network Recommendation — 图注意力网络推荐：动态权重的高精度图推荐</h3>
+  <p class="sc-desc">LightGCN推荐对吸奶器和汽车座椅给予相同权重但实际购买吸奶器后买储奶袋概率是汽车座椅8倍——GAT图注意力机制动态学习邻居权重，推荐精度比LightGCN提升8-15%配件交叉销售客单价提升10-20%</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Graph-Foundation-Model-Recommendation.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph Foundation Model Recommendation — 图基础模型推荐：跨图迁移的零样本推荐</h3>
+  <p class="sc-desc">新开设的独立站没有用户行为数据无法训练推荐系统只能展示热销榜——图基础模型零样本迁移第一天就有个性化推荐，比热销榜CVR提升15-25%解决新卖家推荐冷启动问题年化增益10-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Graph-Knowledge-Distillation-Recommendation.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph Knowledge Distillation Recommendation — 图知识蒸馏推荐：轻量化GNN的高效部署</h3>
+  <p class="sc-desc">当独立站/中小卖家因算力不足无法部署 LightGCN 等大型 GNN 推荐系统时，图知识蒸馏将大模型知识压缩至边缘可部署的轻量模型，保留 90-95% 精度、推理延迟从 100ms 降至 5ms，让小卖家也能用上企业级推荐。</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Graph-Neural-Lookalike-Propagation.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph Neural Lookalike Propagation — 知识图谱关系传播扩展高质量相似受众</h3>
+  <p class="sc-desc">广告投手面临&quot;新品类仅80个种子用户、传统Lookalike质量差&quot;——多关系图传播将种子覆盖从80人扩展到2400候选用户，冷启动CPA降低38%，新品类冷启动节省约6万元</p>
+  <div class='sc-footer'><span class='sc-roi'>6 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Graph-RAG-Knowledge-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Graph RAG Knowledge Retrieval — 知识图谱增强检索：结构化知识驱动精准问答</h3>
+  <p class="sc-desc">向量RAG无法回答「高退货产品的供应商还给哪些产品供货」等多跳推理问题——知识图谱增强检索沿图边多跳遍历发现跨SKU系统性质量问题，避免批量召回损失年化50-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-80 万（以避损为主）</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">GraphRAG - 知识图谱增强检索生成</h3>
+  <p class="sc-desc">知识运营面临多文档关系难串联——图增强检索将找答案时间从30分降到5分，年化省12万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HCCE-Concept-Hierarchy-Embedding.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HCCE — 超球面锥概念层次嵌入</h3>
+  <p class="sc-desc">数据分析师面临&quot;KG无法建模IS-A层次关系导致合规Agent无法通过产品分类找到所有子类合规要求&quot;——HCCE超球面锥表示将层次查询准确率从51%提升至84%，合规覆盖率提升65%</p>
+  <div class='sc-footer'><span class='sc-roi'>84%</span><span class='sc-diff'>⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HELMET-LongContext-RAG-Evaluation.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-HELMET-LongContext-RAG-Evaluation</h3>
+  <p class="sc-desc">技术团队面临128K上下文LLM选型标准缺失——HELMET 20+维度评测识别真正理解边界，选型准确避免上线后翻车，年化决策价值35万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HGCN — 双曲图卷积网络</h3>
+  <p class="sc-desc">母婴电商的产品品类天然是层次树状结构（母婴 &gt; 喂养 &gt; 吸奶器 &gt; [品牌A, B, C]）</p>
+  <div class='sc-footer'><span class='sc-roi'>45%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HGT-Heterogeneous-Graph-Transformer.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HGT — 异构图 Transformer 表示学习</h3>
+  <p class="sc-desc">母婴出海电商覆盖多语言市场（英文站、中文站、日文站）</p>
+  <div class='sc-footer'><span class='sc-roi'>60%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HNSW-ANN-Vector-Index-Engineering.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HNSW — 向量索引工程与 ANN 检索优化</h3>
+  <p class="sc-desc">技术负责人面临&quot;知识库超过1万条后检索延迟线性增长&quot;——HNSW将百万级向量检索从O(n)暴力扫描降至O(log n)，p99延迟&lt;10ms，规模扩展零额外成本</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hierarchical-Product-KG-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">层级商品知识图谱自动构建（图片→KG）</h3>
+  <p class="sc-desc">业务问题:出海卖家上架 1 万件母婴新品到 Amazon US,需逐 SKU 填写品类路径(`Baby &gt; Feeding &gt; Baby Formula &gt; Infant Formula 0-6m`)、净重(g)、包装材质、适用月龄等 10+ 个强制属性</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HippoRAG-Multi-Hop-Reasoning-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HippoRAG — 多跳推理检索与知识图谱路径规划</h3>
+  <p class="sc-desc">运营面临&quot;跨域业务问题（供应链→广告→定价）无法一次诊断&quot;——HippoRAG多跳推理将跨域诊断覆盖率从45%提升至78%，年化减少跨部门沟通成本30万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HippoRAG-v2-Knowledge-Integration.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HippoRAG v2 — 知识整合的记忆增强多跳推理</h3>
+  <p class="sc-desc">知识库团队面临跨文档推理准确率低——HippoRAGv2实时知识整合将多跳推理准确率+15%，知识库更新延迟&lt;500ms，年化决策质量提升35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>280万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HyDE-Hypothetical-Document.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">HyDE - 假设文档嵌入查询扩展</h3>
+  <p class="sc-desc">研究员面临冷启动问题搜不到高质量答案——假设文档生成将首轮召回率提升20%，年化省9万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hybrid-SQL-Vector-RAG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill: Skill-Hybrid-SQL-Vector-RAG | 母婴跨境电商知识图谱</h3>
+  <p class="sc-desc">数据分析师面临&quot;结构化订单数据与语义评论数据割裂无法联合分析&quot;——Hybrid SQL-Vector RAG将SQL精确查询与语义向量检索融合，联合查询覆盖率提升60%，跨模态分析响应时间降低70%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hybrid-Search-BM25-Vector.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">稀疏+稠密混合检索 — BM25 与向量检索融合</h3>
+  <p class="sc-desc">母婴出海电商的搜索场景高度两极化：部分用户输入精确型号（&quot;Spectra S1 Plus&quot;、&quot;B07X4X5GXD&quot;），纯向量检索因 OOV 问题召回率低；另一部分用户输入模糊语义查询（&quot;适合背奶妈妈的静音吸奶器&quot;），纯 BM25 只能匹配字面词汇，无法理解意图</p>
+  <div class='sc-footer'><span class='sc-roi'>35 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Application-Patterns.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG Application Patterns — 知识图谱下游应用：从构建到推荐/搜索/冷启动</h3>
+  <p class="sc-desc">知识图谱构建完成后无法应用——LLM-GNN Co-Teaching 将 KG 应用到新品类目标注（冷启动准确率 93%）和跨平台关联推荐（连带销售率+5-8%），年化 GMV ¥50-110 万</p>
+  <div class='sc-footer'><span class='sc-roi'>20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Augmented-Recommendation-CoLaKG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识图谱增强推荐 - CoLaKG (LLM × KG)</h3>
+  <p class="sc-desc">海外华人妈妈购买奶粉需综合考量品牌(HiPP/Aptamil)、成分(DHA/HMO 益生元)、段位(1段/2段)、认证(EU 有机/Non-GMO),传统 CF 无法解读这些维度</p>
+  <div class='sc-footer'><span class='sc-roi'>100-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Auto-Construction-Agent-Driven.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">AI Agent 驱动的电商知识图谱自动构建</h3>
+  <p class="sc-desc">业务问题： 母婴出海电商管理数千个 SKU，商品信息分散在 Amazon、Shopify、供应商提供的不同格式描述中</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Data-Fusion-Pipeline.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG Data Fusion Pipeline — 多源采集数据驱动的知识图谱自动构建：竞品属性图谱融合</h3>
+  <p class="sc-desc">业务背景：选品团队需要对婴儿奶瓶品类建立竞品知识图谱，覆盖 200+ SKU 的品牌、材质、容量、适用月龄、价格、评分等属性，以及产品间的兼容关系（哪些奶嘴可以与哪些奶瓶配合使用），以往依赖人工录入，每月更新需 3 天</p>
+  <div class='sc-footer'><span class='sc-roi'>4.5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Hallucination-Detection.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG三元组幻觉检测 — 将LLM响应结构化为知识图谱进行事实级一致性验证</h3>
+  <p class="sc-desc">让LLM自己评判LLM的错误准确率极低——将响应分解为KG三元组进行一致性验证比SelfCheckGPT准确率高+16%、F1高+20%，且成本低10倍（2025 arXiv:2512.23547）</p>
+  <div class='sc-footer'><span class='sc-roi'>70%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Incremental-Update.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识图谱增量更新（KG Incremental Update）</h3>
+  <p class="sc-desc">业务背景：亚马逊 Prime Day 期间，价格每 10 分钟可能变化</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Logistics-Intelligence.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识图谱物流智能 — 供应链实体关系图驱动的物流决策</h3>
+  <p class="sc-desc">物流团队面临&quot;跨境发货决策需查4个系统每次45分钟频繁出错&quot;——物流知识图谱3秒返回认证+路线+关税完整决策包，年化减少报关错误损失约30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Powered-User-Profiling.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG-Powered User Profiling — 知识图谱驱动的用户画像：产品知识增强推荐</h3>
+  <p class="sc-desc">用户运营面临画像碎片化——知识图谱画像将标签覆盖率提40%，年化增收15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>18%</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-RAG-Structured-Knowledge-Reasoning.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG-RAG — 知识图谱结构化推理路径增强</h3>
+  <p class="sc-desc">分析师面临供应链多跳推理准确率低——KG-RAG图谱路径推理将多跳QA F1+22%，推理链可视化+可解释，年化决策质量提升38万元</p>
+  <div class='sc-footer'><span class='sc-roi'>90万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Relation-Completion-CBLiP.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Knowledge Graph Relation Completion with CBLiP</h3>
+  <p class="sc-desc">数据治理面临关系缺失导致图谱不完整——关系补全将缺边率从22%降至8%，年化省11万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Supply-Chain-Cost-Attribution.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">KG Supply Chain Cost Attribution — 图神经网络 + 因果推断的供应链成本归因</h3>
+  <p class="sc-desc">跨境母婴品牌供应链成本季度性激增，头程/原材料/仓储三因素难以区分——时序生产图 TPG + PC 算法因果归因将成本驱动识别准确率从 40% 提升至 85%，年化节省错误决策成本 50-150 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>3000-5000 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KGQA-Question-Answering.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Knowledge Graph Question Answering (KGQA)</h3>
+  <p class="sc-desc">客服主管面临图谱问答依赖人工查资料——KGQA将答案响应从10分压到1分，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Base-Version-Control.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill: 知识库版本控制系统</h3>
+  <p class="sc-desc">知识库运营面临&quot;产品规格迭代后旧知识污染Agent答复导致合规风险&quot;——知识库版本控制用Git式分支管理隔离知识变更，知识污染事故归零，合规审计追溯时间从2天缩至15分钟</p>
+  <div class='sc-footer'><span class='sc-roi'>105万</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Conflict-Detection-LLM.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">知识冲突检测 — 参数知识与外部知识的一致性对齐</h3>
+  <p class="sc-desc">合规团队面临新旧版本法规在知识库中冲突——知识冲突检测将矛盾条目识别率95%，法规审查效率提升8倍，年化节省32万元</p>
+  <div class='sc-footer'><span class='sc-roi'>42万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Conflict-Detection-Resolution.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Knowledge Conflict Detection — 知识冲突检测与消解</h3>
+  <p class="sc-desc">知识库运营面临&quot;不同论文对同一参数给出矛盾值导致Agent输出矛盾建议&quot;——三层冲突检测将参数声明冲突检出率达到91%，知识库一致性评分从5.2→8.4分</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Graph-for-Skills-Management.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Knowledge Graph for Skills Management（知识图谱驱动的技能管理）</h3>
+  <p class="sc-desc">HRBP面临技能台账分散难调配——技能图谱将人才匹配周期缩短60%，年化省18万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Generative-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">LLM Generative Product Search — LLM 生成式商品搜索：超越关键词的意图理解</h3>
+  <p class="sc-desc">用户说「上班偷偷泵奶开会不能发声」传统关键词搜索无法处理这种自然语言意图——LLM生成式搜索理解「安静+便携+工作场景」直接生成匹配商品，复杂查询转化率提升20-30%年化增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LayoutLM-Document-Structure-Parsing.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">LayoutLM — 文档版面理解与结构化解析</h3>
+  <p class="sc-desc">知识库运营面临&quot;PDF论文文本提取后图表说明污染正文导致Skill萃取质量差&quot;——LayoutLM联合文本+坐标+视觉将内容污染率从23%降至4%，萃取质量评分提升1.2分</p>
+  <div class='sc-footer'><span class='sc-roi'>23%</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LongRAG-Long-Context-Hybrid.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">LongRAG — 长上下文与RAG混合决策策略</h3>
+  <p class="sc-desc">运营团队面临长文档与知识库检索策略选择困难——LongRAG自动路由将综合成本降低40%，质量保持97%，年化节省API成本32万元</p>
+  <div class='sc-footer'><span class='sc-roi'>128万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Low-Cost-Dependency-KG-Construction.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">低成本依存解析KG构建 — 1/10成本达到LLM 94%质量的无监督知识图谱构建</h3>
+  <p class="sc-desc">LLM构建知识图谱成本高阻止大多数团队落地——依存句法解析提取三元组达到LLM方案94%质量，成本仅1/10，无需GPU无需标注数据（2025 arXiv:2507.03226）</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MTEB-Embedding-Benchmark-Selection.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-MTEB-Embedding-Benchmark-Selection</h3>
+  <p class="sc-desc">AI工程师面临&quot;嵌入模型选型拍脑袋导致查询准确率低15%且API成本超标10倍&quot;——MTEB/MMTEB(ICLR2025)基准评测3天科学选型，避免模型迁移成本50万元，中英双语检索准确率最优</p>
+  <div class='sc-footer'><span class='sc-roi'>避免模型迁移成本约50万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Matryoshka-Representation-Learning.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Matryoshka表示学习 — 嵌套多尺度嵌入压缩</h3>
+  <p class="sc-desc">数据工程师面临百万级商品向量存储成本高——MRL将嵌入维度压缩16倍，存储成本-93.75%，精度损失&lt;2%，年化节省基础设施费用55万元</p>
+  <div class='sc-footer'><span class='sc-roi'>1000万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MedRAG-Domain-Vertical-RAG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">垂直领域RAG — 医疗→电商迁移学习的最佳实践</h3>
+  <p class="sc-desc">产品团队面临婴儿食品成分安全查询不准确——垂直领域RAG将成分安全查询准确率+35%，达到营养师专业水平，年化规避产品风险55万元</p>
+  <div class='sc-footer'><span class='sc-roi'>180万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MinHash-LSH-Knowledge-Dedup.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-MinHash-LSH-Knowledge-Dedup</h3>
+  <p class="sc-desc">数据工程师面临&quot;知识库30%重复文档导致RAG返回冗余且向量存储浪费&quot;——MinHash-LSH近似去重在O(n)时间处理50万文档，RAG精度+23%，向量存储成本节省36%</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Modular-RAG-Architecture.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Modular RAG — 积木式RAG工程化架构</h3>
+  <p class="sc-desc">工程团队面临RAG系统牵一发动全身难以迭代——模块化RAG将单节点迭代周期从2周→2天，年化工程效率提升60%，间接价值50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>48-142万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-KB-Federated-Reasoning.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-Multi-KB-Federated-Reasoning</h3>
+  <p class="sc-desc">大型跨境商家面临&quot;供应链/定价/合规三个独立知识库无法联合推理&quot;——多知识库联邦推理框架跨库协同检索，跨域复杂问题解答准确率提升52%，年化减少跨团队沟通成本40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>220万</span><span class='sc-diff'>⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MultiTurn-RAG-Context-Management.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-MultiTurn-RAG-Context-Management</h3>
+  <p class="sc-desc">客服Agent面临&quot;多轮对话中前文业务上下文丢失导致重复询问用户&quot;——多轮RAG上下文管理引入会话状态追踪，上下文保留率提升75%，客服满意度提升28%，年化节省人工介入成本20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>1,526万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-NER-Universal-v2.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Multilingual Named Entity Recognition (Universal NER v2)</h3>
+  <p class="sc-desc">本地化运营面临多语种实体抽取慢——多语NER将标注工时降50%，年化省7万元</p>
+  <div class='sc-footer'><span class='sc-roi'>25%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">UniECS — 统一多模态电商搜索与商品匹配</h3>
+  <p class="sc-desc">选品分析师看到竞品图但叫不出名字——多模态统一搜索引擎同时理解图文意图，竞品雷达覆盖率提升60%，年化节省调研工时18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>18 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Product-Understanding.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Multimodal Product Understanding — 多模态商品理解：图文统一表示驱动搜索与推荐</h3>
+  <p class="sc-desc">买家上传竞品图片询问有没有类似产品但文本搜索无法处理图片查询——多模态商品理解将图文统一为单一向量支持以图搜货和图文一致性检测，搜索CVR提升5-10%并发现Listing图文不符风险年化GMV增益15-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-50 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-RAG.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Multimodal RAG - 图文混合多模态检索增强生成</h3>
+  <p class="sc-desc">内容审核面临图文视频信息混杂——多模态RAG将审核漏检率降30%，年化省13万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NuggetIndex-Atomic-Knowledge-Management.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">NuggetIndex原子知识单元管理 — 最小事实粒度+时效区间+生命周期状态的可维护RAG</h3>
+  <p class="sc-desc">段落级RAG中一个事实过期整个段落都变得不可信——NuggetIndex将知识分解为原子事实单元并附带时效区间，Nugget Recall提升42%，冲突率降低55%，生成器输入减少64%（2026 arXiv:2604.27306）</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ontology-Schema-Design.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">领域 Ontology 与图谱 Schema 设计</h3>
+  <p class="sc-desc">业务背景：某跨境母婴品牌 KG 建设初期，不同工程师对&quot;吸奶器配件&quot;的关系建模方式各不相同（有人用 `hasPart`，有人用 `compatibleWith`，有人用 `accessoryOf`）</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-OpenRE-LLM-Knowledge-Extraction.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-OpenRE-LLM-Knowledge-Extraction</h3>
+  <p class="sc-desc">运营面临&quot;需要人工标注50万条商品描述的实体关系耗时3个月&quot;——LLM-OREF三阶段开放关系抽取将标注时间压缩至2天，关系类型覆盖从30种扩展至150+种，年化节省标注人力60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PIKE-RAG-Specialized-Knowledge.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-PIKE-RAG-Specialized-Knowledge</h3>
+  <p class="sc-desc">运营团队面临通用RAG对电商术语理解偏差——PIKE专业知识注入将垂直场景准确率+35%，新员工培训系统准确率达95%，年化价值40万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PersonaRAG-User-Persona-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">PersonaRAG — 用户画像驱动的个性化检索增强</h3>
+  <p class="sc-desc">产品团队面临不同角色用户收到同样深度回答——PersonaRAG将用户满意度+28%，CEO/运营师分层精准响应，年化降低无效决策损失35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>42万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PoisonedRAG-Knowledge-Poisoning-Defense.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">PoisonedRAG防御 — 知识库投毒攻击检测与防御</h3>
+  <p class="sc-desc">安全团队面临知识库被竞品植入虚假合规信息——投毒攻击检测将恶意文档识别率达96%，规避合规风险年化保护价值80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>144万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Knowledge-Graph-Query.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Product KG Query — 多 Agent 产品知识图谱查询与 SKU 跨平台映射</h3>
+  <p class="sc-desc">跨境运营面临多平台 SKU 数据孤岛——Q2K 多 Agent 自动匹配将跨平台 SKU 对齐准确率从人工 78% 提升至 92%，运营手工比对时间从 3-4 小时/款降至自动完成，年化节省 ¥15-30 万</p>
+  <div class='sc-footer'><span class='sc-roi'>800 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Property-Graph-Query-Optimization.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Property Graph Query Optimization — 属性图查询工程</h3>
+  <p class="sc-desc">运营面临&quot;知识图谱Skill路径查询卡顿需要8秒用户直接放弃&quot;——属性图索引+APOC优化将3跳查询从8秒降至200ms，用户体验从卡顿变为实时响应</p>
+  <div class='sc-footer'><span class='sc-roi'>85%</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Query-Intent-Classification-Routing.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill: 查询意图分类与动态路由</h3>
+  <p class="sc-desc">智能搜索面临&quot;用户查询意图混杂导致同一问题触发多套RAG逻辑响应不一&quot;——查询意图分类路由精准识别FAQ/分析/探索三类意图并分流，首答准确率提升46%，无效检索次数降低55%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Query2Doc-Query-Expansion.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Query2Doc — LLM驱动的查询扩展</h3>
+  <p class="sc-desc">运营面临知识库关键词稀疏查询召回率低——Query2Doc将召回率从52%→81%，用户找到有效答案比例+35%，年化运营效率提升30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2.4万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Adversarial-Robustness-2025.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-RAG-Adversarial-Robustness-2025</h3>
+  <p class="sc-desc">安全团队面临知识库安全性无法量化——鲁棒性压测框架识别最脆弱场景，针对性加固后攻击成功率-78%，年化保护品牌价值80万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-CoT-Interleaved-Reasoning.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-RAG-CoT-Interleaved-Reasoning</h3>
+  <p class="sc-desc">合规团队面临多步骤决策推理依据不足——RAG-CoT交织推理每步有据可查，多跳准确率+28%，合规决策可审计，年化风险规避45万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Fusion-Multi-Query.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">RAG-Fusion — 多查询并行检索融合</h3>
+  <p class="sc-desc">运营面临单一查询召回覆盖率低遗漏关键信息——RAG-Fusion多查询并行召回率+40%，决策信息完整性显著提升，年化避免信息缺失损失28万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Reranking-CrossEncoder.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">检索后精排 — Cross-Encoder Reranking</h3>
+  <p class="sc-desc">知识产品经理面临搜索结果前后不一致——重排模型将Top3准确率提升16%，年化省9万元</p>
+  <div class='sc-footer'><span class='sc-roi'>28 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-vs-Finetuning-Decision-Framework.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-RAG-vs-Finetuning-Decision-Framework</h3>
+  <p class="sc-desc">AI工程师面临&quot;不知道该用RAG还是微调，两套方案都尝试耗时2个月&quot;——RAG vs微调决策框架从数据动态性/长尾覆盖/推理成本三维量化评估，选型决策时间从2个月压缩至3天，避免错误技术路线</p>
+  <div class='sc-footer'><span class='sc-roi'>50%</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAGAS-RAG-Evaluation-Framework.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">RAGAS — RAG 质量自动化评估框架</h3>
+  <p class="sc-desc">数据分析师面临&quot;Agent报告无法验证是否幻觉&quot;——RAGAS将RAG质量评测从人工抽查改为全自动四维打分，幻觉检测覆盖率达85%，Skill审核效率提升15x</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAGLAB-Research-RAG-Framework.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">RAGLAB — 研究导向的模块化RAG实验框架</h3>
+  <p class="sc-desc">技术团队面临RAG算法对比实验周期长——RAGLAB标准化框架将实验周期2周→2天，算法选型准确，年化工程效率提升25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>投入成本（月均3000元×12=3.6万元）vs 收益（48</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAPTOR-Hierarchical-RAG.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">RAPTOR - 递归抽象树型分层检索</h3>
+  <p class="sc-desc">研究助理面临长文档越搜越散——层级RAG将检索耗时从20分降到4分，年化省10万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RankGPT-Listwise-Reranking.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">RankGPT — LLM 驱动 Listwise 重排序</h3>
+  <p class="sc-desc">运营面临&quot;复杂跨域查询第一阶段检索排序混乱最相关Skill排在第20位&quot;——RankGPT Listwise重排序将Top-5精准率从61%提升至84%，Agent报告引用质量从6.2→8.1分</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SDPM-Semantic-Chunking.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">SDPM语义双阶段分块 — 边界感知的智能分块策略</h3>
+  <p class="sc-desc">数据团队面临合规文档固定分块破坏语义完整性——SDPM将RAG准确率从65%→81%，合规审查错误率-62%，年化规避风险38万元</p>
+  <div class='sc-footer'><span class='sc-roi'>130万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SPLADE-Learned-Sparse-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">SPLADE — 学习式稀疏检索与语义倒排索引</h3>
+  <p class="sc-desc">运营面临&quot;中英混合查询或同义词搜索召回失效&quot;——SPLADE学习式稀疏检索使跨语言场景召回率提升22%，无需向量数据库直接复用Elasticsearch</p>
+  <div class='sc-footer'><span class='sc-roi'>90 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Self-RAG-Reflective-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Self-RAG — 自反思检索生成框架</h3>
+  <p class="sc-desc">知识库团队面临RAG生成幻觉率高达18%——Self-RAG自反思机制将幻觉率降至6%，决策准确率+34%，年化避免错误决策损失60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>72万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Semantic-Chunking-Strategy.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">语义分块策略 — RAG 管道的基础层</h3>
+  <p class="sc-desc">母婴出海电商的 Amazon Listing 商品详情页通常包含多个话题段落：产品特性（Safety Features）、使用说明（How to Use）、注意事项（Warnings）、规格参数（Specifications）</p>
+  <div class='sc-footer'><span class='sc-roi'>18 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SmartVector-Self-Aware-Embeddings.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">SmartVector自感知向量嵌入 — 时间感知+置信度衰减+关系感知的活嵌入框架</h3>
+  <p class="sc-desc">静态嵌入不知道自己什么时候创建的也无法判断是否过期——SmartVector添加时间感知+Ebbinghaus置信度衰减+关系感知，Top-1准确率从31%提升至62%，过期答案率从35%降至13.3%（2026 arXiv:2604.20598）</p>
+  <div class='sc-footer'><span class='sc-roi'>35%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Speculative-RAG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Speculative RAG — 推测性检索加速框架</h3>
+  <p class="sc-desc">工程团队面临大促高并发知识库响应延迟800ms导致体验差——Speculative-RAG将延迟降至320ms(-60%)，大促期间系统不崩溃，年化保护GMV约80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>420万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-StreamingRAG-Realtime-Knowledge.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Streaming-RAG — 实时流式知识库动态更新</h3>
+  <p class="sc-desc">运营团队面临知识库价格信息滞后最长30分钟——流式RAG将知识更新延迟降至&lt;100ms，大促实时定价决策准确，年化GMV保护60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>440万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TG-RAG-Temporal-Knowledge-Graph.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">时序知识图谱RAG — 双层时序图增量更新与时间窗口检索</h3>
+  <p class="sc-desc">静态知识库的过期答案率高达35%，语义相关不等于时间有效——TG-RAG双层时序图在不重建知识库的前提下实现增量时序更新，过期答案率从35%降至13.3%（2025 arXiv:2510.13590）</p>
+  <div class='sc-footer'><span class='sc-roi'>35%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TableRAG-Structured-Data-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-TableRAG-Structured-Data-Retrieval</h3>
+  <p class="sc-desc">运营面临&quot;50万行库存表超Token无法用LLM直接查询&quot;——TableRAG双路检索将大表查询成功率从0%提升至95%，答案准确率+29%，人工筛选30分钟缩至15秒</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TagRAG-Hierarchical-Label-KG.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">TagRAG层级标签知识图谱 — 对象标签链驱动的超高效KG构建与检索</h3>
+  <p class="sc-desc">GraphRAG构建成本极高（LLM全量摘要）导致大多数团队无法负担知识图谱——TagRAG标签链构建速度14.6×、检索1.9×快，平均胜率78.36%，支持实时增量更新（2026 arXiv:2601.05254）</p>
+  <div class='sc-footer'><span class='sc-roi'>14.6×</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VectorDB-Production-Engineering.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐⭐">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Skill-VectorDB-Production-Engineering</h3>
+  <p class="sc-desc">工程团队面临&quot;向量数据库召回质量随数据增长到千万量级后断崖下降&quot;——向量DB生产工程从索引参数/分片策略/ANN算法三层优化，千万级Recall@10从62%提升至88%，查询P99延迟降至80ms以内</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VideoRAG-Video-Knowledge-Retrieval.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">VideoRAG — 视频知识库检索增强生成</h3>
+  <p class="sc-desc">运营团队面临TikTok直播回放内容无法检索——VideoRAG视频知识库使100场回放可精准检索，内容复用率+300%，年化内容价值42万元</p>
+  <div class='sc-footer'><span class='sc-roi'>58万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-VisRAG-Vision-Document-RAG.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">VisRAG — 纯视觉文档页面RAG</h3>
+  <p class="sc-desc">合规团队面临PDF表格OCR错误率8%——VisRAG纯视觉解析将表格提取准确率从92%→100%，FDA/CE合规审查零遗漏，年化规避风险50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>176万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Visual-Product-Search.html" data-domain="08-知识图谱" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">Visual Product Search — 视觉商品搜索：以图搜货与相似款发现</h3>
+  <p class="sc-desc">用户在社交媒体看到竞品同款想找相似但更便宜的款式文字搜索效果差——CLIP视觉搜索让用户上传图片直接找相似商品，搜索转化率提升8-15%同时帮助卖家发现视觉差异化空间年化增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-WRITEBACK-RAG-Trainable-KB.html" data-domain="08-知识图谱" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">WRITEBACK-RAG可训练知识库 — 门控证据蒸馏让知识库从检索模式中持续自我优化</h3>
+  <p class="sc-desc">知识库被当作静态存储，有标注的查询-答案对作为学习信号白白浪费——WRITEBACK-RAG门控证据蒸馏将有用知识写回知识库，跨4种RAG方法和6个基准平均提升+2.14%（2026 arXiv:2603.25737）</p>
+  <div class='sc-footer'><span class='sc-roi'>25%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-iText2KG-Schema-Free-KG-Induction.html" data-domain="08-知识图谱" data-diff="">
+  <div class="sc-domain">08-知识图谱</div>
+  <h3 class="sc-title">iText2KG — 零样本增量知识图谱构建</h3>
+  <p class="sc-desc">知识库运营面临&quot;知识图谱边全靠人工维护双括号链接无法规模化&quot;——iText2KG零样本自动抽取三元组将图谱边数从11643条扩展至25000+，人工构建成本降低95%</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-PnL-Analyst.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agent 驱动的 P&amp;L 归因分析 — SKU 级成本拆解</h3>
+  <p class="sc-desc">财务团队面临&quot;SKU级P&amp;L拆解耗时3天且人工汇总容易出错&quot;——Agent驱动P&amp;L归因分析将SKU级成本拆解时间从3天压缩至30分钟，年化节省财务分析人力成本20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>P&amp;L 分析时间从 2-4 小时降至 5 分钟；及时发现亏损</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-RAG-Active-Retrieval.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agentic RAG主动检索 — 自主规划多轮检索的知识增强Agent</h3>
+  <p class="sc-desc">客服AI团队面临&quot;固定RAG每次检索全库噪声多回答错误率15%且API成本高&quot;——Self-RAG按需精准检索准确率提升至95%同时检索成本降低40%，年化35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Hallucination-Detection-BI.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM幻觉检测 — 商业智能场景的事实一致性验证引擎</h3>
+  <p class="sc-desc">DataAgent运营面临&quot;AI日报数字偶发错误损害工具可信度&quot;——多层事实核查使幻觉检测TPR达82%，避免月均3-5起决策失误，年化预防损失约200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Schema-Inference.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM 自动推断数据结构 — 无 schema 的电商 API 接入</h3>
+  <p class="sc-desc">数据工程师面临&quot;接入新电商API时手动解析无文档schema耗时数天&quot;——LLM自动推断数据结构将新API接入时间从3天缩短至2小时，年化加速业务集成节省工程成本20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>新 API 接入时间从 3 天降至 4 小时，年化节省工程人</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-as-Judge-Evaluator.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM-as-Judge — 用大模型自动评估生成内容质量</h3>
+  <p class="sc-desc">团队面临&quot;AI每天生成50条Listing人工审核不够用&quot;——LLM-as-Judge实现100%自动化质检，合规风险发现率提升50%，年化节省人力+避免下架损失共140万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Table-Understanding.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Multimodal Table Understanding Agent — 表格理解：规格对比/认证矩阵/价格表</h3>
+  <p class="sc-desc">分析师面临表格截图难读——多模态表理解将录入错误率从12%降到3%，年化省8万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-OmniThink-Knowledge-Boundary-Expansion.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Skill-OmniThink-Knowledge-Boundary-Expansion</h3>
+  <p class="sc-desc">分析师面临市场报告知识盲区遗漏——OmniThink自动识别知识缺口并补全，报告深度+300%，年化分析质量提升价值30万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Enhanced-Data-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">RAG-Enhanced Data Analysis（RAG 增强数据分析）</h3>
+  <p class="sc-desc">&quot;为什么德国站吸奶器转化率下降&quot;→ RAG 检索到上月分析&quot;德国站转化率下降是因为欧元贬值导致价格上涨 8%&quot;→本次发现同样模式→自动引用历史结论+实时数据验证</p>
+  <div class='sc-footer'><span class='sc-roi'>投入产出比 1:22.4，远超行业平均水平（1:3-5）</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Structured-Data-Fusion.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">RAG与结构化数据混合检索 — 向量检索与SQL查询融合</h3>
+  <p class="sc-desc">客服运营面临&quot;智能客服单一检索路径、结构化查单与语义问答无法同时满足、首答解决率仅58%&quot;——双路混合检索将首答解决率从58%提升至82%，年化节省人工客服成本15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agent-Memory-Learning.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MemGPT — 长期记忆与虚拟上下文管理</h3>
+  <p class="sc-desc">母婴产品的用户咨询是长期关系（从孕期到孩子 3 岁），Agent 需要记住用户的历史偏好、购买记录、孩子的成长阶段、之前的咨询问题</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AgenticPay-Procurement-Negotiation.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">AgenticPay — LLM 多 Agent 采购谈判：自主完成价格与 MOQ 协商</h3>
+  <p class="sc-desc">业务问题：母婴品牌向供应商采购配方奶粉，供应商初始 MOQ=1000 箱（资金占用约 50 万），品牌方目标 MOQ≤500 箱（降低首单风险）</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Context-Engine-Architecture.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Context Engine三层架构 — engine/agents/registry分离的可复用MAS骨架</h3>
+  <p class="sc-desc">紧耦合MAS中改一个Agent需要2天且担心影响其他Agent——engine/agents/registry三层分离使新增Agent从2天压缩至2小时，单Agent可独立测试无副作用</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Domain-Agnostic-Context-Engine.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">域无关Context Engine — 一套引擎跨域复用的通用MAS架构</h3>
+  <p class="sc-desc">每开拓一个新业务域就要重新开发一套MAS系统耗时2-4周——域无关Context Engine使新增业务域只需更新知识库和YAML配置文件（3人天vs30人天），节省90%开发成本</p>
+  <div class='sc-footer'><span class='sc-roi'>35 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Dual-RAG-Context-Engine.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">双通道RAG上下文引擎 — 指令RAG与事实RAG协同的高保真信息检索架构</h3>
+  <p class="sc-desc">单RAG系统将操作SOP和市场数据混为一谈导致指令遵从率只有71%——双通道RAG（指令RAG+事实RAG）将指令遵从率提升至96%，引用准确率从58%提升至89%</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Flowr-Supply-Chain-MAS.html" data-domain="10-MAS" data-diff="">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Flowr — 零售供应链多 Agent 端到端自动化</h3>
+  <p class="sc-desc">母婴品牌在亚马逊/独立站同时运营，SKU 达 500+，跨境仓（海外仓 + 国内直发）补货涉及 DHL/UPS 运输周期（15-30 天）、海关清关（3-7 天）、Amazon FBA 入仓（1-5 天），任何一环延误都导致断货（Lost Buy Box，单 SKU 日损失 2,000-8,000 元）</p>
+  <div class='sc-footer'><span class='sc-roi'>91 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Helicase-Supply-Chain-KG-MAS.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">Helicase — 不确定性感知供应链知识图谱：多 Agent 自主构建</h3>
+  <p class="sc-desc">业务问题：母婴品牌（奶粉/辅食）需追踪&quot;原料→供应商→工厂→认证机构&quot;多跳关系，人工调研一家供应商需 3-5 天，百家供应商无法覆盖</p>
+  <div class='sc-footer'><span class='sc-roi'>80%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-High-Fidelity-RAG-Defense.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">高保真RAG防御 — 引用链溯源、数据投毒与提示注入三层防御体系</h3>
+  <p class="sc-desc">AI合规助手给出错误的FDA认证流程导致申报失败损失8000美元——NASA级三层防御（输入清洗+数据投毒检测+引用链验证）将合规决策错误率从8%降至0.5%</p>
+  <div class='sc-footer'><span class='sc-roi'>91%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Competitive-Intelligence-Agent.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">多 Agent 竞品情报系统 — 7×24 小时全天候竞品监控与预警</h3>
+  <p class="sc-desc">运营主管面临&quot;竞品价格和Listing变化只能靠人工定期检查发现总是滞后&quot;——四Agent协作7×24竞品监控将竞品变化发现时间从3天压缩至15分钟，年化避损$8万</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万/年</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Compliance-Multi-Market-Orchestrator.html" data-domain="10-MAS" data-diff="⭐⭐⭐">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS-Compliance-Multi-Market-Orchestrator — 多市场合规检查Agent并行编排与跨市场合规矩阵生成</h3>
+  <p class="sc-desc">跨境运营面临美国/欧盟/英国合规串行检查耗时7天延误旺季上架——并行Agent编排最严标准聚合将检查时间压缩至1天，旺季提前6天入仓年化多产出GMV约$54,000</p>
+  <div class='sc-footer'><span class='sc-roi'>7→1</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Customer-Service-Intelligent-Escalation.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS客服智能升级路由 — 首答Agent/人工升级/风控三者协作路由机制</h3>
+  <p class="sc-desc">客服团队面临&quot;AI和人工分工不清处理效率低&quot;——智能路由将AI处理量从30%→70%，年化节省人力成本36万元并降低差评率20%</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Dynamic-KG-Collaboration.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Dynamic KG Collaboration — 多智能体动态知识图谱协同：实时构建、冲突解决、协同进化</h3>
+  <p class="sc-desc">知识运营面临商品知识更新滞后——Dynamic KG Collaboration将上新同步时延72小时压到6小时，年化省16万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Ecommerce-Ops-Automation.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">多 Agent 电商运营自动化 — 补货/广告/客服全天候自动化编排</h3>
+  <p class="sc-desc">运营总监面临&quot;补货/广告调价/Listing更新每天耗费团队大量重复性工作时间&quot;——事件驱动MAS编排将日常运营自动化率提升至73%，年化价值$10.3万</p>
+  <div class='sc-footer'><span class='sc-roi'>70%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Multi-Warehouse-Replenishment-Consensus.html" data-domain="10-MAS" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS多仓库补货Nash协商 — 多仓库Agent协商最优库存调拨方案</h3>
+  <p class="sc-desc">供应链团队面临&quot;多仓库存不平衡调配响应慢&quot;——Nash协商将多仓调拨决策从48-72小时→8-12小时，年化节省断货损失+仓储费15-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Resource-Scheduling.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Resource Scheduling — OS 调度原语驱动的多智能体资源管理</h3>
+  <p class="sc-desc">双 11 大促前 20 个选品 Agent 同时调用 GPT-4o，API 配额耗尽导致任务排队超时——MAS 资源调度层通过 Token 预算感知分配避免配额溢出，大促期间 Agent 吞吐量提升 3.5 倍</p>
+  <div class='sc-footer'><span class='sc-roi'>12 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Testing-Verification.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">MAS Testing &amp; Verification — 多智能体系统测试验证：覆盖制导 Fuzzing + 跨框架可观测性</h3>
+  <p class="sc-desc">业务背景：选品扫描工作流由 5 个 Agent 串行协作（品类趋势 Agent → 竞品分析 Agent → 合规预筛 Agent → 利润计算 Agent → 综合评分 Agent）</p>
+  <div class='sc-footer'><span class='sc-roi'>42 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ParaManager-Parallel-Orchestration.html" data-domain="10-MAS" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">ParaManager — 小模型主编排：Agent-as-Tool 并行子任务分解</h3>
+  <p class="sc-desc">运营专员面临多任务串行拖慢时效——ParaManager将处理时长4小时压到50分钟，年化省18万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SRL-Semantic-Blueprint-MAS.html" data-domain="10-MAS" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">10-MAS</div>
+  <h3 class="sc-title">SRL语义蓝图构建 — 用语义角色标注替代单一Prompt的结构化上下文工程</h3>
+  <p class="sc-desc">MAS中Agent接交错误率高达35%是因为用线性Prompt混合了角色/指令/约束——SRL六槽位语义蓝图将接交错误率从35%降至8%，同时内置槽位保护将提示注入防御成功率提升至98%</p>
+  <div class='sc-footer'><span class='sc-roi'>35%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Carbon-Footprint-Optimizer.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">母婴出海AI碳足迹优化器 — 绿色供应链的能耗与排放量化</h3>
+  <p class="sc-desc">技术团队面临AI系统碳排放无法量化——碳足迹优化器将推理能耗降低35%，年化减碳120吨CO2eq，ESG评级提升至B+</p>
+  <div class='sc-footer'><span class='sc-roi'>19.2万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Transparency-Explanation.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">AI决策透明度与可解释性 — LIME/SHAP合规说明生成</h3>
+  <p class="sc-desc">合规运营面临&quot;推荐和定价算法缺乏可解释性、EU AI Act高风险系统合规审查无法通过&quot;——SHAP解释引擎将算法决策透明度达标，解锁欧盟市场准入资格</p>
+  <div class='sc-footer'><span class='sc-roi'>2 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Cultural-VOC-Alignment.html" data-domain="11-AI人文" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">Cross-Cultural VOC Alignment — 跨文化用户声音对齐：消除翻译偏差的多语言评论分析</h3>
+  <p class="sc-desc">德国市场吸奶器平均4.2星低于美国4.6星于是投入资源改进产品实际是文化误读——德国4.2星校准后等于美国4.7星，跨文化VOC对齐避免基于误读信号的产品改进浪费年化5-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Inclusive-Design-Accessibility-AI.html" data-domain="11-AI人文" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">11-AI人文</div>
+  <h3 class="sc-title">Inclusive Design Accessibility AI — 包容性设计AI（无障碍母婴产品推荐与界面优化）</h3>
+  <p class="sc-desc">设计团队面临&quot;母婴App被视障用户投诉无障碍缺失面临ADA诉讼风险&quot;——WCAG合规扫描识别95%无障碍问题，年化防范法律诉讼风险20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>无障碍合规降低法律诉讼风险（美国ADA诉讼增加），年化防范价</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Active-Learning-Annotation.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Active Learning Annotation — 主动学习标注策略（最小标注成本最大化模型性能）</h3>
+  <p class="sc-desc">数据团队面临&quot;标注预算有限但模型训练数据质量不足&quot;——主动学习以20%标注量达到全量随机标注的模型性能，年化将标注成本从15万元降至3万元节省12万元</p>
+  <div class='sc-footer'><span class='sc-roi'>将标注成本降低 70-80%，以月均标注预算 5 万元计，年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Carbon-Footprint-ML-Model.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">ML模型碳足迹评估 — 可持续AI的算力碳排放量化</h3>
+  <p class="sc-desc">AI团队面临&quot;欧盟CSRD要求披露数字碳排放但无量化工具&quot;——GHG Protocol碳足迹计算器量化AI训练和推理排放，满足ESG合规，年化价值约75万元</p>
+  <div class='sc-footer'><span class='sc-roi'>60万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MoE-Multi-Task-Learning.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">MoE多任务学习 — 专家混合架构的多任务电商建模</h3>
+  <p class="sc-desc">算法团队面临&quot;CTR/CVR/ROAS需维护三个独立模型成本高且相互割裂&quot;——MoE专家共享架构三任务联合训练，平均AUC提升0.005，MLOps成本降低30%，年化综合ROI约18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Model-Evaluation-Metrics.html" data-domain="12-ML基础" data-diff="">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill Card: Model Evaluation Metrics（模型评估体系）</h3>
+  <p class="sc-desc">业务问题： 我们训练了 3 个流失预测模型（XGBoost / LightGBM / Logistic Regression），需要决定用哪个模型上线到 WF-A 智能补货系统，触发对高风险用户的挽留优惠券</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Amazon-A10-Algorithm-Ranking.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Amazon A10 Algorithm Ranking — 亚马逊搜索排名因子建模与 Listing 可见度优化</h3>
+  <p class="sc-desc">Listing 排名从第 18 跌到 25 位但不知道哪里出了问题——PP-GLAM 可解释排名模型揭示 A10 外部流量权重大幅提升，针对性优化可将自然排名提升 8-12 位，广告 ACOS 降低 30-40%</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Amazon-ToS-Compliance-Guardrail.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Amazon ToS Compliance Guardrail（亚马逊合规护栏）</h3>
+  <p class="sc-desc">业务问题：运营用 ChatGPT 生成吸奶器 listing 文案，但 LLM 可能产出违规声明——&quot;clinically proven to increase milk supply&quot;&quot;FDA approved design&quot;&quot;guaranteed results in 7 days&quot;——这些在 Amazon 上都是红线</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CABB-Cross-Category-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Click A Buy B 跨品类归因去偏 - 点击与购买商品不一致的归因修正</h3>
+  <p class="sc-desc">用户点击吸奶器广告，进入品牌店铺后转而购买了储奶袋和奶瓶</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HGNN-Cross-Device-Matching.html" data-domain="13-广告分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">层次图神经网络跨设备用户匹配 - 无ID的跨端行为拼接</h3>
+  <p class="sc-desc">业务问题：母婴 DTC 站在 Instagram 投广告，用户在手机看到广告、到电脑搜索品牌词下单</p>
+  <div class='sc-footer'><span class='sc-roi'>⭐⭐⭐⭐☆</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Identity-Fragmentation-Debiasing.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Identity Fragmentation Debiasing（身份碎片化纠偏）</h3>
+  <p class="sc-desc">业务问题：女装独立站通过 Instagram（手机端）大量投放信息流广告</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-AI-Copywriting.html" data-domain="13-广告分析" data-diff="">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Amazon Listing 文案 AI 生成（标题+Bullet+描述全套）</h3>
+  <p class="sc-desc">某母婴品牌每月新品 8-12 个 SKU，人工撰写一套完整 Listing（标题+5条Bullet+描述+后台ST）需要 2-3 小时/SKU，月均耗时 20-30 小时</p>
+  <div class='sc-footer'><span class='sc-roi'>16-40 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Long-Tail-Search-Embedding-SEO.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Long Tail Search Embedding SEO — 双塔嵌入模型驱动的电商长尾搜索词排名优化</h3>
+  <p class="sc-desc">母婴卖家把90%SEO精力投在「breast pump」等头部词上却发现竞争激烈ROI低——双塔嵌入模型挖掘高转化低竞争长尾词（如「quiet double electric breast pump for office」），通过自然搜索流量提升20-40%，年化GMV增益30-100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-Listing-Localization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Multilingual Listing Localization — LLM 驱动的多语言 Listing 本地化与文化适配</h3>
+  <p class="sc-desc">M5 吸奶器打算进 Amazon.de，Google 翻译的 Listing 德国搜索流量几乎为零——神经机器翻译 + 母语者语料微调将德语 Listing 自然搜索排名从首页底部提升至 Top 5，转化率提升 30-60%</p>
+  <div class='sc-footer'><span class='sc-roi'>30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RELATE-RL-Ad-Text-Generation.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">RELATE强化学习广告文案生成 — RL端到端优化CTCVR的LLM广告创意框架</h3>
+  <p class="sc-desc">AI生成的&quot;流畅专业&quot;广告文案转化率提升不明显因为优化了语言质量而非真实转化——RELATE用RL直接把CTCVR作为奖励信号端到端训练LLM，在线部署CTCVR提升+9.19%（2026 arXiv:2602.11780）</p>
+  <div class='sc-footer'><span class='sc-roi'>4.6万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SEO-Organic-Ranking-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">SEO Organic Ranking Optimization — 电商 SEO 自然排名元数据优化</h3>
+  <p class="sc-desc">吸奶器主词排名第 8，每天自然点击 20 次，Top 3 竞品标题里有&quot;hospital grade/quiet/rechargeable&quot;等词我们完全缺失——多智能体元数据差距分析 + 关键词优化，排名 Top 3 后自然流量增加 3-5 倍</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Creator-ROI-Attribution.html" data-domain="13-广告分析" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">TikTok达人直播ROI归因 — PSM分离主播效应与流量效应</h3>
+  <p class="sc-desc">品牌负责人面临&quot;达人带货的ROI里不知道多少是主播影响力多少是投流效果&quot;——倾向得分匹配将主播净贡献与流量效果精确拆分，年化广告预算优化$7.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>2.1x</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Zero-Click-Search-Optimization.html" data-domain="13-广告分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">13-广告分析</div>
+  <h3 class="sc-title">Zero-Click Search Optimization — 零点击搜索时代的流量保全与特色摘要抢占</h3>
+  <p class="sc-desc">60% 的搜索零点击结束但品牌曝光为零——FAQ Schema 标记+权威内容结构将 AI Overview 引用概率提升 3.2×，把零点击流量损失转化为品牌认知收益</p>
+  <div class='sc-footer'><span class='sc-roi'>20-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Baby-Age-Clock-RFM-Enhancement.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Baby Age Clock RFM Enhancement — 从购买品类序列推断婴儿月龄，扩展 RFM 的第四时间维度</h3>
+  <p class="sc-desc">用户分析师面临&quot;RFM将辅食准备期妈妈错误标记为流失用户、关键节点前触达完全缺失&quot;——从购买品类序列推断婴儿月龄扩展RFM第四维度，纠正15-20%用户的错误降级，年化GMV增量约4.5万美元</p>
+  <div class='sc-footer'><span class='sc-roi'>4.5 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PersonaBot-RAG-Profiling.html" data-domain="14-用户分析" data-diff="">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">PersonaBot RAG画像生成 - LLM+RAG驱动的客户画像落地工具</h3>
+  <p class="sc-desc">Momcozy 在 Amazon US 的 S9/S12 系列累积数万条评论，但产品团队只能依赖人工抽查了解用户诉求，无法识别&quot;职场背奶妈妈&quot;与&quot;新手妈妈&quot;在痛点上的差异，导致广告文案和详情页对所有人说同样的话，转化率损耗严重 - 数据要求： - Amazon Review 数据（user_id、product_id、评论文本、评分、时间戳），CSV 格式 - 数量：每 SKU ≥ 50</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Purchase-Sequence-Prediction.html" data-domain="14-用户分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">Purchase Sequence Prediction — 买家下一购买行为序列预测</h3>
+  <p class="sc-desc">买了吸奶器的用户下个月最可能买配件还是辅食机，品牌完全不知道只能广撒网，复购率只有 18%——时间感知 Transformer 序列建模预测下一购买品类和时机，精准触达复购率提升到 30%+，LTV 增加 40-60%</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SCRABLE-Review-Response-Generation.html" data-domain="14-用户分析" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">14-用户分析</div>
+  <h3 class="sc-title">SCRABLE Review Response Generation — RAG+LLM 自优化差评回复生成</h3>
+  <p class="sc-desc">每天 20-30 条差评需在 48h 内回复否则影响卖家评分，人工团队时差覆盖困难——RAG 检索产品知识库 + LLM 自优化迭代生成专业回复，回复时效 18h→2h、回复率 60%→95%+，ROUGE-L 提升 8.5%</p>
+  <div class='sc-footer'><span class='sc-roi'>20-100 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DARA-Agentic-MMM.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">DARA Agentic MMM — LLM Agent 驱动的营销组合建模：双阶段自动调参与智能归因</h3>
+  <p class="sc-desc">某母婴辅食品牌在美国市场同时投放 Amazon Ads、Meta（FB+IG）、TikTok，月均广告预算 $15 万美元，但各渠道的 adstock 效应差异显著（TikTok 内容影响力可持续 2-4 周，Amazon 关键词效果衰减快）</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TikTok-Live-Real-Time-CVR-Prediction.html" data-domain="15-营销投放分析" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">15-营销投放分析</div>
+  <h3 class="sc-title">TikTok直播间实时CVR预测 — 基于弹幕情绪与互动信号的秒级转化率预测</h3>
+  <p class="sc-desc">TikTok直播运营面临&quot;不知道直播间转化率什么时候会下跌无法提前干预&quot;——秒级CVR预测将转化率下跌预警时间提前90秒，福利话术触发后CVR回升23%，年化$8.6万</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agent-Knowledge-Distillation-SOP.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">企业 SOP 蒸馏进 Agent — 让 AI 掌握老运营经验的知识蒸馏框架</h3>
+  <p class="sc-desc">运营总监面临&quot;老运营的经验在人员流动时大量流失AI助手不具备领域专业知识&quot;——SOP蒸馏流水线将老运营经验固化进Agent，新人上手时间从3个月压缩至2周，年化价值$5.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>58%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agent-Stage-Evaluation.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">EComStage — 电商 Agent 三阶段(Perception/Planning/Action)双向 Benchmark</h3>
+  <p class="sc-desc">产品经理面临Agent阶段效果黑盒——Stage Evaluation将回归缺陷发现提前2天，年化省10万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AgentTrace-Causal-RCA.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">AgentTrace — 因果图根因分析：0.12s 定位多 Agent 故障</h3>
+  <p class="sc-desc">业务问题：WF-A 智能补货工作流由 3 个 Agent 串联（需求预测 Agent → 采购决策 Agent → PO 下单 Agent）</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-Memory-Management.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">AgeMem — 统一 LTM+STM 管理的 Agentic Memory</h3>
+  <p class="sc-desc">母婴用户从孕期到 3 岁的完整生命周期,跨越 4 年、可能数百次交互</p>
+  <div class='sc-footer'><span class='sc-roi'>STM Filter + Summary 让对话 context 维持紧凑</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AutoSkill-Lifelong-Learning.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">AutoSkill — 经验驱动终身学习：Skill 自进化版本管理</h3>
+  <p class="sc-desc">培训负责人面临技能卡片更新滞后——AutoSkill将知识刷新周期30天压到7天，年化省15万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Business-Problem-to-Skill-Retrieval.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">业务问题→Skill 检索 — Sentence-BERT + RRF 多路召回引擎</h3>
+  <p class="sc-desc">业务用户面临&quot;726个Skill不知道哪个解决我的问题只能逐页翻&quot;——Sentence-BERT向量检索将业务问题到匹配Skill的发现时间从30分钟压缩至3秒</p>
+  <div class='sc-footer'><span class='sc-roi'>30 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CASCADE-Deployment-Time-Learning.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">CASCADE — 案例推理部署时学习：Contextual Bandit 无参数自适应</h3>
+  <p class="sc-desc">发布经理面临上线后策略失配——CASCADE将部署失败率8%降到2%，年化省19万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20.9%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cognitive-Architecture-Agent-Memory.html" data-domain="16-智能体工程" data-diff="">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">Skill: 认知架构智能体记忆系统</h3>
+  <p class="sc-desc">运营 Agent 因上下文窗口限制在大促期间丢失跨系统决策链——引入认知架构多级记忆管理（工作记忆+情景记忆+语义记忆），Agent 跨轮次决策一致性提升至 92%，大促期合规+定价联合决策速度提升12倍。</p>
+  <div class='sc-footer'><span class='sc-roi'>年省人工+系统维护¥480万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Combo-Inventory-Crisis-Response.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">库存危机响应 Combo Pattern — 断货/积压异常触发的 5 步自动响应链路</h3>
+  <p class="sc-desc">供应链总监面临&quot;断货或积压发生后应急响应需要多个系统多个人协调处理效率极低&quot;——5步自动响应链路将库存危机响应时间从3天人工协调压缩至4小时自动完成，年化避损$12万</p>
+  <div class='sc-footer'><span class='sc-roi'>15-50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Combo-New-Product-Launch-Playbook.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">新品上市全链路 Combo Pattern — 从蓝海选品到首月排名突破的 7 步编排</h3>
+  <p class="sc-desc">新品负责人面临&quot;新品上市要协调SEO/合规/图文/广告多个团队流程混乱且各自为战&quot;——7步Skill执行链路将新品从开发到首页排名的时间从3个月压缩至6周，首月GMV提升$2.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KB-RBAC-Access-Control.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">Skill-KB-RBAC-Access-Control</h3>
+  <p class="sc-desc">企业知识库面临&quot;运营专员意外访问供应商成本数据导致竞争泄密风险&quot;——KB-RBAC细粒度Pre-filter权限控制将越权访问事故降低90%，满足GDPR合规要求，风险价值保护500万元/次</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KV-Cache-Optimization-Agent.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">KV-Cache优化 — Agent推理内存效率的系统级提升</h3>
+  <p class="sc-desc">工程团队面临&quot;21个Agent共享相同System Prompt但每次都重复计算浪费大量资源&quot;——PagedAttention Prefix Sharing后第2次起速度提升3-5倍，年化节省GPU成本约45万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30-45万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLMLingua-Context-Compression.html" data-domain="16-智能体工程" data-diff="">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">LLMLingua-2 — 大语言模型上下文压缩</h3>
+  <p class="sc-desc">工程团队面临大促期间Agent调用成本激增——LLMLingua压缩率80%，大促API成本从¥5万/天→¥1万/天，年化节省48万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Long-Term-Preference-Memory.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">Shopping Companion — 记忆增强的长期偏好购物 Agent</h3>
+  <p class="sc-desc">母婴用户的生命周期天然就是&quot;长周期&quot;:怀孕 9 个月 + 0-3 岁宝宝 = 接近 4 年的购物窗口</p>
+  <div class='sc-footer'><span class='sc-roi'>59.5%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MCP-A2A-Protocol-Stack.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">MCP + A2A 双协议栈 — Orchestrated Multi-Agent 企业架构</h3>
+  <p class="sc-desc">平台架构师面临Agent对接协议碎片化——MCP A2A Stack将接入周期10天压到2天，年化省22万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MemoryOS-Agent-Memory-Management.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">MemoryOS — OS启发的Agent分级记忆管理</h3>
+  <p class="sc-desc">Agent工程师面临长期运行记忆膨胀崩溃——MemoryOS三级分级存储使Agent稳定运行12+月，记忆成本恒定，年化保障运营连续性价值50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>120万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PromptGuard-Injection-Defense.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">PromptGuard — Agent Prompt注入攻击防御</h3>
+  <p class="sc-desc">安全团队面临竞品在评论中植入恶意prompt劫持Agent——PromptGuard将注入攻击拦截率96%，保护知识库Agent安全，年化保护品牌价值100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>690万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Production-Observability.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">Skill-RAG-Production-Observability</h3>
+  <p class="sc-desc">618/双11大促期间知识库检索延迟突破300ms且幻觉率上升导致投诉率飙升15%——引入 RAG 生产可观测性框架（延迟/幻觉/SLA 全链路监控），大促保障期服务 SLA 达标率 99.5%，投诉率降回基线，年化避免客服成本超标 300%。</p>
+  <div class='sc-footer'><span class='sc-roi'>1180万</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SC-Agent-MCP-ERP-Integration.html" data-domain="16-智能体工程" data-diff="">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">供应链智能体MCP多ERP集成 — Model Context Protocol驱动的多系统双向协调模式</h3>
+  <p class="sc-desc">SAP/Oracle/WMS多套ERP系统碎片化集成导致Agent只能分析不能执行——MCP统一协议将采购自动化率30%→80%，采购周期2天→5分钟</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SCPA-Autonomous-SC-Planning-Agent.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">自主供应链规划智能体SCPA — 自然语言→结构化规划报告的JD.com完整框架</h3>
+  <p class="sc-desc">日常供应链晨报人工准备30分钟且双十一备货规划需3天——JD.com SCPA自然语言→结构化规划报告，晨报2分钟/备货规划1小时，运营人效提升2-3倍</p>
+  <div class='sc-footer'><span class='sc-roi'>87%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Semantic-Cache-RAG-Acceleration.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">Skill: Skill-Semantic-Cache-RAG-RAG-Acceleration</h3>
+  <p class="sc-desc">运营每天重复查询相同5-10个核心SKU每次800ms推理耗时——引入语义缓存加速（相似查询复用），重复查询响应时间从 800ms→50ms（降低 94%），LLM API 调用成本减少 40%。</p>
+  <div class='sc-footer'><span class='sc-roi'>105万</span><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Skill-Dependency-Path-Planner.html" data-domain="16-智能体工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">Skill 依赖路径规划器 — BFS/Dijkstra 学习路径导航</h3>
+  <p class="sc-desc">学习用户面临&quot;想掌握某个高级Skill不知道要先学哪些基础&quot;——BFS依赖路径规划将最优学习路径生成时间从人工梳理1天压缩至毫秒级自动输出</p>
+  <div class='sc-footer'><span class='sc-roi'>2 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Skill-Lifecycle-Design.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">SoK Agentic Skills — Agent Skill 全生命周期与方法论底座</h3>
+  <p class="sc-desc">Agent Skill 库随业务扩张持续累积，旧 Skill 过时但无机制识别和淘汰，造成 Agent 调用低效 Skill 失败率上升——Skill 生命周期 4 元组（能力/触发/效果/版本）让 Skill 可被自动评估和演化，无效 Skill 下线率提升 60%</p>
+  <div class='sc-footer'><span class='sc-roi'>60%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supplier-Negotiation-LLM-Agent.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">LLM驱动供应商谈判智能体 — 结构化采购谈判自动化与议价策略优化</h3>
+  <p class="sc-desc">采购谈判凭经验价格几乎不降——BATNA分析+锚定策略将采购成本降低5-9%，年采购额¥500万的卖家年化节省¥25-40万</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tool-Description-Audit.html" data-domain="16-智能体工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">16-智能体工程</div>
+  <h3 class="sc-title">MCP Tool 描述质量审核 — 六维 Smell 扫描与动态路由</h3>
+  <p class="sc-desc">MCP Tool 描述模糊导致 Agent 频繁调用错误工具，任务失败率高达 30%——系统化 Tool 描述审核（参数/边界/示例三要素）将 Agent 工具调用成功率从 70% 提升到 95%，节省无效 token 消耗</p>
+  <div class='sc-footer'><span class='sc-roi'>15.12%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Contextual-Dynamic-Pricing-Optimal.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">Contextual Dynamic Pricing — 最优上下文定价：O(√dT) Regret + LDP 隐私保护</h3>
+  <p class="sc-desc">业务背景：不同用户群（海外华人/本地消费者/新生儿家庭）对同款婴幼儿奶粉的购买意愿差异显著</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-EMSR-Bid-Price-Inventory-Control.html" data-domain="17-价格优化" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">17-价格优化</div>
+  <h3 class="sc-title">EMSR-b Bid-Price Inventory Control — 酒店边际座位收益模型迁移到FBA库存动态定价</h3>
+  <p class="sc-desc">定价负责人面临&quot;库存高峰期没有提价、淡季没有及时清仓错过收益窗口&quot;——酒店EMSR-b边际收益模型将SKU定价效率提升31%，年化毛利增量$4.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>16-30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-3D-Bin-Packing-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">3D Bin Packing Optimization — 3D 装箱优化：集装箱/货架空间利用率最大化</h3>
+  <p class="sc-desc">跨境卖家海运集装箱人工装载率只有65-70%每次多花一个柜子运费18000元——3D装箱优化算法智能排列商品箱子将利用率提升到85%，全年海运4-6批年化节省集装箱费用10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Carrier-Selection-ML.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">承运商智能选择 — ML驱动的跨境配送商优化决策</h3>
+  <p class="sc-desc">物流团队面临&quot;惯性选FedEx但UPS在部分航线便宜15%且DHL罢工无法快速切换&quot;——ML承运商智能选择年化节省物流成本19万+降低客诉节省10万约29万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Logistics-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Cross-Border Logistics Routing（跨境物流路径优化）</h3>
+  <p class="sc-desc">旺季（Q4）缺货成本 $5000/天→空运；淡季持有成本低→海运</p>
+  <div class='sc-footer'><span class='sc-roi'>45 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Customs-Clearance-Risk-Scoring.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Customs Clearance Risk Scoring — 跨境清关多维风险预警</h3>
+  <p class="sc-desc">清关合规团队面临&quot;婴配粉/CE产品查验扣押率25%、年均8-12次被扣损失20-80万元&quot;——多维风险评分模型AUC=0.81将高风险批次召回率提升至85%，年化减损20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Drone-UAV-Last-Mile-Delivery.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">无人机末端配送调度 — UAV最后一公里的路径规划</h3>
+  <p class="sc-desc">跨境运营面临&quot;郊区最后一公里配送成本高达12元/件且急需品时效慢&quot;——无人机调度规划降低配送成本至3元/件，30分钟配送留存率+15%，规模化后年化ROI约125万元</p>
+  <div class='sc-footer'><span class='sc-roi'>45万元</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Green-Logistics-Carbon-Optimization.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">碳最优物流路径规划 — ESG合规与成本的多目标优化</h3>
+  <p class="sc-desc">跨境运营面临&quot;欧盟CBAM碳合规压力和ESG采购要求无量化工具&quot;——多目标碳最优路径规划降低碳排放40%，碳税成本节省+满足ESG要求，年化ROI约245万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Last-Mile-Delivery-Prediction.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Last-Mile Delivery Prediction（最后一公里配送时效预测）</h3>
+  <p class="sc-desc">跨境母婴订单选择快递时仅凭经验判断，东海岸送 FedEx、西海岸送 USPS——最后一公里时效预测模型基于历史配送数据精准选路，每单节省 $1.2，年化 3000 单 = 节省 36 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>3.08 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Anomaly-Fraud-Signal.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Anomaly Fraud Signal — 物流轨迹异常作为欺诈信号特征工程</h3>
+  <p class="sc-desc">风控团队面临&quot;竞品刷单物流轨迹与真实订单难以区分&quot;——15类物流特征欺诈评分将刷单识别召回率从52%提升至87%，年化通过举报恢复BSR保护价值30-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>成功识别并举报竞品刷单后，BSR 恢复带来年化增收 30-8</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Carbon-Scope3-Tracker.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">物流碳排放Scope3追踪 — 全链路碳足迹核算引擎</h3>
+  <p class="sc-desc">ESG团队面临Scope3碳排放核算难——逐单CO2eq核算将ESG报告准确率提升至99%，Amazon CPF认证通过率100%</p>
+  <div class='sc-footer'><span class='sc-roi'>150-200万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Cost-PL-Attribution.html" data-domain="18-物流履约" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Cost PL Attribution — 物流成本 P&amp;L 归因：每单头程+FBA+退货的利润拆解</h3>
+  <p class="sc-desc">母婴卖家月度账面毛利22%但实际某款婴儿枕头退货率18%、真实净利润为负——物流成本五层ABC拆解（L1货值到L5退货）到SKU粒度，发现隐性亏损SKU并停止无效广告，年化节省3-8万美元并优化退货成本</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-80 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Fraud-Detection.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Logistics Fraud Detection — 物流链路欺诈检测：虚假收货、刷单物流与地址篡改的识别与拦截</h3>
+  <p class="sc-desc">&quot;Item Not Received&quot;（INR）欺诈是跨境母婴电商最常见的纠纷类型，占纠纷总量约 35%</p>
+  <div class='sc-footer'><span class='sc-roi'>月均 -$3,200</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Smart-Packaging-Optimizer.html" data-domain="18-物流履约" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">智能包装优化器 — 包材选择与填充率最大化</h3>
+  <p class="sc-desc">物流团队面临包装成本过高且破损率8%——智能包装优化将材料成本降低22%、破损率降至2.1%，年化节省29万元</p>
+  <div class='sc-footer'><span class='sc-roi'>2545万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Zone-GNN-Last-Mile-Routing.html" data-domain="18-物流履约" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">18-物流履约</div>
+  <h3 class="sc-title">Zone-GNN — 区域化最后一公里路径优化：GNN + 指针网络</h3>
+  <p class="sc-desc">跨境卖家自营海外仓配送路线靠人工排线效率低下——区域化GNN+指针网络学习历史驾驶偏好，日均里程减少10-14%，2辆车年化节省8-18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</h3>
+  <p class="sc-desc">运营每天需手动检查35个SKU×8个指标共280个时序数据点是否异常——时序基础模型零样本异常检测1小时内自动发现全域异常按优先级排队处理，提前发现缺货/竞品攻击/点击欺诈年化挽回20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Payment-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">Cross-Border Payment Fraud Detection — 跨境支付欺诈检测：多源信号图谱风险建模</h3>
+  <p class="sc-desc">独立站支付欺诈率3-8%每月因拒付损失3000美元以上但传统规则只能拦截60-70%——图神经网络多跳关联分析发现盗刷信用卡团伙，检测率提升至85-90%年化避免欺诈损失25-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥25-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">DS-DGA-GCN — 动态图假评论群组检测：冷启动新品防刷评</h3>
+  <p class="sc-desc">业务问题：新款奶瓶（ASIN B0XXXX）上架后 6 小时内突现 38 条 5 星评论，评论者账号注册时间集中在近 7 天、互相之间都购买过同一批产品</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DS-DGA-GCN-Fake-Review-Group-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">DS-DGA-GCN假评论群体检测 — 多样性与自相似性感知的动态图注意力GCN</h3>
+  <p class="sc-desc">竞争对手有组织的恶意差评攻击让新品评分在7天内从4.8崩至3.6——DS-DGA-GCN通过多样性与自相似性感知的动态图注意力识别假评论群体，Amazon数据集准确率89.8%（2026 arXiv:2603.08332）</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GNN-Fraud-Detection.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">图神经网络欺诈检测 — 关系图结构感知的电商欺诈识别</h3>
+  <p class="sc-desc">风控团队面临&quot;欺诈团伙通过设备/地址/IP共享组织刷单但传统规则只能发现15%&quot;——图神经网络传播使团伙召回率从15%提升至72%，年化减少欺诈损失约80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-IP-Trademark-Brand-Monitoring.html" data-domain="19-风控反欺诈" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">IP Trademark Brand Monitoring — 知识产权主动监控：商标侵权自动检测与预警</h3>
+  <p class="sc-desc">竞品上架与我品牌名95%相似的仿冒品抢走流量但人工发现需要数周——多模态IP监控24小时内检测品牌名/Logo/图片侵权并生成证据包，快速举报保护品牌GMV年化避损20-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-80 万（以品牌保护为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-PromoGuardian-Promotion-Fraud-GNN.html" data-domain="19-风控反欺诈" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">19-风控反欺诈</div>
+  <h3 class="sc-title">PromoGuardian — 促销欺诈多关系图神经网络检测</h3>
+  <p class="sc-desc">促销运营负责人面临大促期优惠券被批量套利日损数万元——多关系图神经网络同时捕获设备/地址/时序三维欺诈信号，促销套利损失减少60-70%，年化节省100-500万元</p>
+  <div class='sc-footer'><span class='sc-roi'>$144,000-$672,000</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-A-Plus-Content-Template-Engine.html" data-domain="20-AI视频生成" data-diff="">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">A+Content模板引擎 — VOC驱动的A+内容自动排版生成</h3>
+  <p class="sc-desc">品牌运营面临&quot;A+Content制作外包贵且来回修改周期长&quot;——RAG+模板引擎将A+内容从创意到成稿压缩至2小时，CTR提升12%，年化节省制作费$2.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>15%</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Product-Video-Script-Generator.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Skill-AI-Product-Video-Script-Generator — AI 母婴产品视频脚本自动生成</h3>
+  <p class="sc-desc">内容创作面临&quot;母婴产品视频脚本耗时耗力&quot;——VOC痛点驱动自动生成将视频生产效率提升5倍，月均多产出20条内容</p>
+  <div class='sc-footer'><span class='sc-roi'>2万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Video-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Brand Video Generation — AI品牌视频生成：从文本/图像到高保真营销视频的全链路技术</h3>
+  <p class="sc-desc">品牌经理面临视频产能跟不上投放——品牌视频生成将产出周期从5天缩到6小时，年化省18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>4.5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Market-Content-Localization.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">文化感知内容本地化 — 跨市场文化风险识别与自动替换</h3>
+  <p class="sc-desc">出海运营面临&quot;进入新市场内容文化风险词不知道有哪些导致差评&quot;——文化知识图谱LLM风险检测将上架前文化误区发现率提升至98%，避免封号损失</p>
+  <div class='sc-footer'><span class='sc-roi'>15%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Diffusion-Model-Product-Image.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Diffusion Model Product Image Generation — 扩散模型产品图生成：AI 主图替代专业摄影</h3>
+  <p class="sc-desc">新款吸奶器需要12张产品图专业摄影报价2400美元等7天——Stable Diffusion ControlNet基于一张真实产品照片2小时生成50张候选图，成本降低90%大促前快速迭代年化节省20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-Listing-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">LLM多语言Listing批量生成 — 1小时完成5语言新品入驻</h3>
+  <p class="sc-desc">跨境运营面临&quot;新品进入德国日本市场人工翻译需2周且成本高&quot;——LLM Few-shot多语言生成将5语言Listing制作从14天压缩至1小时，单SKU节省$1,200</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multilingual-Live-Virtual-Anchor-Clone.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">多语言直播虚拟主播实时克隆 — 跨语言直播带货数字人生成与实时驱动</h3>
+  <p class="sc-desc">美国TikTok Shop黄金时段（本地晚7-10点）无法派驻中国主播——多语言数字人实现24/7英语直播，月运营成本$800替代$5000真人主播，月GMV增加$1.5-3万</p>
+  <div class='sc-footer'><span class='sc-roi'>1.5-3万</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Phantom-Product-Showcase-I2V.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Phantom — Product Showcase I2V（商品主体一致性视频生成）</h3>
+  <p class="sc-desc">商品运营面临静图卖点展示弱——I2V将详情页停留时长从45秒提到72秒，年化增收20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Background-Scene-Generation.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">SD+ControlNet商品场景图生成 — 白底转场景化主图的AI摄影替代</h3>
+  <p class="sc-desc">摄影预算有限的卖家面临&quot;每个SKU拍多场景图成本极高&quot;——SD Inpainting+ControlNet将场景化主图成本从$200/SKU降至$8/SKU，年化节省$28.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>20%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Image-Quality-Assessment.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">CLIP商品主图质量评分 — 上新门控自动化评估引擎</h3>
+  <p class="sc-desc">运营团队面临&quot;主图质量良莠不齐上架前无法快速筛选&quot;——CLIP多维评分将低质主图拦截率提升至92%，每月避免因主图差导致的CTR损失折合$3,600</p>
+  <div class='sc-footer'><span class='sc-roi'>80%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Visual-Data-Collection.html" data-domain="20-AI视频生成" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">20-AI视频生成</div>
+  <h3 class="sc-title">Visual Data Collection — 电商图文视频数据采集与 AI 视频生成素材库构建</h3>
+  <p class="sc-desc">研究助理面临图片标注采集慢——视觉采集将标注工时降55%，年化省9万元</p>
+  <div class='sc-footer'><span class='sc-roi'>380 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AI-Product-Safety-Certification.html" data-domain="21-合规决策" data-diff="⭐⭐⭐">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">AI Product Safety Certification — AI驱动产品安全认证自动化：从测试报告解析到合规路径规划</h3>
+  <p class="sc-desc">当母婴产品需要进入美国+欧盟+澳大利亚三个市场时，AI认证路径规划在5分钟内输出最低成本认证组合并识别可共享测试，将认证周期从8周压缩到4周、成本降低20-35%。</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AIGC-Content-Compliance-Review.html" data-domain="21-合规决策" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">AI生成内容合规审查 — 图文/视频虚假宣传自动检测</h3>
+  <p class="sc-desc">品牌运营面临&quot;AI生成的产品图文被平台标记为虚假宣称导致Listing下架&quot;——AIGC内容合规审查将AI生成内容违规率从18%降至2%，年化保护Listing上架稳定性减少损失40-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>规避 FTC 单次罚款 $51,744 + Amazon 封</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-California-Prop65-Label-Check.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">加州65号提案标签合规 — 母婴产品化学物质自动检查</h3>
+  <p class="sc-desc">产品团队面临&quot;进入加州市场的母婴产品因Prop65标签缺失被投诉起诉&quot;——自动Prop65合规检查将上架前标签遗漏率从35%降至&lt;1%，年化避免加州诉讼和赔偿风险100-500万元</p>
+  <div class='sc-footer'><span class='sc-roi'>Prop65 每天每件产品 $2,500 民事处罚，品牌公益</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-EPR-Auto-Calculator.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">EPR扩展生产者责任自动费用测算 — 欧盟/英国/法国合规</h3>
+  <p class="sc-desc">合规团队面临&quot;进入欧盟市场手动计算EPR费用耗时且错误率高&quot;——EPR费用自动测算将计算错误率从12%降至0.5%且节省90%人工时，年化节省合规运营成本15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>德国 VerpackG 漏报罚款最高 €200,000；精准</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-HTS-Agentic-Tariff-Classification.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">HTS多Agent关税编码分类 — 共识验证+层级推理+不确定性感知的跨境清关自动化</h3>
+  <p class="sc-desc">30%的年度HS申报编码存在错误导致关税多缴或清关延误——多Agent共识+逐元素投票+层级推理将4位HTS准确率提升至75%+，人工工作量减少80%（2026 arXiv:2606.16987）</p>
+  <div class='sc-footer'><span class='sc-roi'>84.2%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Market-Ad-Copy-Compliance.html" data-domain="21-合规决策" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">多市场广告文案合规矩阵 — FDA/FTC/ASA 差异自动对比</h3>
+  <p class="sc-desc">品牌运营面临&quot;同一广告文案在美/欧/澳发布时违规规定不一致&quot;——多市场广告文案合规矩阵将跨境文案违规漏报率从28%降至4%，年化避免广告下架损失30-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>替代单市场合规咨询费 $1,500–$5,000/次，4 市</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Platform-Policy-Change-Adaptive-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">平台政策变更自适应监控 — 跨境电商合规政策智能预警与快速响应</h3>
+  <p class="sc-desc">卖家因政策变更滞后被封号——语义变更检测+影响分级将政策响应时间从7天缩短至8小时，相当于每年避免一次封号损失（价值$10-30万）</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-REACH-Chemical-Compliance.html" data-domain="21-合规决策" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">REACH化学品合规 — 母婴玩具/床品化学物质限制自动检查</h3>
+  <p class="sc-desc">产品合规经理面临&quot;母婴产品进入欧盟市场时化学物质超标风险无法提前识别&quot;——REACH合规自动检测将上市前违规发现率提升70%，年化避免召回和罚款保护50-150万元</p>
+  <div class='sc-footer'><span class='sc-roi'>EU RAPEX 通报导致产品下架+召回平均成本 €80K–</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Regulatory-Graph-Compliance-Monitor.html" data-domain="21-合规决策" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">21-合规决策</div>
+  <h3 class="sc-title">Regulatory Graph Compliance Monitor — 合规知识图谱+GenAI实时监控</h3>
+  <p class="sc-desc">吸奶器新品上架美国同时面对FDA/CPSC/FTC/Amazon四套规则人工检查需2-3天——合规知识图谱+GenAI实时扫描10秒内识别复合违规风险并给出修改建议，拦截违规上架避免下架损失年化30-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-200 万（以避损为主）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Clickstream-Persona-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Clickstream Persona Pipeline — 点击流用户画像：VQ-VAE 离散 Persona + 多层行为 KG</h3>
+  <p class="sc-desc">母婴跨境电商应用：独立站/APP 原始点击流 → 离散 persona token，驱动个性化推荐和 A/B 实验</p>
+  <div class='sc-footer'><span class='sc-roi'>25 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Document-Intelligence-Parsing.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Document Intelligence Parsing — LLM 驱动的文档智能解析：图文统一 OCR、跨页表格恢复、布局感知推理</h3>
+  <p class="sc-desc">每季度收到 20 家供应商 PDF 报价单，人工录入 SKU/价格/MOQ 需 3-4 天且错误率 8%——Layout-aware LLM 解析实现 PDF→结构化数据全自动，人工录入工时归零，错误率降至 1% 以下</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ecommerce-Data-Quality-Assessment.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">E-commerce Data Quality Assessment — 产品目录数据质量双轨评分与门控</h3>
+  <p class="sc-desc">母婴跨境电商应用：商品 catalog 错误检测与缺失模态补全，保证下游推荐/搜索质量</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万/年</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Incremental-Update-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">知识图谱增量更新流水线 — 实体变更检测与一致性维护</h3>
+  <p class="sc-desc">竞品价格知识图谱每日全量重建耗时4小时令定价师等不到数据——引入实体变更检测增量更新流水线，图谱刷新延迟从4小时→15分钟（延迟降低 80%），定价决策时效性显著改善。</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Graph-Auto-Update.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Knowledge Graph Auto-Update — 知识图谱增量更新与一致性维护</h3>
+  <p class="sc-desc">数据工程师面临&quot;知识图谱因手动维护滞后导致推荐链路使用过期关系&quot;——增量更新自动化将图谱新鲜度从T+3提升至T+0.5，年化减少推荐质量损耗增收20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>竞品价格图谱实时化使 Buy Box 保有率提升</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Data-Annotation-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">LLM-based Data Annotation Pipeline — LLM 辅助数据标注流水线</h3>
+  <p class="sc-desc">数据团队面临&quot;人工标注训练数据成本高且周期长&quot;——LLM辅助标注流水线将标注成本降低70%速度提升5倍，年化节省数据标注成本25-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万条评论标注成本从</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Focused-Web-Crawling.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">LLM-Focused Web Crawling — LLM/MLLM 引导的主题爬取：KG 驱动发现与动态 JS 页面抽取</h3>
+  <p class="sc-desc">研究员面临网页信息抓不全——LLM Web Crawling将有效字段覆盖率57%提到85%，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Procurement-Email-Extraction.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Procurement Email Extraction — 采购邮件结构化提取：多供应商报价聚合与合规验证</h3>
+  <p class="sc-desc">母婴跨境电商应用：自动解析供应商报价邮件→结构化 MOQ/交期/价格梯度，节省 4-6h/周人工录入</p>
+  <div class='sc-footer'><span class='sc-roi'>25 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Attribute-Completion.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Product Attribute Completion — 商品属性自动补全：AI 填补 Listing 属性空白</h3>
+  <p class="sc-desc">新款吸奶器需要填写42个属性字段人工填写1.5小时但30-40%属性空白导致搜索排名下降——AI从标题/要点/图片自动提取属性值5分钟完成，属性完整度60%提升到90%搜索曝光增加20-35%年化15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Border-Tax-Tariff-Modeling.html" data-domain="23-运营财务" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">HTS Tariff Intelligence — LLM 驱动的跨境关税分类与节税优化</h3>
+  <p class="sc-desc">母婴跨境卖家吸奶器被默认申报为液体泵（关税3.4%）而非呼吸治疗器具（0%），500万美元货值每年多缴17万美元关税——ATLAS LLM分层HTS分类识别正确10位编码，配合CBP Binding Ruling申请实现合规节税，Top-20 SKU年化节税20-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-200 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FBA-Cost-Forecast-Adjustment.html" data-domain="23-运营财务" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">FBA Cost Forecast Adjustment — 不对称惩罚驱动的履约成本最小化</h3>
+  <p class="sc-desc">母婴吸奶器 Q4 补货用对称均值预测，欠载紧急空运成本是海运6倍，35% 的补货周期都要付出额外代价——不对称惩罚预测调整（CPP_L/CPP_H）将补货预测自动偏移至第 75 分位数，欠载概率从 35% 降至 15%，100 SKU 规模年化净节省 10-30 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FBA-Fee-Intelligence.html" data-domain="23-运营财务" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">FBA Fee Intelligence（FBA 费用结构分析与长库龄预警）</h3>
+  <p class="sc-desc">FBA 月账单 15 万元但不知道哪些 SKU 费用异常——五层费用拆解（头程/仓储/长库龄/移仓/退货）到 SKU 粒度，长库龄 270 天提前预警，年化减少 LTSF 5-20 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FBA-Fee-Waterfall-Attribution.html" data-domain="23-运营财务" data-diff="">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">Skill-FBA-Fee-Waterfall-Attribution — FBA费用瀑布归因</h3>
+  <p class="sc-desc">运营面临&quot;FBA月账单20万元但不知道哪类费用在吃利润&quot;——逐层瀑布归因将仓储/配送/LTSF/移仓费分解到SKU粒度，锁定高费用集群，年化节省FBA费用15-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-FX-Natural-Hedging-Strategy.html" data-domain="23-运营财务" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">自然对冲策略 — 跨境电商外汇敞口零成本对冲</h3>
+  <p class="sc-desc">跨境运营总监面临&quot;汇率敞口全额暴露但无预算购买金融工具&quot;——自然对冲将USD净敞口降低50%，零额外对冲成本实现年化风险降低80-150万CNY</p>
+  <div class='sc-footer'><span class='sc-roi'>1500万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Inventory-Carrying-Cost-Model.html" data-domain="23-运营财务" data-diff="">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">Skill-Inventory-Carrying-Cost-Model — 库存持有成本模型</h3>
+  <p class="sc-desc">库存管理负责人面临&quot;不知道积压500件库存每月实际损耗多少资金&quot;——全口径持有成本模型（资金+仓储+LTSF+折损）显示年化成本率40%，EOQ优化后年省库存成本15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Logistics-Cost-Model.html" data-domain="23-运营财务" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">Logistics Cost Model — 跨境物流全链路成本建模与关税不确定性优化</h3>
+  <p class="sc-desc">2026 年关税叠加 70% 让采购决策变成财务赌注——蒙特卡洛随机优化在关税波动下降低 TLC 9.5-16.8%，年采购 $500K 节省 $47,500-84,000</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万/年</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Profitability-Waterfall-By-ASIN.html" data-domain="23-运营财务" data-diff="">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">Skill-Profitability-Waterfall-By-ASIN — 单品盈利瀑布分析</h3>
+  <p class="sc-desc">运营团队面临&quot;月销最高的SKU以为最赚钱结果发现亏损而小SKU才是现金牛&quot;——ASIN级盈利瀑布自动识别亏损品和现金牛，止损+聚焦后月净利润从1.2万升至4.8万，年化增利43万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30-100 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SKU-Level-PL-Dashboard.html" data-domain="23-运营财务" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">SKU-Level PL Dashboard — 单品利润核算：每个 SKU 今天赚了多少钱</h3>
+  <p class="sc-desc">账号整体毛利率 22% 看似正常，但 CFO 发现现金流持续很紧，不知道哪些 SKU 在拖后腿——SKU 粒度五层 P&amp;L 拆解（FBA/广告/退货/仓储/关税）识别亏损 SKU，清退后整体毛利率提升至 28-32%，年化释放现金流 15-40 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Temu-Consignment-Analytics.html" data-domain="23-运营财务" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">23-运营财务</div>
+  <h3 class="sc-title">Temu 全托管/半托管利润分析 — 成本拆解矩阵与定价决策模型</h3>
+  <p class="sc-desc">全托管卖家面临&quot;Temu平台净利润算不清楚定价全靠感觉&quot;——成本拆解模型将SKU级净利润透明化，识别亏损SKU占比从不可知降至精确，年化止损$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Decision-Graph-SC-Inference.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链因果决策图推理 — 从相关性到因果性，Palantir分析→行动的核心跨越</h3>
+  <p class="sc-desc">决策者面临&quot;相关性分析无法判断因果方向导致错误干预&quot;——Pearl因果阶梯从关联→干预→反事实，Airbus/Merck案例证明正确干预降低30%库存决策错误率</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Climate-ESG-Supply-Chain-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">气候与ESG供应链风险标签 — 碳足迹追踪、CSRD合规与可持续供应链评级</h3>
+  <p class="sc-desc">品牌面临&quot;EU CSRD强制ESG披露但无系统化数据&quot;——碳足迹+劳工合规Tag体系满足CSRD合规要求，支持高溢价ESG定位（欧洲市场+5-10%）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Decision-Audit-Trail-Ontology.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">AI决策审计追踪本体 — 供应链自动化决策的完整记录、回溯与合规证明</h3>
+  <p class="sc-desc">AI自动化团队面临&quot;自动决策无法证明合规合理&quot;——哈希链审计追踪将合规审查准备从2周→即时查询，防范EU AI Act监管风险</p>
+  <div class='sc-footer'><span class='sc-roi'>¥45万元（按库存金额¥120万、持有成本率25%计算）</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Decision-Outcome-Closed-Loop-Learning.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链决策结果闭环学习 — 从执行结果到模型改进的Palantir决策飞轮</h3>
+  <p class="sc-desc">运营负责人面临决策学不会复盘——闭环学习将策略迭代周期从30天缩到7天，年化增利20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Dynamic-Carrier-Selection-Tag-Driven.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag驱动动态承运商选择引擎 — 基于实时标签的末程承运商智能匹配与成本优化</h3>
+  <p class="sc-desc">物流团队面临&quot;固定承运商导致偏远区域附加费浪费&quot;——基于实时Tag动态承运商选择比静态规则便宜15-20%，大促期间自动切换避免SLA违约</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-EPR-Extended-Producer-Responsibility-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">欧盟EPR扩大生产者责任标签体系 — EPR注册合规、包装标签与回收报告自动化</h3>
+  <p class="sc-desc">合规面临&quot;德国EPR不合规随时被罚款最高10万欧元&quot;——合规矩阵扫描从2周→10分钟，38个未注册SKU优先级自动排序</p>
+  <div class='sc-footer'><span class='sc-roi'>94%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Graph-OKB-Design-SC.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链操作知识库OKB图谱设计 — Neo4j+Delta双层架构与CDC实时同步策略</h3>
+  <p class="sc-desc">供应商断供影响链分析需要3层SQL JOIN耗时30分钟且容易漏查——Neo4j+Delta双层OKB将多跳BOM遍历从分钟级→2秒，供应商替代方案秒级发现</p>
+  <div class='sc-footer'><span class='sc-roi'>400万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-SC-MultiAgent-Consensus-Replenishment.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">LLM多智能体共识补货决策 — InvAgent框架：需求/采购/仓储三方博弈自动达成最优</h3>
+  <p class="sc-desc">补货决策需要销售/采购/仓储三方周会耗时3天且结果次优——InvAgent三方共识框架将决策时间→1小时自动达成，牛鞭效应降低30%</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Last-Mile-Cost-Per-Zone-Analytics.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">末程分区成本精算 — 农村/偏远/标准区域差异化成本分解与路线优化</h3>
+  <p class="sc-desc">物流面临&quot;偏远区域附加费侵蚀利润但无法量化&quot;——分区精算识别高成本区域改用USPS，年均1000件偏远订单节省$6,000-12,000</p>
+  <div class='sc-footer'><span class='sc-roi'>20%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Market-Compliance-Matrix-Ontology.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">多市场合规矩阵本体 — US/EU/JP/AU跨境合规要求统一建模与差异分析</h3>
+  <p class="sc-desc">合规团队面临&quot;US/EU/JP/AU同时运营合规要求超50项靠人工管理必然遗漏&quot;——结构化合规矩阵10分钟完成多市场合规扫描，防止新品上市合规缺口导致的下架损失</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Online-Feature-Store-SC-Realtime.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链实时特征存储架构 — Online/Offline分离+毫秒级读取的Zalando母婴SKU模式</h3>
+  <p class="sc-desc">Agent实时决策分别查询ERP/WMS/预测服务总延迟3秒影响决策效率——Online/Offline特征存储实现在线特征10-20ms读取，支撑每日100K+次实时决策</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ontology-LLM-AutoBuild-SC.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">LLM驱动供应链本体自动构建 — 从ERP文档到语义图谱的零样本迭代萃取</h3>
+  <p class="sc-desc">企业本体靠人工维护更新滞后覆盖不全——LLM零样本迭代萃取将本体构建从3个月→2天，新供应商入库2周→1天，识别隐性单点故障提前预防</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Order-Routing-Intelligence-Engine.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">智能订单路由引擎 — 多约束订单履约路径优化与实时分配决策</h3>
+  <p class="sc-desc">订单团队面临&quot;3个仓库该从哪发货靠经验判断&quot;——多约束评分矩阵(时效×成本×可靠性)将SLA达成率从91%提升至97%，仓库负载均衡减少OOS率2-3pp</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Real-Time-Supply-Chain-Drift-Detection.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链信号漂移实时检测 — 从概念漂移到Tag失效预警的在线检测体系</h3>
+  <p class="sc-desc">数据团队面临&quot;模型准确率悄悄下降但无法感知&quot;——流式漂移检测将数据质量问题发现从月度审计→5分钟实时预警，防止错误预测导致的断货超卖</p>
+  <div class='sc-footer'><span class='sc-roi'>2-8万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Regulatory-Change-Impact-Propagation.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">法规变更影响传播引擎 — 新规 → 受影响SKU/市场的Tag传播与行动触发</h3>
+  <p class="sc-desc">合规团队面临&quot;新法规出来需要2周人工核查哪些SKU受影响&quot;——BFS图谱传播10分钟完成全库评估，自动打标并触发合规行动，防止货到港被扣押损失5-15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Return-Fraud-Detection-Tag-Engine.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">退货欺诈检测标签引擎 — 识别假退货/滥用退货政策的行为模式与Tag自动标记</h3>
+  <p class="sc-desc">逆向物流面临&quot;退货欺诈占总退货3-8%无法识别&quot;——多维行为特征检测自动标记高风险退货，停止自动批准，年化减少欺诈损失2万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Return-Root-Cause-Attribution-Graph.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">退货根因归因图谱 — 多层次退货原因知识图谱与供应链改善闭环</h3>
+  <p class="sc-desc">运营面临&quot;退货率从3%升至7%不知道根因&quot;——三层因果图谱精确定位到电机批次变更，供应商整改后退货率回归3%，年化减少退货成本8万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SC-Causal-DAG-E2E-Attribution.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链端到端因果DAG归因框架 — Amazon PC算法+SCM实现缺货根因30分钟诊断</h3>
+  <p class="sc-desc">缺货/异常根因靠人工多系统排查耗时2天且易误判——Amazon PC算法+SCM端到端因果DAG将根因诊断→30分钟自动归因，准确率提升45%</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SC-Digital-Twin-Sync-Architecture.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链数字孪生同步架构 — 物理→数字实时镜像与仿真决策支持</h3>
+  <p class="sc-desc">供应商停产/FBA延误需要实时量化影响——数字孪生7层仿真引擎将What-if响应从3天人工协调→30分钟自动推演，防止断货GMV损失30-50万元/次</p>
+  <div class='sc-footer'><span class='sc-roi'>30-50万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SC-Ontology-Schema-Versioning.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链本体Schema版本化与迁移 — 向后兼容的本体演化策略防止Agent系统崩溃</h3>
+  <p class="sc-desc">本体Schema升级导致依赖Agent崩溃停机4-8小时——向后兼容双写过渡策略实现零停机Schema迁移，年化防止Agent崩溃事故损失20-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-80 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SKU-Level-Margin-Attribution-Ontology.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">SKU级利润归因本体 — 从GMV到净利润的全链路成本拆解与Tag驱动的利润诊断</h3>
+  <p class="sc-desc">CEO/CFO面临&quot;GMV1000万但不知道哪些SKU在赚钱哪些在亏&quot;——全链路瀑布P&amp;L将亏损SKU(约16%)识别出来，Tag驱动的调价/下架行动直接增加利润3-5%</p>
+  <div class='sc-footer'><span class='sc-roi'>8-12万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SKU-Master-Data-Golden-Record.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">SKU主数据黄金记录治理 — MDM体系、主键统一与多源冲突消解</h3>
+  <p class="sc-desc">运营面临&quot;Amazon/Shopify/TikTok/ERP四套SKU编码跨渠道数据孤岛&quot;——MDM黄金记录将跨渠道库存准确率从74%提升至99%，新品上市从3天降至4小时</p>
+  <div class='sc-footer'><span class='sc-roi'>44%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Signal-Uncertainty-Quantification-SC.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链信号不确定性量化 — 从点预测到区间估计，支撑置信度分层决策</h3>
+  <p class="sc-desc">决策者面临&quot;AI给出建议但不知道置信度导致盲目执行&quot;——Conformal Prediction量化不确定性为可靠区间，高置信度自动执行、低置信度升级审核，减少错误决策50%</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supplier-Ontology-Capability-Map.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应商本体能力图谱 — 产能/质量/认证/风险四维供应商Ontology设计与实例化</h3>
+  <p class="sc-desc">采购团队面临&quot;供应商评估靠表单+面谈需要2周&quot;——四维本体(能力/认证/绩效/风险)将评估时间从2周→2天，认证标签自动传播消除合规盲区</p>
+  <div class='sc-footer'><span class='sc-roi'>30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Agent-Orchestration-Hub.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链Agent编排中枢 — 多Agent协作、任务分发与跨域决策自动化</h3>
+  <p class="sc-desc">运营面临&quot;供应链响应靠人工协调需2-4小时&quot;——Hub-and-Spoke编排中枢将多Agent协作响应时间压缩至4分钟，级联触发机制自动协调采购/库存/物流/合规4个域</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Data-Lineage-Tracking.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链数据血缘追踪 — 从原始数据到Tag决策的全链路溯源与影响分析</h3>
+  <p class="sc-desc">数据团队面临&quot;AI补货触发后不知道数据来源&quot;——血缘图谱将数据问题排查从2天→5分钟，满足EU AI Act可解释性合规要求</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Finance-Risk-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链金融风险标签 — 融资依赖度/信用评级/现金流压力的综合风险画像</h3>
+  <p class="sc-desc">CFO面临&quot;不知道供应商是否面临资金链断裂风险&quot;——金融风险三维画像（流动性/杠杆/现金）提前3-6个月预警，防止供应商断供损失20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-Ontology-Action-Trigger.html" data-domain="24-标签工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链本体驱动行动触发 — Palantir风格Object-Action-Writeback全链路闭环</h3>
+  <p class="sc-desc">供应链运营面临&quot;分析看板有了但还要人工去ERP下单&quot;——Palantir风格Object-Action-Writeback闭环将补货响应从2天缩短至4小时自动触发，实现分析到行动的完整闭环</p>
+  <div class='sc-footer'><span class='sc-roi'>25万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tag-Fairness-Bias-Audit.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag Fairness &amp; Bias Audit — 标签系统算法偏见检测与公平性修正</h3>
+  <p class="sc-desc">数据工程师面临&quot;标签系统性别偏见导致部分SKU曝光严重不足&quot;——算法公平性修正将受歧视分组曝光率提升40%，年化增收15-30万元并降低欧盟AI法案合规风险</p>
+  <div class='sc-footer'><span class='sc-roi'>消除标签偏见后受影响 SKU 曝光提升 30-50%，年化增</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tag-Optimized-Logistics-Routing.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">Tag-Optimized Logistics Routing — SKU物流属性标签驱动智能配送路由</h3>
+  <p class="sc-desc">物流负责人面临&quot;危品品类和温控商品每次发货都要人工核查承运商资质耗时且易出错&quot;——标签规则引擎自动过滤合规承运商将物流合规核查从人工1小时压缩至自动秒级，年化节省物流合规损失75万元</p>
+  <div class='sc-footer'><span class='sc-roi'>52 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tag-Propagation-Supply-Chain.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">供应链知识图谱标签传播算法 — LPA/层级继承/关系链传播的Tag扩散引擎</h3>
+  <p class="sc-desc">供应链团队面临&quot;认证标签手工维护60%覆盖率&quot;——LPA+层级继承传播算法将合规标签覆盖率从60%提升至95%，供应商FDA认证自动扩散到旗下所有SKU</p>
+  <div class='sc-footer'><span class='sc-roi'>60%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tag-Quality-Coverage-KPI.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">标签质量KPI监控体系 — 覆盖率/准确率/时效性/一致性的全维度Tag质量仪表盘</h3>
+  <p class="sc-desc">自动化团队面临&quot;标签错误后几个月才发现&quot;——五维质量KPI(覆盖率/准确率/时效/一致性/完整性)将标签错误MTTD从数月降至实时，防止误触发Action损失20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tag-Schema-Engineering-Lifecycle.html" data-domain="24-标签工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">标签Schema工程与生命周期管理 — 企业级Tag类型设计、Schema约束与版本治理</h3>
+  <p class="sc-desc">数据工程师面临&quot;多平台数据孤岛，断货识别延迟8小时&quot;——统一Tag Schema(七类标签+六阶段生命周期)将断货识别延迟从8小时降至15分钟，合规审查从3天→10分钟</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Warehouse-Slotting-Optimization-Tag.html" data-domain="24-标签工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">24-标签工程</div>
+  <h3 class="sc-title">仓储货位优化Tag引擎 — ABC分层驱动的智能货位分配与拣货效率提升</h3>
+  <p class="sc-desc">仓储管理面临&quot;货位沿用历史分配导致拣货行走距离浪费&quot;——ABC标签驱动的智能货位分配将拣货效率提升20-40%，年化节省约14万元人力成本，零额外投入</p>
+  <div class='sc-footer'><span class='sc-roi'>14万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Defense-Search-Strategy.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">品牌词防守策略 — 品牌词投放防竞品截流与自然排名协同</h3>
+  <p class="sc-desc">品牌运营面临&quot;竞品在品牌词上截流、品牌词CTR从35%跌至22%&quot;——防守策略将品牌词流量保护率恢复至90%+，广告ROI达10-30倍</p>
+  <div class='sc-footer'><span class='sc-roi'>0.2-0.5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Competitor-Keyword-Gap-Analysis.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Competitor-Keyword-Gap-Analysis — 竞品关键词缺口分析</h3>
+  <p class="sc-desc">运营面临&quot;竞品有排名的词我们完全没有覆盖&quot;——关键词缺口挖掘将自然流量词汇覆盖率从45%提升至72%，年化增加自然流量价值35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>12-20 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Index-Health-Monitoring.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">索引健康度监控 — 全链路搜索索引覆盖率与收录状态追踪</h3>
+  <p class="sc-desc">运营面临&quot;新品上架后搜索流量为零、不知是否已被索引&quot;——健康度监控将索引问题发现延迟从3天缩短至4小时，年化减少错失销售20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Keyword-Cannibalization-Detection.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">关键词自相竞争检测 — 用二部图 Jaccard 算法发现同店 SKU 流量内耗</h3>
+  <p class="sc-desc">多SKU卖家面临&quot;同店产品互相抢关键词流量越打越内耗&quot;——Jaccard二部图检测将关键词重叠SKU识别精度达94%，流量集中度提升35%</p>
+  <div class='sc-footer'><span class='sc-roi'>3.5 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Search-Query-Expansion.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">LLM搜索词语义扩展 — 用大模型覆盖长尾搜索意图提升Listing覆盖面</h3>
+  <p class="sc-desc">Listing运营面临&quot;长尾搜索词覆盖不足导致大量有购买意图的流量看不到Listing&quot;——LLM语义扩展将Listing关键词覆盖面提升3.2倍，自然流量增量年化$5.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>4 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Market-Search-Localization.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">多市场搜索词本地化 — 多站点关键词迁移与本地语言适配</h3>
+  <p class="sc-desc">跨境运营面临&quot;直译关键词进入新市场流量极低、DE/JP站 Impression几乎为零&quot;——三层本地化体系将新市场自然搜索流量提升3-5倍，节省广告拉量成本10-20万元/市场/年</p>
+  <div class='sc-footer'><span class='sc-roi'>10-20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Aware-Recommendation-Reranking.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索意图感知推荐重排序 — 将实时搜索信号注入推荐排序</h3>
+  <p class="sc-desc">推荐算法工程师面临&quot;推荐系统不知道用户当前搜索意图导致推荐与搜索意图脱节&quot;——搜索意图向量注入重排序将搜索场景推荐CTR提升28%，年化$6.8万GMV增量</p>
+  <div class='sc-footer'><span class='sc-roi'>8 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Driven-Product-KG.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索驱动商品知识图谱 — 用搜索共现行为揭示品类语义结构</h3>
+  <p class="sc-desc">数据科学家面临&quot;品类语义结构只能靠人工梳理无法系统化发现搜索意图间的关联&quot;——搜索词共现图嵌入将品类语义空间构建自动化，选品相关性发现效率提升5倍，年化$4.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">标签→关键词自动映射矩阵 — SKU 标签体系驱动搜索词包生成</h3>
+  <p class="sc-desc">SEO专员面临&quot;SKU标签体系和关键词研究完全脱节每次更新标签都要手动重做关键词&quot;——标签→关键词本体映射自动输出优先级关键词包，每SKU关键词研究时间从3天压缩至20分钟，年化效率提升$3.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>3 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-VOC-Signal-Loop.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索词VOC信号闭环 — 从买家搜索语言挖掘真实需求并反哺产品迭代</h3>
+  <p class="sc-desc">产品负责人面临&quot;用户搜索词里包含大量产品改进信号但从未被系统分析利用&quot;——搜索词VOC信号挖掘将用户真实需求语言提炼效率提升8倍，Listing迭代周期从季度压缩至月度，年化$4.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Voice-Search-Optimization-Amazon.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Voice-Search-Optimization-Amazon — Amazon 语音搜索优化</h3>
+  <p class="sc-desc">运营面临&quot;Alexa语音搜索流量被忽略&quot;——长尾问句关键词策略将语音搜索带来的流量占比从2%提升至8%，年化新增GMV15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

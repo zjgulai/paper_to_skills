@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LongRAG — 长上下文与RAG混合决策策略 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/08-知识图谱.html">08-知识图谱</a> / Skill-LongRAG-Long-Context-Hybrid</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">08-知识图谱</div>
+  <h1 class="skill-main-title">LongRAG — 长上下文与RAG混合决策策略</h1>
+  <p class="skill-skill-id">Skill-LongRAG-Long-Context-Hybrid</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>跨境物流与履约</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>LLM数据分析</span><span class='tag'>供应商管理与博弈</span><span class='tag'>逆向物流与退货</span><span class='tag'>多渠道协同增长</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>128万元</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#2563eb;color:#fff">中等 · 73分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（34%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 76.0, 34.0, 50.7, 51.0, 50.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 7.6, 5.1, 7.6, 5.1, 2.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>选品负责人 / 运营负责人<span class='biz-ctx-secondary'> · 数据分析师 · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 品类体系 · 竞品 ASIN 网络分析</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品类很多，不清楚品类间的关联，没法做系统性类目扩张规划；竞品矩阵太复杂，品牌/SKU/渠道理不清</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立品类知识图谱，清晰看到哪些是入口品/引流品/利润品，指导下一步选品扩张方向</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>品类太多不知道先做哪个</span><span class='biz-pain-tag'>竞品关系理不清楚</span><span class='biz-pain-tag'>不知道用户买了奶瓶还会买什么</span><span class='biz-pain-tag'>类目扩张没有逻辑</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营团队面临长文档与知识库检索策略选择困难——LongRAG自动路由将综合成本降低40%，质量保持97%，年化节省API成本32万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：根据文档集规模、问题复杂度、成本约束自适应决策——小规模文档直接喂长上下文LLM（成本低、延迟短），大规模库存用RAG精准检索（精度高、成本可控）。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>- 业务问题：母婴供应商与海外平台（Amazon/Shopee）签订50-80页采购合同，涉及价格条款、物流要求、质量标准、退货政策等多维信息。传统方案需人工逐页审阅（8-12小时/份），或用RAG检索但易遗漏关键条款；现需在2小时内完成合同风险评估与条款提取，准确率&gt;95%。</p><p>- 数据要求： - 合同库：200份历史合同（PDF格式，平均60页/份，共12,000页） - 查询：「该合同中婴儿推车的最小订单量、退货期限、质检标准分别是什么？」等5-8个结构化问题 - 上下文窗口：Claude 3.5 Sonnet 200K token</p><p>- 预期产出： - 自动判断：该合同&lt;100K token ⟹ 直接长上下文处理；若&gt;100K token ⟹ 触发RAG检索关键章节 - 条款提取准确率：96.2%（vs 人工100%，差异仅关键边界条款） - 处理时间：8分钟/份（vs 人工10小时，加速75倍） - 成本对比：¥0.32/份（长上下文）vs ¥1.20/份（RAG+人工审核）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li><strong>场景A（合同分析）</strong>：采购经理面临年1000份合同审阅——LongRAG混合策略将人工审阅时间从10小时/份降至8分钟/份，成本从¥1.20/份降至¥0.32/份，年化收益<strong>¥128万元</strong></li><li><strong>场景B（评论分析）</strong>：运营分析师需月100次产品评论查询——混合策略将月成本从¥1,200（全长上下文）降至¥180，年化节省¥12,240元；若扩展至10个SKU产品线，年化ROI升至<strong>¥84万元</strong></li><li><strong>实施难度</strong>：⭐⭐</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+import pandas as pd
+from typing import Literal, Dict, Tuple
+import json
+
+# ============================================================================
+# Skill-LongRAG-Long-Context-Hybrid: 母婴跨境电商场景实现
+# ============================================================================
+
+class LongRAGHybridRouter:
+    &quot;&quot;&quot;
+    自适应决策路由：根据文档规模、问题类型、成本约束选择最优策略
+    &quot;&quot;&quot;
+    
+    def __init__(self, 
+                 long_context_cost_per_1k_token: float = 0.15,  # Claude 3.5 Sonnet
+                 rag_cost_per_query: float = 0.08,  # 检索+生成成本
+                 long_context_token_budget: int = 200000,
+                 quality_weight: Dict[str, float] = None):
+        &quot;&quot;&quot;
+        初始化混合路由器
+        
+        Args:
+            long_context_cost_per_1k_token: 长上下文LLM的成本（元/1K token）
+            rag_cost_per_query: RAG单次查询成本（元）
+            long_context_token_budget: 长上下文预算（token）
+            quality_weight: 质量权重 {&#x27;cost&#x27;: 0.3, &#x27;latency&#x27;: 0.3, &#x27;accuracy&#x27;: 0.4}
+        &quot;&quot;&quot;
+        self.long_context_cost = long_context_cost_per_1k_token
+        self.rag_cost = rag_cost_per_query
+        self.token_budget = long_context_token_budget
+        
+        self.quality_weight = quality_weight or {
+            &#x27;cost&#x27;: 0.3,
+            &#x27;latency&#x27;: 0.3,
+            &#x27;accuracy&#x27;: 0.4
+        }
+        
+        # 母婴产品类别与问题类型映射
+        self.product_categories = {
+            &#x27;婴儿推车&#x27;: {&#x27;avg_tokens&#x27;: 8500, &#x27;query_type&#x27;: &#x27;mixed&#x27;},
+            &#x27;暖奶器&#x27;: {&#x27;avg_tokens&#x27;: 5200, &#x27;query_type&#x27;: &#x27;precision&#x27;},
+            &#x27;有机辅食&#x27;: {&#x27;avg_tokens&#x27;: 6800, &#x27;query_type&#x27;: &#x27;mixed&#x27;},
+            &#x27;奶瓶&#x27;: {&#x27;avg_tokens&#x27;: 4100, &#x27;query_type&#x27;: &#x27;precision&#x27;},
+            &#x27;安全座椅&#x27;: {&#x27;avg_tokens&#x27;: 9200, &#x27;query_type&#x27;: &#x27;global&#x27;}
+        }
+        
+        # 问题类型特征
+        self.query_type_patterns = {
+            &#x27;global&#x27;: [&#x27;总结&#x27;, &#x27;综合&#x27;, &#x27;全部&#x27;, &#x27;整体&#x27;, &#x27;所有&#x27;],
+            &#x27;precision&#x27;: [&#x27;具体&#x27;, &#x27;特定&#x27;, &#x27;哪个&#x27;, &#x27;多少&#x27;, &#x27;是否&#x27;],
+            &#x27;mixed&#x27;: [&#x27;对比&#x27;, &#x27;分析&#x27;, &#x27;评估&#x27;]
+        }
+    
+    def estimate_document_tokens(self, 
+                                  doc_count: int, 
+                                  avg_doc_length: str = &#x27;medium&#x27;) -&gt; int:
+        &quot;&quot;&quot;
+        估算文档集总token数
+        </code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.15319</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LongRAG-Long-Context-Hybrid" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Adaptive-RAG-Query-Routing.html'>Skill-Adaptive-RAG-Query-Routing</a></li><li><a href='../skills/Skill-Context-Compression.html'>Skill-Context-Compression</a></li><li><a href='../skills/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.html'>Skill-GraphRAG-Knowledge-Enhanced-Retrieval</a></li><li><a href='../skills/Skill-LLMLingua-Context-Compression.html'>Skill-LLMLingua-Context-Compression</a></li><li><a href='../skills/Skill-Speculative-RAG.html'>Skill-Speculative-RAG</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Adaptive-RAG-Query-Routing.html'>Skill-Adaptive-RAG-Query-Routing</a></li><li><a href='../skills/Skill-LLMLingua-Context-Compression.html'>Skill-LLMLingua-Context-Compression</a></li><li><a href='../skills/Skill-Speculative-RAG.html'>Skill-Speculative-RAG</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Speculative-RAG.html'>Skill-Speculative-RAG</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-LongRAG-Long-Context-Hybrid',skill_domain:'08-知识图谱'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-LongRAG-Long-Context-Hybrid',skill_domain:'08-知识图谱',skill_difficulty:''});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

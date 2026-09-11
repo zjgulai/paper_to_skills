@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>01-因果推断 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>01-因果推断</h1><p>Causal inference, uplift modeling, DiD, IV</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 01-因果推断 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Augmented-Synthetic-Control-ML.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Augmented Synthetic Control — 机器学习增强的合成控制法</h3>
+  <p class="sc-desc">运营面临&quot;新市场准入后销量增长无法分离自然趋势与真实效果&quot;——ASCM双重修正SCM偏差从3.5%降至0.8%，年化减少市场扩张错误决策损失约80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Automated-Causal-Discovery.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Automated Causal Discovery — 自动化因果发现：从数据自动识别业务驱动因素</h3>
+  <p class="sc-desc">运营长期认为BSR排名是销量的原因努力刷排名但效果不稳定——NOTEARS自动因果发现揭示BSR是销量的结果而非原因，纠正错误认知后将资源聚焦真正的驱动因素（广告/价格）年化ROI提升10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Attribution-Bridge.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Attribution Bridge（因果归因桥梁）</h3>
+  <p class="sc-desc">TikTok 内容归因：naive 归因给 45%，因果 ITE 只有 32%——因为 13% 的&quot;内容驱动购买&quot;实际上是用户本身的品类偏好驱动的</p>
+  <div class='sc-footer'><span class='sc-roi'>45 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Churn-Retention-Attribution.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Churn Retention Attribution — Uplift + DiD 因果用户流失归因与留存优化</h3>
+  <p class="sc-desc">母婴订阅运营面临流失挽留精准度不足——DR-Learner uplift 模型识别可说服用户（30%），将挽留 ROI 从 1.2x 提升至 4.8x，DiD 三重交互精准分解价格/产品/竞品各因子净贡献，年化节省无效促销成本 30-100 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30-100 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Cohort-Analysis.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Cohort Analysis — 因果队列分析：促销干预的长期用户行为效应</h3>
+  <p class="sc-desc">增长经理面临留存变化找不到真因——因果队列将误判率从28%降到9%，年化增收18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200-500 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Discovery-PC-Algorithm.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">PC算法因果发现：从观测数据识别销售驱动因果链</h3>
+  <p class="sc-desc">业务问题：Momcozy 美国站想理解广告 spend、竞品 price、季节 index、促销活动、KOL 合作这 5 个因素如何因果影响周销量</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-RL-Decision-Making.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">因果强化学习 — 从相关驱动到因果驱动的决策优化</h3>
+  <p class="sc-desc">供应链团队面临&quot;历史备货策略混杂大促偏差无法直接学习&quot;——因果净化后的离线RL策略库存周转率提升15%，年化资金效率节省约180万元</p>
+  <div class='sc-footer'><span class='sc-roi'>500万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Representation-Disentangle.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Representation Learning Disentangle — 解耦因果表示学习（VAE+因果图）</h3>
+  <p class="sc-desc">数据科学家面临&quot;特征空间中因果因子与混淆因子纠缠导致模型跨市场泛化性差&quot;——解耦因果表示学习将跨市场模型迁移性能提升30%，年化减少新市场模型重训练成本15-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>精准识别驱动复购的关键因子后，资源配置效率提升 25-40%</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Representation-Learning.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">因果表示学习 — 从观测数据中学习干预不变的因果潜变量</h3>
+  <p class="sc-desc">算法团队面临&quot;从美国市场训练的模型在德国市场性能下降30%无法直接迁移&quot;——环境不变因果表示将跨市场性能下降从30%降至8%，年化新市场冷启动价值100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Sentiment-Attribution.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">DINER — 因果去偏的方面级情感分析</h3>
+  <p class="sc-desc">母婴产品运营面临差评方向归因失真困境——DINER 多变量因果推断（Backdoor Adjustment + TDE 反事实）消除价格/物流等方面词的标注偏置，将方面情感归因准确率提升约30%，避免1-3次错误产品迭代决策，年化规避成本50-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>70-240 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Time-Series-CausalImpact.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">CausalImpact时序因果 — 政策/活动对时序指标的因果冲击估计</h3>
+  <p class="sc-desc">运营面临&quot;促销后销量增加但无法分离趋势贡献与真实促销增量&quot;——BSTS反事实模型将真实增量从表面+22%修正至+8%，精准ROI指导下年化优化约200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Uplift-Modeling.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Uplift Modeling — 因果提升模型：识别&quot;可说服者&quot;的跨域基础层</h3>
+  <p class="sc-desc">母婴品牌发2万张优惠券时60-70%给了本来就会买的用户白白损失利润——因果提升模型从A/B实验数据识别「可说服者」，精准发券后ROI从1.2x提升至3-5x，年化节省无效促销50-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-VOC-Sentiment-Attribution.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal VOC Sentiment Attribution — DiD+情感分析识别评论情绪变化真实因果驱动</h3>
+  <p class="sc-desc">运营面临&quot;差评增加后不知道是包装问题还是物流破损导致&quot;——DiD+情感因果归因将根因定位准确率从45%提升至88%，年化精准修复节省无效投入20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>精确归因根因后，解决方案针对性提升 80%，差评率回落周期从</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ClusterSC-Synthetic-Control.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">ClusterSC - 聚类合成控制法</h3>
+  <p class="sc-desc">业务问题：母婴品牌在黑五期间，仅对美国加州投放 50 万美元 TikTok 联动广告</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-ROI-Prediction.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">共形预测ROI区间估计 - 小样本下的可信转化贡献量化</h3>
+  <p class="sc-desc">业务问题：桑基图显示 &quot;Google Ads → 首页 → 搜索 → PDP → 支付&quot; 这条路径贡献了 35% 的转化</p>
+  <div class='sc-footer'><span class='sc-roi'>5-15 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-Risk-Assessment.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Conformal Risk Assessment — 共形预测业务风险量化：覆盖率保证的区间估计</h3>
+  <p class="sc-desc">但预测误差未被显式量化，导致高估时积压、低估时缺货，实测缺货率 8%</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Counterfactual-Ad-Attribution-Debiasing.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Counterfactual Ad Attribution Debiasing — 因果去混淆广告归因区分&quot;广告真正带来的转化&quot;与&quot;用户本来就会买</h3>
+  <p class="sc-desc">CFO面临&quot;广告ROAS报告4.2x但暂停广告后订单只降15%、怀疑归因严重高估&quot;——因果去混淆IPW去偏将真实iROAS从虚高4.2x还原为2.73x，按真实ROAS重新分配预算年化节省广告浪费约15-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万/月</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Counterfactual-Evaluation.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">反事实评估 — Potential Outcomes + 合成控制反事实基线</h3>
+  <p class="sc-desc">数据科学家面临&quot;无法量化如果不做这个促销销量会如何基线难以确定&quot;——合成控制反事实框架将促销净增量归因准确率从±30%提升至±8%，ROI决策置信度大幅提升</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DML-Cohort-Causal-Effect.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">DML Cohort 因果效应 - 群体异质性 HTE 估计</h3>
+  <p class="sc-desc">平台对所有新妈妈用户统一发放&quot;新生儿满减券&quot;,ROI 整体回归到 1.2-1.5x,猜测某些群体响应强、某些群体弱,但不知如何切分 - 数据要求:用户注册时填写宝宝生日 + 高维行为日志(2000 维:RFM、品类偏好、渠道、地理) - DML 配置: - 第一阶段:XGBoost 拟合 $E[Y|X]$,LightGBM 拟合 $E[D|X]$ - PCA 降维至 10 维,K-mea</p>
+  <div class='sc-footer'><span class='sc-roi'>1500-2500 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DiD-Difference-in-Differences.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Difference-in-Differences (DiD) for Causal Effect Estimation</h3>
+  <p class="sc-desc">业务问题：2025年美国对中国产婴儿推车加征25%关税</p>
+  <div class='sc-footer'><span class='sc-roi'>215万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Double-Debiased-ML-Price.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">双重去偏机器学习价格弹性 — 高维混淆下的价格因果效应估计</h3>
+  <p class="sc-desc">定价团队面临&quot;OLS弹性估计-0.23而真实弹性-1.8导致定价策略反向&quot;——DML高维去偏将弹性估计误差从1.57降至0.12，年化定价优化GMV约120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>120万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Doubly-Robust-Cross-Fitting.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Doubly Robust + Cross-fitting — 双重稳健估计与交叉拟合</h3>
+  <p class="sc-desc">数据科学家面临&quot;观察数据因混淆偏差导致广告归因失真&quot;——双重稳健估计将归因误差降低60%，年化广告投资优化节省40-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>去除选择偏差后广告渠道重分配，年化广告效率提升 20-30%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-EPICSCORE-Uncertainty.html" data-domain="01-因果推断" data-diff="">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">认知不确定性共形评分 - 数据稀疏区域自适应区间加宽</h3>
+  <p class="sc-desc">桑基图中每条边代表一条用户路径转化，观测量差异极大</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Guardrailed-Uplift-Targeting.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Guardrailed Uplift Targeting — 约束优化 CATE：业务护栏驱动的精准干预</h3>
+  <p class="sc-desc">当前做法是向所有&quot;高流失风险&quot;用户统一发&quot;免费延长30天&quot;优惠券，ROI 极低——很多用户即使不发券也会续订</p>
+  <div class='sc-footer'><span class='sc-roi'>25-28万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Heterogeneous-Treatment-Effect-XLearner.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">X-Learner异质处理效应 — 识别不同用户群的差异化因果效应</h3>
+  <p class="sc-desc">运营面临&quot;发券无差别，低效用户占用预算&quot;——X-Learner识别高CATE人群，缩减72%发券量仍保持高效果覆盖，年化节省+增量约80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-IV-Instrumental-Variables.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Instrumental Variables (IV) for Causal Inference with Endogeneity</h3>
+  <p class="sc-desc">Momcozy 想知道自己产品的价格弹性——价格下降10%，销量会增加多少</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Intelligent-Attribution-Causal-Forest.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">智能归因 - 因果森林 (Causal Forest)</h3>
+  <p class="sc-desc">我们在美国、加拿大、英国、德国同步投放吸奶器广告，不同市场的用户行为差异显著</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Interference-Networks-Causal.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">网络干扰因果推断 — 社交溢出效应与 Peer Effects 估计</h3>
+  <p class="sc-desc">增长团队面临&quot;社交裂变活动效果被低估因忽略用户间溢出效应&quot;——网络干扰因果推断将裂变ROI估计准确率提升35%，年化减少无效裂变预算浪费30-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40%</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Causal-Discovery.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">LLM辅助因果图发现 — 用语言模型先验加速因果结构学习</h3>
+  <p class="sc-desc">数据团队面临&quot;广告→销量的因果路径不清晰无法确定优化策略&quot;——LLM先验+统计方法构建因果DAG，识别排名路径贡献62%，策略优化后ROAS提升20%，年化增量约40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Causal-Graph-Prior.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">LLM as Causal Graph Prior — LLM 辅助因果图先验注入</h3>
+  <p class="sc-desc">数据科学家面临&quot;因果图结构学习依赖大量数据且无法融合领域专家知识&quot;——LLM辅助因果图先验将结构学习数据需求降低60%且准确率提升25%，年化加速因果决策分析节省20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>小样本新品场景下（&lt; 60 天数据）因果图准确率提升 30-</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Mediation-Causal-Mechanism-Analysis.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Causal Mediation Analysis — Decomposing &quot;Why It Works</h3>
+  <p class="sc-desc">研究经理面临效果链路说不清——中介分析将机制定位时间从3天降到4小时，年化省11万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NOTEARS-Causal-Discovery.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">NOTEARS/DAGMA — 连续优化因果图结构学习</h3>
+  <p class="sc-desc">运营面临&quot;不知道哪些操作真正驱动复购而非巧合相关&quot;——NOTEARS因果图发现将伪相关决策占比从35%降至8%，年化避免无效投放损失50-100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>精准干预节点使广告 ROAS 提升 15-25%，年化节省无</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Network-Interference-Causal.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Network Interference Causal — 网络干扰下的因果推断（peer effects）</h3>
+  <p class="sc-desc">增长团队面临&quot;同一平台用户互动导致AB实验组污染&quot;——网络干扰识别将实验偏差降低50%，年化提升实验决策准确率节省无效推广费20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>正确计量 KOL ROI（含溢出效应通常高估 30-80%）</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Partial-Identification-Bounds.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Partial Identification Bounds — 部分识别与 ATE 边界估计（Manski Bounds）</h3>
+  <p class="sc-desc">合规团队面临&quot;无随机对照数据但需要评估政策效果&quot;——部分识别边界为决策提供可信区间而非点估计，年化降低错误政策落地风险节省50-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>无需运行 A/B 实验即可为广告效果提供统计保证，年化节省实</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Policy-Learning-Observational.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Policy Learning from Observational Data — 从观测数据学习最优决策策略</h3>
+  <p class="sc-desc">业务策略师面临&quot;依赖历史AB实验数据制定促销政策速度太慢&quot;——观测数据策略学习将最优促销政策更新周期从30天缩短至3天，年化GMV提升15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>优惠券预算节省 40-60%，同等转化规模下营销成本年化节省</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Propensity-Score-Matching-QuasiExp.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">倾向得分匹配准实验 — 无随机分配场景的因果效应估计</h3>
+  <p class="sc-desc">数据团队面临&quot;区域先后上线无法随机化分配导致混淆偏差&quot;——PSM去除选择偏差后真实因果效应从+18%校正至+12%，避免对无效功能投资，年化ROI约120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RDD-Regression-Discontinuity-Design.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">断点回归设计 — 利用政策阈值识别因果效应</h3>
+  <p class="sc-desc">运营团队面临&quot;会员门槛策略效果无法区分因果效应与选择偏差&quot;——RDD在阈值处精确识别7.76%的真实复购率提升，年化GMV增量约120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>60万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SCM-ML-Enhanced.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Synthetic Control + ML — 机器学习增强合成控制法</h3>
+  <p class="sc-desc">供应链分析师面临&quot;新市场进入后无法分离销量增长是趋势还是策略效果&quot;——ML增强合成控制将因果效应估计误差降低45%，年化精准归因节省备货成本20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>为市场扩张、渠道策略等重大决策提供可靠因果证据，避免错误决策</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SSBC-Small-Sample-Conformal.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">小样本Beta修正共形预测 - 50个样本也能保证覆盖</h3>
+  <p class="sc-desc">业务问题：日本市场刚上线，只收集了50条带标签的转化数据做校准</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万/月</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Sensitivity-Analysis-Causal.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Sensitivity Analysis Causal — 因果推断中的敏感性分析（Rosenbaum Bounds）</h3>
+  <p class="sc-desc">数据科学家面临&quot;因果推断结论是否对未观测混淆变量敏感无法判断&quot;——Rosenbaum敏感性分析将结论可信度从&quot;假设无混淆&quot;提升为带有敏感性边界的稳健证明，年化降低错误决策风险节省30-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>避免因假因果导致的策略扩张失误（如错误扩大赠品计划），每次决</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Sensitivity-Analysis-Rosenbaum.html" data-domain="01-因果推断" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Rosenbaum 敏感性分析 — 未测量混淆对因果结论的影响量化</h3>
+  <p class="sc-desc">PSM 因果结论因可能存在未测量混淆而被管理层质疑无法通过决策评审——引入 Rosenbaum 敏感性分析量化混淆临界值，Prime 会员促销效果结论获管理层采纳，年化决策信心价值折算提升12%。</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Survival-Causal-Effect.html" data-domain="01-因果推断" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Survival Analysis Causal Effect — 生存分析因果效应（竞争风险+Cox+IPW）</h3>
+  <p class="sc-desc">运营面临&quot;用户退订/弃购时间节点不清楚促活窗口&quot;——生存分析因果效应将精准触达窗口命中率提升40%，年化复购收入增加20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>准确量化促销对复购时间的因果效应后，优化发券时机年化复购 G</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Synthetic-Control-ML-Enhanced.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">机器学习增强合成控制法 — Doudchenko &amp; Imbens 方法与 ML 扩展</h3>
+  <p class="sc-desc">Amazon A9 算法更新后销量异动无法区分算法影响与季节性导致策略误判——引入 ML 增强合成控制法（Doudchenko &amp; Imbens），算法冲击净效应估计置信区间精度 95%，策略响应准确率大幅提升。</p>
+  <div class='sc-footer'><span class='sc-roi'>50-200 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Uplift-Modeling.html" data-domain="01-因果推断" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">01-因果推断</div>
+  <h3 class="sc-title">Uplift Modeling (元学习框架)</h3>
+  <p class="sc-desc">私域运营面临优惠券乱发浪费预算——Uplift将无效触达率从45%降到18%，年化增收32万元</p>
+  <div class='sc-footer'><span class='sc-roi'>102 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

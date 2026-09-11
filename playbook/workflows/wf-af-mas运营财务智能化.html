@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-AF MAS运营财务智能化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-AF MAS运营财务智能化</nav>
+<h1>WF-AF MAS运营财务智能化</h1>
+<p class="lead">利用多智能体协同将P&amp;L分析、库存财务、广告ROI核算等运营财务工作从人工2天压缩到20分钟自动完成的智能化工作流。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>CFO</span><span class='tag'>财务总监</span><span class='tag'>运营数据分析师</span><span class='tag'>供应链财务</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的财务分析当前最大问题是：P&amp;L归因太慢？各部门数据口径不统一？还是无法快速回答CEO的临时性财务问题？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">月度P&amp;L自动归因分析</div>
+  <div class="wf-question">月度P&amp;L分析是否能在20分钟内完成？</div>
+  <div class="wf-context">传统3天人工P&amp;L分析的核心瓶颈是：数据获取2天+分析1天，MAS并行处理可压缩到20分钟</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-MAS-Revenue-Operations.html"><span class="chip-name">MAS运营财务协同 — 多智能体驱动的P&amp;L实时归因与决策</span><span class="chip-role">MAS多Agent P&amp;L协同，20分钟生成结构化归因报告消除部门推诿，年化节省40万元</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Multi-Step-Reasoning-BI.html"><span class="chip-name">多步推理BI分析 — LLM链式推理自动生成财务归因报告</span><span class="chip-role">多步CoT推理，自动完成&quot;利润下降→拆解收入/成本→锁定SKU/渠道→建议行动&quot;链路</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-LLM-Financial-Report-Analyst.html"><span class="chip-name">LLM Financial Report Analyst — 迭代精化 + 代码验证的智能财务报告解读</span><span class="chip-role">LLM财务报告分析，自动解读财务数据并生成可读报告</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">实时财务异常预警</div>
+  <div class="wf-question">财务异常（广告超支/利润骤降）是否能在发生后2分钟内被检测到？</div>
+  <div class="wf-context">大促期间广告异常平均被发现时间T+22小时，损失2-4万元，实时监控可降低80%损失</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Streaming-Analytics-Agent.html"><span class="chip-name">实时流式分析Agent — 毫秒级事件驱动的AI决策管道</span><span class="chip-role">流式ADWIN监控广告消耗/利润异常，2分钟内告警，年化大促保护137万元</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-LLM-Hallucination-Detection-BI.html"><span class="chip-name">LLM幻觉检测 — 商业智能场景的事实一致性验证引擎</span><span class="chip-role">AI日报幻觉检测，确保财务数字准确不被AI误报，防止决策错误</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Forecast-to-PL-Bridge.html"><span class="chip-name">Forecast-to-PL-Bridge — 需求预测误差的财务损失量化与成本优化</span><span class="chip-role">预测→P&amp;L桥接，将需求预测直接转化为利润预测，前置风险识别</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">多维度财务归因（渠道/SKU/地区）</div>
+  <div class="wf-question">利润能否快速下钻到SKU级别/渠道级别/地区级别？</div>
+  <div class="wf-context">P&amp;L下钻能力决定了运营优化的精度，粗粒度归因导致资源投向无效方向</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-DataAgent-Marketing-Attribution.html"><span class="chip-name">DataAgent营销归因分析 — LLM驱动的多渠道营销效果自动归因</span><span class="chip-role">对话式营销归因，CMO随时追问&quot;TikTok贡献了多少利润&quot;立即得到答案</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-SKU-Level-PL-Dashboard.html"><span class="chip-name">SKU-Level PL Dashboard — 单品利润核算：每个 SKU 今天赚了多少钱</span><span class="chip-role">SKU级P&amp;L看板，精确到每个ASIN的贡献毛利</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-PL-Attribution-Analysis.html"><span class="chip-name">P&amp;L Attribution Analysis（SKU 级损益归因分析）</span><span class="chip-role">P&amp;L归因分析，将总体利润变化拆解到各个驱动因子</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">财务预测与情景规划</div>
+  <div class="wf-question">是否有自动化的财务预测和多情景模拟能力？</div>
+  <div class="wf-context">关税/汇率/大促等外部冲击的财务影响需要快速量化，人工建模太慢</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Agent-Time-Series-Forecasting.html"><span class="chip-name">Agent时序预测 — 智能体驱动的自适应需求预测工作流</span><span class="chip-role">智能体时序预测，自动选择最优预测模型，MAPE从18%降至9%</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Cross-Border-Tax-Tariff-Modeling.html"><span class="chip-name">HTS Tariff Intelligence — LLM 驱动的跨境关税分类与节税优化</span><span class="chip-role">跨境关税建模，量化贸易政策变化的财务冲击</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-FX-Hedging-Strategy.html"><span class="chip-name">FX Hedging Strategy — 跨境汇率风险对冲：动态套期保值降低外汇损失</span><span class="chip-role">外汇对冲策略，最小化汇率波动对利润的影响</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

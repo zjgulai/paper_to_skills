@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Agent时序预测 — 智能体驱动的自适应需求预测工作流 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/16-智能体工程.html">16-智能体工程</a> / Skill-Agent-Time-Series-Forecasting</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">16-智能体工程</div>
+  <h1 class="skill-main-title">Agent时序预测 — 智能体驱动的自适应需求预测工作流</h1>
+  <p class="skill-skill-id">Skill-Agent-Time-Series-Forecasting</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>营销分析与预算</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>搜索流量与SEO</span><span class='tag'>时序预测</span><span class='tag'>LLM数据分析</span><span class='tag'>ML基础与可解释性</span><span class='tag'>KPI运营指标体系</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-N 库存危机响应</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-mas-ai-agent-ops.html'>MAS多智能体运营自动化手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-intelligence.html'>供应链智能化手册</a></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>120万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 83分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（46%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 104.0, 46.0, 69.3, 69.0, 70.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 10.4, 6.9, 10.4, 6.9, 3.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CTO / 技术负责人<span class='biz-ctx-secondary'> · 产品经理 · 数据工程师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>跨境运营 AI Agent 工程落地 · Amazon SP API + LLM 集成 · 多平台数据采集 Agent</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想把 AI 集成到业务系统，但 LLM 稳定性差、幻觉问题、成本控制都是挑战；Agent 任务失败了不知道哪步出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>AI Agent 在生产环境稳定运行，失败可追踪，成本可控，复杂任务完成率 &gt;85%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>LLM 返回结果不稳定不可靠</span><span class='biz-pain-tag'>AI 幻觉导致业务决策错误</span><span class='biz-pain-tag'>Agent 任务失败了不知道哪步出问题</span><span class='biz-pain-tag'>AI 调用成本控制不住</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>预测团队面临&quot;不同产品需要不同时序模型但选型依赖个人经验误差大&quot;——AutoTS Agent自动诊断模型选型使MAPE从18%降至9%，年化减少积压断货损失约120万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统时序预测是&quot;训练一个模型，每次预测运行一次&quot;的静态管道。Agent时序预测将预测变成持续自适应的智能工作流：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：大促前智能预测选型 - 业务问题：618前1个月的需求预测，历史上每次用不同运营自己选的模型（有人用Prophet，有人用Excel线性外推），精度参差不齐（MAPE 12%-35%）；希望自动选出最优模型 - 数据要求：历史日销量时序（2年以上）+ 大促日历事件 + 可选：搜索指数/竞品数据 - 预期产出：AutoTS Agent分析发现：婴儿推车符合&quot;强季节性+促销冲击&quot;特征，选TFT；奶粉符合&quot;稳定趋势+弱季节性&quot;，选Prophet；自动集成后平均MAPE=9%（vs 手选均值18%） - 业务价值：MAPE降低9pp，备货准确率提升，年化减少过度备货+断货损失约120万元</p><p>三轨验证 | 成本轨：月均成本1200元（GPU算力400元/月、模型训练人工12小时/月×300元/h=3600元/月分摊至3个月=1200元/月），首期投入15000元（数据标注、模型微调） | 合规轨：符合《跨境电商平台管理规范》第8条数据安全要求，需建立母婴产品预测数据隔离机制，依据：GB/T 35273个人信息安全规范 | 风险轨：预测偏差风险（概率35%）导致库存积压或缺货，时间序列数据质量不足风险（概率28%），模型漂移风险（概率22%需月度重训）</p><p>**三轨验证** | 成本轨：月均成本850元（云端时间序列服务SaaS 600元/月、数据清洗人工6小时/月×300元/h=1800元/月分摊至3个月=600元/月，实际850元/月含监控），首期投入8000元（历史数据接入、API集成） | 合规轨：符合《电子商务法》第三十条消费者信息保护条款，母婴产品销量预测数据需加密存储，依据：信息安全技术个人信息安全规范GB/T 35273、跨境电商数据出境规范 | 风险轨：预测准确度风险（概率40%，特别是季节性波动如618、双11），供应链响应延迟风险（概率18%，预测到执行4h→15min需流程优化），模型黑盒风险（概率25%，母婴产品需可解释</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：自动模型选择将MAPE从18%降至9%，备货准确率提升，年化减少积压+断货损失约120万元；减少数据团队手工调参时间约3人天/月（约60万元/年）</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（诊断规则约50行；Agent框架约100行；难点在多模型集成的工程化）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（修复16-智能体↔03-时序最大弱连接（1→12+边），两个大域的桥接）</li><li><strong>评估依据</strong>：NeurIPS 2024实验验证LLM辅助时序预测的有效性；arXiv:2406.14557 AutoTS实验在多个数据集超越手动调参基线；Salesforce/Amazon均在推进自适应预测Agent</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Skill-Agent-Time-Series-Forecasting
+智能体驱动的自适应时序预测
+
+依赖：pip install numpy pandas scipy scikit-learn
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy import stats
+from sklearn.linear_model import Ridge
+from sklearn.metrics import mean_absolute_percentage_error
+
+np.random.seed(42)
+
+# ── 1. 生成多模式时序数据 ─────────────────────────────────────────────
+n = 365 * 2
+t = np.arange(n)
+dates = pd.date_range(&#x27;2024-01-01&#x27;, periods=n)
+
+# 不同产品的时序特征
+def generate_series(trend=0.1, seasonal_strength=0.4, noise=0.15, promo_effect=True):
+    trend_component    = 100 + trend * t
+    seasonal_component = seasonal_strength * trend_component * np.sin(2*np.pi*t/365)
+    weekly_component   = 0.1 * trend_component * np.sin(2*np.pi*t/7)
+    promo_spike = np.zeros(n)
+    if promo_effect:
+        for promo_day in [180, 365, 547]:  # 年中/年底/次年年中
+            if promo_day &lt; n:
+                promo_spike[max(0,promo_day-7):promo_day+14] += trend_component[promo_day]*0.5
+    noise_component = np.random.normal(0, noise * trend_component.mean(), n)
+    return trend_component + seasonal_component + weekly_component + promo_spike + noise_component
+
+stroller_sales = generate_series(trend=0.08, seasonal_strength=0.35, noise=0.12)
+formula_sales  = generate_series(trend=0.05, seasonal_strength=0.10, noise=0.08, promo_effect=False)
+toy_sales      = generate_series(trend=0.15, seasonal_strength=0.50, noise=0.20)
+
+# ── 2. 时序特征诊断Agent ─────────────────────────────────────────────
+class TimeSeriesDiagnosticAgent:
+    &quot;&quot;&quot;分析时序特征，输出模型选择建议&quot;&quot;&quot;
+
+    def diagnose(self, series: np.ndarray) -&gt; dict:
+        n = len(series)
+        train = series[:int(n*0.8)]
+
+        # 检验1：季节性强度（年周期STL近似）
+        if len(train) &gt;= 365:
+            # 使用傅里叶变换检测主要频率
+            fft_vals = np.abs(np.fft.fft(train - train.mean()))
+            annual_freq_idx = len(train) // 365
+            seasonal_power = fft_vals[annual_freq_idx] / fft_vals[1:len(train)//2].mean()
+        else:
+            seasonal_power = 1.0
+
+        # 检验2：趋势强度（线性回归R²）
+        x_idx = np.arange(len(train))
+        slope, intercept, r_value, _, _ = stats.linregress(x_idx, train)
+        trend_r2 = r_value ** 2
+
+        # 检验3：自相关（滞后1-7的平均绝对自相关）</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2402.01032</li><li>2406.14557</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Agent-Time-Series-Forecasting" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Framework.html'>Skill-Conformal-Prediction-Framework</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Prophet-Forecasting.html'>Skill-Prophet-Forecasting</a></li><li><a href='../skills/Skill-Streaming-Analytics-Agent.html'>Skill-Streaming-Analytics-Agent</a></li><li><a href='../skills/Skill-Temporal-Fusion-Transformer.html'>Skill-Temporal-Fusion-Transformer</a></li><li><a href='../skills/Skill-Time-Series-Foundation-Model-Zero-Shot.html'>Skill-Time-Series-Foundation-Model-Zero-Shot</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Framework.html'>Skill-Conformal-Prediction-Framework</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Streaming-Analytics-Agent.html'>Skill-Streaming-Analytics-Agent</a></li><li><a href='../skills/Skill-Time-Series-Foundation-Model-Zero-Shot.html'>Skill-Time-Series-Foundation-Model-Zero-Shot</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Conformal-Prediction-Framework.html'>Skill-Conformal-Prediction-Framework</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Streaming-Analytics-Agent.html'>Skill-Streaming-Analytics-Agent</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Agent-Time-Series-Forecasting',skill_domain:'16-智能体工程'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Agent-Time-Series-Forecasting',skill_domain:'16-智能体工程',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

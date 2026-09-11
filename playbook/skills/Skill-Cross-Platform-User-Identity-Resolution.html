@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cross-Platform User Identity Resolution — 跨平台用户 ID 统一 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Cross-Platform-User-Identity-Resolution</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">22-数据采集工程</div>
+  <h1 class="skill-main-title">Cross-Platform User Identity Resolution — 跨平台用户 ID 统一</h1>
+  <p class="skill-skill-id">Skill-Cross-Platform-User-Identity-Resolution</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>用户增长与留存</span><span class='tag'>营销分析与预算</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>逆向物流与退货</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>AI搜索与GEO</span><span class='tag'>多渠道协同增长</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-O 广告ROI最大化</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AA 多渠道协同增长</span><span class='tag'>WF-AB 视频电商全链路</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>TikTok 广告真实 ROAS 校准，广告预算优化 10-</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#dc2626;color:#fff">待改进 · 61分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：论文引用 D3（0%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-8010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 60.0, 0.0, 100.0, 100.0, 100.0, 76.0, 34.0, 50.7, 51.0, 50.0];
+    var scores=[8.0, 3.0, 0.0, 8.0, 4.0, 10.0, 7.6, 5.1, 7.6, 5.1, 2.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据工程师 / 技术负责人<span class='biz-ctx-secondary'> · 运营负责人 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想监控竞品价格/评论/排名但没有稳定采集能力，手动太慢；多平台数据分散整合成本极高；数据管道不稳定经常断</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>竞品价格/评论数据每日自动更新，多平台数据统一入仓，数据管道稳定性 &gt;99%，取数时间从小时降到分钟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品数据要手动收集太慢</span><span class='biz-pain-tag'>平台 API 限制抓不到数据</span><span class='biz-pain-tag'>多系统数据整合不起来</span><span class='biz-pain-tag'>报表用的数据是过期的</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>数据工程师面临&quot;同一用户在Amazon/TikTok/独立站无法识别导致营销浪费&quot;——跨平台用户ID统一将重复触达率降低45%，年化节省广告预算20-40万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨平台用户 ID 统一（Identity Resolution / Identity Graph）解决同一用户在 Amazon、TikTok、独立站等不同平台使用不同 ID 的碎片化问题。统一后可实现全链路归因（TikTok 广告→独立站→Amazon 回购）和跨平台 LTV 计算。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景1：TikTok 广告-Amazon 转化全链路归因 - 业务问题：TikTok 投放团队月支出 30 万广告费，但无法证明有多少 Amazon 销售来自 TikTok 广告，传统 last-click 归因低估 TikTok 贡献，导致预算分配错误。 - 数据要求：TikTok 广告点击 ID（tt_click_id）+ Amazon 订单买家邮件哈希 + 独立站注册邮件哈希；三端数据在各自隐私范围内处理 - 预期产出：跨平台 Match Rate 40-60%，TikTok 真实 ROAS 从 1.8x → 3.2x（含跨平台转化），广告预算优化节省 10-15% - 业务价值：广告预</p><p>场景2：跨平台 LTV 计算 - 业务问题：只看 Amazon 单平台，用户 LTV 被低估（忽略了独立站复购和 TikTok Shop 二次购买），导致拉新成本 ROI 计算错误，优质用户被错误判定为&quot;低价值&quot;而减少触达。 - 数据要求：三平台购买记录（去 PII）+ 概率性 ID 图谱 - 预期产出：全平台真实 LTV，高价值用户识别率提升 35%，精准投入高 LTV 人群 - 业务价值：高 LTV 用户复购率平均 2.3 倍于普通用户，精准投放提升 ROI 20-30%</p><p>**三轨验证**： - 成本：自建 Identity Graph 需 Redis Graph 或 Neptune（AWS），中小团队可用 PostgreSQL JSONB 简化；Match 计算可批处理（日级即可） - 合规：必须使用邮件/手机的哈希值（不可逆），GDPR Art.4(11) 要求有用户同意（consent）才能做跨平台 ID 关联 - 风险：概率性匹配误报会污染 ID 图谱（两个不同用户被合并），需要设置高置信度阈值（0.85+）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>ROI：TikTok 广告真实 ROAS 校准，广告预算优化 10-15%，年化节省 <strong>30-50 万元</strong>（月支出 30 万场景）；高 LTV 用户识别提升精准投放 ROI <strong>20-30%</strong>，直接贡献增量 GMV <strong>20-40 万元/年</strong></li><li>实施难度：⭐⭐⭐⭐☆</li><li>优先级：⭐⭐⭐⭐☆</li><li>评估依据：跨平台归因是多渠道运营团队的核心需求，尤其是 TikTok+Amazon+独立站三轨并行的母婴出海卖家。Match Rate 每提升 10%，归因准确度和预算优化效果同步提升。</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+跨平台用户 ID 统一演示
+确定性匹配（邮件哈希）+ 概率性匹配（行为相似度）+ Identity Graph
+&quot;&quot;&quot;
+import hashlib
+import random
+import math
+from datetime import datetime, timedelta
+from collections import defaultdict
+
+# ── 工具函数 ──────────────────────────────────────────────────────────────────
+def hash_email(email: str, salt: str = &quot;p2s_salt_2026&quot;) -&gt; str:
+    &quot;&quot;&quot;SHA-256 哈希邮件（不可逆，满足 GDPR 要求）&quot;&quot;&quot;
+    return hashlib.sha256(f&quot;{salt}:{email.lower().strip()}&quot;.encode()).hexdigest()[:16]
+
+
+# ── 模拟三平台用户数据 ────────────────────────────────────────────────────────
+def generate_platform_data():
+    &quot;&quot;&quot;
+    生成 Amazon / TikTok / DTC 三平台用户数据
+    部分用户跨平台（真实 User A 在三平台均有账号）
+    &quot;&quot;&quot;
+    base_users = [
+        {&quot;email&quot;: &quot;alice@email.com&quot;, &quot;category_pref&quot;: [&quot;baby_gear&quot;, &quot;feeding&quot;],
+         &quot;purchase_hour_avg&quot;: 20.0, &quot;geo&quot;: &quot;US&quot;},
+        {&quot;email&quot;: &quot;bob@email.com&quot;,   &quot;category_pref&quot;: [&quot;diapering&quot;, &quot;toys&quot;],
+         &quot;purchase_hour_avg&quot;: 12.0, &quot;geo&quot;: &quot;UK&quot;},
+        {&quot;email&quot;: &quot;carol@email.com&quot;, &quot;category_pref&quot;: [&quot;nursery&quot;, &quot;feeding&quot;],
+         &quot;purchase_hour_avg&quot;: 9.0,  &quot;geo&quot;: &quot;DE&quot;},
+        {&quot;email&quot;: &quot;dave@email.com&quot;,  &quot;category_pref&quot;: [&quot;baby_gear&quot;, &quot;toys&quot;],
+         &quot;purchase_hour_avg&quot;: 21.0, &quot;geo&quot;: &quot;US&quot;},
+        {&quot;email&quot;: &quot;eve@email.com&quot;,   &quot;category_pref&quot;: [&quot;feeding&quot;],
+         &quot;purchase_hour_avg&quot;: 18.0, &quot;geo&quot;: &quot;US&quot;},
+    ]
+
+    # Amazon 数据：含邮件哈希
+    amazon_users = []
+    for i, u in enumerate(base_users[:4]):  # Alice, Bob, Carol, Dave 在 Amazon
+        amazon_users.append({
+            &quot;platform&quot;: &quot;amazon&quot;,
+            &quot;platform_id&quot;: f&quot;AMZ-{i+1:04d}&quot;,
+            &quot;email_hash&quot;: hash_email(u[&quot;email&quot;]),
+            &quot;category_pref&quot;: u[&quot;category_pref&quot;],
+            &quot;purchase_hour_avg&quot;: u[&quot;purchase_hour_avg&quot;] + random.uniform(-1, 1),
+            &quot;geo&quot;: u[&quot;geo&quot;],
+            &quot;spend_usd&quot;: round(random.uniform(50, 500), 2),
+        })
+
+    # TikTok 数据：Alice 和 Eve 在 TikTok（Alice 有邮件匹配，Eve 无）
+    tiktok_users = [
+        {
+            &quot;platform&quot;: &quot;tiktok&quot;,
+            &quot;platform_id&quot;: f&quot;TTK-0001&quot;,
+            &quot;email_hash&quot;: hash_email(&quot;alice@email.com&quot;),  # 确定性匹配
+            &quot;category_pref&quot;: [&quot;baby_gear&quot;, &quot;feeding&quot;],
+            &quot;purchase_hour_avg&quot;: 19.5,  # 行为相近
+            &quot;geo&quot;: &quot;US&quot;,
+            &quot;ad_click_count&quot;: 12,
+        },
+        {</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Platform-User-Identity-Resolution" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><p class='muted'>暂无</p>
+    <h3>延伸技能</h3><p class='muted'>暂无</p>
+    <h3>可组合技能</h3><p class='muted'>暂无</p>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Cross-Platform-User-Identity-Resolution',skill_domain:'22-数据采集工程'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Cross-Platform-User-Identity-Resolution',skill_domain:'22-数据采集工程',skill_difficulty:'⭐⭐⭐⭐☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

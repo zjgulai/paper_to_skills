@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LLM辅助因果图发现 — 用语言模型先验加速因果结构学习 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/01-因果推断.html">01-因果推断</a> / Skill-LLM-Causal-Discovery</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">01-因果推断</div>
+  <h1 class="skill-main-title">LLM辅助因果图发现 — 用语言模型先验加速因果结构学习</h1>
+  <p class="skill-skill-id">Skill-LLM-Causal-Discovery</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>pricing</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>搜索流量与SEO</span><span class='tag'>LLM数据分析</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-R Amazon SEO优化</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-V 供应商降本博弈</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>200万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 93分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（58%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 131.0, 58.0, 87.3, 87.0, 88.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 13.1, 8.7, 13.1, 8.7, 4.4];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>增长负责人 / CMO<span class='biz-ctx-secondary'> · 数据分析师 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · TikTok Shop · Meta Ads · DTC 独立站</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告预算花了，但不确定哪个渠道真的带来新客；做了大促，不知道销量增长是促销效果还是季节规律</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>能区分「真实增量」和「自然购买」，砍掉虚假归因渠道后同等预算 ROI 提升 20-40%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>钱花出去了不知道有没有用</span><span class='biz-pain-tag'>各渠道报告都说自己贡献最大</span><span class='biz-pain-tag'>怎么向老板证明这笔钱值得花</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>数据团队面临&quot;广告→销量的因果路径不清晰无法确定优化策略&quot;——LLM先验+统计方法构建因果DAG，识别排名路径贡献62%，策略优化后ROAS提升20%，年化增量约40万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统统计因果发现（PC算法、FCI、GES）依赖数据驱动，需要大量观测数据才能可靠地识别因果关系。在母婴电商场景中，有三个痛点：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：广告→销量因果图构建 - 业务问题：运营怀疑&quot;广告预算→搜索排名→销量&quot;是主路径，还是&quot;广告预算→直接转化→销量&quot;，两条路径会影响完全不同的优化策略 - 数据要求：月度数据（广告预算/搜索排名/CTR/CVR/销量/竞品数/Review数）约18-24个月；LLM接口（询问因果方向先验） - 预期产出：因果DAG显示两条路径的相对权重；中介效应分析显示&quot;通过排名的间接效应&quot;占总效应的62% - 业务价值：优化策略从&quot;增加广告预算&quot;转为&quot;优化Listing质量提升自然排名&quot;，相同预算下ROI提升约20%，年化GMV增量约80万元</p><p>三轨对抗验证： 1. 成本验证：LLM先验询问约50对变量，每次约100 tokens，总成本不超过1元；统计分析是一次性投入，不超过1天工作量 2. 合规验证：因果图是内部分析工具，不涉及平台合规；但基于因果图的策略（如自动调价）需在平台规则允许范围内 3. 风险验证：LLM的因果先验来自通用互联网文本，可能不反映特定平台（如亚马逊A10算法）的实际机制；必须用实际数据做最终验证，LLM先验仅作参考不可直接当结论</p><p>场景B：供应链风险传导路径发现 - 业务问题：不知道&quot;原材料价格上涨&quot;如何通过供应链传导到&quot;最终利润下降&quot;，中间有哪些可以干预的节点 - 数据要求：供应链各环节数据（原材料价格/MOQ/运费/汇率/库存/利润）+ LLM因果先验 - 预期产出：供应链因果DAG + 每个中间节点的&quot;干预效应&quot;（如在运费节点干预可以截断多少传导） - 业务价值：识别最有杠杆作用的干预点，年化优化供应链成本约100万元</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：因果图指导广告-Listing优化策略，相同预算下ROAS提升20%；按年广告支出200万元，增量产出约40万元；供应链因果图发现干预节点，年化优化成本约100万元</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（LLM询问简单，统计部分需基础因果推断知识；主要挑战在领域变量定义和数据质量）</li><li><strong>优先级</strong>：⭐⭐⭐☆☆（因果图是高级分析工具，建议先有稳定数据管道再实施）</li><li><strong>评估依据</strong>：arXiv:2305.00050 展示LLM在因果方向判断上的准确率达到65-80%（强于随机，弱于完整统计方法）；结合统计方法后可提升到85%+；微软、DeepMind等研究机构均有工业级因果发现+LLM的工作</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Skill-LLM-Causal-Discovery
+LLM辅助因果图发现 — 广告→销量因果结构学习
+
+依赖：pip install numpy pandas scipy
+注意：生产环境需接入LLM API；此处用规则模拟LLM因果先验
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from itertools import combinations
+from scipy import stats
+
+np.random.seed(42)
+
+# ── 1. LLM先验因果知识库（模拟LLM对业务变量对的判断）────────────────
+# 生产环境：替换为 LLM API 调用
+# prompt = f&quot;Does variable X causally influence Y in e-commerce context? Answer: Yes/No/Uncertain + confidence&quot;
+LLM_CAUSAL_PRIOR = {
+    # (因, 果): (方向, 置信度)  正值=因→果，负值=因抑制果，0=无关
+    (&#x27;ad_spend&#x27;, &#x27;search_rank&#x27;):    (1,   0.90),  # 广告预算→搜索排名
+    (&#x27;ad_spend&#x27;, &#x27;direct_cvr&#x27;):     (1,   0.85),  # 广告预算→直接转化率
+    (&#x27;search_rank&#x27;, &#x27;organic_ctr&#x27;): (1,   0.92),  # 搜索排名→自然点击率
+    (&#x27;search_rank&#x27;, &#x27;sales&#x27;):       (1,   0.88),  # 搜索排名→销量
+    (&#x27;organic_ctr&#x27;, &#x27;sales&#x27;):       (1,   0.85),  # 自然点击→销量
+    (&#x27;direct_cvr&#x27;, &#x27;sales&#x27;):        (1,   0.87),  # 直接转化→销量
+    (&#x27;review_score&#x27;, &#x27;sales&#x27;):      (1,   0.82),  # 评分→销量
+    (&#x27;competitor_count&#x27;, &#x27;sales&#x27;):  (-1,  0.75),  # 竞品数→（抑制）销量
+    (&#x27;competitor_count&#x27;, &#x27;search_rank&#x27;): (-1, 0.70),
+    (&#x27;season&#x27;, &#x27;sales&#x27;):            (1,   0.88),  # 季节→销量
+    (&#x27;season&#x27;, &#x27;ad_spend&#x27;):         (1,   0.65),  # 季节→广告支出（混淆）
+    (&#x27;ad_spend&#x27;, &#x27;review_score&#x27;):   (0,   0.80),  # 广告不直接影响评分
+    (&#x27;sales&#x27;, &#x27;ad_spend&#x27;):          (0,   0.60),  # 销量可能反向影响预算
+}
+
+# ── 2. 生成模拟观测数据 ────────────────────────────────────────────
+n = 120  # 10年月度数据
+season       = np.sin(2 * np.pi * np.arange(n) / 12)
+ad_spend     = 10 + 3 * season + np.random.normal(0, 1, n)
+search_rank  = -0.5 * ad_spend + 8 + np.random.normal(0, 0.5, n)  # 排名越低越好（数值小）
+organic_ctr  = -0.3 * search_rank + 5 + np.random.normal(0, 0.3, n)
+direct_cvr   = 0.4 * ad_spend + 2 + np.random.normal(0, 0.5, n)
+review_score = 4.2 + 0.05 * np.cumsum(np.random.normal(0, 0.1, n))  # 随时间缓慢变化
+competitor_count = 20 + np.random.normal(0, 3, n)
+sales = (0.4 * organic_ctr + 0.3 * direct_cvr + 0.2 * review_score
+         - 0.1 * competitor_count + 2 * season + np.random.normal(0, 2, n))
+
+df = pd.DataFrame({
+    &#x27;ad_spend&#x27;: ad_spend, &#x27;search_rank&#x27;: search_rank,
+    &#x27;organic_ctr&#x27;: organic_ctr, &#x27;direct_cvr&#x27;: direct_cvr,
+    &#x27;review_score&#x27;: review_score, &#x27;competitor_count&#x27;: competitor_count,
+    &#x27;season&#x27;: season, &#x27;sales&#x27;: sales
+})
+
+print(f&quot;数据集: {n}个月观测, {len(df.columns)}个变量&quot;)
+
+# ── 3. 统计因果骨架（条件独立性检验）────────────────────────────────
+def partial_correlation(df, x, y, z_vars=None):
+    &quot;&quot;&quot;偏相关系数（控制z_vars后，x与y的相关性）&quot;&quot;&quot;
+    if not z_vars:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2303.05279</li><li>2305.00050</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-LLM-Causal-Discovery" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Automated-Causal-Discovery.html'>Skill-Automated-Causal-Discovery</a></li><li><a href='../skills/Skill-Causal-Attribution-Bridge.html'>Skill-Causal-Attribution-Bridge</a></li><li><a href='../skills/Skill-Causal-Churn-Retention-Attribution.html'>Skill-Causal-Churn-Retention-Attribution</a></li><li><a href='../skills/Skill-Causal-Discovery-PC-Algorithm.html'>Skill-Causal-Discovery-PC-Algorithm</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-Mediation-Causal-Mechanism-Analysis.html'>Skill-Mediation-Causal-Mechanism-Analysis</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Causal-Attribution-Bridge.html'>Skill-Causal-Attribution-Bridge</a></li><li><a href='../skills/Skill-Causal-Churn-Retention-Attribution.html'>Skill-Causal-Churn-Retention-Attribution</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li><li><a href='../skills/Skill-Mediation-Causal-Mechanism-Analysis.html'>Skill-Mediation-Causal-Mechanism-Analysis</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Causal-Churn-Retention-Attribution.html'>Skill-Causal-Churn-Retention-Attribution</a></li><li><a href='../skills/Skill-KG-Auto-Construction-Agent-Driven.html'>Skill-KG-Auto-Construction-Agent-Driven</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-LLM-Causal-Discovery',skill_domain:'01-因果推断'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-LLM-Causal-Discovery',skill_domain:'01-因果推断',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 反事实定价策略 Agent</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

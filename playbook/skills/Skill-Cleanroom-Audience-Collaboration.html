@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cleanroom Audience Collaboration — 数据洁净室跨品牌受众协作无需共享原始数据 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Cleanroom-Audience-Collaboration</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">22-数据采集工程</div>
+  <h1 class="skill-main-title">Cleanroom Audience Collaboration — 数据洁净室跨品牌受众协作无需共享原始数据</h1>
+  <p class="skill-skill-id">Skill-Cleanroom-Audience-Collaboration</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>AI伦理与治理</span><span class='tag'>逆向物流与退货</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AB 视频电商全链路</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10-20 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据工程师 / 技术负责人<span class='biz-ctx-secondary'> · 运营负责人 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想监控竞品价格/评论/排名但没有稳定采集能力，手动太慢；多平台数据分散整合成本极高；数据管道不稳定经常断</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>竞品价格/评论数据每日自动更新，多平台数据统一入仓，数据管道稳定性 &gt;99%，取数时间从小时降到分钟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品数据要手动收集太慢</span><span class='biz-pain-tag'>平台 API 限制抓不到数据</span><span class='biz-pain-tag'>多系统数据整合不起来</span><span class='biz-pain-tag'>报表用的数据是过期的</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>数字营销团队面临&quot;想与内容平台共分析受众但GDPR禁止共享用户数据、媒体规划无法做受众重叠验证&quot;——数据洁净室K匿名性+差分隐私联合分析在数据不出本地前提下完成受众重叠分析，规避最高4%全球营收的合规罚款风险</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>数据洁净室（Data Clean Room, DCR） 是解决&quot;数据协作 vs 隐私保护&quot;矛盾的核心技术：两家公司（如母婴品牌 × 育儿内容平台）想要共同分析彼此的用户数据，但任何一方都不能看到对方的原始用户记录。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：母婴奶粉品牌（5,000 历史买家）想与&quot;宝宝树&quot;类育儿内容平台合作，了解：①有多少重叠用户（已经在平台上）；②重叠用户和非重叠用户的 LTV 差异；③是否值得在该平台投放广告。</p><p>洁净室方案（AWS Clean Rooms）： 1. 品牌上传：哈希邮箱 + 购买金额分段（High/Mid/Low，不上传具体金额） 2. 平台上传：哈希邮箱 + 活跃度分段（DAU/WAU/MAU） 3. 洁净室联合查询： 4. 输出：分组重叠数（不含具体用户名单）</p><p>预期产出： - 重叠率：品牌买家中 38% 活跃于该平台 - 高 LTV 用户（Top 20%）中 52% 活跃于平台（相关性强） - 建议：值得在该平台投放，预期 ROAS &gt; 3x（基于重叠人群质量）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：媒体规划决策准确率提升（避免高估重叠率导致的低效媒体投资），年化节省约 <strong>$10-20 万</strong>广告浪费；合规风险规避（GDPR 违规最高罚款 4% 全球营收），对 $5M 年营收的品牌意味着最高 $20 万风险敞口</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（AWS Clean Rooms 几分钟创建，数据上传和查询约 2-3 周工程化；自建需 6-8 周）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（Cookie 消亡后媒体协作的核心基础设施，尤其欧盟市场从 2024 年起监管力度持续加强）</li><li><strong>评估依据</strong>：AdsBPC 在真实广告数据集上比传统 DP 机制准确率提升 33-95%；AWS Clean Rooms 已有 Adidas、Volkswagen 等头部品牌生产部署；媒体重叠分析是 AWS 客户调研中排名第一的数据协作用例</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Cleanroom Audience Collaboration
+数据洁净室受众协作模拟——隐私安全联合分析
+
+依赖：numpy, pandas
+模拟：本地洁净室查询引擎（生产环境用 AWS/Google Clean Rooms）
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+import hashlib
+from typing import Dict, Tuple, Optional, List
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ─────────────────────────────────────────────
+# 1. 模拟双方数据（各自持有，不互相可见）
+# ─────────────────────────────────────────────
+
+def generate_brand_data(n_users: int = 5000) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;品牌侧数据：历史购买用户（含哈希邮箱）&quot;&quot;&quot;
+    np.random.seed(42)
+    emails = [f&quot;user{i}@example.com&quot; for i in range(n_users)]
+    email_hashes = [hashlib.sha256(e.encode()).hexdigest()[:16] for e in emails]
+    ltv = np.random.lognormal(5.0, 0.7, n_users)
+    ltv_segment = pd.qcut(ltv, q=3, labels=[&#x27;Low&#x27;, &#x27;Mid&#x27;, &#x27;High&#x27;])
+    return pd.DataFrame({
+        &#x27;email_hash&#x27;: email_hashes,
+        &#x27;ltv_segment&#x27;: ltv_segment,
+        &#x27;ltv_actual&#x27;: ltv.round(2),  # 品牌侧保留，不上传
+        &#x27;purchase_count&#x27;: np.random.poisson(2.5, n_users).clip(1, 20),
+    })
+
+
+def generate_platform_data(brand_df: pd.DataFrame,
+                            overlap_rate: float = 0.40) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;平台侧数据：活跃用户（部分与品牌重叠）&quot;&quot;&quot;
+    np.random.seed(123)
+    n_brand = len(brand_df)
+
+    # 重叠用户（使用品牌侧的哈希邮箱）
+    n_overlap = int(n_brand * overlap_rate)
+    overlap_hashes = brand_df[&#x27;email_hash&#x27;].iloc[:n_overlap].tolist()
+
+    # 平台独有用户
+    n_platform_only = int(n_brand * 0.8)
+    platform_only_hashes = [hashlib.sha256(f&quot;platform{i}@domain.com&quot;.encode()).hexdigest()[:16]
+                             for i in range(n_platform_only)]
+
+    all_hashes = overlap_hashes + platform_only_hashes
+    n_total = len(all_hashes)
+
+    activity = np.random.choice([&#x27;DAU&#x27;, &#x27;WAU&#x27;, &#x27;MAU&#x27;],
+                                 n_total, p=[0.3, 0.45, 0.25])
+    # 重叠用户倾向更活跃（更高价值）
+    for i in range(n_overlap):
+        if np.random.random() &lt; 0.5:
+            activity[i] = &#x27;DAU&#x27;
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.02463</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cleanroom-Audience-Collaboration" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li><li><a href='../skills/Skill-Counterfactual-Ad-Attribution-Debiasing.html'>Skill-Counterfactual-Ad-Attribution-Debiasing</a></li><li><a href='../skills/Skill-Dual-Tower-Lookalike-Modeling.html'>Skill-Dual-Tower-Lookalike-Modeling</a></li><li><a href='../skills/Skill-Multi-Source-User-Identity-Unification.html'>Skill-Multi-Source-User-Identity-Unification</a></li><li><a href='../skills/Skill-Privacy-Preserving-Lookalike-FL.html'>Skill-Privacy-Preserving-Lookalike-FL</a></li><li><a href='../skills/Skill-Privacy-Safe-Identity-Resolution.html'>Skill-Privacy-Safe-Identity-Resolution</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-CDA-Cookieless-Attribution.html'>Skill-CDA-Cookieless-Attribution</a></li><li><a href='../skills/Skill-Counterfactual-Ad-Attribution-Debiasing.html'>Skill-Counterfactual-Ad-Attribution-Debiasing</a></li><li><a href='../skills/Skill-Dual-Tower-Lookalike-Modeling.html'>Skill-Dual-Tower-Lookalike-Modeling</a></li><li><a href='../skills/Skill-Multi-Source-User-Identity-Unification.html'>Skill-Multi-Source-User-Identity-Unification</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Counterfactual-Ad-Attribution-Debiasing.html'>Skill-Counterfactual-Ad-Attribution-Debiasing</a></li><li><a href='../skills/Skill-Dual-Tower-Lookalike-Modeling.html'>Skill-Dual-Tower-Lookalike-Modeling</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Cleanroom-Audience-Collaboration',skill_domain:'22-数据采集工程'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Cleanroom-Audience-Collaboration',skill_domain:'22-数据采集工程',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lifecycle Stage Aware Recommendation — 用户生命周期感知推荐 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Lifecycle-Stage-Aware-Rec</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">05-推荐系统</div>
+  <h1 class="skill-main-title">Lifecycle Stage Aware Recommendation — 用户生命周期感知推荐</h1>
+  <p class="skill-skill-id">Skill-Lifecycle-Stage-Aware-Rec</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>recommendation</span><span class='tag'>供应链与补货</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>时序预测</span><span class='tag'>逆向物流与退货</span><span class='tag'>多渠道协同增长</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-AA 多渠道协同增长</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>阶段跃迁期精准推送使品类交叉购买率提升 25-40%，对年均</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#2563eb;color:#fff">中等 · 73分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（34%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 76.0, 34.0, 50.7, 51.0, 50.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 7.6, 5.1, 7.6, 5.1, 2.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营面临&quot;用户从新生儿期过渡到辅食期时品类切换推荐错失商机&quot;——生命周期阶段感知推荐将辅食CTR从1.2%提升至4.8%、NTB用户数提升35%，年化品类GMV增量约200万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>母婴消费者的需求随用户生命周期阶段（备孕期→孕期→新生儿期→婴儿期→幼儿期）发生结构性跃迁，传统推荐系统将用户视为静态偏好载体，无法捕捉这种相变式转型。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景1：Amazon 婴儿用品跨阶段主动推荐 - 业务问题：用户从&quot;新生儿奶粉&quot;阶段过渡到&quot;婴儿辅食&quot;阶段时，推荐系统未能及时切换，错失辅食品类增购机会，相关品类 CVR 仅 1.2% - 数据要求：用户 18 个月以上购买序列、商品月龄标注（0-6M/6-12M/1-3Y）、用户注册时的预产期（可选） - 预期产出：阶段跃迁期（宝宝 5-7 月龄）品类切换推荐 CTR 从 1.2% 升至 4.8%，辅食品类 30 日 NTB（新品类购买）用户数提升 35% - 业务价值：辅食品类扩张，年化品类 GMV 增量约 200 万元</p><p>场景2：会员体系分层激活 - 业务问题：品牌 APP 用户分层运营靠人工打标，同是&quot;奶粉用户&quot;却混合了不同阶段，Push 到达率 14% - 数据要求：APP 内购买/浏览记录、会员注册信息 - 预期产出：基于阶段分层的 Push 到达后转化率从 2.1% 提升至 5.8%，品类交叉销售率提升 28% - 业务价值：精准推送降低 30% 用户退订率，年化 LTV 提升约 80 万元</p><p>**三轨验证**： - 成本：HMM 训练轻量，在线推理 &lt;10ms；商品月龄标注需一次性人工完成（约 2 人周） - 合规：不收集儿童年龄等敏感信息，仅用商品信号推断阶段；COPPA 合规 - 风险：阶段识别准确率受数据稀疏影响；需设置 fallback（阶段不确定时用通用热门推荐）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>ROI：阶段跃迁期精准推送使品类交叉购买率提升 25-40%，对年均 5000 个活跃用户，年化增量 GMV 150-250 万元</li><li>实施难度：⭐⭐⭐☆☆（核心是商品月龄标注，推荐逻辑不复杂）</li><li>优先级：⭐⭐⭐⭐⭐</li><li>评估依据：母婴品类的阶段性需求跃迁是行业独特优势，竞争对手难以复制品牌对用户全周期的持续服务能力；用户阶段跃迁是最高价值运营节点</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+from collections import Counter
+
+# ============================================================
+# Lifecycle Stage Aware Recommendation（生命周期感知推荐简化版）
+# ============================================================
+
+# 商品→生命周期阶段映射（0:孕期, 1:新生儿0-6M, 2:婴儿6-12M, 3:幼儿1-3Y）
+ITEM_STAGE_MAP = {
+    &quot;叶酸&quot;: 0, &quot;孕妇奶粉&quot;: 0, &quot;待产包&quot;: 0,
+    &quot;新生儿奶粉&quot;: 1, &quot;纸尿裤NB&quot;: 1, &quot;婴儿床&quot;: 1, &quot;新生儿衣服&quot;: 1,
+    &quot;段位奶粉2段&quot;: 2, &quot;辅食泥&quot;: 2, &quot;学饮杯&quot;: 2, &quot;爬行垫&quot;: 2,
+    &quot;幼儿奶粉3段&quot;: 3, &quot;儿童零食&quot;: 3, &quot;早教玩具&quot;: 3, &quot;绘本&quot;: 3,
+}
+
+def infer_user_stage(purchase_history: list[str]) -&gt; int:
+    &quot;&quot;&quot;基于购买历史推断用户当前生命周期阶段（取最高频阶段）&quot;&quot;&quot;
+    stage_counts = Counter()
+    for item in purchase_history:
+        stage = ITEM_STAGE_MAP.get(item)
+        if stage is not None:
+            stage_counts[stage] += 1
+    if not stage_counts:
+        return 1  # 默认新生儿阶段
+    return stage_counts.most_common(1)[0][0]
+
+def detect_stage_transition(recent_items: list[str], current_stage: int) -&gt; bool:
+    &quot;&quot;&quot;检测是否即将进入下一阶段（最近10次购买中出现≥2个下一阶段商品）&quot;&quot;&quot;
+    next_stage = current_stage + 1
+    next_stage_count = sum(
+        1 for item in recent_items[-10:]
+        if ITEM_STAGE_MAP.get(item) == next_stage
+    )
+    return next_stage_count &gt;= 2
+
+def recommend_by_stage(current_stage: int,
+                       is_transitioning: bool,
+                       purchased_items: set[str],
+                       top_n: int = 5) -&gt; list[str]:
+    &quot;&quot;&quot;基于生命周期阶段生成推荐商品列表&quot;&quot;&quot;
+    # 目标阶段：过渡期推荐下一阶段商品
+    target_stage = current_stage + 1 if is_transitioning else current_stage
+
+    # 候选商品（目标阶段未购买的商品）
+    stage_items = [
+        item for item, stage in ITEM_STAGE_MAP.items()
+        if stage == target_stage and item not in purchased_items
+    ]
+
+    # 简化打分：过渡期给下一阶段商品额外权重
+    transition_bonus = 0.3 if is_transitioning else 0.0
+    scores = {item: 0.5 + transition_bonus + np.random.uniform(0, 0.2)
+              for item in stage_items}
+
+    ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    return [item for item, _ in ranked[:top_n]]
+
+# ---------- 测试用例 ----------
+# 用户历史：新生儿期为主，最近出现辅食泥信号
+user_history = [</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2405.09832</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Lifecycle-Stage-Aware-Rec" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Baby-Age-Aware-Recommendation.html'>Skill-Baby-Age-Aware-Recommendation</a></li><li><a href='../skills/Skill-Cross-Platform-Transfer-Rec.html'>Skill-Cross-Platform-Transfer-Rec</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-Recommendation-TS-Demand.html'>Skill-Recommendation-TS-Demand</a></li><li><a href='../skills/Skill-Sequential-Recommendation-Transformer.html'>Skill-Sequential-Recommendation-Transformer</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Platform-Transfer-Rec.html'>Skill-Cross-Platform-Transfer-Rec</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-Recommendation-TS-Demand.html'>Skill-Recommendation-TS-Demand</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-LTV-Prediction-ZILN.html'>Skill-LTV-Prediction-ZILN</a></li><li><a href='../skills/Skill-Recommendation-TS-Demand.html'>Skill-Recommendation-TS-Demand</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Lifecycle-Stage-Aware-Rec',skill_domain:'05-推荐系统'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Lifecycle-Stage-Aware-Rec',skill_domain:'05-推荐系统',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

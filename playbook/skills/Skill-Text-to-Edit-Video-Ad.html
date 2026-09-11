@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Skill Card: Text-to-Edit — MLLM母婴视频广告智能剪辑 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/20-ai视频生成.html">20-AI视频生成</a> / Skill-Text-to-Edit-Video-Ad</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">20-AI视频生成</div>
+  <h1 class="skill-main-title">Skill Card: Text-to-Edit — MLLM母婴视频广告智能剪辑</h1>
+  <p class="skill-skill-id">Skill-Text-to-Edit-Video-Ad</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>LLM数据分析</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>多渠道协同增长</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AB 视频电商全链路</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-content-factory.html'>AI 内容工厂手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 91分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（58%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 60.0, 100.0, 100.0, 100.0, 100.0, 131.0, 58.0, 87.3, 87.0, 88.0];
+    var scores=[8.0, 3.0, 10.0, 8.0, 4.0, 10.0, 13.1, 8.7, 13.1, 8.7, 4.4];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>内容运营 / 品牌负责人<span class='biz-ctx-secondary'> · 社媒运营 · CMO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>TikTok Shop LIVE · Instagram Reels · 多语言虚拟主播（英/西/阿/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>TikTok/Reels 需要大量视频，拍摄成本高周期长产能跟不上；想做直播带货但真人主播成本高语言是障碍</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>视频内容产能提升 5-10 倍，单条视频成本降低 80%，多语言市场内容本地化快速覆盖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>视频内容来不及做</span><span class='biz-pain-tag'>拍视频成本太高</span><span class='biz-pain-tag'>主播太贵或不稳定</span><span class='biz-pain-tag'>多语言内容没有人拍</span><span class='biz-pain-tag'>TikTok 更新频率要求太高</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营提交&quot;把产品视频第 5-8 秒换成使用场景&quot;的需求，人工剪辑需 2 天、外包成本 $500+——Text-to-Edit 视频编辑将自然语言指令直接执行，从&quot;需求到成品&quot;缩短到 10 分钟，广告素材迭代成本降低 90%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：通过多模态大语言模型（MLLM）理解自然语言编辑指令，端到端生成结构化剪辑方案（JSON格式的镜头序列、配音脚本、装饰元素），将母婴品牌广告从&quot;2天手工剪辑&quot;降至&quot;10分钟自动生成&quot;。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题： 某母婴品牌（婴儿沐浴露、洗发水）在Amazon、Shopee、TikTok Shop同步运营。原流程：每个SKU×每个平台需制作1-2条&quot;产品展示+使用场景+用户评价&quot;的短视频，由外包视频团队制作，周期8-10天，单条成本 $800-1200。内容库存严重不足，导致平台曝光率低。</p><p>具体数据规模： - 产品矩阵：12个SKU（不同香型、规格） - 目标平台：3个（Amazon、Shopee、TikTok Shop） - 月度视频需求：36条（12 SKU × 3平台） - 素材库：200条预制短片（产品展示、婴儿洗澡场景、用户评价、装饰元素）</p><p>应用流程： 1. 运营输入：`&quot;婴儿沐浴露-无泪配方，展示产品+婴儿洗澡场景（5-8秒）+用户评价（8-12秒），加&#x27;Dermatologist Tested&#x27;标签，背景音乐温馨风格，时长30秒，适配TikTok Shop&quot;` 2. MLLM处理：理解需求 → 从素材库自动匹配&quot;产品展示片段（3秒）+ 婴儿洗澡场景（3秒）+ 用户评价（2秒）+ CTA（2秒）&quot; → 生成JSON剪辑方案 → 自动渲染 3. 输出：30秒成品视频 + 配音脚本 + 字幕文件</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>成本：$1.44（AI渲染 $1.44 vs 外包 $800）</li><li>收益：基于转化率提升 1.4%，假设单条视频带动销售额 $5,000，增量收益 = $5,000 × 1.4% = $70</li><li>**单条ROI = $70 / $1</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/visual_content/text_to_edit_video_ad</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import json
+import numpy as np
+from datetime import datetime, timedelta
+from collections import defaultdict
+
+class TextToEditVideoAdPipeline:
+    &quot;&quot;&quot;
+    MLLM母婴视频广告智能剪辑引擎
+    输入：产品信息 + 自然语言编辑指令 + 素材库
+    输出：JSON剪辑方案 + 配音脚本 + 装饰标签
+    &quot;&quot;&quot;
+    
+    def __init__(self, material_library_size=200):
+        &quot;&quot;&quot;初始化素材库和编辑规则&quot;&quot;&quot;
+        self.material_library = self._init_material_library(material_library_size)
+        self.edit_rules = self._init_edit_rules()
+        self.voice_styles = {
+            &quot;warm&quot;: {&quot;speed&quot;: 0.95, &quot;pitch&quot;: 1.1},
+            &quot;professional&quot;: {&quot;speed&quot;: 1.0, &quot;pitch&quot;: 1.0},
+            &quot;energetic&quot;: {&quot;speed&quot;: 1.1, &quot;pitch&quot;: 1.2}
+        }
+        self.overlay_templates = {
+            &quot;limited_offer&quot;: {&quot;duration&quot;: 2, &quot;position&quot;: &quot;bottom&quot;},
+            &quot;product_feature&quot;: {&quot;duration&quot;: 3, &quot;position&quot;: &quot;center&quot;},
+            &quot;user_testimonial&quot;: {&quot;duration&quot;: 2, &quot;position&quot;: &quot;top&quot;}
+        }
+    
+    def _init_material_library(self, size):
+        &quot;&quot;&quot;初始化素材库：包含产品展示、使用场景、用户评价等片段&quot;&quot;&quot;
+        library = {
+            &quot;product_showcase&quot;: [
+                {&quot;id&quot;: f&quot;ps_{i}&quot;, &quot;duration&quot;: 3, &quot;category&quot;: &quot;婴儿洗护&quot;, &quot;content&quot;: f&quot;Product showcase {i}&quot;}
+                for i in range(1, 51)
+            ],
+            &quot;usage_scene&quot;: [
+                {&quot;id&quot;: f&quot;us_{i}&quot;, &quot;duration&quot;: 4, &quot;category&quot;: &quot;婴儿洗护&quot;, &quot;content&quot;: f&quot;Usage scene {i}&quot;}
+                for i in range(1, 51)
+            ],
+            &quot;user_feedback&quot;: [
+                {&quot;id&quot;: f&quot;uf_{i}&quot;, &quot;duration&quot;: 2, &quot;category&quot;: &quot;婴儿洗护&quot;, &quot;content&quot;: f&quot;User feedback {i}&quot;}
+                for i in range(1, 51)
+            ],
+            &quot;cta_segment&quot;: [
+                {&quot;id&quot;: f&quot;cta_{i}&quot;, &quot;duration&quot;: 2, &quot;category&quot;: &quot;通用&quot;, &quot;content&quot;: f&quot;CTA segment {i}&quot;}
+                for i in range(1, 51)
+            ]
+        }
+        return library
+    
+    def _init_edit_rules(self):
+        &quot;&quot;&quot;编辑规则：将自然语言指令映射到结构化动作&quot;&quot;&quot;
+        return {
+            &quot;replace&quot;: r&quot;换成|替换|改为&quot;,
+            &quot;add&quot;: r&quot;加|添加|插入&quot;,
+            &quot;remove&quot;: r&quot;删除|移除|去掉&quot;,
+            &quot;adjust&quot;: r&quot;调整|修改|改变&quot;,
+            &quot;time_pattern&quot;: r&quot;(\d+)-(\d+)秒|第(\d+)秒&quot;
+        }
+    
+    def parse_edit_instruction(self, instruction):</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2501.05884</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Text-to-Edit-Video-Ad" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html'>Skill-Aquarius-Brand-Video-Generation</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-NL2Dashboard-Automation.html'>Skill-NL2Dashboard-Automation</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-DAWN-Talking-Head-Review.html'>Skill-DAWN-Talking-Head-Review</a></li><li><a href='../skills/Skill-Phantom-Product-Showcase-I2V.html'>Skill-Phantom-Product-Showcase-I2V</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Text-to-Edit-Video-Ad',skill_domain:'20-AI视频生成'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Text-to-Edit-Video-Ad',skill_domain:'20-AI视频生成',skill_difficulty:''});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

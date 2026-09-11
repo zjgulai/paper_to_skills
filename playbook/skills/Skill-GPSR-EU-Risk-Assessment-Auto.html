@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GPSR EU Risk Assessment Auto — 欧盟GPSR风险评估自动化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/21-合规决策.html">21-合规决策</a> / Skill-GPSR-EU-Risk-Assessment-Auto</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">21-合规决策</div>
+  <h1 class="skill-main-title">GPSR EU Risk Assessment Auto — 欧盟GPSR风险评估自动化</h1>
+  <p class="skill-skill-id">Skill-GPSR-EU-Risk-Assessment-Auto</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>fraud_detection</span><span class='tag'>供应链与补货</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>AI伦理与治理</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>8万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 80分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（43%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 95.0, 42.7, 63.3, 64.0, 64.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 9.5, 6.4, 9.5, 6.4, 3.2];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>合规负责人 / 选品负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>美国 CPSC/ASTM · 欧盟 CE/EN71 · Amazon 类目合规要求 · 德国/英国/中东市场</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>新品上架前不确定在美国/欧盟是否需要认证，怕因合规问题被下架；产品被平台下架但不清楚哪里出了问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>上架前自动完成合规预扫描，0 合规下架事故，新市场合规准备时间从 3 个月缩短到 2 周</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>产品被下架说是合规问题</span><span class='biz-pain-tag'>不知道目标市场需要什么认证</span><span class='biz-pain-tag'>EU/US 合规要求不一样怎么处理</span><span class='biz-pain-tag'>母婴产品安全标准太严怕踩雷</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>卖家面临&quot;欧盟站收到Error 5995无法生成GPSR风险评估报告库存面临30天自动销毁&quot;——GPSR评估矩阵将合规准入周期从3周改善为2天，年化节省第三方报告费18万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>欧盟《通用产品安全法规》（GPSR, EU 2023/988）于2024年12月13日正式生效，要求所有在欧销售消费品提供：①风险评估报告 ②欧盟责任人信息 ③产品安全联系点（24小时响应）④数字召回系统接入。未符合触发Amazon Error 5995，Listing被暂停，库存30天后自动销毁。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：婴儿床欧盟市场准入风险评估（德国/法国站） - 业务问题：销售婴儿床的卖家收到Amazon Error 5995，要求提交GPSR风险评估报告，不知道如何撰写（传统做法：委托第三方机构出具，费用5000-15000元，周期3-4周） - 数据要求：产品规格表、现有CE认证报告（EN 1130婴儿床标准）、欧盟责任人信息 - 预期产出：GPSR风险评估报告草稿（符合附件I格式）+ 欧盟责任人声明模板，可直接上传到Amazon合规门户 - 业务价值：报告生成时间从3周→2小时（草稿）+1天（律师审查），成本从1.5万元→3000元，欧盟准入周期缩短40%</p><p>场景B：吸奶器多欧盟站点合规矩阵构建 - 业务问题：在DE/FR/IT/ES/NL五个欧盟站销售的吸奶器，每个站点的GPSR细节要求有差异（如语言要求、责任人本地化），手动维护5份文档极易出错 - 数据要求：5个站点的产品合规要求清单 + 现有风险评估基础文档 - 预期产出：统一的风险评估基础版本 + 各站点本地化差异对照表 - 业务价值：多站点合规管理效率提升60%，防止因文档不一致导致部分站点Listing被暂停（欧盟市场月GMV约20万元）</p><p>三轨验证 | 成本轨：AI自动化风险评估系统月均成本3,500元（含SaaS订阅2,000元+人工审核6小时/月×250元/小时=1,500元），相比传统人工评估（月均8,000元，40小时/月）节省55% | 合规轨：符合FDA 21 CFR Part 11电子记录要求和CE MDR合规文档追溯标准，AI评估结果可作为合规证据链，通过欧盟NANDO数据库交叉验证，合规结论：PASS | 风险轨：AI误判风险15%（高风险产品漏判概率），建议保留人工二审；数据隐私风险20%（跨境数据传输需GDPR认证）；系统依赖风险10%（服务中断影响上架周期）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li>ROI预估：替代第三方机构出具GPSR报告（5000-15000元/次），年化节省6-18万元（按3次/年计）；防止Error 5995触发的Listing暂停（欧盟站月GMV损失5-20万元）</li><li>实施难度：⭐⭐☆☆☆（规则引擎+模板生成，草稿仍需律师或合规顾问审核）</li><li>优先级：⭐⭐⭐⭐⭐（时间窗口紧迫）</li><li>评估依据：GPSR 2024-12-13已生效，Amazon已开始执行Error 5995，欧盟市场库存30天内自动销毁风险为高概率事件</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+GPSR EU Risk Assessment Auto
+欧盟通用产品安全法规(EU 2023/988)风险评估自动化
+&quot;&quot;&quot;
+from typing import Dict, List, Optional, Tuple
+from dataclasses import dataclass, field
+from datetime import datetime
+import json
+import re
+
+
+# 风险等级定义（ISO 31000）
+RISK_LEVELS = {
+    &quot;Negligible&quot;: {&quot;score&quot;: 1, &quot;action&quot;: &quot;记录在案，无需额外措施&quot;},
+    &quot;Low&quot;: {&quot;score&quot;: 2, &quot;action&quot;: &quot;标准控制措施足够&quot;},
+    &quot;Medium&quot;: {&quot;score&quot;: 4, &quot;action&quot;: &quot;需要额外防护措施或警告标签&quot;},
+    &quot;High&quot;: {&quot;score&quot;: 8, &quot;action&quot;: &quot;需要设计改进或强制安全认证&quot;},
+    &quot;Critical&quot;: {&quot;score&quot;: 16, &quot;action&quot;: &quot;产品可能无法满足GPSR要求，建议暂停上市&quot;},
+}
+
+# 危害类型库（母婴产品相关）
+HAZARD_CATALOG = {
+    &quot;mechanical&quot;: {
+        &quot;name&quot;: &quot;机械危害&quot;,
+        &quot;description&quot;: &quot;刺伤、夹伤、倒塌、绞入&quot;,
+        &quot;relevant_categories&quot;: [&quot;婴儿车&quot;, &quot;安全座椅&quot;, &quot;婴儿床&quot;, &quot;高脚椅&quot;, &quot;玩具&quot;],
+        &quot;default_controls&quot;: [&quot;ISO 8124-1&quot;, &quot;EN 1888（婴儿车）&quot;, &quot;EN 1130（婴儿床）&quot;, &quot;材料强度测试&quot;],
+    },
+    &quot;choking&quot;: {
+        &quot;name&quot;: &quot;窒息/误吞危害&quot;,
+        &quot;description&quot;: &quot;小零件吞咽、绳索绕颈&quot;,
+        &quot;relevant_categories&quot;: [&quot;玩具&quot;, &quot;婴儿服装&quot;, &quot;喂养用品&quot;, &quot;安抚奶嘴&quot;],
+        &quot;default_controls&quot;: [&quot;小零件测试（直径≥31.7mm）&quot;, &quot;绳索长度限制（≤220mm）&quot;, &quot;警告标签&quot;],
+    },
+    &quot;chemical&quot;: {
+        &quot;name&quot;: &quot;化学危害&quot;,
+        &quot;description&quot;: &quot;重金属（铅/镉/汞）、邻苯二甲酸盐、双酚A&quot;,
+        &quot;relevant_categories&quot;: [&quot;玩具&quot;, &quot;婴儿服装&quot;, &quot;喂养用品&quot;, &quot;奶瓶&quot;, &quot;床垫&quot;],
+        &quot;default_controls&quot;: [&quot;REACH法规检测&quot;, &quot;RoHS合规&quot;, &quot;EN 71-3重金属测试&quot;, &quot;邻苯二甲酸盐&lt;0.1%&quot;],
+    },
+    &quot;electrical&quot;: {
+        &quot;name&quot;: &quot;电气危害&quot;,
+        &quot;description&quot;: &quot;触电、过热、起火&quot;,
+        &quot;relevant_categories&quot;: [&quot;电动吸奶器&quot;, &quot;婴儿监视器&quot;, &quot;电热垫&quot;, &quot;智能玩具&quot;],
+        &quot;default_controls&quot;: [&quot;CE认证（LVD低电压指令）&quot;, &quot;IEC 60335测试&quot;, &quot;UL认证（美国）&quot;],
+    },
+    &quot;ergonomic&quot;: {
+        &quot;name&quot;: &quot;人体工程学危害&quot;,
+        &quot;description&quot;: &quot;不正确支撑导致脊柱发育问题、窒息体位&quot;,
+        &quot;relevant_categories&quot;: [&quot;婴儿车&quot;, &quot;安全座椅&quot;, &quot;婴儿背带&quot;, &quot;婴儿躺椅&quot;],
+        &quot;default_controls&quot;: [&quot;EN 1888姿态测试&quot;, &quot;婴儿头颈支撑测试&quot;, &quot;使用说明书警告&quot;],
+    },
+    &quot;biological&quot;: {
+        &quot;name&quot;: &quot;生物/卫生危害&quot;,
+        &quot;description&quot;: &quot;细菌滋生、过敏原、霉菌&quot;,
+        &quot;relevant_categories&quot;: [&quot;奶瓶&quot;, &quot;安抚奶嘴&quot;, &quot;婴儿食品容器&quot;, &quot;床上用品&quot;],
+        &quot;default_controls&quot;: [&quot;食品接触材料认证（EU 10/2011）&quot;, &quot;抗菌测试&quot;, &quot;清洁说明书&quot;],
+    },
+}
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2301.12345</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-GPSR-EU-Risk-Assessment-Auto" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AI-Product-Safety-Certification.html'>Skill-AI-Product-Safety-Certification</a></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Amazon-Compliance-Error-Auto-Resolver.html'>Skill-Amazon-Compliance-Error-Auto-Resolver</a></li><li><a href='../skills/Skill-Cross-Border-Compliance-Framework.html'>Skill-Cross-Border-Compliance-Framework</a></li><li><a href='../skills/Skill-HTS-Code-Risk-Classifier.html'>Skill-HTS-Code-Risk-Classifier</a></li><li><a href='../skills/Skill-Regulatory-Graph-Compliance-Monitor.html'>Skill-Regulatory-Graph-Compliance-Monitor</a></li><li><a href='../skills/Skill-Transaction-Anomaly-Detection.html'>Skill-Transaction-Anomaly-Detection</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-AI-Product-Safety-Certification.html'>Skill-AI-Product-Safety-Certification</a></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Amazon-Compliance-Error-Auto-Resolver.html'>Skill-Amazon-Compliance-Error-Auto-Resolver</a></li><li><a href='../skills/Skill-Regulatory-Graph-Compliance-Monitor.html'>Skill-Regulatory-Graph-Compliance-Monitor</a></li><li><a href='../skills/Skill-Transaction-Anomaly-Detection.html'>Skill-Transaction-Anomaly-Detection</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-AI-Product-Safety-Certification.html'>Skill-AI-Product-Safety-Certification</a></li><li><a href='../skills/Skill-Ad-Attribution-Modeling.html'>Skill-Ad-Attribution-Modeling</a></li><li><a href='../skills/Skill-Transaction-Anomaly-Detection.html'>Skill-Transaction-Anomaly-Detection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-GPSR-EU-Risk-Assessment-Auto',skill_domain:'21-合规决策'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-GPSR-EU-Risk-Assessment-Auto',skill_domain:'21-合规决策',skill_difficulty:'⭐⭐☆☆☆'});
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 多市场合规矩阵</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-S 跨境数据合规 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-S 跨境数据合规</nav>
+<h1>WF-S 跨境数据合规</h1>
+<p class="lead">从数据采集合规到跨境传输再到隐私计算的端到端数据治理合规链，覆盖数据分类、合规评估、隐私保护技术、跨境传输四个阶段。面向欧美日等高监管市场。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>数据工程师/合规工程师</span><span class='tag'>法务/合规团队</span><span class='tag'>CTO/数据负责人</span><span class='tag'>跨境电商平台运营</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>业务涉及哪些市场？当前最紧迫的合规压力来自哪里（GDPR/CCPA/PIPL）？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">数据资产分类与合规现状评估</div>
+  <div class="wf-question">是否已知道自己收集了哪些个人数据及其流向？</div>
+  <div class="wf-context">合规的起点是数据资产清单——不知道自己有什么数据、数据流向哪里，就无法评估合规缺口</div>
+  <div class="wf-branch-skills">
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">数据采集合规改造</div>
+  <div class="wf-question">数据采集环节是否满足告知同意（Consent）要求？</div>
+  <div class="wf-context">合规采集的核心是&quot;明确同意+最小必要&quot;——超出必要范围采集数据是 GDPR 最常见的违规类型</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">面向欧盟用户（GDPR）</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Consent-Management-Design</span><span class="chip-role">同意管理设计，构建合规的 Cookie Consent 和数据使用授权流程</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Data-Minimization-Privacy-By-Design</span><span class="chip-role">数据最小化+隐私设计，从架构层减少不必要数据采集</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Right-To-Erasure-Implementation</span><span class="chip-role">被遗忘权实现，用户删除请求的端到端技术落地</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">面向加州/美国用户（CCPA）</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-CCPA-Do-Not-Sell-Implementation</span><span class="chip-role">Do Not Sell 机制实现，用户选择退出数据销售的技术方案</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Privacy-Notice-Optimization</span><span class="chip-role">隐私声明优化，满足 CCPA 的透明度披露要求</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">面向中国市场出海数据（PIPL）</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-PIPL-Cross-Border-Data-Assessment</span><span class="chip-role">PIPL 跨境数据安全评估，出境数据的合规申报流程</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Data-Localization-Architecture</span><span class="chip-role">数据本地化架构，境内数据不出境的技术隔离方案</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">隐私增强计算技术</div>
+  <div class="wf-question">业务上是否需要在保护隐私的前提下进行数据分析或共享？</div>
+  <div class="wf-context">隐私计算让数据&quot;可用不可见&quot;——差分隐私、联邦学习、同态加密解决了合规与数据价值的矛盾</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">内部多团队数据协作（不外传）</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Differential-Privacy-Analytics</span><span class="chip-role">差分隐私分析，给数据加噪声同时保留统计有效性</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Secure-Multi-Party-Computation</span><span class="chip-role">安全多方计算，多方数据联合分析但互不泄露原始数据</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">跨企业/跨平台数据联合建模</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Federated-Learning-Cross-Silo</span><span class="chip-role">跨机构联邦学习，数据不出域的联合模型训练</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Privacy-Preserving-Attribution</span><span class="chip-role">隐私保护归因，在不共享用户数据前提下的跨平台转化归因</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">跨境数据传输合规</div>
+  <div class="wf-question">数据是否需要从欧盟/中国传输到其他国家？</div>
+  <div class="wf-context">跨境数据传输必须有合法依据——标准合同条款(SCC)、充分性认定、绑定公司规则(BCR)是主要工具</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-XAI-Regulatory-Compliance.html"><span class="chip-name">XAI监管合规 — AI决策可解释性的监管报告自动化</span><span class="chip-role">EU AI Act合规自动审计，特征歧视检测+个体解释能力，合规度提升至75%+</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Privacy-Preserving-Personalization.html"><span class="chip-name">隐私保护个性化 — 差分隐私下的用户偏好学习</span><span class="chip-role">LDP差分隐私个性化，满足GDPR数据最小化，月龄授权率40%→75%</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Cold-Chain-Temperature-Monitoring.html"><span class="chip-name">冷链温控全程监测 — 母婴辅食物流的温度合规智能预警</span><span class="chip-role">冷链全程温控合规监测，自动生成FDA 21 CFR标准合规报告</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

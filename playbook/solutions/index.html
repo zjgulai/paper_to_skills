@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>方案库 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html" aria-current="page" class="active"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<div class="sol-hero">
+  <h1>方案库</h1>
+  <p class="muted">从 Palantir 方法论到可落地的 AI 决策系统方案，每个方案含完整架构设计、分阶段路线图、核心 Skill 索引</p>
+  <div class="sol-hero-stats">
+    <span><strong>19</strong> 个方案</span>
+    <span><strong>1338</strong> 个 Skills 支撑</span>
+    <span><strong>24</strong> 个知识域覆盖</span>
+  </div>
+</div>
+
+<div class="sol-grid">
+
+<a class="sol-card" href="sol-counterfactual-pricing.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#8b5cf620;color:#8b5cf6;border:1.5px solid #8b5cf640">CP</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">定价策略 AI</span>
+      <span class="sol-updated">更新 2026-06-20</span>
+    </div>
+  </div>
+  <h3 class="sol-title">反事实推演 → 动态定价架构</h3>
+  <p class="sol-subtitle">因果推断、博弈论与多智能体的融合决策系统</p>
+  <p class="sol-summary">打破基于滞后规则的竞价内卷，引入因果推断的反事实基线计算真实利润 Uplift。结合 MAS 跨部门利益制衡，构建反直觉的高价值商业化定价产品。…</p>
+  <div class="sol-roi">告别无效价格战，通过反事实预判提升净利润率 15%-40%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">因果推断</span><span class="sol-tag">多智能体</span><span class="sol-tag">动态定价</span><span class="sol-tag">反直觉决策</span></div>
+    <div class="sol-stats">
+      <span>3 阶段</span>
+      <span>10 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-sc-tag-to-decision.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#0ea5e920;color:#0ea5e9;border:1.5px solid #0ea5e940">SC</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">供应链 AI</span>
+      <span class="sol-updated">更新 2026-06-18</span>
+    </div>
+  </div>
+  <h3 class="sol-title">供应链标签工程 → 决策全链路架构</h3>
+  <p class="sol-subtitle">从 Palantir 本体论到母婴跨境电商可执行方案</p>
+  <p class="sol-summary">基于 Palantir 本体论四层架构，设计七层供应链 AI 决策系统。标签工程作为语义枢纽，打通从原始数据到自动执行决策的完整链路。含三大架构陷阱、分阶段实施路线图（MVP→12个月）、71个核心 Skill 索引。…</p>
+  <div class="sol-roi">运营团队供应链日常工作减少 60%，异常响应从小时级→分钟级</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">供应链</span><span class="sol-tag">标签工程</span><span class="sol-tag">Palantir</span><span class="sol-tag">决策自动化</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>14 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-aigc-content-factory.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#7c3aed20;color:#7c3aed;border:1.5px solid #7c3aed40">AI</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">AI 内容 & 营销</span>
+      <span class="sol-updated">更新 2026-06-18</span>
+    </div>
+  </div>
+  <h3 class="sol-title">AIGC 内容工厂 → 全渠道投放自动化</h3>
+  <p class="sol-subtitle">从商品图文生成到多平台 A/B 测试投放的完整闭环</p>
+  <p class="sol-summary">构建母婴跨境卖家的 AI 内容生产线：商品主图质量门控 → 多语言 Listing 生成 → A+ Content 自动排版 → 短视频素材制作 → 多平台 A/B 测试 → 投放预算自动分配。将内容制作周期从 2 周压缩至 2 天，单 S…</p>
+  <div class="sol-roi">内容制作周期 2周→2天，单 SKU 内容成本降低 70%，CTR 提升 15-25%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">AIGC</span><span class="sol-tag">内容生成</span><span class="sol-tag">A/B测试</span><span class="sol-tag">多渠道投放</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>12 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-intelligent-pricing-revenue.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#05966920;color:#059669;border:1.5px solid #05966940">$$</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">定价 & 财务</span>
+      <span class="sol-updated">更新 2026-06-18</span>
+    </div>
+  </div>
+  <h3 class="sol-title">智能定价 → 利润最大化全链路</h3>
+  <p class="sol-subtitle">从竞品监控到动态调价再到 P&L 归因的闭环决策系统</p>
+  <p class="sol-summary">构建母婴跨境卖家的智能定价决策系统：竞品价格实时监控 → 价格弹性建模 → 动态调价策略 → 促销效果评估 → P&L 影响归因 → 定价决策闭环。将价格决策从「拍脑袋」升级为「数据驱动」，毛利率提升 3-8 个百分点。…</p>
+  <div class="sol-roi">定价响应速度从 3 天→实时，毛利率提升 3-8 pp，年化增利 $5-20 万</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">动态定价</span><span class="sol-tag">价格弹性</span><span class="sol-tag">P&L</span><span class="sol-tag">竞品监控</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>12 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-global-compliance-firewall.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#dc262620;color:#dc2626;border:1.5px solid #dc262640">CC</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">合规 & 风控</span>
+      <span class="sol-updated">更新 2026-06-18</span>
+    </div>
+  </div>
+  <h3 class="sol-title">全球合规防火墙 → 风险零容忍运营体系</h3>
+  <p class="sol-subtitle">从 Listing 预扫描到账号健康管理的自动化合规全链路</p>
+  <p class="sol-summary">构建母婴跨境卖家的合规防火墙：新品上架前合规预扫描 → Listing 违规词自动修复 → 竞品投诉监控 → 账号健康实时预警 → 申诉 SOP 自动生成。将合规响应从「事后救火」转变为「事前预防」，封号风险降低 80%。…</p>
+  <div class="sol-roi">违规 Listing 拦截率 95%+，封号风险 ↓80%，合规处理时间 3天→4小时</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">合规</span><span class="sol-tag">风控</span><span class="sol-tag">账号健康</span><span class="sol-tag">产品安全</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>14 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-user-growth-repurchase-flywheel.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#10b98120;color:#10b981;border:1.5px solid #10b98140">GR</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">增长 & 用户运营</span>
+      <span class="sol-updated">更新 2026-06-19</span>
+    </div>
+  </div>
+  <h3 class="sol-title">用户增长 → 复购飞轮全链路</h3>
+  <p class="sol-subtitle">从拉新到激活到留存到裂变的 AI 驱动增长引擎</p>
+  <p class="sol-summary">构建母婴跨境品牌的 AI 增长飞轮：用户分层（RFM）→ 流失预警 → 最佳复购触达时机预测 → 邮件/WhatsApp/积分多通道干预 → 干预效果归因 → 策略自我优化。将用户 LTV 从均值视角升级为个体精准运营，复购率提升 20-3…</p>
+  <div class="sol-roi">复购率提升 20-35%，LTV 增长 40%，客户获取成本摊薄 28%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">增长模型</span><span class="sol-tag">复购</span><span class="sol-tag">LTV</span><span class="sol-tag">私域</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>12 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-ai-agent-ops-automation.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#8b5cf620;color:#8b5cf6;border:1.5px solid #8b5cf640">AG</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">智能体工程</span>
+      <span class="sol-updated">更新 2026-06-19</span>
+    </div>
+  </div>
+  <h3 class="sol-title">AI Agent 运营自动化 → 降本增效飞轮</h3>
+  <p class="sol-subtitle">从单点 Agent 工具到多 Agent 协作的电商运营自动化全栈</p>
+  <p class="sol-summary">构建母婴跨境卖家的 AI Agent 运营自动化体系：从单个智能 Agent（补货/定价/Listing优化）到多 Agent 协作系统（竞品情报→定价→广告→库存全链路自动化）。提供 Agent ROI 量化框架，帮助决策者评估哪些运营岗…</p>
+  <div class="sol-roi">运营人效提升 3-5 倍，重复性运营工作减少 70%，Agent 投资回收期 4-8 个月</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">Agent</span><span class="sol-tag">MAS</span><span class="sol-tag">自动化</span><span class="sol-tag">ROI量化</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>12 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-search-traffic-dominance.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#f59e0b20;color:#f59e0b;border:1.5px solid #f59e0b40">SR</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">搜索 & 流量</span>
+      <span class="sol-updated">更新 2026-06-19</span>
+    </div>
+  </div>
+  <h3 class="sol-title">搜索流量制霸 → 自然流量飞轮</h3>
+  <p class="sol-subtitle">从关键词研究到排名突破再到广告协同的搜索增长全链路</p>
+  <p class="sol-summary">构建母婴跨境卖家的搜索流量护城河：关键词蓝海发现 → 排名因子量化 → Listing 语义优化 → 广告飞轮加速 → 自然流量沉淀。搜索排名每提升一个页面，自然流量增长 3-5 倍。将搜索运营从「靠感觉」升级为「数据驱动的流量工程」。…</p>
+  <div class="sol-roi">目标关键词排名从第3页→第1页，自然流量提升3-5倍，广告 ACoS 降低 35%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">搜索排名</span><span class="sol-tag">关键词</span><span class="sol-tag">SEO</span><span class="sol-tag">自然流量</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>12 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-voc-product-selection.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#10b98120;color:#10b981;border:1.5px solid #10b98140">VP</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">选品增长 AI</span>
+      <span class="sol-updated">更新 2026-06-21</span>
+    </div>
+  </div>
+  <h3 class="sol-title">VOC 情报 → 选品决策全链路架构</h3>
+  <p class="sol-subtitle">用户声音驱动的母婴新品筛选与需求验证系统</p>
+  <p class="sol-summary">系统整合 Amazon 评论、Reddit 社交讨论、品牌差评三层 VOC 数据，通过情感分析、痛点聚类、需求强度评分，将用户真实声音转化为可量化的选品决策信号，输出 GO/NO-GO 推荐和首批 SKU 配置建议。…</p>
+  <div class="sol-roi">新品首月滞销率降低 35%，选品决策周期从 4 周压缩到 3 天</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">VOC分析</span><span class="sol-tag">情感分析</span><span class="sol-tag">选品决策</span><span class="sol-tag">需求预测</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>10 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-ads-organic-synergy.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#f59e0b20;color:#f59e0b;border:1.5px solid #f59e0b40">AO</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">流量增长 AI</span>
+      <span class="sol-updated">更新 2026-06-21</span>
+    </div>
+  </div>
+  <h3 class="sol-title">广告-自然流量协同增长架构</h3>
+  <p class="sol-subtitle">搜索广告与自然排名一体化运营的 AI 决策系统</p>
+  <p class="sol-summary">打破广告投放与自然 SEO 分开管理的孤岛思维，构建关键词维度的「广告-自然」双轨监控体系。以自然排名位置为决策变量动态调整广告出价，在目标词自然排名提升期间逐步降低广告 ACoS，最终实现流量成本最优化。…</p>
+  <div class="sol-roi">综合 ACoS 降低 20-28%，自然流量占比从 35% 提升至 55%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">搜索广告</span><span class="sol-tag">自然排名</span><span class="sol-tag">ROAS优化</span><span class="sol-tag">关键词矩阵</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>10 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-inventory-risk-management.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#ef444420;color:#ef4444;border:1.5px solid #ef444440">IR</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">供应链 AI</span>
+      <span class="sol-updated">更新 2026-06-21</span>
+    </div>
+  </div>
+  <h3 class="sol-title">库存风险量化 → 智能补货决策架构</h3>
+  <p class="sol-subtitle">从CVaR金融风险度量到多SKU库存组合的最优决策系统</p>
+  <p class="sol-summary">将金融风险管理的CVaR（期望损失）框架迁移到多SKU库存组合管理，量化「极端滞销场景」下的尾部风险。结合供应链网络的中介中心性分析识别瓶颈节点，构建从风险感知→安全库存动态调整→韧性补货决策的完整链路。…</p>
+  <div class="sol-roi">库存滞销率降低6-8%，极端断货损失降低40%，年化释放现金40-80万元</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">库存优化</span><span class="sol-tag">风险度量</span><span class="sol-tag">CVaR</span><span class="sol-tag">补货决策</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>10 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-viral-growth-engine.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#8b5cf620;color:#8b5cf6;border:1.5px solid #8b5cf640">VG</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">增长 AI</span>
+      <span class="sol-updated">更新 2026-06-21</span>
+    </div>
+  </div>
+  <h3 class="sol-title">病毒传播预测 → 爆品增长引擎架构</h3>
+  <p class="sol-subtitle">SIR流行病学 + VOC信号 + 内容工厂的爆品全链路增长系统</p>
+  <p class="sol-summary">将流行病学SIR模型迁移到TikTok短视频爆品传播预测，通过发布后72小时的早期信号拟合传播参数R₀，预测需求峰值时间和量级。结合VOC信号环路识别「有病毒传播潜力」的产品特征，构建从内容发布→传播预测→备货响应→库存执行的完整增长引擎。…</p>
+  <div class="sol-roi">爆单备货准确率提升35%，断货损失年化减少50万元，爆品发现周期从4周→72小时</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">SIR模型</span><span class="sol-tag">病毒传播</span><span class="sol-tag">TikTok</span><span class="sol-tag">VOC</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>10 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-cdp-lookalike-full-stack.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#0ea5e920;color:#0ea5e9;border:1.5px solid #0ea5e940">CDP</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">CDP & 广告技术</span>
+      <span class="sol-updated">更新 2026-06-24</span>
+    </div>
+  </div>
+  <h3 class="sol-title">CDP 全链路：身份统一 → 种子净化 → Lookalike 扩展</h3>
+  <p class="sol-subtitle">从碎片化多平台数据到高质量广告受众的完整架构</p>
+  <p class="sol-summary">解决母婴跨境卖家最核心的数据碎片化问题：Amazon/TikTok/独立站同一用户三套 ID，导致 Lookalike 种子质量差、广告重复触达、归因失真。三层 CDP 架构彻底打通，ROAS 从 1.9x 恢复到 3.5x+。…</p>
+  <div class="sol-roi">广告 ROAS 提升 40-80%，年化增效 20-40 万元，GDPR 合规零风险</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">CDP</span><span class="sol-tag">Lookalike</span><span class="sol-tag">身份统一</span><span class="sol-tag">广告投放</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-member-growth-system.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#8b5cf620;color:#8b5cf6;border:1.5px solid #8b5cf640">MEM</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">会员运营 AI</span>
+      <span class="sol-updated">更新 2026-06-24</span>
+    </div>
+  </div>
+  <h3 class="sol-title">会员增长体系：等级设计 → 生命周期干预 → 裂变归因</h3>
+  <p class="sol-subtitle">从零搭建母婴跨境 DTC 完整会员运营闭环</p>
+  <p class="sol-summary">为母婴 DTC 品牌提供从等级体系设计到运营执行的完整 AI 方案。Markov CLV 优化等级门槛，RL 序列干预精准触达，裂变网络价值精算激励额度，积分负债精算控制财务风险。…</p>
+  <div class="sol-roi">会员 CLV 提升 15-25%，干预成本降低 30%，年化增收 50-150 万元</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">会员体系</span><span class="sol-tag">LTV</span><span class="sol-tag">生命周期</span><span class="sol-tag">裂变</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-privacy-safe-advertising.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#10b98120;color:#10b981;border:1.5px solid #10b98140">PPA</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">隐私合规 & 广告技术</span>
+      <span class="sol-updated">更新 2026-06-24</span>
+    </div>
+  </div>
+  <h3 class="sol-title">隐私合规广告架构：联邦 Lookalike + 洁净室 + 因果去偏</h3>
+  <p class="sol-subtitle">Cookie 消亡时代的跨境广告精准投放全栈解决方案</p>
+  <p class="sol-summary">GDPR/CCPA/PIPL 三法叠加的合规压力下，传统广告方法论正在失效。本方案提供「数据不出境 + 归因不失真 + 受众不泄露」的完整技术栈，在最严苛的隐私约束下维持广告效果。…</p>
+  <div class="sol-roi">欧盟/北美市场广告合规零风险，ROAS 提升 12-20%，规避最高 4% 全球营收罚款</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">隐私合规</span><span class="sol-tag">GDPR</span><span class="sol-tag">联邦学习</span><span class="sol-tag">归因去偏</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-causal-intelligence-pricing.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#7c3aed20;color:#7c3aed;border:1.5px solid #7c3aed40">CI</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">定价策略 AI</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">因果智能定价体系</h3>
+  <p class="sol-subtitle">DML去偏弹性 × 异质用户定价 × 市场准入评估</p>
+  <p class="sol-summary">传统OLS价格弹性估计因季节/促销混淆存在50%+偏差——甚至出现错误方向。本方案用双重去偏机器学习(DML)获得无偏弹性，X-Learner识别异质用户群差异，合成控制法评估新市场准入ROI，形成因果驱动的完整定价决策体系。…</p>
+  <div class="sol-roi">弹性估计偏差1.57→0.12，年化定价优化GMV约120万元</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">因果推断</span><span class="sol-tag">价格弹性</span><span class="sol-tag">DML</span><span class="sol-tag">X-Learner</span></div>
+    <div class="sol-stats">
+      <span>3 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-video-commerce-intelligence.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#ec489920;color:#ec4899;border:1.5px solid #ec489940">VC</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">内容营销 AI</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">视频电商全链路智能化</h3>
+  <p class="sol-subtitle">MAS自动内容 × 商品标签化 × 因果ROI归因</p>
+  <p class="sol-summary">视频电商面临三大痛点：内容产量不足（手工3h/篇）、商品关联率低（人工打标错误15%）、ROI归因不清（平台报告高估30%）。本方案用MAS多智能体自动化内容生产，多模态LLM实现视频商品标签化，Geo实验+因果方法获得真实增量ROI。…</p>
+  <div class="sol-roi">爆款率5%→18%，年化GMV增量约150万元，内容成本降低97%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">视频电商</span><span class="sol-tag">MAS</span><span class="sol-tag">TikTok</span><span class="sol-tag">RLHF</span></div>
+    <div class="sol-stats">
+      <span>3 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-logistics-intelligence-esg.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#10b98120;color:#10b981;border:1.5px solid #10b98140">LI</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">物流履约 AI</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">物流智能化2.0 × ESG合规</h3>
+  <p class="sol-subtitle">动态路由 × 冷链合规 × 碳足迹优化 × 智能承运商选择</p>
+  <p class="sol-summary">2025-2026年欧盟CBAM和ESG信披要求使跨境物流从纯成本问题升级为合规+效率+可持续的三维挑战。本方案提供从冷链FDA合规到碳排放优化再到ML智能承运商选择的完整物流智能化升级路径。…</p>
+  <div class="sol-roi">冷链FDA通关率85%→98%，物流成本降低8%，年化综合ROI约245万元</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">物流智能化</span><span class="sol-tag">冷链</span><span class="sol-tag">ESG</span><span class="sol-tag">碳排放</span></div>
+    <div class="sol-stats">
+      <span>3 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+<a class="sol-card" href="sol-ai-engineering-acceleration.html">
+  <div class="sol-card-header">
+    <div class="sol-icon" style="background:#f59e0b20;color:#f59e0b;border:1.5px solid #f59e0b40">AE</div>
+    <div class="sol-card-meta">
+      <span class="sol-category">AI工程 基础设施</span>
+      <span class="sol-updated">更新 2026-07</span>
+    </div>
+  </div>
+  <h3 class="sol-title">AI工程效率加速体系</h3>
+  <p class="sol-subtitle">推理加速 × 主动检索 × 少样本学习 × 持续学习</p>
+  <p class="sol-summary">随着AI Agent系统规模扩大，工程效率成为核心瓶颈：推理延迟高（Agent每次8秒）、RAG噪声多（固定检索准确率85%）、新品类无训练数据（少样本困境）、模型季节退化（无持续学习）。本方案提供4个维度的AI工程效率提升路径。…</p>
+  <div class="sol-roi">Agent延迟降低50-63%，年化GPU成本节省约45万元，客服准确率85%→95%</div>
+  <div class="sol-footer">
+    <div class="sol-tags"><span class="sol-tag">推理加速</span><span class="sol-tag">Agentic RAG</span><span class="sol-tag">ICL</span><span class="sol-tag">持续学习</span></div>
+    <div class="sol-stats">
+      <span>4 阶段</span>
+      <span>8 Skills</span>
+    </div>
+  </div>
+</a>
+</div>
+
+<div class="sol-coming-soon">
+  <h3>更多方案即将发布</h3>
+  <div class="sol-coming-grid">
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#8b5cf6">◆</span>
+      <strong>广告归因 → 预算智能分配</strong>
+      <p>从 PVM 统一到 Bayesian MMM 全渠道预算优化</p>
+    </div>
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#059669">◆</span>
+      <strong>用户 LTV → 精准留存干预</strong>
+      <p>Uplift 建模识别可干预用户，精准发券 ROI 优化</p>
+    </div>
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#d97706">◆</span>
+      <strong>选品决策 → 市场机会矩阵</strong>
+      <p>五维数据并行采集，GO/NO-GO 评分体系</p>
+    </div>
+    <div class="sol-coming-card">
+      <span class="sol-coming-icon" style="color:#e11d48">◆</span>
+      <strong>AI Agent 替代重复性岗位</strong>
+      <p>供应链对账、数据提取、广告出价三类场景</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.sol-hero{text-align:center;padding:36px 0 28px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.sol-hero h1{font-size:32px;font-weight:800;margin:0 0 8px;letter-spacing:-.04em;color:var(--ink)}
+.sol-hero .muted{max-width:520px;margin:0 auto 14px;color:var(--muted);font-size:13.5px;line-height:1.6}
+.sol-hero-stats{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+.sol-hero-stats span{font-size:12.5px;color:var(--muted)}
+.sol-hero-stats strong{color:var(--ink);font-size:20px;font-weight:800;letter-spacing:-.04em}
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:32px}
+.sol-card{display:flex;flex-direction:column;gap:10px;padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);text-decoration:none;color:inherit;transition:border-color var(--t-card),box-shadow var(--t-card),transform var(--t-card);cursor:pointer}
+.sol-card:hover{border-color:var(--line-strong);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.sol-card-header{display:flex;align-items:center;gap:10px}
+.sol-icon{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.sol-card-meta{display:flex;flex-direction:column;gap:2px}
+.sol-category{font-size:10.5px;font-weight:700;color:var(--accent);letter-spacing:.03em;text-transform:uppercase}
+.sol-updated{font-size:10.5px;color:var(--muted)}
+.sol-title{font-size:14.5px;font-weight:700;color:var(--ink);margin:0;line-height:1.35;letter-spacing:-.02em}
+.sol-subtitle{font-size:12.5px;color:var(--muted);margin:0;line-height:1.4}
+.sol-summary{font-size:12.5px;color:var(--ink-2);margin:0;line-height:1.55}
+.sol-roi{font-size:12px;font-weight:600;color:var(--green-dark);background:var(--green-bg);border:1px solid rgba(20,83,45,.12);border-radius:var(--r-xs);padding:5px 10px}
+.sol-footer{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.sol-tags{display:flex;gap:4px;flex-wrap:wrap}
+.sol-tag{font-size:10.5px;background:var(--panel-2);color:var(--ink-2);padding:2px 6px;border-radius:var(--r-xs);border:1px solid var(--line)}
+.sol-stats{display:flex;gap:8px;font-size:11px;color:var(--muted)}
+.sol-coming-soon{background:var(--panel);border:1px dashed var(--line-strong);border-radius:var(--r-lg);padding:22px;margin-top:6px}
+.sol-coming-soon h3{font-size:14px;font-weight:700;color:var(--muted);margin:0 0 14px;text-align:center;letter-spacing:-.01em}
+.sol-coming-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.sol-coming-card{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:4px}
+.sol-coming-icon{font-size:16px}
+.sol-coming-card strong{font-size:12.5px;color:var(--ink);font-weight:600;letter-spacing:-.01em}
+.sol-coming-card p{font-size:11.5px;color:var(--muted);margin:0;line-height:1.4}
+</style>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

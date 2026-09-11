@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-Q 标签驱动全链路决策 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-Q 标签驱动全链路决策</nav>
+<h1>WF-Q 标签驱动全链路决策</h1>
+<p class="lead">从 SKU 标签体系构建到供应链、定价、广告 AI 自动决策触发的端到端智能运营链，实现&quot;标签即策略&quot;的决策自动化。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>数据工程师/标签工程师</span><span class='tag'>运营负责人</span><span class='tag'>供应链数据科学家</span><span class='tag'>AI 产品经理</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>当前业务决策的自动化程度如何？哪类决策最依赖人工判断？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">SKU 标签体系设计</div>
+  <div class="wf-question">是否已有统一的 SKU 标签分类体系？</div>
+  <div class="wf-context">标签是决策自动化的语言——没有一致的标签本体论，下游补货/定价/广告决策就无法自动协同</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">从零建立标签体系</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Palantir-Ontology-Design</span><span class="chip-role">Palantir 本体论方法，设计 SKU 实体-关系-行动的三层标签架构</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Taxonomy-Hierarchy-Construction</span><span class="chip-role">分类体系构建，建立品类→细分→属性的层次化标签树</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Entity-Resolution-Product-Matching</span><span class="chip-role">实体解析，跨平台 SKU 标识统一（ASIN/EAN/内部编码映射）</span></span>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">已有标签体系，需质量提升</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Tag-Quality-Assessment</span><span class="chip-role">标签质量诊断，识别缺失/冲突/过时标签（覆盖率、一致性、新鲜度三维）</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Active-Learning-Label-Correction</span><span class="chip-role">主动学习标签修正，人机协作高效修复错误标签</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">决策触发规则设计</div>
+  <div class="wf-question">哪类业务决策已有明确规则可以自动化？</div>
+  <div class="wf-context">决策自动化分三层：规则触发→ML 预测触发→Agent 自主触发，从确定性高的场景先入手</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">补货决策自动化（最成熟、ROI 最高）</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Inventory-Policy-Automation</span><span class="chip-role">库存策略自动化，基于 SKU 标签（速度/季节性/ABC 类）自动生成补货策略</span></span>
+        <a class="wf-skill-chip" href="../skills/Skill-Safety-Stock-Replenishment.html"><span class="chip-name">Safety Stock and Replenishment Strategy</span><span class="chip-role">安全库存动态计算，标签驱动差异化安全系数</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Forecast-Driven-Inventory.html"><span class="chip-name">Forecast-Driven Inventory（预测驱动库存优化）</span><span class="chip-role">预测驱动库存，将预测结果直接映射到补货 PO</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">定价决策自动化</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Bayesian-Dynamic-Pricing</span><span class="chip-role">贝叶斯动态定价，基于竞争位置/库存健康/需求信号自动调价</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Competitive-Pricing-Intelligence</span><span class="chip-role">竞品价格监控，触发式竞价响应规则</span></span>
+        <a class="wf-skill-chip" href="../skills/Skill-Price-Elasticity-Estimation.html"><span class="chip-name">Price Elasticity Estimation — 需求价格弹性估算：跨境 SKU 定价底线测算</span><span class="chip-role">价格弹性建模，为不同标签组的 SKU 设置不同调价幅度上限</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">广告出价自动化</summary>
+      <div class="wf-branch-skills">
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Bid-Optimization-Reinforcement</span><span class="chip-role">强化学习出价优化，基于 SKU 利润标签自动设置 Target ACoS</span></span>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Campaign-Budget-Allocation-Bayesian</span><span class="chip-role">贝叶斯预算分配，按 SKU 标签（新品/成熟/清仓）差异化投放策略</span></span>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">特征工程与信号融合</div>
+  <div class="wf-question">驱动决策的信号来源是否完整可信？</div>
+  <div class="wf-context">标签驱动决策的质量上限取决于信号质量——销速/竞争位置/库存健康/搜索趋势四类信号缺一不可</div>
+  <div class="wf-branch-skills">
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">决策自动化编排与监控</div>
+  <div class="wf-question">自动化决策系统上线后如何保证可控？</div>
+  <div class="wf-context">AI 决策自动化的最大风险是&quot;黑盒失控&quot;——必须建立人工审核阈值、决策回滚机制和持续监控</div>
+  <div class="wf-branch-skills">
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

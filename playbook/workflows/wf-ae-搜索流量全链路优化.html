@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-AE 搜索流量全链路优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-AE 搜索流量全链路优化</nav>
+<h1>WF-AE 搜索流量全链路优化</h1>
+<p class="lead">从SEO因果效果测量到多Agent搜索运营再到搜索流量财务归因的完整闭环，将搜索运营从经验驱动升级为数据驱动。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>SEO负责人</span><span class='tag'>搜索流量运营</span><span class='tag'>CMO</span><span class='tag'>数据分析师</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的搜索运营当前最大问题是：SEO投入真实ROI不清晰？关键词排名监控太人工？还是搜索流量对P&amp;L贡献无法量化？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">SEO效果因果评估</div>
+  <div class="wf-question">SEO优化后流量增加，但多少是真正由SEO带来的？</div>
+  <div class="wf-context">简单前后对比高估SEO效果约6-15pp（混入了市场自然增长），导致SEO预算决策失误</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Causal-SEO-Search-Attribution.html"><span class="chip-name">搜索流量因果归因 — SEO排名提升的真实增量效果识别</span><span class="chip-role">SEO排名对流量的因果估计，DiD去除共同趋势，年化预算优化60万元</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Search-Organic-Growth-Attribution.html"><span class="chip-name">搜索有机增长归因 — SEO流量驱动用户生命周期价值的因果建模</span><span class="chip-role">有机搜索用户LTV溢价量化，PSM去偏后真实溢价28%，年化决策100万元</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Causal-Time-Series-CausalImpact.html"><span class="chip-name">CausalImpact时序因果 — 政策/活动对时序指标的因果冲击估计</span><span class="chip-role">CausalImpact时序因果，精确量化Listing优化对搜索流量的冲击</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">多Agent搜索排名实时监控</div>
+  <div class="wf-question">关键词排名是否有自动化监控和快速响应能力？</div>
+  <div class="wf-context">500个关键词人工监控做不到，而MAS可实现全量5分钟自动诊断并输出行动计划</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-MAS-Search-Optimization.html"><span class="chip-name">MAS驱动搜索流量优化 — 多智能体协同的A9算法自动化运营</span><span class="chip-role">MAS搜索优化，5分钟根因诊断，年化避免排名下滑流量损失80万元</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Streaming-Analytics-Agent.html"><span class="chip-name">实时流式分析Agent — 毫秒级事件驱动的AI决策管道</span><span class="chip-role">实时流式告警，ADWIN检测流量异常2分钟内响应</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Amazon-A10-Algorithm-Ranking.html"><span class="chip-name">Amazon A10 Algorithm Ranking — 亚马逊搜索排名因子建模与 Listing 可见度优化</span><span class="chip-role">A10算法排名因素分析，FBA库存/评分/广告协同优化自然排名</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">搜索流量财务归因</div>
+  <div class="wf-question">搜索运营的成本和收益是否有完整的财务核算？</div>
+  <div class="wf-context">大多数品牌只知道有机流量占比，但无法向CFO解释SEO的利润贡献</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Search-Revenue-Attribution.html"><span class="chip-name">搜索流量财务归因 — 有机搜索对运营利润的全链路价值量化</span><span class="chip-role">搜索流量P&amp;L归因，PSM去偏计算真实LTV增量，生成CFO级ROI报告</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Multi-Step-Reasoning-BI.html"><span class="chip-name">多步推理BI分析 — LLM链式推理自动生成财务归因报告</span><span class="chip-role">多步推理BI，20分钟自动生成搜索投入产出分析报告</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-LTV-Prediction-BTYD.html"><span class="chip-name">LTV Prediction BTYD — BG/NBD + Gamma-Gamma 客户生命周期价值预测</span><span class="chip-role">搜索用户LTV预测，量化有机搜索用户的长期价值</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">搜索与广告协同优化</div>
+  <div class="wf-question">自然搜索与付费广告是否形成了有效的协同增效关系？</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Sponsored-Organic-Rank-Synergy.html"><span class="chip-name">Skill-Sponsored-Organic-Rank-Synergy — 广告-自然排名协同模型</span><span class="chip-role">广告-自然协同排名策略，两者互补最大化搜索可见性</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-DataAgent-Marketing-Attribution.html"><span class="chip-name">DataAgent营销归因分析 — LLM驱动的多渠道营销效果自动归因</span><span class="chip-role">多渠道归因Agent，区分广告和SEO各自贡献，优化预算分配</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-ROAS-Budget-Optimization.html"><span class="chip-name">ROAS Optimization and Ad Budget Allocation</span><span class="chip-role">ROAS预算优化，在搜索流量峰期动态调整广告出价</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

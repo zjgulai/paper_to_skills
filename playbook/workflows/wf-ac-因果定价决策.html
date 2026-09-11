@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-AC 因果驱动定价决策 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-AC 因果驱动定价决策</nav>
+<h1>WF-AC 因果驱动定价决策</h1>
+<p class="lead">从价格弹性估计到最优定价再到A/B验证的全链路因果定价体系，解决传统OLS弹性估计偏差导致的定价失误问题。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>定价策略负责人</span><span class='tag'>数据科学家</span><span class='tag'>运营总监</span><span class='tag'>CFO</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的定价决策当前最大问题是：不知道真实价格弹性？担心降价会引发价格战？还是不同用户群的价格敏感度差异未被利用？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">因果价格弹性估计（去偏）</div>
+  <div class="wf-question">是否有可靠的价格弹性数据？</div>
+  <div class="wf-context">传统OLS弹性估计因为季节/促销等混淆变量，通常有50-200%的偏差——甚至显示错误的弹性方向</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">需要重新建立弹性估计</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Double-Debiased-ML-Price.html"><span class="chip-name">双重去偏机器学习价格弹性 — 高维混淆下的价格因果效应估计</span><span class="chip-role">DML双重去偏弹性估计，从OLS偏差1.57降至0.12，年化定价优化GMV约120万元</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-IV-Instrumental-Variables.html"><span class="chip-name">Instrumental Variables (IV) for Causal Inference with Endogeneity</span><span class="chip-role">工具变量法，用竞品价格变化作为IV消除内生性偏差</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">需要细粒度异质弹性</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Heterogeneous-Treatment-Effect-XLearner.html"><span class="chip-name">X-Learner异质处理效应 — 识别不同用户群的差异化因果效应</span><span class="chip-role">X-Learner异质弹性，识别哪类用户（月龄段/消费水平）价格敏感度最高</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Propensity-Score-Matching-QuasiExp.html"><span class="chip-name">倾向得分匹配准实验 — 无随机分配场景的因果效应估计</span><span class="chip-role">PSM准实验，当无法做随机定价实验时用历史数据估计</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">竞品价格监控与响应策略</div>
+  <div class="wf-question">当竞品降价时如何快速决策是否跟进？</div>
+  <div class="wf-context">错误的定价响应（跟进引发价格战，不跟进损失流量）是母婴电商最高频的决策失误</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Competitive-Price-Monitoring.html"><span class="chip-name">Competitive Price Monitoring（竞品价格监测与响应）</span><span class="chip-role">竞品价格实时监控，检测价格变化触发分析流程</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Augmented-Synthetic-Control-ML.html"><span class="chip-name">Augmented Synthetic Control — 机器学习增强的合成控制法</span><span class="chip-role">ASCM合成控制，评估竞品降价对自家销量的真实因果影响</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Dynamic-Pricing-Elasticity.html"><span class="chip-name">Dynamic Pricing with Demand Elasticity（动态定价与需求弹性）</span><span class="chip-role">动态定价引擎，基于弹性实时调整建议价格</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">促销定价的因果效果评估</div>
+  <div class="wf-question">如何区分促销真实拉动效果vs只是提前购买？</div>
+  <div class="wf-context">很多促销只是让会买的用户提前买（需求借贷），真实增量比表面增长低50%以上</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Causal-Time-Series-CausalImpact.html"><span class="chip-name">CausalImpact时序因果 — 政策/活动对时序指标的因果冲击估计</span><span class="chip-role">CausalImpact评估促销真实增量，消除自然趋势偏差</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Long-Horizon-Experiment-Effect.html"><span class="chip-name">长期实验遗留效应估计 — 避免实验期偏差的因果推断</span><span class="chip-role">长期实验遗留效应，分析促销后的复购是否有净增量</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Bayesian-AB-Testing.html"><span class="chip-name">贝叶斯A/B实验 — 小样本快速决策的概率推断框架</span><span class="chip-role">贝叶斯定价A/B，小流量快速验证新价格策略效果</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">用户分层差异化定价</div>
+  <div class="wf-question">是否对不同用户群使用差异化定价策略？</div>
+  <div class="wf-context">不同月龄段/消费历史的用户价格敏感度差异3-5倍，统一定价是巨大机会损失</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Tag-Causal-Treatment-Effect.html"><span class="chip-name">标签因果效应估计 — 用户行为标签的处理效应量化</span><span class="chip-role">标签因果效应，量化不同用户标签的真实价格响应差异</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Personalized-ML-Pricing.html"><span class="chip-name">Personalized ML Pricing — 个性化 ML 定价：用户级支付意愿驱动的差异化定价</span><span class="chip-role">个性化ML定价，基于用户特征实现精准定价</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Compliant-Dynamic-Pricing-Guard.html"><span class="chip-name">Compliant Dynamic Pricing Guard（合规-定价双约束优化）</span><span class="chip-role">合规定价保护，确保差异化定价符合平台规则和法律法规</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

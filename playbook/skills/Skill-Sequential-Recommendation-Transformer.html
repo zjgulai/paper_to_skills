@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>序列推荐Transformer — 基于购买序列的个性化下一步推荐 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/05-推荐系统.html">05-推荐系统</a> / Skill-Sequential-Recommendation-Transformer</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">05-推荐系统</div>
+  <h1 class="skill-main-title">序列推荐Transformer — 基于购买序列的个性化下一步推荐</h1>
+  <p class="skill-skill-id">Skill-Sequential-Recommendation-Transformer</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>搜索流量与SEO</span><span class='tag'>时序预测</span><span class='tag'>ML基础与可解释性</span><span class='tag'>KPI运营指标体系</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 93分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（58%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 131.0, 58.0, 87.3, 87.0, 88.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 13.1, 8.7, 13.1, 8.7, 4.4];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 产品经理 · 广告优化师</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon · DTC 独立站 · 邮件/SMS 个性化</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>老客来了只买一件就走，相关产品没被推出去；Bundle 商品连带销售做不起来；站内推荐位点击率低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>老客连带购买率提升 20-35%，客单价提升，品类交叉销售做起来</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>相关产品没有被看到</span><span class='biz-pain-tag'>Bundle 凑单没人用</span><span class='biz-pain-tag'>新品没有曝光机会</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>电商运营面临&quot;婴儿月龄驱动需求快速演变但推荐缺乏时序感知&quot;——SASRec序列建模使复购率从22%提升至28%，年化GMV增量约360万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>序列推荐（Sequential Recommendation）将用户的历史交互序列视为&quot;购物句子&quot;，用Transformer结构捕捉购买行为的时序依赖和意图演变。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：基于购买旅程的复购推荐 - 业务问题：亚马逊店铺的复购率仅22%，首购后无个性化推荐导致用户流失。传统协同过滤推荐&quot;热销爆款&quot;，但月龄0-1岁用户推荐&quot;12月龄辅食&quot;严重错配 - 数据要求：用户历史订单序列（SKU ID + 购买时间戳，至少60天）、商品属性（品类/月龄段/标签）；用户序列至少5条才能激活SASRec，否则退回流行度推荐 - 预期产出：为每个用户生成&quot;下一个最可能购买的Top-10 SKU&quot;，按月龄适配度和个人偏好排序；如购买序列为[奶粉0段, 奶瓶, 奶瓶刷]，则推荐[奶粉1段, 安抚奶嘴, 吸鼻器] - 业务价值：论文数据：在NDCG@10上提升约25-70%（个</p><p>三轨对抗验证： 1. 成本验证：RecJPQ压缩后模型大小从8GB降至4GB，单机GPU可承载；推理延迟P95约20ms，满足实时推荐需求；训练约4-8小时/epoch（A100） 2. 合规验证：推荐系统不涉及违规操纵；注意推荐数据不可包含价格歧视逻辑（对不同用户推荐不同价格的同一SKU） 3. 风险验证：新品冷启动（无序列数据）会退化为纯流行度推荐，降低个性化效果；大促期用户行为分布偏移（购买大额礼品非日常需求），需在评估时排除大促期数据，避免泄漏</p><p>场景B：搜索结果重排序 - 业务问题：用户搜索&quot;奶粉&quot;，结果缺乏个性化（新生儿用户和12月龄宝宝妈看到相同排序） - 数据要求：同上 + 搜索词上下文 - 预期产出：序列模型提取用户月龄偏好信号，对搜索结果按用户个人历史重排，0段奶粉用户置顶0段系列 - 业务价值：搜索CVR预估提升10-15%，约20万元/月增量</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：RecSys 2024论文数据：个性化流行度融合使NDCG@10提升25-70%；母婴场景预估复购率从22%提升至28%（+6个百分点），月GMV 50万下年化增量约360万元；额外减少月龄错配推荐约40%，降低退货率约2%（年化节省约30万元）</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（开源实现成熟，RecBole框架可直接使用；主要挑战在数据管道建设和冷启动处理）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（母婴用户月龄驱动的需求快速演变是行业独特性，序列推荐针对性强）</li><li><strong>评估依据</strong>：RecSys 2024两篇论文均达到产业级验证；百万商品规模的RecJPQ工程化方案已在生产环境验证（加速4.5倍）；亚马逊官方推荐系统核心组件即序列建模</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Skill-Sequential-Recommendation-Transformer
+序列推荐Transformer — 母婴电商购买序列建模
+
+依赖：pip install numpy pandas scikit-learn
+注意：生产版本需 PyTorch + 完整SASRec实现；此为简化版展示核心逻辑
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from collections import defaultdict
+from sklearn.metrics.pairwise import cosine_similarity
+
+np.random.seed(42)
+
+# ── 1. 模拟母婴用户购买序列数据 ─────────────────────────────────────
+BABY_ITEMS = {
+    &#x27;ITEM_001&#x27;: {&#x27;name&#x27;: &#x27;0段奶粉&#x27;,    &#x27;age_group&#x27;: 0,  &#x27;category&#x27;: &#x27;奶粉&#x27;},
+    &#x27;ITEM_002&#x27;: {&#x27;name&#x27;: &#x27;1段奶粉&#x27;,    &#x27;age_group&#x27;: 1,  &#x27;category&#x27;: &#x27;奶粉&#x27;},
+    &#x27;ITEM_003&#x27;: {&#x27;name&#x27;: &#x27;2段奶粉&#x27;,    &#x27;age_group&#x27;: 2,  &#x27;category&#x27;: &#x27;奶粉&#x27;},
+    &#x27;ITEM_004&#x27;: {&#x27;name&#x27;: &#x27;标准奶瓶&#x27;,   &#x27;age_group&#x27;: 0,  &#x27;category&#x27;: &#x27;喂养&#x27;},
+    &#x27;ITEM_005&#x27;: {&#x27;name&#x27;: &#x27;宽口奶瓶&#x27;,   &#x27;age_group&#x27;: 1,  &#x27;category&#x27;: &#x27;喂养&#x27;},
+    &#x27;ITEM_006&#x27;: {&#x27;name&#x27;: &#x27;奶瓶刷&#x27;,     &#x27;age_group&#x27;: 0,  &#x27;category&#x27;: &#x27;清洁&#x27;},
+    &#x27;ITEM_007&#x27;: {&#x27;name&#x27;: &#x27;吸鼻器&#x27;,     &#x27;age_group&#x27;: 0,  &#x27;category&#x27;: &#x27;护理&#x27;},
+    &#x27;ITEM_008&#x27;: {&#x27;name&#x27;: &#x27;辅食机&#x27;,     &#x27;age_group&#x27;: 4,  &#x27;category&#x27;: &#x27;辅食&#x27;},
+    &#x27;ITEM_009&#x27;: {&#x27;name&#x27;: &#x27;学步车&#x27;,     &#x27;age_group&#x27;: 8,  &#x27;category&#x27;: &#x27;玩具&#x27;},
+    &#x27;ITEM_010&#x27;: {&#x27;name&#x27;: &#x27;安抚奶嘴&#x27;,   &#x27;age_group&#x27;: 0,  &#x27;category&#x27;: &#x27;安抚&#x27;},
+    &#x27;ITEM_011&#x27;: {&#x27;name&#x27;: &#x27;婴儿湿巾&#x27;,   &#x27;age_group&#x27;: 0,  &#x27;category&#x27;: &#x27;护理&#x27;},
+    &#x27;ITEM_012&#x27;: {&#x27;name&#x27;: &#x27;纸尿裤NB&#x27;,   &#x27;age_group&#x27;: 0,  &#x27;category&#x27;: &#x27;尿裤&#x27;},
+    &#x27;ITEM_013&#x27;: {&#x27;name&#x27;: &#x27;纸尿裤M&#x27;,    &#x27;age_group&#x27;: 3,  &#x27;category&#x27;: &#x27;尿裤&#x27;},
+    &#x27;ITEM_014&#x27;: {&#x27;name&#x27;: &#x27;爬行垫&#x27;,     &#x27;age_group&#x27;: 3,  &#x27;category&#x27;: &#x27;玩具&#x27;},
+}
+item_ids = list(BABY_ITEMS.keys())
+
+# 生成模拟用户购买序列
+def generate_user_sequences(n_users=200, max_seq_len=15):
+    sequences = {}
+    for uid in range(n_users):
+        # 用户的&quot;月龄轨迹&quot;：0-12个月逐步成长
+        start_age = np.random.choice([0, 1, 2, 3, 4])
+        seq_len   = np.random.randint(5, max_seq_len)
+        seq = []
+        current_age = start_age
+        for _ in range(seq_len):
+            # 根据当前月龄，从匹配商品中随机选（模拟真实购买行为）
+            matching = [k for k, v in BABY_ITEMS.items() if v[&#x27;age_group&#x27;] &lt;= current_age + 1]
+            if matching:
+                item = np.random.choice(matching)
+                seq.append(item)
+            current_age = min(current_age + np.random.choice([0, 0, 1]), 12)
+        sequences[uid] = seq
+    return sequences
+
+user_sequences = generate_user_sequences(200)
+print(f&quot;生成 {len(user_sequences)} 个用户购买序列&quot;)
+print(f&quot;平均序列长度: {np.mean([len(s) for s in user_sequences.values()]):.1f}&quot;)
+
+# ── 2. 简化版序列推荐模型（基于共现矩阵 + 位置加权）────────────────
+class SimpleSequentialRecommender:
+    &quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2408.09992</li><li>2409.04329</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Sequential-Recommendation-Transformer" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Baby-Age-Aware-Recommendation.html'>Skill-Baby-Age-Aware-Recommendation</a></li><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li><li><a href='../skills/Skill-Contrastive-Sequential-Recommendation.html'>Skill-Contrastive-Sequential-Recommendation</a></li><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li><li><a href='../skills/Skill-Embedding-Fundamentals.html'>Skill-Embedding-Fundamentals</a></li><li><a href='../skills/Skill-GNN-Ecommerce-Recommendation.html'>Skill-GNN-Ecommerce-Recommendation</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Baby-Age-Aware-Recommendation.html'>Skill-Baby-Age-Aware-Recommendation</a></li><li><a href='../skills/Skill-Cold-Start-Meta-Learning-PAM.html'>Skill-Cold-Start-Meta-Learning-PAM</a></li><li><a href='../skills/Skill-Contrastive-Sequential-Recommendation.html'>Skill-Contrastive-Sequential-Recommendation</a></li><li><a href='../skills/Skill-Diversity-Reranking-SMMR.html'>Skill-Diversity-Reranking-SMMR</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Baby-Age-Aware-Recommendation.html'>Skill-Baby-Age-Aware-Recommendation</a></li><li><a href='../skills/Skill-Contrastive-Sequential-Recommendation.html'>Skill-Contrastive-Sequential-Recommendation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Sequential-Recommendation-Transformer',skill_domain:'05-推荐系统'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Sequential-Recommendation-Transformer',skill_domain:'05-推荐系统',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

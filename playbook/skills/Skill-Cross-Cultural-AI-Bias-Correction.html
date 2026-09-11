@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cross Cultural AI Bias Correction · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/11-ai人文.html">11-AI人文</a> / Skill-Cross-Cultural-AI-Bias-Correction</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">11-AI人文</div>
+  <h1 class="skill-main-title">Cross Cultural AI Bias Correction</h1>
+  <p class="skill-skill-id">Skill-Cross-Cultural-AI-Bias-Correction</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>ML基础与可解释性</span><span class='tag'>AI伦理与治理</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-S 跨境数据合规</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>0万元</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#dc2626;color:#fff">待改进 · 63分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：ROI量化 D4（0%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-61010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[80.0, 100.0, 100.0, 0.0, 100.0, 100.0, 76.0, 34.0, 50.7, 51.0, 50.0];
+    var scores=[6.4, 5.0, 10.0, 0.0, 4.0, 10.0, 7.6, 5.1, 7.6, 5.1, 2.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>品牌负责人 / 内容运营<span class='biz-ctx-secondary'> · CEO · 社媒运营</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>TikTok · Instagram · DTC 品牌站 · 母婴社媒内容</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>品牌内容同质化，想在母婴赛道建立有温度有记忆点的品牌人设；海外用户文化差异大，本地化内容难以真正有共鸣</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>品牌内容从「产品介绍」升级为「情感共鸣的故事」，海外用户分享率和评论互动率提升</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>内容没有灵魂用户不爱看</span><span class='biz-pain-tag'>AI 写的东西太像 AI</span><span class='biz-pain-tag'>不同文化的妈妈怎么打动</span><span class='biz-pain-tag'>品牌故事讲不出来</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>运营团队面临东南亚/欧美市场推荐算法偏见导致转化差异达40%——跨文化偏见修正将各市场CTR差异收窄至8%以内，年化GMV提升55万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>跨文化AI偏见修正基于Hofstede文化维度理论（权力距离、个人主义、不确定性规避、长期导向等5维）与对抗性去偏差相结合。核心思想：不同文化背景下，用户对推荐、定价、内容的公平性认知存在系统差异。通过构建文化维度向量C∈ℝ⁵，将其作为条件变量注入推荐模型，使用Adversarial Debiasing框架（对抗网络D_adv检测隐性偏见），同时采用Reweighting策略对样本重新加权以消除文化偏差。公式：L_total = L_r</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：母婴产品推荐系统在东南亚/欧美/中东市场的性别刻板印象去除</p><p>- 业务问题：东南亚市场推荐系统对女性用户推荐家务/育儿产品占比92%（性别偏见），欧美市场同比45%（文化差异），中东市场因宗教因素对女性推荐覆盖受限。导致东南亚女性用户留存率下降18%，投诉率上升3.2倍；欧美市场虽无明显投诉但转化率较低（文化适配不足）。 - 数据要求：各地区过去24个月用户行为数据（点击、购买、停留时长）≥500万条/地区；用户性别、年龄、地理位置标签；产品类目标签（家务/教育/娱乐/健康等）；用户反馈与投诉文本；Hofstede文化维度数据库（按国家/地区预标注）。 - 预期产出：(1)各地区推荐系统中性别偏见指数从0.72降至0.35以下；(2)文化适配度评分（0-</p><p>三轨验证 | 成本轨：模型开发+数据标注+A/B测试月均成本18万元，6个月ROI周期 | 合规轨：符合GDPR（欧盟）、CCPA（美国）、当地数据保护法；通过公平性审计（Fairness Through Awareness标准） | 风险轨：(1)文化维度数据准确性风险（概率15%，影响：参数偏差导致过度修正），(2)地区特异性过度拟合风险（概率12%，影响：新地区扩展效果不佳），(3)用户隐私泄露风险（概率8%，影响：品牌声誉受损）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><p>0万元</p>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+# ============ 第一部分：文化维度数据与模拟数据生成 ============
+
+# Hofstede文化维度数据（示例：5个国家/地区）
+hofstede_data = {
+    &#x27;region&#x27;: [&#x27;China&#x27;, &#x27;USA&#x27;, &#x27;Saudi_Arabia&#x27;, &#x27;Vietnam&#x27;, &#x27;Germany&#x27;],
+    &#x27;power_distance&#x27;: [80, 40, 95, 70, 35],  # 权力距离
+    &#x27;individualism&#x27;: [20, 91, 25, 20, 67],   # 个人主义
+    &#x27;uncertainty_avoidance&#x27;: [30, 46, 80, 30, 65],  # 不确定性规避
+    &#x27;masculinity&#x27;: [66, 62, 60, 40, 66],     # 男性气质
+    &#x27;long_term_orientation&#x27;: [87, 26, 36, 57, 83]  # 长期导向
+}
+hofstede_df = pd.DataFrame(hofstede_data)
+hofstede_df = hofstede_df.set_index(&#x27;region&#x27;)
+
+# 模拟母婴推荐数据：用户-产品交互矩阵
+np.random.seed(42)
+n_users = 1000
+n_products = 50
+regions_list = [&#x27;China&#x27;, &#x27;USA&#x27;, &#x27;Saudi_Arabia&#x27;, &#x27;Vietnam&#x27;, &#x27;Germany&#x27;]
+
+# 生成用户特征
+user_data = {
+    &#x27;user_id&#x27;: range(n_users),
+    &#x27;region&#x27;: np.random.choice(regions_list, n_users),
+    &#x27;gender&#x27;: np.random.choice([&#x27;M&#x27;, &#x27;F&#x27;], n_users),
+    &#x27;age&#x27;: np.random.randint(20, 50, n_users)
+}
+user_df = pd.DataFrame(user_data)
+
+# 生成产品特征与类别
+product_data = {
+    &#x27;product_id&#x27;: range(n_products),
+    &#x27;category&#x27;: np.random.choice([&#x27;Childcare&#x27;, &#x27;Education&#x27;, &#x27;Health&#x27;, &#x27;Entertainment&#x27;, &#x27;Household&#x27;], n_products),
+    &#x27;gender_bias_score&#x27;: np.random.uniform(0, 1, n_products)  # 产品的性别偏见程度
+}
+product_df = pd.DataFrame(product_data)
+
+# 生成交互数据（用户-产品点击/购买）
+interactions = []
+for _ in range(5000):
+    user_idx = np.random.randint(0, n_users)
+    product_idx = np.random.randint(0, n_products)
+    user_region = user_df.loc[user_idx, &#x27;region&#x27;]
+    user_gender = user_df.loc[user_idx, &#x27;gender&#x27;]
+    product_category = product_df.loc[product_idx, &#x27;category&#x27;]
+    
+    # 模拟性别偏见：女性用户更容易被推荐家务类产品
+    bias_factor = 1.5 if (user_gender == &#x27;F&#x27; and product_category == &#x27;Household&#x27;) else 1.0
+    interaction_prob = 0.3 * bias_factor
+    
+    if np.random.random() &lt; interaction_prob:
+        interactions.append({
+            &#x27;user_id&#x27;: user_idx,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>1607.06520</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Cross-Cultural-AI-Bias-Correction" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Cultural-Marketing-Adaptation.html'>Skill-Cross-Cultural-Marketing-Adaptation</a></li><li><a href='../skills/Skill-Differential-Privacy-Recommendation.html'>Skill-Differential-Privacy-Recommendation</a></li><li><span class='muted'>Skill-Dynamic-Pricing-Cultural-Sensitivity</span></li><li><span class='muted'>Skill-Fairness-Aware-Ranking</span></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><span class='muted'>Skill-Multilingual-Content-Moderation</span></li><li><span class='muted'>Skill-User-Segmentation-Global-Markets</span></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Differential-Privacy-Recommendation.html'>Skill-Differential-Privacy-Recommendation</a></li><li><span class='muted'>Skill-Dynamic-Pricing-Cultural-Sensitivity</span></li><li><span class='muted'>Skill-Fairness-Aware-Ranking</span></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><span class='muted'>Skill-Multilingual-Content-Moderation</span></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+    <h3>可组合技能</h3><ul><li><span class='muted'>Skill-Dynamic-Pricing-Cultural-Sensitivity</span></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><span class='muted'>Skill-Multilingual-Content-Moderation</span></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Cross-Cultural-AI-Bias-Correction',skill_domain:'11-AI人文'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Cross-Cultural-AI-Bias-Correction',skill_domain:'11-AI人文',skill_difficulty:''});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

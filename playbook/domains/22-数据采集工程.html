@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>22-数据采集工程 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>22-数据采集工程</h1><p>新领域 (2026-06-05): Document intelligence, identity resolution, fake review detection, federated collection, web crawling</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 22-数据采集工程 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Adaptive-Crawl-Scheduling.html" data-domain="22-数据采集工程" data-diff="">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Adaptive Crawl Scheduling — 自适应爬取调度：Sleeping Bandit + 神经质量优先级</h3>
+  <p class="sc-desc">数据采集主管面临爬虫频繁失效——Adaptive Crawl将采集中断率12%压到3%，年化省19万元</p>
+  <div class='sc-footer'><span class='sc-roi'>336 万/年</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Advertising-API-Unified-Schema.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Advertising API Unified Schema — 多平台广告统一数据模型（Amazon/Meta/TikTok/Google）</h3>
+  <p class="sc-desc">广告分析师面临&quot;Amazon/Meta/TikTok广告数据字段不一致跨平台分析极难&quot;——统一Schema Adapter将跨平台数据整合时间从5天/月压缩至4小时/月</p>
+  <div class='sc-footer'><span class='sc-roi'>20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Amazon-SP-API-Data-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Amazon SP-API Data Pipeline — 增量采集标准化管道（订单/库存/财务报告）</h3>
+  <p class="sc-desc">数据工程师面临&quot;Amazon SP-API数据采集不稳定且各报告格式不统一&quot;——增量采集+Schema映射将数据完整率从73%提升至99.2%，数据工程人力节省60%</p>
+  <div class='sc-footer'><span class='sc-roi'>20 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cleanroom-Audience-Collaboration.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Cleanroom Audience Collaboration — 数据洁净室跨品牌受众协作无需共享原始数据</h3>
+  <p class="sc-desc">数字营销团队面临&quot;想与内容平台共分析受众但GDPR禁止共享用户数据、媒体规划无法做受众重叠验证&quot;——数据洁净室K匿名性+差分隐私联合分析在数据不出本地前提下完成受众重叠分析，规避最高4%全球营收的合规罚款风险</p>
+  <div class='sc-footer'><span class='sc-roi'>10-20 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Clickstream-Persona-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Clickstream Persona Pipeline — 点击流用户画像：VQ-VAE 离散 Persona + 多层行为 KG</h3>
+  <p class="sc-desc">母婴跨境电商应用：独立站/APP 原始点击流 → 离散 persona token，驱动个性化推荐和 A/B 实验</p>
+  <div class='sc-footer'><span class='sc-roi'>25 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Continuous-NLP-SEO-Morphing.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">连续语义漂移 SEO 文本对抗变异</h3>
+  <p class="sc-desc">运营团队躺在固定Listing关键词上等死——引入连续语义漂移追踪与对抗生成式SEO文本变异，每72小时从TikTok/Reddit新兴俚语中自动提取高熵长尾词注入Listing后端，在竞品反应过来之前收割2-4周零广告费的自然搜索流量红利。</p>
+  <div class='sc-footer'><span class='sc-roi'>187.2万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Platform-User-Identity.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">跨平台用户 ID 统一 — Amazon/TikTok/独立站身份解析</h3>
+  <p class="sc-desc">数据工程师面临&quot;跨平台用户身份割裂导致LTV低估和高价值用户触达不足&quot;——跨平台身份解析将用户识别覆盖率提升55%，年化优化高价值用户策略增收25-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Platform-User-Identity-Resolution.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Cross-Platform User Identity Resolution — 跨平台用户 ID 统一</h3>
+  <p class="sc-desc">数据工程师面临&quot;同一用户在Amazon/TikTok/独立站无法识别导致营销浪费&quot;——跨平台用户ID统一将重复触达率降低45%，年化节省广告预算20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>TikTok 广告真实 ROAS 校准，广告预算优化 10-</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Dark-Pattern-Review-Detection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Dark Pattern Detection in Reviews — 评论水军与暗模式检测</h3>
+  <p class="sc-desc">运营面临&quot;竞品刷单水军在平台站稳脚跟导致真实口碑信号被污染&quot;——暗模式评论检测将水军识别召回率从55%提升至91%，年化减少因虚假竞品信号导致的选品错误损失30-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>每次成功识别竞品攻击并申诉成功，挽回 GMV 损失</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-Collection-Causal-Debiasing.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Data Collection Causal Debiasing — 采集偏差因果修正：爬虫选择性采集对因果分析的去污染</h3>
+  <p class="sc-desc">某母婴品牌通过爬虫采集 Amazon 评论，分析&quot;打折 coupon 是否提升复购率&quot;</p>
+  <div class='sc-footer'><span class='sc-roi'>180 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-Mesh-Ecommerce.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Data Mesh for Ecommerce — 数据网格架构</h3>
+  <p class="sc-desc">数据平台团队面临&quot;各部门数据孤岛导致跨域分析效率低下&quot;——数据网格架构将跨域数据请求响应时间从5天降至4小时，年化提升数据驱动决策效率节省30-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>消除跨团队 ETL 重复开发，节省</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-Provenance-Lineage.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Data Provenance &amp; Lineage — 数据血缘追踪：LLM 训练数据溯源与 AI 法规合规</h3>
+  <p class="sc-desc">母婴跨境电商应用：追踪商品推荐/风控模型的训练数据来源，满足 EU AI Act 等法规审计要求</p>
+  <div class='sc-footer'><span class='sc-roi'>240-385 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-Quality-Monitor-Alert.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Data Quality Monitor Alert — 多维数据质量监控与异常告警（SPC + KL 散度）</h3>
+  <p class="sc-desc">数据团队面临&quot;数据质量问题发现总是在报告出错后业务已经受损&quot;——SPC控制图+KL散度将数据异常提前发现时间从事后1天变为事中实时告警，年化避损$9.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Document-Intelligence-Parsing.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Document Intelligence Parsing — LLM 驱动的文档智能解析：图文统一 OCR、跨页表格恢复、布局感知推理</h3>
+  <p class="sc-desc">每季度收到 20 家供应商 PDF 报价单，人工录入 SKU/价格/MOQ 需 3-4 天且错误率 8%——Layout-aware LLM 解析实现 PDF→结构化数据全自动，人工录入工时归零，错误率降至 1% 以下</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ecommerce-Data-Quality-Assessment.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">E-commerce Data Quality Assessment — 产品目录数据质量双轨评分与门控</h3>
+  <p class="sc-desc">母婴跨境电商应用：商品 catalog 错误检测与缺失模态补全，保证下游推荐/搜索质量</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万/年</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Fake-Review-Detection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Fake Review Detection — 假评论检测：图神经网络+LLM 可解释欺诈识别</h3>
+  <p class="sc-desc">品类经理面临刷评污染口碑——Fake Review将异常评论拦截率78%提到96%，年化省21万元</p>
+  <div class='sc-footer'><span class='sc-roi'>380 万/年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Feature-Store-Architecture.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Feature Store Architecture — 特征工程平台化</h3>
+  <p class="sc-desc">数据工程师面临&quot;特征计算逻辑散落各处导致训练线上不一致&quot;——特征工程平台化将训练线上一致性从75%提升至98%，年化减少模型性能损耗节省20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>消除跨团队重复特征 ETL，节省</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-KG-Incremental-Update-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">知识图谱增量更新流水线 — 实体变更检测与一致性维护</h3>
+  <p class="sc-desc">竞品价格知识图谱每日全量重建耗时4小时令定价师等不到数据——引入实体变更检测增量更新流水线，图谱刷新延迟从4小时→15分钟（延迟降低 80%），定价决策时效性显著改善。</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Graph-Auto-Update.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Knowledge Graph Auto-Update — 知识图谱增量更新与一致性维护</h3>
+  <p class="sc-desc">数据工程师面临&quot;知识图谱因手动维护滞后导致推荐链路使用过期关系&quot;——增量更新自动化将图谱新鲜度从T+3提升至T+0.5，年化减少推荐质量损耗增收20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>竞品价格图谱实时化使 Buy Box 保有率提升</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Data-Annotation-Pipeline.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">LLM-based Data Annotation Pipeline — LLM 辅助数据标注流水线</h3>
+  <p class="sc-desc">数据团队面临&quot;人工标注训练数据成本高且周期长&quot;——LLM辅助标注流水线将标注成本降低70%速度提升5倍，年化节省数据标注成本25-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万条评论标注成本从</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Focused-Web-Crawling.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">LLM-Focused Web Crawling — LLM/MLLM 引导的主题爬取：KG 驱动发现与动态 JS 页面抽取</h3>
+  <p class="sc-desc">研究员面临网页信息抓不全——LLM Web Crawling将有效字段覆盖率57%提到85%，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ML-Pipeline-Observability.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">ML 数据管道可观测性 — 数据漂移监控与告警</h3>
+  <p class="sc-desc">数据工程师面临&quot;ML模型上线后数据漂移静默导致预测质量悄然劣化&quot;——管道可观测性将数据漂移发现时间从14天缩短至6小时，年化减少模型效果损耗保护20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>55 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Market-Signal-Realtime-Collection.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Market Signal Realtime Collection — 实时市场信号采集：事件驱动感知与趋势冷启动检测</h3>
+  <p class="sc-desc">策略经理面临市场信号滞后——Realtime Collection将监测延迟6小时压到20分钟，年化省18万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-UGC-Cross-Platform-Fusion.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">跨平台UGC多模态融合采集 — 图文视频评论统一信号采集与去噪</h3>
+  <p class="sc-desc">品牌质量问题在TikTok已爆发而Amazon评分仍正常——跨平台多模态UGC融合将质量预警提前6周，保护年销$500万SKU避免$50-80万评分下滑损失</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Observability-ML-Pipelines.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Observability for ML Pipelines — ML 数据管道可观测性</h3>
+  <p class="sc-desc">数据工程师面临&quot;生产ML管道中数据质量异常无告警导致决策失效&quot;——流水线可观测性将异常检测漏报率从40%降至5%，年化减少因数据问题导致的错误决策损失15-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>模型漂移从 T+7 天发现 → T+1 天发现，每次大促事件</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Privacy-Compliant-Data-Collection-GDPR-CCPA.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Privacy-Compliant Data Collection GDPR/CCPA — 隐私合规数据采集架构</h3>
+  <p class="sc-desc">独立站通过 GA4+Pixel 未经同意采集用户行为被德国 DPA 开出€1.2 万罚款——引入 GDPR/CCPA 合规数据采集架构（同意管理+数据最小化），合规覆盖率 100%，规避最高 2000 万欧元罚款风险，年化法律成本降低 96%。</p>
+  <div class='sc-footer'><span class='sc-roi'>避免 GDPR 罚款（最高年营业额 4%，对月 GMV 10</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Privacy-GDPR-CCPA-Collection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">隐私合规数据采集架构 — GDPR/CCPA 合规设计</h3>
+  <p class="sc-desc">欧洲评论数据采集系统存储用户真实邮箱/IP 面临 GDPR 违规高风险——引入隐私合规架构（假名化+差分隐私+数据最小化），违规暴露风险清零，合规改造成本仅为被罚款金额的 3%。</p>
+  <div class='sc-footer'><span class='sc-roi'>2000 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Privacy-Preserving-Federated-Collection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Privacy-Preserving Federated Collection — 隐私保护联邦采集：差分隐私预算与联邦推荐</h3>
+  <p class="sc-desc">数据治理面临跨域采集合规风险——Federated Collection将违规暴露率4%压到0.5%，年化省30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>25 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Privacy-Safe-Identity-Resolution.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Privacy-Safe Identity Resolution — 隐私合规跨平台 ID 解析：多方对齐与差分隐私</h3>
+  <p class="sc-desc">数据治理经理面临身份串绑难追责——Identity Resolution将错绑率3.5%压到0.4%，年化省17万元</p>
+  <div class='sc-footer'><span class='sc-roi'>280-400 万/年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Procurement-Email-Extraction.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Procurement Email Extraction — 采购邮件结构化提取：多供应商报价聚合与合规验证</h3>
+  <p class="sc-desc">母婴跨境电商应用：自动解析供应商报价邮件→结构化 MOQ/交期/价格梯度，节省 4-6h/周人工录入</p>
+  <div class='sc-footer'><span class='sc-roi'>25 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Product-Attribute-Completion.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Product Attribute Completion — 商品属性自动补全：AI 填补 Listing 属性空白</h3>
+  <p class="sc-desc">新款吸奶器需要填写42个属性字段人工填写1.5小时但30-40%属性空白导致搜索排名下降——AI从标题/要点/图片自动提取属性值5分钟完成，属性完整度60%提升到90%搜索曝光增加20-35%年化15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Real-Time-Inventory-Event-Stream.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Real-Time Inventory Event Stream — FBA 库存事件溯源架构（Event Sourcing + CQRS）</h3>
+  <p class="sc-desc">运营总监面临&quot;库存数据延迟12小时导致断货识别总是迟到&quot;——Event Sourcing+CQRS将库存事件处理延迟从12小时降至30秒，断货预警准确率提升至97%</p>
+  <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Realtime-Feature-Collection.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Realtime Feature Collection — 流式特征采集与在线特征仓库：推荐系统实时个性化的数据基础设施</h3>
+  <p class="sc-desc">算法工程师面临特征入仓延迟——Realtime Feature将时延90分钟压到5分钟，年化省22万元</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Dedup-Quality-Filter.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Review Dedup &amp; Quality Filter — 多平台评论在线去重与质量排序</h3>
+  <p class="sc-desc">内容运营面临评论重复污染分析——Dedup Filter将重复率18%压到2%，年化省16万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Velocity-Anomaly-Detector.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">差评速率异常检测 — 区分竞品恶意攻击与真实产品问题</h3>
+  <p class="sc-desc">亚马逊运营面临&quot;48小时内涌入23条1星差评无法判断是攻击还是产品问题&quot;——CUSUM异常检测将识别时间从48小时→2小时，拦截攻击后单SKU月均多保留8.5万美元销售额</p>
+  <div class='sc-footer'><span class='sc-roi'>30-80万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Schema-Evolution-Data-Contract.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Schema Evolution &amp; Data Contract — 数据契约与 Schema 演化管理</h3>
+  <p class="sc-desc">数据工程师面临&quot;上游数据字段变更导致下游ML管道静默失败&quot;——数据契约将字段变更导致的pipeline故障减少80%，年化减少数据质量事故维护成本20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>breaking change 引发的数据管道中断从 4h/</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Streaming-ETL-Flink-Kafka.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Streaming ETL with Flink/Kafka — 实时流式 ETL 工程化</h3>
+  <p class="sc-desc">运营面临&quot;库存事件到数据仓库延迟2小时导致补货决策滞后&quot;——流式ETL将数据延迟从2小时降至30秒，年化减少因延迟导致的断货损失40-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>实时看板替代 T+1 报表，大促期间及时补货预警挽回 GMV</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Synthetic-Data-Ecommerce.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Synthetic Data for E-commerce — 电商合成数据生成：解决新品冷启动与长尾数据稀缺</h3>
+  <p class="sc-desc">母婴跨境电商应用：新品上市无历史数据时生成高质量合成数据，驱动冷启动推荐和库存预测</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Synthetic-Data-Generation-Tabular.html" data-domain="22-数据采集工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">合成表格数据生成 — 隐私保护的数据增强与分享框架</h3>
+  <p class="sc-desc">数据团队面临&quot;欺诈退货样本仅2%严重不平衡导致检测F1低至0.43&quot;——TAEGAN合成欺诈样本使检测F1提升至0.71，年化减少欺诈损失约84万元</p>
+  <div class='sc-footer'><span class='sc-roi'>84万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Weak-Supervision-Data-Labeling.html" data-domain="22-数据采集工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Weak Supervision Data Labeling — 弱监督数据标注：用规则函数替代人工标注</h3>
+  <p class="sc-desc">训练评论分类AI需要10000条人工标注数据花3万元等3周——弱监督用15个规则函数自动标注全部数据1天完成成本近零，标注效率提升10-50倍支持多个AI项目年化节省数据标注成本20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Web-Page-Change-Detection.html" data-domain="22-数据采集工程" data-diff="">
+  <div class="sc-domain">22-数据采集工程</div>
+  <h3 class="sc-title">Web Page Change Detection — 网页变化检测：VLM 视觉差异识别与 DOM 原子性保护</h3>
+  <p class="sc-desc">母婴跨境电商应用：仅在竞品价格/库存/图片发生变化时触发全量抓取，减少 70% 无效爬取</p>
+  <div class='sc-footer'><span class='sc-roi'>2.58 万</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

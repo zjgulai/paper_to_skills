@@ -1,0 +1,74 @@
+{
+  "gate": "week1",
+  "overall_pass": false,
+  "checks": [
+    {
+      "id": 1,
+      "name": "LLM Top-1 accuracy vs golden",
+      "threshold": ">= 0.85",
+      "value": 0.7547,
+      "pass": false,
+      "note": "n_eval=481"
+    },
+    {
+      "id": 2,
+      "name": "Per-label F1 weighted (TOP-30)",
+      "threshold": ">= 0.75",
+      "value": 0.8134,
+      "pass": true
+    },
+    {
+      "id": 3,
+      "name": "Top-3 mean Jaccard (recall proxy)",
+      "threshold": ">= 0.50",
+      "value": 0.6227,
+      "pass": true
+    },
+    {
+      "id": 4,
+      "name": "LLM sentiment Cohen κ",
+      "threshold": ">= 0.65",
+      "value": 1.0,
+      "pass": true
+    },
+    {
+      "id": 5,
+      "name": "ABSA aspect/record in [1, 5]",
+      "threshold": "1.0 <= x <= 5.0",
+      "value": 2.91,
+      "pass": true,
+      "note": "total_aspects=1303, n_total=500"
+    },
+    {
+      "id": 6,
+      "name": "ABSA empty rate",
+      "threshold": "< 0.10",
+      "value": 0.0876,
+      "pass": true
+    },
+    {
+      "id": 7,
+      "name": "Proxy NPS three-way agreement vs golden",
+      "threshold": ">= 0.85",
+      "value": 0.998,
+      "pass": true,
+      "note": "n_eval=500"
+    },
+    {
+      "id": 8,
+      "name": "Tag mutex (POS+NEG co-occurrence) rate",
+      "threshold": "< 0.03",
+      "value": 0.0038,
+      "pass": true,
+      "note": "violations=19, n=5000"
+    },
+    {
+      "id": 9,
+      "name": "JSON parse failure rate",
+      "threshold": "< 0.01",
+      "value": 0.0014,
+      "pass": true,
+      "note": "failed=7, n=5000"
+    }
+  ]
+}

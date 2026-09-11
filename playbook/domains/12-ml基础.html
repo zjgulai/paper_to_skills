@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>12-ML基础 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>12-ML基础</h1><p>Feature engineering, model evaluation, drift detection, performance monitor</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 12-ML基础 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Active-Learning-Annotation.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Active Learning Annotation — 主动学习标注策略（最小标注成本最大化模型性能）</h3>
+  <p class="sc-desc">数据团队面临&quot;标注预算有限但模型训练数据质量不足&quot;——主动学习以20%标注量达到全量随机标注的模型性能，年化将标注成本从15万元降至3万元节省12万元</p>
+  <div class='sc-footer'><span class='sc-roi'>将标注成本降低 70-80%，以月均标注预算 5 万元计，年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-AutoML-Pipeline-Design.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">AutoML 流水线设计 — Optuna TPE + FLAML 自动化建模</h3>
+  <p class="sc-desc">数据科学家面临&quot;每个新预测任务都要重新手工搜索超参模型选择耗时数天&quot;——Optuna TPE贝叶斯搜索将模型调优时间从3天压缩至4小时，准确率提升7%</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Bayesian-Hyperparameter-Optimization.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">贝叶斯超参搜索 — Optuna/BO 替代随机搜索</h3>
+  <p class="sc-desc">数据科学家面临&quot;随机搜索超参耗费大量GPU算力且效果不稳定&quot;——贝叶斯超参优化将调参迭代次数减少60%且最终模型性能提升8-15%，年化节省GPU成本10-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>CTR 模型 AUC +2%~4% → 广告 ROAS 提升</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Carbon-Footprint-ML-Model.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">ML模型碳足迹评估 — 可持续AI的算力碳排放量化</h3>
+  <p class="sc-desc">AI团队面临&quot;欧盟CSRD要求披露数字碳排放但无量化工具&quot;——GHG Protocol碳足迹计算器量化AI训练和推理排放，满足ESG合规，年化价值约75万元</p>
+  <div class='sc-footer'><span class='sc-roi'>60万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-ML-Feature-Engineering.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Causal ML Feature Engineering — 因果驱动的特征工程：消除混淆提升模型可靠性</h3>
+  <p class="sc-desc">需求预测模型加入广告花费特征后大促期预测严重失真——因果DAG识别广告花费是混淆变量而非需求原因，去除后大促期预测误差降低30-50%，年化减少备货决策失误10-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Representation-Transfer-Learning.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">因果表示学习跨域迁移 — 从源域提取不变因果特征用于目标域零样本适配</h3>
+  <p class="sc-desc">新市场冷启动期模型不准导致广告大量浪费——因果表示迁移从小样本中提取不变因果特征，使日本/欧洲新市场AUC从0.61提升至0.76，节省6-12个月成熟期广告浪费</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Class-Conditional-Generation-Augment.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">条件生成数据增强 — 稀有类别的扩散模型精准数据合成</h3>
+  <p class="sc-desc">风控团队面临&quot;欺诈退货仅1.8%极端不平衡导致XGBoost召回率42%&quot;——条件扩散模型生成多样化合成样本，召回率提升至68%，年化减少欺诈损失约35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Class-Imbalance-Handling.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Class Imbalance Handling — SMOTE/ADASYN/Focal Loss 处理低频事件</h3>
+  <p class="sc-desc">风控运营面临&quot;欺诈/退货低频事件召回率仅38%、大量漏检导致月均损失15万元&quot;——SMOTE+Focal Loss将欺诈召回率从38%提升至78%，年化减损85-95万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Concept-Drift-Detection.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Concept Drift Detection — 在线监控模型分布漂移</h3>
+  <p class="sc-desc">广告运营面临&quot;大促后CTR预测模型漂移未被感知、出价策略失准导致月均5-8万元广告损耗&quot;——ADWIN/DDM在漂移后6-12小时内触发告警，比月度再训练提前20天感知，年化节省80-110万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-8 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-Prediction-Framework.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Conformal Prediction — 无分布假设的预测区间保证框架</h3>
+  <p class="sc-desc">供应链团队面临&quot;备货点预测不知道置信度是多少&quot;——Conformal Prediction提供统计保证的区间，断货率降低35%、过度备货减少25%，年化资金效率提升200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Continual-Learning-Production.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">持续学习生产模型 — 无遗忘的在线模型知识更新</h3>
+  <p class="sc-desc">算法团队面临&quot;季节切换后需求预测模型MAPE从11%劣化至18%（旧季节知识遗忘）&quot;——EWC持续学习弹性约束保留跨季节知识，年化降低积压断货损失约100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Contrastive-Learning-Ecommerce.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Contrastive Learning for Ecommerce — 对比学习用于电商表示学习（SimCLR/MoCo 迁移）</h3>
+  <p class="sc-desc">搜索算法工程师面临&quot;多语言产品语义对齐需要大量标注成本高昂&quot;——对比学习无监督构建多语言统一嵌入，跨语言产品检索准确率提升35%，年化节省标注成本15-30万元并提升跨境流量转化</p>
+  <div class='sc-footer'><span class='sc-roi'>构建高质量无监督产品嵌入，下游搜索/推荐/跨语言匹配均受益，</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Validation-Strategies.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Cross-Validation Strategies（交叉验证策略）</h3>
+  <p class="sc-desc">业务问题：我们用过去 24 个月数据训练 Prophet 预测下月销量</p>
+  <div class='sc-footer'><span class='sc-roi'>3-5 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-Drift-Detection.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill-Data-Drift-Detection</h3>
+  <p class="sc-desc">业务问题：baby sterilizer 需求预测模型（TFT）上线 6 个月后，MAPE 从 12% 悄悄涨到 28%，直到库存积压才被发现，损失约 $8,000 滞销成本</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Early-Stopping-Regularization.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Early Stopping and Regularization — 防止过拟合的训练控制技术</h3>
+  <p class="sc-desc">数据科学团队面临&quot;LTV预测模型训练集AUC=0.91但测试集仅0.73、严重过拟合导致广告CPO虚高&quot;——Elastic Net+Early Stopping将测试集AUC提升至0.84，年化提升广告效益8-12万元+降低仓储成本25-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8-12 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Embedding-Fundamentals.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Embedding Fundamentals — 嵌入表示学习基础：从 ID 映射到多模态语义对齐</h3>
+  <p class="sc-desc">跨境平台上架 50 款新款婴儿车，无任何历史购买数据，纯 ID 嵌入无法初始化，导致新品在推荐系统中几乎不曝光（冷启动问题）</p>
+  <div class='sc-footer'><span class='sc-roi'>15-50 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ensemble-Methods.html" data-domain="12-ML基础" data-diff="">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill Card: Ensemble Methods（集成学习方法）</h3>
+  <p class="sc-desc">单独用 XGBoost 预测流失 AUC=0.82，单独用 LightGBM AUC=0.81，单独用 Random Forest AUC=0.78</p>
+  <div class='sc-footer'><span class='sc-roi'>180 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Feature-Engineering.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Feature Engineering for E-Commerce Machine Learning</h3>
+  <p class="sc-desc">数据科学家面临特征零散难复用——特征工程将建模周期从5天缩到1天，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Feature-Selection.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Feature Selection（特征选择）</h3>
+  <p class="sc-desc">我们从多个数据源（CRM、广告平台、网站分析、客服系统）汇总了 200+ 特征</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Federated-Learning-Privacy.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">联邦学习隐私保护 — 跨数据孤岛的协作训练框架</h3>
+  <p class="sc-desc">跨境团队面临&quot;多国站点数据GDPR禁止合并无法联合建模&quot;——FedAvg联邦训练使德国/日本站个性化提升15-20%，合规合作成本零，年化ROI约150万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50-80万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hyperparameter-Optimization.html" data-domain="12-ML基础" data-diff="">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Hyperparameter Optimization（超参调优）</h3>
+  <p class="sc-desc">默认参数的 XGBoost 流失预测 AUC=0.78，希望通过超参调优提升到 0.82+</p>
+  <div class='sc-footer'><span class='sc-roi'>0.5 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Imbalanced-Data-Handling.html" data-domain="12-ML基础" data-diff="">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill Card: Imbalanced Data Handling in Mother-Baby Cross-Border E-commerce</h3>
+  <p class="sc-desc">流失率 5%，直接用 XGBoost 训练，Recall 只有 0.3——70% 的流失用户没被识别</p>
+  <div class='sc-footer'><span class='sc-roi'>¥12 万/月 × 12 月 =</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-In-Context-Learning-Tabular.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">In-Context Learning表格数据 — 无需训练的少样本电商数据分析</h3>
+  <p class="sc-desc">数据团队面临&quot;新品类只有80条样本传统ML过拟合AUC=0.62无法部署风控&quot;——TabPFN ICL 1秒内AUC提升至0.82，新品类上线即有风控保护年化15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Label-Smoothing-Regularization.html" data-domain="12-ML基础" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">标签平滑正则化 — 改善过拟合与模型置信度校准</h3>
+  <p class="sc-desc">商品品类分类模型置信度虚高（softmax&gt;0.99）导致边界品类广告投放精准度低——引入标签平滑正则化校准模型置信度，误分类率降低6%，广告精准投放 CTR 提升 8-12%。</p>
+  <div class='sc-footer'><span class='sc-roi'>广告品类投放精准度 +15%~30% → 无效曝光费用减少，</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Mixture-of-Experts-Routing.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Mixture of Experts Routing — MoE 路由机制（多任务条件激活，降低推理成本）</h3>
+  <p class="sc-desc">AI平台工程师面临&quot;同一模型服务多个业务线时专业性不足且推理成本高&quot;——MoE路由机制在相同推理成本下将各业务线任务准确率提升8-15%，年化增效价值20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>同等推理成本下提升多任务 AI 服务质量 8-15%，年化间</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MoE-Multi-Task-Learning.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">MoE多任务学习 — 专家混合架构的多任务电商建模</h3>
+  <p class="sc-desc">算法团队面临&quot;CTR/CVR/ROAS需维护三个独立模型成本高且相互割裂&quot;——MoE专家共享架构三任务联合训练，平均AUC提升0.005，MLOps成本降低30%，年化综合ROI约18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Model-Calibration.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Model Calibration — 让预测概率真正可信的校准技术</h3>
+  <p class="sc-desc">运营决策团队面临&quot;退货预测模型概率输出失真、备货缓冲比例设置误差±20%导致过度备货&quot;——Platt Scaling/Isotonic Regression将ECE从0.18降至0.04，年化节省FBA仓储成本40-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Model-Compression-Edge-Deployment.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">模型压缩与边缘部署 — INT8 量化 + 结构化剪枝 + ONNX 导出</h3>
+  <p class="sc-desc">工程师面临&quot;预测模型推理延迟500ms无法满足实时调价要求&quot;——INT8量化+ONNX将推理延迟从500ms降至38ms，在边缘设备部署成本降低80%</p>
+  <div class='sc-footer'><span class='sc-roi'>9 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Model-Evaluation-Metrics.html" data-domain="12-ML基础" data-diff="">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill Card: Model Evaluation Metrics（模型评估体系）</h3>
+  <p class="sc-desc">业务问题： 我们训练了 3 个流失预测模型（XGBoost / LightGBM / Logistic Regression），需要决定用哪个模型上线到 WF-A 智能补货系统，触发对高风险用户的挽留优惠券</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Model-Performance-Monitor.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Skill-Model-Performance-Monitor</h3>
+  <p class="sc-desc">算法负责人面临模型劣化发现太晚——性能监控将故障发现从7天压到1小时，年化省16万元</p>
+  <div class='sc-footer'><span class='sc-roi'>28%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Task-Ad-CTR-CVR.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">多任务广告CTR/CVR联合学习 — 共享底层的多目标广告预测</h3>
+  <p class="sc-desc">广告团队面临&quot;CTR/CVR/ROAS三模型独立训练长尾品类CVR数据严重不足&quot;——ESMM整个展示空间联合训练CTCVR精度提升15%，年化ROAS提升约8%节省+增量56万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Neural-Architecture-Search-NAS.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Neural Architecture Search (NAS) — 轻量神经网络自动设计（母婴电商边缘部署）</h3>
+  <p class="sc-desc">工程师面临&quot;仓库WMS终端需要轻量视觉模型但手工设计耗时且次优&quot;——神经架构搜索自动找到满足设备延迟约束的最优网络，边缘部署后扫描效率提升40%，年化节省仓储人工成本15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>边缘部署轻量模型替代云端推理，仓库/终端场景年化节省云计算成</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Online-Incremental-Learning.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Online Incremental Learning — 在线增量学习：模型无需重训即可适应数据漂移</h3>
+  <p class="sc-desc">旺季到来时需求预测模型仍用淡季规律导致严重缺货但批量重训需等4周——在线增量学习让模型每日自动更新漂移检测后2-3天校准完毕，减少旺季缺货损失年化30-100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥30-100 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Out-of-Distribution-Detection.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Out-of-Distribution Detection — OOD 检测识别分布外样本（新品/新市场冷启动防御）</h3>
+  <p class="sc-desc">新品冷启动阶段需求预测模型对未知品类给出虚假高置信度预测导致备货严重失误——引入 OOD 检测（Energy Score+马氏距离）识别分布外样本，异常备货率降低 35%，新品冷启动库存准确率提升至 78%。</p>
+  <div class='sc-footer'><span class='sc-roi'>减少对新品/新市场的盲目预测，年化减少备货失误损失 20-4</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Reward-Model-RLHF-Ecommerce.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">RLHF奖励模型电商 — 人类偏好对齐的电商AI质量提升</h3>
+  <p class="sc-desc">内容团队面临&quot;AI生成Listing虽准确但转化率低30%缺乏情感共鸣和紧迫感&quot;——RLHF奖励模型对齐母婴用户偏好，Listing转化率提升18%，年化GMV增量约100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>100万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SHAP-Shapley-Feature-Attribution.html" data-domain="12-ML基础" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">SHAP Shapley值特征归因 — 可解释AI的通用特征重要性引擎</h3>
+  <p class="sc-desc">运营面临&quot;AI模型黑盒决策无法说服团队执行&quot;——SHAP将特征贡献分解为可操作归因，模型决策接受率从40%提升至78%，年化减少无效广告支出80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>500万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Sparse-Autoencoder-Feature.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Sparse Autoencoder Feature — 稀疏自编码器特征提取（电商用户行为压缩与可解释特征）</h3>
+  <p class="sc-desc">数据科学家面临&quot;用户嵌入是黑盒运营无法理解推荐逻辑导致信任度低&quot;——稀疏自编码器将用户表示转化为可解释概念，运营理解推荐决策率提升80%，年化通过可解释 AI 提升业务协同价值15-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>可解释特征提升运营对 AI 决策的信任度，加速 A/B 实验</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Supply-Chain-ML-Features.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Supply Chain ML Feature Engineering — 供应链 ML 特征工程：时序+图+统计三维</h3>
+  <p class="sc-desc">供应链分析师面临特征口径不一致——供应链特征将预测MAPE降12%，年化省18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8.2%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tabular-Deep-Learning-FT-Transformer.html" data-domain="12-ML基础" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">FT-Transformer表格深度学习 — 超越GBDT的表格数据神经网络</h3>
+  <p class="sc-desc">算法团队面临&quot;LTV预测GBDT AUC=0.79已达瓶颈特征工程成本高&quot;——FT-Transformer自动学习特征交叉AUC提升至0.83，年化精准营销增量约110万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Time-Series-Pretraining-Foundation.html" data-domain="12-ML基础" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">12-ML基础</div>
+  <h3 class="sc-title">Time Series Foundation Model Pretraining — 时序基础模型预训练迁移（Moirai/TimesFM/Chronos）</h3>
+  <p class="sc-desc">运营面临&quot;新品上线无历史数据传统预测模型完全失效只能靠拍脑袋备货&quot;——时序基础模型零样本预测将新品首月备货准确率从±60%改善至±25%，年化减少滞销积压损失20-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>新品首月备货准确率提升，减少滞销积压和断货，年化价值 20-</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>东南亚市场情报与选品分群 — Shopee/Lazada 热搜词 + K-Means 价格带定位 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Shopee-Lazada-SEA-Market-Intelligence</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">14-用户分析</div>
+  <h1 class="skill-main-title">东南亚市场情报与选品分群 — Shopee/Lazada 热搜词 + K-Means 价格带定位</h1>
+  <p class="skill-skill-id">Skill-Shopee-Lazada-SEA-Market-Intelligence</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>pricing</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>跨境物流与履约</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>供应商管理与博弈</span><span class='tag'>KPI运营指标体系</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>多渠道协同增长</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-N 库存危机响应</span><span class='tag'>WF-P 关税危机应对</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>80-150 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>东南亚选品负责人面临&quot;不知道Shopee哪个国家哪个价格带最有机会&quot;——K-means市场聚类将最优价格带定位精度提升至87%，新品首月GMV超预期35%</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：东南亚各国母婴市场在价格敏感度、品牌认知和本地监管上差异巨大（新加坡 vs 菲律宾 vs 泰国价格带相差 35 倍）。用 KMeans 聚类对 Shopee/Lazada 热销商品按「价格区间 × 月销量 × 评分」三维特征进行分群，识别每个市场的主力价格带和竞争密度，为选品定价和差异化入市提供数据依据。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：婴儿奶瓶进入菲律宾 Shopee 的价格带定位 - 业务问题：品牌方准备把 Amazon 上 $18 的奶瓶打入菲律宾 Shopee，但不知道 $18 在菲律宾是哪个竞争层，是否需要重新定价或推出差异化版本。 - 数据要求：Shopee 菲律宾「baby bottle」Top 200 商品的价格/月销量/评分/主图风格 - 预期产出： - K-Means 分群（通常 3-4 群：低端大众、中端主流、高端精品、进口溢价） - $18 价格点落在哪个群，该群的竞争密度（商品数量/头部市占率） - 差异化入市建议：是硬打主流价格带，还是定位「进口溢价」细分群 - 业务价值：精准定价避免直面低</p><p>三轨验证： - 成本：数据采集需购买 Shopee 爬虫服务或第三方数据 API（如 DataHive、SimilarWeb），月费约 2000-5000 元；计算资源几乎免费（单次 K-Means 在笔记本上秒级完成）；人力投入约 2-3 天（数据清洗 + 聚类调参 + 报告撰写）。 - 合规：Shopee 反爬协议禁止未经授权的自动化数据抓取，需使用官方 API 或合规数据供应商；不涉及 GDPR（东南亚非欧盟区域），但需遵守菲律宾《数据隐私法》（RA 10173）——仅收集公开商品信息，不涉及用户个人数据，风险较低。 - 风险：若公开定价策略（如直接对标竞品价格带），可能引发竞品价格战，</p><p>场景B：泰国 vs 马来西亚母婴品类机会对比 - 业务问题：新财年扩张 1 个东南亚国家，泰国和马来西亚哪个市场机会更大？ - 数据要求：两个国家的婴儿推车/学步鞋/奶瓶三品类的市场数据 - 预期产出：市场机会矩阵（市场规模 × 竞争密度 × 价格带匹配度），推荐优先进入市场 - 业务价值：正确选国家可节省 3-6 个月试错成本，年化战略价值约 100 万元以上</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：精准定价策略避免直面低价内卷，进口溢价群平均净利率比中端群高 15-20%；正确选择国家市场节省 3-6 个月试错成本，年化战略价值约 80-150 万元</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（数据依赖爬虫或第三方数据服务，K-Means 算法标准化，sklearn 实现成本极低）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐☆</li><li><strong>评估依据</strong>：东南亚母婴市场 2025-2026 年是最重要的增量市场，但 SEA 内部差异极大，不做国家级市场情报直接入市会导致选品/定价严重偏差；该工具复用成本极低（换品类/换国家几分钟）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：paper2skills-code/user_analytics/shopee_lazada_sea_market_intelligence</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+东南亚 Shopee/Lazada 市场情报 K-Means 分群分析
+- 输入：商品价格/销量/评分数据（从爬虫或 API 获取）
+- 输出：市场分群、价格带定位、竞争密度分析
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
+from typing import Dict, List, Tuple
+
+
+# ── 1. 模拟 Shopee 菲律宾婴儿奶瓶市场数据 ──────────────────────
+def generate_sea_market_data(
+    country: str = &quot;Philippines&quot;,
+    category: str = &quot;baby_bottle&quot;,
+    n_products: int = 200,
+    seed: int = 42,
+) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;生成模拟的东南亚电商市场数据（真实场景从爬虫获取）&quot;&quot;&quot;
+    np.random.seed(seed)
+    
+    # 模拟三个价格层次（低/中/高）
+    low_n, mid_n, high_n = 80, 90, 30
+    
+    prices = np.concatenate([
+        np.random.uniform(1.5, 6.0, low_n),    # 低端：$1.5-6 (PH peso × 0.018)
+        np.random.uniform(6.0, 15.0, mid_n),   # 中端：$6-15
+        np.random.uniform(15.0, 35.0, high_n), # 高端：$15-35
+    ])
+    monthly_sales = np.concatenate([
+        np.random.randint(500, 5000, low_n),   # 低端高销量
+        np.random.randint(100, 1500, mid_n),
+        np.random.randint(10, 200, high_n),    # 高端低销量
+    ])
+    ratings = np.concatenate([
+        np.random.uniform(3.5, 4.5, low_n),
+        np.random.uniform(4.0, 4.8, mid_n),
+        np.random.uniform(4.2, 5.0, high_n),
+    ])
+    
+    df = pd.DataFrame({
+        &quot;商品名&quot;: [f&quot;{category}_{i:03d}&quot; for i in range(n_products)],
+        &quot;价格_USD&quot;: prices.round(2),
+        &quot;月销量&quot;:   monthly_sales,
+        &quot;评分&quot;:     ratings.round(1),
+        &quot;国家&quot;:     country,
+        &quot;品类&quot;:     category,
+    })
+    return df.sample(frac=1, random_state=seed).reset_index(drop=True)
+
+
+# ── 2. K-Means 分群 ────────────────────────────────────────────
+def kmeans_market_segmentation(
+    df: pd.DataFrame,
+    n_clusters: int = None,
+    max_k: int = 6,
+) -&gt; Tuple[pd.DataFrame, KMeans, int]:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2404.09733</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Shopee-Lazada-SEA-Market-Intelligence" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Clickstream-Persona-Pipeline.html'>Skill-Clickstream-Persona-Pipeline</a></li><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><a href='../skills/Skill-Cross-Platform-Listing-Sync-Optimizer.html'>Skill-Cross-Platform-Listing-Sync-Optimizer</a></li><li><a href='../skills/Skill-Multi-Platform-Ad-Budget-Allocator.html'>Skill-Multi-Platform-Ad-Budget-Allocator</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Competitive-Price-Monitoring.html'>Skill-Competitive-Price-Monitoring</a></li><li><a href='../skills/Skill-Cross-Platform-Listing-Sync-Optimizer.html'>Skill-Cross-Platform-Listing-Sync-Optimizer</a></li><li><a href='../skills/Skill-Multi-Platform-Ad-Budget-Allocator.html'>Skill-Multi-Platform-Ad-Budget-Allocator</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Platform-Listing-Sync-Optimizer.html'>Skill-Cross-Platform-Listing-Sync-Optimizer</a></li><li><a href='../skills/Skill-Multi-Platform-Ad-Budget-Allocator.html'>Skill-Multi-Platform-Ad-Budget-Allocator</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Shopee-Lazada-SEA-Market-Intelligence',skill_domain:'14-用户分析'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Shopee-Lazada-SEA-Market-Intelligence',skill_domain:'14-用户分析',skill_difficulty:'⭐⭐☆☆☆'});
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 竞品雷达站</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

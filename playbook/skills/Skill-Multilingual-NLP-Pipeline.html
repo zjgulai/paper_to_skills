@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>多语言 NLP 管道 — mBERT Zero-Shot 跨语言情感/实体提取 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/07-nlp-voc.html">07-NLP-VOC</a> / Skill-Multilingual-NLP-Pipeline</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">07-NLP-VOC</div>
+  <h1 class="skill-main-title">多语言 NLP 管道 — mBERT Zero-Shot 跨语言情感/实体提取</h1>
+  <p class="skill-skill-id">Skill-Multilingual-NLP-Pipeline</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>客服与VOC</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>时序预测</span><span class='tag'>ML基础与可解释性</span><span class='tag'>KPI运营指标体系</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>15 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 81分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（43%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 98.0, 43.3, 65.3, 65.0, 66.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 9.8, 6.5, 9.8, 6.5, 3.3];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>产品运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 客服负责人 · 品牌负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Reviews / Q&amp;A · TikTok 评论区 · Reddit 母婴社区</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>每月几千条差评和 Q&amp;A 没有人力一条条看，但痛点都在里面；新品开发不知道做什么功能、改什么问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>自动提取 Top 10 高频痛点，新品开发有用户数据背书，每月出竞品用户洞察报告</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>差评太多看不过来</span><span class='biz-pain-tag'>不知道用户真正在意什么</span><span class='biz-pain-tag'>竞品评论没有系统分析过</span><span class='biz-pain-tag'>新品开发靠拍脑袋</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>多语言运营面临&quot;德语法语日语评论无法做情感分析只能看英语&quot;——mBERT零样本跨语言迁移将多语言VOC分析覆盖率从20%提升至100%，年化节省翻译费$3.6万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：利用多语言预训练模型（XLMR/mBERT）的跨语言迁移能力，在中文或英文标注数据上训练情感分析/实体提取模型，zeroshot 直接迁移到德语（DE）、法语（FR）、日语（JP）、西班牙语（ES）等目标语言，无需目标语言标注数据。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：全球多站点 Review 情感统一分析</p><p>- 业务问题：母婴品牌同时运营美国/德国/日本/西班牙 4 个站点，每个站点的 Review 情感分析需要独立建模，人力和标注成本是 4 倍；运营只懂中英文，无法直接阅读德/日/西语差评 - 数据要求：英文 Review 标注数据 800 条（正/中/负）+ 各站未标注 Review 原文 - 预期产出：一个模型覆盖 4 语言情感分析，DE/JP/ES 的 F1 均 &gt; 0.75（无需目标语言标注）；输出统一情感仪表盘，自动翻译负面 Review 关键句 - 业务价值：标注成本从 4 语种 × 500 条 × 3 元/条 = 6000 元 → 仅英文 800 条 × 3 元 = 2400 元，</p><p>三轨验证： - 成本：显性成本包括英文标注费 2400 元 + 推理 API 调用费（约 0.002 元/条，按 10 万条/月计约 200 元/月）+ 工程师调试时间约 2 人天（折合 3000 元）。首年总成本约 8000 元。 - 合规：不触碰 Amazon 政策红线（仅分析公开 Review 文本，不涉及用户身份信息）；GDPR 合规需确保不存储可关联到个人身份的原始文本，建议在推理后丢弃原文，仅保留情感标签和聚合统计。 - 风险：低风险。主要风险是模型在日语上 F1 低于 0.75 导致误判，可能遗漏重要差评；建议对日语设置置信度阈值（&lt; 0.6 时标记人工复核），避免因误判引发运营</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：标注成本节省 3600 元（60%）；运营决策改善年化 <strong>15 万元</strong>（多站 VOC 覆盖）；竞品分析效率提升年化节省 <strong>8 万元</strong>。总年化约 <strong>23 万元</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（字符级 TF-IDF 方案零依赖可运行；生产方案需 HuggingFace transformers + GPU 微调，但预训练模型已公开免费）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（品牌已运营 4+ 站点，每天产生多语言 Review，一个模型覆盖全站是刚需）</li><li><strong>评估依据</strong>：XLM-R 在 XNLI 跨语言基准上 DE/FR/ES 精度 &gt; 80%，JP &gt; 75%；ROI 来自覆盖面扩展而非单站精度提升</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/nlp_voc/multilingual_nlp_pipeline</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+多语言 NLP 管道 — 模拟 mBERT Zero-Shot 跨语言情感分析
+（用 TF-IDF + sklearn 模拟跨语言迁移，生产环境替换为 HuggingFace transformers）
+&quot;&quot;&quot;
+import numpy as np
+from typing import List, Dict, Tuple
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import classification_report
+
+
+class MultilingualSentimentPipeline:
+    &quot;&quot;&quot;
+    多语言情感分析管道
+    训练：在源语言（英文）标注数据上训练
+    推理：zero-shot 迁移到目标语言
+    &quot;&quot;&quot;
+
+    def __init__(self):
+        self.pipeline = Pipeline([
+            (&quot;tfidf&quot;, TfidfVectorizer(
+                max_features=5000,
+                analyzer=&quot;char_wb&quot;,  # 字符级 n-gram → 天然跨语言
+                ngram_range=(2, 4),
+                sublinear_tf=True,
+            )),
+            (&quot;clf&quot;, LogisticRegression(
+                max_iter=500,
+                random_state=42,
+                multi_class=&quot;multinomial&quot;,
+                C=1.0,
+            )),
+        ])
+        self.label_map = {0: &quot;negative&quot;, 1: &quot;neutral&quot;, 2: &quot;positive&quot;}
+
+    def fit(self, texts: List[str], labels: List[int]):
+        &quot;&quot;&quot;
+        在源语言训练
+        labels: 0=negative, 1=neutral, 2=positive
+        &quot;&quot;&quot;
+        self.pipeline.fit(texts, labels)
+        return self
+
+    def predict(self, texts: List[str]) -&gt; List[Dict]:
+        &quot;&quot;&quot;跨语言推理&quot;&quot;&quot;
+        preds = self.pipeline.predict(texts)
+        probas = self.pipeline.predict_proba(texts)
+        results = []
+        for i, text in enumerate(texts):
+            results.append({
+                &quot;text&quot;: text[:60] + &quot;...&quot; if len(text) &gt; 60 else text,
+                &quot;sentiment&quot;: self.label_map[preds[i]],
+                &quot;confidence&quot;: round(float(probas[i].max()), 4),
+                &quot;probabilities&quot;: {
+                    self.label_map[j]: round(float(p), 3)
+                    for j, p in enumerate(probas[i])
+                },
+            })
+        return results</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>1911.02116</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multilingual-NLP-Pipeline" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Cultural-VOC-Alignment.html'>Skill-Cross-Cultural-VOC-Alignment</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Multilingual-Sentiment-Alignment.html'>Skill-Multilingual-Sentiment-Alignment</a></li><li><a href='../skills/Skill-NLP-Sentiment-ML-Pipeline.html'>Skill-NLP-Sentiment-ML-Pipeline</a></li><li><a href='../skills/Skill-Review-Temporal-Trend-Mining.html'>Skill-Review-Temporal-Trend-Mining</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Cultural-VOC-Alignment.html'>Skill-Cross-Cultural-VOC-Alignment</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Multilingual-Sentiment-Alignment.html'>Skill-Multilingual-Sentiment-Alignment</a></li><li><a href='../skills/Skill-Review-Temporal-Trend-Mining.html'>Skill-Review-Temporal-Trend-Mining</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Cultural-VOC-Alignment.html'>Skill-Cross-Cultural-VOC-Alignment</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Multilingual-Sentiment-Alignment.html'>Skill-Multilingual-Sentiment-Alignment</a></li><li><a href='../skills/Skill-Review-Temporal-Trend-Mining.html'>Skill-Review-Temporal-Trend-Mining</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Multilingual-NLP-Pipeline',skill_domain:'07-NLP-VOC'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Multilingual-NLP-Pipeline',skill_domain:'07-NLP-VOC',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

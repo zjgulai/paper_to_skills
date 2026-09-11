@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>少样本评论分类 — Prototypical Networks 从英语迁移到新市场语言 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/07-nlp-voc.html">07-NLP-VOC</a> / Skill-Few-Shot-Review-Classification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">07-NLP-VOC</div>
+  <h1 class="skill-main-title">少样本评论分类 — Prototypical Networks 从英语迁移到新市场语言</h1>
+  <p class="skill-skill-id">Skill-Few-Shot-Review-Classification</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>data_collection</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>ML基础与可解释性</span><span class='tag'>KPI运营指标体系</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-S 跨境数据合规</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>2.8 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>产品运营负责人 / 选品负责人<span class='biz-ctx-secondary'> · 客服负责人 · 品牌负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon Reviews / Q&amp;A · TikTok 评论区 · Reddit 母婴社区</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>每月几千条差评和 Q&amp;A 没有人力一条条看，但痛点都在里面；新品开发不知道做什么功能、改什么问题</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>自动提取 Top 10 高频痛点，新品开发有用户数据背书，每月出竞品用户洞察报告</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>差评太多看不过来</span><span class='biz-pain-tag'>不知道用户真正在意什么</span><span class='biz-pain-tag'>竞品评论没有系统分析过</span><span class='biz-pain-tag'>新品开发靠拍脑袋</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>多语言运营面临&quot;德语法语日语评论只有少量标注数据无法建立分类模型&quot;——Prototypical Networks少样本分类将新市场VOC分析启动时间从3个月压缩至2周，年化$2.8万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>来自 MTL/迁移学习，迁移逻辑是： Prototypical Networks 的核心假设是「同类别样本在特征空间中聚集在一个原型点附近」。通过在英语评论（数据丰富）上学习「类别原型」的表示方式，新市场语言（德语/日语）只需少量标注样本（5shot）即可利用同样的原型机制分类，无需重新训练全部参数。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景：德国市场婴儿安全座椅评论分类冷启动 - 业务问题：进入德国市场初期，German 评论仅有 120 条，无法训练传统分类器（通常需要 1000+ 条/类），VOC 分析团队需要 3 个月人工标注期才能启动自动化分析。 - 数据要求：英语评论 ≥500 条（含类别标签）；德语评论仅需每类 5-10 条标注样本（支持集）；无标注德语评论用于批量分类。 - 预期产出：三分类（正面/负面/安装问题）准确率 ≥75%，新市场 VOC 分析 2 周内可启动。 - 业务价值：VOC 分析启动时间从 3 个月压缩至 2 周，年化节省运营人力成本 $2.8 万（按 2 人/月人力计算）。</p><p>三轨验证： - 成本：显性成本极低。无需 GPU，TF-IDF + 余弦距离在单台 4 核 CPU 机器上即可运行；数据采集成本仅需 15-30 条德语标注（约 $150-300 外包标注费）；人力成本集中在 2 人/周的支持集构建与验证。 - 合规：低风险。仅使用公开评论数据，不涉及用户隐私字段；TF-IDF 字符 n-gram 不存储原始文本，符合 GDPR 数据最小化原则；分类结果不生成合成内容，不触碰 Amazon 评论政策中关于“自动生成内容”的红线。 - 风险：中等。若德语支持集标注质量差（如标注者混淆“安装问题”与“负面”），原型偏移可能导致准确率骤降至 60% 以下；建议每类至</p><p>场景：多市场统一 VOC 平台 - 5-shot 模式可快速扩展到日语/西班牙语市场，每个新市场仅需 15-30 条初始标注，统一的 VOC Dashboard 覆盖全球站点。</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：新市场 VOC 分析启动时间从 3 个月压缩至 2 周，<strong>年化节省人力成本 $2.8 万</strong></li><li><strong>适用规模</strong>：同时运营 3+ 个语言市场的跨境品牌，每年开拓 1-2 个新市场</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（无需 GPU，TF-IDF + 余弦距离，本地即可运行）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（数据稀缺场景普遍存在，直接解决新市场起步痛点）</li><li><strong>见效周期</strong>：每个新市场 1-2 天完成支持集标注，当周可用于决策</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/nlp_voc/few_shot_review_classification</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import accuracy_score, classification_report
+
+np.random.seed(42)
+
+# ── 合成数据：英语支持集 + 德语（模拟翻译）─────────────────────────────
+# 简化：用英语模拟，通过添加&quot;前缀&quot;模拟跨语言场景
+EN_SUPPORT = {
+    &#x27;正面&#x27;: [
+        &quot;great quality baby car seat very safe&quot;,
+        &quot;excellent product easy to install love it&quot;,
+        &quot;perfect for our baby comfortable and secure&quot;,
+        &quot;amazing seat best purchase highly recommend&quot;,
+        &quot;wonderful quality sturdy and reliable&quot;,
+    ],
+    &#x27;负面&#x27;: [
+        &quot;terrible quality broke after one week&quot;,
+        &quot;very hard to install confusing instructions&quot;,
+        &quot;poor quality not worth the money&quot;,
+        &quot;seat is uncomfortable baby cries all time&quot;,
+        &quot;waste of money bad product&quot;,
+    ],
+    &#x27;安装问题&#x27;: [
+        &quot;installation is difficult missing parts&quot;,
+        &quot;hard to install base not secure confusing&quot;,
+        &quot;installation manual is wrong missing screws&quot;,
+        &quot;latch system unclear cannot install properly&quot;,
+        &quot;took 3 hours to install not intuitive&quot;,
+    ]
+}
+
+# 德语支持集（5-shot，模拟带德语词汇特征的文本）
+DE_SUPPORT = {
+    &#x27;正面&#x27;: [
+        &quot;de-sehr gut qualitat sicher und bequem&quot;,
+        &quot;de-ausgezeichnet produkt kind liebt es&quot;,
+        &quot;de-perfekt fur unser baby sicher&quot;,
+    ],
+    &#x27;负面&#x27;: [
+        &quot;de-schlecht qualitat kaputt schnell&quot;,
+        &quot;de-sehr schwierig einbauen nicht gut&quot;,
+    ],
+    &#x27;安装问题&#x27;: [
+        &quot;de-einbau schwierig anleitung falsch&quot;,
+        &quot;de-installation unklar teile fehlen&quot;,
+    ]
+}
+
+# 德语测试集（无标注，模拟真实场景）
+DE_QUERIES = [
+    (&quot;de-tolles produkt sehr sicher kind happy&quot;, &#x27;正面&#x27;),
+    (&quot;de-schrecklich qualitat sehr enttaeuschend&quot;, &#x27;负面&#x27;),
+    (&quot;de-einbau sehr schwierig basis nicht stabil&quot;, &#x27;安装问题&#x27;),
+    (&quot;de-super einfach zu montieren empfehle es&quot;, &#x27;正面&#x27;),
+    (&quot;de-kaputt nach einer woche unbrauchbar&quot;, &#x27;负面&#x27;),
+    (&quot;de-anleitung unverstandlich schraube fehlt&quot;, &#x27;安装问题&#x27;),
+    (&quot;de-baby schlaeft gut sehr komfortabel&quot;, &#x27;正面&#x27;),
+    (&quot;de-installation dauert lang unintuitiv&quot;, &#x27;安装问题&#x27;),</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2304.09653</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Few-Shot-Review-Classification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Market-Transfer-Demand.html'>Skill-Cross-Market-Transfer-Demand</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Multilingual-NLP-Pipeline.html'>Skill-Multilingual-NLP-Pipeline</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Market-Transfer-Demand.html'>Skill-Cross-Market-Transfer-Demand</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cross-Market-Transfer-Demand.html'>Skill-Cross-Market-Transfer-Demand</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Few-Shot-Review-Classification',skill_domain:'07-NLP-VOC'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Few-Shot-Review-Classification',skill_domain:'07-NLP-VOC',skill_difficulty:'⭐⭐☆☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

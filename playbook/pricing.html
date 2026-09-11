@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>升级 Pro · paper2skills</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="index.html"><span class="sbl-text">总览</span></a><a href="diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="agents.html"><span class="sbl-text">智能体广场</span></a><a href="agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<style>
+.pricing-hero{text-align:center;padding:60px 20px 40px;max-width:800px;margin:0 auto}
+.pricing-hero h1{font-size:2rem;font-weight:800;color:var(--ink);margin:0 0 12px}
+.pricing-hero p{font-size:1.05rem;color:var(--muted);max-width:520px;margin:0 auto 32px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin:0 auto 60px;padding:0 20px}
+.pc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:32px 28px;display:flex;flex-direction:column}
+.pc.featured{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,50,62,.15)}
+.pc-badge{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 10px;border-radius:20px;margin-bottom:16px;width:fit-content}
+.pc-name{font-size:1.2rem;font-weight:800;color:var(--ink);margin-bottom:4px}
+.pc-price{font-size:2rem;font-weight:800;color:var(--accent);margin:8px 0 4px}
+.pc-price sub{font-size:14px;font-weight:500;color:var(--muted)}
+.pc-desc{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.pc-features{list-style:none;padding:0;margin:0 0 28px;flex:1}
+.pc-features li{font-size:13.5px;color:var(--ink);padding:7px 0;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:flex-start}
+.pc-features li:last-child{border-bottom:none}
+.pc-features li::before{content:"✓";color:var(--accent);font-weight:700;flex-shrink:0}
+.pc-cta{display:block;text-align:center;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;cursor:pointer;transition:opacity .15s}
+.pc-cta.primary{background:var(--accent);color:#fff;border:none}
+.pc-cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.pc-cta.primary:hover{opacity:.88}
+.pc-cta.secondary:hover{border-color:var(--ink)}
+.pricing-faq{max-width:700px;margin:0 auto;padding:0 20px 60px}
+.pricing-faq h2{font-size:1.2rem;font-weight:800;margin-bottom:20px;color:var(--ink)}
+.faq-item{border-bottom:1px solid var(--line);padding:16px 0}
+.faq-item summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.faq-item summary::after{content:"+";color:var(--muted);font-size:18px}
+.faq-item[open] summary::after{content:"−"}
+.faq-item p{font-size:13.5px;color:var(--muted);line-height:1.7;margin:10px 0 0}
+</style>
+<div class="pricing-hero">
+  <h1>为母婴出海卖家而生的 AI 决策平台</h1>
+  <p>免费访问 1338+ Skill 知识库，升级 Pro 解锁无限 Agent 调用、数据接入与 API 权限。</p>
+</div>
+<div class="pricing-grid">
+  <div class="pc">
+    <div class="pc-name">Free</div>
+    <div class="pc-price">¥0 <sub>/月</sub></div>
+    <p class="pc-desc">适合个人探索与学习</p>
+    <ul class="pc-features">
+      <li>访问全部 1338+ Skill 卡片</li>
+      <li>25 个领域知识图谱</li>
+      <li>场景手册（只读）</li>
+      <li>AI Agent 每月 10 次调用</li>
+      <li>Agent 报告本地存储（7 天）</li>
+    </ul>
+    <a href="agents.html" class="pc-cta secondary">开始使用</a>
+  </div>
+  <div class="pc featured">
+    <div class="pc-badge">最受欢迎</div>
+    <div class="pc-name">Pro</div>
+    <div class="pc-price">¥299 <sub>/月</sub></div>
+    <p class="pc-desc">适合跨境电商运营团队</p>
+    <ul class="pc-features">
+      <li>Free 所有权益</li>
+      <li><strong>无限</strong> AI Agent 调用</li>
+      <li>Agent 报告云端持久化（永久）</li>
+      <li>CSV 数据文件直接上传</li>
+      <li>飞书多维表格自动触发分析</li>
+      <li>REST API 访问（1000 次/月）</li>
+      <li>飞书群专属技术支持</li>
+    </ul>
+    <a href="#pro-payment" class="pc-cta primary" onclick="document.getElementById('pro-modal').style.display='flex'">立即升级 Pro</a>
+  </div>
+  <div class="pc">
+    <div class="pc-name">Enterprise</div>
+    <div class="pc-price">定制 <sub></sub></div>
+    <p class="pc-desc">适合品牌方 / 大型 TP 服务商</p>
+    <ul class="pc-features">
+      <li>Pro 所有权益</li>
+      <li>私有化部署选项</li>
+      <li>无限 API 调用</li>
+      <li>Amazon SP-API 数据接入</li>
+      <li>定制 Agent Prompt 与工作流</li>
+      <li>SLA 保障 + 专属客户成功</li>
+    </ul>
+    <a href="mailto:support@paper2skills.com" class="pc-cta secondary">联系销售</a>
+  </div>
+</div>
+
+<div class="pricing-faq">
+  <h2>常见问题</h2>
+  <details class="faq-item">
+    <summary>免费版和 Pro 版的 Agent 调用有什么区别？</summary>
+    <p>免费版每月可调用 AI Agent 10 次（所有 Agent 共享），Pro 版无限制。超过 10 次后免费用户会看到升级提示，当月已用次数会在下月 1 日重置。</p>
+  </details>
+  <details class="faq-item">
+    <summary>REST API 可以做什么？</summary>
+    <p>Pro 版可通过 <code>GET /api/v1/skills/search?q=关键词</code> 程序化查询 Skill 知识库，适合把 paper2skills 集成到自有系统、飞书机器人、或自动化工作流中。</p>
+  </details>
+  <details class="faq-item">
+    <summary>如何升级？支持什么支付方式？</summary>
+    <p>点击「立即升级 Pro」按钮，扫码完成微信支付后系统自动开通。支持月付，随时可取消，下个计费周期不再续费。</p>
+  </details>
+  <details class="faq-item">
+    <summary>企业版有试用期吗？</summary>
+    <p>企业版提供 7 天免费 POC 试用，包含完整功能接入和技术支持。请通过邮件联系我们安排。</p>
+  </details>
+</div>
+
+<!-- Pro 升级 Modal -->
+<div id="pro-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:16px;padding:40px 36px;max-width:420px;width:90%;text-align:center">
+    <h2 style="font-size:1.3rem;font-weight:800;margin:0 0 8px">升级 Pro 版</h2>
+    <p style="font-size:13.5px;color:#64748b;margin:0 0 24px">微信扫码完成支付，系统自动开通</p>
+    <div style="width:180px;height:180px;margin:0 auto 20px;background:#f1f5f9;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:13px">
+      微信支付二维码<br>（配置后显示）
+    </div>
+    <div style="font-size:28px;font-weight:800;color:#B5323E;margin-bottom:4px">¥299<span style="font-size:14px;font-weight:500;color:#64748b">/月</span></div>
+    <p style="font-size:12px;color:#94a3b8;margin:4px 0 20px">支付后自动开通，随时可取消</p>
+    <button onclick="document.getElementById('pro-modal').style.display='none'" style="width:100%;padding:12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;font-size:13px;color:#64748b">稍后再说</button>
+  </div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="assets/playbook-data.js?v=20260720193818"></script>
+  <script src="assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

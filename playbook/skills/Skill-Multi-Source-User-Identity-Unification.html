@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multi-Source User Identity Unification — 跨平台用户身份统一打通 Amazon/TikTok/独立站同一用户 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/14-用户分析.html">14-用户分析</a> / Skill-Multi-Source-User-Identity-Unification</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">14-用户分析</div>
+  <h1 class="skill-main-title">Multi-Source User Identity Unification — 跨平台用户身份统一打通 Amazon/TikTok/独立站同一用户</h1>
+  <p class="skill-skill-id">Skill-Multi-Source-User-Identity-Unification</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>knowledge_graph</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>LLM数据分析</span><span class='tag'>逆向物流与退货</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>多渠道协同增长</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-Q 标签驱动决策</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-T 用户分层精细运营</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AB 视频电商全链路</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / 用户增长负责人<span class='biz-ctx-secondary'> · CMO · 产品经理</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon 买家分层 · DTC 站 LTV 预测 · Klaviyo/Brevo 邮件分群</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>有大量老客户，但不知道谁是高价值客户、谁快要流失；新客获取成本越来越高，老客复购却上不去</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>用户按 RFM/LTV 分层精准触达，高价值用户留存率提升，老客贡献收入占比从 30% 提升到 50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>老客复购率上不去</span><span class='biz-pain-tag'>不知道哪些用户要流失了</span><span class='biz-pain-tag'>所有用户用同一套活动</span><span class='biz-pain-tag'>买过一次就不见了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>数据团队面临&quot;Amazon/TikTok/独立站同一用户三套ID无法打通导致Lookalike种子质量差、广告重复触达&quot;——三层匹配架构将跨平台用户识别覆盖率提升至85%+，广告重复触达年化节省约8万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>母婴跨境卖家面临的核心数据碎片化问题：同一个&quot;张妈妈&quot;在 Amazon 是 buyer_id_A，在 TikTok Shop 是 tiktok_uid_B，在独立站是 email_C，在 WhatsApp 私域是 phone_D——四个 ID 指向同一个人，但系统无法自动打通。用户身份统一（User Identity Unification / Entity Resolution）就是解决这个&quot;一人多面&quot;问题的核心技术，是 CDP、Lo</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题：母婴品牌在 Amazon 有 8,000 历史买家，独立站有 3,200 注册用户，WhatsApp 私域有 5,500 联系人。三端各有 RFM 分析，但同一用户在三端的消费行为无法合并——导致：Amazon 高价值用户反复被独立站当&quot;新客&quot;拉新广告触达（浪费预算）；WhatsApp 私域触达后 Amazon 购买的增量贡献无法归因。</p><p>匹配方案： 1. L1 确定性：邮箱哈希匹配（Amazon 有购买邮件 → 独立站注册邮箱）→ 对齐约 1,800 人 2. L2 概率性：购买时间窗口（同一自然日在两端有购买）+ 品类重叠（婴儿奶粉 + 纸尿裤）→ 对齐约 900 人 3. L3 GNN：手机号前 3 位区号 + 时区行为 + 客单价分布图结构相似度 → 补充约 400 人</p><p>预期产出：三端统一用户池约 3,100 人（原始合并可能有 16,700 行，去重后约 9,600 独立用户），其中跨平台识别出 3,100 人有多端行为记录</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：三端统一后避免广告重复触达节省约 $8 万/年；Lookalike 种子质量提升使 ROAS 提升 10-15%（$20 万预算基准 = 年化增收约 $3-4.5 万）；合计年化收益 <strong>$11-12.5 万</strong>，实施成本约 5 万，ROI &gt; 120%</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（L1+L2 约 2-3 周；L3 GNN 需要额外 4-6 周，可逐步上线）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（是 CDP、Lookalike、会员体系的前置基础设施，不做此题其他工作效果大打折扣）</li><li><strong>评估依据</strong>：arXiv:2304.03215 跨设备 GNN 匹配比 baseline 精度高 5%+；DegUIL 在长尾用户（占总用户 70%+）的匹配 Hits@1 提升 8.3%；ComEM 在 8 个 ER 数据集上均优于单一策略</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：2 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Multi-Source User Identity Unification
+跨平台用户身份统一——三层匹配架构
+
+依赖：numpy, pandas, hashlib
+实现：L1确定性 + L2概率性 + L3行为相似度匹配
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+import hashlib
+from itertools import combinations
+from typing import List, Dict, Tuple, Set, Optional
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+
+# ─────────────────────────────────────────────
+# 1. 模拟三平台用户数据
+# ─────────────────────────────────────────────
+
+def hash_pii(value: str) -&gt; str:
+    &quot;&quot;&quot;SHA-256 哈希 PII（生产中用 HMAC + salt）&quot;&quot;&quot;
+    return hashlib.sha256(value.encode()).hexdigest()[:16]
+
+
+def generate_platform_data() -&gt; Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    &quot;&quot;&quot;生成 Amazon / 独立站 / WhatsApp 三端模拟数据&quot;&quot;&quot;
+    np.random.seed(42)
+
+    # 真实用户池（用于生成跨平台重叠）
+    n_real_users = 500
+    real_emails = [f&quot;user{i}@baby.com&quot; for i in range(n_real_users)]
+    real_phones = [f&quot;+1650{i:07d}&quot; for i in range(n_real_users)]
+
+    # Amazon（8000条，其中500真实用户有邮箱）
+    amz_records = []
+    for i in range(800):  # 缩小为800便于演示
+        has_email = i &lt; 500
+        email_hash = hash_pii(real_emails[i]) if has_email else f&quot;anon_{i}&quot;
+        amz_records.append({
+            &#x27;amz_buyer_id&#x27;: f&quot;AMZ{i:05d}&quot;,
+            &#x27;email_hash&#x27;: email_hash,
+            &#x27;purchase_days&#x27;: sorted(np.random.choice(range(180), np.random.randint(1, 8), replace=False).tolist()),
+            &#x27;avg_order_value&#x27;: round(np.random.lognormal(4.0, 0.5), 2),
+            &#x27;categories&#x27;: list(np.random.choice([&#x27;formula&#x27;, &#x27;diaper&#x27;, &#x27;stroller&#x27;, &#x27;toy&#x27;], np.random.randint(1, 4), replace=False)),
+            &#x27;timezone_offset&#x27;: np.random.choice([-8, -5, 0, 8]),
+        })
+    amz_df = pd.DataFrame(amz_records)
+
+    # 独立站（320条，其中200有邮箱与Amazon重叠）
+    dtc_records = []
+    for i in range(320):
+        has_overlap = i &lt; 200
+        email_hash = hash_pii(real_emails[i]) if has_overlap else f&quot;dtc_anon_{i}&quot;
+        dtc_records.append({
+            &#x27;dtc_user_id&#x27;: f&quot;DTC{i:04d}&quot;,
+            &#x27;email_hash&#x27;: email_hash,
+            &#x27;purchase_days&#x27;: sorted(np.random.choice(range(180), np.random.randint(1, 5), replace=False).tolist()),
+            &#x27;avg_order_value&#x27;: round(np.random.lognormal(4.1, 0.5), 2),</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2304.03215</li><li>2308.05322</li><li>2405.16884</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multi-Source-User-Identity-Unification" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cross-Platform-User-Transfer.html'>Skill-Cross-Platform-User-Transfer</a></li><li><a href='../skills/Skill-Dual-Tower-Lookalike-Modeling.html'>Skill-Dual-Tower-Lookalike-Modeling</a></li><li><a href='../skills/Skill-Entity-Resolution-KG-Dedup.html'>Skill-Entity-Resolution-KG-Dedup</a></li><li><a href='../skills/Skill-Graph-Neural-Lookalike-Propagation.html'>Skill-Graph-Neural-Lookalike-Propagation</a></li><li><a href='../skills/Skill-Privacy-Safe-Identity-Resolution.html'>Skill-Privacy-Safe-Identity-Resolution</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><span class='muted'>Skill-Real-Time-CDP-Feature-Store</span></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cross-Platform-User-Transfer.html'>Skill-Cross-Platform-User-Transfer</a></li><li><a href='../skills/Skill-Dual-Tower-Lookalike-Modeling.html'>Skill-Dual-Tower-Lookalike-Modeling</a></li><li><a href='../skills/Skill-Graph-Neural-Lookalike-Propagation.html'>Skill-Graph-Neural-Lookalike-Propagation</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li><li><span class='muted'>Skill-Real-Time-CDP-Feature-Store</span></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Dual-Tower-Lookalike-Modeling.html'>Skill-Dual-Tower-Lookalike-Modeling</a></li><li><a href='../skills/Skill-Graph-Neural-Lookalike-Propagation.html'>Skill-Graph-Neural-Lookalike-Propagation</a></li><li><a href='../skills/Skill-RFM-Customer-Segmentation.html'>Skill-RFM-Customer-Segmentation</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Multi-Source-User-Identity-Unification',skill_domain:'14-用户分析'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Multi-Source-User-Identity-Unification',skill_domain:'14-用户分析',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

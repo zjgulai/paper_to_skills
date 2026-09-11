@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-V 供应商降本博弈 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-V 供应商降本博弈</nav>
+<h1>WF-V 供应商降本博弈</h1>
+<p class="lead">从供应商评估到议价博弈再到风险分散的端到端采购优化链。反直觉核心：大多数卖家把采购价当固定成本，实际上供应商议价空间通常在15-30%，且工厂的真实成本卖家可以用大宗商品期货指数精确推算。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>采购/供应链负责人</span><span class='tag'>运营总监</span><span class='tag'>创始人/CEO</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你上次主动和供应商谈判降价是什么时候？降了多少？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">供应商成本穿透</div>
+  <div class="wf-question">你知道供应商的真实生产成本吗？</div>
+  <div class="wf-context">反直觉：80%的卖家不知道原材料价格走势，而供应商报价里通常包含30-50%的不透明利润。用大宗商品期货指数可以推算供应商底牌。</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">主材是金属/塑料/棉纱等标准大宗商品</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Commodity-Futures-Cost-Baseline.html"><span class="chip-name">大宗商品期货驱动的竞品成本底线穿透 (Commodity Futures Arbitrage)</span><span class="chip-role">大宗商品期货基线，从铜铝塑料指数反推供应商真实原材料成本</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-BOM-Cost-Rollup-Tag-Engine.html"><span class="chip-name">BOM成本卷积标签引擎 — 从原材料到制成品的全层级成本精算与Tag驱动</span><span class="chip-role">BOM成本展开，将产品拆解到原材料级别精算成本</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Supplier-Evaluation-Model.html"><span class="chip-name">Supplier Evaluation Model（供应商评估模型）</span><span class="chip-role">供应商综合评估模型，量化质量/交期/成本/服务四维得分</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">定制品/专有工艺，成本不透明</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Supplier-Performance-Scorecard.html"><span class="chip-name">Supplier Performance Scorecard — 供应商绩效量化追踪系统</span><span class="chip-role">供应商绩效评分卡，用历史交期/质检/响应速度建立客观评分</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Supplier-Risk-XGBoost.html"><span class="chip-name">Supplier Risk XGBoost — AHP-TOPSIS+XGBoost 供应商风险评分</span><span class="chip-role">XGBoost供应商风险预测，识别供应商财务/产能/依赖度风险</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">议价策略设计</div>
+  <div class="wf-question">当前你是单一供应商还是多家竞争？</div>
+  <div class="wf-context">单一供应商意味着你没有BATNA（最佳替代方案），议价力为零。引入备选供应商报价是最强的议价工具，哪怕你不打算换。</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">单一供应商依赖，无备选</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Supplier-Development-Roadmap-Tracking.html"><span class="chip-name">供应商发展路线图追踪 — 改进计划执行跟踪与供应商升降级Tag管理</span><span class="chip-role">供应商开发路线图，制定6-12个月备选供应商引入计划</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Multi-Factory-Capacity-Allocation.html"><span class="chip-name">多工厂产能分配算法 — OEM/ODM多厂商协同下的弹性产能调度优化</span><span class="chip-role">多工厂产能分配，逐步将20-30%订单转移备选供应商制造博弈压力</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-AgenticPay-Procurement-Negotiation.html"><span class="chip-name">AgenticPay — LLM 多 Agent 采购谈判：自主完成价格与 MOQ 协商</span><span class="chip-role">AI采购谈判Agent，生成数据支撑的议价方案和谈判脚本</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">已有2-3家供应商竞价</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Multi-SKU-Procurement-Budget-Allocation.html"><span class="chip-name">Constructing decision rules for multiproduct newsvendors</span><span class="chip-role">多SKU采购预算分配，在供应商间最优化订单分配最大化价格竞争</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Supplier-Capacity-Booking-Engine.html"><span class="chip-name">供应商产能预订引擎 — 旺季弹性产能锁定与长期产能保障协议管理</span><span class="chip-role">供应商产能预订引擎，用提前锁产能换取价格优惠</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">质量成本优化</div>
+  <div class="wf-question">你的质检是在出货后还是生产中？</div>
+  <div class="wf-context">反直觉：出货后质检发现问题的修复成本是生产中质检的8-12倍（加上退货/差评/排名损失）。质检前置是最高ROI的成本优化。</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Supplier-Delivery-Quality-Rate-KPI.html"><span class="chip-name">供应商来料质量IQC-KPI体系 — 入库检验合格率、质量成本与批次拒收分析</span><span class="chip-role">供应商交付质量KPI，建立缺陷率/漏检率/返工率三层质量指标</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Supplier-Qualification-Onboarding-KPI.html"><span class="chip-name">供应商准入认证KPI体系 — 新供应商评估、认证审核与准入门槛量化</span><span class="chip-role">供应商准入KPI，用数据驱动的准入标准替代主观判断</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Inbound-ETA-Accuracy-KPI.html"><span class="chip-name">在途ETA准确率与到货履约率KPI — 过程数据vs结果数据的全链路在途管理体系</span><span class="chip-role">入库准时率KPI，量化供应商交期不确定性对库存成本的影响</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">供应链韧性建设</div>
+  <div class="wf-question">如果主供应商停产30天，你的损失是多少？</div>
+  <div class="wf-context">集中度风险是跨境卖家最被低估的风险。单一工厂依赖在旺季断供时损失可达年利润的40-80%，而分散采购成本只增加3-5%。</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Supply-Chain-Resilience-Modeling.html"><span class="chip-name">Supply Chain Resilience Modeling — 供应链韧性建模：断链风险预测与备选方案规划</span><span class="chip-role">供应链韧性建模，量化单一工厂依赖的VaR和CVaR风险</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html"><span class="chip-name">Gen-QOT 提前期分布建模 - 动态安全库存防海运延误</span><span class="chip-role">交期分布风险，用概率分布而非单点预测建立备货安全垫</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Supplier-Capacity-Planning.html"><span class="chip-name">Multi-objective multi-site supplier selection and order splitting</span><span class="chip-role">供应商产能规划，旺季前3个月预锁产能防止被竞争对手抢占</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-MOQ-Payment-Terms-Optimization.html"><span class="chip-name">MOQ与账期联动优化决策 — 最小起订量与付款条件的现金流效益模型</span><span class="chip-role">最小起订量与账期联合优化，通过增加MOQ换取更长账期改善现金流</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

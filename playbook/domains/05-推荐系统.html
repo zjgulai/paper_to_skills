@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>05-推荐系统 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>05-推荐系统</h1><p>Recommendation systems, cold start, diversity reranking</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 05-推荐系统 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Ad-Aware-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Ad-Aware Recommendation — 广告感知协同排序：有机推荐与赞助商品的联合优化</h3>
+  <p class="sc-desc">业务背景：某母婴品牌同时运营 Sponsored Products 广告和自然搜索排名</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Baby-Age-Aware-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Baby Age Aware Recommendation — 基于推断婴儿月龄的实时品类推荐动态切换</h3>
+  <p class="sc-desc">推荐算法团队面临&quot;母婴首页推荐CTR仅1.2%、对4月龄宝宝推荐学步车导致完全无效曝光&quot;——三层月龄感知推荐（月龄推断+品类优先级+个性化精排）将CTR从1.2%提升至2.8%，月GMV增量约2.16万美元</p>
+  <div class='sc-footer'><span class='sc-roi'>30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Bundle-Recommendation-Complementary.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Bundle Recommendation Complementary — 互补商品捆绑推荐</h3>
+  <p class="sc-desc">运营面临&quot;奶粉详情页客单价低、关联购买率仅12%&quot;——互补图神经网络捆绑推荐将AOV提升35%、关联购买率改善至28%，年化增量GMV约96万元</p>
+  <div class='sc-footer'><span class='sc-roi'>捆绑推荐 AOV 提升 30-40%，关联转化率提升 15-</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CAGED-Debiased-Rec.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">因果图聚合权重去偏推荐 - CAGED</h3>
+  <p class="sc-desc">Momcozy 吸奶器爆款 SKU 占全部流量的 60%+，200 余款配件（替换配件、特殊尺码）几乎零曝光</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CSDM-Diffusion-ColdStart.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">扩散模型冷启动CTR - 新品零交互时的转化潜力预热</h3>
+  <p class="sc-desc">业务问题 跨境母婴电商每周上新 200-500 个 SKU（Momcozy 双泵吸奶器、有机棉连体衣、婴儿推车配件等）</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Deconfounded-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">去混淆因果推荐 — 暴露偏差校正的无偏推荐系统</h3>
+  <p class="sc-desc">电商团队面临&quot;推荐系统流行度偏差导致新品和长尾商品被系统性低估&quot;——IPS去混淆推荐使Precision@20提升35%，年化新品孵化价值约180万元</p>
+  <div class='sc-footer'><span class='sc-roi'>120万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cold-Start-Meta-Learning-PAM.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Popularity-Aware Meta-Learning for Cold-Start Recommendation</h3>
+  <p class="sc-desc">推荐算法经理面临新品类冷启动——PAM将首日CTR 1.0%提到2.8%，年化增34万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conjoint-Analysis-Product-Design.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">联合分析产品设计 — 用CBC+层次贝叶斯量化消费者属性偏好</h3>
+  <p class="sc-desc">产品负责人面临&quot;新品属性组合（有机/BPA-free/价格区间）靠感觉定不知道哪个最重要&quot;——联合分析量化消费者属性权重，新品成功率提升28%，年化节省无效研发投入$4.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>80-150 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Contextual-Bandits-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Contextual Bandits Recommendation — 在线探索-利用均衡推荐</h3>
+  <p class="sc-desc">运营面临&quot;新品上线7天曝光不足、推荐系统流量分配&lt;0.1%&quot;——LinUCB在线探索将新品首周总曝光提升300%、7天后CVR高于Baseline15%，年化新品孵化成功率提升25%</p>
+  <div class='sc-footer'><span class='sc-roi'>新品冷启动加速 50%，大促期价格优化 GMV 提升 8-1</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Contrastive-Sequential-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Contrastive Sequential Recommendation — 对比学习序列推荐：高质量自监督训练</h3>
+  <p class="sc-desc">独立站月均购买仅500次数据稀疏无法训练高质量推荐模型——对比学习通过序列增强（掩码/截取/打乱）从稀疏行为中提取自监督信号，无需标注数据精度提升8-15%冷启动推荐质量大幅改善年化15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Counterfactual-Recommendation-DCE.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">反事实推荐 - 双重校准估计器（DCE）</h3>
+  <p class="sc-desc">增长分析师面临推荐因果不清——DCE将虚高转化率18%修正到7%，年化省27万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200-400 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Platform-Transfer-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Cross-Platform Transfer Recommendation — 跨平台迁移推荐</h3>
+  <p class="sc-desc">运营面临&quot;TikTok Shop新店冷启动首推CTR仅3%&quot;——跨平台用户embedding迁移将已匹配用户CTR提升至11%、冷启动期缩短60%，年化增量LTV约120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>冷启动期用户 30 日 LTV 提升 30-45%；对跨平台</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Deep-Learning-Recommendation-HI.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Deep Learning Recommendation with Heterogeneous Inference</h3>
+  <p class="sc-desc">业务问题 某母婴出海APP使用传统协同过滤进行首页推荐，发现： - 新用户总是被推荐奶粉、纸尿裤等标品，难以发现长尾商品 - 用户反馈&quot;推荐太单一&quot;，复购率停滞在25% - 想推的新品牌（如本土有机棉品牌）得不到曝光机会</p>
+  <div class='sc-footer'><span class='sc-roi'>15%</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Diffusion-Model-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐⭐">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Diffusion Model Recommendation — 扩散模型推荐：生成式推荐的范式革命</h3>
+  <p class="sc-desc">传统推荐从候选集中选最好的但新品上架当天没有候选历史数据——扩散模型生成式推荐直接生成用户理想商品嵌入向量不受候选集限制，新品上架第一天即可被推荐年化GMV增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐⭐⭐</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Diversity-Reranking-SMMR.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Diversity-Aware Reranking with SMMR</h3>
+  <p class="sc-desc">电商运营面临首页同质化——SMMR将重复曝光率26%压到8%，年化增16万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Explainable-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Explainable Recommendation for Business Trust</h3>
+  <p class="sc-desc">商家运营面临推荐结果说不清——可解释推荐将申诉率5%压到1%，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-roi'>35%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Federated-Cross-Seller-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Federated Cross-Seller Recommendation — 隐私保护的跨卖家联邦推荐</h3>
+  <p class="sc-desc">中小独立站用户行为数据不足1万无法训练好的推荐模型但又不愿意共享用户数据——联邦学习框架允许多卖家协同训练推荐模型数据不出本地，推荐召回率提升15-30%满足GDPR合规年化增益20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GNN-Ecommerce-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">GNN Ecommerce Recommendation — 图神经网络电商推荐：用户-商品图谱深度学习</h3>
+  <p class="sc-desc">独立站关联推荐只显示同品类热销榜CTR仅2%未利用婴儿推车用户60%会购买安全座椅的配套关系——LightGCN图神经网络消息传递捕捉高阶配套效应，关联推荐CTR从2%提升到5-8%AOV提升15-25%年化增益20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-IIA-Substitution-Pattern-Analysis.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">IIA替代模式分析 — Nested Logit建立商品品类树竞争结构</h3>
+  <p class="sc-desc">选品负责人面临&quot;不知道新增一个竞品对现有产品的流量影响是按比例均匀分配还是有偏向&quot;——Nested Logit打破IIA假设将替代模式精准建模，选品决策误差降低35%</p>
+  <div class='sc-footer'><span class='sc-roi'>200-400 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Knowledge-Graph-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Knowledge Graph Enhanced Recommendation — 知识图谱增强推荐</h3>
+  <p class="sc-desc">运营面临&quot;奶粉推荐只推替代品、关联购买率仅8%&quot;——成分-认证知识图谱路径推理将关联购买率提升至18%、欧洲市场转化率提升1.9%，年化GMV增量约200-300万元</p>
+  <div class='sc-footer'><span class='sc-roi'>关联购买率提升 10-15%，推荐可解释性使欧洲/北美高客单</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Augmented-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">LLM Augmented Recommendation — 大语言模型增强个性化推荐：自然语言驱动的跨域用户意图理解</h3>
+  <p class="sc-desc">母婴跨境电商新用户注册率高但转化低，约 65% 新用户第一屏浏览 ≤3 个商品后跳出</p>
+  <div class='sc-footer'><span class='sc-roi'>100万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Session-Personalization-Cache.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">LLM Session Personalization Cache — LLM 驱动的会话意图缓存与千人千面推荐</h3>
+  <p class="sc-desc">母婴独立站首页对所有用户展示相同商品，哺乳妈妈和奶爸看到的首屏完全一样导致CTR仅2.3%——LLM会话意图三层缓存（长期偏好+近期行为+即时session）驱动千人千面排序，首页CTR提升到4-5%，年化GMV增益40-120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥40-120 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Lifecycle-Stage-Aware-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Lifecycle Stage Aware Recommendation — 用户生命周期感知推荐</h3>
+  <p class="sc-desc">运营面临&quot;用户从新生儿期过渡到辅食期时品类切换推荐错失商机&quot;——生命周期阶段感知推荐将辅食CTR从1.2%提升至4.8%、NTB用户数提升35%，年化品类GMV增量约200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>阶段跃迁期精准推送使品类交叉购买率提升 25-40%，对年均</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MAS-Collaborative-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">MAS Collaborative Recommendation — 多智能体协同个性化推荐：LLM Agent 异构协作框架</h3>
+  <p class="sc-desc">业务背景：跨境母婴电商选品需要同时考虑：① 当前趋势（TikTok热词）② 安全认证（FDA/CE）③ 价格竞争力 ④ 用户历史偏好</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MNL-Purchase-Choice-Model.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">MNL购买选择模型 — 用效用函数建模「为什么选A不选B」</h3>
+  <p class="sc-desc">推荐算法工程师面临&quot;推荐系统只能预测点击率但不知道用户为什么选这个不选那个&quot;——MNL离散选择模型将购买因果机制透明化，推荐精准度提升41%，年化GMV增量$8.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>3000万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Marketing-Driven-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Marketing-Driven Recommendation — 营销活动驱动的推荐系统：Promotion-Aware 个性化协同优化</h3>
+  <p class="sc-desc">业务背景：母婴品类 Amazon Prime Day 期间，运营团队准备了 200 个参与促销的 SKU（折扣率 15%-50%），需要对不同用户展示「最可能因折扣购买」的商品组合，而非单纯推热销榜</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Matrix-Factorization.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Skill Card: Matrix Factorization for Recommendation (矩阵分解推荐)</h3>
+  <p class="sc-desc">推荐运营面临协同过滤失效——Matrix Factorization将召回率48%提到76%，年化增21万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MultiModal-Product-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">MultiModal Product Recommendation — 多模态产品推荐</h3>
+  <p class="sc-desc">运营面临&quot;纯文本推荐重复率高、用户反馈老是推一样的&quot;——视觉+文本+UGC门控融合将首页CTR提升28%、新品发现率提升40%，年化SEO增量价值约60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>多模态推荐 CTR 相对提升 20-35%，对主图高质量商品</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NeuralNDCG-Learning-to-Rank.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">NeuralNDCG — 可微分排序优化与Learning to Rank</h3>
+  <p class="sc-desc">搜索团队面临排序靠经验——NeuralNDCG将前3位点击率2.4%提到4.9%，年化增33万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Personalized-Search-Ranking.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Personalized Search Ranking — 个性化搜索排名：用户历史驱动的搜索结果重排</h3>
+  <p class="sc-desc">独立站搜索&quot;吸奶器&quot;所有用户看同样排序导致CVR仅3.5%低于行业均值——用户历史偏好驱动的LTR个性化重排，老用户便携款和配件优先展示CVR从3.5%提升到5-7%年化增益10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Position-Bias-Debiasing-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Position Bias Debiasing Recommendation — 位置偏差去偏公平推荐</h3>
+  <p class="sc-desc">运营面临&quot;老ASIN因历史曝光多CTR虚高持续霸屏、新品流量&lt;老品1/10&quot;——IPS逆倾向去偏将模型NDCG@10提升12%、新品前10位占比从8%升至18%，年化广告节省约30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>NDCG@10 提升 10-15%，新品流量公平化减少广告依</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Price-Sensitive-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Price-Sensitive Recommendation — 价格感知推荐：弹性感知的个性化定价与排序融合</h3>
+  <p class="sc-desc">业务背景：Prime Day / Black Friday 母婴类目促销期间，某品牌对婴儿消毒器打折30%（$59.99→$41.99）</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RLHF-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">RLHF推荐系统 — 人类偏好对齐的个性化推荐</h3>
+  <p class="sc-desc">电商团队面临&quot;推荐CTR高但无效点击率70%用户满意度低&quot;——RLHF奖励模型对齐真实偏好，复购率从25%提升至27%，年化GMV增量约138万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Real-Time-Streaming-Recommendation.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Real-Time Streaming Recommendation — 流式实时推荐：毫秒级个性化更新架构</h3>
+  <p class="sc-desc">用户点击了便携吸奶器后首页推荐还是旧的因为批量系统明天才更新——流式推荐每次用户行为后毫秒级更新推荐结果，session内CTR提升15-25%年化GMV增益15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Recommendation-Compliance-Filter.html" data-domain="05-推荐系统" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Recommendation Compliance Filter — 推荐系统实时合规内容过滤</h3>
+  <p class="sc-desc">运营面临&quot;推荐系统偶发推送违规品导致关联账号受限风险&quot;——实时合规过滤层将违规品推荐概率降至&lt;0.1%，年化防止账号受限保护价值50-200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>单次账号受限损失 10-50 万元（广告暂停 + 排名下滑）</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Recommendation-TS-Demand.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">推荐系统时序需求预测 — 购买序列驱动的个性化需求预警</h3>
+  <p class="sc-desc">推荐团队面临&quot;在错误月龄段推荐商品导致转化率极低比如5月龄推辅食机&quot;——时序协同过滤在正确月龄时间节点推送，转化率提升25%，年化GMV增量约80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Semantic-ID-Retrieval-RPG.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Semantic ID Retrieval for Recommendation (RPG)</h3>
+  <p class="sc-desc">商品运营面临语义召回漏匹配——Semantic ID将召回覆盖率61%提到88%，年化增29万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Sequential-Recommendation-Transformer.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">序列推荐Transformer — 基于购买序列的个性化下一步推荐</h3>
+  <p class="sc-desc">电商运营面临&quot;婴儿月龄驱动需求快速演变但推荐缺乏时序感知&quot;——SASRec序列建模使复购率从22%提升至28%，年化GMV增量约360万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Session-Based-Recommendation-SR-GNN.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Session-Based Recommendation with SR-GNN</h3>
+  <p class="sc-desc">母婴出海电商中 60%+ 用户以匿名状态浏览（未登录/未注册）</p>
+  <div class='sc-footer'><span class='sc-roi'>首年投入约 15 万，预期年增量 GMV 约 1440 万，</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Social-Proof-Viral-Rec.html" data-domain="05-推荐系统" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">Social Proof Viral Recommendation — 社交证明病毒式推荐</h3>
+  <p class="sc-desc">运营面临&quot;KOL推荐后24h内流量峰值未被利用、错失转化窗口&quot;——KOL背书+UGC时效融合将当日CVR提升25%、退货率从18%降至11%，年化综合贡献约200-350万元</p>
+  <div class='sc-footer'><span class='sc-roi'>KOL 背书时效利用提升 CVR 20-30%，UGC 时效</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Topological-Data-Analysis-Cross-Sell.html" data-domain="05-推荐系统" data-diff="">
+  <div class="sc-domain">05-推荐系统</div>
+  <h3 class="sc-title">拓扑数据分析 (TDA) 挖掘时空隐性关联销售路径</h3>
+  <p class="sc-desc">会员经理面临交叉销售没抓手——TDA将连带购买率7%提到13%，年化增18万元</p>
+  
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

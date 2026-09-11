@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-N 库存危机响应 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-N 库存危机响应</nav>
+<h1>WF-N 库存危机响应</h1>
+<p class="lead">从异常检测触发到物流路由决策的库存危机 5 步自动响应链，专门处理断货危机（DSI &lt; 14天）和积压危机（库龄 &gt; 90天积压率 &gt; 30%）两类紧急场景，要求在 4 小时内完成决策闭环。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>供应链数据科学家</span><span class='tag'>库存/采购运营</span><span class='tag'>供应链负责人</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>当前库存是断货风险还是积压问题？</div>
+</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 断货危机响应时效从 2-3 天（人工协调）压缩至 &lt; 4 小时（自动化决策）</li><li>[OK] 大促断货率从 18% 降至 4%，期望避免损失 8.4 万元/年（按 2 次大促计算）</li><li>[OK] 积压 SKU 45 天清库率从 35% 提升至 70%，节省 FBA 长期存储费 3-8 万元/年</li><li>[OK] A+ 级 SKU 空运 ROI 平均 &gt; 3x（断货损失节省远超运费）</li></ul></div>
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">异常检测与危机定性</div>
+  <div class="wf-question">当前库存异常是什么类型？</div>
+  <div class="wf-context">快速诊断危机类型，是断货危机（DSI &lt; 14天）还是积压危机（库龄 &gt; 90天），精准触发对应响应链</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">DSI &lt; 14天 且 销售速度未下滑</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html"><span class="chip-name">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</span><span class="chip-role">断货风险检测，计算修正后真实 DSI（考虑即将到来的需求峰值）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Inventory-Health-Aging-Attribution.html"><span class="chip-name">Business Metric-Aware Forecasting for Inventory Management</span><span class="chip-role">紧急健康诊断，识别断货根因（预测误差/备货不足/销速突增）</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">库龄 &gt; 90天库存占比 &gt; 30%</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Inventory-Health-Aging-Attribution.html"><span class="chip-name">Business Metric-Aware Forecasting for Inventory Management</span><span class="chip-role">积压根因四分类归因（需求误判/滞销/竞品冲击/季节性错判）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html"><span class="chip-name">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</span><span class="chip-role">销速异常检测，判断积压是否仍在加深</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">混合危机（断货 + 其他 SKU 积压）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html"><span class="chip-name">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</span><span class="chip-role">全SKU异常扫描，按危机类型分流</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Inventory-Health-Aging-Attribution.html"><span class="chip-name">Business Metric-Aware Forecasting for Inventory Management</span><span class="chip-role">库存组合健康度总览，优先级排序</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">需求重新预测</div>
+  <div class="wf-question">是否处于大促 / 旺季前期（距离高峰 &lt; 45 天）？</div>
+  <div class="wf-context">考虑季节性、大促放量因子进行快速修正预测，这一步决定补货量的基准</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">距大促 &lt; 30天（Prime Day / Black Friday / 圣诞旺季）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Demand-Forecasting-Supply-Chain.html"><span class="chip-name">Demand Forecasting for Supply Chain</span><span class="chip-role">大促需求快速预测（季节倍数 2-4x），修正 DSI</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-EventCast-LLM-Event-Forecasting.html"><span class="chip-name">EventCast — LLM 事件感知需求预测：大促/节假日场景 MAE-57%</span><span class="chip-role">大促特征感知预测，识别历史同期爆发模式</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">日常运营期（非大促）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Demand-Forecasting-Supply-Chain.html"><span class="chip-name">Demand Forecasting for Supply Chain</span><span class="chip-role">ARIMA 快速预测（优先速度，30 分钟内出结果）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Conformal-Prediction-Demand-UQ.html"><span class="chip-name">Conformal Prediction Demand UQ（需求预测不确定性量化）</span><span class="chip-role">需求置信区间量化，确定补货量上下界</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">ABC 紧急重分级</div>
+  <div class="wf-question">危机 SKU 在整体商品组合中的优先级如何？</div>
+  <div class="wf-context">危机情况下重新评估 SKU 价值，将有限资源（资金/物流）集中到最关键的 SKU</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Dynamic-ABC-Stratification-Adaptive-Policy.html"><span class="chip-name">动态ABC分层与策略自适应 — 帕累托分类自动更新与差异化库存策略绑定</span><span class="chip-role">紧急度 × 价值度双维度重分级，生成 A+/A/B/C 优先级排序</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Forecast-Driven-Inventory.html"><span class="chip-name">Forecast-Driven Inventory（预测驱动库存优化）</span><span class="chip-role">预测驱动的补货策略匹配（按新 ABC 分级设置目标 DSI）</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">紧急补货量决策</div>
+  <div class="wf-question">补货还是甩货？补多少？</div>
+  <div class="wf-context">在 MOQ 约束下计算最优补货量（断货危机）或最优甩货方案（积压危机）</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">断货危机 → 紧急补货</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Dynamic-Lot-Sizing-MOQ.html"><span class="chip-name">Efficient Algorithms for the Joint Replenishment Problem with Minimum Order Quantities</span><span class="chip-role">MOQ 约束下的紧急批量决策，目标 DSI = 45 天安全线</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Safety-Stock-Replenishment.html"><span class="chip-name">Safety Stock and Replenishment Strategy</span><span class="chip-role">应急安全库存重新设定，考虑交期不确定性</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">积压危机 → 甩货/降价清仓</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Dynamic-Lot-Sizing-MOQ.html"><span class="chip-name">Efficient Algorithms for the Joint Replenishment Problem with Minimum Order Quantities</span><span class="chip-role">反向批量决策，计算促销/打包清仓的最优甩货量</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Multi-Channel-Inventory-Pooling.html"><span class="chip-name">Multi-Channel Inventory Pooling（多渠道库存池化）</span><span class="chip-role">跨渠道调拨，将 FBA 积压转移至第三方仓降低存储费</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">最优物流路由</div>
+  <div class="wf-question">空运还是海运？紧急度 vs 成本如何权衡？</div>
+  <div class="wf-context">比较空运和海运的 ROI（避免断货损失 vs 运费成本），生成最终物流执行方案</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">A+ 级 SKU 断货危机（单价 &gt; $30，日销 &gt; 10件）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Cross-Border-Logistics-Routing.html"><span class="chip-name">Cross-Border Logistics Routing（跨境物流路径优化）</span><span class="chip-role">空运优先方案，计算 Air ROI = (断货损失节省 - 空运费) / 空运费</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Tag-Optimized-Logistics-Routing.html"><span class="chip-name">Tag-Optimized Logistics Routing — SKU物流属性标签驱动智能配送路由</span><span class="chip-role">标签驱动的智能路由，自动选择最优承运商和线路</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Delivery-Promise-Optimization.html"><span class="chip-name">Delivery Promise Optimization — 时效承诺优化：转化率与准时率的帕累托</span><span class="chip-role">FBA 入库时效承诺，优化 ETA 可见性</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">B/C 级 SKU 或积压清仓物流</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Cross-Border-Logistics-Routing.html"><span class="chip-name">Cross-Border Logistics Routing（跨境物流路径优化）</span><span class="chip-role">海运成本优先，计算最低成本路线</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Last-Mile-Delivery-Prediction.html"><span class="chip-name">Last-Mile Delivery Prediction（最后一公里配送时效预测）</span><span class="chip-role">末端时效预测，评估是否影响 Prime 资格</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">危机解除验证</div>
+  <div class="wf-question">执行后 7 天内库存 DSI 是否恢复至安全线以上？</div>
+  <div class="wf-context">闭环验证危机响应效果，避免「以为解决了但其实没有」</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Anomaly-Detection-Foundation-Model.html"><span class="chip-name">Anomaly Detection Foundation Model — 异常检测基础模型：零样本时序异常感知</span><span class="chip-role">每日 DSI 监控，危机解除条件：DSI &gt; 21 天持续 3 天</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Inventory-Health-Aging-Attribution.html"><span class="chip-name">Business Metric-Aware Forecasting for Inventory Management</span><span class="chip-role">危机复盘，识别根因并防止同类问题重现</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Combo-Inventory-Crisis-Response.html"><span class="chip-name">库存危机响应 Combo Pattern — 断货/积压异常触发的 5 步自动响应链路</span><span class="chip-role">Combo Pattern 全链路复盘，更新参数配置供下次使用</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

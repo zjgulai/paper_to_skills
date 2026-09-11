@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-Y 账期现金流优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-Y 账期现金流优化</nav>
+<h1>WF-Y 账期现金流优化</h1>
+<p class="lead">从现金转换周期诊断到供应链融资工具选择再到多币种损耗修复的端到端现金流健康链。反直觉核心：大多数卖家的真实利润吞噬者不是广告费，而是亚马逊14天账期+60天备货周期+汇率自动转换3-4%三者叠加产生的隐性现金漏洞。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>财务负责人/CFO</span><span class='tag'>创始人/CEO</span><span class='tag'>运营总监</span><span class='tag'>供应链负责人</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的现金转换周期（CCC）是多少天？超过60天就需要外部融资填补缺口。</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">现金转换周期诊断</div>
+  <div class="wf-question">资金从采购到回款需要多少天？</div>
+  <div class="wf-context">反直觉：跨境卖家的CCC（现金转换周期）通常在75-120天（中国备货30-45天+头程15-30天+Amazon入库7天+账期14天），而传统零售只有45-60天。CCC越长，需要的运营资金越多，现金流压力越大。</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html"><span class="chip-name">Cross-Border Cash Flow Forecasting（跨境电商现金流预测与融资窗口规划）</span><span class="chip-role">跨境现金流预测，建立SKU级别的采购-到货-销售-回款时间线</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Operating-Cash-Flow-Forecast.html"><span class="chip-name">Operating Cash Flow Forecast — 需求预测驱动的运营现金流预测与库存融资优化</span><span class="chip-role">经营现金流预测，滚动3-6个月现金流缺口测算</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Cash-Conversion-Cycle-Optimization.html"><span class="chip-name">Skill-Cash-Conversion-Cycle-Optimization — 现金转换周期优化</span><span class="chip-role">现金转换周期优化，识别DIO/DSO/DPO三个驱动因子的压缩空间</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">汇率损耗修复</div>
+  <div class="wf-question">你是否在用Amazon自动结汇？每年多付了多少汇兑成本？</div>
+  <div class="wf-context">反直觉：Amazon自动结汇收取3-4%手续费，对年销$500K的卖家意味着$15K-$20K的隐性年损耗，完全透明但被大多数卖家忽视。换用第三方收款工具可以将成本降到0.5-1%，年节省$10K+。</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Multicurrency-FX-Hedging.html"><span class="chip-name">Multicurrency FX Hedging — 跨境卖家多货币外汇风险对冲</span><span class="chip-role">多币种汇率对冲，计算美元/欧元/英镑/日元各币种的最优持有比例</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-FX-Hedging-Strategy.html"><span class="chip-name">FX Hedging Strategy — 跨境汇率风险对冲：动态套期保值降低外汇损失</span><span class="chip-role">汇率对冲策略设计，远期锁汇vs自然对冲vs期权对冲的成本收益对比</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Tariff-FX-FBA-Cost-Dynamics.html"><span class="chip-name">关税-汇率-FBA费率三联动成本动态测算 — 跨境利润实时压力测试模型</span><span class="chip-role">关税+汇率+FBA费用动态联动，综合测算三项隐性成本的年度总损耗</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">供应链融资工具选择</div>
+  <div class="wf-question">旺季备货资金缺口如何填补？有哪些成本最低的融资方式？</div>
+  <div class="wf-context">供应链融资工具的成本差异巨大：Amazon Lending年化利率10-12%，Payoneer融资15-18%，银行供应链金融6-8%，而抵押库存的专业供应链融资平台可以做到8-12%+更灵活的还款周期。</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">短期缺口（1-3个月），优先便捷性</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Amazon-Lending-Decision.html"><span class="chip-name">Amazon Lending Decision — 电商平台卖家信用评估与融资决策</span><span class="chip-role">Amazon Lending决策模型，评估接受Amazon融资的真实成本vs机会成本</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Inventory-Financing-Optimization.html"><span class="chip-name">Inventory Financing Optimization — 库存融资与供应链金融决策优化</span><span class="chip-role">库存融资优化，以库存为抵押的融资工具成本收益计算</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">中长期资金规划，优先成本</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Supply-Chain-Finance-Risk-Modeling.html"><span class="chip-name">Supply Chain Finance Risk Modeling — 供应链金融风险建模：跨境贸易融资信用评估</span><span class="chip-role">供应链金融风险建模，评估不同融资渠道的综合风险调整后成本</span></a>
+        <span class="wf-skill-chip missing"><span class="chip-name">Skill-Working-Capital-Optimization</span><span class="chip-role">营运资金优化，通过延长账期/加速回款/减少安全库存系统降低资金占用</span></span>
+        <a class="wf-skill-chip" href="../skills/Skill-Amazon-Payment-Cycle-Forecast.html"><span class="chip-name">Amazon Payment Cycle Forecast — Amazon 回款周期预测与现金流规划</span><span class="chip-role">Amazon账期周期预测，精确预测每笔款项回款时间优化资金调度</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">旺季现金流压测</div>
+  <div class="wf-question">如果Q4销售额翻3倍，现金流能否支撑？</div>
+  <div class="wf-context">旺季是现金流陷阱最高发期：备货资金需求是平时的3-4倍，但回款时间反而因FBA拥堵延长，大量卖家在旺季最高销量时陷入现金流危机。</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Procurement-Budget-Rolling-Reforecast.html"><span class="chip-name">采购预算滚动重测 — 季度滚动预测与偏差管理的动态预算调整机制</span><span class="chip-role">采购预算滚动重预测，每月更新旺季备货资金需求预测</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Cross-Border-Cash-Flow-Forecasting.html"><span class="chip-name">Cross-Border Cash Flow Forecasting（跨境电商现金流预测与融资窗口规划）</span><span class="chip-role">跨境现金流预测精化，将关税变化/汇率波动/FBA费用调整纳入情景模型</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

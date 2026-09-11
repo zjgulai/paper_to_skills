@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>碳最优物流路径规划 — ESG合规与成本的多目标优化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/18-物流履约.html">18-物流履约</a> / Skill-Green-Logistics-Carbon-Optimization</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">18-物流履约</div>
+  <h1 class="skill-main-title">碳最优物流路径规划 — ESG合规与成本的多目标优化</h1>
+  <p class="skill-skill-id">Skill-Green-Logistics-Carbon-Optimization</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>knowledge_graph</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>跨境物流与履约</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>ML基础与可解释性</span><span class='tag'>供应商管理与博弈</span><span class='tag'>逆向物流与退货</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-P 关税危机应对</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-AF MAS运营财务智能化</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>15万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 93分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（58%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 131.0, 58.0, 87.3, 87.0, 88.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 13.1, 8.7, 13.1, 8.7, 4.4];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>物流负责人 / 供应链负责人<span class='biz-ctx-secondary'> · 客服负责人 · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>FBA vs FBM vs 第三方海外仓 · 美国本土最后一公里 · 跨境退货逆向物流</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>物流时效不稳定，差评里大量「收货太慢」，影响 DSR 评分；退货率高，处理成本吃掉大量利润；旺季物流爆仓</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>物流时效提升 20-30%，物流相关差评减少 40%，退货成本可控，旺季履约稳定不崩溃</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>物流超时差评太多</span><span class='biz-pain-tag'>旺季爆仓订单积压</span><span class='biz-pain-tag'>退货处理成本太高</span><span class='biz-pain-tag'>头程运费太贵压缩了毛利</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>跨境运营面临&quot;欧盟CBAM碳合规压力和ESG采购要求无量化工具&quot;——多目标碳最优路径规划降低碳排放40%，碳税成本节省+满足ESG要求，年化ROI约245万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>2025年欧盟CBAM（碳边境调节机制）和ESG信披要求已经影响全球供应链，母婴跨境品牌面临&quot;碳合规&quot;和&quot;成本控制&quot;的双重压力。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：跨境空运vs海运的碳成本决策 - 业务问题：新款婴儿车从中国发往德国，空运3天但碳排放是海运的50倍，海运25天；在欧盟CBAM压力下，如何选择？ - 数据要求：货物重量/体积、空运/海运运费报价、交货期要求、欧盟碳价（≈65€/吨CO2） - 预期产出：空运总成本（运费+碳税等效）vs 海运总成本的量化对比；建议：&lt;3吨急货选空运，&gt;3吨常规货选海运+提前备货 - 业务价值：优化运输方式后，碳排放降低约40%（合规成本减少约15万元/年），同时通过提前备货消除空运需求，物流成本降低约30万元/年</p><p>三轨对抗验证： 1. 成本验证：模型计算成本极低（Python 10ms/次）；主要成本在数据收集（各路段里程、各运输方式排放因子），一次性建设约1-2天 2. 合规验证：碳排放计算方法需符合GHG Protocol Scope 3标准，用于对外ESG披露时需第三方核查；目前仅用于内部决策无合规风险 3. 风险验证：碳排放因子会随能源结构变化（如绿色航运燃料推广）；需每年更新排放因子数据库；帕累托前沿解可能因约束变化大幅移动（如碳价大涨），需有动态重算机制</p><p>场景B：最后一公里多点配送路径优化 - 业务问题：FBA美国仓发货到东海岸5个城市的经销商，如何规划卡车路线兼顾成本和碳排放 - 数据要求：各交货点坐标、时间窗口、货物重量、卡车载重和油耗参数 - 预期产出：帕累托最优配送路径：比最短里程方案少排碳15%，且比最低成本方案只多花3%费用 - 业务价值：年配送30次，节省碳排放约18吨CO2，按碳市场价65€/吨，碳资产价值约7800€；同时满足欧洲合作伙伴的ESG采购要求</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：优化运输方式后碳排放降低40%，按欧盟碳价65€/吨，500次运输/年节省碳成本约15万元；满足ESG采购要求避免欧洲合作伙伴流失（合同价值约200万元）；空运→海运转移降低物流成本约30万元/年；综合ROI约245万元/年</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（数据收集是主要挑战；计算模型成熟，OR-Tools/NSGA-II有成熟库）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（欧盟ESG/CBAM政策已生效，不做碳管理的跨境品牌将面临合规风险）</li><li><strong>评估依据</strong>：Transportation Research Part C 顶刊（影响因子9.5）；欧盟CBAM 2026年全面实施，碳核算将成为强制要求；DHL、马士基等头部物流商均已提供碳排放计算服务</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Skill-Green-Logistics-Carbon-Optimization
+碳最优物流路径规划 — 成本与碳排放多目标优化
+
+依赖：pip install numpy pandas scipy
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy.spatial.distance import cdist
+
+np.random.seed(42)
+
+# ── 1. 碳排放计算模型 ─────────────────────────────────────────────
+class CarbonEmissionModel:
+    &quot;&quot;&quot;
+    基于 GHG Protocol Scope 3 的运输碳排放计算
+    排放量 = 重量(吨) × 距离(km) × 排放因子(kgCO2/吨·km)
+    &quot;&quot;&quot;
+    # 各运输方式排放因子（kgCO2/吨·km）
+    EMISSION_FACTORS = {
+        &#x27;air&#x27;:       1.052,   # 空运（最高）
+        &#x27;sea&#x27;:       0.013,   # 海运（远洋，最低）
+        &#x27;truck_hvy&#x27;: 0.062,   # 重卡
+        &#x27;truck_lt&#x27;:  0.096,   # 轻型货车
+        &#x27;rail&#x27;:      0.028,   # 铁路
+        &#x27;express&#x27;:   0.206,   # 快递（轻货空运比例高）
+    }
+
+    def calculate(self, weight_kg: float, distance_km: float, mode: str) -&gt; dict:
+        &quot;&quot;&quot;计算单次运输的碳排放&quot;&quot;&quot;
+        factor  = self.EMISSION_FACTORS.get(mode, 0.1)
+        weight_t = weight_kg / 1000
+        emission_kg  = weight_t * distance_km * factor
+        emission_ton = emission_kg / 1000
+        # 欧盟碳价约65€/吨CO2（2024）
+        carbon_cost_eur = emission_ton * 65
+        return {
+            &#x27;mode&#x27;: mode,
+            &#x27;weight_kg&#x27;: weight_kg,
+            &#x27;distance_km&#x27;: distance_km,
+            &#x27;emission_kgCO2&#x27;: emission_kg,
+            &#x27;emission_tCO2&#x27;: emission_ton,
+            &#x27;carbon_cost_eur&#x27;: carbon_cost_eur,
+        }
+
+    def mode_comparison(self, weight_kg: float, distance_km: float) -&gt; pd.DataFrame:
+        &quot;&quot;&quot;对比所有运输方式&quot;&quot;&quot;
+        results = [self.calculate(weight_kg, distance_km, mode)
+                   for mode in self.EMISSION_FACTORS.keys()]
+        df = pd.DataFrame(results)
+        df = df.sort_values(&#x27;emission_kgCO2&#x27;)
+        return df
+
+# ── 2. 多目标路径优化（简化版帕累托分析）────────────────────────────
+class MultiObjectiveRouteOptimizer:
+    &quot;&quot;&quot;
+    多目标绿色路径规划（简化版：枚举+帕累托筛选）
+    生产环境：使用 NSGA-II (pip install pymoo) 或 OR-Tools
+    &quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Green-Logistics-Carbon-Optimization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Cross-Border-Logistics-Routing.html'>Skill-Cross-Border-Logistics-Routing</a></li><li><a href='../skills/Skill-Cross-Border-Tax-Tariff-Modeling.html'>Skill-Cross-Border-Tax-Tariff-Modeling</a></li><li><a href='../skills/Skill-FX-Hedging-Strategy.html'>Skill-FX-Hedging-Strategy</a></li><li><a href='../skills/Skill-Logistics-Cost-PL-Attribution.html'>Skill-Logistics-Cost-PL-Attribution</a></li><li><a href='../skills/Skill-Multi-Temperature-Logistics.html'>Skill-Multi-Temperature-Logistics</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-Cross-Border-Tax-Tariff-Modeling.html'>Skill-Cross-Border-Tax-Tariff-Modeling</a></li><li><a href='../skills/Skill-FX-Hedging-Strategy.html'>Skill-FX-Hedging-Strategy</a></li><li><a href='../skills/Skill-Multi-Temperature-Logistics.html'>Skill-Multi-Temperature-Logistics</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Category-Compliance-Prescan.html'>Skill-Category-Compliance-Prescan</a></li><li><a href='../skills/Skill-FX-Hedging-Strategy.html'>Skill-FX-Hedging-Strategy</a></li><li><a href='../skills/Skill-Multi-Temperature-Logistics.html'>Skill-Multi-Temperature-Logistics</a></li><li><a href='../skills/Skill-Supplier-Evaluation-Model.html'>Skill-Supplier-Evaluation-Model</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Green-Logistics-Carbon-Optimization',skill_domain:'18-物流履约'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Green-Logistics-Carbon-Optimization',skill_domain:'18-物流履约',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ EPR合规费用测算</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

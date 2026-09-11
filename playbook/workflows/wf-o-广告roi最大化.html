@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-O 广告ROI最大化 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-O 广告ROI最大化</nav>
+<h1>WF-O 广告ROI最大化</h1>
+<p class="lead">从多触点归因修正到 Agent 自动预算优化的广告 ROI 最大化 6 步决策链，覆盖归因去偏、价格弹性校准、MMM 饱和度分析、跨平台预算分配、自然+付费协同和 Agent 持续优化六个环节，适用于月度广告支出 ≥ $5,000 的跨境品牌。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>广告投放运营</span><span class='tag'>增长数据科学家</span><span class='tag'>品牌 CMO / 营销负责人</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你当前最大的广告 ROI 问题是什么？</div>
+</div>
+<div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 归因修正后真实 ROAS 比平台上报提升准确性 30-50%（减少虚假高 ROAS 渠道的过度投入）</li><li>[OK] 预算重分配后综合 ROAS 提升 40-65%（月广告费 $20,000 级别约增收 $16,000-$26,000）</li><li>[OK] 自我蚕食率平均下降 15pp，付费广告不再侵占自然流量</li><li>[OK] Agent 自动化后运营每周节省 8-12 小时人工分析调整时间</li><li>[OK] 年化 ROI：实施成本 3-5 万元，预期收益 150-300 万元，ROI 30-60x</li></ul></div>
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">归因诊断与修正</div>
+  <div class="wf-question">当前广告平台上报的 ROAS 是否可信？</div>
+  <div class="wf-context">平台自报归因普遍存在虚报偏差（TikTok/Meta 末次点击高估 30-50%），需要进行因果化修正</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">有 A/B 实验数据（开/关广告组对照）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Ad-Attribution-Modeling.html"><span class="chip-name">Multi-Touch Attribution Modeling for Digital Advertising</span><span class="chip-role">实验驱动的真实归因，消除混淆偏差</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-DiD-Difference-in-Differences.html"><span class="chip-name">Difference-in-Differences (DiD) for Causal Effect Estimation</span><span class="chip-role">双重差分估计广告净效应（开广告 vs 关广告组）</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">仅有观测数据（无实验）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Ad-Attribution-Modeling.html"><span class="chip-name">Multi-Touch Attribution Modeling for Digital Advertising</span><span class="chip-role">Shapley 值近似归因，各渠道贡献分解</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Causal-Attribution-Bridge.html"><span class="chip-name">Causal Attribution Bridge（因果归因桥梁）</span><span class="chip-role">因果归因替代 naive 末次点击，去除渠道间相关性偏差</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-CDA-Privacy-Causal-Attribution.html"><span class="chip-name">CDA — 隐私保护因果渠道归因：无用户数据的多触点归因</span><span class="chip-role">无 Cookie 环境下的隐私安全归因（适用于欧洲市场）</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">多触点归因窗口冲突（同一用户被多渠道重复计算）</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-PIE-Experimental-MTA.html"><span class="chip-name">PIE 实验增量预测多触点归因 - Amazon MTA 框架落地</span><span class="chip-role">实验驱动的多触点归因，解决窗口重叠问题</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-FrontDoor-Causal-MTA.html"><span class="chip-name">ALM-MTA 前门因果多触点归因 - 剔除隐藏混淆的广告真实 ROI 剥离</span><span class="chip-role">前门准则多触点因果归因</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">价格弹性校准</div>
+  <div class="wf-question">广告引流配合折扣活动时，净利润是增加还是减少？</div>
+  <div class="wf-context">高弹性产品降价促销可放大广告效果，但需要计算盈亏平衡点，避免「越卖越亏」</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Price-Elasticity-Estimation.html"><span class="chip-name">Price Elasticity Estimation — 需求价格弹性估算：跨境 SKU 定价底线测算</span><span class="chip-role">产品价格弹性系数估计（ε），识别价格敏感型 vs 品牌忠诚型</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Competitive-Response-Modeling.html"><span class="chip-name">Competitive Response Modeling（竞争响应建模）</span><span class="chip-role">竞品价格响应预测，确认降价不会触发价格战</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">MMM 饱和度分析</div>
+  <div class="wf-question">各渠道当前投入是否已经超过边际收益最优点？</div>
+  <div class="wf-context">识别过度投入的饱和渠道（边际 ROI 接近 0），找到欠投资的高潜力渠道</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">有 90 天以上多渠道广告数据</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Marketing-Mix-Modeling.html"><span class="chip-name">Marketing Mix Modeling (MMM) for Macro Budget Allocation</span><span class="chip-role">Hill 函数拟合各渠道饱和曲线，找边际 ROI 最优区间</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Channel-Saturation-Curve.html"><span class="chip-name">Channel Saturation Curve（渠道饱和曲线建模）</span><span class="chip-role">渠道饱和曲线精确建模，识别「资金黑洞」渠道</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">数据不足（&lt; 90天）或新渠道</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Marketing-Mix-Modeling.html"><span class="chip-name">Marketing Mix Modeling (MMM) for Macro Budget Allocation</span><span class="chip-role">贝叶斯 MMM（少数据场景），结合先验信息估计饱和度</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Causal-Discovery-PC-Algorithm.html"><span class="chip-name">PC算法因果发现：从观测数据识别销售驱动因果链</span><span class="chip-role">渠道间因果结构发现，识别间接效果</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">跨平台预算最优分配</div>
+  <div class="wf-question">如何在亚马逊 SP/SB/SD、TikTok、Google 等渠道间最优分配预算？</div>
+  <div class="wf-context">拉格朗日最优化：在总预算约束下，使各渠道边际 ROI 相等（Equi-marginal principle）</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Multi-Platform-Ad-Budget-Allocator.html"><span class="chip-name">多平台广告预算最优分配 — 约束优化最大化跨平台 ROAS</span><span class="chip-role">跨平台预算最优分配（考虑饱和曲线 + 修正后 ROAS）</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Search-Ad-Budget-ROI-Integration.html"><span class="chip-name">自然搜索与广告预算联合优化 — 有机排名提升vs广告CPC的边际收益对比</span><span class="chip-role">亚马逊内部 SP/SB/SD 三类型广告资源分配</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">自然+付费协同优化</div>
+  <div class="wf-question">付费广告是否在蚕食原本属于自然排名的流量？</div>
+  <div class="wf-context">自我蚕食（cannibalization）是广告效率损失的隐性原因，识别并消除</div>
+  <div class="wf-branches">
+    <details class="wf-branch" open>
+      <summary class="wf-condition">同一关键词同时有自然 Top3 和付费广告位</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Search-Ad-Budget-ROI-Integration.html"><span class="chip-name">自然搜索与广告预算联合优化 — 有机排名提升vs广告CPC的边际收益对比</span><span class="chip-role">自我蚕食检测 + 付费出价压低策略（节省蚕食部分预算）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-IV-Instrumental-Variables.html"><span class="chip-name">Instrumental Variables (IV) for Causal Inference with Endogeneity</span><span class="chip-role">工具变量法分离自然 vs 付费转化真实归因</span></a>
+      </div>
+    </details>
+    <details class="wf-branch" open>
+      <summary class="wf-condition">自然排名较低（Page 2+），付费是主要流量来源</summary>
+      <div class="wf-branch-skills">
+        <a class="wf-skill-chip" href="../skills/Skill-Search-Ad-Budget-ROI-Integration.html"><span class="chip-name">自然搜索与广告预算联合优化 — 有机排名提升vs广告CPC的边际收益对比</span><span class="chip-role">全付费驱动策略，建立排名飞轮（评论 → 自然排名提升）</span></a>
+        <a class="wf-skill-chip" href="../skills/Skill-Keyword-Demand-Gap-Analysis.html"><span class="chip-name">关键词需求缺口矩阵分析 — 识别高需求低竞争关键词蓝海</span><span class="chip-role">识别自然排名可突破的长尾词，减少付费依赖</span></a>
+      </div>
+    </details>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">Agent 持续自动优化</div>
+  <div class="wf-question">如何建立自动化机制让广告 ROI 持续改善？</div>
+  <div class="wf-context">将前 5 步的模型封装为 Agent，实现每周自动数据读取 → 模型更新 → 预算调整闭环</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-DARA-Agentic-MMM-Optimizer.html"><span class="chip-name">DARA - LLM+RL 双阶段广告预算分配 Agent</span><span class="chip-role">Agent 化 MMM，每周自动更新饱和曲线，触发预算重分配</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Agent-Observability-Tracing.html"><span class="chip-name">Agent Observability Tracing — AI Agent 可观测性追踪：生产环境全链路监控</span><span class="chip-role">Agent 执行可观测性，记录每次调整的决策链路和效果追踪</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Combo-Ad-ROI-Maximizer.html"><span class="chip-name">广告ROI最大化 Combo Pattern — 从归因分析到预算自动重分配的 6 步优化链路</span><span class="chip-role">Combo Pattern 全链路 Agent 编排，整合前 5 步为自动化 Pipeline</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">ROI 改善效果验证</div>
+  <div class="wf-question">优化后第 30/60/90 天 ROAS 是否持续改善？</div>
+  <div class="wf-context">严格评估归因修正 + 预算重分配的实际效果，避免表面 ROAS 上涨掩盖实际问题</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-DiD-Difference-in-Differences.html"><span class="chip-name">Difference-in-Differences (DiD) for Causal Effect Estimation</span><span class="chip-role">对照实验验证预算调整的真实因果效果（holdout 组对比）</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Switchback-Experiment-Design.html"><span class="chip-name">Switchback 实验设计 - 数据驱动的双边市场实验</span><span class="chip-role">时间序列实验设计，控制季节性干扰评估 Agent 优化效果</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Ad-Attribution-Modeling.html"><span class="chip-name">Multi-Touch Attribution Modeling for Digital Advertising</span><span class="chip-role">定期重新校准归因模型，防止市场变化导致模型漂移</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

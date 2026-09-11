@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>03-时间序列 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>03-时间序列</h1><p>Demand forecasting, conformal prediction, LLM forecasting</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 03-时间序列 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ARIMA-GARCH-Demand-Volatility.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">ARIMA-GARCH Demand Volatility — 需求波动率预测（不确定性区间建模）</h3>
+  <p class="sc-desc">供应链计划师面临&quot;固定安全库存在高波动期不足、平日过剩&quot;——ARIMA-GARCH动态安全库存将持仓成本降低15%，年化节省10-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>动态安全库存比固定安全库存减少持仓成本15%，年化节省10-</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Adaptive-Forecast-Accuracy-Optimization.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Adaptive Forecast Accuracy Optimization — 自适应预测精准化：滚动误差修正驱动库存精度</h3>
+  <p class="sc-desc">当促销季或竞品冲击导致需求模式骤变时，静态预测模型会持续积累系统性误差——自适应滚动误差修正实时检测偏移并调整参数，将 MAPE 降低 15-25%，让库存精准度随环境变化持续保优。</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Bayesian-Structural-Time-Series.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Bayesian Structural Time Series — 贝叶斯结构时间序列分离促销/季节/趋势效应</h3>
+  <p class="sc-desc">品牌运营面临&quot;30万美元Influencer Campaign后销量涨40%但不确定是Campaign效果还是季节旺季&quot;——贝叶斯结构时序反事实分析将Campaign净iROAS从4.5修正为2.3，年化节省20-40万元无效投放</p>
+  <div class='sc-footer'><span class='sc-roi'>20-40 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-Time-Series-Forecasting-GCF.html" data-domain="03-时间序列" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">因果时间序列预测 - GCF 反事实需求建模</h3>
+  <p class="sc-desc">平台在大促期对核心母婴 SKU(纸尿裤、婴儿车)做搜索权重提升 + 首页 Banner 曝光,需要回答&quot;如果没做促销,需求应该是多少&quot;——避免把自然增长功劳归到促销 - 数据要求:全品类销量历史 + 促销标记 + 商品图谱(同类竞品关系) - GCF 配置:节点=SKU,边=同品类竞品,干预=促销曝光,合成控制=未受促销的同类 - 业务价值:促销 ROI 计算精度提升 30-50%,避免</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-Prediction-Demand-UQ.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Conformal Prediction Demand UQ（需求预测不确定性量化）</h3>
+  <p class="sc-desc">供应链经理面临需求预测没把握——共形预测将库存缺口从18%降至6%，年化省20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-TS-Intervals.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Conformal TS Intervals（时序 Conformal 预测区间）</h3>
+  <p class="sc-desc">传统正态假设需求预测区间过宽（±25%），导致安全库存过度备货——Conformal 预测在无分布假设下输出紧致 90% 覆盖区间，减少过度备货成本 500 元/月/SKU</p>
+  <div class='sc-footer'><span class='sc-roi'>€1,850 × 12 × 35% = €7,770（约 6.2 万元人民币）</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Conformal-Time-Series-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Conformal Time Series Forecasting — 共形时序预测：有覆盖保证的需求预测区间</h3>
+  <p class="sc-desc">计划经理面临预测区间不可信——共形时序将超卖率降30%，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Contrastive-Time-Series-Cold-Start.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Contrastive Time Series Cold Start — 对比学习驱动的新品需求冷启动预测</h3>
+  <p class="sc-desc">母婴选品运营面临新品上市零历史销售数据——对比学习冷启动预测通过找5个最相似历史SKU迁移需求模式，新品首月备货误差从±65%降至±28%，避免缺货/压库损失年化30-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-Market-Transfer-Demand.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">跨市场需求迁移学习 — 用成熟市场数据加速新市场冷启动</h3>
+  <p class="sc-desc">出海运营面临&quot;德国日本新市场没有历史数据需求预测完全是盲猜&quot;——Domain Adaptation跨市场迁移将新市场冷启动误差降低45%，年化$3.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>3.6 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Cross-SKU-Demand-Correlation-Mining.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Cross-SKU Demand Correlation Mining — 跨 SKU 需求相关性挖掘组合补货优化</h3>
+  <p class="sc-desc">补货运营面临&quot;主机吸奶器卖出后配件SKU缺货率高达15%因为未感知到需求跟随关系&quot;——Granger因果挖掘将配件补货触发提前2周，缺货率从15%降至4%，年化节省20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Demand-Anomaly-Causal-Attribution.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Demand Anomaly Causal Attribution — 需求异常因果归因（销量突变根因诊断）</h3>
+  <p class="sc-desc">运营面临&quot;销量突降不知根因只能瞎猜导致错误应对延误止损&quot;——多假设并行因果检验5分钟内输出根因排序，年化减少诊断延迟损失15-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5分钟内完成根因诊断，快速止损，年化减少诊断延迟损失15-3</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Demand-Quantile-Forecast.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Demand Quantile Forecast — 需求分位数预测：备货决策的置信区间框架</h3>
+  <p class="sc-desc">供应链面临&quot;均值备货导致断货率8%或大量积压&quot;——分位数回归P50/P85/P95三级备货策略将缺货率降至3%，年化节省断货+积压损失20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Demand-Signal-Nowcasting.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Demand Signal Nowcasting — 用搜索词/评论量实时修正需求预测</h3>
+  <p class="sc-desc">运营面临&quot;TikTok视频病毒传播后6小时搜索量暴涨但销量数据延迟3天已经缺货&quot;——领先信号Nowcasting提前3天响应，避免缺货损失10-15万元/次</p>
+  <div class='sc-footer'><span class='sc-roi'>500 万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-EventCast-LLM-Event-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">EventCast — LLM 事件感知需求预测：大促/节假日场景 MAE-57%</h3>
+  <p class="sc-desc">某母婴品牌618大促备货奶粉 SKU（如 A2 奶粉 900g），需提前 7 天向供应商下 PO</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Forecast-Driven-Inventory.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Forecast-Driven Inventory（预测驱动库存优化）</h3>
+  <p class="sc-desc">吸奶器月需求预测 1200±200，提前期 30 天，缺货成本 $25/件，持有成本 $3/件</p>
+  <div class='sc-footer'><span class='sc-roi'>8-12 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-GP-New-Product-Demand.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">GP New Product Demand — 高斯过程新品冷启动需求预测</h3>
+  <p class="sc-desc">供应链面临&quot;新品冷启动期&lt;50个数据点预测精度极差&quot;——高斯过程回归在小样本下给出带置信区间的预测，首批备货准确率从±40%提升至±20%，年化节省15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Hierarchical-Demand-Forecasting-Reconciliation.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">HiFoReAd 多层时序预测调和 - 母婴跨境补货分层一致性</h3>
+  <p class="sc-desc">Momcozy 60+ SKU × 多仓(上海/香港/海外仓) × 多市场(US/DE/JP),各层独立预测加总 30-50% 不一致;采购按 SKU 下单,但财务按市场聚合,两边数字对不上,月底对账 2-3 PM 天纯人工调和 - 数据要求:历史 SKU/仓/市场 三层销售时序 + 加总矩阵 S - HiFoReAd 配置: - Stage 1: LGBM + AutoETS 三月预测</p>
+  <div class='sc-footer'><span class='sc-roi'>800-1500 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Holiday-Spike-Demand-Decomposition.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Holiday Spike Demand Decomposition — 节假日需求峰值分解（Prime Day/黑五）</h3>
+  <p class="sc-desc">采购面临&quot;Prime Day后连续3年过度备货因为把节日峰值误算入年度增长趋势&quot;——节日脉冲分解剥离真实增长率从35%修正为18%，年化降低FBA长库龄费用15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Intelligent-Prediction-Doubly-Robust.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">智能预测 - 双重稳健估计 (Doubly Robust Estimation)</h3>
+  <p class="sc-desc">我们计划在北美市场投放吸奶器季节性促销活动（如母亲节、黑五）</p>
+  <div class='sc-footer'><span class='sc-roi'>30-50 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Intermittent-Demand-Croston-TSB.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Intermittent Demand Croston TSB — 母婴长尾 SKU 间歇需求预测</h3>
+  <p class="sc-desc">运营面临&quot;400个配件SKU中70%月均销量不足5件传统补货公式导致长期缺货或积压&quot;——TSB间歇需求预测将长尾SKU库存周转天数从180天压缩至90天，年化释放库存资金20-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-30 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Kalman-Filter-Demand-Tracking.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Kalman Filter 需求状态追踪 — 在噪声销售数据中实时追踪真实需求</h3>
+  <p class="sc-desc">需求预测工程师面临&quot;销售数据噪声太大传统移动平均无法识别真实需求趋势&quot;——火箭制导Kalman Filter迁移将需求信号提取精准度提升4.2倍，预测误差降低48%，年化$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>1500万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Lead-Time-Demand-Integration-Model.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Lead Time Demand Integration Model — 前置期×需求联合分布建模缺货概率量化</h3>
+  <p class="sc-desc">跨境备货运营面临&quot;前置期28-55天波动大用固定45天安全库存缺货率高达8%&quot;——联合分布蒙特卡洛建模将缺货率从8%降至2.5%，年化减少缺货损失30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-MTL-Cold-Start-SKU-Demand.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">MTL 冷启动 SKU 需求预测 — 共享编码器加速新品上线</h3>
+  <p class="sc-desc">需求预测工程师面临&quot;新SKU上市前2-4周需求预测误差高达±80%备货全靠赌&quot;——Multi-task Learning共享同类SKU需求模式将冷启动预测误差降至±25%，年化减少过备货损失$4.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>4.2 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Horizon-Forecast-Reconciliation.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Multi-Horizon Forecast Reconciliation — 多时间粒度预测协调（日/周/月一致性）</h3>
+  <p class="sc-desc">计划团队面临&quot;日度补货计划与月度产能计划相互矛盾导致决策混乱&quot;——多粒度预测协调消除计划矛盾，年化减少库存误差损失10-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>消除计划矛盾，年化减少因计划不一致导致的库存误差损失10-2</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Step-Ahead-Forecast-Calibration.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Multi-Step-Ahead Forecast Calibration — 多步预测校准滚动修正减少累积偏差</h3>
+  <p class="sc-desc">供应链团队面临&quot;大促前8周预测系统性低估18%导致每次缺货但不知道修正方法&quot;——分步偏差滚动校正将大促缺货率从12%降至3%，年化减少缺货损失40-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40-60 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multivariate-Cointegration.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Multivariate Cointegration（多变量协整 VECM）</h3>
+  <p class="sc-desc">吸奶器与法兰配件分别独立预测备货，导致主机有货但配件经常断货——多变量协整建模发现两者长期均衡关系，实现联动补货，配件断货率降低 40%</p>
+  <div class='sc-footer'><span class='sc-roi'>60 倍/年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Price-Elasticity-Time-Series-Fusion.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Price Elasticity Time Series Fusion — 价格弹性×时间序列融合预测</h3>
+  <p class="sc-desc">运营面临&quot;黑五计划降价25%需要预测销量确定备货量但纯时序模型不感知价格变化&quot;——价格弹性融合时序将大促备货准确率提升40%，年化减少缺货损失25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>25 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Promotional-Lift-Decomposition.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Promotional Lift Decomposition — 促销提升分解剥离促销带来的虚假需求</h3>
+  <p class="sc-desc">采购面临&quot;Prime Day销量达平时6倍上调Q3全季备货40%但促销后出现需求洼地导致大量滞销&quot;——促销Forward Buy分解将真实净提升从500%修正为150%，年化节省FBA处置成本20-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-30 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Prophet-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Prophet Forecasting with Seasonality and Holidays</h3>
+  <p class="sc-desc">备货经理面临促销销量难预测——Prophet将MAPE从22%降到13%，年化省17万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Return-Rate-Forecasting-Model.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Return Rate Forecasting Model — 退货率时序预测节后退货浪潮提前量化</h3>
+  <p class="sc-desc">仓储运营面临&quot;黑五后退货浪潮使FBA账面库存虚高触发不必要的补货订单&quot;——退货率时序预测提前量化节后退货浪潮，年化降低FBA存储费用10-15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-15 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SSM-Realtime-Signal-Tracking.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">SSM Realtime Signal Tracking — 状态空间模型实时信号追踪</h3>
+  <p class="sc-desc">广告优化面临&quot;5分钟批量出价错过竞价高峰段&quot;——卡尔曼滤波&lt;1ms实时追踪竞争强度，动态调价使综合ACoS从18%降至15.5%，年化节省14-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>14-20 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-STL-Seasonal-Decomposition.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">STL Seasonal Decomposition — STL 季节性分解：时间序列趋势×季节×残差三层分离</h3>
+  <p class="sc-desc">16个时序Skill居然没有STL季节性分解导致备货计划无法量化圣诞季高多少——STL将时序分解为趋势×季节×残差三层，季节性指数精确量化后备货误差降低30%异常检测误报率降低60%年化减少备货失误10-30万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥10-30 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Sales-Velocity-Momentum-Detection.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Sales Velocity Momentum Detection — BSR 销量加速度检测识别爆品起飞信号</h3>
+  <p class="sc-desc">竞品监控人员面临&quot;爆品销量已翻倍才发现反应已经来不及&quot;——三层动量信号检测在爆品真正起飞前7-14天发出预警，广告防御响应窗口扩大保护年化GMV 50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Seasonal-Pattern-Transfer-Learning.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">旺季模式迁移学习 — 新品首次黑五从老品学习放大系数</h3>
+  <p class="sc-desc">新品负责人面临&quot;新品首次面对黑五完全没有旺季历史不知道该备多少货&quot;——旺季模式迁移从同类老品将首次旺季备货误差降低60%，年化避损$6.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>6.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Streaming-Data-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Streaming Data Forecasting — 流式采集数据驱动的实时需求预测：采集→特征→预测端到端</h3>
+  <p class="sc-desc">运营经理面临实时数据来不及算——流式预测将响应延迟从30分降到2分，年化省12万元</p>
+  <div class='sc-footer'><span class='sc-roi'>60 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Temporal-Fusion-Transformer.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">&#x27;Skill: Temporal Fusion Transformer (TFT) 多水平时序预测&#x27;</h3>
+  <p class="sc-desc">业务问题：预测数百个 SKU 未来 7-30 天销量，考虑节假日、促销和季节性</p>
+  <div class='sc-footer'><span class='sc-roi'>180-320 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Temporal-Fusion-Transformer-Inventory.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Temporal Fusion Transformer Inventory — TFT 多变量时序库存补货决策</h3>
+  <p class="sc-desc">供应链团队面临&quot;8周预测锁单需融合广告计划/竞品价格/节假日多信号但单变量模型误差高达28%&quot;——TFT多变量时序融合将8周预测MAPE从28%降至12%，年化降低库存成本35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>35 万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Time-Series-Anomaly-Detection.html" data-domain="03-时间序列" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Time Series Anomaly Detection for E-Commerce Monitoring</h3>
+  <p class="sc-desc">风控专员面临销量异常发现太晚——时序异常检测将漏报率从20%降到4%，年化省13万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50%</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Time-Series-Forecasting.html" data-domain="03-时间序列" data-diff="">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Skill Card: 时间序列预测 (Time Series Forecasting)</h3>
+  <p class="sc-desc">计划主管面临销量波动难排产——时序预测将缺货率降25%，年化省24万元</p>
+  <div class='sc-footer'><span class='sc-roi'>120-150万元</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Time-Series-Foundation-Model.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">Time Series Foundation Model — 时序基础模型：零样本跨品类需求预测</h3>
+  <p class="sc-desc">新品上架仅2周只有14天销量数据无法训练需求预测模型——时序基础模型Chronos零样本直接预测新品未来需求给出P10/P50/P90备货方案，新品冷启动预测误差从±60%降至±25%年化减少备货失误20-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-60 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Time-Series-Foundation-Model-Zero-Shot.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">时序基础模型零样本预测 — 无需训练的跨域需求预测</h3>
+  <p class="sc-desc">新品运营面临&quot;仅45天历史数据需求预测MAPE高达38%备货失误严重&quot;——零样本时序基础模型无需训练直接预测新品需求，MAPE降至23%，年化节省首批积压约180万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-TimeCMA-LLM-Forecasting.html" data-domain="03-时间序列" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">03-时间序列</div>
+  <h3 class="sc-title">TimeCMA - LLM-Empowered Multivariate Time Series Forecasting via Cross-Modality Alignment</h3>
+  <p class="sc-desc">业务分析师面临节假日波动难解释——TimeCMA将预测误差降18%，年化省11万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5,000 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

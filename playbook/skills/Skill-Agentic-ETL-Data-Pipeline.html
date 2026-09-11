@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Agentic ETL数据管道 — LLM驱动的自动化数据清洗与转换 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/09-dataagent-llm.html">09-DataAgent-LLM</a> / Skill-Agentic-ETL-Data-Pipeline</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">09-DataAgent-LLM</div>
+  <h1 class="skill-main-title">Agentic ETL数据管道 — LLM驱动的自动化数据清洗与转换</h1>
+  <p class="skill-skill-id">Skill-Agentic-ETL-Data-Pipeline</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>multi_agent</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>LLM数据分析</span><span class='tag'>AI伦理与治理</span><span class='tag'>逆向物流与退货</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AB 视频电商全链路</span><span class='tag'>WF-AF MAS运营财务智能化</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>52万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 93分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（58%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 131.0, 58.0, 87.3, 87.0, 88.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 13.1, 8.7, 13.1, 8.7, 4.4];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据分析师 / 运营负责人<span class='biz-ctx-secondary'> · CEO · 供应链负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API · Shopify · TikTok Ads API · 多平台数据整合</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>数据需求太多，数据团队排期 2 周；非技术人员（采购/客服/运营）有数据问题但不会 SQL；重复报表占用大量时间</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>业务方用自然语言自助查数据，常规报表自动化，数据驱动决策响应速度从「天」变「分钟」</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>数据需求排期太长</span><span class='biz-pain-tag'>不会 SQL 只能等数据团队</span><span class='biz-pain-tag'>老板临时要数据没法马上出</span><span class='biz-pain-tag'>分析师时间都花在取数上</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>分析师面临&quot;Amazon和TikTok数据格式不同每次手动对账需2小时&quot;——LLM驱动的语义ETL自动Schema推断和跨源JOIN，对账时间从2小时压缩到5分钟，年化节省约52万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统ETL（ExtractTransformLoad）管道面临母婴电商的特殊挑战：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：多平台数据自动融合（Amazon+TikTok Shop） - 业务问题：Amazon SP-API返回的ASIN格式为&quot;B07XXXXX&quot;，TikTok Shop返回的商品ID为&quot;TIKX-XXXXX&quot;，两者需要按SKU名称模糊匹配融合为统一报表。传统方案需要工程师写mapping表维护，每次上新品都要手动更新 - 数据要求：Amazon销售报告（CSV）+ TikTok广告报告（JSON）+ 商品主数据表（Excel） - 预期产出：LLM自动推断三个数据源的JOIN键（Amazon: ASIN→SKU名，TikTok: 商品ID→SKU名），语义匹配后生成统一多平台销售报表，数据</p><p>三轨对抗验证： 1. 成本验证：每次Schema理解约500 tokens（0.005元），每次大规模转换约2000 tokens（0.02元），日均使用10次=0.25元/天，全年&lt;100元 2. 合规验证：用LLM处理业务数据需注意数据最小化（不发送用户PII给API）；亚马逊数据需在API条款允许的范围内使用；建议本地部署LLM（Ollama/Qwen）处理敏感数据 3. 风险验证：LLM生成的Python代码可能有BUG（逻辑错误而非语法错误）；必须有人工&quot;代码审查&quot;步骤，对于财务数据处理尤其重要；建议LLM生成代码后先在小样本上运行验证</p><p>场景B：运营数据临时清洗（自助分析） - 业务问题：运营需要对比两个季度的退货率，但数据格式不同（一个是百分比&quot;8.2%&quot;，另一个是小数&quot;0.082&quot;） - 方案：用Agentic ETL自动识别格式差异并统一，运营用自然语言描述即可完成 - 业务价值：运营自助处理数据清洗需求，减少工程团队约30%的数据支持请求</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：数据对账时间从手工2小时/次 → 自动5分钟，每周3次对账，年化节省约260小时 = 52万元（按200元/小时）；临时分析需求响应时间从2天→30分钟，运营决策速度提升显著；LLM API成本&lt;100元/年</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（核心架构1周可搭建；LLM代码生成准确率约85%，需人工审查机制；主要挑战在异常处理和边界情况覆盖）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（每个有多平台数据的团队的痛点，ROI极高）</li><li><strong>评估依据</strong>：VLDB 2024 LOTUS论文验证语义查询在数据分析任务上比传统SQL准确率高30%；arXiv:2501.12823展示Agentic ETL在BI场景的端到端应用；Snowflake/Databricks均在推进AI-Native ETL产品</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Skill-Agentic-ETL-Data-Pipeline
+Agentic ETL — LLM驱动的自动数据清洗与融合
+
+依赖：pip install numpy pandas
+注意：生产环境接入 DeepSeek/OpenAI API 进行Schema理解和语义转换
+&quot;&quot;&quot;
+
+import re
+import json
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+from typing import Any, Optional
+
+np.random.seed(42)
+
+# ── 1. 模拟多源数据（Amazon + TikTok Shop）─────────────────────────
+amazon_data = pd.DataFrame({
+    &#x27;ASIN&#x27;:         [&#x27;B07ABC123&#x27;, &#x27;B07DEF456&#x27;, &#x27;B07GHI789&#x27;, &#x27;B07JKL012&#x27;, &#x27;B07MNO345&#x27;],
+    &#x27;Product_Name&#x27;: [&#x27;婴儿推车轻便折叠款&#x27;, &#x27;吸奶器电动静音&#x27;, &#x27;婴儿床围栏防摔&#x27;, &#x27;0段奶粉900g&#x27;, &#x27;婴儿洗发沐浴露&#x27;],
+    &#x27;Units_Sold&#x27;:   [245, 189, 312, 567, 143],
+    &#x27;Revenue_USD&#x27;:  [12250.5, 9450.0, 7800.0, 22680.0, 4290.0],
+    &#x27;Return_Rate&#x27;:  [&#x27;4.1%&#x27;, &#x27;2.8%&#x27;, &#x27;5.2%&#x27;, &#x27;0.9%&#x27;, &#x27;3.7%&#x27;],  # 格式不一致！
+})
+
+tiktok_data = pd.DataFrame({
+    &#x27;item_id&#x27;:     [&#x27;TK-001-STROLLER&#x27;, &#x27;TK-002-PUMP&#x27;, &#x27;TK-003-FENCE&#x27;, &#x27;TK-004-FORMULA&#x27;, &#x27;TK-005-WASH&#x27;],
+    &#x27;title&#x27;:       [&#x27;Lightweight Baby Stroller&#x27;, &#x27;Electric Breast Pump Quiet&#x27;, &#x27;Baby Crib Rail Guard&#x27;,
+                    &#x27;Formula Stage 0&#x27;, &#x27;Baby Shampoo 2-in-1&#x27;],
+    &#x27;clicks&#x27;:      [3420, 2150, 4100, 8900, 1870],
+    &#x27;ad_spend&#x27;:    [850.5, 650.0, 920.0, 2100.0, 410.0],
+    &#x27;roas&#x27;:        [0.082, 0.091, 0.065, 0.078, 0.089],  # 小数格式（vs Amazon的百分比）
+})
+
+print(&quot;Amazon数据：&quot;)
+print(amazon_data.to_string(index=False))
+print(&quot;\nTikTok数据：&quot;)
+print(tiktok_data.to_string(index=False))
+
+# ── 2. Schema推断器（模拟LLM的Schema理解）───────────────────────────
+class AgenticSchemaInferrer:
+    &quot;&quot;&quot;
+    模拟LLM的Schema推断能力
+    生产环境：调用LLM API分析数据样本，输出字段映射和类型推断
+    &quot;&quot;&quot;
+
+    def infer_field_type(self, series: pd.Series) -&gt; str:
+        &quot;&quot;&quot;推断字段的语义类型&quot;&quot;&quot;
+        sample = series.dropna().head(5).astype(str).tolist()
+        # 检测百分比格式
+        if all(re.match(r&#x27;^\d+\.?\d*%$&#x27;, str(v)) for v in sample[:3]):
+            return &#x27;percentage_string&#x27;
+        # 检测小数率（0-1范围）
+        try:
+            nums = [float(v) for v in sample]
+            if all(0 &lt;= n &lt;= 1 for n in nums):
+                return &#x27;decimal_rate&#x27;
+        except:
+            pass</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2407.11418</li><li>2501.12823</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Agentic-ETL-Data-Pipeline" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Amazon-SP-API-Data-Pipeline.html'>Skill-Amazon-SP-API-Data-Pipeline</a></li><li><a href='../skills/Skill-Data-Collection-Agent-Pipeline.html'>Skill-Data-Collection-Agent-Pipeline</a></li><li><a href='../skills/Skill-Data-Provenance-Lineage.html'>Skill-Data-Provenance-Lineage</a></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-LLM-Code-Generation-Data-Pipeline.html'>Skill-LLM-Code-Generation-Data-Pipeline</a></li><li><a href='../skills/Skill-LLM-Hallucination-Detection-BI.html'>Skill-LLM-Hallucination-Detection-BI</a></li><li><a href='../skills/Skill-NL2Dashboard-Automation.html'>Skill-NL2Dashboard-Automation</a></li><li><a href='../skills/Skill-SQL-Agent-Text-to-SQL.html'>Skill-SQL-Agent-Text-to-SQL</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Amazon-SP-API-Data-Pipeline.html'>Skill-Amazon-SP-API-Data-Pipeline</a></li><li><a href='../skills/Skill-Data-Provenance-Lineage.html'>Skill-Data-Provenance-Lineage</a></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-LLM-Code-Generation-Data-Pipeline.html'>Skill-LLM-Code-Generation-Data-Pipeline</a></li><li><a href='../skills/Skill-LLM-Hallucination-Detection-BI.html'>Skill-LLM-Hallucination-Detection-BI</a></li><li><a href='../skills/Skill-NL2Dashboard-Automation.html'>Skill-NL2Dashboard-Automation</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Amazon-SP-API-Data-Pipeline.html'>Skill-Amazon-SP-API-Data-Pipeline</a></li><li><a href='../skills/Skill-Ecommerce-Data-Quality-Assessment.html'>Skill-Ecommerce-Data-Quality-Assessment</a></li><li><a href='../skills/Skill-LLM-Code-Generation-Data-Pipeline.html'>Skill-LLM-Code-Generation-Data-Pipeline</a></li><li><a href='../skills/Skill-LLM-Hallucination-Detection-BI.html'>Skill-LLM-Hallucination-Detection-BI</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Agentic-ETL-Data-Pipeline',skill_domain:'09-DataAgent-LLM'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Agentic-ETL-Data-Pipeline',skill_domain:'09-DataAgent-LLM',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 增长DataAgent诊断师</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WF-AD 标签驱动精准实验设计 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../workflows/index.html">工作流</a> / WF-AD 标签驱动精准实验设计</nav>
+<h1>WF-AD 标签驱动精准实验设计</h1>
+<p class="lead">从用户标签体系出发，设计分层A/B实验、评估处理效应异质性、消除选择偏差的完整实验科学工作流。</p>
+<div class="wf-meta">
+  <div><strong>适用角色</strong><span class='tag'>增长运营</span><span class='tag'>数据分析师</span><span class='tag'>产品经理</span><span class='tag'>用户研究团队</span></div>
+  <div class="wf-entry-question"><strong>入口问题：</strong>你的A/B实验当前最大问题是：效果检测太慢？标签群体间效果差异无法量化？还是实验结论在不同用户群不一致？</div>
+</div>
+
+<div class="wf-tree">
+  <div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">标签分层实验设计</div>
+  <div class="wf-question">实验是否考虑了用户标签的分层随机分配？</div>
+  <div class="wf-context">不分层的随机实验可能让高活跃用户恰好集中在处理组，导致效果被高估7pp，浪费预算</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Tag-AB-Experiment-Design.html"><span class="chip-name">标签-AB实验设计 — 基于用户标签的精准实验分层与分析</span><span class="chip-role">标签分层A/B实验，消除选择偏差并发现新生儿段+20%效果的精准投放人群</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-CUPED-Variance-Reduction.html"><span class="chip-name">Skill Card: CUPED 方差缩减法——母婴跨境电商 A/B 实验加速器</span><span class="chip-role">CUPED协变量调整，利用用户历史标签降低30-50%实验方差，减少实验周期</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Power-Analysis-Sample-Size.html"><span class="chip-name">Power Analysis and Sample Size Calculation for A/B Testing</span><span class="chip-role">功效分析，根据标签分布精确计算最小样本量</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">实验中的溢出效应检测</div>
+  <div class="wf-question">推荐系统/社交功能实验是否存在用户间的相互干扰？</div>
+  <div class="wf-context">推荐算法A/B的对照组受处理组影响（共享库存/口碑传播），导致效果被低估2-3pp</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Interference-Spillover-Correction.html"><span class="chip-name">实验溢出效应纠正 — 网络干扰下A/B实验的因果偏差修正</span><span class="chip-role">溢出效应纠正，检测并修正网络干扰，精确估计真实ATE</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Network-Effect-Experiments.html"><span class="chip-name">Network Effect Experiments（网络效应实验）</span><span class="chip-role">网络效应实验设计，用集群随机化隔离社交溢出</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">异质处理效应分析</div>
+  <div class="wf-question">实验整体效果可以，但不同用户群的效果差异是否被深入分析？</div>
+  <div class="wf-context">平均效果+3%的背后，高月龄用户可能-2%、低月龄用户+12%，统一策略是次优的</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Heterogeneous-Treatment-Effect-XLearner.html"><span class="chip-name">X-Learner异质处理效应 — 识别不同用户群的差异化因果效应</span><span class="chip-role">X-Learner异质效应，识别高效果标签人群优先投放，节省40%预算同时维持效果</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Multi-Metric-Experiment-Tradeoff.html"><span class="chip-name">多指标实验权衡决策 — OEC与帕累托最优实验评估</span><span class="chip-role">多指标实验权衡，各标签组在GMV/复购/NPS上的综合表现</span></a>
+  </div>
+</div><div class="wf-step" style="--depth:0">
+  <div class="wf-step-name">地理区域实验（无法用户分流时）</div>
+  <div class="wf-question">平台不允许用户分流或存在市场均衡效应时如何评估策略效果？</div>
+  <div class="wf-context">亚马逊广告/SEO策略、线下推广无法做用户级A/B，需要地理区域实验</div>
+  <div class="wf-branch-skills">
+    <a class="wf-skill-chip" href="../skills/Skill-Geo-Holdout-Experiment.html"><span class="chip-name">Geo Holdout实验 — 地理区域控制实验消除网络效应偏差</span><span class="chip-role">Geo地理控制实验，揭示平台归因虚高12pp，年化广告预算优化100万元</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Augmented-Synthetic-Control-ML.html"><span class="chip-name">Augmented Synthetic Control — 机器学习增强的合成控制法</span><span class="chip-role">ASCM合成控制，小规模市场测试的效果外推到全市场</span></a>
+    <a class="wf-skill-chip" href="../skills/Skill-Bayesian-AB-Testing.html"><span class="chip-name">贝叶斯A/B实验 — 小样本快速决策的概率推断框架</span><span class="chip-role">贝叶斯实验，小流量快速决策，测试周期从12天→3天</span></a>
+  </div>
+</div>
+</div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

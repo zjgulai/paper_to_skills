@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Phantom — Product Showcase I2V（商品主体一致性视频生成） · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/20-ai视频生成.html">20-AI视频生成</a> / Skill-Phantom-Product-Showcase-I2V</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">20-AI视频生成</div>
+  <h1 class="skill-main-title">Phantom — Product Showcase I2V（商品主体一致性视频生成）</h1>
+  <p class="skill-skill-id">Skill-Phantom-Product-Showcase-I2V</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>供应链与补货</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>搜索流量与SEO</span><span class='tag'>AI伦理与治理</span><span class='tag'>逆向物流与退货</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>WF-A 智能补货</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AB 视频电商全链路</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-content-factory.html'>AI 内容工厂手册</a><a class='hb-uplink' href='../playbooks/pb-tiktok-shop.html'>TikTok Shop 运营决策手册</a></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>50 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 78分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（40%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 90.0, 40.0, 60.0, 60.0, 60.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 9.0, 6.0, 9.0, 6.0, 3.0];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>内容运营 / 品牌负责人<span class='biz-ctx-secondary'> · 社媒运营 · CMO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>TikTok Shop LIVE · Instagram Reels · 多语言虚拟主播（英/西/阿/日）</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>TikTok/Reels 需要大量视频，拍摄成本高周期长产能跟不上；想做直播带货但真人主播成本高语言是障碍</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>视频内容产能提升 5-10 倍，单条视频成本降低 80%，多语言市场内容本地化快速覆盖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>视频内容来不及做</span><span class='biz-pain-tag'>拍视频成本太高</span><span class='biz-pain-tag'>主播太贵或不稳定</span><span class='biz-pain-tag'>多语言内容没有人拍</span><span class='biz-pain-tag'>TikTok 更新频率要求太高</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>商品运营面临静图卖点展示弱——I2V将详情页停留时长从45秒提到72秒，年化增收20万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>输入 13 张商品参考图，生成商品保持外观一致性的动态展示视频——商品 Logo、纹理、颜色在视频全程不畸变。这解决了通用 I2V 模型的致命伤：生成视频时商品外观逐渐漂移（&quot;copypaste&quot;信息泄露问题）。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>业务问题： 某母婴品牌在 Amazon 美国站销售「智能恒温暖奶器」，库存 2000 件，日销 50 件，转化率 4.5%。Amazon 允许在主图位上传视频，有视频的 listing 转化率比纯图片高 20-30%。但该品类有 12 个 SKU（不同颜色/容量/电压版本），找专业视频拍摄成本 $800/SKU，且拍摄周期 2 周，无法覆盖所有变体。</p><p>数据要求： - 商品白底主图 1 张（Amazon 主图规格：2000×2000px 白底，暖奶器正面展示） - 可选：2-3 张多角度图（侧面/背面/配件特写）提升多视角效果 - 文本描述：&quot;smooth 360 rotation of baby bottle warmer on white background, studio lighting, stainless steel texture visible&quot;</p><p>预期产出： - 5 秒产品旋转展示视频，暖奶器的不锈钢机身、LED 显示屏、Logo 全程不失真 - 批量化：12 SKU × 5 秒 = 60 秒视频内容，总 GPU 成本约 $0.60（1.3B 模型） - 支持多角度输入时自动生成平滑视角切换，展示暖奶器从正面到侧面的完整轮廓</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>转化率提升：视频覆盖率 10%→90% → CVR +20-25% → 月 GMV $50 万 → 月增 $10-15 万</li><li>拍摄成本节省：50 SKU × $500 = $25,000 一次性</li><li>年化总 ROI：<strong>150-250 万元</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（3 星）— Phantom 1.3B 仅需 8GB VRAM，Apache 2.0 可商用</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐（5 星）— 直接提升 listing 转化率，是所有 SKU 的通用能力</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/visual_content/phantom_product_showcase_i2v</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Phantom — Product Showcase I2V Pipeline
+基于 Phantom (arXiv:2502.11079) 的推理封装
+
+依赖: pip install diffusers transformers accelerate
+模型: HuggingFace Phantom-Wan-1.3B / Phantom-Wan-14B (Apache 2.0)
+&quot;&quot;&quot;
+
+import torch
+import numpy as np
+from PIL import Image
+from typing import List, Dict, Optional
+from dataclasses import dataclass, field
+
+
+@dataclass
+class ShowcaseConfig:
+    &quot;&quot;&quot;商品展示视频配置&quot;&quot;&quot;
+    product_images: List[str]         # 商品参考图（1-3 张）
+    output_duration_sec: int = 5      # 视频时长
+    fps: int = 16                     # 帧率
+    motion_prompt: str = &quot;&quot;           # 动作描述
+    guidance_scale: float = 5.0       # Phantom 推荐 5.0
+    model_size: str = &quot;1.3B&quot;          # &quot;1.3B&quot; or &quot;14B&quot;
+
+
+class PhantomProductShowcase:
+    &quot;&quot;&quot;
+    Phantom 商品展示视频生成管线
+    
+    模型加载（首次运行自动下载）:
+    from diffusers import PhantomPipeline
+    pipe = PhantomPipeline.from_pretrained(&quot;Phantom-video/Phantom-Wan-1.3B&quot;)
+    &quot;&quot;&quot;
+    
+    SUPPORTED_SIZES = {
+        &quot;1.3B&quot;: {&quot;vram&quot;: &quot;8GB&quot;, &quot;model_id&quot;: &quot;Phantom-video/Phantom-Wan-1.3B&quot;},
+        &quot;14B&quot;: {&quot;vram&quot;: &quot;24GB&quot;, &quot;model_id&quot;: &quot;Phantom-video/Phantom-Wan-14B&quot;},
+    }
+    
+    def __init__(self, model_size: str = &quot;1.3B&quot;):
+        if model_size not in self.SUPPORTED_SIZES:
+            raise ValueError(f&quot;Unsupported size: {model_size}&quot;)
+        self.model_size = model_size
+        self.model_id = self.SUPPORTED_SIZES[model_size][&quot;model_id&quot;]
+        self.device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;
+    
+    def generate_showcase(
+        self,
+        config: ShowcaseConfig,
+        num_inference_steps: int = 50,
+    ) -&gt; Dict:
+        &quot;&quot;&quot;
+        生成商品展示视频
+        
+        Args:
+            config: 展示配置
+            num_inference_steps: 去噪步数
+        
+        Returns:</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2502.11079</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Phantom-Product-Showcase-I2V" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-AnchorCrafter-Virtual-Anchor-Demo.html'>Skill-AnchorCrafter-Virtual-Anchor-Demo</a></li><li><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html'>Skill-Aquarius-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Brand-Video-Generation.html'>Skill-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-DAWN-Talking-Head-Review.html'>Skill-DAWN-Talking-Head-Review</a></li><li><a href='../skills/Skill-E-Commerce-Video-Benchmark.html'>Skill-E-Commerce-Video-Benchmark</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Product-Demo-Video-Auto-Edit.html'>Skill-Product-Demo-Video-Auto-Edit</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Short-Video-Thumbnail-CTR-Predictor.html'>Skill-Short-Video-Thumbnail-CTR-Predictor</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html'>Skill-Aquarius-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Brand-Video-Generation.html'>Skill-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-DAWN-Talking-Head-Review.html'>Skill-DAWN-Talking-Head-Review</a></li><li><a href='../skills/Skill-E-Commerce-Video-Benchmark.html'>Skill-E-Commerce-Video-Benchmark</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Product-Demo-Video-Auto-Edit.html'>Skill-Product-Demo-Video-Auto-Edit</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Short-Video-Thumbnail-CTR-Predictor.html'>Skill-Short-Video-Thumbnail-CTR-Predictor</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Aquarius-Brand-Video-Generation.html'>Skill-Aquarius-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Category-Trend-Forecasting.html'>Skill-Category-Trend-Forecasting</a></li><li><a href='../skills/Skill-Competitor-Product-Intelligence.html'>Skill-Competitor-Product-Intelligence</a></li><li><a href='../skills/Skill-DAWN-Talking-Head-Review.html'>Skill-DAWN-Talking-Head-Review</a></li><li><a href='../skills/Skill-Listing-Quality-Scoring.html'>Skill-Listing-Quality-Scoring</a></li><li><a href='../skills/Skill-Product-Demo-Video-Auto-Edit.html'>Skill-Product-Demo-Video-Auto-Edit</a></li><li><a href='../skills/Skill-Product-Opportunity-Scoring.html'>Skill-Product-Opportunity-Scoring</a></li><li><a href='../skills/Skill-Short-Video-Thumbnail-CTR-Predictor.html'>Skill-Short-Video-Thumbnail-CTR-Predictor</a></li><li><a href='../skills/Skill-Text-to-Edit-Video-Ad.html'>Skill-Text-to-Edit-Video-Ad</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Phantom-Product-Showcase-I2V',skill_domain:'20-AI视频生成'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Phantom-Product-Showcase-I2V',skill_domain:'20-AI视频生成',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

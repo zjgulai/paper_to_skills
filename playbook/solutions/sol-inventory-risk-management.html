@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>库存风险量化 → 智能补货决策架构 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html" aria-current="page" class="active"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="index.html">方案库</a> / 库存风险量化 → 智能补货决策架构</nav>
+
+<div class="sd-hero">
+  <div class="sd-hero-icon" style="background:#ef444415;color:#ef4444;border:2px solid #ef444430">IR</div>
+  <div>
+    <div class="sd-hero-meta"><span class="sd-category">供应链 AI</span><span class="sd-updated">更新于 2026-06-21</span></div>
+    <h1>库存风险量化 → 智能补货决策架构</h1>
+    <p class="sd-subtitle">从CVaR金融风险度量到多SKU库存组合的最优决策系统</p>
+  </div>
+</div>
+
+<div class="sd-roi-banner">
+  <span>[↑]</span> 库存滞销率降低6-8%，极端断货损失降低40%，年化释放现金40-80万元
+</div>
+
+<p class="sd-summary">将金融风险管理的CVaR（期望损失）框架迁移到多SKU库存组合管理，量化「极端滞销场景」下的尾部风险。结合供应链网络的中介中心性分析识别瓶颈节点，构建从风险感知→安全库存动态调整→韧性补货决策的完整链路。</p>
+
+<div class="sd-grid-2">
+  <div class="sd-section">
+    <h2>4层架构设计</h2>
+    <p class="sd-sec-desc">从原始数据到自动执行决策的完整分层</p>
+    <div class="sd-layers">
+
+<div class="sd-layer">
+  <div class="sd-layer-no" style="background:#6366f115;color:#6366f1;border:1.5px solid #6366f130">L1</div>
+  <div class="sd-layer-body">
+    <strong>风险感知层</strong>
+    <span>多SKU历史需求数据 · 前置期分布建模 · 季节性分解</span>
+  </div>
+</div>
+<div class="sd-layer">
+  <div class="sd-layer-no" style="background:#8b5cf615;color:#8b5cf6;border:1.5px solid #8b5cf630">L2</div>
+  <div class="sd-layer-body">
+    <strong>CVaR量化层</strong>
+    <span>Monte Carlo需求模拟 · 组合CVaR计算 · 边际风险贡献</span>
+  </div>
+</div>
+<div class="sd-layer">
+  <div class="sd-layer-no" style="background:#0ea5e915;color:#0ea5e9;border:1.5px solid #0ea5e930">L3</div>
+  <div class="sd-layer-body">
+    <strong>网络韧性层</strong>
+    <span>供应链有向图 · 中介中心性 · 瓶颈节点识别 · 断供影响模拟</span>
+  </div>
+</div>
+<div class="sd-layer">
+  <div class="sd-layer-no" style="background:#06b6d415;color:#06b6d4;border:1.5px solid #06b6d430">L4</div>
+  <div class="sd-layer-body">
+    <strong>决策执行层</strong>
+    <span>安全库存动态公式 · P95触发补货 · 资金约束优化 · 执行回路</span>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <div class="sd-section">
+    <h2>分阶段实施路线图</h2>
+    <p class="sd-sec-desc">MVP（3个月）→ 智能化（12个月）</p>
+    <div class="sd-phases">
+
+<div class="sd-phase">
+  <div class="sd-phase-header" style="border-left:3px solid #64748b">
+    <span class="sd-phase-name" style="color:#64748b">Phase 1 风险基线</span>
+    <span class="sd-phase-dur">1-2周</span>
+  </div>
+  <div class="sd-phase-action">CVaR库存风险建模+多SKU相关性矩阵</div>
+  <div class="sd-phase-roi">量化尾部风险，告别直觉备货</div>
+</div>
+<div class="sd-phase">
+  <div class="sd-phase-header" style="border-left:3px solid #3b82f6">
+    <span class="sd-phase-name" style="color:#3b82f6">Phase 2 韧性诊断</span>
+    <span class="sd-phase-dur">2-4周</span>
+  </div>
+  <div class="sd-phase-action">供应链网络中介中心性+瓶颈识别</div>
+  <div class="sd-phase-roi">关键供应商断货预警提前30天</div>
+</div>
+<div class="sd-phase">
+  <div class="sd-phase-header" style="border-left:3px solid #8b5cf6">
+    <span class="sd-phase-name" style="color:#8b5cf6">Phase 3 动态决策</span>
+    <span class="sd-phase-dur">1-2月</span>
+  </div>
+  <div class="sd-phase-action">P95触发安全库存自动调整+补货执行</div>
+  <div class="sd-phase-roi">断货率降低25%</div>
+</div>
+<div class="sd-phase">
+  <div class="sd-phase-header" style="border-left:3px solid #059669">
+    <span class="sd-phase-name" style="color:#059669">Phase 4 闭环优化</span>
+    <span class="sd-phase-dur">持续</span>
+  </div>
+  <div class="sd-phase-action">大促CVaR压测+备货方案自动生成</div>
+  <div class="sd-phase-roi">大促备货准确率+15%</div>
+</div>
+    </div>
+  </div>
+</div>
+
+<div class="sd-section sd-full">
+  <h2>[!] 三大架构陷阱</h2>
+  <p class="sd-sec-desc">最容易被忽视、代价最大的设计决策错误</p>
+  <div class="sd-traps">
+
+<div class="sd-trap">
+  <span class="sd-trap-no">T1</span>
+  <div>
+    <strong>CVaR参数估计陷阱</strong>
+    <p>历史数据不足时（<24个月），CVaR会严重低估极端风险。必须用Bootstrap重采样+情景模拟扩增样本</p>
+  </div>
+</div>
+<div class="sd-trap">
+  <span class="sd-trap-no">T2</span>
+  <div>
+    <strong>相关性崩溃陷阱</strong>
+    <p>大促期间SKU相关性显著升高（全线爆单），平时的相关矩阵在大促时失效，需单独建大促情景模型</p>
+  </div>
+</div>
+<div class="sd-trap">
+  <span class="sd-trap-no">T3</span>
+  <div>
+    <strong>网络拓扑过时陷阱</strong>
+    <p>供应链网络中介中心性每季度重算一次，供应商变动后必须更新，否则韧性评估失真</p>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="sd-section sd-full">
+  <h2>核心 Skill 索引（10 个）</h2>
+  <p class="sd-sec-desc">本方案涉及的关键 Skills，点击查看详情</p>
+  <div class="sd-skills">
+<a class="sd-skill-chip" href="../skills/Skill-CVaR-Inventory-Risk-Portfolio.html">CVaR Inventory Risk Portfolio</a><a class="sd-skill-chip" href="../skills/Skill-Supply-Chain-Network-Betweenness-Resilience.html">Supply Chain Network Betweenness Res</a><a class="sd-skill-chip" href="../skills/Skill-Lead-Time-Safety-Stock-Auto-Adjuster.html">Lead Time Safety Stock Auto Adjuster</a><a class="sd-skill-chip" href="../skills/Skill-Lead-Time-Distribution-Risk-GenQOT.html">Lead Time Distribution Risk GenQOT</a><a class="sd-skill-chip" href="../skills/Skill-Multi-Echelon-Inventory.html">Multi Echelon Inventory</a><a class="sd-skill-chip" href="../skills/Skill-Safety-Stock-Replenishment.html">Safety Stock Replenishment</a><a class="sd-skill-chip" href="../skills/Skill-Demand-Forecasting-Supply-Chain.html">Demand Forecasting Supply Chain</a><a class="sd-skill-chip" href="../skills/Skill-Conformal-Prediction-Demand-UQ.html">Conformal Prediction Demand UQ</a><a class="sd-skill-chip" href="../skills/Skill-Markdown-Clearance-Auto-Trigger.html">Markdown Clearance Auto Trigger</a><a class="sd-skill-chip" href="../skills/Skill-MAS-Multi-Warehouse-Replenishment-Consensus.html">MAS Multi Warehouse Replenishment Co</a>
+  </div>
+  <div style="margin-top:12px">
+    <a href="../skills/index.html" style="font-size:13px;color:var(--accent,#3b82f6);text-decoration:none">查看全部 1338 个 Skills →</a>
+  </div>
+</div>
+
+<style>
+.sd-hero{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.sd-hero-icon{width:48px;height:48px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.sd-hero-meta{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+.sd-category{font-size:10.5px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 7px;border-radius:var(--r-xs);text-transform:uppercase;letter-spacing:.04em}
+.sd-updated{font-size:11px;color:var(--muted)}
+.sd-hero h1{font-size:20px;font-weight:800;margin:0 0 3px;color:var(--ink);letter-spacing:-.03em}
+.sd-subtitle{font-size:13px;color:var(--muted);margin:0}
+.sd-roi-banner{background:var(--green-bg);border:1px solid rgba(20,83,45,.12);border-radius:var(--r-md);padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--green-dark);display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.sd-summary{font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:20px}
+.sd-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:768px){.sd-grid-2{grid-template-columns:1fr}}
+.sd-section{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
+.sd-section h2{font-size:15px;font-weight:700;margin:0 0 3px;color:var(--ink);letter-spacing:-.02em}
+.sd-sec-desc{font-size:11.5px;color:var(--muted);margin:0 0 12px}
+.sd-full{margin-top:0}
+.sd-layers{display:flex;flex-direction:column;gap:8px}
+.sd-layer{display:flex;align-items:center;gap:10px}
+.sd-layer-no{width:32px;height:32px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.sd-layer-body{display:flex;flex-direction:column;gap:1px}
+.sd-layer-body strong{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.sd-layer-body span{font-size:11.5px;color:var(--muted);line-height:1.4}
+.sd-phases{display:flex;flex-direction:column;gap:8px}
+.sd-phase{padding:10px 12px;background:var(--panel-2);border-radius:var(--r-md)}
+.sd-phase-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.sd-phase-name{font-size:12.5px;font-weight:700}
+.sd-phase-dur{font-size:10.5px;color:var(--muted)}
+.sd-phase-action{font-size:12px;color:var(--ink-2);margin-bottom:2px}
+.sd-phase-roi{font-size:11px;color:var(--green-dark);font-weight:600}
+.sd-traps{display:flex;flex-direction:column;gap:10px}
+.sd-trap{display:flex;gap:10px;padding:12px;background:var(--amber-bg);border:1px solid rgba(217,119,6,.2);border-radius:var(--r-md)}
+.sd-trap-no{width:26px;height:26px;background:var(--amber);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+.sd-trap strong{font-size:13px;font-weight:600;color:var(--amber-dark);display:block;margin-bottom:3px}
+.sd-trap p{font-size:12px;color:var(--amber-dark);margin:0;line-height:1.5;opacity:.85}
+.sd-skills{display:flex;flex-wrap:wrap;gap:5px}
+.sd-skill-chip{font-size:11px;background:var(--panel-2);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--r-xs);padding:3px 8px;text-decoration:none;transition:border-color var(--t),color var(--t)}
+.sd-skill-chip:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

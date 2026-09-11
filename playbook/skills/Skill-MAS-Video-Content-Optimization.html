@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAS视频内容优化 — 多智能体协同的短视频全链路运营 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/10-mas.html">10-MAS</a> / Skill-MAS-Video-Content-Optimization</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">10-MAS</div>
+  <h1 class="skill-main-title">MAS视频内容优化 — 多智能体协同的短视频全链路运营</h1>
+  <p class="skill-skill-id">Skill-MAS-Video-Content-Optimization</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>multi_agent</span><span class='tag'>pricing</span><span class='tag'>visual_generation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>数据采集与治理</span><span class='tag'>MAS与智能体工程</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>视觉内容生成</span><span class='tag'>实验与因果推断</span><span class='tag'>用户增长与留存</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>搜索流量与SEO</span><span class='tag'>时序预测</span><span class='tag'>KPI运营指标体系</span><span class='tag'>逆向物流与退货</span><span class='tag'>直播与TikTok商业化</span><span class='tag'>多渠道协同增长</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-H 复购增长</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-R Amazon SEO优化</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-X TikTok Shop冷启动</span><span class='tag'>WF-AB 视频电商全链路</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-video-ecommerce.html'>视频电商全链路增长手册</a><a class='hb-uplink' href='../playbooks/pb-mas-ai-agent-ops.html'>MAS多智能体运营自动化手册</a><a class='hb-uplink' href='../playbooks/pb-content-factory.html'>AIGC 内容工厂手册</a></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>150万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>运营负责人 / CTO<span class='biz-ctx-secondary'> · 产品经理 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC + 库存 + 定价 多 Agent 协作 · TikTok 内容运营流水线</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>运营任务太碎，选品/定价/广告/客服同时跑，人手严重不足；重复性运营动作需要 7×24 响应但没有足够人力</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>多个 AI Agent 协作自动完成跨系统运营任务，运营团队人效提升 3-5 倍，7×24 无人值守运营</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>运营人手不够任务太多</span><span class='biz-pain-tag'>价格变化没有及时响应</span><span class='biz-pain-tag'>重复性工作占据太多时间</span><span class='biz-pain-tag'>想做 7×24 监控但没人盯</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>内容团队面临&quot;TikTok内容每天3小时制作爆款率仅5%无法规模化&quot;——多智能体自动化内容流水线每日3篇爆款率提升至18%，年化GMV增量约150万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>TikTok/Reels母婴视频运营涉及选题→脚本→生成→发布→分析的完整链路，每个环节需要不同专业知识。MAS视频优化系统将每个环节交由专职Agent负责：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：TikTok母婴内容自动化运营 - 业务问题：运营团队每天花3小时做TikTok内容（选题+拍摄+剪辑+发布），内容质量参差不齐，爆款率不足5% - 数据要求：TikTok API（趋势数据）+ AI视频生成工具API + 历史内容表现数据 - 预期产出：MAS每天自动生成3个内容方案，预测爆款率从5%提升至18%；人工只需审核AI选出的最优方案（10分钟/天） - 业务价值：内容量从1篇/天提升至3篇/天，曝光量增加约200%；爆款率提升驱动自然流量增长，年化GMV增量约150万元</p><p>**三轨验证**： - **成本**：TikTok API 调用费用约 $0.003/次，AI视频生成工具（如HeyGen）约 $0.5/分钟视频，每日3条视频成本约 $15；人力成本从3小时降至10分钟，节省约 $50/天 - **合规**：需确保AI生成内容不违反TikTok社区准则（如虚假宣传、误导性医疗建议）；母婴类内容需标注广告性质（如#ad），避免违反FTC广告法 - **风险**：若Trend Agent误判敏感话题（如婴儿睡眠安全），可能引发平台审查或品牌声誉风险；A/B测试中不同版本可能被用户截图对比，导致负面舆论</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：每日内容量从1篇提升至3篇，爆款率从5%提升至18%，年化曝光量增加200%；自然流量增长驱动GMV约150万元/年；人工时间从3小时/天降至10分钟/天，节省约20万元</li><li><strong>实施难度</strong>：⭐⭐⭐⭐☆（各Agent逻辑约100行；工程难点在多个API（TikTok+视频生成工具）的稳定集成）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（修复10-MAS↔20-视频最大断层（规模102）；视频电商是增长最快的母婴渠道）</li><li><strong>评估依据</strong>：WWW 2024 MAS电商视频优化论文；arXiv:2406.11545 AutoCreator多Agent创作验证；TikTok Official已发布商业化AI创作助手</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Skill-MAS-Video-Content-Optimization
+多智能体视频内容优化系统
+
+依赖：pip install numpy pandas
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import Optional
+
+np.random.seed(42)
+
+@dataclass
+class VideoContent:
+    content_id: str
+    topic:      str
+    hook:       str       # 开场钩子
+    script:     str       # 脚本要点
+    cta:        str       # 行动召唤
+    tags:       list = field(default_factory=list)
+    version:    str = &#x27;A&#x27;
+
+@dataclass
+class VideoMetrics:
+    &quot;&quot;&quot;发布后3小时早期指标&quot;&quot;&quot;
+    views:         int
+    avg_watch_pct: float  # 平均观看百分比
+    cta_clicks:    int
+    shares:        int
+
+    @property
+    def cqs(self) -&gt; float:
+        &quot;&quot;&quot;内容质量分&quot;&quot;&quot;
+        hook_score      = min(1.0, self.avg_watch_pct / 0.6)  # 60%观看率=满分
+        retention_score = self.avg_watch_pct
+        cta_rate        = self.cta_clicks / max(self.views, 1)
+        share_rate      = self.shares / max(self.views, 1)
+        return 0.4*hook_score + 0.3*retention_score + 0.2*min(cta_rate/0.03,1) + 0.1*min(share_rate/0.01,1)
+
+# ── 专职Agent ────────────────────────────────────────────────────────
+class TrendAgent:
+    TRENDING_TOPICS = [
+        &#x27;新生儿睡眠训练技巧&#x27;,
+        &#x27;6个月宝宝辅食添加全指南&#x27;,
+        &#x27;婴儿推车选购攻略2026&#x27;,
+        &#x27;母乳喂养常见问题解答&#x27;,
+        &#x27;宝宝爬行期玩具推荐&#x27;,
+    ]
+    def get_trending(self) -&gt; list[str]:
+        # 生产环境：调用TikTok Trend API
+        return self.TRENDING_TOPICS[:3]
+
+class ScriptAgent:
+    SCRIPT_TEMPLATES = {
+        &#x27;睡眠&#x27;: {&#x27;hook&#x27;: &#x27;90%的新手妈妈都犯过这个错误...&#x27;, &#x27;cta&#x27;: &#x27;点击购买睡眠辅助产品&#x27;},
+        &#x27;辅食&#x27;: {&#x27;hook&#x27;: &#x27;别让宝宝错过黄金添加期！&#x27;, &#x27;cta&#x27;: &#x27;链接在评论区，辅食工具一站购&#x27;},
+        &#x27;推车&#x27;: {&#x27;hook&#x27;: &#x27;价格差5倍的推车，差距到底在哪？&#x27;, &#x27;cta&#x27;: &#x27;直播间同款8折&#x27;},
+        &#x27;default&#x27;: {&#x27;hook&#x27;: &#x27;这个细节99%的父母都忽略了&#x27;, &#x27;cta&#x27;: &#x27;点击了解更多&#x27;},</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2406.11545</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MAS-Video-Content-Optimization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Brand-Video-Generation.html'>Skill-Brand-Video-Generation</a></li><li><a href='../skills/Skill-Live-Commerce-Stream-Algorithm.html'>Skill-Live-Commerce-Stream-Algorithm</a></li><li><a href='../skills/Skill-Multi-Agent-Skill-Composition.html'>Skill-Multi-Agent-Skill-Composition</a></li><li><a href='../skills/Skill-ResMAS-Resilience-Topology-Optimization.html'>Skill-ResMAS-Resilience-Topology-Optimization</a></li><li><a href='../skills/Skill-Tag-Video-Commerce-Tagging.html'>Skill-Tag-Video-Commerce-Tagging</a></li><li><a href='../skills/Skill-TikTok-Algorithm-Content-Boost.html'>Skill-TikTok-Algorithm-Content-Boost</a></li><li><a href='../skills/Skill-Video-ROI-Attribution.html'>Skill-Video-ROI-Attribution</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Live-Commerce-Stream-Algorithm.html'>Skill-Live-Commerce-Stream-Algorithm</a></li><li><a href='../skills/Skill-Multi-Agent-Skill-Composition.html'>Skill-Multi-Agent-Skill-Composition</a></li><li><a href='../skills/Skill-ResMAS-Resilience-Topology-Optimization.html'>Skill-ResMAS-Resilience-Topology-Optimization</a></li><li><a href='../skills/Skill-Tag-Video-Commerce-Tagging.html'>Skill-Tag-Video-Commerce-Tagging</a></li><li><a href='../skills/Skill-Video-ROI-Attribution.html'>Skill-Video-ROI-Attribution</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Live-Commerce-Stream-Algorithm.html'>Skill-Live-Commerce-Stream-Algorithm</a></li><li><a href='../skills/Skill-Multi-Agent-Skill-Composition.html'>Skill-Multi-Agent-Skill-Composition</a></li><li><a href='../skills/Skill-ResMAS-Resilience-Topology-Optimization.html'>Skill-ResMAS-Resilience-Topology-Optimization</a></li><li><a href='../skills/Skill-Tag-Video-Commerce-Tagging.html'>Skill-Tag-Video-Commerce-Tagging</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-MAS-Video-Content-Optimization',skill_domain:'10-MAS'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-MAS-Video-Content-Optimization',skill_domain:'10-MAS',skill_difficulty:'⭐⭐⭐⭐☆'});
+</script>
+<div style='margin:24px 0;padding:16px 18px;background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:12px'><div style='font-size:12.5px;font-weight:700;color:#3730a3;margin-bottom:10px'>可直接调用的 Agent</div><div style='display:flex;flex-wrap:wrap;gap:8px'><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ TikTok 内容官</a><a href='../agents.html' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;transition:opacity .15s' onmouseover='this.style.opacity=".85"' onmouseout='this.style.opacity="1"'>◈ 视频内容MAS优化师</a></div><div style='font-size:11px;color:#94a3b8;margin-top:8px'>Agent 已内置此 Skill 的业务逻辑，点击进入智能体广场立即运行</div></div>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

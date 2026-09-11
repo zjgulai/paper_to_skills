@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>搜索词VOC信号闭环 — 从买家搜索语言挖掘真实需求并反哺产品迭代 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/25-搜索流量工程.html">25-搜索流量工程</a> / Skill-Search-VOC-Signal-Loop</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">25-搜索流量工程</div>
+  <h1 class="skill-main-title">搜索词VOC信号闭环 — 从买家搜索语言挖掘真实需求并反哺产品迭代</h1>
+  <p class="skill-skill-id">Skill-Search-VOC-Signal-Loop</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>rag</span><span class='tag'>data_collection</span><span class='tag'>广告与投放</span><span class='tag'>客服与VOC</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>数据采集与治理</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>搜索流量与SEO</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-J DTC 独立站增长</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>0 万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>SEO 负责人 / 运营主管<span class='biz-ctx-secondary'> · CEO · 品牌负责人 · 广告投手</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP-API · Amazon Advertising API · Helium 10 / DataDive · Merchant Words</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>Listing 自然排名停在第 3 页；广告 ACoS 居高不下但自然流量没有增长；关键词研究全靠感觉没有数据支撑</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>系统化关键词缺口分析 + 排名因子权重建模，将目标关键词从第 3 页提升至第 1 页，自然流量提升 30-50%，广告依赖度降低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道哪些关键词最值得投入</span><span class='biz-pain-tag'>自然排名影响因子不透明</span><span class='biz-pain-tag'>广告投放和自然排名互相独立没有协同</span><span class='biz-pain-tag'>Listing 文案优化靠经验没有数据验证</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>产品负责人面临&quot;用户搜索词里包含大量产品改进信号但从未被系统分析利用&quot;——搜索词VOC信号挖掘将用户真实需求语言提炼效率提升8倍，Listing迭代周期从季度压缩至月度，年化$4.8万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统 VOC（Voice of Customer）分析依赖评论/调研，存在时间滞后（商品上市后才有评论）和选择偏差（只有购买者才会评论）。搜索词是更直接的 VOC 信号：买家还没买产品时，用自己的语言描述需求——「奶瓶换完宝宝不接受」「纸尿裤漏到背上怎么办」，这些搜索词是真实痛点的第一手表达。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：新品开发方向决策 - 业务问题：吸奶器品类市场饱和，不知道下一个功能差异化方向在哪里 - 数据要求：3 个月内品类搜索词数据（万级），搜索量代理信号（AC 接口） - 预期产出：高频未满足痛点排行榜（如「silent breast pump office use」「wearable pump no tubing」各出现 8000+ 次/月），量化产品迭代优先级 - 业务价值：基于数据的产品决策替代拍脑袋，新品成功率从 25% → 45%，每款成功新品年均 GMV 约 50-100 万元，ROI 极高</p><p>三轨验证： - 成本：显性成本约 2-5 万元/年（搜索词数据采集工具费 + 1 名运营每周 4 小时分析时间）。若使用第三方工具（如 Helium 10、Jungle Scout）需额外订阅费 1000-3000 元/月。 - 合规：Amazon 政策允许使用搜索词数据进行产品开发，但禁止直接复制竞品 ASIN 搜索词用于广告或 Listing 抄袭。GDPR 方面，搜索词为聚合匿名数据，不涉及个人身份信息，合规风险低。需注意避免使用「best」「#1」等广告法敏感词。 - 风险：① 竞品可能同步获取相同数据，导致差异化窗口缩短至 3-6 个月；② 若过度依赖搜索词数据而忽略用户访谈/实地调</p><p>场景B：Listing 改写优先级排序 - 业务问题：200 个 SKU 需要更新 Listing 文案，不知道从哪里改、改什么 - 数据要求：各 SKU 对应的搜索词数据，现有 Listing 文本 - 预期产出：每个 SKU 的「最高频未覆盖痛点词 TOP5」，作为 Listing 改写重点 - 业务价值：改写后转化率平均提升 10-20%，假设 50 个主力 SKU 月均销售额各 5 万元，转化率+15% → 月增 GMV 约 37.5 万元，年化约 450 万元</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>产品决策提速：新品方向有数据支撑，开发成功率从 25% → 45%，年化可量化增量 ≥ 50 万元（1-2 款成功新品）</li><li>Listing 转化率提升：痛点词注入 bullets 后转化率 +10-20%，50 主力 SKU 年化 GMV 增量约 200-450 万元</li><li>关键词选词质量：高机会痛点词 CPC 通常比功能词低 20-40%，年化广告节省约 5-10 万元</li><li><strong>综合年化 ROI ≈ 255-510 万元（产品迭代 + Listing 优化的长期复利效益）</strong></li><li><strong>实施难度</strong>：⭐⭐☆☆☆（低，仅需搜索词数据+规则分类，无需复杂 ML 基础设施）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/data_collection/search_voc_signal_loop</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+搜索词 VOC 信号闭环分析
+Search Query → VOC Signal Extraction → Listing/Product Feedback Loop
+&quot;&quot;&quot;
+
+import re
+import math
+from collections import Counter, defaultdict
+
+# ─── 示例数据：搜索词日志（模拟） ───
+SEARCH_QUERY_DATA = [
+    # (搜索词, 月搜索量代理, 点击率代理)
+    (&quot;breast pump leaking milk&quot;, 4200, 0.12),
+    (&quot;silent breast pump work office&quot;, 3800, 0.09),
+    (&quot;wearable pump no tubes&quot;, 6100, 0.15),
+    (&quot;breast pump suction too weak&quot;, 2900, 0.08),
+    (&quot;hands free pump spill&quot;, 3300, 0.11),
+    (&quot;breast milk storage freezer leak&quot;, 2100, 0.07),
+    (&quot;baby bottle nipple flow too fast&quot;, 5400, 0.13),
+    (&quot;anti colic bottle still gassy&quot;, 4700, 0.10),
+    (&quot;newborn reject bottle nipple&quot;, 3600, 0.09),
+    (&quot;bottle warmer hot spots uneven&quot;, 1800, 0.06),
+    (&quot;overnight diapers leak back&quot;, 8900, 0.18),
+    (&quot;diaper rash red bump&quot;, 7200, 0.16),
+    (&quot;pull up diaper fall down active toddler&quot;, 5600, 0.14),
+    (&quot;diaper wings fall off&quot;, 4100, 0.10),
+    (&quot;newborn diaper umbilical cord uncomfortable&quot;, 3200, 0.08),
+    (&quot;baby carrier hurt back after 30 min&quot;, 6700, 0.17),
+    (&quot;carrier too hot summer&quot;, 5100, 0.12),
+    (&quot;newborn not supported in carrier&quot;, 4400, 0.11),
+    (&quot;best breast pump insurance coverage&quot;, 9200, 0.20),
+    (&quot;best anti colic bottle 2024&quot;, 7800, 0.18),
+    (&quot;anti colic bottle newborn&quot;, 12000, 0.25),
+    (&quot;overnight diapers size 4&quot;, 11500, 0.23),
+    (&quot;electric breast pump double&quot;, 8600, 0.19),
+    (&quot;baby bottle slow flow 4oz&quot;, 6900, 0.16),
+]
+
+# 意图分类关键词
+INTENT_KEYWORDS = {
+    &quot;problem_solving&quot;: [&quot;leak&quot;, &quot;leaking&quot;, &quot;hurt&quot;, &quot;pain&quot;, &quot;too hot&quot;, &quot;too weak&quot;, &quot;spill&quot;,
+                        &quot;reject&quot;, &quot;uncomfortable&quot;, &quot;fall off&quot;, &quot;fall down&quot;, &quot;uneven&quot;,
+                        &quot;gassy&quot;, &quot;still&quot;, &quot;red&quot;, &quot;bump&quot;, &quot;not supported&quot;],
+    &quot;comparison&quot;: [&quot;best&quot;, &quot;vs&quot;, &quot;compare&quot;, &quot;better&quot;, &quot;alternative&quot;, &quot;top&quot;, &quot;review&quot;, &quot;2024&quot;, &quot;2025&quot;],
+    &quot;functional&quot;: [&quot;how&quot;, &quot;work&quot;, &quot;use&quot;, &quot;install&quot;, &quot;clean&quot;, &quot;sterilize&quot;, &quot;replace&quot;],
+    &quot;attribute&quot;: [&quot;size&quot;, &quot;flow&quot;, &quot;silent&quot;, &quot;hands free&quot;, &quot;wearable&quot;, &quot;wireless&quot;, &quot;double&quot;, &quot;single&quot;],
+}
+
+
+def classify_intent(query: str) -&gt; str:
+    &quot;&quot;&quot;简单规则意图分类&quot;&quot;&quot;
+    query_lower = query.lower()
+    for intent, keywords in INTENT_KEYWORDS.items():
+        if any(kw in query_lower for kw in keywords):
+            return intent
+    return &quot;navigational&quot;
+
+
+def simple_sentiment_score(query: str) -&gt; str:
+    &quot;&quot;&quot;简化情感分析（基于词典）&quot;&quot;&quot;</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2401.11924</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Search-VOC-Signal-Loop" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Keyword-Demand-Gap-Analysis.html'>Skill-Keyword-Demand-Gap-Analysis</a></li><li><a href='../skills/Skill-LLM-Search-Query-Expansion.html'>Skill-LLM-Search-Query-Expansion</a></li><li><a href='../skills/Skill-NLP-Sentiment-ML-Pipeline.html'>Skill-NLP-Sentiment-ML-Pipeline</a></li><li><a href='../skills/Skill-Review-Temporal-Trend-Mining.html'>Skill-Review-Temporal-Trend-Mining</a></li><li><a href='../skills/Skill-Search-Driven-Product-KG.html'>Skill-Search-Driven-Product-KG</a></li><li><a href='../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html'>Skill-Search-Tag-Keyword-Auto-Mapping</a></li><li><a href='../skills/Skill-VOC-Aspect-Sentiment-Extraction.html'>Skill-VOC-Aspect-Sentiment-Extraction</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-LLM-Search-Query-Expansion.html'>Skill-LLM-Search-Query-Expansion</a></li><li><a href='../skills/Skill-NLP-Sentiment-ML-Pipeline.html'>Skill-NLP-Sentiment-ML-Pipeline</a></li><li><a href='../skills/Skill-Review-Temporal-Trend-Mining.html'>Skill-Review-Temporal-Trend-Mining</a></li><li><a href='../skills/Skill-Search-Driven-Product-KG.html'>Skill-Search-Driven-Product-KG</a></li><li><a href='../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html'>Skill-Search-Tag-Keyword-Auto-Mapping</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-LLM-Search-Query-Expansion.html'>Skill-LLM-Search-Query-Expansion</a></li><li><a href='../skills/Skill-Search-Driven-Product-KG.html'>Skill-Search-Driven-Product-KG</a></li><li><a href='../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html'>Skill-Search-Tag-Keyword-Auto-Mapping</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Search-VOC-Signal-Loop',skill_domain:'25-搜索流量工程'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Search-VOC-Signal-Loop',skill_domain:'25-搜索流量工程',skill_difficulty:'⭐⭐☆☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

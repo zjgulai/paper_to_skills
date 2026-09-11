@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>差评速率异常检测 — 区分竞品恶意攻击与真实产品问题 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/22-数据采集工程.html">22-数据采集工程</a> / Skill-Review-Velocity-Anomaly-Detector</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">22-数据采集工程</div>
+  <h1 class="skill-main-title">差评速率异常检测 — 区分竞品恶意攻击与真实产品问题</h1>
+  <p class="skill-skill-id">Skill-Review-Velocity-Anomaly-Detector</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>data_collection</span><span class='tag'>fraud_detection</span><span class='tag'>pricing</span><span class='tag'>客服与VOC</span><span class='tag'>数据采集与治理</span><span class='tag'>定价与利润</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>时序预测</span><span class='tag'>逆向物流与退货</span><span class='tag'>AI搜索与GEO</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-C 客服分诊</span><span class='tag'>WF-E Review监控</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-I 智能体工程</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>30-80万元</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐☆☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 85分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（49%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 109.0, 48.7, 72.7, 73.0, 72.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 10.9, 7.3, 10.9, 7.3, 3.6];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>数据工程师 / 技术负责人<span class='biz-ctx-secondary'> · 运营负责人 · 选品负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP API + Keepa · TikTok Shop API · 跨境多平台数据湖</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>想监控竞品价格/评论/排名但没有稳定采集能力，手动太慢；多平台数据分散整合成本极高；数据管道不稳定经常断</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>竞品价格/评论数据每日自动更新，多平台数据统一入仓，数据管道稳定性 &gt;99%，取数时间从小时降到分钟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>竞品数据要手动收集太慢</span><span class='biz-pain-tag'>平台 API 限制抓不到数据</span><span class='biz-pain-tag'>多系统数据整合不起来</span><span class='biz-pain-tag'>报表用的数据是过期的</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>亚马逊运营面临&quot;48小时内涌入23条1星差评无法判断是攻击还是产品问题&quot;——CUSUM异常检测将识别时间从48小时→2小时，拦截攻击后单SKU月均多保留8.5万美元销售额</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>差评速率异常检测通过时序统计方法识别评论速率突变，区分两类场景：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：婴儿配方奶粉竞品攻击预警 - 业务问题：某SKU在48小时内新增23条1星差评（正常基准：日均0.3条），评分从4.6星骤降至4.1星 - 检测结果：CUSUM在第8条时触发告警，账号平均年龄17天，Verified Purchase仅4%（正常&gt;70%） - 判断：竞品恶意攻击，置信度92% - 处置：立即向Amazon提交Review Removal Request，提供统计证据；5天内移除18条，评分恢复4.5星 - 业务价值：Sales rank从#124恢复至#67，当月多保留约8.5万美元销售额</p><p>场景B：吸奶器产品批次质量问题早期预警 - 业务问题：某批次(2024Q3生产)吸奶器差评在3周内缓慢增加，但内容高度一致（&quot;噪音大&quot;） - 检测结果：CUSUM在第14天触发趋势告警，评论地理分布多样（美国15个州），文本相似度中等（0.45） - 判断：真实产品问题，置信度88% - 处置：召回该批次联系换货，同步更新产品设计，损失控制在45万元内 - 业务价值：早期干预vs晚期差评积累，避免评分&lt;4.0导致的长期排名受损（年均损失估算&gt;300万）</p><p>三轨验证 | 成本轨：月均成本3,200元（云计算资源1,500元+人工审核16小时/月@100元/小时+API调用200元+存储维护500元） | 合规轨：符合《电商法》第五条数据采集规范，遵循Amazon爬虫协议robots.txt，获取公开商品信息合规；需补充《个人信息保护法》合规声明，建议获得Amazon官方数据合作授权 | 风险轨：IP被封禁概率15%（需轮换代理池），数据延迟导致价格偏差概率8%（可接受范围），Amazon服务条款变更风险12%（需月度合规审查）</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：评分每下降0.1星销量降低5-8%；及时检测攻击（2小时vs48小时），避免差评在高峰期累积，年均保护销售额约30-80万元/SKU</li><li><strong>实施难度</strong>：⭐⭐☆☆☆（CUSUM算法简单，主要工作在数据采集管道）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（差评攻击是Amazon运营最高频紧急事件，7×24监控必备）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+差评速率异常检测系统 - CUSUM + 评论元数据分析
+区分竞品恶意攻击 vs 真实产品问题
+&quot;&quot;&quot;
+import numpy as np
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+from datetime import datetime, timedelta
+import random
+
+
+@dataclass
+class ReviewRecord:
+    &quot;&quot;&quot;评论记录&quot;&quot;&quot;
+    review_id: str
+    rating: int               # 1-5星
+    timestamp: datetime
+    reviewer_age_days: int    # 账号年龄（天）
+    is_verified_purchase: bool
+    country_code: str         # 评论者国家
+    text_length: int          # 评论文字长度
+    text_hash: str            # 评论内容哈希（用于相似度比较）
+
+
+class CUSUMDetector:
+    &quot;&quot;&quot;CUSUM累积和控制图差评速率异常检测&quot;&quot;&quot;
+
+    def __init__(self, baseline_rate: float, k_factor: float = 0.5, h_threshold: float = 5.0):
+        &quot;&quot;&quot;
+        baseline_rate: 基准差评率（日均负评数，如0.3）
+        k_factor: 允许漂移系数（通常=0.5*sigma）
+        h_threshold: 告警阈值（通常=4*sigma）
+        &quot;&quot;&quot;
+        self.baseline_rate = baseline_rate
+        self.k = k_factor
+        self.h = h_threshold
+        self.s_pos = 0.0  # 上行累积和
+        self.s_neg = 0.0  # 下行累积和
+        self.alerts = []
+
+    def update(self, day: int, negative_count: float) -&gt; Optional[str]:
+        &quot;&quot;&quot;处理单日差评数量，返回告警类型或None&quot;&quot;&quot;
+        x = negative_count
+        mu = self.baseline_rate
+
+        self.s_pos = max(0, self.s_pos + (x - mu - self.k))
+        self.s_neg = max(0, self.s_neg + (-x + mu - self.k))
+
+        if self.s_pos &gt; self.h:
+            alert = f&quot;Day {day}: 差评速率异常升高 (S+={self.s_pos:.2f} &gt; h={self.h})&quot;
+            self.alerts.append(alert)
+            self.s_pos = 0  # 重置
+            return &quot;SPIKE_UP&quot;
+        if self.s_neg &gt; self.h:
+            alert = f&quot;Day {day}: 差评速率异常下降 (S-={self.s_neg:.2f} &gt; h={self.h})&quot;
+            self.alerts.append(alert)
+            self.s_neg = 0
+            return &quot;SPIKE_DOWN&quot;
+        return None
+</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2006.06870</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Review-Velocity-Anomaly-Detector" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Amazon-SP-API-Data-Pipeline.html'>Skill-Amazon-SP-API-Data-Pipeline</a></li><li><a href='../skills/Skill-Dark-Pattern-Review-Detection.html'>Skill-Dark-Pattern-Review-Detection</a></li><li><a href='../skills/Skill-Data-Quality-Monitor-Alert.html'>Skill-Data-Quality-Monitor-Alert</a></li><li><a href='../skills/Skill-Negative-Review-Root-Cause-Analyzer.html'>Skill-Negative-Review-Root-Cause-Analyzer</a></li><li><a href='../skills/Skill-Review-Defense-Vine-Optimizer.html'>Skill-Review-Defense-Vine-Optimizer</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Amazon-SP-API-Data-Pipeline.html'>Skill-Amazon-SP-API-Data-Pipeline</a></li><li><a href='../skills/Skill-Dark-Pattern-Review-Detection.html'>Skill-Dark-Pattern-Review-Detection</a></li><li><a href='../skills/Skill-Negative-Review-Root-Cause-Analyzer.html'>Skill-Negative-Review-Root-Cause-Analyzer</a></li><li><a href='../skills/Skill-Review-Defense-Vine-Optimizer.html'>Skill-Review-Defense-Vine-Optimizer</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Amazon-SP-API-Data-Pipeline.html'>Skill-Amazon-SP-API-Data-Pipeline</a></li><li><a href='../skills/Skill-Dark-Pattern-Review-Detection.html'>Skill-Dark-Pattern-Review-Detection</a></li><li><a href='../skills/Skill-Review-Defense-Vine-Optimizer.html'>Skill-Review-Defense-Vine-Optimizer</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Review-Velocity-Anomaly-Detector',skill_domain:'22-数据采集工程'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Review-Velocity-Anomaly-Detector',skill_domain:'22-数据采集工程',skill_difficulty:'⭐⭐☆☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

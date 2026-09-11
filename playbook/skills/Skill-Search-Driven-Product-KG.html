@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>搜索驱动商品知识图谱 — 用搜索共现行为揭示品类语义结构 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/25-搜索流量工程.html">25-搜索流量工程</a> / Skill-Search-Driven-Product-KG</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">25-搜索流量工程</div>
+  <h1 class="skill-main-title">搜索驱动商品知识图谱 — 用搜索共现行为揭示品类语义结构</h1>
+  <p class="skill-skill-id">Skill-Search-Driven-Product-KG</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>recommendation</span><span class='tag'>rag</span><span class='tag'>knowledge_graph</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>标签工程与决策触发</span><span class='tag'>搜索流量与SEO</span><span class='tag'>LLM数据分析</span><span class='tag'>供应商管理与博弈</span><span class='tag'>竞品情报自动化</span><span class='tag'>WF-D 选品扫描</span><span class='tag'>WF-F 动态定价</span><span class='tag'>WF-G Listing内容优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-R Amazon SEO优化</span><span class='tag'>WF-S 跨境数据合规</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>10 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>SEO 负责人 / 运营主管<span class='biz-ctx-secondary'> · CEO · 品牌负责人 · 广告投手</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon SP-API · Amazon Advertising API · Helium 10 / DataDive · Merchant Words</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>Listing 自然排名停在第 3 页；广告 ACoS 居高不下但自然流量没有增长；关键词研究全靠感觉没有数据支撑</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>系统化关键词缺口分析 + 排名因子权重建模，将目标关键词从第 3 页提升至第 1 页，自然流量提升 30-50%，广告依赖度降低</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>不知道哪些关键词最值得投入</span><span class='biz-pain-tag'>自然排名影响因子不透明</span><span class='biz-pain-tag'>广告投放和自然排名互相独立没有协同</span><span class='biz-pain-tag'>Listing 文案优化靠经验没有数据验证</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>数据科学家面临&quot;品类语义结构只能靠人工梳理无法系统化发现搜索意图间的关联&quot;——搜索词共现图嵌入将品类语义空间构建自动化，选品相关性发现效率提升5倍，年化$4.2万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>传统商品知识图谱依赖人工标注属性关系（纸尿裤 → 适用年龄 → 03M），成本高且更新慢。搜索行为天然包含买家对商品关系的隐式认知：当用户搜索「纸尿裤 + 湿巾」时，说明这两个品类在买家心智中高度关联；当「吸奶器」和「储奶袋」总是共现，说明它们构成功能组合关系。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：新品选品关联分析 - 业务问题：运营不知道新品（婴儿游泳圈）关联哪些品类，不知道买家还会搜索什么 - 数据要求：平台搜索日志（用户ID + 会话ID + 搜索词 + 时间戳），最少 10 万条记录 - 预期产出：以「婴儿游泳圈」为节点的一跳知识图谱，揭示关联品类（浮水背心/防水尿裤/婴儿防晒/泳圈打气筒） - 业务价值：选品决策效率提升 3 倍，新品开发成功率从 30% → 50%（有数据支撑的关联选品），年化 GMV 增量约 20-40 万元</p><p>三轨验证： - 成本：需采购或自建搜索日志采集管道（约 5-8 万元/年），图数据库（Neo4j 或 ArangoDB 许可费约 3-5 万元/年），1 名数据工程师 2 周开发时间（约 2 万元人力成本）。总计约 10-15 万元初始投入。 - 合规：搜索日志需脱敏处理（去除用户ID、IP、设备指纹），仅保留聚合后的共现统计，避免触碰 GDPR 个人数据定义。Amazon 平台禁止使用第三方工具抓取搜索数据，必须通过官方 API（如 SP-API 的搜索查询报告）获取，否则违反 ToS。 - 风险：共现关系可能被恶意刷单/虚假搜索污染（竞品可通过自动化脚本制造虚假共现），需引入异常检测过滤噪</p><p>场景B：Listing 语义关键词扩展 - 业务问题：「婴儿背带」的 Listing 缺失大量搜索关联词（「新生儿抱抱带」「哺乳期背巾」） - 数据要求：同上，已构建的商品知识图谱 - 预期产出：基于图谱邻居节点的关键词扩展建议，覆盖买家搜索路径中的所有关联词 - 业务价值：自然流量覆盖词从 40 个扩展到 120 个，搜索曝光量提升 60-80%</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：</li><li>选品决策：关联选品成功率从 30% → 50%，假设年均尝试 20 个关联新品，每个新品年 GMV 差异 10 万，增量约 40 万元/年</li><li>Listing 优化：搜索覆盖词 +60-80%，带动自然流量年增量约 15-30 万元</li><li>用户旅程延长：图谱驱动的关联推荐使客单价提升 10-15%，年化约 8-20 万元</li><li><strong>综合年化 ROI ≈ 63-90 万元</strong></li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（中，需要平台搜索日志数据，图数据库部署）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/data_collection/search_driven_product_kg</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+搜索驱动商品知识图谱构建
+Search Co-occurrence → Node2Vec Graph Embedding → Semantic KG
+&quot;&quot;&quot;
+
+import numpy as np
+from collections import defaultdict
+import random
+import math
+
+# ─── 示例数据：模拟搜索日志 ───
+SEARCH_LOGS = [
+    # (session_id, user_id, [搜索词序列])
+    (&quot;s001&quot;, &quot;u001&quot;, [&quot;baby diapers newborn&quot;, &quot;baby wipes sensitive&quot;, &quot;diaper rash cream&quot;]),
+    (&quot;s002&quot;, &quot;u002&quot;, [&quot;breast pump electric&quot;, &quot;milk storage bags&quot;, &quot;nursing bra&quot;]),
+    (&quot;s003&quot;, &quot;u003&quot;, [&quot;baby bottle anti colic&quot;, &quot;bottle warmer&quot;, &quot;formula dispenser&quot;]),
+    (&quot;s004&quot;, &quot;u001&quot;, [&quot;pull up training pants&quot;, &quot;potty training seat&quot;, &quot;toddler underwear&quot;]),
+    (&quot;s005&quot;, &quot;u004&quot;, [&quot;baby carrier newborn&quot;, &quot;nursing cover&quot;, &quot;baby wrap&quot;]),
+    (&quot;s006&quot;, &quot;u002&quot;, [&quot;baby monitor wifi&quot;, &quot;white noise machine&quot;, &quot;swaddle blanket&quot;]),
+    (&quot;s007&quot;, &quot;u003&quot;, [&quot;baby diapers size 2&quot;, &quot;baby wipes unscented&quot;, &quot;baby lotion&quot;]),
+    (&quot;s008&quot;, &quot;u005&quot;, [&quot;breast pump portable&quot;, &quot;milk storage bags freezer&quot;, &quot;nursing pad&quot;]),
+    (&quot;s009&quot;, &quot;u006&quot;, [&quot;baby bottle slow flow&quot;, &quot;bottle brush cleaner&quot;, &quot;bottle sterilizer&quot;]),
+    (&quot;s010&quot;, &quot;u007&quot;, [&quot;swim diaper reusable&quot;, &quot;baby sunscreen&quot;, &quot;baby swim ring&quot;]),
+    (&quot;s011&quot;, &quot;u004&quot;, [&quot;pull up diapers girls&quot;, &quot;potty training chart&quot;, &quot;potty seat&quot;]),
+    (&quot;s012&quot;, &quot;u008&quot;, [&quot;baby carrier hiking&quot;, &quot;baby wrap stretchy&quot;, &quot;infant carrier&quot;]),
+    (&quot;s013&quot;, &quot;u001&quot;, [&quot;baby wipes travel&quot;, &quot;diaper bag backpack&quot;, &quot;changing pad&quot;]),
+    (&quot;s014&quot;, &quot;u009&quot;, [&quot;electric breast pump&quot;, &quot;storage bags breast milk&quot;, &quot;breast pad&quot;]),
+    (&quot;s015&quot;, &quot;u003&quot;, [&quot;anti colic bottle&quot;, &quot;formula mixer&quot;, &quot;baby bottle warmer electric&quot;]),
+]
+
+# 搜索词规范化映射（简化品类）
+QUERY_NORM = {
+    &quot;baby diapers newborn&quot;: &quot;newborn_diaper&quot;,
+    &quot;baby diapers size 2&quot;: &quot;size2_diaper&quot;,
+    &quot;baby wipes sensitive&quot;: &quot;baby_wipes&quot;,
+    &quot;baby wipes unscented&quot;: &quot;baby_wipes&quot;,
+    &quot;baby wipes travel&quot;: &quot;baby_wipes&quot;,
+    &quot;diaper rash cream&quot;: &quot;diaper_rash_cream&quot;,
+    &quot;breast pump electric&quot;: &quot;electric_breast_pump&quot;,
+    &quot;electric breast pump&quot;: &quot;electric_breast_pump&quot;,
+    &quot;breast pump portable&quot;: &quot;portable_breast_pump&quot;,
+    &quot;milk storage bags&quot;: &quot;milk_storage_bag&quot;,
+    &quot;milk storage bags freezer&quot;: &quot;milk_storage_bag&quot;,
+    &quot;storage bags breast milk&quot;: &quot;milk_storage_bag&quot;,
+    &quot;nursing bra&quot;: &quot;nursing_bra&quot;,
+    &quot;nursing pad&quot;: &quot;nursing_pad&quot;,
+    &quot;nursing cover&quot;: &quot;nursing_cover&quot;,
+    &quot;breast pad&quot;: &quot;nursing_pad&quot;,
+    &quot;baby bottle anti colic&quot;: &quot;anti_colic_bottle&quot;,
+    &quot;baby bottle slow flow&quot;: &quot;slow_flow_bottle&quot;,
+    &quot;anti colic bottle&quot;: &quot;anti_colic_bottle&quot;,
+    &quot;bottle warmer&quot;: &quot;bottle_warmer&quot;,
+    &quot;baby bottle warmer electric&quot;: &quot;bottle_warmer&quot;,
+    &quot;formula dispenser&quot;: &quot;formula_dispenser&quot;,
+    &quot;formula mixer&quot;: &quot;formula_dispenser&quot;,
+    &quot;bottle brush cleaner&quot;: &quot;bottle_brush&quot;,
+    &quot;bottle sterilizer&quot;: &quot;bottle_sterilizer&quot;,
+    &quot;pull up training pants&quot;: &quot;pull_up_diaper&quot;,
+    &quot;pull up diapers girls&quot;: &quot;pull_up_diaper&quot;,
+    &quot;potty training seat&quot;: &quot;potty_seat&quot;,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2405.16871</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Search-Driven-Product-KG" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Audience-Knowledge-Graph.html'>Skill-Audience-Knowledge-Graph</a></li><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Keyword-Demand-Gap-Analysis.html'>Skill-Keyword-Demand-Gap-Analysis</a></li><li><a href='../skills/Skill-Listing-Semantic-Relevance-Scoring.html'>Skill-Listing-Semantic-Relevance-Scoring</a></li><li><a href='../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html'>Skill-Search-Tag-Keyword-Auto-Mapping</a></li><li><a href='../skills/Skill-Search-VOC-Signal-Loop.html'>Skill-Search-VOC-Signal-Loop</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Audience-Knowledge-Graph.html'>Skill-Audience-Knowledge-Graph</a></li><li><a href='../skills/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.html'>Skill-Dense-Retrieval-Ecommerce-Semantic-Search</a></li><li><a href='../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html'>Skill-Search-Tag-Keyword-Auto-Mapping</a></li><li><a href='../skills/Skill-Search-VOC-Signal-Loop.html'>Skill-Search-VOC-Signal-Loop</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html'>Skill-Search-Tag-Keyword-Auto-Mapping</a></li><li><a href='../skills/Skill-Search-VOC-Signal-Loop.html'>Skill-Search-VOC-Signal-Loop</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Search-Driven-Product-KG',skill_domain:'25-搜索流量工程'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Search-Driven-Product-KG',skill_domain:'25-搜索流量工程',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>25-搜索流量工程 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>25-搜索流量工程</h1><p>新领域 (2026-06-18): Amazon A9/A10 search ranking, keyword demand-gap analysis, listing semantic relevance, organic-paid synergy</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 25-搜索流量工程 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-A9-Algorithm-Sales-Velocity-Optimization.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-A9-Algorithm-Sales-Velocity-Optimization — A9 算法销量速度优化</h3>
+  <p class="sc-desc">运营面临&quot;新品上线后A9权重积累慢排名起不来&quot;——销量速度优化将新品进入Top20时间从30天缩短至12天，年化多增GMV80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Amazon-Search-Ranking-Factor-Model.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Amazon 搜索排名因子权重建模 — 用 LightGBM+SHAP 解构 A9/A10 算法</h3>
+  <p class="sc-desc">运营负责人面临&quot;目标关键词卡在第3页无法突破&quot;——LightGBM+SHAP排名因子建模将自然搜索曝光量提升3倍，年化GMV增量$21.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>3.2 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Defense-Search-Strategy.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">品牌词防守策略 — 品牌词投放防竞品截流与自然排名协同</h3>
+  <p class="sc-desc">品牌运营面临&quot;竞品在品牌词上截流、品牌词CTR从35%跌至22%&quot;——防守策略将品牌词流量保护率恢复至90%+，广告ROI达10-30倍</p>
+  <div class='sc-footer'><span class='sc-roi'>0.2-0.5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Brand-Keyword-Hijack-Alert.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Brand-Keyword-Hijack-Alert — 品牌词搜索下竞品展示份额超30%触发品牌防守广告扩展</h3>
+  <p class="sc-desc">品牌负责人面临&quot;竞品在品牌词搜索截流&quot;——竞品展示份额&gt;30%自动扩展品牌词防守广告将品牌词流量截流率从28%降至9%，年化保护品牌流量价值35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>340%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Category-Tree-Placement-Optimizer.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Category-Tree-Placement-Optimizer — 品类树节点竞争密度优化</h3>
+  <p class="sc-desc">选品负责人面临&quot;品类节点竞争激烈排名难突破&quot;——最低竞争密度节点识别将新品首月BSR均值提升40%，上架成功率提高25%</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Causal-SEO-Search-Attribution.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索流量因果归因 — SEO排名提升的真实增量效果识别</h3>
+  <p class="sc-desc">SEO团队面临&quot;关键词排名提升后流量+22%但无法分离趋势混淆&quot;——DiD去除共同趋势后真实增量+12%，年化SEO预算效率提升30%约60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Click-Through-Rate-Title-Optimizer.html" data-domain="25-搜索流量工程" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Click-Through-Rate-Title-Optimizer — 标题 CTR 机器学习优化器</h3>
+  <p class="sc-desc">运营面临&quot;Listing标题CTR低广告浪费&quot;——ML预测最佳关键词位置将标题CTR从3.2%提升至5.1%，年化节省广告费15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Competitor-Keyword-Gap-Analysis.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Competitor-Keyword-Gap-Analysis — 竞品关键词缺口分析</h3>
+  <p class="sc-desc">运营面临&quot;竞品有排名的词我们完全没有覆盖&quot;——关键词缺口挖掘将自然流量词汇覆盖率从45%提升至72%，年化增加自然流量价值35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>12-20 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Index-Health-Monitoring.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">索引健康度监控 — 全链路搜索索引覆盖率与收录状态追踪</h3>
+  <p class="sc-desc">运营面临&quot;新品上架后搜索流量为零、不知是否已被索引&quot;——健康度监控将索引问题发现延迟从3天缩短至4小时，年化减少错失销售20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-International-Search-Localization.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-International-Search-Localization — 跨市场搜索关键词本地化</h3>
+  <p class="sc-desc">跨市场运营面临&quot;直译关键词本地搜索量很低&quot;——语义迁移本地化将德语市场自然搜索点击率提升3倍，年化增收25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>3-10 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Keyword-Cannibalization-Detection.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">关键词自相竞争检测 — 用二部图 Jaccard 算法发现同店 SKU 流量内耗</h3>
+  <p class="sc-desc">多SKU卖家面临&quot;同店产品互相抢关键词流量越打越内耗&quot;——Jaccard二部图检测将关键词重叠SKU识别精度达94%，流量集中度提升35%</p>
+  <div class='sc-footer'><span class='sc-roi'>3.5 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Keyword-Demand-Gap-Analysis.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">关键词需求缺口矩阵分析 — 识别高需求低竞争关键词蓝海</h3>
+  <p class="sc-desc">选品负责人面临&quot;关键词研究全靠感觉竞争激烈蓝海找不到&quot;——双维度缺口矩阵将高价值低竞争关键词发现效率提升5倍，年化流量成本降低$8.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>2.5 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Search-Query-Expansion.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">LLM搜索词语义扩展 — 用大模型覆盖长尾搜索意图提升Listing覆盖面</h3>
+  <p class="sc-desc">Listing运营面临&quot;长尾搜索词覆盖不足导致大量有购买意图的流量看不到Listing&quot;——LLM语义扩展将Listing关键词覆盖面提升3.2倍，自然流量增量年化$5.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>4 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Conversion-Rate-Optimizer.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Listing-Conversion-Rate-Optimizer — Listing 转化率 A/B 测试优化器</h3>
+  <p class="sc-desc">运营面临&quot;Listing转化率远低于品类均值&quot;——A/B测试驱动迭代将CVR从6.8%提升至9.5%，年化增收50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-20 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Listing-Semantic-Relevance-Scoring.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Listing 语义相关性评分 — 用 Sentence-BERT 诊断 SEO 缺口</h3>
+  <p class="sc-desc">Listing优化专员面临&quot;文案改了好几版但排名无明显变化&quot;——Sentence-BERT语义相关性评分将Listing与搜索意图匹配度从62%提升至89%，CTR提升22%</p>
+  <div class='sc-footer'><span class='sc-roi'>1.8 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Long-Tail-Keyword-Mining.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">长尾关键词挖掘 — NLP词频+竞品反查+搜索建议词三路融合</h3>
+  <p class="sc-desc">选品运营面临&quot;核心词流量饱和、Listing 曝光上限瓶颈&quot;——三路融合挖掘将关键词覆盖扩大3-5倍，自然流量年化增收20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>40-80 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Long-Tail-Opportunity-Auto-Capture.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Long-Tail-Opportunity-Auto-Capture — 新兴长尾词周搜索量激增自动创建定向广告组</h3>
+  <p class="sc-desc">运营面临&quot;新兴长尾词机会被竞品抢先占据&quot;——长尾词周增&gt;50%自动创建定向广告组将新词抢占速度从7天缩短至24小时，年化多获流量价值25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>3.2%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Market-Search-Localization.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">多市场搜索词本地化 — 多站点关键词迁移与本地语言适配</h3>
+  <p class="sc-desc">跨境运营面临&quot;直译关键词进入新市场流量极低、DE/JP站 Impression几乎为零&quot;——三层本地化体系将新市场自然搜索流量提升3-5倍，节省广告拉量成本10-20万元/市场/年</p>
+  <div class='sc-footer'><span class='sc-roi'>10-20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Organic-Paid-Rank-Synergy-Model.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">自然排名与广告排名协同效应建模 — 用 Panel DiD 量化广告飞轮 ROI</h3>
+  <p class="sc-desc">运营总监面临&quot;广告烧了钱但自然排名没有长期增长飞轮&quot;——Panel DiD量化广告飞轮溢出ROI，自然流量长期贡献度年化提升$14.4万</p>
+  <div class='sc-footer'><span class='sc-roi'>15-25 万</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Review-Keyword-Mining-SEO.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Review-Keyword-Mining-SEO — 评论关键词挖掘 SEO</h3>
+  <p class="sc-desc">运营面临&quot;关键词研究忽略买家真实搜索语言&quot;——评论词挖掘将长尾词自然排名数量提升65%，月均自然流量增加8000次</p>
+  <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Ad-Budget-ROI-Integration.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">自然搜索与广告预算联合优化 — 有机排名提升vs广告CPC的边际收益对比</h3>
+  <p class="sc-desc">广告投手面临&quot;不知道投广告提排名和直接出价各自的边际ROI哪个更高&quot;——自然+付费联合边际收益对比将广告预算ROI提升19%，年化$8.4万效率增量</p>
+  <div class='sc-footer'><span class='sc-roi'>60 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Aware-Recommendation-Reranking.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索意图感知推荐重排序 — 将实时搜索信号注入推荐排序</h3>
+  <p class="sc-desc">推荐算法工程师面临&quot;推荐系统不知道用户当前搜索意图导致推荐与搜索意图脱节&quot;——搜索意图向量注入重排序将搜索场景推荐CTR提升28%，年化$6.8万GMV增量</p>
+  <div class='sc-footer'><span class='sc-roi'>8 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Compliance-Guard.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索词合规预扫描 — Amazon TOS + FDA 双轨违禁词实时过滤</h3>
+  <p class="sc-desc">运营面临&quot;关键词上架后才发现含违禁宣称导致Listing被下架&quot;——上架前合规预扫描将违禁词漏报率从22%降至3%，年化避免账号受限保护广告预算50-120万元</p>
+  <div class='sc-footer'><span class='sc-roi'>50-100 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Conversion-Rate-Predictor.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索词级 CVR 预测 — 关键词维度转化率预测模型</h3>
+  <p class="sc-desc">广告运营面临&quot;500+关键词预算分配全靠经验、ROAS优化无系统支撑&quot;——CVR预测模型将相同预算ROAS提升20-35%，年化增收20-80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万/年</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Driven-Logistics-Promise.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Search-Driven Logistics Promise — 搜索词意图信号驱动履约时效承诺优化</h3>
+  <p class="sc-desc">运营面临&quot;旺季FBA时效承诺与实际履约脱节导致差评激增和A9排名下滑&quot;——搜索词时效意图驱动的动态承诺优化将差评率降低40%排名稳定，年化保护流量价值30-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>时效承诺准确后差评率降低 40%，A9 排名稳定，年化保护流</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Driven-Product-KG.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索驱动商品知识图谱 — 用搜索共现行为揭示品类语义结构</h3>
+  <p class="sc-desc">数据科学家面临&quot;品类语义结构只能靠人工梳理无法系统化发现搜索意图间的关联&quot;——搜索词共现图嵌入将品类语义空间构建自动化，选品相关性发现效率提升5倍，年化$4.2万</p>
+  <div class='sc-footer'><span class='sc-roi'>10 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Funnel-Attribution.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索漏斗分归因 — 搜索→展示→点击→加购→购买各层转化拆解</h3>
+  <p class="sc-desc">广告投手面临&quot;高展示低购买、不清楚哪层漏斗在流失&quot;——搜索漏斗分归因将关键词 CVR 提升15-25%，相同预算年化增收30-45万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Organic-Growth-Attribution.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索有机增长归因 — SEO流量驱动用户生命周期价值的因果建模</h3>
+  <p class="sc-desc">SEO团队面临&quot;搜索用户LTV表面高45%但含选择偏差无法准确评估SEO价值&quot;——PSM消除选择偏差后真实增量+28%，年化SEO预算决策优化约100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Position-Click-Elasticity.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索位置点击弹性分析 — 用 Examination Model 分离位置偏差估计真实 CTR</h3>
+  <p class="sc-desc">广告投手面临&quot;不知道把排名从第3页提到第1页值不值得投入&quot;——位置弹性量化将广告投决策ROI可见度提升至月化$3.8万增量GMV</p>
+  <div class='sc-footer'><span class='sc-roi'>3.6 万</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Query-Performance-Attribution.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Search-Query-Performance-Attribution — 搜索词业绩归因</h3>
+  <p class="sc-desc">广告负责人面临&quot;SQP报告数据庞大无法快速提取高价值词&quot;——自动归因分析将高价值词发现效率提升10倍，ACOS平均降低18%</p>
+  <div class='sc-footer'><span class='sc-roi'>20-35 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Rank-Recovery-Auto-Action.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Search-Rank-Recovery-Auto-Action — 核心关键词排名跌出Page1自动触发三步恢复行动</h3>
+  <p class="sc-desc">运营面临&quot;核心关键词排名跌出Page1但未及时响应&quot;——排名跌出自动触发三步恢复行动将排名恢复时间从14天缩短至5天，年化保护自然流量价值50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>15%</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Revenue-Attribution.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索流量财务归因 — 有机搜索对运营利润的全链路价值量化</h3>
+  <p class="sc-desc">CFO面临&quot;SEO年投80万无法量化净利润贡献导致预算被质疑&quot;——PSM去偏搜索LTV因果归因生成P&amp;L级ROI，使SEO预算决策优化年化影响约100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>46万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Share-of-Voice.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索声量份额 — 关键词维度市场份额追踪与竞争格局监测</h3>
+  <p class="sc-desc">品牌运营面临&quot;感知竞品在抢流量但无法量化哪些词被侵蚀&quot;——关键词SOV矩阵将流量份额从10%提升至20%，资源聚焦带动年化增收50-100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Signal-Realtime-Pipeline.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">A9 搜索信号实时采集 Pipeline — 排名变化与竞品动态的流式监控</h3>
+  <p class="sc-desc">运营面临&quot;竞品排名变化2小时后才能发现导致响应滞后&quot;——搜索信号实时采集将关键词排名监控延迟从2小时降至5分钟，年化减少因排名丢失导致的流量损失20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20-50 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Tag-Keyword-Auto-Mapping.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">标签→关键词自动映射矩阵 — SKU 标签体系驱动搜索词包生成</h3>
+  <p class="sc-desc">SEO专员面临&quot;SKU标签体系和关键词研究完全脱节每次更新标签都要手动重做关键词&quot;——标签→关键词本体映射自动输出优先级关键词包，每SKU关键词研究时间从3天压缩至20分钟，年化效率提升$3.6万</p>
+  <div class='sc-footer'><span class='sc-roi'>3 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-Term-Negative-Optimization.html" data-domain="25-搜索流量工程" data-diff="⭐☆☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Search-Term-Negative-Optimization — 搜索词否定优化</h3>
+  <p class="sc-desc">广告负责人面临&quot;无关搜索词持续消耗广告预算&quot;——精确否定优化将广告浪费率从35%降至12%，年化节省广告费20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐☆☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Search-VOC-Signal-Loop.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">搜索词VOC信号闭环 — 从买家搜索语言挖掘真实需求并反哺产品迭代</h3>
+  <p class="sc-desc">产品负责人面临&quot;用户搜索词里包含大量产品改进信号但从未被系统分析利用&quot;——搜索词VOC信号挖掘将用户真实需求语言提炼效率提升8倍，Listing迭代周期从季度压缩至月度，年化$4.8万</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Seasonal-Keyword-Rotation-Strategy.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Seasonal-Keyword-Rotation-Strategy — 季节性关键词轮换策略</h3>
+  <p class="sc-desc">运营面临&quot;节假日流量峰值前关键词布局不足&quot;——峰值预判提前布局将Prime Day当天自然流量比平日高出4倍，年化多增GMV60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>8-15 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Seasonal-Search-Trend-Modeling.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">季节性搜索趋势建模 — 搜索峰值预测与备货节奏对齐</h3>
+  <p class="sc-desc">供应链运营面临&quot;旺季搜索峰值无法提前预判、屡次因备货不足错失黄金销售期&quot;——季节性趋势建模将备货命中率从70%提升至90%，年化减少错失销售30-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30-60 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Sponsored-Organic-Rank-Synergy.html" data-domain="25-搜索流量工程" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Sponsored-Organic-Rank-Synergy — 广告-自然排名协同模型</h3>
+  <p class="sc-desc">运营面临&quot;广告和自然排名各自独立优化效果差&quot;——协同模型将同等广告预算下自然流量贡献从30%提升至52%，年化降低获客成本25%</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Voice-Search-Optimization-Amazon.html" data-domain="25-搜索流量工程" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">25-搜索流量工程</div>
+  <h3 class="sc-title">Skill-Voice-Search-Optimization-Amazon — Amazon 语音搜索优化</h3>
+  <p class="sc-desc">运营面临&quot;Alexa语音搜索流量被忽略&quot;——长尾问句关键词策略将语音搜索带来的流量占比从2%提升至8%，年化新增GMV15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

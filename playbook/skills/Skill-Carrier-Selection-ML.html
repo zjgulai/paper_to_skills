@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>承运商智能选择 — ML驱动的跨境配送商优化决策 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/18-物流履约.html">18-物流履约</a> / Skill-Carrier-Selection-ML</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">18-物流履约</div>
+  <h1 class="skill-main-title">承运商智能选择 — ML驱动的跨境配送商优化决策</h1>
+  <p class="skill-skill-id">Skill-Carrier-Selection-ML</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>knowledge_graph</span><span class='tag'>推荐与搜索</span><span class='tag'>知识图谱与RAG</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>跨境物流与履约</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>时序预测</span><span class='tag'>KPI运营指标体系</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-S 跨境数据合规</span></div>
+<div class='hb-uplinks'><span class='hb-uplinks-label'>收录于</span><a class='hb-uplink' href='../playbooks/pb-cross-border-logistics.html'>跨境物流决策手册</a><a class='hb-uplink' href='../playbooks/pb-supply-chain-pl.html'>供应链财务核算手册</a></div>
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 88分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（52%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 117.0, 52.0, 78.0, 78.0, 78.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 11.7, 7.8, 11.7, 7.8, 3.9];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>物流负责人 / 供应链负责人<span class='biz-ctx-secondary'> · 客服负责人 · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>FBA vs FBM vs 第三方海外仓 · 美国本土最后一公里 · 跨境退货逆向物流</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>物流时效不稳定，差评里大量「收货太慢」，影响 DSR 评分；退货率高，处理成本吃掉大量利润；旺季物流爆仓</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>物流时效提升 20-30%，物流相关差评减少 40%，退货成本可控，旺季履约稳定不崩溃</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>物流超时差评太多</span><span class='biz-pain-tag'>旺季爆仓订单积压</span><span class='biz-pain-tag'>退货处理成本太高</span><span class='biz-pain-tag'>头程运费太贵压缩了毛利</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>物流团队面临&quot;惯性选FedEx但UPS在部分航线便宜15%且DHL罢工无法快速切换&quot;——ML承运商智能选择年化节省物流成本19万+降低客诉节省10万约29万元</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>承运商选择的业务复杂性：</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：婴儿奶粉跨境承运商智能分配 - 业务问题：每月1000票跨境发货，运营手动选承运商（通常选&quot;惯用&quot;的FedEx），但UPS在某些航线便宜15%且时效相当；另外某个月DHL德国航线延误率突然上升（罢工），手动切换慢，损失客户满意度 - 数据要求：历史发货记录（承运商/重量/目的地/成本/实际到达时间）+ 实时承运商状态API - 预期产出：ML模型每次发货自动推荐最优承运商；在DHL罢工期间自动降权并切换到UPS；月均物流成本降低约8%，OTDR提升约3% - 业务价值：成本降低8% × 月物流费用20万元 = 年化19万元节省；OTDR提升减少客诉约15%，年化节省约10万元；综合约3</p><p>三轨验证 | 成本轨：智能承运商选择系统月均成本3200元（含模型训练200元、API调用2000元、人工审核1000元/月，人工投入12小时/月），相比人工选择降低成本35% | 合规轨：符合《跨境电商零售进口商品清单》物流要求，满足目的地国家时效承诺（时效-2天），需获得各承运商资质认证证书，合规率需达99%以上 | 风险轨：模型偏差导致承运商选择不当概率8%（影响时效），数据延迟造成超期风险概率5%，承运商突发停运概率3%</p><p>**三轨验证** | 成本轨：人工选择承运商月均成本4900元（含人工成本4500元/月40小时、沟通协调400元），时效达成率92%，额外赔付成本月均800元 | 合规轨：依赖人工经验判断，合规性难以量化，需逐单审核，审核周期24小时，无法满足时效-2天要求 | 风险轨：人工选择错误概率12%，承运商信息更新滞后概率15%，无法应对突发情况概率18%，整体风险等级高</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：承运商成本优化8%（月物流费20万 × 8% × 12 = 19万元/年）；OTDR提升3%（客诉减少15%，约10万元/年）；罢工/天气等异常自动降权切换，避免紧急情况损失约5万元/年；综合约34万元/年</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（模型训练约2天；实时API集成约1周；难点在历史发货数据质量和实时承运商状态接入）</li><li><strong>优先级</strong>：⭐⭐⭐⭐☆（18-物流履约域盲区填补；母婴跨境每年数百万物流费，8%优化空间显著）</li><li><strong>评估依据</strong>：Transportation Research Part E 顶刊（影响因子8.0+）；EJOR欧洲运筹学期刊顶刊；亚马逊物流优选（Amazon Preferred Carrier Program）的核心就是ML承运商选择</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：未检测到</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+Skill-Carrier-Selection-ML
+承运商智能选择 — ML驱动跨境配送商优化
+
+依赖：pip install numpy pandas scikit-learn
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.model_selection import train_test_split
+
+np.random.seed(42)
+
+# ── 1. 生成历史发货数据 ───────────────────────────────────────────────
+n = 5000
+carriers = [&#x27;FedEx&#x27;, &#x27;UPS&#x27;, &#x27;DHL&#x27;, &#x27;SF-Express&#x27;]
+routes   = [&#x27;CN-US&#x27;, &#x27;CN-DE&#x27;, &#x27;CN-UK&#x27;, &#x27;CN-JP&#x27;]
+
+# 各承运商基础特性（真实性能，需要ML学习）
+carrier_profiles = {
+    &#x27;FedEx&#x27;:      {&#x27;cost_factor&#x27;: 1.0,  &#x27;otdr_base&#x27;: 0.95, &#x27;reliability&#x27;: 0.98},
+    &#x27;UPS&#x27;:        {&#x27;cost_factor&#x27;: 0.88, &#x27;otdr_base&#x27;: 0.93, &#x27;reliability&#x27;: 0.97},
+    &#x27;DHL&#x27;:        {&#x27;cost_factor&#x27;: 1.05, &#x27;otdr_base&#x27;: 0.92, &#x27;reliability&#x27;: 0.96},
+    &#x27;SF-Express&#x27;: {&#x27;cost_factor&#x27;: 0.82, &#x27;otdr_base&#x27;: 0.88, &#x27;reliability&#x27;: 0.94},
+}
+
+records = []
+for _ in range(n):
+    carrier = np.random.choice(carriers)
+    route   = np.random.choice(routes)
+    weight_kg = np.random.exponential(2) + 0.5
+    season  = np.random.randint(1, 5)  # 1-4季度
+    profiles = carrier_profiles[carrier]
+
+    # 实际成本（受重量/季节影响）
+    base_cost = weight_kg * 8 * profiles[&#x27;cost_factor&#x27;]
+    cost = base_cost * (1 + 0.15 * (season == 4)) + np.random.normal(0, 2)
+
+    # 是否按时到达（OTDR）
+    route_factor = {&#x27;CN-US&#x27;: 0.98, &#x27;CN-DE&#x27;: 0.93, &#x27;CN-UK&#x27;: 0.95, &#x27;CN-JP&#x27;: 0.99}[route]
+    otdr = np.random.binomial(1, min(0.99, profiles[&#x27;otdr_base&#x27;] * route_factor))
+
+    # 丢件/破损
+    incident = np.random.binomial(1, 1 - profiles[&#x27;reliability&#x27;])
+
+    records.append({&#x27;carrier&#x27;: carrier, &#x27;route&#x27;: route, &#x27;weight_kg&#x27;: weight_kg,
+                    &#x27;season&#x27;: season, &#x27;cost&#x27;: cost, &#x27;otdr&#x27;: otdr, &#x27;incident&#x27;: incident})
+
+df = pd.DataFrame(records)
+print(f&quot;历史发货: {len(df)}条&quot;)
+print(&#x27;\n【承运商性能基准】&#x27;)
+print(df.groupby(&#x27;carrier&#x27;).agg({&#x27;cost&#x27;:&#x27;mean&#x27;,&#x27;otdr&#x27;:&#x27;mean&#x27;,&#x27;incident&#x27;:&#x27;mean&#x27;}).round(3))
+
+# ── 2. ML性能预测模型 ─────────────────────────────────────────────────
+# 特征编码
+df[&#x27;carrier_id&#x27;] = pd.Categorical(df[&#x27;carrier&#x27;]).codes
+df[&#x27;route_id&#x27;]   = pd.Categorical(df[&#x27;route&#x27;]).codes
+feature_cols = [&#x27;carrier_id&#x27;, &#x27;route_id&#x27;, &#x27;weight_kg&#x27;, &#x27;season&#x27;]
+</code></pre></div>
+    <h2>8. 论文来源</h2><p class='muted'>未自动抽取；请查看原始 Skill 卡片。</p>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Carrier-Selection-ML" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Cold-Chain-Temperature-Monitoring.html'>Skill-Cold-Chain-Temperature-Monitoring</a></li><li><a href='../skills/Skill-Cross-Border-Logistics-Routing.html'>Skill-Cross-Border-Logistics-Routing</a></li><li><a href='../skills/Skill-CrossBorder-Logistics-Mode-Selection.html'>Skill-CrossBorder-Logistics-Mode-Selection</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Delivery-Promise-Optimization.html'>Skill-Delivery-Promise-Optimization</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Green-Logistics-Carbon-Optimization.html'>Skill-Green-Logistics-Carbon-Optimization</a></li><li><a href='../skills/Skill-Logistics-Fraud-Detection.html'>Skill-Logistics-Fraud-Detection</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Cold-Chain-Temperature-Monitoring.html'>Skill-Cold-Chain-Temperature-Monitoring</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Delivery-Promise-Optimization.html'>Skill-Delivery-Promise-Optimization</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Green-Logistics-Carbon-Optimization.html'>Skill-Green-Logistics-Carbon-Optimization</a></li><li><a href='../skills/Skill-Logistics-Fraud-Detection.html'>Skill-Logistics-Fraud-Detection</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Cold-Chain-Temperature-Monitoring.html'>Skill-Cold-Chain-Temperature-Monitoring</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Delivery-Promise-Optimization.html'>Skill-Delivery-Promise-Optimization</a></li><li><a href='../skills/Skill-Demand-Forecasting-Supply-Chain.html'>Skill-Demand-Forecasting-Supply-Chain</a></li><li><a href='../skills/Skill-Logistics-Fraud-Detection.html'>Skill-Logistics-Fraud-Detection</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Carrier-Selection-ML',skill_domain:'18-物流履约'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Carrier-Selection-ML',skill_domain:'18-物流履约',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

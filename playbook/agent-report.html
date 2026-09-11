@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>智能体报告 · paper2skills</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="index.html"><span class="sbl-text">总览</span></a><a href="diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="agents.html"><span class="sbl-text">智能体广场</span></a><a href="agent-report.html" aria-current="page" class="active"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<!-- 报告详情 Modal -->
+<div id="rpt-detail-overlay" class="rpt-detail-overlay" role="dialog" aria-modal="true" style="display:none">
+  <div class="rpt-detail-modal">
+    <div class="rpt-detail-header">
+      <div class="rpt-detail-header-left">
+        <div class="rpt-detail-icon-wrap" id="rpt-detail-icon"></div>
+        <div>
+          <div class="rpt-detail-agent-name" id="rpt-detail-agent-name"></div>
+          <div class="rpt-detail-ts" id="rpt-detail-ts"></div>
+        </div>
+      </div>
+      <button class="rpt-detail-close" onclick="closeRptDetail()" aria-label="关闭">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="rpt-detail-inputs" id="rpt-detail-inputs"></div>
+    <div class="rpt-detail-body" id="rpt-detail-body"></div>
+    <div class="rpt-detail-footer">
+      <button class="rpt-detail-btn rpt-detail-btn-feishu" id="rpt-detail-feishu-btn" onclick="pushDetailToFeishu()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        推送飞书
+      </button>
+      <button class="rpt-detail-btn" onclick="copyCurrentRpt()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        复制报告
+      </button>
+      <button class="rpt-detail-btn rpt-detail-btn-del" onclick="deleteCurrentRpt()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+        删除
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="rpt-page">
+  <!-- 头部 -->
+  <div class="rpt-header">
+    <div class="rpt-header-left">
+      <h1 class="rpt-title">智能体报告台</h1>
+      <p class="rpt-subtitle">Agent Analytics Dashboard</p>
+    </div>
+    <div class="rpt-header-actions">
+      <button onclick="exportReports()" class="rpt-btn rpt-btn-outline">导出全部</button>
+      <button onclick="clearReports()" class="rpt-btn rpt-btn-ghost">清空记录</button>
+    </div>
+  </div>
+
+  <!-- 统计栏 -->
+  <div class="rpt-summary-bar">
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-total">0</span>
+      <span class="rpt-metric-label">总运行次数</span>
+    </div>
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-agents">0</span>
+      <span class="rpt-metric-label">调用智能体</span>
+    </div>
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-today">0</span>
+      <span class="rpt-metric-label">今日运行</span>
+    </div>
+    <div class="rpt-metric">
+      <span class="rpt-metric-value" id="rpt-latest">—</span>
+      <span class="rpt-metric-label">最近运行</span>
+    </div>
+  </div>
+
+  <!-- 过滤栏 -->
+  <div class="rpt-filter-bar">
+    <button class="rpt-filter active" data-agent="all" onclick="setAgentFilter('all')">全部</button>
+    <button class="rpt-filter" data-agent="agent-product-radar" onclick="setAgentFilter('agent-product-radar')">选品雷达</button><button class="rpt-filter" data-agent="agent-listing-doctor" onclick="setAgentFilter('agent-listing-doctor')">Listing 医生</button><button class="rpt-filter" data-agent="agent-voc-decoder" onclick="setAgentFilter('agent-voc-decoder')">用户之声解码器</button><button class="rpt-filter" data-agent="agent-ad-attribution" onclick="setAgentFilter('agent-ad-attribution')">广告归因侦探</button><button class="rpt-filter" data-agent="agent-competitor-radar" onclick="setAgentFilter('agent-competitor-radar')">竞品雷达站</button><button class="rpt-filter" data-agent="agent-supply-sentinel" onclick="setAgentFilter('agent-supply-sentinel')">供应链哨兵</button><button class="rpt-filter" data-agent="agent-cs-triage" onclick="setAgentFilter('agent-cs-triage')">客服分诊台</button><button class="rpt-filter" data-agent="agent-pricing-advisor" onclick="setAgentFilter('agent-pricing-advisor')">动态定价顾问</button><button class="rpt-filter" data-agent="agent-account-guardian" onclick="setAgentFilter('agent-account-guardian')">账号风险卫士</button><button class="rpt-filter" data-agent="agent-pnl-analyzer" onclick="setAgentFilter('agent-pnl-analyzer')">P&L 透视镜</button><button class="rpt-filter" data-agent="agent-brand-guardian" onclick="setAgentFilter('agent-brand-guardian')">品牌合规卫士</button><button class="rpt-filter" data-agent="agent-tiktok-content" onclick="setAgentFilter('agent-tiktok-content')">TikTok 内容官</button><button class="rpt-filter" data-agent="agent-dml-counterfactual-pricing" onclick="setAgentFilter('agent-dml-counterfactual-pricing')">反事实定价策略 Agent</button><button class="rpt-filter" data-agent="agent-sku-tag-scanner" onclick="setAgentFilter('agent-sku-tag-scanner')">SKU标签质量扫描器</button><button class="rpt-filter" data-agent="agent-compliance-matrix" onclick="setAgentFilter('agent-compliance-matrix')">多市场合规矩阵</button><button class="rpt-filter" data-agent="agent-return-analyzer" onclick="setAgentFilter('agent-return-analyzer')">退货根因分析师</button><button class="rpt-filter" data-agent="agent-margin-calculator" onclick="setAgentFilter('agent-margin-calculator')">SKU利润归因计算器</button><button class="rpt-filter" data-agent="agent-geopolitical-risk" onclick="setAgentFilter('agent-geopolitical-risk')">地缘风险评估仪</button><button class="rpt-filter" data-agent="agent-epr-calculator" onclick="setAgentFilter('agent-epr-calculator')">EPR合规费用测算</button><button class="rpt-filter" data-agent="agent-cold-start-advisor" onclick="setAgentFilter('agent-cold-start-advisor')">新品冷启动助手</button><button class="rpt-filter" data-agent="agent-festival-replenishment" onclick="setAgentFilter('agent-festival-replenishment')">大促备货决策Agent</button><button class="rpt-filter" data-agent="agent-video-content-mas" onclick="setAgentFilter('agent-video-content-mas')">视频内容MAS优化师</button><button class="rpt-filter" data-agent="agent-causal-pricing-advisor" onclick="setAgentFilter('agent-causal-pricing-advisor')">因果定价顾问</button><button class="rpt-filter" data-agent="agent-growth-diagnostics" onclick="setAgentFilter('agent-growth-diagnostics')">增长DataAgent诊断师</button><button class="rpt-filter" data-agent="agent-search-mas-monitor" onclick="setAgentFilter('agent-search-mas-monitor')">搜索MAS监控站</button><button class="rpt-filter" data-agent="agent-xai-compliance-auditor" onclick="setAgentFilter('agent-xai-compliance-auditor')">XAI合规审计师</button>
+  </div>
+
+  <!-- 报告卡片网格 -->
+  <div id="rpt-list" class="rpt-cards-grid"></div>
+</div>
+
+<style>
+/* ── 页面骨架 ── */
+.rpt-page{max-width:1200px;margin:0 auto;padding:32px 24px}
+.rpt-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line,#E5E5E5)}
+.rpt-title{margin:0;font-size:22px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-.5px}
+.rpt-subtitle{margin:3px 0 0;font-size:11px;color:#999;font-family:monospace;text-transform:uppercase;letter-spacing:.8px}
+.rpt-header-actions{display:flex;gap:8px}
+.rpt-btn{height:34px;padding:0 14px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .15s}
+.rpt-btn-outline{background:#fff;border:1px solid var(--line,#E5E5E5);color:var(--ink,#0C0C0C)}
+.rpt-btn-outline:hover{border-color:var(--ink,#0C0C0C)}
+.rpt-btn-ghost{background:transparent;border:1px solid transparent;color:#aaa}
+.rpt-btn-ghost:hover{color:var(--accent,#B5323E)}
+
+/* ── 统计栏 ── */
+.rpt-summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line,#E5E5E5);border:1px solid var(--line,#E5E5E5);border-radius:10px;overflow:hidden;margin-bottom:24px}
+.rpt-metric{background:#fff;padding:18px 20px}
+.rpt-metric-value{display:block;font-size:26px;font-weight:700;color:var(--ink,#0C0C0C);letter-spacing:-1px}
+.rpt-metric-label{display:block;font-size:11.5px;color:#888;margin-top:3px}
+
+/* ── 过滤栏 ── */
+.rpt-filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #F0F0F0}
+.rpt-filter{height:28px;padding:0 11px;border:1px solid var(--line,#E5E5E5);border-radius:20px;background:#fff;color:#666;font-size:12px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.rpt-filter.active{background:var(--ink,#0C0C0C);border-color:var(--ink,#0C0C0C);color:#fff;font-weight:600}
+.rpt-filter:hover:not(.active){border-color:#999;color:var(--ink,#0C0C0C)}
+
+/* ── 报告卡片网格 ── */
+.rpt-cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:1100px){.rpt-cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.rpt-cards-grid{grid-template-columns:1fr};.rpt-summary-bar{grid-template-columns:repeat(2,1fr)}}
+
+/* ── 摘要卡片 ── */
+.rpt-card{background:#fff;border:1px solid var(--line,#E5E5E5);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s;display:flex;flex-direction:column}
+.rpt-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.08);border-color:var(--ink,#0C0C0C)}
+.rpt-card-top{padding:16px 18px 14px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid #F5F5F5}
+.rpt-card-icon-wrap{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.rpt-card-icon-wrap svg{width:20px;height:20px}
+.rpt-card-info{flex:1;min-width:0}
+.rpt-card-agent-name{font-size:13.5px;font-weight:700;color:var(--ink,#0C0C0C);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rpt-card-ts{font-size:11px;color:#999;margin-top:2px;font-family:monospace}
+.rpt-card-mid{padding:12px 18px;flex:1}
+.rpt-card-inputs-preview{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.rpt-card-input-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:3px;font-size:11px;max-width:180px;overflow:hidden}
+.rpt-card-input-key{color:#94a3b8;flex-shrink:0}
+.rpt-card-input-val{color:#475569;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rpt-card-kpi-row{display:flex;gap:8px;flex-wrap:wrap}
+.rpt-card-kpi{flex:1;min-width:80px;padding:7px 10px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px}
+.rpt-card-kpi-label{font-size:10px;color:#94a3b8;margin-bottom:2px}
+.rpt-card-kpi-val{font-size:15px;font-weight:700;color:var(--ink,#0C0C0C)}
+.rpt-card-kpi-val.warn{color:var(--accent,#B5323E)}
+.rpt-card-kpi-val.ok{color:#059669}
+.rpt-card-result-preview{font-size:12px;color:#64748b;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.rpt-card-footer{padding:10px 18px;border-top:1px solid #F5F5F5;display:flex;align-items:center;gap:6px}
+.rpt-card-cat-badge{font-size:10px;color:#64748b;background:#F1F5F9;padding:2px 7px;border-radius:3px;border:1px solid #E2E8F0}
+.rpt-card-view-btn{margin-left:auto;font-size:11.5px;color:#64748b;display:flex;align-items:center;gap:3px;transition:color .15s}
+.rpt-card:hover .rpt-card-view-btn{color:var(--ink,#0C0C0C)}
+.rpt-card-seeded{font-size:10px;color:#94a3b8;padding:2px 6px;border:1px solid #E2E8F0;border-radius:3px}
+
+/* ── 详情 Modal ── */
+.rpt-detail-overlay{position:fixed;inset:0;z-index:2000;background:rgba(12,12,12,.45);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px}
+.rpt-detail-modal{background:#fff;border-radius:14px;width:100%;max-width:760px;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.16)}
+.rpt-detail-header{padding:18px 22px;border-bottom:1px solid var(--line,#E5E5E5);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.rpt-detail-header-left{display:flex;align-items:center;gap:12px}
+.rpt-detail-icon-wrap{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.rpt-detail-icon-wrap svg{width:22px;height:22px}
+.rpt-detail-agent-name{font-size:15px;font-weight:700;color:var(--ink,#0C0C0C)}
+.rpt-detail-ts{font-size:11.5px;color:#94a3b8;font-family:monospace;margin-top:2px}
+.rpt-detail-close{background:none;border:none;cursor:pointer;color:#94a3b8;padding:4px;border-radius:6px;display:flex;align-items:center;transition:color .15s,background .15s}
+.rpt-detail-close:hover{color:var(--ink,#0C0C0C);background:#F1F5F9}
+.rpt-detail-inputs{padding:14px 22px;background:#FAFAFA;border-bottom:1px solid #F0F0F0;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
+.rpt-detail-input-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#fff;border:1px solid #E2E8F0;border-radius:4px;font-size:12px}
+.rpt-detail-input-key{color:#94a3b8}
+.rpt-detail-input-val{color:#374151;font-weight:500;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rpt-detail-body{flex:1;overflow-y:auto;padding:20px 22px}
+.rpt-detail-footer{padding:14px 22px;border-top:1px solid var(--line,#E5E5E5);display:flex;gap:8px;flex-shrink:0;background:#fff}
+.rpt-detail-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid var(--line,#E5E5E5);background:#fff;color:var(--ink,#0C0C0C);transition:all .15s}
+.rpt-detail-btn:hover{border-color:var(--ink,#0C0C0C)}
+.rpt-detail-btn-feishu{background:#00b96b;border-color:#00b96b;color:#fff}
+.rpt-detail-btn-feishu:hover{background:#009a5a;border-color:#009a5a}
+.rpt-detail-btn-del{margin-left:auto;color:#dc2626;border-color:#fecaca}
+.rpt-detail-btn-del:hover{background:#fef2f2;border-color:#dc2626}
+
+/* ── 结构化报告渲染 ── */
+.rr-body{padding:4px 0;font-size:13px;color:#1e293b;line-height:1.7}
+.rr-spacer{height:6px}
+.rr-section{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#F1F5F9 0%,#FAFAFA 100%);border-left:3px solid var(--ink,#0C0C0C);padding:8px 12px;margin:14px 0 6px;font-size:12.5px;font-weight:700;color:var(--ink,#0C0C0C);border-radius:0 4px 4px 0;letter-spacing:.3px;text-transform:uppercase}
+.rr-section-dot{width:5px;height:5px;border-radius:50%;background:var(--ink,#0C0C0C);flex-shrink:0}
+.rr-warn{display:flex;align-items:flex-start;gap:8px;background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#991B1B;font-weight:500}
+.rr-ok{display:flex;align-items:flex-start;gap:8px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:6px;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#166534;font-weight:500}
+.rr-action{display:flex;align-items:flex-start;gap:8px;background:#EFF6FF;border-left:3px solid #3B82F6;padding:8px 12px;margin:4px 0;font-size:12.5px;color:#1E40AF;font-weight:500;border-radius:0 4px 4px 0}
+.rr-kv{display:flex;align-items:baseline;gap:6px;padding:3px 0;font-size:12.5px}
+.rr-kv-key{color:#64748B;font-size:12px;flex-shrink:0}
+.rr-kv-sep{color:#CBD5E1}
+.rr-val{font-weight:700;color:var(--ink,#0C0C0C);font-variant-numeric:tabular-nums}
+.rr-row{display:flex;align-items:baseline;gap:8px;padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;margin-bottom:2px}
+.rr-row-plain{padding:3px 0 3px 12px;font-size:12.5px;border-left:2px solid #E2E8F0;margin-left:4px;color:#475569}
+.rr-row-key{color:#64748B;font-size:12px;flex-shrink:0;min-width:80px}
+.rr-row-sep{color:#CBD5E1;margin:0 2px}
+.rr-priority{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12.5px;color:#334155}
+.rr-p0{background:var(--accent,#B5323E);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}
+.rr-p1{background:#F59E0B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}
+.rr-p2{background:#64748B;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0}
+.rr-line{padding:2px 0;font-size:12.5px;color:#334155}
+.rr-num{font-weight:700;color:#0C0C0C;font-variant-numeric:tabular-nums}
+.rr-pct{font-weight:600;color:#0369a1;font-size:12px}
+
+/* ── 分页 ── */
+.rpt-pagination{display:flex;justify-content:center;align-items:center;gap:4px;padding:28px 0 8px;flex-wrap:wrap}
+.rpt-page-btn{min-width:32px;height:32px;padding:0 10px;border:1px solid var(--line,#E5E5E5);border-radius:6px;background:#fff;color:#555;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.rpt-page-btn:hover:not([disabled]){border-color:var(--ink,#0C0C0C);color:var(--ink,#0C0C0C)}
+.rpt-page-btn.active{background:var(--ink,#0C0C0C);border-color:var(--ink,#0C0C0C);color:#fff;font-weight:600}
+.rpt-page-btn[disabled]{opacity:.35;cursor:not-allowed}
+.rpt-page-info{font-size:12px;color:#888;padding:0 8px}
+
+/* ── 空状态 ── */
+.rpt-empty{grid-column:1/-1;text-align:center;padding:80px 40px}
+.rpt-empty-icon{width:56px;height:56px;margin:0 auto 16px;opacity:.2}
+.rpt-empty-title{font-size:16px;font-weight:600;color:#555;margin-bottom:6px}
+.rpt-empty-desc{font-size:13px;color:#888}
+.rpt-empty-cta{display:inline-flex;align-items:center;gap:6px;margin-top:20px;padding:9px 18px;background:var(--ink,#0C0C0C);color:#fff;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.rpt-empty-cta:hover{opacity:.85}
+</style>
+
+<script>
+const _AGENT_NAMES={"agent-product-radar": "选品雷达", "agent-listing-doctor": "Listing 医生", "agent-voc-decoder": "用户之声解码器", "agent-ad-attribution": "广告归因侦探", "agent-competitor-radar": "竞品雷达站", "agent-supply-sentinel": "供应链哨兵", "agent-cs-triage": "客服分诊台", "agent-pricing-advisor": "动态定价顾问", "agent-account-guardian": "账号风险卫士", "agent-pnl-analyzer": "P&L 透视镜", "agent-brand-guardian": "品牌合规卫士", "agent-tiktok-content": "TikTok 内容官", "agent-dml-counterfactual-pricing": "反事实定价策略 Agent", "agent-sku-tag-scanner": "SKU标签质量扫描器", "agent-compliance-matrix": "多市场合规矩阵", "agent-return-analyzer": "退货根因分析师", "agent-margin-calculator": "SKU利润归因计算器", "agent-geopolitical-risk": "地缘风险评估仪", "agent-epr-calculator": "EPR合规费用测算", "agent-cold-start-advisor": "新品冷启动助手", "agent-festival-replenishment": "大促备货决策Agent", "agent-video-content-mas": "视频内容MAS优化师", "agent-causal-pricing-advisor": "因果定价顾问", "agent-growth-diagnostics": "增长DataAgent诊断师", "agent-search-mas-monitor": "搜索MAS监控站", "agent-xai-compliance-auditor": "XAI合规审计师"};
+const _AGENT_ICONS={"agent-product-radar": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"2\"/><circle cx=\"11\" cy=\"11\" r=\"5\" stroke-dasharray=\"2 1.5\" opacity=\".6\"/><circle cx=\"11\" cy=\"11\" r=\"8.5\" stroke-dasharray=\"2 2\" opacity=\".35\"/><line x1=\"11\" y1=\"4\" x2=\"11\" y2=\"2.5\" stroke-width=\"2\"/></svg>", "agent-listing-doctor": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"8\" cy=\"7\" r=\"3.5\"/><path d=\"M8 10.5C5 10.5 3 13 3 15v1h10v-1c0-2-2-4.5-5-4.5z\"/><path d=\"M14.5 8.5h5M17 6v5\" stroke-width=\"2\"/></svg>", "agent-voc-decoder": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 4h12a1 1 0 011 1v7a1 1 0 01-1 1H9l-4 3v-3H3a1 1 0 01-1-1V5a1 1 0 011-1z\"/><path d=\"M7 8h6M7 11h4\" stroke-width=\"1.5\"/></svg>", "agent-ad-attribution": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"4\" cy=\"17\" r=\"1.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"11\" cy=\"11\" r=\"1.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"18\" cy=\"5\" r=\"1.5\" fill=\"currentColor\" stroke=\"none\"/><path d=\"M5.1 16 10 12M12 10l5-4.5\" stroke-dasharray=\"2 1\"/><path d=\"M3 17l5-6 5 4 5-9\" stroke-width=\"2\" stroke-dasharray=\"none\"/></svg>", "agent-competitor-radar": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"11,2 13.5,8.5 20.5,8.5 15,12.5 17,19 11,15 5,19 7,12.5 1.5,8.5 8.5,8.5\" opacity=\".9\"/></svg>", "agent-supply-sentinel": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 2l8 4.5V15L11 20 3 15V6.5L11 2z\"/><path d=\"M11 2v18M3 6.5l8 4.5 8-4.5\" stroke-width=\"1.2\" opacity=\".6\"/><circle cx=\"11\" cy=\"11\" r=\"2.5\" fill=\"currentColor\" stroke=\"none\" opacity=\".8\"/></svg>", "agent-cs-triage": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"16\" height=\"3.5\" rx=\"1\"/><rect x=\"3\" y=\"9.5\" width=\"11\" height=\"3.5\" rx=\"1\"/><rect x=\"3\" y=\"15\" width=\"7\" height=\"3.5\" rx=\"1\"/><path d=\"M17.5 12l-3 3 1.5 1.5 4.5-4.5\" stroke-width=\"1.8\" stroke=\"currentColor\"/></svg>", "agent-pricing-advisor": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 18L10 8l4 5 4-9\"/><path d=\"M4 18h14\" stroke-width=\"1.2\" opacity=\".5\"/><path d=\"M16 4h4v4\" stroke-width=\"1.8\"/></svg>", "agent-account-guardian": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 2l7.5 3v6c0 4.5-3.5 7.5-7.5 8.5C3.5 18.5 3 15.5 3 11V5L11 2z\"/><path d=\"M7.5 11l2.5 2.5 4.5-4.5\" stroke-width=\"2\"/></svg>", "agent-pnl-analyzer": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"13\" width=\"4\" height=\"6\" rx=\".8\" fill=\"currentColor\" opacity=\".3\"/><rect x=\"9\" y=\"9\" width=\"4\" height=\"10\" rx=\".8\" fill=\"currentColor\" opacity=\".5\"/><rect x=\"15\" y=\"5\" width=\"4\" height=\"14\" rx=\".8\" fill=\"currentColor\" opacity=\".8\"/><path d=\"M3 19h16\" stroke-width=\"1.2\"/></svg>", "agent-brand-guardian": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 2l7.5 3v6c0 4.5-3.5 7.5-7.5 8.5C3.5 18.5 3 15.5 3 11V5L11 2z\"/><circle cx=\"11\" cy=\"10.5\" r=\"2.5\"/><path d=\"M8.5 15.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5\" stroke-width=\"1.4\"/></svg>", "agent-tiktok-content": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"13\" r=\"4\"/><path d=\"M15 3h3v3\" stroke-width=\"1.8\"/><path d=\"M15 6a4 4 0 01-4 4\" stroke-width=\"1.8\"/><path d=\"M9 13l2 2 4-4\" stroke=\"none\" fill=\"currentColor\" opacity=\".7\"/><polygon points=\"9,11 15,13 9,15\" fill=\"currentColor\" stroke=\"none\"/></svg>", "agent-dml-counterfactual-pricing": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 15c2-4 5-4 7 0s5 4 7 0\" stroke-width=\"2\"/><path d=\"M4 9c2-4 5-4 7 0s5 4 7 0\" stroke-width=\"1.5\" opacity=\".5\" stroke-dasharray=\"2 1\"/><path d=\"M11 7v8\" stroke-dasharray=\"2 1.5\" opacity=\".4\"/></svg>", "agent-sku-tag-scanner": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"6\" width=\"11\" height=\"12\" rx=\"1.5\"/><path d=\"M8.5 3.5h7.5a1 1 0 011 1v12\" stroke-width=\"1.2\" opacity=\".5\"/><path d=\"M6 10h6M6 13h4\" stroke-width=\"1.4\"/><path d=\"M16 14l2.5 2.5M17.5 12.5a3 3 0 100 6 3 3 0 000-6z\" stroke-width=\"1.5\"/></svg>", "agent-compliance-matrix": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"2\" width=\"8\" height=\"8\" rx=\"1\"/><rect x=\"12\" y=\"2\" width=\"8\" height=\"8\" rx=\"1\"/><rect x=\"2\" y=\"12\" width=\"8\" height=\"8\" rx=\"1\"/><rect x=\"12\" y=\"12\" width=\"8\" height=\"8\" rx=\"1\"/><path d=\"M14 16l2 2 4-3\" stroke-width=\"1.8\"/></svg>", "agent-return-analyzer": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 10H18M14 6l4 4-4 4\" stroke-width=\"1.8\"/><path d=\"M3 17h8M3 17l3-2.5M3 17l3 2.5\" stroke-width=\"1.5\"/><circle cx=\"17\" cy=\"16.5\" r=\"2.5\"/><line x1=\"15.8\" y1=\"15.3\" x2=\"18.2\" y2=\"17.7\" stroke-width=\"1.5\"/><line x1=\"18.2\" y1=\"15.3\" x2=\"15.8\" y2=\"17.7\" stroke-width=\"1.5\"/></svg>", "agent-margin-calculator": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"16\" height=\"16\" rx=\"2\"/><path d=\"M7 11h8M11 7v8\"/><circle cx=\"7.5\" cy=\"7.5\" r=\".8\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"14.5\" cy=\"14.5\" r=\".8\" fill=\"currentColor\" stroke=\"none\"/></svg>", "agent-geopolitical-risk": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8.5\"/><ellipse cx=\"11\" cy=\"11\" rx=\"3.5\" ry=\"8.5\"/><path d=\"M2.5 8.5h17M2.5 13.5h17\" stroke-width=\"1.2\" opacity=\".6\"/><path d=\"M11 5l1.5 3.5-3 .5 2 3-2.5 1.5\" stroke=\"none\" fill=\"currentColor\" opacity=\".6\"/><circle cx=\"11\" cy=\"4\" r=\"1.5\" fill=\"currentColor\" stroke=\"none\" opacity=\".9\"/></svg>", "agent-epr-calculator": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"16\" height=\"14\" rx=\"1.5\"/><path d=\"M7 9h3M7 12h5M7 15h2\" stroke-width=\"1.4\"/><path d=\"M14 9l1.5 3-1.5 3M16 9l1.5 3-1.5 3\" stroke-width=\"1.3\" opacity=\".7\"/></svg>", "agent-cold-start-advisor": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 19V8M7 12l4-4 4 4\" stroke-width=\"2\"/><path d=\"M5 19h12\" stroke-width=\"1.2\" opacity=\".5\"/><circle cx=\"11\" cy=\"5\" r=\"2.5\"/><path d=\"M9 5.5L11 3l2 2.5\" stroke-width=\"1.5\" fill=\"none\"/></svg>", "agent-festival-replenishment": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 18h16M5 18V9l6-6 6 6v9\"/><rect x=\"8.5\" y=\"12\" width=\"5\" height=\"6\" rx=\".8\"/><path d=\"M9 9h4\" stroke-width=\"1.2\"/><path d=\"M17 5l2-2M19 7l1-3\" stroke-width=\"1.5\" opacity=\".7\"/></svg>", "agent-video-content-mas": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"5\" width=\"14\" height=\"12\" rx=\"2\"/><polygon points=\"19,8 22,11 19,14\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"9\" cy=\"11\" r=\"2.5\"/></svg>", "agent-causal-pricing-advisor": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 16 L8 10 L12 13 L18 6\"/><circle cx=\"18\" cy=\"6\" r=\"1.5\" fill=\"currentColor\"/><path d=\"M3 19h16\" stroke-dasharray=\"2 1\"/></svg>", "agent-growth-diagnostics": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"M11 7v4l3 3\"/><path d=\"M7 11h1M15 11h1M11 7v1M11 15v1\"/></svg>", "agent-search-mas-monitor": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"9\" r=\"6\"/><path d=\"M13.5 13.5 L19 19\"/><path d=\"M9 6v3l2 2\"/></svg>", "agent-xai-compliance-auditor": "<svg viewBox=\"0 0 22 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 3L4 7v5c0 3.5 2.8 6.8 7 8 4.2-1.2 7-4.5 7-8V7L11 3z\"/><path d=\"M8 11l2 2 4-4\"/></svg>"};
+const _AGENT_CAT_CLASS={"agent-product-radar": "cat-supply", "agent-listing-doctor": "cat-ad", "agent-voc-decoder": "cat-voc", "agent-ad-attribution": "cat-ad", "agent-competitor-radar": "cat-ops", "agent-supply-sentinel": "cat-supply", "agent-cs-triage": "cat-voc", "agent-pricing-advisor": "cat-ops", "agent-account-guardian": "cat-risk", "agent-pnl-analyzer": "cat-ops", "agent-brand-guardian": "cat-risk", "agent-tiktok-content": "cat-ad", "agent-dml-counterfactual-pricing": "cat-ops", "agent-sku-tag-scanner": "cat-supply", "agent-compliance-matrix": "cat-ad", "agent-return-analyzer": "cat-voc", "agent-margin-calculator": "cat-ad", "agent-geopolitical-risk": "cat-supply", "agent-epr-calculator": "cat-ad", "agent-cold-start-advisor": "cat-supply", "agent-festival-replenishment": "cat-supply", "agent-video-content-mas": "cat-ad", "agent-causal-pricing-advisor": "cat-supply", "agent-growth-diagnostics": "cat-supply", "agent-search-mas-monitor": "cat-ad", "agent-xai-compliance-auditor": "cat-risk"};
+const _AGENT_CATS={"agent-product-radar": "选品分析", "agent-listing-doctor": "Listing 优化", "agent-voc-decoder": "VOC 分析", "agent-ad-attribution": "广告归因", "agent-competitor-radar": "竞品监控", "agent-supply-sentinel": "供应链预警", "agent-cs-triage": "客服售后", "agent-pricing-advisor": "价格策略", "agent-account-guardian": "合规风控", "agent-pnl-analyzer": "数据分析", "agent-brand-guardian": "合规风控", "agent-tiktok-content": "内容营销", "agent-dml-counterfactual-pricing": "价格策略", "agent-sku-tag-scanner": "标签工程", "agent-compliance-matrix": "合规风控", "agent-return-analyzer": "客服售后", "agent-margin-calculator": "数据分析", "agent-geopolitical-risk": "合规风控", "agent-epr-calculator": "合规风控", "agent-cold-start-advisor": "选品增长", "agent-festival-replenishment": "供应链", "agent-video-content-mas": "内容营销", "agent-causal-pricing-advisor": "价格策略", "agent-growth-diagnostics": "数据分析", "agent-search-mas-monitor": "搜索流量", "agent-xai-compliance-auditor": "合规风控"};
+
+// 颜色映射（与 agents.html 一致）
+const _CAT_COLORS={
+  'cat-supply':'#15803d','cat-ad':'#7c3aed','cat-voc':'#0891b2',
+  'cat-attribution':'#b45309','cat-competitor':'#be185d','cat-listing':'#0369a1',
+  'cat-pricing':'#c2410c','cat-risk':'#b91c1c','cat-analytics':'#1d4ed8',
+  'cat-content':'#6d28d9','cat-tag':'#0f766e','cat-cs':'#0891b2',
+  'cat-selection':'#059669',
+};
+function _catColor(id){return _CAT_COLORS[_AGENT_CAT_CLASS[id]]||'#555';}
+
+let _activeFilter='all';
+let _currentRptIdx=-1;
+const _FEISHU_HOOK_RPT=typeof _FEISHU_HOOK!=='undefined'?_FEISHU_HOOK:'';
+
+function _initSeeds(){
+  try{
+    var ex=JSON.parse(localStorage.getItem('agentReports')||'[]');
+    if(ex.length===0){
+      var rootPrefix=window.location.pathname.includes('/skills/')||window.location.pathname.includes('/domains/')||window.location.pathname.includes('/playbooks/')||window.location.pathname.includes('/solutions/')?'../':'';
+      fetch(rootPrefix+'assets/seed_reports.json').then(function(r){return r.json();}).then(function(seeds){
+        localStorage.setItem('agentReports',JSON.stringify(seeds));
+        _renderR();
+      }).catch(function(){});
+    }
+  }catch(e){}
+}
+
+function _loadR(){try{return JSON.parse(localStorage.getItem('agentReports')||'[]')}catch(e){return[]}}
+
+function setAgentFilter(id){
+  _activeFilter=id;
+  document.querySelectorAll('.rpt-filter').forEach(b=>b.classList.toggle('active',b.dataset.agent===id));
+  const list=document.getElementById('rpt-list');
+  list.dataset.page='1';
+  _renderR();
+}
+
+function _extractKPIs(result){
+  const kpis=[];
+  const pats=[
+    {rx:/可售天数[：:]\s*([\d.]+)\s*天/,label:'可售天数',suffix:'天',warnBelow:14},
+    {rx:/净利润率[：:]\s*([\d.]+)%/,label:'净利润率',suffix:'%',warnBelow:8},
+    {rx:/ACoS[：:]\s*([\d.]+)%/,label:'ACoS',suffix:'%',warnAbove:25},
+    {rx:/ROAS[：:]\s*([\d.]+)/,label:'ROAS'},
+    {rx:/机会评分[：:]\s*(\d+)\/100/,label:'机会评分',suffix:'/100',warnBelow:60},
+    {rx:/综合评分[：:]\s*(\d+)\/100/,label:'综合评分',suffix:'/100',warnBelow:60},
+    {rx:/账号健康[^:：]*[：:]\s*(\d+)/,label:'账号健康',suffix:'分',warnBelow:60},
+    {rx:/退货率[：:]\s*([\d.]+)%/,label:'退货率',suffix:'%',warnAbove:15},
+    {rx:/净利润[：:]\s*\$?([\d,.]+)/,label:'净利润',prefix:'$'},
+  ];
+  for(const p of pats){
+    const m=(result||'').match(p.rx);
+    if(m){
+      const n=parseFloat(m[1].replace(/,/g,''));
+      const w=(p.warnBelow!=null&&n<p.warnBelow)||(p.warnAbove!=null&&n>p.warnAbove);
+      kpis.push({label:p.label,value:(p.prefix||'')+m[1]+(p.suffix||''),warn:w});
+      if(kpis.length>=2)break;
+    }
+  }
+  return kpis;
+}
+
+function _renderReport(raw){
+  if(!raw)return'';
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const lines=raw.split(String.fromCharCode(10));
+  let html='';
+  for(let i=0;i<lines.length;i++){
+    const l=lines[i],trim=l.trim();
+    if(!trim){html+='<div class="rr-spacer"></div>';continue;}
+    if(/^━━.+━━$/.test(trim)){
+      const title=trim.replace(/^━+\s*/,'').replace(/\s*━+$/,'');
+      html+=`<div class="rr-section"><span class="rr-section-dot"></span>${esc(title)}</div>`;continue;
+    }
+    if(/^\[!\]|^\[WARN\]/.test(trim)){
+      html+=`<div class="rr-warn">⚠ ${esc(trim.replace(/^\[!\]\s*|\[WARN\]\s*/,''))}</div>`;continue;
+    }
+    if(/^\[OK\]/.test(trim)){
+      html+=`<div class="rr-ok">✓ ${esc(trim.replace(/^\[OK\]\s*/,''))}</div>`;continue;
+    }
+    if(/^\[>\]/.test(trim)){
+      html+=`<div class="rr-action">→ ${esc(trim.replace(/^\[>\]\s*/,''))}</div>`;continue;
+    }
+    if(/^[├└]─/.test(trim)){
+      const msg=trim.replace(/^[├└]─+\s*/,'');
+      const vm=msg.match(/^(.+?):\s*(.+)$/);
+      if(vm){
+        const isNum=/[\$\d,%\+\-]+/.test(vm[2]);
+        const val=isNum?`<span class="rr-val">${esc(vm[2])}</span>`:esc(vm[2]);
+        html+=`<div class="rr-row"><span class="rr-row-key">${esc(vm[1])}</span><span class="rr-row-sep">:</span>${val}</div>`;
+      }else{html+=`<div class="rr-row-plain">${esc(msg)}</div>`;}
+      continue;
+    }
+    if(/^P[0-3][（（(]/.test(trim)||/^P[0-3]:/.test(trim)){
+      const p=trim.match(/^(P\d)/)?.[1]||'P1';
+      const pc=p==='P0'?'rr-p0':p==='P1'?'rr-p1':'rr-p2';
+      html+=`<div class="rr-priority"><span class="${pc}">${p}</span>${esc(trim.replace(/^P\d[^\s]*/,'').trim())}</div>`;continue;
+    }
+    const kv=trim.match(/^(.{2,20})[：:]\s*(.{1,200})$/);
+    if(kv&&!trim.startsWith('http')){
+      const numRaw=kv[2],hasNum=/[\$\d,%]+/.test(numRaw)&&numRaw.length<60;
+      const val=hasNum?`<span class="rr-val">${esc(numRaw)}</span>`:esc(numRaw);
+      html+=`<div class="rr-kv"><span class="rr-kv-key">${esc(kv[1])}</span><span class="rr-kv-sep">:</span>${val}</div>`;continue;
+    }
+    let styled=esc(trim).replace(/(\$[\d,]+(?:\.\d+)?)/g,'<span class="rr-num">$1</span>').replace(/([\d.]+%)/g,'<span class="rr-pct">$1</span>');
+    html+=`<div class="rr-line">${styled}</div>`;
+  }
+  return html;
+}
+
+function _fmtTs(ts){
+  if(!ts)return'—';
+  const d=new Date(ts.replace(' ','T'));
+  if(isNaN(d))return ts;
+  const today=new Date();
+  const isToday=d.toDateString()===today.toDateString();
+  if(isToday)return'今天 '+d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+  return d.toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'})+' '+d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+}
+
+function _renderSummaryCard(r,globalIdx){
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  const catClass=_AGENT_CAT_CLASS[r.id]||'';
+  const color=_catColor(r.id);
+  const icon=_AGENT_ICONS[r.id]||'';
+  const ts=_fmtTs(r.ts);
+  const category=_AGENT_CATS[r.id]||'';
+  const kpis=_extractKPIs(r.result||'');
+
+  // 输入参数摘要（最多2个）
+  const inputEntries=Object.entries(r.inputs||{}).slice(0,2);
+  const chips=inputEntries.map(([k,v])=>
+    `<span class="rpt-card-input-chip">
+      <span class="rpt-card-input-key">${k}</span>
+      <span class="rpt-card-input-val" title="${v.replace(/"/g,"'")}">
+        ${v.length>25?v.slice(0,23)+'…':v}
+      </span>
+    </span>`
+  ).join('');
+
+  // KPI 亮点
+  const kpiHtml=kpis.length?`<div class="rpt-card-kpi-row">${
+    kpis.map(k=>`<div class="rpt-card-kpi">
+      <div class="rpt-card-kpi-label">${k.label}</div>
+      <div class="rpt-card-kpi-val ${k.warn?'warn':'ok'}">${k.value}</div>
+    </div>`).join('')
+  }</div>`:'';
+
+  // 结果文字预览（去掉格式符）
+  const preview=(r.result||'').replace(/━+|\[OK\]|\[!\]|\[>\]/g,'').replace(/\n+/g,' ').trim().slice(0,120);
+
+  const seededBadge=r.seeded?'<span class="rpt-card-seeded">示例</span>':'';
+
+  return `<div class="rpt-card" onclick="openRptDetail(${globalIdx})">
+    <div class="rpt-card-top">
+      <div class="rpt-card-icon-wrap" style="background:${color}">${icon}</div>
+      <div class="rpt-card-info">
+        <div class="rpt-card-agent-name">${name}</div>
+        <div class="rpt-card-ts">${ts}</div>
+      </div>
+    </div>
+    <div class="rpt-card-mid">
+      ${chips?`<div class="rpt-card-inputs-preview">${chips}</div>`:''}
+      ${kpiHtml||`<div class="rpt-card-result-preview">${preview}</div>`}
+    </div>
+    <div class="rpt-card-footer">
+      ${category?`<span class="rpt-card-cat-badge">${category}</span>`:''}
+      ${seededBadge}
+      <span class="rpt-card-view-btn">查看详情
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </span>
+    </div>
+  </div>`;
+}
+
+function _updateSummary(reports){
+  const today=new Date().toDateString();
+  document.getElementById('rpt-total').textContent=reports.length;
+  document.getElementById('rpt-agents').textContent=new Set(reports.map(r=>r.id)).size;
+  document.getElementById('rpt-today').textContent=reports.filter(r=>r.ts&&new Date(r.ts.replace(' ','T')).toDateString()===today).length;
+  const last=reports[reports.length-1];
+  document.getElementById('rpt-latest').textContent=last?_fmtTs(last.ts):'—';
+}
+
+function _renderR(){
+  const reports=_loadR();
+  _updateSummary(reports);
+  const filtered=_activeFilter==='all'?reports:reports.filter(r=>r.id===_activeFilter);
+  const list=document.getElementById('rpt-list');
+  if(!filtered.length){
+    list.innerHTML=`<div class="rpt-empty">
+      <svg class="rpt-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <div class="rpt-empty-title">暂无报告记录</div>
+      <div class="rpt-empty-desc">前往智能体广场运行分析，报告将自动保存到这里</div>
+      <a href="agents.html" class="rpt-empty-cta">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        前往智能体广场
+      </a>
+    </div>`;
+    return;
+  }
+  const PAGE_SIZE=9;
+  const reversed=[...filtered].reverse();
+  const totalPages=Math.ceil(reversed.length/PAGE_SIZE);
+  let curPage=parseInt(list.dataset.page||'1');
+  if(curPage<1)curPage=1;
+  if(curPage>totalPages)curPage=totalPages;
+  list.dataset.page=curPage;
+  const start=(curPage-1)*PAGE_SIZE;
+  const pageItems=reversed.slice(start,start+PAGE_SIZE);
+
+  // 计算 globalIdx（在完整 reports 数组中的真实索引）
+  const cards=pageItems.map((r,i)=>{
+    const fi=filtered.length-1-start-i;
+    const gi=reports.indexOf(filtered[fi]);
+    return _renderSummaryCard(r,gi);
+  }).join('');
+
+  const pager=totalPages<=1?'':(() => {
+    let btns=`<button class="rpt-page-btn" onclick="_goPage(${curPage-1})" ${curPage<=1?'disabled':''}>‹</button>`;
+    for(let p=1;p<=totalPages;p++){
+      if(totalPages>7&&p>2&&p<totalPages-1&&Math.abs(p-curPage)>1){
+        if(p===3||p===totalPages-2)btns+='<span class="rpt-page-info">…</span>';
+        continue;
+      }
+      btns+=`<button class="rpt-page-btn ${p===curPage?'active':''}" onclick="_goPage(${p})">${p}</button>`;
+    }
+    btns+=`<button class="rpt-page-btn" onclick="_goPage(${curPage+1})" ${curPage>=totalPages?'disabled':''}>›</button>`;
+    btns+=`<span class="rpt-page-info">${start+1}-${Math.min(start+PAGE_SIZE,filtered.length)}/${filtered.length}条</span>`;
+    return`<div class="rpt-pagination">${btns}</div>`;
+  })();
+
+  list.innerHTML=cards+pager;
+}
+
+function _goPage(p){
+  const list=document.getElementById('rpt-list');
+  list.dataset.page=p;
+  _renderR();
+  list.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── 详情 Modal ── */
+function openRptDetail(idx){
+  const r=_loadR()[idx];
+  if(!r)return;
+  _currentRptIdx=idx;
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  const color=_catColor(r.id);
+  const icon=_AGENT_ICONS[r.id]||'';
+
+  document.getElementById('rpt-detail-icon').innerHTML=icon;
+  document.getElementById('rpt-detail-icon').style.background=color;
+  document.getElementById('rpt-detail-agent-name').textContent=name;
+  document.getElementById('rpt-detail-ts').textContent=_fmtTs(r.ts);
+
+  // 输入参数
+  const inputChips=Object.entries(r.inputs||{}).map(([k,v])=>
+    `<span class="rpt-detail-input-chip">
+      <span class="rpt-detail-input-key">${k}:</span>
+      <span class="rpt-detail-input-val" title="${v.replace(/"/g,"'")}">${v.length>40?v.slice(0,38)+'…':v}</span>
+    </span>`
+  ).join('');
+  const inputsEl=document.getElementById('rpt-detail-inputs');
+  inputsEl.style.display=inputChips?'flex':'none';
+  inputsEl.innerHTML=inputChips;
+
+  document.getElementById('rpt-detail-body').innerHTML=`<div class="rr-body">${_renderReport(r.result||'')}</div>`;
+
+  const overlay=document.getElementById('rpt-detail-overlay');
+  overlay.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+
+function closeRptDetail(){
+  document.getElementById('rpt-detail-overlay').style.display='none';
+  document.body.style.overflow='';
+  _currentRptIdx=-1;
+}
+
+function copyCurrentRpt(){
+  if(_currentRptIdx<0)return;
+  const r=_loadR()[_currentRptIdx];
+  if(!r)return;
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  navigator.clipboard.writeText(`[${name}] ${r.ts||''}\
+\
+输入:\
+${JSON.stringify(r.inputs,null,2)}\
+\
+结果:\
+${r.result||''}`).then(()=>{
+    const btn=document.querySelector('.rpt-detail-btn:nth-child(2)');
+    if(btn){const orig=btn.innerHTML;btn.innerHTML='✓ 已复制';setTimeout(()=>btn.innerHTML=orig,1800);}
+  });
+}
+
+function deleteCurrentRpt(){
+  if(_currentRptIdx<0||!confirm('确认删除这条报告记录？'))return;
+  const rs=_loadR();
+  rs.splice(_currentRptIdx,1);
+  localStorage.setItem('agentReports',JSON.stringify(rs));
+  closeRptDetail();
+  _renderR();
+}
+
+function pushDetailToFeishu(){
+  if(_currentRptIdx<0)return;
+  const r=_loadR()[_currentRptIdx];
+  if(!r||!_FEISHU_HOOK_RPT){alert('飞书推送未配置');return;}
+  const name=_AGENT_NAMES[r.id]||r.name||r.id;
+  const btn=document.getElementById('rpt-detail-feishu-btn');
+  if(btn){btn.textContent='推送中…';btn.disabled=true;}
+  const inpLines=Object.entries(r.inputs||{}).map(([k,v])=>k+': '+v).join(String.fromCharCode(10));
+  const resultText=(r.result||'').replace(/\*\*/g,'').replace(/#+\s/g,'').trim().slice(0,1800);
+  const body=JSON.stringify({
+    msg_type:'interactive',
+    card:{
+      header:{title:{tag:'plain_text',content:'📊 '+name+' — 报告推送'},template:'green'},
+      elements:[
+        {tag:'div',text:{tag:'plain_text',content:'时间: '+r.ts+(inpLines?'\
+\
+输入:\
+'+inpLines:'')}},
+        {tag:'hr'},
+        {tag:'div',text:{tag:'plain_text',content:resultText}}
+      ]
+    }
+  });
+  fetch(_FEISHU_HOOK_RPT,{method:'POST',headers:{'Content-Type':'application/json'},body})
+    .then(()=>{if(btn){btn.innerHTML='✓ 已推送';setTimeout(()=>{btn.innerHTML='推送飞书';btn.disabled=false;},2000);};})
+    .catch(()=>{if(btn){btn.textContent='推送失败';btn.disabled=false;};});
+}
+
+// ESC 关闭
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRptDetail();});
+document.getElementById('rpt-detail-overlay').addEventListener('click',e=>{
+  if(e.target===document.getElementById('rpt-detail-overlay'))closeRptDetail();
+});
+
+function exportReports(){
+  const rs=_loadR();if(!rs.length){alert('暂无报告记录');return;}
+  const txt=rs.map((r,i)=>`=== 报告 #${i+1} | ${r.name||r.id} | ${r.ts||''} ===\
+输入:\
+${JSON.stringify(r.inputs,null,2)}\
+\
+结果:\
+${r.result||''}\
+`).join('\
+');
+  const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='agent-reports-'+new Date().toISOString().slice(0,10)+'.txt';a.click();
+}
+
+function aiSynthesizeReports(){const reports=loadReports();if(!reports.length){alert('暂无报告，请先在智能体广场运行分析');return;}const recent=reports.slice(0,8);const st=recent.map((r,i)=>'【'+(i+1)+'. '+r.name+' | '+r.ts+'】\n输入: '+JSON.stringify(r.inputs)+'\n结果: '+r.result.slice(0,400)).join('\n\n---\n\n');const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;z-index:3000;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px';overlay.innerHTML='<div style="background:#fff;border-radius:14px;width:100%;max-width:680px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)"><div style="padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:16px;font-weight:800;color:#0f172a">AI 综合分析报告</div><div style="font-size:12px;color:#64748b;margin-top:2px">基于最近 '+recent.length+' 条 Agent 运行记录</div></div><button id="ai-synth-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8">×</button></div><div style="flex:1;overflow-y:auto;padding:16px 20px"><div id="ai-synth-output" style="font-size:13.5px;color:#374151;line-height:1.7;white-space:pre-wrap"><div style="color:#6366f1;font-weight:600">⏳ 正在综合分析 '+recent.length+' 条报告，请稍候…</div></div></div><div style="padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:8px"><button id="ai-synth-copy" style="padding:7px 14px;background:var(--panel-2,#f8fafc);border:1.5px solid var(--line,#e2e8f0);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer"> 复制</button></div></div>';document.body.appendChild(overlay);const outputEl=document.getElementById('ai-synth-output');document.getElementById('ai-synth-close').onclick=()=>overlay.remove();overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};fetch('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'deepseek-chat',messages:[{role:'system',content:'你是跨境电商AI数据分析师。请综合分析下面多个Agent的运行结果，给出：1.跨Agent综合洞察；2.最需优先处理的3个问题；3.具体可量化行动建议。结构化中文输出。'},{role:'user',content:'以下是近期Agent运行结果：\n\n'+st}],max_tokens:1500,temperature:0.45,stream:false})}).then(r=>r.json()).then(data=>{const ans=(data?.choices?.[0]?.message?.content||'').trim()||'分析失败，请重试';outputEl.innerHTML=ans.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');document.getElementById('ai-synth-copy').onclick=()=>{navigator.clipboard.writeText(ans).then(()=>{document.getElementById('ai-synth-copy').textContent='✓ 已复制';});};}).catch(e=>{outputEl.innerHTML='<span style="color:#ef4444">[AI调用失败] '+e.message+'</span>';});}
+
+function clearReports(){
+  if(!confirm('确认清空全部运行记录？此操作不可撤销。'))return;
+  localStorage.removeItem('agentReports');_renderR();
+}
+
+function _loadRemoteReports(){
+  (async function(){
+    try{
+      if(typeof _sessionKey!=='function')return;
+      const remote=await fetch('/api/reports?session_key='+_sessionKey()+'&limit=20').then(r=>r.json());
+      if(remote&&remote.length){
+        const local=_loadR();
+        const seen=new Set(local.map(r=>r.id+'|'+(r.ts||'')));
+        const merged=remote
+          .filter(r=>!seen.has((r.agent_id||'')+'|'+(r.created_at||'')))
+          .map(r=>{return{id:r.agent_id,name:r.agent_name,result:r.result,ts:r.created_at,inputs:JSON.parse(r.inputs||'{}')};})
+          .concat(local).slice(0,50);
+        if(remote.length&&!local.length){localStorage.setItem('agentReports',JSON.stringify(merged));_renderR();}
+      }
+    }catch(e){}
+  })();
+}
+
+document.addEventListener('DOMContentLoaded',function(){_initSeeds();_renderR();_loadRemoteReports();});
+window.addEventListener('storage',e=>{if(e.key==='agentReports')_renderR();});
+</script>
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="assets/playbook-data.js?v=20260720193818"></script>
+  <script src="assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

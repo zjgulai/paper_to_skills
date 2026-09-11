@@ -1,0 +1,103 @@
+# ---------------------------------------------------------------------------
+# paper2skills 版本控制忽略规则
+# 目标：仓库只跟踪「文本资产」（卡片 / 脚本 / 文档 / 数据清单 / 报告），
+#       不跟踪体积巨大的二进制与中间产物。首次纳管时间 2026-09-12。
+# ---------------------------------------------------------------------------
+
+# --- 密钥与凭证（硬性禁止入库）---
+# 背景：2026-09-12 首次纳管时发现仓库根目录存在未加密的 DDDD.pem（RSA PRIVATE KEY）。
+# 该文件未被任何脚本引用，已从 git 历史中彻底清除并落在本地磁盘上。
+# 任何 *.pem / *.key / 凭证类文件一律不得入库。
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+*_rsa
+*.ppk
+credentials.json
+secrets.json
+secrets.y*ml
+*secret*.json
+*credential*.json
+
+# --- 论文与数据资产：二进制 / 表格 / 图片 / 压缩包（体积大，不入库）---
+# 说明：这些是「原始数据资产」，可由采集脚本重新生成，或本就属于业务侧数据仓库。
+#       需要长期归档请走对象存储，不要塞进 git。
+*.pdf
+*.xlsx
+*.xls
+*.xlsm
+*.docx
+*.pptx
+*.zip
+*.tar
+*.gz
+*.7z
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.mp4
+*.mov
+*.log
+*.bak
+*.sql
+*.parquet
+
+# --- 依赖与构建产物 ---
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+.pytest_cache/
+.DS_Store
+
+# --- 论文 PDF 全文（体积大；按需从 arXiv/出版商重新获取）---
+# 保留目录结构与 README，仅忽略二进制正文
+paper2skills-vault/papers/**/*.pdf
+paper2skills-vault/07-NLP-VOC/papers/**/*.pdf
+*.pdf
+
+# --- NLP-VOC 子项目的历史大体积中间产物（已迁出子项目，此处仅留档）---
+# 这些 jsonl 单文件 500MB+，git 无法有效管理；如需归档请走对象存储
+paper2skills-vault/07-NLP-VOC/research/**/*.jsonl
+paper2skills-vault/07-NLP-VOC/research/**/*.parquet
+paper2skills-vault/07-NLP-VOC/research/**/*.csv
+paper2skills-vault/07-NLP-VOC/research/**/*.db
+paper2skills-vault/07-NLP-VOC/research/**/*.sqlite*
+
+# --- 演示与媒体 ---
+paper2skills-vault/07-NLP-VOC/presentation/**/*.{mp4,mov,png,jpg,zip}
+*.mp4
+*.mov
+
+# --- 调研中间产物（可复现，不入库；只入 reports/ 与 data/*.md）---
+paper2skills-research/data/**/*.json
+paper2skills-research/data/**/*.csv
+
+# --- 本地备份 ---
+_backup/
+*.tar.gz
+
+# ---------------------------------------------------------------------------
+# 显式保留（即使被上面的规则命中）
+# 说明：候选池 JSON/CSV 是「本轮检索的可复现证据」，体积可控，必须入库。
+# ---------------------------------------------------------------------------
+!paper2skills-research/data/arxiv_candidates.csv
+!paper2skills-research/data/arxiv_candidates.json
+!paper2skills-research/data/journal_candidates.csv
+!paper2skills-research/data/journal_candidates.json
+!paper2skills-research/data/recommendations.csv
+!paper2skills-research/data/recommendations.json
+!paper2skills-research/data/skill_audit.json
+!paper2skills-research/data/dedup_report.json
+!paper2skills-research/data/bundles/**

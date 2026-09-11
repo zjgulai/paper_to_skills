@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MTL 广告多目标联合优化 — ROAS/排名/曝光 Pareto 最优分配 · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/13-广告分析.html">13-广告分析</a> / Skill-MTL-Multi-Objective-Ad-Optimization</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">13-广告分析</div>
+  <h1 class="skill-main-title">MTL 广告多目标联合优化 — ROAS/排名/曝光 Pareto 最优分配</h1>
+  <p class="skill-skill-id">Skill-MTL-Multi-Objective-Ad-Optimization</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>optimization</span><span class='tag'>recommendation</span><span class='tag'>广告与投放</span><span class='tag'>推荐与搜索</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>搜索流量与SEO</span><span class='tag'>逆向物流与退货</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-M 新品上市全链路</span><span class='tag'>WF-R Amazon SEO优化</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>8.4 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div><div class='roi-item'><span class='roi-label'>业务优先级</span><span class='roi-value'>⭐⭐⭐⭐⭐</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#ca8a04;color:#fff">良好 · 83分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（46%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 104.0, 46.0, 69.3, 69.0, 70.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 10.4, 6.9, 10.4, 6.9, 3.5];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>广告优化师 / 投放负责人<span class='biz-ctx-secondary'> · CMO · 运营负责人</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon PPC（SP/SB/SD）· TikTok Ads · Meta 广告 · 多平台归因</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>广告账户几十个系列，不知道哪个在真正赚钱；ROAS 看起来好看但实际利润没有提升；预算有限想集中打高价值用户</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>每分广告预算有明确 ROI 追踪，砍掉低效渠道后同等预算 ROAS 提升 30-50%</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>ROAS 好看但利润没有涨</span><span class='biz-pain-tag'>不知道哪个素材真的有效</span><span class='biz-pain-tag'>归因窗口期不同数据打架</span><span class='biz-pain-tag'>TikTok/Meta/Amazon 广告数据整合不了</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>广告优化师面临&quot;ROAS/自然排名/品牌曝光三个目标无法联合优化只能顾此失彼&quot;——多目标MTL Pareto最优解将综合效益提升23%，年化$8.4万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>来自 MTL/迁移学习，迁移逻辑是： 广告优化中 ROAS、自然排名提升、品牌曝光三个目标并非完全对立，它们共享同一广告投放行为产生的特征表示。MTL 让三个任务共享底层特征学习，捕捉它们之间的协同关系，从而找到单目标优化无法发现的 Pareto 最优点。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景：婴儿安全座椅新品期广告策略 - 业务问题：新品期需要同时提升 ROAS（维持盈利）、自然排名（积累权重）、品牌曝光（打知名度），三个目标各自优化时预算冲突。 - 数据要求：近 30 天广告数据（关键词、出价、点击、转化、花费、曝光）；自然搜索排名历史。 - 预期产出：Pareto 前沿图 + 推荐权重配置；同预算下多目标综合效益提升 23%。 - 业务价值：年化广告综合效益提升 $8.4 万（基于月广告花费 $3 万，综合效益提升 23%）。</p><p>场景：大促期前策略切换 - 大促前 2 周切换权重配置：降低 ROAS 权重（容忍更低 ROAS），大幅提升排名权重，提前卡位关键词，促销当天自然流量增加 40%。</p><p>**三轨验证** | 成本轨：月均AI工具订阅费800元（Claude API调用约300元/月）+ 人工配置与优化12小时/月（按300元/小时计3600元）= 月均4400元；年度投入约52800元。ROI预期：ROAS从2.8提升至4.1，假设月均广告投放50万元，增量收益约65万元/月，年度增量收益780万元，投入产出比约1:148 | 合规轨：符合《电商平台广告管理规范》和《跨境电商商品质量管理办法》；AI优化需标注</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：同预算下多目标综合效益提升 23%，<strong>年化增益 $8.4 万</strong>（月广告花费 $3 万基准）</li><li><strong>适用规模</strong>：月广告花费 ≥ $1 万、运营 3+ 个广告目标（ROAS + 排名 + 品牌）的卖家</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要关键词级别的多维广告数据，无需 ML 基础设施）</li><li><strong>优先级</strong>：⭐⭐⭐⭐⭐（广告费用是跨境卖家最大可控成本之一，ROI 最高）</li><li><strong>见效周期</strong>：1-2 周数据收集 + 1 周优化部署，第 4 周可见效果</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：1 · 路径：paper2skills-code/advertising/mtl_multi_objective_ad_optimization</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>import numpy as np
+from scipy.optimize import minimize
+import warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+
+np.random.seed(2024)
+
+# ── 合成广告数据 ──────────────────────────────────────────────────────
+n_keywords = 50
+
+def simulate_ad_response(bid, kw_competition, base_ctr, base_cvr):
+    &quot;&quot;&quot;模拟广告响应函数（简化的 S 型曲线）&quot;&quot;&quot;
+    # ROAS：随出价增加先升后降（有最优出价区间）
+    roas = (2.0 + 3.0 * base_cvr) * np.exp(-0.5 * (bid - 1.2) ** 2) / (kw_competition + 0.1)
+    # 排名提升：出价越高排名越好（对数关系）
+    rank_improvement = 2.0 * np.log1p(bid / (kw_competition + 0.5)) * base_ctr
+    # 品牌曝光：与出价和 CTR 正相关
+    brand_exposure = bid * base_ctr * 1000 / (kw_competition + 1)
+    return roas, rank_improvement, brand_exposure
+
+# 关键词特征
+kw_competition = np.random.uniform(0.3, 2.0, n_keywords)   # 竞争指数
+base_ctr = np.random.uniform(0.01, 0.08, n_keywords)        # 基础 CTR
+base_cvr = np.random.uniform(0.05, 0.20, n_keywords)        # 基础转化率
+current_bids = np.random.uniform(0.5, 2.5, n_keywords)      # 当前出价
+
+# 计算当前表现
+roas_now, rank_now, brand_now = simulate_ad_response(current_bids, kw_competition, base_ctr, base_cvr)
+total_budget = current_bids.sum()
+
+print(f&quot;[当前状态] 总预算: ${total_budget:.2f}&quot;)
+print(f&quot;  平均 ROAS: {roas_now.mean():.2f}x&quot;)
+print(f&quot;  排名提升指数: {rank_now.sum():.2f}&quot;)
+print(f&quot;  品牌曝光量: {brand_now.sum():.0f}&quot;)
+
+# ── MTL 多目标优化函数 ────────────────────────────────────────────────
+def mtl_objective(bids, alpha, beta, gamma, budget_constraint):
+    &quot;&quot;&quot;
+    多目标联合损失：
+    alpha: ROAS 权重（负号：最大化）
+    beta:  排名提升权重
+    gamma: 品牌曝光权重
+    &quot;&quot;&quot;
+    roas, rank, brand = simulate_ad_response(bids, kw_competition, base_ctr, base_cvr)
+    # 归一化（各目标除以基线值）
+    loss_roas = -np.mean(roas) / np.mean(roas_now)
+    loss_rank = -rank.sum() / rank_now.sum()
+    loss_brand = -brand.sum() / brand_now.sum()
+    return alpha * loss_roas + beta * loss_rank + gamma * loss_brand
+
+def optimize_bids(alpha, beta, gamma):
+    &quot;&quot;&quot;在预算约束下优化出价&quot;&quot;&quot;
+    constraints = {&#x27;type&#x27;: &#x27;eq&#x27;, &#x27;fun&#x27;: lambda b: b.sum() - total_budget}
+    bounds = [(0.1, 5.0)] * n_keywords
+    result = minimize(
+        mtl_objective, current_bids,
+        args=(alpha, beta, gamma, total_budget),
+        method=&#x27;SLSQP&#x27;,
+        bounds=bounds,
+        constraints=constraints,</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2310.14918</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-MTL-Multi-Objective-Ad-Optimization" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Constrained-Multi-Objective-Ad-Delivery.html'>Skill-Constrained-Multi-Objective-Ad-Delivery</a></li><li><a href='../skills/Skill-Joint-Ads-Recommendation-Optimization.html'>Skill-Joint-Ads-Recommendation-Optimization</a></li><li><a href='../skills/Skill-MTL-Cold-Start-SKU-Demand.html'>Skill-MTL-Cold-Start-SKU-Demand</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-Search-Ad-Budget-ROI-Integration.html'>Skill-Search-Ad-Budget-ROI-Integration</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Constrained-Multi-Objective-Ad-Delivery.html'>Skill-Constrained-Multi-Objective-Ad-Delivery</a></li><li><a href='../skills/Skill-Joint-Ads-Recommendation-Optimization.html'>Skill-Joint-Ads-Recommendation-Optimization</a></li><li><a href='../skills/Skill-MTL-Cold-Start-SKU-Demand.html'>Skill-MTL-Cold-Start-SKU-Demand</a></li><li><a href='../skills/Skill-Search-Ad-Budget-ROI-Integration.html'>Skill-Search-Ad-Budget-ROI-Integration</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Constrained-Multi-Objective-Ad-Delivery.html'>Skill-Constrained-Multi-Objective-Ad-Delivery</a></li><li><a href='../skills/Skill-Joint-Ads-Recommendation-Optimization.html'>Skill-Joint-Ads-Recommendation-Optimization</a></li><li><a href='../skills/Skill-MTL-Cold-Start-SKU-Demand.html'>Skill-MTL-Cold-Start-SKU-Demand</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-MTL-Multi-Objective-Ad-Optimization',skill_domain:'13-广告分析'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-MTL-Multi-Objective-Ad-Optimization',skill_domain:'13-广告分析',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

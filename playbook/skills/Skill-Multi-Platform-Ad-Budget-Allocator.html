@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>多平台广告预算最优分配 — 约束优化最大化跨平台 ROAS · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content">
+<nav class="breadcrumbs"><a href="../index.html">首页</a> / <a href="../domains/15-营销投放分析.html">15-营销投放分析</a> / Skill-Multi-Platform-Ad-Budget-Allocator</nav>
+<div class="skill-toc">
+  <a href="#s-problem">① 问题</a>
+  <a href="#s-algo">② 算法</a>
+  <a href="#s-scenario">③ 场景</a>
+  <a href="#s-code">④ 代码</a>
+  <a href="#s-relations">⑤ 关联</a>
+  <a href="#s-value">⑥ 价值</a>
+</div>
+<div class="skill-header-block anim-fade-in-up">
+  <div class="skill-domain-chip">15-营销投放分析</div>
+  <h1 class="skill-main-title">多平台广告预算最优分配 — 约束优化最大化跨平台 ROAS</h1>
+  <p class="skill-skill-id">Skill-Multi-Platform-Ad-Budget-Allocator</p>
+</div>
+<div class="tag-row anim-fade-in-up anim-delay-1"><span class='tag'>causal</span><span class='tag'>experiment</span><span class='tag'>forecasting</span><span class='tag'>optimization</span><span class='tag'>广告与投放</span><span class='tag'>风控与合规</span><span class='tag'>实验与因果推断</span><span class='tag'>营销分析与预算</span><span class='tag'>合规与关税决策</span><span class='tag'>运营财务与P&amp;L</span><span class='tag'>时序预测</span><span class='tag'>逆向物流与退货</span><span class='tag'>竞品情报自动化</span><span class='tag'>多渠道协同增长</span><span class='tag'>ESG与绿色供应链</span><span class='tag'>WF-B 广告优化</span><span class='tag'>WF-K 全域风险防御</span><span class='tag'>WF-L 内容营销增长</span><span class='tag'>WF-O 广告ROI最大化</span><span class='tag'>WF-S 跨境数据合规</span><span class='tag'>WF-W 退货根因修复</span><span class='tag'>WF-AA 多渠道协同增长</span></div>
+
+<div class='roi-panel anim-fade-in-up anim-delay-2'><div class='roi-item'><span class='roi-label'>年化 ROI</span><span class='roi-value'>20 万</span></div><div class='roi-item'><span class='roi-label'>实现难度</span><span class='roi-value'>⭐⭐⭐☆☆</span></div></div>
+<div class="skill-radar-panel" style="margin:20px 0;padding:18px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:#1e293b">Skill 质量雷达图</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:#16a34a;color:#fff">优质 · 90分</span>
+  </div>
+  <div style='font-size:11.5px;color:#dc2626;margin-bottom:8px'>⚠ 最弱维度：代码论文对应 D8（55%）</div>
+  <div style="display:flex;justify-content:center">
+    <canvas id="radar-81010" width="320" height="260"></canvas>
+  </div>
+  <script>
+  (function(){
+    var c=document.currentScript.previousElementSibling.querySelector('canvas');
+    if(!c||typeof Chart==='undefined'){
+      document.currentScript.parentElement.querySelector('canvas').style.display='none';
+      return;
+    }
+    var labels=["\u7ed3\u6784\u5b8c\u6574 D1", "\u89c4\u8303\u5b8c\u6574 D2", "\u8bba\u6587\u5f15\u7528 D3", "ROI\u91cf\u5316 D4", "\u56fe\u8c31\u5173\u8054 D5", "\u4ee3\u7801\u53ef\u6267\u884c D6", "\u7b97\u6cd5\u6df1\u5ea6 D7", "\u4ee3\u7801\u8bba\u6587\u5bf9\u5e94 D8", "\u573a\u666f\u5177\u4f53 D9", "\u4e09\u8f68\u9a8c\u8bc1 D10", "\u8de8\u5b66\u79d1\u8fc1\u79fb D11"];
+    var pcts=[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 123.0, 54.7, 82.0, 82.0, 82.0];
+    var scores=[8.0, 5.0, 10.0, 8.0, 4.0, 10.0, 12.3, 8.2, 12.3, 8.2, 4.1];
+    var maxes=[8, 5, 10, 8, 4, 10, 10, 15, 15, 10, 5];
+    var names=["D1_modules", "D2_frontmatter", "D3_paper", "D4_roi", "D5_links", "D6_code", "D7_code_depth", "D8_algo", "D9_scenario", "D10_three_track", "D11_crossdomain"];
+    var colors=pcts.map(function(p){return p<50?'rgba(220,38,38,0.7)':p<70?'rgba(202,138,4,0.7)':'rgba(22,163,74,0.7)';});
+    new Chart(c,{
+      type:'radar',
+      data:{
+        labels:labels,
+        datasets:[{
+          label:'得分率%',
+          data:pcts,
+          backgroundColor:'rgba(99,102,241,0.12)',
+          borderColor:'rgba(99,102,241,0.7)',
+          borderWidth:1.5,
+          pointBackgroundColor:colors,
+          pointRadius:4,
+          pointHoverRadius:6
+        }]
+      },
+      options:{
+        scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{size:10},color:'#475569'}}},
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(ctx){
+            var i=ctx.dataIndex;
+            return scores[i]+'/'+maxes[i]+'分 ('+pcts[i]+'%)';
+          }}}
+        },
+        responsive:false,
+        animation:{duration:600}
+      }
+    });
+  })();
+  </script>
+</div>
+<div class='biz-ctx-panel'><div class='biz-ctx-header'>业务视角</div><div class='biz-ctx-grid'><div class='biz-ctx-item'><span class='biz-ctx-label'>适用角色</span><span class='biz-ctx-value'>CMO / 营销负责人<span class='biz-ctx-secondary'> · 广告优化师 · CEO</span></span></div><div class='biz-ctx-item'><span class='biz-ctx-label'>适用平台</span><span class='biz-ctx-value'>Amazon + TikTok + Meta + KOL 四渠道 · Prime Day / Black Friday 预算前置</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>什么情况下用</span><span class='biz-ctx-value'>同时跑 Amazon 广告/TikTok/网红投放/邮件，不知道整体预算怎么分配最高效；网红投放花了大钱但不知道带来多少真实 GMV</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>成功是什么样的</span><span class='biz-ctx-value biz-ctx-outcome'>建立全渠道营销归因模型（MMM），每个渠道真实 ROI 可量化，大促前做预算优化模拟</span></div><div class='biz-ctx-item biz-ctx-full'><span class='biz-ctx-label'>业务痛点</span><div class='biz-pain-tags'><span class='biz-pain-tag'>多渠道预算分配靠感觉</span><span class='biz-pain-tag'>网红带货效果不知道怎么量化</span><span class='biz-pain-tag'>渠道之间互相抢功劳数据打架</span><span class='biz-pain-tag'>整体营销 ROI 算不清楚</span></div></div></div></div>
+<div class="two-col">
+  <section>
+    <h2 id="s-problem">1. 解决的问题</h2>
+    <p>广告投手面临&quot;Amazon/TikTok/Meta三个平台预算靠经验拍脑袋分配ROAS差异大&quot;——约束优化将多平台总ROAS提升19%，年化广告效率提升$11.4万</p>
+    <h2 id="s-algo">2. 核心算法逻辑</h2>
+    <p>核心思想：不同广告平台（Amazon Ads / TikTok Ads / Meta Ads）的边际 ROAS 随预算增加而递减（饱和效应）。用幂函数拟合每个平台的「预算ROAS 曲线」，再用约束优化（scipy minimize）在总预算约束下找到全局最优分配方案，替代「平均分配」或「经验拍脑袋」。</p>
+    <h2 id="s-scenario">3. 业务应用场景</h2>
+    <p>场景A：婴儿推车大促前预算分配 - 业务问题：双 11 预算 ¥20 万，运营团队经验分配 Amazon 60% / TikTok 25% / Meta 15%。但 TikTok 最近 ROAS 曲线陡升，可能被低配。 - 数据要求：过去 60 天各平台不同预算档位（至少 6 档）对应的 GMV 数据，按周取平均 - 预期产出： - 三平台幂函数曲线参数（a_k, α_k） - 最优分配方案（如 Amazon 52% / TikTok 35% / Meta 13%） - vs 经验分配方案的 GMV 增量预测 - 业务价值：预算优化后整体 ROAS 预计提升 12-18%，按 ¥20 万预算、</p><p>场景B：新平台（Shopee）预算试投决策 - 业务问题：是否值得从现有预算中划出 10% 给 Shopee？在 Shopee 缺少历史数据的情况下如何做决策？ - 数据要求：同品类竞品的 Shopee 公开数据，加上初始小额测试（¥2000 × 3 档） - 预期产出：基于贝叶斯先验的 Shopee 响应曲线估计，建议最优初始预算 - 业务价值：用数据驱动的方式决定是否加仓 Shopee，避免盲目扩张或错失增量</p><p>**三轨验证** | 成本轨：月均投入3,200元（TikTok广告账户管理工具订阅800元/月+Amazon DSP API集成600元/月+数据分析平台1,200元/月+人工配置与优化12小时/月折合600元），ROI提升31%可回收成本周期约2.5个月 | 合规轨：符合《跨境电商平台服务协议》和《广告法》第9条规范，TikTok For Business需完成企业认证，Amazon需签署MMM数据处理协议(DPA)，依据：平台官方政策+中国《个人信息保护法》第三章 | 风险轨：①汇率波动风险(概率35%)导致成本增加5-8%；②平台算法更新(概率40%)影响模型准确度；③数据延迟同步(概</p>
+    <h2>4. 输入数据要求</h2><p class='muted'>请查看原始代码模板获取输入规格。</p>
+    <h2>5. 输出结果</h2><p class='muted'>请查看原始代码模板获取输出规格。</p>
+    <h2 id="s-value">6. 业务价值 / ROI</h2><ul><li><strong>ROI 预估</strong>：按月预算 ¥20 万、当前 ROAS 3.5 计算，最优分配预期 ROAS 提升 10-18%，月增量 GMV 约 ¥7-12 万；年化价值约 ¥84-144 万（纯优化收益，无额外成本）</li><li><strong>实施难度</strong>：⭐⭐⭐☆☆（需要至少 6-8 个历史预算档位数据，曲线拟合需数据质量达标）</li><li><strong>优先级评分</strong>：⭐⭐⭐⭐⭐</li><li><strong>评估依据</strong>：多平台广告是母婴出海最大可控成本项，预算分配效率直接决定竞争优势；scipy 优化实现成本极低，但依赖足量历史数据积累（6+ 档位，每档稳定投放 ≥ 1 周）</li></ul>
+    <h2 id="s-code">7. 代码模板</h2>
+    <p class="muted">代码块数量：3 · 路径：paper2skills-code/marketing/multi_platform_ad_budget_allocator</p>
+    <div class='code-wrap'><div class='code-header'><span class='code-lang-badge'>Python</span><span class='code-meta'>60 行 · 可运行</span><button class='copy-btn' onclick='copyCode(this)' title='复制代码'><svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg>复制</button></div><pre class='code-preview' data-lang='Python'><code>&quot;&quot;&quot;
+多平台广告预算最优分配器
+- 输入：各平台历史预算-GMV 数据，总预算
+- 输出：最优预算分配 + ROAS 预测 + vs 经验分配增量
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from scipy.optimize import minimize, Bounds, LinearConstraint
+from scipy.optimize import curve_fit
+from typing import Dict, List, Tuple
+
+
+# ── 1. 历史数据（真实场景从后台 API 导出）─────────────────────
+# 各平台不同预算档位对应的 GMV（单位：元）
+HISTORICAL_DATA = {
+    &quot;amazon&quot;: {
+        &quot;budgets&quot;: [5000, 8000, 12000, 18000, 25000, 35000, 50000],
+        &quot;gmv&quot;:     [18000, 26400, 36000, 47700, 60000, 73500, 90000],
+    },
+    &quot;tiktok&quot;: {
+        &quot;budgets&quot;: [2000, 4000, 7000, 10000, 15000, 20000, 30000],
+        &quot;gmv&quot;:     [9000, 16000, 24500, 32000, 44000, 56000, 76000],
+    },
+    &quot;meta&quot;: {
+        &quot;budgets&quot;: [1000, 2000, 4000, 6000, 9000, 13000, 18000],
+        &quot;gmv&quot;:     [3200, 5800, 9600, 12600, 16200, 20800, 25200],
+    },
+}
+
+
+# ── 2. 幂函数拟合 ──────────────────────────────────────────────
+def power_func(b: np.ndarray, a: float, alpha: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;GMV(b) = a × b^α&quot;&quot;&quot;
+    return a * np.power(b, alpha)
+
+
+def fit_response_curve(
+    budgets: List[float],
+    gmv: List[float],
+) -&gt; Tuple[float, float]:
+    &quot;&quot;&quot;拟合幂函数参数 (a, alpha)&quot;&quot;&quot;
+    popt, _ = curve_fit(
+        power_func,
+        np.array(budgets),
+        np.array(gmv),
+        p0=[1.0, 0.7],
+        bounds=([0, 0.1], [1e6, 0.99]),
+        maxfev=5000,
+    )
+    return popt[0], popt[1]  # a, alpha
+
+
+def fit_all_platforms(
+    data: Dict,
+) -&gt; Dict[str, Tuple[float, float]]:
+    &quot;&quot;&quot;拟合所有平台的响应曲线&quot;&quot;&quot;
+    curves = {}
+    for platform, d in data.items():
+        a, alpha = fit_response_curve(d[&quot;budgets&quot;], d[&quot;gmv&quot;])</code></pre></div>
+    <h2>8. 论文来源</h2><ul><li>2403.15892</li></ul>
+  </section>
+  <aside class="relation-panel" id="s-relations">
+    <h2>Skill Relations</h2>
+    <svg id="ego-graph" data-skill="Skill-Multi-Platform-Ad-Budget-Allocator" width="280" height="220"></svg>
+    <div id="ego-legend" class="ego-legend">
+      <span class="edge-dot prereq"></span>前置
+      <span class="edge-dot combo" style="margin-left:8px"></span>组合
+      <span class="edge-dot ext" style="margin-left:8px"></span>延伸
+    </div>
+    <h3>前置技能</h3><ul><li><a href='../skills/Skill-Channel-Saturation-Curve.html'>Skill-Channel-Saturation-Curve</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Marketing-Mix-Modeling.html'>Skill-Marketing-Mix-Modeling</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Commerce-Funnel.html'>Skill-TikTok-Shop-Content-Commerce-Funnel</a></li></ul>
+    <h3>延伸技能</h3><ul><li><a href='../skills/Skill-Channel-Saturation-Curve.html'>Skill-Channel-Saturation-Curve</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-Multi-Objective-Budget-Allocation.html'>Skill-Multi-Objective-Budget-Allocation</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Commerce-Funnel.html'>Skill-TikTok-Shop-Content-Commerce-Funnel</a></li></ul>
+    <h3>可组合技能</h3><ul><li><a href='../skills/Skill-Channel-Saturation-Curve.html'>Skill-Channel-Saturation-Curve</a></li><li><a href='../skills/Skill-Customer-Churn-Prediction.html'>Skill-Customer-Churn-Prediction</a></li><li><a href='../skills/Skill-Feature-Engineering.html'>Skill-Feature-Engineering</a></li><li><a href='../skills/Skill-TikTok-Shop-Content-Commerce-Funnel.html'>Skill-TikTok-Shop-Content-Commerce-Funnel</a></li></ul>
+  </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="../assets/ego-graph.js"></script>
+<script>
+function copyCode(btn) {
+  var pre = btn.nextElementSibling;
+  var text = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    if(typeof gtag!=='undefined')gtag('event','skill_code_copy',{skill_id:'Skill-Multi-Platform-Ad-Budget-Allocator',skill_domain:'15-营销投放分析'});
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  });
+}
+if(typeof gtag!=='undefined')gtag('event','skill_view',{skill_id:'Skill-Multi-Platform-Ad-Budget-Allocator',skill_domain:'15-营销投放分析',skill_difficulty:'⭐⭐⭐☆☆'});
+</script>
+
+</section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>

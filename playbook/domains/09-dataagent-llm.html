@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>09-DataAgent-LLM · paper2skills</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9HJR3G0MR"></script>
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-N9HJR3G0MR');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">P</span>
+      <span class="brand-name">paper2skills<span class="brand-tag">Playbook</span></span>
+    </a>
+    <div class="topbar-right">
+      <input id="global-search" placeholder="搜索技能 / 场景…" autocomplete="off" role="search" aria-label="搜索">
+      <a href="../ai-roadmap.html" class="topbar-cta">AI 路线图 →</a>
+      <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
+        <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
+        <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
+        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
+      </div>
+    </div>
+  </header>
+  <div id="search-results" class="search-results hidden" role="listbox"></div>
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <main class="layout">
+    <aside class="sidebar" id="sidebar">
+       <div class="sb-top">
+         <div class="sb-section"><p class="sb-label">决策工具</p><div class="sb-links"><a href="../index.html"><span class="sbl-text">总览</span></a><a href="../diagnostic.html"><span class="sbl-text">业务诊断中心</span></a><a href="../chat.html"><span class="sbl-text">AI 知识库对话</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">执行手册</p><div class="sb-links"><a href="../playbooks/index.html"><span class="sbl-text">场景手册</span></a><a href="../solutions/index.html"><span class="sbl-text">方案库</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">智能体</p><div class="sb-links"><a href="../agents.html"><span class="sbl-text">智能体广场</span></a><a href="../agent-report.html"><span class="sbl-text">智能体报告</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">知识图谱</p><div class="sb-links"><a href="../domains/index.html"><span class="sbl-text">按领域浏览</span></a><a href="../topics/index.html"><span class="sbl-text">按主题浏览</span></a><a href="../workflows/index.html"><span class="sbl-text">业务工作流</span></a><a href="../graph/overview.html"><span class="sbl-text">技能关系图谱</span></a><a href="../skills/index.html"><span class="sbl-text">全部 Skills</span></a></div></div>
+         <div class="sb-section"><p class="sb-label">战略报告</p><div class="sb-links"><a href="../ai-roadmap.html"><span class="sbl-text">AI 能力路线图</span></a><a href="../maturity-report.html"><span class="sbl-text">成熟度报告 2026</span></a></div></div>
+      </div>
+      <div class="sb-bottom">
+        <a href="../pricing.html" class="sb-upgrade-card">
+          <span class="sb-upgrade-label">免费版 · 每月10次</span>
+          <span class="sb-upgrade-title">升级 Pro 解锁无限调用</span>
+          <span class="sb-upgrade-sub">CSV接入 · REST API · 无限Agent →</span>
+        </a>
+        <a href="../settings.html" class="sb-settings-link">
+          <span class="sb-settings-icon">⚙</span>
+          <span>设置 · API Key</span>
+        </a>
+      </div>
+    </aside>
+    <section class="content"><h1>09-DataAgent-LLM</h1><p>DataAgent, LLM-powered data analysis, NL2Dashboard</p>
+<div style='display:flex;align-items:center;gap:10px;margin:12px 0 8px'>
+  <input id='domain-search' placeholder='在 09-DataAgent-LLM 中搜索…' autocomplete='off'
+    style='flex:1;max-width:340px;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px'>
+  <span class='muted' id='domain-count' style='font-size:13px'></span>
+</div>
+<div id="dom-pg-bar" class="pg-bar"></div>
+<script>
+(function(){
+  var PAGE=40;var cur=1;
+  function getVis(){return Array.from(document.querySelectorAll('.cards .skill-card')).filter(function(c){return c.style.display!=='none';});}
+  function renderPager(total){
+    var pages=Math.ceil(total/PAGE);
+    var bar=document.getElementById('dom-pg-bar');if(!bar)return;
+    if(pages<=1){bar.innerHTML='';return;}
+    var h='<div class="pg-inner">';
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur-1)+')" '+(cur<=1?'disabled':'')+'>‹</button>';
+    for(var p=1;p<=pages;p++){
+      if(pages>8&&p>2&&p<pages-1&&Math.abs(p-cur)>1){if(p===3||p===pages-2)h+='<span class="pg-ellipsis">…</span>';continue;}
+      h+='<button class="pg-btn'+(p===cur?' pg-active':'')+'" onclick="window._dpg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="pg-btn" onclick="window._dpg('+(cur+1)+')" '+(cur>=pages?'disabled':'')+'>›</button>';
+    h+='<span class="pg-info">第'+cur+'/'+pages+'页 · 共'+total+'个</span></div>';
+    bar.innerHTML=h;
+  }
+  function applyPage(){
+    var all=getVis();
+    var s=(cur-1)*PAGE;
+    all.forEach(function(c,i){c.style.display=(i>=s&&i<s+PAGE)?'':'none';});
+    renderPager(all.length);
+  }
+  window._dpg=function(p){
+    var all=getVis();
+    var pages=Math.ceil(all.length/PAGE);
+    cur=Math.max(1,Math.min(p,pages));
+    all.forEach(function(c){c.style.display='';});
+    applyPage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  var inp=document.getElementById('domain-search');
+  var cnt=document.getElementById('domain-count');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    cur=1;
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.cards .skill-card').forEach(function(c){
+      c.style.display=(!q||(c.textContent||'').toLowerCase().includes(q))?'':'none';
+    });
+    var vis=getVis().length;
+    if(cnt)cnt.textContent=q?('显示 '+vis+' / '+document.querySelectorAll('.cards .skill-card').length+' 个'):'';
+    applyPage();
+  });
+  document.addEventListener('DOMContentLoaded',applyPage);
+})();
+</script><div class='cards'><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agent-Capability-Evaluation.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agent能力评估基准 — 任务完成率与工具调用准确率评测</h3>
+  <p class="sc-desc">技术运营面临&quot;Agent版本迭代无量化评估、上线后才发现能力退化引发运营事故&quot;——5D评估框架将Agent退化问题在上线前拦截，年化规避运营事故损失50万元+</p>
+  <div class='sc-footer'><span class='sc-roi'>5-20 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agent-Memory-KV-Store.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agent 长期记忆 KV 存储设计 — 跨会话业务上下文保持</h3>
+  <p class="sc-desc">Agent工程师面临&quot;跨会话业务上下文丢失导致用户每次交互都要重新描述背景&quot;——Agent长期记忆存储将用户背景重述次数从每次降至0次，年化提升Agent使用效率节省用户时间成本10-20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>减少运营人员重复上下文说明，每 SKU 每月节省 2-5 小</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-Competitor-Intelligence.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agent 自动化竞品情报采集与分析 — Amazon/TikTok 全渠道监控</h3>
+  <p class="sc-desc">运营陷入竞品价格/评论变化 T+7 滞后感知困境——引入多渠道 Agent 自动巡检框架（Amazon/TikTok 全渠道），将竞品异动响应窗口从7天压缩至1小时，GMV 防御损失年化减少 15%。</p>
+  <div class='sc-footer'><span class='sc-roi'>竞争响应速度提升 7x，估算每季度减少因价格滞后导致的转化损</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-ETL-Data-Pipeline.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agentic ETL数据管道 — LLM驱动的自动化数据清洗与转换</h3>
+  <p class="sc-desc">分析师面临&quot;Amazon和TikTok数据格式不同每次手动对账需2小时&quot;——LLM驱动的语义ETL自动Schema推断和跨源JOIN，对账时间从2小时压缩到5分钟，年化节省约52万元</p>
+  <div class='sc-footer'><span class='sc-roi'>52万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-PnL-Analyst.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agent 驱动的 P&amp;L 归因分析 — SKU 级成本拆解</h3>
+  <p class="sc-desc">财务团队面临&quot;SKU级P&amp;L拆解耗时3天且人工汇总容易出错&quot;——Agent驱动P&amp;L归因分析将SKU级成本拆解时间从3天压缩至30分钟，年化节省财务分析人力成本20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>P&amp;L 分析时间从 2-4 小时降至 5 分钟；及时发现亏损</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Agentic-RAG-Active-Retrieval.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agentic RAG主动检索 — 自主规划多轮检索的知识增强Agent</h3>
+  <p class="sc-desc">客服AI团队面临&quot;固定RAG每次检索全库噪声多回答错误率15%且API成本高&quot;——Self-RAG按需精准检索准确率提升至95%同时检索成本降低40%，年化35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Argos-Agentic-Anomaly-Detection.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Argos — Agentic时序异常检测</h3>
+  <p class="sc-desc">背景：母婴品牌在Amazon US、Amazon EU、Shopify、SHEIN四平台销售，需要监控每日销量、广告ROI、退货率等指标异常</p>
+  <div class='sc-footer'><span class='sc-roi'>5-10万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Autonomous-AB-Report-Agent.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Agent 自动生成 AB 实验分析报告 — 含统计检验解读</h3>
+  <p class="sc-desc">分析师被每月 5-10 个 Listing AB 实验的手工报告撰写工作淹没——引入 Agent 自动报告生成（统计检验解读+业务建议），人均报告耗时从3小时→15分钟，释放分析师年化2400小时投入高价值决策。</p>
+  <div class='sc-footer'><span class='sc-roi'>每月节省分析师 20-40 小时报告撰写时间，年化节省人力约</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-CS-Ticket-Intelligence.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">CS Ticket Intelligence — 客服工单智能分诊：自动分类路由与优先级排序</h3>
+  <p class="sc-desc">每天50条买家消息手动分类处理需3-4小时且容易遗漏高危差评工单——AI工单分诊1秒完成多维分类（类型/紧急度/情感/差评风险），响应时间8h→2h客服效率提升3-5倍年化节省15-40万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥15-40 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Customer-Journey-Decision-Tree.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">客服对话决策树 - 从日志中自学策略</h3>
+  <p class="sc-desc">母婴出海电商客服 70% 工单是&quot;退换货咨询&quot;(尺码错、漏发、过敏等),人工处理成本高,响应慢</p>
+  <div class='sc-footer'><span class='sc-roi'>600 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-Agent-Error-Recovery.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">数据 Agent 执行失败自修复 — 自动重试+降级策略</h3>
+  <p class="sc-desc">大促期间数据 Pipeline 因 API 频繁返回 503/429 中断率高达30%——引入 Agent 自修复框架（指数退避+降级策略+自动告警），Pipeline 中断率从 30%→2%，年化避免大促期数据断供损失 40%。</p>
+  <div class='sc-footer'><span class='sc-roi'>Pipeline 中断率从 30% → 3%，避免每日数据缺</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-Collection-Agent-Pipeline.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Data Collection Agent Pipeline — LLM Agent 自动化多源数据采集 Pipeline</h3>
+  <p class="sc-desc">研究助理面临数据采集人工慢——采集Agent将抓数工时从8小时压到1小时，年化省14万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Data-to-Dashboard-Multi-Agent-Visualization.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Data-to-Dashboard — 多Agent智能可视化生成</h3>
+  <p class="sc-desc">经营管理者面临报表分散看不全——多Agent可视化将看数时间从40分降到8分，年化省10万元</p>
+  <div class='sc-footer'><span class='sc-roi'>58%</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DataAgent-Marketing-Attribution.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">DataAgent营销归因分析 — LLM驱动的多渠道营销效果自动归因</h3>
+  <p class="sc-desc">CMO面临&quot;多渠道营销归因报告需等2天且无法即兴追问&quot;——对话式营销归因Agent 10分钟生成报告支持即兴追问，年化营销预算优化效益约100万元</p>
+  <div class='sc-footer'><span class='sc-roi'>20万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">DeepAnalyze — 自主数据科学Agent</h3>
+  <p class="sc-desc">背景：母婴品牌在Amazon、Shopify、SHEIN等多个平台销售，运营团队每周需要汇总各平台数据生成分析报告，耗时4-6小时/周</p>
+  <div class='sc-footer'><span class='sc-roi'>20万</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-DialIn-LLM-Case-Intent-Clustering.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Dial-In LLM 层次化客服意图聚类 - 无监督发现 Case 意图树</h3>
+  <p class="sc-desc">客服主管面临来电诉求归类靠人工——意图聚类将分拣准确率提到92%，年化省9万元</p>
+  <div class='sc-footer'><span class='sc-roi'>200-400 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Annotation-Weak-Supervision.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">EvoPool — 进化式多智能体弱监督标注</h3>
+  <p class="sc-desc">母婴跨境卖家面临海量多语言评论与工单需标注的成本困境——EvoPool 进化式弱监督框架将 LLM 直接标注 10 万条的 10 万次 API 调用压缩为 50 次，标注速度提升 4500x，年化节省标注人力成本 80-150 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80-150 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Business-Intelligence-Reasoning.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM Business Intelligence Reasoning — LLM 商业智能推理：从数据到决策的 CoT 分析</h3>
+  <p class="sc-desc">运营每周一分析多维度数据准备汇报需要3-4小时，异常出现时根因分析需1-2天——LLM Chain-of-Thought推理将数据→假设→验证→建议自动化，周报分析15分钟完成年化节省人力20-50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>¥20-50 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Code-Generation-Data-Pipeline.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM驱动数据管道代码生成 — 自然语言生成ETL/数据清洗代码</h3>
+  <p class="sc-desc">运营面临&quot;Amazon和TikTok报告格式差异需工程师2天手工清洗&quot;——LLM自动生成ETL代码+自修复执行，处理时间5分钟，年化节省约50万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Demand-Signal-Extraction.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM 从非结构化数据抽取需求信号 — 评论/社媒挖掘</h3>
+  <p class="sc-desc">选品分析师面临&quot;从海量评论和社媒内容中手动提炼需求信号耗时且遗漏多&quot;——LLM结构化需求信号抽取将分析覆盖率从5%提升至90%且速度提升50倍，年化发现更多选品机会增收30-60万元</p>
+  <div class='sc-footer'><span class='sc-roi'>选品研究时间从 6 小时降至 30 分钟，每次选品研究节省</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Ecommerce-Report-Automation.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM 驱动电商经营报表自动生成 — 日报/周报零代码落地</h3>
+  <p class="sc-desc">运营面临&quot;每天手动整理销售数据制作日报耗时2-3小时&quot;——LLM自动报告生成将日报制作时间从150分钟压缩至5分钟，年化节省运营人力成本15-25万元</p>
+  <div class='sc-footer'><span class='sc-roi'>节省每周 3-4 小时运营人工，按月化算约节省 0.5 人天</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Financial-Report-Analyst.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM Financial Report Analyst — 迭代精化 + 代码验证的智能财务报告解读</h3>
+  <p class="sc-desc">跨境母婴 CFO 面临 Amazon/TikTok/银行三平台账单手工汇总需 3 天——迭代精化 + Python 数值验证 Agent 将月度 P&amp;L 汇总压缩至 30 分钟，误差率从手工 5-10% 降至 &lt;2%，年化节省财务人力成本 10-30 万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-30 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Hallucination-Detection-BI.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM幻觉检测 — 商业智能场景的事实一致性验证引擎</h3>
+  <p class="sc-desc">DataAgent运营面临&quot;AI日报数字偶发错误损害工具可信度&quot;——多层事实核查使幻觉检测TPR达82%，避免月均3-5起决策失误，年化预防损失约200万元</p>
+  <div class='sc-footer'><span class='sc-roi'>10-50万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Schema-Inference.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM 自动推断数据结构 — 无 schema 的电商 API 接入</h3>
+  <p class="sc-desc">数据工程师面临&quot;接入新电商API时手动解析无文档schema耗时数天&quot;——LLM自动推断数据结构将新API接入时间从3天缩短至2小时，年化加速业务集成节省工程成本20-35万元</p>
+  <div class='sc-footer'><span class='sc-roi'>新 API 接入时间从 3 天降至 4 小时，年化节省工程人</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Tool-Selection-Router.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM工具路由与意图识别 — 意图分类与置信过滤</h3>
+  <p class="sc-desc">智能体运营面临&quot;Multi-Tool Agent工具路由错误率32%、无效API调用占40%成本&quot;——意图分类+置信过滤将工具选择准确率从68%提升至91%，年化节省API成本24万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-Uncertainty-Quantification-BI.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM输出不确定性量化 — BI场景的置信度感知决策</h3>
+  <p class="sc-desc">运营面临&quot;AI日报数字无法判断哪些可信哪些需复核&quot;——语义熵+Platt校准为每个结论标注置信度，高置信直接使用低置信必核，年化避免AI错误决策损失约110万元</p>
+  <div class='sc-footer'><span class='sc-roi'>80万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-LLM-as-Judge-Evaluator.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">LLM-as-Judge — 用大模型自动评估生成内容质量</h3>
+  <p class="sc-desc">团队面临&quot;AI每天生成50条Listing人工审核不够用&quot;——LLM-as-Judge实现100%自动化质检，合规风险发现率提升50%，年化节省人力+避免下架损失共140万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multi-Step-Reasoning-BI.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">多步推理BI分析 — LLM链式推理自动生成财务归因报告</h3>
+  <p class="sc-desc">财务团队面临&quot;月度P&amp;L归因报告需2天人工分析且框架不一致&quot;——CoT+PAL多步推理链20分钟自动生成可信归因报告，年化节省80万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Multimodal-Table-Understanding.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Multimodal Table Understanding Agent — 表格理解：规格对比/认证矩阵/价格表</h3>
+  <p class="sc-desc">分析师面临表格截图难读——多模态表理解将录入错误率从12%降到3%，年化省8万元</p>
+  <div class='sc-footer'><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-NL2Dashboard-Automation.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">NL2Dashboard Automation（自然语言→智能仪表盘）</h3>
+  <p class="sc-desc">运营询问&quot;美德两国周销量对比加趋势线&quot;需等 BI 工程师排期 3-5 天——NL2Dashboard 将自然语言直接转为可视化图表，BI 需求响应从天级压缩到秒级，节省开发人力 15-25 万元/年</p>
+  <div class='sc-footer'><span class='sc-roi'>18-30万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-OmniThink-Knowledge-Boundary-Expansion.html" data-domain="09-DataAgent-LLM" data-diff="">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Skill-OmniThink-Knowledge-Boundary-Expansion</h3>
+  <p class="sc-desc">分析师面临市场报告知识盲区遗漏——OmniThink自动识别知识缺口并补全，报告深度+300%，年化分析质量提升价值30万元</p>
+  
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-ProRCA-Business-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐☆☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">ProRCA — 因果图路径溯源根因分析</h3>
+  <p class="sc-desc">运营总监面临业绩下滑原因说不清——ProRCA将定位时间从3天缩到6小时，年化省15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>100 万</span><span class='sc-diff'>⭐⭐☆☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Enhanced-Data-Analysis.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">RAG-Enhanced Data Analysis（RAG 增强数据分析）</h3>
+  <p class="sc-desc">&quot;为什么德国站吸奶器转化率下降&quot;→ RAG 检索到上月分析&quot;德国站转化率下降是因为欧元贬值导致价格上涨 8%&quot;→本次发现同样模式→自动引用历史结论+实时数据验证</p>
+  <div class='sc-footer'><span class='sc-roi'>投入产出比 1:22.4，远超行业平均水平（1:3-5）</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-RAG-Structured-Data-Fusion.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">RAG与结构化数据混合检索 — 向量检索与SQL查询融合</h3>
+  <p class="sc-desc">客服运营面临&quot;智能客服单一检索路径、结构化查单与语义问答无法同时满足、首答解决率仅58%&quot;——双路混合检索将首答解决率从58%提升至82%，年化节省人工客服成本15万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5 万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Root-Cause-Analysis-Agent.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Root Cause Analysis Agent for Business Anomalies</h3>
+  <p class="sc-desc">业务负责人面临异常暴增找不到根因——根因Agent将排查成本降40%，年化省18万元</p>
+  <div class='sc-footer'><span class='sc-roi'>4万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-SQL-Agent-Text-to-SQL.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Text-to-SQL Agent for Natural Language Data Query</h3>
+  <p class="sc-desc">BI分析师面临取数靠开发排队——Text-to-SQL将取数周期从2天缩到10分钟，年化省22万元</p>
+  <div class='sc-footer'><span class='sc-roi'>5万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Step-Back-Prompting.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Step-Back Prompting — 抽象推理提升复杂问题准确率</h3>
+  <p class="sc-desc">运营分析师面临复杂业务决策LLM推理错误率高——Step-Back抽象推理将复杂问题准确率提升11%，决策失误率-35%，年化避免损失45万元</p>
+  <div class='sc-footer'><span class='sc-roi'>413万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Streaming-Analytics-Agent.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">实时流式分析Agent — 毫秒级事件驱动的AI决策管道</h3>
+  <p class="sc-desc">电商团队面临&quot;大促广告消耗异常要等T+1才发现每次损失数万元&quot;——ADWIN流式检测+LLM实时分析在2分钟内告警，年化大促保护GMV约137万元</p>
+  <div class='sc-footer'><span class='sc-roi'>30万元</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Text2SQL-Schema-Linking.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐☆☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">Schema-Linking感知Text2SQL — 列对齐与表联接推断</h3>
+  <p class="sc-desc">数据运营面临&quot;运营每日10-20个临时数据请求、数据分析师3小时/天疲于应付查数需求&quot;——Schema-Linking感知Text2SQL将查询准确率从60%提升至85%，年化节省分析师人力20万元</p>
+  <div class='sc-footer'><span class='sc-roi'>0 万元</span><span class='sc-diff'>⭐⭐⭐☆☆</span></div>
+</a><a class="card skill-card anim-fade-in-up" href="../skills/Skill-Tool-Calling-Chain-of-Thought.html" data-domain="09-DataAgent-LLM" data-diff="⭐⭐⭐⭐☆">
+  <div class="sc-domain">09-DataAgent-LLM</div>
+  <h3 class="sc-title">工具调用链式推理 — Function Calling + CoT 结合实现可解释 Agent</h3>
+  <p class="sc-desc">运营输入自然语言问题需跨查广告/销售/竞品三个系统但无法获得可解释推理链——引入工具调用链式推理（Function Calling+CoT），多系统查询从手工4小时→Agent 5分钟完成，推理步骤全程可审计，年化节省分析人时 60%。</p>
+  <div class='sc-footer'><span class='sc-roi'>减少数据分析师日常查询工作量 60%，跨系统问题响应从小时级</span><span class='sc-diff'>⭐⭐⭐⭐☆</span></div>
+</a></div></section>
+  </main>
+
+  <!-- AI Chat Panel -->
+  <script src="../assets/playbook-data.js?v=20260720193818"></script>
+  <script src="../assets/search.js"></script>
+  <script>
+  const hbtn = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobile-overlay');
+  const sidebar = document.getElementById('sidebar');
+  function toggleMenu(open) {
+    hbtn.setAttribute('aria-expanded', open);
+    hbtn.classList.toggle('open', open);
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbtn.addEventListener('click', () => toggleMenu(hbtn.getAttribute('aria-expanded') !== 'true'));
+  overlay.addEventListener('click', () => toggleMenu(false));
+
+  fetch('/auth/me', {credentials: 'include', cache: 'no-store'}).then(function(r){ return r.json(); }).then(function(u){
+    if (u && u.name) {
+      var nameNode = document.getElementById('p2s-user-name');
+      var avatarNode = document.getElementById('p2s-user-avatar');
+      var loginNode = document.getElementById('p2s-login-btn');
+      if (nameNode) { nameNode.textContent = u.name; nameNode.style.display = 'inline'; }
+      if (avatarNode) { avatarNode.textContent = String(u.name).slice(0, 1); avatarNode.style.display = 'inline-flex'; avatarNode.title = u.name; }
+      if (loginNode) { loginNode.textContent = '退出'; loginNode.href = '#'; loginNode.onclick = function(){ fetch('/auth/logout', {method: 'POST', credentials: 'include'}).then(function(){ location.reload(); }); return false; }; }
+    }
+  }).catch(function(){});
+
+  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
+    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
+    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
+    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
+    fetch('/api/feishu-callback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: {value: {
+          action: 'confirm',
+          agent_id: 'playbook-progress',
+          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
+        }}
+      })
+    }).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已推送';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
+    }).catch(() => {});
+  };
+  </script>
+</body>
+</html>
