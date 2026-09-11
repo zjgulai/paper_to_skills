@@ -90,30 +90,42 @@ source: human+ai
 
 ## PHASE 2 · 萃取流水线化（1 天）
 
-- [ ] **T2-1 升级 `MasterPrompt.md` 到 v2**
-  - 新增 R1-R5 证据规则（数字必须来自未截断原文并给出处；摘要不可得则不给数字；venue 规范化；硬拦截条目；数据可得性声明）
-  - 新增 frontmatter v2 模板（`paper_id/paper/venue/venue_tier/evidence_grade/verified_by/supersedes/related`）
-  - 新增"数据要求：企业内是否可得"必填行
-  - 验收：用新模板重跑 1 张已有卡，确认字段齐全
+- [x] **T2-1 升级 `MasterPrompt.md` 到 v2** ✅ 已完成
+  - 交付：`paper2skills-vault/07-资源库/MasterPrompt-v2.md`（v1 原文保留供对照）
+  - 含 R1–R5 证据规则、frontmatter v2（`paper_id/venue/venue_tier/evidence_grade/verified_by/related`）、
+    「数据要求 + 企业内是否可得」必填行、**①b 反例与适用边界**、**⑥ 原文引用（≥3 条）**、
+    R4 硬拦截清单（撤稿 / 纯理论 / survey / workshop 抬级 / PDF 提示注入 / 顶刊 stale_method）、
+    以及出卡前自检清单
 
-- [ ] **T2-2 升级 `paper-萃取/SKILL.md`**
-  - 修正路径（✅ 本轮已改为 `<REPO_ROOT>`）
-  - 把 Step 5"代码验证"从人工描述改为**调用脚本**：`python3 scripts/verify_skill_code.py <card>`
-  - 加 Step 4.5：生成 `evidence.md`（每个数字的原文出处）
+- [x] **T2-3 新建 `paper-萃取/scripts/verify_skill_code.py`（原计划 T2-4 提前）** ✅ 已完成
+  - 五级验证 L1 语法 / L2 编译 / L3 导入 / L4 运行 / L5 断言
+  - 判定 `PASS` / `ENV_BLOCKED` / **`ORPHAN_DEP`**（新增第四类）/ `FAIL`
+  - **首次全量基线：80 张含代码卡片 → K1 执行率 52.5%**
+    （PASS 42 / ENV_BLOCKED 6 / ORPHAN_DEP 9 / FAIL 23）
+  - 验收（原计划「故意塞一个语法错误的卡片，确认被拦」）✅ 通过——实测拦下 8 个真语法错误
 
-- [ ] **T2-3 新建 `paper2skills-skills/paper-萃取/scripts/extract_code_blocks.py`**
-  - 从卡片抽 ```python 块 → `paper2skills-code/<domain>/<algo>/model.py` + `test_model.py`
-  - 验收：对 3 张已有卡试跑，产出可 import 的文件
+- [x] **T2-5 新建 `paper-审核/scripts/gate_check.py`（G1/G2/G3 三合一）** ✅ 已完成
+  - G1 读 K1 产物（无凭证一律判红）；G2 度量数字溯源；G3 业务具体性与数据可得性
+  - **首次全量基线（G2）：130 张卡 → 57 张通过（43.8%），红灯 438 条**
+  - 验收（原计划「预期大量红色，这正是要暴露的问题」）✅ 完全符合预期
 
-- [ ] **T2-4 新建 `paper2skills-skills/paper-萃取/scripts/verify_skill_code.py`**
-  - 流程：`py_compile` → 有 pytest 则 `pytest -q` → 否则 `python model.py`；记录退出码/耗时/stdout 到 `verification_report.md`
-  - 门禁：退出码非 0 → 卡片 `status: draft`，写 `审核问题库.md`，**禁止同步**
-  - 验收：故意塞一个语法错误的卡片，确认被拦
+- [x] **T1-3 新建 `paper2skills-vault/07-资源库/venue-whitelist.md`** ✅ 已完成
+  - 含 tier 定义、28 刊 ISSN 表、会议白名单、§3 降级判定表（含 6 处抬级反例）
+  - **§7 纠正了两个原判断错误**：OpenReview「❌403」→「部分可用但覆盖易高估」；
+    DBLP「⚠️UA限速」→「HTTP 200 + Anubis 挑战页，脚本路线放弃」
+  - §7.3 Crossref 双日期过滤器规则；§7.4 `NAACL 2026` 不存在；§9 ISSN 陷阱
 
-- [ ] **T2-5 新建 `paper2skills-skills/paper-审核/scripts/gate_check.py`**
-  - G1 代码可执行 / G2 事实可溯源 / G3 业务可落地，各产出 `gate_*.json`
-  - G2 的实现：正则抽取卡片中所有数字 → 要求在 `evidence.md` 或卡片的 `> 原文："..."` 引用块中有对应出处
-  - 验收：对已有卡跑一遍，报告"无出处数字"计数（预期：大量红色，这正是要暴露的问题）
+- [x] **T0-2 清理 26 组重复 Skill 卡片** ✅ 已完成
+  - 25 组字节相同 → 删顶层副本；1 张仅顶层存在 → 迁入唯一存放地；
+    1 张已漂移（产品研发部→产品中心）→ 保留新版，旧版移入 `_superseded/`
+  - 验收：`find paper2skills-vault -name 'Skill-*.md' | uniq -d` 输出为空 ✅
+  - **前置动作**：仓库此前**不是 git 仓库**，已先 `git init` 建立安全网（见下方"附 C"）
+
+- [ ] **T2-2 升级 `paper-萃取/SKILL.md`**（路径已修，Step 5 改为调用脚本待做）
+- [ ] **T2-4 新建 `paper-萃取/scripts/extract_code_blocks.py`**
+  - 现在 K1 已能直接验证卡片内代码块，此脚本降级为「落盘到 `paper2skills-code/`」的可选步骤
+- [ ] **T2-6 `sync.py` 加门禁前置**
+- [ ] **T2-7 新建 `paper-维护` skill（仓库体检）**
 
 - [ ] **T2-6 `paper-同步/scripts/sync.py` 加门禁前置**
   - 同步前校验三份 `gate_*.json` 全绿，否则拒绝
@@ -217,5 +229,35 @@ source: human+ai
 | 1 | 投放主体是**自有独立站**还是**第三方平台店**？ | T3-9 的落地形态（前者可做受众级随机化，后者降级为诊断框架） | 业务方 |
 | 2 | 出海历史是否 ≥2 个完整年度（月度活跃面板）？ | T3-4 是否需要品类季节性先验替代 | 业务方 |
 | 3 | 是否有 RCT / holdback 流量？ | T3-2、T3-3 的理论前提 | 业务方 |
-| 4 | OpenReview / DBLP 取数受限（403 / bot 挑战） | 会议季路线 C/D 只能人工导出 | 无需决策，接受限制 |
+| 4 | OpenReview / DBLP 取数受限 | 会议季路线只能走 Crossref + PMLR + ACL Anthology + 名单页；**已精确界定**（见 venue-whitelist §7） | 无需决策，接受限制 |
 | 5 | 数字幻觉（本轮已实证：4 篇摘要含缺陷、150 篇源码被截断） | G2 门禁 + 抽检是**必需**而非可选 | 执行纪律 |
+
+## 附 C · 安全事件与仓库纳管（2026-09-12）
+
+**事件**：本仓库此前**不是 git 仓库**（无 `.git`），意味着任何删除都不可回退。
+在建立安全网的过程中，发现仓库根目录存在 **`DDDD.pem`——一个未加密的 RSA 私钥**，
+且**未被任何脚本引用**。
+
+**处置**：
+1. 先写 `.gitignore`（排除 PDF / Excel / 500MB+ jsonl / node_modules 等大体积产物），
+   首次 commit 纳管文本资产；
+2. 发现 `DDDD.pem` 被纳管后，**删除 `.git` 重建历史**（该 commit 从未推送，故无泄露面），
+   并在 `.gitignore` 中加入 `*.pem` / `*.key` / `id_rsa*` / `credentials.json` 等硬性规则；
+3. 复查 `git ls-files` 中已无密钥类文件。
+
+**最终状态**：2753 个文本文件、`.git` 体积 38MB，含完整回退能力。
+
+> ⚠️ **需要业务方确认**：`DDDD.pem` 仍在本地磁盘（`-rw-------`，仅属主可读）。
+> 若它曾被用于生产环境（云主机 SSH、支付回调验签等），**建议轮换该密钥对**——
+> 它长期以明文形式存在于一个当时无版本控制的目录中。
+
+## 附 D · 本轮引入的两条实现铁律（写代码前必读）
+
+| # | 铁律 | 违反后的实测后果 |
+|---|------|------------------|
+| 1 | **验证代码块必须按卡片拼接，不能逐块独立导入** | 首轮 K1 报 44 个 L3 导入失败，其中 **19 个是假阳性**——卡片是「block1 定义类 → block3 使用」的递进结构，逐块导入必然 `NameError`。修正后执行率从 46.2% 升到 52.5% |
+| 2 | **验证必须在断网语义下运行** | 首轮全量门禁**跑 30 分钟未出结果**，而进程 CPU 时间仅 **2.2 秒**——时间全花在网络重试上。加入 socket 拦截 + `HF_HUB_OFFLINE=1` 后，同一全量跑完只需 **2 分 55 秒** |
+
+> 教训的共性：**这两条都会让「验证工具本身」成为最大的假信号源**。
+> 门禁工具的可信度需要先于被门禁对象建立。
+

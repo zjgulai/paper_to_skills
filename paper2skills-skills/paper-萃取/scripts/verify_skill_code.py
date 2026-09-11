@@ -1,0 +1,805 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+verify_skill_code.py — paper2skills K1 门禁（代码可执行性验证）
+
+设计依据（2026-09 调研）：
+  * AutoReproduce (arXiv:2505.20662) 实测：PaperCoder 生成的代码**执行率仅 17.94%**，
+    性能差距 89.23%；加入执行闭环后执行率 **94.87%**、差距降到 19.72%。
+  * ResearchCodeBench 附录 G：新研究代码失败中 **58.6% 是语义错误**（能跑但算错），
+    语法/命名/类型错误各仅 8–9% —— 所以「能跑」只是第一层，必须分阶段报告。
+  * AI Scientist / agentskills.io 均警告：靠 LLM 自评「代码没问题」不可靠。
+
+因此本脚本不产生任何「分数」，只产生**可复核的退出码与 stdout 凭证**。
+
+-------------------------------------------------------------------------------
+五级验证（逐级递进，每级独立记录，不因前级失败而丢弃后级信息）
+-------------------------------------------------------------------------------
+  L1 SYNTAX   解析能否通过            —— ast.parse
+  L2 COMPILE  能否编译为字节码        —— py_compile
+  L3 IMPORT   模块能否被 import       —— 缺失第三方依赖注入 stub，不算代码错
+  L4 SMOKE    作为脚本直接跑通        —— python <file>，超时保护
+  L5 TEST     断言是否真的成立        —— pytest（若存在测试函数）
+
+-------------------------------------------------------------------------------
+三级判定（K1 放行 = PASS）
+-------------------------------------------------------------------------------
+    PASS         L1+L2 通过，且（L4 或 L5 通过）
+  ENV_BLOCKED  L1+L2 通过，但后续失败全部归因于「本机缺第三方依赖/凭证/资源」
+               —— 不判失败，但**禁止声称已验证**，计入「未验证」分母
+  ORPHAN_DEP   L1+L2 通过，但卡片 import 的**本地模块在本仓库内找不到**
+               —— 这是真实缺陷（卡片依赖了不存在的代码），必须修，不得归因环境
+  FAIL         L1 或 L2 失败，或 L3/L4 出现与依赖无关的真实错误
+
+  ⚠️ 关于 ORPHAN_DEP 与 ENV_BLOCKED 的区别（本脚本最重要的判定）：
+     `import torch` 失败 → 本机没装 → ENV_BLOCKED（环境问题）
+     `import review_quality_scoring` 失败 → 仓库里没这个模块 → ORPHAN_DEP（卡片缺陷）
+     二者都会抛 ImportError，只能靠「包名是否存在于仓库/第三方 Index」区分。
+     把后者误判为环境问题，会让「卡片引用了不存在的代码」长期隐藏在绿灯下。
+
+用法
+----
+  # 验证单张卡片（文件中所有 python 块）
+  python3 verify_skill_code.py --card ../../paper2skills-vault/13-广告分析/Skill-X.md
+
+  # 验证已抽出的代码文件
+  python3 verify_skill_code.py --file path/to/model.py
+
+  # 全量回归（所有卡片），输出汇总
+  python3 verify_skill_code.py --all --summary-out verification_summary.json
+
+  # 只做快速语法+编译扫描（秒级，适合 pre-commit）
+  python3 verify_skill_code.py --all --level 2
+"""
+
+from __future__ import annotations
+
+import argparse
+import ast
+import json
+import os
+import py_compile
+import re
+import signal
+import subprocess
+import sys
+import sysconfig
+import tempfile
+import textwrap
+import time
+from dataclasses import dataclass, field, asdict
+from pathlib import Path
+
+# ---------------------------------------------------------------------------
+# 路径定位（禁止硬编码绝对路径 —— 见 T0-3 路径约定）
+# ---------------------------------------------------------------------------
+REPO_ROOT = Path(__file__).resolve().parents[3]          # .../paper2skills-skills/paper-萃取/scripts/x.py
+if os.environ.get("PAPER2SKILLS_ROOT"):
+    REPO_ROOT = Path(os.environ["PAPER2SKILLS_ROOT"]).resolve()
+VAULT = REPO_ROOT / "paper2skills-vault"
+REPORT_DIR = REPO_ROOT / "paper2skills-research" / "data" / "verification"
+
+PY_BLOCK_RE = re.compile(r"^```(?:python|py|python3)\s*$", re.M | re.I)
+FENCE_RE = re.compile(r"^```", re.M)
+
+# 判定为「环境缺失」而非「代码缺陷」的异常特征
+ENV_ERROR_SIGNS = (
+    "ModuleNotFoundError",
+    "ImportError",
+    "No module named",
+    "cannot import name",
+    "TclError",
+    "no display name",
+    "DISPLAY",
+    "requires a GPU",
+    "CUDA",
+    "No such file or directory",
+    "FileNotFoundError",
+    "URLError",
+    "ConnectionError",
+    "HTTPError",
+    "TimeoutError",
+    "PermissionError",
+    "SSL",
+    "certificate",
+    "MaxRetriesPerRequest",
+    "api_key",
+    "API key",
+    "OPENAI_API_KEY",
+    "ReadTimeout",
+)
+
+STDLIB = set(getattr(sys, "stdlib_module_names", ())) | {
+    "os", "sys", "re", "json", "math", "random", "time", "typing", "collections",
+    "itertools", "functools", "pathlib", "datetime", "dataclasses", "abc",
+    "warnings", "logging", "copy", "string", "csv", "io", "unittest", "hashlib",
+    "statistics", "operator", "subprocess", "glob", "textwrap", "enum", "decimal",
+    "inspect", "traceback", "pickle", "sqlite3", "uuid", "contextlib",
+}
+
+IMPORT_RE = re.compile(r"^\s*(?:from\s+([A-Za-z_][\w.]*)\s+import|import\s+([A-Za-z_][\w.]*))", re.M)
+
+# ---------------------------------------------------------------------------
+# 注入用的 stub：让「缺依赖」在本机可 import，但一旦真被调用就抛出明确错误。
+# 这样 L3 IMPORT 才能区分「代码写错了」与「本机没装 torch」。
+# ---------------------------------------------------------------------------
+# 注意：这段源码内含大量 {} 字面量，禁止用 str.format —— 使用占位符替换。
+STUB_TEMPLATE = '''
+import sys, types
+def _install(name):
+    if name in sys.modules:
+        return
+    class _Missing(types.ModuleType):
+        def __getattr__(self, attr):
+            if attr.startswith("__") and attr.endswith("__"):
+                raise AttributeError(attr)
+            raise ImportError(
+                "K1-STUB: " + name + "." + attr + " 在本机不可用（依赖未安装）。"
+                "此错误归因于环境，不计为代码缺陷。"
+            )
+    m = _Missing(name)
+    m.__path__ = []
+    sys.modules[name] = m
+for _n in __K1_MISSING_NAMES__:
+    _install(_n)
+'''
+
+# ---------------------------------------------------------------------------
+# 执行环境的 hermetic 化（本轮实测教训）
+#
+# 症状：全量门禁跑 30 分钟未出结果，而进程 CPU 时间只有 2.2 秒 —— 全部时间花在
+#       **网络等待**上（卡片里的 `AutoModel.from_pretrained(...)`、`requests.get(...)`、
+#       `yf.download(...)` 会一直等重试退避）。
+#
+# 结论：K1 门禁必须在**断网**语义下运行。理由有三：
+#   ① 网络状态会让「同一次验证」结果不可复现（CI 里跑一次网断一次网变一次红绿）；
+#   ② 卡片模板的业务价值在于方法，不在于能否拉到某个远端资源；
+#   ③ 真正需要外部数据的卡片，应显式声明为 ENV_BLOCKED，而不是挂住流水线。
+#
+# 实现：拦截 socket 建连 + 把几个主流网络客户端替换为即时抛错的 stub。
+# 抛出的错误含 "offline"/"network" 关键词，会被 is_env_error() 正确归因为环境问题。
+# ---------------------------------------------------------------------------
+NETWORK_BLOCK_TEMPLATE = '''
+# ---- K1 hermetic: 阻断网络（立即失败，不重试、不等待）----
+class _K1NetworkBlocked(RuntimeError):
+    pass
+
+_K1_MSG = ("K1-OFFLINE: network access is disabled during verification "
+           "(环境限制，非代码缺陷)")
+
+def _blocked(*a, **k):
+    raise _K1NetworkBlocked(_K1_MSG)
+
+try:
+    import socket as _s
+    _s.socket.connect = _blocked
+    _s.socket.connect_ex = _blocked
+    _s.create_connection = _blocked
+except Exception:
+    pass
+
+# 常见网络客户端：把模块级入口替换为即时抛错，抢在它们内部重试之前失败
+for _netmod in ("requests", "httpx", "urllib3", "yfinance",
+                "huggingface_hub", "kaggle", "boto3", "openai", "anthropic"):
+    try:
+        import importlib as _il
+        _m = _il.import_module(_netmod)
+        for _attr in ("get", "post", "put", "request", "head"):
+            if hasattr(_m, _attr):
+                setattr(_m, _attr, _blocked)
+    except Exception:
+        pass
+
+# matplotlib 交互后端会阻塞 → 统一切 Agg
+try:
+    import matplotlib
+    matplotlib.use("Agg")
+except Exception:
+    pass
+'''
+
+
+@dataclass
+class Stage:
+    name: str
+    passed: bool | None          # None = 未执行
+    detail: str = ""
+    stdout: str = ""
+    stderr: str = ""
+    seconds: float = 0.0
+    env_related: bool = False
+
+
+@dataclass
+class Result:
+    target: str
+    kind: str                    # card | file
+    stages: list[Stage] = field(default_factory=list)
+    verdict: str = "FAIL"        # PASS | ENV_BLOCKED | ORPHAN_DEP | FAIL | UNVERIFIED
+    missing_deps: list[str] = field(default_factory=list)   # 本机缺的第三方包
+    orphan_deps: list[str] = field(default_factory=list)    # 仓库内找不到的本地模块
+    resolved_local: list[str] = field(default_factory=list) # 自动解析到的仓库内模块
+    code_lines: int = 0
+    notes: list[str] = field(default_factory=list)
+
+    def add(self, s: Stage) -> None:
+        self.stages.append(s)
+
+    def stage(self, name: str) -> Stage | None:
+        return next((s for s in self.stages if s.name == name), None)
+
+
+# ---------------------------------------------------------------------------
+# 抽取
+# ---------------------------------------------------------------------------
+def extract_python_blocks(text: str) -> list[str]:
+    """从 markdown 中取出所有 ```python 围栏块（按围栏奇偶位切分，避免正则误吞）。"""
+    parts = FENCE_RE.split(text)
+    blocks: list[str] = []
+    # split 后：parts[0] 是正文，之后依次是 info-line+body / 正文 / info-line+body ...
+    # 使用 finditer 更稳妥地保留 info 行
+    for m in re.finditer(r"^```([^\n`]*)\n(.*?)^```\s*$", text, re.M | re.S):
+        info = m.group(1).strip().lower()
+        if info in ("python", "py", "python3"):
+            blocks.append(m.group(2))
+    return blocks
+
+
+def looks_like_python(body: str) -> bool:
+    """未标注语言的围栏块，用启发式判断是否是 Python（保留旧卡片的兼容性）。"""
+    if re.search(r"^\s*(import|from|def|class)\s+\w", body, re.M):
+        return True
+    if re.search(r"^\s*(print|return|for |while |if )", body, re.M):
+        return True
+    return False
+
+
+def extract_all_python(text: str) -> list[str]:
+    """先取标注为 python 的块；若一个都没有，再对未标注块做启发式回退。"""
+    blocks = extract_python_blocks(text)
+    if blocks:
+        return blocks
+    out = []
+    for m in re.finditer(r"^```[^\n`]*\n(.*?)^```\s*$", text, re.M | re.S):
+        if looks_like_python(m.group(1)):
+            out.append(m.group(1))
+    return out
+
+
+def stitch_blocks(blocks: list[str]) -> str:
+    """把一张卡片的多个 python 块按文档顺序拼成一个模块。
+
+    ⚠️ 为什么必须拼接（实测教训）：
+    全量门禁第一次跑出 44 个 L3_IMPORT 失败，其中 **19 个是「逐块独立导入」造成的假阳性** ——
+    卡片普遍是「block1 定义类 → block2 定义数据类 → block3 使用」的递进结构，
+    单独导入 block3 必然 `NameError: name 'XXX' is not defined`。
+    那不是卡片错误，是我的验证方式与卡片实际用法不符（卡片是给人整段用的）。
+
+    拼接时顺带处理两个真实存在的书写习惯：
+      ① 重复 import（多个块各自 `import numpy as np`）→  Python 允许重复 import，无害；
+      ② 块之间用 `# ====` 分隔注释 →  原样保留，便于报错行号回溯到具体块。
+    """
+    if len(blocks) == 1:
+        return blocks[0]
+    parts = []
+    for i, b in enumerate(blocks, 1):
+        parts.append(f"\n# ===== K1 block {i} =====\n{textwrap.dedent(b).strip()}\n")
+    return "\n".join(parts)
+
+
+def block_line_map(blocks: list[str], stitched: str) -> list[tuple[int, int, int]]:
+    """返回 [(block_index, start_line, end_line)]，用于把拼接后的报错行号映射回块号。"""
+    spans = []
+    line = 1
+    for i, b in enumerate(blocks, 1):
+        n = len(textwrap.dedent(b).strip().splitlines())
+        start = line + 2            # 跳过 "\n# ===== K1 block i =====" 两行
+        spans.append((i, start, start + n - 1))
+        line = start + n + 1
+    return spans
+
+
+def locate_block(spans: list[tuple[int, int, int]], lineno: int) -> int | None:
+    for idx, s, e in spans:
+        if s <= lineno <= e:
+            return idx
+    return None
+
+
+def repo_local_module_index() -> dict[str, Path]:
+    """扫描仓库，建立「本地模块名 → 所在目录」索引。
+
+    存在两种来源：
+      1. paper2skills-code/<domain>/<algo>/      —— 已落地的代码模板子模块
+      2. 卡片同目录下的 <algo>.py                —— 历史卡片自带的实现文件
+    用于区分「本机缺第三方包」(ENV) 与「卡片引用了不存在的模块」(ORPHAN)。
+    """
+    idx: dict[str, Path] = {}
+    code_root = REPO_ROOT / "paper2skills-code"
+    if code_root.is_dir():
+        for p in code_root.rglob("*.py"):
+            if "nlp_voc" in p.parts:      # 已迁出子项目的镜像，不作为可用实现
+                continue
+            if p.name == "__init__.py":
+                idx.setdefault(p.parent.name, p.parent)
+            else:
+                idx.setdefault(p.stem, p.parent)
+    return idx
+
+
+@dataclass
+class DepReport:
+    third_party: list[str] = field(default_factory=list)   # 本机没装 → 环境问题
+    local_found: list[str] = field(default_factory=list)   # 仓库里有实现 → 加进 PYTHONPATH
+    orphan: list[str] = field(default_factory=list)        # 仓库里也没有 → 卡片缺陷
+
+
+def classify_deps(code: str, local_index: dict[str, Path]) -> DepReport:
+    rep = DepReport()
+    seen: set[str] = set()
+    for m in IMPORT_RE.finditer(code):
+        mod = (m.group(1) or m.group(2) or "").split(".")[0]
+        if not mod or mod in STDLIB or mod in seen:
+            continue
+        seen.add(mod)
+        try:
+            __import__(mod)
+            continue                       # 本机可 import，无需处理
+        except Exception:
+            pass
+        if mod in local_index:             # 仓库里有 → 可达，加路径
+            rep.local_found.append(mod)
+        elif _is_stdlib_like(mod):
+            rep.third_party.append(mod)
+        else:
+            # 判定「像第三方包名」还是「像本地模块名」
+            if _looks_like_local_module(mod):
+                rep.orphan.append(mod)
+            else:
+                rep.third_party.append(mod)
+    return rep
+
+
+# 已知 PyPI 上存在、且是学术卡片高频依赖的包（缺失即环境问题，绝不判 ORPHAN）
+KNOWN_PYPI = {
+    "numpy", "pandas", "scipy", "sklearn", "statsmodels", "matplotlib", "seaborn",
+    "torch", "torchvision", "tensorflow", "keras", "transformers", "datasets",
+    "xgboost", "lightgbm", "catboost", "optuna", "shap", "lime",
+    "causalml", "econml", "dowhy", "prophet", "pmdarima", "sktime", "tsfresh",
+    "networkx", "stellargraph", "torch_geometric", "dgl", "node2vec", "gensim",
+    "nltk", "spacy", "jieba", "sentence_transformers", "faiss", "faiss_cpu",
+    "openai", "anthropic", "langchain", "llama_index", "chromadb", "pinecone",
+    "plotly", "altair", "streamlit", "fastapi", "flask", "pydantic", "requests",
+    "httpx", "aiohttp", "bs4", "lxml", "openpyxl", "pyarrow", "polars", "duckdb",
+    "sqlalchemy", "psycopg2", "pymysql", "redis", "celery", "mlflow", "wandb",
+    "imblearn", "mlxtend", "umap", "hdbscan", "category_encoders", "feature_engine",
+    "sentencepiece", "tokenizers", "accelerate", "peft", "trl", "vllm",
+    "pdfplumber", "PyPDF2", "pypdf", "fitz", "MinerU", "paddleocr",
+    "yaml", "tqdm", "dotenv", "click", "rich", "tabulate", "joblib", "pytest",
+}
+
+
+def _is_stdlib_like(mod: str) -> bool:
+    return mod in KNOWN_PYPI
+
+
+def _looks_like_local_module(mod: str) -> bool:
+    """snake_case 全小写且非已知 PyPI 包 → 更可能是本地模块名。
+
+    注意：这是启发式。为避免把真·第三方包误判成 ORPHAN，只有「全小写 + 下划线分隔 +
+    不是已知包 + 在 PyPI 上查不到」才判 ORPHAN；否则一律从宽按环境问题处理。
+    """
+    if mod in KNOWN_PYPI or mod in STDLIB:
+        return False
+    if not re.fullmatch(r"[a-z][a-z0-9_]*", mod):
+        return False
+    if "." in mod:
+        return False
+    # 保守策略：名字里含下划线 → 强本地信号（PyPI 包极少用下划线）
+    if "_" in mod:
+        return True
+    # 其余单词型名字：若能在 site-packages 里找到同名目录则不算 orphan（已被 __import__ 覆盖）
+    return False
+
+
+def detect_missing_deps(code: str) -> list[str]:
+    """兼容旧接口：返回本机 import 不到的顶层模块名。"""
+    out = []
+    for m in IMPORT_RE.finditer(code):
+        mod = (m.group(1) or m.group(2) or "").split(".")[0]
+        if not mod or mod in STDLIB or mod in out:
+            continue
+        try:
+            __import__(mod)
+        except Exception:
+            out.append(mod)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# 执行辅助
+# ---------------------------------------------------------------------------
+def run(cmd: list[str], cwd: Path, timeout: int, env: dict | None = None) -> tuple[int, str, str, float]:
+    """带硬超时的子进程执行。
+
+    ⚠️ 教训：仅设 timeout 不足以防止挂死 —— subprocess.run 的 timeout 在
+    被 traceback 引用的深层 C 调用（下载重试、CUDA 初始化）上可能长时间不生效。
+    因此这里**开启新会话**，超时后杀整个进程组，确保不留孤儿。
+    """
+    t0 = time.time()
+    try:
+        p = subprocess.Popen(
+            cmd, cwd=str(cwd), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, stdin=subprocess.DEVNULL, env=env,
+            start_new_session=True,          # 独立进程组，便于整组回收
+        )
+    except Exception as e:                    # 连启动都失败
+        return 127, "", f"[K1] 无法启动子进程: {e}", time.time() - t0
+    try:
+        out, err = p.communicate(timeout=timeout)
+        return p.returncode, out or "", err or "", time.time() - t0
+    except subprocess.TimeoutExpired:
+        # 杀整个进程组，避免孤儿进程继续占资源
+        try:
+            os.killpg(os.getpgid(p.pid), signal.SIGKILL)
+        except Exception:
+            try:
+                p.kill()
+            except Exception:
+                pass
+        try:
+            out, err = p.communicate(timeout=10)
+        except Exception:
+            out, err = "", ""
+        tail = (err or "")[-1200:]
+        return (124, out or "",
+                f"{tail}\n[K1] ⏱ 超时 {timeout}s 已强制终止（进程组 SIGKILL）。"
+                f"常见原因：真实网络等待、plt.show()、input()、CUDA 初始化。",
+                time.time() - t0)
+
+
+def is_env_error(text: str) -> bool:
+    return any(sign in text for sign in ENV_ERROR_SIGNS)
+
+
+def trim(s: str, n: int = 1500) -> str:
+    s = s.strip()
+    return s if len(s) <= n else s[: n // 2] + f"\n... [截断 {len(s) - n} 字符] ...\n" + s[-n // 2 :]
+
+
+# ---------------------------------------------------------------------------
+# 核心：对一个代码单元做五级验证
+# ---------------------------------------------------------------------------
+def verify_unit(code: str, target: str, kind: str, workdir: Path,
+                max_level: int = 5, timeout: int = 90,
+                local_index: dict[str, Path] | None = None) -> Result:
+    res = Result(target=target, kind=kind)
+    res.code_lines = len(code.splitlines())
+    code = textwrap.dedent(code).strip("\n") + "\n"
+    local_index = local_index if local_index is not None else {}
+
+    # --- L1 SYNTAX ---
+    t0 = time.time()
+    try:
+        ast.parse(code)
+        res.add(Stage("L1_SYNTAX", True, "ast.parse 通过", seconds=time.time() - t0))
+    except SyntaxError as e:
+        res.add(Stage("L1_SYNTAX", False,
+                      f"语法错误 line {e.lineno}: {e.msg}",
+                      stderr=f"{e.text or ''}", seconds=time.time() - t0))
+        res.verdict = "FAIL"
+        return res
+    if max_level < 2:
+        res.verdict = "UNVERIFIED"
+        return res
+
+    # --- L2 COMPILE ---
+    src = workdir / "unit.py"
+    src.write_text(code, encoding="utf-8")
+    t0 = time.time()
+    try:
+        py_compile.compile(str(src), cfile=str(workdir / "unit.pyc"), doraise=True)
+        res.add(Stage("L2_COMPILE", True, "py_compile 通过", seconds=time.time() - t0))
+    except py_compile.PyCompileError as e:
+        res.add(Stage("L2_COMPILE", False, "编译失败", stderr=trim(str(e)), seconds=time.time() - t0))
+        res.verdict = "FAIL"
+        return res
+    if max_level < 3:
+        res.verdict = "UNVERIFIED"
+        return res
+
+    # --- 依赖分类：第三方缺失(环境) vs 本地模块不存在(卡片缺陷) ---
+    deps = classify_deps(code, local_index)
+    res.missing_deps = deps.third_party
+    res.orphan_deps = deps.orphan
+    res.resolved_local = deps.local_found
+
+    stub = workdir / "_k1_stub.py"
+    stub_src = (STUB_TEMPLATE.replace("__K1_MISSING_NAMES__", repr(res.missing_deps))
+                if res.missing_deps else "")
+    # 关键：把「环境准备」变成 hermetic —— 见 NETWORK_BLOCK_TEMPLATE 注释。
+    # 没有这一步，卡片里一句 AutoModel.from_pretrained("bert-base-uncased")
+    # 会让门禁挂在网络下载上（实测 30 分钟耗尽 CPU 仅 2.2 秒）。
+    stub_src += NETWORK_BLOCK_TEMPLATE
+    stub.write_text(stub_src, encoding="utf-8")
+    runner = workdir / "_k1_runner.py"
+    runner.write_text(
+        "import _k1_stub  # noqa: F401  (注入缺失依赖 stub, 关闭 matplotlib 交互后端)\n"
+        f"import runpy, sys\nsys.argv = ['{src.name}']\n"
+        f"runpy.run_path(r'{src.name}', run_name='__main__')\n",
+        encoding="utf-8",
+    )
+    env = dict(os.environ)
+    # 仓库内已落地的本地模块 → 加进搜索路径，让卡片有机会真正跑起来
+    extra_path = [str(workdir)] + [str(local_index[m]) for m in deps.local_found]
+    env["PYTHONPATH"] = os.pathsep.join(extra_path + [env.get("PYTHONPATH", "")]).strip(os.pathsep)
+    env["MPLBACKEND"] = "Agg"
+    env["PYTHONWARNINGS"] = "ignore"
+    # 让下载型库直接走本地缓存/报错，而不是联网重试（配合 NETWORK_BLOCK_TEMPLATE）
+    env["HF_HUB_OFFLINE"] = "1"
+    env["TRANSFORMERS_OFFLINE"] = "1"
+    env["HF_DATASETS_OFFLINE"] = "1"
+    env["NO_PROXY"] = "*"
+    env["no_proxy"] = "*"
+    env["TOKENIZERS_PARALLELISM"] = "false"
+
+    # --- L3 IMPORT ---
+    probe = workdir / "_k1_import_probe.py"
+    probe.write_text(
+        "import _k1_stub\n"
+        f"import importlib.util as u\n"
+        f"spec = u.spec_from_file_location('unit', r'{src.name}')\n"
+        "m = u.module_from_spec(spec)\n"
+        "try:\n"
+        "    spec.loader.exec_module(m)\n"
+        "    print('K1_IMPORT_OK')\n"
+        "except SystemExit:\n"
+        "    print('K1_IMPORT_OK')\n",
+        encoding="utf-8",
+    )
+    rc, out, err, secs = run([sys.executable, probe.name], workdir, timeout, env)
+    ok = "K1_IMPORT_OK" in out
+    env_rel = (not ok) and is_env_error(err + out)
+    # ORPHAN 优先级高于 ENV：卡片 import 了仓库里根本不存在的本地模块 → 卡片缺陷，不是环境问题
+    orphan_hit = (not ok) and bool(res.orphan_deps) and any(
+        o in (err + out) for o in res.orphan_deps
+    )
+    if ok:
+        detail = "模块可 import"
+    elif orphan_hit:
+        detail = f"引用了仓库内不存在的本地模块: {', '.join(res.orphan_deps)}"
+    elif env_rel:
+        detail = f"缺第三方依赖/凭证: {', '.join(res.missing_deps) or '未识别'}"
+    else:
+        detail = "import 时崩溃"
+    res.add(Stage("L3_IMPORT", ok, detail, stdout=trim(out), stderr=trim(err),
+                  seconds=secs, env_related=env_rel and not orphan_hit))
+    if orphan_hit:
+        res.verdict = "ORPHAN_DEP"
+        return res
+    if max_level < 4:
+        res.verdict = "PASS" if ok else ("ENV_BLOCKED" if env_rel else "FAIL")
+        return res
+
+    # --- L4 SMOKE（作为脚本直接跑）---
+    rc, out, err, secs = run([sys.executable, runner.name], workdir, timeout, env)
+    smoke_ok = rc == 0
+    smoke_env = (not smoke_ok) and is_env_error(err + out)
+    note = ""
+    if rc == 124:
+        note = "超时"
+    elif rc != 0 and not smoke_env:
+        # 定位第一处真实报错行
+        m = re.search(r'File "([^"]+)", line (\d+)', err)
+        if m:
+            note = f"阻塞在 line {m.group(2)}"
+    res.add(Stage("L4_SMOKE", smoke_ok,
+                  "脚本执行成功" if smoke_ok else (f"环境阻塞 {note}".strip() if smoke_env else f"运行期错误 {note}".strip()),
+                  stdout=trim(out), stderr=trim(err), seconds=secs, env_related=smoke_env))
+
+    # --- L5 TEST（pytest）---
+    if max_level >= 5:
+        has_test = bool(re.search(r"^\s*def\s+test_\w+", code, re.M)) or "assert " in code
+        if not has_test:
+            res.add(Stage("L5_TEST", None, "代码中未发现 test_ 函数或 assert，无可执行断言"))
+        else:
+            tf = workdir / "test_unit.py"
+            body = code if re.search(r"^\s*def\s+test_\w+", code, re.M) else (
+                "import unit\n\n" + "\n".join(
+                    "def test_auto_%d():\n%s" % (i, textwrap.indent(a, "    "))
+                    for i, a in enumerate(
+                        ["    " + ln.strip() for ln in code.splitlines() if ln.strip().startswith("assert ")],
+                        start=1,
+                    )
+                )
+            )
+            tf.write_text(body, encoding="utf-8")
+            rc, out, err, secs = run(
+                [sys.executable, "-m", "pytest", tf.name, "-q", "--no-header",
+                 "-p", "no:cacheprovider", "--tb=short"],
+                workdir, timeout, env,
+            )
+            t_ok = rc == 0
+            t_env = (not t_ok) and is_env_error(err + out)
+            res.add(Stage("L5_TEST", t_ok,
+                          "pytest 全绿" if t_ok else ("环境阻塞" if t_env else "断言失败"),
+                          stdout=trim(out), stderr=trim(err), seconds=secs, env_related=t_env))
+
+    # --- 判定 ---
+    l4 = res.stage("L4_SMOKE")
+    l5 = res.stage("L5_TEST")
+    真实执行 = (l4 and l4.passed) or (l5 and l5.passed)
+    if 真实执行:
+        res.verdict = "PASS"
+    elif (l4 and l4.env_related) or (l5 and l5.env_related) or \
+         (res.stage("L3_IMPORT") and res.stage("L3_IMPORT").env_related):
+        res.verdict = "ENV_BLOCKED"
+    else:
+        res.verdict = "FAIL"
+    return res
+
+
+# ---------------------------------------------------------------------------
+# 入口
+# ---------------------------------------------------------------------------
+def collect_cards() -> list[Path]:
+    return sorted(
+        p for p in VAULT.rglob("Skill-*.md")
+        if "_superseded" not in p.parts
+    )
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="paper2skills K1 代码可执行性门禁")
+    g = ap.add_mutually_exclusive_group(required=True)
+    g.add_argument("--card", type=Path, help="单张 Skill 卡片路径")
+    g.add_argument("--file", type=Path, help="已抽出的 .py 文件")
+    g.add_argument("--all", action="store_true", help="全量回归所有卡片")
+    ap.add_argument("--level", type=int, default=5, choices=[1, 2, 3, 4, 5],
+                    help="最大验证级别（2=只做语法+编译，秒级）")
+    ap.add_argument("--timeout", type=int, default=90, help="单次执行超时秒数")
+    ap.add_argument("--json-out", type=Path, help="结果 JSON 输出路径")
+    ap.add_argument("--markdown-out", type=Path, help="人类可读报告输出路径")
+    ap.add_argument("--quiet", action="store_true")
+    ap.add_argument("--per-block", action="store_true",
+                    help="逐块独立验证（默认是把卡片所有代码块按文档顺序拼成一个模块，"
+                         "与卡片实际用法一致；逐块模式会产生大量 NameError 假阳性，仅用于定位）")
+    args = ap.parse_args()
+
+    units: list[tuple[str, str, str, list]] = []   # (target, kind, code, block_spans)
+
+    if args.card:
+        text = args.card.read_text(encoding="utf-8", errors="replace")
+        blocks = extract_all_python(text)
+        if not blocks:
+            print(f"⚠️  {args.card.name} 未发现 python 代码块")
+            return 2
+        if args.per_block:
+            for i, b in enumerate(blocks, 1):
+                units.append((f"{args.card.name}#block{i}", "card", b, []))
+        else:
+            st = stitch_blocks(blocks)
+            units.append((f"{args.card.name}#stitched({len(blocks)}块)", "card", st,
+                          block_line_map(blocks, st)))
+    elif args.file:
+        units.append((args.file.name, "file",
+                      args.file.read_text(encoding="utf-8", errors="replace"), []))
+    else:
+        for c in collect_cards():
+            blocks = extract_all_python(c.read_text(encoding="utf-8", errors="replace"))
+            if not blocks:
+                continue
+            rel = str(c.relative_to(REPO_ROOT))
+            if args.per_block:
+                for i, b in enumerate(blocks, 1):
+                    units.append((f"{rel}#block{i}", "card", b, []))
+            else:
+                st = stitch_blocks(blocks)
+                units.append((f"{rel}#stitched({len(blocks)}块)", "card", st,
+                              block_line_map(blocks, st)))
+
+    # 仓库内已落地的本地模块索引（用于区分 ORPHAN_DEP 与 ENV_BLOCKED）
+    local_index = repo_local_module_index()
+    if local_index and not args.quiet:
+        print(f"已索引仓库内本地模块 {len(local_index)} 个（可自动解析的卡片将真正执行）")
+
+    results: list[Result] = []
+    ICON = {"PASS": "✅", "ENV_BLOCKED": "🟡", "ORPHAN_DEP": "🔴",
+            "FAIL": "❌", "UNVERIFIED": "⚪"}
+    with tempfile.TemporaryDirectory(prefix="k1_") as td:
+        for idx, (target, kind, code, spans) in enumerate(units):
+            wd = Path(td) / f"u{idx}"
+            wd.mkdir(parents=True, exist_ok=True)
+            r = verify_unit(code, target, kind, wd, max_level=args.level,
+                            timeout=args.timeout, local_index=local_index)
+            # 把报错行号映射回具体 block，方便作者定位
+            if spans:
+                for st in r.stages:
+                    m = re.search(r"line (\d+)", st.detail or "") or \
+                        re.search(r'line (\d+)', st.stderr or "")
+                    if m:
+                        bi = locate_block(spans, int(m.group(1)))
+                        if bi:
+                            st.detail = f"[block{bi}] {st.detail}"
+                            break
+            results.append(r)
+            if not args.quiet:
+                icon = ICON.get(r.verdict, "?")
+                bad = next((s for s in r.stages if s.passed is False), None)
+                extra = f"  ← {bad.name}: {bad.detail}" if bad else ""
+                print(f"{icon} {r.verdict:12s} {target}{extra}")
+
+    # --- 汇总 ---
+    tally = {"PASS": 0, "ENV_BLOCKED": 0, "ORPHAN_DEP": 0, "FAIL": 0, "UNVERIFIED": 0}
+    for r in results:
+        tally[r.verdict] = tally.get(r.verdict, 0) + 1
+    exec_units = tally["PASS"]
+    denom = len(results)
+    rate = (exec_units / denom * 100) if denom else 0.0
+
+    summary = {
+        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "max_level": args.level,
+        "units_total": denom,
+        "tally": tally,
+        "exec_rate_pct": round(rate, 2),
+        "note": ("exec_rate_pct = PASS / units_total。ENV_BLOCKED 计入未验证分母，"
+                 "不得声称已验证；ORPHAN_DEP 是卡片缺陷（引用了仓库内不存在的模块），必须修。"),
+    }
+    payload = {"summary": summary, "results": [
+        {**asdict(r), "stages": [asdict(s) for s in r.stages]} for r in results
+    ]}
+
+    print("\n" + "=" * 66)
+    print(f"单元总数 {denom} | ✅ PASS {tally['PASS']} | 🟡 ENV_BLOCKED {tally['ENV_BLOCKED']} "
+          f"| 🔴 ORPHAN {tally['ORPHAN_DEP']} | ❌ FAIL {tally['FAIL']} "
+          f"| ⚪ 未执行 {tally['UNVERIFIED']}")
+    print(f"K1 执行率 = {rate:.1f}%   （对照：PaperCoder 17.94% / AutoReproduce 94.87%）")
+    print("=" * 66)
+
+    if args.json_out:
+        args.json_out.parent.mkdir(parents=True, exist_ok=True)
+        args.json_out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"JSON → {args.json_out}")
+    if args.markdown_out:
+        args.markdown_out.parent.mkdir(parents=True, exist_ok=True)
+        lines = [
+            "# K1 代码可执行性验证报告", "",
+            f"- 生成时间：{summary['generated_at']}",
+            f"- 最大验证级别：L{args.level}",
+            f"- 单元总数：{denom}",
+            f"- **K1 执行率：{rate:.1f}%**（PASS {tally['PASS']} / 环境阻塞 {tally['ENV_BLOCKED']} "
+            f"/ 孤儿依赖 {tally['ORPHAN_DEP']} / 失败 {tally['FAIL']} / 未执行 {tally['UNVERIFIED']}）",
+            "",
+            "> **口径说明（三个易被混淆的判定）**",
+            "> - `PASS`：真正跑通了（L4 脚本执行成功 或 L5 断言全绿）。只有这一类可以声称「已验证」。",
+            "> - `ENV_BLOCKED`：本机缺第三方依赖/凭证/资源（如未装 torch）。**计入未验证分母** —— 缺依赖不等于代码正确。",
+            "> - `ORPHAN_DEP`：卡片 `import` 的**本地模块在仓库内根本不存在**（如 `import review_quality_scoring`）。",
+            ">   这是卡片真实缺陷，必须修，**绝不可归因环境而放行**。",
+            "",
+            "## 明细", "",
+            "| 判定 | 目标 | 阻塞阶段 | 说明 |", "|---|---|---|---|",
+        ]
+        ICON2 = {"PASS": "✅", "ENV_BLOCKED": "🟡", "ORPHAN_DEP": "🔴",
+                 "FAIL": "❌", "UNVERIFIED": "⚪"}
+        for r in results:
+            icon = ICON2.get(r.verdict, "?")
+            bad = next((s for s in r.stages if s.passed is False), None)
+            lines.append(f"| {icon} {r.verdict} | `{r.target}` | {bad.name if bad else '—'} | "
+                         f"{bad.detail if bad else '全部通过'} |")
+        # 孤儿依赖专章：这是最需要人看的部分
+        orphans = [r for r in results if r.verdict == "ORPHAN_DEP"]
+        if orphans:
+            lines += ["", "## 孤儿依赖清单（卡片引用了仓库内不存在的模块）", "",
+                      "| 卡片 | 缺失模块 |", "|---|---|"]
+            for r in orphans:
+                lines.append(f"| `{r.target}` | {', '.join('`%s`' % o for o in r.orphan_deps)} |")
+        args.markdown_out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print(f"Markdown → {args.markdown_out}")
+
+    # 退出码：FAIL 或 ORPHAN_DEP 存在即非 0（可作 CI 门禁）
+    return 0 if (tally["FAIL"] == 0 and tally["ORPHAN_DEP"] == 0) else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

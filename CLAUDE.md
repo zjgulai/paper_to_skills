@@ -79,38 +79,144 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 
 | File | Purpose |
 |------|---------|
-| `paper2skills-vault/07-资源库/MasterPrompt.md` | Master prompt for converting papers to skills |
-| `paper2skills-vault/07-资源库/关键词库.md` | ArXiv search keywords by domain |
+| `paper2skills-vault/07-资源库/MasterPrompt-v2.md` | **当前生效的 Master Prompt**(含 R1–R5 证据规则、frontmatter v2、硬拦截清单) |
+| `paper2skills-vault/07-资源库/MasterPrompt.md` | v1 原文(保留供对照,新卡片一律走 v2) |
+| `paper2skills-vault/07-资源库/关键词库.md` | ArXiv search keywords by domain (v1) |
+| `paper2skills-vault/07-资源库/venue-whitelist.md` | **venue 白名单 + 降级判定 + 时效基准规则** |
 | `paper2skills-vault/07-资源库/papers_registry.json` | **论文唯一事实源**(候选/评分/决策/门禁/交付物回指) |
 | `paper2skills-vault/07-资源库/sync_status.json` | Tracks sync status across platforms |
+| `paper2skills-vault/07-资源库/gates/gate_g2.json` | **K2 事实可溯源门禁产物**(G1 见 `paper2skills-research/data/verification/`) |
+| `paper2skills-skills/paper-萃取/scripts/verify_skill_code.py` | **K1 门禁**:五级代码可执行性验证(语法/编译/导入/运行/断言) |
+| `paper2skills-skills/paper-审核/scripts/gate_check.py` | **K2 门禁**:G1 代码 / G2 事实 / G3 业务 三合一 |
 | `paper2skills-skills/paper-同步/scripts/sync.py` | Sync script for vault/GitHub/feishu |
 | `paper2skills-research/scripts/` | 检索/评分/去重/体检脚本(见下方"检索路线") |
+
+## 门禁体系(K1 / K2,2026-09-12 建立)
+
+**背景**:存量审核靠 LLM 打 7/10 分放行。而 `AutoReproduce`(arXiv:2505.20662) 实测:
+LLM 评审认为"很好"的生成代码,**执行率仅 17.94%**;加上执行闭环后才到 94.87%。
+`ResearchCodeBench` 附录 G 进一步显示新代码失败中 **58.6% 是语义错误**(能跑但算错)。
+→ 故门禁必须产出**可复核的退出码与 stdout**,而不是分数。
+
+### K1 代码可执行 · `paper-萃取/scripts/verify_skill_code.py`
+
+| 级别 | 检查 | 说明 |
+|------|------|------|
+| L1 | `ast.parse` | 语法 |
+| L2 | `py_compile` | 编译 |
+| L3 | import 探针 | **缺第三方依赖注入 stub,归因环境;仓库内不存在的本地模块判 ORPHAN_DEP(卡片缺陷)** |
+| L4 | 作为脚本执行 | 超时保护 + 独立进程组 SIGKILL |
+| L5 | `pytest` | 断言是否真的成立 |
+
+判定:`PASS` / `ENV_BLOCKED`(缺依赖,计入未验证分母) / `ORPHAN_DEP`(卡片引用了不存在的模块) / `FAIL`。
+
+```bash
+# 全量(卡片级:自动把卡片内所有 python 块按文档顺序拼成一个模块)
+python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py --all \
+  --level 5 --timeout 30 \
+  --json-out paper2skills-research/data/verification/k1_l5.json
+
+# 单卡 / 快速语法扫描(秒级)
+python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py --card <card.md>
+python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py --all --level 2
+```
+
+**两条必须遵守的实现约束**(都是实测踩出来的):
+1. **必须按卡片拼接验证,不能逐块独立导入** — 卡片普遍是「block1 定义类 → block3 使用」的递进结构,
+   逐块导入会产生大量 `NameError` **假阳性**(首次实测 44 个 L3 失败里 19 个是假的)。
+   需要逐块定位时用 `--per-block`。
+2. **验证必须在断网语义下运行** — 卡片里的 `from_pretrained(...)`/`requests.get(...)` 会挂在网络重试上
+   (实测:跑 30 分钟未出结果,而进程 CPU 时间仅 2.2 秒)。脚本已内置 socket 拦截 +
+   `HF_HUB_OFFLINE=1` 等环境变量,把网络调用变成即时失败并归因为 `ENV_BLOCKED`。
+
+**首次全量基线(2026-09-12)**:80 张含代码卡片 → **K1 执行率 52.5%**
+(PASS 42 / ENV_BLOCKED 6 / ORPHAN_DEP 9 / FAIL 23)。对照 PaperCoder 17.94%、AutoReproduce 94.87%。
+
+### K2 三合一门禁 · `paper-审核/scripts/gate_check.py`
+
+| 门禁 | 检查 | 关键口径 |
+|------|------|----------|
+| **G1 代码可执行** | 读 K1 产物 | 无 K1 凭证一律判红(禁止凭人工判断放行) |
+| **G2 事实可溯源** | 带「度量语义」的数字是否能在证据链中找到出处 | 证据链 = 卡片内 `> 原文:"..."` 引用块 + 同目录 `evidence.md`。**只回答"有没有出处",不判断"对不对"**(对错靠人工抽检) |
+| **G3 业务可落地** | 场景是否具体、是否声明数据可得性、ROI 是否有依据、是否关联 ≥2 张卡 | 空泛表述黑名单 + 母婴出海具体信号计数 |
+
+```bash
+python3 paper2skills-skills/paper-审核/scripts/gate_check.py --all \
+  --k1 paper2skills-research/data/verification/k1_l5.json \
+  --outdir paper2skills-vault/07-资源库/gates
+```
+
+**首次全量基线(2026-09-12,G2)**:130 张卡 → **57 张通过(43.8%)**,红灯 438 条。
+根因:全库 **13,868 个数字 vs 仅 3 行** `> 原文:"..."` 引用块。
+
+> ⚠️ **口径警告**:三个门禁必须**分开报**。`Cited but Not Verified`(arXiv:2605.06635) 实测
+> 链接可用 >94%、主题相关 >80%,而**事实一致性只有 39–77%** —— 合成一个「可信度总分」
+> 会把最弱的那一维平均掉。
 
 ## 检索路线(2026-09 实测结论)
 
 | 路线 | 覆盖 | 调用 | 实测 |
 |------|------|------|------|
-| arXiv API | 预印本、方法论、模型类 | `export.arxiv.org/api/query` + `submittedDate:[start TO end]` | ✅ 49 查询 → 1046 篇(92 天) |
-| Crossref | UTD24/FT50/CCF-A 期刊**正式在线发表** | `api.crossref.org/journals/{issn}/works?filter=from-pub-date:..,until-pub-date:..` | ✅ 28 刊 → 1751 篇 |
-| 会议 proceedings | KDD/SIGIR/RecSys/CIKM/EMNLP | 先由 arXiv `comment`/`journal_ref` 字段捕获 | ⚠️ 部分覆盖(152 篇带 venue 信号) |
-| OpenReview | ICLR/NeurIPS 投稿与接收 | — | ❌ 403 人机验证,需浏览器/个人 token |
-| DBLP | 会议目录 | — | ⚠️ bot 挑战 + 429,需带 UA 限速 |
+| arXiv API | 预印本、方法论、模型类 | `https://export.arxiv.org/api/query` + `submittedDate:[start TO end]` | ✅ 49 查询 → 1046 篇(92 天)。**必须 https + `curl -L`**(http 返回 301 空 body) |
+| Crossref 期刊 | UTD24/FT50/CCF 期刊**正式在线发表** | `api.crossref.org/journals/{issn}/works?filter=from-pub-date:..,until-pub-date:..` | ✅ 28 刊 → 1751 篇 |
+| Crossref 会议录 | KDD/SIGIR/WWW/WSDM 论文集 | `api.crossref.org/works?query.container-title={proceedings 全名}` | ✅ **dl.acm.org 403 的唯一替代**,含 `event.location` |
+| PMLR 卷级 BibTeX | UAI/AISTATS/MLSys | `proceedings.mlr.press/v{N}/assets/bib/bibliography.bib` | ✅ **一次调用全量**(UAI v337 = 639KB,330 篇) |
+| ACL Anthology | ACL 2026 全 7 卷 | `aclanthology.org/volumes/2026.acl-long.bib` | ✅ 但 >60s,须 `--max-time 180`;**无 JSON 端点** |
+| OpenAlex | 跨源补充与交叉校验 | `api.openalex.org/works?filter=primary_location.source.issn:{issn},...` | ✅ 免鉴权;⚠️ **按上线日索引,与 Crossref 封面日语义不同** |
+| **OpenReview** | DBLP 镜像 + 已回填 venue 的会议 | ✅ `/notes/search?term=..&limit=1000&type=terms` 与 `/groups?id=..` 实测 **200**;❌ `/notes` 仍 403 | ⚠️ **可用但覆盖易高估**(见下) |
+| **DBLP** | — | — | ⛔ **彻底不可用**(见下) |
+| Semantic Scholar | — | — | ❌ 429 |
 
-**两个必须记住的坑**:
+**四个必须记住的坑**:
 1. **顶刊"新发表" ≠ 新方法** — 实测 79% 的顶刊文章 DOI 年份段比发表年份早 ≥2 年
    (例:`10.1287/mnsc.2022.02462` 发表于 2026-07-09 但 DOI 为 2022)。萃取时应优先找预印本版本。
 2. **Crossref 多关键词抓取会跨组重复计数** — 同一批 120 条记录实际只有 91 篇唯一论文(重复率 24%),
    排序前必须先按 DOI 去重。
+3. **Crossref 必须同时打 `from-pub-date` 与 `from-print-pub-date`** — SAGE 系(JM/JMR/POM)的
+   `published` 是 online-first 日期,只打前者会漏掉整期。实测 POM:普通过滤 55 条且几乎全无卷期,
+   print-date 过滤给出干净的 `{35(7):16, 35(8):16, 35(9):17}`;ISR 的 print-date 过滤结果为 **0**
+   (证明其本季纯 Articles in Advance,无正式期号)。
+4. **DBLP 不是"限速问题"** — `dblp.org`/`dblp.uni-trier.de`/`dblp.dagstuhl.de` 三镜像全部返回
+   **HTTP 200 + Anubis proof-of-work 挑战页**(`<title>Making sure you're not a bot!</title>`)。
+   换 UA、降速、换镜像、换 API 路径**全部无效** → **脚本路线应彻底放弃**。
+   最危险之处是状态码为 200,脚本若不检查正文会把挑战页当数据解析。
+   替代:Crossref(ACM DL DOI) + OpenAlex。
 
-## 存量资产体检(2026-09-12 `skill_audit.py`)
+**OpenReview 的精确边界(勿高估)**:`/notes/search` 支持精确短语匹配 venue 且 `limit=1000` 一次全量,
+但实测 `"SIGIR 2026"` 返回的 123 条里 117 条 invitation=`Record` 且带 `dblp:` externalId,
+**是 DBLP 镜像,不等于正会**(SIGIR 正会 274 篇未覆盖);`"ICML 2026"`/`"ICLR 2026"`/`"ACL 2026"`/
+`"AAAI 2026"` 精确短语查询返回 **0**(venue 字段未回填);`"EMNLP 2026"` 返回的 147 条实为
+workshop 名(GroundLM/NLP4PI)。**正会枚举仍需个人 token**。
+
+**`NAACL 2026` 不存在**(2026 停办一届):`2026.naacl.org` DNS 不解析、
+`aclanthology.org/events/naacl-2026/` 404、`naacl.org` 只挂 2027。
+venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-资源库/venue-whitelist.md`。
+
+## 存量资产体检(2026-09-12 实测)
+
+> 本节数字为 T0-2 去重**之后**的实测值;括号内为去重前的旧值,保留用于对照。
 
 | 指标 | 实测值 | 说明 |
 |------|--------|------|
-| 唯一 Skill 卡片 | **130 张** | 文件数 156,因 `07-NLP-VOC/` 下 26 组同名重复(25 组字节相同、1 组已漂移) |
-| 含 frontmatter | 73/156 (46%) | 规范不统一 |
-| 含 `paper:` 溯源字段 | **6/156 (3%)** | 无法反查论文来源 |
-| 含可运行 Python | 95/156 (60%);含 `def/class` 69/156 (44%) | 代码可执行性无脚本凭证 |
-| 领域分布 | 07-NLP-VOC 42 / 16-智能体工程 16 / 10-MAS 12 / 06-增长模型 10 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
+| 唯一 Skill 卡片 | **130 张** | 去重前文件数 156,`07-NLP-VOC/` 下 26 组同名重复已清理(25 组字节相同直接删、1 组已漂移移入 `_superseded/`) |
+| 含 frontmatter | **73/130 (56%)** | 规范不统一 |
+| 含 `paper:` 溯源字段 | **6/130 (4.6%)** | 无法反查论文来源。⚠️ 注意:frontmatter 里的 `source:`(值多为 `human+ai`)是**文档来源**,**不是**论文来源,统计时勿混淆 |
+| 含 python 代码块 | **80/130 (62%)** / 共 104 个代码块 | — |
+| **K1 代码执行率** | **52.5%** | PASS 42 / ENV_BLOCKED 6 / ORPHAN_DEP 9 / FAIL 23。详见下方"门禁体系" |
+| **G2 事实溯源通过率** | **43.8%** | 红灯 438 条;根因是全库 13,868 个数字 vs 仅 3 行原文引用块 |
+| 领域分布 | 07-NLP-VOC 41 / 16-智能体工程 16 / 10-MAS 12 / 06-增长模型 10 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
+
+### 已发现的代码硬缺陷(由 K1 首次暴露,均为真缺陷)
+
+8 个代码块连 `ast.parse` 都过不了,例如:
+`Skill-AB-Experimental-Design`(中文书名号 `【` 混入代码)、
+`Skill-MAS-Orchestrator`(箭头 `→` 混入代码)、
+`Skill-Argos-Agentic-Anomaly-Detection`(三引号 f-string 未闭合)、
+`Skill-Memory-as-Action` / `Skill-Skill-Lifecycle-Design`(首行非 Python)。
+另有 9 张卡片 `import` 了仓库内**根本不存在**的本地模块
+(`autotag_self_evolving`、`review_quality_scoring`、`nps_driver_analysis` 等)。
+
+> 这些缺陷此前从未被发现,原因是审核依赖 LLM 阅读而非执行。
 
 ## Workflow Commands
 
@@ -152,13 +258,19 @@ python scripts/sync.py --status
 
 ## Skill Card Format
 
-Each skill card follows a 5-module structure:
+**新卡片一律走 `MasterPrompt-v2.md`**,其结构为 6 段 + frontmatter v2:
 
-1. **Algorithm Principle** (≤300 words) - Core idea, math intuition, key assumptions
-2. **Business Applications** (1-2 scenarios) - Specific mother & baby cross-border e-commerce use cases
-3. **Code Template** - Runnable Python code with test cases
-4. **Skill Relations** - Prerequisites, extensions, combinable skills
-5. **Business Value Assessment** - ROI estimate, difficulty rating (1-5 stars), priority score
+0. **frontmatter** — 含 `paper_id` / `paper` / `venue` / `venue_tier` / `evidence_grade` / `related`(缺字段即未完成)
+1. **算法原理**(≤300 字)— 核心思想 / 数学直觉 / 关键假设
+1b. **反例与适用边界** — 什么时候不要用 / 已知失败模式 / 论文自承局限(无则显式写"论文未讨论")
+2. **母婴出海应用案例**(1-2 个)— 业务问题 / 数据要求 / **数据可得性(必填)** / 预期产出 / 业务价值
+3. **代码模板** — 可运行 Python + 测试;须能过 K1(不得 import 仓库内不存在的模块、不得有 `plt.show()`/网络请求、须含 assert)
+4. **技能关联** — 必须真的引用 `Skill-*.md` 文件名,≥2 个
+5. **商业价值评估** — ROI 须给公式或参数来源 + 难度/优先级星级
+6. **原文引用(必填,≥3 条)** — `> 原文:"<逐字摘录>"` + 出处(arXiv ID / 章节 / 页码)
+
+> v1 的五段式结构(`MasterPrompt.md`)仅保留供对照。v2 新增的第 0/1b/6 段
+> 分别对应 G2 溯源门禁、边界声明要求、证据链要求。
 
 ## Code Standards
 
