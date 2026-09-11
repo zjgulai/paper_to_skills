@@ -129,8 +129,13 @@ python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py --all --le
    (实测:跑 30 分钟未出结果,而进程 CPU 时间仅 2.2 秒)。脚本已内置 socket 拦截 +
    `HF_HUB_OFFLINE=1` 等环境变量,把网络调用变成即时失败并归因为 `ENV_BLOCKED`。
 
-**首次全量基线(2026-09-12)**:80 张含代码卡片 → **K1 执行率 52.5%**
-(PASS 42 / ENV_BLOCKED 6 / ORPHAN_DEP 9 / FAIL 23)。对照 PaperCoder 17.94%、AutoReproduce 94.87%。
+**首次全量基线(2026-09-12)**:84 个代码单元 → **K1 执行率 54.8%**
+(PASS 46 / ENV_BLOCKED 7 / ORPHAN_DEP 9 / FAIL 22),**语法级失败已归零**。
+对照 PaperCoder 17.94%、AutoReproduce 94.87%。
+
+> 迭代轨迹:46.2% → 52.5%(修 ORPHAN 假阳性)→ 54.8%(修围栏结构)。
+> 前两次提升都来自**修正门禁自身的缺陷**,而非改写卡片——这说明
+> **门禁工具的可信度必须先于被门禁对象建立**。
 
 ### K2 三合一门禁 · `paper-审核/scripts/gate_check.py`
 
@@ -202,21 +207,37 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 | 含 frontmatter | **73/130 (56%)** | 规范不统一 |
 | 含 `paper:` 溯源字段 | **6/130 (4.6%)** | 无法反查论文来源。⚠️ 注意:frontmatter 里的 `source:`(值多为 `human+ai`)是**文档来源**,**不是**论文来源,统计时勿混淆 |
 | 含 python 代码块 | **80/130 (62%)** / 共 104 个代码块 | — |
-| **K1 代码执行率** | **52.5%** | PASS 42 / ENV_BLOCKED 6 / ORPHAN_DEP 9 / FAIL 23。详见下方"门禁体系" |
-| **G2 事实溯源通过率** | **43.8%** | 红灯 438 条;根因是全库 13,868 个数字 vs 仅 3 行原文引用块 |
+| **K1 代码执行率** | **54.8%** | 84 单元:PASS 46 / ENV_BLOCKED 7 / ORPHAN_DEP 9 / FAIL 22;语法级失败 0。详见下方"门禁体系" |
+| **G1 门禁通过率** | **35.4%** | 46/130,红灯 77 |
+| **G2 事实溯源通过率** | **43.8%** | 57/130,红灯 438 条;根因是全库 13,868 个数字 vs 仅 3 行原文引用块 |
+| **G3 业务可落地通过率** | **39.2%** | 51/130,红灯 94 |
 | 领域分布 | 07-NLP-VOC 41 / 16-智能体工程 16 / 10-MAS 12 / 06-增长模型 10 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
 
-### 已发现的代码硬缺陷(由 K1 首次暴露,均为真缺陷)
+### 已发现的缺陷(由 K1 首次暴露,已修复)
 
-8 个代码块连 `ast.parse` 都过不了,例如:
-`Skill-AB-Experimental-Design`(中文书名号 `【` 混入代码)、
-`Skill-MAS-Orchestrator`(箭头 `→` 混入代码)、
-`Skill-Argos-Agentic-Anomaly-Detection`(三引号 f-string 未闭合)、
-`Skill-Memory-as-Action` / `Skill-Skill-Lifecycle-Design`(首行非 Python)。
-另有 9 张卡片 `import` 了仓库内**根本不存在**的本地模块
-(`autotag_self_evolving`、`review_quality_scoring`、`nps_driver_analysis` 等)。
+首轮报出「8 个语法错误」,**逐个人工核对后发现全部是 markdown 围栏结构问题,不是代码缺陷**——
+这个区分很重要:用 LLM 阅读永远发现不了,只有执行才暴露。
 
-> 这些缺陷此前从未被发现,原因是审核依赖 LLM 阅读而非执行。
+| 缺陷类 | 数量 | 实例 | 修复 |
+|--------|------|------|------|
+| 伪代码被标成 ```python | 9 处 | `Skill-AB-Experimental-Design`(ASCII 框图)、`Skill-Memory-as-Action`(函数签名) | 改标 `pseudocode` / `yaml` |
+| 代码块内含嵌套 ``` | 1 张 | `Skill-Argos-Agentic-Anomaly-Detection`(f-string 里嵌 markdown) | 外层改 **4 反引号**(Markdown 标准做法);此前该块被截成两半、后半段整个丢失 |
+| 代码围栏**未闭合** | 2 张 | `Skill-Session-Based-Recommendation-SR-GNN`、`Skill-Knowledge-Graph-for-Skills-Management` | 在代码真实结束处补闭栏;此前 ④技能关联 等正文被当作 Python |
+| 真代码笔误 | 1 处 | `self._ Aspects = None`(标识符中间多空格) | 改 `self._aspects` |
+
+**仍待修(9 张)**:卡片 `import` 了仓库内**根本不存在**的本地模块,判 `ORPHAN_DEP`:
+`autotag_self_evolving`、`review_quality_scoring`、`nps_driver_analysis`、
+`behavioral_intent_tree_parsing`、`crosslingual_semantic_alignment`、
+`crosslingual_sentiment_transfer`、`dialogue_to_action_graph`、
+`product_attribute_graph_parsing`、`voc_semantic_blueprint`。
+
+### 门禁自身的 3 个 bug(同样由 K1 迭代暴露)
+
+| # | bug | 后果 |
+|---|-----|------|
+| 1 | `looks_like_python` 启发式过宽(把含 `if`/`for` 的**文档**判为代码) | 3 个假阳性,报告出现不存在的「语法错误」 |
+| 2 | 围栏正则不支持**变长反引号**(只认 3 个) | 嵌套块被截断;4 反引号块被整个漏掉(表现为"该卡无代码") |
+| 3 | `extract_all_python` 回退分支误用 `m.group(1)` | 同上 |
 
 ## Workflow Commands
 
