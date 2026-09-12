@@ -230,18 +230,68 @@ def collect_evidence(card: Path, text: str,
         for n in re.findall(r"\d+(?:\.\d+)?", src):
             nums.add(n)
 
-    # 同目录 / 同名 evidence.md
+    # 证据链 evidence.md 的定位。
     #
     # ⚠️ 这里曾经是一个洗白后门：evidence.md 里的数字**无条件**全收，
     # 于是「在 evidence.md 里裸写一句 `ROI 提升 42.7%`」就能让卡片正文的
     # 无出处数字过闸。现在只认两种：
     #   ① 位于**已逐字核验**的引用块内；
     #   ② 位于带显式出处指针的行（含 `出处` 或 `§`），用于引用表格/图号。
-    for cand in (
+    #
+    # ⚠️⚠️ 2026-09-12 修第二个缺陷：**门禁根本找不到 evidence.md**。
+    # 原实现只在「卡片同目录」找，而 MasterPrompt-v2 与 registry 的约定是
+    # `papers/<域>/<p2s-id>/evidence.md`。后果是 PHASE3 全部新卡的
+    # evidence.md 对 G2 一点作用都没有 —— 上面那个「只认两种」的加固成了空转，
+    # 而 G2 绿灯实际只靠卡片自身 ⑥ 段引文。
+    # （由子代理在 p2s-2026-0018 上发现：它观察到 evidence_sources 全是「卡片引用块」。）
+    # 现按 paper_id 反查 registry 的 outputs.evidence，并兜底扫 papers/*/<paper_id>/。
+    ev_candidates: list[Path] = [
         card.with_suffix(".evidence.md"),
         card.parent / "evidence.md",
         card.parent / f"{card.stem}.evidence.md",
-    ):
+    ]
+    # ⚠️ 注意 `paper_id` 在两个地方**语义不同**，这是本仓库的一个命名坑：
+    #   卡片 frontmatter 的 `paper_id` = **arXiv ID**（如 2608.25277）
+    #   registry 的 `paper_id`        = **项目内 ID**（如 p2s-2026-0018）
+    # 第一版修复只按 registry 的 `paper_id` 匹配，于是全部落空、静默退回旧行为。
+    # 现按三条线索依次认领：registry.paper_id / identifiers.arxiv / outputs.skill_card 路径。
+    m_pid = re.search(r"^paper_id:\s*(\S+)", text, re.M)
+    fm_pid = m_pid.group(1).strip().strip("\"'") if m_pid else ""
+    if fm_pid:
+        try:
+            reg = json.loads((VAULT / "07-资源库" / "papers_registry.json")
+                             .read_text(encoding="utf-8"))
+            card_rel = str(card.resolve().relative_to(REPO_ROOT))
+            rec_hit = None
+            for rec in reg.get("records", []):
+                if rec.get("paper_id") == fm_pid:
+                    rec_hit = rec; break
+                if (rec.get("identifiers") or {}).get("arxiv") == fm_pid:
+                    rec_hit = rec; break
+            if rec_hit is None:       # 再退一步：用 outputs.skill_card 反认（应对未回填的模板占位）
+                for rec in reg.get("records", []):
+                    sc = (rec.get("outputs") or {}).get("skill_card") or ""
+                    if sc and "<" not in sc and sc == card_rel:
+                        rec_hit = rec; break
+            if rec_hit is not None:
+                p_out = (rec_hit.get("outputs") or {}).get("evidence")
+                if p_out and "<" not in p_out:
+                    ev_candidates.insert(0, REPO_ROOT / p_out)
+                # 兜底：用 registry 的项目内 ID 扫 papers/*/<p2s-id>/evidence.md
+                p2s = rec_hit.get("paper_id")
+                if p2s:
+                    ev_candidates.extend(
+                        sorted((VAULT / "papers").glob(f"*/{p2s}/evidence.md")))
+        except Exception:
+            pass                      # registry 不可读不该让门禁崩，退到路径兜底
+        ev_candidates.extend(sorted((VAULT / "papers").glob(f"*/{fm_pid}/evidence.md")))
+
+    seen_ev: set[Path] = set()
+    for cand in ev_candidates:
+        cand = Path(cand)
+        if cand in seen_ev or not cand.is_file():
+            continue
+        seen_ev.add(cand)
         if cand.is_file():
             ev = cand.read_text(encoding="utf-8", errors="replace")
             sources.append(f"evidence.md: {cand.relative_to(REPO_ROOT)}")

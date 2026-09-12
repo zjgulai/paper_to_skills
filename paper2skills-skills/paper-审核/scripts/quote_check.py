@@ -416,6 +416,11 @@ def main() -> int:
 
     n_fab_cards = [r for r in reports if r["verdict"] == "FABRICATED"]
     n_noft = [r for r in reports if r["verdict"] == "NO_FULLTEXT"]
+    # ⚠️ NO_QUOTES 必须单列，不能并进「通过」。
+    # 一张**没有任何引用块**的卡片此前会被算作「通过」—— 那是「没东西可查」，
+    # 不是「出处为真」，正是本项目反复封堵的假绿灯类型（与 G2 基线里
+    # 「没有数字的卡片自动通过」同源）。单卡模式下 --all 的过滤不生效，这条尤其容易被误读。
+    n_noq = [r for r in reports if r["verdict"] == "NO_QUOTES"]
 
     if args.json:
         print(json.dumps(reports, ensure_ascii=False, indent=2))
@@ -445,9 +450,15 @@ def main() -> int:
                 print(f"      {r['note']}")
 
         print()
+        n_pass = len(reports) - len(n_fab_cards) - len(n_noft) - len(n_noq)
         print(f"共 {len(reports)} 张卡："
-              f"{len(reports) - len(n_fab_cards) - len(n_noft)} 通过，"
-              f"{len(n_fab_cards)} 含伪造引文，{len(n_noft)} 无全文可核验")
+              f"{n_pass} 通过（有引用块且逐字可核），"
+              f"{len(n_fab_cards)} 含伪造引文，"
+              f"{len(n_noft)} 无全文可核验，"
+              f"{len(n_noq)} 无引用块（**不等于通过**）")
+        if n_noq:
+            print(f"      ↑ 这 {len(n_noq)} 张卡没有任何引用块（无 `> 原文:` 行），"
+                  f"G2a 会判红；quote_check 对它们无话可说。")
 
     if args.json_out:
         Path(args.json_out).write_text(

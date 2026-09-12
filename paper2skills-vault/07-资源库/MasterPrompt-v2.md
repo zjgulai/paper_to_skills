@@ -66,7 +66,11 @@ source: ai
 paper_id: <arXiv ID 或 DOI>          # 例 2606.26690 / 10.1287/mnsc.2022.02462
 paper: <论文标题原文，不要翻译>
 venue: <规范化 venue 名>              # 例 KDD 2026 / CIKM 2026 / arXiv preprint
-venue_tier: <CCF-A|CCF-B|UTD24|FT50|preprint|non-paper>
+venue_tier: <CCF-A|CCF-B|UTD24|FT50|preprint|non-paper|workshop|demo>
+#   ⚠️ 后两个值(workshop/demo)是 2026-09-12 补入的**轨道类型**，不是层级。
+#   R3 要求 workshop/findings/demo 必须显式标注 —— 标了轨道就不要同时声称主会层级。
+#   实测教训：RecSys 2026 的 3 页 Demo 短文曾被写成 `venue_tier: top`（两处错：
+#   (a) `top` 不在枚举内；(b) RecSys 是 CCF-B 且该卡是 demo track 而非主会）。
 evidence_grade: <A|B|C>              # A=原始 PDF 全文可得 B=仅摘要 C=仅二手描述
 verified_by: <验证方式>               # 例 verify_skill_code.py + 人工抽检 3 处数字
 supersedes: <被本卡取代的旧卡，无则留空>

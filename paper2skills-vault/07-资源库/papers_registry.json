@@ -38,7 +38,7 @@
       "published": "2026-06-25",
       "journal": "",
       "venue": "",
-      "venue_tier": "workshop",
+      "venue_tier": "preprint",
       "domain": "13-广告分析",
       "priority": "P0",
       "decision": "extract",
@@ -57,7 +57,9 @@
         "evidence": "pass",
         "business": "pass"
       },
-      "status": "extracted"
+      "status": "extracted",
+      "venue_track": "workshop",
+      "venue_track_note": "轨道标记（非层级）：workshop 按降级表降一级；demo/short paper 降为 preprint。tier 字段记**降级后**的有效层级。"
     },
     {
       "paper_id": "p2s-2026-0002",
@@ -69,7 +71,7 @@
       "published": "2026-08-12",
       "journal": "",
       "venue": "CIKM",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "13-广告分析",
       "priority": "P0",
       "decision": "extract",
@@ -193,7 +195,7 @@
       "published": "2026-08-26",
       "journal": "",
       "venue": "KDD",
-      "venue_tier": "top",
+      "venue_tier": "CCF-A",
       "domain": "03-时间序列",
       "priority": "P0",
       "decision": "extract",
@@ -224,7 +226,7 @@
       "published": "2026-07-14",
       "journal": "",
       "venue": "SIGIR",
-      "venue_tier": "top",
+      "venue_tier": "CCF-A",
       "domain": "05-推荐系统",
       "priority": "P0",
       "decision": "extract",
@@ -286,7 +288,7 @@
       "published": "2026-07-03",
       "journal": "",
       "venue": "",
-      "venue_tier": "second",
+      "venue_tier": "preprint",
       "domain": "04-供应链",
       "priority": "P0",
       "decision": "extract",
@@ -323,20 +325,22 @@
       "decision": "extract",
       "decision_reason": "被助攻的乌龙球：站外种草引发增量但被下游 marketplace 记账，ROAS 系统性失真；跨境最贵的测量缺口",
       "data_availability": "synthetic",
-      "note": "论文**无真实数据**：纯理论 + 一个模拟研究（Section 6，200,000 simulated intents）。原文自述 'We outline a simulation design...'。卡片中一切数字须标注为模拟设定/模拟输出。业务侧仍需受众级随机化：自建独立站可行，纯平台站内卖家降级为诊断框架。",
+      "note": "论文**无真实数据**：纯理论 + 一个模拟研究（Section 6，200,000 simulated intents）。原文自述 'We outline a simulation design...'。卡片中一切数字须标注为模拟设定/模拟输出。业务侧仍需受众级随机化：自建独立站可行，纯平台站内卖家降级为诊断框架。 ⚠️ decision_reason 的「**跨境**最贵的测量缺口」属项目侧外推：全文 cross-border/e-commerce/mother/baby/TikTok 零命中。真正的瓶颈是 channel-complete outcome（下游 marketplace 订单能否回到同一 user/order key），不是随机化本身。",
       "score": 24.7,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/14-用户分析/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/14-用户分析/Skill-Incrementality-Measurement.md",
         "code_dir": "paper2skills-code/user_analytics/<algo>",
         "evidence": "paper2skills-vault/papers/14-用户分析/p2s-2026-0010/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "31/31",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0011",
@@ -353,21 +357,23 @@
       "priority": "P0",
       "decision": "extract",
       "decision_reason": "TRACE：Scout/Judge 双 agent + 多源证据接地做目录属性补全，生产四个垂类曝光加权覆盖率 +90.4%，结账转化 +0.48%",
-      "data_availability": "available",
-      "note": "无 venue；数字来自完整摘要，萃取前须回原文核对",
+      "data_availability": "partial",
+      "note": "无 venue（保持 preprint，不抬级）。⚠️ 摘要/正文不一致：摘要报 +90.4%，正文仅 'over 90%' 且无分垂类精确表 —— 下游不得把 90.4% 当正文表格值引用。评测集（500 SKU/2,497 对、955 SKU/4,990 对）与代码均未公开，故 data_availability 由 available 降为 partial。",
       "score": 25.2,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/00-电商Agent/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/00-电商Agent/Skill-Agentic-Catalog-Enrichment.md",
         "code_dir": "paper2skills-code/ecommerce_agent/<algo>",
         "evidence": "paper2skills-vault/papers/00-电商Agent/p2s-2026-0011/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "45/45",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0012",
@@ -379,7 +385,7 @@
       "published": "2026-07-24",
       "journal": "",
       "venue": "KDD",
-      "venue_tier": "top",
+      "venue_tier": "CCF-A",
       "domain": "05-推荐系统",
       "priority": "P0",
       "decision": "extract",
@@ -410,7 +416,7 @@
       "published": "2026-09-01",
       "journal": "",
       "venue": "EMNLP",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "02-A_B实验",
       "priority": "P0",
       "decision": "extract",
@@ -420,16 +426,18 @@
       "score": 41.4,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/02-A_B实验/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/02-A_B实验/Skill-Persona-Based-AB-Simulation.md",
         "code_dir": "paper2skills-code/ab_testing/<algo>",
         "evidence": "paper2skills-vault/papers/02-A_B实验/p2s-2026-0013/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "41/41",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0014",
@@ -441,26 +449,30 @@
       "published": "2026-08-27",
       "journal": "",
       "venue": "RecSys",
-      "venue_tier": "top",
+      "venue_tier": "preprint",
       "domain": "00-电商Agent",
       "priority": "P0",
       "decision": "extract",
       "decision_reason": "自刷新检索的会话式推荐：逐项 hash 做目录增量对账，LLM 只做意图分类，检索/重排走专用函数",
       "data_availability": "available",
-      "note": "RecSys 2026，**3 页短文（Demo）**，标注时勿写成完整方法论文",
+      "note": "RecSys 2026 **Demo 轨短文**（3 页，无 Experiments/Evaluation 章节；§3 仅一张同步耗时表）。⚠️ **R4 冲突待人工裁决**：MasterPrompt-v2 R4 硬拦截清单含「纯 benchmark 报告 / demo paper / workshop 短文 → 不出卡」。本卡已按 registry 的 decision=extract 产出并在卡片顶部写了诚实边界声明，但是否应保留需按 R4 复核。venue_tier 曾误写 'top'（已改 'demo'）。",
       "score": 64.8,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/00-电商Agent/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md",
         "code_dir": "paper2skills-code/ecommerce_agent/<algo>",
         "evidence": "paper2skills-vault/papers/00-电商Agent/p2s-2026-0014/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "37/37",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted",
+      "venue_track": "demo",
+      "venue_track_note": "轨道标记（非层级）：workshop 按降级表降一级；demo/short paper 降为 preprint。tier 字段记**降级后**的有效层级。"
     },
     {
       "paper_id": "p2s-2026-0015",
@@ -503,7 +515,7 @@
       "published": "2026-08-26",
       "journal": "",
       "venue": "EMNLP",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "16-智能体工程",
       "priority": "P0",
       "decision": "extract",
@@ -513,16 +525,18 @@
       "score": 48.2,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/16-智能体工程/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/16-智能体工程/Skill-Stateful-Skill-Runtime.md",
         "code_dir": "paper2skills-code/llm_agent_engineering/<algo>",
         "evidence": "paper2skills-vault/papers/16-智能体工程/p2s-2026-0016/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "50/50",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0017",
@@ -534,26 +548,28 @@
       "published": "2026-08-23",
       "journal": "",
       "venue": "EMNLP",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "10-MAS",
       "priority": "P0",
       "decision": "extract",
       "decision_reason": "Collaboration Tax：32 任务×11 模型量化'多 Agent 协作税'与四阶段失败级联 → **什么时候不该拆多 Agent**",
       "data_availability": "available",
-      "note": "EMNLP 2026 主会；现有 16 张卡全在讲'怎么搭'，缺'该不该搭'",
+      "note": "EMNLP 2026 主会；现有 16 张卡全在讲'怎么搭'，缺'该不该搭' ⚠️ 底本来自 PDF（arXiv 无 LaTeXML HTML），无章节号，出处请用章节名。",
       "score": 46.4,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/10-MAS/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/10-MAS/Skill-Multi-Agent-Collaboration-Tax.md",
         "code_dir": "paper2skills-code/mas/<algo>",
         "evidence": "paper2skills-vault/papers/10-MAS/p2s-2026-0017/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "55/55",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0018",
@@ -565,26 +581,28 @@
       "published": "2026-08-26",
       "journal": "",
       "venue": "EMNLP",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "10-MAS",
       "priority": "P0",
       "decision": "extract",
       "decision_reason": "Routed Graph Handoff：NL 交接吞 40-60% token，155-token router 选类型化依赖图；τ-retail +12.7pp @3.2× 压缩",
       "data_availability": "available",
-      "note": "EMNLP 2026；须配 graph-aware executor prompt，否则失效",
+      "note": "EMNLP 2026；须配 graph-aware executor prompt，否则失效 ⚠️ 口径澄清：+12.7pp @3.2× 只是 τ-retail 单点值；加权平均压缩 **2.1×**，AppWorld 仅 1.04×，且 graph-only 在 AppWorld 回退 −14.6pp（router 的作用是消除该回退）。",
       "score": 45.2,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/10-MAS/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/10-MAS/Skill-Routed-Graph-Handoff.md",
         "code_dir": "paper2skills-code/mas/<algo>",
         "evidence": "paper2skills-vault/papers/10-MAS/p2s-2026-0018/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "51/51",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0019",
@@ -606,16 +624,18 @@
       "score": 59.1,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/09-DataAgent-LLM/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/09-DataAgent-LLM/Skill-SQL-Agent-Access-Control.md",
         "code_dir": "paper2skills-code/data_agent_llm/<algo>",
         "evidence": "paper2skills-vault/papers/09-DataAgent-LLM/p2s-2026-0019/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "39/39",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0020",
@@ -627,7 +647,7 @@
       "published": "2026-09-08",
       "journal": "",
       "venue": "RecSys",
-      "venue_tier": "workshop",
+      "venue_tier": "preprint",
       "domain": "02-A_B实验",
       "priority": "P1",
       "decision": "extract",
@@ -646,7 +666,9 @@
         "evidence": "pending",
         "business": "pending"
       },
-      "status": "shortlisted"
+      "status": "shortlisted",
+      "venue_track": "workshop",
+      "venue_track_note": "轨道标记（非层级）：workshop 按降级表降一级；demo/short paper 降为 preprint。tier 字段记**降级后**的有效层级。"
     },
     {
       "paper_id": "p2s-2026-0021",
@@ -658,7 +680,7 @@
       "published": "2026-06-17",
       "journal": "",
       "venue": "KDD",
-      "venue_tier": "top",
+      "venue_tier": "CCF-A",
       "domain": "13-广告分析",
       "priority": "P1",
       "decision": "extract",
@@ -689,7 +711,7 @@
       "published": "2026-08-20",
       "journal": "",
       "venue": "SIGIR",
-      "venue_tier": "preprint",
+      "venue_tier": "CCF-A",
       "domain": "05-推荐系统",
       "priority": "P1",
       "decision": "extract",
@@ -720,7 +742,7 @@
       "published": "2026-08-10",
       "journal": "",
       "venue": "CIKM",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "05-推荐系统",
       "priority": "P1",
       "decision": "extract",
@@ -751,7 +773,7 @@
       "published": "2026-09-04",
       "journal": "",
       "venue": "CIKM",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "14-用户分析",
       "priority": "P1",
       "decision": "extract",
@@ -844,7 +866,7 @@
       "published": "2026-06-30",
       "journal": "",
       "venue": "ICML",
-      "venue_tier": "workshop",
+      "venue_tier": "CCF-B",
       "domain": "12-ML基础",
       "priority": "P1",
       "decision": "watch",
@@ -863,7 +885,9 @@
         "evidence": "pending",
         "business": "pending"
       },
-      "status": "shortlisted"
+      "status": "shortlisted",
+      "venue_track": "workshop",
+      "venue_track_note": "轨道标记（非层级）：workshop 按降级表降一级；demo/short paper 降为 preprint。tier 字段记**降级后**的有效层级。"
     },
     {
       "paper_id": "p2s-2026-0028",
@@ -875,7 +899,7 @@
       "published": "2026-08-03",
       "journal": "",
       "venue": "EMNLP",
-      "venue_tier": "top",
+      "venue_tier": "CCF-B",
       "domain": "16-智能体工程",
       "priority": "P1",
       "decision": "extract",
@@ -906,7 +930,7 @@
       "published": "2026-08-29",
       "journal": "",
       "venue": "NeurIPS",
-      "venue_tier": "workshop",
+      "venue_tier": "CCF-B",
       "domain": "16-智能体工程",
       "priority": "P1",
       "decision": "watch",
@@ -925,7 +949,9 @@
         "evidence": "pending",
         "business": "pending"
       },
-      "status": "shortlisted"
+      "status": "shortlisted",
+      "venue_track": "workshop",
+      "venue_track_note": "轨道标记（非层级）：workshop 按降级表降一级；demo/short paper 降为 preprint。tier 字段记**降级后**的有效层级。"
     },
     {
       "paper_id": "p2s-2026-0030",
@@ -937,26 +963,30 @@
       "published": "2026-08-29",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "preprint",
       "domain": "16-智能体工程",
       "priority": "P1",
       "decision": "extract",
       "decision_reason": "**负结果**（性价比最高的一页纸）：知识图谱记忆在 LongMemEval 上 token F1 0.417 < 平铺向量 0.468，劝退早期投图记忆",
       "data_availability": "available",
-      "note": "作为 Skill-GraphRAG 与 Agentic-Memory-Management 的'边界/反例'小节",
+      "note": "作为 Skill-GraphRAG 与 Agentic-Memory-Management 的'边界/反例'小节 ⚠️ **口径**：论文自设范围限定 —— 'these results characterise this extraction-based pipeline rather than graph-structured memory in general'（摘要末句）与 '...at this model scale, not graph-structured memory in general'（附录 A.1）。**不得读成「图结构记忆普遍无效」**，registry 原写「劝退早期投图记忆」偏宽。",
       "score": 39.1,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/16-智能体工程/Skill-<方法名>.md",
-        "code_dir": "paper2skills-code/llm_agent_engineering/<algo>",
-        "evidence": "paper2skills-vault/papers/16-智能体工程/p2s-2026-0030/evidence.md"
+        "enhanced_cards": [
+          "paper2skills-vault/08-知识图谱/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md",
+          "paper2skills-vault/16-智能体工程/Skill-Agentic-Memory-Management.md"
+        ],
+        "note": "负结果，按计划增强既有卡而非新建（避免重复出卡）"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "n/a",
+        "evidence": "pass",
+        "business": "pass",
+        "quotes_verbatim": "18/18 + 17/17",
+        "verified_at": "2026-09-12"
       },
-      "status": "shortlisted"
+      "status": "extracted-as-enhancement"
     },
     {
       "paper_id": "p2s-2026-0031",
@@ -968,7 +998,7 @@
       "published": "2026-09-01",
       "journal": "",
       "venue": "NeurIPS",
-      "venue_tier": "workshop",
+      "venue_tier": "CCF-B",
       "domain": "10-MAS",
       "priority": "P1",
       "decision": "watch",
@@ -987,7 +1017,9 @@
         "evidence": "pending",
         "business": "pending"
       },
-      "status": "shortlisted"
+      "status": "shortlisted",
+      "venue_track": "workshop",
+      "venue_track_note": "轨道标记（非层级）：workshop 按降级表降一级；demo/short paper 降为 preprint。tier 字段记**降级后**的有效层级。"
     },
     {
       "paper_id": "p2s-2026-0032",
@@ -1030,7 +1062,7 @@
       "published": "2026-08-24",
       "journal": "",
       "venue": "COLM",
-      "venue_tier": "workshop",
+      "venue_tier": "non-paper",
       "domain": "09-DataAgent-LLM",
       "priority": "P1",
       "decision": "extract",
@@ -1049,7 +1081,9 @@
         "evidence": "pending",
         "business": "pending"
       },
-      "status": "shortlisted"
+      "status": "shortlisted",
+      "venue_track": "workshop",
+      "venue_track_note": "轨道标记（非层级）：workshop 按降级表降一级；demo/short paper 降为 preprint。tier 字段记**降级后**的有效层级。"
     },
     {
       "paper_id": "p2s-2026-0034",
@@ -1154,7 +1188,7 @@
       "published": "2026-09-10",
       "journal": "",
       "venue": "",
-      "venue_tier": "second",
+      "venue_tier": "",
       "domain": "00-电商Agent",
       "priority": "P1",
       "decision": "watch",
@@ -1185,7 +1219,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "13-广告分析",
       "priority": "P1",
       "decision": "watch",
@@ -1216,7 +1250,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "15-营销投放分析",
       "priority": "P1",
       "decision": "watch",
@@ -1247,7 +1281,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "15-营销投放分析",
       "priority": "P1",
       "decision": "watch",
@@ -1278,7 +1312,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "04-供应链",
       "priority": "P1",
       "decision": "watch",
@@ -1309,7 +1343,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "04-供应链",
       "priority": "P1",
       "decision": "watch",
@@ -1340,7 +1374,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "02-A_B实验",
       "priority": "P1",
       "decision": "watch",
@@ -1371,7 +1405,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "02-A_B实验",
       "priority": "P1",
       "decision": "watch",
@@ -1402,7 +1436,7 @@
       "published": "",
       "journal": "",
       "venue": "",
-      "venue_tier": "top",
+      "venue_tier": "",
       "domain": "05-推荐系统",
       "priority": "P2",
       "decision": "watch",
@@ -1434,6 +1468,87 @@
         "p2s-2026-0039: domain '15-营销投放' -> '15-营销投放分析'",
         "p2s-2026-0040: domain '15-营销投放' -> '15-营销投放分析'",
         "p2s-2026-0010: data_availability 'conditional' -> 'synthetic'（论文无真实数据）"
+      ]
+    },
+    {
+      "at": "2026-09-12",
+      "by": "PHASE3-3C/3D",
+      "changes": [
+        "p2s-2026-0011: data_availability 'available' -> 'partial'",
+        "p2s-2026-0014: venue_tier 'top' -> 'demo'",
+        "p2s-2026-0017: note 记底本为 PDF",
+        "p2s-2026-0018: note 补口径澄清（3.2× 是单点，平均 2.1×）"
+      ]
+    },
+    {
+      "at": "2026-09-12",
+      "by": "PHASE3",
+      "reason": "venue_tier 对齐 venue-whitelist.md（唯一权威）",
+      "changes": [
+        "p2s-2026-0002: CIKM tier 'top' -> 'CCF-B'",
+        "p2s-2026-0006: KDD tier 'top' -> 'CCF-A'",
+        "p2s-2026-0007: SIGIR tier 'top' -> 'CCF-A'",
+        "p2s-2026-0009: venue 为空，tier 'second' -> 'preprint'",
+        "p2s-2026-0012: KDD tier 'top' -> 'CCF-A'",
+        "p2s-2026-0013: EMNLP tier 'top' -> 'CCF-B'",
+        "p2s-2026-0014: RecSys tier 'demo' -> 'CCF-B'",
+        "p2s-2026-0016: EMNLP tier 'top' -> 'CCF-B'",
+        "p2s-2026-0017: EMNLP tier 'top' -> 'CCF-B'",
+        "p2s-2026-0018: EMNLP tier 'top' -> 'CCF-B'",
+        "p2s-2026-0020: RecSys tier 'workshop' -> 'CCF-B'",
+        "p2s-2026-0021: KDD tier 'top' -> 'CCF-A'",
+        "p2s-2026-0022: SIGIR tier 'preprint' -> 'CCF-A'",
+        "p2s-2026-0023: CIKM tier 'top' -> 'CCF-B'",
+        "p2s-2026-0024: CIKM tier 'top' -> 'CCF-B'",
+        "p2s-2026-0027: ICML tier 'workshop' -> 'CCF-A'",
+        "p2s-2026-0028: EMNLP tier 'top' -> 'CCF-B'",
+        "p2s-2026-0029: NeurIPS tier 'workshop' -> 'CCF-A'",
+        "p2s-2026-0030: venue 为空，tier 'top' -> 'preprint'",
+        "p2s-2026-0031: NeurIPS tier 'workshop' -> 'CCF-A'",
+        "p2s-2026-0033: COLM tier 'workshop' -> 'non-paper'",
+        "p2s-2026-0037: venue 为空，tier 'second' -> ''",
+        "p2s-2026-0038: venue 为空，tier 'top' -> ''",
+        "p2s-2026-0039: venue 为空，tier 'top' -> ''",
+        "p2s-2026-0040: venue 为空，tier 'top' -> ''",
+        "p2s-2026-0041: venue 为空，tier 'top' -> ''",
+        "p2s-2026-0042: venue 为空，tier 'top' -> ''",
+        "p2s-2026-0043: venue 为空，tier 'top' -> ''",
+        "p2s-2026-0044: venue 为空，tier 'top' -> ''",
+        "p2s-2026-0045: venue 为空，tier 'top' -> ''"
+      ],
+      "flags": [
+        "p2s-2026-0019: venue=SIGMOD 未收录于 venue-whitelist.md，registry 记 'second' —— 需人工补白名单"
+      ]
+    },
+    {
+      "at": "2026-09-12",
+      "by": "PHASE3",
+      "reason": "venue_tier 对齐 venue-whitelist.md：tier 记降级后有效层级，轨道另存 venue_track（R3 要求显式标注）",
+      "changes": [
+        "p2s-2026-0001: venue 为空 → tier 'preprint'",
+        "p2s-2026-0014: RecSys[demo] 'CCF-B' → 'preprint'",
+        "p2s-2026-0020: RecSys[workshop] 'CCF-B' → 'preprint'",
+        "p2s-2026-0027: ICML[workshop] 'CCF-A' → 'CCF-B'",
+        "p2s-2026-0029: NeurIPS[workshop] 'CCF-A' → 'CCF-B'",
+        "p2s-2026-0031: NeurIPS[workshop] 'CCF-A' → 'CCF-B'"
+      ],
+      "flags": [
+        "p2s-2026-0019: venue='SIGMOD' 未收录白名单，tier 维持 'second'"
+      ]
+    },
+    {
+      "at": "2026-09-12",
+      "by": "PHASE3-3C/3D/3E",
+      "changes": [
+        "p2s-2026-0010: gates→pass(引文 31/31), status→extracted, skill_card 回填",
+        "p2s-2026-0011: gates→pass(引文 45/45), status→extracted, skill_card 回填",
+        "p2s-2026-0013: gates→pass(引文 41/41), status→extracted, skill_card 回填",
+        "p2s-2026-0014: gates→pass(引文 37/37), status→extracted, skill_card 回填",
+        "p2s-2026-0016: gates→pass(引文 50/50), status→extracted, skill_card 回填",
+        "p2s-2026-0017: gates→pass(引文 55/55), status→extracted, skill_card 回填",
+        "p2s-2026-0018: gates→pass(引文 51/51), status→extracted, skill_card 回填",
+        "p2s-2026-0019: gates→pass(引文 39/39), status→extracted, skill_card 回填",
+        "p2s-2026-0030: 登记为增强任务 + 补范围限定口径"
       ]
     }
   ]

@@ -101,6 +101,76 @@ $$
 
 ---
 
+## ①b 反例与适用边界（负结果证据）
+
+> **口径声明**：本卡讲「记忆管理」,但记忆这件事有**两半** —— **抽取/结构化**那一半与
+> **遗忘/剪枝**那一半。`2608.28978`（*Selective Forgetting*，arXiv preprint，LongMemEval，500 题）
+> 这篇**负结果**论文给出的最有价值的一条判据就是：**这两半不能一起信**。以下按两半分开写。
+> ⚠️ 论文把自己的结论严格限定在「基于抽取的流水线」范围内,**不是**「图结构记忆普遍无效」——
+> 见第 4 条,这是本节最重要的一处口径。
+
+**1.「图结构抽取」那一半：负结果,不要当 Agent 记忆的主存储**
+
+在**匹配 5 检索根候选生成预算**下,把每轮对话抽成 typed node + 属性边的图记忆
+**没有跑赢**平铺向量基线：token F1 **0.417 vs 0.468**，
+配对 bootstrap（500 问）**Δ = −0.050，95% CI [−0.085, −0.016]**（区间不含 0）；
+judge 准确率 **0.454 vs 0.536**（⑥ Q1/Q15）。
+
+差距最大的是**需要回忆某条历史 assistant 发言**的问题：judge **0.911 → 0.607**（⑥ Q2/Q12）。
+机制解释：平铺基线能**逐字**取回原始 assistant 那一轮，
+而图抽取把它**分解成实体与关系**,丢掉了这类问题依赖的**表层形式（surface form）**（⑥ Q2/Q12）。
+
+→ **对 AgeMem 的直接含义**：`Summary` / `Filter` 若把原话压成「要素」,就踩同一个坑。
+**LTM 必须保留可回溯的原文通道**（例如 `Add` 时同时落一条原文指针 / hash）,
+否则「客户上次说的**具体那句话**」这类检索会系统性劣化。
+
+**2.「遗忘 / 剪枝」那一半：正结果,可以复用（本卡最该拿走的一条）**
+
+论文的遗忘模块反而是**成功**的：对一张 **27,021 节点**的持久图应用**一次**，
+移除 **9.8% 节点 / 9.5% 存储字节**（2,653 节点、2,560 边，440.6 MB → 398.6 MB）；
+token F1 **基本不变（+0.001，95% CI [−0.015, +0.016]）**，
+judge 正确率下降 **1.6 个点**，95% 区间把损失上界压在 **3.8 个点**（[−0.038, +0.006]）（⑥ Q4/Q6）。
+打分口径：recency / access frequency / degree centrality / turn age 加权，
+阈值以下节点**连同关联边**一并删除，每 **400 轮**触发一次（⑥ Q13）。
+
+→ **可复用的是「剪枝策略」,不是「抽取管线」。** 对一个已经在跑的 Agent LTM,
+先上「重要度打分 + 尾部剪枝」拿存储收益,比先重构成知识图谱风险低得多；
+这条与本卡 ③ 段的 `Delete` 与 STM 的 `Filter` 是同一件事的两种实现。
+
+**3. 但这一半也有两个没关掉的口子（论文自承,本卡照抄不加工）**
+
+- **没有匹配压缩对照**：论文把「随机剪掉同样比例的节点」列为下一步**第一优先级**实验（⑥ Q11）——
+  「按重要度剪枝有效」**尚未**与「随便剪都一样」区分开。
+  本卡 ③ 段的三因子打分在本卡内**没有独立证据**证明它优于随机剪枝,落地时必须自建这个对照。
+- **judge 确实掉了 1.6 个点**：论文承认被剪掉的信息仍可能对正确答案有贡献,
+  这是明确的**效率 ↔ 信息保留**权衡（⑥ Q7）,不是零成本。
+- 实验规模有限：只跑了 **4 次完整 run**,且**没有对保留参数做 sweep**（⑥ Q16/Q17）——
+  这条结论的置信度应按此打折。
+
+**4. 论文自设的范围限定（本卡强制口径 —— 最重要的一条）**
+
+- ✅ 可以说：「这个**基于抽取的**图记忆流水线在 LongMemEval 上没跑赢平铺向量基线。」
+- ❌ 不能说：「图结构记忆普遍无效 / 不要在 Agent 记忆上投图。」
+  论文原话把结论限定为 **this extraction-based pipeline** / **at this model scale**,
+  明确排除 **graph-structured memory in general**（⑥ Q3/Q10）；
+  抽取器是**单个小模型（GPT-4o-mini）**、只评了**一个 benchmark**（⑥ Q14）。
+
+**5. 与本卡 `Update` 工具直接相关的一类失败模式**
+
+知识更新类问题 F1 **0.456 vs 0.511**：论文检查失败样本发现,在**没有显式置信度**时,
+冲突消解策略会**保留旧的属性值而不替换为新值**（⑥ Q8）。
+→ 对本卡的 `Update` 是硬要求：**必须显式定义冲突消解规则**（论文建议对事实 / 数值型属性用
+last-write-wins）,否则「宝宝月龄 / 偏好品牌」这类随时间变化的字段会**静默过期**,
+而 Agent 自己不会报错。
+
+**6. 论文未讨论 / 未报告**
+
+母婴出海、跨境电商、多语言客服与平台站内数据 —— **论文未讨论**；
+抽取调用的 token 成本与端到端时延 —— **论文未报告**；
+除 LongMemEval 之外的第二 benchmark —— **论文未报告**,且已列为下一步工作（⑥ Q11）。
+
+---
+
 ## ② 母婴出海应用案例
 
 ### 场景一:母婴用户 0-3 岁全生命周期 LTM/STM 协同管理
@@ -243,7 +313,7 @@ python agemem.py
 
 - **05-推荐系统**:基于 LTM 偏好的个性化推荐
 - **07-NLP-VOC 自动打标签**:从对话中萃取 LTM 候选条目
-- **08-知识图谱**:LTM 存储可结构化为 KG
+- **08-知识图谱**:LTM 存储可结构化为 KG ⚠️ **与 2608.28978 的负结果冲突,见 ①b 段** —— 该论文实测「把对话抽成 KG」这一半**没有**跑赢平铺向量基线（token F1 0.417 vs 0.468）;若要做,须按 ①b 第 1 条保留原文回溯通道,并按第 4 条限定结论口径。
 
 ---
 
@@ -281,6 +351,108 @@ python agemem.py
 2. **数据扎实**:Qwen3-4B +23.52% 相对增益,小模型 4B 即可超越 baseline
 3. **Memory Quality 量化**:LLM judge 评估存储记忆质量,而非只看任务成功
 4. **作者背景**:阿里巴巴 + 武汉大学,产业实战 + 学术严谨
+
+---
+
+---
+
+## ⑥ 原文引用
+
+> **本段引文的论文与范围**：本段全部引文均来自 `2608.28978`
+> *Selective Forgetting: A Graph-Based Memory Framework for Long-Term LLM Agents*
+> （arXiv preprint，全文存档：`papers/16-智能体工程/p2s-2026-0030/fulltext.md`）。
+> ⚠️ 本卡的**正面主张来自另一篇论文**（AgeMem，arXiv:2601.01885），那张论文的全文
+> 未收录在本仓库存档中，因此**本段不引用它**（无法逐字核验的引文一律不写）。
+> 本段引文全部用于 **①b 反例与适用边界**：抽取那一半是负结果，遗忘/剪枝那一半是正结果。
+
+
+**A. 负结果：抽取那一半没跑赢平铺向量基线**
+
+> 原文:"On LongMemEval, the graph does not outperform a flat vector baseline at a matched candidate-generation budget of five retrieval roots: token F1 is $0.417$ against $0.468$, and a paired bootstrap over 500 questions gives $\Delta=-0.050$ (95% CI $[-0.085,-0.016]$)."
+> 出处：2608.28978 §Abstract｜Q1
+
+> 原文:"The gap is widest on questions that require recalling a specific prior assistant turn, where judged correctness falls from $0.911$ to $0.607$, suggesting that decomposing a turn into entities discards the surface form these questions depend on."
+> 出处：2608.28978 §Abstract｜Q2
+
+> 原文:"Because our extractor is a single small model evaluated on one benchmark, these results characterise this extraction-based pipeline rather than graph-structured memory in general."
+> 出处：2608.28978 §Abstract｜Q3
+
+**B. 正结果：遗忘 / 剪枝那一半是有效的（本卡可复用的部分）**
+
+> 原文:"The forgetting module is more successful. Applied once to a persistent 27,021-node graph, it removes 9.8% of nodes and 9.5% of stored bytes; token F1 is unchanged ($+0.001$, 95% CI $[-0.015,+0.016]$) and judged correctness falls by $1.6$ points, with the 95% interval bounding any loss at $3.8$ points ($[-0.038,+0.006]$)."
+> 出处：2608.28978 §Abstract｜Q4
+
+> 原文:"The proposed forgetting module contributes a retention mechanism whose cost we can bound: pruning the low-importance tail of a 27,021-node store removed 9.8% of nodes and 9.5% of bytes, and a paired bootstrap over 500 questions detects no significant change in any of the four metrics (Table 7)."
+> 出处：2608.28978 §6 Conclusion｜Q5
+
+> 原文:"Applying the forgetting mechanism removes 2,653 nodes (9.8%) and 2,560 edges (5.5%), reducing the graph size from 440.6 MB to 398.6 MB, a 9.5% reduction."
+> 出处：2608.28978 §5 Discussion and Limitations / Table 2｜Q6
+
+> 原文:"The reduction in LLM-judge accuracy, however, indicates that some pruned information can still contribute to correct answers, highlighting a trade-off between memory efficiency and information retention."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q7
+
+**C. 失败模式与论文自设的范围限定（照抄不加工）**
+
+> 原文:"Graph RAG also underperforms on knowledge-update questions (F1: 0.456 vs. 0.511). Inspection of failures indicates that the current conflict-resolution policy can retain an earlier attribute value instead of replacing it with a more recent value when no explicit confidence score is available."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q8
+
+> 原文:"First, representing conversational memory as a knowledge graph does not uniformly improve retrieval over a flat vector store."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q9
+
+> 原文:"Accordingly, our findings should be read as characterising this extraction-based graph memory pipeline at this model scale, not graph-structured memory in general."
+> 出处：2608.28978 §A.1 Note to Reviewers on Experimental Scope and AI Use｜Q10
+
+> 原文:"Given additional budget, our order of priority would be: a matched-compression control that prunes the same fraction of nodes at random, to isolate the contribution of the importance function; a second benchmark; and a stronger extraction model."
+> 出处：2608.28978 §A.1 Note to Reviewers on Experimental Scope and AI Use｜Q11
+
+**D. 方法口径（打分因子、抽取器、检索口径）**
+
+> 原文:"The flat baseline can retrieve the original assistant turn verbatim, whereas graph extraction decomposes the turn into entities and relationships. In doing so, it may lose information about which item or statement was specifically emphasized."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q12
+
+> 原文:"Every 400 turns, the retention stage scores each node by recency, access frequency, centrality, and turn age, pruning nodes whose importance falls below the threshold together with their incident edges."
+> 出处：2608.28978 §3.1 Architecture / Figure 1 caption｜Q13
+
+> 原文:"Each conversational turn is processed by a single LLM extraction call (GPT-4o-mini) using a structured system prompt that defines the ontology, output schema, and extraction rules."
+> 出处：2608.28978 §3.3 Extraction Pipeline｜Q14
+
+**E. 整体读数与实验规模（用于判断结论强度）**
+
+> 原文:"In Experiment 1, the baseline RAG system outperforms Graph RAG overall, achieving a token F1 of 0.468 compared with 0.417 and an LLM-judge accuracy of 0.536 compared with 0.454."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q15
+
+> 原文:"We chose to spend it on four full runs (Experiment 1 treatment and control, Experiment 2 treatment and control) at $n=500$ with temperature $=0$, and to report paired bootstrap intervals over those runs, rather than on a larger number of partially evaluated configurations."
+> 出处：2608.28978 §A.1 Note to Reviewers on Experimental Scope and AI Use｜Q16
+
+> 原文:"We did not perform a full sweep over the retention parameters; the consequences of this are discussed at the end of this section."
+> 出处：2608.28978 §A.2 Justification for parameter values｜Q17
+
+<details><summary>Q 编号 ↔ 论文位置对照</summary>
+
+| Q | 论文位置 | 行号 |
+|---|---|---|
+| Q1 | §Abstract | L15 |
+| Q2 | §Abstract | L15 |
+| Q3 | §Abstract | L15 |
+| Q4 | §Abstract | L15 |
+| Q5 | §6 Conclusion | L181 |
+| Q6 | §5 Discussion and Limitations / Table 2 | L169 |
+| Q7 | §5 Discussion and Limitations | L173 |
+| Q8 | §5 Discussion and Limitations | L167 |
+| Q9 | §5 Discussion and Limitations | L159 |
+| Q10 | §A.1 Note to Reviewers on Experimental Scope and AI Use | L267 |
+| Q11 | §A.1 Note to Reviewers on Experimental Scope and AI Use | L267 |
+| Q12 | §5 Discussion and Limitations | L165 |
+| Q13 | §3.1 Architecture / Figure 1 caption | L63 |
+| Q14 | §3.3 Extraction Pipeline | L73 |
+| Q15 | §5 Discussion and Limitations | L161 |
+| Q16 | §A.1 Note to Reviewers on Experimental Scope and AI Use | L265 |
+| Q17 | §A.2 Justification for parameter values | L275 |
+
+</details>
+
+---
+
 
 ---
 

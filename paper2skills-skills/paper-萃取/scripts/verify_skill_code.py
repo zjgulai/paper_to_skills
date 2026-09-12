@@ -639,9 +639,17 @@ def verify_unit(code: str, target: str, kind: str, workdir: Path,
     probe = workdir / "_k1_import_probe.py"
     probe.write_text(
         "import _k1_stub\n"
-        f"import importlib.util as u\n"
+        f"import importlib.util as u, sys\n"
         f"spec = u.spec_from_file_location('unit', r'{src.name}')\n"
         "m = u.module_from_spec(spec)\n"
+        # ⚠️ 必须先把模块注册进 sys.modules 再 exec_module。
+        # 否则在 CPython 3.14 下，**任何含 @dataclass 的被测模块**都会崩在
+        #   dataclasses._is_type → sys.modules.get(cls.__module__).__dict__
+        # 抛 AttributeError: 'NoneType' object has no attribute '__dict__'，
+        # 而 L3 会把这条「探针自身的缺陷」记成卡片的 `import 时崩溃` —— 假红灯。
+        # （2026-09-12 由子代理在 p2s-2026-0014 一卡上发现并给出最小复现；
+        #  影响面是全仓库所有用 dataclass 的卡片，故在探针侧统一修，而不是让每张卡改写法。）
+        "sys.modules['unit'] = m\n"
         "try:\n"
         "    spec.loader.exec_module(m)\n"
         "    print('K1_IMPORT_OK')\n"
@@ -822,8 +830,51 @@ def _selftest() -> int:
     print(("✅" if not missing else "❌") + f" 迁移索引来源正确（全部位于 nlp_voc/: {not missing}）")
     ok = ok and not missing
 
+    # --- 第二组：L3 探针端到端自证 ---
+    # 锁定 2026-09-12 由 p2s-2026-0014 一卡暴露的**探针自身缺陷**：
+    # 探针不把被测模块注册进 sys.modules 时，凡「`from __future__ import annotations`
+    # + `@dataclass`」的模块都会崩在 dataclasses._is_type（注解是字符串 → 走 forward-ref
+    # 分支 → 需要 sys.modules[cls.__module__]），L3 却把它记成卡片的 `import 时崩溃`。
+    # 影响面是全仓库所有 dataclass 卡，故在探针侧修，而不是让每张卡改写法。
     print()
-    print("SELFTEST " + ("PASS —— 三个依赖判定互相可区分" if ok else "FAIL —— 判定退化，勿信门禁数字"))
+    print("--- L3 探针端到端自证 ---")
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        tdp = Path(td)
+        (tdp / "_k1_stub.py").write_text("", encoding="utf-8")
+        (tdp / "unit_mod.py").write_text(
+            "from __future__ import annotations\n"
+            "from dataclasses import dataclass\n\n"
+            "@dataclass\n"
+            "class Row:\n"
+            "    a: int\n"
+            "    b: str = 'x'\n",
+            encoding="utf-8",
+        )
+        (tdp / "_k1_import_probe.py").write_text(
+            "import _k1_stub\n"
+            "import importlib.util as u, sys\n"
+            "spec = u.spec_from_file_location('unit', 'unit_mod.py')\n"
+            "m = u.module_from_spec(spec)\n"
+            "sys.modules['unit'] = m\n"
+            "try:\n"
+            "    spec.loader.exec_module(m)\n"
+            "    print('K1_IMPORT_OK')\n"
+            "except SystemExit:\n"
+            "    print('K1_IMPORT_OK')\n",
+            encoding="utf-8",
+        )
+        pr = subprocess.run([sys.executable, "_k1_import_probe.py"], cwd=td,
+                            capture_output=True, text=True, timeout=60)
+        probe_ok = "K1_IMPORT_OK" in pr.stdout
+        print(("✅" if probe_ok else "❌") +
+              " L3 探针能吃下 `from __future__ import annotations` + @dataclass 的模块"
+              + ("" if probe_ok else f"  ← {pr.stderr.strip().splitlines()[-1:] }"))
+        ok = ok and probe_ok
+
+    print()
+    print("SELFTEST " + ("PASS —— 依赖判定与 L3 探针均自证可信" if ok
+                        else "FAIL —— 判定退化，勿信门禁数字"))
     return 0 if ok else 1
 
 

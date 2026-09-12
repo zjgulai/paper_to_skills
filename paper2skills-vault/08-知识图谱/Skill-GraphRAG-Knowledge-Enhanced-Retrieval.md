@@ -7,6 +7,10 @@
 ### 核心思想
 **GraphRAG（Graph Retrieval-Augmented Generation）** 将传统 RAG（检索增强生成）中的文本块检索升级为**知识图谱结构化检索**，通过图遍历获取与查询相关的实体、关系和子图，显著提升复杂推理场景的答案准确性和可解释性。
 
+> ⚠️ **与 2608.28978 的负结果冲突，见 ①b 段**：上面这句「显著提升复杂推理场景的答案准确性」是
+> 本卡的原有表述，**保留不改**，但必须按 ①b 的边界条件读 —— 该论文在 LongMemEval 上实测
+> 基于抽取的图记忆 token F1 **0.417 < 0.468**（平铺向量基线），即「提升」并非无条件成立。
+
 传统 RAG 的局限：
 - 只能检索与查询字面相似的文本块
 - 缺乏跨文档的关联推理能力
@@ -50,6 +54,83 @@ GraphRAG 通常采用三层检索架构：
 - **查询可实体化**：用户查询可以映射到图谱中的实体或关系
 - **图连通性**：相关实体在图中存在路径连接
 - **语义一致性**：实体和关系的文本描述与查询语义一致
+
+---
+
+## ①b 反例与适用边界（负结果证据）
+
+> **本节的证据等级说明**：本节全部边界来自一篇**负结果**论文 ——
+> `2608.28978` *Selective Forgetting: A Graph-Based Memory Framework for Long-Term LLM Agents*
+> （arXiv preprint，在 LongMemEval 上评测，500 题）。它与本卡 ①②⑤ 段的正面主张**方向相反**，
+> 故单列一节，**只用于限定本卡的适用范围**。
+> ⚠️ 该论文把自己的结论严格限定在「基于抽取的流水线」这一范围内，
+> **不能**读成「图结构记忆普遍无效」—— 见本节第 4 条，那是本节最重要的一处口径。
+
+**1. 什么时候不要用（本卡最重要的一条边界）**
+
+**当业务问题依赖「逐字回忆某条历史发言 / 某条具体推荐」时，不要用基于抽取的图记忆替代平铺文本检索。**
+论文在 LongMemEval、**匹配 5 检索根候选生成预算**的条件下，图记忆**没有跑赢**平铺向量基线：
+token F1 **0.417 vs 0.468**，配对 bootstrap（500 问）**Δ = −0.050，95% CI [−0.085, −0.016]**
+（区间不含 0，差距显著）；judge 准确率 **0.454 vs 0.536**（⑥ Q1/Q5）。
+
+差距**集中在**「单 session、需要回忆某条历史 assistant 发言」的问题上：
+judge correctness 从 **0.911 掉到 0.607**（⑥ Q2/Q7）。
+论文给的机制解释是：平铺基线能把原始 assistant 那一轮**逐字**取回，
+而图抽取把一轮对话**分解成实体与关系**，于是丢掉了这类问题所依赖的
+**表层形式（surface form）**（⑥ Q2/Q8）。
+
+→ **对本卡场景一的直接含义**：客服 Agent 回答「你上次跟我说这个奶嘴不能高温消毒，对吗？」
+这类**复述型**问题时，图记忆会系统性变差。这类场景**必须保留原文回溯通道**（原文 chunk 旁路），
+不能只留图谱。
+
+**2. 已知的失败模式（均有论文出处）**
+
+| 失败模式 | 论文实测 | 出处 |
+|---|---|---|
+| 逐字 / 精确回忆（单 session·assistant） | judge **0.911 → 0.607** | ⑥ Q2 / Q7 |
+| 知识更新 | F1 **0.456 vs 0.511**；无显式置信度时冲突消解**保留旧属性值**而不替换 | ⑥ Q16 |
+| 整体 | token F1 **0.417 vs 0.468**；judge **0.454 vs 0.536** | ⑥ Q1 / Q5 |
+
+**唯一的方向性例外**：时序推理是论文中图记忆**唯一**改善 judge 的题型（**0.293 vs 0.278**，⑥ Q6）——
+事件可表示为带时序属性的 typed node 并连到参与实体。**本卡场景二（购买路径 / 时序）正落在这一例外里**，
+而场景一（客服复述）落在最差的那一档。选型时请**按题型分流**，不要整站一刀切。
+
+**3. 「剪枝 / 遗忘」那一半是正结果，可复用（本卡最该拿走的一条）**
+
+同一篇论文的遗忘模块是**成功**的：对一张 **27,021 节点**的持久图应用**一次**，
+移除 **9.8% 节点 / 9.5% 存储字节**（2,653 节点、2,560 边，440.6 MB → 398.6 MB），
+token F1 **基本不变（+0.001，95% CI [−0.015, +0.016]）**；
+judge 正确率下降 **1.6 个点**，95% 区间把任何损失的上界压在 **3.8 个点**（[−0.038, +0.006]）（⑥ Q4/Q12）。
+打分口径：按 recency / access frequency / degree centrality / turn age 加权，
+阈值以下的节点**连同关联边**一起删除，每 **400 轮**触发一次（⑥ Q13）。
+
+→ **图记忆里可复用的是「重要度打分 + 尾部剪枝」，不是「抽取管线」。**
+已经有一张图在跑的业务方，先上剪枝拿存储收益，比先重做抽取低风险得多。
+
+**4. 结论的正确粒度（本卡强制口径）**
+
+- ✅ 可以说：「这个**基于抽取的**图记忆流水线在 LongMemEval 上没跑赢平铺向量基线，
+  且差距集中在逐字回忆类问题。」
+- ❌ 不能说：「图结构记忆普遍不如向量检索」，也不能说「劝退所有投图记忆」。
+  论文原话把结论限定为 **this extraction-based pipeline** 与 **at this model scale**，
+  明确排除 **graph-structured memory in general**（⑥ Q3/Q10）；
+  抽取器是**单个小模型（GPT-4o-mini）**、只评了**一个 benchmark**（⑥ Q15/Q3）。
+
+**5. 论文自承、本卡无法消除的方法学缺口（照抄不加工）**
+
+- **没有匹配压缩对照**：论文把「随机剪掉同样比例的节点」列为下一步**第一优先级**实验（⑥ Q11）——
+  即「按重要度剪枝有效」尚未与「随便剪都一样」区分开。
+- 只跑了 **4 次完整 run**（Exp1 处理 / 对照、Exp2 处理 / 对照），且**没有对保留参数做 sweep**（⑥ Q16/Q17）。
+- **论文未讨论**母婴出海 / 跨境电商场景；**论文未报告**工程成本、抽取调用的 token 成本或端到端时延；
+  **论文未报告**除 LongMemEval 之外的第二 benchmark。
+
+**6. 本卡既有正面主张与本节的冲突（显式标注，未删除）**
+
+① 核心思想中「复杂推理场景答案准确性」的正面表述，与 ⑤ 评估依据第 1 条援引的
+微软 GraphRAG 准确率提升幅度 ——
+⚠️ **这两处在本卡内都没有引文支撑，且与 2608.28978 的负结果方向相反。**
+两者任务不同（微软 GraphRAG 是 query-focused summarization，2608.28978 是 agent 长效记忆），
+**不能直接互相否定**；本卡保留原表述，但在此标注：**使用时不得当作已核验事实**。
 
 ---
 
@@ -682,13 +763,121 @@ if __name__ == '__main__':
 - **业务价值高**：客服和推荐是电商核心场景
 - **技术前沿性**：GraphRAG 是 RAG 2.0 的发展方向
 - **可落地性强**：可基于现有知识图谱技能扩展
-- **竞争优势**：相比传统 RAG 有显著效果提升
+- **竞争优势**：相比传统 RAG 有显著效果提升 ⚠️ **与 2608.28978 的负结果冲突，见 ①b 段** —— 该论文的图记忆在 LongMemEval 上并未跑赢平铺向量基线，「显著效果提升」不是无条件结论。
 
 ### 评估依据
-1. **GraphRAG 相比传统 RAG 有明显优势**：微软研究显示 GraphRAG 在复杂推理任务上准确率提升 40%+
+1. **GraphRAG 相比传统 RAG 有明显优势**：微软研究显示 GraphRAG 在复杂推理任务上准确率提升 40%+ ⚠️ **本卡 ⑥ 段无对应引文支撑该数字，且与 2608.28978 的负结果方向相反，见 ①b 段第 6 条**（两者任务不同，不能直接互相否定，但此数字未经本卡核验）。
 2. **母婴电商场景天然适合 KG**：商品关联、用户购买路径都有清晰的图结构
 3. **基础设施复用**：可基于已萃取的 Knowledge Graph 技能快速构建
 4. **长期演进路径清晰**：可向 GNN、多模态、CausalRAG 方向持续迭代
+
+---
+
+---
+
+## ⑥ 原文引用
+
+> **本段引文的论文与范围**：本段全部引文均来自 `2608.28978`
+> *Selective Forgetting: A Graph-Based Memory Framework for Long-Term LLM Agents*
+> （arXiv preprint，全文存档：`papers/16-智能体工程/p2s-2026-0030/fulltext.md`）。
+> 这是一篇**负结果**论文，因此本段引文主要用于**限定本卡的适用范围**（见 ①b 段），而非支持本卡的正面主张。
+> 论文自设的范围限定见 Q3 与 Q10：结论仅适用于 **this extraction-based pipeline**，
+> 不适用于 **graph-structured memory in general**。
+
+
+**A. 负结果：图记忆没有跑赢平铺向量基线（本卡核心边界）**
+
+> 原文:"On LongMemEval, the graph does not outperform a flat vector baseline at a matched candidate-generation budget of five retrieval roots: token F1 is $0.417$ against $0.468$, and a paired bootstrap over 500 questions gives $\Delta=-0.050$ (95% CI $[-0.085,-0.016]$)."
+> 出处：2608.28978 §Abstract｜Q1
+
+> 原文:"The gap is widest on questions that require recalling a specific prior assistant turn, where judged correctness falls from $0.911$ to $0.607$, suggesting that decomposing a turn into entities discards the surface form these questions depend on."
+> 出处：2608.28978 §Abstract｜Q2
+
+> 原文:"Because our extractor is a single small model evaluated on one benchmark, these results characterise this extraction-based pipeline rather than graph-structured memory in general."
+> 出处：2608.28978 §Abstract｜Q3
+
+> 原文:"The forgetting module is more successful. Applied once to a persistent 27,021-node graph, it removes 9.8% of nodes and 9.5% of stored bytes; token F1 is unchanged ($+0.001$, 95% CI $[-0.015,+0.016]$) and judged correctness falls by $1.6$ points, with the 95% interval bounding any loss at $3.8$ points ($[-0.038,+0.006]$)."
+> 出处：2608.28978 §Abstract｜Q4
+
+**B. 逐题型拆解：差距在哪里、唯一的例外在哪里**
+
+> 原文:"In Experiment 1, the baseline RAG system outperforms Graph RAG overall, achieving a token F1 of 0.468 compared with 0.417 and an LLM-judge accuracy of 0.536 compared with 0.454."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q5
+
+> 原文:"Graph RAG achieves its only improvement on the LLM-judge metric for temporal-reasoning questions (0.293 vs. 0.278)."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q6
+
+> 原文:"The largest performance deficit occurs for single-session (assistant) questions (judge: 0.607 vs. 0.911). These questions often require recalling a specific recommendation or factual statement from a previous assistant response."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q7
+
+> 原文:"This highlights an important limitation of extraction-based memory representations: structured abstraction can improve relational organization while simultaneously discarding information required for precise or verbatim recall."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q8
+
+**C. 论文自设的适用范围（本卡强制口径的依据）**
+
+> 原文:"Taken together, these results suggest that graph structure alone is not sufficient to improve long-term conversational memory. Its benefits are strongest when relationships and temporal structure are important, whereas flat text retrieval remains advantageous for precise or verbatim recall."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q9
+
+> 原文:"Accordingly, our findings should be read as characterising this extraction-based graph memory pipeline at this model scale, not graph-structured memory in general."
+> 出处：2608.28978 §A.1 Note to Reviewers on Experimental Scope and AI Use｜Q10
+
+> 原文:"Given additional budget, our order of priority would be: a matched-compression control that prunes the same fraction of nodes at random, to isolate the contribution of the importance function; a second benchmark; and a stronger extraction model."
+> 出处：2608.28978 §A.1 Note to Reviewers on Experimental Scope and AI Use｜Q11
+
+**D.「剪枝 / 遗忘」那一半是正结果（同一篇论文，可复用）**
+
+> 原文:"Applying the forgetting mechanism removes 2,653 nodes (9.8%) and 2,560 edges (5.5%), reducing the graph size from 440.6 MB to 398.6 MB, a 9.5% reduction."
+> 出处：2608.28978 §5 Discussion and Limitations / Table 2｜Q12
+
+> 原文:"Every 400 turns, the retention stage scores each node by recency, access frequency, centrality, and turn age, pruning nodes whose importance falls below the threshold together with their incident edges."
+> 出处：2608.28978 §3.1 Architecture / Figure 1 caption｜Q13
+
+> 原文:"At question time, the retrieval stage embeds the referenced entities, selects the top-5 matching nodes ranked by cosine similarity, and expands them via a 2-hop subgraph traversal to build the answer-generation context."
+> 出处：2608.28978 §3.1 Architecture / Figure 1 caption｜Q14
+
+> 原文:"Each conversational turn is processed by a single LLM extraction call (GPT-4o-mini) using a structured system prompt that defines the ontology, output schema, and extraction rules."
+> 出处：2608.28978 §3.3 Extraction Pipeline｜Q15
+
+**E. 知识更新失败模式（与冲突消解策略相关）**
+
+> 原文:"Graph RAG also underperforms on knowledge-update questions (F1: 0.456 vs. 0.511). Inspection of failures indicates that the current conflict-resolution policy can retain an earlier attribute value instead of replacing it with a more recent value when no explicit confidence score is available."
+> 出处：2608.28978 §5 Discussion and Limitations｜Q16
+
+**F. 论文的实验规模与参数（用于判断上述结论的强度）**
+
+> 原文:"We chose to spend it on four full runs (Experiment 1 treatment and control, Experiment 2 treatment and control) at $n=500$ with temperature $=0$, and to report paired bootstrap intervals over those runs, rather than on a larger number of partially evaluated configurations."
+> 出处：2608.28978 §A.1 Note to Reviewers on Experimental Scope and AI Use｜Q17
+
+> 原文:"We did not perform a full sweep over the retention parameters; the consequences of this are discussed at the end of this section."
+> 出处：2608.28978 §A.2 Justification for parameter values｜Q18
+
+<details><summary>Q 编号 ↔ 论文位置对照</summary>
+
+| Q | 论文位置 | 行号 |
+|---|---|---|
+| Q1 | §Abstract | L15 |
+| Q2 | §Abstract | L15 |
+| Q3 | §Abstract | L15 |
+| Q4 | §Abstract | L15 |
+| Q5 | §5 Discussion and Limitations | L161 |
+| Q6 | §5 Discussion and Limitations | L163 |
+| Q7 | §5 Discussion and Limitations | L165 |
+| Q8 | §5 Discussion and Limitations | L165 |
+| Q9 | §5 Discussion and Limitations | L175 |
+| Q10 | §A.1 Note to Reviewers on Experimental Scope and AI Use | L267 |
+| Q11 | §A.1 Note to Reviewers on Experimental Scope and AI Use | L267 |
+| Q12 | §5 Discussion and Limitations / Table 2 | L169 |
+| Q13 | §3.1 Architecture / Figure 1 caption | L63 |
+| Q14 | §3.1 Architecture / Figure 1 caption | L63 |
+| Q15 | §3.3 Extraction Pipeline | L73 |
+| Q16 | §5 Discussion and Limitations | L167 |
+| Q17 | §A.1 Note to Reviewers on Experimental Scope and AI Use | L265 |
+| Q18 | §A.2 Justification for parameter values | L275 |
+
+</details>
+
+---
+
 
 ---
 
