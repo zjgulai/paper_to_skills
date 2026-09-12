@@ -93,6 +93,7 @@ NOISE_PATTERNS = (
     # `> 出处：2606.26690 §4.2` 都报成「无出处的度量数字」（实测 4 条假红灯）。
     r"^\d{4}\.\d{4,5}(v\d+)?$",         # arXiv: 2606.26690
     r"^10\.\d{4,9}?$",               # DOI 前缀 10.1287
+    r"^0\d+$",                        # 补零 ID 片段（如 p2s-2026-0001 的 0001）
     # ⚠️ 这里原本还有 r"^\d{1,2}$"（当时的想法是「章节号/序号」）。
     # 但它会把**所有 1–2 位数字**一律豁免 —— 包括 `转化率提升 15%`、`留存 30%`，
     # 而百分比恰恰是最高价值、最需要出处的断言类型。实测这等于给
@@ -168,10 +169,15 @@ class GateResult:
 # 文本预处理
 # ---------------------------------------------------------------------------
 def strip_code(text: str) -> str:
-    """去掉代码围栏与行内代码 —— 代码里的数字不是「事实断言」。"""
-    t = CODE_FENCE_RE.sub("\n[[CODE]]\n", text)
-    t = INLINE_CODE_RE.sub(" [[CODE]] ", t)
-    return t
+    """只去掉**代码围栏**，**保留行内代码**。
+
+    ⚠️ 早期版本连行内代码一起去掉（`INLINE_CODE_RE`），实测形成一个洗白后门：
+    把论文事实数字写成 `` `2–3 倍` `` 即可绕过 G2 —— 而反引号是写代码标识符的
+    顺手习惯，作者未必有规避意图，但后果是该断言完全不进检查。
+    代码围栏保留豁免（那是 MasterPrompt v2.1 明确的 B 类「本地可复现数字」约定），
+    行内代码不再豁免。为此补两条标识符噪声规则（纯补零 ID、年份已覆盖）。
+    """
+    return CODE_FENCE_RE.sub("\n[[CODE]]\n", text)
 
 
 def parse_frontmatter(text: str) -> dict:
@@ -260,12 +266,35 @@ STRUCTURAL_PREFIX_RE = re.compile(
 )
 
 
-def is_noise(num: str, unit: str, prefix: str = "") -> bool:
+# 中文数字量级断言：`两三倍`、`十五个百分点`、`三成`、`翻倍`。
+# ⚠️ 这是一个**已知无法自动核验**的形式：NUM_TOKEN_RE 只认阿拉伯数字，
+# 因此「论文说 two to more than three times」写成「两三倍」后，
+# G2 完全看不到 —— 实测真实案例：卡片断言「离散度是对齐标签的两三倍」，
+# 对应原文 "they leave two to more than three times the aligned label's dispersion"，
+# 断言本身正确，但绕过了全部数字检查。
+# 跨语言数字匹配无法机械化（引文是英文而断言是中文），所以这里**只报黄灯**，
+# 要求人工确认该断言有对应引文 —— 目的是让豁免**可见**，而不是假装已覆盖。
+CN_NUMERAL_CLAIM_RE = re.compile(
+    r"([一二三四五六七八九十百千万两半]+\s*(?:倍|成|个百分点|pp))"
+    r"|(翻[一二三四五六七八九十两]?倍)"
+)
+
+# 领域目录标签：`15-营销投放分析`、`13-广告分析`、`06-增长模型`。
+# 这是仓库自身的命名约定，裸数字 15 不是任何事实断言 ——
+# 不加这条会把「组合 Skill-Marketing-Mix-Modeling.md（15-营销投放分析）」
+# 报成「高价值断言 15 无出处」（实测假红灯 2 条）。
+DOMAIN_LABEL_RE = re.compile(r"^-\s*[\u4e00-\u9fff]")
+
+
+def is_noise(num: str, unit: str, prefix: str = "", suffix: str = "") -> bool:
     """判断数字是否为「结构性编号」而非事实断言。
 
-    `prefix` 是数字左侧若干字符，用于识别 §4.2 / 图 3 / 式 (7) 这类指代。
+    `prefix` / `suffix` 是数字左右两侧的若干字符，用于识别
+    §4.2 / 图 3 / 式 (7) / 15-营销投放分析 这类指代与标签。
     """
     if prefix and STRUCTURAL_PREFIX_RE.search(prefix):
+        return True
+    if suffix and DOMAIN_LABEL_RE.search(suffix):
         return True
     for pat in NOISE_PATTERNS:
         if re.match(pat, num):
@@ -387,7 +416,8 @@ def gate_g2(card: Path, text: str) -> GateResult:
     for m in NUM_TOKEN_RE.finditer(prose):
         num, unit = m.group(1), (m.group(2) or "")
         prefix = prose[max(0, m.start() - 12):m.start()]
-        if is_noise(num, unit, prefix):
+        suffix = prose[m.end():m.end() + 12]
+        if is_noise(num, unit, prefix, suffix):
             continue
         ctx = prose[max(0, m.start() - 30): m.end() + 30].replace("\n", " ")
         if is_metric(ctx, num, unit):
@@ -405,11 +435,52 @@ def gate_g2(card: Path, text: str) -> GateResult:
     for m in NUM_TOKEN_RE.finditer(prose):
         num, unit = m.group(1), (m.group(2) or "")
         prefix = prose[max(0, m.start() - 12):m.start()]
-        if is_noise(num, unit, prefix):
+        suffix = prose[m.end():m.end() + 12]
+        if is_noise(num, unit, prefix, suffix):
             continue
         ctx = prose[max(0, m.start() - 30): m.end() + 30].replace("\n", " ")
         if not is_metric(ctx, num, unit) and num not in ev_nums:
             yellow.append((f"{num}{unit}", ctx.strip()))
+
+    # --- G2c 出处「实质性」检查（高精度，专抓数字凑巧命中）-------------------------
+    #
+    # ⚠️ 这是 G2 最后一个已知漏洞：`ev_nums` 是**全局、不区分出处**的数字集合，
+    # 因此不校验「某个断言由某条引文支撑」，只校验「这个数字在全库某处出现过」。
+    # 实测反例：卡片断言「离散度是对齐标签的 2–3 倍」，而唯一含 `3` 的引文是
+    # "the controlled model-skill comparison (Table 3) is single-organization" ——
+    # 数字 3 来自**表号**，与该断言毫无关系，但 G2 判 GREEN。
+    #
+    # 修法（刻意做成高精度而非高召回）：只检查「该数字在引文里的**全部**出现位置
+    # 是否都属于结构性语境」（表号/图号/公式号/章节号/样本量 10K）。
+    # 若全是结构性的 → 该数字没有任何实质性出处 → 黄灯要求人工确认。
+    # 不做语义相关性判断，因为引文多为英文而断言多为中文，跨语言词面重合度
+    # 天然接近 0，强行相关会制造大量假阳性，而假阳性会让门禁失去威信。
+    all_quote_texts = [q.get("quote", "") for q in qrep.get("quotes", [])
+                       if q.get("verdict") in ("VERBATIM", "UNVERIFIABLE")]
+    structural_only: list[tuple[str, str]] = []
+    for token, ctx in claimed:
+        bare = re.match(r"[\d.]+", token).group(0)
+        occ_before: list[str] = []
+        for qt in all_quote_texts:
+            # 边界必须是 (?<![\d.]) 与 (?![\d.])：只看一侧会把小数 `3.4`
+            # 里的 `3` 当成独立出现，于是「3」总能找到一堆假实质出处，
+            # 实测导致本检查完全失效（合成用例该报却没报）。
+            for mm in re.finditer(rf"(?<![\d.]){re.escape(bare)}(?![\d.])", qt):
+                occ_before.append(qt[max(0, mm.start() - 14):mm.start()])
+        if not occ_before:
+            continue                      # 无出处的情况已由 G2-UNSOURCED-METRIC 覆盖
+        substantive = [
+            b for b in occ_before
+            if not STRUCTURAL_PREFIX_RE.search(b)
+            and not re.search(r"\d+\s*[KkMm]$", b)      # 10K / 20K 样本量
+        ]
+        if not substantive:
+            structural_only.append((token, ctx))
+    structural_only = list(dict.fromkeys(structural_only))
+
+    # --- 中文数字量级断言：无法自动核验，报黄灯要求人工确认（见常量处说明）---
+    cn_claims = list(dict.fromkeys(
+        m.group(0) for m in CN_NUMERAL_CLAIM_RE.finditer(prose)))
 
     # 去重：同一 (数字, 上下文) 只算一条 —— 避免重复计数虚增债务
     red = list(dict.fromkeys(red))
@@ -432,6 +503,8 @@ def gate_g2(card: Path, text: str) -> GateResult:
         "quotes_spliced": qrep.get("n_spliced"),
         "quotes_unverifiable": len(unverifiable),
         "quote_verdict": qrep.get("verdict"),
+        "sourced_structural_only": len(structural_only),
+        "cn_numeral_claims": len(cn_claims),
         "fulltext_archived": bool(qrep.get("fulltext")),
     }
 
@@ -468,6 +541,17 @@ def gate_g2(card: Path, text: str) -> GateResult:
         g.add("RED", "G2-TRUNCATED", f"另有 {len(red) - 40} 条高价值断言无出处（已截断展示）")
     for token, ctx in yellow[:10]:
         g.add("YELLOW", "G2-UNSOURCED-GENERAL", f"一般数字 `{token}` 无出处",
+              evidence=f"…{ctx}…")
+    for tok in cn_claims[:15]:
+        g.add("YELLOW", "G2-CN-NUMERAL-CLAIM",
+              f"断言 `{tok}` 用中文数字表达量级，**无法自动核验**（引文通常为英文，"
+              f"跨语言数字匹配不可机械化）—— 请人工确认它确实有对应引文",
+              evidence="若该量级来自论文，建议改写成阿拉伯数字并在 ⑥ 段补引文；"
+                       "若为定性描述，请确认措辞未夸大论文结论")
+    for token, ctx in structural_only[:15]:
+        g.add("YELLOW", "G2-SOURCED-STRUCTURAL-ONLY",
+              f"断言 `{token}` 的数字只在引文的**结构性语境**（表号/图号/章节号/样本量）中出现，"
+              f"未见实质性出处 —— 请人工确认该断言是否真的有引文支撑",
               evidence=f"…{ctx}…")
     if green:
         g.add("GREEN", "G2-SOURCED", f"{len(green)} 个高价值断言有出处")

@@ -143,10 +143,10 @@ source: human+ai
 > 每张卡交付：Skill 卡片 + 代码 + evidence.md + 三份 gate JSON。数据可得性已在 registry 标注。
 
 **批次 3A · 广告与增长（业务杠杆最高，4 张）**
-- [ ] T3-1 `2606.26690` 归因蚕食校正 → `13-广告分析/Skill-Cannibalization-Corrected-Attribution.md`
-- [ ] T3-2 `2608.11675` FunnelCausalNet 多档券 uplift → `13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md`
-- [ ] T3-3 `2608.10182` 因果约束下的预算分配 → `13-广告分析/Skill-Causal-Budget-Allocation.md`
-- [ ] T3-4 `2608.18174` 季节性流失误报修正 → `06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md`（难度⭐1，可先做）
+- [x] T3-1 `2606.26690` 归因蚕食校正 → `13-广告分析/Skill-Cannibalization-Corrected-Attribution.md` ✅ K1 PASS / 引文 18-18 VERBATIM / G2·G3 绿
+- [x] T3-2 `2608.11675` FunnelCausalNet 多档券 uplift → `13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md` ✅ K1 PASS / 引文 28-28 VERBATIM / G2·G3 绿
+- [x] T3-3 `2608.10182` 因果约束下的预算分配 → `13-广告分析/Skill-Causal-Budget-Allocation.md` ✅ K1 PASS / 引文 38-38 VERBATIM / G2·G3 绿（registry 的 +7.20% 已三处核实）
+- [x] T3-4 `2608.18174` 季节性流失误报修正 → `06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md` ✅ K1 PASS / 引文 40-40 VERBATIM / G2·G3 绿（复现包=arXiv ancillary files，未下载）
 
 **批次 3B · 预测与库存（4 张）**
 - [ ] T3-5 `2608.25871` CEDAR 决策条件化需求预测 → `03-时间序列/Skill-Decision-Conditioned-Forecasting.md`

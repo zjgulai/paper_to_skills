@@ -1,13 +1,13 @@
 {
   "gate": "G3",
-  "generated_at": "2026-09-12T04:12:58+0800",
+  "generated_at": "2026-09-12T12:20:08+0800",
   "summary": {
     "gate": "G3",
-    "cards_checked": 130,
-    "cards_passed": 51,
-    "pass_rate_pct": 39.2,
-    "red_findings": 94,
-    "yellow_findings": 180
+    "cards_checked": 134,
+    "cards_passed": 55,
+    "pass_rate_pct": 41.0,
+    "red_findings": 93,
+    "yellow_findings": 181
   },
   "results": [
     {
@@ -922,10 +922,10 @@
       "passed": false,
       "findings": [
         {
-          "level": "RED",
-          "code": "G3-NOT-CONCRETE",
-          "message": "仅命中 2 个母婴出海具体信号（需 ≥3）—— 场景过于泛化",
-          "evidence": "命中: ['奶粉', '母婴']"
+          "level": "GREEN",
+          "code": "G3-CONCRETE",
+          "message": "命中 3 个具体业务信号: 吸奶器, 奶粉, 母婴",
+          "evidence": ""
         },
         {
           "level": "RED",
@@ -947,7 +947,7 @@
         }
       ],
       "metrics": {
-        "concrete_signals": 2,
+        "concrete_signals": 3,
         "vague_phrases": 0,
         "has_data_requirement": false,
         "has_roi_basis": false,
@@ -1222,6 +1222,26 @@
         "has_data_requirement": false,
         "has_roi_basis": false,
         "skill_relations": 0
+      }
+    },
+    {
+      "gate": "G3",
+      "target": "paper2skills-vault/06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md",
+      "passed": true,
+      "findings": [
+        {
+          "level": "GREEN",
+          "code": "G3-CONCRETE",
+          "message": "命中 11 个具体业务信号: Amazon, SKU, 优惠券, 吸奶器, 复购, 奶瓶, 断货, 母婴",
+          "evidence": ""
+        }
+      ],
+      "metrics": {
+        "concrete_signals": 11,
+        "vague_phrases": 0,
+        "has_data_requirement": true,
+        "has_roi_basis": true,
+        "skill_relations": 8
       }
     },
     {
@@ -3400,6 +3420,72 @@
         "has_data_requirement": false,
         "has_roi_basis": true,
         "skill_relations": 0
+      }
+    },
+    {
+      "gate": "G3",
+      "target": "paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md",
+      "passed": true,
+      "findings": [
+        {
+          "level": "GREEN",
+          "code": "G3-CONCRETE",
+          "message": "命中 7 个具体业务信号: ASIN, Amazon, ROAS, TikTok, 广告位, 母婴, 独立站",
+          "evidence": ""
+        },
+        {
+          "level": "YELLOW",
+          "code": "G3-NO-ROI-BASIS",
+          "message": "ROI 缺少计算依据（公式或参数）",
+          "evidence": ""
+        }
+      ],
+      "metrics": {
+        "concrete_signals": 7,
+        "vague_phrases": 0,
+        "has_data_requirement": true,
+        "has_roi_basis": false,
+        "skill_relations": 6
+      }
+    },
+    {
+      "gate": "G3",
+      "target": "paper2skills-vault/13-广告分析/Skill-Causal-Budget-Allocation.md",
+      "passed": true,
+      "findings": [
+        {
+          "level": "GREEN",
+          "code": "G3-CONCRETE",
+          "message": "命中 13 个具体业务信号: Amazon, FBA, ROAS, Shopify, 优惠券, 吸奶器, 头程, 奶瓶",
+          "evidence": ""
+        }
+      ],
+      "metrics": {
+        "concrete_signals": 13,
+        "vague_phrases": 0,
+        "has_data_requirement": true,
+        "has_roi_basis": true,
+        "skill_relations": 7
+      }
+    },
+    {
+      "gate": "G3",
+      "target": "paper2skills-vault/13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md",
+      "passed": true,
+      "findings": [
+        {
+          "level": "GREEN",
+          "code": "G3-CONCRETE",
+          "message": "命中 13 个具体业务信号: ASIN, Amazon, ROAS, SKU, Shopify, TikTok, 优惠券, 吸奶器",
+          "evidence": ""
+        }
+      ],
+      "metrics": {
+        "concrete_signals": 13,
+        "vague_phrases": 0,
+        "has_data_requirement": true,
+        "has_roi_basis": true,
+        "skill_relations": 5
       }
     },
     {

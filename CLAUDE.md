@@ -87,7 +87,9 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 | `paper2skills-vault/07-资源库/sync_status.json` | Tracks sync status across platforms |
 | `paper2skills-vault/07-资源库/gates/gate_g2.json` | **K2 事实可溯源门禁产物**(G1 见 `paper2skills-research/data/verification/`) |
 | `paper2skills-skills/paper-萃取/scripts/verify_skill_code.py` | **K1 门禁**:五级代码可执行性验证(语法/编译/导入/运行/断言) |
-| `paper2skills-skills/paper-审核/scripts/gate_check.py` | **K2 门禁**:G1 代码 / G2 事实 / G3 业务 三合一 |
+| `paper2skills-skills/paper-审核/scripts/gate_check.py` | **K2 门禁**:G1 代码 / G2 事实(含 G2a·G2b·G2c) / G3 业务 |
+| `paper2skills-skills/paper-审核/scripts/quote_check.py` | **G2b 引文逐字核验**:把每条 `> 原文:"..."` 回查论文全文存档,判 VERBATIM/FUZZY/FABRICATED。`--selftest` 用四个用例自证能区分真引文/伪造/拼接 |
+| `paper2skills-research/scripts/fetch_fulltext.py` | **全文抓取**:arXiv LaTeXML HTML → Markdown(保留章节号),存到 `papers/<域>/<paper_id>/fulltext.md`;萃取前必跑,否则引文无从核验 |
 | `paper2skills-skills/paper-同步/scripts/sync.py` | Sync script for vault/GitHub/feishu |
 | `paper2skills-research/scripts/` | 检索/评分/去重/体检脚本(见下方"检索路线") |
 
@@ -142,17 +144,58 @@ python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py --all --le
 | 门禁 | 检查 | 关键口径 |
 |------|------|----------|
 | **G1 代码可执行** | 读 K1 产物 | 无 K1 凭证一律判红(禁止凭人工判断放行) |
-| **G2 事实可溯源** | 带「度量语义」的数字是否能在证据链中找到出处 | 证据链 = 卡片内 `> 原文:"..."` 引用块 + 同目录 `evidence.md`。**只回答"有没有出处",不判断"对不对"**(对错靠人工抽检) |
+| **G2 事实可溯源** | 见下方 G2a/G2b/G2c 三层 | 2026-09-12 由「有没有出处」升级为「出处对不对」 |
 | **G3 业务可落地** | 场景是否具体、是否声明数据可得性、ROI 是否有依据、是否关联 ≥2 张卡 | 空泛表述黑名单 + 母婴出海具体信号计数 |
 
+**G2 的三层(2026-09-12 加固,每层都由实测缺陷驱动)**
+
+| 层 | 回答的问题 | 实现 | 判罚 |
+|----|-----------|------|------|
+| **G2a 有出处** | 带度量语义的数字能否在证据链里找到 | 原逻辑 | 红灯 |
+| **G2b 出处为真** | 引用块是否**逐字**存在于论文全文存档 | `quote_check.py` | 伪造 → 红灯 |
+| **G2c 出处实质** | 数字是否只在引文的**结构性语境**(表号/图号/样本量)中出现 | 最长连续匹配 + 结构前缀识别 | 黄灯待人工确认 |
+
 ```bash
+# 单卡(写卡时用,三个脚本都要过)
+python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py --card <card.md>
+python3 paper2skills-skills/paper-审核/scripts/quote_check.py --card <card.md>
+python3 paper2skills-skills/paper-审核/scripts/gate_check.py --card <card.md>
+
+# 全量
 python3 paper2skills-skills/paper-审核/scripts/gate_check.py --all \
   --k1 paper2skills-research/data/verification/k1_l5.json \
   --outdir paper2skills-vault/07-资源库/gates
 ```
 
-**首次全量基线(2026-09-12,G2)**:130 张卡 → **57 张通过(43.8%)**,红灯 438 条。
-根因:全库 **13,868 个数字 vs 仅 3 行** `> 原文:"..."` 引用块。
+**G2 基线(2026-09-12,131 张卡)**:旧报告写的「**57 张通过(43.8%)**」**不成立**,已作废。两点原因:
+
+1. 旧 `passed` 判定写死 `len(red)==0`,于是**没有任何数字的卡片自动通过** —— 那是「没东西可查」,不是「有证据」。
+2. `NOISE_PATTERNS` 里 `^\d{1,2}$` 与 `^v?\d+\.\d+$` 两条,把**所有 1–2 位数字与所有小数**一律豁免 ——
+   含 `提升 15%`、`92.2%`。旧基线把这些断言整个漏掉了。
+
+加固后的真实基线:**0/130 通过**(新出的卡片 `Skill-Cannibalization-Corrected-Attribution.md` 是首个通过者,1/131),
+红灯 2,742 条。根因是**全库 `> 原文:"..."` 引用块实测为 0 条**
+(旧报告称「仅 3 行」,那是 crude grep 的假阳性 —— 那 3 处是「数据忠实于原文」这类散文,不是引用块)。
+
+> 这个修正本身是重要教训:**门禁数字变差,不一定是资产变差,可能是门禁终于开始测真东西了。**
+> 三个假绿灯(上面 1、2 与 evidence.md 无过滤收录)全部是「门禁自己放水」,比假红灯危险得多。
+
+**已封堵的 7 个 G2 漏洞(全部由实测发现,不是理论担忧)**
+
+| # | 漏洞 | 后果 |
+|---|------|------|
+| 1 | 只判「有无出处」不判「出处真假」 | 伪造一段带数字的引文即可让任意数字过闸 |
+| 2 | 两个脚本各有一套引用正则(`> 原文:"..."` 匹配不到) | 带合格引文的卡片反被判「无任何出处」——**假红灯** |
+| 3 | `evidence.md` 数字无条件全收 | 在 evidence.md 裸写 `ROI 提升 42.7%` 即可洗白 |
+| 4 | `^\d{1,2}$` 豁免 | **所有 1–2 位数字**免检,含 `提升 15%` |
+| 5 | `^v?\d+\.\d+$` 豁免 | **所有小数**免检,含 `92.2%` |
+| 6 | 行内代码被剥离 | 把论文事实写成 `` `2–3 倍` `` 即绕过 G2 |
+| 7 | 中文数字不匹配 | 写成「两三倍」即绕过全部数字检查(跨语言数字匹配不可机械化,现改为黄灯提示) |
+
+> **引文核验器必须先自证可信**:`quote_check.py --selftest` 用四个用例锁定行为,
+> 其中「拼接引文」一条是开发中实测发现的漏洞 —— 把摘要句与引言句缝成一句(论文里不存在这句话)时,
+> 全文档 n-gram 覆盖率仍是 **1.0**(每个碎片都能在文档某处找到),连续度只有 0.681。
+> 故判定改用「最长**连续**匹配段占引文的比例」。
 
 > ⚠️ **口径警告**:三个门禁必须**分开报**。`Cited but Not Verified`(arXiv:2605.06635) 实测
 > 链接可用 >94%、主题相关 >80%,而**事实一致性只有 39–77%** —— 合成一个「可信度总分」
@@ -199,19 +242,33 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 
 ## 存量资产体检(2026-09-12 实测)
 
-> 本节数字为 T0-2 去重**之后**的实测值;括号内为去重前的旧值,保留用于对照。
+> 本节数字为 T0-2 去重 + PHASE3 批次 3A **之后**的实测值。
+> ⚠️ **门禁口径在 2026-09-12 当天由松变紧**(修了 7 个假绿灯),所以 K1/G1/G2/G3 四个数字
+> **不能与当天早些时候的报告直接对比** —— 门禁数字变差,可能是门禁终于开始测真东西了。
 
 | 指标 | 实测值 | 说明 |
 |------|--------|------|
-| 唯一 Skill 卡片 | **130 张** | 去重前文件数 156,`07-NLP-VOC/` 下 26 组同名重复已清理(25 组字节相同直接删、1 组已漂移移入 `_superseded/`) |
-| 含 frontmatter | **73/130 (56%)** | 规范不统一 |
-| 含 `paper:` 溯源字段 | **6/130 (4.6%)** | 无法反查论文来源。⚠️ 注意:frontmatter 里的 `source:`(值多为 `human+ai`)是**文档来源**,**不是**论文来源,统计时勿混淆 |
-| 含 python 代码块 | **80/130 (62%)** / 共 104 个代码块 | — |
-| **K1 代码执行率** | **54.8%** | 84 单元:PASS 46 / ENV_BLOCKED 7 / ORPHAN_DEP 9 / FAIL 22;语法级失败 0。详见下方"门禁体系" |
-| **G1 门禁通过率** | **35.4%** | 46/130,红灯 77 |
-| **G2 事实溯源通过率** | **43.8%** | 57/130,红灯 438 条;根因是全库 13,868 个数字 vs 仅 3 行原文引用块 |
-| **G3 业务可落地通过率** | **39.2%** | 51/130,红灯 94 |
-| 领域分布 | 07-NLP-VOC 41 / 16-智能体工程 16 / 10-MAS 12 / 06-增长模型 10 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
+| 唯一 Skill 卡片 | **134 张** | 去重前 156;PHASE3 批次 3A 新增 4 张。`07-NLP-VOC/` 下 26 组同名重复已在 T0-2 清理 |
+| 含 frontmatter | 73/130 (56%) | 规范不统一(仅统计存量 130 张) |
+| 含 `paper:` 溯源字段 | 6/130 (4.6%) | ⚠️ frontmatter 里的 `source:`(值多为 `human+ai`)是**文档来源**,**不是**论文来源,统计时勿混淆 |
+| 含 python 代码块 | 80/130 (62%) / 104 个代码块 | — |
+| **K1 代码执行率** | **55.7%** | 88 单元:PASS 49 / ENV_BLOCKED 7 / ORPHAN_DEP 9 / FAIL 23;语法级失败 0 |
+| **G1 门禁通过率** | **36.6%** | 49/134,红灯 78 |
+| **G2 事实溯源通过率** | **3.0%** | **4/134**,红灯 2,696 条。4 个通过者全部是本轮 PHASE3 新卡(见下) |
+| **G3 业务可落地通过率** | **41.0%** | 55/134,红灯 93 |
+| **引文逐字核验** | **124 条全部 VERBATIM** | 4 张新卡:18/18 + 28/28 + 38/38 + 40/40;0 伪造 0 近似 |
+| 领域分布 | 07-NLP-VOC 41 / 16-智能体工程 16 / 10-MAS 12 / 06-增长模型 11 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
+
+### PHASE3 批次 3A 交付(4 张,三门前全绿)
+
+| 卡片 | 论文 | venue | K1 | 引文 | G2 | G3 |
+|------|------|-------|----|------|----|----|
+| `13-广告分析/Skill-Cannibalization-Corrected-Attribution.md` | 2606.26690 | ADKDD 2026 (**workshop**) | PASS | 18/18 | ✅ | ✅ |
+| `13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md` | 2608.11675 | CIKM 2026 | PASS | 28/28 | ✅ | ✅ |
+| `13-广告分析/Skill-Causal-Budget-Allocation.md` | 2608.10182 | arXiv preprint | PASS | 38/38 | ✅ | ✅ |
+| `06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md` | 2608.18174 | arXiv preprint | PASS | 40/40 | ✅ | ✅ |
+
+**这 4 张恰好也是全库唯一的 G2 通过者** —— 存量 130 张的 G2 全红,根因是**引用块为 0**。
 
 ### 已发现的缺陷(由 K1 首次暴露,已修复)
 
@@ -411,6 +468,7 @@ Search priority: Papers with code implementations > experimental validation > th
 
 | Date | Skill | Domain | Commit |
 |------|-------|--------|--------|
+| 2026-09-12 | **PHASE3 批次 3A（4 张，三门前全绿）**: 归因蚕食校正 ETDC+HCA / FunnelCausalNet 多档券 uplift / 因果约束预算分配 / 季节性流失标签修正 | 13-广告分析 · 06-增长模型 | 见下一提交 |
 | 2026-05-15 | Marketing Mix Modeling (MMM) + Promotion Effectiveness (DML) | 15-营销投放分析 | — |
 | 2026-05-15 | Ad Attribution Modeling + ROAS Budget Optimization | 13-广告分析 | — |
 | 2026-05-15 | User Funnel Analysis + Cohort Retention Analysis | 14-用户分析 | — |
