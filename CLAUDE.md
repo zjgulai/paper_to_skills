@@ -307,7 +307,7 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 | 含 frontmatter | **144/146** | ⚠️ **不是 146/146** —— `Skill-Two-Echelon-Inventory-DRL.md` 与 `Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md` **至今无 frontmatter**(后者已在 3E 补了 18 条引文,却仍缺)。此处曾误记为 146/146,2026-09-12 盘点时由 `repo_health` C2 与人工复核推翻 |
 | v2 必填字段实际欠账 | `paper_id` 8 / `paper` 29 / `venue` 66 / `venue_tier` 74 / `evidence_grade` 78(共 96 张有来源卡) | ⚠️ `repo_health` C2 报的「126 张」**含 48 张 `author-practice` 卡的误报** —— 它们按设计就不该有来源字段(见漏洞 #8/#10 的三类口径),C2 尚未跟上该口径 |
 | 含 `paper:` / `paper_id:` 溯源字段 | 98 张 | 另有 48 张声明 `author-practice`(设计上无论文来源),见 `provenance_audit.py` |
-| 含 python 代码块 | 80/130 (62%) / 104 个代码块 | — |
+| 含 ` ```python ` 代码块 | **97/146 张 (66.4%) / 141 个块** | 按行首 ```python 围栏直接计数;K1 的「100 单元」是把卡片内代码块**按文档顺序拼成一个模块**后的单元数,两者口径不同,不要互相换算 |
 | **K1 代码执行率** | **62.0%** | 100 单元:PASS 62 / ENV_BLOCKED 7 / **ORPHAN_DEP 0** / MIGRATED_DEP 9 / FAIL 22;语法级失败 0 |
 | **G1 门禁通过率** | **42.5%** | 62/146,红灯 68 / 黄灯 7 |
 | **G2 事实溯源通过率** | **16.3%** | **16/98**(可核验分母),红灯 1,476 / 黄灯 645;另有 **48 张无法核验**(无论文来源) |
