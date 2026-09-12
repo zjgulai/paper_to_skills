@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T12:40:00",
+  "generated_at": "2026-09-12T12:35:00",
   "window": {
     "start": "2026-06-12",
     "end": "2026-09-12"
@@ -25,7 +25,7 @@
       "P1": 25,
       "P2": 1
     },
-    "gated_extracted": 4
+    "gated_extracted": 8
   },
   "records": [
     {
@@ -172,16 +172,16 @@
       "score": 28.4,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/03-时间序列/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/03-时间序列/Skill-Shipping-Cost-Estimation.md",
         "code_dir": "paper2skills-code/time_series/<algo>",
         "evidence": "paper2skills-vault/papers/03-时间序列/p2s-2026-0005/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0006",
@@ -197,22 +197,22 @@
       "domain": "03-时间序列",
       "priority": "P0",
       "decision": "extract",
-      "decision_reason": "CEDAR：决策条件化仿真，可回答'给定预算排期与备货计划的销量'，KDD 2026 正式发表并用于真实预算规划",
-      "data_availability": "available",
-      "note": "KDD 2026 proceedings 已核实（journal_ref 完整）",
+      "decision_reason": "CEDAR：决策条件化仿真，可回答「给定**预算排期（折扣 + 广告花费）**的销量」，KDD 2026 正式发表并用于真实预算规划",
+      "data_availability": "partial",
+      "note": "KDD 2026（32nd ACM SIGKDD，DOI 10.1145/3770855.3818338）已核实。⚠️ 两处口径修正（由出卡时逐项核对发现）：①原文动作向量只有**折扣与广告花费两个变量**，**不含补货/备货决策** —— 原 note 写「给定预算排期与备货计划的销量」是抬级，故删除「备货计划」；②数据为阿里 1688（国内 B2B）私有面板，论文仅称「正在推进发布部分匿名版本」，故 data_availability 由 available 改 partial。③平台是**国内** B2B，非跨境场景。",
       "score": 62.2,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/03-时间序列/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/03-时间序列/Skill-Decision-Conditioned-Forecasting.md",
         "code_dir": "paper2skills-code/time_series/<algo>",
         "evidence": "paper2skills-vault/papers/03-时间序列/p2s-2026-0006/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0007",
@@ -261,20 +261,20 @@
       "decision": "extract",
       "decision_reason": "ORLA：求解器验证的 MIP 建模生成与选择，做多仓库存分配；支持自然语言约束（'优先保 FBA 不断货'）",
       "data_availability": "available",
-      "note": "与 2607.25956 高度重叠，建议合并为一张卡",
+      "note": "与 2607.25956 高度重叠，建议合并为一张卡（本文正文与参考文献中 `2607` 零命中，故卡片未对两篇关系作任何断言）。⚠️ 口径修正：registry 原写的自然语言约束例子「优先保 FBA 不断货」**与论文措辞不符** —— 全文 `FBA`/`cross-border`/`stockout`/`lead time` 均零命中；论文自己的例子是「Enforce minimum TID」（表 6）与 §4.4 的约束清单。卡片已用业务原话做场景转译并显式标注。另：全文首页页眉写 `Journal: European Journal of Operational Research`，但无录用证据，故仍记 preprint，不得当 EJOR 论文引用。",
       "score": 36.8,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/04-供应链/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md",
         "code_dir": "paper2skills-code/supply_chain/<algo>",
         "evidence": "paper2skills-vault/papers/04-供应链/p2s-2026-0008/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0009",
@@ -292,20 +292,20 @@
       "decision": "extract",
       "decision_reason": "SupplyNetPy：开源 Python 库，多级网络离散事件仿真，支持易腐库存/节点中断/随机提前期；落地成本最低",
       "data_availability": "available",
-      "note": "Winter Simulation Conference 2026；**有开源实现**",
+      "note": "Winter Simulation Conference 2026；**有开源实现**：`pip install supplynetpy`，仓库 github.com/SupplyChainSimulation/SupplyNetPy（论文逐字给出，未联网核实可达性）。⚠️ 论文内部不一致：§3.4 示例代码写 `import SupplyNetPy.Components`（混合大小写），而 §1.1 安装命令为全小写 `pip install supplynetpy`，论文未解释。registry 原写「落地成本最低」只部分采信 —— 建模侧成立，数据侧（批次效期台账、中断样本）仍需补齐。",
       "score": 38.7,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/04-供应链/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/04-供应链/Skill-Supply-Network-Simulation.md",
         "code_dir": "paper2skills-code/supply_chain/<algo>",
         "evidence": "paper2skills-vault/papers/04-供应链/p2s-2026-0009/evidence.md"
       },
       "gates": {
-        "code": "pending",
-        "evidence": "pending",
-        "business": "pending"
+        "code": "pass",
+        "evidence": "pass",
+        "business": "pass"
       },
-      "status": "shortlisted"
+      "status": "extracted"
     },
     {
       "paper_id": "p2s-2026-0010",

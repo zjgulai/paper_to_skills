@@ -585,6 +585,11 @@ Full       MAE 3.086  MAPE 0.0120
 > 数值是否接近纯属巧合。更要注意方向差异：论文表 2 里 Stage 1 + Stage 2 的 MAE（1.893）**高于** Stage 1（1.735），
 > 而本算例里 Stage 2 是改善的 —— **结论方向不同**，这本身就是"合成数据结论不可外推"的例证。
 
+> **落地顺序提示（来自 §4，见 ⑥ 引用）**：论文的时间切分是**回测**口径，不是上线口径 ——
+> 评估做完之后，面向生产的版本可以用**全部可得历史**重新拟合。实操含义：
+> 先用留出期证明四段结构在你的账单上站得住，再在**全量历史**上重训一份上线版本，
+> 否则上线模型会白丢最近一期旺季与费率卡更新。
+
 ---
 
 ## ④ 技能关联
@@ -699,6 +704,9 @@ Full       MAE 3.086  MAPE 0.0120
 > 出处：2607.16230 §4 Dataset and Experimental Setup
 
 > 原文："We use a time-based split in which earlier months are used for training and the final three months are reserved for holdout evaluation."
+> 出处：2607.16230 §4 Dataset and Experimental Setup
+
+> 原文："Importantly, this chronological split is used for backtesting rather than final deployment; once evaluation is complete, the production-facing version of the model can be refit on the full available history so that the most recent demand and surcharge patterns are retained."
 > 出处：2607.16230 §4 Dataset and Experimental Setup
 
 > 原文："| Orders | 250,000 line-item orders | | Products | 260 products across 36 categories | | Time span | 2024-01 to 2025-06 (18 months) | | Fulfillment setting | Single Boston warehouse; single parcel carrier | | Route granularity | 8 destination zones | | Pricing layer | Zone x billable-weight rate card with surcharges | | Consolidation signal | Latent savings inferred from weak operational proxies | | Evaluation | Time-based holdout; MAE, MAPE, aggregate error |"

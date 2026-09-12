@@ -154,17 +154,17 @@ source: human+ai
 
 > 每张卡交付：Skill 卡片 + 代码 + evidence.md + 三份 gate JSON。数据可得性已在 registry 标注。
 
-**批次 3A · 广告与增长（业务杠杆最高，4 张）**
+**批次 3A · 广告与增长（业务杠杆最高，4 张）** ✅ 全部完成
 - [x] T3-1 `2606.26690` 归因蚕食校正 → `13-广告分析/Skill-Cannibalization-Corrected-Attribution.md` ✅ K1 PASS / 引文 18-18 VERBATIM / G2·G3 绿
 - [x] T3-2 `2608.11675` FunnelCausalNet 多档券 uplift → `13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md` ✅ K1 PASS / 引文 28-28 VERBATIM / G2·G3 绿
 - [x] T3-3 `2608.10182` 因果约束下的预算分配 → `13-广告分析/Skill-Causal-Budget-Allocation.md` ✅ K1 PASS / 引文 38-38 VERBATIM / G2·G3 绿（registry 的 +7.20% 已三处核实）
 - [x] T3-4 `2608.18174` 季节性流失误报修正 → `06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md` ✅ K1 PASS / 引文 40-40 VERBATIM / G2·G3 绿（复现包=arXiv ancillary files，未下载）
 
-**批次 3B · 预测与库存（4 张）**
-- [ ] T3-5 `2608.25871` CEDAR 决策条件化需求预测 → `03-时间序列/Skill-Decision-Conditioned-Forecasting.md`
-- [ ] T3-6 `2607.16230` RouteCost 运费成本预估 → `03-时间序列/Skill-Shipping-Cost-Estimation.md`
-- [ ] T3-7 `2607.09745` SupplyNetPy 多级供应链仿真 → `04-供应链/Skill-Supply-Network-Simulation.md`（**有开源库，最省力**）
-- [ ] T3-8 `2606.29366` ORLA 多仓库存分配（与 `2607.25956` 合并）→ `04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md`
+**批次 3B · 预测与库存（4 张）** ✅ 全部完成
+- [x] T3-5 `2608.25871` CEDAR → `03-时间序列/Skill-Decision-Conditioned-Forecasting.md` ✅ K1 PASS / 引文 47-47 / G2·G3 绿（**修正了 registry 两处抬级：「备货计划」与 data_availability**）
+- [x] T3-6 `2607.16230` RouteCost → `03-时间序列/Skill-Shipping-Cost-Estimation.md` ✅ K1 PASS / 引文 36-36 / G2·G3 绿
+- [x] T3-7 `2607.09745` SupplyNetPy → `04-供应链/Skill-Supply-Network-Simulation.md` ✅ K1 PASS / 引文 38-38 / G2·G3 绿（开源包名与仓库 URL 已逐字核实）
+- [x] T3-8 `2606.29366` ORLA → `04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md` ✅ K1 PASS / 引文 41-41 / G2·G3 绿（**registry 的「优先保 FBA 不断货」与原文不符，已修正并记录**）
 
 **批次 3C · 用户与电商（3 张）**
 - [ ] T3-9 `2607.09608` 增量测量（站外种草→站内成交）→ `14-用户分析/Skill-Incrementality-Measurement.md`
