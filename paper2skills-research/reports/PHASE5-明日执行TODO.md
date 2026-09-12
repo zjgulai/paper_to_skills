@@ -356,7 +356,7 @@ Evidence from E-Commerce*, Management Science 2026-07-09）。这是纯机械回
 
 ---
 
-## 5. 本次盘点新发现（3 条，均已写进 CLAUDE.md）
+## 5. 本次盘点新发现（4 条，均已写进 CLAUDE.md）
 
 | # | 发现 | 性质 |
 |---|------|------|
