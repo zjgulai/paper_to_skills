@@ -90,7 +90,11 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 | `paper2skills-skills/paper-审核/scripts/gate_check.py` | **K2 门禁**:G1 代码 / G2 事实(含 G2a·G2b·G2c) / G3 业务 |
 | `paper2skills-skills/paper-审核/scripts/quote_check.py` | **G2b 引文逐字核验**:把每条 `> 原文:"..."` 回查论文全文存档,判 VERBATIM/FUZZY/FABRICATED。`--selftest` 用四个用例自证能区分真引文/伪造/拼接 |
 | `paper2skills-research/scripts/fetch_fulltext.py` | **全文抓取**:arXiv LaTeXML HTML → Markdown(保留章节号),存到 `papers/<域>/<paper_id>/fulltext.md`;萃取前必跑,否则引文无从核验 |
-| `paper2skills-skills/paper-同步/scripts/sync.py` | Sync script for vault/GitHub/feishu |
+| `paper2skills-vault/07-资源库/关键词库-v2.md` | **三段式检索词**(正向 / 负向 / 约束词)。⚠️ 负向词**按域生效** —— 同一个词在不同域含义相反(`trial`/`cohort`/`ad`),无脑全局负向会误杀方法论论文 |
+| `paper2skills-research/scripts/candidate_filter.py` | 三段式过滤的**可执行部件**(配置若只有文字一定会腐烂)。实测丢弃 25.8%,逐篇抽检无误杀;`--selftest` 含同词异义反例 |
+| `paper2skills-vault/07-资源库/scoring_config.json` | 评分权重/阈值/关键词表外置。缺文件时脚本退回内置默认值(不静默用空值) |
+| `paper2skills-skills/paper-维护/scripts/repo_health.py` | **仓库体检**(C1–C8:重复卡片/frontmatter/路径/围栏结构/registry/门禁时效/卫生/段落完整性)。`--selftest` 用构造样本证明检查真的会报警 |
+| `paper2skills-skills/paper-同步/scripts/sync.py` | Sync script;**同步前现场跑 K2 门禁,红灯即拒绝**(退出码 2);绕过须 `--force-gates "<理由>"` 并留痕 |
 | `paper2skills-research/scripts/` | 检索/评分/去重/体检脚本(见下方"检索路线") |
 
 ## 门禁体系(K1 / K2,2026-09-12 建立)
