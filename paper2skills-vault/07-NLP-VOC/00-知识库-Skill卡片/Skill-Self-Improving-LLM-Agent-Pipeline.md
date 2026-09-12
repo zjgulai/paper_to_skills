@@ -3,12 +3,13 @@ title: 自迭代 LLM Agent 管线
 doc_type: knowledge
 module: 07-NLP-VOC
 topic: self-improving-llm-agent-pipeline
+paper_id: 2408.06292
+evidence_basis: paper-verbatim
 status: stable
 created: 2026-05-06
-updated: 2026-05-06
+updated: 2026-09-12
 owner: self
 source: human+ai
-evidence_basis: paper-verbatim
 ---
 
 # Skill: 自迭代 LLM Agent 管线
