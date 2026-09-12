@@ -122,8 +122,7 @@ stretch 是**有监督**的平滑优化，改的是**特征与标签的联合形
      明显落后。分类侧论文自己的措辞只是 "remains in the top tier"（第一梯队），**没有**说每格都第一。
      选型时请按**贵司自己的骨干架构**看对应那一行，而不是看总榜。
 2. **箱数 T 是唯一的正则化旋钮，调不对就退化**：T 小 → 保留原分布结构；T 大 → 逼近 CDF / target encoding，
-   过度平滑会抹掉信号（论文引用了「降高频不等于提升效果」的既有结论）。论文把 T 交给 Optuna 搜
-   （候选含 1、2、4、…、512 与 100000）。
+   过度平滑会抹掉信号（论文引用了「降高频不等于提升效果」的既有结论）。论文把 T 交给 Optuna 一起搜（具体候选集见论文 Table 2，本卡不复述）。
 3. **标签噪声**：supervised stretch 用标签设计变换，天然有被带偏的风险。论文的噪声实验显示它在最高噪声级
    （η = 0.5）平均排名反而最好，但那是 **4 个数据集 × 5 个模型 = 20 个组合上的平均排名**，不是每个数据集都成立；
    标签无法清洗时，退到 unsupervised stretch 更稳。
@@ -661,6 +660,15 @@ ROI = (ΔM − C_impl) / C_impl，其中 ΔM = N_iter × H × (1 − r_manual)�
 > 原文："We use accuracy for classification and $R^{2}$ (clipped to $[0,1]$) for regression as primary metrics."
 > 出处：2608.09162 §4.1 Experimental Setup（指标）
 
+> 原文："We use the TALENT benchmark suite [35, 23], focusing on the Tiny Benchmark 1 collection of 26 classification and 12 regression datasets."
+> 出处：2608.09162 §4.1 Experimental Setup（数据集构成：26 分类 + 12 回归）
+
+> 原文："From the original TALENT Benchmark 1 collection of 42 datasets, we exclude four datasets that contain only categorical features (Amazon_employee_access, BNG(tic-tac-toe), led24, splice), yielding our final experimental suite of 38 datasets."
+> 出处：2608.09162 §B.3 Experimental Setup Details（42 → 38 的剔除口径）
+
+> 原文："We evaluate five representative neural architectures for tabular data: FT-Transformer (FTT) [9], standard MLP, MLP-PLR [10], RealMLP [17], and ResNet [14]. Experiments span 38 datasets, yielding 190 dataset-model combinations."
+> 出处：2608.09162 §4.1 Experimental Setup（5 个架构 / 190 个单元）
+
 **B. 与既有变换的理论联系（CDF / PLE / target encoding）**
 
 > 原文："The win-rate analysis (Figure 3) further shows that it statistically outperforms every alternative under the pairwise criterion, with decisive regression win-loss records of 18-7 against PLE, 28-9 against PLE-T, and 14-4 against standardization (Appendix C)."
@@ -693,6 +701,9 @@ ROI = (ΔM − C_impl) / C_impl，其中 ΔM = N_iter × H × (1 − r_manual)�
 > 出处：2608.09162 §3.4 Supervised Stretch
 > 原文："In practice, to prevent information leakage, we use $K$-fold cross-validation with adaptive Nadaraya-Watson kernel regression to obtain $\widehat{f}(x_{i})$ for each sample without using its own target value [25, 32] (details in Appendix B.1)."
 > 出处：2608.09162 §3.4 Supervised Stretch（Out-of-fold estimation）
+
+> 原文："We then average these ranks over the $4\times 5=20$ (dataset, model) combinations."
+> 出处：2608.09162 §G.1 Noise Robustness（Experimental Setup：4 × 5 = 20）
 
 **D. 边界、失败模式与论文自承局限**
 

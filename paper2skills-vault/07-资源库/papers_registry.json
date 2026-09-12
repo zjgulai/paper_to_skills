@@ -746,7 +746,7 @@
       "domain": "05-推荐系统",
       "priority": "P1",
       "decision": "extract",
-      "decision_reason": "Sequential Modality Dropout：四行代码让推荐模型在缺图/缺文案下仍可用；95% 单品缺失率下 HR@10 保留 61% vs 22%",
+      "decision_reason": "Sequential Modality Dropout：四行代码让推荐模型在缺图/缺文案下仍可用；**在 Scientific 域、MM-SASRec backbone、5 seed 均值下**，95% 单品缺失率时 HR@10 保留 61% vs 22%（**不是所有域的普遍值**；其他域佐证：70% 丢弃下 71–78% vs 46–53%）。真实缺失率背景：Toys & Games 34.3% / Beauty 48.3% 商品无文本，四域 26–41% 无图像。",
       "data_availability": "available",
       "note": "CIKM 2026；摘要含代码链接，摘要截断导致误判为无代码",
       "score": 50.9,
@@ -839,7 +839,7 @@
       "domain": "12-ML基础",
       "priority": "P1",
       "decision": "extract",
-      "decision_reason": "Tabular Numeric Stretch Transformation：把数值特征变换形式化为优化问题，优于手调 log/box-cox",
+      "decision_reason": "Tabular Numeric Stretch Transformation：把数值特征变换形式化为优化问题，优于手调 log/box-cox ⚠️ 口径：摘要「优于所有基线」是**聚合口径**（190 单元归一化分数 + 配对胜率），论文未给任何百分比提升；且 Table 1 的 mlp/mlp_plr 两行 PLE 优于 supervised stretch，分类侧措辞只是 'remains in the top tier'。不要读成「每格第一」。",
       "data_availability": "available",
       "note": "增强现有 Skill-Feature-Engineering",
       "score": 31.8,
@@ -1549,6 +1549,14 @@
         "p2s-2026-0018: gates→pass(引文 51/51), status→extracted, skill_card 回填",
         "p2s-2026-0019: gates→pass(引文 39/39), status→extracted, skill_card 回填",
         "p2s-2026-0030: 登记为增强任务 + 补范围限定口径"
+      ]
+    },
+    {
+      "at": "2026-09-12",
+      "by": "PHASE3-3E",
+      "changes": [
+        "p2s-2026-0023: decision_reason 补条件口径（61%/22% 是 Scientific×MM-SASRec×5seed）",
+        "p2s-2026-0026: decision_reason 补「一致优于」的实际口径 + 反例"
       ]
     }
   ]
