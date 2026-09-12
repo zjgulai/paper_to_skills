@@ -134,10 +134,19 @@ source: human+ai
   - 修了一个自己引入的 bug：`--gate warn` 最初与 enforce 行为完全相同（都 return 2），
     会让用户以为在「只看警告」，最后去用 `--gate off` 把门禁整个关掉 —— 比不加更糟
 
-- [ ] **T2-7 新建 `paper-维护` skill（仓库体检）**
-  - 检查：重复卡片、frontmatter 缺失、路径失效（`/Users/pray` 类）、registry 与卡片不一致、ledger 过期
-  - 频率：每周；输出体检报告
-  - 验收：首次运行能报出 T0-2 的重复与 T0-1 的路径问题（回归测试）
+- [x] **T2-7 新建 `paper-维护` skill（仓库体检）** ✅ 已完成
+  - `paper2skills-skills/paper-维护/`：`SKILL.md` + `scripts/repo_health.py`
+  - 8 项检查 C1–C8：重复卡片 / frontmatter / 硬编码路径 / **代码围栏结构** / registry 一致性 /
+    门禁汇总与时效 / 仓库卫生 / v2 段落完整性
+  - 频率：每周；`--json-out` 供趋势追踪；`--selftest` 用构造样本证明检查真的会报警
+  - 验收 ✅：`--selftest` 4 项全绿；对全库跑出真实欠账
+    （C8：130/135 张缺 ⑥ 段、13 张仅有 ①②③；C3：7 处绝对路径；C2：57 张无 frontmatter）
+  - **首轮就抓出 3 张真正未闭合的代码围栏并修好**（Multi-Armed-Bandit / Matrix-Factorization /
+    Customer-Churn-Prediction），并修正了一处自身过度表述：围栏未闭合 **不会**让 K1 失败
+    （K1 把 EOF 当隐式闭合），真实后果是渲染错乱 —— K1 全绿不代表围栏没问题
+  - 开发过程中修了 **5 个自身 bug，全部是假红灯**：C3 白名单漏 vault 侧（误报 290+ 处）、
+    C4 把缩进 1–3 空格的示例围栏当硬缺陷、C4 的 `critical` 把提示当缺陷、
+    C6 读错 K1 时间戳位置、C7 只数文件个数而不区分是否被 git 跟踪
 
 ---
 
