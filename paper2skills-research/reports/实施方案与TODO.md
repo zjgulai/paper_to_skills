@@ -72,13 +72,13 @@ source: human+ai
   - 必须收录本轮实测发现的 6 处抬级案例作为反例
   - 验收：给出"arXiv comment 含 Workshop/Findings/Demonstrations/Under review/manuscript → 降级"的判定表
 
-- [ ] **T1-4 新建 `paper2skills-vault/07-资源库/关键词库-v2.md`（三段式）**
+- [x] **T1-4 新建 `paper2skills-vault/07-资源库/关键词库-v2.md`（三段式）** ✅ 并落地为可执行过滤器 `candidate_filter.py`（实测丢弃 25.8%，逐篇抽检无误杀）
   - 正向词：现有 16 域的检索词（从 `关键词库.md` 继承）
   - **负向词**（本轮实测必需）：`software supply chain`、`SBOM`、`package detection`、`model lineage`、`LLM inference`、`MRI`、`EEG`、`radiotherapy`、`clinical`、`lesion`、`PET`（04 域污染率 27%、14 域 64%）
   - **约束词**：14 域加 `+e-commerce/retail/subscription/churn/retention`；04 域加 `+inventory/fulfillment/warehouse`
   - 拆词：07-VOC 域把 `product review summarization` / `opinion mining` / `multimodal review` / `aspect extraction` 分成 4 条独立查询（本轮 92 天仅命中 9 篇 = 过窄）
 
-- [ ] **T1-5 评分器落地为脚本**（✅ 已完成，需迁移 + 参数化）
+- [x] **T1-5 评分器落地为脚本**（✅ 已迁移 + 参数化）
   - 现状：`rank_candidates.py`（6 维评分，本轮跑出 19 篇 ≥60 分）
   - 动作：把阈值、权重、缺口关键词表抽到 `paper2skills-vault/07-资源库/scoring_config.json`
 

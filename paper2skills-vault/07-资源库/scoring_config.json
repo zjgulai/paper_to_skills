@@ -1,0 +1,146 @@
+{
+  "_comment": "paper2skills 候选论文评分参数。由 rank_candidates.py 读取（缺文件时使用脚本内置默认值）。改动此文件即改变排序结果，改前请先看 _calibration 段。",
+  "version": "1.0.0",
+  "updated": "2026-09-12",
+
+  "_calibration": {
+    "how_derived": "本轮 92 天窗口（2026-06-12→2026-09-12）实测：arXiv 49 查询组 → 1046 篇；Crossref 28 刊 → 1751 篇；合并去重后按本配置打分，≥60 分 19 篇，全部进入 P0 队列并已人工复核。",
+    "what_it_is_not": "这不是一个经过标注集训练的模型，而是一组人工设定的启发式权重。它的作用是把「哪些论文值得花 1-2 小时萃取」的判断题变成可复现、可讨论、可回归的算术题 —— 不是替代人工判断。",
+    "known_weaknesses": [
+      "关键词命中法会被「摘要里顺带提一句 e-commerce」抬分；实测 04 域污染率 27%、14 域 64%，靠 negative_keywords 补救",
+      "venue 识别依赖 comment / journal_ref 文本，OpenReview 未回填 venue 的会议会掉到 preprint 档（0 分），实测 ICML 2026 / ICLR 2026 均如此",
+      "business 分对「母婴锚点」只加 4 分常数，无法区分「真的做母婴」与「摘要里出现了 baby 一词」"
+    ],
+    "recalibration_trigger": "当某领域的 P0 队列人工复核驳回率 >40% 时，该领域的 negative/constraint 词需要重调"
+  },
+
+  "window_days": 92,
+  "thresholds": {
+    "p0": 60,
+    "p1": 40,
+    "p2": 30,
+    "_comment": "≥p0 进 P0 萃取队列；[p1,p0) 进 P1 观察；[p2,p1) 仅登记。低于 p2 不登记。"
+  },
+
+  "dimensions": {
+    "venue": {
+      "max": 30,
+      "_comment": "发表层级。顶会/顶刊正式接收 30；顶会 workshop 18；非顶会正式 18；非顶会 workshop 或 arXiv-only 10；识别不到 venue 0。",
+      "tier_top": 30,
+      "tier_top_workshop": 18,
+      "tier_other": 18,
+      "tier_other_workshop": 10,
+      "tier_unknown": 0,
+      "top_venues": [
+        "NeurIPS", "ICML", "ICLR", "KDD", "SIGIR", "WWW", "WSDM", "RecSys", "ACL",
+        "EMNLP", "NAACL", "AAAI", "IJCAI", "AAMAS", "COLM", "VLDB", "SIGMOD",
+        "Management Science", "Marketing Science", "Operations Research", "M&SOM",
+        "MIS Quarterly", "ISR", "TKDE", "TOIS", "TIST", "UAI", "AISTATS", "MLSys"
+      ],
+      "venue_aliases": {
+        "neurips": "NeurIPS", "nips": "NeurIPS", "icml": "ICML", "iclr": "ICLR",
+        "kdd": "KDD", "sigkdd": "KDD", "sigir": "SIGIR", "www": "WWW", "thewebconf": "WWW",
+        "wsdm": "WSDM", "recsys": "RecSys", "cikm": "CIKM", "acl": "ACL", "emnlp": "EMNLP",
+        "naacl": "NAACL", "aaai": "AAAI", "ijcai": "IJCAI", "aamas": "AAMAS", "colm": "COLM",
+        "uai": "UAI", "aistats": "AISTATS", "mlsys": "MLSys", "cvpr": "CVPR", "iccv": "ICCV",
+        "eccv": "ECCV", "vldb": "VLDB", "sigmod": "SIGMOD", "icde": "ICDE", "tkde": "TKDE",
+        "tois": "TOIS", "tist": "TIST", "management science": "Management Science",
+        "marketing science": "Marketing Science", "operations research": "Operations Research",
+        "m&som": "M&SOM", "msom": "M&SOM", "mis quarterly": "MIS Quarterly",
+        "information systems research": "ISR"
+      },
+      "workshop_hints": ["workshop", "tutorial", "findings", "demo track", "industry track", "challenge"]
+    },
+
+    "code": {
+      "max": 15,
+      "_comment": "工程可得性。有代码链接/明确系统实现 11 分，另有开源/仓库表述再 +4，封顶 15。",
+      "strong_pattern": "github\\.com|huggingface\\.co|code is available|our code|code will be|open-source",
+      "strong_points": 11,
+      "weak_pattern": "open[- ]sourc|we release|publicly available|repository",
+      "weak_points": 4
+    },
+
+    "business": {
+      "max": 20,
+      "_comment": "业务相关性。强词每个 3.5（封顶 14）+ 弱词每个 1.2（封顶 6）+ 母婴锚点命中一次性 +4，总封顶 20。",
+      "strong_points_each": 3.5,
+      "strong_cap": 14,
+      "weak_points_each": 1.2,
+      "weak_cap": 6,
+      "category_anchor_bonus": 4,
+      "strong_keywords": [
+        "e-commerce", "ecommerce", "online retail", "cross-border", "marketplace", "seller",
+        "shopping", "product listing", "assortment", "merchandis", "catalog",
+        "advertis", "bidding", "sponsored search", "roas", "budget allocation", "campaign",
+        "recommendation system", "recommender", "search ranking", "ranking system",
+        "demand forecasting", "inventory", "replenishment", "supply chain", "fulfillment",
+        "pricing", "promotion", "discount", "coupon", "subscription",
+        "customer churn", "lifetime value", "retention", "conversion", "funnel", "uplift",
+        "a/b test", "ab test", "experiment platform", "bandit",
+        "customer review", "user feedback", "voice of customer", "sentiment", "aspect-based",
+        "logistics", "warehouse", "shipping", "return"
+      ],
+      "weak_keywords": [
+        "user behavior", "click-through", "ctr", "personaliz", "cold-start", "session",
+        "anomaly detection", "knowledge graph", "text-to-sql", "data analysis agent",
+        "marketing", "consumer", "brand"
+      ],
+      "category_anchors": [
+        "baby", "infant", "mother", "maternal", "toddler", "nursery", "stroller",
+        "breast pump", "diaper", "formula", "feeding", "carseat", "car seat"
+      ]
+    },
+
+    "method": {
+      "max": 20,
+      "_comment": "方法可萃取性。每个正向表述 +3（封顶 20）；每个负向表述 -8；标题/摘要判定为综述则封顶 4。",
+      "positive_points_each": 3.0,
+      "negative_penalty_each": 8.0,
+      "survey_cap": 4,
+      "positive": [
+        "we propose", "we introduce", "we present", "our method", "our approach", "our framework",
+        "algorithm", "framework", "architecture", "model we", "we develop", "we design",
+        "experiments", "experimental results", "benchmark", "dataset", "ablation",
+        "outperform", "state-of-the-art", "sota", "baseline", "evaluation on"
+      ],
+      "negative": [
+        "survey", "systematic review", "literature review", "meta-analysis", "position paper",
+        "we argue", "call for", "roadmap", "tutorial", "overview of", "taxonomy of existing",
+        "research agenda", "perspective paper", "soK:", "sok "
+      ],
+      "survey_title_prefixes": ["a survey", "survey", "a review", "systematic review"]
+    },
+
+    "freshness": {
+      "max": 8,
+      "_comment": "时效。8 - 已发布天数/12，下限 0。即约 96 天后归零；按 R4「预印本距今 >3 年不纳入」另有人工门槛。",
+      "base": 8.0,
+      "days_divisor": 12.0,
+      "fallback_days": 92
+    },
+
+    "gap": {
+      "max": 7,
+      "_comment": "缺口匹配：命中项目中尚无 Skill 卡片的空白方向，每命中一个 +2.5，封顶 7。",
+      "points_each": 2.5,
+      "keywords": {
+        "广告归因/增量": ["attribution", "incrementality", "geo experiment", "marketing mix", "mmm"],
+        "实验平台/序贯检验": ["sequential test", "always valid", "switchback", "crossover", "variance reduction", "cuped"],
+        "选品/组合优化": ["assortment", "product selection", "new product", "category management"],
+        "供应链-LLM": ["supply chain", "procurement", "supplier", "lead time"],
+        "推荐-生成式": ["generative recommendation", "semantic id", "llm ranker", "reranker"],
+        "Agent技能/上下文": ["agent skill", "skill library", "context compression", "context engineering", "memory"],
+        "评价/自动化评测": ["llm-as-a-judge", "judge", "rubric", "evaluation harness", "benchmark"],
+        "跨境合规/多语言": ["multilingual", "cross-lingual", "compliance", "regulation", "customs"]
+      }
+    }
+  },
+
+  "shortlist_domain_order": [
+    "16-智能体工程", "00-电商Agent", "05-推荐系统", "13-广告分析", "02-A_B实验",
+    "01-因果推断", "03-时间序列", "04-供应链", "06-增长模型", "07-VOC舆情",
+    "08-知识图谱", "09-DataAgent", "10-MAS", "14-用户分析", "15-营销投放",
+    "12-ML基础", "11-AI人文"
+  ]
+}

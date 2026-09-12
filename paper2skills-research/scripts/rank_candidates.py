@@ -27,9 +27,32 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
+CONFIG_PATH = ROOT.parent / "paper2skills-vault" / "07-资源库" / "scoring_config.json"
+
+
+def load_config(path: Path = CONFIG_PATH) -> dict:
+    """读取外置评分配置。
+
+    ⚠️ 设计约束：**配置文件缺失时必须完全退回内置默认值**，且默认值等于本文件
+    原本硬编码的那一套。这样「引入配置文件」这件事本身不改变任何一条既有排序 ——
+    否则无法区分「调参导致的排序变化」与「重构引入的回归」。
+    实测验收方式：重构前后 recommendations.json 的 md5 必须一致。
+    """
+    if not path.is_file():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:                                   # 配置坏了不能静默用空值
+        print(f"⚠️  评分配置 {path} 解析失败（{exc}），本轮使用内置默认值")
+        return {}
+
+
+CFG = load_config()
+DIM = CFG.get("dimensions", {})
+THRESH = CFG.get("thresholds", {})
 
 # ---------- A. 发表层级 ----------
-TIER_A = {
+TIER_A_DEFAULT = {
     "neurips": "NeurIPS", "nips": "NeurIPS", "icml": "ICML", "iclr": "ICLR",
     "kdd": "KDD", "sigkdd": "KDD", "sigir": "SIGIR", "www": "WWW", "thewebconf": "WWW",
     "wsdm": "WSDM", "recsys": "RecSys", "cikm": "CIKM", "acl": "ACL", "emnlp": "EMNLP",
@@ -41,11 +64,14 @@ TIER_A = {
     "m&som": "M&SOM", "msom": "M&SOM", "mis quarterly": "MIS Quarterly",
     "information systems research": "ISR",
 }
-WORKSHOP_HINTS = ("workshop", "tutorial", "findings", "demo track", "industry track", "challenge")
+TIER_A = DIM.get("venue", {}).get("venue_aliases", TIER_A_DEFAULT)
+WORKSHOP_HINTS = tuple(DIM.get("venue", {}).get(
+    "workshop_hints",
+    ["workshop", "tutorial", "findings", "demo track", "industry track", "challenge"]))
 NEG_HINTS = ("arxiv preprint", "under review", "preprint", "submitted to", "to appear")
 
 # ---------- C. 业务相关性 ----------
-BUSINESS_STRONG = [
+BUSINESS_STRONG_DEFAULT = [
     "e-commerce", "ecommerce", "online retail", "cross-border", "marketplace", "seller",
     "shopping", "product listing", "assortment", "merchandis", "catalog",
     "advertis", "bidding", "sponsored search", "roas", "budget allocation", "campaign",
@@ -57,31 +83,31 @@ BUSINESS_STRONG = [
     "customer review", "user feedback", "voice of customer", "sentiment", "aspect-based",
     "logistics", "warehouse", "shipping", "return",
 ]
-BUSINESS_WEAK = [
+BUSINESS_WEAK_DEFAULT = [
     "user behavior", "click-through", "ctr", "personaliz", "cold-start", "session",
     "anomaly detection", "knowledge graph", "text-to-sql", "data analysis agent",
     "marketing", "consumer", "brand",
 ]
 # 母婴品类锚点（命中则强加权）
-CATEGORY_ANCHORS = [
+CATEGORY_ANCHORS_DEFAULT = [
     "baby", "infant", "mother", "maternal", "toddler", "nursery", "stroller",
     "breast pump", "diaper", "formula", "feeding", "carseat", "car seat",
 ]
 
 # ---------- D. 方法可萃取性 ----------
-METHOD_POS = [
+METHOD_POS_DEFAULT = [
     "we propose", "we introduce", "we present", "our method", "our approach", "our framework",
     "algorithm", "framework", "architecture", "model we", "we develop", "we design",
     "experiments", "experimental results", "benchmark", "dataset", "ablation",
     "outperform", "state-of-the-art", "sota", "baseline", "evaluation on",
 ]
-METHOD_NEG = [
+METHOD_NEG_DEFAULT = [
     "survey", "systematic review", "literature review", "meta-analysis", "position paper",
     "we argue", "call for", "roadmap", "tutorial", "overview of", "taxonomy of existing",
     "research agenda", "perspective paper", "soK:", "sok ",
 ]
 
-GAP_KEYWORDS = {
+GAP_KEYWORDS_DEFAULT = {
     "广告归因/增量": ["attribution", "incrementality", "geo experiment", "marketing mix", "mmm"],
     "实验平台/序贯检验": ["sequential test", "always valid", "switchback", "crossover", "variance reduction", "cuped"],
     "选品/组合优化": ["assortment", "product selection", "new product", "category management"],
@@ -91,6 +117,28 @@ GAP_KEYWORDS = {
     "评价/自动化评测": ["llm-as-a-judge", "judge", "rubric", "evaluation harness", "benchmark"],
     "跨境合规/多语言": ["multilingual", "cross-lingual", "compliance", "regulation", "customs"],
 }
+
+
+# ---------- 配置解析后的生效常量（默认值 = 重构前硬编码的那一套）----------
+BUSINESS_STRONG = DIM.get("business", {}).get("strong_keywords", BUSINESS_STRONG_DEFAULT)
+BUSINESS_WEAK = DIM.get("business", {}).get("weak_keywords", BUSINESS_WEAK_DEFAULT)
+CATEGORY_ANCHORS = DIM.get("business", {}).get("category_anchors", CATEGORY_ANCHORS_DEFAULT)
+METHOD_POS = DIM.get("method", {}).get("positive", METHOD_POS_DEFAULT)
+METHOD_NEG = DIM.get("method", {}).get("negative", METHOD_NEG_DEFAULT)
+GAP_KEYWORDS = DIM.get("gap", {}).get("keywords", GAP_KEYWORDS_DEFAULT)
+
+TOP_VENUES = set(DIM.get("venue", {}).get("top_venues", [
+    "NeurIPS", "ICML", "ICLR", "KDD", "SIGIR", "WWW", "WSDM", "RecSys", "ACL",
+    "EMNLP", "NAACL", "AAAI", "IJCAI", "AAMAS", "COLM", "VLDB", "SIGMOD",
+    "Management Science", "Marketing Science", "Operations Research", "M&SOM",
+    "MIS Quarterly", "ISR", "TKDE", "TOIS", "TIST", "UAI", "AISTATS", "MLSys"]))
+
+V = DIM.get("venue", {})
+C = DIM.get("code", {})
+B = DIM.get("business", {})
+M = DIM.get("method", {})
+F = DIM.get("freshness", {})
+G = DIM.get("gap", {})
 
 
 def venue_of(item: dict) -> tuple[int, str]:
@@ -105,14 +153,12 @@ def venue_of(item: dict) -> tuple[int, str]:
         # 摘要里的“published at”类描述
         return (0, "")
     is_ws = any(h in low for h in WORKSHOP_HINTS)
-    top = {"NeurIPS", "ICML", "ICLR", "KDD", "SIGIR", "WWW", "WSDM", "RecSys", "ACL",
-           "EMNLP", "NAACL", "AAAI", "IJCAI", "AAMAS", "COLM", "VLDB", "SIGMOD",
-           "Management Science", "Marketing Science", "Operations Research", "M&SOM",
-           "MIS Quarterly", "ISR", "TKDE", "TOIS", "TIST", "UAI", "AISTATS", "MLSys"}
-    best = sorted(hits, key=lambda h: (h not in top, h))[0]
-    if best in top:
-        return (18 if is_ws else 30), best
-    return (10 if is_ws else 18), best
+    best = sorted(hits, key=lambda h: (h not in TOP_VENUES, h))[0]
+    if best in TOP_VENUES:
+        return (V.get("tier_top_workshop", 18) if is_ws
+                else V.get("tier_top", 30)), best
+    return (V.get("tier_other_workshop", 10) if is_ws
+            else V.get("tier_other", 18)), best
 
 
 def score(item: dict) -> dict:
@@ -124,30 +170,35 @@ def score(item: dict) -> dict:
 
     # B. 代码
     code = 0
-    if re.search(r"github\.com|huggingface\.co|code is available|our code|code will be|open-source", low):
-        code += 11
-    if re.search(r"open[- ]sourc|we release|publicly available|repository", low):
-        code += 4
-    code = min(code, 15)
+    if re.search(C.get("strong_pattern",
+                       r"github\.com|huggingface\.co|code is available|our code|code will be|open-source"), low):
+        code += C.get("strong_points", 11)
+    if re.search(C.get("weak_pattern", r"open[- ]sourc|we release|publicly available|repository"), low):
+        code += C.get("weak_points", 4)
+    code = min(code, C.get("max", 15))
 
     # C. 业务
     strong_hits = [k for k in BUSINESS_STRONG if k in low]
     weak_hits = [k for k in BUSINESS_WEAK if k in low]
     anchors = [k for k in CATEGORY_ANCHORS if k in low]
-    business = min(14, 3.5 * len(set(strong_hits)))
-    business += min(6, 1.2 * len(set(weak_hits)))
+    business = min(B.get("strong_cap", 14),
+                   B.get("strong_points_each", 3.5) * len(set(strong_hits)))
+    business += min(B.get("weak_cap", 6),
+                    B.get("weak_points_each", 1.2) * len(set(weak_hits)))
     if anchors:
-        business += 4
-    business = min(20, round(business, 1))
+        business += B.get("category_anchor_bonus", 4)
+    business = min(B.get("max", 20), round(business, 1))
 
     # D. 方法
     pos = sum(1 for k in METHOD_POS if k in low)
     neg = sum(1 for k in METHOD_NEG if k in low)
-    method = min(20, 3.0 * pos)
+    method = min(M.get("max", 20), M.get("positive_points_each", 3.0) * pos)
     if neg:
-        method = max(0, method - 8 * neg)
-    if re.search(r"\babstract\b.{0,80}\b(survey|review)\b", low) or title_low.startswith(("a survey", "survey", "a review", "systematic review")):
-        method = min(method, 4)
+        method = max(0, method - M.get("negative_penalty_each", 8.0) * neg)
+    if re.search(r"\babstract\b.{0,80}\b(survey|review)\b", low) or \
+            title_low.startswith(tuple(M.get("survey_title_prefixes",
+                                              ["a survey", "survey", "a review", "systematic review"]))):
+        method = min(method, M.get("survey_cap", 4))
     method = round(method, 1)
 
     # E. 时效
@@ -155,12 +206,12 @@ def score(item: dict) -> dict:
         pub = datetime.fromisoformat(item["published"].replace("Z", "+00:00"))
         days = (datetime.now(timezone.utc) - pub).days
     except Exception:
-        days = 92
-    fresh = round(max(0, 8 - days / 12), 1)
+        days = F.get("fallback_days", 92)
+    fresh = round(max(0, F.get("base", 8) - days / F.get("days_divisor", 12)), 1)
 
     # F. 缺口
     gap_hits = [g for g, kws in GAP_KEYWORDS.items() if any(k in low for k in kws)]
-    gap = min(7, 2.5 * len(gap_hits))
+    gap = min(G.get("max", 7), G.get("points_each", 2.5) * len(gap_hits))
 
     total = round(tier + code + business + method + fresh + gap, 1)
     return {
@@ -205,10 +256,11 @@ def main() -> None:
             ])
 
     # 短名单 markdown
-    order = ["16-智能体工程", "00-电商Agent", "05-推荐系统", "13-广告分析", "02-A_B实验",
-             "01-因果推断", "03-时间序列", "04-供应链", "06-增长模型", "07-VOC舆情",
-             "08-知识图谱", "09-DataAgent", "10-MAS", "14-用户分析", "15-营销投放",
-             "12-ML基础", "11-AI人文"]
+    order = CFG.get("shortlist_domain_order",
+                    ["16-智能体工程", "00-电商Agent", "05-推荐系统", "13-广告分析", "02-A_B实验",
+                     "01-因果推断", "03-时间序列", "04-供应链", "06-增长模型", "07-VOC舆情",
+                     "08-知识图谱", "09-DataAgent", "10-MAS", "14-用户分析", "15-营销投放",
+                     "12-ML基础", "11-AI人文"])
     lines = ["# 近三个月（2026-06-12 → 2026-09-11）候选论文短名单", "",
              f"候选总数 {len(rows)}；下表为各领域综合得分 Top 10。", ""]
     for dom in order:
@@ -228,8 +280,11 @@ def main() -> None:
         print(f"{r['score']:>5} {r['venue'] or '—':<10} {r['arxiv_id']:<12} {r['published'][:10]} {r['title'][:78]}")
     print()
     print("venue 命中统计:", dict(Counter(r["venue"] for r in rows if r["venue"]).most_common(20)))
-    print("分数分布:", {k: sum(1 for r in rows if r["score"] >= t) for k, t in
-                    [("≥70", 70), ("≥60", 60), ("≥50", 50), ("≥40", 40), ("≥30", 30)]})
+    print("分数分布:", {f"≥{t}": sum(1 for r in rows if r["score"] >= t)
+                      for t in (70, 60, 50, 40, 30)})
+    print(f"阈值（scoring_config.json）: P0≥{THRESH.get('p0', 60)} "
+          f"P1≥{THRESH.get('p1', 40)} P2≥{THRESH.get('p2', 30)}"
+          + ("" if CFG else "   ⚠️ 未找到配置文件，正在使用内置默认值"))
 
 
 if __name__ == "__main__":
