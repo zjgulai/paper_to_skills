@@ -70,11 +70,22 @@ PAPERS_DIR = VAULT / "papers"
 # 实测 6 张卡（AB-Experimental-Design / AGRS / MAA / StaR / VOC-Semantic-Blueprint /
 # VOC-Proxy-NPS）全部中招，其中 5 张是我刚加的声明文本触发的。
 #
-# 修法：① 引号必须**成对同型**（用分组配对，不再用两个独立字符类）；
-#       ② 去掉 `re.S` —— 引文是单行，跨行的绝不是引文。
+# ⚠️⚠️ 第三个坑（2026-09-12 实测，漏洞 #15）：**引文内嵌双引号会被截成残句**。
+# `"[^"\n]+"` 是非贪婪的，遇到内层引号就闭合。实测两条真实引文：
+#     > 原文:"These results indicate that the LLM-based "Fuzzy" Random Forest model is …"
+# 被抽成 42 字符的 `These results indicate that the LLM-based `，
+# 而这条**残句确实逐字存在于底本**，于是 quote_check 报 VERBATIM ——
+# **门禁核验的不是卡片声称的那句话，而是一段更短的碎片**，
+# 且因为 `n_quotes` 与逐字命中都正常，报告里完全看不出来。
+# 全库扫描：2,085 条引文中 4 条被截断（1 条已由子代理自行发现并改写）。
+#
+# 修法：ASCII 双引号分支改用 `"(.+)"`（**贪婪**），让它匹配到**行内最后一个**引号。
+# 这样内层引号会被一并吞进引文，与卡片实际声称的文本一致；
+# 另有「尾随内容检测」selftest 用例锁定该行为。
+# 注：全角引号分支保持非贪婪 —— 它们不存在与 ASCII 混用的歧义。
 QUOTE_RE = re.compile(
     r"^>[ \t]*(?:原文\s*[:：][ \t]*)?"
-    r"(?:\"([^\"\n]+)\"|“([^”\n]+)”|「([^」\n]+)」|『([^』\n]+)』)"
+    r'(?:"(.+)"|“([^”\n]+)”|「([^」\n]+)」|『([^』\n]+)』)'
     r"[ \t]*$",
     re.M,
 )
@@ -395,6 +406,19 @@ def selftest() -> int:
         and v_splice != "VERBATIM" and flag_splice        # 拼接必须被标出
         and v_para == "VERBATIM"
     )
+
+    # 用例 5｜内嵌双引号不得被截成残句（漏洞 #15）
+    # 实测原句：`…the LLM-based "Fuzzy" Random Forest model is …`
+    # 旧正则抽成 42 字符的残句，而残句本身逐字存在于底本 → 报 VERBATIM，
+    # 即**门禁核验的不是卡片声称的那句话**。这里锁定「抽出的必须与写入的一致」。
+    inner = ('These results indicate that the LLM-based "Fuzzy" Random Forest model '
+             'is a highly effective tool for predicting startup success.')
+    line = f'> 原文:"{inner}"\n'
+    got = extract_quotes(line)
+    q_inner_ok = len(got) == 1 and got[0]["quote"] == inner
+    print(f"5 内嵌双引号: 抽出 {len(got)} 条，长度 {len(got[0]['quote']) if got else 0}"
+          f"（期望 {len(inner)}）{'✅' if q_inner_ok else '❌ 被截断'}")
+    ok = ok and q_inner_ok
 
     print(f"1 真引文     : {v_real:10s} 连续度={r_real}")
     print(f"2 纯伪造     : {v_fake:10s} 连续度={r_fake}   ← 必须 FABRICATED")

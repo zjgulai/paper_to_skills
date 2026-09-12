@@ -1,5 +1,13 @@
 ---
 paper: "Customer Sentiment Analysis with Cuckoo Search and K-means Clustering"
+# ⚠️ 溯源错位（2026-09-12 实测）：卡内声明的 arXiv:2311.11250 实际对应的是
+#    Kumar, Roy, Dogra & Kim, "A Comprehensive Review on Sentiment Analysis:
+#    Tasks, Approaches and Applications" —— 另一篇论文（底本 fulltext.md 已二次确认）。
+#    故**刻意不填 paper_id**：填了就等于断言 2311.11250 是本卡来源。
+#    CSK 方法的真实出处是 Pandey, Rajpoot & Saraswat (2017),
+#    "Twitter sentiment analysis using hybrid cuckoo search method",
+#    Information Processing & Management 53(4):764–779（期刊论文，无 arXiv 版本，
+#    本仓库无底本）。补到该原文前，本卡的效果数字不可核验。
 evidence_basis: paper-traceable
 module: 07-NLP-VOC
 created: 2026-05-15
