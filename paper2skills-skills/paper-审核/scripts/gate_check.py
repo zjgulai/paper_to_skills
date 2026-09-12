@@ -445,6 +445,24 @@ def gate_g1(card: Path, text: str, k1_index: dict) -> GateResult:
 EVIDENCE_LINE_RE = re.compile(r"^\s*>\s*(原文|出处)\s*[:：].*$", re.M)
 
 
+def strip_frontmatter(text: str) -> str:
+    """去掉 YAML frontmatter 块，再做数字扫描。
+
+    ⚠️ 这是一个实测出来的**假黄灯源**（2026-09-12，由 F4 子代理发现）：
+    frontmatter 里的 `created: 2026-05-15` / `updated: 2026-09-12` 会被
+    NUM_TOKEN_RE 拆出 `15` 与 `12`，然后判成「一般数字无出处」。
+    实测影响 **65 张卡、126 条黄灯** —— 全是**元数据**，不是断言。
+
+    frontmatter 是**文档元数据**（标题/模块/时间/溯源字段），按定义不承载
+    「事实断言」；把它计入 G2 断言集，会让黄灯数随「卡片填了多少元数据」变化，
+    而不是随「内容有多少无出处数字」变化 —— 那正是本门禁最该避免的事。
+    `paper_id` / `venue` 等字段只用于**分类**（card_has_paper_source），
+    不参与断言计数，所以剥掉不影响溯源判定。
+    """
+    m = FRONTMATTER_RE.match(text)
+    return text[m.end():] if m else text
+
+
 def strip_evidence(text: str) -> str:
     return EVIDENCE_LINE_RE.sub("\n", text)
 
@@ -453,8 +471,15 @@ def strip_evidence(text: str) -> str:
 # 实测：01-因果推断/Skill-Intelligent-Attribution-Causal-Forest 的正文里
 # 「参考论文」出现在第 13853 字符（卡片总长 14069），若不去掉这段，
 # 一张纯经验卡会因为列了几篇参考论文而被迫按「有来源卡」审查 —— 判错了对象。
+#
+# ⚠️ `参考资料` 必须在内（2026-09-12 由子代理实测发现）：全库 43 张卡用 `参考论文`，
+# 但有 3 张用 `参考资料`。实测 `04-供应链/Skill-Two-Echelon-Inventory-DRL.md` 的
+# `## 参考资料` 是**混合表** —— 第 1 条正是本卡来源论文（且正文 ③ 段 docstring 里
+# 写着「基于论文：Stranieri & Stella (2022) …」），另两条才是延伸阅读。
+# 漏掉这个词会让这类卡被判「有来源」（正确），但**理由**是错的；
+# 更糟的是若有人据此给它们加 `author-practice`，会真的触发 BASIS-CONTRADICTION。
 _REF_SECTION_RE = re.compile(
-    r"^#{1,4}\s*(参考论文|参考文献|References|Bibliography|延伸阅读)\s*$",
+    r"^#{1,4}\s*(参考论文|参考文献|参考资料|References|Bibliography|延伸阅读)\s*$",
     re.M | re.I,
 )
 
@@ -493,8 +518,9 @@ def card_has_paper_source(text: str, fm: dict) -> bool:
 def gate_g2(card: Path, text: str) -> GateResult:
     rel = rel_to_repo(card)
     g = GateResult("G2", rel, True)
-    # 先剥代码（代码里的数字不是事实断言），再剥证据语法行（引文是证据不是断言）
-    prose = strip_evidence(strip_code(text))
+    # 先剥 frontmatter（元数据不是断言），再剥代码（代码里的数字不是事实断言），
+    # 最后剥证据语法行（引文是证据不是断言）
+    prose = strip_evidence(strip_code(strip_frontmatter(text)))
     fm = parse_frontmatter(text)
 
     # --- 证据基础分类（决定本卡是「该修」还是「修不了」）-------------------
@@ -539,9 +565,25 @@ def gate_g2(card: Path, text: str) -> GateResult:
         g.add("YELLOW", "G2-QUOTE-CHECK-UNAVAILABLE",
               "引文逐字核验器未加载，本轮未核验引文真伪 —— 结论不完整")
     else:
+        # ⚠️⚠️ 只有 **VERBATIM** 能充当出处（2026-09-12 修，漏洞 #13）。
+        #
+        # 原写法把 `UNVERIFIABLE` 也算作出处，理由是「历史卡无全文存档」——
+        # 那是个善意豁免，但它**没有闸门**：`UNVERIFIABLE` 的成因恰恰是
+        # 「找不到这篇论文的全文」，于是任何人只要写一段引文、配一个
+        # 指不到底本的 `paper_id`，就能让任意数字变成"有出处"。
+        #
+        # 更糟的是它与 QUOTE_RE 的跨行 bug 叠加后形成**自引文洗白**：
+        # 卡片自己的声明文字被解析成"引文"，卡片自己的数字就成了"有出处"。
+        # 由子代理在 `Skill-AB-Experimental-Design` 上实测发现：
+        # 一条 2777 字符的"引文"里 90% 是卡片自身正文，
+        # metrics 显示 `sourced=20/26, traceability_pct=76.9` ——
+        # **20 个数字的"出处"就是卡片自己**，红灯 28→6 是假象。
+        #
+        # 修法：`UNVERIFIABLE` 不再计入出处，只出一条黄灯（下面已有）。
+        # 这与「门禁的豁免条款必须比拦截条款测得更严」是同一原则。
         trusted_quotes = {
             q["quote"] for q in qrep.get("quotes", [])
-            if q.get("verdict") in ("VERBATIM", "UNVERIFIABLE")
+            if q.get("verdict") == "VERBATIM"
         }
 
     ev_nums, ev_sources = collect_evidence(card, text, trusted_quotes=trusted_quotes)
@@ -800,6 +842,22 @@ def selftest() -> int:
          '> 原文:"Production attribution is timely, granular, and continuously '
          'available, but observational by construction."\n> 出处：2606.26690 §1\n',
          "PASS", False),
+        # --- 用例 6/7 专防漏洞 #13（自引文洗白）----------------------------
+        # 子代理实测：把声明写成以 `「` 开头的 `>` 行时，旧 QUOTE_RE 会跨行吞掉
+        # 卡片正文，把卡片自己的数字变成"有出处"。用例 6 锁定「指不到底本的
+        # 引文不算出处」；用例 7 锁定「中文闭引号不再跨行吞正文」。
+        ("6 无全文的引文不得充当出处",
+         "paper_id: 9999.99999\n",
+         'ROI 提升 **42.7%**，覆盖 **2300万** 用户。\n\n'
+         '> 原文:"our framework improves incremental ROAS by 42.7% And reaches 2300 万 users"\n'
+         '> 出处：9999.99999 §1\n',
+         "FAIL", True),
+        ("7 中文闭引号不得跨行吞正文",
+         "evidence_basis: author-practice\n",
+         '# 卡\n\n'
+         '> 「本行以中文开引号，闭引号后面还有字」。\n'
+         '> 这一行是卡片自己的正文，**42.7%** 与 **2300万** 都是本卡的数字。\n',
+         "UNVERIFIABLE", False),
     ]
 
     ok = True

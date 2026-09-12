@@ -61,8 +61,23 @@ MIN_FULLTEXT_CHARS = 8000
 ARXIV_RE = re.compile(r"\b(\d{4}\.\d{4,5})(?:v\d+)?\b")
 DOI_RE = re.compile(r"\b(10\.\d{4,9}/[^\s（()\"']+)")
 
-# frontmatter 里可能承载溯源信息的键（按可信度排序）
-ID_KEYS = ("paper_id", "arxiv", "arxiv_id", "doi")
+# 非 ID 形式的来源声明（2026-09-12 新增）。
+#
+# ⚠️ 本脚本第一版**只认 arXiv ID / DOI**，于是把 7 张「用标题声明了来源、
+# 但没写 ID」的卡误判成「无论文来源」，并让 F4 给它们加上了
+# 「本卡无对应论文来源」的声明 —— **与被声明卡片自己的正文直接矛盾**。
+# 由子代理在 F4 执行中实测发现，不是设计时想到的。
+#
+# 教训：判「没有来源」时，**「找不到 ID」不等于「没有来源声明」**。
+# 与 K1 的 ORPHAN_DEP 误判同源（判某个东西「不存在」之前先 `ls` 一次）。
+DECL_RE = re.compile(
+    r"(?:\*\*)?(?:论文来源|来源论文|基于论文|主论文)(?:\*\*)?\s*[:：]\s*(.+)",
+)
+# ACL Anthology 正式编号（USSA 这类只有 ACL 号、无 arXiv 的论文）
+ANTHOLOGY_RE = re.compile(r"\b(\d{4}\.[a-z0-9-]+\.[0-9]+)\b", re.I)
+
+# frontmatter 里可承载溯源信息的键（按可信度排序）
+ID_KEYS = ("paper_id", "arxiv", "arxiv_id", "doi", "anthology_id")
 TITLE_KEYS = ("paper", "paper_title", "source", "url", "title")
 
 _STOP = {
@@ -229,6 +244,23 @@ def audit_card(card: Path, idx: PaperIndex, by_arxiv: dict, by_card: dict) -> di
     body = text[:12000]
     arxiv_ids += ARXIV_RE.findall(body)
     arxiv_ids += DOI_RE.findall(body)
+    arxiv_ids += ANTHOLOGY_RE.findall(body)
+
+    # 非 ID 的来源声明：`**论文来源**: X`、`基于论文: X`（含代码 docstring 内的）。
+    # ⚠️ 这一条是本脚本第二版新增 —— 第一版只认 ID，把 7 张卡误判为无论文来源。
+    # 命中的是**标题串**，没有 ID 可查全文，所以下面按 `declared_title` 单独记账：
+    # 判定归 NEEDS_FULLTEXT（「有来源待补全文」），而不是 NO_PAPER_SOURCE。
+    declared_title = ""
+    dm = DECL_RE.search(text)
+    if dm:
+        declared_title = dm.group(1).strip().strip('*').strip()
+    if not declared_title:
+        # frontmatter 的 `paper:` 若是个标题串（不是 ID），也算来源声明
+        for k in ("paper", "paper_title"):
+            v = (fm.get(k) or "").strip().strip('"').strip("'")
+            if len(v) > 12 and not ARXIV_RE.search(v) and not DOI_RE.search(v):
+                declared_title = v
+                break
 
     # registry 反查（同名不同义字段：registry.paper_id 是 p2s-XXXX）
     reg_pid = rec.get("paper_id") if rec else None
@@ -272,6 +304,8 @@ def audit_card(card: Path, idx: PaperIndex, by_arxiv: dict, by_card: dict) -> di
         primary = arxiv_ids[0]
     elif hits:
         primary = hits[0]["matched_key"]
+    elif declared_title:
+        primary = declared_title
     else:
         primary = ""
 
@@ -285,6 +319,9 @@ def audit_card(card: Path, idx: PaperIndex, by_arxiv: dict, by_card: dict) -> di
     elif "pdf_only" in classes:
         verdict = "NEEDS_PDF_CONVERT"
     elif primary:
+        # 含「只有标题、没有 ID」的情形：仍是有来源，只是**还没法抓全文**。
+        # 判 NEEDS_FULLTEXT 而不是 NO_PAPER_SOURCE —— 后者会误导后续给出
+        # 「本卡无论文来源」的声明（本轮实测的错就出在这里）。
         verdict = "NEEDS_FULLTEXT"
     else:
         verdict = "NO_PAPER_SOURCE"
@@ -296,10 +333,12 @@ def audit_card(card: Path, idx: PaperIndex, by_arxiv: dict, by_card: dict) -> di
         "verdict": verdict,
         "n_quotes": n_quotes,
         "primary_source": primary,
+        "declared_title": declared_title,
         "all_candidate_ids": sorted(set(arxiv_ids)),
         "cited_ids": sorted(set(arxiv_ids[1:])),
         "registry_paper_id": reg_pid,
-        "match_method": match_method or ("id" if arxiv_ids else ""),
+        "match_method": match_method or ("id" if arxiv_ids else
+                                         ("declared" if declared_title else "")),
         "hits": hits,
     }
 

@@ -92,7 +92,9 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 | `paper2skills-skills/paper-萃取/scripts/verify_skill_code.py` | **K1 门禁**:五级代码可执行性验证(语法/编译/导入/运行/断言) |
 | `paper2skills-skills/paper-审核/scripts/gate_check.py` | **K2 门禁**:G1 代码 / G2 事实(含 G2a·G2b·G2c) / G3 业务 |
 | `paper2skills-skills/paper-审核/scripts/quote_check.py` | **G2b 引文逐字核验**:把每条 `> 原文:"..."` 回查论文全文存档,判 VERBATIM/FUZZY/FABRICATED。`--selftest` 用四个用例自证能区分真引文/伪造/拼接 |
-| `paper2skills-research/scripts/fetch_fulltext.py` | **全文抓取**:arXiv LaTeXML HTML → Markdown(保留章节号),存到 `papers/<域>/<paper_id>/fulltext.md`;萃取前必跑,否则引文无从核验 |
+| `paper2skills-research/scripts/fetch_fulltext.py` | **全文抓取**:arXiv LaTeXML HTML → Markdown(保留章节号),存到 `papers/<域>/<paper_id>/fulltext.md`;萃取前必跑,否则引文无从核验。PHASE4 起支持 `--pdf`(本地 PDF→fulltext,含硬换行接回)与 `--from-worklist`(按审计结果批量补) |
+| `paper2skills-research/scripts/provenance_audit.py` | **卡片论文溯源可达性体检**:把「G2 全红」拆成**已核验 / 可修 / 无论文来源**三层,回答「哪些卡该修、哪些卡修不了」。`--selftest` 锁定三层判定互斥。⚠️ 首版只扫 frontmatter 导致 47 张卡被误判,现扫正文并剥尾部参考区 |
+| `paper2skills-research/scripts/registry_consistency.py` | **registry 门禁声明 vs 实物核对**。把**覆盖率**作为一等输出(核对到 N/M),低于 90% 拒绝给「一致」结论。⚠️ 它诞生的原因就是前身脚本静默跳过 3 条 `enhanced_cards` 记录却报「无不一致」 |
 | `paper2skills-vault/07-资源库/关键词库-v2.md` | **三段式检索词**(正向 / 负向 / 约束词)。⚠️ 负向词**按域生效** —— 同一个词在不同域含义相反(`trial`/`cohort`/`ad`),无脑全局负向会误杀方法论论文 |
 | `paper2skills-research/scripts/candidate_filter.py` | 三段式过滤的**可执行部件**(配置若只有文字一定会腐烂)。实测丢弃 25.8%,逐篇抽检无误杀;`--selftest` 含同词异义反例 |
 | `paper2skills-vault/07-资源库/scoring_config.json` | 评分权重/阈值/关键词表外置。缺文件时脚本退回内置默认值(不静默用空值) |
@@ -192,7 +194,7 @@ python3 paper2skills-skills/paper-审核/scripts/gate_check.py --all \
 > 这个修正本身是重要教训:**门禁数字变差,不一定是资产变差,可能是门禁终于开始测真东西了。**
 > 三个假绿灯(上面 1、2 与 evidence.md 无过滤收录)全部是「门禁自己放水」,比假红灯危险得多。
 
-**已封堵的 7 个 G2 漏洞(全部由实测发现,不是理论担忧)**
+**已封堵的 11 个 G2 漏洞(全部由实测发现,不是理论担忧)**
 
 | # | 漏洞 | 后果 |
 |---|------|------|
@@ -203,6 +205,17 @@ python3 paper2skills-skills/paper-审核/scripts/gate_check.py --all \
 | 5 | `^v?\d+\.\d+$` 豁免 | **所有小数**免检,含 `92.2%` |
 | 6 | 行内代码被剥离 | 把论文事实写成 `` `2–3 倍` `` 即绕过 G2 |
 | 7 | 中文数字不匹配 | 写成「两三倍」即绕过全部数字检查(跨语言数字匹配不可机械化,现改为黄灯提示) |
+| 8 | **分母把两类人混在一起**(2026-09-12) | 56 张**从设计上无论文来源**的经验卡被记成「有缺陷」→ 通过率 11% 同时混进了两类完全不同的东西。现拆 `outcome: PASS / FAIL / UNVERIFIABLE`,`evidence_basis` 声明决定分类,**通过率只在可核验分母上算** |
+| 9 | **「无法核验」被平均成「通过」** | 与 #8 同源:若不拆,把 56 张没法验的卡并进分母,全库通过率会因为**多了没法验的卡**而看起来变好。现 `summarise()` 单列 `cards_unverifiable` |
+| 10 | **新口径可能变成新后门**(预防性) | 新增一个「不阻塞」的结局本身就是一次放水风险 —— 加一行 `evidence_basis: author-practice` 就能全库免检。故 `card_has_paper_source()` 检测**声明与实物矛盾**:卡里明明有 arXiv/DOI 却自称无论文来源 → `G2-BASIS-CONTRADICTION` 红灯 |
+| 11 | **尾部署「参考论文」区被当成来源声明** | 实测 `Skill-Intelligent-Attribution-Causal-Forest` 的「参考论文」出现在第 13853 字符(卡片总长 14069),一张纯经验卡会因为列了几篇延伸阅读而被迫按「有来源卡」审查。现 `strip_reference_section()` 先剥掉尾部参考区再判。⚠️ 词汇表必须含 `参考资料` —— 全库 43 张用 `参考论文`,另 3 张用 `参考资料`(实测 `Skill-Two-Echelon-Inventory-DRL` 的该段是**混合表**,第 1 条就是本卡来源论文) |
+| 12 | **frontmatter 元数据被当成事实断言**(2026-09-12 由 F4 子代理发现) | `created: 2026-05-15` / `updated: 2026-09-12` 被数字正则拆出 `15`、`12` 判成「一般数字无出处」;**实测影响 65 张卡、126 条黄灯**,全是元数据。frontmatter 里的 `paper_id` 同样被当数字 → 红灯也随之虚高。现 `strip_frontmatter()` 在数字扫描前剥掉整个 YAML 块(它只用于**分类**,不承载断言)。效果:黄灯 767→575,红灯 2,649→1,308 |
+| 13 | **自引文洗白**(2026-09-12 由 F4 子代理实测复现) | `QUOTE_RE` 把开引号集 `["“「『]` 与闭引号集 `["”」』]` 写成两个**独立**字符类 → **任何闭引号能闭合任何开引号**;配合 `re.S`,`> 「…」` 这类行会**跨行吞掉卡片正文**。叠加「`UNVERIFIABLE` 引文也算出处」这条善意豁免后形成完整后门:**写一段引文 + 一个指不到底本的 `paper_id`,卡片自己的数字就成了「有出处」**。实测 `Skill-AB-Experimental-Design` 被抽出一条 **2777 字符的「引文」**(90% 是卡片自身正文),`sourced=20/26、traceability=76.9%` —— 红灯 28→6 是假象。两层都修:①引号**成对同型**+去掉 `re.S`;②`UNVERIFIABLE` **不再计入出处**(只出黄灯)。`--selftest` 用例 6/7 锁定 |
+
+> **#10 的教训值得单列**:修复 #8/#9 时新增了一个「不阻塞」的结局,**这本身就是一次放水**。
+> 任何「新增豁免」都必须同时写清「什么情况下不许豁免」,否则修复动作会制造下一个漏洞。
+> `gate_check.py --selftest` 的用例 3(声明与实物矛盾)与用例 4(伪造引文不得因声明免检)
+> 就是为此而设 —— **门禁的豁免条款必须比它的拦截条款测得更严**。
 
 > **引文核验器必须先自证可信**:`quote_check.py --selftest` 用四个用例锁定行为,
 > 其中「拼接引文」一条是开发中实测发现的漏洞 —— 把摘要句与引言句缝成一句(论文里不存在这句话)时,

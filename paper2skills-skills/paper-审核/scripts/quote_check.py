@@ -60,9 +60,23 @@ PAPERS_DIR = VAULT / "papers"
 # 前缀是「原文：」→ 引号不紧跟 `>` → **一条都匹配不到**。
 # 后果是带合格引文的卡片反而被判「无任何可追溯出处」（假红灯），
 # 而假红灯会让人不再相信门禁。两个脚本必须共用同一个抽取器。
+#
+# ⚠️⚠️ 第二个坑（2026-09-12 实测，同样是假红灯的子类）：
+# 旧写法把开引号集 `["“「『]` 与闭引号集 `["”」』]` 写成两个**独立**字符类，
+# 于是**任何闭引号都能闭合任何开引号**。后果：一张卡的证据声明行里若出现
+# `「⑥ 原文引用」` 这样的中文书名号，`「` 会被当成开引号、后面的 `」` 闭合它，
+# 而 `re.S` 让 `.+?` 跨行吞掉整段声明 —— 于是一张**完全没有引文**的卡
+# 被抽出 1 条「引文」，再因找不到全文而被判 `NO_FULLTEXT`。
+# 实测 6 张卡（AB-Experimental-Design / AGRS / MAA / StaR / VOC-Semantic-Blueprint /
+# VOC-Proxy-NPS）全部中招，其中 5 张是我刚加的声明文本触发的。
+#
+# 修法：① 引号必须**成对同型**（用分组配对，不再用两个独立字符类）；
+#       ② 去掉 `re.S` —— 引文是单行，跨行的绝不是引文。
 QUOTE_RE = re.compile(
-    r"^>\s*(?:原文\s*[:：]\s*)?[\"“「『](.+?)[\"”」』]\s*$",
-    re.M | re.S,
+    r"^>[ \t]*(?:原文\s*[:：][ \t]*)?"
+    r"(?:\"([^\"\n]+)\"|“([^”\n]+)”|「([^」\n]+)」|『([^』\n]+)』)"
+    r"[ \t]*$",
+    re.M,
 )
 # 出处行：> 出处：2606.26690 §4.2（PDF 第 5 页）
 SOURCE_RE = re.compile(r"^>\s*出处\s*[:：]\s*(.+)$", re.M)
@@ -251,7 +265,8 @@ def extract_quotes(text: str) -> list[dict]:
     quotes: list[dict] = []
     lines = text.split("\n")
     for m in QUOTE_RE.finditer(text):
-        raw = m.group(1).strip()
+        # 引号成对同型后用 4 个分组承载四种引号，取第一个非 None 的
+        raw = next(g for g in m.groups() if g is not None).strip()
         # 找出处：引用块之后 3 行内第一个 `> 出处：`
         tail = text[m.end():m.end() + 400]
         sm = SOURCE_RE.search(tail)
