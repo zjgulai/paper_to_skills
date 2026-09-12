@@ -12,6 +12,7 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 > 并补上可复现评分、三层去重、双门禁(K1 代码可执行 / K2 事实可溯源)。
 > 设计见 `paper2skills-research/reports/paper2skills-萃取链路升级方案-v2.md`,
 > 实施清单见 `paper2skills-research/reports/实施方案与TODO.md`,
+> **当前执行视图见 `paper2skills-research/reports/PHASE5-明日执行TODO.md`**(每次收工后重写这一份),
 > 论文唯一事实源为 `paper2skills-vault/07-资源库/papers_registry.json`。
 
 ## Project Structure
@@ -297,29 +298,44 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 > ⚠️ **门禁口径在 2026-09-12 当天由松变紧**(修了 7 个假绿灯),所以 K1/G1/G2/G3 四个数字
 > **不能与当天早些时候的报告直接对比** —— 门禁数字变差,可能是门禁终于开始测真东西了。
 
-> ⚠️ **本节已更新到 PHASE3 批次 3A–3E 之后**（2026-09-12）。旧值在下方「基线变化」里对照。
+> ⚠️ **本节已更新到 PHASE3 批次 3A–3E + PHASE4-A 之后**（2026-09-12 14:10 实测）。旧值在下方「基线变化」里对照。
 
 | 指标 | 实测值 | 说明 |
 |------|--------|------|
 | 唯一 Skill 卡片 | **146 张** | 去重前 156;PHASE3 新增 8 张(3A–3D)+ 增强 4 张既有卡(3E,不新增)。`07-NLP-VOC/` 下 26 组同名重复已在 T0-2 清理 |
-| 含 `> 原文:"..."` 引用块 | **90/146 张 / 2,085 条** | PHASE4 前为 20 张 / 729 条 —— **+70 张、+1,356 条**,全部逐字核验通过 |
-| 含 frontmatter | 146/146 | PHASE4 已补齐(此前 73/130) |
+| 含 `> 原文:"..."` 引用块 | **90/146 张 / 2,087 条** | PHASE4-A 前为 20 张 / 729 条 —— **+70 张、+1,358 条**,全部逐字核验通过 |
+| 含 frontmatter | **144/146** | ⚠️ **不是 146/146** —— `Skill-Two-Echelon-Inventory-DRL.md` 与 `Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md` **至今无 frontmatter**(后者已在 3E 补了 18 条引文,却仍缺)。此处曾误记为 146/146,2026-09-12 盘点时由 `repo_health` C2 与人工复核推翻 |
+| v2 必填字段实际欠账 | `paper_id` 8 / `paper` 29 / `venue` 66 / `venue_tier` 74 / `evidence_grade` 78(共 96 张有来源卡) | ⚠️ `repo_health` C2 报的「126 张」**含 48 张 `author-practice` 卡的误报** —— 它们按设计就不该有来源字段(见漏洞 #8/#10 的三类口径),C2 尚未跟上该口径 |
 | 含 `paper:` / `paper_id:` 溯源字段 | 98 张 | 另有 48 张声明 `author-practice`(设计上无论文来源),见 `provenance_audit.py` |
 | 含 python 代码块 | 80/130 (62%) / 104 个代码块 | — |
 | **K1 代码执行率** | **62.0%** | 100 单元:PASS 62 / ENV_BLOCKED 7 / **ORPHAN_DEP 0** / MIGRATED_DEP 9 / FAIL 22;语法级失败 0 |
 | **G1 门禁通过率** | **42.5%** | 62/146,红灯 68 / 黄灯 7 |
 | **G2 事实溯源通过率** | **16.3%** | **16/98**(可核验分母),红灯 1,476 / 黄灯 645;另有 **48 张无法核验**(无论文来源) |
 | **G3 业务可落地通过率** | **45.9%** | 67/146,红灯 93 / 黄灯 174 |
-| **引文逐字核验** | **2,085 条,88/90 张通过** | **0 伪造 0 近似 0 拼接**;另 2 张为「有来源、无全文」故只判无法核验 |
+| **引文逐字核验** | **2,087 条,90/90 张 VERBATIM** | **0 伪造 0 近似 0 拼接**;另 2 张判 `NO_FULLTEXT`(有来源、无全文底本) |
+| provenance 四层(split) | VERIFIED 83 / RETROFIT_READY 8 / NEEDS_FULLTEXT 7 / **NO_PAPER_SOURCE 48** | `provenance_audit.py` 产出,四类互斥 |
+| registry | 45 条(extract 31 / watch 14)。**已交付卡 16 + 已交付为增强 3,真·待萃取 12** | ⚠️ 统计时必须同时看 `outputs.skill_card` **与** `outputs.enhanced_cards` —— 只数前者会把 3 篇已作为 3E 增强交付的论文(`0023`/`0026`/`0030`)误记成「未出卡」。另有 **8 条 `title` 仍是 `(待补：见 note)`**(标题实际写在 `decision_reason` 里) |
+| 仓库体检欠账 | C3 🟡16 / C8 🟡58 | C1/C4/C5/C6/C7 ✅;⚠️ **C2 口径失真**(见上表) |
 | 领域分布 | 07-NLP-VOC 41 / 16-智能体工程 17 / 10-MAS 14 / 06-增长模型 11 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
 
 > ⚠️ **G2 红灯比 PHASE4 之前「更多」是正常的**:PHASE4 修了 3 个假绿灯(#12/#13/#14),
 > 其中 #14(中文卡数字被系统性漏检)让红灯从 1,308 升到 **1,476** —— 那是**门禁终于开始
-> 测真东西了**,不是资产变差。同一时期卡片侧新增了 1,356 条逐字引文。
+> 测真东西了**,不是资产变差。同一时期卡片侧新增了 1,358 条逐字引文。
 > **两个方向的数字同时变化时,不要拿「红灯总数」当进度指标**;要看
 > 「可核验分母上的通过率」与「引文逐字核验条数」。
+> 📌 本仓库已发生 **4 次「提升来自修门禁而非改资产」**(46.2→52.5→54.8%、ORPHAN 9→0、
+> 红灯 1,308→1,476、以及本轮的 C2 口径失真)—— 所以每次盘点都要**主动去撞工具**,
+> 而不是只看它有没有报错。
 
 ### PHASE4(2026-09-12)· 存量卡证据链补齐
+
+> ⚠️ **命名消歧:本仓库现在有两个「PHASE4」,不要混用。**
+> - **PHASE4-A(实际执行)** = 本节的「存量卡证据链补齐」 → ✅ 已完成
+> - **PHASE4(原计划)** = 空白领域补卡(T4-1 12-ML基础三张卡 / T4-2 17-跨境合规新域 /
+>   T4-3 11-AI人文改流程 / T4-4 06-增长模型供给策略) → ❌ **一项未执行**,
+>   自 2026-09-12 起**改称 PHASE6**
+>
+> **下一轮执行视图见 `paper2skills-research/reports/PHASE5-明日执行TODO.md`。**
 
 把 146 张卡按「能不能修」分成四层，然后分别处理(`provenance_audit.py` 产出工单):
 
@@ -473,6 +489,8 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 | 5 | **L3 探针不注册 `sys.modules`** | CPython 3.14 下凡「`from __future__ import annotations` + `@dataclass`」的模块崩在 `dataclasses._is_type`,被记成卡片的 `import 时崩溃` —— **影响全仓库所有 dataclass 卡** | K1 `--selftest` 端到端用例 |
 | 6 | **`gate_check` 找不到 evidence.md** | 只在卡片同目录找,而约定是 `papers/<域>/<p2s-id>/evidence.md` → **PHASE3 全部新卡的 evidence.md 对 G2 毫无作用**,漏洞 #3 的加固成了空转 | 见下 |
 | 7 | **`quote_check` 把「没有引用块」算作「通过」** | `NO_QUOTES` 的卡被并进「N 通过」汇总 —— 「没东西可查」≠「出处为真」,又一个假绿灯 | 汇总行现单列 |
+| 8 | **`repo_health --json-out` 因父目录不存在而崩溃**(2026-09-12 盘点新发现) | 体检报告**全部正常打印完**、结论「✅ 无 CRITICAL」,最后一步写 JSON 时 `FileNotFoundError` → **退出码 1**。后果:① PHASE5 T5-4「周日体检 + 趋势追踪」拿不到可比较的历史文件;② 这个失败**看起来像体检失败**,而体检其实是过的 —— 与 #6 同类的「静默退回/假失败」 | **待修**(`json_out.parent.mkdir(parents=True, exist_ok=True)`) |
+| 9 | **`repo_health` C2 不认 `author-practice` 口径**(同上) | C2 报「有 frontmatter 但缺 v2 必填字段 **126 张**」,其中 **48 张是 `evidence_basis: author-practice` 卡** —— 它们**按设计就不该有**来源字段(漏洞 #8/#10 的三类口径)。真实欠账:无 frontmatter **2 张**;96 张有来源卡中缺 `venue` 66 / `venue_tier` 74 / `evidence_grade` 78。**口径未跟上口径**,与漏洞 #11(参考区词汇表)同源 | **待修**;豁免后仍需用构造样本自证会抓真缺陷 |
 
 **#5 的最小复现**(`from __future__ import annotations` 是触发条件 —— 它让所有注解变成字符串,
 `dataclasses._is_type` 才会走 forward-ref 分支去查 `sys.modules[cls.__module__]`):
@@ -665,7 +683,9 @@ Search priority: Papers with code implementations > experimental validation > th
 
 | Date | Skill | Domain | Commit |
 |------|-------|--------|--------|
-| 2026-09-12 | **PHASE3 批次 3A（4 张，三门前全绿）**: 归因蚕食校正 ETDC+HCA / FunnelCausalNet 多档券 uplift / 因果约束预算分配 / 季节性流失标签修正 | 13-广告分析 · 06-增长模型 | 见下一提交 |
+| 2026-09-12 | **PHASE4-A（存量卡证据链补齐，不新增卡片）**: 129 张卡 +5,721 行；引文 729→2,087 条（+90 张卡有引文）；封堵 5 个门禁假绿灯（#11–#15）；F3/F4 分层工单全覆盖 | 全库 | `a8055a7` / `ec716da` / `8b05d6f` |
+| 2026-09-12 | **PHASE3 批次 3E（增强既有卡，不新增）**: GraphRAG 18/18 · Agentic-Memory 17/17 · Feature-Engineering 30/30 · Cold-Start-PAM 32/32 | 08-知识图谱 · 16-智能体工程 · 12-ML基础 · 05-推荐系统 | `8c8652d` / `07141ca` |
+| 2026-09-12 | **PHASE3 批次 3A–3D（18 张新卡，三门前全绿）**: 归因蚕食校正 / 多档券 uplift / 因果预算分配 / 季节性流失标签 / 决策条件预测 / 海运成本 / 供应链仿真 / 多仓分配 / 增量测量 / 活跃目录推荐 / 目录属性补全 / 状态化 Skill 运行时 / 多智能体协作税 / 路由图交接 / Text-to-SQL 权限门禁 / 人格条件 A/B 仿真 | 13-广告分析 · 06-增长模型 · 03-时间序列 · 04-供应链 · 14-用户分析 · 00-电商Agent · 16-智能体工程 · 10-MAS · 09-DataAgent-LLM · 02-A_B实验 | 见 `10e97da` 起 |
 | 2026-05-15 | Marketing Mix Modeling (MMM) + Promotion Effectiveness (DML) | 15-营销投放分析 | — |
 | 2026-05-15 | Ad Attribution Modeling + ROAS Budget Optimization | 13-广告分析 | — |
 | 2026-05-15 | User Funnel Analysis + Cohort Retention Analysis | 14-用户分析 | — |

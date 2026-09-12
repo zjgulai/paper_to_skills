@@ -2,17 +2,28 @@
 title: paper2skills 萃取链路升级 —— 实施方案与 TODO
 doc_type: plan
 module: 00-项目管理
-status: draft
+status: active
 created: 2026-09-12
+updated: 2026-09-12
 owner: self
 source: human+ai
+execution_view: paper2skills-research/reports/PHASE5-明日执行TODO.md
 ---
 
-# paper2skills 萃取链路升级 —— 实施方案与 TODO
+# paper2skills 萃取链路升级 —— 实施方案与TODO
 
 > 配套文档：`paper2skills-research/reports/paper2skills-萃取链路升级方案-v2.md`（设计）、
 > `paper2skills-research/reports/近三个月论文更新与推荐清单.md`（本轮论文结论）、
 > `paper2skills-vault/07-资源库/papers_registry.json`（唯一事实源，45 条决策记录）
+>
+> 📌 **本文件是「总计划」（阶段划分与验收标准），不是「执行视图」。**
+> 每日/每轮该做什么，看在 `paper2skills-research/reports/PHASE5-明日执行TODO.md`
+> —— 那一份每次收工后重写，本文件只在**阶段边界变化**时更新。
+>
+> ⚠️ **2026-09-12 命名消歧（重要）**：
+> - **PHASE4-A** = 实际执行的「存量卡证据链补齐」（129 张卡补引文/来源声明）→ ✅ 完成，见 §PHASE4-A
+> - **PHASE4（本节 §PHASE4）** = 原计划的「空白领域补卡」→ ❌ **一项未执行**，
+>   自 2026-09-12 起**改称 PHASE6**，以免「PHASE4 做完了」被误解
 
 ## 0. 总览
 
@@ -22,7 +33,8 @@ source: human+ai
 | **PHASE 1** | 补齐检索基建：多源检索 + 三段式关键词 + venue 白名单 | 4 个脚本 + 2 份资源库文档 | 半天 |
 | **PHASE 2** | 萃取流水线化：registry + 证据规则 + 双门禁脚本 | 3 个脚本 + MasterPrompt v2 + 卡片模板 v2 | 1 天 |
 | **PHASE 3** | 首批萃取：P0 队列 19 篇 → 出 8-10 张卡 | 卡片 + 代码 + 验证报告 | 分批，每张卡 1-2 小时 |
-| **PHASE 4** | 空白领域补卡：12-ML基础 / 17-跨境合规 | 3+3 张卡 | 1 天 |
+| **PHASE 4A** | 存量 146 张卡证据链补齐（F3 补引文 / F4 补来源声明） | 129 张卡 + 门禁加固 | ✅ 已完成 |
+| **PHASE 6** | ~~PHASE 4~~ 空白领域补卡：12-ML基础 / 17-跨境合规 | 3+3 张卡 | 1 天（**未开始**） |
 | **PHASE 5** | 常态化：周更 + 周体检 + 季度复盘 | 例行流程 | 每周 1 小时 |
 
 **验收总标准**：连续两周的周更短名单 ≤20 条且有分数与理由；每张新卡 G1/G2/G3 全绿；仓库周检重复卡片 0、frontmatter 缺失 0、路径失效 0。
@@ -31,18 +43,18 @@ source: human+ai
 
 ## PHASE 0 · 止血（1 小时）
 
-- [ ] **T0-1 修正失效的绝对路径** ✅ 本轮已完成
+- [x] **T0-1 修正失效的绝对路径** ✅ 本轮已完成
   - `paper-同步/scripts/sync.py` 的 `BASE_DIR` 改为按脚本位置反推 + 支持 `PAPER2SKILLS_ROOT` 环境变量；DOMAINS 映射从 6 个补到 18 个
   - 6 个 SKILL.md / 文档里的 `/Users/pray/project/paper_to_skills` → `<REPO_ROOT>`
   - `paper-skills-graph/scripts/skills_graph_analyzer.py` 默认路径改为相对定位
   - 验收：`python3 paper2skills-skills/paper-同步/scripts/sync.py --status` 能正常列出同步状态 ✅
 
-- [ ] **T0-2 清理 26 组重复 Skill 卡片**
+- [x] **T0-2 清理 26 组重复 Skill 卡片**
   - 事实：`07-NLP-VOC/` 下 26 组同名卡片各存两份（25 组字节相同，`Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎.md` 两份已漂移 6 字节）
   - 动作：① 人工比对漂移的那一份，决定保留版本；② 以 `00-知识库-Skill卡片/` 为唯一存放地（与 10-MAS 结构一致），删除顶层副本；③ 删除前 `git`/备份
   - 验收：`find paper2skills-vault -name 'Skill-*.md' | sed 's#.*/##' | sort | uniq -d` 输出为空
 
-- [ ] **T0-3 建立"路径约定"并写进 `paper-维护` 的检查范围**
+- [x] **T0-3 建立"路径约定"并写进 `paper-维护` 的检查范围**
   - 事实：本轮清理了 `paper2skills-skills/` 下 22 处失效的 `/Users/pray/project/paper_to_skills` 硬编码
     （6 个 SKILL.md/文档 + `sync.py` + `skills_graph_analyzer.py`），仓库内仍存在的 `/Users/pray` 全部是
     **有意保留**的两类：① `paper2skills-code/nlp_voc/**` 与迁移说明（指向已迁出的 `../ai_nlp_voc/`）；
@@ -51,7 +63,7 @@ source: human+ai
     文档用 `<REPO_ROOT>` 占位；历史归档不改写，只加时效注记。
   - 验收：`paper-维护` 的路径检查只对 `paper2skills-skills/**` 与 `paper2skills-code/**`（排除 `nlp_voc/`）报警
 
-- [ ] **T0-4 新建 `paper2skills-research/` 的定位说明**
+- [x] **T0-4 新建 `paper2skills-research/` 的定位说明**
   - 说明该目录是"调研与流水线工程"工作区（脚本 + 中间数据 + 报告），不属于交付的 vault/code
   - 在 `CLAUDE.md` 的项目结构中补一行（✅ 本轮已完成）
 
@@ -59,15 +71,17 @@ source: human+ai
 
 ## PHASE 1 · 检索基建（半天）
 
-- [ ] **T1-1 沉淀 arXiv 收割脚本**（✅ 已完成，需迁移到正式位置）
+- [ ] **T1-1 沉淀 arXiv 收割脚本**（脚本已完成，**迁移到正式位置未做**）
   - 现状：`paper2skills-research/scripts/arxiv_harvest.py`（49 查询组，本轮跑出 1046 篇）
   - 动作：复制到 `paper2skills-skills/paper-选题/scripts/arxiv_harvest.py`
+  - ⚠️ 2026-09-12 盘点核实：`paper2skills-skills/paper-选题/` **下没有 `scripts/` 目录**，迁移未执行
+  - 影响：低（脚本可用，只是不在 `paper-选题` skill 的预期位置）
 
-- [ ] **T1-2 沉淀 Crossref 期刊收割脚本**（✅ 已完成）
+- [x] **T1-2 沉淀 Crossref 期刊收割脚本**（✅ 已完成）
   - 现状：`paper2skills-research/scripts/journal_harvest.py`（28 刊，本轮跑出 1751 篇）
   - 验收：`--days 7` 能在 1 分钟内跑完增量
 
-- [ ] **T1-3 新建 `paper2skills-vault/07-资源库/venue-whitelist.md`**
+- [x] **T1-3 新建 `paper2skills-vault/07-资源库/venue-whitelist.md`**
   - 内容：顶会/顶刊白名单（UTD24 / FT50 / CCF-A/B / 领域顶会）+ workshop/findings/demo 降级规则
   - 必须收录本轮实测发现的 6 处抬级案例作为反例
   - 验收：给出"arXiv comment 含 Workshop/Findings/Demonstrations/Under review/manuscript → 降级"的判定表
@@ -121,9 +135,14 @@ source: human+ai
   - 验收：`find paper2skills-vault -name 'Skill-*.md' | uniq -d` 输出为空 ✅
   - **前置动作**：仓库此前**不是 git 仓库**，已先 `git init` 建立安全网（见下方"附 C"）
 
-- [ ] **T2-2 升级 `paper-萃取/SKILL.md`**（路径已修，Step 5 改为调用脚本待做）
-- [ ] **T2-4 新建 `paper-萃取/scripts/extract_code_blocks.py`**
+- [x] **T2-2 升级 `paper-萃取/SKILL.md`** ✅ 2026-09-12 复核：Step 5 已改为调用 `verify_skill_code.py`，
+  并新增 **Step 5b 生成 evidence.md**（G2 溯源凭证，必做）与 **Step 5c 运行 K2 三合一门禁**；
+  Step 6 明确「前置条件：Step 5 未通过不得执行」
+- [ ] **T2-4 新建 `paper-萃取/scripts/extract_code_blocks.py`**（**未做，已降级为可选**）
   - 现在 K1 已能直接验证卡片内代码块，此脚本降级为「落盘到 `paper2skills-code/`」的可选步骤
+  - ⚠️ 2026-09-12 盘点核实：`paper2skills-skills/paper-萃取/scripts/` 下只有 `verify_skill_code.py`
+  - 影响：低 —— `CLAUDE.md` 已明确 registry 的 `outputs.code_dir` 是**规划值**，
+    代码模板内嵌在卡片 ③ 段由 K1 验证，故本项不是欠账，而是一个未采纳的备选方案
 - [x] **T2-6 `paper-同步/scripts/sync.py` 加门禁前置** ✅ 已完成（并删除了早期重复列出的同名条目）
   - 同步前现场跑 K2 三合一门禁（G1/G2/G3），任一红灯即**拒绝同步**（退出码 2）
   - 三档强度 `--gate enforce|warn|off`，默认 enforce
@@ -180,12 +199,43 @@ source: human+ai
 
 **批次 3E · 增强而非新建（避免重复出卡）**
 - [x] T3-17 `2608.28978` 负结果 → `Skill-GraphRAG-Knowledge-Enhanced-Retrieval`（引用块 0→18/18）与 `Skill-Agentic-Memory-Management`（0→17/17）各加"反例与适用边界"小节 ✅（**registry「劝退早期投图记忆」比原文宽，已按论文自设范围限定修正**：「this extraction-based pipeline rather than graph-structured memory in general」）
-- [ ] T3-18 `2608.09162` 数值特征变换 → 增强 `Skill-Feature-Engineering`（进行中）
-- [ ] T3-19 `2608.10240` 顺序模态丢弃 → 增强推荐域卡片（代码仅四行，收益明确）（进行中）
+- [x] **T3-18** `2608.09162` 数值特征变换 → 增强 `Skill-Feature-Engineering`（引用块 0→**30/30**；摘要称「一致优于所有基线」，但论文自己的 Table 1 里 `mlp`/`mlp_plr` 两行 PLE 优于 stretch —— 反例已写进 1b）✅
+- [x] **T3-19** `2608.10240` 顺序模态丢弃 → 增强 `Skill-Cold-Start-Meta-Learning-PAM`（引用块 0→**32/32**）✅
 
 ---
 
-## PHASE 4 · 空白领域补卡（1 天）
+## PHASE 4A · 存量卡证据链补齐 ✅ 已完成（2026-09-12）
+
+> 这不是原计划的 PHASE4 —— 见文件头「命名消歧」。原 PHASE4 已改称 PHASE6。
+> 完整报告见 `PHASE4-发现的内容缺陷.md`，口径结论已写进 `CLAUDE.md`。
+
+**做法**：用 `provenance_audit.py` 把 146 张卡按「能不能修」分四层，再分层处置：
+
+| 层 | 张数 | 处置 |
+|----|------|------|
+| 已核验 | 83 | 无需动 |
+| 可补引文（有全文底本） | 8 | F3 补逐字引文 |
+| 可补引文（需先抓全文） | 7 | 先 `fetch_fulltext` 再补 |
+| 无论文来源 | 48 | F4 补 `evidence_basis: author-practice` + 证据基础声明 |
+
+**交付**：129 张卡、+5,721 行 / −103 行（102 行是 frontmatter 元数据规范化），
+**没有改写任何既有正文与数字**。引文 729 → **2,087 条**，0 伪造 0 近似 0 拼接。
+
+**顺带封堵 5 个门禁假绿灯（#11–#15）**，其中 #13（自引文洗白）与 #14（中文卡数字被
+系统性漏检）**由子代理在干活时实测发现并复现**，不是设计时想到的。
+
+**两条必须传给下一轮的结论**：
+1. **残余 G2 红灯的 75%–85% 是「作者外推」**（⑤ 商业价值评估与 ② 应用案例里的
+   工期/ROI/倍数），论文里本就不存在 → **G2 通过率有结构性上限**，
+   下一步该做**口径设计**而不是继续补引文。
+2. **修门禁会让红灯上升**（#14 使 1,308 → 1,476）→ **不能拿红灯总数当进度指标**。
+
+---
+
+## PHASE 6（原 PHASE 4）· 空白领域补卡（1 天）❌ 未开始
+
+> 2026-09-12 盘点确认：以下四项**一项未执行**。原编号 PHASE4 已改称 PHASE6。
+> 执行顺序见 `PHASE5-明日执行TODO.md` §3 顺延清单 S3。
 
 - [ ] **T4-1 12-ML基础：表格基础模型三张卡**
   - `2609.04540` Mitra-v2 + `2608.01400` TabDPT-Turbo → `Skill-Tabular-Foundation-Model-Baseline.md`（**含 HF 权重与代码，当周可跑**）
@@ -212,11 +262,36 @@ source: human+ai
 
 ## PHASE 5 · 常态化（每周）
 
+> ⚠️ **2026-09-12 盘点：PHASE5 的启动前置条件尚未满足。**
+> - **T5-4 现在跑不通** —— `repo_health.py --json-out` 因 `data/health/` 目录不存在而崩溃（退出码 1），
+>   趋势追踪拿不到历史文件。修法见 `PHASE5-明日执行TODO.md` §X3(a)。
+> - **T5-3 的「G1/G2/G3 全绿」标准目前不可达** —— G2 通过率被「作者外推」结构性封顶在 ~16%，
+>   需要先落**口径设计**（§X1），否则每周都会看到一张永远修不绿的表。
+> **结论：先把 X1/X3 做完，再启动本阶段。**
+
 - [ ] **T5-1 周一自动化（30 min，脚本）**：arXiv + Crossref 增量 → 评分 → 去重 → 更新 registry → 生成 `shortlist.md`
 - [ ] **T5-2 周二人工（30 min）**：从短名单勾 P0/P1，写入 registry `decision` + 理由
 - [ ] **T5-3 周三至周五（AI 主导）**：萃取 1-3 张卡 → G1/G2/G3 → 抽检 1 张的数字出处
-- [ ] **T5-4 周日（10 min）**：`paper-维护` 体检
+- [ ] **T5-4 周日（10 min）**：`paper-维护` 体检 ⛔ **被 X3(a) 阻塞**
 - [ ] **T5-5 每季度**：刷新缺口表 / venue 白名单 / 关键词库；统计卡片使用率（哪些卡被真实项目引用过），淘汰零使用卡片
+
+> 📌 **PHASE5 的日常执行视图不在本文件**，在 `PHASE5-明日执行TODO.md`
+> （该文件按「哪一天做什么」组织，每次收工后重写；本文件只在阶段边界变化时更新）。
+
+---
+
+## 附 A0 · registry 欠账（2026-09-12 盘点新增，**不属于任何阶段，是横切问题**）
+
+| 项 | 数量 | 性质 |
+|----|------|------|
+| `decision: extract` 且**无任何产出** | **12 篇** | 论文在册、决策已下、卡没做。P0 三篇：`0007`（推荐系统）/ `0012`（推荐系统）/ `0015` Mitra-v2（12-ML基础，**唯一与 PHASE6 T4-1 重合的一篇**） |
+| ~~15 篇待萃取~~ —— **勘误** | 3 篇 | `0023` / `0026` / `0030` **不是欠账**：它们已作为 PHASE3-3E 的**增强**交付（`outputs.enhanced_cards` 非空且路径存在）。⚠️ **统计「未出卡」时必须同时看 `skill_card` 与 `enhanced_cards`** —— 只数前者会虚报 3 篇 |
+| `title` 仍是 `(待补：见 note)` | **8 条**（`p2s-2026-0038`～`0045`） | **纯机械回填**（标题实际写在 `decision_reason` 里），约 10 分钟 |
+| 卡片 `paper_id` **不在 registry** | **70 张** | ⚠️ **不是错误** —— registry 只覆盖本轮检索的 45 条，存量 146 张卡的历史论文来自更早批次。**不要现在去补 70 条记录**（几天工作量，且需先设计 schema 兼容），先加 `coverage_note` 说明归属规则 |
+
+> registry 45 条的完整口径：**已交付卡 16 + 已交付为增强 3 + 真·待萃取 12 + watch 14 = 45**。
+> 处理顺序：8 条标题回填 → 12 篇 backlog 排期 → 70 张覆盖率**登记不修**。
+> 详见 `PHASE5-明日执行TODO.md` §Z3 / §Z4 / §S4。
 
 ---
 
@@ -236,13 +311,18 @@ source: human+ai
 
 ## 附 B · 关键风险与前置澄清
 
-| # | 风险/待澄清 | 影响的 TODO | 需谁决策 |
-|---|-------------|-------------|----------|
-| 1 | 投放主体是**自有独立站**还是**第三方平台店**？ | T3-9 的落地形态（前者可做受众级随机化，后者降级为诊断框架） | 业务方 |
-| 2 | 出海历史是否 ≥2 个完整年度（月度活跃面板）？ | T3-4 是否需要品类季节性先验替代 | 业务方 |
-| 3 | 是否有 RCT / holdback 流量？ | T3-2、T3-3 的理论前提 | 业务方 |
-| 4 | OpenReview / DBLP 取数受限 | 会议季路线只能走 Crossref + PMLR + ACL Anthology + 名单页；**已精确界定**（见 venue-whitelist §7） | 无需决策，接受限制 |
-| 5 | 数字幻觉（本轮已实证：4 篇摘要含缺陷、150 篇源码被截断） | G2 门禁 + 抽检是**必需**而非可选 | 执行纪律 |
+> ⚠️ **2026-09-12 盘点：1–3 号问题从 PHASE3 挂到今天仍未回答。**
+> 已转写为可直接回答的问句，见 `PHASE5-明日执行TODO.md` §4 ——
+> **留在表格里不会有人回答，必须问出去**。
+
+| # | 风险/待澄清 | 影响的 TODO | 需谁决策 | 2026-09-12 状态 |
+|---|-------------|-------------|----------|------------------|
+| 1 | 投放主体是**自有独立站**还是**第三方平台店**？ | T3-9 的落地形态（前者可做受众级随机化，后者降级为诊断框架） | 业务方 | 🔴 **未回答**（已交付卡 `Skill-Incrementality-Measurement`，落地形态悬空） |
+| 2 | 出海历史是否 ≥2 个完整年度（月度活跃面板）？ | T3-4 是否需要品类季节性先验替代 | 业务方 | 🔴 **未回答**（已交付卡 `Skill-Seasonal-Aligned-Churn-Label`） |
+| 3 | 是否有 RCT / holdback 流量？ | T3-2、T3-3 的理论前提 | 业务方 | 🔴 **未回答**（已交付卡 `Skill-Funnel-Causal-Coupon-Allocation`、`Skill-Causal-Budget-Allocation`） |
+| 4 | OpenReview / DBLP 取数受限 | 会议季路线只能走 Crossref + PMLR + ACL Anthology + 名单页；**已精确界定**（见 venue-whitelist §7） | 无需决策，接受限制 | ✅ 已接受 |
+| 5 | 数字幻觉（本轮已实证：4 篇摘要含缺陷、150 篇源码被截断） | G2 门禁 + 抽检是**必需**而非可选 | 执行纪律 | ✅ 已落为 K1/K2 门禁 + `--selftest` |
+| 6 | **`DDDD.pem` 私钥仍在本地磁盘**，且曾长期存放于当时无版本控制的仓库根目录 | 见附 C —— 若曾用于生产（云主机 SSH / 支付回调验签），应轮换 | **业务方（安全事项）** | 🔴 **未确认**（优先级最高） |
 
 ## 附 C · 安全事件与仓库纳管（2026-09-12）
 
