@@ -282,18 +282,34 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 > ⚠️ **门禁口径在 2026-09-12 当天由松变紧**(修了 7 个假绿灯),所以 K1/G1/G2/G3 四个数字
 > **不能与当天早些时候的报告直接对比** —— 门禁数字变差,可能是门禁终于开始测真东西了。
 
+> ⚠️ **本节已更新到 PHASE3 批次 3A–3E 之后**（2026-09-12）。旧值在下方「基线变化」里对照。
+
 | 指标 | 实测值 | 说明 |
 |------|--------|------|
-| 唯一 Skill 卡片 | **138 张** | 去重前 156;PHASE3 批次 3A+3B 新增 8 张。`07-NLP-VOC/` 下 26 组同名重复已在 T0-2 清理 |
+| 唯一 Skill 卡片 | **146 张** | 去重前 156;PHASE3 新增 8 张(3A–3D)+ 增强 4 张既有卡(3E,不新增)。`07-NLP-VOC/` 下 26 组同名重复已在 T0-2 清理 |
+| 含 `> 原文:"..."` 引用块 | **20/146 张 / 729 条** | 存量 130 张里仅 2 张有;其余全部来自 PHASE3(见下)。**这是 G2 全红的唯一根因** |
 | 含 frontmatter | 73/130 (56%) | 规范不统一(仅统计存量 130 张) |
 | 含 `paper:` 溯源字段 | 6/130 (4.6%) | ⚠️ frontmatter 里的 `source:`(值多为 `human+ai`)是**文档来源**,**不是**论文来源,统计时勿混淆 |
 | 含 python 代码块 | 80/130 (62%) / 104 个代码块 | — |
-| **K1 代码执行率** | **58.7%** | 92 单元:PASS 54 / ENV_BLOCKED 7 / ORPHAN_DEP 9 / FAIL 22;语法级失败 0 |
-| **G1 门禁通过率** | **39.1%** | 54/138,红灯 77 |
-| **G2 事实溯源通过率** | **5.8%** | **8/138**,红灯 2,666 条。8 个通过者全部是本轮 PHASE3 新卡(见下) |
-| **G3 业务可落地通过率** | **41.3%** | 57/138,红灯 95 |
-| **引文逐字核验** | **286 条全部 VERBATIM** | 8 张新卡:18/28/38/40 + 47/36/38/41;0 伪造 0 近似 |
-| 领域分布 | 07-NLP-VOC 41 / 16-智能体工程 16 / 10-MAS 12 / 06-增长模型 11 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
+| **K1 代码执行率** | **62.0%** | 100 单元:PASS 62 / ENV_BLOCKED 7 / **ORPHAN_DEP 0** / MIGRATED_DEP 9 / FAIL 22;语法级失败 0 |
+| **G1 门禁通过率** | **42.5%** | 62/146,红灯 68 / 黄灯 7 |
+| **G2 事实溯源通过率** | **11.0%** | **16/146**,红灯 2,655 条。16 个通过者 = 3A/3B 的 8 张 + 3C/3D 的 8 张 |
+| **G3 业务可落地通过率** | **45.9%** | 67/146,红灯 93 / 黄灯 177 |
+| **引文逐字核验** | **635 条全部 VERBATIM** | 3A/3B 286 + 3C/3D 349;0 伪造 0 近似 0 拼接 |
+| 领域分布 | 07-NLP-VOC 41 / 16-智能体工程 17 / 10-MAS 14 / 06-增长模型 11 / 08-知识图谱 9 … | 11/12 域各仅 1 张 |
+
+**基线变化(2026-09-12 PHASE3 3A–3E 前后)**
+
+| 指标 | 3A/3B 后 | 3C/3D/3E 后 | 变化原因 |
+|---|---|---|---|
+| 卡片数 | 138 | **146** | +8(3C 3 张 / 3D 5 张);3E 是增强不新增 |
+| K1 执行率 | 58.7%(92 单元) | **62.0%**(100 单元) | 新增 8 个代码单元全 PASS |
+| ORPHAN_DEP | 9 | **0** | **判定修正**,非卡片改动(见下「已迁出镜像」一节) |
+| G2 通过 | 8/138 | **16/146** | 新增 8 张全过 |
+| 引文数 | 286 | **635** | 新增 349 条全 VERBATIM |
+
+> ⚠️ 存量 130 张的 G2 仍全红,根因未变:**引用块为 0**。这不是「新卡拉高了均值」,
+> 而是「新卡是唯一有证据链的资产」。
 
 ### PHASE3 批次 3A 交付(4 张,三门前全绿)
 
@@ -313,7 +329,34 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 | `04-供应链/Skill-Supply-Network-Simulation.md` | 2607.09745 | WSC 2026 (CCF-B) | PASS | 38/38 | ✅ | ✅ |
 | `04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md` | 2606.29366 | arXiv preprint | PASS | 41/41 | ✅ | ✅ |
 
-**这 8 张恰好也是全库唯一的 G2 通过者** —— 存量 130 张的 G2 全红,根因是**引用块为 0**。
+### PHASE3 批次 3C 交付(3 张,三门前全绿)
+
+| 卡片 | 论文 | venue | K1 | 引文 | G2 | G3 |
+|------|------|-------|----|------|----|----|
+| `14-用户分析/Skill-Incrementality-Measurement.md` | 2607.09608 | arXiv preprint | PASS | 31/31 | ✅ | ✅ |
+| `00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md` | 2608.27006 | RecSys'26 **Demo** | PASS | 37/37 | ✅ | ✅ |
+| `00-电商Agent/Skill-Agentic-Catalog-Enrichment.md` | 2608.20844 | arXiv preprint | PASS | 45/45 | ✅ | ✅ |
+
+### PHASE3 批次 3D 交付(5 张,三门前全绿)
+
+| 卡片 | 论文 | venue | K1 | 引文 | G2 | G3 |
+|------|------|-------|----|------|----|----|
+| `16-智能体工程/Skill-Stateful-Skill-Runtime.md` | 2608.26263 | arXiv preprint | PASS | 50/50 | ✅ | ✅ |
+| `10-MAS/Skill-Multi-Agent-Collaboration-Tax.md` | 2608.22152 | arXiv preprint | PASS | 55/55 | ✅ | ✅ |
+| `10-MAS/Skill-Routed-Graph-Handoff.md` | 2608.25277 | arXiv preprint | PASS | 51/51 | ✅ | ✅ |
+| `09-DataAgent-LLM/Skill-SQL-Agent-Access-Control.md` | 2607.22115 | arXiv preprint | PASS | 39/39 | ✅ | ✅ |
+| `02-A_B实验/Skill-Persona-Based-AB-Simulation.md` | 2609.01038 | arXiv preprint | PASS | 41/41 | ✅ | ✅ |
+
+### PHASE3 批次 3E 交付(增强既有卡,不新增)
+
+| 论文 | 被增强的卡 | 引用块 | 说明 |
+|------|-----------|--------|------|
+| 2608.28978 | `08-知识图谱/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md` | 0 → **18/18** | 负结果:「反例与适用边界」 |
+| 2608.28978 | `16-智能体工程/Skill-Agentic-Memory-Management.md` | 0 → **17/17** | 同上 |
+| 2608.09162 | `12-ML基础/Skill-Feature-Engineering.md` | 0 → **26/26** | 数值特征变换形式化为优化问题 |
+| 2608.10240 | `05-推荐系统/Skill-Cold-Start-Meta-Learning-PAM.md` | 0 → **32/32** | 顺序模态丢弃 |
+
+**这 16 张(3A–3D)也是全库唯一的 G2 通过者** —— 存量 130 张的 G2 全红,根因是**引用块为 0**。
 
 ### registry 被出卡过程反向修正的断言(4 处)
 
@@ -370,13 +413,35 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 > 这是本项目第三次「提升来自修门禁而非改卡片」—— 与 46.2%→52.5%→54.8% 那次同源。
 > 教训:**判某个东西「不存在」之前,先 `ls` 一次。**
 
-### 门禁自身的 3 个 bug(同样由 K1 迭代暴露)
+### 门禁自身的 bug(全部由实测暴露,`--selftest` 逐条锁定)
 
-| # | bug | 后果 |
-|---|-----|------|
-| 1 | `looks_like_python` 启发式过宽(把含 `if`/`for` 的**文档**判为代码) | 3 个假阳性,报告出现不存在的「语法错误」 |
-| 2 | 围栏正则不支持**变长反引号**(只认 3 个) | 嵌套块被截断;4 反引号块被整个漏掉(表现为"该卡无代码") |
-| 3 | `extract_all_python` 回退分支误用 `m.group(1)` | 同上 |
+| # | bug | 后果 | 锁定方式 |
+|---|-----|------|----------|
+| 1 | `looks_like_python` 启发式过宽(把含 `if`/`for` 的**文档**判为代码) | 3 个假阳性,报告出现不存在的「语法错误」 | — |
+| 2 | 围栏正则不支持**变长反引号**(只认 3 个) | 嵌套块被截断;4 反引号块被整个漏掉(表现为"该卡无代码") | — |
+| 3 | `extract_all_python` 回退分支误用 `m.group(1)` | 同上 | — |
+| 4 | 索引阶段 `if "nlp_voc" in p.parts: continue` | **9 张卡被误判 `ORPHAN_DEP`** 并列入「必须修卡片」,而模块其实都在仓库里 | K1 `--selftest` 四用例 |
+| 5 | **L3 探针不注册 `sys.modules`** | CPython 3.14 下凡「`from __future__ import annotations` + `@dataclass`」的模块崩在 `dataclasses._is_type`,被记成卡片的 `import 时崩溃` —— **影响全仓库所有 dataclass 卡** | K1 `--selftest` 端到端用例 |
+| 6 | **`gate_check` 找不到 evidence.md** | 只在卡片同目录找,而约定是 `papers/<域>/<p2s-id>/evidence.md` → **PHASE3 全部新卡的 evidence.md 对 G2 毫无作用**,漏洞 #3 的加固成了空转 | 见下 |
+| 7 | **`quote_check` 把「没有引用块」算作「通过」** | `NO_QUOTES` 的卡被并进「N 通过」汇总 —— 「没东西可查」≠「出处为真」,又一个假绿灯 | 汇总行现单列 |
+
+**#5 的最小复现**(`from __future__ import annotations` 是触发条件 —— 它让所有注解变成字符串,
+`dataclasses._is_type` 才会走 forward-ref 分支去查 `sys.modules[cls.__module__]`):
+```python
+spec = u.spec_from_file_location('unit', 'unit.py')
+m = u.module_from_spec(spec)
+spec.loader.exec_module(m)        # ❌ AttributeError: 'NoneType' object has no attribute '__dict__'
+sys.modules['unit'] = m           # ✅ 补这一行即通过
+```
+三个子代理各自撞上并**各自改卡片绕开**(去掉 future import)。这说明:
+**门禁缺陷会以「大家都学会绕路」的形式被消化掉,而不是被报告** —— 所以 `--selftest` 比文档更可靠。
+
+**#6 的定位过程本身是个教训**:第一版修复按 registry 的 `paper_id` 匹配,全部落空且**静默退回旧行为**。
+根因是本仓库一个命名坑:**卡片 frontmatter 的 `paper_id` 是 arXiv ID(如 `2608.25277`),
+registry 的 `paper_id` 是项目内 ID(如 `p2s-2026-0018`)** —— 同名字段、不同语义。
+现按 `registry.paper_id` / `identifiers.arxiv` / `outputs.skill_card` 三条线索依次认领。
+> **修门禁时必须验证「修复真的生效」,而不是「门禁还绿着」。** 第一版修复后门禁照样绿,
+> 因为它压根没找到文件 —— 绿得和没修一样。
 
 ## Workflow Commands
 

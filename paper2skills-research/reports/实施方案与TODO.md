@@ -166,22 +166,22 @@ source: human+ai
 - [x] T3-7 `2607.09745` SupplyNetPy → `04-供应链/Skill-Supply-Network-Simulation.md` ✅ K1 PASS / 引文 38-38 / G2·G3 绿（开源包名与仓库 URL 已逐字核实）
 - [x] T3-8 `2606.29366` ORLA → `04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md` ✅ K1 PASS / 引文 41-41 / G2·G3 绿（**registry 的「优先保 FBA 不断货」与原文不符，已修正并记录**）
 
-**批次 3C · 用户与电商（3 张）**
-- [ ] T3-9 `2607.09608` 增量测量（站外种草→站内成交）→ `14-用户分析/Skill-Incrementality-Measurement.md`
-- [ ] T3-10 `2608.27006` 活跃目录增量购物助手 → `00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md`
-- [ ] T3-11 `2608.20844` TRACE 目录属性补全 → `00-电商Agent/Skill-Agentic-Catalog-Enrichment.md`
+**批次 3C · 用户与电商（3 张）** ✅ 全部完成
+- [x] T3-9 `2607.09608` 增量测量（站外种草→站内成交）→ `14-用户分析/Skill-Incrementality-Measurement.md` ✅ K1 PASS / 引文 31-31 / G2·G3 绿（**论文无真实数据**：纯理论 + 模拟研究，`data_availability` 已由 conditional 改 synthetic）
+- [x] T3-10 `2608.27006` 活跃目录增量购物助手 → `00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md` ✅ K1 PASS / 引文 37-37 / G2·G3 绿（**Demo 短文，R4 冲突待裁决**；`venue_tier` 由 top 改 preprint）
+- [x] T3-11 `2608.20844` TRACE 目录属性补全 → `00-电商Agent/Skill-Agentic-Catalog-Enrichment.md` ✅ K1 PASS / 引文 45-45 / G2·G3 绿（摘要报 +90.4% 而正文仅 "over 90%"，已在卡内钉死口径）
 
-**批次 3D · Agent 工程与实验（5 张）**
-- [ ] T3-12 `2608.26263` SKILL.state → `16-智能体工程/Skill-Stateful-Skill-Runtime.md`
-- [ ] T3-13 `2608.22152` Collaboration Tax → `10-MAS/Skill-Multi-Agent-Collaboration-Tax.md`
-- [ ] T3-14 `2608.25277` Routed Graph Handoff → `10-MAS/Skill-Routed-Graph-Handoff.md`
-- [ ] T3-15 `2607.22115` RBAC Text-to-SQL 门禁 → `09-DataAgent-LLM/Skill-SQL-Agent-Access-Control.md`
-- [ ] T3-16 `2609.01038` 人格条件 A/B 仿真 → `02-A_B实验/Skill-Persona-Based-AB-Simulation.md`
+**批次 3D · Agent 工程与实验（5 张）** ✅ 全部完成
+- [x] T3-12 `2608.26263` SKILL.state → `16-智能体工程/Skill-Stateful-Skill-Runtime.md` ✅ K1 PASS / 引文 50-50 / G2·G3 绿（摘要**一个数字都没有**，压缩比 16.2× 取自正文；另记「单步 prompt 反而更高」这条反直觉边界）
+- [x] T3-13 `2608.22152` Collaboration Tax → `10-MAS/Skill-Multi-Agent-Collaboration-Tax.md` ✅ K1 PASS / 引文 55-55 / G2·G3 绿（**底本来自 PDF**：arXiv 无 LaTeXML HTML，v1/v2/v3 全 404）
+- [x] T3-14 `2608.25277` Routed Graph Handoff → `10-MAS/Skill-Routed-Graph-Handoff.md` ✅ K1 PASS / 引文 51-51 / G2·G3 绿（3.2× 是 τ-retail 单点，加权平均 2.1×；graph-only 在 AppWorld 回退 −14.6pp）
+- [x] T3-15 `2607.22115` RBAC Text-to-SQL 门禁 → `09-DataAgent-LLM/Skill-SQL-Agent-Access-Control.md` ✅ K1 PASS / 引文 39-39 / G2·G3 绿（**SIGMOD 录用无原文证据**，卡片按保守口径记 preprint）
+- [x] T3-16 `2609.01038` 人格条件 A/B 仿真 → `02-A_B实验/Skill-Persona-Based-AB-Simulation.md` ✅ K1 PASS / 引文 41-41 / G2·G3 绿（0.75–0.90 分项来源不同：0.90 来自公开电商人格 × subscription）
 
 **批次 3E · 增强而非新建（避免重复出卡）**
-- [ ] T3-17 `2608.28978` 负结果 → 在 `Skill-GraphRAG-Knowledge-Enhanced-Retrieval` 与 `Skill-Agentic-Memory-Management` 各加"反例与适用边界"小节
-- [ ] T3-18 `2608.09162` 数值特征变换 → 增强 `Skill-Feature-Engineering`
-- [ ] T3-19 `2608.10240` 顺序模态丢弃 → 增强推荐域卡片（代码仅四行，收益明确）
+- [x] T3-17 `2608.28978` 负结果 → `Skill-GraphRAG-Knowledge-Enhanced-Retrieval`（引用块 0→18/18）与 `Skill-Agentic-Memory-Management`（0→17/17）各加"反例与适用边界"小节 ✅（**registry「劝退早期投图记忆」比原文宽，已按论文自设范围限定修正**：「this extraction-based pipeline rather than graph-structured memory in general」）
+- [ ] T3-18 `2608.09162` 数值特征变换 → 增强 `Skill-Feature-Engineering`（进行中）
+- [ ] T3-19 `2608.10240` 顺序模态丢弃 → 增强推荐域卡片（代码仅四行，收益明确）（进行中）
 
 ---
 
