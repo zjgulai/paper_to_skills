@@ -2,6 +2,8 @@
 name: Monodense-单品价格弹性估计
 description: 基于 Walmart 提出的 Monodense 深度神经网络，无需对照实验即可从大规模交易数据中学习单品价格弹性，为动态定价和促销决策提供量化依据。
 paper: arXiv:2603.29261
+paper_id: 2603.29261
+evidence_basis: paper-verbatim
 area: 04-供应链
 ---
 
@@ -194,3 +196,82 @@ category
 | Double Machine Learning | 36.1% | 0.43 |
 
 Monodense-DLM 在需求预测精度和弹性估计一致性上均显著优于传统 ML 方法。
+
+---
+
+## ⑥ 原文引用
+
+> 原文："Item Price Elasticity is used to quantify the responsiveness of consumer demand to changes in item prices, enabling businesses to create pricing strategies and optimize revenue management."
+> 出处：2603.29261 §Abstract（PDF 第 1 页）
+
+> 原文："Price elasticity of demand measures sensitivity of consumer demand to changes in item prices. To make economic and business sense this elasticity of demand measure will be always negative."
+> 出处：2603.29261 §I Introduction 式 (1) 前（PDF 第 2 页）
+
+> 原文："In this paper, we model item-level price elasticity using large-scale transactional datasets, by proposing a novel elasticity estimation framework which has the capability to work in an absence of treatment control setting."
+> 出处：2603.29261 §Abstract（PDF 第 1 页）
+
+> 原文："1) Monodense-DL network – Hybrid neural network architecture combining embedding, dense, and Monodense layers 2) DML – Double machine learning setting using regression models 3) LGBM – Light Gradient Boosting Model"
+> 出处：2603.29261 §Abstract（PDF 第 1 页）——本卡「三模型对比」的口径来源
+
+> 原文："Traditional approaches to elasticity estimation, such as econometric models, often assume linear or exponential relationships between demand and price and fail to capture complex, non-linear, and non exponential patterns."
+> 出处：2603.29261 §I Introduction（PDF 第 1 页）
+
+> 原文："Moreover these traditional econometric approaches fail to scale across millions of items due to price and business constraints of running control/treatment (C/T) experiments across the whole item universe."
+> 出处：2603.29261 §I Introduction（PDF 第 1 页）
+
+> 原文："2) No requirement for a creation C/T group or the need to run recurrent expensive experiments."
+> 出处：2603.29261 §III.A 框架优势（PDF 第 3 页）
+
+> 原文："This monodense layer ensures that in the learned price to demand relationship a decrease in price results in an increase in demand and vice versa."
+> 出处：2603.29261 §III.B Proposed Monodense-DLM network（PDF 第 4 页）
+
+> 原文："Our proposed Monodense DLM ensures that the final evaluated item elasticities are always negative, thereby making them economically consistent, as it bakes in the monotonicity between price and demand while modeling the demand to price relationship."
+> 出处：2603.29261 §II.B Machine-learning based methods（PDF 第 3 页）
+
+> 原文："We apply weight constraints based on a monotonicity indicator vector t, where each element ti corresponds to a feature xi ."
+> 出处：2603.29261 §III.B 单调性权重约束（PDF 第 4 页）
+
+> 原文："If ti = 1 The feature is considered to be monotonically increasing so an increase in input X would result an increase in output Y . The corresponding weights (wi ) are constrained to be non-negative (wi ≥ 0)."
+> 出处：2603.29261 §III.B 单调性指示向量（PDF 第 4 页）——对应本卡 $t_i = 1$ 的分支
+
+> 原文："If ti = 0: The feature has no monotonic constraint."
+> 出处：2603.29261 §III.B 单调性指示向量（PDF 第 4 页）——对应本卡 $t_i = 0$ 的分支
+
+> 原文："To correctly capture the both concave and convex nature of demand to price relationship as proposed by Davor et al., 2023 [8] we start with a zero-centered, monotonically increasing, convex activation function (ρ) (e.g., ReLU, ELU, SELU)."
+> 出处：2603.29261 §III.B 激活函数变体（PDF 第 4 页）
+
+> 原文："we start by data creation, creating a cross join dataset of the aggregated monthly transaction information thereby creating a lag month and a lead month combination for each item pair"
+> 出处：2603.29261 §III.A Dataset creation（PDF 第 3 页）——即本卡的 Lead-Lag Cross Join
+
+> 原文："1) Inventory data to account for stock-outs and availability constraints, ensuring elasticity estimates reflected true consumer behavior rather than supply limitations."
+> 出处：2603.29261 §III.A Dataset creation（PDF 第 3 页）——库存作为上下文特征、缺货会扭曲弹性的原文依据
+
+> 原文："The data creation is done using pyspark which leverages spark distributed computing. 2 years and 3 month of data is considered while creating the training dataset."
+> 出处：2603.29261 §III.A Dataset creation（PDF 第 3 页）
+
+> 原文："Deep learning model 30.90%"
+> 出处：2603.29261 §IV 表 I WMAPE（PDF 第 5 页）——论文写 **30.90%**，本卡表里写 **30.9%**；门禁按裸数字匹配，`30.9` ≠ `30.90`，故 `30.9%` 仍会被判无出处
+
+> 原文："LGBM model Double Machine Learning* 35.9% 36.1% TABLE I *F OR DOUBLE MACHINE LEARNING WMAPE OF OUTCOME MODEL IS RECORDED"
+> 出处：2603.29261 §IV 表 I（PDF 第 5 页）——LGBM 35.9% / DML 36.1%
+
+> 原文："Deep learning model 0.36"
+> 出处：2603.29261 §IV 表 II MAE（PDF 第 5 页）
+
+> 原文："LGBM Double machine learning 0.42 0.43 TABLE II"
+> 出处：2603.29261 §IV 表 II MAE（PDF 第 5 页）——LGBM 0.42 / DML 0.43
+
+> 原文："It is observed that our proposed model outperforms the other two models in terms of overall WMAPE."
+> 出处：2603.29261 §IV Results and Findings（PDF 第 5 页）
+
+> 原文："When comparing our proposed Monodense DL model with other two models the MAE is lower for our model."
+> 出处：2603.29261 §IV Results and Findings（PDF 第 5 页）
+
+> 原文："The experimental results demonstrate that our novel model outperforms double machine learning and LGBM model."
+> 出处：2603.29261 §V Conclusion（PDF 第 5 页）
+
+> 原文："Paper also demonstrates that with our proposed data creation method it is possible to model the price elasticity using a huge real world transaction dataset (1 billion+ rows) counterpart to the other studies conducted in the area which have only utilized comparatively small or synthetically created datasets."
+> 出处：2603.29261 §V Conclusion（PDF 第 5 页）——「十亿级交易数据」的出处
+
+> **口径提示（不改正文，仅记录）**：本卡「五、业务价值评估」里的毛利率提升区间（3-8%）与促销损耗减少区间（10-20%）是**业务经验估算**，论文没有对应数字；
+> 论文可核验的只有上表 WMAPE/MAE 三行对比与 1 billion+ rows 的数据规模。「三、代码模板」里的示例输出（弹性值 -0.49/-0.70/-0.86/-1.02、品类均值 -0.89/-0.59/-0.80/-0.79）是**合成数据跑出来的演示值**，论文无此内容。

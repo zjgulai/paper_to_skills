@@ -1,13 +1,15 @@
 ---
 title: MAS消费者行为仿真
 doc_type: knowledge
-module: NLP-VOC
+module: 07-NLP-VOC
 topic: multi-agent-simulation
 status: stable
 created: 2026-04-29
-updated: 2026-04-29
+updated: 2026-09-12
 owner: self
 source: ai
+paper_id: 2510.18155
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MAS Consumer Behavior Simulation
@@ -255,6 +257,61 @@ python3 model.py
 - 促销决策周期：从2周缩短至2天
 - 新品失败率：-30%（仿真提前识别风险）
 - 促销ROI：+25%（识别并避免替代效应主导的无效促销）
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We construct a week-long virtual town experiment where agents plan daily schedules, manage resources, shop with earned income, converse and make social commitments, coordinate visits to town locations, and choose between a cafe, fast-food outlet, and family restaurant for meals. A fried chicken shop offers a midweek 20% discount while others maintain regular pricing."
+> 出处：2510.18155 Abstract / §I Introduction
+
+> 原文:"Our simulation features 11 agents and 10 locations for residence, dining, shopping, work, and leisure. Each agent plans a daily routine using LLM responses guided by structured prompts and executes it within the simulation, focusing on food-purchase behavior to evaluate discount strategy."
+> 出处：2510.18155 §III Simulation Setting
+
+> 原文:"DeepSeek-V3 powers the simulation, enabling agents to plan, execute, and communicate naturally."
+> 出处：2510.18155 §III.A
+
+> 原文:"Eleven agents cover diverse demographics: ages 22–35, various professions (e.g., software engineer, barista, chef), and income types (hourly, monthly, business-owner)."
+> 出处：2510.18155 §III.B.2
+
+> 原文:"Theoretically, consumer psychology research shows individual variation in deal promotion proneness (DPP) - the tendency of some consumers to respond more strongly to price-based incentives than others"
+> 出处：2510.18155 §I Introduction
+
+> 原文:"memory stream that stores recent interactions, personal experiences, and contextual updates over time."
+> 出处：2510.18155 §III.D.1
+
+> 原文:"If a proposed action exceeds their available budget, the agent may drop or revise the plan, reinforcing realism through bounded rationality."
+> 出处：2510.18155 §III.E.2
+
+> 原文:"The 20% midweek discount at Fried Chicken Shop produced measurable changes in market dynamics, as shown in Fig. 4."
+> 出处：2510.18155 §IV.A
+
+> 原文:"The shop’s revenue increased 51% from Day 2 ($100.6) to Day 3 ($152.11) despite the price reduction, indicating strong consumer response to the promotion."
+> 出处：2510.18155 §IV.A
+
+> 原文:"At the same time, Local Diner has decreased revenue for 7%."
+> 出处：2510.18155 §IV.A
+
+> 原文:"The discount triggered market share redistribution, with Fried Chicken Shop’s share increasing from 30% (Day 1) to 41% (Day 3), while Local Diner’s share decreased from 62% to 48%."
+> 出处：2510.18155 §IV.A
+
+> 原文:"The delayed peak on Day 3 rather than immediate response reveals gradual information diffusion through the agent network. Total daily market size fluctuated between $276 - 471 without systematic expansion during the promotion period, indicating the discount primarily drove substitution between restaurants rather than increasing overall food consumption."
+> 出处：2510.18155 §IV.A
+
+> 原文:"This substitution effect, where customers shifted between providers without increasing total spending, demonstrates realistic consumer behavior in response to localized price promotions."
+> 出处：2510.18155 §IV.A
+
+> 原文:"Our results exhibit the same substitution-driven pattern, supporting the validity of the generative simulation."
+> 出处：2510.18155 §IV.B
+
+> 原文:"For instance, our daily planning prompt is approximately 7,098 characters, 2225 characters for conversation in length, and includes detailed rules about the agent’s current state(location, energy, money, etc), previous memory load back, location options, work routines, and agent constraints."
+> 出处：2510.18155 §V.A
+
+> 原文:"A notable challenge in LLM-driven simulations is the model’s tendency to hallucinate responses outside the configured environment, even when provided with structured context."
+> 出处：2510.18155 §V.A
+
+> 原文:"For example, a 7-year-old agent assigned childlike attributes still displayed adult behaviors (e.g., requesting coffee when tired) and lacked age-appropriate curiosity or emotional tone."
+> 出处：2510.18155 §V.C
 
 ---
 

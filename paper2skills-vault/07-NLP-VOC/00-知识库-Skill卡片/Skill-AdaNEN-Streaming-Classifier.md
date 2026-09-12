@@ -1,5 +1,24 @@
+---
+title: "Skill Card: 流式 VOC 分类与概念漂移检测"
+module: 07-NLP-VOC
+paper_id: 10.1145/3639054
+paper: A Novel Neural Ensemble Architecture for On-the-fly Classification of Evolving Text Streams
+venue: ACM TKDD 2024
+venue_tier: CCF-A
+evidence_basis: paper-traceable
+source: human+ai
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 流式 VOC 分类与概念漂移检测
 # AdaNEN Streaming Classifier
+
+> **证据基础声明**：本卡**有可核验的论文来源** —— frontmatter `paper_id: 10.1145/3639054`
+> 已通过 Crossref 核实（标题与期刊均匹配：ACM TKDD, 2024-05-31）。
+> 但**该论文全文尚未入库**，故卡内数字**暂无逐字引文支撑**，不可当作论文结论引用。
+> 待补：把全文存入 `papers/07-NLP-VOC/10.1145-3639054/` 并在「⑥ 原文引用」段补逐字摘录后，
+> `evidence_basis` 应升级为 `paper-verbatim`。
 
 **论文来源**: A Novel Neural Ensemble Architecture for On-the-fly Classification of Evolving Text Streams (ACM TKDD 2024)
 **理论基础**: Adaptive Neural Ensemble Network — 多窗口集成 + 概念漂移检测 + 动态权重衰减

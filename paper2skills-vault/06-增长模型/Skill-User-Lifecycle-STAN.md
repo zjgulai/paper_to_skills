@@ -1,3 +1,19 @@
+---
+title: Skill-User-Lifecycle-STAN
+module: 06-增长模型
+topic: 用可学习的用户生命周期阶段表示自适应调权，改进多任务推荐
+status: draft
+created: 2026-05-15
+updated: 2026-09-12
+owner: self
+source: ai
+paper_id: 2306.12232
+paper: "STAN: Stage-Adaptive Network for Multi-Task Recommendation by Learning User Lifecycle-Based Representation"
+evidence_basis: paper-verbatim
+verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+related: Skill-Customer-Journey-Prototype.md, Skill-Uplift-Churn-Prediction.md
+---
+
 # Skill Card: STAN 用户生命周期自适应建模
 
 **论文来源**: STAN: Stage-Adaptive Network for Multi-Task Recommendation by Learning User Lifecycle-Based Representation  
@@ -150,6 +166,64 @@ python3 model.py
 1. **MVP阶段**（2周）：用历史数据离线训练模型，输出用户阶段分布报告
 2. **试点阶段**（2周）：选择"兴趣期→购买期"转化场景A/B测试
 3. **全面推广**（1个月）：全量上线，集成到推荐系统和营销自动化平台
+
+---
+
+## ⑥ 原文引用
+
+> 原文："Existing methods generally formulate the optimization of these evaluation metrics as a multitask learning problem, but often overlook the fact that user preferences for different tasks are personalized and change over time. Identifying and tracking the evolution of user preferences can lead to better user retention."
+> 出处：2306.12232 §Abstract（PDF 第 1 页）
+
+> 原文："To address this issue, we introduce the concept of “user lifecycle,” consisting of multiple stages characterized by users’ varying preferences for different tasks."
+> 出处：2306.12232 §Abstract（PDF 第 1 页）
+
+> 原文："We propose a novel Stage-Adaptive Network (STAN) framework for modeling user lifecycle stages. STAN first identifies latent user lifecycle stages based on learned user preferences, and then employs the stage representation to enhance multi-task learning performance."
+> 出处：2306.12232 §Abstract（PDF 第 1 页）
+
+> 原文："It dynamically adjusts its focus on tasks according to the user’s stage, which is modeled by the representation of their preferences."
+> 出处：2306.12232 §1 Introduction（PDF 第 2 页）
+
+> 原文："we introduce the latent user stage representation module to adjust 𝑦˜𝑘 and generate a reliable preference"
+> 出处：2306.12232 §3 阶段自适应模块（PDF 第 8 页）
+
+> 原文："Note that the four discrete stages in Fig. 1 are merely examples for visualization purposes, and the actual stages in our model are represented by continuous vectors."
+> 出处：2306.12232 §1 Introduction（PDF 第 2 页）——**边界**：论文的阶段是连续向量，不是本卡 ② 里那套离散 AIPL 四标签
+
+> 原文："We collected one month of user behavior data from an e-commerce platform, which records users’ clicks, staytime, and purchase actions."
+> 出处：2306.12232 §2.1 数据分析（PDF 第 3 页）
+
+> 原文："We randomly selected 50,000 users’ actions over three days for data analysis."
+> 出处：2306.12232 §2.1 数据分析（PDF 第 3 页）
+
+> 原文："The stages are named New, Wander, Stick and Loyal, as shown in Fig. 3. Note that one user could not belong to multiple stages."
+> 出处：2306.12232 §2.1 数据分析（PDF 第 3 页）——论文自己的阶段命名是 New / Wander / Stick / Loyal
+
+> 原文："Users at stage Stick could be quickly found by their relatively low CVR value along with high CTR and staytime, which indicates that they only dwell on the platform but rarely contribute to purchasing. Users at stage Loyal show a custom of steadily clicking, staying, and purchasing on the platform, implying their satisfaction with the recommendation outcomes and the platform."
+> 出处：2306.12232 §2.1 数据分析（PDF 第 4 页）
+
+> 原文："By taking user lifecycle and stages into account, which can be customized to specific contexts, the recommendation system can more effectively address the diverse needs of users at different stages of their interactions with the platform."
+> 出处：2306.12232 §1 Introduction（PDF 第 2 页）
+
+> 原文："Public dataset4 : The Wechat-Video dataset is a publicly available dataset containing 7.3 million user interaction samples from the Wechat Channels’ Recommendation System, involving a total of 20,000 users."
+> 出处：2306.12232 §4.1.1 数据集（PDF 第 10 页）
+
+> 原文："This dataset was collected from an e-commerce platform over a month in 2022."
+> 出处：2306.12232 §4.1.1 Industrial dataset（PDF 第 10 页）
+
+> 原文："For the industrial dataset, we focus on classical RS prediction tasks: CTR, staytime, and CVR."
+> 出处：2306.12232 §4.1.3 任务（PDF 第 11 页）
+
+> 原文："Firstly, STAN achieves the most effective results on all tasks in both metrics and outperforms all the competitive baselines in the industrial and public datasets."
+> 出处：2306.12232 §4.2 离线结果（PDF 第 12 页）
+
+> 原文："Surprisingly, even though the subsets are significantly smaller than the original training dataset, the performance is nearly the same, and sometimes even better."
+> 出处：2306.12232 §4.3 消融/子集实验（PDF 第 12 页）
+
+> 原文："Furthermore, online A/B testing reveals that our model outperforms the existing model, achieving a significant improvement of 3.05% in staytime per user and 0.88% in CVR."
+> 出处：2306.12232 §Abstract（PDF 第 1 页）——**本卡唯一两个来自论文的业务指标**：人均停留时长 +3.05%、CVR +0.88%（线上 A/B）
+
+> **口径提示（不改正文，仅记录）**：本卡 ② 的「留存率提升区间」「复购转化率提升区间」「触达疲劳投诉下降区间」「营销 ROI 提升区间」「品类渗透率区间」，
+> 以及 ⑤ 的全部金额与倍数，均为**业务假设代入**，论文没有对应数字；论文可核验的只有上方 3.05% / 0.88% 这一条线上 A/B 结论与离线指标排序。
 
 ---
 

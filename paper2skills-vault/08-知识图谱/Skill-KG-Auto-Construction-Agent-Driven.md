@@ -8,6 +8,9 @@ created: 2026-05-01
 updated: 2026-05-01
 owner: self
 source: human+ai
+paper: arXiv:2511.11017
+paper_id: 2511.11017
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: AI Agent 驱动的电商知识图谱自动构建
@@ -837,3 +840,97 @@ Round 4: 持续学习与进化
   - 与 AutoTag 标签系统联动：新标签自动触发 KG 扩展
   - 与用户反馈闭环：错误三元组自动修正
 ```
+
+---
+
+## ⑥ 原文引用（arXiv:2511.11017 逐字摘录）
+
+> 原文:"This paper introduces a fully automated, AI agent-driven framework for constructing product knowledge graphs directly from unstructured product descriptions."
+> 出处：2511.11017 §Abstract
+
+> 原文:"Leveraging Large Language Models (LLMs), our method operates in three stages using dedicated agents: ontology creation and expansion, ontology refinement, and knowledge graph population."
+> 出处：2511.11017 §Abstract
+
+> 原文:"This agent-based approach ensures semantic coherence, scalability, and high-quality output without relying on predefined schemas or handcrafted extraction rules."
+> 出处：2511.11017 §Abstract
+
+> 原文:"We evaluate the system on a real-world dataset of air conditioner product descriptions, demonstrating strong performance in both ontology generation and KG population."
+> 出处：2511.11017 §Abstract
+
+> 原文:"The framework achieves over 97% property coverage and minimal redundancy, validating its effectiveness and practical applicability."
+> 出处：2511.11017 §Abstract
+
+> 原文:"Our framework consists of three main stages: (1) ontology creation and expansion, (2) ontology refinement, and (3) knowledge graph population."
+> 出处：2511.11017 §3 Methodology
+
+> 原文:"We begin by sampling representative product descriptions from the corpus, focusing on coverage across product categories. An LLM-based agent is employed to extract initial ontology elements."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Ontology Creation and Expansion）
+
+> 原文:"The agent identifies product classes, attributes, and relationships, organizing them into RDF/Turtle format with clearly defined rdfs:domain, rdfs:range, and descriptive rdfs:comment annotations."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Ontology Creation and Expansion）
+
+> 原文:"Ontology expansion proceeds iteratively. We present additional product descriptions to the agent using a prompt that instructs it to generalize beyond individual instances and extend the schema where necessary."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Ontology Creation and Expansion）
+
+> 原文:"The agent integrates new classes or properties discovered in these samples without removing existing elements, preserving schema stability."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Ontology Creation and Expansion）
+
+> 原文:"We typically iterate this expansion process over approximately 30 product samples per category until the number of new ontology elements added per iteration significantly diminishes (indicating a plateau), balancing coverage with schema manageability."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Ontology Creation and Expansion）
+
+> 原文:"we perform zero-shot refinement leveraging the LLM’s encoded knowledge."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Ontology Refinement）
+
+> 原文:"We provide the complete ontology as input, prompting the LLM to suggest revisions, merges, or extensions aimed at improving generality, reducing redundancy, clarifying ambiguities, and enhancing adaptability to diverse product domains."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Ontology Refinement）
+
+> 原文:"Given the refined ontology and individual product descriptions, the LLM-based agent generates RDF triples that capture specific product details."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Knowledge Graph Population）
+
+> 原文:"The agent is guided by a prompt that instructs it to map product attributes and relationships precisely according to the ontology, translating values into English where necessary and respecting the expected units and formats defined in the rdfs:comments."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Knowledge Graph Population）
+
+> 原文:"Triples are only generated when values are explicitly available in the description, avoiding hallucination or inference beyond the provided data."
+> 出处：2511.11017 §3.1 The Agent-based Workflow（Knowledge Graph Population）
+
+> 原文:"We implemented the framework using the ChatGPT 4.1 Mini model, chosen for its favorable balance of cost and performance."
+> 出处：2511.11017 §3.2 Implementation Details
+
+> 原文:"The prompts used at each stage are designed to be modular and composable, enabling iterative improvements and rapid adaptation to new domains or product types."
+> 出处：2511.11017 §3.2 Implementation Details
+
+> 原文:"We evaluate our framework on a real-world dataset from a retail store, consisting of 291 product descriptions for the category"
+> 出处：2511.11017 §3.3 Evaluation
+
+> 原文:"The evaluation is conducted along three dimensions: – Ontology Coverage: We assess the completeness of the automatically generated ontologies by measuring the number of extracted classes, attributes, and relationships. – Ontology Quality: We perform qualitative evaluation of the ontology’s coherence, generality, and usability, with expert annotation to identify redundancies, inconsistencies, or missing elements."
+> 出处：2511.11017 §3.3 Evaluation
+
+> 原文:"We automatically evaluate the populated knowledge graph by measuring the number of generated RDF triples and the proportion of ontology properties that are instantiated in the graph."
+> 出处：2511.11017 §3.3 Evaluation
+
+> 原文:"The constructed ontology comprises 42 classes and 69 properties, including 20 data attributes and 49 object relationships."
+> 出处：2511.11017 §4 Results
+
+> 原文:"Regarding knowledge graph population, the framework successfully processed 282 out of 291 product descriptions, with failures on only nine instances (3%) due to invalid RDF outputs."
+> 出处：2511.11017 §4 Results
+
+> 原文:"The resulting knowledge graph contains 7,459 RDF triples, achieving 97.1% coverage of the properties defined in the ontology."
+> 出处：2511.11017 §4 Results
+
+> 原文:"This indicates that nearly all classes and attributes were populated with real product data, demonstrating the system"
+> 出处：2511.11017 §4 Results
+
+> 原文:"We report minimal redundancy and no significant inconsistencies, confirming that the ontology generalizes well across the product category while maintaining sufficient specificity for downstream tasks."
+> 出处：2511.11017 §4 Results
+
+> 原文:"By eliminating the need for manual schema design, rule engineering, or annotated datasets, the framework significantly reduces development overhead and improves adaptability to new domains and product types."
+> 出处：2511.11017 §5 Conclusion and Future Work
+
+> 原文:"Integrating multimodal data, such as product images, specifications sheets, and customer reviews, can improve coverage and semantic depth."
+> 出处：2511.11017 §5 Conclusion and Future Work
+
+> 原文:"adding continuous updates from streaming product data will support dynamic, real-time KG construction for retail and e-commerce applications."
+> 出处：2511.11017 §5 Conclusion and Future Work
+
+> 原文:"Overall, the proposed framework provides a robust and extensible foundation for next-generation product intelligence systems, supporting advanced downstream applications such as recommendation engines, search optimization, and automated catalog enrichment."
+> 出处：2511.11017 §5 Conclusion and Future Work

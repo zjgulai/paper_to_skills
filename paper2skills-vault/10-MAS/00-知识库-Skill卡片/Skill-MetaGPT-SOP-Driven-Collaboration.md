@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2308.00352
+paper: "MetaGPT: Meta Programming for Multi-Agent Collaborative Framework"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MetaGPT — SOP 驱动的多智能体协作框架
@@ -255,3 +258,81 @@ python metagent_sop.py
 - 标准化、重复性任务用 MetaGPT（质量可控、可复现）
 - 探索性、创新性任务用 AutoGen（灵活、快速迭代）
 - 混合模式：MetaGPT 的 SOP agent 组内用 AutoGen 进行灵活讨论
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> 下列引文均为底本中的**连续子串**，未改标点、未改词、未把两句话缝成一句（由 `quote_check.py` 逐字核验）。
+> 本段只覆盖 ① 与 ⑤ 中**能回溯到论文原文**的断言；② 的场景数字与 ⑤ 的 ROI 表均为作者举例/自估。
+> ⚠️ ⑤ 评估依据里引用的 HumanEval / MBPP 分数、以及 ① 提到的百分比提升，**在本底本中零命中**，
+> 详见本卡维护记录（不改正文）。
+
+### A. 核心思想：把 SOP 编进 prompt，并用结构化产物约束协作（对应 ①核心思想）
+
+> 原文:"However, existing works primarily focuses on simple tasks lacking exploration and investigation in complicated tasks mainly due to the hallucination problem. This kind of hallucination gets amplified infinitely as multiple intelligent agents interact with each other, resulting in failures when tackling complicated problems."
+> 出处：2308.00352 Abstract
+
+> 原文:"Therefore, we introduce MetaGPT, an innovative framework that infuses effective human workflows as a meta programming approach into LLM-driven multi-agent collaboration. In particular, MetaGPT first encodes Standardized Operating Procedures (SOPs) into prompts, fostering structured coordination. And then, it further mandates modular outputs, bestowing agents with domain expertise paralleling human professionals to validate output"
+> 出处：2308.00352 Abstract
+
+> 原文:"Through prolonged collaborative practice, humans have developed widely accepted standardized operating procedures (SOPs) across many domains[1, 2, 3]. These SOPs play a critical role in supporting task decomposition and efficient coordination. For instance, in software engineering, the waterfall methodology delineates orderly phases of requirements analysis, system design, coding, testing, and deliverables."
+> 出处：2308.00352 §1 Introduction
+
+> 原文:"Moreover, human roles possess specialized expertise tailored to their assigned responsibilities: software engineers leverage programming proficiency to implement code, while product managers employ market analysis to formulate business needs. Without standardized outputs, collaboration becomes disorderly [4, 5, 6]."
+> 出处：2308.00352 §1 Introduction
+
+### B. 三个核心机制（对应 ①「角色专业化 / 结构化输出 / 共享消息池+发布订阅」）
+
+> 原文:"In this work, we present MetaGPT, a pioneering multi-agent framework incorporating real-world expertise based on SOPs. Firstly, each agent is identified by a descriptive job title, allowing the system to initialize with an appropriate role-specific prompt prefix. This embeds domain knowledge within agent definitions, rather than simplistic role-playing prompts."
+> 出处：2308.00352 §1 Introduction
+
+> 原文:"Secondly, we analyze efficient human workflows to extract SOPs encapsulating procedural knowledge required for collaborative tasks. These SOPs are encoded into the agent architecture through role-based action specifications. Thirdly, agents produce standardized action outputs to enable knowledge sharing. By formalizing artifacts that human experts exchange, MetaGPT streamlines coordination between interdependent roles."
+> 出处：2308.00352 §1 Introduction
+
+> 原文:"Knowledge Sharing. This mechanism allows agents to exchange information effectively, contributing to a shared knowledge base. Agents can store, retrieve, and share data at different levels of granularity. It not only enhances coordination but also reduces redundant communication, increasing overall operational efficiency."
+> 出处：2308.00352 §3.1 Framework Overview（Collaboration Layer）
+
+> 原文:"Encapsulating Workflows. This mechanism leverages SOPs to break down complex tasks into smaller, manageable components. It assigns these subtasks to suitable agents and supervises their performance by standardized output, ensuring that their actions align with the overarching objectives."
+> 出处：2308.00352 §3.1 Framework Overview（Collaboration Layer）
+
+> 原文:"In MetaGPT, each agent proactively curates personalized knowledge by retrieving relevant historical messages from shared environment logs. Instead of passively relying on dialogue, agents leverage role-based interests to extract pertinent information. Specifically, the environment replicates messages to provide a unified data repository. Agents register subscriptions based on message types meaningful for their roles. Matching messages are automatically dispatched to notify appropriate agents."
+> 出处：2308.00352 §3.2.4 Knowledge Sharing Mechanisms & Customized Knowledge Management
+
+> 原文:"Whenever an agent generates a message, it is replicated to the shared environment log, creating a single source of truth. This ensures all agents have access to the same information."
+> 出处：2308.00352 §3.2.4（Message replication）
+
+> 原文:"Agents can register subscriptions based on their roles and the types of messages that are meaningful for them. This is done based on predefined criteria that align with the agent’s responsibilities and tasks."
+> 出处：2308.00352 §3.2.4（Role-based subscriptions）
+
+> 原文:"When a new message matches the subscription criteria of an agent, it is automatically dispatched to notify the relevant agent. This proactive information dissemination prevents agents from missing out on important updates."
+> 出处：2308.00352 §3.2.4（Message dispatch）
+
+> 原文:"MetaGPT’s combination of centralized message sharing with personalized role-based memory caches enables customized knowledge management, reducing irrelevant data while providing common context. This balances team coordination with individual efficiency."
+> 出处：2308.00352 §3.2.4
+
+> 原文:"This layer establishes core building blocks necessary for individual agent operations and system-wide information exchange, including Environment, Memory, Role, Action and Tools."
+> 出处：2308.00352 §3.1 Framework Overview（Foundational Components Layer）
+
+### C. 论文自报效果（对应 ①「级联错误控制」与 ⑤「实验验证充分」的量级参照）
+
+> 原文:"Moreover, during the automated end-to-end process, MetaGPT produces high-quality requirement documents, design artifacts, flowcharts and interface specifications. These intermediate standardized outputs significantly boost the success rate of final code execution."
+> 出处：2308.00352 §1 Introduction
+
+> 原文:"In short, using the MetaGPT framework takes an average of 516 seconds and $1.12 to get a project containing 4.71 code files, 3 PRDs and 3 documents. After no more than three bug-fixes, the success rate of the project generated can reach 51.43%."
+> 出处：2308.00352 §4.1 Task Selection & Evaluation Method（Experiments Settings）
+
+> 原文:"As evidenced by the data presented in Table 2, MetaGPT exhibits robust performance across a diverse set of tasks, achieving successful execution in all but two instances: Flappy Bird and Tank Battle."
+> 出处：2308.00352 §4.2 Comparison with Alternative Approaches
+
+> 原文:"In direct contrast, the competing frameworks, AutoGPT and AgentVerse, did not accomplish successful execution in any of the tasks, marking a stark differentiation in the effectiveness of the MetaGPT framework."
+> 出处：2308.00352 §4.2 Comparison with Alternative Approaches
+
+> 原文:"We conduct comprehensive experiments on python games generation, CRUD code generation and simple data analysis tasks with AutoGPT [18] , AgentVerse [19], LangChain [20] and our MetaGPT. The overall results demonstrate MetaGPT’s substantial superiority of MetaGPT over its counterparts on both the quality of the code and the conformance to the expected workflow."
+> 出处：2308.00352 §1 Introduction（contributions）
+
+### D. 论文自承的统计口径局限（对应 ⑤「实验验证充分」应附的边界）
+
+> 原文:"It is important to underscore that the statistics presented here represent the outcomes of the current experimental suite and are not to be considered as definitive performance benchmarks. The performance of MetaGPT may vary depending on the specific experimental conditions and the task configurations utilized."
+> 出处：2308.00352 §4.1 Task Selection & Evaluation Method（Experiments Settings）

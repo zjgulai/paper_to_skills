@@ -8,9 +8,14 @@ created: 2026-04-28
 updated: 2026-04-28
 owner: self
 source: ai
+evidence_basis: author-practice
 ---
 
 # Skill Card: Causal Discovery with PC Algorithm
+
+> **证据基础声明**：本卡为人写的经验与方法总结，**无对应论文来源**；
+> 卡内数字为业内实践值/示例值，**不可当作论文结论引用**。
+> 若这些数字实际来自某篇论文，请补 `paper_id` 与「⑥ 原文引用」段，本卡将转为有来源卡审查。
 
 ---
 

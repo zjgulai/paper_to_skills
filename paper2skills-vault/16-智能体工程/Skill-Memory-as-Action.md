@@ -8,6 +8,8 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2510.12635
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: Memory-as-Action — 记忆操作嵌入策略 + DCPO 训练
@@ -368,3 +370,142 @@ python3 memact.py
 - **LTM 持久化**用 AgeMem 三阶段 RL
 - **推理时压缩**用 ACON 蒸馏小模型
 - **四者叠加**:Focus 在线 prompt + MemAct 训练 base + AgeMem 长期记忆 + ACON 推理压缩
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We propose a novel framework, Memory-as-Action, where an agent actively manages its working memory by executing explicit editing operations as part of a unified policy."
+> 出处：2510.12635 §Abstract（核心思想：memory 操作内嵌进统一 policy）
+
+> 原文:"In this work, we reframe working memory management as a learnable, intrinsic capability."
+> 出处：2510.12635 §Abstract（把 memory 管理从外部启发式升级为可学习能力）
+
+> 原文:"The dominant approach to context engineering today relies on a workflow of external, rule-based operations (Packer et al., 2023; Jin et al., 2025; Li et al., 2025)."
+> 出处：2510.12635 §1（传统范式 = 外部 rule-based 控制器的依据）
+
+> 原文:"We introduce the Memory-as-Action framework, which enables an agent to actively edit its own working memory"
+> 出处：2510.12635 §2.1 Overview
+
+> 原文:"memory actions can overwrite or remove past context, breaking the common prefix assumption and resulting in trajectory fractures."
+> 出处：2510.12635 §2.1（trajectory fracture 的成因）
+
+> 原文:"such memory editing actions break the standard assumption of a continuously growing prefix in LLM interactions, leading to what we call trajectory fractures."
+> 出处：2510.12635 §Abstract（trajectory fracture 的命名）
+
+> 原文:"we propose a new algorithm, Dynamic Context Policy Optimization, which enables stable end-to-end reinforcement learning by segmenting trajectories at memory action points and applying trajectory-level advantages to the resulting action segments."
+> 出处：2510.12635 §Abstract（DCPO 的定位）
+
+> 原文:"We model the agent’s interaction as a Markov Decision Process (MDP), allowing the policy to explicitly edit its working memory while pursuing the primary task."
+> 出处：2510.12635 §2.2（MDP 重定义）
+
+> 原文:"Action Space: $\mathcal{A}=\mathcal{A}_{\text{task}}\cup\mathcal{A}_{\text{mem}}$, where $\mathcal{A}_{\text{task}}$ contains task-oriented actions that interact with the external environment, and $\mathcal{A}_{\text{mem}}$ contains memory actions that directly modify the working memory."
+> 出处：2510.12635 §2.2（action space = task ∪ mem。注：底本用 LaTeX 记号，卡片写的 $\mathcal{A}_{\text{task}}$ / $\mathcal{A}_{\text{mem}}$ 与之一致）
+
+> 原文:"This creates what we term a trajectory fracture—a point where the working memory $H_{t+1}$ is no longer a simple extension of $H_{t}$."
+> 出处：2510.12635 §2.3.2（trajectory fracture 的定义）
+
+> 原文:"We define a segment $\sigma_{i}$ as the subsequence between two consecutive memory actions at $t^{\text{mem}}_{i}$ and $t^{\text{mem}}_{i+1}$, sharing a common prefix $H_{t^{\text{mem}}_{i}}$ and generating a new sequence over $(t^{\text{mem}}_{i},\ t^{\text{mem}}_{i+1}]$."
+> 出处：2510.12635 §2.3.2（Segmentation 定义）
+
+> 原文:"This ensures that the gradient for each token is computed using the exact context under which it was generated."
+> 出处：2510.12635 §2.3.2（分段的核心好处：避免 mismatch）
+
+> 原文:"we use the trajectory-level group-normalized advantage estimation method from GRPO (Shao et al., 2024)."
+> 出处：2510.12635 §2.3.3（trajectory-level advantage 来自 GRPO）
+
+> 原文:"is a binary mask indicating newly generated tokens within each segment."
+> 出处：2510.12635 §2.3.3（loss 中 $m^{\sigma_i}_t$ 的语义：只对新生成 token 算梯度）
+
+> 原文:"In our implementation, memory management is operationalized via a dedicated prune_context tool."
+> 出处：2510.12635 §3.2.1（prune_context 工具）
+
+> 原文:"When the agent determines that the context needs to be condensed, it invokes the prune_context tool with two arguments: a model-generated summary synthesizing the key information to be retained, and a list of ids_to_prune corresponding to the historical records to be deleted."
+> 出处：2510.12635 §3.2.1（prune_context 的两个参数：summary + ids_to_prune）
+
+> 原文:"we prompted DeepSeek-V3.1 to emulate MemAct-style behavior, thereby generating a high-quality trajectory dataset for policy initialization."
+> 出处：2510.12635 §3.1（cold-start 数据由 DeepSeek-V3.1 模拟生成）
+
+> 原文:"From more than 800 successful trajectories, over 3,000 segments were extracted for fine-tuning."
+> 出处：2510.12635 §3.1（800+ 条成功轨迹 → 3000+ segments）
+
+> 原文:"We perform training for 6 epochs with a batch size of 256."
+> 出处：2510.12635 §3.2.1（cold-start SFT：6 epoch）
+
+> 原文:"The learning rate is set to $5\times 10^{-5}$ and follows a cosine decay schedule with a warmup ratio of 0.1."
+> 出处：2510.12635 §3.2.1（cold-start SFT 学习率 5e-5）
+
+> 原文:"we trained the agent on a dataset combining 8,000 multi-hop QA examples from Asearcher with 8,000 synthesized multi-objective tasks from HotpotQA."
+> 出处：2510.12635 §3.1（RL 数据：8k multi-hop + 8k multi-objective）
+
+> 原文:"The training distribution was deliberately biased toward lower-complexity tasks (fewer than four objectives) to increase generalization pressure and encourage the emergence of robust memory management strategies."
+> 出处：2510.12635 §3.1（训练数据偏向简单任务的依据）
+
+> 原文:"For the primary DCPO training phase, we use a batch size of 128."
+> 出处：2510.12635 §3.2.1（DCPO batch=128）
+
+> 原文:"we generate $N_{\text{traj}}=8$ trajectories for each prompt and sample $N_{\text{seg}}=16$ segments for each policy update step."
+> 出处：2510.12635 §3.2.1（N_traj=8 / N_seg=16）
+
+> 原文:"The policy is optimized with the AdamW optimizer using a learning rate of $1\times 10^{-6}$."
+> 出处：2510.12635 §3.2.1（DCPO lr=1e-6）
+
+> 原文:"Trajectories are terminated if they exceed a maximum of 35 tool-use turns (including both task and memory actions)."
+> 出处：2510.12635 §3.2.1（max_turns=35）
+
+> 原文:"The reward signal is determined by a gpt-oss (OpenAI, 2025) based evaluator, which assesses whether the agent’s final answer is consistent with the ground truth."
+> 出处：2510.12635 §3.2.1（reward 由 gpt-oss 评估器给出）
+
+> 原文:"we set the parameters to $r_{\text{task}}=+1.0$ and $r_{\text{pen}}=-0.1$."
+> 出处：2510.12635 §3.2.1（reward 参数 +1.0 / −0.1）
+
+> 原文:"The training data is constrained to simpler tasks with two to four objectives, while evaluation is performed on more complex test sets with up to eight objectives to measure generalization."
+> 出处：2510.12635 §3.1（Multi-Objective QA 的 2-4 / 至多 8 个目标）
+
+> 原文:"Our MemAct-14B-RL model achieves a leading average accuracy of 59.1%, outperforming all baselines, including the much larger Qwen3-235B model."
+> 出处：2510.12635 §3.4（59.1% 准确率；「14B ≥ 235B」的原始表述）
+
+> 原文:"Furthermore, this level of performance is achieved with an average context of only 3,447 input tokens per round (Figure 2a), in sharp contrast to the Search-R1-14B agent, which requires a substantially larger context (8,625 tokens) for lower accuracy."
+> 出处：2510.12635 §3.4（3,447 vs 8,625 tokens/round）
+
+> 原文:"For the more capable 14B model, RL leads to an efficiency-oriented strategy."
+> 出处：2510.12635 §3.4（14B 的 emergent 策略：效率导向）
+
+> 原文:"In contrast, for the smaller 7B model, RL promotes a strategy of extending the reasoning process."
+> 出处：2510.12635 §3.4（7B 的 emergent 策略：补偿导向）
+
+> 原文:"This suggests a compensatory policy: the model attempts to overcome its limited internal knowledge by gathering more external information for each sub-objective, which in turn necessitates more intensive memory management."
+> 出处：2510.12635 §3.4（7B 补偿策略的原文解释）
+
+> 原文:"These findings indicate that the MemAct framework does not enforce a single, rigid strategy."
+> 出处：2510.12635 §3.4（不强加固定策略）
+
+> 原文:"Our final model, MemAct-14B-RL, achieves an average score of 0.567, nearly on par with the Search-R1 baseline’s score of 0.572."
+> 出处：2510.12635 §3.4（Multi-hop QA 平均 0.567 vs 0.572）
+
+> 原文:"| Base | 0.580 | 0.488 | 0.655 | 0.233 | 0.275 | 0.446 |"
+> 出处：2510.12635 §3.4 表 1（Base = Qwen2.5-14B-Instruct 行）
+
+> 原文:"| + Sliding Window | 0.535 | 0.472 | 0.560 | 0.271 | 0.215 | 0.411 |"
+> 出处：2510.12635 §3.4 表 1（Sliding Window 行）
+
+> 原文:"| + Sliding Window w/ Summary | 0.540 | 0.442 | 0.692 | 0.268 | 0.335 | 0.455 |"
+> 出处：2510.12635 §3.4 表 1（Sliding Window + Summary 行）
+
+> 原文:"| + Search-R1 w/ Cold-Start | 0.775 | 0.624 | 0.723 | 0.364 | 0.376 | 0.572 |"
+> 出处：2510.12635 §3.4 表 1（Search-R1 Cold-Start 行）
+
+> 原文:"| + MemAct (SFT) | 0.764 | 0.616 | 0.705 | 0.330 | 0.359 | 0.555 |"
+> 出处：2510.12635 §3.4 表 1（MemAct-SFT 行）
+
+> 原文:"| + MemAct (RL) | 0.767 | 0.618 | 0.710 | 0.353 | 0.385 | 0.567 |"
+> 出处：2510.12635 §3.4 表 1（MemAct-RL 行）
+
+> 原文:"For our 7B model, employing MemAct within the DCPO framework reduced the duration of the rollout phase by approximately 40% and the policy update phase by 25%."
+> 出处：2510.12635 §3.4 Training Efficiency（rollout −40% / update −25%）
+
+> 原文:"The reward signal is determined by a gpt-oss (OpenAI, 2025) based evaluator"
+> 出处：2510.12635 §3.3 Metrics（评估可机评信号）
+
+> 原文:"All experiments were conducted on NVIDIA H100 GPUs."
+> 出处：2510.12635 §3.2.1（训练硬件为 H100）

@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2601.02752
+paper: "EComStage: Stage-wise and Orientation-specific Benchmarking for Large Language Models in E-commerce"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: EComStage — 电商 Agent 三阶段双向评估框架
@@ -255,6 +258,40 @@ python ecomstage_eval.py
 4. **代码可立即跑**:close-ended 用 accuracy,open-ended 用 cosine sim,实现非常标准
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Qwen3-4B-Instruct achieves the highest overall score (82.26)"
+> 出处：2601.02752 §4.2.2 Open-source Models less than 7B
+>
+> 原文:"Among them, Claude Sonnet 4 achieves the best average score (84.21), followed closely by Gemini 2.5-Pro (84.01)."
+> 出处：2601.02752 §4.2.1 Closed-source APIs
+>
+> 原文:"In contrast, Gemini 2.5-Pro achieves the highest accuracy in Solution Decision, benefiting from its enhanced long-term planning ability"
+> 出处：2601.02752 §4.2.1 Closed-source APIs
+>
+> 原文:"Notably, GPT-4o, previously one of the strongest LLMs, shows relative weakness on merchant-oriented tasks."
+> 出处：2601.02752 §4.3 Stage-wise and Side-wise Comparison
+>
+> 原文:"Our experiments reveal that no single model consistently excels across all tasks, stages, or orientations."
+> 出处：2601.02752 §4.3 Stage-wise and Side-wise Comparison
+>
+> 原文:"EComStage evaluates LLMs through seven separate representative tasks spanning diverse e-commerce scenarios, with all samples human-annotated and quality-checked."
+> 出处：2601.02752 Abstract
+>
+> 原文:"We evaluate a wide range of over 30 LLMs, spanning from 1B to over 200B parameters, including open-source models and closed-source APIs, revealing stage/orientation-specific strengths and weaknesses."
+> 出处：2601.02752 Abstract
+>
+> 原文:"Unlike prior benchmarks that focus only on customer-oriented interactions, EComStage also evaluates merchant-oriented scenarios, including promotion management, content review, and operational support relevant to real-world applications."
+> 出处：2601.02752 Abstract
+>
+> 原文:"Specifically, our Planning set contains only 164 samples, but each sample spans multiple merchant scenarios, making it highly informative despite the smaller quantity. Overall, the benchmark includes five close-ended tasks and two open-ended generation tasks."
+> 出处：2601.02752 §4.2 Main Experimental Results
+>
+> 原文:"| Total instances | 4804 |"
+> 出处：2601.02752 §3.2 Tasks, Table 2
 
 ## 参考论文
 

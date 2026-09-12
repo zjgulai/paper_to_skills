@@ -1,3 +1,13 @@
+---
+paper_id: 2312.04668
+paper: "TOD-Flow: Modeling the Structure of Task-Oriented Dialogues"
+venue: arXiv preprint (LG AI Research / University of Michigan)
+evidence_basis: paper-verbatim
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 客服对话决策图
 # Dialogue-to-Action Graph
 
@@ -194,3 +204,61 @@ python3 model.py
 - 论文方法可直接复用到客服场景
 
 **综合评分: 8/10**
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"The inferred TOD-Flow graph can be easily integrated with any dialogue model to improve its prediction performance, transparency, and controllability."
+> 出处：2312.04668 Abstract
+
+> 原文:"Our TOD-Flow graph learns what a model can, should, and should not predict, effectively reducing the search space and providing a rationale for the model’s prediction."
+> 出处：2312.04668 Abstract
+
+> 原文:"Our TOD-Flow graph captures the causal dependency between dialog acts in terms of can, should, and should not relationships."
+> 出处：2312.04668 Figure 1 caption
+
+> 原文:"First, we show that subtask graph can infer the relationship between dialog state and dialog acts without requiring any manual definition of nodes and edges in graphs."
+> 出处：2312.04668 §1 Introduction
+
+> 原文:"Second, in addition to the precondition (or can relationship), we present learning algorithms to model two novel relationships, should and should not, which provide more fine-grained control and improved prediction."
+> 出处：2312.04668 §1 Introduction
+
+> 原文:"For instance, a can relationship may represent that the system can make a payment only if the user confirms the payment."
+> 出处：2312.04668 §1 Introduction
+
+> 原文:"The should relationship may learn that if a user ask about the address of the hotel, the system should reply back."
+> 出处：2312.04668 §1 Introduction
+
+> 原文:"We use the graph to condition each candidate result, then select the best one using a selection method such as most number of actions in set, candidate with least graph violations, etc."
+> 出处：2312.04668 §4.1 Graph-conditioned Dialog Policy
+
+> 原文:"We can further improve the prediction performance if our baseline dialog model can be sampled multiple times with different results, as illustrated in Figure 2."
+> 出处：2312.04668 §4.1 Graph-conditioned Dialog Policy
+
+> 原文:"We empirically found that simply choosing the result with the most actions works best."
+> 出处：2312.04668 §4.1 Graph-conditioned Dialog Policy
+
+> 原文:"We used two standard TOD benchmarks."
+> 出处：2312.04668 §5.1 Datasets
+
+> 原文:"SGD covers a wide range of domains (i.e., different dialog acts and goals)."
+> 出处：2312.04668 §5.1 Datasets
+
+> 原文:"We use 24 domains in SGD, and did not use the schema for experiment."
+> 出处：2312.04668 §5.1 Datasets
+
+> 原文:"MultiWOZ (Budzianowski et al., 2020) has 10k humanhuman conversations on 14 domains."
+> 出处：2312.04668 §5.1 Datasets
+
+> 原文:"Overall, we observe that TOD-Flow consistently improves the prediction accuracy with a significant margin compared to other baselines BC and MSG2 on all base models and all dataset."
+> 出处：2312.04668 §5.2 Results
+
+> 原文:"Importantly, we have integrated these inferred graphs with a range of dialogue models, without necessitating retraining, resulting in a substantial enhancement in performance in both dialog act classification and end-toend response generation."
+> 出处：2312.04668 §6 Conclusion
+
+> 原文:"We also relied on action annotations from the datasets to infer graphs, which limits the applicability of our approach."
+> 出处：2312.04668 Limitations
+
+> 原文:"It would be interesting to extend our approach to unannotated raw dialogues."
+> 出处：2312.04668 Limitations

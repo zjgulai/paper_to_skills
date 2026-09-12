@@ -1,3 +1,13 @@
+---
+paper_id: 2405.07195
+paper: "InsightNet : Structured Insight Mining from Customer Feedback"
+venue: arXiv preprint (Amazon)
+evidence_basis: paper-verbatim
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: VOC 自动打标签与自进化标签体系
 # AutoTag Self-Evolving Label System for VOC
 
@@ -301,6 +311,58 @@ report = bridge_autotag_to_kano(predictions, intensity_results)
 - **可落地性**: 技术方案成熟（InsightNet 已在 Amazon 生产环境验证）
 - **复利效应**: 标签体系越用越准，数据飞轮效应强
 - **组合价值**: 与现有 5+ 个 Skill 可组合，产生协同价值
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We empirically demonstrate that InsightNet outperforms the current state-of-the-art methods in multi-label topic classification, achieving an F1 score of 0.85, which is an improvement of 11% F1-score over the previous best results."
+> 出处：2405.07195 Abstract
+
+> 原文:"We model aspect identification as a multi-task hierarchical classification problem and then leverage the generative model (section 4.1) to classify topic (granular aspect), identify sentiment, extract verbatim and also discover new topics that are not in the current taxonomy."
+> 出处：2405.07195 §1 Introduction
+
+> 原文:"We propose a bottom-up method to generate a hierarchical auto-taxonomy from reviews with weak supervision."
+> 出处：2405.07195 §4.2 AutoTaxonomy: Semi-supervised Taxonomy Creation
+
+> 原文:"This means we start with identifying Granular Topics from the reviews, then group them into broader (high-level) topics."
+> 出处：2405.07195 §4.2 AutoTaxonomy: Semi-supervised Taxonomy Creation
+
+> 原文:"We either enrich taxonomy with these topics as fine-grained subtopics (L4 topics) or as novel topics (new L3 topics)."
+> 出处：2405.07195 §4.4 Post-Processing
+
+> 原文:"We conducted a comprehensive evaluation of our proposed methodology across a diverse set of 43 categories, encompassing over 2200+ distinct product types, which collectively represent more than 95% of the global volume of reviews."
+> 出处：2405.07195 §5.4 Experimental Results & Baselines
+
+> 原文:"Specifically, our approach can generate over 1200+ unique topics that capture both positive and negative aspects of the reviews, while Aspect Clustering produces many redundant topics for the same level of coverage."
+> 出处：2405.07195 §5.4 Experimental Results & Baselines
+
+> 原文:"Moreover, our approach ensures that the topics are consistent and coherent across reviews and product categories, with only 12% of them being duplicates that can be easily merged in post-processing."
+> 出处：2405.07195 §5.4 Experimental Results & Baselines
+
+> 原文:"We also observed around 15% new topics have emerged which were not part of taxonomy (detailed analysis in Appendix section A.3)."
+> 出处：2405.07195 §5.4 Experimental Results & Baselines
+
+> 原文:"We analyzed $\sim 10k$ reviews spanning across product categories and found that our model generated $\sim$1450+ unique topics."
+> 出处：2405.07195 §A.3 Observations on new topic discovery
+
+> 原文:"Out of these, $\sim$1200+ topics matched the existing taxonomy, while $\sim$200+ topics ($\sim$20%) were new and emerged from post-processing."
+> 出处：2405.07195 §A.3 Observations on new topic discovery
+
+> 原文:"The auto-taxonomy generated using reviews from 40+ product categories resulted in 8 L1 topics, 600+ L2 topics, and 1200+ L3 topics ."
+> 出处：2405.07195 §C.2 Discussion on Taxonomy
+
+> 原文:"InsightNet surpasses the state-of-the-art methods by 11% F1-score on overall performance metrics, and achieves 85% F1-score on topic classification."
+> 出处：2405.07195 §6 Conclusion
+
+> 原文:"This strategy achieved an F1-score of 0.80, which was considerably higher than the other variations."
+> 出处：2405.07195 §5.2 Prompt Engineering
+
+> 原文:"Specifically, we used around $75k$ reviews for training and $10k$ reviews for testing, thereby ensuring coverage across all product categories and granular topics."
+> 出处：2405.07195 §5.4 Experimental Results & Baselines
+
+> 原文:"Additionally, InsightNet generalises well for unseen aspects and suggests new topics to be added to the taxonomy."
+> 出处：2405.07195 Abstract
 
 ---
 

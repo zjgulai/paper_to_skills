@@ -1,3 +1,12 @@
+---
+title: "Skill Card: PERSONABOT RAG Persona Generation"
+module: 07-NLP-VOC
+paper_id: 2505.17156
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: PERSONABOT RAG Persona Generation
 # PERSONABOT RAG用户画像生成
 
@@ -309,6 +318,57 @@ python3 model.py
 - 画像生成自动化率：100%（vs 原人工标注20%）
 - 画像维度丰富度：15+维度（vs 原5维）
 - 营销转化率：+60%
+
+---
+
+## ⑥ 原文引用
+
+本节仅收录本卡底本（arXiv:2505.17156 全文）中可逐字核验的原句。②/⑤ 段的商业测算数字（转化率、客单价、人天、年化 ROI 等）为本地业务估算，论文中不存在，未在此罗列。
+
+> 原文:"The main objective of this paper is to generate synthetic customer personas and integrate them into a Retrieval-Augmented Generation (RAG) chatbot to support decision-making in business processes."
+> 出处：2505.17156 §Abstract
+
+> 原文:"Next, synthetic personas are generated using Few-Shot and Chain-of-Thought (CoT) prompting techniques and evaluated based on completeness, relevance, and consistency using McNemar’s test."
+> 出处：2505.17156 §Abstract
+
+> 原文:"After augmenting the knowledge base, the average accuracy rating of the chatbot increased from 5.88 to 6.42 on a 10-point scale, and 81.82% of participants found the updated system useful in business contexts."
+> 出处：2505.17156 §Abstract
+
+> 原文:"The average rating across all evaluators was 5.88."
+> 出处：2505.17156 §4.1.1 Quantitative Results
+
+> 原文:"The McNemar test produced a test statistic of 1.0 and a p-value of 0.0063, indicating a statistically significant difference between the two prompting methods."
+> 出处：2505.17156 §4.2.1 Quantitative Results
+
+> 原文:"As shown in contingency table 5, in 11 cases evaluators rated the Few-Shot persona as complete and the CoT persona as not complete, and in only 1 case the opposite occurred."
+> 出处：2505.17156 §4.2.1 Quantitative Results
+
+> 原文:"The evaluation was carried out by three expert evaluators (n=3), each of whom reviewed a total of 5 personas."
+> 出处：2505.17156 §4.2.1 Quantitative Results
+
+> 原文:"In this study, personas were created using two different prompting techniques: few-shot prompting and CoT prompting. GPT-4o Mini was selected as the language model for persona generation."
+> 出处：2505.17156 §3.4 Generation Of Synthetic Customer Personas
+
+> 原文:"In the few-shot prompting technique, the model was provided with three verified personas as examples."
+> 出处：2505.17156 §3.4 Generation Of Synthetic Customer Personas
+
+> 原文:"The role of the RAG system is to act as a conversational agent that allows users to query information based on customer persona data and general information about different segments."
+> 出处：2505.17156 §3.5 Building the RAG system
+
+> 原文:"The first type of data used was the Customer Success Stories, which served as input for generating synthetic customer personas."
+> 出处：2505.17156 §3.3.1 Customer Success Story
+
+> 原文:"These results indicate that CoT prompting outperformed Few-Shot as it required less time and fewer tokens, making it superior and computationally more efficient."
+> 出处：2505.17156 §4.2.1 Quantitative Results
+
+> 原文:"The evaluation revealed that Few-Shot prompting significantly outperformed CoT prompting in terms of completeness."
+> 出处：2505.17156 §4.2.2 Summary of Findings
+
+> 原文:"Augmenting the knowledge base with synthetic personas and segment-specific information resulted in a slight increase in accuracy, with the average rating rising to 6.42."
+> 出处：2505.17156 §4.3.2 Summary of Findings
+
+> 原文:"For synthetic persona generation, the data source was restricted to customer success stories, which mainly showcased positive customer experiences."
+> 出处：2505.17156 §6.2 Limitations
 
 ---
 

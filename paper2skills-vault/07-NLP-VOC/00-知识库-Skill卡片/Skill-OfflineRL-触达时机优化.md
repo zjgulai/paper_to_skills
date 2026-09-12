@@ -1,3 +1,12 @@
+---
+title: Skill: 离线RL触达时机优化 - 不打扰的最优干预
+module: 07-NLP-VOC
+paper_id: 2202.03867
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill: 离线RL触达时机优化 - 不打扰的最优干预
 
 ## 基础信息
@@ -141,3 +150,58 @@ action_probabilities = {
 
 **难度**: ⭐⭐⭐⭐⭐ (5/5) - 需要RL基础设施  
 **优先级**: P5 - 营销优化方向进阶技能
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We propose an offline reinforcement learning framework to optimize sequential notification decisions for driving user engagement."
+> 出处：2202.03867 §Abstract
+
+> 原文:"We describe a state-marginalized importance sampling policy evaluation approach, which can be used to evaluate the policy offline and tune learning hyperparameters."
+> 出处：2202.03867 §Abstract
+
+> 原文:"we collect data through online exploration in the production system, train an offline Double Deep Q-Network and launch a successful policy online."
+> 出处：2202.03867 §Abstract
+
+> 原文:"a user’s experience depends on a sequence of notifications and attributing impact to a single notification is not always accurate, if not impossible."
+> 出处：2202.03867 §Abstract
+
+> 原文:"Most machine learning applications in notification systems are built around response-prediction models, trying to attribute both short-term impact and long-term impact to a notification decision."
+> 出处：2202.03867 §Abstract
+
+> 原文:"Although intrusive and frequent notifications can bring users back to site, they could create notification fatigue or cause notification disablement, which hurts user engagement in the long run"
+> 出处：2202.03867 §I Introduction
+
+> 原文:"We propose a state-marginalized importance sampling algorithm for offline evaluation to reduce the high variance of the existing importance sampling based algorithms."
+> 出处：2202.03867 §I Introduction（贡献之一）
+
+> 原文:"In this paper, we focus our discussions on applying reinforcement learning to such time-insensitive notifications to determine the best delivery times towards long-term engagement."
+> 出处：2202.03867 §III Notification delivery time optimization
+
+> 原文:"We consider a discrete action space consisting of two actions - SEND (send the notification candidate to the user) and NOT-SEND (the notification candidate is put back in the notification queue for further considerations)."
+> 出处：2202.03867 §III-B Markov Decision Process for Notification Spacing
+
+> 原文:"In this paper, we use a user visit to the platform within the next time step as a reward."
+> 出处：2202.03867 §III-B Markov Decision Process for Notification Spacing
+
+> 原文:"The reward can also be defined as notification clicks, or notification disables as negative rewards or a linear combination of them."
+> 出处：2202.03867 §III-B Markov Decision Process for Notification Spacing
+
+> 原文:"Our proposed offline solution is a combination of Offline Deep Q-Network (DQN) and data collection with well-controlled online exploration."
+> 出处：2202.03867 §IV-A Offline Training
+
+> 原文:"We then train the Double DQN models described in Section IV-A using a fully-connected 3-layer neural network with different hyper-parameters"
+> 出处：2202.03867 §V-B Online Experiments in Notification Spacing
+
+> 原文:"Compared with the baseline policy, the new policy from offline reinforcement learning increased the total sessions by $0.3\%$, which is considered a moderate gain in a volume neutral iteration, but very impressive given that the total notification volume is reduced by $3.49\%$."
+> 出处：2202.03867 §V-B Online Experiments in Notification Spacing（表 I 线上 A/B 结果）
+
+> 原文:"The $4.53\%$ increase in notification CTR and $4.37\%$ decrease in notification unfollow total are mainly driven by the reduction in notification volume."
+> 出处：2202.03867 §V-B Online Experiments in Notification Spacing（表 I 线上 A/B 结果）
+
+> 原文:"The tuning typically takes 1-3 weeks for notifications as site engagement responses takes days to show up."
+> 出处：2202.03867 §V-B Online Experiments in Notification Spacing
+
+> 原文:"One of the limitations of our presented results is that we trained and tested this framework in a one-week frame."
+> 出处：2202.03867 §VI Discussion（论文自承局限）

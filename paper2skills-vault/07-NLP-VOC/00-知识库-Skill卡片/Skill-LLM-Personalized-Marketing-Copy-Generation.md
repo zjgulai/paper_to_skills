@@ -5,9 +5,11 @@ module: 07-NLP-VOC
 topic: marketing-copy-personalization
 status: stable
 created: 2026-04-27
-updated: 2026-04-27
+updated: 2026-09-12
 owner: self
 source: human+ai
+paper_id: 2505.23809
+evidence_basis: paper-verbatim
 ---
 
 # Skill: LLM 驱动个性化营销文案生成
@@ -272,6 +274,64 @@ python3 model.py
 2. 用户画像需与文案属性有清晰映射关系
 3. 人工终审不可省略（LLM 生成 + 人把关 = 最佳性价比）
 4. 建立文案效果追踪，用数据驱动 Prompt 迭代
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Leveraging LLMs’ language generation capabilities, we propose a framework that integrates prompt engineering, multiobjective fine-tuning, and post-processing to generate marketing copy that is both engaging and conversion-driven."
+> 出处：2505.23809 Abstract
+
+> 原文:"Through offline evaluations and online A/B tests across categories, our approach achieves a 12.5% increase in CTR and 8.3% in CVR while maintaining content novelty."
+> 出处：2505.23809 Abstract
+
+> 原文:"The system consists of four modules—data preprocessing, LLM fine-tuning, post-processing, and review— designed to generate personalized, conversion-focused marketing copy."
+> 出处：2505.23809 §3.1
+
+> 原文:"These guidelines included preferred tone of voice, forbidden keywords, and structural requirements for different product categories, ensuring the generated copy aligns with established brand identities and market conventions."
+> 出处：2505.23809 §3.1
+
+> 原文:"Composite prompts combine user queries, persona, and product context."
+> 出处：2505.23809 §3.1
+
+> 原文:"Combining diversity and conversion predictions yields a weighted reward"
+> 出处：2505.23809 §3.2
+
+> 原文:"These mechanisms work in concert: we first filter for maximum diversity, then predict conversion for each candidate, and finally apply the weighted ranking to output the topK copies for post-processing and review"
+> 出处：2505.23809 §3.2
+
+> 原文:"We quantify creativity by the inverse average cosine similarity among generated copy embeddings"
+> 出处：2505.23809 §3.2
+
+> 原文:"A seven-day 1:1 live A/B test measures CTR lift for real-world impact."
+> 出处：2505.23809 §4.1
+
+> 原文:"A seven-day randomized traffic-split assigns sessions to Control, Treatment A, or B using a fixed seed, ensuring consistency."
+> 出处：2505.23809 §4.2
+
+> 原文:"Post-test, Z-tests and chi-square tests assess significance (p < 0.05), confirming valid performance lifts for rollout and further optimization"
+> 出处：2505.23809 §4.2
+
+> 原文:"As λ increases from 0.2 to 0.8, the diversity score climbs steadily—from 0.42 to 0.68—indicating that higher λ values indeed yield more varied, creative outputs."
+> 出处：2505.23809 §5.1
+
+> 原文:"However, this gain in novelty comes with diminishing conversion efficiency: CTR drops from 11.3 % to 9.1 %, and CVR falls from 4.7 % to 3.9 %."
+> 出处：2505.23809 §5.1
+
+> 原文:"In fast-moving consumer goods (FMCG), CTR remains high (12.1 %) even with elevated creativity, reflecting strong impulse-buy behavior."
+> 出处：2505.23809 §5.1
+
+> 原文:"Electronics users, however, display more deliberation: at the same λ, CTR is only 8.5 % and CVR 3.5 %, indicating that overly creative copy may distract from technical value propositions"
+> 出处：2505.23809 §5.1
+
+> 原文:"For FMCG, diversity rose from 0.35 to 0.64, CTR from 8.9% to 12.1%, and CVR from 3.8% to 5.2%, reducing information fatigue and improving conversion by over 35%."
+> 出处：2505.23809 §5.2
+
+> 原文:"Moreover, Our LLM-driven framework outperforms traditional copywriting across all metrics at λ=0.6, showing higher diversity, CTR, and CVR."
+> 出处：2505.23809 §5.2
+
+> 原文:"Offline evaluations and small-traffic A/B tests show that setting λ = 0.6 yields high novelty with stable gains (CTR +10.4%, CVR +4.1%)."
+> 出处：2505.23809 §7
 
 ---
 

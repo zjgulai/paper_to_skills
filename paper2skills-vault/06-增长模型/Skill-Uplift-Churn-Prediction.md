@@ -1,3 +1,19 @@
+---
+title: Skill-Uplift-Churn-Prediction
+module: 06-增长模型
+topic: 用 Uplift/ITE 而非流失概率本身，识别「干预才留下」的可说服者
+status: draft
+created: 2026-05-15
+updated: 2026-09-12
+owner: self
+source: ai
+paper_id: 2312.07206
+paper: A churn prediction dataset from the telecom sector: a new benchmark for uplift modeling
+evidence_basis: paper-verbatim
+verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+related: Skill-Customer-Journey-Prototype.md, Skill-DQN-Purchase-Prediction.md
+---
+
 # Skill Card: Uplift Modeling for Churn Prediction
 
 **论文来源**: A churn prediction dataset from the telecom sector: a new benchmark for uplift modeling  
@@ -174,6 +190,61 @@ python3 model.py
 1. **MVP阶段**（2周）：用历史优惠券实验数据训练模型，输出四象限分群报告
 2. **试点阶段**（2周）：选择"兴趣期+价格敏感"用户群体进行A/B测试
 3. **全面推广**（1个月）：集成到优惠券发放系统，实现自动化分群触达
+
+---
+
+## ⑥ 原文引用
+
+> 原文："This is the first publicly available dataset offering the possibility to evaluate the efficiency of uplift modeling on the churn prediction problem."
+> 出处：2312.07206 §Abstract（PDF 第 1 页）
+
+> 原文："Uplift modeling, also known as individual treatment effect (ITE) estimation, is an important approach for data-driven decision making that aims to identify the causal impact of an intervention on individuals."
+> 出处：2312.07206 §Abstract（PDF 第 1 页）
+
+> 原文："Uplift modeling, often called the conditional average treatment effect, has become a crucial tool for data-driven decision making. This modeling technique estimates the effect that a particular intervention or treatment has on individuals, enabling the selection of only those individuals who are likely to have a positive reaction to the action."
+> 出处：2312.07206 §1 Introduction（PDF 第 1 页）
+
+> 原文："Churn, in this context, refers to customers terminating their subscription to the telecom service."
+> 出处：2312.07206 §Abstract（PDF 第 1 页）
+
+> 原文："To address this issue, this paper introduces a new churn dataset for uplift modeling, coming from a major telecom company in Belgium, Orange Belgium."
+> 出处：2312.07206 §1 Introduction（PDF 第 1 页）
+
+> 原文："A subset of these high-risk customers was randomly assigned to the control group, while the remaining customers formed the target group."
+> 出处：2312.07206 §2 Churn campaigns（PDF 第 1 页）
+
+> 原文："The churn outcome is determined in a two-month window following the campaign, and any subsequent churn is not attributed to this specific campaign."
+> 出处：2312.07206 §2 Churn campaigns（PDF 第 1 页）——论文的观察窗是 **two-month**，本卡 ② 写的「30 天内是否流失」是卡片自定的业务口径
+
+> 原文："The churn dataset consists of 11,896 samples, a relatively small number compared to other publicly available uplift datasets. However, it has a larger number of features, totaling 178."
+> 出处：2312.07206 §3 Description（PDF 第 2 页）
+
+> 原文："The treatment predictor has a loss of 23.82% (close to the proportion of control samples, 24.26%), which corresponds to a p-value of 0.26 under the null hypothesis."
+> 出处：2312.07206 §4 Randomization（PDF 第 3 页）——随机化校验（Classifier 2 Sample Test）
+
+> 原文："Estimated probabilities are reported in Table 3, along with the business name associated with the four counterfactuals."
+> 出处：2312.07206 §3 表 3（PDF 第 3 页）——「必然转化者 / 可说服者 / 无法挽回者 / 不要打扰者」四象限即出自此表
+
+> 原文："This suggests that a negligible number of customers are likely to churn regardless of the targeted marketing action."
+> 出处：2312.07206 §3 表 3 后的分析（PDF 第 3 页）
+
+> 原文："We also observe that the churn dataset is more balanced between positive and negative causal effects (second and third rows), whereas, in both the Hillstrom and Criteo datasets, there is a larger proportion of individuals with a positive causal effect (persuadable customers, third row)."
+> 出处：2312.07206 §3（PDF 第 3 页）
+
+> 原文："We used the classical random forest (RF) model [1], the T-learner uplift model [11], and the uplift random forest [8]."
+> 出处：2312.07206 §5 Benchmark experimental setup（PDF 第 4 页）——论文基准里**没有 X-Learner，也没有 S-Learner**
+
+> 原文："The performance of each model was estimated in terms of the area under the uplift curve (AUUC) [7]."
+> 出处：2312.07206 §5 Benchmark experimental setup（PDF 第 4 页）——评价指标是 **AUUC**，不是 Qini
+
+> 原文："Interestingly, the performance of the outcome RF model is consistently the highest, showing that the uplift approach is not always preferable, as discussed in [5, 6]."
+> 出处：2312.07206 §6 Results（PDF 第 4 页）
+
+> 原文："Finally, we observed in a benchmark experiment that classical predictive modeling is more effective than uplift modeling [5, 6]. This has also been observed in practice by our industrial partner."
+> 出处：2312.07206 §7 Conclusion（PDF 第 5 页）——**负结果**：本文的基准里普通流失预测（outcome RF）反而最好；仅凭本卡断言「干预对谁有效」会与本文结论相反
+
+> **口径提示（不改正文，仅记录）**：本卡 ②⑤ 的全部数字（节省比例区间、挽回率区间、月成本、年节省金额、倍数、人天/周数）均为**业务假设代入**，论文没有对应数字；
+> 论文可核验的对应量只有 11,896 样本 / 178 特征、随机化校验、表 3 的四类反事实分布，以及 §6–§7 的**负结果**。
 
 ---
 

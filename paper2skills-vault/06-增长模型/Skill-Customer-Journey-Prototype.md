@@ -1,3 +1,19 @@
+---
+title: Skill-Customer-Journey-Prototype
+module: 06-增长模型
+topic: 用加权编辑距离做旅程序列原型检测 → k-NN 购买预测 → 反事实序列推荐
+status: draft
+created: 2026-05-15
+updated: 2026-09-12
+owner: self
+source: ai
+paper_id: 2505.11086
+paper: Analysis of Customer Journeys Using Prototype Detection and Counterfactual Explanations for Sequential Data
+evidence_basis: paper-verbatim
+verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+related: Skill-User-Lifecycle-STAN.md, Skill-Cold-Start-Product-Recommendation.md
+---
+
 # Skill Card: Customer Journey Prototype Detection 客户旅程序列原型检测
 
 **论文来源**: Analysis of Customer Journeys Using Prototype Detection and Counterfactual Explanations for Sequential Data  
@@ -164,6 +180,52 @@ python3 model.py
 1. **MVP阶段**（1周）：用历史数据检测原型，输出典型旅程模式报告
 2. **试点阶段**（1周）：选择"加购未支付"场景，对比反事实推荐效果
 3. **产品化**（2周）：集成到CRM/营销自动化系统，实时生成干预建议
+
+---
+
+## ⑥ 原文引用
+
+> 原文："In this study, we propose a novel approach comprising three steps for analyzing customer journeys. First, the distance between sequential data is defined and used to identify and visualize representative sequences. Second, the likelihood of purchase is predicted based on this distance. Third, if a sequence suggests no purchase, counterfactual sequences are recommended to increase the probability of a purchase using a proposed method, which extracts counterfactual explanations for sequential data."
+> 出处：2505.11086 §Abstract（PDF 第 1 页）
+
+> 原文："(1) First, the distances between sequential data are calculated using weighted Levenshtein distance, and prototypes (typical patterns) are extracted by clustering using k-medoids and then visualized. (2) Next, using these distances, predictions are made using nonparametric regression techniques such as k-nearest neighbor (k-NN). (3) Finally, based on these predictions, measures are proposed to improve specific sequences using counterfactual explanation."
+> 出处：2505.11086 §1 Introduction（PDF 第 3 页）
+
+> 原文："Clustering was evaluated using the Silhouette Coefficient (SC) for cluster sizes k ∈ {2, 3, 4, 5, 6, 7, 8}"
+> 出处：2505.11086 §3.2.2 Results of Prototype Detection and Visualization（PDF 第 11 页）——注意：原型个数 k 由轮廓系数在 k=2…8 上选取，**不是**「业务经验定 3-7 个」
+
+> 原文："The typical sequences extracted under the setting w1 = 2, w2 = 1, w3 = 10 with k = 6 are shown below:"
+> 出处：2505.11086 §3.2.2（PDF 第 11 页）
+
+> 原文："The cluster sizes were as follows: Cluster 1: 14, Cluster 2: 18, Cluster 3: 35, Cluster 4: 9, Cluster 5: 7, and Cluster 6: 20."
+> 出处：2505.11086 §3.2.2（PDF 第 11 页）
+
+> 原文："Comparing the values of each model, the accuracy for k ′ = 5 was approximately 0.81, indicating that it would be possible to predict whether a product will be purchased based on the sequence."
+> 出处：2505.11086 §3.2.3 Results of Prediction and Counterfactual Explanation（PDF 第 13 页）
+
+> 原文："Specifically, four cases are shown in which the original sequence had a label of y = 0 (non-purchase), and an alternative sequence improved the prediction to ŷ = 1 (purchase)."
+> 出处：2505.11086 §3.2.3（PDF 第 13 页）
+
+> 原文："This analysis demonstrated that even minor changes in the sequence of information acquisition and evaluation can influence purchase intentions."
+> 出处：2505.11086 §3.2.3（PDF 第 14 页）
+
+> 原文："It was administered to 127 female university students in Japan over a two-day period from November 30 to December 1, 2022."
+> 出处：2505.11086 §3.1 Data（PDF 第 8 页）
+
+> 原文："As a result, 104 valid samples were obtained. Of these, 86 resulted in a purchase and 18 in a non-purchase."
+> 出处：2505.11086 §3.1 Data（PDF 第 9 页）
+
+> 原文："The questionnaire consisted of 13 predefined combinations of touchpoints and actions:"
+> 出处：2505.11086 §3.1 Data（PDF 第 8 页）
+
+> 原文："These results suggest that after recognizing a product, consumers generally tend to compare or confirm it in physical stores."
+> 出处：2505.11086 §3.2.1 Descriptive Statistics（PDF 第 10 页）
+
+> 原文："To facilitate the recall of recent consumption behavior, respondents were first asked to describe specific brand names and shopping contexts. However, this approach may introduce recall bias—a limitation that is acknowledged in the design of survey-based research."
+> 出处：2505.11086 §3.1 Data（PDF 第 9 页）——论文自承局限，对应本卡 1b 类边界
+
+> **口径提示（不改正文，仅记录）**：本卡 ② 场景 2 的「加购未支付转化率提升」区间与 ⑤ 的全部金额、倍数、人天均为**业务假设代入**，论文中没有对应数字；
+> 论文可核验的对应量只有上方引文里的 k-NN 预测准确率（k′=5）与四条反事实序列由 y=0 翻转为 ŷ=1。
 
 ---
 

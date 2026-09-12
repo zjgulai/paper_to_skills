@@ -8,6 +8,8 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2510.00615
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: ACON — Agent 长上下文压缩与失败驱动准则优化
@@ -285,3 +287,94 @@ python acon.py
 - **先用 ACON** 在现有 Agent 上做 quick win(API-based, 1-2 周见效)
 - **再用 AgeMem** 在客户长周期偏好场景做 RL fine-tune
 - **长期用 Focus / MemAct** 探索 memory-policy 一体化
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We introduce Agent Context Optimization (Acon), a unified framework that optimally compresses both environment observations and interaction histories into concise yet informative condensations."
+> 出处：2510.00615 §Abstract（双重压缩的总体定义）
+
+> 原文:"Acon leverages compression guideline optimization in natural language space: given paired trajectories where full context succeeds but compressed context fails, capable LLMs analyze the causes of failure, and the compression guideline is updated accordingly."
+> 出处：2510.00615 §Abstract（失败驱动的 NL guideline 优化）
+
+> 原文:"As interactions accumulate, contexts grow unbounded as in Figure 2, creating two major challenges."
+> 出处：2510.00615 §1（上下文无界增长这一核心瓶颈）
+
+> 原文:"Second, excessively long contexts dilute relevant information, distracting the model with outdated or extraneous details (Shi et al., 2023)."
+> 出处：2510.00615 §1（长上下文稀释相关信息的依据）
+
+> 原文:"we apply history compression only when the history length exceeds a predefined threshold"
+> 出处：2510.00615 §3.2（History compression 的阈值触发机制）
+
+> 原文:"We similarly apply observation compression only when the observation length exceeds a threshold"
+> 出处：2510.00615 §3.2（Observation compression 的阈值触发机制）
+
+> 原文:"To overcome these challenges, we propose to optimize compression guidelines ${\mathcal{P}}$ (natural language prompts) for context compression, rather than fine-tuning model parameters $\phi$."
+> 出处：2510.00615 §3.3（gradient-free：只优化 prompt 不微调参数）
+
+> 原文:"We instantiate this idea as prompt optimization using an LLM as the optimizer, where the natural language prompt"
+> 出处：2510.00615 §3.3（LLM-as-optimizer 范式）
+
+> 原文:"we perform a second iteration that conditions only on successful task with compressed context, asking the LLM to generate feedback about which information was actually used during execution."
+> 出处：2510.00615 §3.3（CO 步骤只用 success trajectory）
+
+> 原文:"To reduce this cost, we distill the compressor into a smaller model."
+> 出处：2510.00615 §3.4（compressor 蒸馏的动机：compressor 本身有额外调用成本）
+
+> 原文:"Once trained, the student replaces the teacher during inference, decoupling decision making from compression."
+> 出处：2510.00615 §3.4（蒸馏后的部署形态）
+
+> 原文:"We evaluate Acon on three challenging benchmarks that require multi-step interactions across diverse domains."
+> 出处：2510.00615 §4（3 个 long-horizon benchmark）
+
+> 原文:"| No compression | 56.0 | 16.14 | 9.93 | 5.96 | 80.7 | 7.57 | 2.98 | 47.9 | 10.10 | 5.36 | 39.7 | 11.95 | 9.11 |"
+> 出处：2510.00615 §4.1 表 1（AppWorld 无压缩基线：Acc 56.0、Peak 9.93×10³）
+
+> 原文:"$\overline{\underline{\textsc{ut}}}$$\overline{\underline{\textsc{co}}}$ | Acon | 56.5 | 22.82 | 7.33 | 4.69 | 86.0 | 7.09 | 2.84 | 56.2 | 7.48 | 4.43 | 30.2 | 7.44 | 6.55 |"
+> 出处：2510.00615 §4.1 表 1（AppWorld Acon UT+CO 行：Acc 56.5、Peak 7.33×10³ → 56.5% vs 56.0%）
+
+> 原文:"on AppWorld, Acon reduces peak tokens by over 25% while preserving the accuracy of the no compression upper bound"
+> 出处：2510.00615 §4.2（AppWorld peak tokens −25%）
+
+> 原文:"On OfficeBench (2(a)), Acon lowers peak context size by nearly 30% while maintaining accuracy above 74%."
+> 出处：2510.00615 §4.2（OfficeBench peak tokens −30%、准确率 >74%）
+
+> 原文:"| No Compression | 76.84 | 11.52 | 7.27 | 4.43 |"
+> 出处：2510.00615 §4.1 表 2(a)（OfficeBench 无压缩 Acc 76.84；底本表中不带 % 号，卡片写的 76.84% 是同一数字）
+
+> 原文:"$\overline{\underline{\textsc{ut}}}$ | Acon | 74.74 | 13.13 | 4.93 | 3.85 |"
+> 出处：2510.00615 §4.1 表 2(a)（OfficeBench Acon UT 行 Acc 74.74；底本表中不带 % 号）
+
+> 原文:"On 8-objective QA (2(b)), Acon even surpasses the no compression baseline in EM/F1 while reducing peak tokens and dependency by 54.5% and 61.5%, respectively."
+> 出处：2510.00615 §4.2（8-objective QA peak tokens −54.5%，EM/F1 反超无压缩）
+
+> 原文:"step into smaller models such as Qwen3-14B, Qwen3-8B (Yang et al., 2025), and Phi-4 (Abdin et al., 2024) using LoRA (Hu et al., 2022)."
+> 出处：2510.00615 §4.3（蒸馏 student 模型清单 + LoRA）
+
+> 原文:"As shown in Figure 4, distilled compressors retain over 95% of the performance of gpt-4.1 compressor while reducing overhead."
+> 出处：2510.00615 §4.3（蒸馏保留 95%+ 性能）
+
+> 原文:"Acon substantially improves their performance: on AppWorld, Qwen3-14B improves from 26.8% to 33.9%, and on 8-objective QA from 0.158 to 0.197 EM."
+> 出处：2510.00615 §4.4（Qwen3-14B +7pp 的原始数字）
+
+> 原文:"(iii) allows small LMs to function more effectively as agents, improving performance by 32% on AppWorld, 20% on OfficeBench, and 46% on Multi-objective QA by mitigating the distraction of long contexts through Acon."
+> 出处：2510.00615 §1（小 Agent 相对提升 +32% / +46% 的出处）
+
+> 原文:"Moderate values (4096 for history, 1024 for observation) provide the best trade-off, maintaining accuracy close to no compression while still reducing peak tokens substantially."
+> 出处：2510.00615 §4.5（阈值 4096 history / 1024 observation）
+
+> 原文:"As shown in Figure 7, observation compression reduces cost by compressing inputs, whereas history compression rarely helps due to KV-cache overhead."
+> 出处：2510.00615 §4.5（history compression 不一定省 cost，KV-cache 抵消收益）
+
+> 原文:"Acon compresses context while maintaining performance, but one limitation remains: the compressor module can introduce extra cost, and history compression can increase costs in agentic tasks."
+> 出处：2510.00615 §4.5（论文自承局限：compressor 模块本身有额外 cost）
+
+> 原文:"Compressor distillation partly alleviates this issue by replacing expensive LLM calls with smaller models."
+> 出处：2510.00615 §4.5（蒸馏缓解 compressor 自身开销）
+
+> 原文:"Experiments on AppWorld, OfficeBench, and Multi-objective QA show that Acon reduces peak tokens by 26-54% while maintaining or even improving task success."
+> 出处：2510.00615 §5（峰值 token −26~54% 的总区间）
+
+> 原文:"Experiments on AppWorld, OfficeBench, and Multi-objective QA show that Acon reduces memory usage by 26-54% (peak tokens) while largely preserving task performance, preserves over 95% of accuracy when distilled into smaller compressors, and enhances smaller LMs as long-horizon agents with up to 46% performance improvement."
+> 出处：2510.00615 §Abstract（26-54% / 95% / 46% 三项总括）

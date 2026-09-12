@@ -1,3 +1,12 @@
+---
+title: Skill Card: TopicImpact Opinion Unit Extraction
+module: 07-NLP-VOC
+paper_id: 2507.13392
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: TopicImpact Opinion Unit Extraction
 # TopicImpact观点单元画像抽取
 
@@ -208,6 +217,76 @@ python3 model.py
 - 产品迭代精准度：+40%
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"These opinion units consist of an opinion label, a supporting excerpt, and a sentiment score (1–10), where 1 is very negative and 10 is very positive."
+> 出处：2507.13392 §3 TopicImpact
+
+> 原文:"In the preprocessing step, raw reviews are transformed by an LLM into opinion units (Häglund and Björklund, 2025) – extracted phrases that encapsulate a customer’s sentiment on specific aspects."
+> 出处：2507.13392 §1 Introduction
+
+> 原文:"On average, each review generates 5.65 opinion units."
+> 出处：2507.13392 §5.1 Datasets
+
+> 原文:"Evaluations on review datasets demonstrate that LLMs can accurately extract opinion units using few-shot learning, with GPT-4 achieving a recall of 85.3% and precision of 87.4% when evaluated on restaurant reviews (Häglund and Björklund, 2025)."
+> 出处：2507.13392 §2 Related Work
+
+> 原文:"By clustering these opinion units instead of entire reviews, TopicImpact generates more coherent and interpretable topic clusters."
+> 出处：2507.13392 §1 Introduction
+
+> 原文:"Unlike approaches that cluster entire reviews, TopicImpact generates more coherent topics by clustering aspect-delineated opinion units, this is an important strategy because individual reviews often address multiple aspects."
+> 出处：2507.13392 §1 Introduction
+
+> 原文:"The opinion units are clustered through topic modeling, based on the widely used BertTopic (Grootendorst, 2022b), with the number of clusters as a key parameter."
+> 出处：2507.13392 §3 TopicImpact
+
+> 原文:"For our evaluation, we set the number of topics to 20 to ensure a manageable workload for human evaluation and the minimum topic size to 50 to provide sufficient data for statistical significance in regression analysis."
+> 出处：2507.13392 §5.2 Topic Modeling
+
+> 原文:"The dependent variable y is the star rating which ranges from 1 to 5."
+> 出处：2507.13392 §3 TopicImpact
+
+> 原文:"This analysis provides coefficients for each topic, reflecting their strength of association with star ratings, along with p-values to assess statistical significance."
+> 出处：2507.13392 §3 TopicImpact
+
+> 原文:"If there are multiple mentions of ‘service’ within the same review, an average sentiment score is calculated; if there are no mentions, the value is set to zero."
+> 出处：2507.13392 §3 TopicImpact
+
+> 原文:"We implement three different methods for integrating topic and sentiment information to predict star ratings and compare their performance."
+> 出处：2507.13392 §5.4 Star Prediction Methods
+
+> 原文:"We evaluate the predictive performance of the regression models using R2 and RMSE on a holdout sample with 5-fold cross-validation."
+> 出处：2507.13392 §5.4 Star Prediction Methods
+
+> 原文:"For the general-purpose embedding model (that is, all-mpnet-base-v2), the average topic precision over the clusters for each dataset fall in the range 86.3-91.7%, with 63.2-79.0% of topics achieving 90% precision (see Table 1), demonstrating a high topic coherence (Eklund and Forsman, 2022)."
+> 出处：2507.13392 §6.1 Topic and Sentiment Coherence
+
+> 原文:"Inter-rater agreement among evaluators was 90.3%."
+> 出处：2507.13392 §6.1 Topic and Sentiment Coherence
+
+> 原文:"The percentage of outliers not assigned to a cluster ranges from 17-32%."
+> 出处：2507.13392 §6.1 Topic and Sentiment Coherence
+
+> 原文:"The sentiment-aware model (sentiCSE) consistently performs worse across all three datasets."
+> 出处：2507.13392 §6.1 Topic and Sentiment Coherence
+
+> 原文:"Method 3, which splits the dataset based on LLM-sentiment scores into positive and negative opinion units before clustering each split separately, achieves the highest accuracy with an R2 value of 0.726, indicating a strong model fit."
+> 出处：2507.13392 §6.2 Star Prediction: Regression Analysis
+
+> 原文:"To answer RQ2, our results show that TopicImpact accurately predicts star ratings. Topic modeling alone using general embeddings yields unsatisfactory results due to insufficient sentiment capture."
+> 出处：2507.13392 §6.2 Star Prediction: Regression Analysis
+
+> 原文:"TopicImpact enhances the extraction of actionable insights from customer reviews by integrating topic modeling with LLM-powered segmentation of reviews into distinct opinion units—individual, separated opinions supported by text excerpts."
+> 出处：2507.13392 §7 Conclusion
+
+> 原文:"A limitation of LLM preprocessing is that it sometimes misses opinions in reviews or creates excerpts lacking full context (Häglund and Björklund, 2025)."
+> 出处：2507.13392 §8 Limitations
+
+> 原文:"In this work, we evaluate our system’s ability to generate coherent topics and predict star ratings by comparing a general-purpose embedding model (all-mpnet-base-v2) with a sentiment-aware embedding (sentiCSE). While the comparison reveals clear trends between the general and sentimentaware embeddings, further validation using a larger number of embedding models would enhance the reliability and generalizability of these conclusions."
+> 出处：2507.13392 §8 Limitations
 
 ## 附录：论文核心信息
 

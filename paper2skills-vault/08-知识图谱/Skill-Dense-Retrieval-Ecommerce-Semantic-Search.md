@@ -8,6 +8,9 @@ created: 2026-05-01
 updated: 2026-05-01
 owner: self
 source: human+ai
+paper: arXiv:2601.16492
+paper_id: 2601.16492
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: 面向电商的稠密检索与语义排序
@@ -847,3 +850,94 @@ Round 4: 多模态与在线学习
   - 根据用户点击反馈在线优化 embedding
   - A/B 测试框架评估语义搜索效果
 ```
+
+---
+
+## ⑥ 原文引用（arXiv:2601.16492 逐字摘录）
+
+> 本段引文全部取自本卡核心方法对应的论文 **LLM-based Semantic Search for Conversational Queries in E-commerce**（Siddiqui et al., arXiv:2601.16492），逐字核验通过。
+> 卡片 ③ 段的交叉编码器重排序（第 4 阶段）**不在该论文内**（该论文把 reranking 列为 future work），来源见「参考论文」第 2 条 2602.16299。
+
+> 原文:"We present an LLM-based semantic search framework that effectively captures user intent from conversational queries by combining domain-specific embeddings with structured filters."
+> 出处：2601.16492 §Abstract
+
+> 原文:"To address the challenge of limited labeled data, we generate synthetic data using LLMs to guide the fine-tuning of two models: an embedding model that positions semantically similar products close together in the representation space, and a generative model for converting natural language queries into structured constraints."
+> 出处：2601.16492 §Abstract
+
+> 原文:"By combining similarity-based retrieval with constraint-based filtering, our framework achieves strong precision and recall across various settings compared to baseline approaches on a real-world dataset."
+> 出处：2601.16492 §Abstract
+
+> 原文:"Conversational user queries are increasingly challenging traditional e-commerce platforms, whose search systems are typically optimized for keyword-based queries."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"In recent years, Sentence Transformers (Reimers and Gurevych, 2019b) have gained increasing attention for their ability to capture semantic meaning at the sentence level, making them more suitable for this new setting"
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"First, Sentence Transformers need to be fine-tuned to adapt to specific domains, but labeled data is often scarce, making it unclear which products should be positioned closer together in the embedding space."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"Second, embeddings often struggle to represent numerical values and categorical information (Wallace et al., 2019), which may encode key requirements, as illustrated in the example query above."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"we propose generating synthetic queries for products by leveraging LLMs’ world knowledge and reasoning capabilities, and using the inherent semantic links between these synthetic queries and product information to guide the fine-tuning of Sentence Transformers."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"The same fine-tuned Sentence Transformer is then used to embed user queries for similarity-based retrieval."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"To capture numerical values and categorical information, we fine-tune a generative model to convert user input into structured filters that are applied before retrieval, ensuring that only items meeting the extracted constraints are considered."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"We use a large-scale Amazon Review dataset (Hou et al., 2024), covering 1.3 million products, to fine-tune our models."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"Experimental results show that our system achieves precision@$k$ scores of 0.32, 0.20, and 0.13 for $k=1,5,10$, respectively, and recall@$k$ scores of 0.16, 0.44, and 0.57 for $k=1,5,10$, respectively, significantly outperforming baselines."
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"a 2025 survey shows that 54% of consumers have shifted toward conversational search habits, favoring natural language over keywords"
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"Research shows that 69% of consumers use the search bar immediately upon visiting an e-commerce site, yet 80% abandon the platform due to unsatisfactory search results"
+> 出处：2601.16492 §1. Introduction
+
+> 原文:"The dataset contains approximately 1.3 million products spanning the years 1996 to 2023."
+> 出处：2601.16492 §3. Dataset
+
+> 原文:"As shown in Figure 1, our framework computes semantic embeddings for each product in the product catalog. For each user query, the system extracts user intent by combining an embedding with structured filters. It then excludes irrelevant products using the structured filters, and finally produces a ranked list of products based on similarity scores using the query embedding."
+> 出处：2601.16492 §4. Methods
+
+> 原文:"we select roughly 22,000 products belonging to the Cell Phones & Accessories category. This catalog serves as the testbed for our framework,"
+> 出处：2601.16492 §5.1 Test Setting
+
+> 原文:"We then randomly sample 151 queries from this set and rewrite them into natural language queries enriched with additional constraints."
+> 出处：2601.16492 §5.1 Test Setting
+
+> 原文:"Across all label dimensions (such as price_min and subcategory, see the label structure in Table 1) the fine-tuned Flan-T5-Small achieves strong results with an accuracy of 99.8% - 99.9%, and the overall match accuracy reaches 99.4%."
+> 出处：2601.16492 §5.2.1 Label extraction component evaluation
+
+> 原文:"Notably, only 24.4% of queries have all label dimensions correctly extracted."
+> 出处：2601.16492 §5.2.1 Label extraction component evaluation
+
+> 原文:"Overall, our system outperforms the baselines with substantial gains across all evaluation metrics."
+> 出处：2601.16492 §5.3 Results
+
+> 原文:"Adding structured filter extraction (Flan-T5-small) consistently improves both precision and recall across all sentence transformer configurations"
+> 出处：2601.16492 §5.3.1 Effectiveness of structured filter extraction
+
+> 原文:"the improvement comes from accurate pre-filtering rather than from constraint-aware representation learning."
+> 出处：2601.16492 §5.3.3 Does constraint-aware fine-tuning help?
+
+> 原文:"In practice, the effective strategy is to use a generally fine-tuned encoder for retrieval and apply structured filters afterward to enforce price, rating, and review constraints prior to ranking."
+> 出处：2601.16492 §6. Discussion（Effective handling of constraint information）
+
+> 原文:"product embeddings are indexed using FAISS to enable fast similarity-based search, and a combination of lightweight models (i.e., multi-qa-MiniLM-L6-cos-v1 and Flan-T5-small) is selected to handle user queries."
+> 出处：2601.16492 §6. Discussion（Model efficiency）
+
+> 原文:"Future work includes fine-tuning language models to improve label generation for the training task, incorporating reranking models on top of the current pipeline, and validating the viability of the approach across other product categories."
+> 出处：2601.16492 §7. Conclusion（Future work）
+
+> 原文:"the implementation and evaluation of the proposed framework focus on the Cell Phones & Cell Phone Accessories category. How it performs on other categories, especially those with more noise or ambiguity, remains uncertain."
+> 出处：2601.16492 §6. Discussion（Limitation）
+
+> 原文:"we identified labeling inconsistencies in the ESCI dataset. Several retrieved products were exact matches both semantically and in metadata but were not labeled as such in the annotations. This behavior is expected in large-scale e-commerce datasets, where relevance judgments are often incomplete or inconsistent, highlighting the challenge of evaluating real-world retrieval systems using imperfect ground-truth labels."
+> 出处：2601.16492 §6. Discussion（Imperfect ground-truth labels）

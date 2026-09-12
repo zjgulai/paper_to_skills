@@ -1,3 +1,12 @@
+---
+title: Skill Card: Taxonomy 动态演化
+module: 07-NLP-VOC
+paper_id: 2506.10737
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: Taxonomy 动态演化
 # TaxoAdapt: Adaptive Taxonomy Construction for Evolving Corpora
 
@@ -281,6 +290,59 @@ python pipeline.py             # 测试完整流水线
 - **可组合性**: 与 5+ 个现有技能形成上下游关系
 
 ---
+
+## ⑥ 原文引用
+
+> 原文:"As a multidimensional method, TaxoAdapt generates taxonomies that are 26.51% more granularity-preserving and 50.41% more coherent than the most competitive baselines judged by LLMs."
+> 出处：2506.10737 §Abstract
+
+> 原文:"TaxoAdapt performs iterative hierarchical classification, expanding both the taxonomy width and depth based on corpus’ topical distribution."
+> 出处：2506.10737 §Abstract
+
+> 原文:"Additionally, these approaches fail to account for the multi-faceted nature of scientific literature, where a single research paper may contribute to multiple dimensions (e.g., methodology, new tasks, evaluation metrics, benchmarks)."
+> 出处：2506.10737 §Abstract
+
+> 原文:"Scientific literature is inherently multifaceted, with individual papers often contributing to multiple aspects of a domain– such as tasks, methodologies, and datasets."
+> 出处：2506.10737 §3.2 Multi-Dimension Classification
+
+> 原文:"TaxoAdapt aligns the multidimensional taxonomy generation (and expansion) process to a corpus."
+> 出处：2506.10737 §1 Introduction
+
+> 原文:"To determine which nodes require deeper exploration, we employ hierarchical classification."
+> 出处：2506.10737 §3.3 Top-Down Taxonomy Construction
+
+> 原文:"Given that domain-specific trends are continually evolving in scientific literature, we must ensure that both the depth and breadth of the underlying research landscape are accurately represented."
+> 出处：2506.10737 §3.3 Top-Down Taxonomy Construction
+
+> 原文:"We set the density threshold $\delta$ = 40 papers and the maximum depth $l=2$."
+> 出处：2506.10737 §Appendix A Experimental Settings
+
+> 原文:"Thus, TaxoAdapt utilizes its knowledge of the dimension, layer, and papers mapped to the specific node being expanded to determine granularity-consistent candidate entities."
+> 出处：2506.10737 §1 Introduction
+
+> 原文:"We can attribute these gains to TaxoAdapt’s hierarchical classification and taxonomy-aware clustering steps based on the lower performance of ablation, No Clustering."
+> 出处：2506.10737 §5 Experimental Results
+
+> 原文:"We showcase the task dimension, where due to the rapid increase in EMNLP submissions and accepted papers, features more nodes overall (EMNLP’22: 62 nodes; EMNLP’24: 99 nodes)."
+> 出处：2506.10737 §5 Experimental Results
+
+> 原文:"This shows that TaxoAdapt still achieves high performance even within more specialized domains."
+> 出处：2506.10737 §Appendix F Non-Computer Science Domains
+
+> 原文:"Our comprehensive experiments demonstrate that TaxoAdapt significantly outperforms existing methods in granularity preservation, dimensional specificity, and corpus relevance."
+> 出处：2506.10737 §6 Conclusion
+
+> 原文:"The agreement percentages between the LLMs and the human evaluator range from 70% to 90%, indicating strong overall agreement."
+> 出处：2506.10737 §Appendix C LLM-Human Agreement Analysis
+
+> 原文:"Note that all LLM-based baselines utilize GPT-4o-mini as their underlying model."
+> 出处：2506.10737 §4.2 Baselines
+
+> 原文:"Although existing works have shown the success of LLMs on fine-grained classification, this classification relies on the parametric knowledge of LLMs, which could be a limitation when LLMs’ knowledge becomes outdated."
+> 出处：2506.10737 §7 Limitations
+
+> 原文:"Reproducibility: Our dataset and code is available at https://github.com/pkargupta/taxoadapt."
+> 出处：2506.10737 §1 Introduction
 
 ## 附录：论文信息
 

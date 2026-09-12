@@ -3,9 +3,11 @@ title: Schema-Guided Generation — 语义蓝图编译器
 doc_type: knowledge
 module: 07-NLP-VOC
 topic: semantic-blueprint-compiler
+paper_id: 2307.09702
+evidence_basis: paper-verbatim
 status: stable
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-09-12
 owner: self
 source: human+ai
 ---
@@ -247,3 +249,49 @@ python blueprint_compiler.py
     ↓ 输出: Agent 执行计划
 [执行/检索/分析/生成/验证]
 ```
+
+---
+
+## ⑥ 原文引用
+
+> 说明：本卡的**技术内核**（Schema 约束解码 / FSM / CFG / PDA）可在 Willard & Louf 的底本中逐字溯源；
+> ②⑤ 两段的业务场景、ROI 与工期数字是 07-NLP-VOC 子项目自研的落地估算，论文未讨论。
+
+> 原文:"In this article we describe an efficient approach to guiding language model text generation with regular expressions and context-free grammars."
+> 出处：2307.09702 §Abstract（① 的核心命题：约束解码约束在正则/CFG 上）
+
+> 原文:"This kind of guided LLM generation is used to make LLM model output usable under rigid formatting requirements that are either hard or costly to capture through fine-tuning alone"
+> 出处：2307.09702 §1 Introduction（① 为什么需要 Schema-Guided：业务要求刚性格式）
+
+> 原文:"The newer generation of Large Language Models has proven efficient at generating structured outputs, for instance code or outputs in JSON format, by conditioning on the prompt alone."
+> 出处：2307.09702 §2.1 Guided generation（只靠 prompt 已能产出 JSON 等结构化输出）
+
+> 原文:"The validity of the output is however influenced heavily by subtle differences in prompting, and even the best known prompting techniques do not systematically result in valid outputs."
+> 出处：2307.09702 §2.1 Guided generation（① 「无约束生成不可靠」的原文依据）
+
+> 原文:"The methods exposed here guarantee the validity of the output. They guide the sequence generation process by complementing it with a deterministic monitoring process. This process keeps track of the generated tokens, and manipulates the logits at each step of the process."
+> 出处：2307.09702 §2.1 Guided generation（① 第 2 层「约束解码层」的原始表述）
+
+> 原文:"We propose an approach that uses the standard finite state machine (FSM) formulation of regular expressions to both arbitrarily start and stop guided generation and allow the construction of an ”index” with which the set of non-zero-probability tokens can be obtained efficiently at each step."
+> 出处：2307.09702 §1 Introduction（① Schema 定义层用 FSM 表达合法输出空间）
+
+> 原文:"The result is an algorithm that scales as $\mathcal{O}(1)$ on average."
+> 出处：2307.09702 §1 Introduction（约束解码的复杂度：均摊 O(1)）
+
+> 原文:"Our FSM approach can also be extended to CFGs and $\operatorname{LALR}(1)$ parsers to allow for efficient guided generation according to popular data formats and programming languages (e.g. JSON, Python, SQL, etc.)."
+> 出处：2307.09702 §1 Introduction（① CFG 约束生成，覆盖 JSON/Python/SQL）
+
+> 原文:"We want to extend the state-based indexing provided above for regular expressions and their FSMs to CFGs. This can be done using pushdown automata (PDA)."
+> 出处：2307.09702 §4.1 Pushdown Automata Formulation（④ CFG 路线用下推自动机实现）
+
+> 原文:"The vocabulary indexing introduced in this paper removes a prohibitive run-time scaling barrier in guided generation."
+> 出处：2307.09702 §5 Discussion（③ 生产环境建议「用 Outlines 做高效约束解码」的依据）
+
+> 原文:"An implementation is provided in the open source Python library Outlines (Louf and Willard, )."
+> 出处：2307.09702 §Abstract（④ 延伸技能 Outlines 的出处）
+
+> 原文:"This means that guided generation is ultimately an ”iterative” matching and/or parsing problem, because we are not given the entire string upfront."
+> 出处：2307.09702 §2.1 Guided generation（约束解码须逐步增量匹配，而非整串事后校验）
+
+> 原文:"Our approach adds little to no overhead to the token sequence generation process, and makes guided generation feasible in practice."
+> 出处：2307.09702 §Abstract（约束解码的工程可行性）

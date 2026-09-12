@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2601.13671
+paper: "The Orchestration of Multi-Agent Systems: Architectures, Protocols, and Enterprise Adoption"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MCP + A2A 双协议栈 — Orchestrated MAS 企业架构
@@ -294,6 +297,43 @@ python mas_orchestration.py
 4. **完整 receipt**:论文给出从角色 → 编排 → 协议 → 治理的完整 blueprint
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Agentic systems have evolved from single agents that perform narrow tasks, to loosely coupled multi-agent setups, and now to orchestrated collectives where coordination ensures consistency, scale, and reliability."
+> 出处：2601.13671 §X Conclusion
+>
+> 原文:"In a multi-agent system, specialized agents are autonomous components designed to perform narrowly scoped, role-specific tasks within the broader architecture. Each agent typically incorporates a large language model as its cognitive core, enabling it to perceive inputs, reason about them, and act within clearly defined operational boundaries."
+> 出处：2601.13671 §IV Specialized Agents
+>
+> 原文:"Collectively, these mechanisms show that reliability in multi-agent systems arises not only from intelligent agents but from the orchestration layer that governs planning, execution, and validation, enabling scalable and policy-compliant performance."
+> 出处：2601.13671 §V-E Closing Discussion
+>
+> 原文:"As illustrated in Fig. 3, MCP mediates every external invocation through a defined interface that enforces schema consistency, access control, and auditability."
+> 出处：2601.13671 §VI-A Model Context Protocol
+>
+> 原文:"Together, MCP and A2A form the dual foundation of agent communication—MCP for tool access and A2A for peer collaboration"
+> 出处：2601.13671 §VI-B Agent-to-Agent Protocol
+>
+> 原文:"Robust security controls, including cryptographic signing and role-based routing, guarantee message integrity and policy compliance."
+> 出处：2601.13671 §VI-B Agent-to-Agent Protocol
+>
+> 原文:"For example, autonomous agents studied in [15] now parse insurance applications and supporting documents with over 95% accuracy, enabling much faster policy issuance."
+> 出处：2601.13671 §VIII-A Banking, Financial Services and Insurance
+>
+> 原文:"In another use-case explored in [15], a mortgage lender integrated Document AI and Decision AI agents to handle loan paperwork, achieving a 20× faster approval process while cutting processing costs by 80%."
+> 出处：2601.13671 §VIII-A Banking, Financial Services and Insurance
+>
+> 原文:"In practice, this approach led to over a 50% reduction in development time and effort for early-adopter teams at the bank."
+> 出处：2601.13671 §VIII-B Software Engineering and IT Modernization
+>
+> 原文:"Studies suggest that up to 80% of common support incidents could be resolved by AI agents without human intervention, cutting resolution times by 60–90% in fully agent-driven workflows."
+> 出处：2601.13671 §VIII-C Cross Industry Adoption
+>
+> 原文:"The component validates aggregated outputs against defined schemas before integrating them into the shared state, preventing invalid data from propagating through workflows."
+> 出处：2601.13671 §V-D Quality and Operations Management
 
 ## 参考论文
 

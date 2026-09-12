@@ -1,3 +1,13 @@
+---
+paper_id: 2407.11004
+paper: "The ALCHEmist: Automated Labeling 500x CHEaper Than LLM Data Annotators"
+venue: NeurIPS 2024
+evidence_basis: paper-verbatim
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 弱监督自动标注 — LLM 生成标注程序
 # ALCHEmist: Automated Labeling via Program Generation
 
@@ -288,6 +298,46 @@ python pipeline.py           # 测试完整流水线
 - **独特价值**: 可审计性和可复用性是其他方法无法提供的
 - **可落地性**: 方法成熟（NeurIPS Spotlight，已有开源），不依赖复杂训练
 - **通用性**: 任何有明确文本模式的分类任务都可应用
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Rather than having pretrained models label data, we task language models to generate programs that can output labels."
+> 出处：2407.11004 §1 Introduction
+
+> 原文:"For example, we find that labeling a moderately-sized dataset [12] with 7,569 data points using GPT-4 costs over $1,200."
+> 出处：2407.11004 §1 Introduction
+
+> 原文:"For example, for the dataset described above [12], the number of GPT-4 calls was reduced from 7,569 (the size of the dataset) to 10 (the number of generated programs), resulting in a massive cost reduction from $1,200 to $0.70, a 1,700-fold decrease."
+> 出处：2407.11004 §1 Introduction
+
+> 原文:"Moreover, code can be easily inspected, corrected, and extended, allowing seamless adaptation when prediction classes or labeling rules change."
+> 出处：2407.11004 §1 Introduction
+
+> 原文:"For simplicity, in this work, we focus on using the Snorkel framework [17], which is a standard and widely-used approach in the weak supervision community."
+> 出处：2407.11004 §3.2 Dataset Synthesis
+
+> 原文:"For each dataset, we input pure prompts without supplementary information into GPT-3.5 and generate 10 programs to use."
+> 出处：2407.11004 §4.1 Cost Reduction and Improved Performance
+
+> 原文:"We observe that label accuracy is improved on five out of eight datasets, particularly in challenging settings such as the MedAbs, Cancer, and French datasets, outperforming the baseline zero-shot prompting approach."
+> 出处：2407.11004 §4.1 Cost Reduction and Improved Performance
+
+> 原文:"In contrast, Alchemist only prompts 10 programs for each task, resulting in a significant reduction in the costs—by orders of magnitude."
+> 出处：2407.11004 §4.1 Cost Reduction and Improved Performance
+
+> 原文:"This is particularly evident in the SMS dataset, where WRENCH requires 73 manually crafted labeling functions to obtain high-quality labels, while Alchemist only needs 10 generated programs to obtain comparable performance and higher coverage."
+> 出处：2407.11004 §4.5 Comparing to Human-crafted Programs
+
+> 原文:"Empirically, our results indicate that Alchemist demonstrates comparable or even superior performance compared to language model-based annotation, improving five out of eight datasets with an average enhancement of 12.9%."
+> 出处：2407.11004 §5 Conclusion
+
+> 原文:"Notably, Alchemist reduces total costs by a factor of approximately 500."
+> 出处：2407.11004 §5 Conclusion
+
+> 原文:"First, API calls scale with the number of programs instead of the number of data points. That is, since we generate programs that can themselves make any number of predictions locally at no cost, we can reduce the number of API calls by orders of magnitude."
+> 出处：2407.11004 §1 Introduction
 
 ---
 

@@ -8,6 +8,8 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2605.02801
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: 编排轨迹驱动的 RL — MAS 三维设计框架与 Kimi PARL 实践
@@ -340,3 +342,125 @@ python3 mas_rl_trace.py
 - **拓扑层**:AdaptOrch(P2-4)做 O2(whom to delegate)
 - **训练层**:本 Skill 做 reward 设计 + credit 分配 + orchestration 学习
 - **评估层**:EComStage(P0-3)做三阶段评估
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"This paper studies RL for LLM-based multi-agent systems through orchestration traces: temporal interaction graphs whose events include sub-agent spawning, delegation, communication, tool use, return, aggregation, and stopping decisions."
+> 出处：2605.02801 §Abstract（orchestration trace 的完整事件类型定义）
+
+> 原文:"First, reward design falls into eight families; orchestration rewards target system-level properties such as parallelism speedup, split correctness, and aggregation quality."
+> 出处：2605.02801 §Abstract（维度一：8 个奖励家族）
+
+> 原文:"Second, reward and credit signals attach to eight credit- or signal-bearing units from token to team; explicit counterfactual message-level credit remains especially sparse in our curated pool, while agent-, role-, turn-, and orchestrator-level signals are beginning to fill in."
+> 出处：2605.02801 §Abstract（维度二：8 个信度承载单元 + message 级最稀疏）
+
+> 原文:"Third, orchestration learning decomposes into five sub-decisions (when to spawn, whom to delegate to, how to communicate, how to aggregate, when to stop); within our curated pool as of May 4, 2026, we found no explicit RL training method for the stopping decision."
+> 出处：2605.02801 §Abstract（维度三：5 个子决策 + O5 stop 的空白声明）
+
+> 原文:"R7 is newly central in LLM-MAS."
+> 出处：2605.02801 §6.1（R7 是 LLM-MAS 最独特的奖励维度）
+
+> 原文:"They reward system-level properties (wall-clock speedup, split correctness, finish-rate), not task-level correctness. This is where LLM-MAS RL departs most sharply from agentic RL."
+> 出处：2605.02801 §6.1（R7 奖励的是系统级属性）
+
+> 原文:"| R7 | Orchestration | per-orchestrator-decision | system metrics (speedup, finish-rate) | pseudo-parallelism; reward-shape collapse | Kimi PARL [28], Puppeteer [10], ParaManager [76], WideSeek-R1 [68] |"
+> 出处：2605.02801 §6.1 表 10（R7 行：粒度 / 来源 / 主要 hack 风险 / 代表方法）
+
+> 原文:"| R1 | Shared team / outcome | team (terminal) | verifier / ground truth | reward diffusion; free-riding | MAGRPO [37], MAPoRL [47], Dr. MAS [15], CoLLM-MAAC [38] |"
+> 出处：2605.02801 §6.1 表 10（R1 行）
+
+> 原文:"| R8 | Hybrid local–global | mixed | weighted composition of R1–R7 | weight drift; signal drowning | SHARP [31], M-GRPO [19], HERA [30], LangMARL [71], Agent Q-Mix [23] |"
+> 出处：2605.02801 §6.1 表 10（R8 行）
+
+> 原文:"Kimi’s PARL [28] is the clearest published instance of an R7+R8 composition and serves as our canonical worked example."
+> 出处：2605.02801 §6.2（Kimi PARL 作为典范案例）
+
+> 原文:"where $r_{\text{perf}}$ is the downstream task outcome (R1), $r_{\text{parallel}}$ rewards genuine speedup over a serial baseline (R7), and $r_{\text{finish}}$ rewards all spawned sub-agents reaching termination (R7, a shape against pseudo-parallelism)."
+> 出处：2605.02801 §6.2（r_orch 三项各自的语义）
+
+> 原文:"Crucially, the public Kimi K2.5 description states that the hyperparameters for both auxiliary rewards are annealed to zero over training so that the final policy optimizes the primary task objective."
+> 出处：2605.02801 §6.2（λ₁/λ₂ 退火到 0）
+
+> 原文:"Early in training these terms scaffold exploration of parallel scheduling; late in training they are removed so the orchestrator cannot farm auxiliary metrics by over-spawning or padding parallel work."
+> 出处：2605.02801 §6.2（退火的原因：前期 scaffold、后期防刷分）
+
+> 原文:"Pseudo-parallelism (R7). The orchestrator spawns sub-agents that do no useful work in order to maximize a naïve parallelism bonus."
+> 出处：2605.02801 §6.3（伪并行）
+
+> 原文:"Free-riding / lazy agent (R1). Under shared reward, one sub-agent contributes negligibly but absorbs equal credit."
+> 出处：2605.02801 §6.3（搭便车）
+
+> 原文:"Communication padding (R6). When a judge or PRM scores messages, policies inflate message length or verbosity to farm partial credit."
+> 出处：2605.02801 §6.3（通信注水 / 过度通信）
+
+> 原文:"Tool-spam (R5). When tool-call success is rewarded, policies call many redundant tools."
+> 出处：2605.02801 §6.3（tool-spam）
+
+> 原文:"Verifier collusion (R6). When the verifier is an LLM from the same family as the policy, both drift together and the verifier reward becomes uninformative."
+> 出处：2605.02801 §6.3（verifier 共谋）
+
+> 原文:"We argue that a single final reward in an LLM-MAS trace has eight plausible units to which reward, credit, or design signals can attach, each one finer-grained than the next:"
+> 出处：2605.02801 §7.1（8 个信度层级：team → token）
+
+> 原文:"The team and agent units are inherited from cooperative MARL; role credit has partial analogues in heterogeneous-agent MARL; and orchestrator-decision credit is the least classical because the decision changes the future agent set itself."
+> 出处：2605.02801 §7.1（哪些层级是 LLM-MAS 特有的）
+
+> 原文:"the sparse levels (orchestrator, message) mark the most under-populated research territory."
+> 出处：2605.02801 §7.1 图 12 说明（orchestrator / message 最稀疏）
+
+> 原文:"The orchestrator level is sparsely populated."
+> 出处：2605.02801 §7.2（orchestrator 层级稀疏）
+
+> 原文:"Puppeteer, Kimi PARL, and WideSeek-R1 are the clearest cases that explicitly attach an optimization signal to orchestrator decisions, and they do so by very different mechanisms (learned central critic vs. Critical-Steps heuristic)."
+> 出处：2605.02801 §7.2（orchestrator 级代表方法与机制差异）
+
+> 原文:"The message level is even sparser."
+> 出处：2605.02801 §7.2（message 层级更稀疏）
+
+> 原文:"while C3 [7] is the only retained entry that explicitly estimates counterfactual message-level credit."
+> 出处：2605.02801 §7.2（C3 是唯一的 message-level counterfactual credit）
+
+> 原文:"Puppeteer [10] trains exactly such a learned central critic in a CTDE style (§2.1), freezing sub-agents and updating only the orchestrator."
+> 出处：2605.02801 §8.2.2 O2（Puppeteer 的 orchestrator-level critic）
+
+> 原文:"M-GRPO [19] formalizes aggregation as a separate main agent whose policy consumes sub-agent summaries and emits trajectory continuations."
+> 出处：2605.02801 §8.2.4 O4（M-GRPO 的聚合机制）
+
+> 原文:"Context-Folding [55] treats aggregation as an explicit agent action, rewarding branch outcomes approximately as $r_{\text{branch}}\approx r_{\text{main}}\pm 0.2$ scope adjustment."
+> 出处：2605.02801 §8.2.4 O4（Context-Folding 的聚合奖励）
+
+> 原文:"We found no retained entry that trains this decision directly."
+> 出处：2605.02801 §8.2.5 O5: When to stop（O5 空白）
+
+> 原文:"Existing entries stop either externally (e.g., ground-truth answer verifier signals completion) or at a fixed step-count cap."
+> 出处：2605.02801 §8.2.5（现有系统的两种停止方式）
+
+> 原文:"The orchestrator’s stop action is, as far as we can tell from public material, not explicitly trained as an RL target in any entry in our curated pool."
+> 出处：2605.02801 §8.2.5（stop 未被显式训练）
+
+> 原文:"A stopping policy that trades accuracy for cost is a natural objective."
+> 出处：2605.02801 §8.2.5（O5 的训练信号：边际收益 vs 成本）
+
+> 原文:"This is the sub-decision with the clearest shape of an open research direction:"
+> 出处：2605.02801 §8.2.5（O5 是最明确的开放方向）
+
+> 原文:"The policy’s support includes no-op; exercising spawn commits to downstream rollout cost (§5.1)."
+> 出处：2605.02801 §8.2.1 O1（spawn 决策的不可逆成本）
+
+> 原文:"Moonshot’s Kimi K2.5 is the most openly documented industrial instance of trained orchestration in our pool."
+> 出处：2605.02801 §4.2.1（Kimi 作为工业锚点）
+
+> 原文:"The K2.6 product and technical materials scale the deployment envelope to $300$ sub-agents and $4{,}000$ coordinated steps and add Claw Groups, a research preview of cross-vendor and human-in-the-loop coordination [29]."
+> 出处：2605.02801 §4.2.1（K2.6：300 sub-agents / 4,000 steps）
+
+> 原文:"The orchestrator is a learned policy, not a prompt template. Sub-agent creation is an action in its action space."
+> 出处：2605.02801 §4.2.1（编排器是被训练的策略，非 prompt 模板）
+
+> 原文:"We release an $84$-entry curated pool ($51$ focal LLM-MAS entries plus $33$ supporting references) with $18$-column taxonomy tags, synchronised with the paper bibliography and summarised as a single table in Appendix B."
+> 出处：2605.02801 §1.4（84-entry tagged pool + 18 列标签）
+
+> 原文:"We identify fifteen open problems (§11), organized along algorithmic, reward, systems, safety, and evaluation axes."
+> 出处：2605.02801 §1.4（15 个研究方向）
+

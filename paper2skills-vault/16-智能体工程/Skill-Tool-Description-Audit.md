@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2602.14878
+paper: "Model Context Protocol (MCP) Tool Descriptions Are Smelly! Towards Improving AI Agent Efficiency with Augmented MCP Tool Descriptions"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MCP Tool 描述质量审核 — 六维 Smell 扫描与动态路由
@@ -287,6 +290,61 @@ python3 mcp_smell_scanner.py
 5. **学术严谨**: ICC 评分一致性验证 + 统计显著性检验
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"we conduct the first large-scale empirical study of 856 tools spread across 103 MCP servers, assessing their description quality and their impact on agent performance."
+> 出处：2602.14878 Abstract
+>
+> 原文:"we find that 97.1% of the analyzed tool descriptions contain at least one smell, with 56% failing to state their purpose clearly."
+> 出处：2602.14878 Abstract
+>
+> 原文:"While augmenting these descriptions for all components improves task success rates by a median of 5.85 percentage points and improves partial goal completion by 15.12%, it also increases the number of execution steps by 67.46% and regresses performance in 16.67% of cases."
+> 出处：2602.14878 Abstract
+>
+> 原文:"All six smell types affect the majority of MCP tool descriptions, with the most severe issues appearing in nearly 90% of tools."
+> 出处：2602.14878 §5.1 RQ-1
+>
+> 原文:"As shown in Figure 7, the most widespread smell categories are Unstated Limitations (89.8%), Missing Usage Guidelines (89.3%), and Opaque Parameters (84.3%)."
+> 出处：2602.14878 §5.1 RQ-1
+>
+> 原文:"The next tier includes Underspecified or Incomplete descriptions (79.1%) and Exemplar Issues (77.9%)"
+> 出处：2602.14878 §5.1 RQ-1
+>
+> 原文:"Even for the best-performing component (i.e., Purpose), we observe the Unclear Purpose smell in 56% of tools, indicating that more than half of tool descriptions do not clearly articulate their intended functionality."
+> 出处：2602.14878 §5.1 RQ-1
+>
+> 原文:"Only 2.9% of MCP tool descriptions are fully smell-free."
+> 出处：2602.14878 §5.1 RQ-1
+>
+> 原文:"we implement a 5-point Likert scale (Joshi et al., 2015) rubric for each component."
+> 出处：2602.14878 §4.1.4 Scoring & smell derivation
+>
+> 原文:"We designate score 3 as the minimum threshold"
+> 出处：2602.14878 §4.1.4 Scoring & smell derivation
+>
+> 原文:"To address this limitation, we extend the client with a configurable switching module called the Tool Description Router, which allows for the dynamic selection of tool descriptions."
+> 出处：2602.14878 §4.5.2 Tool Description Router
+>
+> 原文:"With augmented tool descriptions, agents achieve an absolute increase of 5.85 percentage points (median) in task success rate across all models and domains."
+> 出处：2602.14878 §5.2 RQ-2
+>
+> 原文:"Beyond task-level success rate, augmented tool descriptions also improve evaluator-level performance, increasing the Average Evaluator Score (AE) by 15.12% across all foundation models."
+> 出处：2602.14878 §5.2 RQ-2
+>
+> 原文:"The average number of execution steps (AS) increases by 67.46% (median) across models and domains when using the fully augmented tool descriptions, compared to the original MCP-Universe baseline."
+> 出处：2602.14878 §5.2 RQ-2
+>
+> 原文:"the performance of the agent regresses in 16.67% of cases (highlighted in red), indicating that augmenting all components does not necessarily improve the success rate in all domains and models."
+> 出处：2602.14878 §5.2 RQ-2
+>
+> 原文:"Across all evaluated domain-model combinations, Cochran’s Q test consistently yields $p>0.20$, indicating no statistically significant differences among the three configurations."
+> 出处：2602.14878 §5.3 RQ-3
+>
+> 原文:"Conversely, scores 1 and 2 capture failure modes, reflecting descriptions that are vague, incomplete, or functionally sub-optimal."
+> 出处：2602.14878 §4.1.4 Scoring & smell derivation
 
 ## 参考论文
 

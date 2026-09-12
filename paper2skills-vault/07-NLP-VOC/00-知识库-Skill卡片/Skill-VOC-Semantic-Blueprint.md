@@ -1,5 +1,24 @@
+---
+title: "Skill Card: VOC 语义蓝图生成"
+module: 07-NLP-VOC
+paper: USSA: A Unified Table Filling Scheme for Structured Sentiment Analysis
+venue: ACL 2023
+venue_tier: CCF-A
+anthology_id: 2023.acl-long.802
+evidence_basis: paper-traceable
+source: human+ai
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: VOC 语义蓝图生成
 # VOC Semantic Blueprint Generation
+
+> **证据基础声明**：本卡**有可定位的论文来源** —— 见下方「论文来源」与 frontmatter 的
+> `anthology_id: 2023.acl-long.802`（ACL Anthology 正式编号，ACL 2023 长文）。
+> 但**该论文全文尚未入库**，故卡内数字**暂无逐字引文支撑**，不可当作论文结论引用。
+> 待补：把全文存入 `papers/07-NLP-VOC/2023.acl-long.802/` 并在「⑥ 原文引用」段补逐字摘录后，
+> `evidence_basis` 应升级为 `paper-verbatim`。
 
 **论文来源**: USSA: A Unified Table Filling Scheme for Structured Sentiment Analysis (ACL 2023)
 **理论基础**: Bi-lexical Dependency Parsing → 2D Table-Filling + Bi-Axial Attention

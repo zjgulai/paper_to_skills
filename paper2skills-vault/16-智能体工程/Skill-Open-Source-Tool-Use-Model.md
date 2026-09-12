@@ -8,6 +8,8 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2508.18255
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: 开源 Tool Use 基座模型选型 — Hermes 4 混合推理家族
@@ -353,3 +355,151 @@ python3 hermes4_client.py
 - **简单 tool use**:全量 Hermes 4 14B 本地部署
 - **成本敏感**:Hermes 4 70B 云托管替代 GPT-4o
 - **数据隐私**:Hermes 4 本地部署满足跨境数据合规
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We present Hermes 4, a family of hybrid reasoning models that combine structured, multi-turn reasoning with broad instruction-following ability."
+> 出处：2508.18255 §Abstract（「混合推理」的原文定义）
+
+> 原文:"Together, these contributions demonstrate how open-weight reasoning models can be effectively trained and rigorously evaluated, yielding models that are comparable to frontier systems while remaining transparent and reproducible."
+> 出处：2508.18255 §1 Introduction（开源模型接近前沿的核心论断）
+
+> 原文:"The Hermes 4 dataset consists primarily of newly synthesized reasoning and non-reasoning data, totaling approximately 5 million samples and 19 billion tokens."
+> 出处：2508.18255 §2 Post-training Data（5M 样本 / 19B tokens）
+
+> 原文:"The dataset is a composite of 3.5 million reasoning samples and 1.6 million non-reasoning samples."
+> 出处：2508.18255 §2（3.5M reasoning + 1.6M non-reasoning）
+
+> 原文:"A significant portion of the Hermes 3 [51] dataset3 was retained to ensure continuity in the model’s capabilities."
+> 出处：2508.18255 §2（保留 Hermes 3 数据以维持能力连续性；"dataset3" 是底本 PDF 的脚注粘连，逐字照录）
+
+> 原文:"The reasoning samples were intentionally token-heavy, with an average of five times more tokens per sample than their non-reasoning counterparts, accommodating thinking traces up to 16 thousand tokens long."
+> 出处：2508.18255 §2（reasoning 样本约为非推理的 5 倍 token、thinking trace 最长 16k）
+
+> 原文:"We process pre-training seed data through a graph-based synthetic data generator called DataForge."
+> 出处：2508.18255 §2.1 DataForge
+
+> 原文:"Inspired by AgentInstruct [31] , DataForge generates conversational data across a wide variety of tasks."
+> 出处：2508.18255 §2.1（DataForge 的灵感来源 AgentInstruct）
+
+> 原文:"Each datapoint is generated via a random walk through a directed acyclic graph (DAG) where each node implements a struct → struct map."
+> 出处：2508.18255 §2.1（图-based DAG 合成）
+
+> 原文:"We draw seed data from a biased sample of DCLM [22] and FineWeb [42], preferring more recent samples."
+> 出处：2508.18255 §2.1.1（seed passage 来自 DCLM / FineWeb）
+
+> 原文:"we might condition on a Wikipedia article from the pre-training data and transform it into a rap song"
+> 出处：2508.18255 §2.1.2（Passage Transformation：Wikipedia → rap song）
+
+> 原文:"The judge grades the sample based on a rubric specific to the instruction type that usually covers coherence, relevance, complexity, style, and tone."
+> 出处：2508.18255 §2.1.2（Judge Review 的五个 rubric 维度）
+
+> 原文:"If the judge fails the sample, we iterate on the answer until the judge gives it a passing score or we reach a maximum iteration count, in which case the sample is discarded."
+> 出处：2508.18255 §2.1.2（Rejection Sampling：最多 N 次迭代，不过则丢弃）
+
+> 原文:"We enforce that every graph has a single source node and single target node to enable nesting of graphs into higher order graphs."
+> 出处：2508.18255 §2.1.2 图 1 说明（单 source → 单 target）
+
+> 原文:"This enables composition of graphs into higher-order graphs to arbitrary nesting depth."
+> 出处：2508.18255 §2.1.3（图可嵌套为高阶 graph 的 node）
+
+> 原文:"We rejection sample [53] against roughly a thousand task-specific verifiers using Atropos [27], our open source reinforcement learning environment microservice manager."
+> 出处：2508.18255 §2.2（~1000 verifiers + Atropos 的定位）
+
+> 原文:"Following the recipe presented in OpenThoughts [10] we include multiple unique trajectories to the same verified result."
+> 出处：2508.18255 §2.2（rejection sampling 方法参考 OpenThoughts）
+
+> 原文:"This environment generates trajectories rewarded for succinctly presenting the final answer in whatever form the user requested by decoupling format compliance from semantic correctness through a binary reward signal (1.0 for a valid format and 0.0 for an invalid one)."
+> 出处：2508.18255 §2.2.1 Answer Format（二进制格式奖励 1.0 / 0.0）
+
+> 原文:"over 150 output formats are sampled"
+> 出处：2508.18255 §2.2.1（150+ 输出格式）
+
+> 原文:"We leverage the RLVR-IFEval [43] set of verifiable tasks to introduce a large set of constraint instructions"
+> 出处：2508.18255 §2.2.2 Instruction Following（基于 RLVR-IFEval 约束集）
+
+> 原文:"The reward signal is derived from programmatic validation: a binary score of 1.0 is awarded if the model’s output successfully instantiates the target Pydantic model without error and 0.0 otherwise, with a supplemental penalty for excessive length."
+> 出处：2508.18255 §2.2.4 Schema Adherence（原文环境名为 Schema Adherence，卡片写作「JSON Editing」，见报告）
+
+> 原文:"To facilitate agentic behavior, the Tool Use environment trains the model to generate reasoning and then produce one or more tool calls."
+> 出处：2508.18255 §2.2.5 Tool Use（先推理后调用工具；一个 turn 内可多次调用）
+
+> 原文:"The environment, seeded with the tasks from [16] and others, intercepts a special <tool_call> token, and validates that the JSON has both all the fields in the correct hierarchy as well as the values for those fields from the origin dataset."
+> 出处：2508.18255 §2.2.5（拦截 <tool_call> token + 字段层级/取值校验）
+
+> 原文:"The reward is determined if the entirety of the JSON produced in the tool calls is equivalent to the origin, and is given a binary reward based on accuracy."
+> 出处：2508.18255 §2.2.5（tool call JSON 与 origin 完全等价 → binary reward）
+
+> 原文:"• A training methodology that incorporates loss-masking, length-control fine-tuning, and efficient packing strategies for large-scale heterogeneous data (Section 3);"
+> 出处：2508.18255 §1（Loss Masking / Length-Control FT / Efficient Packing 三项训练方法）
+
+> 原文:"As with Hermes 3, we began with the 405B and 70B versions of Llama 3.1 [49]. For the 14B model, we began with the Qwen3 14B [57] checkpoint."
+> 出处：2508.18255 §3 Training（三档基座：Llama 3.1 405B/70B、Qwen3 14B）
+
+> 原文:"Hermes 4 was trained on 192 NVIDIA B200 GPUs"
+> 出处：2508.18255 §3（训练硬件）
+
+> 原文:"We found that when evaluated on LiveCodeBench in reasoning mode, our 14B model would reach its maximum context of 40,960 tokens 60% of the time."
+> 出处：2508.18255 §3.1 Controlling reasoning length（14B 超长推理问题）
+
+> 原文:"Our approach to solving this utilizes a second supervised fine-tuning stage to teach the model to stop reasoning at 30,000 tokens and generate an answer."
+> 出处：2508.18255 §3.1（⚠️ 论文的 length-control 是「第二阶段 SFT 教模型在 30k token 停」，卡片写的「控制在 16k 以内」与原文不符，见报告）
+
+> 原文:"We did not deem reasoning truncation training necessary for Hermes 4 70B or Hermes 4 405B."
+> 出处：2508.18255 §3.1 表 2 说明（70B/405B 不需要截断训练）
+
+> 原文:"Table 3 gives the evaluation scores for Hermes 4 405B compared to similarly sized open-weight models."
+> 出处：2508.18255 §4 Results（表 3 口径）
+
+> 原文:"Table 4 does the same for Hermes 4 70B and 14B."
+> 出处：2508.18255 §4 Results（表 4 口径：70B / 14B）
+
+> 原文:"96.2 (73.8)"
+> 出处：2508.18255 §4 表 3（Hermes 4 405B · MATH-500 = 96.2，括号内为非推理模式 73.8）
+
+> 原文:"81.9 (11.4)"
+> 出处：2508.18255 §4 表 3（Hermes 4 405B · AIME'24 = 81.9 / 非推理 11.4）
+
+> 原文:"78.1 (10.6)"
+> 出处：2508.18255 §4 表 3（Hermes 4 405B · AIME'25 = 78.1 / 非推理 10.6）
+
+> 原文:"70.6 (39.4)"
+> 出处：2508.18255 §4 表 3（Hermes 4 405B · GPQA Diamond = 70.6 / 非推理 39.4）
+
+> 原文:"97.5 86.5 83.1 78.1"
+> 出处：2508.18255 §4 表 3（Deepseek R1 671B 推理模式：MATH-500 97.5、AIME'24 86.5、AIME'25 83.1、GPQA 78.1）
+
+> 原文:"97.5 (90.3)"
+> 出处：2508.18255 §4 表 3（Qwen3 235B R · MATH-500 = 97.5 / 非推理 90.3）
+
+> 原文:"61.4 (28.1)"
+> 出处：2508.18255 §4 表 3（Hermes 4 405B · LCBv6 Aug2024+ = 61.4 / 非推理 28.1）
+
+> 原文:"65.1 (34.6)"
+> 出处：2508.18255 §4 表 3（Qwen3 235B R · LCBv6 = 65.1 / 非推理 34.6）
+
+> 原文:"87.2 (73.6)"
+> 出处：2508.18255 §4 表 3（Hermes 4 405B · MMLU = 87.2 / 非推理 73.6）
+
+> 原文:"95.5 (71.0)"
+> 出处：2508.18255 §4 表 4（Hermes 4 70B · MATH-500 = 95.5 / 非推理 71.0）
+
+> 原文:"73.5 (9.5)"
+> 出处：2508.18255 §4 表 4（Hermes 4 70B · AIME'24 = 73.5 / 非推理 9.5）
+
+> 原文:"Math & Reasoning 88.3 (75.6) 91.1 (76.3)"
+> 出处：2508.18255 §4 表 4（该行含 Hermes 4 14B 的 MATH-500 = 91.1 / 非推理 76.3；左侧 88.3/75.6 为 Cogito 70B）
+
+> 原文:"32.2 (12.2) 55.4 (11.0)"
+> 出处：2508.18255 §4 表 4（该行含 Hermes 4 14B 的 AIME'24 = 55.4 / 非推理 11.0；左侧 32.2/12.2 为 Cogito 70B）
+
+> 原文:"Under these conditions, most models exhibited what we term policy rigidity."
+> 出处：2508.18255 §5.1 Baseline Behavior under Standard Prompting（policy rigidity）
+
+> 原文:"For example, large proprietary models such as GPT-5 and Opus 4.1 frequently issued disclaimers emphasizing their AI identity or overtly reformulated responses to align with safety constraints."
+> 出处：2508.18255 §5.1（专有模型的免责声明行为）
+
+> 原文:"By contrast, Hermes 4 demonstrated comparatively greater contextual fidelity: it tended to interpret fictional prompts as role-play and generated in-character responses without repeated disclaimers."
+> 出处：2508.18255 §5.1（Hermes 4 的上下文保真度更高）

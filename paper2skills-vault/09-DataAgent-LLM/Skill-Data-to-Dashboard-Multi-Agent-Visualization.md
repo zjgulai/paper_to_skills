@@ -9,7 +9,9 @@ status: stable
 created: 2026-04-26
 updated: 2026-04-26
 paper: arXiv:2505.23695
+paper_id: 2505.23695
 source: ai
+evidence_basis: paper-verbatim
 ---
 
 # Data-to-Dashboard — 多Agent智能可视化生成
@@ -409,3 +411,58 @@ python dashboard_agent.py
 - DeepAnalyze 解决"分析什么"（生成洞察报告）
 - Data-to-Dashboard 解决"怎么看"（生成可视化图表）
 - 两者结合形成完整的"数据→洞察→可视化"决策链路，预期年节省可达 **¥25-30万**
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Our agentic system operates in two sequential stages: data-to-insight and insight-to-chart"
+> 出处：2505.23695 §3（Proposed Approach，对应本文 §1 的「两阶段架构」断言）
+
+> 原文:"our framework simulates the analytical reasoning process of business analysts by retrieving domain-relevant knowledge and adapting to diverse datasets without relying on closed ontologies or question templates."
+> 出处：2505.23695 §Abstract（对应「不依赖封闭本体或预定义问题模板」）
+
+> 原文:"This label is inferred using external reference knowledge sources, such as Wikipedia, enabling broad transferability across industries without relying on closed taxonomies or predefined ontologies."
+> 出处：2505.23695 §3.2（Domain Detector，Domain Detection Agent 的职责口径）
+
+> 原文:"The Evaluator agent scores the generated outputs across five dimensions"
+> 出处：2505.23695 §3.2（Evaluator，Multi-Perspective / Evaluator 的评分维度）
+
+> 原文:"We adopt the Reflexion framework (Shinn et al., 2023) to enhance reasoning after the evaluation stage."
+> 出处：2505.23695 §3.2（Self-Reflector，自反思迭代机制）
+
+> 原文:"Our approach implements a Tree-of-Thought (ToT) reasoning framework (Yao et al., 2023) for transforming analytical insights into domain-appropriate visualizations."
+> 出处：2505.23695 §3.3（Stage 2: Insight to Chart）
+
+> 原文:"Through the three-expert consensus mechanism, the system can evaluate competing visualization strategies against domain requirements, debate the effectiveness of different chart types, and scrutinize the selection of visual encodings before committing to a final representation."
+> 出处：2505.23695 §3.3（专家共识评估机制）
+
+> 原文:"Moreover, most existing approaches—whether targeting low-level tasks such as chart factuality check or high-level insight generation—rely heavily on question-answer (QA) pairs(Masry et al., 2022; Sahu et al., 2024) to drive the analytical process."
+> 出处：2505.23695 §2（Related Work，传统方案依赖预定义问题的依据）
+
+> 原文:"As shown in Table 1, our approach significantly outperforms a non-agentic GPT-4o baseline with domain awareness in terms of insightfulness, novelty, and depth,"
+> 出处：2505.23695 §6（Result 2 总结句）
+
+> 原文:"| Insightful | 0.78 | 0.88 | +12 % |"
+> 出处：2505.23695 §6 表 1（GPT-4o → Ours，Insightfulness 相对提升 +12%）
+
+> 原文:"| Novelty | 0.65 | 0.83 | +28 % |"
+> 出处：2505.23695 §6 表 1（Novelty 相对提升 +28%）
+
+> 原文:"| Depth | 0.75 | 0.99 | +31 % |"
+> 出处：2505.23695 §6 表 1（Depth 相对提升 +31%）
+
+> 原文:"While both our approach and the baseline struggled somewhat in novelty, our system notably surpassed the baseline (0.599 vs. 0.390), successfully generating insights that extend beyond conventional thinking."
+> 出处：2505.23695 §6（Result 2 · Novelty 正文数值）
+
+> 原文:"Our system outperformed the baseline in terms of the depth of the generated insights (0.942 vs. 0.803), demonstrating that our output exhibits a deeper understanding of CRM complexities, effectively capturing subtle relationships and insights that are implicit in the raw data."
+> 出处：2505.23695 §6（Result 2 · Depth 正文数值）
+
+> 原文:"We evaluate our system on three datasets across different domains."
+> 出处：2505.23695 §Abstract（实验规模）
+
+> 原文:"Conference: 2nd Workshop on Agentic AI for Enterprise; August 3–7, 2025; Toronto, ON, Canada"
+> 出处：2505.23695 首页页眉（venue：KDD 2025 的 workshop，非主会）
+
+> 原文:"It is worth noting that the quality of generated insights was found to inversely impact chart generation accuracy. Particularly, when Stage 1 domain insights are effectively transferred to Stage 2, generating accurate charts, especially legends, becomes more challenging."
+> 出处：2505.23695 §3.3（论文自承的负向发现：洞察质量与图表生成准确率反向影响）

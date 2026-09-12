@@ -1,5 +1,23 @@
+---
+title: "Skill Card: 开放世界增量分类"
+module: 07-NLP-VOC
+paper: "OpenCML: Open-world Continual Learning for Multimodal and Multilingual Data"
+venue: ACL 2025
+venue_tier: CCF-A
+evidence_basis: paper-traceable
+source: human+ai
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 开放世界增量分类
 # OpenWorld Class Incremental Learning
+
+> **证据基础声明**：本卡**有可定位的论文来源** —— 见下方「论文来源」（OpenCML, ACL 2025）。
+> 但**该论文全文尚未入库**，且**未找到其 arXiv/DOI 编号**（检索到的
+> `arXiv:2511.19491` 经核实是**另一篇**同主题论文 OpenWorldLib，**不是** OpenCML，已排除）。
+> 故卡内数字**暂无逐字引文支撑**，不可当作论文结论引用。
+> 待补：从 ACL Anthology 取得正式编号并把全文存入 `papers/07-NLP-VOC/` 后补「⑥ 原文引用」段。
 
 **论文来源**: OpenCML: Open-world Continual Learning for Multimodal and Multilingual Data (ACL 2025)
 **理论基础**: Prototype-based Open World Learning + 增量类别发现 + 记忆回放防遗忘

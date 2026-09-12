@@ -8,6 +8,8 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2512.24565
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MCP Tool Use 评估基准 — TFS/TEFS 双指标与干扰测试
@@ -336,3 +338,103 @@ python3 mcp_agent_bench.py
 - **生产验证**: MCP-Universe 真实环境最终确认
 - **能力对比**: 两个基准一起跑，交叉验证
 - **成本控制**: MCPAgentBench 的 Token Efficiency 指导模型选型
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"MCPAgentBench employs a sandbox environment built upon the Autogen framework."
+> 出处：2512.24565 §3.1（评估环境基于 Autogen 沙箱）
+
+> 原文:"After deduplication, we obtain definitions for 9714 MCP servers and over 20000 MCP tools."
+> 出处：2512.24565 §3.2 Step 1（原始数据规模：9,714 servers / 20,000+ tools）
+
+> 原文:"For Tasks, we collect real-world user queries and task descriptions from the Hugging Face Datasets platform and other academic datasets like Infinity-Instruct (2025) and Schema-Guided Dialogue Dataset Rastogi et al. (2020)."
+> 出处：2512.24565 §3.2 Step 1（任务侧数据来源：HuggingFace + Infinity-Instruct）
+
+> 原文:"To construct high-quality test cases, MCPAgentBench employs a four-step data processing workflow designed to ensure task authenticity, tool representativeness, and solution uniqueness."
+> 出处：2512.24565 §3.2（四步流水线的出处）
+
+> 原文:「Therefore, strict manual curation is performed, aiming to align the Task and Tool to achieve a "unique solution" with minimal modifications.」
+> 出处：2512.24565 §3.2 Step 3（人工审核确保唯一解）
+
+> 原文:"LLM (e.g., GPT-4o) automatically generate Python stub functions based on the curated tool definitions (including tool name, description, and parameters)."
+> 出处：2512.24565 §3.2 Step 4（GPT-4o 生成 stub 函数 + 专家审核）
+
+> 原文:「This design not only tests the model’s fundamental tool-calling capabilities but also specifically assesses its tool discrimination and anti-interference abilities in a "needle in a haystack" scenario.」
+> 出处：2512.24565 §3.1（Distractor「大海捞针」场景的原文表述）
+
+> 原文:"Task Domain: 1) General Tasks: Covers common scenarios such as daily life, entertainment, and office work. 2) Professional Tasks: Involves specific domains, such as academic research or software engineering."
+> 出处：2512.24565 §3.3（两个 domain 的划分）
+
+> 原文:"Invocation Complexity: 1) Single-Tool Invocation: The task can be resolved by invoking only one MCP tool. This tests the Agent’s foundational ability to understand and select the correct tool."
+> 出处：2512.24565 §3.3（Single-Tool 类型定义）
+
+> 原文:"2) Dual-Tool Parallel Invocation: The task requires the Agent to plan and invoke two independent tools concurrently. This assesses the Agent’s task decomposition and parallel planning capabilities."
+> 出处：2512.24565 §3.3（Dual Parallel 类型定义）
+
+> 原文:"3) Dual-Tool Serial Invocation: The task requires the Agent to invoke tools in two sequential steps, following a specific logical order."
+> 出处：2512.24565 §3.3（Dual Serial 类型定义）
+
+> 原文:"4) Multi-Tool Invocation: The task requires the Agent to invoke tools in multiple steps according to a logical sequence."
+> 出处：2512.24565 §3.3（Multi-Tool 类型定义）
+
+> 原文:"Every Domain contains 30 tasks of type Single-tool Invocation, plus 20 tasks of each other complex type of invocation, for a total of 180 tasks."
+> 出处：2512.24565 §3.3（⚠️ 底本此版写 **180** tasks / 每域每复杂类型 20 条，与卡片写的「178 tasks」「Multi-Tool 38 (20+18)」不一致，见报告）
+
+> 原文:"TFS is the weighted average score across all tasks."
+> 出处：2512.24565 §4.1（TFS 定义收尾句）
+
+> 原文:"TEFS is the weighted average score across all tasks."
+> 出处：2512.24565 §4.1（TEFS 定义收尾句）
+
+> 原文:"Token Efficiency: Measures the score obtained per 1k output tokens consumed."
+> 出处：2512.24565 §4.1（Token Efficiency 定义）
+
+> 原文:"Time Efficiency: Measures the score obtained per minute of execution time."
+> 出处：2512.24565 §4.1（Time Efficiency 定义）
+
+> 原文:"We evaluate the performance of the following 11 mainstream models using the MCPAgentBench benchmark:"
+> 出处：2512.24565 §4.2（11 个模型的出处；注意下一句正文写 "these 10 mainstream models"，论文自身不一致）
+
+> 原文:"Figure 3 presents the overall average TFS and TEFS scores (avg@4) for these 10 mainstream models evaluated on MCPAgentBench."
+> 出处：2512.24565 §4.2（avg@4 口径）
+
+> 原文:"Under the TFS metric, Claude Sonnet 4.5, o3, and glm-4.6 achieve the top three scores, demonstrating superior task completion, whereas Gemini 3 Pro Preview records the lowest score."
+> 出处：2512.24565 §4.2（TFS 前三名与最低分；⚠️ 底本 Figure 3 是图片，未给出 71.6/66.0/65.1 等具体分值）
+
+> 原文:"When we assess performance using the stricter TEFS metric, Claude Sonnet 4.5, glm-4.6, and qwen3-235b-a22b-instruct-2507 secure the top three positions in execution efficiency, with Gemini 3 Pro Preview exhibiting the lowest efficiency score."
+> 出处：2512.24565 §4.2（TEFS 前三名与最低分；⚠️ 同上，具体分值 57.7/54.4/51.8 不在底本文字中）
+
+> 原文:"We observe that under the TFS metric, the average score for the Dual Parallel Tool Task is higher than that for the Dual Serial Tool Task."
+> 出处：2512.24565 §4.2（TFS: Dual Parallel > Dual Serial）
+
+> 原文:"However, a transition to the TEFS metric reveals a sharp and significant drop in the Dual Parallel Tool Task scores across the board."
+> 出处：2512.24565 §4.2（TEFS: Dual Parallel 大幅下滑）
+
+> 原文:"This inability is particularly evident in models from the OpenAI series (e.g., gpt-5), which record a TEFS score of 0 for the Dual Parallel Tool Task, demonstrating a complete failure to execute the required parallel tool calls efficiently or correctly."
+> 出处：2512.24565 §4.2（OpenAI 系列 Dual Parallel TEFS=0）
+
+> 原文:"| gpt-5 | 90.83 | 77.50 | 0.00 | 10.00 | 82.50 | 48.75 | 0.00 | 30.56 |"
+> 出处：2512.24565 §4.2 表 2（TEFS avg@4：gpt-5 两处 Dual Parallel 均为 0.00）
+
+> 原文:"| o3 | 95.83 | 80.00 | 0.00 | 8.75 | 87.50 | 48.75 | 0.00 | 25.00 |"
+> 出处：2512.24565 §4.2 表 2（TEFS avg@4：o3 两处 Dual Parallel 均为 0.00）
+
+> 原文:"| o4-mini | 93.33 | 72.50 | 0.00 | 10.00 | 91.67 | 57.50 | 0.00 | 11.11 |"
+> 出处：2512.24565 §4.2 表 2（TEFS avg@4：o4-mini 两处 Dual Parallel 均为 0.00）
+
+> 原文:"qwen3-235b-a22b-instruct-2507 exhibits the highest Token Efficiency, significantly higher than Claude Sonnet 4.5 and glm-4.6, which rank second and third, respectively."
+> 出处：2512.24565 §4.2（Token Efficiency 最高者）
+
+> 原文:"Conversely, gpt-5 records the lowest Token Efficiency, suggesting that the excessive"
+> 出处：2512.24565 §4.2（Token Efficiency 最低者；后接 "thinking" tokens 解释，因引号嵌套故截断引用）
+
+> 原文:"Figure 5 illustrates the results for Time Efficiency. Claude Sonnet 4.5 achieves the highest Time Efficiency, with glm-4.6 and qwen3-235b-a22b-instruct-2507 ranking second and third, respectively."
+> 出处：2512.24565 §4.2（Time Efficiency 排名）
+
+> 原文:"As shown in Figure 6(a), TEFS generally exhibits an upward trend as the model size increases. However, a noticeable dip in performance occurs at the Qwen 2.5 32B model, which may relate to its specific training methodology."
+> 出处：2512.24565 §4.3（模型规模 vs TEFS 的 dip 现象）
+
+> 原文:"overall, as the number of alternative tools increases, the TEFS of all models show a slight downward trend."
+> 出处：2512.24565 §4.3（候选工具数量 vs TEFS）

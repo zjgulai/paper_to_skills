@@ -7,8 +7,10 @@ topic: learning-to-rank
 version: 0.1.0
 status: stable
 created: 2026-04-26
-updated: 2026-04-26
+updated: 2026-09-12
 paper: arXiv:2102.07831
+paper_id: 2102.07831
+evidence_basis: paper-verbatim
 source: ai
 ---
 
@@ -315,3 +317,84 @@ python neural_ndcg.py
 - REVISION 解决"用户搜什么"（意图识别）
 - NeuralNDCG 解决"结果怎么排"（排序优化）
 - 两者结合形成完整的智能搜索链路：意图理解 → 候选召回 → 精排优化 → 结果展示
+
+## 6. 原文引用
+
+> 原文："Learning to Rank (LTR) algorithms are usually evaluated using Information Retrieval metrics like Normalised Discounted Cumulative Gain (NDCG) or Mean Average Precision."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）
+
+> 原文："As these metrics rely on sorting predicted items’ scores (and thus, on items’ ranks), their derivatives are either undefined or zero everywhere. This makes them unsuitable for gradient-based optimisation, which is the usual method of learning appropriate scoring functions."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）
+
+> 原文："Commonly used LTR loss functions are only loosely related to the evaluation metrics, causing a mismatch between the optimisation objective and the evaluation criterion."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）——本卡开篇「评估指标与训练损失不匹配」的原文依据
+
+> 原文："In this paper, we address this mismatch by proposing NeuralNDCG, a novel differentiable approximation to NDCG."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）
+
+> 原文："Since NDCG relies on the nondifferentiable sorting operator, we obtain NeuralNDCG by relaxing that operator using NeuralSort, a differentiable approximation of sorting."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）——NeuralSort 可微松弛的原文依据
+
+> 原文："As a result, we obtain a new ranking loss function which is an arbitrarily accurate approximation to the evaluation metric, thus closing the gap between the training and the evaluation of LTR models."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）
+
+> 原文："We introduce two variants of the proposed loss function."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）
+
+> 原文："Such loss functions fall into one of three categories: pointwise, pairwise or listwise. Pointwise approaches treat the problem as a simple regression or classification of the ground truth relevancy for each individual search result, foregoing possible interactions between items. In pairwise approaches, pairs of items are considered as independent variables and the function is learned to correctly indicate the preference among the pair. Examples include RankNet [5], LambdaRank [6] or LambdaMART [7]."
+> 出处：2102.07831 §1 Introduction（PDF 第 2 页）——本卡「三种 LTR 范式」表的原文依据
+
+> 原文："However, IR metrics consider entire search results lists at once, unlike pointwise and pairwise algorithms. This mismatch has motivated listwise approaches, which compute the loss based on the scores of the entire list of search results. Two popular listwise approaches are ListNet [8] and ListMLE [29]."
+> 出处：2102.07831 §1 Introduction（PDF 第 2 页）
+
+> 原文："Note that the temperature parameter τ allows to control the trade-off between the accuracy of the approximation and the variance of the gradients."
+> 出处：2102.07831 §2 NeuralSort 式 (4) 后（PDF 第 3 页）
+
+> 原文："Generally speaking, the lower the temperature, the better the approximation at the cost of a larger variance in the gradients."
+> 出处：2102.07831 §2（PDF 第 3 页）
+
+> 原文："Thus, as the temperature approaches zero, NeuralNDCG approaches true NDCG in both its variants."
+> 出处：2102.07831 §2 性质（PDF 第 5 页）——本卡「tau → 0 时 P_hat → P_sort」的原文依据
+
+> 原文："Since Pb is row-stochastic but not-necessarily column-stochastic (i.e. each column does not necessarily sum to one), an individual ground truth gain g(y)j may have corresponding weights in the rows of Pb that do not sum to one (and, in particular, may sum to more than one), so it will overcontribute to the total sum"
+> 出处：2102.07831 §2 Sinkhorn 归一化段（PDF 第 4 页）——本卡「scale(P_hat) = Sinkhorn 迭代归一化」的原文依据
+
+> 原文："We now provide an alternative formulation of NeuralNDCG, called NeuralNDCG Transposed (NeuralNDCGT for short), where the summation is done over the documents, not their ranks."
+> 出处：2102.07831 §2 NeuralNDCG Transposed（PDF 第 4 页）——本卡「Standard / Transposed 两种变体」的原文依据
+
+> 原文："We evaluate a Context-Aware Ranker [21] trained with NeuralNDCG loss on Web30K [22] and Istella [12] datasets. We demonstrate favourable performance of NeuralNDCG as compared to baselines. In particular, NeuralNDCG outperforms ApproxNDCG [23], a competing method for direct optimisation of NDCG."
+> 出处：2102.07831 §1 Introduction 贡献列表（PDF 第 2 页）
+
+> 原文："For a pointwise baseline, we used a simple RMSE of predicted relevancy."
+> 出处：2102.07831 §4.2 Baselines（PDF 第 8 页）
+
+> 原文："Pairwise losses we compared with consist of RankNet and LambdaRank. Similarly to NeuralNDCG, these losses support training with a specific rank cutoff. We thus train models with these losses at ranks 5, 10 and at the maximum rank."
+> 出处：2102.07831 §4.2 Baselines（PDF 第 8 页）
+
+> 原文："For both datasets, we report models performance in terms of NDCG@5 and NDCG@10."
+> 出处：2102.07831 §4.3 Metrics（PDF 第 8 页）
+
+> 原文："Both NeuralNDCG variants in every rank cutoff setting outperform ApproxNDCG on both datasets in all metrics reported."
+> 出处：2102.07831 §5 Results 表 3 前（PDF 第 9 页）
+
+> 原文："Table 3: Test NDCG on Web30K and Istella. Boldface is the best performing loss column-wise."
+> 出处：2102.07831 §5 表 3 标题（PDF 第 9 页）
+
+> 原文："We used 60% of the data for training, 20% for validation and hyperparameter tuning and the remaining 20% for testing."
+> 出处：2102.07831 §4.1 Datasets（PDF 第 7 页）
+
+> 原文："we used an architecture consisting of 2 encoder blocks of a single attention head each, with a hidden dimension of 384."
+> 出处：2102.07831 §4.2 Baselines（PDF 第 7 页）
+
+> 原文："The batch size was set to 64 (Web30K) or 110 (Istella) and search results lists were truncated or padded to the length of 240 when training."
+> 出处：2102.07831 §4.2 Baselines（PDF 第 8 页）
+
+> 原文："We trained the networks for 100 epochs, decaying the learning rate by the factor of 0.1 after 50 epochs."
+> 出处：2102.07831 §4.2 Baselines（PDF 第 8 页）
+
+> 原文："the empirical evaluation shows that our proposed method outperforms previous work aimed at direct optimisation of NDCG and is competitive with the state-of-the-art methods."
+> 出处：2102.07831 §Abstract（PDF 第 1 页）
+
+> **口径提示（不改正文，仅记录）**：本卡正文里的 NDCG@10 提升、线上 A/B 指标（点击率 / 转化率）、搜索转化率区间、UV / 客单价 / 年 GMV 增量**全部是业务假设或卡片自定口径，论文中没有对应数字**；
+> 论文可核验的对应量是表 3 在 Web30K / Istella 上的 NDCG@5 与 NDCG@10（摘要口径为「优于 ApproxNDCG、与 SOTA 相当」）。
+> 另：论文超参里 `τ` 设的是 **1**（§4.2 尾），本卡 ② 写的 `tau=0.1` 是卡片自定值，不是论文取值。

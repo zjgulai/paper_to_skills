@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2602.20867
+paper: "SoK: Agentic Skills - Beyond Tool Use in LLM Agents"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: SoK Agentic Skills — Skill 全生命周期与方法论底座
@@ -261,6 +264,46 @@ python skill_contract.py
 4. **与项目契合**:本项目正是 P1+P2+P5 模式,survey 直接适用
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We ground the concept of an agentic skill in a four-tuple formalization that captures the essential properties distinguishing skills from related abstractions."
+> 出处：2602.20867 §II-A Formal Definition
+>
+> 原文:"An agentic skill is a tuple"
+> 出处：2602.20867 §II-A Formal Definition, Definition 1
+>
+> 原文:"The lifecycle comprises seven stages, depicted in Fig.2:"
+> 出处：2602.20867 §IV Skill Lifecycle Model
+>
+> 原文:"Distillation: extracting a stable and generalizable procedure from trajectories or demonstrations and packaging it into the $(C,\pi,T,R)$ tuple together with descriptive metadata and usage constraints."
+> 出处：2602.20867 §IV Skill Lifecycle Model, Distillation
+>
+> 原文:"the SkillsBench benchmark [32] demonstrates that curated skills raise agent pass rates by 16.2 percentage points on average, while self-generated skills degrade performance by 1.3 pp, encoding incorrect or overly specific heuristics."
+> 出处：2602.20867 §II-C Skills as Procedural Memory
+>
+> 原文:"Notably, a smaller model equipped with curated skills can outperform a larger model operating without them. One interpretation is that procedural memory serves as an efficiency multiplier and partially substitute for model scale."
+> 出处：2602.20867 §II-C Skills as Procedural Memory
+>
+> 原文:"The benchmark evaluates 86 tasks across 11 domains (healthcare, manufacturing, cybersecurity, natural science, energy, finance, office work, media, robotics, mathematics, and software engineering) using 7 agent-model configurations over 7,308 trajectories."
+> 出处：2602.20867 §VIII-D Anchor Case Study: SkillsBench
+>
+> 原文:"Curated skills provide substantial, quantifiable improvement. Across all configurations, curated skills raise the average pass rate by 16.2 percentage points (from 24.3% to 40.6%). The effect varies dramatically by domain: healthcare sees +51.9 pp, manufacturing +41.9 pp, and cybersecurity +23.2 pp, while software engineering gains only +4.5 pp and mathematics +6.0 pp."
+> 出处：2602.20867 §VIII-D Anchor Case Study: SkillsBench
+>
+> 原文:"Self-generated skills provide no benefit. Self-generated skills average $-$1.3 pp relative to the no-skills baseline, suggesting that models cannot yet reliably author the procedural knowledge they benefit from consuming in open-ended settings. Only one configuration (Claude Opus 4.6) showed a modest +1.4 pp, while Codex + GPT-5.2 degraded by $-$5.6 pp."
+> 出处：2602.20867 §VIII-D Anchor Case Study: SkillsBench
+>
+> 原文:"Skills as compute equalizers. Smaller models equipped with curated skills can match or exceed larger models without skills. Claude Haiku 4.5 with skills (27.7%) outperforms Claude Opus 4.5 without skills (22.0%), suggesting that skill libraries may serve as a practical cost-reduction mechanism."
+> 出处：2602.20867 §VIII-D Anchor Case Study: SkillsBench
+>
+> 原文:"Skill quantity and complexity matter. Focused skills with 2–3 modules yield optimal improvement (+18.6 pp), while 4+ skills show diminishing returns (+5.9 pp)."
+> 出处：2602.20867 §VIII-D Anchor Case Study: SkillsBench
+>
+> 原文:"grounded by a case study of the ClawHavoc campaign in which nearly 1,200 malicious skills infiltrated a major agent marketplace, exfiltrating API keys, cryptocurrency wallets, and browser credentials at scale."
+> 出处：2602.20867 Abstract
 
 ## 参考论文
 

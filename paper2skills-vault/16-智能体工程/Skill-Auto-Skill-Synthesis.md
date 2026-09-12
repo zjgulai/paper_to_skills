@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2604.08618
+paper: "SkillForge: Forging Domain-Specific, Self-Evolving Agent Skills in Cloud Technical Support"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: SkillForge — 领域特定自演化 Agent Skill 萃取与优化
@@ -229,6 +232,55 @@ python skillforge.py
 4. **可分阶段落地**:可以先只用 Skill Creator(无演化)落地,再加自演化闭环
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"| #Tickets | 389 | 527 | 256 | 385 | 326 | 1883 |"
+> 出处：2604.08618 §3.1.1 Scenarios and Dataset, Table 1
+>
+> 原文:"| #Tasks | 706 | 1061 | 572 | 730 | 668 | 3737 |"
+> 出处：2604.08618 §3.1.1 Scenarios and Dataset, Table 1
+>
+> 原文:"We evaluate SkillForge on five representative cloud technical support scenarios from a major cloud provider, as summarized in Table 1."
+> 出处：2604.08618 §3.1.1 Scenarios and Dataset
+>
+> 原文:"All tickets are real-world, anonymized production tickets."
+> 出处：2604.08618 §3.1.1 Scenarios and Dataset
+>
+> 原文:"We validated the LLM-judge against human annotations on a sample subset, achieving over 90% agreement, confirming its reliability for automated evaluation"
+> 出处：2604.08618 §3.1.2 Evaluation Metrics
+>
+> 原文:"We report two variants: Strict CR (proportion classified as Consistent) and Lenient CR (proportion classified as Consistent or Partially Consistent)."
+> 出处：2604.08618 §3.1.2 Evaluation Metrics
+>
+> 原文:"To evaluate the generality of the self-evolution mechanism, we apply it from three distinct starting points—S_manual, S_domain, and S_generic—and track the improvement over three evolution cycles."
+> 出处：2604.08618 §3.3 RQ2: Effectiveness of the Self-Evolution Loop
+>
+> 原文:"All three starting points benefit from the self-evolution loop, with Strict CR gains of +10.99, +9.23, and +11.60 after three iterations respectively."
+> 出处：2604.08618 §3.3 RQ2: Effectiveness of the Self-Evolution Loop
+>
+> 原文:"S_manual, despite being expert-authored, still benefits substantially (+10.99 Strict, +12.21 Lenient), indicating that automated evolution can surpass human-curated knowledge."
+> 出处：2604.08618 §3.3 RQ2: Effectiveness of the Self-Evolution Loop
+>
+> 原文:"The skill-equipped agent achieves +13.76pp Strict CR over this legacy system on the same held-out set, confirming that domain-contextualized creation combined with automated self-evolution can surpass mature, human-engineered production systems."
+> 出处：2604.08618 §3.4 Comparison with Production Legacy System
+>
+> 原文:"Instead of a single classification, the Failure Analyzer performs a parallel analysis of each Bad Case across four distinct dimensions, drawing on structured reasoning approaches [20, 21] to ensure comprehensive attribution:"
+> 出处：2604.08618 §2.6.1 Multi-Dimensional Failure Analysis (Failure Analyzer)
+
+> 原文:"S_domain outperforms S_generic across all scenarios, with average gains of +4.3pp Strict CR and +3.6pp Lenient CR."
+> 出处：2604.08618 §3.2 RQ1: Efficacy of Domain-Contextualized Skill Creator
+>
+> 原文:"S_domain outperforms the generic baseline by +4.3pp Strict CR and +3.6pp Lenient CR, and the self-evolution loop delivers consistent Strict CR gains of 9–12pp across three iterations regardless of starting point"
+> 出处：2604.08618 §5 Conclusion
+
+> 原文:"SkillsBench, a recent benchmark of 86 tasks across 11 domains, confirms that curated skills improve success rates by 16.2pp on average while self-generated skills provide no benefit [15]."
+> 出处：2604.08618 §1 Introduction
+>
+> 原文:"which showed that curated skills improve agent success rates by 16.2pp while self-generated skills provide negligible benefit."
+> 出处：2604.08618 §4.2 Agent Skill Construction and Management
 
 ## 参考论文
 

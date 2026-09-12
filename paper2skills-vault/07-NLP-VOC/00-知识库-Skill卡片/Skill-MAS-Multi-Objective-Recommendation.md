@@ -1,13 +1,15 @@
 ---
 title: MAS多目标推荐
 doc_type: knowledge
-module: NLP-VOC
+module: 07-NLP-VOC
 topic: multi-objective-recommendation
 status: stable
 created: 2026-04-29
-updated: 2026-04-29
+updated: 2026-09-12
 owner: self
 source: ai
+paper_id: 2512.24325
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MAS Multi-Objective Recommendation
@@ -264,6 +266,69 @@ python3 model.py
 - 客单价：+10%（更多高利润商品推荐）
 - 品类发现率：+30%
 - 高峰期延迟：-20%
+
+
+## ⑥ 原文引用
+
+> 原文:"MaRCA models the stages of a recommender system as cooperative agents, using Centralized Training with Decentralized Execution (CTDE) to optimize revenue under computation resource constraints."
+> 出处：2512.24325 §Abstract
+
+> 原文:"MaRCA has consistently handled hundreds of billions of ad requests per day and has delivered a 16.67% revenue uplift using existing computation resources."
+> 出处：2512.24325 §Abstract
+
+> 原文:"Contemporary industrial recommender systems typically adopt a cascaded architecture comprising three stages: retrieval, preranking, and ranking [19, 46]."
+> 出处：2512.24325 §1 Introduction
+
+> 原文:"we formulate the multi-stage recommendation process as a constrained sequential decision-making problem that aims to maximize overall business revenue while adhering to strict computation resource constraints."
+> 出处：2512.24325 §3.1 Problem Formulation
+
+> 原文:"As illustrated in Figure 2, the system follows a collaborative multiagent framework, where the AWRQ-Mixer and AutoBucket TestBench feed their computed metrics into the MPC-based Balancer, which then orchestrates the final action selection."
+> 出处：2512.24325 §3.2 System Design
+
+> 原文:"The action value estimation module, AWRQ-Mixer, predicts the expected revenue of each request by jointly encoding user attributes, contextual information, and the inter-stage dependencies in the recommendation stages."
+> 出处：2512.24325 §3.3 Adaptive Weighting Recurrent Q-Mixer
+
+> 原文:"In multi-agent recommendation pipelines, the joint action-value 𝑄 tot must be non-decreasing in each agent’s value 𝑄𝑔 to reflect their cooperative contribution."
+> 出处：2512.24325 §3.3.2 Softplus-Based Monotonicity Constraints (SMC)
+
+> 原文:"Rather than averaging, we dynamically weight ensemble outputs according to their temporal difference (TD) errors, and we call this method Adaptive Weighting (AW)."
+> 出处：2512.24325 §3.3.1 Adaptive Weighting Recurrent Q (AWRQ)
+
+> 原文:"The key insight is using variance across candidate actions to guide their contribution to the final reward."
+> 出处：2512.24325 §3.3.3 Variance-Guided Credit Assignment (VGCA)
+
+> 原文:"As illustrated in Figure 3, the framework models the recommendation stages as cooperative agents through AWRQ."
+> 出处：2512.24325 §3.3 Adaptive Weighting Recurrent Q-Mixer
+
+> 原文:"Table 3 shows that the MPC-based approach not only improves overall computation resource usage but also substantially lowers the risk of exceeding the computation budget."
+> 出处：2512.24325 §4.1.2 MPC-based Revenue-Cost Balancer Experiment Results
+
+> 原文:"Figure 4c indicates that 𝑁 = 10 provides an effective balance between predictive accuracy and runtime efficiency."
+> 出处：2512.24325 §4.1.2 MPC-based Revenue-Cost Balancer Experiment Results
+
+> 原文:"Table 4: Online A/B test results comparing Static, RL-MPCA, MaRCA (Feedback-Based), and MaRCA (MPC-Based)."
+> 出处：2512.24325 §4.2 Online A/B test Results (Table 4)
+
+> 原文:"Revenue +0.00% +3.67%(±0.20%) +12.16%(±0.28%) +14.93%(±0.43%) +16.67%(±0.24%) GMV +0.00% +6.16%(±3.68%) +13.78%(±4.03%) +15.65%(±5.39%) +18.18%(±3.95%)"
+> 出处：2512.24325 §4.2 Online A/B test Results (Table 4 · Revenue/GMV 行)
+
+> 原文:"Clicks +0.00% +5.38%(±0.09%) +15.37%(±0.10%) +17.79%(±0.13%) +19.51%(±0.07%) ROI +0.00% +2.40%(±3.69%) +0.55%(±4.04%) +0.64%(±5.41%) +1.29%(±3.96%) CTR +0.00% +0.69%(±0.10%) +4.85%(±0.10%) +5.58%(±0.14%) +5.22%(±0.08%)"
+> 出处：2512.24325 §4.2 Online A/B test Results (Table 4 · Clicks/ROI/CTR 行)
+
+> 原文:"Here, ROI is defined as ROI = GMV/Spend, where Spend denotes advertiser spend (i.e., the platform’s revenue in our setting)."
+> 出处：2512.24325 §4.2 Online A/B test Results
+
+> 原文:"Our near-real-time deployment adds virtually no additional latency."
+> 出处：2512.24325 §4.2 Online A/B test Results
+
+> 原文:"MaRCA achieved statistically significant improvements across all key metrics while operating within existing computation resource constraints."
+> 出处：2512.24325 §4.2 Online A/B test Results
+
+> 原文:"Its stability has also mitigated the need for continuous on-call support."
+> 出处：2512.24325 §4.2 Online A/B test Results
+
+> 原文:"Our extensive offline experiments and large-scale online deployment demonstrate that MaRCA significantly improves business revenue, achieving a 16.67% revenue increase with no additional computation resource."
+> 出处：2512.24325 §5 Conclusion
 
 ---
 

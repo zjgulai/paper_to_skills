@@ -1,3 +1,12 @@
+---
+title: Skill Card: 评论质量评分与虚假检测
+module: 07-NLP-VOC
+paper_id: 2510.08081
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 评论质量评分与虚假检测
 # Review Quality Scoring & Spam Detection
 
@@ -292,3 +301,61 @@ scorer = ReviewQualityScorer(
 **辅助参考论文**：
 - LLMChaos (2024/2025, ScienceDirect) — LLM + 混沌理论虚假评论检测
 - Predicting Helpful Votes from Amazon Reviews (arXiv:2412.02884, 2024) — 帮助性投票预测
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Ranking online reviews by their intrinsic quality is a critical task for e-commerce platforms and information services, impacting user experience and business outcomes."
+> 出处：2510.08081 §Abstract（评论质量排序的业务重要性 —— ① 与 ⑤ 的立论前提）
+
+> 原文:"An effective review ranking system enhances user trust, facilitates informed choices, and ultimately drives business conversions."
+> 出处：2510.08081 §1 Introduction（质量排序带来的业务价值）
+
+> 原文:"Online reviews profoundly influence consumer decisions (Chevalier and Mayzlin, 2006; Floyd et al., 2014) on platforms like Yelp, Amazon, and Meituan."
+> 出处：2510.08081 §1 Introduction（② 场景1 的平台范围）
+
+> 原文:"Traditional methods that rely on hand-crafted features are rigid and fail to adapt to new domains or evolving quality standards without manual re-engineering"
+> 出处：2510.08081 §1 Introduction（① 为何要做可解释特征工程）
+
+> 原文:"they often function as uninterpretable black boxes (Rudin, 2019), hindering diagnostics and offering no actionable insights."
+> 出处：2510.08081 §1 Introduction（① 黑箱模型的问题）
+
+> 原文:"This reveals a critical research gap: the need for a framework that can autonomously discover interpretable and effective features for review quality assessment."
+> 出处：2510.08081 §1 Introduction（可解释特征自动发现的研究缺口）
+
+> 原文:"We then employ three corresponding prompts to have the LLM identify the common strengths of high-quality reviews, the common flaws of low-quality reviews, and the key differentiators between them."
+> 出处：2510.08081 §3.1 Initial Hypothesis Generation（高质量样本 vs 低质量样本的对比分析）
+
+> 原文:"We construct review quality scores using review click-through rates and apply AutoQual to mine features, identifying five key features: informativeness, providing actionable advice, colloquial expression, containing real examples, and credible and engaging language."
+> 出处：2510.08081 §6 Industrial Deployment（工业落地选出的可解释特征 —— 对应 ① 的多维度质量模型）
+
+> 原文:"We further manually add two additional features: not being promotional copy and not being AI-generated."
+> 出处：2510.08081 §6 Industrial Deployment（② 场景2「模板化好评 / 刷单」在论文侧的对应特征）
+
+> 原文:"In an online A/B experiment conducted from January 18 to February 7, 2025, we observe a 1.42% increase in average review browsing time, a 0.79% increase in the average number of reviews viewed per user, and a 0.27% increase in the conversion rate of users who viewed reviews."
+> 出处：2510.08081 §6 Industrial Deployment（附录「美团 A/B 测试：转化率 +0.27%」的逐字出处）
+
+> 原文:"We deploy our method on a large-scale online platform with a billion-level user base. Large-scale A/B testing confirms its effectiveness, increasing average reviews viewed per user by 0.79% and the conversion rate of review readers by 0.27%."
+> 出处：2510.08081 §Abstract（同一结论的摘要口径）
+
+> 原文:"For Amazon, we sample 2,000 representative reviews from each of four categories (Cellphones and Accessories, Clothing, Shoes and Jewelry, Grocery and Gourmet Food, and Office Products), using helpful votes as the quality score."
+> 出处：2510.08081 §4.2 Datasets（② 数据要求：评论文本 + 星级/有用票）
+
+> 原文:"For Meituan, we sample 20,000 reviews from the in-store dining domain, using review click-through rate (CTR) as the quality score."
+> 出处：2510.08081 §4.2 Datasets（质量分真值可用业务信号代理，无需人工标注）
+
+> 原文:"We also introduce a second group of baselines specifically designed for review helpfulness prediction: TNN Olmedilla et al. (2022), a 1D-CNN-based model; SEHP Malik and Nawaz (2024), a stacking-based ensemble model; and BHeIP-CoRT Li et al. (2025), a BERT-based model that utilizes rating-text consistency."
+> 出处：2510.08081 §4.4 Comparison Methods（附录表 BHeIPCoRT「评分-文本一致性建模」在本文中的表述）
+
+> 原文:"As the list demonstrates, many of the discovered features are highly domain-specific (e.g., Detail Specificity, Comparative Context, Emotional Expression)."
+> 出处：2510.08081 §5.3 Case Study（① 可解释特征确实具有域特异性）
+
+> 原文:"In some cases, the relatively sparse set of features discovered by AutoQual outperforms the high-dimensional semantic features from even a fine-tuned PLM."
+> 出处：2510.08081 §5.1 Feature Discovery Performance（少量可解释特征即可媲美微调 PLM）
+
+> 原文:"Furthermore, this cross-task setting without intra-task memory significantly reduces computational costs, decreasing the agent’s LLM token consumption by 44.95% and the annotation LLM token consumption by 29.79% on average."
+> 出处：2510.08081 §5.2 Ablation Study（论文中唯一可溯源的「计算成本下降」数字；注意与 ⑤ 的 30% 不是同一口径）
+
+> 原文:"Our current industrial deployment is constrained by system architecture limitations, leading us to integrate only a set of high-level, universal features."
+> 出处：2510.08081 §8 Limitations（⑤ 的权重/阈值为通用设定而非按域调优 —— 适用边界）

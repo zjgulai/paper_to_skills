@@ -1,4 +1,21 @@
+---
+title: "Skill Card: StaR-观点语句排序"
+module: 07-NLP-VOC
+paper: "Rank, Don't Generate: Statement-level Ranking for Explainable Recommendation"
+evidence_basis: paper-traceable
+source: human+ai
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: StaR-观点语句排序
+
+> **证据基础声明**：本卡**有来源论文声明** —— ③ 代码模板的 docstring 里写着
+> 「基于论文: Rank, Don't Generate: Statement-level Ranking for Explainable Recommendation」。
+> 但该论文**全文尚未入库**，且卡内未记录其 arXiv/DOI 编号，
+> 故卡内数字**暂无逐字引文支撑**，不可当作论文结论引用。
+> 待补 `paper_id` 与「⑥ 原文引用」段后转为 `paper-verbatim`。
+> （2026-09-12 修正：此前误标为「无对应论文来源」，与 ③ 段 docstring 自相矛盾。）
 
 ---
 

@@ -1,3 +1,13 @@
+---
+paper_id: 2206.07587
+paper: "Cross-lingual AMR Aligner: Paying Attention to Cross-Attention"
+venue: ACL 2023
+evidence_basis: paper-verbatim
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 跨语言语义结构对齐
 # Cross-lingual Semantic Alignment
 
@@ -191,3 +201,55 @@ python3 model.py
 - 建议与 TJAP 跨市场技能同步实施
 
 **综合评分: 7/10**
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"This paper introduces a novel aligner for Abstract Meaning Representation (AMR) graphs that can scale cross-lingually, and is thus capable of aligning units and spans in sentences of different languages."
+> 出处：2206.07587 Abstract
+
+> 原文:"Our approach leverages modern Transformer-based parsers, which inherently encode alignment information in their cross-attention weights, allowing us to extract this information during parsing."
+> 出处：2206.07587 Abstract
+
+> 原文:"This eliminates the need for English-specific rules or the Expectation Maximization (EM) algorithm that have been used in previous approaches."
+> 出处：2206.07587 Abstract
+
+> 原文:"In addition, we propose a guided supervised method using alignment to further enhance the performance of our aligner."
+> 出处：2206.07587 Abstract
+
+> 原文:"This paper presents the first AMR aligner that can scale cross-lingually by leveraging the implicit information acquired in Transformer-based parsers (Bai et al., 2022)."
+> 出处：2206.07587 §1 Introduction
+
+> 原文:"We propose an approach for extracting alignment information from crossattention, and a guided supervised method to enhance the performance of our aligner."
+> 出处：2206.07587 §1 Introduction
+
+> 原文:"We also aim to explore whether cross-attention can be guided by the alignment between the words of the sentence and the nodes of the graph."
+> 出处：2206.07587 §3.2 Guided Cross-Attention
+
+> 原文:"Our algorithm1 to extract and align the input-output spans is divided into six steps:"
+> 出处：2206.07587 §3.3 Alignment Extraction
+
+> 原文:"We use SPRING (Bevilacqua et al., 2021) as our parsing model based on the BART-large architecture (Lewis et al., 2020) for English and SPRING based on mBART for non-English languages mBART (Liu et al., 2020) for the multilingual setting."
+> 出处：2206.07587 §4.2 Parsing models
+
+> 原文:"Our guided attention approach performs best, improving upon LEAMR on Subgraph (+0.5) and Relation (+2.6)."
+> 出处：2206.07587 §5.1 LEAMR alignment results
+
+> 原文:"We achieve state-of-the-art results in the benchmarks for AMR alignment and demonstrate our aligner’s ability to obtain them across multiple languages."
+> 出处：2206.07587 Abstract
+
+> 原文:"All modern alignment systems depend on rules to some degree."
+> 出处：2206.07587 §5.4 Rule ablation
+
+> 原文:"However, our guided model is resilient to rule removal, dropping by barely one point on Subgraph and 5 points on Relation."
+> 出处：2206.07587 §5.4 Rule ablation
+
+> 原文:"Firstly, our approach relies heavily on the use of Transformer models, which can be computationally expensive to train and run."
+> 出处：2206.07587 §5 Limitations
+
+> 原文:"Additionally, the lower performance of our aligner for languages other than English is still a substantial shortcoming, which is discussed in Section 5.2."
+> 出处：2206.07587 §5 Limitations
+
+> 原文:"Furthermore, our method is not adaptable to nonTransformer architectures, as it relies on the specific properties of Transformer-based models to extract alignment information."
+> 出处：2206.07587 §5 Limitations

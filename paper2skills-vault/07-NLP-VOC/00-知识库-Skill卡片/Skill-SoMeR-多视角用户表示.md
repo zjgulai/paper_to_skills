@@ -1,3 +1,12 @@
+---
+title: Skill Card: SoMeR Multi-View User Representation
+module: 07-NLP-VOC
+paper_id: 2405.05275
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: SoMeR Multi-View User Representation
 # SoMeR多视角用户表示学习
 
@@ -342,3 +351,66 @@ python3 model.py
 | 验证结果 | IO driver检测F1=0.99，跨平台迁移能力强 |
 | 反直觉洞察 | 单一视角有偏差，多视角融合才能还原真实用户 |
 | 适用场景 | 用户嵌入、相似性搜索、跨源数据融合 |
+
+---
+
+## ⑥ 原文引用
+
+说明：以下引文逐字摘自 arXiv 全文存档；卡片中 ROI 预估、实施排期与人群占比等业务推算数字并非论文结论，全文无对应表述。
+
+> 原文:"To address these limitations, we propose SoMeR, a Social Media user Representation learning framework that incorporates temporal activities, text contents, profile information, and network interactions to learn comprehensive user portraits."
+> 出处：2405.05275 §Abstract
+
+> 原文:"However, existing methods are either designed for commercial applications, or rely on specific features like text contents, activity patterns, or platform metadata, failing to holistically model user behavior across different modalities."
+> 出处：2405.05275 §Abstract
+
+> 原文:"SoMeR encodes user post streams as sequences of time-stamped textual features, uses transformers to embed this along with profile data, and jointly trains with link prediction and contrastive learning objectives to capture user similarity."
+> 出处：2405.05275 §Abstract
+
+> 原文:"We first encode user posts as a sequence of triplets of the form (timestamp, textual feature, value), which augments typically limited time series data by incorporating a variety of features from each post."
+> 出处：2405.05275 §Introduction
+
+> 原文:"We encode the contextual information of these triplets into an embedding using a transformer-based architecture"
+> 出处：2405.05275 §Introduction
+
+> 原文:"This framework allows us to discover similar users in populations with heterogeneous beliefs, attitudes, and behaviors."
+> 出处：2405.05275 §Introduction
+
+> 原文:"We combine this triplet embedding with a user profile embedding, and impose two jointly trained objectives: (1) network link prediction to learn interactions between users, and (2) contrastive learning to pull similar users closer and push dissimilar users farther away."
+> 出处：2405.05275 §Introduction
+
+> 原文:"Our framework has demonstrated scalability, handling datasets with up to 17 million texts."
+> 出处：2405.05275 §Introduction
+
+> 原文:"SoMeR achieves unexpectedly high accuracy, even if users do not post months before posting their first hate group."
+> 出处：2405.05275 §Introduction
+
+> 原文:"We format a user’s posting history into triplets of time, feature, and value, which undergo encoding via a Triplet Encoder, a transformer-based contextual learning module and a fusion attention layer, becoming a user history embedding that is then concatenated to the user profile embedding."
+> 出处：2405.05275 §Figure 1
+
+> 原文:"Other than the posting history of a user, their profile features, e.g., location and number of followers and friends, can also play an important role."
+> 出处：2405.05275 §Methods
+
+> 原文:"We design a self-supervised network link prediction objective to train our model to learn interaction activities such as sharing, following and commenting."
+> 出处：2405.05275 §Methods
+
+> 原文:"Contrastive learning aims to obtain a latent embedding space in which similar samples are closer and distinct samples are farther from each other."
+> 出处：2405.05275 §Methods
+
+> 原文:"Finally, the contrastive objective function and the network link prediction objective are jointly trained at the same time."
+> 出处：2405.05275 §Methods
+
+> 原文:"This pre-training step can be used in unsupervised settings where annotated data is hard to obtain."
+> 出处：2405.05275 §Introduction
+
+> 原文:"We choose the hidden dimension K = 64 with a grid search in [32, 64, 128]."
+> 出处：2405.05275 §Methods
+
+> 原文:"In conclusion, the consistently high F1-scores SoMer achieves demonstrate the effectiveness of our method."
+> 出处：2405.05275 §Model Performance and Ablation
+
+> 原文:"Table 3 shows that SoMeR significantly outperforms the BERT baseline by 9% and SATAR by 20% on F1-scores, indicating the effectiveness of our method."
+> 出处：2405.05275 §Model Performance and Ablation
+
+> 原文:"We show it is versatile and generalizable to different downstream tasks and across different social platforms, including detecting IO drivers, measuring online political polarization, and predicting future user participation in hate subreddits."
+> 出处：2405.05275 §Conclusion

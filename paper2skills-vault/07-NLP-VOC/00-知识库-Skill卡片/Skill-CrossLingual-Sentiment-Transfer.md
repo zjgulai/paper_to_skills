@@ -1,3 +1,13 @@
+---
+paper_id: 2508.09515
+paper: "LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation"
+venue: ACL 2025 (底本未声明 venue)
+evidence_basis: paper-verbatim
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 跨语言情感迁移 (Cross-Lingual Sentiment Transfer)
 # 低资源语言市场的零样本/低样本情感分析
 
@@ -189,3 +199,69 @@ for lang, texts in target_unlabeled.items():
 - 代码目录: `paper2skills-code/nlp_voc/crosslingual_sentiment_transfer/`
 - 补充论文(Budget-Xfer): [2603.27651v1](https://arxiv.org/abs/2603.27651v1)
 - 补充论文(DeFTX稀疏微调): [2505.15090v1](https://arxiv.org/abs/2505.15090v1)
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Cross-lingual aspect-based sentiment analysis (ABSA) involves detailed sentiment analysis in a target language by transferring knowledge from a source language with available annotated data."
+> 出处：2508.09515 Abstract
+
+> 原文:"Most existing methods depend heavily on often unreliable translation tools to bridge the language gap."
+> 出处：2508.09515 Abstract
+
+> 原文:"In this paper, we propose a new approach that leverages a large language model (LLM) to generate high-quality pseudo-labelled data in the target language without the need for translation tools."
+> 出处：2508.09515 Abstract
+
+> 原文:"First, the framework trains an ABSA model to obtain predictions for unlabelled target language data."
+> 出处：2508.09515 Abstract
+
+> 原文:"Next, LLM is prompted to generate natural sentences that better represent these noisy predictions than the original text."
+> 出处：2508.09515 Abstract
+
+> 原文:"The ABSA model is then further fine-tuned on the resulting pseudo-labelled dataset."
+> 出处：2508.09515 Abstract
+
+> 原文:"We demonstrate the effectiveness of this method across six languages and five backbone models, surpassing previous state-of-the-art translation-based approaches."
+> 出处：2508.09515 Abstract
+
+> 原文:"To this end, we propose the LLM Augmented Cross-lingual ABSA (LACA) framework, which leverages unlabelled target language data to improve cross-lingual ABSA performance."
+> 出处：2508.09515 §1 Introduction
+
+> 原文:"1) We introduce a novel LACA framework, which enhances cross-lingual ABSA by generating high-quality pseudo-labelled target language data using LLMs, effectively avoiding the language gap problems by generating coherent natural sentences given noisy predicted labels."
+> 出处：2508.09515 §1 Introduction — Contributions
+
+> 原文:"To address this, we propose employing LLMs for data augmentation, generating sentences that align better with the predicted labels."
+> 出处：2508.09515 §3.3 Pseudo-Labelled Data Generation
+
+> 原文:"Pseudo-labels are crucial for exposing the model to language-specific elements like slang and aspect terms in the target language, which pre-training alone cannot fully address."
+> 出处：2508.09515 §3.3 Pseudo-Labelled Data Generation
+
+> 原文:"To ensure the quality of the generated dataset $\mathcal{D}_{\mathcal{G}}$, it should meet several key criteria: generated sentences should accurately reflect all sentiment elements in the tuples, include only the specified sentiment elements, and be in the target language."
+> 出处：2508.09515 §3.4 Training
+
+> 原文:"1) XLM-R is a strong baseline in Zero-shot settings, while mBERT underperforms."
+> 出处：2508.09515 §5 Results
+
+> 原文:"2) Translation-TA and Bilingual-TA perform similarly or worse than Zero-shot."
+> 出处：2508.09515 §5 Results
+
+> 原文:"6) LACA with LLaMA 3.1 70B (LACALLaMA70) achieves new state-of-the-art results with mBERT and XLM-R in Spanish, French, and on average."
+> 出处：2508.09515 §5 Results
+
+> 原文:"It surpasses the previous best methods by 1.50% with mBERT and 2.62% with XLM-R while improving the Zero-shot baseline by 11.61% with mBERT and 6% with XLM-R."
+> 出处：2508.09515 §5 Results
+
+> 原文:"Second, the performance of our method improves with larger LLMs, but this also increases training time and demands more computational resources, although it does not affect inference."
+> 出处：2508.09515 Limitations
+
+> 原文:"Smaller LLMs can perform significantly worse than larger ones, especially for unsupported languages."
+> 出处：2508.09515 Limitations
+
+> 原文:"Es Fr Nl Ru Avg mBERT 56.90 45.80 45.97 34.06 45.68 +LACALLaMA70 65.23 54.90 55.29 53.72 57.29 +LACAOrca13 64.80 54.21 55.41 53.86 57.07 +LACALLaMA8 64.33 53.74 54.56 52.36 56.25"
+> 出处：2508.09515 Table 3（mBERT 区块，Es/Fr/Nl/Ru/Avg 五列；对应本卡「mBERT Zero-Shot 45.68 → LACA+LLaMA 70B 57.29」）
+
+> 原文:"XLM-R 67.48 58.87 58.95 56.10 60.35 +LACALLaMA70 71.89 64.97 65.35 63.20 66.35 +LACAOrca13 71.61 64.25 65.41 63.46 66.18"
+> 出处：2508.09515 Table 3（XLM-R 区块；对应本卡「XLM-R Zero-Shot 60.35 → LACA 66.35」）
+
+> 注：本卡 ① 段表格里的 `46.41` / `52.59` / `71.17` 三个数字**没有**在此列出处 —— 它们与论文 Table 2/Table 3 的口径不符，详见随本次补引文提交的报告「发现的既有断言问题」。

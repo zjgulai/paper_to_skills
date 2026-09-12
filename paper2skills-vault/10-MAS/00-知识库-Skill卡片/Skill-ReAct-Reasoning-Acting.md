@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2210.03629
+paper: "ReAct: Synergizing Reasoning and Acting in Language Models"
+evidence_basis: paper-verbatim
 ---
 
 # Skill: ReAct — 推理与行动交替执行
@@ -251,3 +254,63 @@ python react_agent.py
 复杂问题: ToT + ReAct
   问题 → ToT 规划最优路径 → ReAct 执行每步 → 答案
 ```
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> 下列引文均为底本中的**连续子串**，未改标点、未改词、未把两句话缝成一句（由 `quote_check.py` 逐字核验）。
+> 本段只覆盖 ① 与 ⑤ 中**能回溯到论文原文**的方法性断言；⑤ 的 ROI 表为作者自估，论文中无对应数字。
+
+### A. 核心范式：推理与行动交织（对应 ①核心思想、①数学直觉的轨迹定义）
+
+> 原文:"In this paper, we explore the use of LLMs to generate both reasoning traces and task-specific actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with and gather additional information from external sources such as knowledge bases or environments."
+> 出处：2210.03629 Abstract
+
+> 原文:"The idea of ReAct is simple: we augment the agent’s action space to $\mathcal{\hat{A}}=\mathcal{A}\cup\mathcal{L}$, where $\mathcal{L}$ is the space of language. An action $\hat{a}_{t}\in\mathcal{L}$ in the language space, which we will refer to as a thought or a reasoning trace, does not affect the external environment, thus leading to no observation feedback."
+> 出处：2210.03629 §2 ReAct: Synergizing Reasoning + Acting
+
+### B. 两个关键问题：CoT 幻觉 与 Act-only 无规划（对应 ①「ReAct 解决了两个关键问题」）
+
+> 原文:"Concretely, on question answering (HotpotQA) and fact verification (Fever), ReAct overcomes prevalent issues of hallucination and error propagation in chain-of-thought reasoning by interacting with a simple Wikipedia API, and generating human-like task-solving trajectories that are more interpretable than baselines without reasoning traces."
+> 出处：2210.03629 Abstract
+
+> 原文:"However, this “chain-of-thought” reasoning is a static black box, in that the model uses its own internal representations to generate thoughts and is not grounded in the external world, which limits its ability to reason reactively or update its knowledge."
+> 出处：2210.03629 §1 Introduction
+
+> 原文:"However, they do not employ language models to reason abstractly about high-level goals or maintain a working memory to support acting"
+> 出处：2210.03629 §1 Introduction
+
+> 原文:"Hallucination is a serious problem for CoT, resulting in much higher false positive rate than ReAct (14% vs. 6%) in success mode, and make up its major failure mode (56%)."
+> 出处：2210.03629 §3.3 Results and Observations
+
+### C. 关键假设与适用面（对应 ①关键假设、⑤「广泛适用」「基础性地位」「可解释」）
+
+> 原文:"General and flexible. Due to the flexible thought space and thought-action occurrence format, ReAct works for diverse tasks with distinct action spaces and reasoning needs, including but not limited to QA, fact verification, text game, and web navigation."
+> 出处：2210.03629 §2 ReAct: Synergizing Reasoning + Acting
+
+> 原文:"Performant and robust. ReAct shows strong generalization to new task instances while learning solely from one to six in-context examples, consistently outperforming baselines with only reasoning or acting across different domains."
+> 出处：2210.03629 §2 ReAct: Synergizing Reasoning + Acting
+
+> 原文:"Human aligned and controllable. ReAct promises an interpretable sequential decision making and reasoning process where humans can easily inspect reasoning and factual correctness."
+> 出处：2210.03629 §2 ReAct: Synergizing Reasoning + Acting
+
+### D. 论文自报效果（对应 ②「业务价值：消除幻觉」与 ⑤「效果验证」的量级参照）
+
+> 原文:"Furthermore, on two interactive decision making benchmarks (ALFWorld and WebShop), ReAct outperforms imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, while being prompted with only one or two in-context examples."
+> 出处：2210.03629 Abstract
+
+> 原文:"On ALFWorld, the best ReAct trial achieves an average success rate of 71%, significantly outperforming the best Act (45%) and BUTLER (37%) trials."
+> 出处：2210.03629 §4 Decision Making Tasks（Results）
+
+> 原文:"With additional sparse reasoning, ReAct achieves significantly better performance, with an absolute 10% improvement over the previous best success rate."
+> 出处：2210.03629 §4 Decision Making Tasks（Results）
+
+### E. 边界与失败模式（论文自承局限；卡片正文未声明，此处仅备查）
+
+> 原文:"While interleaving reasoning, action and observation steps improves ReAct’s groundedness and trustworthiness, such a structural constraint also reduces its flexibility in formulating reasoning steps, leading to more reasoning error rate than CoT."
+> 出处：2210.03629 §3.3 Results and Observations
+
+> 原文:"Despite the simplicity of our method, complex tasks with large action spaces require more demonstrations to learn well, which unfortunately can easily go beyond the input length limit of in-context learning."
+> 出处：2210.03629 §6 Conclusion

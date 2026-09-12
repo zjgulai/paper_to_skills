@@ -1,3 +1,12 @@
+---
+title: Skill Card: Spiral of Silence Mining
+module: 07-NLP-VOC
+paper_id: 2502.00952
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: Spiral of Silence Mining
 # 沉默螺旋：少数派意见挖掘
 
@@ -222,3 +231,63 @@ python3 model.py
 | 验证结果 | 72.1%少数派选择沉默，分享概率是多数派的一半 |
 | 反直觉洞察 | 少数派意见被系统性低估和沉默 |
 | 适用场景 | 用户研究、需求挖掘、社区运营 |
+
+---
+
+## ⑥ 原文引用
+
+说明：以下引文逐字摘自 arXiv 全文存档；卡片中 ROI 预估、实施排期、评论占比与沉默概率调整系数等业务推算数字并非论文结论，全文无对应表述。
+
+> 原文:"72.1% of participants who perceive themselves in the minority remain silent and are half as likely to post compared to those who believe their opinion is in the majority."
+> 出处：2502.00952 §Abstract
+
+> 原文:"We surveyed members of politically-oriented Reddit communities about their willingness to post on contentious topics, yielding 439 responses across twelve subreddits."
+> 出处：2502.00952 §Abstract
+
+> 原文:"the theory posits people are less likely to voice opinions when they believe they hold minority views, creating a reinforcing cycle where these opinions are expressed less."
+> 出处：2502.00952 §Abstract
+
+> 原文:"We find that participants who believe their opinion is in the minority remain silent 72.1% of the time, and these opinions are only half as likely to be posted compared to those in the majority."
+> 出处：2502.00952 §1 Introduction
+
+> 原文:"This traditional approach of analyzing existing posts online is self-defeating, since it excludes viewpoints that users feel uncomfortable sharing online."
+> 出处：2502.00952 §1 Introduction
+
+> 原文:"In our work, we develop a human-plus-algorithm pipeline to generate potential topics that community members feel are appropriate and in-bounds for a community to discuss, but which also likely to spark internal disagreement."
+> 出处：2502.00952 §1 Introduction
+
+> 原文:"We test these results through a series of three mixed-effects models, finding that participants report a higher likelihood of sharing minoritized opinions in subreddits they perceive as more diverse, but a lower likelihood of sharing in subreddits with more stringent content moderation"
+> 出处：2502.00952 §1 Introduction
+
+> 原文:"Our findings illustrate how, within the politically-oriented subreddits we study, the distribution of viewpoints being shared online can misrepresent community members’ actual opinions, systematically marginalizing minority perspectives."
+> 出处：2502.00952 §1 Introduction
+
+> 原文:"Since these self-silenced viewpoints will not be posted on Reddit, we directly survey community members to measure this phenomenon."
+> 出处：2502.00952 §4.3 Data Collection Process
+
+> 原文:"From our survey, we find that participants are less likely to voice incongruent viewpoints across topics."
+> 出处：2502.00952 §5 Results
+
+> 原文:"Among responses where the reported viewpoint aligns with the majority opinion in a subreddit, 47.2% indicate a high likelihood of sharing their viewpoint (Share Likelihood > 4)."
+> 出处：2502.00952 §5 Results
+
+> 原文:"In contrast, only 27.9% of responses expressing incongruent viewpoints report a high likelihood of sharing."
+> 出处：2502.00952 §5 Results
+
+> 原文:"Approximately half (52.8%) of participants responded that they are likely to share their viewpoint (Share Likelihood > 4) when they believe themselves to agree with the majority (see Fig. 7)."
+> 出处：2502.00952 §5.2.2 Incongruent viewpoints are shared less often
+
+> 原文:"On average, across all topics, participants are 2.04 times more likely to share a viewpoint they perceive as being in the majority compared to viewpoints they believe are in the minority."
+> 出处：2502.00952 §5.2.2 Incongruent viewpoints are shared less often
+
+> 原文:"Participants are also less likely to upvote posts sharing minoritized opinions."
+> 出处：2502.00952 §1 Introduction
+
+> 原文:"In congruent conditions, 65.8% of viewpoints that would not be posted (Share Likelihood ≤ 4) would be upvoted (Upvote Likelihood > 4)."
+> 出处：2502.00952 §5.3.3 Upvoting provides an alternative for sharing otherwise selfsilenced opinions
+
+> 原文:"for half of the incongruent viewpoints (53.3%), participants are still likely to use upvoting as a mechanism for expressing their opinions, even when they are unwilling to post them."
+> 出处：2502.00952 §5.3.3 Upvoting provides an alternative for sharing otherwise selfsilenced opinions
+
+> 原文:"74.4% of the content shared on the subreddit has a liberal view, compared to only 58.6% of what active members self-report (Fig. 1)."
+> 出处：2502.00952 §1 Introduction

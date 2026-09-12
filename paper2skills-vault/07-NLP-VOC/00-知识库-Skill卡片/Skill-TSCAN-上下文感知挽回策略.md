@@ -1,3 +1,12 @@
+---
+title: "Skill: TSCAN上下文感知Uplift - 流失原因到挽回策略"
+module: 07-NLP-VOC
+paper_id: 2504.18881
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill: TSCAN上下文感知Uplift - 流失原因到挽回策略
 
 ## 基础信息
@@ -128,3 +137,64 @@ best_strategy = '推送断奶指南 + 免费配件包'
 
 **难度**: ⭐⭐⭐⭐ (4/5) - 需要因果推断和神经网络基础  
 **优先级**: P4 - 流失挽回方向核心技能
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Accurate estimation of the Individual Treatment Effect (ITE) is essential for business diagnostics in the online food delivery industry, particularly for assessing the impact of various business strategies, such as inventory management, pricing optimization and online marketing campaigns."
+> 出处：2504.18881 §Abstract
+
+> 原文:"A primary challenge in ITE estimation lies in sample selection bias."
+> 出处：2504.18881 §Abstract
+
+> 原文:"However, these regularizations may introduce undesirable information loss and limit predictive performance."
+> 出处：2504.18881 §Abstract
+
+> 原文:"To address these issues, we propose TSCAN: a Context-Aware uplift model based on a Two-Stage training approach, comprising CAN-U and CAN-D sub-models."
+> 出处：2504.18881 §Abstract
+
+> 原文:"In Stage 1, CAN-U generates counterfactual uplift labels while mitigating selection bias through integrated IPM and propensity score regularization."
+> 出处：2504.18881 §Abstract
+
+> 原文:"In Stage 2, CAN-D eliminates these regularizations and leverages an isotonic output layer to directly model uplift effects in a supervised manner."
+> 出处：2504.18881 §Abstract
+
+> 原文:"By reinforcing factual outcomes, CAN-D adaptively corrects estimation errors from CAN-U while circumventing the performance degradation induced by bias-mitigation regularizations."
+> 出处：2504.18881 §Abstract
+
+> 原文:"We design a Context-Aware Attention Layer that explicitly models the tripartite interaction among merchant features, treatments, and external contexts, enabling adaptive ITE estimation across diverse operational scenarios."
+> 出处：2504.18881 §1 Introduction（Contributions）
+
+> 原文:"This problem differs from traditional supervised learning in that it requires causal inference rather than mere association modeling."
+> 出处：2504.18881 §1 Introduction
+
+> 原文:"In dynamic environments such as online marketing, the efficacy of a given intervention (treatment, e.g., a promotional subsidy or ad bid) is highly context-dependent."
+> 出处：2504.18881 §1 Introduction
+
+> 原文:"Such contextual heterogeneity is essential for accurate uplift estimation, yet it remains largely unexploited by existing methods, which typically assume treatment effects are context-invariant."
+> 出处：2504.18881 §1 Introduction
+
+> 原文:"In summary, two overarching challenges remain: (1) developing more effective methods to address selection bias while maintaining the predictive performance of the model and the quality of personalized recommendations; (2) accounting for the impact of contextual factors on treatment effects."
+> 出处：2504.18881 §1 Introduction
+
+> 原文:"These works underscore a critical insight: the same treatment can yield divergent outcomes under different contextual conditions."
+> 出处：2504.18881 §2.2 Context-Aware Treatment Effect Estimation
+
+> 原文:"For example, a merchant discount may significantly increase order volume during off-peak hours but have negligible effect during lunchtime peak periods due to demand saturation."
+> 出处：2504.18881 §2.2 Context-Aware Treatment Effect Estimation
+
+> 原文:"The two-stage training strategy improves performance: CAN-D (full TSCAN) outperforms CAN-U on both datasets, with relative improvements of up to 5.95% in QINI and 1.45% in AUUC on the Eleshop-1M dataset."
+> 出处：2504.18881 §5.2.2 RQ2
+
+> 原文:"To evaluate the performance of TSCAN in real-world online scenarios, we deployed TSCAN on a real merchant diagnosis system of an online food ordering platform in China."
+> 出处：2504.18881 §5.2.3 RQ3
+
+> 原文:"The A/B test compares TSCAN against BART (the previously deployed model) across 90,000 merchants randomly assigned to treatment groups."
+> 出处：2504.18881 §5.2.3 RQ3
+
+> 原文:"As shown in Table 4, in the online experiment, TSCAN outperforms the baseline model BART, achieving an AUUC improvement of 0.0349, a CAUUC improvement of 0.0411 and a 0.76% increase in order volume (95% CI [0.68%, 0.84%], p=0.001)."
+> 出处：2504.18881 §5.2.3 RQ3
+
+> 原文:"This adaptive behavior validates the design of the context-aware attention layer."
+> 出处：2504.18881 §5.2.3 RQ3

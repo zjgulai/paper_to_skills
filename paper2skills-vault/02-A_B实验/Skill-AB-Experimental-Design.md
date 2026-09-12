@@ -3,9 +3,21 @@ name: AB-Experimental-Design
 description: 基于 Zhou et al. (2023) 的 A/B 实验设计基础工具包，覆盖连续/二分类指标样本量计算、相对提升 Delta method、统计功效与 MDE 回验、分层随机分配及 CUPED 方差缩减，为跨境电商业务实验提供严谨统计支撑。
 paper: "Zhou et al. (2023). All about Sample-Size Calculations for A/B Testing. CIKM."
 area: 02-A_B实验
+venue: CIKM 2023
+venue_tier: CCF-B
+evidence_basis: paper-traceable
+source: human+ai
 ---
 
 # Skill: A/B 实验设计基础
+
+> **证据基础声明**：本卡**有来源论文声明** —— frontmatter `paper:` 与 ① 段正文均写明
+> 「基于 Zhou et al. (2023). All about Sample-Size Calculations for A/B Testing. CIKM」。
+> 但**该论文全文尚未入库**，且卡内未记录其 arXiv/DOI 编号，
+> 故卡内数字**暂无逐字引文支撑**，不可当作论文结论引用。
+> 待补 `paper_id` 与「⑥ 原文引用」段后转为 `paper-verbatim`。
+> （2026-09-12 修正：此前误标为「无对应论文来源」，与 frontmatter `paper:` 及 ① 段自相矛盾 ——
+> 该矛盾由 G2 的 `BASIS-CONTRADICTION` 检查抓出，是那条检查生效的实证。）
 
 ## 一、算法原理
 

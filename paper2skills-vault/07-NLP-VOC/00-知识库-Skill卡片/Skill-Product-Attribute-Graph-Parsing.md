@@ -1,3 +1,12 @@
+---
+title: "Skill Card: 产品属性图谱解析"
+module: 07-NLP-VOC
+paper_id: 2410.21237
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 产品属性图谱解析
 # Product Attribute Graph Parsing
 
@@ -185,3 +194,72 @@ python3 model.py
 - 论文方法成熟，工程可行性高
 
 **综合评分: 8/10**
+
+---
+
+## ⑥ 原文引用
+
+本节仅收录本卡底本（arXiv:2410.21237 全文）中可逐字核验的原句。②/⑤ 段的商业测算数字（整理工时、SKU 规模、跨市场完整度、年化价值等）为本地业务估算，论文中不存在，未在此罗列。
+
+> 原文:"In this paper, we propose a novel method for constructing structured product knowledge graphs from raw product images."
+> 出处：2410.21237 §Abstract
+
+> 原文:"Our method outperforms our baseline in all metrics and evaluated properties, demonstrating its effectiveness and bright usage potential."
+> 出处：2410.21237 §Abstract
+
+> 原文:"The knowledge graph construction can be roughly divided into two core stages."
+> 出处：2410.21237 §3.1 Method Overview
+
+> 原文:"Our method cycles through four sequential steps for each product. A product-centric knowledge graph will be generated with four steps: Extracting, Formatting and Inferring, Hierarchy Expansion, and Graph Pruning."
+> 出处：2410.21237 §3.1 Method Overview
+
+> 原文:"Once the knowledge graph is initialized, it can be loaded into a graph database and used in various downstream applications."
+> 出处：2410.21237 §3.1 Method Overview
+
+> 原文:"After the generation in the first turn, we use SGLang [38] for regular expression constrained generation."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"The output is forced to be generated in JSON format, strictly following the data type and schema structure."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"This guarantees that the response will always be generated reliably containing all requested properties, and additionally ensures the response can be parsed programmatically."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"Hierarchical Expansion attempts to introduce additional entities between the product node and the abstract category node."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"An LLM is prompted to analyze and generate an intermediate entity between a category property and the product name. This expansion is repeated several times so that multiple intermediate entities are inserted."
+> 出处：2410.21237 §4.2 Cycle of Enrollment（原文随后以 Dark Chocolate Bar → Dark Chocolate → Chocolate → Food and Beverage 举例）
+
+> 原文:"Pruning is the final step of enrolling a product. When properties are created with LLM free-form generation, there can be entities sharing exactly the same or similar meaning, these can be merged into one node."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"Additionally, while we primarily focus on studying KG construction from product images, our method inherently supports textual product description as input by skipping the Extract phase."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"To tackle the challenge of extracting rich information from images, we employed a recent state-of-theart open-source vision language model, InternVL2 [5, 6]."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"Because each product subgraph is generated independent of the size of the existing inventory, as shown in Figure 2."
+> 出处：2410.21237 §4.2 Cycle of Enrollment
+
+> 原文:"Enforcing data types also acts as a fail-safe, preventing LLMs from generating invalid information."
+> 出处：2410.21237 §4.1 Graph Initialization
+
+> 原文:"We collected 120 images and their corresponding metadata using BlueCart Walmart Data Product API1 ."
+> 出处：2410.21237 §5.1 Dataset Collection
+
+> 原文:"Among these, 105 images are valid, we then manually labeled the properties Category, Primary Package Color, Package Material, Package Shape, and Weight based on our generated schema."
+> 出处：2410.21237 §5.1 Dataset Collection
+
+> 原文:"Unless otherwise specified, we use InternVL2-8B in bfloat16 and Llama3.1-70B in int4. The experiments are conducted on 6 RTX 4090 GPUs."
+> 出处：2410.21237 §5 Experiment
+
+> 原文:"Accuracy@0.05 for Weight dropped over 10%. This shows that reasoning is important for analyzing more ambiguous properties that require contextual understanding."
+> 出处：2410.21237 §5.3 Analysis
+
+> 原文:"Even without reasoning or multi-turn conversation, our method still outperforms the baseline by a large margin, showing the robustness of our method when constructing links from image data."
+> 出处：2410.21237 §5.3 Analysis
+
+> 原文:"While our work shows promising results on various metrics using high-quality images, additional work may be required for lowresolution images."
+> 出处：2410.21237 §6 Limitations

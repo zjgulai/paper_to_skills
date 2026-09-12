@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2603.14864
+paper: "Shopping Companion: A Memory-Augmented LLM Agent for Real-World E-Commerce Tasks"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: Shopping Companion — 记忆增强的长期偏好购物 Agent
@@ -256,6 +259,46 @@ python shopping_companion.py
 4. **跨境母婴契合**:用户跨 session 偏好 + 跨平台凑单 + 长周期 LTV 是核心场景
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Our meta-evaluation study demonstrates that the GPT-5 evaluator achieves more than 90% agreement with human experts."
+> 出处：2603.14864 §4.2 Evaluation Methods
+>
+> 原文:"We construct a large-scale shopping sandbox containing over 1.2 million real-world products to enable consistent evaluation."
+> 出处：2603.14864 §4.1 Shopping Simulation Environment
+>
+> 原文:"Our benchmark contains 1,000 instructions (500 per task) split into 800 training and 200 test examples. Each instruction has 15–50 turn conversation history with embedded preferences."
+> 出处：2603.14864 §6.1 Experimental Setup, Dataset
+>
+> 原文:"Shopping Companion employs a two-stage architecture (illustrated in Figure 1): Stage 1 (Preference Identification) retrieves relevant conversation history via memory tools and extracts implicit user preferences (e.g., brand aversions, size history). These are presented to the user for confirmation, enabling intervention before shopping proceeds."
+> 出处：2603.14864 §5.1 Two-Stage Agentic Framework
+>
+> 原文:"However, performance drops substantially on add-on deals, with success rates between 24.0% and 54.0%, indicating that multi-product coordination and constraint satisfaction remain challenging even for large-scale models."
+> 出处：2603.14864 §6.2 Main Results, Closed-source LLMs
+>
+> 原文:"Qwen3-4B achieves only 49.0% Acc. and 44.0% Succ. on single products and performs poorly on add-on deals (6.0% Succ.)."
+> 出处：2603.14864 §6.2 Main Results, Open-source LLMs
+>
+> 原文:"With dual & tool-wise rewards, the model reaches 90.0% Acc. and 84.0% Succ. on single products and 55.0% Acc. and 43.0% Succ. on add-on deals, outperforming open-source baselines and approaching closed-source models."
+> 出处：2603.14864 §6.2 Main Results, Shopping Companion
+>
+> 原文:"| GPT-5 | 82.0 | 75.0 | 66.0 | 54.0 | 74.0 | 64.5 |"
+> 出处：2603.14864 §6 Experiments, Table 2
+>
+> 原文:"| GPT-4o | 79.0 | 72.0 | 41.0 | 26.0 | 60.0 | 49.0 |"
+> 出处：2603.14864 §6 Experiments, Table 2
+>
+> 原文:"| GPT-4.1 | 88.0 | 78.0 | 39.0 | 24.0 | 63.5 | 51.0 |"
+> 出处：2603.14864 §6 Experiments, Table 2
+>
+> 原文:"89.0 81.0 50.0 38.0 69.5 59.5"
+> 出处：2603.14864 §6 Experiments, Table 2 (Qwen3-4B-LoRA + RL, Dual-reward)
+>
+> 原文:"90.0 84.0 55.0 43.0 72.5 63.5"
+> 出处：2603.14864 §6 Experiments, Table 2 (Qwen3-4B-LoRA + RL, Dual&Tool-wise Reward)
 
 ## 参考论文
 

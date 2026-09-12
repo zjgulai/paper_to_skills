@@ -1,3 +1,12 @@
+---
+title: "Skill Card: NPS 驱动因素分析 (NPS Driver Analysis)"
+module: 07-NLP-VOC
+paper_id: 2510.16551
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: NPS 驱动因素分析 (NPS Driver Analysis)
 # 从评论文本识别 NPS 驱动因素并量化归因
 
@@ -144,6 +153,57 @@ for i, insight in enumerate(insights[:5], 1):
 | 时效性 | ★★★★☆ | 月度/季度运行，持续追踪驱动因素变化 |
 
 **综合评分: 8/10**
+
+
+## ⑥ 原文引用
+
+> 原文:"This research proposes a systematic, large language model (LLM) approach for extracting product and service attributes, features, and associated sentiments from customer reviews."
+> 出处：2510.16551 §Abstract
+
+> 原文:"Simulations indicate that enhancing sentiment for key service features could yield 1–2% average revenue gains per store."
+> 出处：2510.16551 §Abstract
+
+> 原文:"we define features as specific, tangible, and actionable characteristics of a product or service, while attributes are the benefits these features provide to customers."
+> 出处：2510.16551 §1 Introduction
+
+> 原文:"The first phase of our analysis yields a concise list of ten attributes, each linked to 3 to 6 features that span diverse domains of the customer experience, from coffee quality to customer service and store ambiance."
+> 出处：2510.16551 §1 Introduction
+
+> 原文:"In the second phase, we test eight LLM prompt variants on a random subset of 300 reviews, assessing performance using agreement metrics with human annotations and predictive validity for customer ratings."
+> 出处：2510.16551 §1 Introduction
+
+> 原文:"while human coders required a median of six minutes per review (with 90% of reviews containing 2–10 sentences) and could not process more than five reviews in a session, the LLM completed each review in less than two seconds."
+> 出处：2510.16551 §1 Introduction
+
+> 原文:"We measure sentiment on a 5-point scale to represent the full range of emotions from strongly negative to strongly positive."
+> 出处：2510.16551 §Proposed LLM Approach
+
+> 原文:"Similar to the Net Promoter Score (NPS), which contrasts promoters and detractors, we use the shares of positive and negative sentiment to capture the balance of favorable versus unfavorable evaluations."
+> 出处：2510.16551 §Generating Actionable Insights · Evolution of Attribute Sentiments over Time
+
+> 原文:"a one point improvement in sentiment for Staff Professionalism (e.g., through training) is associated with an increases of .19 in average store rating."
+> 出处：2510.16551 §Store-Level Impact
+
+> 原文:"While not causal, such an analysis highlights actionable opportunities for targeted interventions and provides guidance for Starbucks in designing field experiments to assess expected ROI."
+> 出处：2510.16551 §Store-Level Impact
+
+> 原文:"As a result, drawing causal conclusions is not feasible in our current analysis."
+> 出处：2510.16551 §Identifying High-Leverage Attributes and Features for Enhancing Customer Satisfaction
+
+> 原文:"Our analysis separately regresses customer ratings on (i) attribute-level and (ii) feature-level sentiments. For each attribute or feature, we define four dummy variables (positive, neutral, negative, and not mentioned, with the latter indicating that the attribute/feature does not appear in the review) and use negative sentiment as the reference category."
+> 出处：2510.16551 §Identifying High-Leverage Attributes and Features for Enhancing Customer Satisfaction
+
+> 原文:"The regression coefficients and their significance levels are nearly identical across the two specifications. All attributes are statistically significant, underscoring their role as key drivers of customer satisfaction."
+> 出处：2510.16551 §Identifying High-Leverage Attributes
+
+> 原文:"Following the tradition in conjoint analysis, we use the parameter estimates from Model 2 to simulate the impact of improving feature sentiment by one level (e.g., from negative to neutral or from neutral to positive) on customer ratings."
+> 出处：2510.16551 §Identifying High-Leverage Features
+
+> 原文:"while our results are predictive and robust, they remain correlational."
+> 出处：2510.16551 §Conclusion
+
+> 原文:"The initial refinement of attributes and features requires human oversight, and prompts were tailored to the coffee shop domain."
+> 出处：2510.16551 §Conclusion
 
 ---
 

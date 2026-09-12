@@ -8,6 +8,8 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2512.15943
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: SLM Tool Calling 成本优化 — 350M 参数击败 LLM
@@ -319,3 +321,130 @@ python3 slm_tool_caller.py
 - **简单查询**: SLM 本地处理 (80% 工单)
 - **复杂推理**: Hermes 4 70B 或 Claude (15% 工单)
 - **极端复杂**: GPT-4o/Claude Opus (5% 工单)
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Experimental results demonstrated that our fine-tuned SLM achieves exceptional performance with a 77.55% pass rate on ToolBench evaluation, significantly outperforming all baseline models including ChatGPT-CoT (26.00%), ToolLLaMA-DFS (30.18%), and ToolLLaMA-CoT (16.27%)."
+> 出处：2512.15943 §Abstract（77.55% vs 26.00% / 30.18% / 16.27% 四项数字的唯一出处）
+
+> 原文:"We fine-tuned the facebook/opt-350m model using the ToolBench dataset, conducting training on Amazon SageMaker with Hugging Face TRL library integration."
+> 出处：2512.15943 §Introduction（基座 opt-350m + SageMaker + TRL）
+
+> 原文:"The OPT-350M model, with its 350 million parameters, represents a strategic balance between capability and efficiency."
+> 出处：2512.15943 §Method（350M 的定位）
+
+> 原文:"We trained the model on the ToolBench dataset, which contains over 16,000 real-world APIs from RapidAPI Hub with corresponding instruction-solution pairs."
+> 出处：2512.15943 §Method（ToolBench 16,000+ APIs）
+
+> 原文:"The training process was conducted on Amazon SageMaker (instance type ml.g5.8xlarge), leveraging its managed environment for scalable compute resources and seamless integration with the Hugging Face ecosystem."
+> 出处：2512.15943 §Method（训练实例类型 ml.g5.8xlarge）
+
+> 原文:"Our SFT approach focused on teaching the model to generate responses in the proper ToolBench format, consisting of Thought-Action-Action Input patterns that enable systematic tool manipulation and reasoning."
+> 出处：2512.15943 §Method（Thought-Action-Action Input 数据格式）
+
+> 原文:"After the transformation, the training data comprised 187,542 examples for the model to learn from."
+> 出处：2512.15943 §Method · Experiment Setup（187,542 条训练样本）
+
+> 原文:"The facebook/opt-350m model was fine-tuned for a single epoch with carefully optimized hyperparameters."
+> 出处：2512.15943 §Method · Experiment Setup（单 epoch）
+
+> 原文:"The critical configuration included a conservative learning rate of $5\times 10^{-5}$ with 100 warmup steps for stable adaptation, an effective batch size of 32 achieved via gradient accumulation over 4 steps to provide robust gradient estimates, and aggressive gradient clipping (max_norm=0.3) to prevent training instability."
+> 出处：2512.15943 §Method · Experiment Setup（lr 5e-5 / warmup 100 / batch 32 / grad accum 4 / clip 0.3）
+
+> 原文:"Memory-efficient techniques including FP16 mixed precision and gradient checkpointing enabled processing of complex tool-chain sequences."
+> 出处：2512.15943 §Method · Experiment Setup（FP16 + gradient checkpointing）
+
+> 原文:"The AdamW optimizer with 0.01 weight decay effectively handled sparse gradients from tool-specific tokens while preventing overfitting."
+> 出处：2512.15943 §Method · Experiment Setup（AdamW，weight decay 0.01）
+
+> 原文:"We employed ToolEval, an automated evaluation framework that uses ChatGPT as an evaluator to assess tool-use capabilities."
+> 出处：2512.15943 §Evaluation framework（ToolEval 评估框架）
+
+> 原文:"Pass Rate Evaluation: Measures the proportion of successfully completed instructions within limited API call budgets."
+> 出处：2512.15943 §Evaluation framework（Pass Rate 定义）
+
+> 原文:"Win Rate Assessment: Compares solution quality between different models by evaluating factors including information richness, factual accuracy, reasoning quality, milestone achievement, API exploration efficiency, and cost-effectiveness."
+> 出处：2512.15943 §Evaluation framework（Win Rate 定义与六个评估因子）
+
+> 原文:"The benchmark consists of six test categories: G1-instruction, G1-category, G1-tool, G2-category, G2-instruction, and G3-instruction, totaling 1,100 test queries."
+> 出处：2512.15943 §Evaluation framework（六类共 1,100 queries）
+
+> 原文:"G1-instruction (200 queries): Single-tool scenarios with unseen instructions"
+> 出处：2512.15943 §Evaluation framework（G1-instruction 200 条）
+
+> 原文:"G1-category (200 queries): Single-tool scenarios with unseen categories"
+> 出处：2512.15943 §Evaluation framework（G1-category 200 条）
+
+> 原文:"G1-tool (200 queries): Single-tool scenarios with completely unseen tools"
+> 出处：2512.15943 §Evaluation framework（G1-tool 200 条）
+
+> 原文:"G2-instruction (200 queries): Multi-tool intra-category scenarios"
+> 出处：2512.15943 §Evaluation framework（G2-instruction 200 条）
+
+> 原文:"G2-category (200 queries): Multi-tool scenarios across categories"
+> 出处：2512.15943 §Evaluation framework（G2-category 200 条）
+
+> 原文:"G3-instruction (100 queries): Multi-tool intra-collection scenarios"
+> 出处：2512.15943 §Evaluation framework（G3-instruction 100 条）
+
+> 原文:"| Our SLM | 350M | 77.55% | – |"
+> 出处：2512.15943 §Results 表 1（Overall Performance Comparison）
+
+> 原文:"| ToolLLaMA-DFS | 7B | 30.18% | -47.37% |"
+> 出处：2512.15943 §Results 表 1
+
+> 原文:"| ChatGPT-CoT | 175B | 26.00% | -51.55% |"
+> 出处：2512.15943 §Results 表 1（注意：底本记为 175B，卡片正文亦写 175B）
+
+> 原文:"| ToolLLaMA-CoT | 7B | 16.27% | -61.28% |"
+> 出处：2512.15943 §Results 表 1
+
+> 原文:"| G1_instr | 78.5 | 32.5 | 33.0 | 16.0 | 3.5 |"
+> 出处：2512.15943 §Results 表 2（列序：Ours / TLLM-D / GPT-C / TLLM-C / Claude）
+
+> 原文:"| G1_cat | 74.0 | 32.5 | 29.5 | 21.5 | 3.0 |"
+> 出处：2512.15943 §Results 表 2（⚠️ 卡片写 G1-cat「~78%」，底本为 74.0，见报告）
+
+> 原文:"| G1_tool | 79.0 | 28.0 | 29.5 | 14.5 | 2.5 |"
+> 出处：2512.15943 §Results 表 2（⚠️ 卡片写 G1-tool「~75%」，底本为 79.0，见报告）
+
+> 原文:"| G2_cat | 80.5 | 32.5 | 24.5 | 16.5 | 1.5 |"
+> 出处：2512.15943 §Results 表 2（⚠️ 卡片写 G2-cat「~76%」，底本为 80.5，见报告）
+
+> 原文:"| G2_instr | 74.5 | 29.5 | 24.0 | 18.0 | 2.5 |"
+> 出处：2512.15943 §Results 表 2（⚠️ 卡片写 G2-inst「~78%」，底本为 74.5，见报告）
+
+> 原文:"| G3_instr | 80.0 | 22.0 | 5.0 | 6.0 | 4.0 |"
+> 出处：2512.15943 §Results 表 2（G3 = 80.0，与卡片「~80%」一致）
+
+> 原文:"| Avg | 77.6 | 30.2 | 26.0 | 16.3 | 2.7 |"
+> 出处：2512.15943 §Results 表 2（各模型平均分）
+
+> 原文:"The narrow performance variance (6.5% range) between different complexity levels suggests robust learning of the fundamental principles of tool-use."
+> 出处：2512.15943 §Results（六类方差 6.5%）
+
+> 原文:"Large language models suffer from parameter dilution, where the vast majority of parameters are optimized for general language understanding rather than tool manipulation."
+> 出处：2512.15943 §Discussion（「参数稀释」的原文表述）
+
+> 原文:"Our results demonstrate that 350M parameters represents a strategic sweet spot for tool-calling applications."
+> 出处：2512.15943 §Discussion · Optimal Parameter-Task Alignment（参数-任务对齐）
+
+> 原文:"This parameter count provides sufficient capacity to learn API interaction patterns, parameter mapping, and error handling without the complexity overhead that leads to inconsistent outputs in larger models."
+> 出处：2512.15943 §Discussion（350M 恰好覆盖 API 选择 / 参数映射 / 错误处理）
+
+> 原文:"The capacity aligns precisely with the complexity requirements of tool-calling tasks, avoiding both underfitting (insufficient capacity) and overfitting (excessive complexity)."
+> 出处：2512.15943 §Discussion（既避免欠拟合也避免过拟合）
+
+> 原文:"Our model was specifically optimized for ToolBench evaluation criteria and may not generalize to other tool-calling frameworks or real-world API ecosystems with different interaction patterns."
+> 出处：2512.15943 §Discussion · Limitations（泛化局限）
+
+> 原文:"Larger models may excel when tool calling is embedded within complex conversational contexts."
+> 出处：2512.15943 §Discussion · Limitations（上下文理解局限）
+
+> 原文:"Real-world applications often involve hundreds of interconnected tools with complex dependencies, authentication requirements, and error handling scenarios that may exceed our model’s learned patterns."
+> 出处：2512.15943 §Discussion · Limitations（复杂工具链的可扩展性）
+
+> 原文:"As APIs evolve and new tools emerge, the specialized nature of our model may require frequent retraining to maintain performance, whereas larger general-purpose models might adapt more readily to novel tool patterns through few-shot learning."
+> 出处：2512.15943 §Discussion · Limitations（维护成本）

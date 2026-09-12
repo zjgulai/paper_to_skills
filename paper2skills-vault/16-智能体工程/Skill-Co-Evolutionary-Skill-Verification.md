@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2604.01687
+paper: "EvoSkills: Self-Evolving Agent Skills via Co-Evolutionary Verification"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: 协同演化 Skill 验证 — EvoSkills 自动萃取 + 信息隔离审核
@@ -304,6 +307,73 @@ python3 evoskills.py
 5. **完整 Case Study**:Appendix E 给出 Exoplanet Transit 任务的完整演化轨迹,可复刻
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"provides the first systematic benchmark for evaluating agent skills, comprising 87 tasks across 11 domains with deterministic verifiers."
+> 出处：2604.01687 §2 Related Work
+>
+> 原文:"It contains 87 tasks across roughly 20 professional domains, providing broad coverage of the real-world distribution of skill-augmented tasks."
+> 出处：2604.01687 §4.1 Experimental Setup
+>
+> 原文:"EvoSkills reaches a 71.1% pass rate, exceeding the no-skill baseline (30.6%) by $+40.5$pp and human-curated skills (53.5%) by $+17.6$pp. The Skill-Creator baseline achieves only 34.1%, barely above the no-skill baseline"
+> 出处：2604.01687 §4.2 RQ1: Skill Quality Comparison
+>
+> 原文:"removing the surrogate verifier drops pass rate from 71.1% to 41.1%, and using background context yields only 48.6%."
+> 出处：2604.01687 §4.3 RQ2: Ablation Studies
+>
+> 原文:"First, removing the surrogate verifier drops the pass rate from 71.1% to 41.1% ($-30.0$pp)."
+> 出处：2604.01687 Appendix B Ablation Studies
+>
+> 原文:"Second, providing only background context documents without any evolution yields 48.6% pass rate, above the no-skill baseline ($+18.0$pp) but well below EvoSkills ($-22.5$pp)."
+> 出处：2604.01687 Appendix B Ablation Studies
+>
+> 原文:"Self-evolved skills outperform human-curated skills in 9 of 11 domains, with the largest margins in Finance ($+56.9$pp over human-curated) and Cybersecurity ($+23.2$pp)."
+> 出处：2604.01687 §4.5 RQ4: Domain-Level Analysis
+>
+> 原文:"At round 0 (one-shot generation without verification), EvoSkills performs on par with the no-skill baseline, but the pass rate climbs sharply once iterative verification begins, reaching 44% at round 2, surpassing human-curated skills at round 3 (63%), and converging at 75% by round 5."
+> 出处：2604.01687 §4.6 Evolution Dynamics
+>
+> 原文:"each task requires 4.1 verification cycles and 2.4 evolution iterations on average to achieve convergence."
+> 出处：2604.01687 §4.6 Evolution Dynamics
+>
+> 原文:"skills evolved by a single frontier LLM transfer effectively to six additional LLMs from five companies, yielding 35–45pp gains over their respective no-skill baselines."
+> 出处：2604.01687 §1 Introduction
+>
+> 原文:"agents create better skills than human-curated ones by capturing the reasoning patterns and tool-use strategies that agents actually need;"
+> 出处：2604.01687 §1 Introduction
+>
+> 原文:"Evolution iters $N{=}5$, surrogate iters $M{=}15$, context cap $\beta{=}0.7$"
+> 出处：2604.01687 Alg. 1 configuration
+>
+> 原文:"the Surrogate Verifier operates in a completely independent LLM session $\pi_{\theta}^{V}$, observing only the task instruction $I$ and the output files $x^{(i)}$, remaining blind to the Skill Generator’s reasoning, code, and skill content."
+> 出处：2604.01687 §3.3 EvoSkills Framework, Surrogate Verifier
+>
+> 原文:"When the surrogate test passes but the ground-truth oracle fails, only an opaque pass/fail bit is returned, i.e., no test content or failure details to prevent the Skill Generator from overfitting to the held-out tests."
+> 出处：2604.01687 §3.3 EvoSkills Framework, Co-evolution
+>
+> 原文:"In addition, we also evaluate the transferability of the skills evolved by Claude Opus 4.6 on six additional models: GPT-5.2 (Singh et al., 2025), Claude Sonnet 4.5 (Anthropic, 2025d), Claude Haiku 4.5 (Anthropic, 2025c), Qwen3-Coder-480B (Yang et al., 2025), DeepSeek V3-671B (Liu et al., 2024) and Mistral Large 3-675B (Mistral AI, 2025)."
+> 出处：2604.01687 §4.1 Experimental Setup
+>
+> 原文:"| GPT-5.2 | 65.0 | 29.6 | +35.4 |"
+> 出处：2604.01687 Appendix A, Table A3
+>
+> 原文:"| Claude Sonnet 4.5 | 63.1 | 20.0 | +43.1 |"
+> 出处：2604.01687 Appendix A, Table A3
+>
+> 原文:"| Claude Haiku 4.5 | 54.5 | 10.4 | +44.1 |"
+> 出处：2604.01687 Appendix A, Table A3
+>
+> 原文:"| Qwen3 Coder | 50.8 | 8.4 | +42.4 |"
+> 出处：2604.01687 Appendix A, Table A3
+>
+> 原文:"| DeepSeek V3 | 48.8 | 13.0 | +35.8 |"
+> 出处：2604.01687 Appendix A, Table A3
+>
+> 原文:"| Mistral Large 3 | 43.1 | 4.9 | +38.2 |"
+> 出处：2604.01687 Appendix A, Table A3
 
 ## 参考论文
 

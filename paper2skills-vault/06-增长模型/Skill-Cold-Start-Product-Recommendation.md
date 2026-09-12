@@ -1,3 +1,19 @@
+---
+title: Skill-Cold-Start-Product-Recommendation
+module: 06-增长模型
+topic: 用 LLM 模拟用户-商品交互，把冷商品直接转成「伪热商品」再走标准嵌入优化
+status: draft
+created: 2026-05-15
+updated: 2026-09-12
+owner: self
+source: ai
+paper_id: 2402.09176
+paper: Large Language Model Interaction Simulator for Cold-Start Item Recommendation
+evidence_basis: paper-verbatim
+verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+related: Skill-New-Product-Opportunity-Mining.md, Skill-Uplift-Churn-Prediction.md
+---
+
 # Skill Card: Cold-Start Product Recommendation (冷启动商品推荐)
 
 ---
@@ -678,6 +694,46 @@ if __name__ == '__main__':
 | 吞吐能力 | 8,640商品/小时 |
 | 候选用户筛选 | 十亿→百级 |
 | 模拟交互数量 | Top-20/商品 |
+
+---
+
+## ⑥ 原文引用
+
+> 原文："Existing cold-start models use mapping functions to generate fake behavioral embeddings based on the content feature of cold items. However, these generated embeddings have significant differences from the real behavioral embeddings, leading to a negative impact on cold recommendation performance."
+> 出处：2402.09176 §Abstract / §1（PDF 第 1 页）
+
+> 原文："To address this challenge, we propose an LLM Interaction Simulator (LLM-InS) to model users’ behavior patterns based on the content aspect. This simulator allows recommender systems to simulate vivid interactions for each cold item and transform them from cold to warm items directly."
+> 出处：2402.09176 §Abstract（PDF 第 1 页）
+
+> 原文："Additionally, we introduce an efficient “filtering-and-refining” approach to take full advantage of the simulation power of the LLMs."
+> 出处：2402.09176 §Abstract（PDF 第 1 页）
+
+> 原文："Unlike conventional “embedding simulation” methods, we propose an “interaction simulation” approach. Obviously, predicting interactions for all users in large datasets is impractical."
+> 出处：2402.09176 §4.2 Hierarchical Interaction Simulator（PDF 第 4 页）
+
+> 原文："Collaborative Filtering (CF) is essential for billion-scale recommender systems to filter the most interesting items for users from billions of candidates."
+> 出处：2402.09176 §1 Introduction（PDF 第 1 页）
+
+> 原文："we calculate its top-K user candidates"
+> 出处：2402.09176 §4.2.1 式 (17)（PDF 第 5 页）
+
+> 原文："We opted for a top-k value of 20."
+> 出处：2402.09176 §5.1.3 Hyperparameter Setting（PDF 第 6 页）
+
+> 原文："By convention, we set K to 20 and report the average values obtained across all users in the test set."
+> 出处：2402.09176 §5.1.4 Evaluation Metrics（PDF 第 7 页）
+
+> 原文："Table 1. Overall, cold and warm recommendation performance comparison over three backbone models (MF, NGCF, LightGCN). The best and second-best results in each column are highlighted in bold font and underlined."
+> 出处：2402.09176 §5.2 Main Results (RQ1) 表 1 标题（PDF 第 7 页）
+
+> 原文："| %Improv. | 43.48% | 44.87% | 3.88% | 4.72% | 22.05% | 21.69% | 63.41% | 49.33% | 24.56% | 23.76% | 3.58% | 4.45% |"
+> 出处：2402.09176 §5.2 表 1（NGCF 骨干网络 %Improv. 行）。列序 = Overall / Cold / Warm × CiteULike / MovieLens × Recall / NDCG；故第 6 列 **21.69%** = CiteULike 数据集上**冷商品 NDCG** 的相对提升，第 2 列 44.87% 才是 CiteULike 整体 NDCG 提升
+
+> 原文："Extensive experiments using real behavioral embeddings demonstrate that our proposed model, LLM-InS, outperforms nine state-of-the-art cold-start methods and three LLM models in cold-start item recommendations."
+> 出处：2402.09176 §Abstract（PDF 第 1 页）
+
+> **底本标题差异（不改正文，仅记录）**：卡片正文与「参考论文」段把本文称作 **ColdLLM** / *Large Language Model Simulator for Cold-Start Recommendation*（WSDM 2025）；
+> 全文底本首页标题为 *Large Language Model Interaction Simulator for Cold-Start Item Recommendation*，方法名 **LLM-InS**，全文无 `ColdLLM` / `WSDM` 命中，也未见 LLaMA-7B 与任何时延/吞吐数字。
 
 ---
 

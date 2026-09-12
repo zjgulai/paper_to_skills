@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2308.08155
+paper: "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: AutoGen — 多智能体对话编排框架
@@ -243,3 +246,67 @@ python autogen_mas.py
 - 探索阶段用 AutoGen（快速试错、动态调整）
 - 生产阶段用 MetaGPT（标准化、可复现、质量可控）
 - 混合模式：AutoGen 编排 MetaGPT 的 SOP agent 组
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> 下列引文均为底本中的**连续子串**，未改标点、未改词、未把两句话缝成一句（由 `quote_check.py` 逐字核验）。
+> 本段只覆盖 ① 与 ⑤ 中**能回溯到论文原文**的断言；② 的场景数字与 ⑤ 的 ROI 表均为作者举例/自估，论文中无对应数字。
+
+### A. 两个核心抽象（对应 ①「Conversable Agent」与「Conversation Programming」）
+
+> 原文:"This technical report presents AutoGen, a new framework that enables development of LLM applications using multiple agents that can converse with each other to solve tasks. AutoGen agents are customizable, conversable, and seamlessly allow human participation. They can operate in various modes that employ combinations of LLMs, human inputs, and tools."
+> 出处：2308.08155 Abstract
+
+> 原文:"AutoGen abstracts and implements conversable agents designed to solve tasks through inter-agent conversations. Using conversable agents in AutoGen, developers can create various forms and patterns of multi-agent conversations involving LLMs, humans, and tools."
+> 出处：2308.08155 §2 The AutoGen Framework
+
+> 原文:"A unique feature of agents in AutoGen is their conversability, allowing them to solve tasks collectively through inter-agent conversations. A conversable agent is an entity with a specific role that can send and receive messages to and from other conversable agents to start or continue a conversation. It maintains its internal states based on sent and received messages and can be configured with a set of capabilities (e.g., enabled by LLMs, humans, tools, etc.)."
+> 出处：2308.08155 §2.1 Conversable Agent
+
+> 原文:"Customizable agents that integrate LLMs, humans, and tools. AutoGen agent comes with a set of capabilities powered by LLMs, humans, tools, or a combination of these. By selecting and configuring a subset of built-in capabilities, one can easily create agents with different roles, as shown in Figure 2."
+> 出处：2308.08155 §1 Introduction（key features）
+
+### B. Computation 与 Control Flow（对应 ①「两种机制控制协作」）
+
+> 原文:"With AutoGen, building a complex multi-agent conversation system involves (a) defining a set of conversable agents with specialized capabilities and roles, and (b) defining the interaction behavior between agents, i.e., how an agent should respond when receiving messages from another agent."
+> 出处：2308.08155 §2 The AutoGen Framework
+
+> 原文:"One main insight of AutoGen is to solve tasks via inter-agent conversations. With the goal of enabling next-gen applications, we face the challenge of finding a simple, unified approach to facilitate easy orchestration of complex workflows. We introduce the following designs to tackle this challenge: (1) intuitive and unified conversation interfaces; (2) automated agent chat via auto-reply; and (3) generic support of diverse conversation patterns."
+> 出处：2308.08155 §2.2 Multi-Agent Conversations
+
+> 原文:"Agents in AutoGen have unified conversation interfaces, including send/receive for sending/receiving messages and generate_reply for generating a reply based on the received message. With this conversation-centric design, a workflow can be represented as a sequence of inter-agent message passing and agent acting (programmed in generate_reply)."
+> 出处：2308.08155 §2.2（Multi-agent conversation via unified conversation interfaces）
+
+> 原文:"To ease the development of multi-agent conversation, we aim to reduce the developers’ effort to only defining the behavior of each agent. That is, once agents are appropriately configured, the developer can readily trigger the conversation among the agents and the conversation would proceed automatically with no extra effort of the developer for crafting a control plane."
+> 出处：2308.08155 §2.2（Automated multi-agent conversation with registered auto-reply）
+
+### C. 论文自报收益（对应 ⑤「技术成熟度高」「可落地性强」的量级参照）
+
+> 原文:"The core workflow code for OptiGuide was reduced from over 430 lines to 100 lines using AutoGen, leading to significant productivity improvement. The new agents are customizable, conversable, and can autonomously manage their chat memories."
+> 出处：2308.08155 §4 A2: Multi-Agent Coding（Workflow）
+
+> 原文:"For example, with AutoGen, the core workflow code in A3 is reduced from over 430 lines to 100 lines, bringing in a 4X saving."
+> 出处：2308.08155 §5 Discussion（Programmability）
+
+> 原文:"Modularity: The division of tasks into separate agents promotes modularity in the system. Each agent can be developed, tested, and maintained independently, simplifying the overall development process and facilitating code management. (A2, A3, A6)"
+> 出处：2308.08155 §5 Discussion（Modularity）
+
+> 原文:"Allowing human involvement: AutoGen provides a native mechanism to achieve human participation and/or human oversight. With AutoGen, humans can seamlessly and optionally cooperate with AI to solve problems or generally participate in the activity."
+> 出处：2308.08155 §5 Discussion（Allowing human involvement）
+
+> 原文:"This setup allows for proper memory management, as the Commander maintains memory related to user interactions, providing context-aware decision-making."
+> 出处：2308.08155 §4 A2: Multi-Agent Coding（Takeaways）
+
+### D. 使用边界与建议（对应 ①关键假设 4「对话可收敛」与 ⑤「灵活度适配业务变化」）
+
+> 原文:"Keep the agent chat topology as simple as possible, as well as reduce code-based extension. Consider using the two-agent chat or the group chat setup first, as they require least code-based extension."
+> 出处：2308.08155 §5.1 General Guidelines for Using AutoGen
+
+> 原文:"Consider using built-in agents first. For example, AssistantAgent is pre-configured to be backed by GPT-4, with carefully designed system message for generic problem solving via code."
+> 出处：2308.08155 §5.1 General Guidelines for Using AutoGen
+
+> 原文:"Despite the numerous advantages of AutoGen agents, there could be cases/scenarios where other libraries/packages could help."
+> 出处：2308.08155 §5.1 General Guidelines for Using AutoGen

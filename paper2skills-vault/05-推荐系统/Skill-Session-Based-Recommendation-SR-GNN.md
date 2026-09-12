@@ -5,8 +5,10 @@ module: 05-推荐系统
 topic: session-based-recommendation
 status: stable
 created: 2026-04-27
-updated: 2026-04-27
+updated: 2026-09-12
 owner: self
+paper_id: 1811.00855
+evidence_basis: paper-verbatim
 source: ai
 ---
 
@@ -271,3 +273,73 @@ def collate_fn(batch):
 
 - **评估依据**:
   SR-GNN 解决母婴电商匿名用户无法做用户级协同过滤的痛点。品类购买决策链短、连带性强，session 图结构天然适合建模同一购物任务内的多品类跳转。
+
+---
+
+## ⑥ 原文引用
+
+> 原文："The problem of session-based recommendation aims to predict users’ actions based on anonymous sessions."
+> 出处：1811.00855 §Abstract（PDF 第 1 页）
+
+> 原文："However, in many recent services, user identification may be unknown and only the user behavior history during an ongoing session is available. It is of great importance to model limited behaviors in one session and generate the recommendation."
+> 出处：1811.00855 §Introduction（PDF 第 1 页）——本卡 ② 场景 1「匿名 session」的业务前提
+
+> 原文："Previous methods on the session-based recommendation most model a session as a sequence and capture users’ preference to make recommendations. Though achieved promising results, they fail to consider the complex items transitions among all session sequences, and are insufficient to obtain accurate users’ preference in the session."
+> 出处：1811.00855 §Abstract（PDF 第 1 页）——本卡「取代传统 RNN 只能建模线性顺序」的原文依据
+
+> 原文："Besides, those RNN models use a hidden vector representing the user’s general interest, which perform badly when the session is long, due to the presence of interest drift."
+> 出处：1811.00855 §Introduction（PDF 第 2 页）——本卡 ② 场景 2「实时兴趣漂移」的原文依据
+
+> 原文："To better capture the structure of the user-click sessions and take complex transitions of items into account, we propose a novel method, i.e. Session-based Recommendation with Graph Neural Networks, SR-GNN for brevity. In the proposed method, session sequences are aggregated together and modeled as graph-structure data."
+> 出处：1811.00855 §Abstract（PDF 第 1 页）
+
+> 原文："Based on this graph, GNN can capture complex transitions of items, which are difficult to be revealed by the conventional sequential methods. Each session is then represented as the composition of the global preference and current interests of the session using an attention network."
+> 出处：1811.00855 §Abstract（PDF 第 1 页）
+
+> 原文："Each session sequence $s$ can be modeled as a directed subgraph $\mathcal{G}_{s}=(\mathcal{V}_{s},\mathcal{E}_{s})$."
+> 出处：1811.00855 §III.B Constructing session subgraphs and the global graph（PDF 第 3 页）
+
+> 原文："Each edge $(v_{s,i-1},v_{s,i})\in\mathcal{E}_{s}$ means that a user clicks item $v_{s,i}$ after $v_{s,i-1}$ in the session $s$."
+> 出处：1811.00855 §III.B（PDF 第 3 页）——本卡 session 图建边规则的原文依据
+
+> 原文："For SR-GNN, we consider constructing a global graph with binary edges, where each edge is a boolean value indicating whether there exists a transition from one item to another in all subgraphs."
+> 出处：1811.00855 §III.B（PDF 第 3 页）
+
+> 原文："Previous session-based recommendation methods always assume there exists a distinct latent vector of user for each session. The proposed SR-GNN method does not make any assumptions on that vector. Instead, a session is represented directly by nodes involved in that session."
+> 出处：1811.00855 §III.D Generating session embeddings（PDF 第 4 页）
+
+> 原文："Besides, SR-GNN adopts the soft-attention mechanism to generate a session representation which can automatically select the most significant item transitions, and neglect noisy and ineffective user actions in the current session."
+> 出处：1811.00855 §IV.D Comparison among baseline methods（PDF 第 7 页）
+
+> 原文："Compared with the state-of-art methods like NARM and STAMP, SR-GNN further considers transitions between items in a session and thereby models every session as a subgraph, which can capture more complex and implicit connections between user clicks."
+> 出处：1811.00855 §IV.D（PDF 第 7 页）——注意：**论文自述的机制是「把每个 session 建模成子图、捕捉商品间转移」，并非「GNN 比 RNN 表达能力更强」**
+
+> 原文："We evaluate the proposed method on two real-world representative datasets, i.e. Yoochoose and Diginetica."
+> 出处：1811.00855 §IV.A Datasets（PDF 第 4 页）
+
+> 原文："The Yoochoose dataset is obtained from the RecSys Challenge 2015, which contains a stream of user clicks on an e-commerce website within 6 months."
+> 出处：1811.00855 §IV.A Datasets（PDF 第 4 页）
+
+> 原文："the remaining 7981580 sessions and 37483 items constitute the Yoochoose dataset, while 204771 sessions and 43097 items construct the Diginetica dataset."
+> 出处：1811.00855 §IV.A Datasets（PDF 第 4 页）
+
+> 原文："MRR@20 (Mean Reciprocal Rank) is the average of reciprocal ranks of the correctly-recommended items. The reciprocal rank is set to 0 when the rank exceeds 20."
+> 出处：1811.00855 §IV.C Evaluation Metrics（PDF 第 5 页）
+
+> 原文："| P@20 | MRR@20 | P@20 | MRR@20 | P@20 | MRR@20 |"
+> 出处：1811.00855 §IV.D 表 2 表头（PDF 第 5 页）。列序 = Yoochoose 1/64 / Yoochoose 1/4 / Diginetica × (P@20, MRR@20)
+
+> 原文："| SR-GNN | 70.57 | 30.94 | 71.36 | 31.89 | 63.03 | 27.42 |"
+> 出处：1811.00855 §IV.D 表 2 SR-GNN 行（PDF 第 5 页）——Yoochoose 1/64 的 MRR@20 = **30.94**
+
+> 原文："| NARM | 68.32 | 28.63 | 69.73 | 29.23 | 62.58 | 27.35 |"
+> 出处：1811.00855 §IV.D 表 2 NARM 行（PDF 第 5 页）——Yoochoose 1/64 的 MRR@20 = **28.63**；据此 (30.94−28.63)/28.63 ≈ **8.07%**，与卡片写的「提升 8.3%」**对不上**（且论文里 Yoochoose 1/64 的最强基线是 STAMP 的 29.67，对 STAMP 只有约 4.3%）
+
+> 原文："According to the experiments, it is obvious that the proposed SR-GNN method achieves the best performance among all methods on the three datasets in terms of P@20 and MRR@20."
+> 出处：1811.00855 §IV.D（PDF 第 5 页）
+
+> 原文："Extensive experiments conducted on two real datasets show that SR-GNN evidently outperforms the state-of-the-art session-based recommendation methods and always obtain stable performance with different connection schemes, session representations, and session lengths."
+> 出处：1811.00855 §Abstract（PDF 第 1 页）
+
+> **口径提示（不改正文，仅记录）**：本卡 ②⑤ 里的置信度示例、session 内转化率与 CTR 提升区间、匿名流量占比、月均 GMV、年增量与 ROI 倍数**全部是业务假设或卡片自定口径，论文中没有对应数字**；论文可核验的只有表 2 的 P@20 / MRR@20 三数据集对比。
+> 另：本卡 ① 的注意力公式把 `s_g` 放进 α 的 sigmoid 内、并先算 `s_g` 再加权求和；论文式 (6)–(7) 的 α 用的是 **local embedding `v_{s,n}`（最后一个点击）**，且最终 session 表示是 local 与 global 的**拼接后线性变换** `s_h = W_3[s_l; s_g]`，不是加权求和 —— 属公式层面的既有偏差，不在本次补引文范围内。

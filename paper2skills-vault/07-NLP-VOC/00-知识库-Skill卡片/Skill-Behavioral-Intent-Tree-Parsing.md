@@ -1,3 +1,13 @@
+---
+paper_id: 2408.05353
+paper: "IntentRec: Predicting User Session Intent with Hierarchical Multi-Task Learning"
+venue: arXiv preprint (Netflix)
+evidence_basis: paper-verbatim
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: 行为意图树解析
 # Behavioral Intent Tree Parsing
 
@@ -188,3 +198,55 @@ python3 model.py
 - Netflix 级工业实践，方法成熟
 
 **综合评分: 8/10**
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"In this paper, we introduce IntentRec, a novel recommendation framework based on hierarchical multi-task neural network architecture that tries to estimate a user’s latent intent using their short- and long-term implicit signals as proxies and uses the intent prediction to predict the next item user is likely to engage with."
+> 出处：2408.05353 Abstract
+
+> 原文:"IntentRec consists of three major components: input feature constructor, user intent predictor, and next-item predictor."
+> 出处：2408.05353 §1 Introduction
+
+> 原文:"We explicitly model the short-term interest of a user using implicit signals happening within a certain time threshold (e.g., one week) and incorporate it while constructing the input feature sequence, while the long-term interest of a user will be modeled via a Transformer [47] later."
+> 出处：2408.05353 §1 Introduction
+
+> 原文:"The output sequence of the Transformer will be used for each intent prediction task (e.g., action type), and all the individual predictions are transformed into embeddings via projection layers."
+> 出处：2408.05353 §1 Introduction
+
+> 原文:"The intent embedding sequence will be combined with the input feature sequence to predict the next item of a user accurately."
+> 出处：2408.05353 §1 Introduction
+
+> 原文:"Then, the intent-aware feature sequence {F1 ⊕ S1 ⊕ Z1, . . . , F𝑛 ⊕ S𝑛 ⊕ Z𝑛 } again goes through the FC and normalization layer, and the output is fed to another Transformer encoder optimized for next-item prediction, whose architecture is similar to the intent encoder."
+> 出处：2408.05353 §3 Proposed Method — Next-item prediction
+
+> 原文:"The aforementioned intent-aware feature sequence is fed to a Transformer item encoder to predict the next item at each position in the sequence."
+> 出处：2408.05353 §1 Introduction
+
+> 原文:"Unlike the conventional next-item prediction, IntentRec utilizes hierarchical multi-task learning, where we conduct the intent prediction first and use the intent prediction output for the next-item prediction."
+> 出处：2408.05353 §1 Introduction
+
+> 原文:"Our paper is the first H-MTL framework that can predict the user intent using both short- and long-term interests of a user."
+> 出处：2408.05353 §1 Introduction — Contributions
+
+> 原文:"The attention layer in our intent predictor (Fig. 4) generates importance weights of each intent prediction head"
+> 出处：2408.05353 §4 Discussion — intent weighting
+
+> 原文:"We can define a user’s primary intent by investigating the highest value of attention weights of this user."
+> 出处：2408.05353 §4 Discussion — intent weighting
+
+> 原文:"Remarkably, IntentRec outperforms the best baselines: TransAct and IntentRec-V0; for instance, IntentRec shows 7.4% accuracy improvement compared to TransAct with statistical significance (p-values from Student’s t-test < 0.01)."
+> 出处：2408.05353 §4.2 Next Item and Intent Prediction Accuracy
+
+> 原文:"Timesince-release prediction is also crucial since certain users tend to engage with newly released shows/movies more frequently than other users."
+> 出处：2408.05353 §4.3 Ablation Studies of IntentRec
+
+> 原文:"Genre and Movie/Show predictions are less helpful than the others, but they still have downstream applications and business values."
+> 出处：2408.05353 §4.3 Ablation Studies of IntentRec
+
+> 原文:"Fig. 6 represents 10 unique clusters of user intent embeddings obtained by IntentRec."
+> 出处：2408.05353 §4.4 intent embedding clustering
+
+> 原文:"Extensive experiments on Netflix user engagement data demonstrate that IntentRec outperforms state-of-the-art user intent and next-item prediction models."
+> 出处：2408.05353 Abstract

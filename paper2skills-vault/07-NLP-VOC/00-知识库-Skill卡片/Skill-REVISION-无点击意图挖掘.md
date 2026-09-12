@@ -1,3 +1,12 @@
+---
+title: "Skill Card: REVISION Intent Mining"
+module: 07-NLP-VOC
+paper_id: 2510.22739
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: REVISION Intent Mining
 # REVISION无点击意图挖掘
 
@@ -206,6 +215,87 @@ python3 model.py
 - 搜索转化率：+20%
 - 用户满意度：+15%
 - 运营策略精准度：+50%
+
+---
+
+## ⑥ 原文引用
+
+本节仅收录本卡底本（arXiv:2510.22739 全文）中可逐字核验的原句。②/⑤ 段的商业测算数字（搜索转化率、客服人力节约、闭环完整度、年化 ROI 等）为本地业务估算，论文中不存在，未在此罗列。
+
+> 原文:"In the online A/B test, compared with previous pipeline, the ratio of no-click queries decreases by 13.91% for trigger subset, while the Click-Through Rate (CTR), order volume, and Gross Merchandise Value (GMV) increase by 10.73%, 13.60%, and 10.73%, respectively."
+> 出处：2510.22739 §I Introduction
+
+> 原文:"This mismatch between user implicit intent expression and system response defines the User–SearchSys Intent Discrepancy."
+> 出处：2510.22739 §Abstract
+
+> 原文:"Figure 1 illustrates the REVISION paradigm, comprising asynchronous offline and online stages."
+> 出处：2510.22739 §III.A Motivation and Overview
+
+> 原文:"Based on these signals, we perform hierarchical clustering via phrase mapping and vector similarity matching [22]."
+> 出处：2510.22739 §III.A Motivation and Overview
+
+> 原文:"For unassigned items, we compute pairwise similarities and run DBSCAN [30] (Density-based clustering algorithm) on the precomputed distance matrix dij = max{0, 1 − cos(ai , aj )} with ε = 0.5 and min samples = 2, yielding auxiliary semantic clusters."
+> 出处：2510.22739 §III.B Offline Stage
+
+> 原文:"Level 2. For main category c, the assigned actions are further partitioned over Sc using s0.6 (a, s) and a relaxed threshold τ2 = 0.35; items below the threshold are routed to an “other” bucket under c."
+> 出处：2510.22739 §III.B Offline Stage
+
+> 原文:"Reasoning possible no-click factors: Visual Feature Discrepancy:xxx, Functional Requirement Gap:xxx, Quality Expectation Mismatch:xxx, Usage Scenario Incompatibility:xx"
+> 出处：2510.22739 §III.B Offline Stage
+
+> 原文:"These components enable flexible composition via graphical configuration."
+> 出处：2510.22739 §III.B Offline Stage
+
+> 原文:"Inspired by Plan-Then-Execute [52], REVISION-R1, built upon Qwen2.5VL-3B [15], is trained using offline mining data and suggestions to reason over real-time user query images and corresponding historical product results, dynamically predicting strategy optimization plans."
+> 出处：2510.22739 §I Introduction
+
+> 原文:"In the offline stage, We target no-click queries—image uploads without clicks within 30 seconds."
+> 出处：2510.22739 §IV.A Offline and Online Setups
+
+> 原文:"After filtering bot traffic and lowquality images via CNN classifiers, we collect 8–12 million such queries daily from Taobao."
+> 出处：2510.22739 §IV.A Offline and Online Setups
+
+> 原文:"Over time, this cache covers about 30% of queries, achieving over 93% accuracy and significantly reducing computation costs."
+> 出处：2510.22739 §IV.A Offline and Online Setups
+
+> 原文:"The offline pipeline is orchestrated weekly via Airflow, with all intermediate artifacts stored in versioned partitioned Hive tables for traceability."
+> 出处：2510.22739 §IV.A Offline and Online Setups
+
+> 原文:"We first input data into Qwen2.5VL-72B to extract visual information from the query and products."
+> 出处：2510.22739 §IV.A Offline and Online Setups
+
+> 原文:"For Qwen3-30B-A3B (deployed on 2 PPU GPUs), to reduce interference from irrelevant information, we rank the product metadata by importance and select the top 10 elements as input."
+> 出处：2510.22739 §IV.A Offline and Online Setups
+
+> 原文:"We randomly sampled 10,000 online queries that triggered optimization strategies and recruited 10 assessors with search ranking expertise."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"As shown in Table I, REVISION’s offline mining pipeline significantly outperformed the baseline, improving search quality by 37.99% in top-1 results and 34.21% in top-4 results."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"The inter-assessor agreement reached 91%, indicating high consistency."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"In the thinking content evaluation, REVISION-R1 outperforms OmniSearch [29] by 13.6% on the Qwen3 metric."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"In the answer accuracy evaluation, REVISION-R1 achieves 16.4% and 18.7% higher tool matching and order matching rates, respectively, compared with OmniSearch, which is a GPT-4V–based adaptive retrieval planning agent."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"We allocated 10% of user traffic to each strategy to rigorously assess its effectiveness and stability."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"Offline Mining Hyperparameters. Table V shows our configuration (α = 0.7/0.6, τ = 0.40/0.35) achieves optimal balance."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"We use 12 input images balancing API cost and quality."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"Cosine captures angular similarity in Sentence-BERT embeddings, while magnitude-sensitive metrics fail to cluster semantically similar but magnitude-variant signals, reducing relevance (e.g., -3.72% top-1 for Euclidean)."
+> 出处：2510.22739 §IV.B Evaluation and Ablation Study
+
+> 原文:"It demonstrates that no-click interactions yield valuable signals when interpreted by reasoning models, with implications extending to recommendation and conversational systems."
+> 出处：2510.22739 §V Conclusion
 
 ---
 

@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2601.07190
+paper: Active Context Compression: Autonomous Memory Management in LLM Agents
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: 主动上下文剪枝 — Focus 仿生粘菌自主压缩架构
@@ -270,6 +273,46 @@ python3 focus_agent.py
 5. **可叠加优化**:与 ACON / AgeMem / Skills 互补,不冲突
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"22.7% Token Savings with Equal Accuracy: On 5 context-intensive SWE-bench instances, Focus reduced total tokens from 14.9M to 11.5M while matching Baseline accuracy (3/5 = 60%)."
+> 出处：2601.07190 §VI Conclusion
+>
+> 原文:"Focus achieved 22.7% total token reduction (14.9M $\rightarrow$ 11.5M) while maintaining identical accuracy to Baseline (3/5 = 60% for both)."
+> 出处：2601.07190 §IV-D Key Findings, Finding 1
+>
+> 原文:"Initial experiments showed passive Focus prompting yielded only 1-2 compressions per task with marginal (6%) token savings."
+> 出处：2601.07190 §IV-B Aggressive Compression Prompting
+>
+> 原文:"Structured phases: Explicit guidance to use 4-6 focus phases"
+> 出处：2601.07190 §IV-B Aggressive Compression Prompting
+>
+> 原文:"Focus averaged 6.0 compressions per task (vs. 2.0 with passive prompting), dropping 70.2 messages per task."
+> 出处：2601.07190 §IV-D Key Findings, Finding 3
+>
+> 原文:"On matplotlib-26020, both agents passed the test suite, but Focus achieved 57% token savings (4.0M $\rightarrow$ 1.7M)."
+> 出处：2601.07190 §IV-E Case Study: Maximum Savings (matplotlib-26020)
+>
+> 原文:"On pylint-7080, Focus used 110% more tokens than Baseline (4.3M vs. 2.1M), yet both agents passed the test suite."
+> 出处：2601.07190 §IV-F Case Study: When Compression Adds Overhead (pylint-7080)
+>
+> 原文:"Our earlier experiments with passive Focus prompting showed accuracy degradation (60% vs. 80%)."
+> 出处：2601.07190 §IV-G Analysis
+>
+> 原文:"Instances requiring extensive codebase navigation (matplotlib, sympy) showed 50-57% savings"
+> 出处：2601.07190 §IV-G Analysis
+>
+> 原文:"Focus showed 50-57% savings on exploration-heavy tasks but 110% overhead on one iterative refinement task."
+> 出处：2601.07190 §V-C Limitations
+>
+> 原文:"For tasks with 50+ tool calls (common in SWE-bench), this amortization strongly favors compression."
+> 出处：2601.07190 §V-A The Cognitive Tax of Compression
+
+> 原文:"Periodic reminders: After 15 tool calls without compression, the system injects"
+> 出处：2601.07190 §IV-B Aggressive Compression Prompting
 
 ## 参考论文
 

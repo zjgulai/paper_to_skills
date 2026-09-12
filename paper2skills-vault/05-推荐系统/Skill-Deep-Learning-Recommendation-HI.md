@@ -1,3 +1,19 @@
+---
+title: Skill-Deep-Learning-Recommendation-HI
+module: 05-推荐系统
+topic: 用异构推理（p2p + n2p）在一个模型里同时拿到相关性与多样性
+status: draft
+created: 2026-05-15
+updated: 2026-09-12
+owner: self
+source: ai
+paper_id: 2009.12969
+paper: "Simultaneous Relevance and Diversity: A New Recommendation Inference Approach"
+evidence_basis: paper-verbatim
+verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+related: Skill-Session-Based-Recommendation-SR-GNN.md, Skill-NeuralNDCG-Learning-to-Rank.md
+---
+
 # Skill Card: Deep Learning Recommendation with Heterogeneous Inference
 
 ---
@@ -278,6 +294,65 @@ if __name__ == "__main__":
 
 ### 优先级评分
 ⭐⭐⭐⭐☆ (4/5)
+
+---
+
+## ⑥ 原文引用
+
+> 原文："We propose a new approach, heterogeneous inference, which extends the general collaborative filtering (CF) by introducing a new way of CF inference, negative-to-positive."
+> 出处：2009.12969 §Abstract（PDF 第 1 页）
+
+> 原文："To tackle this challenge at its core, we propose a new recommendation approach, Heterogeneous Inference (HI), which fundamentally extends the CF approach by introducing into CF a new channel of relevance inference, negative-to-positive (n2p) inference, in addition to the existing p2p inference."
+> 出处：2009.12969 §Introduction（PDF 第 2 页）
+
+> 原文："Because both the source item and target item in the inter-item similarity inference are positive feedback (a.k.a. positive engagement), we consider conventional CF being based on positive-to-positive (p2p) inference."
+> 出处：2009.12969 §Introduction（PDF 第 1 页）——本卡「p2p 通道」的原文定义
+
+> 原文："Like p2p, n2p makes the observation that when users are not interested in one item (i.e., the negative) they tend to be interested in some other items (i.e., the positive)."
+> 出处：2009.12969 §Introduction（PDF 第 2 页）——本卡「n2p 通道」的原文定义
+
+> 原文："CF only cares about positive correlation (p2p). HI leverages both positive correlation (p2p) and negative correlation (n2p) in one cohesive model."
+> 出处：2009.12969 §Introduction（PDF 第 2 页）
+
+> 原文："HI combines p2p and n2p inference in one cohesive recommendation model. It is able to gain relevance and diversity collaboratively as inherent outcomes of one relevance inference process, i.e., divergent relevance (DR)."
+> 出处：2009.12969 §Our approach → HI for divergent relevance（PDF 第 4 页）
+
+> 原文："Heterogeneous inference achieves divergent relevance, where relevance and diversity support each other as two collaborating objectives in one recommendation model, and where recommendation diversity is an inherent outcome of the relevance inference process."
+> 出处：2009.12969 §Abstract（PDF 第 1 页）
+
+> 原文："The concern of shrinking diversity is also known as the Rabbit Hole problem, the Filter Bubble issue, or the Echo Chamber effect in different domains"
+> 出处：2009.12969 §Introduction（PDF 第 2 页）——本卡「信息茧房 / 过滤气泡」的原文措辞
+
+> 原文："Therefore, we propose a general-purpose feedback-differentiating encoding (FEEDE) scheme, which precisely encodes different types of feedback, regardless whether the CF algorithm implementation supports it or not."
+> 出处：2009.12969 §Our approach → Feedback-Differentiating Encoding（PDF 第 3 页）
+
+> 原文："FEEDE demonstrates the feedback-differentiating capability by complementing the conventional positive feedback encoding, $\mathbf{X}$, with an additional negative feedback encoding, $\mathbf{Y}$,"
+> 出处：2009.12969 §Our approach 式 (6) 前（PDF 第 3 页）——本卡「Y = O − X」那一行公式的出处
+
+> 原文："HI is built upon latent representations of entities (i.e., items and users), for example, via matrix factorization or embedding sub-network in a deep neural network."
+> 出处：2009.12969 §Our approach → HI for divergent relevance（PDF 第 4 页）
+
+> 原文："The two channels of inference (p2p and n2p) can be mixed by a preset or a dynamic candidate ratio, e.g., p2p vs. n2p = 70% vs. 30%."
+> 出处：2009.12969 §Candidate generation by HI（PDF 第 5 页）——论文给的比例示例是 70:30
+
+> 原文："HI candidate generation assumes a mixture ratio of p2p:n2p = 67:33."
+> 出处：2009.12969 §Experiments → Algorithms and tests（PDF 第 6 页）——实验里实际用的是 67:33
+
+> 原文："The dataset is obtained by down-sampling production data during a couple of weeks’ time, which contains around one million unique users and one million unique video items."
+> 出处：2009.12969 §Experiments → Test-BT（PDF 第 6 页）
+
+> 原文："Overall, MovieLens contains over $6000$ user and around $4000$ items."
+> 出处：2009.12969 §Experiments → Test-RT（PDF 第 6 页）
+
+> 原文："Overall, HI-RT outperforms both baseline algorithms: CF-RT and CF-DM simultanuously on all performance metrics: AUC ROC, precision (at a given recall value), recall (at a given precision value), diversity median, and diversity 25 percentile."
+> 出处：2009.12969 §Experiments → Results and observations（PDF 第 7 页）
+
+> 原文："Our analysis and experiments on public datasets and real-world production data show that our approach outperforms existing methods on relevance and diversity simultaneously."
+> 出处：2009.12969 §Abstract（PDF 第 1 页）
+
+> **口径提示（不改正文，仅记录）**：本卡 ② 的全部比率、SKU 量级与 ⑤ 的 ROI 表**都是业务假设或卡片自定口径，论文中没有对应数字** ——
+> 论文的多样性结论是定性的「同时优于基线」，其量化指标是 AUC-ROC / mAP / diversity median / diversity 25 percentile（§Experiments），
+> 与本卡的百分比不是同一口径，故未强行配对引文。
 
 ---
 

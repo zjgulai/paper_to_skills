@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2303.17760
+paper: "CAMEL: Communicative Agents for “Mind” Exploration of Large Scale Language Model Society"
+evidence_basis: paper-verbatim
 ---
 
 # Skill: CAMEL — 角色扮演式自主协作多 Agent 框架
@@ -254,3 +257,82 @@ python camel_agent.py
 - 用 **MetaGPT** 定义标准化分析流程（SOP）
 - 流程中的每个步骤用 **CAMEL** 角色对执行
 - 用 **AutoGen** 作为底层对话基础设施
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> 下列引文均为底本中的**连续子串**，未改标点、未改词、未把两句话缝成一句（由 `quote_check.py` 逐字核验）。
+> 本段只覆盖 ① 与 ⑤ 中**能回溯到论文原文**的断言；② 的场景数字与 ⑤ 的 ROI 表均为作者举例/自估，论文中无对应数字。
+
+### A. 核心思想：角色扮演 + Inception Prompting（对应 ①核心思想）
+
+> 原文:"To address the challenges of achieving autonomous cooperation, we propose a novel communicative agent framework named role-playing . Our approach involves using inception prompting to guide chat agents toward task completion while maintaining consistency with human intentions."
+> 出处：2303.17760 Abstract
+
+> 原文:"This paper explores the potential of building scalable techniques to facilitate autonomous cooperation among communicative agents and provide insight into their “cognitive” processes."
+> 出处：2303.17760 Abstract
+
+### B. 三机制之一：Role-Playing 角色分离（对应 ①机制 1「AI User / AI Assistant」）
+
+> 原文:"Our proposed framework is a novel role-playing approach for studying multiple communicative agents. Specifically, we concentrate on task-oriented role-playing that involves one AI assistant and one AI user. After the multi-agent system receives a preliminary idea and the role assignment from human users, a task-specifier agent will provide a detailed description to make the idea specific and then the AI assistant and AI user will cooperate on completing the specified task through multi-turn conversations until the AI user determines the task is done."
+> 出处：2303.17760 §3.1 Role-playing Framework
+
+> 原文:"The AI user is responsible for giving instructions to the AI assistant and directing the conversation toward task completion. On the other hand, the AI assistant is designed to follow the instructions from the AI user and respond with specific solutions."
+> 出处：2303.17760 §3.1 Role-playing Framework
+
+> 原文:"After the role assignment is completed, the AI assistant $\mathcal{A}$ and AI user $\mathcal{U}$ will collaborate in an instruction-following manner to accomplish the task. In the AI assistant-user scenario, the AI user is responsible for providing instructions, and the assistant is expected to respond with a solution that fulfills the instructions."
+> 出处：2303.17760 §3.1 Role-playing Framework（Conversation Towards Task-Solving）
+
+> 原文:"After the task specification, The AI assistant role and the AI user role will be assigned to the user agent and the assistant agent correspondingly to complete the specified task. In practice, a system message is passed to each agent declaring roles to each."
+> 出处：2303.17760 §3.1 Role-playing Framework（AI Assistant-User Role Assignment）
+
+### C. 三机制之二：Inception Prompting 递归提示（对应 ①机制 2）
+
+> 原文:"Unlike other techniques for conversational language models, our prompt engineering occurs solely at the beginning of role-playing, for task specification and role assignment. Once the conversation phase commences, the AI assistant and AI user prompt each other automatically in a loop until termination."
+> 出处：2303.17760 §3.2 Inception Prompting
+
+### D. 终止条件与角色稳定性（对应 ①「终止条件由协议定义」与 ①关键假设 2、4）
+
+> 原文:"End of Task Token: If the user believes that the task has been solved, they are expected to say <CAMEL_TASK_DONE> to signify the completion of the task. Once this message is received, the conversation is terminated to ensure that the data generated accurately reflects the completion of the task."
+> 出处：2303.17760 §4.1 Role-Playing for AI Society and Code Scenarios（Termination Conditions）
+
+> 原文:"User No Instruct: If the user does not instruct the assistant for 3 rounds, the conversation is terminated."
+> 出处：2303.17760 §4.1（Termination Conditions）
+
+> 原文:"Assistant Instruct: If the assistant provides an instruction to the user, it indicates a role reversal, and the conversation is terminated."
+> 出处：2303.17760 §4.1（Termination Conditions）
+
+> 原文:"Maximum Number of Messages: To keep the cost of generated chats in check, we have set a maximum limit of 40 messages. This limit guarantees a long enough conversation between the user and assistant while also ensuring that the data generated is not too costly to produce. The cost grows quadratically with the length of the conversation, making it essential to set a limit."
+> 出处：2303.17760 §4.1（Termination Conditions）
+
+### E. 论文实测的四类协作失效（对应 ①关键假设 2「LLM 遵循角色约束」的反例）
+
+> 原文:"Role Flipping: One challenge we encountered was role flipping, where the assistant and user switch roles during the conversation. This issue typically arises when the assistant starts providing instructions or commands instead of following the user’s prompts, which can lead to confusion and a reversal of roles. To avoid role flipping, it is crucial for the assistant not to ask questions, as this can also contribute to the problem."
+> 出处：2303.17760 §4.1（Challenges and Observations）
+
+> 原文:"Assistant Repeats Instruction: Another challenge that we observed was the assistant simply repeating the user’s instructions without any role flipping occurring."
+> 出处：2303.17760 §4.1（Challenges and Observations）
+
+> 原文:"Flake Replies: We also observed instances where the assistant agent responds with a flake reply, often taking the form of "I will…". These messages do not contribute to the task at hand, as the assistant promises to take action but ultimately fails to follow through."
+> 出处：2303.17760 §4.1（Challenges and Observations）
+
+> 原文:"Infinite Loop of Messages: A particularly interesting challenge that we encountered was when the assistant and user engage in an infinite loop of meaningless conversation, such as repeatedly thanking each other or saying goodbye without making any progress in the conversation."
+> 出处：2303.17760 §4.1（Challenges and Observations）
+
+### F. 数据规模与产出（对应 ①机制 3 与 ③「可复用资产」）
+
+> 原文:"*Figure 5: Generated Meta Data. The meta data generated by LLMs for AI Society and Code datasets. 50 assistant roles and 50 user role are generated for AI Society. 20 programming languages and 50 domains are generated for Code.*"
+> 出处：2303.17760 §4.1（Figure 5）
+
+> 原文:"Our library, which we make publicly available, provides modular functionality, implementations of different agents, well-crafted prompts, and data explorers, thereby simplifying the utilization of the library for future research in various areas such as multi-agent systems, cooperative AI, game theory simulations, social analysis, AI ethics, AI alignment, and beyond."
+> 出处：2303.17760 §1 Introduction
+
+### G. 结论与自承风险（对应 ⑤「可落地性」与边界）
+
+> 原文:"Our approach enables communicative agents to collaborate autonomously toward completing tasks while requiring minimal human intervention. Through our analysis, we show that achieving autonomous cooperation is challenging due to issues like hallucination, conversation deviation, role flipping, and termination conditions."
+> 出处：2303.17760 §5 Conclusion
+
+> 原文:"We are aware of the potential risks and limitations of this work. For the risks, since existing LLMs are not fully tuned to be harmless, they can be easily exploited by malicious users for harmful purposes."
+> 出处：2303.17760 §5 Conclusion（Risk, Limitation and Future Work）

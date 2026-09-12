@@ -1,3 +1,13 @@
+---
+paper_id: 2602.12778
+paper: "Aspect-Based Sentiment Analysis for Future Tourism Experiences: A BERT-MoE Framework for Persian User Reviews"
+venue: arXiv preprint
+evidence_basis: paper-verbatim
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: BERT-MoE 高效方面情感分析
 
 ---
@@ -381,3 +391,61 @@ if __name__ == "__main__":
 - 适合多语言电商场景
 - 资源效率高，适合小团队
 - 与第一个 VOC 技能形成梯度（基础版 → 高效版）
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"The model achieved a weighted F1-score of 90.6% for ABSA, outperforming the baseline BERT (89.25%) and the hybrid (85.7%)."
+> 出处：2602.12778 Abstract
+
+> 原文:"Efficiency gains included a 39% lower GPU power consumption compared to dense BERT, which supports sustainable AI deployment."
+> 出处：2602.12778 Abstract
+
+> 原文:"After preprocessing, we ended up with 58,473 high-quality reviews (from an initial set of 72,238), each annotated for six important aspects: the host, price, location, amenities, cleanliness, and connectivity."
+> 出处：2602.12778 §1 Introduction
+
+> 原文:"A dataset of 72,238 user reviews was collected from Jabama, a leading Iranian tourism platform that serves over seven million users and 18,000 hosts across 769 cities."
+> 出处：2602.12778 §3 Methodology — Dataset Collection and Preprocessing
+
+> 原文:"Compared to dense models, our three-stage method, which fine-tunes BERT for inputs to specialized sub-networks, results in a 39% reduction in GPU power use (Zeng et al. 2024)."
+> 出处：2602.12778 §1 Introduction
+
+> 原文:"Our basic sentiment classification, aspect extraction with a BERT encoder, and ABSA using a hybrid expert-enhanced BERT model achieved a weighted F1-score of 90.6%, outperforming standalone BERT (89.25%) and a more advanced hybrid BERT model (BERT+MoE+LoRA) (85.7%) (Hu et al. 2021)."
+> 出处：2602.12778 §1 Introduction
+
+> 原文:"Our MoE design uses Top-K routing and auxiliary losses."
+> 出处：2602.12778 §1 Introduction
+
+> 原文:"This helps to minimize route failures, balance specialist use, and enable potential edge computing applications for mobile tourism."
+> 出处：2602.12778 §1 Introduction
+
+> 原文:"A modified BERT encoder with a sigmoid activation function (Figure 5) was trained to identify six aspects: host, price, location, amenities, cleanliness, and connectivity."
+> 出处：2602.12778 §3 Methodology — Model Development
+
+> 原文:"The modified model achieved an F1 score of 93.3% (with a learning rate of 2 × 10−5 , batch size of 32, and 4 epochs)."
+> 出处：2602.12778 §3 Methodology — Model Development
+
+> 原文:"Although the overall weighted F1 improvement appears modest (+1.35 percentage points over the dense BERT baseline), the proposed MoE architecture delivers two decisive advantages that strongly justify its added complexity:"
+> 出处：2602.12778 §4 Experimental Results — Discussion
+
+> 原文:"Energy efficiency: A 39% reduction in GPU power consumption compared to dense BERT (Figure 12), directly supporting UN SDG 12 on responsible consumption and enabling cost-effective, sustainable deployment on tourism platforms in developing regions."
+> 出处：2602.12778 §4 Experimental Results — Discussion
+
+> 原文:"Key findings show: (1) 39% lower power consumption (116W vs 191W), etc."
+> 出处：2602.12778 Fig. 12 Comparative GPU performance metrics
+
+> 原文:"Near-elimination of routing collapse (COV2 reduced from 1.5856 to 0.0109) ensures stable long-term training and straightforward horizontal scaling—critical limitations that have historically hindered practical adoption of MoE models in real-world, low-resource settings."
+> 出处：2602.12778 §4 Experimental Results — Discussion
+
+> 原文:"The final hybrid expert-enhanced architecture (BERT+MoE models), along with all reported results, were trained on two NVIDIA Tesla T4 GPUs (16 GB VRAM each) using PyTorch Automatic Mixed Precision."
+> 出处：2602.12778 §4 Experimental Results — Implementation and Reproducibility Details
+
+> 原文:"This study introduced a three-stage ABSA framework for Persian tourism reviews and released the 58,473-review Jabama dataset."
+> 出处：2602.12778 §5 Conclusion
+
+> 原文:"The proposed hybrid BERT–MoE model achieved a weighted F1-score of 90.6%, outperforming baseline architectures."
+> 出处：2602.12778 §5 Conclusion
+
+> 原文:"TopK routing and rectification techniques ensured stable expert utilization and reduced GPU power consumption by 39%."
+> 出处：2602.12778 §5 Conclusion

@@ -8,6 +8,7 @@ created: 2026-05-06
 updated: 2026-05-06
 owner: self
 source: human+ai
+evidence_basis: paper-verbatim
 ---
 
 # Skill: 自迭代 LLM Agent 管线
@@ -652,3 +653,43 @@ python model.py
 - DPO 训练可能导致策略"过拟合"短期反馈，需保留人工审核作为最终关卡
 - 自我编辑指令积累过多会降低生成效率，建议定期合并和淘汰低分指令
 - 评估 LLM 的偏见会传导到策略更新，建议定期人工抽检反思质量
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"Furthermore, The AI Scientist can run in an open-ended loop, building on its previous scientific discoveries to improve the next generation of ideas."
+> 出处：2408.06292 §1 Introduction
+
+> 原文:"By leveraging modern LLM frameworks like chain-of-thought (Wei et al., 2022) and self-reflection (Shinn et al., 2024) to improve decision-making, The AI Scientist is able to generate its own scientific ideas and hypotheses, as well as a plan for testing them with experiments."
+> 出处：2408.06292 §1 Introduction
+
+> 原文:"Finally, The AI Scientist adds the completed ideas and reviewer feedback to its archive of scientific findings, and the process repeats."
+> 出处：2408.06292 §1 Introduction
+
+> 原文:"We use multiple rounds of chain-of-thought (Wei et al., 2022) and self-reflection (Shinn et al., 2024) to refine and develop each idea."
+> 出处：2408.06292 §3 The AI Scientist
+
+> 原文:"Each section is initially refined with one round of self-reflection (Shinn et al., 2024) as it is being written."
+> 出处：2408.06292 §3 The AI Scientist
+
+> 原文:"To resolve this, we perform one final round of self-reflection section-by-section, aiming to remove any duplicated information and streamline the arguments of the paper."
+> 出处：2408.06292 §3 The AI Scientist
+
+> 原文:"Typical applications of LLMs often involve embedding the model into an “agent” (Wang et al., 2024) framework, including the following possibilities: the structuring of language queries (e.g. few-shot prompting (Brown et al., 2020)), encouraging reasoning traces (e.g. chain-of-thought (Wei et al., 2022)), or asking the model to iteratively refine its outputs (e.g., self-reflection (Shinn et al., 2024))."
+> 出处：2408.06292 §2 Background
+
+> 原文:"To evaluate the generated papers, we design and validate an automated reviewer, which we show achieves near-human performance in evaluating paper scores."
+> 出处：2408.06292 Abstract
+
+> 原文:"The AI Scientist can generate hundreds of interesting, medium-quality papers over the course of a week."
+> 出处：2408.06292 §1 Introduction
+
+> 原文:"The cost-effectiveness of the system, producing papers with potential conference relevance at an approximate cost of $15 per paper, highlights its ability to democratize research (increase its accessibility) and accelerate scientific progress."
+> 出处：2408.06292 §9 Discussion
+
+> 原文:"Here, we focus on Machine Learning (ML) applications, but this approach can more generally be applied to almost any other discipline, e.g. biology or physics, given an adequate way of automatically executing experiments (Kehoe et al., 2015; Arnold, 2022; Zucchelli et al., 2021)."
+> 出处：2408.06292 §1 Introduction
+
+> 原文:"In the future, we aim to use our proposed discovery process to produce self-improving AI in a closed-loop system using open models."
+> 出处：2408.06292 §9 Discussion

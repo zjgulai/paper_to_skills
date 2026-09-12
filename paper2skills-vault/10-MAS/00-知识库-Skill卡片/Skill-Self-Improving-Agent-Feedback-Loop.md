@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2303.17651
+paper: "Self-Refine: Iterative Refinement with Self-Feedback"
+evidence_basis: paper-verbatim
 ---
 
 # Skill: Self-Refine + RL — 反馈闭环与自进化 Agent
@@ -253,3 +256,69 @@ python self_improving_agent.py
     ↓
 [反馈/评估/记忆/再训练] → loop back
 ```
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> 下列引文均为底本中的**连续子串**，未改标点、未改词、未把两句话缝成一句（由 `quote_check.py` 逐字核验）。
+> 本段只覆盖 ① 与 ⑤ 中**能回溯到论文原文**的断言；② 的场景数字与 ⑤ 的 ROI 表均为作者举例/自估。
+> ⚠️ 本底本是 **Self-Refine(2303.17651)** 全文；卡片「参考论文」第 2 条 Reflexion(2303.11366) 为延伸阅读，
+> 本段不引用它（该卡的引文见 `Skill-Reflexion-Self-Improvement.md`）。
+
+### A. 核心思想：同一模型既生成也批评（对应 ①核心思想）
+
+> 原文:"Like people, LLMs do not always generate the best text for a given generation problem on their first try (e.g., summaries, answers, explanations). Just as people then refine their text, we introduce Self-Refine, a framework for similarly improving initial outputs from LLMs through iterative feedback and refinement. The main idea is to generate an output using an LLM, then allow the same model to provide multi-aspect feedback for its own output; finally, the same model refines its previously generated output given its own feedback. Unlike earlier work, our iterative refinement framework does not require supervised training data or reinforcement learning, and works with a single LLM."
+> 出处：2303.17651 Abstract
+
+> 原文:"Iterative refinement, a fundamental characteristic of human problem-solving, is a process that involves creating an initial draft and subsequently refining it through self-feedback (Simon, 1962; Flower and Hayes, 1981; Amabile, 1983)."
+> 出处：2303.17651 §1 Introduction
+
+> 原文:"Although LLMs can generate coherent outputs in the initial step, they often fall short in addressing more intricate requirements, especially for tasks with multifaceted objectives (e.g., dialogue response generation with criteria such as making the response relevant, engaging, and safe) or those with less defined goals (e.g., enhancing program readability)."
+> 出处：2303.17651 §1 Introduction
+
+> 原文:"We propose Self-Refine, a novel approach that allows LLMs to iteratively refine their own outputs using their own feedback, along multiple dimensions to improve performance on diverse tasks. Unlike prior work, our approach does not require supervised training data or reinforcement learning, and uses a single LLM."
+> 出处：2303.17651 §1 Introduction（contributions）
+
+### B. 四个步骤与迭代终止（对应 ①「Self-Refine 的四个步骤」与 ①数学直觉的停止条件）
+
+> 原文:"Self-Refine consists of an iterative loop between two components: feedback, and refine, which work in tandem to generate high-quality outputs."
+> 出处：2303.17651 §1 Introduction
+
+> 原文:"Given an input $x$, and an initial output $y_{0}$, Self-Refine successively refines the output in a feedback $\rightarrow$ refine $\rightarrow$ feedback loop."
+> 出处：2303.17651 §3.1 The Self-Refine Framework
+
+> 原文:"feedback receives the initial output $y_{0}$ and provides feedback on how to enhance it. This feedback is task-dependent and generally addresses multiple aspects of the input."
+> 出处：2303.17651 §3.1 The Self-Refine Framework
+
+> 原文:"refine is responsible for refining an output $y_{t}$ based on the received feedback and the previously generated output."
+> 出处：2303.17651 §3.1 The Self-Refine Framework
+
+> 原文:"Iterative improvement The feedback $\rightarrow$ refine $\rightarrow$ feedback loop can be applied multiple times."
+> 出处：2303.17651 §3.1 The Self-Refine Framework
+
+> 原文:"A key contribution of Self-Refine is using actionable feedback. Given the initial output from an LLM, the feedback pinpoints the reasons for the output meeting (or not meeting) the requirements. The feedback covers two aspects (i) localization of the problem (ii) instruction to improve."
+> 出处：2303.17651 §3.1 The Self-Refine Framework（Actionable and multi-aspect feedback）
+
+### C. 经验记忆的思想来源（对应 ①「经验记忆库（Memory Bank）扩展了 Self-Refine」）
+
+> 原文:"One key aspect of Self-Refine is the retention of a history of past experiences. This is achieved by appending the previous outputs to the prompt continuously. This allows the system to learn from past mistakes and avoid repeating them."
+> 出处：2303.17651 §3.1 The Self-Refine Framework（Iterative improvement）
+
+### D. 论文自报效果（对应 ⑤「Self-Improving Agent 是系统持续进化的关键」的量级参照）
+
+> 原文:"We experiment with 7 diverse tasks, ranging from review rewriting to math reasoning, demonstrating that our approach outperforms direct generation. In all tasks, outputs generated with Self-Refine are preferred by humans and by automated metrics over those generated directly with GPT-3.5 and GPT-4, improving on average by absolute $\sim$20% across tasks."
+> 出处：2303.17651 Abstract
+
+> 原文:"We conduct extensive experiments on 7 diverse tasks of review rewriting, acronym generation, story generation, code rewriting, response generation, constrained generation, and toxicity removal, demonstrating that Self-Refine outperforms direct generation from strong generators like GPT-3.5 and even GPT-4 by at least 5%, and up to more than 40% improvement."
+> 出处：2303.17651 §1 Introduction（contributions）
+
+> 原文:"Our main results are presented in Table 3. As shown, Self-Refine significantly improves the quality of outputs generated by the baseline method across all tasks."
+> 出处：2303.17651 §5 Results
+
+> 原文:"| Solve Rate | Math Reasoning | 71.3 | 76.2 |"
+> 出处：2303.17651 §5 Results（Table 3）
+
+> 原文:"| Sentiment Reversal | 15.3 | 84.7 |"
+> 出处：2303.17651 §5 Results（Table 3）

@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2305.10601
+paper: "Tree of Thoughts: Deliberate Problem Solving with Large Language Models"
+evidence_basis: paper-verbatim
 ---
 
 # Skill: Tree of Thoughts — 树搜索式任务规划
@@ -252,3 +255,63 @@ ToT:        问题
 
 最佳组合: ToT 负责高层规划 + ReAct 负责每步执行
 ```
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> 下列引文均为底本中的**连续子串**，未改标点、未改词、未把两句话缝成一句（由 `quote_check.py` 逐字核验）。
+> 本段只覆盖 ① 与 ⑤ 中**能回溯到论文原文**的断言；⑤ 的 ROI 表为作者自估，论文中无对应数字。
+
+### A. 核心思想：把推理从链扩成树（对应 ①核心思想、①与 CoT 的区别表）
+
+> 原文:"To surmount these challenges, we introduce a new framework for language model inference, “Tree of Thoughts” (ToT), which generalizes over the popular “Chain of Thought” approach to prompting language models, and enables exploration over coherent units of text (“thoughts”) that serve as intermediate steps toward problem solving. ToT allows LMs to perform deliberate decision making by considering multiple different reasoning paths and self-evaluating choices to decide the next course of action, as well as looking ahead or backtracking when necessary to make global choices."
+> 出处：2305.10601 Abstract
+
+> 原文:"Research on human problem-solving suggests that people search through a combinatorial problem-space – a tree where the nodes represent partial solutions, and the branches correspond to operators that modify them"
+> 出处：2305.10601 §3 Tree of Thoughts: Deliberate Problem Solving with LM
+
+> 原文:"ToT frames any problem as a search over a tree, where each node is a state $s=[x,z_{1\cdots i}]$ representing a partial solution with the input and the sequence of thoughts so far."
+> 出处：2305.10601 §3 Tree of Thoughts: Deliberate Problem Solving with LM
+
+### B. 四个步骤（对应 ①「ToT 的四个步骤」逐条）
+
+> 原文:"1. Thought decomposition. While CoT samples thoughts coherently without explicit decomposition, ToT leverages problem properties to design and decompose intermediate thought steps."
+> 出处：2305.10601 §3 Tree of Thoughts（1. Thought decomposition）
+
+> 原文:"3. State evaluator $V(p_{\theta},S)$. Given a frontier of different states, the state evaluator evaluates the progress they make towards solving the problem, serving as a heuristic for the search algorithm to determine which states to keep exploring and in which order."
+> 出处：2305.10601 §3 Tree of Thoughts（3. State evaluator）
+
+> 原文:"Breadth-first search (BFS) (Algorithm 1) maintains a set of the $b$ most promising states per step."
+> 出处：2305.10601 §3 Tree of Thoughts（4. Search algorithm）
+
+> 原文:"Depth-first search (DFS) (Algorithm 2) explores the most promising state first, until the final output is reached ($t>T$), or the state evaluator deems it impossible to solve the problem from the current $s$ ($V(p_{\theta},\{s\})(s)\leq v_{th}$ for a value threshold $v_{th}$). In the latter case, the subtree from $s$ is pruned to trade exploration for exploitation. In both cases, DFS backtracks to the parent state of $s$ to continue exploration."
+> 出处：2305.10601 §3 Tree of Thoughts（4. Search algorithm）
+
+### C. 关键假设（对应 ①关键假设 2「Thought 可评估」与 3「搜索空间可控」）
+
+> 原文:"In general, a thought should be “small” enough so that LMs can generate promising and diverse samples (e.g. generating a whole book is usually too “big” to be coherent), yet “big” enough so that LMs can evaluate its prospect toward problem solving (e.g. generating one token is usually too “small” to evaluate)."
+> 出处：2305.10601 §3 Tree of Thoughts（1. Thought decomposition）
+
+> 原文:"(1) Generality. IO, CoT, CoT-SC, and self-refinement can be seen as special cases of ToT (i.e. trees of limited depth and breadth; Figure 1). (2) Modularity. The base LM, as well as the thought decomposition, generation, evaluation, and search procedures can all be varied independently."
+> 出处：2305.10601 §3 Tree of Thoughts（Conceptually, ToT has several benefits…）
+
+### D. 论文自报效果（直接支撑 ⑤「Game of 24 上 4%→74% 的震撼提升」）
+
+> 原文:"For instance, in Game of 24, while GPT-4 with chain-of-thought prompting only solved 4% of tasks, our method achieved a success rate of 74%."
+> 出处：2305.10601 Abstract
+
+> 原文:"Results. As shown in Table 3, IO, CoT, and CoT-SC prompting methods perform badly on the task, achieving only 7.3%, 4.0%, and 9.0% success rates. In contrast, ToT with a breadth of $b=1$ already achieves a success rate of $45\%$, while $b=5$ achieves $74\%$."
+> 出处：2305.10601 §4.1 Game of 24（Results）
+
+> 原文:"Results. Figure 5(a) shows average GPT-4 scores across 100 tasks, where ToT (7.56) is deemed to generate more coherent passages than IO (6.19) and CoT (6.93) on average."
+> 出处：2305.10601 §4.2 Creative writing（Results）
+
+### E. 边界与失败模式（论文自承局限；对应 ⑤「成本注意」的定性依据）
+
+> 原文:"Limitations and future directions. Deliberate search such as ToT might not be necessary for many existing tasks that GPT-4 already excels at, and as an initial step this work only explores three relatively simple tasks that challenges GPT-4 and calls of better search and planning abilities incorporated with LMs."
+> 出处：2305.10601 §6 Discussion
+
+> 原文:"ToT is a framework that empowers LMs to more autonomously and intelligently make decisions and solve problems."
+> 出处：2305.10601 §6 Discussion（Broader impact）

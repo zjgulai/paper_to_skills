@@ -1,3 +1,19 @@
+---
+title: Skill-DQN-Purchase-Prediction
+module: 06-增长模型
+topic: 借用 DQN 的经验回放与 Epsilon-Greedy 思路做 LSTM 购买意图预测
+status: draft
+created: 2026-05-15
+updated: 2026-09-12
+owner: self
+source: ai
+paper_id: 2506.17543
+paper: Predicting E-commerce Purchase Behavior using a DQN-Inspired Deep Learning Model
+evidence_basis: paper-verbatim
+verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+related: Skill-User-Lifecycle-STAN.md, Skill-Customer-Journey-Prototype.md
+---
+
 # Skill Card: DQN-Inspired Purchase Intent Prediction
 # DQN深度强化学习购买意图预测
 
@@ -194,6 +210,61 @@ DQN: 购买概率72% (置信度medium)
 - 用户画像完整度：95%+
 - 运营策略精准度：+40%
 - 营销ROI提升：+50%
+
+---
+
+## ⑥ 原文引用
+
+> 原文："Our approach to predicting buying intent and product demand in e-commerce settings draws inspiration from Deep Q-Networks (DQN), a technique traditionally used in reinforcement learning. We adapt this concept to a supervised learning context, leveraging its ability to handle sequential data and make decisions based on complex patterns of user behavior."
+> 出处：2506.17543 §V Methodology（PDF 第 5 页）
+
+> 原文："Experience Replay: We implement a form of experience replay, storing and randomly sampling from past user sessions during training, mirroring the DQN training process."
+> 出处：2506.17543 §V-A Deep Q-Network Inspiration（PDF 第 5 页）
+
+> 原文："Epsilon-Greedy Exploration: While not directly applicable in our supervised setting, we implement a form of exploration by occasionally introducing random noise in our feature set during training, inspired by the epsilon-greedy strategy in DQNs."
+> 出处：2506.17543 §V-C Training Process（PDF 第 6 页）——注意：论文**没有**把干预当作 action、把转化当作 reward 的 Q 学习闭环
+
+> 原文："Value Prediction: While DQNs predict action-values, our model predicts the ”value” of a session in terms of its likelihood to result in a purchase."
+> 出处：2506.17543 §V-A（PDF 第 5 页）
+
+> 原文："We evaluate our model on a large-scale e-commerce dataset comprising over 885,000 user sessions, each characterized by 1,114 features."
+> 出处：2506.17543 §Abstract（PDF 第 1 页）
+
+> 原文："Through comprehensive experimentation with various classification thresholds, we show that our model achieves a balance between precision and recall, with an overall accuracy of 88% and an AUC-ROC score of 0.88."
+> 出处：2506.17543 §Abstract（PDF 第 1 页）——摘要口径；与表 V 的 AUC-ROC 0.6257 **不一致**，见下
+
+> 原文："Our approach demonstrates robust performance in handling the inherent class imbalance typical in e-commerce data, where purchase events are significantly less frequent than non-purchase events."
+> 出处：2506.17543 §Abstract（PDF 第 1 页）
+
+> 原文："To address the class imbalance inherent in e-commerce data (where purchase events are typically less frequent than view or cart events), we employed class weighting in the loss function. The weights were inversely proportional to the class frequencies in the training data."
+> 出处：2506.17543 §III-D Training Process（PDF 第 3 页）
+
+> 原文："We split the dataset into training (80%), validation (10%), and test (10%) sets, ensuring that all sessions from a single user were kept in the same set to prevent data leakage."
+> 出处：2506.17543 §III-D Training Process（PDF 第 3 页）
+
+> 原文："The model demonstrates strong overall accuracy (87.62%), as evident from Table III, indicating its general effectiveness in predicting user behavior."
+> 出处：2506.17543 §VI-A Interpretation of Results（PDF 第 7 页）——原文 87.62%，比摘要的「88%」低
+
+> 原文："The overall accuracy plateaus at 0.88 for thresholds 0.6 through 0.8."
+> 出处：2506.17543 §VII-A Analysis of Threshold Impact（PDF 第 9 页）
+
+> 原文："For purchase sessions, Table II shows high precision (0.90) but low recall (0.29)."
+> 出处：2506.17543 §VI-A Interpretation of Results（PDF 第 7 页）
+
+> 原文："At the highest threshold of 0.9, we observe an interesting phenomenon. The precision for purchase events reaches 1.00, meaning that when the model predicts a purchase at this threshold, it is always correct. However, this comes at a significant cost to recall, which drops to 0.25."
+> 出处：2506.17543 §VII-A Analysis of Threshold Impact（PDF 第 9 页）
+
+> 原文："| Model / Threshold | Accuracy | Precision | Recall | F1-Score | AUC-ROC |"
+> 出处：2506.17543 §VII 表 V 表头（PDF 第 9 页）
+
+> 原文："| Our Model (0.5) | 0.8762 | 0.8967 | 0.2921 | 0.4406 | 0.6257 |"
+> 出处：2506.17543 §VII 表 V（PDF 第 9 页）——**本表 AUC-ROC 为 0.6257**，与摘要的 0.88 冲突；报告里的「行业基准 0.65–0.75」在论文中无对应数字
+
+> 原文："Our study utilizes the ”E-commerce Events History in Electronics Store” dataset, publicly available on Kaggle."
+> 出处：2506.17543 §III-A Dataset（PDF 第 3 页）
+
+> **口径提示（不改正文，仅记录）**：本卡 ② 里触达精准度、券使用率、无效触达三项提升幅度，以及 ⑤ 的全部费用金额、倍数与人天/周数，均为**业务假设代入**；
+> 论文可核验的只有 §V/§VI/§VII 的模型指标（见上方 表 V 与 §VI-A、§VII-A 引文）。
 
 ---
 

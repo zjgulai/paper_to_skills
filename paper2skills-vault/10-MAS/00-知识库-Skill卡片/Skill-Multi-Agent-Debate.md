@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2305.19118
+paper: "Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate"
+evidence_basis: paper-verbatim
 ---
 
 # Skill: Multi-Agent Debate — 多智能体辩论共识
@@ -266,3 +269,64 @@ python debate_system.py
 复杂决策: Multi-Agent Debate
   多 Agent 辩论 → Judge 裁决 → 高置信度结论
 ```
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> 下列引文均为底本中的**连续子串**，未改标点、未改词、未把两句话缝成一句（由 `quote_check.py` 逐字核验）。
+> 本段只覆盖 ① 与 ⑤ 中**能回溯到论文原文**的断言；⑤ 的 ROI 表为作者自估，论文中无对应数字。
+
+### A. DoT 问题（对应 ①「Degeneration-of-Thought (DoT) 问题」整节）
+
+> 原文:"However, our study shows that such reflection-style methods suffer from the Degeneration-of-Thought (DoT) problem: once the LLM has established confidence in its solutions, it is unable to generate novel thoughts later through reflection even if its initial stance is incorrect."
+> 出处：2305.19118 Abstract
+
+> 原文:"In this work, we focus on the Degeneration-of-Thought (DoT) problem in self-reflection, which is proposed and defined by us for the first time. Formally, DoT describes the following scenario:"
+> 出处：2305.19118 §1 Introduction
+
+> 原文:"Once the LLM has established confidence in its answers, it is unable to generate novel thoughts later through self-reflection even if the initial stance is incorrect."
+> 出处：2305.19118 §1 Introduction
+
+> 原文:"The low disagreement of self-reflection suggests that the LLM sticks to the incorrect answers predicted by CoT and is unable to engage in meaningful self-reflection."
+> 出处：2305.19118 §1 Introduction
+
+### B. MAD 的三机制（对应 ①「MAD 的三个核心机制」）
+
+> 原文:"To address the DoT problem, we propose a Multi-Agent Debate (MAD) framework, in which multiple agents express their arguments in the state of “tit for tat” and a judge manages the debate process to obtain a final solution."
+> 出处：2305.19118 Abstract
+
+> 原文:"To address the DoT issue, we leverage another fundamental characteristic of human problem-solving, i.e., debate, to encourage divergent thinking in LLMs. Specifically, we propose the MAD framework, short for Multi-Agent Debate, where two agents express their own arguments in the state of “tit for tat” and a judge monitors and manages the debate process to obtain a final solution."
+> 出处：2305.19118 §1 Introduction
+
+> 原文:"The nature of MAD determines that (1) The distorted thinking of one LLM can be corrected by the others; (2) The resistance to change of one LLM will be complemented by the others; and (3) each agent can obtain external feedback from the others."
+> 出处：2305.19118 §1 Introduction
+
+> 原文:"There are $N$ debaters $D=\{D_{i}\}_{i=1}^{N}$ involved in the framework. In each debate iteration, the debaters $D_{i}$ speak one by one in a fixed order and express their arguments based on the previous debate history $H$, i.e., $D_{i}(H)=h$."
+> 出处：2305.19118 §2 Multi-Agent Debate Framework（Debaters）
+
+> 原文:"We also design a judge $J$ to manage and monitor the whole debate process. The judge contains two different modes: (a) Discrinative Mode, in which the judge $J$ decides whether the correct solution can be obtained after all the debaters finish their arguments in the current iteration"
+> 出处：2305.19118 §2 Multi-Agent Debate Framework（Judge）
+
+> 原文:"In this work, we mainly use three agents in our MAD framework, including two debaters (i.e., affirmative and negative) and a judge. Unless other stated, we use GPT-3.5-Turbo as the backbone model for all agents by default."
+> 出处：2305.19118 §4.1 Setups（Backbone Models）
+
+### C. 「GPT-3.5 + MAD 超越 GPT-4」的精确口径（对应 ①「关键洞察」、⑤「效果验证」）
+
+> 原文:"Experimental results demonstrate that our MAD framework performs much better than the baseline methods, especially, MAD with GPT-3.5-Turbo can surpass the performance of GPT-4 on Common MT."
+> 出处：2305.19118 §1 Introduction
+
+> 原文:"Remarkably, our proposed MAD, by utilizing GPT-3.5 as the backbone model, has demonstrated significant advancements over GPT-4 across both automatic and human evaluation metrics."
+> 出处：2305.19118 §4.2 Common MT（Results）
+
+> 原文:"Table 5 lists the experimental results in terms of reasoning accuracy. We can observe that Self-Reflect does not improve over the baseline GPT-3.5-Turbo, while CoT and Self-Consistency bring some improvements. Our MAD framework, though not as good as GPT-4, outperforms all the other compared methods based on GPT-3.5-Turbo, which further demonstrates its effectiveness."
+> 出处：2305.19118 §4.3 Counter-Intuitive AR（Results）
+
+### D. 关键假设的反例（对应 ①关键假设 3「Judge 能公正裁决」——论文实测**不支持**该假设）
+
+> 原文:"Extensive analyses suggest that the adaptive break of debate and the modest level of “tit for tat” state are required for MAD to obtain good performance. Moreover, we find that LLMs might not be a fair judge if different LLMs are used for agents."
+> 出处：2305.19118 Abstract
+
+> 原文:"However, we find that “must disagree with each other on every point ” (with a disagreement of 0.988) does not lead to the best performance. We speculate that continuous disagreement without finding common ground can contribute to polarization, where the debate becomes more about winning the argument than seeking truth or understanding."
+> 出处：2305.19118 §5 Analysis（Essense of “Tit for Tat” State）

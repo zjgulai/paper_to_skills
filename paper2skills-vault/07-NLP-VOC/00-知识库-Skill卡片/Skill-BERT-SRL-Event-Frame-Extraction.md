@@ -5,9 +5,12 @@ module: 07-NLP-VOC
 topic: bert-srl-event-frame-extraction
 status: stable
 created: 2026-05-10
-updated: 2026-05-10
+updated: 2026-09-12
 owner: self
 source: human+ai
+paper_id: 1904.05255
+paper: "Simple BERT Models for Relation Extraction and Semantic Role Labeling"
+evidence_basis: paper-verbatim
 ---
 
 # Skill: BERT-SRL + 事件框架 — 语义角色标注与事件抽取
@@ -256,3 +259,43 @@ python bert_srl_model.py
 [异构语义图构建]
     输入 → HGT/HGCN
 ```
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We present simple BERT-based models for relation extraction and semantic role labeling."
+> 出处：1904.05255 Abstract
+
+> 原文:"In this paper, extensive experiments on datasets for these two tasks show that without using any external features, a simple BERT-based model can achieve state-of-the-art performance."
+> 出处：1904.05255 Abstract
+
+> 原文:"To our knowledge, we are the first to successfully apply BERT in this manner."
+> 出处：1904.05255 Abstract
+
+> 原文:"Relation extraction and semantic role labeling (SRL) are two fundamental tasks in natural language understanding."
+> 出处：1904.05255 §1 Introduction
+
+> 原文:"The standard formulation of semantic role labeling decomposes into four subtasks: predicate detection, predicate sense disambiguation, argument identification, and argument classification."
+> 出处：1904.05255 §3.1 Model
+
+> 原文:"The predicate disambiguation task is to identify the correct meaning of a predicate in a given context."
+> 出处：1904.05255 §3.1 Model — Predicate sense disambiguation
+
+> 原文:"Argument identification and classification. This task is to detect the argument spans or argument syntactic heads and assign them the correct semantic role labels."
+> 出处：1904.05255 §3.1 Model — Argument identification and classification
+
+> 原文:"In order to encode the sentence in a predicate-aware manner, we design the input as [[cls] sentence [sep] predicate [sep]], allowing the representation of the predicate to interact with the entire sentence via appropriate attention mechanisms."
+> 出处：1904.05255 §3.1 Model
+
+> 原文:"This is achieved without using any linguistic features and declarative decoding constraints."
+> 出处：1904.05255 §3.3 Dependency-Based SRL Results
+
+> 原文:"Based on this preliminary study, we show that BERT can be adapted to relation extraction and semantic role labeling without syntactic features and human-designed constraints."
+> 出处：1904.05255 §4 Conclusions
+
+> 原文:"While we concede that our model is quite simple, we argue this is a feature, as the power of BERT is able to simplify neural architectures tailored to specific tasks."
+> 出处：1904.05255 §4 Conclusions
+
+> 原文:"Our models provide strong baselines for future research."
+> 出处：1904.05255 Abstract

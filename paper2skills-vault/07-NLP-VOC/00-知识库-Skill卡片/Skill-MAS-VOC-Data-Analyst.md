@@ -1,13 +1,15 @@
 ---
 title: MAS多智能体VOC数据分析
 doc_type: knowledge
-module: NLP-VOC
+module: 07-NLP-VOC
 topic: multi-agent-voc-analysis
 status: stable
 created: 2026-04-29
-updated: 2026-04-29
+updated: 2026-09-12
 owner: self
 source: ai
+paper_id: 2402.01386
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MAS Multi-Agent VOC Data Analyst
@@ -260,6 +262,54 @@ python3 model.py
 - VOC分析周期：2个月 → 4小时
 - 主题识别覆盖率：从人工的60% → 95%
 - 跨平台洞察发现：从0 → 每周自动产出
+
+
+## ⑥ 原文引用
+
+> 原文:"We used LLM-based multi-agents systems to assist the qualitative data analysis process, deploying 27 agents, each responsible for a specific task, such as text summarization, initial code generation, and extracting themes and patterns."
+> 出处：2402.01386 §Abstract
+
+> 原文:"An LLM-based multi-agent system synergises human decision support with AI to automate various qualitative data analysis approaches, including thematic analysis, grounded theory, content analysis, narrative analysis, and discourse analysis."
+> 出处：2402.01386 §1 Introduction
+
+> 原文:"we developed 27 agents, each of which is a specialized instance of an LLM, assigned a specific task to perform."
+> 出处：2402.01386 §3.2 System Design
+
+> 原文:"This is achieved by utilizing the capabilities of LLMs to understand and interpret complex language structures, making it possible to automate the various aspects of qualitative analysis such as thematic analysis, content analysis, narrative analysis, discourse analysis and grounded theory generation."
+> 出处：2402.01386 §3.2 System Design
+
+> 原文:"The agents communicate through a series of interactions with the OpenAI API, processing the input and generating the necessary insights."
+> 出处：2402.01386 §3.2.1 LLM Based Multi-Agent System
+
+> 原文:"To automate the process of content analysis, we developed six AI agents."
+> 出处：2402.01386 §3.2.1 LLM Based Multi-Agent System
+
+> 原文:"The results indicate that integrating LLMs into qualitative research accelerates the analysis process and improves performance. However, certain limitations remain, emphasizing the need for further improvements in their application."
+> 出处：2402.01386 §4.1 Effectiveness of LLM-based Multi Agent System (RQ1)
+
+> 原文:"produced by the proposed system lack creativity and holistic storytelling, which a human analyst could provide, making the output feel mechanical."
+> 出处：2402.01386 §4.1 Effectiveness of LLM-based Multi Agent System (RQ1)
+
+> 原文:"the quality of the generated analysis depends heavily on the clarity and consistency of the input data. Poorly structured or ambiguous feedback lead to inaccurate or incomplete insights."
+> 出处：2402.01386 §4.1 Effectiveness of LLM-based Multi Agent System (RQ1)
+
+> 原文:"there is a strong chance that the system may misinterpret context, such as sarcasm, cultural references, or subtle implications, which a human analyst would recognize."
+> 出处：2402.01386 §4.1 Effectiveness of LLM-based Multi Agent System (RQ1)
+
+> 原文:"Our results demonstrate the system’s capability to autonomously execute qualitative data analysis methods on diverse datasets, streamlining the analysis process and reducing the need for manual intervention."
+> 出处：2402.01386 §4.1 Effectiveness of LLM-based Multi Agent System (RQ1)
+
+> 原文:"Furthermore, it has the potential to reduce the costs for qualitative studies, as the system is capable of handling complex analytical tasks independently."
+> 出处：2402.01386 §5 Discussion
+
+> 原文:"The results indicate that integrating LLM based multi agents into qualitative analysis is representing a step forward towards automation of big data analysis."
+> 出处：2402.01386 §5 Discussion
+
+> 原文:"we only utilized OpenAI API, while many others LLM are available. Therefore, we cannot guarantee that using other LLMs will achieve comparable results."
+> 出处：2402.01386 §5 Discussion
+
+> 原文:"The initial results of the proposed system indicate that it autonomously performs the analysis on the given dataset. However, there is still a need to highlight the importance of ongoing refinement to address potential areas for improvement."
+> 出处：2402.01386 §6 Conclusions
 
 ---
 

@@ -1,13 +1,15 @@
 ---
 title: MAS多智能体强化学习动态定价
 doc_type: knowledge
-module: NLP-VOC
+module: 07-NLP-VOC
 topic: marl-dynamic-pricing
 status: stable
 created: 2026-04-29
-updated: 2026-04-29
+updated: 2026-09-12
 owner: self
 source: ai
+paper_id: 2507.02698
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: MAS MARL Dynamic Pricing
@@ -260,6 +262,70 @@ python3 model.py
 - 定价响应速度：从月度 → 周度 → 实时
 - 利润率提升：+10-20%（规则基线）→ +30-50%（MARL）
 - 价格战频率：-40%
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"This study addresses that gap by evaluating the performance of three MARL algorithms: MADDPG, MADQN, and QMIX against static rule-based baselines, within a simulated environment informed by real e-commerce transaction data and a LightGBM demand prediction model."
+> 出处：2507.02698 Abstract
+
+> 原文:"Among MARL agents, MADQN exhibits the most aggressive pricing behaviour, with the highest volatility and the lowest fairness (0.5844). MADDPG provides a more balanced approach, supporting market competition (share volatility: 9.5 pp) while maintaining relatively high fairness (0.8819) and stable pricing."
+> 出处：2507.02698 Abstract
+
+> 原文:"The dataset contains over one million transactions recorded by a UK-based online retailer, specialized in giftware, serving both individual consumers and wholesalers, between December 2009 and December 2011."
+> 出处：2507.02698 §3.1
+
+> 原文:"To forecast weekly demand, a LightGBM (Light Gradient Boosting Machine) model"
+> 出处：2507.02698 §3.3.1
+
+> 原文:"The model was trained on a product-week aggregated dataset (8,777 observations, 21 features) with log-transformed demand as the target."
+> 出处：2507.02698 §3.3.1
+
+> 原文:"Agents submit product prices, and the environment uses the demand model to simulate weekly sales based on product-level features and competitive market conditions."
+> 出处：2507.02698 §3.4.1
+
+> 原文:"Three distinct Multi-Agent Reinforcement Learning (MARL) frameworks were implemented and evaluated for optimal pricing strategies: Multi-Agent Deep Deterministic Policy Gradient (MADDPG), Multi-Agent Deep Q-Network (MADQN), and QMIX."
+> 出处：2507.02698 §3.5
+
+> 原文:"Multi-Agent Deep Deterministic Policy Gradient (MADDPG) extends DDPG to multi-agent settings, enabling stable learning in non-stationary environments through centralized training and decentralized execution"
+> 出处：2507.02698 §3.5.1
+
+> 原文:"While action decisions are decentralized, centralized critics leverage joint state-action information during training to improve learning stability across agents, encoding competitive market dynamics via price ratios, demand trends, seasonality, and market share metrics in agent state representations."
+> 出处：2507.02698 §3.5.1
+
+> 原文:"The Multi-Agent Deep Q-Network (MADQN) adapts DQN for multi-agent environments using discrete pricing actions (−10% to +10%)"
+> 出处：2507.02698 §3.5.2
+
+> 原文:"The resulting 𝜀 = −0.072 indicates inelastic demand, which is typical for giftware products"
+> 出处：2507.02698 §3.5.1 / §5.3.1
+
+> 原文:"The simulations were configured to model market dynamics over a span of two years, where each episode represented 104 weeks."
+> 出处：2507.02698 §3.7.1
+
+> 原文:"Then, the simulation was run for 30 episodes per experiment to allow sufficient time for MARL algorithms to converge."
+> 出处：2507.02698 §3.7.1
+
+> 原文:"Configuration A - All Rule-Based B - All MADDPG C - All MADQN D - MADDPG + MADQN E - MADQN + Rule-Based F - All QMIX G - One MADDPG H - MADDPG + QMIX"
+> 出处：2507.02698 §4 Table 4
+
+> 原文:"– +293.8% +4272.5% +3008.3% +4041.9% +1622.9% +231.9% +836.5%"
+> 出处：2507.02698 §4 Table 4
+
+> 原文:"MADQN agents adjusted prices most frequently and captured the highest revenue, but introduced volatility and inequity."
+> 出处：2507.02698 §5.2
+
+> 原文:"Several MARL agents, including MADQN and QMIX, exploited this inelasticity by raising prices across episodes, knowing demand would remain fairly stable."
+> 出处：2507.02698 §5.3.1
+
+> 原文:"However, MADQN’s high volatility (0.085) together with high adaptability implies that aggressive pricing can cause instability."
+> 出处：2507.02698 §4
+
+> 原文:"Even though consistent improvements were observed, statistical significance was not achieved"
+> 出处：2507.02698 §4
+
+> 原文:"All experiments were executed on the Snellius National Supercomputer, operated by SURF in the Netherlands"
+> 出处：2507.02698 §3.7.4
 
 ---
 

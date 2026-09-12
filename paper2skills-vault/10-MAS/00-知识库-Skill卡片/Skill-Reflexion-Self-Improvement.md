@@ -8,6 +8,9 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+paper_id: 2303.11366
+paper: "Reflexion: an autonomous agent with dynamic memory and self-reflection"
+evidence_basis: paper-verbatim
 ---
 
 # Skill: Reflexion — 言语强化学习与自我反思
@@ -268,3 +271,72 @@ python reflexion_agent.py
     ↓
 （下一个任务）
 ```
+
+---
+
+## ⑥ 原文引用
+
+> **底本**：本卡 frontmatter 的 `paper_id` 即 arXiv 编号；其全文存档为 `paper2skills-vault/papers/` 下本论文目录的 `fulltext.md`（LaTeXML HTML 转 Markdown，章节号完整）。
+> ⚠️ **底本版本警告**：该存档取自 **arXiv v1**（首页题名为 *Reflexion: an autonomous agent with dynamic
+> memory and self-reflection*，作者为 Shinn / Labash / Gopinath），只含 **AlfWorld 与 HotPotQA** 两个 benchmark，
+> **不含 HumanEval / MBPP**。卡片「参考论文」栏写的是 NeurIPS 2023 正式版
+> （*Language Agents with Verbal Reinforcement Learning*，作者含 Cassano / Narasimhan / Yao），
+> 两者不是同一版本。故 ⑤ 的 HumanEval pass@1 断言在**本底本中零命中**，
+> 详见本卡维护记录（不改正文）。
+> 下列引文均为底本中的**连续子串**（由 `quote_check.py` 逐字核验）。
+
+### A. 核心机制：言语强化学习与三组件（对应 ①核心思想、①数学直觉的循环）
+
+> 原文:"Building on recent research, we propose Reflexion, an approach that endows an agent with dynamic memory and self-reflection capabilities to enhance its existing reasoning trace and task-specific action choice abilities."
+> 出处：2303.11366 Abstract
+
+> 原文:"In this study, Reflexion leverages ReAct (Yao et al.,, 2023), but any decision-making approach can be used in future implementations."
+> 出处：2303.11366 §2 Architecture
+
+> 原文:"The reflection loop aims to help the agent correct common cases of hallucination and inefficiency through trial and error. The model used for self-reflection is an LLM prompted with two-shot learning examples of domain-specific failed trajectory and ideal reflection pairs."
+> 出处：2303.11366 §2.3 Reflexion
+
+> 原文:"A heuristic $\operatorname{h}(s_{t},a_{t},\Omega,\varepsilon,\left[a_{o},o_{0},\ldots,a_{t-1},o_{t-1}\right])$ is defined to tell the agent when to reflect, where $t$ is the time step, $s_{t}$ is the current state, $\Omega$ and $\varepsilon$ are hyperparameters for the maximum number of repetitive action cycles and the maximum number of total actions allowed, and $\left[a_{o},o_{0}\ldots,a_{t-1},o_{t-1}\right])$ is the trajectory history."
+> 出处：2303.11366 §2.2 Heuristics
+
+### B. 评估信号：二值奖励（对应 ①「Evaluator 给出成功/失败信号」与 ①关键假设 3）
+
+> 原文:"Typically, designing or training an effective yet broadly-applicable reward model can be challenging. In this work, we limit the agent to a binary reward model. A binary reward model is a type of reward function that assigns a value of 0 or 1 to an action taken by the agent in the current state. 1 indicates a successful outcome and 0 indicates an unsuccessful outcome."
+> 出处：2303.11366 §2.4 Reward model
+
+### C. 论文自报效果（对应 ⑤「无需重训」「效果验证」的量级参照）
+
+> 原文:"To assess our approach, we evaluate the agent’s ability to complete decision-making tasks in AlfWorld environments and knowledge-intensive, search-based question-and-answer tasks in HotPotQA environments. We observe success rates of 97% and 51%, respectively, and provide a discussion on the emergent property of self-reflection."
+> 出处：2303.11366 Abstract
+
+> 原文:"We ran the agent without reflection for a single trial to establish a starting point, which achieved 63% accuracy (Fig. 2), which is in-line with the results from (Yao et al.,, 2023)"
+> 出处：2303.11366 §3.1 AlfWorld（Results）
+
+> 原文:"Given the ability to reflect, the agent used ReAct to solve 97% of the given environments in 12 trials, failing to solve only 4 out of 134 tasks."
+> 出处：2303.11366 §3.1 AlfWorld（Results）
+
+> 原文:"Reflexion enabled the agent to successfully answer 54% of the questions from the dataset, outperforming the base ReAct agent by 20% (Fig. 3) and its first trial attempt by 22%."
+> 出处：2303.11366 §3.2 HotPotQA（Results）
+
+> 原文:"While the base ReAct agent achieved 34% accuracy and the Reflexion agent achieved 32% accuracy in the first trials (Fig. 3), the Reflexion agent was able to outperform the base ReAct agent over the course of 7 trials."
+> 出处：2303.11366 §3.2 HotPotQA（Results）
+
+> 原文:"It is important to note that the comparison between Reflexion + ReAct and ReAct is not one of accuracy for state-of-the-art performance, but rather a demonstration of improved accuracy by self-improved learning rather than success by retry."
+> 出处：2303.11366 §3.1 AlfWorld（Results）
+
+### D. 边界与失败模式（论文自承局限；卡片正文未声明，此处仅备查）
+
+> 原文:"While Reflexion enabled the agent to discover new problem-solving techniques in AlfWorld decision-making tasks and HotPotQA knowledge-intensive tasks, we observed a shortcoming in its ability to improve on its baseline performance in a third benchmark, WebShop (Yao et al., rint, )."
+> 出处：2303.11366 §4.4 Limitations of Reflexion
+
+> 原文:"However, after only 4 trials, we terminated the baseline and Reflexion runs as the agent did not show improvement in accuracy (Fig. 6) and was not generating helpful, intuitive self-reflections."
+> 出处：2303.11366 §4.4 Limitations of Reflexion
+
+> 原文:"The agent achieved a $33\%\rightarrow 34\%$ accuracy improvement in the baseline run and a mere $33\%\rightarrow 35\%$ accuracy improvement in the Reflexion run"
+> 出处：2303.11366 §4.4 Limitations of Reflexion
+
+> 原文:"In fact, by simply retrying, the base ReAct agent was not able to successfully answer any additional questions."
+> 出处：2303.11366 §3.2 HotPotQA（Results）
+
+> 原文:"We demonstrated learning curves on the AlfWorld and HotPotQA benchmarks that significantly outperform base ReAct agents. In addition, we include an inconclusive attempt to improve performance on the WebShop benchmark and provide a discussion that highlights a few limitations of this approach."
+> 出处：2303.11366 §5 Conclusion

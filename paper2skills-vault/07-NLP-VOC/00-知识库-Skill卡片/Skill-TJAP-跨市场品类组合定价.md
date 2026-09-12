@@ -1,3 +1,12 @@
+---
+title: "Skill Card: TJAP-跨市场品类组合定价"
+module: 07-NLP-VOC
+paper_id: 2603.18114
+evidence_basis: paper-verbatim
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: TJAP-跨市场品类组合定价
 
 ---
@@ -551,3 +560,67 @@ if __name__ == "__main__":
 
 - **评估依据**：
   TJAP 的 regret 界 $\tilde{O}(d\sqrt{T/(1+H)} + s_0\sqrt{T})$ 从理论上证明了跨市场迁移的价值：当市场间异质性是稀疏的（$s_0 \ll d$）时，增加源市场数量 $H$ 可以显著加速目标市场的学习。论文中的合成实验表明，TJAP 一致优于单市场基线（CAP）和 naive pooling（POOL(H)），且 $H=5$ 时后悔可降低 40-60%。对于 Momcozy 这样已在美国建立成熟数据资产、正在向欧洲和新兴市场扩张的品牌，该技能的落地价值极高。
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"We study transfer learning for contextual joint assortment-pricing under a multinomial logit choice model with bandit feedback."
+> 出处：2603.18114 §Abstract
+
+> 原文:"We model heterogeneity through a structured utility shift, where markets share a common contextual utility structure but differ along a sparse set of latent preference coordinates."
+> 出处：2603.18114 §Abstract
+
+> 原文:"That is, discrepancies between the target market and each source market are supported on a common subset of at most s0 coordinates."
+> 出处：2603.18114 §2.3 Structured Cross-Market Heterogeneity (Utility Shift Model)
+
+> 原文:"The sparsity level s0 quantifies the degree of cross-market similarity."
+> 出处：2603.18114 §2.3 Structured Cross-Market Heterogeneity (Utility Shift Model)
+
+> 原文:"The requirement of a common support across source markets captures settings in which structural differences arise from a stable set of market-specific factors, rather than arbitrary idiosyncratic shifts."
+> 出处：2603.18114 §2.3 Structured Cross-Market Heterogeneity (Utility Shift Model)
+
+> 原文:"Source-market data are pooled to estimate shared preference components, thereby reducing estimation variance."
+> 出处：2603.18114 §1 Introduction
+
+> 原文:"The first term reflects statistical uncertainty and shrinks as pooled information accumulates across markets."
+> 出处：2603.18114 §3.2 Optimistic Decision Rule with Price-Uniform Confidence Bounds
+
+> 原文:"The second term accounts for residual transfer bias arising from sparse cross-market shifts."
+> 出处：2603.18114 §3.2 Optimistic Decision Rule with Price-Uniform Confidence Bounds
+
+> 原文:"The first term captures variance reduction from transfer, while the second term reflects an irreducible adaptation cost along heterogeneous coordinates."
+> 出处：2603.18114 §1 Introduction（Contributions）
+
+> 原文:"Under positive price sensitivity, the revenue-maximizing price for any product is finite and depends only on primitive problem constants."
+> 出处：2603.18114 §2.1
+
+> 原文:"This condition can be relaxed to allow covariate shift, as discussed in Section 3.4."
+> 出处：2603.18114 §2.3（Assumption 5 Homogeneous Covariates with Bounded Eigenvalues 的讨论）
+
+> 原文:"The pooled estimator POOL(H), which aggregates data across markets without debiasing, reduces variance but ignores cross-market shifts."
+> 出处：2603.18114 §5.3 Main findings
+
+> 原文:"POOL(H) is uniformly dominated by TJAP with the same H, and the performance gap widens as s0 increases."
+> 出处：2603.18114 §5.3 Main findings
+
+> 原文:"Across all configurations in Figure 2, cumulative regret under TJAP decreases systematically as the number of source markets H increases."
+> 出处：2603.18114 §5.3 Main findings
+
+> 原文:"The improvement is monotone in H, and the gap between H = 0 and H = 5 is substantial when preference shifts are sparse."
+> 出处：2603.18114 §5.3 Main findings
+
+> 原文:"When heterogeneity is localized (small s0 ), transfer yields substantial gains."
+> 出处：2603.18114 §4.4 Structural Implications of Transfer in Joint Assortment-Pricing
+
+> 原文:"In the extreme case s0 ≈ d, transfer offers little improvement over target-only learning."
+> 出处：2603.18114 §4.4 Structural Implications of Transfer in Joint Assortment-Pricing
+
+> 原文:"It improves learning only along directions where markets are behaviorally aligned and provides no benefit where structural mismatch persists."
+> 出处：2603.18114 §4.4 Structural Implications of Transfer in Joint Assortment-Pricing
+
+> 原文:"The lower bound confirms that this cost is unavoidable: no algorithm can eliminate the s0 -driven contribution without additional structural assumptions."
+> 出处：2603.18114 §4.4 Structural Implications of Transfer in Joint Assortment-Pricing
+
+> 原文:"Numerical experiments corroborate the theory, showing that TJAP outperforms both target-only learning and naive pooling while remaining robust to cross-market differences."
+> 出处：2603.18114 §Abstract

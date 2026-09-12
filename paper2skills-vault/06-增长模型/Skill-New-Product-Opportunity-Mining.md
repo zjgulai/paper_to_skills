@@ -1,3 +1,19 @@
+---
+title: Skill-New-Product-Opportunity-Mining
+module: 06-增长模型
+topic: 把创业成功预测框架 SSFF 迁移到电商新品机会挖掘（LLM 抽维度 + 随机森林 + Founder-Idea Fit）
+status: draft
+created: 2026-05-15
+updated: 2026-09-12
+owner: self
+source: ai
+paper_id: 2405.19456
+paper: An Automated Startup Evaluation Pipeline: Startup Success Forecasting Framework (SSFF)
+evidence_basis: paper-verbatim
+verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+related: Skill-Cold-Start-Product-Recommendation.md, Skill-Customer-Journey-Prototype.md
+---
+
 # Skill Card: New Product Opportunity Mining (新品机会挖掘模型)
 
 ---
@@ -674,6 +690,64 @@ if __name__ == '__main__':
 - ❌ 极度创新的全新品类（缺乏可比历史数据）
 - ❌ 季节性极强的短期爆款（时机维度占主导）
 - ❌ 数据积累不足的新业务线
+
+---
+
+## ⑥ 原文引用
+
+> 原文："The conventional Random Forest algorithm, celebrated for its effectiveness and explainability, often faces challenges with categorical variables due to its inherent design constraints. To overcome these limitations, we introduce an LLM-based "Fuzzy" Random Forest model."
+> 出处：2405.19456 §4.1.1 Model Design（PDF 第 4 页）
+
+> 原文："This process is guided by a Chain of Thought prompting technique, where the LLM is presented with a series of questions designed to elicit specific insights into various aspects of a startup’s potential for success."
+> 出处：2405.19456 §4.1.2 LLM-Based Categorical Data Extraction（PDF 第 5 页）
+
+> 原文："In our framework, startup and founder information is processed through an LLM to categorize data across 14 dimensions, including industry growth, market size, development pace, and product-market fit, among others."
+> 出处：2405.19456 §4.1.1 Model Design（PDF 第 4 页）——随机森林特征抽取用的是 **14** 维；本卡正文的「18 维度」见下一条
+
+> 原文："Initially, the data undergoes a preliminary review by a VC scout agent who synthesizes the information into 18 critical dimensions."
+> 出处：2405.19456 §7.1 Framework Design（PDF 第 13 页）——**18 维度**是 SSFF 框架层（VC scout agent 汇总）的口径，与 §4.1.1 随机森林的 14 维不是同一层
+
+> 原文："The application of this model to a dataset comprising 1400 startups—equally split between successful and unsuccessful cases—yielded promising results."
+> 出处：2405.19456 §4.1.1 Model Design（PDF 第 4 页）
+
+> 原文："In the experiments, it is shown that both the choice of the LLM model and the number of data affect the model’s performance. With 200 pieces of data trained with GPT3.5 used, the average accuracy is around 68%. One could see an improvement around 10% with 1400 pieces of data and gpt-4o model."
+> 出处：2405.19456 §4.1.3 Model Performance Evaluation（PDF 第 8 页）——本卡「GPT-4o + 1400 样本」这一组合的出处
+
+> 原文："| Accuracy | | | 0.77 | 279 |"
+> 出处：2405.19456 §4.1.3 表 3 Classification report（PDF 第 8 页）——论文写的是 **0.77**（比例），本卡正文写 **77%**；门禁按裸数字匹配，比例↔百分数不互认，故 `77%` 仍会被判无出处
+
+> 原文："These results indicate that the LLM-based "Fuzzy" Random Forest model is a highly effective tool for predicting startup success, demonstrating both high precision and recall."
+> 出处：2405.19456 §4.1.3 Model Performance Evaluation（PDF 第 8 页）
+
+> 原文："The segmentation results revealed a distinct correlation between the founders’ levels and their startups’ success rates. Founders at Level 5 (L5), characterized by their experience in building significant businesses or holding executive roles in notable technology companies, were markedly more likely to lead a startup to success. Specifically, L5 founders were found to be 3.79 times more likely to be successful compared to those at Level 1 (L1), who had minimal experience or were outside tech circles."
+> 出处：2405.19456 §3.3 Segmentation Result（PDF 第 3 页）
+
+> 原文："The Founder-Idea Fit Score quantitatively assesses the compatibility between a founder’s experience level and the success of their startup idea."
+> 出处：2405.19456 §4.2.1 Measuring Founder-Idea Fit（PDF 第 9 页）
+
+> 原文："We utilize the text-embedding-3-large model from OpenAI to transform textual data into space of 100 dimensions, capturing the semantic essence of each description."
+> 出处：2405.19456 §4.2.2 Preprocessing: Embedding & Cosine Similarity（PDF 第 10 页）
+
+> 原文："With embeddings for both startups and founders, we compute the cosine similarity between each founder’s embedding and their startup’s embedding. This metric serves as a proxy for the "fit" by measuring the semantic alignment between the founder’s background and the startup’s concept."
+> 出处：2405.19456 §4.2.2（PDF 第 10 页）
+
+> 原文："Our statistical analysis began with a calculation of the Pearson correlation coefficient between cosine similarity and the Founder-Idea Fit Score (FIFS), resulting in a coefficient of 0.173."
+> 出处：2405.19456 §4.2.3 Statistical Analysis and Further Model Considerations（PDF 第 10 页）——**负结果**：余弦相似度与 FIFS 相关性很弱（R²=0.030）
+
+> 原文："The Analysis Block dissects each startup across four critical domains to ensure a complete evaluation:"
+> 出处：2405.19456 §5.1 Analytical Domains（PDF 第 11 页）
+
+> 原文："Role-Play Simulation for Realistic Scenario Analysis: The framework simulates a venture capital conference room scenario, positioning virtual analysts to read, dissect, and present findings to a supervisory entity."
+> 出处：2405.19456 §5.2 Design and Implementation Techniques（PDF 第 11 页）
+
+> 原文："A comparative analysis reveals that the data depth, structured insights, and timeliness of information significantly improve as N increases from 3 to 10."
+> 出处：2405.19456 §6.4.4 Comparative Analysis and Findings（PDF 第 12 页）
+
+> 原文："On average, it significantly outperforms zero-shot GPT responses in terms of efficiency, thoroughness, depth of analysis, reliability, and timeliness."
+> 出处：2405.19456 §7.2 Observation of Results（PDF 第 13 页）
+
+> **口径提示（不改正文，仅记录）**：本卡 ②③⑤ 里的「节省无效投入比例区间」「ROI 提升区间」「年新品投入金额」与「节省金额区间」均为**业务假设代入**，论文没有对应数字；
+> 论文可核验的对应量只有上方 表 3 的准确率、1400 样本 / GPT-4o 的对比实验、L5 相对 L1 的 3.79 倍成功率，以及余弦相似度与 FIFS 的弱相关这一**负结果**。
 
 ---
 

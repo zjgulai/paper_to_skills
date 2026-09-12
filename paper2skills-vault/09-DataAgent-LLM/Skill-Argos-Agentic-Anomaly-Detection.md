@@ -10,6 +10,8 @@ created: 2026-04-26
 updated: 2026-04-26
 paper: arXiv:2501.14170
 source: ai
+paper_id: 2501.14170
+evidence_basis: paper-verbatim
 ---
 
 # Argos — Agentic时序异常检测
@@ -536,3 +538,106 @@ python anomaly_detector.py
 - 异常漏检导致库存断货或积压，单次损失¥5-10万
 - Argos提升F1 9.5%~28.3%，直接减少漏检损失
 - **年节省：人工 ¥3-5万 + 异常损失减少 ¥20-50万**
+
+---
+
+## ⑥ 原文引用（arXiv:2501.14170 逐字摘录）
+
+> 原文:"We introduce Argos, an agentic system for detecting time-series anomalies in cloud infrastructure by leveraging large language models (LLMs)."
+> 出处：2501.14170 §Abstract
+
+> 原文:"However, existing systems often struggle to simultaneously achieve explainability, reproducibility, and autonomy, which are three indispensable properties for production use."
+> 出处：2501.14170 §Abstract
+
+> 原文:"Argos proposes to use explainable and reproducible anomaly rules as intermediate representation and employs LLMs to autonomously generate such rules."
+> 出处：2501.14170 §Abstract
+
+> 原文:"The system will efficiently train error-free and accuracy-guaranteed anomaly rules through multiple collaborative agents and deploy the trained rules for low-cost online anomaly detection."
+> 出处：2501.14170 §Abstract
+
+> 原文:"Through evaluation results, we demonstrate that Argos outperforms state-of-the-art methods, increasing $F_{1}$ scores by up to $9.5\%$ and $28.3\%$ on public anomaly detection datasets and an internal dataset collected from Microsoft, respectively."
+> 出处：2501.14170 §Abstract
+
+> 原文:"Prior work on time-series anomaly detection can be broadly categorized into three directions, yet none of these methods simultaneously address explainability, reproducibility, and autonomy."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"Conventional deep learning-based methods [68, 51, 67, 63, 75, 38, 56, 49, 70, 59] often lacks explainability since they generate anomaly labels directly from input data."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"However, due to the inherent non-determinism of LLMs [57, 45], these methods suffer from a lack of reproducibility and often produce inconsistent results when the same data is input across multiple trials."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"However, current rule generation and threshold tuning heavily rely on manual efforts, thereby lacking autonomy."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"We evaluate Argos on two widely used public time-series anomaly detection datasets, KPI [33] and Yahoo [27], as well as an internal dataset collected from Microsoft."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"Compared to the best baselines, our proposed system improves the average $F_{1}$ score by $9.5\%$ and $4.8\%$ on the KPI [33] and Yahoo [27] datasets, respectively. It also achieves up to a significant $28.3\%$ $F_{1}$ score improvement on our internal dataset."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"Besides, Argos speeds up inference by $3.0\times$, $34.3\times$, and $1.5\times$ on the KPI, Yahoo, and Internal datasets, respectively."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"when using LLMs to generate anomaly detection rules 50 times for each metric in the KPI dataset, we observe an overall rate of 4.8% syntax errors in the code implementation."
+> 出处：2501.14170 §2.3 Opportunities and Challenges in Applying LLMs
+
+> 原文:"In addition, for the rules that are correct, the average $F_{1}$ score across all metrics is only 0.129, while the best deep learning-based method achieves a score of 0.819."
+> 出处：2501.14170 §2.3 Opportunities and Challenges in Applying LLMs
+
+> 原文:"Argos employs an agent-based pipeline with feedback loops to iteratively correct anomaly detection rules and improve accuracy."
+> 出处：2501.14170 §1 Introduction
+
+> 原文:"The pipeline consists of three agents: the Detection Agent, the Repair Agent, and the Review Agent."
+> 出处：2501.14170 §3.1 Overview
+
+> 原文:"In each iteration, the Detection Agent first proposes a set of detection rules based on the input data. The Repair Agent then checks the proposed rules for syntax errors and corrects any issues. Next, the Review Agent evaluates the accuracy of the proposed rules using validation data."
+> 出处：2501.14170 §3.1 Overview
+
+> 原文:"The Repair Agent corrects syntax errors in the generated anomaly detection rules, while the Review Agent verifies their accuracy on a validation set."
+> 出处：2501.14170 §3.3 Correctness and Accuracy Improvement via Feedback Loops
+
+> 原文:"the Repair Agent first checks for syntax errors by executing the rules on dummy data that mimics the format of the input data."
+> 出处：2501.14170 §3.3 Correctness and Accuracy Improvement via Feedback Loops
+
+> 原文:"If the accuracy of the current anomaly detection rules is worse than the previous iteration, Argos provides a comparison of the accuracy metrics and the code differences between the two versions to the Review Agent."
+> 出处：2501.14170 §3.3 Correctness and Accuracy Improvement via Feedback Loops
+
+> 原文:"Instead of directly using the LLM-generated rules, Argos proposes a model fusion approach that combines these rules with the well-established anomaly detectors deployed in production, ensuring an accuracy guarantee."
+> 出处：2501.14170 §3.4 Accuracy Guarantee via Model Fusion
+
+> 原文:"Argos separately trains two sets of anomaly detection rules: one from false negatives and the other from false positives outputted by the existing base detector."
+> 出处：2501.14170 §3.4 Accuracy Guarantee via Model Fusion
+
+> 原文:"This is because a set of anomaly detection rules only look at either false negative or false positive examples at a time during the training, which makes the anomaly detection an one-class classification task"
+> 出处：2501.14170 §3.4 Accuracy Guarantee via Model Fusion（Aggregator）
+
+> 原文:"Inspired by the beam search algorithm [58], Argos employs a top-$k$ selection strategy to identify the best rules and early terminates the inaccurate rules during training."
+> 出处：2501.14170 §3.5 Efficiency Enhancement
+
+> 原文:"the Detection Agent uses the same input to propose $n$ detection rules, which are passed to both the Repair Agent and the Review Agent. Once the Review Agent verifies that there is no accuracy regression in the generated $n$ rules, the Rule Selector selects the top-$k$ rules based on user-defined criteria."
+> 出处：2501.14170 §3.5 Efficiency Enhancement
+
+> 原文:"We observe that the correctness rate of the Detection Agent only setting is 95.2% in the KPI dataset, 93.5% in the Yahoo dataset, and 93.3% in the Internal dataset. With the help of the Repair Agent, all anomaly detection rules generated by the Training Engine have no syntax errors."
+> 出处：2501.14170 §5.2 Correctness and Accuracy Improvement
+
+> 原文:"the Review Agent helps improve the average test $F_{1}$ score of the anomaly detection rules by $3.8\times$ in the KPI dataset, $11.3\times$ in the Yahoo dataset, and $1.2\times$ in the Internal dataset, clearly demonstrating the effectiveness of feedback loops in the Training Engine."
+> 出处：2501.14170 §5.2 Correctness and Accuracy Improvement
+
+> 原文:"In the KPI and Yahoo datasets, Argos without the Aggregator shows accuracy regressions on 3 and 2 metrics, respectively, with up to $32\%$ accuracy drop."
+> 出处：2501.14170 §5.3 Accuracy Guarantee
+
+> 原文:"In contrast, Argos with the Aggregator has no accuracy regressions across any metrics in all three datasets."
+> 出处：2501.14170 §5.3 Accuracy Guarantee
+
+> 原文:"On the KPI dataset, the $F_{1}$ score for top-$k$ selection at iteration 8 is 0.736, outperforming 0.682 for no-selection at iteration 40."
+> 出处：2501.14170 §5.4 Efficiency Enhancement
+
+> 原文:"In the KPI dataset, Argos achieves an $F_{1}$ score of 0.897, which is $9.5\%$ higher than the best baseline, LSTMAD. In the Yahoo dataset, Argos achieves an $F_{1}$ score of 0.810, $4.8\%$ higher than the best baseline, TFAD. In the Internal dataset, Argos achieves an $F_{1}$ score of 0.936, $28.3\%$ higher than the best baseline, LSTMAD."
+> 出处：2501.14170 §5.5 End-to-End Results
+
+> 原文:"We use the Azure OpenAI service [40] to access the endpoint of LLM models [39], including GPT-3.5 [6], GPT-4-32k [1], and GPT-4o [22], for all LLM experiments in both baselines and Argos."
+> 出处：2501.14170 §5.1 Experiment Setup
+
+> 原文:"Argos comprises an agent-based pipeline that iteratively proposes, repairs, and reviews anomaly detection rules to ensure their quality. Additionally, Argos incorporates model fusion for accuracy guarantees and performs top-$k$ rule selection to enhance efficiency. Our evaluation on both public and internal datasets demonstrates that Argos outperforms state-of-the-art time-series anomaly detection methods, achieving up to a $28.3\%$ improvement in $F_{1}$ score."
+> 出处：2501.14170 §7 Conclusion

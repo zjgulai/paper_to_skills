@@ -1,3 +1,10 @@
+---
+paper_id: 2603.28677
+title: "Skill Card: iReFeed-需求优先级排序"
+module: 07-NLP-VOC
+evidence_basis: paper-verbatim
+---
+
 # Skill Card: iReFeed-需求优先级排序
 
 ---
@@ -503,3 +510,61 @@ class _LightweightNSGA2:
 
 - **评估依据**：
   论文实验表明，考虑需求互联性的iReFeed相比独立评估的ReFeed在优先级排序F1-score上提升35%。对于产品线复杂、季度迭代密集的母婴出海业务，iReFeed能有效避免"孤立评估导致的功能孤岛"和"依赖被忽视导致的路线图延期"两大痛点。该技能与现有Kano、TopicImpact、MAA技能组合后，可形成从用户声音到产品执行的全链路数据驱动决策能力。
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"The experiments on 94 requirements prioritization instances from four real-world software applications show that our enhancement outperforms ReFeed."
+> 出处：2603.28677 Abstract
+
+> 原文:"Our findings show that requirements interconnectedness improves user feedback driven requirements prioritization, helps uncover additional “requires” relations in candidate requirements, and also strengthens search-based release planning."
+> 出处：2603.28677 Abstract
+
+> 原文:"In a seminal paper, Kifetew et al. [13] introduced ReFeed, a user-feedback driven requirements prioritization method. ReFeed associates user-feedback to requirements, and then computes the requirements priorities based on the extracted properties of the associated feedback."
+> 出处：2603.28677 §1 Introduction
+
+> 原文:"In contrast, emailing a scanned document requires a network connection, but not the other way around [15]."
+> 出处：2603.28677 §2.2 Interrelated Requirements in Prioritization
+
+> 原文:"Different from ReFeed, the associations are established at a requirements cluster level in our work."
+> 出处：2603.28677 §3 iReFeed
+
+> 原文:"Therefore, our results suggest that integrating cluster’s internal coherence into ranking requirements further enhances prioritization qualities."
+> 出处：2603.28677 §4.2 Results and Analysis
+
+> 原文:"In contrast, tens or hundreds of thousands of feedback messages can be readily collected for a software application, creating a sizeable critical mass for applying topic modeling."
+> 出处：2603.28677 §3 iReFeed
+
+> 原文:"For example, we extracted a total of 62,074 user reviews for Zoom from Jan 2022 to March 2025, but the Zoom requirements were collected from Feb 2022 to March 2025."
+> 出处：2603.28677 §4.1 Datasets and Metrics
+
+> 原文:"Thus, among the four variants of iReFeed, we recommend LDA-C, though it is somewhat surprising that the pre-trained BERT model with extensive external data does not definitively outperform a locally operated LDA in user-feedback driven requirements prioritization."
+> 出处：2603.28677 §4.2 Results and Analysis
+
+> 原文:"iReFeed achieves a good and balanced performance when the number of prioritized requirements is near the ground-truth size k."
+> 出处：2603.28677 §4.2 Results and Analysis
+
+> 原文:"Second, and more importantly, regardless of the LLMs, iReFeed does help uncover additional “requires” pairs that the baseline prompting fails to identify."
+> 出处：2603.28677 §5 Uncovering “Requires” Pairs
+
+> 原文:"Surprisingly, compared to feeding ChatGPT with all the requirements once, focusing on the requirements within iReFeed’s topic cluster uncovered additional “requires” pairs. These pairs, in turn, helped improve a state-of-the-art SBSE solution to the NRP."
+> 出处：2603.28677 §1 Introduction
+
+> 原文:"Admittedly, the overall accuracies of Table 4 are low."
+> 出处：2603.28677 §5 Uncovering “Requires” Pairs
+
+> 原文:"To integrate iReFeed into NSGA-II, we introduce dependency value (Dvalue). We utilize the automatically identified requires pairs from ChatGPT 4.5 combined results in RQ2 to compute the D-value."
+> 出处：2603.28677 §6 Integrating iReFeed into SBSE
+
+> 原文:"We maximize D-value as an objective in iReFeed giving importance to the requirements with higher dependencies for selection."
+> 出处：2603.28677 §6 Integrating iReFeed into SBSE
+
+> 原文:"The greater share, according to Finkelstein et al. [8], suggests the better performance of iReFeed NSGA-II compared to baseline NSGA-II."
+> 出处：2603.28677 §6 Integrating iReFeed into SBSE
+
+> 原文:"Thus, we conclude positive findings of RQ3 with iReFeed’s superiority over the baseline SBSE solution."
+> 出处：2603.28677 §6 Integrating iReFeed into SBSE
+
+> 原文:"Our future work includes carrying out experimentation on more datasets, investigating the optimal amount of feedback data to use, testing advanced prompting methods like few-shot and chain-of-thought, and guiding metaheuristic or hyper-heuristic search proactively with the “requires” pairs."
+> 出处：2603.28677 §7 Conclusion

@@ -8,6 +8,9 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+paper_id: 2602.16873
+paper: "AdaptOrch: Task-Adaptive Multi-Agent Orchestration in the Era of LLM Performance Convergence"
+evidence_basis: paper-verbatim
 ---
 
 # Skill Card: 任务自适应拓扑 — AdaptOrch 动态编排与收敛定律
@@ -318,6 +321,82 @@ python3 adaptorch.py
 5. **完整 receipt**:论文给出从 DAG 定义 → Algorithm 1/2 → 阈值校准 → 评估的完整链条
 
 ---
+
+---
+
+## ⑥ 原文引用
+
+> 原文:"GPT-4o, Claude 3.5 Sonnet, Gemini 2.0, Llama 3.3 70B, DeepSeek-V3, and Qwen 2.5 72B now cluster within 2–5% of each other on standard benchmarks including MMLU, HumanEval, and MATH"
+> 出处：2602.16873 §1 Introduction
+>
+> 原文:"The central insight is straightforward: tasks decompose into dependency-annotated directed acyclic graphs (DAGs), and structural properties of these DAGs—parallelism width, critical path depth, inter-subtask coupling—turn out to predict the optimal orchestration topology with high accuracy."
+> 出处：2602.16873 §1 Introduction
+>
+> 原文:"demonstrating that topology-aware orchestration achieves 12–23% improvement over static single-topology baselines"
+> 出处：2602.16873 Abstract
+>
+> 原文:"When $\epsilon\to 0$ (perfect convergence) and $\omega(G_{T})>1$ (parallelizable tasks), $\text{Var}_{\tau}/\text{Var}_{M}\to\infty$."
+> 出处：2602.16873 §3.4 Performance Convergence Scaling Law, Corollary 1
+>
+> 原文:"Coupling strength $c(u,v)$ is estimated based on declared context requirements: $c(u,v)=\begin{cases}0.0&\text{if coupling = none (outputs fully independent)}\\ 0.3&\text{if coupling = weak (shared context helpful but not required)}\\ 0.7&\text{if coupling = strong (output of $u$ is direct input to $v$)}\\ 1.0&\text{if coupling = critical (semantic coherence required)}"
+> 出处：2602.16873 §4.2 Phase 2: DAG Construction, Eq. 11
+>
+> 原文:"Default thresholds: $\theta_{\omega}=0.5$ (at least half the subtasks parallelizable), $\theta_{\gamma}=0.6$ (high coupling threshold), $\theta_{\delta}=5$ (minimum subtasks for hierarchical)."
+> 出处：2602.16873 §4.3 Phase 3: Topology Routing, Algorithm 1
+>
+> 原文:"the exact $\omega$ via König’s theorem on the transitive closure requires $O(|V|^{2.5})$ matching and is used only for offline calibration."
+> 出处：2602.16873 §4.3 Phase 3: Topology Routing, Algorithm 1
+>
+> 原文:"Under the adaptive re-routing mechanism (Algorithm 2, line 8), the synthesis protocol terminates within at most $\lceil(1-\gamma_{0})/0.2\rceil\leq 5$ iterations."
+> 出处：2602.16873 §4.5 Phase 5: Adaptive Synthesis Protocol, Proposition 2
+>
+> 原文:"Empirically, convergence occurs in $\leq 2$ iterations for 94% of tasks (Section 5)."
+> 出处：2602.16873 §4.5 Phase 5: Adaptive Synthesis Protocol, Proposition 2
+>
+> 原文:"All models score within $\epsilon=0.04$ on MMLU and $\epsilon=0.06$ on HumanEval."
+> 出处：2602.16873 §5.1 Setup, Models
+>
+> 原文:"Table 1 provides explicit per-model scores validating the $\epsilon$-convergence assumption."
+> 出处：2602.16873 §5.1 Setup, Models
+>
+> 原文:"| Qwen 2.5 72B | 83.8 | 87.8 | 94.2 | 72.4 |"
+> 出处：2602.16873 §5.1 Setup, Table 1
+>
+> 原文:"$\epsilon$ | (max gap) | 0.024 | 0.034 | 0.024 | 0.043 |"
+> 出处：2602.16873 §5.1 Setup, Table 1
+>
+> 原文:"| Single Best | 42.8 | 1.0 | 12.3 | 46.2 | 1.0 | 4.1 | 68.3 | 1.0 | 6.8 |"
+> 出处：2602.16873 §5.2 Results, Table 2
+>
+> 原文:"| Static-Parallel | 47.3 | 1.4 | 52.1 | 44.1 | 1.3 | 18.7 | 72.8 | 1.2 | 28.4 |"
+> 出处：2602.16873 §5.2 Results, Table 2
+>
+> 原文:"| Static-Sequential | 45.6 | 2.8 | 48.9 | 50.3 | 2.4 | 16.4 | 69.1 | 2.1 | 26.1 |"
+> 出处：2602.16873 §5.2 Results, Table 2
+>
+> 原文:"| Self-MoA (matched) | 51.5 | 1.5 | 43.2 | 52.3 | 1.4 | 16.8 | 75.5 | 1.2 | 23.1 |"
+> 出处：2602.16873 §5.2 Results, Table 2
+>
+> 原文:"| AdaptOrch (ours) | 52.6 | 1.6 | 41.8 | 53.1 | 1.5 | 15.9 | 76.4 | 1.3 | 22.7 |"
+> 出处：2602.16873 §5.2 Results, Table 2
+>
+> 原文:"| vs Single Best | +9.8 | — | — | +6.9 | — | — | +8.1 | — | — |"
+> 出处：2602.16873 §5.2 Results, Table 2
+>
+> 原文:"| vs Best Static | +4.5 | — | — | +2.8 | — | — | +3.6 | — | — |"
+> 出处：2602.16873 §5.2 Results, Table 2
+>
+> 原文:"AdaptOrch consumes 41.8K tokens per SWE-bench instance, significantly less than MoA-3L (84.6K) and LLM-Blender (61.7K), because topology-aware routing avoids redundant model calls."
+> 出处：2602.16873 §5.2 Results, Token efficiency
+>
+> 原文:"The router sends 62% of instances to $\tau_{X}$ (hybrid), 24% to $\tau_{P}$ (parallel), and 14% to $\tau_{H}$ (hierarchical)."
+> 出处：2602.16873 §5.3 Topology Distribution Analysis
+>
+> 原文:"Here AdaptOrch prefers sequential (41%) and hierarchical (35%) topologies."
+> 出处：2602.16873 §5.3 Topology Distribution Analysis
+>
+> 原文:"94% of tasks converge within 2 iterations, consistent with Proposition 2."
+> 出处：2602.16873 Figure 11
 
 ## 参考论文
 

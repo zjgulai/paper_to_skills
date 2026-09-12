@@ -1,3 +1,11 @@
+---
+paper: "Customer Sentiment Analysis with Cuckoo Search and K-means Clustering"
+evidence_basis: paper-traceable
+module: 07-NLP-VOC
+created: 2026-05-15
+updated: 2026-09-12
+---
+
 # Skill Card: CSK Customer Sentiment Clustering
 # CSK客户情感聚类分析
 
@@ -206,6 +214,51 @@ CSK: 价格敏感型
 - 用户画像完整度：95%+
 - 运营策略精准度：+60%
 - 营销ROI提升：+80%
+
+---
+
+## ⑥ 原文引用
+
+**⚠️ 溯源异常（2026-09-12 补引文时实测；既有正文与数字一律未改，仅在此声明）**
+
+本卡「论文来源」声明为《Customer Sentiment Analysis with Cuckoo Search and K-means Clustering》(arXiv:2311.11250)。
+但底本 `papers/07-NLP-VOC/2311.11250/fulltext.md` 的实际内容是该 arXiv ID 真实对应的**另一篇**论文：
+Kumar, Roy, Dogra & Kim, *A Comprehensive Review on Sentiment Analysis: Tasks, Approaches and Applications*
+（已用 arXiv abs 页面 2311.11250 二次确认，标题、作者完全一致）。
+底本中 `Customer Sentiment` **零命中**、`abstain`/`Levy` **零命中** →
+**卡片声明的那篇论文在本仓库没有底本**，其「准确率 80%」「多领域验证（Hotel/Movie/Music/Book）」
+「inertia 7.25 → 5.43」等数字**一律无法核验，不作为已证实事实**。
+
+CSK 方法的真实出处是**该综述所引用的 Pandey, Rajpoot & Saraswat (2017)**,
+*Twitter sentiment analysis using hybrid cuckoo search method*, Information Processing & Management 53(4):764–779
+（期刊论文，arXiv 上无版本，本仓库无该文底本）。
+
+下列引文**只**取自实际有底本的这篇综述，且**只**为「CSK = Cuckoo Search + K-means」这一**方法命名与做法**背书，
+**不**为卡片的准确率 / 收益 / 效果数字背书。
+
+> 原文:"The author proposed (Pandey et al, 2017) a novel metaheuristic method based on Cuckoo Search and K-means (called CSK)."
+> 出处：2311.11250 §2.1.4 Others Techniques（综述转述 Pandey et al. 2017）
+
+> 原文:"It enlightens the clustering-based methods for analysing Twitter tweets to find the user’s viewpoints and the sentiment pertained while making such a tweet."
+> 出处：2311.11250 §2.1.4 Others Techniques
+
+> 原文:"The method proposed outlines to find the optimum cluster-heads from the Twitter dataset’s sentimental contents."
+> 出处：2311.11250 §2.1.4 Others Techniques
+
+> 原文:"The model tested its efficacy on various Twitter datasets and then compared it with the existing methods such as particle swarm optimization, differential evolution, cuckoo search, improved cuckoo search, etc."
+> 出处：2311.11250 §2.1.4 Others Techniques
+
+> 原文:"Sentiment analysis (SA) is an emerging field in text mining. It is the process of computationally identifying and categorizing opinions expressed in a piece of text over different social media platforms."
+> 出处：2311.11250 Abstract
+
+> 原文:"There are three levels of SA such as document level, sentence level, and aspect level."
+> 出处：2311.11250 §1 Introduction
+
+> 原文:"This survey paper defines sentiment and its recent research and development in different domains, including voice, images, videos, and text."
+> 出处：2311.11250 Abstract
+
+> 原文:"The challenges and opportunities of sentiment analysis are also discussed in the paper."
+> 出处：2311.11250 Abstract
 
 ---
 
