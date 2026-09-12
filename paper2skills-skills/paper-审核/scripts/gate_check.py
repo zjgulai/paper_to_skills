@@ -83,9 +83,21 @@ METRIC_WORDS = (
 
 # 低价值数字：结构/版本/年份/编号 —— 不要求出处
 NOISE_PATTERNS = (
-    r"^v?\d+\.\d+(\.\d+)?$",          # 版本号 1.2.3
+    # ⚠️ 这里原本是 r"^v?\d+\.\d+(\.\d+)?$"，本意是「版本号/章节号」，
+    # 但它把**所有小数**一律豁免 —— 包括 `92.2%`、`0.55`、`3.14`。
+    # 实测表现为：`误差下降 92.2%` 这种最典型的高价值断言直接不进 G2 检查。
+    # 现在只认显式版本号（必须带 v），章节号改由「结构前缀」规则处理（见 is_noise）。
+    r"^v\d+(\.\d+)+$",                # 版本号 v1.2.3
     r"^(19|20)\d{2}$",                # 年份
-    r"^\d{1,2}$",                     # 个位数（章节号、序号）
+    # arXiv ID / DOI 是**标识符**，不是事实断言。不加这条会把每条
+    # `> 出处：2606.26690 §4.2` 都报成「无出处的度量数字」（实测 4 条假红灯）。
+    r"^\d{4}\.\d{4,5}(v\d+)?$",         # arXiv: 2606.26690
+    r"^10\.\d{4,9}?$",               # DOI 前缀 10.1287
+    # ⚠️ 这里原本还有 r"^\d{1,2}$"（当时的想法是「章节号/序号」）。
+    # 但它会把**所有 1–2 位数字**一律豁免 —— 包括 `转化率提升 15%`、`留存 30%`，
+    # 而百分比恰恰是最高价值、最需要出处的断言类型。实测这等于给
+    # 「两位数以内的数字可以随便写」开了后门，故删除。
+    # 章节号/序号由 `^v?\d+\.\d+` （如 4.2）与「无单位单字符」两条规则覆盖。
 )
 
 NUM_TOKEN_RE = re.compile(
@@ -99,7 +111,7 @@ NUM_TOKEN_RE = re.compile(
 CODE_FENCE_RE = re.compile(r"^```.*?^```", re.M | re.S)
 INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
-QUOTE_RE = re.compile(r"^\s*>\s*[「『\"“](.+?)[」』\"”]\s*$", re.M)
+QUOTE_RE = re.compile(r"^>\s*(?:原文\s*[:：]\s*)?[\"“「『](.+?)[\"”」』]\s*$", re.M | re.S)  # 与 quote_check.py 保持一致
 
 # ---------------------------------------------------------------------------
 # G3：空话黑名单（业务场景段出现这些且无具体动作 → 判空泛）
@@ -174,21 +186,51 @@ def parse_frontmatter(text: str) -> dict:
     return out
 
 
-def collect_evidence(card: Path, text: str) -> tuple[set[str], list[str]]:
+def _extract_quotes(text: str) -> list[str]:
+    """抽取卡片中的引用块文本。
+
+    ⚠️ 必须与 `quote_check.py` 用**同一个抽取器**。历史上这里另有一套正则
+    （只认紧跟 `>` 的引号），而 v2 规范写的是 `> 原文："..."`，两者不匹配，
+    导致「引文本身的判真」与「引文能否充当出处」两个环节看到的引用集合不同 ——
+    合格引文被当成不存在，卡片被判「无出处」假红灯。
+    现在统一：优先调用 quote_check 的抽取器，取不到才退回本地正则。
+    """
+    qc = _load_quote_check()
+    if qc is not None:
+        try:
+            return [q["quote"] for q in qc.extract_quotes(text)]
+        except Exception:
+            pass
+    return [m.group(1) for m in QUOTE_RE.finditer(text)]
+
+
+def collect_evidence(card: Path, text: str,
+                     trusted_quotes: set[str] | None = None) -> tuple[set[str], list[str]]:
     """收集证据链：卡片内引用块 + 同目录 evidence.md 的数字与出处。
 
-    返回 (证据中出现的数字字符串集合, 出处说明列表)
+    `trusted_quotes` 给出**允许充当出处**的引用文本集合（由 G2b 逐字核验产出）。
+    传 None 表示不做甄别（离线调用或核验器不可用）；
+    传集合时，**不在集合内的引用一律不计入出处** —— 这是防止
+    「伪造引文洗白数字」的关键闸门。
     """
     nums: set[str] = set()
     sources: list[str] = []
 
-    for m in QUOTE_RE.finditer(text):
-        src = m.group(1)
+    for src in _extract_quotes(text):
+        if trusted_quotes is not None and src not in trusted_quotes:
+            # 未通过逐字核验的引用不计入出处（G2b 已单独报警）
+            continue
         sources.append(f"卡片引用块: {src[:80]}")
         for n in re.findall(r"\d+(?:\.\d+)?", src):
             nums.add(n)
 
     # 同目录 / 同名 evidence.md
+    #
+    # ⚠️ 这里曾经是一个洗白后门：evidence.md 里的数字**无条件**全收，
+    # 于是「在 evidence.md 里裸写一句 `ROI 提升 42.7%`」就能让卡片正文的
+    # 无出处数字过闸。现在只认两种：
+    #   ① 位于**已逐字核验**的引用块内；
+    #   ② 位于带显式出处指针的行（含 `出处` 或 `§`），用于引用表格/图号。
     for cand in (
         card.with_suffix(".evidence.md"),
         card.parent / "evidence.md",
@@ -197,12 +239,34 @@ def collect_evidence(card: Path, text: str) -> tuple[set[str], list[str]]:
         if cand.is_file():
             ev = cand.read_text(encoding="utf-8", errors="replace")
             sources.append(f"evidence.md: {cand.relative_to(REPO_ROOT)}")
-            for n in re.findall(r"\d+(?:\.\d+)?", ev):
-                nums.add(n)
+            for src in _extract_quotes(ev):
+                if trusted_quotes is not None and src not in trusted_quotes:
+                    continue
+                for n in re.findall(r"\d+(?:\.\d+)?", src):
+                    nums.add(n)
+            for line in ev.splitlines():
+                if "出处" in line or "§" in line:
+                    for n in re.findall(r"\d+(?:\.\d+)?", line):
+                        nums.add(n)
     return nums, sources
 
 
-def is_noise(num: str, unit: str) -> bool:
+# 结构前缀：紧邻数字左侧出现这些标记时，该数字是**指代**（章节/图表/公式号），
+# 不是事实断言。用「前缀」而不是「数字形态」来判定，是因为 `4.2` 既可能是
+# 「§4.2」也可能是「误差 4.2%」——只看数字本身无法区分，必须看上下文。
+STRUCTURAL_PREFIX_RE = re.compile(
+    r"(§|第|节|章|图|表|式|注|Section|Sec\.|Figure|Fig\.|Table|Eq\.?|Equation|Appendix)\s*$",
+    re.IGNORECASE,
+)
+
+
+def is_noise(num: str, unit: str, prefix: str = "") -> bool:
+    """判断数字是否为「结构性编号」而非事实断言。
+
+    `prefix` 是数字左侧若干字符，用于识别 §4.2 / 图 3 / 式 (7) 这类指代。
+    """
+    if prefix and STRUCTURAL_PREFIX_RE.search(prefix):
+        return True
     for pat in NOISE_PATTERNS:
         if re.match(pat, num):
             return True
@@ -270,17 +334,60 @@ def gate_g1(card: Path, text: str, k1_index: dict) -> GateResult:
 # ---------------------------------------------------------------------------
 # G2
 # ---------------------------------------------------------------------------
+# 证据语法行：`> 原文："..."` 与 `> 出处：...` 是**证据本身**，不是待取证的断言。
+# 不剥离它们会有两个后果：①出处的 arXiv ID 被当成度量数字（假红灯）；
+# ②引文里的数字被重复算成「正文断言」。
+# 这不构成绕过：伪造的引文会在 G2b 被逐字核验判 FABRICATED（见 quote_check.py）。
+EVIDENCE_LINE_RE = re.compile(r"^\s*>\s*(原文|出处)\s*[:：].*$", re.M)
+
+
+def strip_evidence(text: str) -> str:
+    return EVIDENCE_LINE_RE.sub("\n", text)
+
+
 def gate_g2(card: Path, text: str) -> GateResult:
     rel = rel_to_repo(card)
     g = GateResult("G2", rel, True)
-    prose = strip_code(text)
-    ev_nums, ev_sources = collect_evidence(card, text)
+    # 先剥代码（代码里的数字不是事实断言），再剥证据语法行（引文是证据不是断言）
+    prose = strip_evidence(strip_code(text))
     fm = parse_frontmatter(text)
+
+    # --- G2b 先跑：逐字核验引用块 ---------------------------------------
+    # ⚠️ 顺序很关键：必须**先**判定哪些引用是真的，**再**决定它们能否充当出处。
+    # 否则伪造一段带数字的引文就能让任意数字过闸（见 quote_check.py 文档）。
+    qc = _load_quote_check()
+    qrep: dict = {}
+    if qc is not None:
+        try:
+            qrep = qc.check_card(card)
+        except Exception as exc:  # 核验器自身出错不能静默放行
+            g.add("RED", "G2-QUOTE-CHECK-ERROR", f"引文核验器异常: {exc}")
+
+    fabricated = [q for q in qrep.get("quotes", []) if q.get("verdict") == "FABRICATED"]
+    fuzzy = [q for q in qrep.get("quotes", []) if q.get("verdict") == "FUZZY"]
+    unverifiable = [q for q in qrep.get("quotes", []) if q.get("verdict") == "UNVERIFIABLE"]
+    # 只有「逐字命中」与「无法核验」（历史卡无全文存档）两类才算出处；
+    # 近似与伪造一律不算 —— 否则等于承认编造的引文可以当证据。
+    if qc is None:
+        # ⚠️ 核验器不可用时必须**退回不甄别**（None），不能退化成空集：
+        # 空集 = 「一条引用都不可信」→ 会把全库证据链清空，
+        # 表现为「忽然所有卡都红灯」，掩盖真实原因（核验器坏了 vs 卡片坏了）。
+        trusted_quotes = None
+        g.add("YELLOW", "G2-QUOTE-CHECK-UNAVAILABLE",
+              "引文逐字核验器未加载，本轮未核验引文真伪 —— 结论不完整")
+    else:
+        trusted_quotes = {
+            q["quote"] for q in qrep.get("quotes", [])
+            if q.get("verdict") in ("VERBATIM", "UNVERIFIABLE")
+        }
+
+    ev_nums, ev_sources = collect_evidence(card, text, trusted_quotes=trusted_quotes)
 
     claimed: list[tuple[str, str]] = []
     for m in NUM_TOKEN_RE.finditer(prose):
         num, unit = m.group(1), (m.group(2) or "")
-        if is_noise(num, unit):
+        prefix = prose[max(0, m.start() - 12):m.start()]
+        if is_noise(num, unit, prefix):
             continue
         ctx = prose[max(0, m.start() - 30): m.end() + 30].replace("\n", " ")
         if is_metric(ctx, num, unit):
@@ -297,7 +404,8 @@ def gate_g2(card: Path, text: str) -> GateResult:
     # 一般数字（非度量）无出处 → 黄灯债务
     for m in NUM_TOKEN_RE.finditer(prose):
         num, unit = m.group(1), (m.group(2) or "")
-        if is_noise(num, unit):
+        prefix = prose[max(0, m.start() - 12):m.start()]
+        if is_noise(num, unit, prefix):
             continue
         ctx = prose[max(0, m.start() - 30): m.end() + 30].replace("\n", " ")
         if not is_metric(ctx, num, unit) and num not in ev_nums:
@@ -316,7 +424,39 @@ def gate_g2(card: Path, text: str) -> GateResult:
         "evidence_sources": len(ev_sources),
         "has_paper_field": bool(fm.get("paper") or fm.get("paper_id")),
         "traceability_pct": round(len(green) / len(claimed) * 100, 1) if claimed else None,
+        # --- G2b 引文逐字核验 ---
+        "quotes_total": len(qrep.get("quotes", [])),
+        "quotes_verbatim": qrep.get("n_verbatim"),
+        "quotes_fuzzy": qrep.get("n_fuzzy"),
+        "quotes_fabricated": qrep.get("n_fabricated"),
+        "quotes_spliced": qrep.get("n_spliced"),
+        "quotes_unverifiable": len(unverifiable),
+        "quote_verdict": qrep.get("verdict"),
+        "fulltext_archived": bool(qrep.get("fulltext")),
     }
+
+    # --- G2b 报警 -------------------------------------------------------
+    for q in fabricated[:10]:
+        tag = "（拼接：论文里不存在这句话，碎片分别来自不同段落）" if q.get("spliced") else ""
+        g.add("RED", "G2-QUOTE-FABRICATED",
+              f"⚠️ 引文在论文全文中找不到{tag}",
+              evidence=f"连续度={q.get('longest_run_ratio')} "
+                       f"n-gram召回={q.get('ngram_recall')}｜{q['quote'][:100]}")
+    if len(fabricated) > 10:
+        g.add("RED", "G2-QUOTE-TRUNCATED",
+              f"另有 {len(fabricated) - 10} 条引文无法在原文中找到（已截断展示）")
+    for q in fuzzy[:10]:
+        g.add("YELLOW", "G2-QUOTE-FUZZY",
+              "引文与原文仅有部分连续匹配，需人工复核是否为改写",
+              evidence=f"连续度={q.get('longest_run_ratio')}｜{q['quote'][:100]}")
+    if unverifiable:
+        g.add("YELLOW", "G2-QUOTE-UNVERIFIED",
+              f"{len(unverifiable)} 条引文无法核验（未找到该论文的全文存档）—— "
+              f"「无全文」不等于「引文为真」",
+              evidence=f"paper_id={fm.get('paper_id', '(缺)')}")
+    if qrep.get("verdict") == "VERBATIM" and qrep.get("n_quotes"):
+        g.add("GREEN", "G2-QUOTE-VERBATIM",
+              f"{qrep['n_quotes']} 条引文全部逐字命中论文全文")
 
     if not ev_sources:
         g.add("RED", "G2-NO-EVIDENCE-CHAIN",
@@ -332,8 +472,10 @@ def gate_g2(card: Path, text: str) -> GateResult:
     if green:
         g.add("GREEN", "G2-SOURCED", f"{len(green)} 个高价值断言有出处")
 
-    # 只有「高价值断言全部有出处」才算 G2 绿
-    g.passed = len(red) == 0
+    # 只有「高价值断言全部有出处」**且**「无伪造引文」才算 G2 绿。
+    # 必须按 findings 统一判定：早期版本写死 `len(red) == 0`，
+    # 会在 G2b 追加红灯后仍报绿（门禁 bug，已修）。
+    g.passed = not any(f.level == "RED" for f in g.findings)
     return g
 
 
@@ -393,6 +535,33 @@ def load_k1(path: Path | None) -> dict:
         return {}
     data = json.loads(path.read_text(encoding="utf-8"))
     return {r["target"]: r for r in data.get("results", [])}
+
+
+_QUOTE_CHECK_CACHE: list = []
+
+
+def _load_quote_check():
+    """加载同目录的 quote_check.py（G2b 逐字核验器）。
+
+    用 importlib 按文件路径加载，而不是 `import quote_check`：
+    脚本要能在任意 cwd 下被调用（CI、子代理、绝对路径直调），
+    依赖 sys.path 会出现「本地能跑、别处 ImportError」。
+    """
+    if _QUOTE_CHECK_CACHE:
+        return _QUOTE_CHECK_CACHE[0]
+    mod = None
+    try:
+        import importlib.util
+        p = Path(__file__).resolve().with_name("quote_check.py")
+        if p.is_file():
+            spec = importlib.util.spec_from_file_location("_p2s_quote_check", p)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+    except Exception:
+        mod = None
+    _QUOTE_CHECK_CACHE.append(mod)
+    return mod
 
 
 def summarise(gates: list[GateResult], name: str) -> dict:
