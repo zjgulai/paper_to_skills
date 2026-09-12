@@ -6,6 +6,7 @@ paper2skills 同步脚本
 """
 
 import os
+import sys
 import shutil
 import argparse
 import json
@@ -248,12 +249,87 @@ def show_status(skill_name):
             print(f"   错误: {info['error']}")
 
 
+# ---------------------------------------------------------------------------
+# 门禁前置：同步前必须过 K2（G1/G2/G3）
+# ---------------------------------------------------------------------------
+GATE_SCRIPT = SKILLS_DIR / "paper-审核" / "scripts" / "gate_check.py"
+K1_JSON = BASE_DIR / "paper2skills-research" / "data" / "verification" / "k1_l5.json"
+
+
+def find_card(skill_name):
+    """按卡片名在 vault 里定位 Skill 卡片文件。"""
+    hits = [p for p in VAULT_DIR.rglob(f"{skill_name}.md") if p.is_file()]
+    hits += [p for p in VAULT_DIR.rglob(f"Skill-{skill_name}.md") if p.is_file()]
+    return hits[0] if hits else None
+
+
+def run_gates(card_path, mode="enforce"):
+    """对一张卡片跑 K2 三合一门禁。
+
+    返回 (ok, detail)。mode="off" 时直接放行。
+
+    ⚠️ 为什么默认 enforce 而不是 warn：门禁如果只是「打印一条警告」，
+    它就必然被忽略 —— 本轮实测发现 G2 的 7 个漏洞里，有 3 个是
+    「门禁自己放水」，而放水的动机正是「卡太严会挡住正常流程」。
+    所以默认拦下，把绕过做成**显式且留痕**的动作，而不是顺手忽略一条黄字。
+    """
+    if mode == "off":
+        return True, "门禁已关闭（--gate off）"
+    if not GATE_SCRIPT.is_file():
+        return (mode != "enforce"), f"找不到门禁脚本 {GATE_SCRIPT}"
+    if not card_path or not Path(card_path).is_file():
+        return (mode != "enforce"), f"找不到卡片文件 {card_path}"
+
+    import subprocess
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        cmd = [sys.executable, str(GATE_SCRIPT), "--card", str(card_path),
+               "--quiet", "--outdir", td]
+        if K1_JSON.is_file():
+            cmd += ["--k1", str(K1_JSON)]
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        detail = {}
+        for g in ("g1", "g2", "g3"):
+            f = Path(td) / f"gate_{g}_{Path(card_path).stem}.json"
+            if not f.is_file():
+                continue
+            data = json.loads(f.read_text(encoding="utf-8"))
+            res = data["results"][0]
+            reds = [x for x in res["findings"] if x["level"] == "RED"]
+            detail[g.upper()] = {"passed": res["passed"],
+                                 "reds": [f"[{x['code']}] {x['message']}" for x in reds]}
+        ok = proc.returncode == 0
+        return ok, detail
+
+
+def print_gate_report(detail):
+    for g, info in sorted(detail.items()):
+        flag = "✅" if info["passed"] else "❌"
+        print(f"  {flag} {g}: {'通过' if info['passed'] else f'红灯 {len(info["reds"])} 条'}")
+        for r in info["reds"][:5]:
+            print(f"       {r}")
+        if len(info["reds"]) > 5:
+            print(f"       …另有 {len(info['reds']) - 5} 条")
+
+
+def record_gate_override(skill_name, reason):
+    """把「绕过门禁」这件事写进 sync_status.json —— 绕过可以，但必须留痕。"""
+    status = load_status()
+    entry = status.setdefault(skill_name, {})
+    entry["_gate_override"] = {"reason": reason, "at": datetime.now().isoformat()}
+    save_status(status)
+
+
 def main():
     parser = argparse.ArgumentParser(description="paper2skills 同步脚本")
     parser.add_argument("--skill", help="技能名称")
     parser.add_argument("--domain", help="领域名称（可选，自动检测）")
     parser.add_argument("--target", default="vault,github", help="目标：vault,github,feishu,all")
     parser.add_argument("--status", action="store_true", help="查看同步状态")
+    parser.add_argument("--gate", choices=["enforce", "warn", "off"], default="enforce",
+                        help="同步前门禁强度：enforce 红灯即拒绝（默认）/ warn 只警告 / off 不跑")
+    parser.add_argument("--force-gates", metavar="REASON", default=None,
+                        help="明知门禁红灯仍要同步时，必须给出理由；理由会写入 sync_status.json 留痕")
 
     args = parser.parse_args()
 
@@ -275,6 +351,30 @@ def main():
         return 1
 
     targets = args.target.split(",") if args.target else ["vault", "github"]
+
+    # ---- 门禁前置 ----
+    if args.gate != "off":
+        card = find_card(args.skill)
+        print(f"门禁检查（{args.gate}）: {card.name if card else args.skill}")
+        ok, detail = run_gates(card, args.gate)
+        if isinstance(detail, dict):
+            print_gate_report(detail)
+        else:
+            print(f"  ⚠️  {detail}")
+        # ⚠️ warn 模式必须**真的不拦**。早期版本写成 `if not ok:` 就 return 2，
+        # 于是 warn 与 enforce 行为完全相同 —— 用户以为自己在「只看警告」，
+        # 实际每次都被拦，最后会去用 --gate off 把门禁整个关掉，比不加这个功能更糟。
+        if not ok and args.gate == "enforce":
+            if args.force_gates:
+                print(f"\n⚠️  门禁未通过，但收到 --force-gates，继续同步。")
+                print(f"   理由（已留痕）: {args.force_gates}")
+                record_gate_override(args.skill, args.force_gates)
+            else:
+                print("\n❌ 门禁未通过，拒绝同步。")
+                print("   修法：按上面红灯逐条修卡片；或先在卡片内补证据链。")
+                print("   确实必须同步时用：--force-gates \"<理由>\"  （理由会写入 sync_status.json）")
+                print("   只想看警告不拦：--gate warn")
+                return 2
 
     print(f"同步 {args.skill} 到 {targets}...")
 

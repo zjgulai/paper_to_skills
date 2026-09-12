@@ -124,12 +124,15 @@ source: human+ai
 - [ ] **T2-2 升级 `paper-萃取/SKILL.md`**（路径已修，Step 5 改为调用脚本待做）
 - [ ] **T2-4 新建 `paper-萃取/scripts/extract_code_blocks.py`**
   - 现在 K1 已能直接验证卡片内代码块，此脚本降级为「落盘到 `paper2skills-code/`」的可选步骤
-- [ ] **T2-6 `sync.py` 加门禁前置**
-- [ ] **T2-7 新建 `paper-维护` skill（仓库体检）**
-
-- [ ] **T2-6 `paper-同步/scripts/sync.py` 加门禁前置**
-  - 同步前校验三份 `gate_*.json` 全绿，否则拒绝
-  - 验收：对一张未过门禁的卡执行同步 → 被拒绝并给出原因
+- [x] **T2-6 `paper-同步/scripts/sync.py` 加门禁前置** ✅ 已完成（并删除了早期重复列出的同名条目）
+  - 同步前现场跑 K2 三合一门禁（G1/G2/G3），任一红灯即**拒绝同步**（退出码 2）
+  - 三档强度 `--gate enforce|warn|off`，默认 enforce
+  - 验收 ✅：对存量卡 `Skill-ROAS-Budget-Optimization` 执行同步 → 被拒绝并逐条列出
+    G2 红灯 4 条 + G3 红灯 1 条；4 张新卡 → G1/G2/G3 全绿放行
+  - 设计要点：绕过必须**显式且留痕** —— `--force-gates "<理由>"` 才能放行，
+    理由与时间写入 `sync_status.json` 的 `_gate_override`；不做「打印一条黄字就放过」那种门禁
+  - 修了一个自己引入的 bug：`--gate warn` 最初与 enforce 行为完全相同（都 return 2），
+    会让用户以为在「只看警告」，最后去用 `--gate off` 把门禁整个关掉 —— 比不加更糟
 
 - [ ] **T2-7 新建 `paper-维护` skill（仓库体检）**
   - 检查：重复卡片、frontmatter 缺失、路径失效（`/Users/pray` 类）、registry 与卡片不一致、ledger 过期
