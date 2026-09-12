@@ -29,6 +29,7 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 │   ├── data/                # 候选池 JSON/CSV、领域 bundle、体检与去重报告
 │   └── reports/             # 方案、推荐清单、TODO
 ├── paper2skills-vault/      # Knowledge base (Obsidian-compatible)
+│   ├── 00-电商Agent/          # Live-catalog conversational rec, agentic catalog enrichment
 │   ├── 01-因果推断/          # Causal inference skills
 │   ├── 02-A_B实验/           # A/B testing skills
 │   ├── 03-时间序列/          # Time series skills
@@ -59,8 +60,10 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
     ├── mas/
     └── llm_agent_engineering/
 
-  说明:11-AI人文 / 12-ML基础 / 13-广告分析 / 14-用户分析 / 15-营销投放分析 五个新业务领域
+  说明:00-电商Agent / 11-AI人文 / 12-ML基础 / 13-广告分析 / 14-用户分析 / 15-营销投放分析 六个新业务领域
   目前仅有 vault Skill 卡片,code/ 侧尚未落地子模块,需要时按 Python 包命名规范(英文 snake_case)新建。
+  ⚠️ registry 的 `outputs.code_dir` 字段(如 `paper2skills-code/ecommerce_agent/<algo>`)是**规划值**,
+  3A/3B/3C 共 11 张卡均**未**落地该目录 —— 代码模板实际内嵌在卡片的「③ 代码模板」段,由 K1 门禁验证。
 ```
 
 ## NLP-VOC 子项目迁出说明
@@ -110,11 +113,16 @@ LLM 评审认为"很好"的生成代码,**执行率仅 17.94%**;加上执行闭�
 |------|------|------|
 | L1 | `ast.parse` | 语法 |
 | L2 | `py_compile` | 编译 |
-| L3 | import 探针 | **缺第三方依赖注入 stub,归因环境;仓库内不存在的本地模块判 ORPHAN_DEP(卡片缺陷)** |
+| L3 | import 探针 | **缺第三方依赖注入 stub,归因环境;仓库内确实不存在的本地模块判 ORPHAN_DEP(卡片缺陷);只存在于已迁出镜像 `nlp_voc/` 的判 MIGRATED_DEP(非缺陷)** |
 | L4 | 作为脚本执行 | 超时保护 + 独立进程组 SIGKILL |
 | L5 | `pytest` | 断言是否真的成立 |
 
-判定:`PASS` / `ENV_BLOCKED`(缺依赖,计入未验证分母) / `ORPHAN_DEP`(卡片引用了不存在的模块) / `FAIL`。
+判定:`PASS` / `ENV_BLOCKED`(缺依赖,计入未验证分母) / `ORPHAN_DEP`(模块在仓库内确实不存在 → 卡片缺陷) /
+`MIGRATED_DEP`(模块只在 `paper2skills-code/nlp_voc/` 镜像里 → **非卡片缺陷**,计入未验证分母但不计入失败) / `FAIL`。
+
+> 判 `ORPHAN_DEP` 之前**必须 `ls` 一次确认模块真的不存在**。2026-09-12 实测:
+> 9 张卡曾被判 ORPHAN 并写进「必须修」清单,`ls` 后全部推翻 —— 它们引用的模块都在 nlp_voc 镜像里。
+> `verify_skill_code.py --selftest` 用四个用例锁定 `PASS/ORPHAN/MIGRATED` 三类互斥可区分。
 
 ```bash
 # 全量(卡片级:自动把卡片内所有 python 块按文档顺序拼成一个模块)
@@ -334,11 +342,33 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 | 代码围栏**未闭合** | 2 张 | `Skill-Session-Based-Recommendation-SR-GNN`、`Skill-Knowledge-Graph-for-Skills-Management` | 在代码真实结束处补闭栏;此前 ④技能关联 等正文被当作 Python |
 | 真代码笔误 | 1 处 | `self._ Aspects = None`(标识符中间多空格) | 改 `self._aspects` |
 
-**仍待修(9 张)**:卡片 `import` 了仓库内**根本不存在**的本地模块,判 `ORPHAN_DEP`:
+**~~仍待修(9 张)~~ —— 已于 2026-09-12 撤销,这 9 张不是卡片缺陷。**
+
+原判定:9 张卡 `import` 了「仓库内**根本不存在**」的本地模块,判 `ORPHAN_DEP`,列入必须修清单。
+**逐个人工 `ls` 核对后全部推翻** —— 这 9 个模块**都真实存在于仓库**:
 `autotag_self_evolving`、`review_quality_scoring`、`nps_driver_analysis`、
 `behavioral_intent_tree_parsing`、`crosslingual_semantic_alignment`、
 `crosslingual_sentiment_transfer`、`dialogue_to_action_graph`、
-`product_attribute_graph_parsing`、`voc_semantic_blueprint`。
+`product_attribute_graph_parsing`、`voc_semantic_blueprint`
+全部位于 `paper2skills-code/nlp_voc/<mod>/`(`07-NLP-VOC` 迁出后保留的代码模板镜像)。
+
+**根因是门禁自己的一条 `continue`**:`repo_local_module_index()` 里
+`if "nlp_voc" in p.parts: continue` —— 索引阶段就把镜像排除掉,于是分类器
+只能把它归成 ORPHAN。判定文案写「模块不存在」,**而这个描述是假的**。
+
+**为什么这个误判有代价**:`ORPHAN_DEP` 与「镜像不可在此运行」的**补救动作相反** ——
+前者要改卡片,后者要改环境(或接受它不可验证)。混为一谈会把 9 张没有缺陷的卡
+送进「必须修卡片」队列,而真正该做的是承认这批卡在本机无法验证。
+
+**修法**:新增第四类判定 `MIGRATED_DEP`(🟠)。模块存在于 `paper2skills-code/nlp_voc/`
+→ 判 MIGRATED,计入未验证分母但**不计入失败、也不算卡片缺陷**;
+只有模块在仓库内**确实找不到**才判 `ORPHAN_DEP`。
+`--selftest` 用四个用例锁定三类判定互斥可区分(样本名从索引现取,不写死 —— 写死会腐烂,
+第一版就因写死 `causal_inference` 报了一次假失败)。
+
+> **实测效果**:全量 L3 扫描 `ORPHAN_DEP 9 → 0`、`MIGRATED_DEP 0 → 9`,退出码从 1 变 0。
+> 这是本项目第三次「提升来自修门禁而非改卡片」—— 与 46.2%→52.5%→54.8% 那次同源。
+> 教训:**判某个东西「不存在」之前,先 `ls` 一次。**
 
 ### 门禁自身的 3 个 bug(同样由 K1 迭代暴露)
 
@@ -441,6 +471,7 @@ python -m pytest model.py -v
 
 | English Directory | Chinese Directory | Domain | Code Dir Status |
 |-------------------|-------------------|--------|-----------------|
+| `ecommerce_agent` | `00-电商Agent` | Live-catalog conversational rec, agentic catalog enrichment | ⬜ |
 | `causal_inference` | `01-因果推断` | Causal inference, uplift modeling | ✅ |
 | `ab_testing` | `02-A_B实验` | A/B testing, multi-armed bandits | ✅ |
 | `time_series` | `03-时间序列` | Demand forecasting, time series | ✅ |

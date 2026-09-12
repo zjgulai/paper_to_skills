@@ -322,8 +322,8 @@
       "priority": "P0",
       "decision": "extract",
       "decision_reason": "被助攻的乌龙球：站外种草引发增量但被下游 marketplace 记账，ROAS 系统性失真；跨境最贵的测量缺口",
-      "data_availability": "conditional",
-      "note": "需受众级随机化：自建独立站可行，纯平台站内卖家须降级为诊断框架",
+      "data_availability": "synthetic",
+      "note": "论文**无真实数据**：纯理论 + 一个模拟研究（Section 6，200,000 simulated intents）。原文自述 'We outline a simulation design...'。卡片中一切数字须标注为模拟设定/模拟输出。业务侧仍需受众级随机化：自建独立站可行，纯平台站内卖家降级为诊断框架。",
       "score": 24.7,
       "source_route": "arxiv",
       "outputs": {
@@ -597,7 +597,7 @@
       "journal": "",
       "venue": "SIGMOD",
       "venue_tier": "second",
-      "domain": "09-DataAgent",
+      "domain": "09-DataAgent-LLM",
       "priority": "P0",
       "decision": "extract",
       "decision_reason": "RBAC Text-to-SQL 基准：度量越权率与过度拒答率 → 数据 Agent 上线门禁（客服看本店/运营看全店）",
@@ -606,9 +606,9 @@
       "score": 59.1,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/09-DataAgent/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/09-DataAgent-LLM/Skill-<方法名>.md",
         "code_dir": "paper2skills-code/data_agent_llm/<algo>",
-        "evidence": "paper2skills-vault/papers/09-DataAgent/p2s-2026-0019/evidence.md"
+        "evidence": "paper2skills-vault/papers/09-DataAgent-LLM/p2s-2026-0019/evidence.md"
       },
       "gates": {
         "code": "pending",
@@ -1031,7 +1031,7 @@
       "journal": "",
       "venue": "COLM",
       "venue_tier": "workshop",
-      "domain": "09-DataAgent",
+      "domain": "09-DataAgent-LLM",
       "priority": "P1",
       "decision": "extract",
       "decision_reason": "Beyond the Harness：从生产 SQL 反解 query-DAG，把老师傅的历史查询蒸馏为可复用上下文 → 跨境口径（GMV 是否含退款）沉淀",
@@ -1040,9 +1040,9 @@
       "score": 36.2,
       "source_route": "arxiv",
       "outputs": {
-        "skill_card": "paper2skills-vault/09-DataAgent/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/09-DataAgent-LLM/Skill-<方法名>.md",
         "code_dir": "paper2skills-code/data_agent_llm/<algo>",
-        "evidence": "paper2skills-vault/papers/09-DataAgent/p2s-2026-0033/evidence.md"
+        "evidence": "paper2skills-vault/papers/09-DataAgent-LLM/p2s-2026-0033/evidence.md"
       },
       "gates": {
         "code": "pending",
@@ -1217,7 +1217,7 @@
       "journal": "",
       "venue": "",
       "venue_tier": "top",
-      "domain": "15-营销投放",
+      "domain": "15-营销投放分析",
       "priority": "P1",
       "decision": "watch",
       "decision_reason": "Large Language Models for Market Research: A Data-Augmentation Approach（Marketing Science 2026-07）— LLM 做市场研究的统计保证，可用于选品前的需求验证",
@@ -1226,9 +1226,9 @@
       "score": null,
       "source_route": "crossref",
       "outputs": {
-        "skill_card": "paper2skills-vault/15-营销投放/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/15-营销投放分析/Skill-<方法名>.md",
         "code_dir": "paper2skills-code/marketing/<algo>",
-        "evidence": "paper2skills-vault/papers/15-营销投放/p2s-2026-0039/evidence.md"
+        "evidence": "paper2skills-vault/papers/15-营销投放分析/p2s-2026-0039/evidence.md"
       },
       "gates": {
         "code": "pending",
@@ -1248,7 +1248,7 @@
       "journal": "",
       "venue": "",
       "venue_tier": "top",
-      "domain": "15-营销投放",
+      "domain": "15-营销投放分析",
       "priority": "P1",
       "decision": "watch",
       "decision_reason": "Impact of the Invisibles: Personalized Pricing on Platform with Anonymous Users（ISR 2026-08-24）— 个性化定价的隐私与反噬",
@@ -1257,9 +1257,9 @@
       "score": null,
       "source_route": "crossref",
       "outputs": {
-        "skill_card": "paper2skills-vault/15-营销投放/Skill-<方法名>.md",
+        "skill_card": "paper2skills-vault/15-营销投放分析/Skill-<方法名>.md",
         "code_dir": "paper2skills-code/marketing/<algo>",
-        "evidence": "paper2skills-vault/papers/15-营销投放/p2s-2026-0040/evidence.md"
+        "evidence": "paper2skills-vault/papers/15-营销投放分析/p2s-2026-0040/evidence.md"
       },
       "gates": {
         "code": "pending",
@@ -1422,6 +1422,19 @@
         "business": "pending"
       },
       "status": "shortlisted"
+    }
+  ],
+  "revision_log": [
+    {
+      "at": "2026-09-12",
+      "by": "PHASE3-3C",
+      "changes": [
+        "p2s-2026-0019: domain '09-DataAgent' -> '09-DataAgent-LLM'",
+        "p2s-2026-0033: domain '09-DataAgent' -> '09-DataAgent-LLM'",
+        "p2s-2026-0039: domain '15-营销投放' -> '15-营销投放分析'",
+        "p2s-2026-0040: domain '15-营销投放' -> '15-营销投放分析'",
+        "p2s-2026-0010: data_availability 'conditional' -> 'synthetic'（论文无真实数据）"
+      ]
     }
   ]
 }

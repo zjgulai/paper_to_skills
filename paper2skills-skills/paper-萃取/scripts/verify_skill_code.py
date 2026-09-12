@@ -218,6 +218,7 @@ class Result:
     verdict: str = "FAIL"        # PASS | ENV_BLOCKED | ORPHAN_DEP | FAIL | UNVERIFIED
     missing_deps: list[str] = field(default_factory=list)   # 本机缺的第三方包
     orphan_deps: list[str] = field(default_factory=list)    # 仓库内找不到的本地模块
+    migrated_deps: list[str] = field(default_factory=list)  # 只存在于已迁出镜像(nlp_voc)的模块
     resolved_local: list[str] = field(default_factory=list) # 自动解析到的仓库内模块
     code_lines: int = 0
     notes: list[str] = field(default_factory=list)
@@ -379,25 +380,35 @@ def locate_block(spans: list[tuple[int, int, int]], lineno: int) -> int | None:
     return None
 
 
-def repo_local_module_index() -> dict[str, Path]:
+def repo_local_module_index() -> tuple[dict[str, Path], dict[str, Path]]:
     """扫描仓库，建立「本地模块名 → 所在目录」索引。
 
-    存在两种来源：
+    返回 (可用索引, 已迁出镜像索引)。两种来源：
       1. paper2skills-code/<domain>/<algo>/      —— 已落地的代码模板子模块
       2. 卡片同目录下的 <algo>.py                —— 历史卡片自带的实现文件
-    用于区分「本机缺第三方包」(ENV) 与「卡片引用了不存在的模块」(ORPHAN)。
+
+    ⚠️ **为什么要把 nlp_voc 单独分出来（2026-09-12 修正）**：
+    `07-NLP-VOC` 子项目已迁出本仓库，`paper2skills-code/nlp_voc/` 只是**代码模板镜像**，
+    其内部 `data_path` 指向 `../ai_nlp_voc/...`（该目录在多数机器上并不存在）。
+    早先的实现把 nlp_voc 直接 `continue` 掉，于是 9 张 `07-NLP-VOC` 的卡片被判 `ORPHAN_DEP`，
+    判定文案是「引用了**仓库内不存在**的本地模块」—— 而这个判断**事实上是假的**：
+    这 9 个模块在仓库里确实存在（`ls paper2skills-code/nlp_voc/<mod>/` 全部命中）。
+    真正的差别是「镜像不可在此运行」，不是「模块不存在」。
+
+    这两件事的**补救动作完全相反**：ORPHAN_DEP 要改卡片，镜像不可运行要改环境或接受它不可验证。
+    把它们混为一谈会把 9 张没有缺陷的卡送进「必须修」清单。
     """
     idx: dict[str, Path] = {}
+    migrated: dict[str, Path] = {}
     code_root = REPO_ROOT / "paper2skills-code"
     if code_root.is_dir():
         for p in code_root.rglob("*.py"):
-            if "nlp_voc" in p.parts:      # 已迁出子项目的镜像，不作为可用实现
-                continue
+            target = migrated if "nlp_voc" in p.parts else idx
             if p.name == "__init__.py":
-                idx.setdefault(p.parent.name, p.parent)
+                target.setdefault(p.parent.name, p.parent)
             else:
-                idx.setdefault(p.stem, p.parent)
-    return idx
+                target.setdefault(p.stem, p.parent)
+    return idx, migrated
 
 
 @dataclass
@@ -405,10 +416,13 @@ class DepReport:
     third_party: list[str] = field(default_factory=list)   # 本机没装 → 环境问题
     local_found: list[str] = field(default_factory=list)   # 仓库里有实现 → 加进 PYTHONPATH
     orphan: list[str] = field(default_factory=list)        # 仓库里也没有 → 卡片缺陷
+    migrated: list[str] = field(default_factory=list)      # 只存在于已迁出镜像 → 非卡片缺陷
 
 
-def classify_deps(code: str, local_index: dict[str, Path]) -> DepReport:
+def classify_deps(code: str, local_index: dict[str, Path],
+                  migrated_index: dict[str, Path] | None = None) -> DepReport:
     rep = DepReport()
+    migrated_index = migrated_index or {}
     seen: set[str] = set()
     for m in IMPORT_RE.finditer(code):
         mod = (m.group(1) or m.group(2) or "").split(".")[0]
@@ -422,6 +436,8 @@ def classify_deps(code: str, local_index: dict[str, Path]) -> DepReport:
             pass
         if mod in local_index:             # 仓库里有 → 可达，加路径
             rep.local_found.append(mod)
+        elif mod in migrated_index:        # 只在已迁出镜像里 → 不是卡片缺陷
+            rep.migrated.append(mod)
         elif _is_stdlib_like(mod):
             rep.third_party.append(mod)
         else:
@@ -545,11 +561,13 @@ def trim(s: str, n: int = 1500) -> str:
 # ---------------------------------------------------------------------------
 def verify_unit(code: str, target: str, kind: str, workdir: Path,
                 max_level: int = 5, timeout: int = 90,
-                local_index: dict[str, Path] | None = None) -> Result:
+                local_index: dict[str, Path] | None = None,
+                migrated_index: dict[str, Path] | None = None) -> Result:
     res = Result(target=target, kind=kind)
     res.code_lines = len(code.splitlines())
     code = textwrap.dedent(code).strip("\n") + "\n"
     local_index = local_index if local_index is not None else {}
+    migrated_index = migrated_index if migrated_index is not None else {}
 
     # --- L1 SYNTAX ---
     t0 = time.time()
@@ -582,9 +600,10 @@ def verify_unit(code: str, target: str, kind: str, workdir: Path,
         return res
 
     # --- 依赖分类：第三方缺失(环境) vs 本地模块不存在(卡片缺陷) ---
-    deps = classify_deps(code, local_index)
+    deps = classify_deps(code, local_index, migrated_index)
     res.missing_deps = deps.third_party
     res.orphan_deps = deps.orphan
+    res.migrated_deps = deps.migrated
     res.resolved_local = deps.local_found
 
     stub = workdir / "_k1_stub.py"
@@ -637,18 +656,28 @@ def verify_unit(code: str, target: str, kind: str, workdir: Path,
     orphan_hit = (not ok) and bool(res.orphan_deps) and any(
         o in (err + out) for o in res.orphan_deps
     )
+    # MIGRATED：模块只存在于已迁出子项目的镜像里 → 镜像不可在此运行，但**不是卡片缺陷**
+    migrated_hit = (not ok) and bool(getattr(res, "migrated_deps", None)) and any(
+        o in (err + out) for o in res.migrated_deps
+    )
     if ok:
         detail = "模块可 import"
     elif orphan_hit:
         detail = f"引用了仓库内不存在的本地模块: {', '.join(res.orphan_deps)}"
+    elif migrated_hit:
+        detail = (f"模块只存在于已迁出子项目镜像 paper2skills-code/nlp_voc/: "
+                  f"{', '.join(res.migrated_deps)}（非卡片缺陷；镜像依赖 ../ai_nlp_voc/ 数据路径）")
     elif env_rel:
         detail = f"缺第三方依赖/凭证: {', '.join(res.missing_deps) or '未识别'}"
     else:
         detail = "import 时崩溃"
     res.add(Stage("L3_IMPORT", ok, detail, stdout=trim(out), stderr=trim(err),
-                  seconds=secs, env_related=env_rel and not orphan_hit))
+                  seconds=secs, env_related=(env_rel or migrated_hit) and not orphan_hit))
     if orphan_hit:
         res.verdict = "ORPHAN_DEP"
+        return res
+    if migrated_hit:
+        res.verdict = "MIGRATED_DEP"
         return res
     if max_level < 4:
         res.verdict = "PASS" if ok else ("ENV_BLOCKED" if env_rel else "FAIL")
@@ -722,9 +751,87 @@ def collect_cards() -> list[Path]:
     )
 
 
+def _selftest() -> int:
+    """自证依赖分类器能区分四种情形 —— 门禁工具必须先自证可信。
+
+    锁定的是 2026-09-12 修的一个**假红灯**：早先实现把 `paper2skills-code/nlp_voc/`
+    整体 `continue` 掉，于是 9 张 07-NLP-VOC 卡片被判 `ORPHAN_DEP`，判定文案却说
+    「引用了**仓库内不存在**的本地模块」—— 而 `ls` 证明这些模块就在仓库里。
+    误判的代价是真实的：这 9 张卡被写进「必须修卡片」清单，而正确动作是「镜像不可在此运行」。
+    """
+    local_index, migrated_index = repo_local_module_index()
+
+    # ⚠️ 样本名**从索引里现取**，不写死：写死会在仓库结构变动时腐烂，
+    #    而且会掩盖真正的分类缺陷（第一版就因为写死 `causal_inference` —— 该目录
+    #    下只有子包、没有顶层 __init__.py —— 报了一次假失败）。
+    if not local_index or not migrated_index:
+        print("❌ 索引为空，无法自检（local=%d, migrated=%d）"
+              % (len(local_index), len(migrated_index)))
+        return 1
+    real_local = sorted(local_index)[0]
+    real_mirror = sorted(migrated_index)[0]
+    phantom = "totally_made_up_module_xyz"
+
+    cases: list[tuple[str, str, str]] = []   # (说明, 代码, 期望分类)
+    cases.append(("stdlib+第三方包 → 不算缺陷",
+                  "import os\nimport numpy\nimport pandas as pd\n", "none"))
+    cases.append((f"仓库内真实存在的本地模块 → local_found（取 {real_local}）",
+                  f"import {real_local}\n", "local"))
+    cases.append((f"仓库内根本不存在的小写模块 → ORPHAN_DEP（{phantom}）",
+                  f"import {phantom}\n", "orphan"))
+    cases.append((f"只在已迁出镜像 nlp_voc 里的模块 → MIGRATED_DEP（取 {real_mirror}）",
+                  f"import {real_mirror}\n", "migrated"))
+    print(f"索引：可用本地模块 {len(local_index)} 个 / 已迁出镜像 {len(migrated_index)} 个")
+    print(f"  nlp_voc 镜像索引样例: {sorted(migrated_index)[:3]}")
+    print()
+
+    ok = True
+    for desc, code, expect in cases:
+        rep = classify_deps(code, local_index, migrated_index)
+        if expect == "orphan":
+            got = "orphan" if rep.orphan else "none"
+        elif expect == "migrated":
+            got = "migrated" if rep.migrated else "none"
+        elif expect == "local":
+            got = "local" if rep.local_found else "none"
+        else:
+            got = "none" if not (rep.orphan or rep.migrated or rep.local_found) else "其他"
+        mark = "✅" if got == expect else "❌"
+        if got != expect:
+            ok = False
+        print(f"{mark} {desc:38s} 期望 {expect:8s} 实得 {got}")
+        if rep.orphan:
+            print(f"     orphan   = {rep.orphan}")
+        if rep.migrated:
+            print(f"     migrated = {rep.migrated}")
+
+    # 关键断言：ORPHAN 与 MIGRATED 必须是**互斥**的两类，不能混
+    print()
+    fake_orphan = classify_deps(f"import {phantom}\n", local_index, migrated_index)
+    mirror_mod = classify_deps(f"import {real_mirror}\n", local_index, migrated_index)
+    # 期望状态（不要再取反 —— 第一版多写了一个 not，把「通过」判成了「失败」）：
+    #   真孤儿模块只落进 orphan、绝不落进 migrated；镜像模块只落进 migrated、绝不落进 orphan。
+    cross = (bool(fake_orphan.orphan) and not fake_orphan.migrated
+             and bool(mirror_mod.migrated) and not mirror_mod.orphan)
+    print(("✅" if cross else "❌") + " 互斥性：真孤儿只进 orphan；镜像模块只进 migrated")
+    ok = ok and cross
+
+    # 迁移路径存在性：migrated 索引里的每个模块就应在 nlp_voc 下真的存在
+    missing = [m for m, path in migrated_index.items()
+               if "nlp_voc" not in path.parts]
+    print(("✅" if not missing else "❌") + f" 迁移索引来源正确（全部位于 nlp_voc/: {not missing}）")
+    ok = ok and not missing
+
+    print()
+    print("SELFTEST " + ("PASS —— 三个依赖判定互相可区分" if ok else "FAIL —— 判定退化，勿信门禁数字"))
+    return 0 if ok else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="paper2skills K1 代码可执行性门禁")
-    g = ap.add_mutually_exclusive_group(required=True)
+    ap.add_argument("--selftest", action="store_true",
+                    help="用构造样本自证三个依赖判定（PASS/ORPHAN/MIGRATED）能互相区分")
+    g = ap.add_mutually_exclusive_group(required=False)
     g.add_argument("--card", type=Path, help="单张 Skill 卡片路径")
     g.add_argument("--file", type=Path, help="已抽出的 .py 文件")
     g.add_argument("--all", action="store_true", help="全量回归所有卡片")
@@ -738,6 +845,10 @@ def main() -> int:
                     help="逐块独立验证（默认是把卡片所有代码块按文档顺序拼成一个模块，"
                          "与卡片实际用法一致；逐块模式会产生大量 NameError 假阳性，仅用于定位）")
     args = ap.parse_args()
+    if args.selftest:
+        return _selftest()
+    if not (args.card or args.file or args.all):
+        ap.error("必须指定 --card / --file / --all 之一（或用 --selftest 自检）")
 
     units: list[tuple[str, str, str, list]] = []   # (target, kind, code, block_spans)
 
@@ -772,19 +883,22 @@ def main() -> int:
                               block_line_map(blocks, st)))
 
     # 仓库内已落地的本地模块索引（用于区分 ORPHAN_DEP 与 ENV_BLOCKED）
-    local_index = repo_local_module_index()
+    local_index, migrated_index = repo_local_module_index()
     if local_index and not args.quiet:
         print(f"已索引仓库内本地模块 {len(local_index)} 个（可自动解析的卡片将真正执行）")
+    if migrated_index and not args.quiet:
+        print(f"另有 {len(migrated_index)} 个模块只存在于已迁出镜像 nlp_voc/（判 MIGRATED_DEP，非卡片缺陷）")
 
     results: list[Result] = []
-    ICON = {"PASS": "✅", "ENV_BLOCKED": "🟡", "ORPHAN_DEP": "🔴",
+    ICON = {"PASS": "✅", "ENV_BLOCKED": "🟡", "ORPHAN_DEP": "🔴", "MIGRATED_DEP": "🟠",
             "FAIL": "❌", "UNVERIFIED": "⚪"}
     with tempfile.TemporaryDirectory(prefix="k1_") as td:
         for idx, (target, kind, code, spans) in enumerate(units):
             wd = Path(td) / f"u{idx}"
             wd.mkdir(parents=True, exist_ok=True)
             r = verify_unit(code, target, kind, wd, max_level=args.level,
-                            timeout=args.timeout, local_index=local_index)
+                            timeout=args.timeout, local_index=local_index,
+                            migrated_index=migrated_index)
             # 把报错行号映射回具体 block，方便作者定位
             if spans:
                 for st in r.stages:
@@ -803,7 +917,8 @@ def main() -> int:
                 print(f"{icon} {r.verdict:12s} {target}{extra}")
 
     # --- 汇总 ---
-    tally = {"PASS": 0, "ENV_BLOCKED": 0, "ORPHAN_DEP": 0, "FAIL": 0, "UNVERIFIED": 0}
+    tally = {"PASS": 0, "ENV_BLOCKED": 0, "ORPHAN_DEP": 0, "MIGRATED_DEP": 0,
+             "FAIL": 0, "UNVERIFIED": 0}
     for r in results:
         tally[r.verdict] = tally.get(r.verdict, 0) + 1
     exec_units = tally["PASS"]
@@ -816,8 +931,10 @@ def main() -> int:
         "units_total": denom,
         "tally": tally,
         "exec_rate_pct": round(rate, 2),
-        "note": ("exec_rate_pct = PASS / units_total。ENV_BLOCKED 计入未验证分母，"
-                 "不得声称已验证；ORPHAN_DEP 是卡片缺陷（引用了仓库内不存在的模块），必须修。"),
+        "note": ("exec_rate_pct = PASS / units_total。ENV_BLOCKED 与 MIGRATED_DEP 均计入未验证分母，"
+                 "不得声称已验证；ORPHAN_DEP 是卡片缺陷（模块在仓库内确实不存在），必须修；"
+                 "MIGRATED_DEP 的模块存在于已迁出子项目镜像 paper2skills-code/nlp_voc/，"
+                 "不是卡片缺陷，但该镜像依赖 ../ai_nlp_voc/ 数据路径，在此不可运行。"),
     }
     payload = {"summary": summary, "results": [
         {**asdict(r), "stages": [asdict(s) for s in r.stages]} for r in results
@@ -825,8 +942,8 @@ def main() -> int:
 
     print("\n" + "=" * 66)
     print(f"单元总数 {denom} | ✅ PASS {tally['PASS']} | 🟡 ENV_BLOCKED {tally['ENV_BLOCKED']} "
-          f"| 🔴 ORPHAN {tally['ORPHAN_DEP']} | ❌ FAIL {tally['FAIL']} "
-          f"| ⚪ 未执行 {tally['UNVERIFIED']}")
+          f"| 🔴 ORPHAN {tally['ORPHAN_DEP']} | 🟠 MIGRATED {tally['MIGRATED_DEP']} "
+          f"| ❌ FAIL {tally['FAIL']} | ⚪ 未执行 {tally['UNVERIFIED']}")
     print(f"K1 执行率 = {rate:.1f}%   （对照：PaperCoder 17.94% / AutoReproduce 94.87%）")
     print("=" * 66)
 
@@ -842,18 +959,22 @@ def main() -> int:
             f"- 最大验证级别：L{args.level}",
             f"- 单元总数：{denom}",
             f"- **K1 执行率：{rate:.1f}%**（PASS {tally['PASS']} / 环境阻塞 {tally['ENV_BLOCKED']} "
-            f"/ 孤儿依赖 {tally['ORPHAN_DEP']} / 失败 {tally['FAIL']} / 未执行 {tally['UNVERIFIED']}）",
+            f"/ 孤儿依赖 {tally['ORPHAN_DEP']} / 已迁出镜像 {tally['MIGRATED_DEP']} "
+            f"/ 失败 {tally['FAIL']} / 未执行 {tally['UNVERIFIED']}）",
             "",
             "> **口径说明（三个易被混淆的判定）**",
             "> - `PASS`：真正跑通了（L4 脚本执行成功 或 L5 断言全绿）。只有这一类可以声称「已验证」。",
             "> - `ENV_BLOCKED`：本机缺第三方依赖/凭证/资源（如未装 torch）。**计入未验证分母** —— 缺依赖不等于代码正确。",
-            "> - `ORPHAN_DEP`：卡片 `import` 的**本地模块在仓库内根本不存在**（如 `import review_quality_scoring`）。",
-            ">   这是卡片真实缺陷，必须修，**绝不可归因环境而放行**。",
+            "> - `ORPHAN_DEP`：卡片 `import` 的**本地模块在仓库内确实不存在**。这是卡片真实缺陷，必须修，",
+            ">   **绝不可归因环境而放行**。（注意与下一项的区别：判 ORPHAN 前请先 `ls` 确认模块真的不存在。）",
+            "> - `MIGRATED_DEP`：模块**确实存在于仓库内**，但只在已迁出子项目的镜像 `paper2skills-code/nlp_voc/` 下。",
+            ">   该镜像是历史代码模板，内部数据路径指向 `../ai_nlp_voc/`（迁出目标，多数机器上不存在），故在此不可运行。",
+            ">   **这不是卡片缺陷** —— 补救动作与 ORPHAN_DEP 相反，不要把它写进「必须修卡片」清单。",
             "",
             "## 明细", "",
             "| 判定 | 目标 | 阻塞阶段 | 说明 |", "|---|---|---|---|",
         ]
-        ICON2 = {"PASS": "✅", "ENV_BLOCKED": "🟡", "ORPHAN_DEP": "🔴",
+        ICON2 = {"PASS": "✅", "ENV_BLOCKED": "🟡", "ORPHAN_DEP": "🔴", "MIGRATED_DEP": "🟠",
                  "FAIL": "❌", "UNVERIFIED": "⚪"}
         for r in results:
             icon = ICON2.get(r.verdict, "?")
@@ -867,10 +988,20 @@ def main() -> int:
                       "| 卡片 | 缺失模块 |", "|---|---|"]
             for r in orphans:
                 lines.append(f"| `{r.target}` | {', '.join('`%s`' % o for o in r.orphan_deps)} |")
+        migrated = [r for r in results if r.verdict == "MIGRATED_DEP"]
+        if migrated:
+            lines += ["", "## 已迁出镜像依赖清单（**不是卡片缺陷**）", "",
+                      "> 这些模块在仓库内确实存在，但只位于 `paper2skills-code/nlp_voc/`（`07-NLP-VOC` 子项目迁出后",
+                      "> 保留的代码模板镜像）。镜像内部数据路径指向 `../ai_nlp_voc/`，故在此不可运行。",
+                      "> 处置建议：要么在装有 `ai_nlp_voc` 的环境里验，要么接受这批卡「不可在此验证」并在统计中单列。", "",
+                      "| 卡片 | 镜像内模块 |", "|---|---|"]
+            for r in migrated:
+                lines.append(f"| `{r.target}` | {', '.join('`%s`' % o for o in r.migrated_deps)} |")
         args.markdown_out.write_text("\n".join(lines) + "\n", encoding="utf-8")
         print(f"Markdown → {args.markdown_out}")
 
-    # 退出码：FAIL 或 ORPHAN_DEP 存在即非 0（可作 CI 门禁）
+    # 退出码：FAIL 或 ORPHAN_DEP 存在即非 0（可作 CI 门禁）。
+    # MIGRATED_DEP 不计入失败：它是环境/历史约束，不是被验证对象的缺陷。
     return 0 if (tally["FAIL"] == 0 and tally["ORPHAN_DEP"] == 0) else 1
 
 

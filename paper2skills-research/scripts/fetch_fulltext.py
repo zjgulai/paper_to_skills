@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -299,6 +300,65 @@ def _curl(url: str, out: Path, max_time: int = 120) -> tuple[int, str]:
         return 0, proc.stdout.strip()[:200]
 
 
+def _unwrap_pdf_lines(text: str) -> str:
+    """把 PDF 抽取结果里的**句内硬换行**接回整段。
+
+    为什么必须做这一步：`pdftotext` 按版面断行，一句话会被切成多行
+    （实测 2608.22152 前 200 行里有 144 行不以句末标点结尾）。
+    而 `quote_check.py` 用「最长**连续**匹配段」判引文真伪 ——
+    若底本里句子中间夹着换行，卡片里写成同一行的逐字引文会被误判 FUZZY/FABRICATED。
+    所以底本必须是**流动文本**，否则门禁会产生假红灯。
+    """
+    out: list[str] = []
+    for raw in text.split("\n"):
+        line = raw.rstrip()
+        if not line.strip():
+            out.append("")
+            continue
+        if out and out[-1] and not out[-1].endswith(" "):
+            prev = out[-1]
+            # 上一行以连字符结尾 + 下一行小写开头 → 断词，去连字符直接接
+            if prev.endswith("-") and line[:1].islower():
+                out[-1] = prev[:-1] + line
+                continue
+            # 上一行未以句末标点结束 → 同一段未完，接续
+            if not prev.rstrip().endswith((".", "!", "?", ":", ";", '"', ")", "]", "。")):
+                out[-1] = prev + " " + line
+                continue
+        out.append(line)
+    return "\n".join(out)
+
+
+def fetch_pdf(arxiv_id: str, max_time: int = 120, verbose: bool = True) -> tuple[str, str]:
+    """PDF 回退：下载 arxiv.org/pdf/{id} → pdftotext → 接回硬换行。
+
+    返回 (markdown, source_url)；不可用时返回 ("", "")。
+    """
+    log = (lambda *a: print(*a, file=sys.stderr)) if verbose else (lambda *a: None)
+    if shutil.which("pdftotext") is None:
+        log("  pdftotext 不可用，跳过 PDF 回退")
+        return "", ""
+    pdf = Path(f"/tmp/p2s_{arxiv_id}.pdf")
+    txt = Path(f"/tmp/p2s_{arxiv_id}.txt")
+    url = f"https://arxiv.org/pdf/{arxiv_id}"
+    code, err = _curl(url, pdf, max_time)
+    if code != 200 or not pdf.exists() or pdf.stat().st_size < 20000:
+        log(f"  {arxiv_id}: PDF 回退失败 HTTP {code} {err}")
+        return "", ""
+    if pdf.read_bytes()[:4] != b"%PDF":
+        log(f"  {arxiv_id}: PDF 回退拿到非 PDF 内容，跳过")
+        return "", ""
+    proc = subprocess.run(["pdftotext", str(pdf), str(txt)],
+                          capture_output=True, text=True)
+    if proc.returncode != 0 or not txt.exists():
+        log(f"  {arxiv_id}: pdftotext 失败 {proc.stderr.strip()[:120]}")
+        return "", ""
+    raw = txt.read_text(encoding="utf-8", errors="replace")
+    md = _unwrap_pdf_lines(raw)
+    log(f"  {arxiv_id}: ✅ PDF {pdf.stat().st_size} → txt {len(raw)} → 接行后 {len(md)} 字符")
+    return md, url
+
+
 def fetch(arxiv_id: str, max_time: int = 120, verbose: bool = True) -> dict:
     """返回 {ok, markdown, version, source, reason}。"""
     log = (lambda *a: print(*a, file=sys.stderr)) if verbose else (lambda *a: None)
@@ -327,7 +387,13 @@ def fetch(arxiv_id: str, max_time: int = 120, verbose: bool = True) -> dict:
             log(f"  {arxiv_id}v{version}: HTTP {code} {err}")
         time.sleep(THROTTLE_SECONDS)
 
-    # 回退：摘要页（至少保住摘要 + 元数据，卡片可标 evidence_grade=abstract）
+    # 回退 1：PDF 全文（无 LaTeXML HTML 的论文，实测 2608.22152 即此情形）
+    pdf_md, pdf_src = fetch_pdf(arxiv_id, max_time, verbose)
+    if pdf_md and len(pdf_md) > 5000:
+        return {"ok": True, "markdown": pdf_md, "version": 0,
+                "source": pdf_src, "reason": ""}
+
+    # 回退 2：摘要页（至少保住摘要 + 元数据，卡片可标 evidence_grade=abstract）
     tmp = Path(f"/tmp/p2s_{arxiv_id}_abs.html")
     code, _ = _curl(f"https://arxiv.org/abs/{arxiv_id}", tmp, 60)
     if code == 200 and tmp.exists():
