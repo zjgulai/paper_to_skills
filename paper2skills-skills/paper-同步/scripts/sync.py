@@ -296,7 +296,14 @@ def run_gates(card_path, mode="enforce"):
             data = json.loads(f.read_text(encoding="utf-8"))
             res = data["results"][0]
             reds = [x for x in res["findings"] if x["level"] == "RED"]
+            # outcome 三态（2026-09-12）：PASS / FAIL / UNVERIFIABLE。
+            # UNVERIFIABLE = 「无论文来源」的经验卡：它**不阻塞同步**（无红灯），
+            # 但必须在同步报告里显式区别于「通过」—— 否则「无法核验」会被
+            # 读成「已核验」。与 G2 旧汇总把 NO_QUOTES 并进「通过」是同一个坑。
+            outcome = (res.get("metrics") or {}).get("outcome", "PASS" if res["passed"] else "FAIL")
             detail[g.upper()] = {"passed": res["passed"],
+                                 "outcome": outcome,
+                                 "unverifiable": outcome == "UNVERIFIABLE",
                                  "reds": [f"[{x['code']}] {x['message']}" for x in reds]}
         ok = proc.returncode == 0
         return ok, detail
@@ -304,6 +311,10 @@ def run_gates(card_path, mode="enforce"):
 
 def print_gate_report(detail):
     for g, info in sorted(detail.items()):
+        if info.get("unverifiable"):
+            # 「无法核验」不是「通过」：它没有证据链，只是没有可核验的对象。
+            print(f"  ⚪ {g}: 无法核验（无论文来源的经验卡，不阻塞同步，但不构成通过）")
+            continue
         flag = "✅" if info["passed"] else "❌"
         print(f"  {flag} {g}: {'通过' if info['passed'] else f'红灯 {len(info["reds"])} 条'}")
         for r in info["reds"][:5]:

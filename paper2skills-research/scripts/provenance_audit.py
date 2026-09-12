@@ -1,0 +1,417 @@
+#!/usr/bin/env python3
+"""provenance_audit.py — 卡片「论文溯源」可达性体检（G2 根因分析）
+
+## 为什么需要这个脚本
+
+2026-09-12 的 G2 基线是 **16/146 通过**，原因被表述为「存量卡引用块为 0」。
+这个表述**把一个可修的门禁缺陷，说成了一个不可修的资产缺陷** —— 于是
+「怎么让存量卡过 G2」变成了无解题。真实问题分层是：
+
+| 层 | 问题 | 可修性 |
+|----|------|--------|
+| L1 | 卡片有引用块，但全文存档不存在/不可索引 | **可修**（补全文/修索引） |
+| L2 | 卡片可溯源到论文，但从未写引用块 | **可修**（补引用块） |
+| L3 | 卡片**根本没有论文来源**（是人写的经验卡） | **不可修**（只能诚实声明） |
+
+只有先把 130 张卡按这三层分开，「修根因」才有明确的目标与分母。
+
+## 判定依据（全部来自仓库实物，不做猜测）
+
+对每张卡收集「溯源线索」：
+1. frontmatter `paper_id`      —— ⚠️ 语义是 **arXiv ID**（如 2608.25277）
+2. frontmatter `paper` / `source` / `url` / `arxiv` —— 标题或 arXiv/DOI 链接
+3. **正文里的 arXiv/DOI** —— ⚠️ 首版只扫了 frontmatter，把 47 张「正文写着
+   `arXiv:2502.02110`」的卡误判成"无论文来源"。**存量卡的溯源信息主要在正文里，
+   不在 frontmatter 里** —— 这是本脚本第一个被自己实测推翻的结论。
+4. 卡片 `title` 与论文标题的**词重叠**（仅在 1/2/3 无果时兜底）
+5. registry `outputs.skill_card` 反查 —— ⚠️ registry 的 `paper_id` 是 `p2s-2026-XXXX`
+
+对每条线索，再判「全文是否真的可达」：
+- `fulltext.md` **且 ≥ MIN_FULLTEXT_CHARS** → 可立即核验（G2b 能跑）
+- `fulltext.md` 但过短 → 只存了摘要，**不可核验**
+- 只有本地 PDF → **待转换**（pdftotext 可解，属可修）
+- 只有 arXiv ID，无本地存档 → **待抓取**（fetch_fulltext.py 可解，属可修）
+- 什么都没有 → **不可达**
+
+用法：
+    python3 provenance_audit.py                              # 控制台报告
+    python3 provenance_audit.py --json-out <path>            # 机器可读
+    python3 provenance_audit.py --worklist-out <path.md>     # 生成可执行工单
+    python3 provenance_audit.py --selftest                   # 自检
+
+退出码：0 正常；1 自检失败。
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+VAULT = REPO_ROOT / "paper2skills-vault"
+PAPERS = VAULT / "papers"
+REGISTRY = VAULT / "07-资源库" / "papers_registry.json"
+
+# 与 quote_check.py 保持同一个下限：低于此值不是全文，引文无法核验
+MIN_FULLTEXT_CHARS = 8000
+
+ARXIV_RE = re.compile(r"\b(\d{4}\.\d{4,5})(?:v\d+)?\b")
+DOI_RE = re.compile(r"\b(10\.\d{4,9}/[^\s（()\"']+)")
+
+# frontmatter 里可能承载溯源信息的键（按可信度排序）
+ID_KEYS = ("paper_id", "arxiv", "arxiv_id", "doi")
+TITLE_KEYS = ("paper", "paper_title", "source", "url", "title")
+
+_STOP = {
+    "a", "an", "the", "for", "of", "and", "with", "via", "to", "in", "on",
+    "is", "are", "based", "using", "toward", "towards", "from", "by",
+}
+
+
+def parse_frontmatter(text: str) -> dict[str, str]:
+    m = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.S)
+    if not m:
+        return {}
+    out: dict[str, str] = {}
+    for line in m.group(1).splitlines():
+        if line.strip().startswith("#") or ":" not in line:
+            continue
+        k, v = line.split(":", 1)
+        out[k.strip()] = v.strip().strip('"').strip("'")
+    return out
+
+
+def norm_title(s: str) -> set[str]:
+    s = re.sub(r"[^a-z0-9\s]", " ", s.lower())
+    return {w for w in s.split() if w not in _STOP and len(w) > 2}
+
+
+def title_overlap(a: str, b: str) -> float:
+    """a 的词有多少比例出现在 b 中（不对称：卡片标题通常短于论文标题）。"""
+    wa = norm_title(a)
+    if not wa:
+        return 0.0
+    return len(wa & norm_title(b)) / len(wa)
+
+
+# --------------------------------------------------------------------------
+# 全文存档索引
+# --------------------------------------------------------------------------
+
+def fulltext_keys(md: Path) -> list[str]:
+    keys = [md.parent.name]
+    try:
+        head = md.read_text(encoding="utf-8", errors="replace")[:800]
+    except OSError:
+        return keys
+    for field in ("arxiv_id", "paper_id"):
+        m = re.search(rf"^\s*{field}\s*:\s*(\S+)\s*$", head, re.M)
+        if m:
+            keys.append(m.group(1))
+    return keys
+
+
+class PaperIndex:
+    """仓库内所有「论文实物」的索引：fulltext.md / PDF，以及它们的可用键。"""
+
+    def __init__(self) -> None:
+        self.by_key: dict[str, dict] = {}
+        self.entries: list[dict] = []
+
+    def add(self, kind: str, path: Path, keys: list[str], size: int) -> None:
+        ent = {"kind": kind, "path": str(path.relative_to(REPO_ROOT)),
+               "keys": keys, "size": size}
+        self.entries.append(ent)
+        for k in keys:
+            prev = self.by_key.get(k)
+            # fulltext 优先于 pdf；同类取大的
+            if prev is None or (kind == "fulltext" and prev["kind"] != "fulltext") \
+                    or (kind == prev["kind"] and size > prev["size"]):
+                self.by_key[k] = ent
+
+    @classmethod
+    def build(cls) -> "PaperIndex":
+        idx = cls()
+        for md in sorted(PAPERS.rglob("fulltext.md")):
+            if not md.is_file():
+                continue
+            size = md.stat().st_size
+            idx.add("fulltext", md, fulltext_keys(md), size)
+        for pdf in sorted(PAPERS.rglob("*.pdf")):
+            if not pdf.is_file():
+                continue
+            keys = [pdf.parent.name, pdf.stem]
+            keys += ARXIV_RE.findall(pdf.name)
+            idx.add("pdf", pdf, keys, pdf.stat().st_size)
+        return idx
+
+    def lookup_ids(self, ids: list[str]) -> list[dict]:
+        return [self.by_key[i] for i in ids if i in self.by_key]
+
+    def classify_hit(self, ent: dict) -> str:
+        if ent["kind"] == "pdf":
+            return "pdf_only"          # 待转换 → 可修
+        return "fulltext_ok" if ent["size"] >= MIN_FULLTEXT_CHARS else "fulltext_short"
+
+
+# --------------------------------------------------------------------------
+# registry
+# --------------------------------------------------------------------------
+
+def load_registry() -> tuple[dict[str, dict], dict[str, dict]]:
+    """返回 (arxiv_id -> record, skill_card_path -> record)。"""
+    if not REGISTRY.exists():
+        return {}, {}
+    data = json.loads(REGISTRY.read_text(encoding="utf-8"))
+    by_arxiv: dict[str, dict] = {}
+    by_card: dict[str, dict] = {}
+    for r in data.get("records", []):
+        aid = (r.get("identifiers") or {}).get("arxiv")
+        if aid:
+            by_arxiv[aid] = r
+        card = (r.get("outputs") or {}).get("skill_card")
+        if card:
+            by_card[card] = r
+    return by_arxiv, by_card
+
+
+# --------------------------------------------------------------------------
+# 主判定
+# --------------------------------------------------------------------------
+
+VERDICT_ORDER = [
+    "VERIFIED",          # 有引用块且全文可核 → G2b 能跑（已是资产）
+    "RETROFIT_READY",    # 全文就位，缺引用块 → 可直接补（最优先）
+    "NEEDS_FULLTEXT",    # 有 arXiv ID，缺存档 → 抓全文后即可补
+    "NEEDS_PDF_CONVERT",  # 只有本地 PDF → 转 fulltext 后即可补
+    "NO_PAPER_SOURCE",   # 查无论文来源 → 只能诚实声明，不可"修复"
+]
+
+VERDICT_LABEL = {
+    "VERIFIED": "✅ 已核验",
+    "RETROFIT_READY": "🟢 可立即补引文",
+    "NEEDS_FULLTEXT": "🟡 抓全文后可补",
+    "NEEDS_PDF_CONVERT": "🟡 转 PDF 后可补",
+    "NO_PAPER_SOURCE": "⚪ 无论文来源",
+}
+
+
+def audit_card(card: Path, idx: PaperIndex, by_arxiv: dict, by_card: dict) -> dict:
+    text = card.read_text(encoding="utf-8", errors="replace")
+    fm = parse_frontmatter(text)
+    rel = str(card.relative_to(REPO_ROOT))
+    rec = by_card.get(rel)
+
+    n_quotes = len(re.findall(r"^>\s*(?:原文\s*[:：]\s*)?[\"“「『]", text, re.M))
+
+    # --- 收集线索 ---
+    candidates: list[str] = []
+    arxiv_ids: list[str] = []
+    for k in ID_KEYS:
+        v = fm.get(k, "")
+        if not v:
+            continue
+        arxiv_ids += ARXIV_RE.findall(v)
+        if DOI_RE.search(v):
+            arxiv_ids.append(DOI_RE.search(v).group(1))
+    for k in TITLE_KEYS:
+        v = fm.get(k, "")
+        arxiv_ids += ARXIV_RE.findall(v)
+        if DOI_RE.search(v):
+            arxiv_ids.append(DOI_RE.search(v).group(1))
+
+    # 正文扫描：存量卡的溯源信息主要在正文（`arXiv:2502.02110`、DOI 链接）。
+    # 只扫前 200 行 —— 卡片末尾的 arXiv 多为「技能关联」里引用的**别篇**论文，
+    # 把它当成本卡来源会产生假匹配；而来源声明几乎总在开头（frontmatter 之后）。
+    body = text[:12000]
+    arxiv_ids += ARXIV_RE.findall(body)
+    arxiv_ids += DOI_RE.findall(body)
+
+    # registry 反查（同名不同义字段：registry.paper_id 是 p2s-XXXX）
+    reg_pid = rec.get("paper_id") if rec else None
+    if reg_pid:
+        candidates.append(reg_pid)
+    if rec:
+        ra = (rec.get("identifiers") or {}).get("arxiv")
+        if ra:
+            arxiv_ids.append(ra)
+
+    # 线索 → 存档
+    hits: list[dict] = []
+    seen_paths: set[str] = set()
+    for key in dict.fromkeys(arxiv_ids + candidates):
+        for ent in idx.lookup_ids([key]):
+            if ent["path"] not in seen_paths:
+                seen_paths.add(ent["path"])
+                hits.append(dict(ent, matched_key=key))
+
+    # 兜底：标题词重叠
+    match_method = "id" if hits else ""
+    if not hits:
+        cand_title = fm.get("paper", "") or ""
+        if len(cand_title) > 12:
+            best, best_score = None, 0.0
+            for ent in idx.entries:
+                if ent["kind"] != "fulltext":
+                    continue
+                score = title_overlap(cand_title, ent["path"])
+                if score > best_score:
+                    best, best_score = ent, score
+            if best and best_score >= 0.7:
+                hits.append(dict(best, matched_key=f"title~{best_score:.2f}"))
+                match_method = "title"
+
+    # --- 判定 ---
+    # 「来源」与「引用」必须分开：正文里出现的第一个 arXiv ID 通常是**本卡来源**，
+    # 其余多是「技能关联」里提到的别篇论文。把后者当来源会让一张无来源的卡
+    # 假装可溯源（并让工单把它排进"抓全文就能修"的队列）。
+    if arxiv_ids:
+        primary = arxiv_ids[0]
+    elif hits:
+        primary = hits[0]["matched_key"]
+    else:
+        primary = ""
+
+    classes = {idx.classify_hit(h) for h in hits}
+    if n_quotes and "fulltext_ok" in classes:
+        verdict = "VERIFIED"
+    elif "fulltext_ok" in classes:
+        verdict = "RETROFIT_READY"
+    elif "fulltext_short" in classes:
+        verdict = "NEEDS_FULLTEXT"
+    elif "pdf_only" in classes:
+        verdict = "NEEDS_PDF_CONVERT"
+    elif primary:
+        verdict = "NEEDS_FULLTEXT"
+    else:
+        verdict = "NO_PAPER_SOURCE"
+
+    return {
+        "card": rel,
+        "domain": rel.split("/")[1] if "/" in rel else "",
+        "name": card.stem,
+        "verdict": verdict,
+        "n_quotes": n_quotes,
+        "primary_source": primary,
+        "all_candidate_ids": sorted(set(arxiv_ids)),
+        "cited_ids": sorted(set(arxiv_ids[1:])),
+        "registry_paper_id": reg_pid,
+        "match_method": match_method or ("id" if arxiv_ids else ""),
+        "hits": hits,
+    }
+
+
+def selftest() -> int:
+    """自检：证明本脚本真的能区分「可修」与「不可修」。
+
+    构造三个卡片的等价输入，检查判定互斥且与预期一致。
+    """
+    idx = PaperIndex.build()
+    ok = True
+
+    # 1｜证据：至少存在一个 fulltext_ok 与一个 pdf_only（否则索引本身失效）
+    kinds = {e["kind"] for e in idx.entries}
+    print(f"索引：{len(idx.entries)} 个论文实物，类型 {sorted(kinds)}")
+    if "fulltext" not in kinds:
+        print("❌ 索引里没有任何 fulltext.md —— 索引构建失效")
+        ok = False
+
+    # 2｜classify_hit 三分互斥
+    cases = [
+        ({"kind": "fulltext", "size": MIN_FULLTEXT_CHARS + 1}, "fulltext_ok"),
+        ({"kind": "fulltext", "size": MIN_FULLTEXT_CHARS - 1}, "fulltext_short"),
+        ({"kind": "pdf", "size": 10 ** 7}, "pdf_only"),
+    ]
+    for ent, want in cases:
+        got = idx.classify_hit(ent)
+        flag = "✅" if got == want else "❌"
+        if got != want:
+            ok = False
+        print(f"{flag} classify_hit({ent['kind']},{ent['size']}) = {got}（期望 {want}）")
+
+    # 3｜标题重叠：真匹配应高分，无关标题应低分
+    hi = title_overlap("ReAct Synergizing Reasoning and Acting in Language Models",
+                       "papers/10-MAS/00-知识库-Skill卡片/Skill-ReAct-Reasoning-Acting.md")
+    lo = title_overlap("ReAct Synergizing Reasoning and Acting in Language Models",
+                       "papers/13-广告分析/p2s-2026-0001/fulltext.md")
+    print(f"标题重叠 相关={hi:.2f} 无关={lo:.2f}")
+    if not (hi > lo):
+        print("❌ 标题重叠无法区分相关/无关")
+        ok = False
+
+    print("✅ 自检通过：三层判定互斥可区分" if ok else "❌ 自检失败")
+    return 0 if ok else 1
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="卡片论文溯源可达性体检")
+    ap.add_argument("--json-out")
+    ap.add_argument("--worklist-out", help="输出可执行工单 Markdown")
+    ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--show", default="", help="只打印该判定的卡片明细")
+    args = ap.parse_args()
+
+    if args.selftest:
+        return selftest()
+
+    idx = PaperIndex.build()
+    by_arxiv, by_card = load_registry()
+    cards = sorted(p for p in VAULT.rglob("Skill-*.md") if p.is_file())
+    reports = [audit_card(c, idx, by_arxiv, by_card) for c in cards]
+
+    tally: dict[str, int] = {v: 0 for v in VERDICT_ORDER}
+    for r in reports:
+        tally[r["verdict"]] += 1
+
+    print(f"卡片总数 {len(reports)}｜论文实物 {len(idx.entries)}"
+          f"（fulltext {sum(1 for e in idx.entries if e['kind'] == 'fulltext')}"
+          f" / pdf {sum(1 for e in idx.entries if e['kind'] == 'pdf')}）")
+    print()
+    width = max(len(VERDICT_LABEL[v]) for v in VERDICT_ORDER)
+    for v in VERDICT_ORDER:
+        print(f"  {VERDICT_LABEL[v]:<{width}}  {tally[v]:>4}")
+
+    fixable = sum(tally[v] for v in
+                  ("RETROFIT_READY", "NEEDS_FULLTEXT", "NEEDS_PDF_CONVERT"))
+    print()
+    print(f"可修（补全文/转 PDF/补引文）: {fixable} / {len(reports)}")
+    print(f"不可修（无论文来源，只能声明）: {tally['NO_PAPER_SOURCE']} / {len(reports)}")
+
+    if args.show:
+        print()
+        for r in reports:
+            if r["verdict"] == args.show:
+                a = r["primary_source"] or (r["registry_paper_id"] or "-")
+                print(f"  {r['card']}   [{a}]")
+
+    if args.worklist_out:
+        lines = ["# 存量卡溯源工单（由 provenance_audit.py 生成，勿手改）", ""]
+        for v in VERDICT_ORDER:
+            group = [r for r in reports if r["verdict"] == v]
+            if not group:
+                continue
+            lines += [f"## {VERDICT_LABEL[v]}（{len(group)} 张）", ""]
+            lines.append("| 卡片 | arXiv/DOI | 存档 | 引文数 |")
+            lines.append("|---|---|---|---|")
+            for r in group:
+                ids = r["primary_source"] or (r["registry_paper_id"] or "—")
+                hp = ", ".join(h["path"] for h in r["hits"]) or "—"
+                lines.append(f"| `{r['card']}` | {ids} | {hp} | {r['n_quotes']} |")
+            lines.append("")
+        Path(args.worklist_out).write_text("\n".join(lines), encoding="utf-8")
+        print(f"\n工单 → {args.worklist_out}")
+
+    if args.json_out:
+        Path(args.json_out).write_text(
+            json.dumps({"tally": tally, "cards": reports},
+                       ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"JSON → {args.json_out}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

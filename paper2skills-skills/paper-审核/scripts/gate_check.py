@@ -115,6 +115,22 @@ FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 QUOTE_RE = re.compile(r"^>\s*(?:原文\s*[:：]\s*)?[\"“「『](.+?)[\"”」』]\s*$", re.M | re.S)  # 与 quote_check.py 保持一致
 
 # ---------------------------------------------------------------------------
+# G2：证据基础分类（决定「该修」还是「修不了」）
+# ---------------------------------------------------------------------------
+# `evidence_basis` 取值（写进 frontmatter，与 provenance_audit.py 的判定对齐）：
+#   paper-verbatim   有论文来源，且已有逐字引文        → 按有来源卡审查
+#   paper-traceable  有论文来源，尚未补逐字引文        → 按有来源卡审查（会红，且**应该**红）
+#   author-practice  无论文来源（作者经验/行业实践）   → UNVERIFIABLE，不阻塞
+#   mixed            多篇论文 + 经验混写               → 按有来源卡审查
+#
+# ⚠️ `author-practice` 是**待核验的声明**，不是免检令牌：
+# 若卡片里同时存在 arXiv/DOI，判 G2-BASIS-CONTRADICTION 红灯（见 card_has_paper_source）。
+# 否则「加一行 frontmatter」就成了全库洗白手段 —— 与本项目已封堵的 7 个后门同类。
+AUTHOR_PRACTICE_BASIS = {"author-practice", "practice", "experience"}
+ARXIV_ANY_RE = re.compile(r"\b(?:arXiv\s*[:：]?\s*)?(\d{4}\.\d{4,5})(?:v\d+)?\b", re.I)
+DOI_ANY_RE = re.compile(r"\b10\.\d{4,9}/[^\s（()\[\]\"'<>]+")
+
+# ---------------------------------------------------------------------------
 # G3：空话黑名单（业务场景段出现这些且无具体动作 → 判空泛）
 # ---------------------------------------------------------------------------
 VAGUE_PHRASES = (
@@ -160,6 +176,15 @@ class GateResult:
     passed: bool
     findings: list[Finding] = field(default_factory=list)
     metrics: dict = field(default_factory=dict)
+    # PASS | FAIL | UNVERIFIABLE
+    #
+    # ⚠️ 为什么需要第三个结局（2026-09-12，G2 根因修复）：
+    # 原设计只有「通过 / 红灯」两态，于是「这张卡**从设计上就没有论文来源**」
+    # 被记成「这张卡有缺陷」—— 两者**补救动作相反**：前者要改判定口径，
+    # 后者要改卡片。混为一谈会让 56 张人写的经验卡永远挂在红灯队列里，
+    # 而基线数字里「通过率 11%」同时混进了两类完全不同的东西。
+    # 与 K1 的 `ORPHAN_DEP` → `MIGRATED_DEP` 修正是同一个错，只是发生在另一层。
+    outcome: str = "PASS"
 
     def add(self, level: str, code: str, message: str, evidence: str = "") -> None:
         self.findings.append(Finding(level, code, message, evidence))
@@ -424,12 +449,71 @@ def strip_evidence(text: str) -> str:
     return EVIDENCE_LINE_RE.sub("\n", text)
 
 
+# 尾部「参考论文 / References」区：那里的 arXiv ID 是**延伸阅读**，不是本卡的来源声明。
+# 实测：01-因果推断/Skill-Intelligent-Attribution-Causal-Forest 的正文里
+# 「参考论文」出现在第 13853 字符（卡片总长 14069），若不去掉这段，
+# 一张纯经验卡会因为列了几篇参考论文而被迫按「有来源卡」审查 —— 判错了对象。
+_REF_SECTION_RE = re.compile(
+    r"^#{1,4}\s*(参考论文|参考文献|References|Bibliography|延伸阅读)\s*$",
+    re.M | re.I,
+)
+
+
+def strip_reference_section(text: str) -> str:
+    """截掉尾部参考区（保留其余正文）。"""
+    m = _REF_SECTION_RE.search(text)
+    return text[:m.start()] if m else text
+
+
+def card_has_paper_source(text: str, fm: dict) -> bool:
+    """这张卡**有没有**把某篇论文声明为**自己的来源**？
+
+    判据是「卡里存在 arXiv ID / DOI / 论文标题字段」——注意：
+    - frontmatter 的 `source: human+ai` 是**文档来源**（谁写的）不是论文来源，
+      不在此列。实测 67 张卡有 `source:` 字段，极易被误当溯源字段。
+    - 尾部「参考论文」区里的 arXiv ID 是**延伸阅读**，先剥掉再判。
+
+    ⚠️ 本函数**只回答「有没有论文可指」**，不回答「指得对不对」：
+    `paper_id: 9999.99999`（不存在的 ID）也会返回 True。
+    那是**该修的缺陷**，故意留给 G2 的红灯去抓 —— 若在这里顺手放行，
+    就等于给「编一个 arXiv ID 来换免检」开了后门。
+    """
+    if (fm.get("paper_id") or "").strip():
+        return True
+    for k in ("paper", "arxiv", "arxiv_id", "doi", "url"):
+        v = (fm.get(k) or "").strip()
+        if v and (ARXIV_ANY_RE.search(v) or DOI_ANY_RE.search(v)
+                  or (k == "paper" and len(v) > 12)):
+            return True
+    # 正文头部：存量卡的来源声明多在正文（`**论文来源**: ... (arXiv:2408.05353)`）
+    body = strip_reference_section(text)
+    return bool(ARXIV_ANY_RE.search(body) or DOI_ANY_RE.search(body))
+
+
 def gate_g2(card: Path, text: str) -> GateResult:
     rel = rel_to_repo(card)
     g = GateResult("G2", rel, True)
     # 先剥代码（代码里的数字不是事实断言），再剥证据语法行（引文是证据不是断言）
     prose = strip_evidence(strip_code(text))
     fm = parse_frontmatter(text)
+
+    # --- 证据基础分类（决定本卡是「该修」还是「修不了」）-------------------
+    # `evidence_basis: author-practice` = 作者经验卡，**从设计上就没有论文来源**。
+    # 对它判「数字无出处」是**判错了对象** —— 补救动作是给它加声明，
+    # 不是给它找论文。所以这类卡走 UNVERIFIABLE，且不产生阻塞红灯。
+    basis = (fm.get("evidence_basis") or fm.get("provenance") or "").strip().lower()
+    declared_practice = basis in AUTHOR_PRACTICE_BASIS
+    has_source = card_has_paper_source(text, fm)
+
+    if declared_practice and not has_source:
+        g.outcome = "UNVERIFIABLE"
+    elif declared_practice and has_source:
+        # 声明与实物矛盾：卡里明明有 arXiv ID 却自称「无论文来源」。
+        # 这**不能**静默采信声明 —— 否则加一行 frontmatter 就能全库免检。
+        g.add("RED", "G2-BASIS-CONTRADICTION",
+              f"frontmatter 声明 `evidence_basis: {basis}`（无论文来源），"
+              f"但卡片内存在 arXiv/DOI/论文标题 —— 声明与实物矛盾，按有来源卡审查")
+        has_source = True
 
     # --- G2b 先跑：逐字核验引用块 ---------------------------------------
     # ⚠️ 顺序很关键：必须**先**判定哪些引用是真的，**再**决定它们能否充当出处。
@@ -582,13 +666,28 @@ def gate_g2(card: Path, text: str) -> GateResult:
               f"{qrep['n_quotes']} 条引文全部逐字命中论文全文")
 
     if not ev_sources:
-        g.add("RED", "G2-NO-EVIDENCE-CHAIN",
-              "卡片内既无 `> 原文：\"...\"` 引用块，也无 evidence.md —— 无任何可追溯的出处")
-    for token, ctx in red[:40]:
-        g.add("RED", "G2-UNSOURCED-METRIC",
-              f"高价值断言 `{token}` 无出处", evidence=f"…{ctx}…")
-    if len(red) > 40:
-        g.add("RED", "G2-TRUNCATED", f"另有 {len(red) - 40} 条高价值断言无出处（已截断展示）")
+        if g.outcome == "UNVERIFIABLE":
+            # ⚠️ 这里不是「放行」，而是**换了问题**：本卡没有任何论文来源，
+            # 「数字有没有出处」这一问题对它无定义。它的正确审查项是
+            # 「有没有声明自己是经验卡」+「有没有伪装成论文结论」。
+            g.add("INFO", "G2-UNVERIFIABLE-NO-SOURCE",
+                  f"卡片声明 `evidence_basis: {basis}` 且无 arXiv/DOI —— "
+                  f"按**作者经验卡**处理，{len(red) + len(yellow)} 处数字**无法核验**"
+                  f"（非缺陷，但也不构成证据）",
+                  evidence="若这些数字实际来自某篇论文，请补 paper_id 与 ⑥ 段引文，"
+                           "本卡会自动转为有来源卡审查")
+        else:
+            g.add("RED", "G2-NO-EVIDENCE-CHAIN",
+                  "卡片内既无 `> 原文：\"...\"` 引用块，也无 evidence.md —— 无任何可追溯的出处")
+    # 无法核验的卡不再逐条报「数字无出处」：那是同一件事的 N 次重复，
+    # 会把 56 张卡的红灯数（916 条）淹没真正的缺陷信号。
+    report_unsourced = g.outcome != "UNVERIFIABLE"
+    if report_unsourced:
+        for token, ctx in red[:40]:
+            g.add("RED", "G2-UNSOURCED-METRIC",
+                  f"高价值断言 `{token}` 无出处", evidence=f"…{ctx}…")
+        if len(red) > 40:
+            g.add("RED", "G2-TRUNCATED", f"另有 {len(red) - 40} 条高价值断言无出处（已截断展示）")
     for token, ctx in yellow[:10]:
         g.add("YELLOW", "G2-UNSOURCED-GENERAL", f"一般数字 `{token}` 无出处",
               evidence=f"…{ctx}…")
@@ -609,7 +708,19 @@ def gate_g2(card: Path, text: str) -> GateResult:
     # 只有「高价值断言全部有出处」**且**「无伪造引文」才算 G2 绿。
     # 必须按 findings 统一判定：早期版本写死 `len(red) == 0`，
     # 会在 G2b 追加红灯后仍报绿（门禁 bug，已修）。
-    g.passed = not any(f.level == "RED" for f in g.findings)
+    has_red = any(f.level == "RED" for f in g.findings)
+    g.passed = not has_red
+    # --- 三态收敛：UNVERIFIABLE 只有当它**确实没有红灯**时才成立 -------------
+    # ⚠️ 顺序不能反：先算 passed，再决定 outcome。
+    # 若先无条件把 outcome 设成 UNVERIFIABLE，一张「声明无论文来源但引文伪造」
+    # 的卡会被记成「无法核验」而不是「引文伪造」—— 那正是本门禁要防的事。
+    if g.outcome == "UNVERIFIABLE" and has_red:
+        g.outcome = "FAIL"
+    elif g.outcome != "UNVERIFIABLE":
+        g.outcome = "PASS" if g.passed else "FAIL"
+    g.metrics["evidence_basis"] = basis or "(未声明)"
+    g.metrics["has_paper_source"] = has_source
+    g.metrics["outcome"] = g.outcome
     return g
 
 
@@ -656,7 +767,64 @@ def gate_g3(card: Path, text: str) -> GateResult:
               f"仅关联 {g.metrics['skill_relations']} 张卡片（要求 ≥2）")
 
     g.passed = not any(f.level == "RED" for f in g.findings)
+    g.outcome = "PASS" if g.passed else "FAIL"
     return g
+
+
+def selftest() -> int:
+    """自证 G2 三态判定可信 —— 门禁必须先自证，再谈被门禁对象。
+
+    五个用例，其中**用例 3 与 5 是防「新口径变成新后门」**：
+    新增一个「不阻塞」的结局，本身就是一次放水风险。必须同时锁定
+    「什么情况下不许给 UNVERIFIABLE」，否则加一行 frontmatter 就能全库免检。
+    """
+    import tempfile
+
+    cases = [
+        # (名称, frontmatter 追加行, 正文, 期望 outcome, 期望有红灯)
+        ("1 有来源卡未声明", "paper_id: 2606.26690\n",
+         "ROI 提升 **42.7%**，覆盖 2,300 万用户。\n> Skill-A\n> Skill-B",
+         "FAIL", True),
+        ("2 经验卡已声明", "evidence_basis: author-practice\n",
+         "经验做法：先按品类分层再算 ROI，通常能省 **30%** 人力。\n> Skill-A\n> Skill-B",
+         "UNVERIFIABLE", False),
+        ("3 声明与实物矛盾", "evidence_basis: author-practice\npaper_id: 2606.26690\n",
+         "ROI 提升 **42.7%**。\n> Skill-A\n> Skill-B",
+         "FAIL", True),
+        ("4 伪造引文不得因声明而免检",
+         "evidence_basis: author-practice\n",
+         'ROI 提升 **42.7%**。\n\n> 原文:"our framework improves incremental ROAS by 42.7% across all markets"\n> 出处：2606.26690 §1\n',
+         "FAIL", True),
+        ("5 有来源卡给足证据", "paper_id: 2606.26690\n",
+         "定性结论，不带数字。\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "PASS", False),
+    ]
+
+    ok = True
+    with tempfile.TemporaryDirectory() as td:
+        for name, fmx, body, want_outcome, want_red in cases:
+            p = Path(td) / "Skill-Selftest.md"
+            p.write_text(f"---\ntitle: selftest\n{fmx}---\n\n{body}\n", encoding="utf-8")
+            r = gate_g2(p, p.read_text(encoding="utf-8"))
+            has_red = any(f.level == "RED" for f in r.findings)
+            good = (r.outcome == want_outcome) and (has_red == want_red)
+            ok = ok and good
+            print(f"{'✅' if good else '❌'} {name}: outcome={r.outcome}"
+                  f"（期望 {want_outcome}）红灯={has_red}（期望 {want_red}）")
+
+    # 用例 2 的正确性还依赖一个前提：经验卡确实被判成「无论文来源」。
+    # 若 card_has_paper_source 有缺陷（例如把 `source: human+ai` 当论文来源），
+    # 用例 2 会退化成 FAIL 而被上面的断言抓到 —— 但把前提单独打印出来，
+    # 能让人一眼看出失败是「判定错」还是「用例本身构造错了」。
+    probe = "本卡为人写的经验总结。\n> Skill-A\n> Skill-B"
+    print(f"   前提核对：无 arXiv/DOI 的正文判为无论文来源 = "
+          f"{not card_has_paper_source(probe, {'source': 'human+ai'})}")
+
+    print("✅ 自检通过：G2 三态互斥，且『无论文来源』不能靠声明洗白伪造引文" if ok
+          else "❌ 自检失败：G2 三态判定不可信")
+    return 0 if ok else 1
 
 
 # ---------------------------------------------------------------------------
@@ -699,17 +867,41 @@ def _load_quote_check():
 
 
 def summarise(gates: list[GateResult], name: str) -> dict:
-    passed = sum(1 for g in gates if g.passed)
+    """按 outcome 三态汇总。
+
+    ⚠️ **绝不把 UNVERIFIABLE 并进分母算通过率**（2026-09-12）。
+    与「Cited but Not Verified」的教训同源：合成一个数字会把最弱的那维平均掉。
+    这里更糟 —— 它会把「无论文来源」平均成「通过」，于是全库通过率
+    会因为**多了 56 张没法验的卡**而看起来变好。
+    """
+    counts = {"passed": 0, "failed": 0, "unverifiable": 0}
+    for g in gates:
+        if g.outcome == "UNVERIFIABLE":
+            counts["unverifiable"] += 1
+        elif g.passed:
+            counts["passed"] += 1
+        else:
+            counts["failed"] += 1
+
     reds = sum(1 for g in gates for f in g.findings if f.level == "RED")
     yellows = sum(1 for g in gates for f in g.findings if f.level == "YELLOW")
-    return {
+    # 「可核验分母」= 排除无法核验的卡；通过率只在它之上计算
+    verifiable = counts["passed"] + counts["failed"]
+    out = {
         "gate": name,
         "cards_checked": len(gates),
-        "cards_passed": passed,
-        "pass_rate_pct": round(passed / len(gates) * 100, 1) if gates else 0.0,
+        "cards_passed": counts["passed"],
+        "cards_failed": counts["failed"],
+        "cards_unverifiable": counts["unverifiable"],
+        "verifiable_denominator": verifiable,
+        "pass_rate_pct": round(counts["passed"] / verifiable * 100, 1) if verifiable else 0.0,
         "red_findings": reds,
         "yellow_findings": yellows,
     }
+    # 兼容旧消费者（sync.py / 报告脚本）读的键名
+    out["pass_rate_over_all_cards_pct"] = (
+        round(counts["passed"] / len(gates) * 100, 1) if gates else 0.0)
+    return out
 
 
 def main() -> int:
@@ -717,11 +909,16 @@ def main() -> int:
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--card", type=Path)
     g.add_argument("--all", action="store_true")
+    g.add_argument("--selftest", action="store_true",
+                   help="自证 G2 三态判定（含『声明不得洗白伪造引文』反例）")
     ap.add_argument("--k1", type=Path, default=None, help="K1 报告 JSON（verify_skill_code.py 产出）")
     ap.add_argument("--outdir", type=Path, default=None, help="三份 gate_*.json 的输出目录")
     ap.add_argument("--only", choices=["G1", "G2", "G3"], default=None)
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
+
+    if args.selftest:
+        return selftest()
 
     cards = [args.card] if args.card else collect_cards()
     k1_index = load_k1(args.k1)
@@ -745,8 +942,13 @@ def main() -> int:
         s = summarise(lst, name)
         summaries.append(s)
         if not args.quiet:
-            print(f"\n{'='*70}\n{name} 门禁：{s['cards_passed']}/{s['cards_checked']} 通过 "
-                  f"({s['pass_rate_pct']}%)  红灯 {s['red_findings']}  黄灯 {s['yellow_findings']}\n{'='*70}")
+            print(f"\n{'='*70}\n{name} 门禁：{s['cards_passed']}/{s['verifiable_denominator']} 通过 "
+                  f"({s['pass_rate_pct']}%，可核验分母)"
+                  f"　红灯 {s['red_findings']}　黄灯 {s['yellow_findings']}")
+            if s["cards_unverifiable"]:
+                print(f"         另有 {s['cards_unverifiable']} 张**无法核验**"
+                      f"（无论文来源，不计入上述分母 —— 既不通过也不失败）")
+            print("=" * 70)
             for r in sorted(lst, key=lambda x: -sum(1 for f in x.findings if f.level == "RED"))[:5]:
                 reds = [f for f in r.findings if f.level == "RED"]
                 if reds:

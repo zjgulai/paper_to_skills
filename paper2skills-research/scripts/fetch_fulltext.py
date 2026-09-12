@@ -439,6 +439,121 @@ BATCHES = {
 }
 
 
+# --------------------------------------------------------------------------
+# 存量卡补全文（PHASE4：G2 根因修复）
+# --------------------------------------------------------------------------
+#
+# 为什么需要这两个入口：存量卡的 G2 红灯有 2,655 条，而"补引文"这一步的
+# **前置条件**是「论文全文在仓库里且可被 quote_check 索引到」。存量卡缺的
+# 正是这个前置条件，有两类形态：
+#   1. 论文 PDF 就在本地（52 个），但从未转成 fulltext.md → `--pdf`
+#   2. 卡片写了 arXiv ID，但仓库没有存档 → `--from-worklist`
+#
+# ⚠️ 落档用**卡片所在域**，不用 registry 的 domain：
+# 存量卡多数不在 registry 里（registry 只有 45 条，卡片有 146 张），
+# 走 registry 会把它们全落到 `papers/_unfiled/`，与卡片目录脱节。
+# 而 quote_check 是按 **paper_id 匹配**找底本，与目录位置无关，所以放对域更可读。
+
+def convert_pdf_mode(src_pdf: Path, domain: str, paper_id: str,
+                     out_root: Path, verbose: bool = True) -> tuple[bool, str]:
+    """把已存在的本地 PDF 转成 fulltext.md（不做网络请求）。
+
+    复用 `_unwrap_pdf_lines`：PDF 抽取的句内硬换行若不接回，
+    quote_check 的「最长连续匹配」会把整句引文误判成 FABRICATED —— **假红灯**。
+    """
+    log = (lambda *a: print(*a)) if verbose else (lambda *a: None)
+    if not src_pdf.is_file():
+        return False, f"源 PDF 不存在: {src_pdf}"
+    proc = subprocess.run(["pdftotext", str(src_pdf), "-"],
+                          capture_output=True, text=True)
+    if proc.returncode != 0 or not proc.stdout.strip():
+        return False, f"pdftotext 失败或无文本层（可能是扫描件）: {proc.stderr.strip()[:120]}"
+    raw = proc.stdout
+    md = _unwrap_pdf_lines(raw)
+    if len(md) < 5000:
+        return False, f"抽取后仅 {len(md)} 字符，不足以核验引文"
+
+    outdir = out_root / domain / paper_id
+    outdir.mkdir(parents=True, exist_ok=True)
+    header = (
+        f"<!-- 自动生成 by paper2skills-research/scripts/fetch_fulltext.py --pdf\n"
+        f"     arxiv_id : {paper_id}\n"
+        f"     paper_id : {paper_id}\n"
+        f"     source   : {src_pdf.relative_to(REPO_ROOT)}\n"
+        f"     fulltext : 是（本地 PDF 转换）\n"
+        f"     用途     : evidence.md 的 `> 原文:\"...\"` 引用块的出处核验底本\n"
+        f"-->\n\n"
+    )
+    dst = outdir / "fulltext.md"
+    dst.write_text(header + md, encoding="utf-8")
+    log(f"  ✅ {src_pdf.name} → {dst.relative_to(REPO_ROOT)}  "
+        f"（raw {len(raw)} → 接行 {len(md)} 字符）")
+    return True, str(dst.relative_to(REPO_ROOT))
+
+
+def _run_from_worklist(worklist: Path, only: set[str], out_root: Path,
+                       dry_run: bool, verbose: bool) -> int:
+    """读 provenance_audit 的 JSON，批量补齐可修卡的全文存档。"""
+    data = json.loads(worklist.read_text(encoding="utf-8"))
+    cards = data.get("cards", [])
+    todo = [c for c in cards if c["verdict"] in ("NEEDS_PDF_CONVERT", "NEEDS_FULLTEXT")]
+    if only:
+        todo = [c for c in todo if c["verdict"] in only]
+    print(f"工单: {len(todo)} 张卡待补全文（来自 {worklist.name}）")
+
+    ok = fail = 0
+    failures: list[str] = []
+    for c in todo:
+        dom = c["domain"]
+        pid = c["primary_source"] or (c.get("registry_paper_id") or "")
+        if not pid or pid.startswith("p2s-"):
+            failures.append(f"{c['card']}: 无可用论文 ID（primary_source 为空）")
+            fail += 1
+            continue
+        if dry_run:
+            print(f"  [dry-run] {c['verdict']:<18} {pid:<14} → papers/{dom}/{pid}/")
+            continue
+
+        if c["verdict"] == "NEEDS_PDF_CONVERT":
+            pdf = next((REPO_ROOT / h["path"] for h in c.get("hits", [])
+                        if h["kind"] == "pdf"), None)
+            if pdf is None:
+                failures.append(f"{c['card']}: 工单标了 pdf_only 但 hits 里没有 pdf")
+                fail += 1
+                continue
+            good, msg = convert_pdf_mode(pdf, dom, pid, out_root, verbose)
+            if good:
+                ok += 1
+            else:
+                failures.append(f"{c['card']}: {msg}")
+                fail += 1
+            continue
+
+        # NEEDS_FULLTEXT：走网络抓取
+        res = fetch(pid, verbose=verbose)
+        if not res["markdown"]:
+            failures.append(f"{c['card']} ({pid}): {res['reason']}")
+            fail += 1
+            continue
+        dst = archive(pid, dom, pid, res["markdown"], res["source"], res["ok"])
+        if res["ok"]:
+            ok += 1
+        else:
+            # 仍落档（摘要也比没有强），但必须登记为降级 —— 摘要存档过不了
+            # quote_check 的 MIN_FULLTEXT_CHARS，所以它**不能**算成功。
+            failures.append(f"{c['card']} ({pid}): {res['reason']}")
+            fail += 1
+        print(f"  → {dst.relative_to(REPO_ROOT)}  ({len(res['markdown'])} 字符)")
+        time.sleep(THROTTLE_SECONDS)
+
+    print(f"\n完成: 成功 {ok}，失败/降级 {fail}")
+    if failures:
+        print("失败明细:")
+        for f in failures:
+            print("  -", f)
+    return 1 if fail else 0
+
+
 def _registry_lookup() -> dict[str, dict]:
     if not REGISTRY.exists():
         return {}
@@ -461,7 +576,37 @@ def main() -> int:
     ap.add_argument("--paper-id", help="registry paper_id，如 p2s-2026-0001")
     ap.add_argument("--stdout", action="store_true", help="只打印，不落盘")
     ap.add_argument("--quiet", action="store_true")
+    # --- PHASE4 存量卡补全文 ---
+    ap.add_argument("--from-worklist", metavar="JSON",
+                    help="读 provenance_audit.py 的 --json-out，批量补全文")
+    ap.add_argument("--only", action="append", default=[],
+                    choices=["NEEDS_PDF_CONVERT", "NEEDS_FULLTEXT"],
+                    help="只处理工单里的某类（可重复）")
+    ap.add_argument("--pdf", metavar="PATH",
+                    help="把本地 PDF 转成 fulltext.md（不抓网络）")
+    ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+
+    if args.from_worklist:
+        wl = Path(args.from_worklist)
+        if not wl.is_absolute():
+            wl = REPO_ROOT / wl
+        if not wl.is_file():
+            ap.error(f"工单不存在: {wl}")
+        return _run_from_worklist(wl, set(args.only), PAPERS_DIR,
+                                  args.dry_run, not args.quiet)
+
+    if args.pdf:
+        if not (args.domain and args.paper_id):
+            ap.error("--pdf 需要同时给 --domain 与 --paper-id")
+        src = Path(args.pdf)
+        if not src.is_absolute():
+            src = REPO_ROOT / src
+        good, msg = convert_pdf_mode(src, args.domain, args.paper_id,
+                                     PAPERS_DIR, not args.quiet)
+        if not good:
+            print(f"❌ {msg}")
+        return 0 if good else 1
 
     ids = list(args.arxiv)
     if args.batch:
