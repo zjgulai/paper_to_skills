@@ -869,7 +869,7 @@ if __name__ == "__main__":
 > 出处：2606.29366 §8 Conclusion（fulltext.md L462）
 
 > 原文："Journal: European Journal of Operational Research"
-> 出处：2606.29366 Abstract；首页页眉：投稿目标标注，非录用信息（fulltext.md L11）
+> 出处：2606.29366 首页页眉（投稿目标标注，非录用信息；fulltext.md L11）
 
 ---
 

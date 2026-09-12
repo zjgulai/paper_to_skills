@@ -201,6 +201,30 @@ python3 paper2skills-skills/paper-审核/scripts/gate_check.py --all \
 > 链接可用 >94%、主题相关 >80%,而**事实一致性只有 39–77%** —— 合成一个「可信度总分」
 > 会把最弱的那一维平均掉。
 
+### 出卡 / 体检的日常命令(按顺序)
+
+```bash
+# 1. 抓全文(缺这一步则引文无从核验)
+python3 paper2skills-research/scripts/fetch_fulltext.py --arxiv <id> --domain <域> --paper-id <p2s-id>
+
+# 2. 出卡后三门禁自验(全部必须绿)
+C=paper2skills-vault/<域>/Skill-<名>.md
+python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py --card "$C"
+python3 paper2skills-skills/paper-审核/scripts/quote_check.py   --card "$C"
+python3 paper2skills-skills/paper-审核/scripts/gate_check.py    --card "$C"
+
+# 3. 同步(门禁红灯会被拒绝)
+python3 paper2skills-skills/paper-同步/scripts/sync.py --skill <名>
+
+# 4. 每周体检
+python3 paper2skills-skills/paper-维护/scripts/repo_health.py \
+  --json-out paper2skills-research/data/health/repo_health.json
+```
+
+**三个脚本都要跑,不能只跑 gate_check**:`gate_check` 的 G1 依赖 K1 产物,
+而 `quote_check` 才是判定引文真伪的那一层。只跑 `gate_check` 会得到一个
+「有出处但出处可能是编的」的绿灯 —— 这正是本轮封堵的漏洞之一。
+
 ## 检索路线(2026-09 实测结论)
 
 | 路线 | 覆盖 | 调用 | 实测 |
