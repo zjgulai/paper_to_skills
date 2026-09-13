@@ -511,12 +511,21 @@ def version_check(text: str, fm: dict, blob: str, ft: Path | None) -> dict:
             f"→ **无从比较**，不给版本结论。")
         return out
 
-    if kind == "explicit" and claim == vlabel:
+    # ⚠️ `declared` 必须与 `explicit` 同权（2026-09-13 修）。
+    # 原写 `if kind == "explicit" and claim == vlabel` —— 于是 frontmatter
+    # `paper_version:` 这条路径**永远拿不到 MATCH**，会直落下面的 else，
+    # 被贴上「卡片声称**正式发表版**」的标签判 MISMATCH：
+    # **版本一致却报黄灯**。而 `claimed_version` 的文档明确把 declared
+    # 称为「最强」的声明强度 —— 判据与文档自相矛盾。
+    # 更糟的是本脚本自己印的处置建议就是「在 ⑥ 段显式声明底本版本
+    # （frontmatter `paper_version:`）」—— 即**门禁在推荐一条会把门禁自己
+    # 搞出假黄灯的路径**。假黄灯会让人不再相信版本层，与假红灯同害。
+    if kind in ("explicit", "declared") and claim == vlabel:
         out["version_verdict"] = V_MATCH
         out["version_note"] = f"卡片声称 {claim}，底本 {vlabel} —— 一致。"
         return out
 
-    if kind == "explicit":
+    if kind in ("explicit", "declared"):
         reason = (f"卡片声称 {claim}，底本是 {vlabel} —— **版本号不同**。")
     else:
         reason = (f"卡片声称**正式发表版**（{claim}），底本是 arXiv 预印本快照 "
@@ -822,7 +831,7 @@ def _selftest_version_cases() -> dict:
         "-->\n"))
 
     def make_card(name: str, pmid: str, ref_entry: str,
-                  venue_line: str = "") -> Path:
+                  venue_line: str = "", extra_fm: str = "") -> Path:
         p = pool / name
         p.write_text(
             "---\n"
@@ -830,7 +839,7 @@ def _selftest_version_cases() -> dict:
             f"paper_id: {pmid}\n"
             "paper: \"Reflexion: an autonomous agent with dynamic memory and self-reflection\"\n"
             "evidence_basis: paper-verbatim\n"
-            + venue_line +
+            + venue_line + extra_fm +
             "---\n\n"
             "## 参考论文\n\n" + ref_entry + "\n\n"
             "## ⑥ 原文引用\n\n"
@@ -888,6 +897,17 @@ def _selftest_version_cases() -> dict:
                     "(CIKM 2026 preprint, under review)\n"
                     "   - Liu, X.\n   - arXiv：2303.11366\n")
     r6j = run(make_card("c6j.md", "2303.11366", ref_preprint), ft_legacy)
+    # 6k/6l：frontmatter `paper_version:`（`kind="declared"`）这条路径。
+    # ⚠️ 这对用例来自一个**实测撞出来的门禁 bug**（2026-09-13，由 Y5 子代理发现）：
+    # `version_check` 原写 `if kind == "explicit" and claim == vlabel`，于是
+    # declared 声明**永远拿不到 MATCH**，直落 else 被判 MISMATCH —— **版本一致却报黄灯**。
+    # 而本脚本印给用户的处置建议恰恰就是「显式声明 `paper_version:`」。
+    # **必须成对**：一致要 MATCH、不一致要 MISMATCH ——
+    # 只测前者的话，把判据改成「恒 MATCH」也能全绿（那会让整个版本层失效）。
+    r6k = run(make_card("c6k.md", "2303.11366", plain,
+                        extra_fm="paper_version: v1\n"), ft_legacy)
+    r6l = run(make_card("c6l.md", "2303.11366", plain,
+                        extra_fm="paper_version: v3\n"), ft_legacy)
 
     # --- 6e：版本标识必须真的进了 `_index_keys`，且基号兜底必须能落到带版本档 ---
     # ⚠️ 这一条针对的是一个**真实踩过的坑**：本仓库曾出现「第一版修复后门禁照样绿，
@@ -928,6 +948,8 @@ def _selftest_version_cases() -> dict:
         ("6h venue自称preprint→豁免", r6h, V_UNCLAIMED),
         ("6i 底本未声明≠不声称正式版", r6i, V_MISMATCH),
         ("6j 参考区自称preprint→豁免", r6j, V_UNCLAIMED),
+        ("6k declared 版本一致→必须 MATCH（不是黄灯）", r6k, V_MATCH),
+        ("6l declared 版本不一致→必须 MISMATCH", r6l, V_MISMATCH),
     ]
     lines = []
     all_ok = True
@@ -943,6 +965,15 @@ def _selftest_version_cases() -> dict:
         flag = "✅" if got == expect else f"❌ 期望 {expect}"
         all_ok = all_ok and got == expect
         lines.append(f"{label}: {got} {flag}{extra}")
+    # ⚠️ 6l 还要锁**消息**，不能只锁 verdict：这个 bug 的**用户可见症状**正是消息错
+    # —— 把「版本号不同」写成「卡片声称**正式发表版**」。只断 verdict 的话，
+    # 把 else 分支的 kind 守卫删掉（declared 又会被贴回「正式发表版」标签）依然全绿，
+    # 而那正是修复前用户读到的那句话。
+    note6l = r6l.get("version_note") or ""
+    note_ok = ("版本号不同" in note6l) and ("正式发表版" not in note6l)
+    lines.append(f"6l 消息不得把「版本号不同」写成「声称正式发表版」: "
+                 f"{'✅' if note_ok else '❌'}")
+    all_ok = all_ok and note_ok
     lines.append(f"6e 版本键进索引+基号兜底: keys={keys} "
                  f"兜底命中={'是' if found == ft_idx else '否'} "
                  f"卡(paper_id=v2)判定={r6e.get('version_verdict')} "
