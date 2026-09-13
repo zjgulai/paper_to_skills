@@ -289,6 +289,10 @@ def emit_list(idx: GraphIndex, json_out=None, outdir: Path = CONTRACTS_DIR):
         print(f"{m['contract_id']:12} {m['template']:3} {m['responsibility']:16} "
               f"{m['role_id']:8} {m['domain_id']:7} {len(m['method_cells']):<4} "
               f"{len(m['rule_cells']):<5} {','.join(m['flows'])}")
+    # ⚠️ 这两个名在 `if json_out:` 之外也要有定义：`emit_list` 的返回值现在带 dup，
+    #    而 `--list` 不带 `--json-out` 是合法调用（只打表格）—— 不预置会 NameError。
+    dup: dict = {}
+    sample_paths: list = []
     if json_out:
         # 清单同时是**消费口（S12）的 join 件**：把已写文件的 `cards` / `status` 读进来，
         # 并给一份反向索引（卡 → 引它的契约）。S12 的判据是「一张卡只有被某份契约引用，
@@ -300,8 +304,20 @@ def emit_list(idx: GraphIndex, json_out=None, outdir: Path = CONTRACTS_DIR):
         #    F7 的 v2 试点契约住在 `contracts/v2/B/`（历史目录），拼路径会让它们**静默漏掉**
         #    —— 清单报「written 0」而门禁 rglob 却数得到，两份口径当场分叉。
         #    判据只有一处：契约文件自己的 frontmatter。故先扫一遍再按 id 建索引。
+        # ⚠️ **与 `check()` 同一口径：139 份的正式位置只有 `A/` 与 `B/`。**
+        #    本条原先用 `outdir.rglob("CTR-*.md")` 建索引 —— `--check`/J10 那条路已按
+        #    #26/#27 收窄，**这条路没有** ⇒ 同一个缺陷只修了一半。实测症状：`contracts/v2/`
+        #    里 3 份 F7 试点样本被当成 139 的成员，把 `counts.written` 从 139 拉回 57，
+        #    并把这 3 条的 `file` 指向 `v2/B/…` —— 正式骨架明明已写完，清单却报「未撰写 82」。
+        #    代价是摘要口径的直接失效：`Σ pending = 139 − 已撰写` 在清单上不成立（得 82 ≠ 真值 0）。
+        #    教训与 #26/#27 同源，并再进一格：**同一个缺陷修在一处不叫修好。**
+        formal = sorted(p for d in (outdir / "A", outdir / "B")
+                        for p in d.glob("CTR-*.md") if p.is_file())
+        _members = {p.resolve() for p in formal}
+        sample_paths = sorted(p for p in outdir.rglob("CTR-*.md")
+                              if p.is_file() and p.resolve() not in _members)
         by_id: dict = {}
-        for p in sorted(outdir.rglob("CTR-*.md")):
+        for p in formal:
             cid = read_frontmatter(p.read_text(encoding="utf-8")).get("contract_id")
             if cid:
                 by_id.setdefault(cid, []).append(p)
@@ -329,6 +345,9 @@ def emit_list(idx: GraphIndex, json_out=None, outdir: Path = CONTRACTS_DIR):
                     by_card.setdefault(slug, []).append(m["contract_id"])
         if dup:
             print(f"🔴 同一 contract_id 落在多个文件里（J10 会重复入账）：{dup}")
+        if sample_paths:
+            print(f"样本/存档（A/ B/ 之外，**不计入 139**）：{len(sample_paths)} 份 —— "
+                  + "、".join(safe_rel(x) for x in sample_paths))
         payload = {
             "_meta": {
                 "what": "139 份供给契约的清单（机器可读）",
@@ -340,13 +359,16 @@ def emit_list(idx: GraphIndex, json_out=None, outdir: Path = CONTRACTS_DIR):
             },
             "counts": {"total": len(rows), "A": n_a, "B": n_b,
                        "written": written, "unwritten": len(rows) - written,
-                       "cards_indexed": len(by_card)},
+                       "cards_indexed": len(by_card),
+                       "samples_excluded": len(sample_paths)},
+            "duplicate_contract_ids": dup,
+            "sample_paths": [safe_rel(x) for x in sample_paths],
             "contracts": rows,
             "by_card": {k: sorted(v) for k, v in sorted(by_card.items())},
         }
         Path(json_out).write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"\n→ {json_out}")
-    return rows
+    return rows, dup
 
 
 FM_KEYS = ("contract_id", "template", "template_version", "responsibility", "role_id", "role_title",
@@ -388,7 +410,16 @@ def norm_val(v):
 def check(idx: GraphIndex, outdir: Path):
     """frontmatter 漂移检测：重算一遍，与文件逐字段比对。"""
     assignments = idx.assignments()
-    files = sorted(p for p in outdir.rglob("CTR-*.md"))
+    # ⚠️ 139 份契约的**正式**位置只有 `A/` 与 `B/`。首版这里是 `outdir.rglob("CTR-*.md")`，
+    #    于是 `contracts/v2/` 里 3 份 F7 试点样本被算成 139 的成员 —— 症状是
+    #    「核对率 102.2%」（分子 142 > 分母 139）却照样报通过。它只在**文件总数超过 139
+    #    之后**才显形，在那之前一直「看起来正常」。核对率 > 100% 本身就是「分子分母不是
+    #    同一个集合」的信号 ⇒ 判据收紧成「必须恰好相等」，而不是「≥ 90% 就算过」。
+    files = sorted(p for d in (outdir / "A", outdir / "B")
+                   for p in d.glob("CTR-*.md") if p.is_file())
+    members = {p.resolve() for p in files}
+    extras = sorted(p for p in outdir.rglob("CTR-*.md")
+                    if p.is_file() and p.resolve() not in members)
     problems, checked, written, unwritten, legacy_v1 = [], 0, 0, 0, []
     for p in files:
         text = p.read_text(encoding="utf-8")
@@ -425,8 +456,16 @@ def check(idx: GraphIndex, outdir: Path):
     print(f"已撰写 {written} · 未撰写（含 {TODO_MARK}）{unwritten}")
     print(f"模板版本：v{TEMPLATE_VERSION} {checked - len(legacy_v1)} 份 · "
           f"无 template_version（F6 v1 底本，J13 不适用）{len(legacy_v1)} 份")
+    print(f"样本/存档（A/ B/ 之外，**不计入 139**）：{len(extras)} 份"
+          + (" —— " + "、".join(safe_rel(p) for p in extras) if extras else ""))
     if cov < 0.9:
         print("⚠️ 核对率 < 90% ⇒ **不给「完整」结论**（「没东西可查」不等于「查过了没问题」）")
+    if cov > 1.0:
+        # 分子多于分母 ⇒ 分子里混了不属于这 139 的东西。这是**判红**，不是提醒：
+        # 一个 >100% 的覆盖率会把真实缺口平均掉（正是首版 102.2% 的病灶）。
+        problems.append((Path("<全集定义>"),
+                         f"核对率 {cov:.1%} > 100% —— 分子里有不属于这 139 份的文件，"
+                         f"覆盖率已经失去意义（正式位置只有 contracts/A 与 contracts/B）"))
     for p, why in problems:
         print(f"🔴 {safe_rel(p)}: {why}")
     return 0 if not problems else 1
@@ -563,8 +602,11 @@ def main() -> int:
     if args.check:
         return check(idx, outdir)
     if args.list:
-        emit_list(idx, args.json_out, outdir)
-        return 0
+        # ⚠️ 判红必须进退出码（#26 的教训：**颜色不是判据，退出码才是**）。
+        #    同一 contract_id 落在两份**正式**契约里 = J10 的重复入账；
+        #    原先它只 `print` 一个 🔴 就 `return 0`，下游按退出码判绿的消费者会把重复当通过。
+        _rows, _dup = emit_list(idx, args.json_out, outdir)
+        return 1 if _dup else 0
     if args.skeleton or args.all_skeletons or args.flow or args.batch_only:
         names = args.skeleton or []
         if args.flow or args.batch_only:

@@ -1,0 +1,336 @@
+{
+  "_meta": {
+    "what": "PHASE6 S3 路由输入：每篇 extract backlog 论文 → 它能服务的 L3 责任（含逐字证据）",
+    "consumed_by": "paper2skills-research/scripts/route_backlog.py",
+    "why_hand_authored": "「这篇论文能服务哪个业务责任」在仓库里没有任何机读事实源可以直接 join：registry 只有技术域（13-广告分析 等），151 L3 是业务责任名，两者之间没有映射表；而 card-classification.json 的卡↔L3 只能覆盖**已有卡**的论文——本文件处理的正是**还没有卡**的 12 篇。故这一层是人的判断，且它是本卡**唯一**新增的人工产物。",
+    "how_it_stays_checkable": "判断的可复核性由三件事承担，全部由脚本机器校验：① 每条 L3 必须在 capability-graph.json 的 151 名单内，且 serviceability ∈ {A,B}（Q4 弱门槛，C 类不放行）；② basis=business_action 的证据必须是 registry 字段的**逐字子串**（G2b 口径：编不出来）；③ basis=capability_inference 的条目必须显式声明为「推得」，confidence 强制 low，且不得单独把论文送进靶区（needs_review）。",
+    "not_a_fact_source": "本文件**不定义** L3、不改 A/B/C、不改供给状态 —— 它只是「哪篇论文 × 哪个已存在的责任名」的一张边表，取值全部受图谱白名单约束。",
+    "backlog_rule": "registry 里 decision=extract ∧ 无已交付产物（outputs.skill_card 文件不存在 ∧ outputs.enhanced_cards 为空）= 12 篇（实测，见 --check 的 N4 双层计数）",
+    "authored": "2026-09-13",
+    "author_task": "PHASE6 S3 / 任务板 B9",
+    "fields": {
+      "l3[].name": "L3 责任名，逐字取自 capability-graph.json",
+      "l3[].evidence": "证据串。basis=business_action 时必须是 registry 该字段的逐字子串",
+      "l3[].evidence_field": "证据所在字段（title / decision_reason / note），脚本会**自己去找**并断言与声明一致",
+      "l3[].basis": "business_action（原文命名了业务动作）| capability_inference（只写了技术能力，L3 是推得的）",
+      "l3[].confidence": "high / medium / low。capability_inference 强制 low",
+      "alternatives[]": "考虑过但**否决**的近邻靶区位，附否决理由 —— 记录判断的另一半，防止「往想要的缺口上凑」"
+    }
+  },
+  "entries": [
+    {
+      "paper_id": "p2s-2026-0007",
+      "l3": [
+        {
+          "name": "复购实验",
+          "evidence": "耗材复购召回",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "论文把「购买=意图终止」显式建模并学个性化复购周期，业务动作就是复购召回策略本身。"
+        },
+        {
+          "name": "生命周期触达",
+          "evidence": "个性化补货节奏",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "学到的补货节奏可直接驱动触达时机；同属 AGT-034，但该位精选线已有供给。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "供需协调",
+          "why_not": "原文的「补货节奏」是**消费者复购节奏**，不是仓内补货计划；岗位应落 AGT-034（CRM留存与复购），落 AGT-016（需求预测与补货计划）会把用户行为模型误挂到供应链责任上。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0012",
+      "l3": [
+        {
+          "name": "内容实验",
+          "evidence": "全漏斗内容探索",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "论文做的是内容冷启动的探索与去偏，责任名是内容实验。"
+        },
+        {
+          "name": "算法评估设计",
+          "evidence": "评估骨架",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "「短长期度量 + 快速短期实验」是可借的评估骨架，属算法评估设计。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "达人筛选",
+          "why_not": "PinEqualizer 的 content 是站内内容（pin），不是达人/KOL，岗位 AGT-033 与论文对象不符。"
+        },
+        {
+          "name": "转化优化",
+          "why_not": "论文不优化转化率本身，优化的是冷启动内容的供给与去偏口径；把它记成转化优化会让一篇 P0 论文看起来落在最大的既有供给位上。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0015",
+      "l3": [
+        {
+          "name": "趋势监测",
+          "evidence": "选品打分表",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "通用表格基线的业务落点由**它打分的那张表**决定：选品打分表 ⇒ 选品/趋势监测（AGT-007）。这是本批里少数能落到靶区的位置。"
+        },
+        {
+          "name": "算法评估设计",
+          "evidence": "免调参基线",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "「免调参基线」本身就是评估设计里的对照物。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "需求预测",
+          "why_not": "「库存表」只说明输入表类型，论文方法不产出补货决策；且该位精选线已有 94 张 legacy + 精选供给。"
+        },
+        {
+          "name": "商业案例",
+          "why_not": "该位是 F3 判定的**结构性空白**（AGT-009 硬件研发线，走 SOP、不占检索预算），接它等于把一份通用模型塞进不走检索的责任。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0020",
+      "l3": [
+        {
+          "name": "广告实验",
+          "evidence": "RTB 的 A/B",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "论文处理的正是 RTB 在线 A/B 的测量污染，责任名是广告实验。"
+        },
+        {
+          "name": "实验设计",
+          "evidence": "三阶段测量协议",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "(k,l) 过滤器族 + 三阶段协议属实验设计层。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "增量分析",
+          "why_not": "论文治的是共享日志带来的**训练数据干扰**，不是增量估计方法；且该位是 B 类、不进靶区一。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0021",
+      "l3": [
+        {
+          "name": "预算分配",
+          "evidence": "竞价",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "三层结构里高层的超参推理（bid bounds / budget pacing）就是预算与出价控制，属 AGT-032。"
+        },
+        {
+          "name": "投放诊断",
+          "evidence": "在线学习",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "在线自适应只在「选哪个专家」上 ⇒ 是投放策略的诊断与切换，不是新建投放模型。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "行动组合",
+          "why_not": "该位（AGT-021 Amazon业务经营）指**经营动作组合**（价格/广告/库存联动），HOBA 只做竞价层超参与专家选择；扩到「行动组合」属于拔高。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0022",
+      "l3": [
+        {
+          "name": "转化优化",
+          "evidence": "点击流",
+          "evidence_field": "decision_reason",
+          "basis": "capability_inference",
+          "confidence": "low",
+          "note": "⚠️ registry 文本只写了技术能力（先验拟合网络 / 零权重更新）与工程量优势（代码公开），**没有命名任何业务责任** —— 本条的 L3 是推得的：序列推荐打分服务推荐位转化。12 篇里唯一一条靠推不靠原文的映射，故标 needs_review。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "复购实验",
+          "why_not": "把通用序列推荐硬说成复购召回是拔高：原文没有任何复购/耗材语义（对比 0007 的原文就写着「耗材复购召回」）。"
+        },
+        {
+          "name": "漏斗诊断",
+          "why_not": "同上，原文无漏斗语义。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0024",
+      "l3": [
+        {
+          "name": "复购实验",
+          "evidence": "复购/订阅",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "原文自述治「深层稀疏目标（复购/订阅）的信号侵蚀」⇒ 论文点名的业务目标就是复购。"
+        },
+        {
+          "name": "漏斗诊断",
+          "evidence": "多任务漏斗依赖强度",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "动态重连漏斗依赖属漏斗诊断；该位精选线已有供给。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "转化优化",
+          "why_not": "论文不优化转化率本身，治的是多任务稀疏目标的信号衰减。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0025",
+      "l3": [
+        {
+          "name": "业务工具实现",
+          "evidence": "线上跑不动",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "两阶段蒸馏把表格基础模型压成 CPU 可跑 ⇒ 落点是「把模型落成跑得动的业务工具」（AGT-047）。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "容量管理",
+          "why_not": "该位属 AGT-049 Agent 平台与可靠运行（Agent 平台的队列/算力容量），不是业务模型部署成本；同词不同责任。"
+        },
+        {
+          "name": "算法评估设计",
+          "why_not": "论文是部署工程（蒸馏），不是评估设计。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0028",
+      "l3": [
+        {
+          "name": "知识溯源",
+          "evidence": "证据效度",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "「画像信号绑到支持/推翻它的事件 + 按证据效度排序」= 知识溯源（AGT-048）。"
+        },
+        {
+          "name": "分群",
+          "evidence": "画像",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "长期画像信号是分群（AGT-034）的输入面。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "生命周期触达",
+          "why_not": "论文不产出触达动作，产出的是画像的证据链与检索排序。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0032",
+      "l3": [
+        {
+          "name": "容量管理",
+          "evidence": "有界背压",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "Node Guardian 强制队列上界 = Agent 平台的容量管理（AGT-049）。"
+        },
+        {
+          "name": "失败恢复",
+          "evidence": "取消传播",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "取消传播 + 重试 = 失败恢复（AGT-049）。"
+        }
+      ],
+      "alternatives": []
+    },
+    {
+      "paper_id": "p2s-2026-0033",
+      "l3": [
+        {
+          "name": "指标契约",
+          "evidence": "跨境口径",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "「GMV 是否含退款」的口径沉淀就是指标契约（AGT-045）。"
+        },
+        {
+          "name": "业务工具实现",
+          "evidence": "Text-to-SQL",
+          "evidence_field": "title",
+          "basis": "business_action",
+          "confidence": "high",
+          "note": "企业 Text-to-SQL 的上下文构造是业务工具实现（AGT-047）。"
+        }
+      ],
+      "alternatives": [
+        {
+          "name": "账号商品映射",
+          "why_not": "该位（T1 #11，legacy 仅 7）是**账号-商品主数据映射**，与「指标口径沉淀」同岗位但不同责任；抢这个空位属于把同岗位的另一件事算成自己的缺口。"
+        }
+      ]
+    },
+    {
+      "paper_id": "p2s-2026-0034",
+      "l3": [
+        {
+          "name": "访问控制",
+          "evidence": "记忆安全基线",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "共享记忆的写入/晋升权限就是访问控制（AGT-050）。"
+        },
+        {
+          "name": "安全事件处理",
+          "evidence": "毒记忆",
+          "evidence_field": "decision_reason",
+          "basis": "business_action",
+          "confidence": "medium",
+          "note": "一次写入、反复检索、污染未见攻击的 agent ⇒ 安全事件处理。"
+        }
+      ],
+      "alternatives": []
+    }
+  ]
+}

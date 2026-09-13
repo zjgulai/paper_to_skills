@@ -1,0 +1,7246 @@
+{
+ "_determinism": "同一输入两次运行逐字节相同（J4）；无时间戳、无随机。",
+ "_filter_format": {
+  "CONSTRAINT_FALLBACK": {
+   "10-MAS": [
+    "llm",
+    "agent",
+    "task",
+    "tool"
+   ],
+   "11-AI人文": [
+    "metaphor",
+    "analogy",
+    "humanities",
+    "philosophy",
+    "well-being"
+   ]
+  },
+  "DOMAIN_CONSTRAINT": {
+   "01-因果推断": [
+    "e-commerce",
+    "retail",
+    "advertis",
+    "marketing",
+    "pricing",
+    "subscription",
+    "customer",
+    "business"
+   ],
+   "02-A_B实验": [
+    "online",
+    "platform",
+    "marketplace",
+    "advertis",
+    "pricing",
+    "user",
+    "e-commerce"
+   ],
+   "03-时间序列": [
+    "demand",
+    "sales",
+    "retail",
+    "inventory",
+    "e-commerce",
+    "supply chain"
+   ],
+   "04-供应链": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order"
+   ],
+   "05-推荐系统": [
+    "e-commerce",
+    "product",
+    "item",
+    "user",
+    "session",
+    "catalog"
+   ],
+   "06-增长模型": [
+    "subscription",
+    "e-commerce",
+    "retail",
+    "customer",
+    "platform"
+   ],
+   "07-NLP-VOC": [
+    "e-commerce",
+    "product",
+    "customer",
+    "review",
+    "feedback"
+   ],
+   "08-知识图谱": [
+    "e-commerce",
+    "product",
+    "customer",
+    "agent",
+    "retrieval"
+   ],
+   "09-DataAgent-LLM": [
+    "analytics",
+    "business",
+    "enterprise",
+    "database",
+    "table"
+   ],
+   "12-ML基础": [
+    "tabular",
+    "business",
+    "prediction",
+    "dataset"
+   ],
+   "13-广告分析": [
+    "advertis",
+    "marketing",
+    "campaign",
+    "budget",
+    "roas"
+   ],
+   "14-用户分析": [
+    "e-commerce",
+    "retail",
+    "subscription",
+    "churn",
+    "user",
+    "customer"
+   ],
+   "15-营销投放分析": [
+    "retail",
+    "e-commerce",
+    "sales",
+    "price",
+    "promotion"
+   ],
+   "16-智能体工程": [
+    "llm",
+    "agent",
+    "tool",
+    "context"
+   ]
+  },
+  "DOMAIN_NEGATIVE": {
+   "01-因果推断": [
+    "clinical",
+    "patient",
+    "drug",
+    "gene",
+    "epidemiolog",
+    "biomarker"
+   ],
+   "02-A_B实验": [
+    "wet lab",
+    "robot",
+    "in vitro"
+   ],
+   "03-时间序列": [
+    "weather",
+    "climate",
+    "traffic flow",
+    "wind power",
+    "load forecasting",
+    "eeg",
+    "ecg",
+    "seismic"
+   ],
+   "04-供应链": [
+    "software supply chain",
+    "sbom",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler"
+   ],
+   "05-推荐系统": [
+    "movie",
+    "music recommendation",
+    "news recommendation",
+    "poi recommendation",
+    "friend recommendation"
+   ],
+   "06-增长模型": [
+    "employee turnover",
+    "student dropout",
+    "attrition rate"
+   ],
+   "07-NLP-VOC": [
+    "clinical note",
+    "hate speech",
+    "fake news",
+    "machine translation"
+   ],
+   "08-知识图谱": [
+    "molecular",
+    "protein",
+    "drug discovery",
+    "biomedical",
+    "chemistry",
+    "crystal"
+   ],
+   "09-DataAgent-LLM": [
+    "code generation benchmark",
+    "gui agent",
+    "web agent"
+   ],
+   "10-MAS": [
+    "multi-agent reinforcement learning"
+   ],
+   "12-ML基础": [
+    "speech recognition",
+    "image classification",
+    "object detection"
+   ],
+   "13-广告分析": [
+    "adversarial attack",
+    "adhd",
+    "alzheimer",
+    "adversarial example"
+   ],
+   "14-用户分析": [
+    "clinical",
+    "patient",
+    "mri",
+    "eeg",
+    "fmri",
+    "lesion",
+    "radiotherapy",
+    "pet scan",
+    "tumor",
+    "cohort study",
+    "epidemiolog",
+    "diagnosis"
+   ],
+   "15-营销投放分析": [
+    "health promotion",
+    "academic promotion",
+    "faculty"
+   ],
+   "16-智能体工程": [
+    "embodied agent",
+    "robot manipulation",
+    "gui agent"
+   ]
+  },
+  "GLOBAL_NEGATIVE": [
+   "software supply chain",
+   "sbom",
+   "software bill of materials",
+   "package detection",
+   "dependency vulnerability",
+   "model lineage",
+   "model card",
+   "kv cache",
+   "serving throughput",
+   "gpu kernel",
+   "clinical",
+   "patient",
+   "lesion",
+   "mri",
+   "eeg",
+   "ecg",
+   "fmri",
+   "radiotherapy",
+   "histopathology",
+   "tumor"
+  ],
+  "STRICT_ECOMMERCE_DOMAINS": [
+   "04-供应链",
+   "14-用户分析"
+  ],
+  "_what": "与 candidate_filter.py 的 DOMAIN_NEGATIVE / DOMAIN_CONSTRAINT 同键名、同语义；域名取自 DOMAIN_DIR。"
+ },
+ "_generator": "paper2skills-research/scripts/build_search_queries.py",
+ "_input_fingerprints": {
+  "candidate_filter_sha256_16": "a18f2d44ecd8658b",
+  "capability_graph_sha256_16_now": "be36dd1d197def0e",
+  "contracts_dir": "paper2skills-vault/07-资源库/contracts",
+  "gap_ledger_generated": "2026-09-13T20:31:34+0800",
+  "gap_ledger_graph_sha256_16": "be36dd1d197def0e",
+  "gap_ledger_sha256_16": "8a15372d19f46ff4",
+  "keyword_lib_sha256_16": "d218999f0e5419a4",
+  "n_contracts": 139
+ },
+ "_inputs": {
+  "contracts": "paper2skills-vault/07-资源库/contracts",
+  "filter": "paper2skills-research/scripts/candidate_filter.py",
+  "keyword_lib": "paper2skills-vault/07-资源库/关键词库-v2.md",
+  "worklist": "paper2skills-research/data/gap-ledger.json"
+ },
+ "_what": "PHASE6 S4 缺口驱动检索式 · 机读产物。三段式（正向/负向/约束）供 candidate_filter.py 直接消费。",
+ "baseline": {
+  "empty_junction_max": 2,
+  "empty_junction_min": 2,
+  "generated": 28,
+  "ledger_rows_blank": 9,
+  "max_full_max": 0.95,
+  "max_junction_max": 0.8,
+  "measured": {
+   "full_max": 0.9118,
+   "generated": 28,
+   "junction_max": 0.2,
+   "mounted": 28,
+   "n_contracts": 139,
+   "n_divergent_carriers": 28,
+   "n_divergent_terms": 56,
+   "n_divergent_used": 56,
+   "shell_count": 0
+  },
+  "min_full_min": 0.05,
+  "min_junction_min": 0.05,
+  "n_contracts": 139,
+  "n_divergent_carriers_min": 28,
+  "n_divergent_terms_min": 3,
+  "n_divergent_used_min": 50,
+  "same_pool_max": 6,
+  "shell_max": 0,
+  "strict_worklist": 3,
+  "wide_by_role_worklist": 5,
+  "worklist_total": 31
+ },
+ "contract_index": {
+  "n_contracts": 139,
+  "n_mounted": 28,
+  "unknown_responsibilities": []
+ },
+ "coverage": {
+  "excluded_structural_blank": 3,
+  "generated": 28,
+  "rate": 0.9032258064516129,
+  "retrieval_eligible_strict": 28,
+  "retrieval_eligible_wide": 26,
+  "worklist_total": 31
+ },
+ "negative_divergence": {
+  "carriers": [
+   "线索评估",
+   "渠道对账",
+   "行动组合",
+   "经营预算",
+   "差异追踪",
+   "收入与费用核对",
+   "生命周期分析",
+   "资金预测",
+   "账号商品映射",
+   "账号诊断",
+   "供需协调",
+   "平台运营",
+   "品牌反馈",
+   "可用性验证",
+   "测试方案",
+   "资源情景比较",
+   "知识产权检索",
+   "达人筛选",
+   "履约异常",
+   "抽样审计",
+   "质量分析",
+   "退货分流",
+   "订单协调",
+   "趋势监测",
+   "复购实验",
+   "供应商评估",
+   "到货异常追踪",
+   "履约跟踪"
+  ],
+  "divergent": {
+   "academic promotion": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": true,
+    "16-智能体工程": false
+   },
+   "adhd": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": true,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "adversarial attack": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": true,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "adversarial example": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": true,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "alzheimer": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": true,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "attrition rate": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": true,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "biomarker": {
+    "01-因果推断": true,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "biomedical": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": true,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "chemistry": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": true,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "climate": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": true,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "clinical note": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": true,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "code generation benchmark": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": true,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "cohort study": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": true,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "compiler": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": true,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "crystal": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": true,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "diagnosis": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": true,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "drug": {
+    "01-因果推断": true,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "drug discovery": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": true,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "embodied agent": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": true
+   },
+   "employee turnover": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": true,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "epidemiolog": {
+    "01-因果推断": true,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": true,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "faculty": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": true,
+    "16-智能体工程": false
+   },
+   "fake news": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": true,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "friend recommendation": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": true,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "gene": {
+    "01-因果推断": true,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "gui agent": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": true,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": true
+   },
+   "hate speech": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": true,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "health promotion": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": true,
+    "16-智能体工程": false
+   },
+   "image classification": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": true,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "in vitro": {
+    "01-因果推断": false,
+    "02-A_B实验": true,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "load forecasting": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": true,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "machine translation": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": true,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "malware": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": true,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "molecular": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": true,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "movie": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": true,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "multi-agent reinforcement learning": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": true,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "music recommendation": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": true,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "news recommendation": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": true,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "npm": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": true,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "object detection": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": true,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "pet scan": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": true,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "poi recommendation": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": true,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "protein": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": true,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "pypi": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": true,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "repository": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": true,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "robot": {
+    "01-因果推断": false,
+    "02-A_B实验": true,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "robot manipulation": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": true
+   },
+   "seismic": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": true,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "speech recognition": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": true,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "student dropout": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": true,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "traffic flow": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": true,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "vulnerability": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": true,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "weather": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": true,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "web agent": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": true,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "wet lab": {
+    "01-因果推断": false,
+    "02-A_B实验": true,
+    "03-时间序列": false,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   },
+   "wind power": {
+    "01-因果推断": false,
+    "02-A_B实验": false,
+    "03-时间序列": true,
+    "04-供应链": false,
+    "05-推荐系统": false,
+    "06-增长模型": false,
+    "07-NLP-VOC": false,
+    "08-知识图谱": false,
+    "09-DataAgent-LLM": false,
+    "10-MAS": false,
+    "12-ML基础": false,
+    "13-广告分析": false,
+    "14-用户分析": false,
+    "15-营销投放分析": false,
+    "16-智能体工程": false
+   }
+  },
+  "domains": [
+   "01-因果推断",
+   "02-A_B实验",
+   "03-时间序列",
+   "04-供应链",
+   "05-推荐系统",
+   "06-增长模型",
+   "07-NLP-VOC",
+   "08-知识图谱",
+   "09-DataAgent-LLM",
+   "10-MAS",
+   "12-ML基础",
+   "13-广告分析",
+   "14-用户分析",
+   "15-营销投放分析",
+   "16-智能体工程"
+  ],
+  "n_divergent": 56,
+  "n_negative_terms": 67,
+  "n_queries_carrying_divergent": 28,
+  "n_used_terms": 56,
+  "used_in_pairs": [
+   {
+    "negative_in": "行动组合",
+    "not_negative_in": "差异追踪",
+    "term": "academic promotion"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "adhd"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "adversarial attack"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "adversarial example"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "alzheimer"
+   },
+   {
+    "negative_in": "可用性验证",
+    "not_negative_in": "测试方案",
+    "term": "attrition rate"
+   },
+   {
+    "negative_in": "复购实验",
+    "not_negative_in": "供应商评估",
+    "term": "biomarker"
+   },
+   {
+    "negative_in": "收入与费用核对",
+    "not_negative_in": "生命周期分析",
+    "term": "biomedical"
+   },
+   {
+    "negative_in": "收入与费用核对",
+    "not_negative_in": "生命周期分析",
+    "term": "chemistry"
+   },
+   {
+    "negative_in": "经营预算",
+    "not_negative_in": "差异追踪",
+    "term": "climate"
+   },
+   {
+    "negative_in": "品牌反馈",
+    "not_negative_in": "可用性验证",
+    "term": "clinical note"
+   },
+   {
+    "negative_in": "渠道对账",
+    "not_negative_in": "行动组合",
+    "term": "code generation benchmark"
+   },
+   {
+    "negative_in": "账号诊断",
+    "not_negative_in": "供需协调",
+    "term": "cohort study"
+   },
+   {
+    "negative_in": "生命周期分析",
+    "not_negative_in": "账号商品映射",
+    "term": "compiler"
+   },
+   {
+    "negative_in": "收入与费用核对",
+    "not_negative_in": "生命周期分析",
+    "term": "crystal"
+   },
+   {
+    "negative_in": "账号诊断",
+    "not_negative_in": "供需协调",
+    "term": "diagnosis"
+   },
+   {
+    "negative_in": "复购实验",
+    "not_negative_in": "供应商评估",
+    "term": "drug"
+   },
+   {
+    "negative_in": "收入与费用核对",
+    "not_negative_in": "生命周期分析",
+    "term": "drug discovery"
+   },
+   {
+    "negative_in": "账号商品映射",
+    "not_negative_in": "账号诊断",
+    "term": "embodied agent"
+   },
+   {
+    "negative_in": "可用性验证",
+    "not_negative_in": "测试方案",
+    "term": "employee turnover"
+   },
+   {
+    "negative_in": "账号诊断",
+    "not_negative_in": "供需协调",
+    "term": "epidemiolog"
+   },
+   {
+    "negative_in": "行动组合",
+    "not_negative_in": "差异追踪",
+    "term": "faculty"
+   },
+   {
+    "negative_in": "品牌反馈",
+    "not_negative_in": "可用性验证",
+    "term": "fake news"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "friend recommendation"
+   },
+   {
+    "negative_in": "复购实验",
+    "not_negative_in": "供应商评估",
+    "term": "gene"
+   },
+   {
+    "negative_in": "渠道对账",
+    "not_negative_in": "行动组合",
+    "term": "gui agent"
+   },
+   {
+    "negative_in": "品牌反馈",
+    "not_negative_in": "可用性验证",
+    "term": "hate speech"
+   },
+   {
+    "negative_in": "行动组合",
+    "not_negative_in": "差异追踪",
+    "term": "health promotion"
+   },
+   {
+    "negative_in": "渠道对账",
+    "not_negative_in": "行动组合",
+    "term": "image classification"
+   },
+   {
+    "negative_in": "差异追踪",
+    "not_negative_in": "收入与费用核对",
+    "term": "in vitro"
+   },
+   {
+    "negative_in": "经营预算",
+    "not_negative_in": "差异追踪",
+    "term": "load forecasting"
+   },
+   {
+    "negative_in": "品牌反馈",
+    "not_negative_in": "可用性验证",
+    "term": "machine translation"
+   },
+   {
+    "negative_in": "生命周期分析",
+    "not_negative_in": "账号商品映射",
+    "term": "malware"
+   },
+   {
+    "negative_in": "收入与费用核对",
+    "not_negative_in": "生命周期分析",
+    "term": "molecular"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "movie"
+   },
+   {
+    "negative_in": "供需协调",
+    "not_negative_in": "平台运营",
+    "term": "multi-agent reinforcement learning"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "music recommendation"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "news recommendation"
+   },
+   {
+    "negative_in": "生命周期分析",
+    "not_negative_in": "账号商品映射",
+    "term": "npm"
+   },
+   {
+    "negative_in": "渠道对账",
+    "not_negative_in": "行动组合",
+    "term": "object detection"
+   },
+   {
+    "negative_in": "账号诊断",
+    "not_negative_in": "供需协调",
+    "term": "pet scan"
+   },
+   {
+    "negative_in": "线索评估",
+    "not_negative_in": "渠道对账",
+    "term": "poi recommendation"
+   },
+   {
+    "negative_in": "收入与费用核对",
+    "not_negative_in": "生命周期分析",
+    "term": "protein"
+   },
+   {
+    "negative_in": "生命周期分析",
+    "not_negative_in": "账号商品映射",
+    "term": "pypi"
+   },
+   {
+    "negative_in": "生命周期分析",
+    "not_negative_in": "账号商品映射",
+    "term": "repository"
+   },
+   {
+    "negative_in": "差异追踪",
+    "not_negative_in": "收入与费用核对",
+    "term": "robot"
+   },
+   {
+    "negative_in": "账号商品映射",
+    "not_negative_in": "账号诊断",
+    "term": "robot manipulation"
+   },
+   {
+    "negative_in": "经营预算",
+    "not_negative_in": "差异追踪",
+    "term": "seismic"
+   },
+   {
+    "negative_in": "渠道对账",
+    "not_negative_in": "行动组合",
+    "term": "speech recognition"
+   },
+   {
+    "negative_in": "可用性验证",
+    "not_negative_in": "测试方案",
+    "term": "student dropout"
+   },
+   {
+    "negative_in": "经营预算",
+    "not_negative_in": "差异追踪",
+    "term": "traffic flow"
+   },
+   {
+    "negative_in": "生命周期分析",
+    "not_negative_in": "账号商品映射",
+    "term": "vulnerability"
+   },
+   {
+    "negative_in": "经营预算",
+    "not_negative_in": "差异追踪",
+    "term": "weather"
+   },
+   {
+    "negative_in": "渠道对账",
+    "not_negative_in": "行动组合",
+    "term": "web agent"
+   },
+   {
+    "negative_in": "差异追踪",
+    "not_negative_in": "收入与费用核对",
+    "term": "wet lab"
+   },
+   {
+    "negative_in": "经营预算",
+    "not_negative_in": "差异追踪",
+    "term": "wind power"
+   }
+  ]
+ },
+ "queries": [
+  {
+   "constraint": [
+    "e-commerce",
+    "product",
+    "item",
+    "user",
+    "session",
+    "catalog",
+    "advertis",
+    "marketing",
+    "campaign",
+    "budget",
+    "roas"
+   ],
+   "contract_id": "CTR-A-041",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-025",
+   "date": "2026-09-13",
+   "domain": "渠道经营",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "harvest_domain_bridge": {
+    "05-推荐系统": "05-推荐系统",
+    "13-广告分析": "13-广告分析"
+   },
+   "l3": "线索评估",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "movie",
+    "music recommendation",
+    "news recommendation",
+    "poi recommendation",
+    "friend recommendation",
+    "adversarial attack",
+    "adhd",
+    "alzheimer",
+    "adversarial example"
+   ],
+   "negative_scope": [
+    {
+     "domain": "05-推荐系统",
+     "terms": [
+      "movie",
+      "music recommendation",
+      "news recommendation",
+      "poi recommendation",
+      "friend recommendation"
+     ]
+    },
+    {
+     "domain": "13-广告分析",
+     "terms": [
+      "adversarial attack",
+      "adhd",
+      "alzheimer",
+      "adversarial example"
+     ]
+    }
+   ],
+   "positive": [
+    "recommender system",
+    "large language model",
+    "sequential recommendation",
+    "generative recommendation",
+    "cold-start",
+    "recommendation",
+    "advertising",
+    "auction",
+    "bidding",
+    "attribution",
+    "marketing",
+    "budget allocation",
+    "ROI",
+    "recommendation system",
+    "collaborative filtering",
+    "semantic ID",
+    "cold-start recommendation",
+    "conversational recommendation",
+    "reranking",
+    "session-based recommendation",
+    "catalog enrichment",
+    "incrementality",
+    "geo experiment",
+    "marketing mix model",
+    "MMM",
+    "ROAS",
+    "sponsored search",
+    "coupon allocation",
+    "cannibalization",
+    "uPlift for advertising",
+    "ad ranking"
+   ],
+   "positive_sources": {
+    "harvest:05-推荐系统": [
+     "recommender system",
+     "large language model",
+     "sequential recommendation",
+     "generative recommendation",
+     "cold-start",
+     "recommendation"
+    ],
+    "harvest:13-广告分析": [
+     "advertising",
+     "auction",
+     "bidding",
+     "attribution",
+     "marketing",
+     "budget allocation",
+     "ROI"
+    ],
+    "junction": [],
+    "junction_provenance": {
+     "empty": true,
+     "n_cards": 0,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 0
+    },
+    "keyword-lib:05-推荐系统": [
+     "recommendation system",
+     "collaborative filtering",
+     "sequential recommendation",
+     "generative recommendation",
+     "semantic ID",
+     "cold-start recommendation",
+     "conversational recommendation",
+     "reranking",
+     "session-based recommendation",
+     "catalog enrichment"
+    ],
+    "keyword-lib:13-广告分析": [
+     "attribution",
+     "incrementality",
+     "geo experiment",
+     "marketing mix model",
+     "MMM",
+     "ROAS",
+     "budget allocation",
+     "bidding",
+     "sponsored search",
+     "coupon allocation",
+     "cannibalization",
+     "uPlift for advertising",
+     "ad ranking"
+    ]
+   },
+   "query_domains": [
+    "05-推荐系统",
+    "13-广告分析"
+   ],
+   "rank": 1,
+   "responsibility": "线索评估",
+   "role_id": "AGT-025",
+   "role_title": "零售渠道与B2B拓展",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "analytics",
+    "business",
+    "enterprise",
+    "database",
+    "table",
+    "tabular",
+    "prediction",
+    "dataset"
+   ],
+   "contract_id": "CTR-A-058",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-040",
+   "date": "2026-09-13",
+   "domain": "财务与合规",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "09-DataAgent-LLM": "09-DataAgent",
+    "12-ML基础": "12-ML基础"
+   },
+   "l3": "渠道对账",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "code generation benchmark",
+    "gui agent",
+    "web agent",
+    "speech recognition",
+    "image classification",
+    "object detection"
+   ],
+   "negative_scope": [
+    {
+     "domain": "09-DataAgent-LLM",
+     "terms": [
+      "code generation benchmark",
+      "gui agent",
+      "web agent"
+     ]
+    },
+    {
+     "domain": "12-ML基础",
+     "terms": [
+      "speech recognition",
+      "image classification",
+      "object detection"
+     ]
+    }
+   ],
+   "positive": [
+    "data analysis agent",
+    "text-to-SQL",
+    "autonomous data science",
+    "insight generation",
+    "table",
+    "agent",
+    "reasoning",
+    "feature engineering",
+    "tabular",
+    "tabular foundation model",
+    "tabular deep learning",
+    "data agent",
+    "root cause analysis agent",
+    "dashboard generation",
+    "table question answering",
+    "data wrangling LLM",
+    "feature transformation",
+    "model evaluation",
+    "calibration",
+    "class imbalance",
+    "distribution shift",
+    "leakage",
+    "agentic etl"
+   ],
+   "positive_sources": {
+    "harvest:09-DataAgent-LLM": [
+     "data analysis agent",
+     "text-to-SQL",
+     "autonomous data science",
+     "insight generation",
+     "table",
+     "agent",
+     "reasoning"
+    ],
+    "harvest:12-ML基础": [
+     "feature engineering",
+     "tabular",
+     "tabular foundation model",
+     "tabular deep learning"
+    ],
+    "junction": [
+     "agentic etl"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 1,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 1
+    },
+    "keyword-lib:09-DataAgent-LLM": [
+     "data agent",
+     "text-to-SQL",
+     "data analysis agent",
+     "autonomous data science",
+     "root cause analysis agent",
+     "dashboard generation",
+     "table question answering",
+     "data wrangling LLM"
+    ],
+    "keyword-lib:12-ML基础": [
+     "feature engineering",
+     "tabular foundation model",
+     "feature transformation",
+     "model evaluation",
+     "calibration",
+     "class imbalance",
+     "distribution shift",
+     "leakage"
+    ]
+   },
+   "query_domains": [
+    "09-DataAgent-LLM",
+    "12-ML基础"
+   ],
+   "rank": 2,
+   "responsibility": "渠道对账",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "advertis",
+    "marketing",
+    "campaign",
+    "budget",
+    "roas",
+    "retail",
+    "e-commerce",
+    "sales",
+    "price",
+    "promotion"
+   ],
+   "contract_id": "CTR-A-034",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-021",
+   "date": "2026-09-13",
+   "domain": "渠道经营",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "13-广告分析": "13-广告分析",
+    "15-营销投放分析": "15-营销投放"
+   },
+   "l3": "行动组合",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "adversarial attack",
+    "adhd",
+    "alzheimer",
+    "adversarial example",
+    "health promotion",
+    "academic promotion",
+    "faculty"
+   ],
+   "negative_scope": [
+    {
+     "domain": "13-广告分析",
+     "terms": [
+      "adversarial attack",
+      "adhd",
+      "alzheimer",
+      "adversarial example"
+     ]
+    },
+    {
+     "domain": "15-营销投放分析",
+     "terms": [
+      "health promotion",
+      "academic promotion",
+      "faculty"
+     ]
+    }
+   ],
+   "positive": [
+    "advertising",
+    "auction",
+    "bidding",
+    "attribution",
+    "marketing",
+    "budget allocation",
+    "ROI",
+    "marketing mix model",
+    "media mix",
+    "promotion",
+    "causal",
+    "retail",
+    "incrementality",
+    "geo experiment",
+    "MMM",
+    "ROAS",
+    "sponsored search",
+    "coupon allocation",
+    "cannibalization",
+    "uPlift for advertising",
+    "ad ranking",
+    "promotion effectiveness",
+    "discount elasticity",
+    "price optimization",
+    "causal machine learning",
+    "double machine learning",
+    "DML",
+    "sales lift",
+    "trade promotion",
+    "price promotion",
+    "markdown optimization",
+    "competitive response modeling"
+   ],
+   "positive_sources": {
+    "harvest:13-广告分析": [
+     "advertising",
+     "auction",
+     "bidding",
+     "attribution",
+     "marketing",
+     "budget allocation",
+     "ROI"
+    ],
+    "harvest:15-营销投放分析": [
+     "marketing mix model",
+     "media mix",
+     "promotion",
+     "causal",
+     "retail"
+    ],
+    "junction": [
+     "competitive response modeling"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 3,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 2
+    },
+    "keyword-lib:13-广告分析": [
+     "attribution",
+     "incrementality",
+     "geo experiment",
+     "marketing mix model",
+     "MMM",
+     "ROAS",
+     "budget allocation",
+     "bidding",
+     "sponsored search",
+     "coupon allocation",
+     "cannibalization",
+     "uPlift for advertising",
+     "ad ranking"
+    ],
+    "keyword-lib:15-营销投放分析": [
+     "promotion effectiveness",
+     "discount elasticity",
+     "price optimization",
+     "causal machine learning",
+     "double machine learning",
+     "DML",
+     "sales lift",
+     "trade promotion",
+     "price promotion",
+     "markdown optimization"
+    ]
+   },
+   "query_domains": [
+    "13-广告分析",
+    "15-营销投放分析"
+   ],
+   "rank": 3,
+   "responsibility": "行动组合",
+   "role_id": "AGT-021",
+   "role_title": "Amazon业务经营",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "demand",
+    "sales",
+    "retail",
+    "inventory",
+    "e-commerce",
+    "supply chain",
+    "price",
+    "promotion"
+   ],
+   "contract_id": "CTR-A-062",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-041",
+   "date": "2026-09-13",
+   "domain": "财务与合规",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "03-时间序列": "03-时间序列",
+    "15-营销投放分析": "15-营销投放"
+   },
+   "l3": "经营预算",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "weather",
+    "climate",
+    "traffic flow",
+    "wind power",
+    "load forecasting",
+    "seismic",
+    "health promotion",
+    "academic promotion",
+    "faculty"
+   ],
+   "negative_scope": [
+    {
+     "domain": "03-时间序列",
+     "terms": [
+      "weather",
+      "climate",
+      "traffic flow",
+      "wind power",
+      "load forecasting",
+      "eeg",
+      "ecg",
+      "seismic"
+     ]
+    },
+    {
+     "domain": "15-营销投放分析",
+     "terms": [
+      "health promotion",
+      "academic promotion",
+      "faculty"
+     ]
+    }
+   ],
+   "positive": [
+    "demand forecasting",
+    "time series",
+    "foundation model",
+    "intermittent demand",
+    "hierarchical forecasting",
+    "marketing mix model",
+    "media mix",
+    "promotion",
+    "causal",
+    "retail",
+    "time series forecasting",
+    "sales prediction",
+    "prediction interval",
+    "conformal prediction",
+    "temporal fusion transformer",
+    "event-driven forecasting",
+    "inventory forecasting",
+    "promotion effectiveness",
+    "discount elasticity",
+    "price optimization",
+    "causal machine learning",
+    "double machine learning",
+    "DML",
+    "sales lift",
+    "trade promotion",
+    "price promotion",
+    "markdown optimization",
+    "step back prompting",
+    "budget reforecast rolling",
+    "cross border cash flow forecasting"
+   ],
+   "positive_sources": {
+    "harvest:03-时间序列": [
+     "demand forecasting",
+     "time series",
+     "foundation model",
+     "intermittent demand",
+     "hierarchical forecasting"
+    ],
+    "harvest:15-营销投放分析": [
+     "marketing mix model",
+     "media mix",
+     "promotion",
+     "causal",
+     "retail"
+    ],
+    "junction": [
+     "step back prompting",
+     "budget reforecast rolling",
+     "cross border cash flow forecasting"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 4,
+     "n_same_family_cards": 1,
+     "n_wildcard_cards": 3
+    },
+    "keyword-lib:03-时间序列": [
+     "time series forecasting",
+     "demand forecasting",
+     "sales prediction",
+     "hierarchical forecasting",
+     "intermittent demand",
+     "prediction interval",
+     "conformal prediction",
+     "temporal fusion transformer",
+     "event-driven forecasting",
+     "inventory forecasting"
+    ],
+    "keyword-lib:15-营销投放分析": [
+     "promotion effectiveness",
+     "discount elasticity",
+     "price optimization",
+     "causal machine learning",
+     "double machine learning",
+     "DML",
+     "sales lift",
+     "trade promotion",
+     "price promotion",
+     "markdown optimization"
+    ]
+   },
+   "query_domains": [
+    "03-时间序列",
+    "15-营销投放分析"
+   ],
+   "rank": 4,
+   "responsibility": "经营预算",
+   "role_id": "AGT-041",
+   "role_title": "经营财务与资金",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "tabular",
+    "business",
+    "prediction",
+    "dataset",
+    "online",
+    "platform",
+    "marketplace",
+    "advertis",
+    "pricing",
+    "user",
+    "e-commerce"
+   ],
+   "contract_id": "CTR-A-060",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-040",
+   "date": "2026-09-13",
+   "domain": "财务与合规",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "02-A_B实验": "02-A_B实验",
+    "12-ML基础": "12-ML基础"
+   },
+   "l3": "差异追踪",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "speech recognition",
+    "image classification",
+    "object detection",
+    "wet lab",
+    "robot",
+    "in vitro"
+   ],
+   "negative_scope": [
+    {
+     "domain": "12-ML基础",
+     "terms": [
+      "speech recognition",
+      "image classification",
+      "object detection"
+     ]
+    },
+    {
+     "domain": "02-A_B实验",
+     "terms": [
+      "wet lab",
+      "robot",
+      "in vitro"
+     ]
+    }
+   ],
+   "positive": [
+    "feature engineering",
+    "tabular",
+    "tabular foundation model",
+    "tabular deep learning",
+    "A/B testing",
+    "online controlled experiment",
+    "multi-armed bandit",
+    "recommendation",
+    "sequential testing",
+    "experiment assignment",
+    "feature transformation",
+    "model evaluation",
+    "calibration",
+    "class imbalance",
+    "distribution shift",
+    "leakage",
+    "experiment design",
+    "statistical power",
+    "always-valid inference",
+    "variance reduction",
+    "CUPED",
+    "switchback experiment",
+    "interference experiment",
+    "contextual bandit",
+    "Thompson sampling",
+    "inventory theft warehouse anomaly"
+   ],
+   "positive_sources": {
+    "harvest:02-A_B实验": [
+     "A/B testing",
+     "online controlled experiment",
+     "multi-armed bandit",
+     "recommendation",
+     "sequential testing",
+     "experiment assignment"
+    ],
+    "harvest:12-ML基础": [
+     "feature engineering",
+     "tabular",
+     "tabular foundation model",
+     "tabular deep learning"
+    ],
+    "junction": [
+     "inventory theft warehouse anomaly"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 9,
+     "n_same_family_cards": 1,
+     "n_wildcard_cards": 1
+    },
+    "keyword-lib:02-A_B实验": [
+     "A/B testing",
+     "multi-armed bandit",
+     "experiment design",
+     "statistical power",
+     "sequential testing",
+     "always-valid inference",
+     "variance reduction",
+     "CUPED",
+     "switchback experiment",
+     "interference experiment",
+     "contextual bandit",
+     "Thompson sampling"
+    ],
+    "keyword-lib:12-ML基础": [
+     "feature engineering",
+     "tabular foundation model",
+     "feature transformation",
+     "model evaluation",
+     "calibration",
+     "class imbalance",
+     "distribution shift",
+     "leakage"
+    ]
+   },
+   "query_domains": [
+    "12-ML基础",
+    "02-A_B实验"
+   ],
+   "rank": 5,
+   "responsibility": "差异追踪",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "analytics",
+    "business",
+    "enterprise",
+    "database",
+    "table",
+    "e-commerce",
+    "product",
+    "customer",
+    "agent",
+    "retrieval"
+   ],
+   "contract_id": "CTR-A-059",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-040",
+   "date": "2026-09-13",
+   "domain": "财务与合规",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "08-知识图谱": "08-知识图谱",
+    "09-DataAgent-LLM": "09-DataAgent"
+   },
+   "l3": "收入与费用核对",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "code generation benchmark",
+    "gui agent",
+    "web agent",
+    "molecular",
+    "protein",
+    "drug discovery",
+    "biomedical",
+    "chemistry",
+    "crystal"
+   ],
+   "negative_scope": [
+    {
+     "domain": "09-DataAgent-LLM",
+     "terms": [
+      "code generation benchmark",
+      "gui agent",
+      "web agent"
+     ]
+    },
+    {
+     "domain": "08-知识图谱",
+     "terms": [
+      "molecular",
+      "protein",
+      "drug discovery",
+      "biomedical",
+      "chemistry",
+      "crystal"
+     ]
+    }
+   ],
+   "positive": [
+    "data analysis agent",
+    "text-to-SQL",
+    "autonomous data science",
+    "insight generation",
+    "table",
+    "agent",
+    "reasoning",
+    "knowledge graph",
+    "retrieval augmented",
+    "graph neural network",
+    "e-commerce",
+    "entity alignment",
+    "knowledge graph completion",
+    "data agent",
+    "root cause analysis agent",
+    "dashboard generation",
+    "table question answering",
+    "data wrangling LLM",
+    "heterogeneous graph",
+    "hyperbolic embedding",
+    "entity linking",
+    "relation extraction",
+    "graph retrieval",
+    "GraphRAG",
+    "knowledge graph construction",
+    "llm financial report analyst"
+   ],
+   "positive_sources": {
+    "harvest:08-知识图谱": [
+     "knowledge graph",
+     "retrieval augmented",
+     "graph neural network",
+     "e-commerce",
+     "entity alignment",
+     "knowledge graph completion"
+    ],
+    "harvest:09-DataAgent-LLM": [
+     "data analysis agent",
+     "text-to-SQL",
+     "autonomous data science",
+     "insight generation",
+     "table",
+     "agent",
+     "reasoning"
+    ],
+    "junction": [
+     "llm financial report analyst"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 14,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 3
+    },
+    "keyword-lib:08-知识图谱": [
+     "knowledge graph",
+     "heterogeneous graph",
+     "hyperbolic embedding",
+     "graph neural network",
+     "entity linking",
+     "relation extraction",
+     "graph retrieval",
+     "GraphRAG",
+     "knowledge graph construction"
+    ],
+    "keyword-lib:09-DataAgent-LLM": [
+     "data agent",
+     "text-to-SQL",
+     "data analysis agent",
+     "autonomous data science",
+     "root cause analysis agent",
+     "dashboard generation",
+     "table question answering",
+     "data wrangling LLM"
+    ]
+   },
+   "query_domains": [
+    "09-DataAgent-LLM",
+    "08-知识图谱"
+   ],
+   "rank": 6,
+   "responsibility": "收入与费用核对",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "e-commerce",
+    "product",
+    "item",
+    "user",
+    "session",
+    "catalog"
+   ],
+   "contract_id": "CTR-A-026",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-017",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "05-推荐系统": "05-推荐系统"
+   },
+   "l3": "生命周期分析",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "movie",
+    "music recommendation",
+    "news recommendation",
+    "poi recommendation",
+    "friend recommendation"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "05-推荐系统",
+     "terms": [
+      "movie",
+      "music recommendation",
+      "news recommendation",
+      "poi recommendation",
+      "friend recommendation"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "recommender system",
+    "sequential recommendation",
+    "generative recommendation",
+    "cold-start",
+    "recommendation",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "recommendation system",
+    "collaborative filtering",
+    "semantic ID",
+    "cold-start recommendation",
+    "conversational recommendation",
+    "reranking",
+    "session-based recommendation",
+    "catalog enrichment",
+    "product lifecycle stage",
+    "logistics cost pl attribution",
+    "cross border returns cost model"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:05-推荐系统": [
+     "recommender system",
+     "large language model",
+     "sequential recommendation",
+     "generative recommendation",
+     "cold-start",
+     "recommendation"
+    ],
+    "junction": [
+     "product lifecycle stage",
+     "logistics cost pl attribution",
+     "cross border returns cost model"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 6,
+     "n_same_family_cards": 2,
+     "n_wildcard_cards": 2
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:05-推荐系统": [
+     "recommendation system",
+     "collaborative filtering",
+     "sequential recommendation",
+     "generative recommendation",
+     "semantic ID",
+     "cold-start recommendation",
+     "conversational recommendation",
+     "reranking",
+     "session-based recommendation",
+     "catalog enrichment"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "05-推荐系统"
+   ],
+   "rank": 7,
+   "responsibility": "生命周期分析",
+   "role_id": "AGT-017",
+   "role_title": "库存与商品生命周期",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "demand",
+    "sales",
+    "retail",
+    "inventory",
+    "e-commerce",
+    "supply chain",
+    "goods",
+    "physical",
+    "warehouse",
+    "fulfillment",
+    "logistics",
+    "order"
+   ],
+   "contract_id": "CTR-A-061",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-041",
+   "date": "2026-09-13",
+   "domain": "财务与合规",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "03-时间序列": "03-时间序列",
+    "04-供应链": "04-供应链"
+   },
+   "l3": "资金预测",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "weather",
+    "climate",
+    "traffic flow",
+    "wind power",
+    "load forecasting",
+    "seismic",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler"
+   ],
+   "negative_scope": [
+    {
+     "domain": "03-时间序列",
+     "terms": [
+      "weather",
+      "climate",
+      "traffic flow",
+      "wind power",
+      "load forecasting",
+      "eeg",
+      "ecg",
+      "seismic"
+     ]
+    },
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    }
+   ],
+   "positive": [
+    "demand forecasting",
+    "time series",
+    "foundation model",
+    "intermittent demand",
+    "hierarchical forecasting",
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "time series forecasting",
+    "sales prediction",
+    "prediction interval",
+    "conformal prediction",
+    "temporal fusion transformer",
+    "event-driven forecasting",
+    "inventory forecasting",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "fx hedging strategy",
+    "amazon lending decision",
+    "multicurrency fx hedging",
+    "budget reforecast rolling"
+   ],
+   "positive_sources": {
+    "harvest:03-时间序列": [
+     "demand forecasting",
+     "time series",
+     "foundation model",
+     "intermittent demand",
+     "hierarchical forecasting"
+    ],
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "junction": [
+     "fx hedging strategy",
+     "amazon lending decision",
+     "multicurrency fx hedging",
+     "budget reforecast rolling"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 19,
+     "n_same_family_cards": 14,
+     "n_wildcard_cards": 5
+    },
+    "keyword-lib:03-时间序列": [
+     "time series forecasting",
+     "demand forecasting",
+     "sales prediction",
+     "hierarchical forecasting",
+     "intermittent demand",
+     "prediction interval",
+     "conformal prediction",
+     "temporal fusion transformer",
+     "event-driven forecasting",
+     "inventory forecasting"
+    ],
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ]
+   },
+   "query_domains": [
+    "03-时间序列",
+    "04-供应链"
+   ],
+   "rank": 8,
+   "responsibility": "资金预测",
+   "role_id": "AGT-041",
+   "role_title": "经营财务与资金",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "e-commerce",
+    "product",
+    "customer",
+    "agent",
+    "retrieval",
+    "llm",
+    "tool",
+    "context"
+   ],
+   "contract_id": "CTR-A-066",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-045",
+   "date": "2026-09-13",
+   "domain": "数据与AI运行",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "08-知识图谱": "08-知识图谱",
+    "16-智能体工程": "16-智能体工程"
+   },
+   "l3": "账号商品映射",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "molecular",
+    "protein",
+    "drug discovery",
+    "biomedical",
+    "chemistry",
+    "crystal",
+    "embodied agent",
+    "robot manipulation",
+    "gui agent"
+   ],
+   "negative_scope": [
+    {
+     "domain": "08-知识图谱",
+     "terms": [
+      "molecular",
+      "protein",
+      "drug discovery",
+      "biomedical",
+      "chemistry",
+      "crystal"
+     ]
+    },
+    {
+     "domain": "16-智能体工程",
+     "terms": [
+      "embodied agent",
+      "robot manipulation",
+      "gui agent"
+     ]
+    }
+   ],
+   "positive": [
+    "knowledge graph",
+    "retrieval augmented",
+    "graph neural network",
+    "e-commerce",
+    "entity alignment",
+    "knowledge graph completion",
+    "agent skills",
+    "skill library",
+    "LLM",
+    "context engineering",
+    "context compression",
+    "agent",
+    "model context protocol",
+    "agent2agent",
+    "tool use",
+    "benchmark",
+    "agent memory",
+    "long-term",
+    "heterogeneous graph",
+    "hyperbolic embedding",
+    "entity linking",
+    "relation extraction",
+    "graph retrieval",
+    "GraphRAG",
+    "knowledge graph construction",
+    "agent skill",
+    "tool calling",
+    "function calling",
+    "MCP",
+    "agent observability",
+    "agent evaluation",
+    "LLM-as-a-judge",
+    "rubric",
+    "prompt injection",
+    "agent safety",
+    "asin sku erp",
+    "amazon tiktok",
+    "product kg query",
+    "privacy safe identity resolution"
+   ],
+   "positive_sources": {
+    "harvest:08-知识图谱": [
+     "knowledge graph",
+     "retrieval augmented",
+     "graph neural network",
+     "e-commerce",
+     "entity alignment",
+     "knowledge graph completion"
+    ],
+    "harvest:16-智能体工程": [
+     "agent skills",
+     "skill library",
+     "LLM",
+     "context engineering",
+     "context compression",
+     "agent",
+     "model context protocol",
+     "agent2agent",
+     "tool use",
+     "benchmark",
+     "agent memory",
+     "long-term"
+    ],
+    "junction": [
+     "asin sku erp",
+     "amazon tiktok",
+     "product kg query",
+     "privacy safe identity resolution"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 7,
+     "n_same_family_cards": 5,
+     "n_wildcard_cards": 2
+    },
+    "keyword-lib:08-知识图谱": [
+     "knowledge graph",
+     "heterogeneous graph",
+     "hyperbolic embedding",
+     "graph neural network",
+     "entity linking",
+     "relation extraction",
+     "graph retrieval",
+     "GraphRAG",
+     "knowledge graph construction"
+    ],
+    "keyword-lib:16-智能体工程": [
+     "agent skill",
+     "skill library",
+     "tool calling",
+     "function calling",
+     "context engineering",
+     "context compression",
+     "agent memory",
+     "MCP",
+     "model context protocol",
+     "agent observability",
+     "agent evaluation",
+     "LLM-as-a-judge",
+     "rubric",
+     "prompt injection",
+     "agent safety"
+    ]
+   },
+   "query_domains": [
+    "08-知识图谱",
+    "16-智能体工程"
+   ],
+   "rank": 11,
+   "responsibility": "账号商品映射",
+   "role_id": "AGT-045",
+   "role_title": "业务口径与主数据",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "tabular",
+    "business",
+    "prediction",
+    "dataset",
+    "e-commerce",
+    "retail",
+    "subscription",
+    "churn",
+    "user",
+    "customer"
+   ],
+   "contract_id": "CTR-A-045",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-027",
+   "date": "2026-09-13",
+   "domain": "渠道经营",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "harvest_domain_bridge": {
+    "12-ML基础": "12-ML基础",
+    "14-用户分析": "14-用户分析"
+   },
+   "l3": "账号诊断",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "speech recognition",
+    "image classification",
+    "object detection",
+    "pet scan",
+    "cohort study",
+    "epidemiolog",
+    "diagnosis"
+   ],
+   "negative_scope": [
+    {
+     "domain": "12-ML基础",
+     "terms": [
+      "speech recognition",
+      "image classification",
+      "object detection"
+     ]
+    },
+    {
+     "domain": "14-用户分析",
+     "terms": [
+      "clinical",
+      "patient",
+      "mri",
+      "eeg",
+      "fmri",
+      "lesion",
+      "radiotherapy",
+      "pet scan",
+      "tumor",
+      "cohort study",
+      "epidemiolog",
+      "diagnosis"
+     ]
+    }
+   ],
+   "positive": [
+    "feature engineering",
+    "tabular",
+    "tabular foundation model",
+    "tabular deep learning",
+    "funnel",
+    "conversion",
+    "cohort",
+    "survival analysis",
+    "user",
+    "feature transformation",
+    "model evaluation",
+    "calibration",
+    "class imbalance",
+    "distribution shift",
+    "leakage",
+    "funnel analysis",
+    "cohort retention",
+    "RFM segmentation",
+    "user segmentation",
+    "behavioral analytics",
+    "session analysis",
+    "conversion funnel",
+    "customer journey",
+    "path analysis",
+    "survival analysis for users",
+    "amazon poa",
+    "voc fraud review detection",
+    "seller rating attack pattern",
+    "account health proactive monitor"
+   ],
+   "positive_sources": {
+    "harvest:12-ML基础": [
+     "feature engineering",
+     "tabular",
+     "tabular foundation model",
+     "tabular deep learning"
+    ],
+    "harvest:14-用户分析": [
+     "funnel",
+     "conversion",
+     "cohort",
+     "survival analysis",
+     "user"
+    ],
+    "junction": [
+     "amazon poa",
+     "voc fraud review detection",
+     "seller rating attack pattern",
+     "account health proactive monitor"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 14,
+     "n_same_family_cards": 12,
+     "n_wildcard_cards": 2
+    },
+    "keyword-lib:12-ML基础": [
+     "feature engineering",
+     "tabular foundation model",
+     "feature transformation",
+     "model evaluation",
+     "calibration",
+     "class imbalance",
+     "distribution shift",
+     "leakage"
+    ],
+    "keyword-lib:14-用户分析": [
+     "funnel analysis",
+     "cohort retention",
+     "RFM segmentation",
+     "user segmentation",
+     "behavioral analytics",
+     "session analysis",
+     "conversion funnel",
+     "customer journey",
+     "path analysis",
+     "survival analysis for users"
+    ]
+   },
+   "query_domains": [
+    "12-ML基础",
+    "14-用户分析"
+   ],
+   "rank": 12,
+   "responsibility": "账号诊断",
+   "role_id": "AGT-027",
+   "role_title": "店铺账号健康与规则",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "14-用户分析"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "llm",
+    "agent",
+    "task",
+    "tool"
+   ],
+   "contract_id": "CTR-A-024",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-016",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "10-MAS": "10-MAS"
+   },
+   "l3": "供需协调",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "multi-agent reinforcement learning"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "10-MAS",
+     "terms": [
+      "multi-agent reinforcement learning"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "multi-agent",
+    "LLM",
+    "coordination",
+    "agent",
+    "simulation",
+    "consumer",
+    "multi-agent reinforcement learning",
+    "pricing",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "multi-agent system",
+    "agent collaboration",
+    "agent orchestration",
+    "role assignment",
+    "communication protocol",
+    "A2A",
+    "agent handoff",
+    "debate",
+    "voting",
+    "collaboration tax",
+    "ad spend inventory sync",
+    "event driven demand mas",
+    "supply chain causal scm",
+    "bullwhip effect mitigation"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:10-MAS": [
+     "multi-agent",
+     "LLM",
+     "coordination",
+     "agent",
+     "simulation",
+     "consumer",
+     "multi-agent reinforcement learning",
+     "pricing"
+    ],
+    "junction": [
+     "ad spend inventory sync",
+     "event driven demand mas",
+     "supply chain causal scm",
+     "bullwhip effect mitigation"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 22,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 19
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:10-MAS": [
+     "multi-agent system",
+     "agent collaboration",
+     "agent orchestration",
+     "role assignment",
+     "communication protocol",
+     "A2A",
+     "agent handoff",
+     "debate",
+     "voting",
+     "collaboration tax"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "10-MAS"
+   ],
+   "rank": 13,
+   "responsibility": "供需协调",
+   "role_id": "AGT-016",
+   "role_title": "需求预测与补货计划",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "advertis",
+    "marketing",
+    "campaign",
+    "budget",
+    "roas",
+    "retail",
+    "e-commerce",
+    "sales",
+    "price",
+    "promotion"
+   ],
+   "contract_id": "CTR-A-040",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-024",
+   "date": "2026-09-13",
+   "domain": "渠道经营",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "harvest_domain_bridge": {
+    "13-广告分析": "13-广告分析",
+    "15-营销投放分析": "15-营销投放"
+   },
+   "l3": "平台运营",
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "adversarial attack",
+    "adhd",
+    "alzheimer",
+    "adversarial example",
+    "health promotion",
+    "academic promotion",
+    "faculty"
+   ],
+   "negative_scope": [
+    {
+     "domain": "13-广告分析",
+     "terms": [
+      "adversarial attack",
+      "adhd",
+      "alzheimer",
+      "adversarial example"
+     ]
+    },
+    {
+     "domain": "15-营销投放分析",
+     "terms": [
+      "health promotion",
+      "academic promotion",
+      "faculty"
+     ]
+    }
+   ],
+   "positive": [
+    "advertising",
+    "auction",
+    "bidding",
+    "attribution",
+    "marketing",
+    "budget allocation",
+    "ROI",
+    "marketing mix model",
+    "media mix",
+    "promotion",
+    "causal",
+    "retail",
+    "incrementality",
+    "geo experiment",
+    "MMM",
+    "ROAS",
+    "sponsored search",
+    "coupon allocation",
+    "cannibalization",
+    "uPlift for advertising",
+    "ad ranking",
+    "promotion effectiveness",
+    "discount elasticity",
+    "price optimization",
+    "causal machine learning",
+    "double machine learning",
+    "DML",
+    "sales lift",
+    "trade promotion",
+    "price promotion",
+    "markdown optimization",
+    "tiktok cvr",
+    "amazon tiktok shop shopee",
+    "cross platform transfer recommendation"
+   ],
+   "positive_sources": {
+    "harvest:13-广告分析": [
+     "advertising",
+     "auction",
+     "bidding",
+     "attribution",
+     "marketing",
+     "budget allocation",
+     "ROI"
+    ],
+    "harvest:15-营销投放分析": [
+     "marketing mix model",
+     "media mix",
+     "promotion",
+     "causal",
+     "retail"
+    ],
+    "junction": [
+     "tiktok cvr",
+     "amazon tiktok shop shopee",
+     "cross platform transfer recommendation"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 5,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 4
+    },
+    "keyword-lib:13-广告分析": [
+     "attribution",
+     "incrementality",
+     "geo experiment",
+     "marketing mix model",
+     "MMM",
+     "ROAS",
+     "budget allocation",
+     "bidding",
+     "sponsored search",
+     "coupon allocation",
+     "cannibalization",
+     "uPlift for advertising",
+     "ad ranking"
+    ],
+    "keyword-lib:15-营销投放分析": [
+     "promotion effectiveness",
+     "discount elasticity",
+     "price optimization",
+     "causal machine learning",
+     "double machine learning",
+     "DML",
+     "sales lift",
+     "trade promotion",
+     "price promotion",
+     "markdown optimization"
+    ]
+   },
+   "query_domains": [
+    "13-广告分析",
+    "15-营销投放分析"
+   ],
+   "rank": 14,
+   "responsibility": "平台运营",
+   "role_id": "AGT-024",
+   "role_title": "其他平台与新市场经营",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "e-commerce",
+    "product",
+    "customer",
+    "review",
+    "feedback",
+    "retail",
+    "subscription",
+    "churn",
+    "user"
+   ],
+   "contract_id": "CTR-A-047",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-029",
+   "date": "2026-09-13",
+   "domain": "品牌与增长",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "07-NLP-VOC": "07-VOC舆情",
+    "14-用户分析": "14-用户分析"
+   },
+   "l3": "品牌反馈",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "clinical note",
+    "hate speech",
+    "fake news",
+    "machine translation",
+    "pet scan",
+    "cohort study",
+    "epidemiolog",
+    "diagnosis"
+   ],
+   "negative_scope": [
+    {
+     "domain": "07-NLP-VOC",
+     "terms": [
+      "clinical note",
+      "hate speech",
+      "fake news",
+      "machine translation"
+     ]
+    },
+    {
+     "domain": "14-用户分析",
+     "terms": [
+      "clinical",
+      "patient",
+      "mri",
+      "eeg",
+      "fmri",
+      "lesion",
+      "radiotherapy",
+      "pet scan",
+      "tumor",
+      "cohort study",
+      "epidemiolog",
+      "diagnosis"
+     ]
+    }
+   ],
+   "positive": [
+    "aspect-based sentiment",
+    "opinion mining",
+    "customer review",
+    "LLM",
+    "large language model",
+    "review summarization",
+    "user feedback",
+    "mining",
+    "funnel",
+    "conversion",
+    "cohort",
+    "survival analysis",
+    "user",
+    "product review summarization",
+    "product",
+    "review",
+    "multimodal review",
+    "review image understanding",
+    "aspect extraction",
+    "voice of customer",
+    "customer feedback categorization",
+    "complaint analysis",
+    "LLM-as-annotator",
+    "label taxonomy evolution",
+    "self-evolving label system",
+    "intent classification",
+    "NPS prediction",
+    "funnel analysis",
+    "cohort retention",
+    "RFM segmentation",
+    "user segmentation",
+    "behavioral analytics",
+    "session analysis",
+    "conversion funnel",
+    "customer journey",
+    "path analysis",
+    "survival analysis for users",
+    "video sentiment analysis voc",
+    "reddit community signal mining",
+    "brand safety video content filter",
+    "cross platform brand search volume"
+   ],
+   "positive_sources": {
+    "harvest:07-NLP-VOC": [
+     "aspect-based sentiment",
+     "opinion mining",
+     "customer review",
+     "LLM",
+     "large language model",
+     "review summarization",
+     "user feedback",
+     "mining"
+    ],
+    "harvest:14-用户分析": [
+     "funnel",
+     "conversion",
+     "cohort",
+     "survival analysis",
+     "user"
+    ],
+    "junction": [
+     "video sentiment analysis voc",
+     "reddit community signal mining",
+     "brand safety video content filter",
+     "cross platform brand search volume"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 4,
+     "n_same_family_cards": 2,
+     "n_wildcard_cards": 2
+    },
+    "keyword-lib:07-NLP-VOC": [
+     "product review summarization",
+     "opinion mining",
+     "product",
+     "review",
+     "multimodal review",
+     "review image understanding",
+     "aspect extraction",
+     "aspect-based sentiment",
+     "voice of customer",
+     "customer feedback categorization",
+     "complaint analysis",
+     "LLM-as-annotator",
+     "label taxonomy evolution",
+     "self-evolving label system",
+     "intent classification",
+     "NPS prediction"
+    ],
+    "keyword-lib:14-用户分析": [
+     "funnel analysis",
+     "cohort retention",
+     "RFM segmentation",
+     "user segmentation",
+     "behavioral analytics",
+     "session analysis",
+     "conversion funnel",
+     "customer journey",
+     "path analysis",
+     "survival analysis for users"
+    ]
+   },
+   "query_domains": [
+    "07-NLP-VOC",
+    "14-用户分析"
+   ],
+   "rank": 16,
+   "responsibility": "品牌反馈",
+   "role_id": "AGT-029",
+   "role_title": "品牌战略与传播",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "14-用户分析"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "online",
+    "platform",
+    "marketplace",
+    "advertis",
+    "pricing",
+    "user",
+    "e-commerce",
+    "subscription",
+    "retail",
+    "customer"
+   ],
+   "contract_id": "CTR-A-013",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-010",
+   "date": "2026-09-13",
+   "domain": "产品与创新",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02"
+   ],
+   "harvest_domain_bridge": {
+    "02-A_B实验": "02-A_B实验",
+    "06-增长模型": "06-增长模型"
+   },
+   "l3": "可用性验证",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "wet lab",
+    "robot",
+    "in vitro",
+    "employee turnover",
+    "student dropout",
+    "attrition rate"
+   ],
+   "negative_scope": [
+    {
+     "domain": "02-A_B实验",
+     "terms": [
+      "wet lab",
+      "robot",
+      "in vitro"
+     ]
+    },
+    {
+     "domain": "06-增长模型",
+     "terms": [
+      "employee turnover",
+      "student dropout",
+      "attrition rate"
+     ]
+    }
+   ],
+   "positive": [
+    "A/B testing",
+    "online controlled experiment",
+    "multi-armed bandit",
+    "recommendation",
+    "sequential testing",
+    "experiment assignment",
+    "churn prediction",
+    "customer lifetime value",
+    "user growth",
+    "retention",
+    "uplift",
+    "conversion rate prediction",
+    "e-commerce",
+    "experiment design",
+    "statistical power",
+    "always-valid inference",
+    "variance reduction",
+    "CUPED",
+    "switchback experiment",
+    "interference experiment",
+    "contextual bandit",
+    "Thompson sampling",
+    "LTV",
+    "repurchase",
+    "user lifecycle",
+    "RFM",
+    "survival analysis",
+    "uplift churn",
+    "seasonality",
+    "early warning system",
+    "renewal prediction",
+    "inclusive design accessibility ai"
+   ],
+   "positive_sources": {
+    "harvest:02-A_B实验": [
+     "A/B testing",
+     "online controlled experiment",
+     "multi-armed bandit",
+     "recommendation",
+     "sequential testing",
+     "experiment assignment"
+    ],
+    "harvest:06-增长模型": [
+     "churn prediction",
+     "customer lifetime value",
+     "user growth",
+     "retention",
+     "uplift",
+     "conversion rate prediction",
+     "e-commerce"
+    ],
+    "junction": [
+     "inclusive design accessibility ai"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 2,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 2
+    },
+    "keyword-lib:02-A_B实验": [
+     "A/B testing",
+     "multi-armed bandit",
+     "experiment design",
+     "statistical power",
+     "sequential testing",
+     "always-valid inference",
+     "variance reduction",
+     "CUPED",
+     "switchback experiment",
+     "interference experiment",
+     "contextual bandit",
+     "Thompson sampling"
+    ],
+    "keyword-lib:06-增长模型": [
+     "churn prediction",
+     "customer lifetime value",
+     "LTV",
+     "retention",
+     "repurchase",
+     "user lifecycle",
+     "RFM",
+     "survival analysis",
+     "uplift churn",
+     "seasonality",
+     "early warning system",
+     "renewal prediction"
+    ]
+   },
+   "query_domains": [
+    "02-A_B实验",
+    "06-增长模型"
+   ],
+   "rank": 17,
+   "responsibility": "可用性验证",
+   "role_id": "AGT-010",
+   "role_title": "工业设计与用户体验",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "online",
+    "platform",
+    "marketplace",
+    "advertis",
+    "pricing",
+    "user",
+    "e-commerce",
+    "llm",
+    "agent",
+    "task",
+    "tool"
+   ],
+   "contract_id": "CTR-A-017",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-013",
+   "date": "2026-09-13",
+   "domain": "产品与创新",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "harvest_domain_bridge": {
+    "02-A_B实验": "02-A_B实验",
+    "10-MAS": "10-MAS"
+   },
+   "l3": "测试方案",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "wet lab",
+    "robot",
+    "in vitro",
+    "multi-agent reinforcement learning"
+   ],
+   "negative_scope": [
+    {
+     "domain": "02-A_B实验",
+     "terms": [
+      "wet lab",
+      "robot",
+      "in vitro"
+     ]
+    },
+    {
+     "domain": "10-MAS",
+     "terms": [
+      "multi-agent reinforcement learning"
+     ]
+    }
+   ],
+   "positive": [
+    "A/B testing",
+    "online controlled experiment",
+    "multi-armed bandit",
+    "recommendation",
+    "sequential testing",
+    "experiment assignment",
+    "multi-agent",
+    "LLM",
+    "coordination",
+    "agent",
+    "simulation",
+    "consumer",
+    "multi-agent reinforcement learning",
+    "pricing",
+    "experiment design",
+    "statistical power",
+    "always-valid inference",
+    "variance reduction",
+    "CUPED",
+    "switchback experiment",
+    "interference experiment",
+    "contextual bandit",
+    "Thompson sampling",
+    "multi-agent system",
+    "agent collaboration",
+    "agent orchestration",
+    "role assignment",
+    "communication protocol",
+    "A2A",
+    "agent handoff",
+    "debate",
+    "voting",
+    "collaboration tax"
+   ],
+   "positive_sources": {
+    "harvest:02-A_B实验": [
+     "A/B testing",
+     "online controlled experiment",
+     "multi-armed bandit",
+     "recommendation",
+     "sequential testing",
+     "experiment assignment"
+    ],
+    "harvest:10-MAS": [
+     "multi-agent",
+     "LLM",
+     "coordination",
+     "agent",
+     "simulation",
+     "consumer",
+     "multi-agent reinforcement learning",
+     "pricing"
+    ],
+    "junction": [],
+    "junction_provenance": {
+     "empty": true,
+     "n_cards": 1,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 1
+    },
+    "keyword-lib:02-A_B实验": [
+     "A/B testing",
+     "multi-armed bandit",
+     "experiment design",
+     "statistical power",
+     "sequential testing",
+     "always-valid inference",
+     "variance reduction",
+     "CUPED",
+     "switchback experiment",
+     "interference experiment",
+     "contextual bandit",
+     "Thompson sampling"
+    ],
+    "keyword-lib:10-MAS": [
+     "multi-agent system",
+     "agent collaboration",
+     "agent orchestration",
+     "role assignment",
+     "communication protocol",
+     "A2A",
+     "agent handoff",
+     "debate",
+     "voting",
+     "collaboration tax"
+    ]
+   },
+   "query_domains": [
+    "02-A_B实验",
+    "10-MAS"
+   ],
+   "rank": 18,
+   "responsibility": "测试方案",
+   "role_id": "AGT-013",
+   "role_title": "产品验证与研发项目",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "retail",
+    "e-commerce",
+    "sales",
+    "price",
+    "promotion",
+    "goods",
+    "physical",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order"
+   ],
+   "contract_id": "CTR-A-001",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-001",
+   "date": "2026-09-13",
+   "domain": "经营与组织",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "15-营销投放分析": "15-营销投放"
+   },
+   "l3": "资源情景比较",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "health promotion",
+    "academic promotion",
+    "faculty",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler"
+   ],
+   "negative_scope": [
+    {
+     "domain": "15-营销投放分析",
+     "terms": [
+      "health promotion",
+      "academic promotion",
+      "faculty"
+     ]
+    },
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    }
+   ],
+   "positive": [
+    "marketing mix model",
+    "media mix",
+    "promotion",
+    "causal",
+    "retail",
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "promotion effectiveness",
+    "discount elasticity",
+    "price optimization",
+    "causal machine learning",
+    "double machine learning",
+    "DML",
+    "sales lift",
+    "trade promotion",
+    "price promotion",
+    "markdown optimization",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "multi objective budget allocation"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:15-营销投放分析": [
+     "marketing mix model",
+     "media mix",
+     "promotion",
+     "causal",
+     "retail"
+    ],
+    "junction": [
+     "multi objective budget allocation"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 4,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 1
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:15-营销投放分析": [
+     "promotion effectiveness",
+     "discount elasticity",
+     "price optimization",
+     "causal machine learning",
+     "double machine learning",
+     "DML",
+     "sales lift",
+     "trade promotion",
+     "price promotion",
+     "markdown optimization"
+    ]
+   },
+   "query_domains": [
+    "15-营销投放分析",
+    "04-供应链"
+   ],
+   "rank": 19,
+   "responsibility": "资源情景比较",
+   "role_id": "AGT-001",
+   "role_title": "经营目标与资源统筹",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "e-commerce",
+    "product",
+    "customer",
+    "agent",
+    "retrieval",
+    "review",
+    "feedback"
+   ],
+   "contract_id": "CTR-A-064",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-043",
+   "date": "2026-09-13",
+   "domain": "财务与合规",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "07-NLP-VOC": "07-VOC舆情",
+    "08-知识图谱": "08-知识图谱"
+   },
+   "l3": "知识产权检索",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "molecular",
+    "protein",
+    "drug discovery",
+    "biomedical",
+    "chemistry",
+    "crystal",
+    "clinical note",
+    "hate speech",
+    "fake news",
+    "machine translation"
+   ],
+   "negative_scope": [
+    {
+     "domain": "08-知识图谱",
+     "terms": [
+      "molecular",
+      "protein",
+      "drug discovery",
+      "biomedical",
+      "chemistry",
+      "crystal"
+     ]
+    },
+    {
+     "domain": "07-NLP-VOC",
+     "terms": [
+      "clinical note",
+      "hate speech",
+      "fake news",
+      "machine translation"
+     ]
+    }
+   ],
+   "positive": [
+    "knowledge graph",
+    "retrieval augmented",
+    "graph neural network",
+    "e-commerce",
+    "entity alignment",
+    "knowledge graph completion",
+    "aspect-based sentiment",
+    "opinion mining",
+    "customer review",
+    "LLM",
+    "large language model",
+    "review summarization",
+    "user feedback",
+    "mining",
+    "heterogeneous graph",
+    "hyperbolic embedding",
+    "entity linking",
+    "relation extraction",
+    "graph retrieval",
+    "GraphRAG",
+    "knowledge graph construction",
+    "product review summarization",
+    "product",
+    "review",
+    "multimodal review",
+    "review image understanding",
+    "aspect extraction",
+    "voice of customer",
+    "customer feedback categorization",
+    "complaint analysis",
+    "LLM-as-annotator",
+    "label taxonomy evolution",
+    "self-evolving label system",
+    "intent classification",
+    "NPS prediction",
+    "gan listing adversarial listing defense"
+   ],
+   "positive_sources": {
+    "harvest:07-NLP-VOC": [
+     "aspect-based sentiment",
+     "opinion mining",
+     "customer review",
+     "LLM",
+     "large language model",
+     "review summarization",
+     "user feedback",
+     "mining"
+    ],
+    "harvest:08-知识图谱": [
+     "knowledge graph",
+     "retrieval augmented",
+     "graph neural network",
+     "e-commerce",
+     "entity alignment",
+     "knowledge graph completion"
+    ],
+    "junction": [
+     "gan listing adversarial listing defense"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 8,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 1
+    },
+    "keyword-lib:07-NLP-VOC": [
+     "product review summarization",
+     "opinion mining",
+     "product",
+     "review",
+     "multimodal review",
+     "review image understanding",
+     "aspect extraction",
+     "aspect-based sentiment",
+     "voice of customer",
+     "customer feedback categorization",
+     "complaint analysis",
+     "LLM-as-annotator",
+     "label taxonomy evolution",
+     "self-evolving label system",
+     "intent classification",
+     "NPS prediction"
+    ],
+    "keyword-lib:08-知识图谱": [
+     "knowledge graph",
+     "heterogeneous graph",
+     "hyperbolic embedding",
+     "graph neural network",
+     "entity linking",
+     "relation extraction",
+     "graph retrieval",
+     "GraphRAG",
+     "knowledge graph construction"
+    ]
+   },
+   "query_domains": [
+    "08-知识图谱",
+    "07-NLP-VOC"
+   ],
+   "rank": 20,
+   "responsibility": "知识产权检索",
+   "role_id": "AGT-043",
+   "role_title": "法务与知识产权",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "e-commerce",
+    "product",
+    "item",
+    "user",
+    "session",
+    "catalog",
+    "advertis",
+    "marketing",
+    "campaign",
+    "budget",
+    "roas"
+   ],
+   "contract_id": "CTR-A-052",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-033",
+   "date": "2026-09-13",
+   "domain": "品牌与增长",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "harvest_domain_bridge": {
+    "05-推荐系统": "05-推荐系统",
+    "13-广告分析": "13-广告分析"
+   },
+   "l3": "达人筛选",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "movie",
+    "music recommendation",
+    "news recommendation",
+    "poi recommendation",
+    "friend recommendation",
+    "adversarial attack",
+    "adhd",
+    "alzheimer",
+    "adversarial example"
+   ],
+   "negative_scope": [
+    {
+     "domain": "05-推荐系统",
+     "terms": [
+      "movie",
+      "music recommendation",
+      "news recommendation",
+      "poi recommendation",
+      "friend recommendation"
+     ]
+    },
+    {
+     "domain": "13-广告分析",
+     "terms": [
+      "adversarial attack",
+      "adhd",
+      "alzheimer",
+      "adversarial example"
+     ]
+    }
+   ],
+   "positive": [
+    "recommender system",
+    "large language model",
+    "sequential recommendation",
+    "generative recommendation",
+    "cold-start",
+    "recommendation",
+    "advertising",
+    "auction",
+    "bidding",
+    "attribution",
+    "marketing",
+    "budget allocation",
+    "ROI",
+    "recommendation system",
+    "collaborative filtering",
+    "semantic ID",
+    "cold-start recommendation",
+    "conversational recommendation",
+    "reranking",
+    "session-based recommendation",
+    "catalog enrichment",
+    "incrementality",
+    "geo experiment",
+    "marketing mix model",
+    "MMM",
+    "ROAS",
+    "sponsored search",
+    "coupon allocation",
+    "cannibalization",
+    "uPlift for advertising",
+    "ad ranking",
+    "tiktok roi",
+    "kol creator matching",
+    "social proof viral recommendation"
+   ],
+   "positive_sources": {
+    "harvest:05-推荐系统": [
+     "recommender system",
+     "large language model",
+     "sequential recommendation",
+     "generative recommendation",
+     "cold-start",
+     "recommendation"
+    ],
+    "harvest:13-广告分析": [
+     "advertising",
+     "auction",
+     "bidding",
+     "attribution",
+     "marketing",
+     "budget allocation",
+     "ROI"
+    ],
+    "junction": [
+     "tiktok roi",
+     "kol creator matching",
+     "social proof viral recommendation"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 5,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 4
+    },
+    "keyword-lib:05-推荐系统": [
+     "recommendation system",
+     "collaborative filtering",
+     "sequential recommendation",
+     "generative recommendation",
+     "semantic ID",
+     "cold-start recommendation",
+     "conversational recommendation",
+     "reranking",
+     "session-based recommendation",
+     "catalog enrichment"
+    ],
+    "keyword-lib:13-广告分析": [
+     "attribution",
+     "incrementality",
+     "geo experiment",
+     "marketing mix model",
+     "MMM",
+     "ROAS",
+     "budget allocation",
+     "bidding",
+     "sponsored search",
+     "coupon allocation",
+     "cannibalization",
+     "uPlift for advertising",
+     "ad ranking"
+    ]
+   },
+   "query_domains": [
+    "05-推荐系统",
+    "13-广告分析"
+   ],
+   "rank": 21,
+   "responsibility": "达人筛选",
+   "role_id": "AGT-033",
+   "role_title": "达人与联盟合作",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "subscription",
+    "e-commerce",
+    "customer",
+    "platform"
+   ],
+   "contract_id": "CTR-A-031",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-020",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "06-增长模型": "06-增长模型"
+   },
+   "l3": "履约异常",
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "employee turnover",
+    "student dropout",
+    "attrition rate"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "06-增长模型",
+     "terms": [
+      "employee turnover",
+      "student dropout",
+      "attrition rate"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "churn prediction",
+    "customer lifetime value",
+    "user growth",
+    "retention",
+    "uplift",
+    "conversion rate prediction",
+    "e-commerce",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "LTV",
+    "repurchase",
+    "user lifecycle",
+    "RFM",
+    "survival analysis",
+    "uplift churn",
+    "seasonality",
+    "early warning system",
+    "renewal prediction",
+    "time delivery",
+    "logistics fraud detection",
+    "logistics anomaly fraud signal"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:06-增长模型": [
+     "churn prediction",
+     "customer lifetime value",
+     "user growth",
+     "retention",
+     "uplift",
+     "conversion rate prediction",
+     "e-commerce"
+    ],
+    "junction": [
+     "time delivery",
+     "logistics fraud detection",
+     "logistics anomaly fraud signal"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 8,
+     "n_same_family_cards": 3,
+     "n_wildcard_cards": 3
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:06-增长模型": [
+     "churn prediction",
+     "customer lifetime value",
+     "LTV",
+     "retention",
+     "repurchase",
+     "user lifecycle",
+     "RFM",
+     "survival analysis",
+     "uplift churn",
+     "seasonality",
+     "early warning system",
+     "renewal prediction"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "06-增长模型"
+   ],
+   "rank": 22,
+   "responsibility": "履约异常",
+   "role_id": "AGT-020",
+   "role_title": "仓储履约与退货处置",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "tabular",
+    "business",
+    "prediction",
+    "dataset",
+    "e-commerce",
+    "product",
+    "customer",
+    "review",
+    "feedback"
+   ],
+   "contract_id": "CTR-A-007",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-005",
+   "date": "2026-09-13",
+   "domain": "经营与组织",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "harvest_domain_bridge": {
+    "07-NLP-VOC": "07-VOC舆情",
+    "12-ML基础": "12-ML基础"
+   },
+   "l3": "抽样审计",
+   "m_cells": [
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "speech recognition",
+    "image classification",
+    "object detection",
+    "clinical note",
+    "hate speech",
+    "fake news",
+    "machine translation"
+   ],
+   "negative_scope": [
+    {
+     "domain": "12-ML基础",
+     "terms": [
+      "speech recognition",
+      "image classification",
+      "object detection"
+     ]
+    },
+    {
+     "domain": "07-NLP-VOC",
+     "terms": [
+      "clinical note",
+      "hate speech",
+      "fake news",
+      "machine translation"
+     ]
+    }
+   ],
+   "positive": [
+    "feature engineering",
+    "tabular",
+    "tabular foundation model",
+    "tabular deep learning",
+    "aspect-based sentiment",
+    "opinion mining",
+    "customer review",
+    "LLM",
+    "large language model",
+    "review summarization",
+    "user feedback",
+    "mining",
+    "feature transformation",
+    "model evaluation",
+    "calibration",
+    "class imbalance",
+    "distribution shift",
+    "leakage",
+    "product review summarization",
+    "product",
+    "review",
+    "multimodal review",
+    "review image understanding",
+    "aspect extraction",
+    "voice of customer",
+    "customer feedback categorization",
+    "complaint analysis",
+    "LLM-as-annotator",
+    "label taxonomy evolution",
+    "self-evolving label system",
+    "intent classification",
+    "NPS prediction",
+    "context learning",
+    "class imbalance handling",
+    "compliance ml risk scoring"
+   ],
+   "positive_sources": {
+    "harvest:07-NLP-VOC": [
+     "aspect-based sentiment",
+     "opinion mining",
+     "customer review",
+     "LLM",
+     "large language model",
+     "review summarization",
+     "user feedback",
+     "mining"
+    ],
+    "harvest:12-ML基础": [
+     "feature engineering",
+     "tabular",
+     "tabular foundation model",
+     "tabular deep learning"
+    ],
+    "junction": [
+     "context learning",
+     "class imbalance handling",
+     "compliance ml risk scoring"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 6,
+     "n_same_family_cards": 1,
+     "n_wildcard_cards": 4
+    },
+    "keyword-lib:07-NLP-VOC": [
+     "product review summarization",
+     "opinion mining",
+     "product",
+     "review",
+     "multimodal review",
+     "review image understanding",
+     "aspect extraction",
+     "aspect-based sentiment",
+     "voice of customer",
+     "customer feedback categorization",
+     "complaint analysis",
+     "LLM-as-annotator",
+     "label taxonomy evolution",
+     "self-evolving label system",
+     "intent classification",
+     "NPS prediction"
+    ],
+    "keyword-lib:12-ML基础": [
+     "feature engineering",
+     "tabular foundation model",
+     "feature transformation",
+     "model evaluation",
+     "calibration",
+     "class imbalance",
+     "distribution shift",
+     "leakage"
+    ]
+   },
+   "query_domains": [
+    "12-ML基础",
+    "07-NLP-VOC"
+   ],
+   "rank": 23,
+   "responsibility": "抽样审计",
+   "role_id": "AGT-005",
+   "role_title": "内控审计与独立复核",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "online",
+    "platform",
+    "marketplace",
+    "advertis",
+    "pricing",
+    "user",
+    "e-commerce"
+   ],
+   "contract_id": "CTR-A-028",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-018",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "harvest_domain_bridge": {
+    "02-A_B实验": "02-A_B实验",
+    "04-供应链": "04-供应链"
+   },
+   "l3": "质量分析",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "wet lab",
+    "robot",
+    "in vitro"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "02-A_B实验",
+     "terms": [
+      "wet lab",
+      "robot",
+      "in vitro"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "A/B testing",
+    "online controlled experiment",
+    "multi-armed bandit",
+    "recommendation",
+    "sequential testing",
+    "experiment assignment",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "experiment design",
+    "statistical power",
+    "always-valid inference",
+    "variance reduction",
+    "CUPED",
+    "switchback experiment",
+    "interference experiment",
+    "contextual bandit",
+    "Thompson sampling",
+    "graph rag knowledge retrieval",
+    "voc triggered inventory signal",
+    "safety concern signal extraction"
+   ],
+   "positive_sources": {
+    "harvest:02-A_B实验": [
+     "A/B testing",
+     "online controlled experiment",
+     "multi-armed bandit",
+     "recommendation",
+     "sequential testing",
+     "experiment assignment"
+    ],
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "junction": [
+     "graph rag knowledge retrieval",
+     "voc triggered inventory signal",
+     "safety concern signal extraction"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 12,
+     "n_same_family_cards": 1,
+     "n_wildcard_cards": 6
+    },
+    "keyword-lib:02-A_B实验": [
+     "A/B testing",
+     "multi-armed bandit",
+     "experiment design",
+     "statistical power",
+     "sequential testing",
+     "always-valid inference",
+     "variance reduction",
+     "CUPED",
+     "switchback experiment",
+     "interference experiment",
+     "contextual bandit",
+     "Thompson sampling"
+    ],
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "02-A_B实验"
+   ],
+   "rank": 24,
+   "responsibility": "质量分析",
+   "role_id": "AGT-018",
+   "role_title": "生产协同与质量控制",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "e-commerce",
+    "product",
+    "item",
+    "user",
+    "session",
+    "catalog"
+   ],
+   "contract_id": "CTR-A-032",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-020",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "05-推荐系统": "05-推荐系统"
+   },
+   "l3": "退货分流",
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "movie",
+    "music recommendation",
+    "news recommendation",
+    "poi recommendation",
+    "friend recommendation"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "05-推荐系统",
+     "terms": [
+      "movie",
+      "music recommendation",
+      "news recommendation",
+      "poi recommendation",
+      "friend recommendation"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "recommender system",
+    "sequential recommendation",
+    "generative recommendation",
+    "cold-start",
+    "recommendation",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "recommendation system",
+    "collaborative filtering",
+    "semantic ID",
+    "cold-start recommendation",
+    "conversational recommendation",
+    "reranking",
+    "session-based recommendation",
+    "catalog enrichment",
+    "voc returns cost driver",
+    "parcel damage prediction",
+    "returns reverse logistics",
+    "predictive returns management"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:05-推荐系统": [
+     "recommender system",
+     "large language model",
+     "sequential recommendation",
+     "generative recommendation",
+     "cold-start",
+     "recommendation"
+    ],
+    "junction": [
+     "voc returns cost driver",
+     "parcel damage prediction",
+     "returns reverse logistics",
+     "predictive returns management"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 14,
+     "n_same_family_cards": 5,
+     "n_wildcard_cards": 6
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:05-推荐系统": [
+     "recommendation system",
+     "collaborative filtering",
+     "sequential recommendation",
+     "generative recommendation",
+     "semantic ID",
+     "cold-start recommendation",
+     "conversational recommendation",
+     "reranking",
+     "session-based recommendation",
+     "catalog enrichment"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "05-推荐系统"
+   ],
+   "rank": 25,
+   "responsibility": "退货分流",
+   "role_id": "AGT-020",
+   "role_title": "仓储履约与退货处置",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "llm",
+    "agent",
+    "task",
+    "tool"
+   ],
+   "contract_id": "CTR-A-020",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-015",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-03"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "10-MAS": "10-MAS"
+   },
+   "l3": "订单协调",
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "multi-agent reinforcement learning"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "10-MAS",
+     "terms": [
+      "multi-agent reinforcement learning"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "multi-agent",
+    "LLM",
+    "coordination",
+    "agent",
+    "simulation",
+    "consumer",
+    "multi-agent reinforcement learning",
+    "pricing",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "multi-agent system",
+    "agent collaboration",
+    "agent orchestration",
+    "role assignment",
+    "communication protocol",
+    "A2A",
+    "agent handoff",
+    "debate",
+    "voting",
+    "collaboration tax",
+    "model context protocol",
+    "supply chain resilience modeling"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:10-MAS": [
+     "multi-agent",
+     "LLM",
+     "coordination",
+     "agent",
+     "simulation",
+     "consumer",
+     "multi-agent reinforcement learning",
+     "pricing"
+    ],
+    "junction": [
+     "model context protocol",
+     "supply chain resilience modeling"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 8,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 6
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:10-MAS": [
+     "multi-agent system",
+     "agent collaboration",
+     "agent orchestration",
+     "role assignment",
+     "communication protocol",
+     "A2A",
+     "agent handoff",
+     "debate",
+     "voting",
+     "collaboration tax"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "10-MAS"
+   ],
+   "rank": 26,
+   "responsibility": "订单协调",
+   "role_id": "AGT-015",
+   "role_title": "采购与合同履约",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "subscription",
+    "e-commerce",
+    "retail",
+    "customer",
+    "platform",
+    "demand",
+    "sales",
+    "inventory",
+    "supply chain"
+   ],
+   "contract_id": "CTR-A-010",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-007",
+   "date": "2026-09-13",
+   "domain": "产品与创新",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "harvest_domain_bridge": {
+    "03-时间序列": "03-时间序列",
+    "06-增长模型": "06-增长模型"
+   },
+   "l3": "趋势监测",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "employee turnover",
+    "student dropout",
+    "attrition rate",
+    "weather",
+    "climate",
+    "traffic flow",
+    "wind power",
+    "load forecasting",
+    "seismic"
+   ],
+   "negative_scope": [
+    {
+     "domain": "06-增长模型",
+     "terms": [
+      "employee turnover",
+      "student dropout",
+      "attrition rate"
+     ]
+    },
+    {
+     "domain": "03-时间序列",
+     "terms": [
+      "weather",
+      "climate",
+      "traffic flow",
+      "wind power",
+      "load forecasting",
+      "eeg",
+      "ecg",
+      "seismic"
+     ]
+    }
+   ],
+   "positive": [
+    "churn prediction",
+    "customer lifetime value",
+    "user growth",
+    "retention",
+    "uplift",
+    "conversion rate prediction",
+    "e-commerce",
+    "demand forecasting",
+    "time series",
+    "foundation model",
+    "intermittent demand",
+    "hierarchical forecasting",
+    "LTV",
+    "repurchase",
+    "user lifecycle",
+    "RFM",
+    "survival analysis",
+    "uplift churn",
+    "seasonality",
+    "early warning system",
+    "renewal prediction",
+    "time series forecasting",
+    "sales prediction",
+    "prediction interval",
+    "conformal prediction",
+    "temporal fusion transformer",
+    "event-driven forecasting",
+    "inventory forecasting",
+    "sir tiktok",
+    "amazon tiktok",
+    "google trends",
+    "demand signal nowcasting"
+   ],
+   "positive_sources": {
+    "harvest:03-时间序列": [
+     "demand forecasting",
+     "time series",
+     "foundation model",
+     "intermittent demand",
+     "hierarchical forecasting"
+    ],
+    "harvest:06-增长模型": [
+     "churn prediction",
+     "customer lifetime value",
+     "user growth",
+     "retention",
+     "uplift",
+     "conversion rate prediction",
+     "e-commerce"
+    ],
+    "junction": [
+     "sir tiktok",
+     "amazon tiktok",
+     "google trends",
+     "demand signal nowcasting"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 14,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 13
+    },
+    "keyword-lib:03-时间序列": [
+     "time series forecasting",
+     "demand forecasting",
+     "sales prediction",
+     "hierarchical forecasting",
+     "intermittent demand",
+     "prediction interval",
+     "conformal prediction",
+     "temporal fusion transformer",
+     "event-driven forecasting",
+     "inventory forecasting"
+    ],
+    "keyword-lib:06-增长模型": [
+     "churn prediction",
+     "customer lifetime value",
+     "LTV",
+     "retention",
+     "repurchase",
+     "user lifecycle",
+     "RFM",
+     "survival analysis",
+     "uplift churn",
+     "seasonality",
+     "early warning system",
+     "renewal prediction"
+    ]
+   },
+   "query_domains": [
+    "06-增长模型",
+    "03-时间序列"
+   ],
+   "rank": 27,
+   "responsibility": "趋势监测",
+   "role_id": "AGT-007",
+   "role_title": "市场竞争与机会研究",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "e-commerce",
+    "retail",
+    "advertis",
+    "marketing",
+    "pricing",
+    "subscription",
+    "customer",
+    "business",
+    "online",
+    "platform",
+    "marketplace",
+    "user"
+   ],
+   "contract_id": "CTR-A-055",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-034",
+   "date": "2026-09-13",
+   "domain": "品牌与增长",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-05"
+   ],
+   "harvest_domain_bridge": {
+    "01-因果推断": "01-因果推断",
+    "02-A_B实验": "02-A_B实验"
+   },
+   "l3": "复购实验",
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "drug",
+    "gene",
+    "epidemiolog",
+    "biomarker",
+    "wet lab",
+    "robot",
+    "in vitro"
+   ],
+   "negative_scope": [
+    {
+     "domain": "01-因果推断",
+     "terms": [
+      "clinical",
+      "patient",
+      "drug",
+      "gene",
+      "epidemiolog",
+      "biomarker"
+     ]
+    },
+    {
+     "domain": "02-A_B实验",
+     "terms": [
+      "wet lab",
+      "robot",
+      "in vitro"
+     ]
+    }
+   ],
+   "positive": [
+    "uplift modeling",
+    "heterogeneous treatment effect",
+    "causal inference",
+    "e-commerce",
+    "causal",
+    "marketing",
+    "incrementality",
+    "A/B testing",
+    "online controlled experiment",
+    "multi-armed bandit",
+    "recommendation",
+    "sequential testing",
+    "experiment assignment",
+    "treatment effect estimation",
+    "propensity score",
+    "doubly robust",
+    "instrumental variables",
+    "difference-in-differences",
+    "synthetic control",
+    "causal discovery",
+    "mediation analysis",
+    "experiment design",
+    "statistical power",
+    "always-valid inference",
+    "variance reduction",
+    "CUPED",
+    "switchback experiment",
+    "interference experiment",
+    "contextual bandit",
+    "Thompson sampling",
+    "notears dagma",
+    "email sequence rl optimizer",
+    "purchase sequence prediction",
+    "email sequence multiarm optimizer"
+   ],
+   "positive_sources": {
+    "harvest:01-因果推断": [
+     "uplift modeling",
+     "heterogeneous treatment effect",
+     "causal inference",
+     "e-commerce",
+     "causal",
+     "marketing",
+     "incrementality"
+    ],
+    "harvest:02-A_B实验": [
+     "A/B testing",
+     "online controlled experiment",
+     "multi-armed bandit",
+     "recommendation",
+     "sequential testing",
+     "experiment assignment"
+    ],
+    "junction": [
+     "notears dagma",
+     "email sequence rl optimizer",
+     "purchase sequence prediction",
+     "email sequence multiarm optimizer"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 11,
+     "n_same_family_cards": 0,
+     "n_wildcard_cards": 10
+    },
+    "keyword-lib:01-因果推断": [
+     "uplift modeling",
+     "causal inference",
+     "treatment effect estimation",
+     "propensity score",
+     "doubly robust",
+     "heterogeneous treatment effect",
+     "instrumental variables",
+     "difference-in-differences",
+     "synthetic control",
+     "causal discovery",
+     "mediation analysis"
+    ],
+    "keyword-lib:02-A_B实验": [
+     "A/B testing",
+     "multi-armed bandit",
+     "experiment design",
+     "statistical power",
+     "sequential testing",
+     "always-valid inference",
+     "variance reduction",
+     "CUPED",
+     "switchback experiment",
+     "interference experiment",
+     "contextual bandit",
+     "Thompson sampling"
+    ]
+   },
+   "query_domains": [
+    "01-因果推断",
+    "02-A_B实验"
+   ],
+   "rank": 28,
+   "responsibility": "复购实验",
+   "role_id": "AGT-034",
+   "role_title": "CRM留存与复购",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "e-commerce",
+    "product",
+    "customer",
+    "agent",
+    "retrieval"
+   ],
+   "contract_id": "CTR-A-018",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-014",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "08-知识图谱": "08-知识图谱"
+   },
+   "l3": "供应商评估",
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "molecular",
+    "protein",
+    "drug discovery",
+    "biomedical",
+    "chemistry",
+    "crystal"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "08-知识图谱",
+     "terms": [
+      "molecular",
+      "protein",
+      "drug discovery",
+      "biomedical",
+      "chemistry",
+      "crystal"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "knowledge graph",
+    "retrieval augmented",
+    "graph neural network",
+    "e-commerce",
+    "entity alignment",
+    "knowledge graph completion",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "heterogeneous graph",
+    "hyperbolic embedding",
+    "entity linking",
+    "relation extraction",
+    "graph retrieval",
+    "GraphRAG",
+    "knowledge graph construction",
+    "supplier risk xgboost",
+    "supplier evaluation model",
+    "agentic sckg risk analyzer",
+    "graph rag knowledge retrieval"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:08-知识图谱": [
+     "knowledge graph",
+     "retrieval augmented",
+     "graph neural network",
+     "e-commerce",
+     "entity alignment",
+     "knowledge graph completion"
+    ],
+    "junction": [
+     "supplier risk xgboost",
+     "supplier evaluation model",
+     "agentic sckg risk analyzer",
+     "graph rag knowledge retrieval"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 27,
+     "n_same_family_cards": 4,
+     "n_wildcard_cards": 20
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:08-知识图谱": [
+     "knowledge graph",
+     "heterogeneous graph",
+     "hyperbolic embedding",
+     "graph neural network",
+     "entity linking",
+     "relation extraction",
+     "graph retrieval",
+     "GraphRAG",
+     "knowledge graph construction"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "08-知识图谱"
+   ],
+   "rank": 29,
+   "responsibility": "供应商评估",
+   "role_id": "AGT-014",
+   "role_title": "OEM供应商开发与协同",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "llm",
+    "agent",
+    "tool",
+    "context"
+   ],
+   "contract_id": "CTR-A-030",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-019",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "16-智能体工程": "16-智能体工程"
+   },
+   "l3": "到货异常追踪",
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "embodied agent",
+    "robot manipulation",
+    "gui agent"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "16-智能体工程",
+     "terms": [
+      "embodied agent",
+      "robot manipulation",
+      "gui agent"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "agent skills",
+    "skill library",
+    "LLM",
+    "context engineering",
+    "context compression",
+    "agent",
+    "model context protocol",
+    "agent2agent",
+    "tool use",
+    "benchmark",
+    "agent memory",
+    "long-term",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "agent skill",
+    "tool calling",
+    "function calling",
+    "MCP",
+    "agent observability",
+    "agent evaluation",
+    "LLM-as-a-judge",
+    "rubric",
+    "prompt injection",
+    "agent safety",
+    "parcel damage prediction",
+    "ar logistics visualization",
+    "last mile delivery prediction",
+    "cross border last mile routing"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:16-智能体工程": [
+     "agent skills",
+     "skill library",
+     "LLM",
+     "context engineering",
+     "context compression",
+     "agent",
+     "model context protocol",
+     "agent2agent",
+     "tool use",
+     "benchmark",
+     "agent memory",
+     "long-term"
+    ],
+    "junction": [
+     "parcel damage prediction",
+     "ar logistics visualization",
+     "last mile delivery prediction",
+     "cross border last mile routing"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 14,
+     "n_same_family_cards": 10,
+     "n_wildcard_cards": 3
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:16-智能体工程": [
+     "agent skill",
+     "skill library",
+     "tool calling",
+     "function calling",
+     "context engineering",
+     "context compression",
+     "agent memory",
+     "MCP",
+     "model context protocol",
+     "agent observability",
+     "agent evaluation",
+     "LLM-as-a-judge",
+     "rubric",
+     "prompt injection",
+     "agent safety"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "16-智能体工程"
+   ],
+   "rank": 30,
+   "responsibility": "到货异常追踪",
+   "role_id": "AGT-019",
+   "role_title": "跨境物流与关务",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  },
+  {
+   "constraint": [
+    "goods",
+    "physical",
+    "retail",
+    "warehouse",
+    "fulfillment",
+    "inventory",
+    "logistics",
+    "order",
+    "analytics",
+    "business",
+    "enterprise",
+    "database",
+    "table"
+   ],
+   "contract_id": "CTR-A-021",
+   "contract_match": "role_id+l3",
+   "contract_role_id": "AGT-015",
+   "date": "2026-09-13",
+   "domain": "供应与履约",
+   "eligible_for_retrieval": true,
+   "flows": [
+    "FLOW-03"
+   ],
+   "harvest_domain_bridge": {
+    "04-供应链": "04-供应链",
+    "09-DataAgent-LLM": "09-DataAgent"
+   },
+   "l3": "履约跟踪",
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "negative": [
+    "software supply chain",
+    "sbom",
+    "software bill of materials",
+    "package detection",
+    "dependency vulnerability",
+    "model lineage",
+    "model card",
+    "kv cache",
+    "serving throughput",
+    "gpu kernel",
+    "clinical",
+    "patient",
+    "lesion",
+    "mri",
+    "eeg",
+    "ecg",
+    "fmri",
+    "radiotherapy",
+    "histopathology",
+    "tumor",
+    "npm",
+    "pypi",
+    "malware",
+    "vulnerability",
+    "repository",
+    "compiler",
+    "code generation benchmark",
+    "gui agent",
+    "web agent"
+   ],
+   "negative_scope": [
+    {
+     "domain": "04-供应链",
+     "terms": [
+      "software supply chain",
+      "sbom",
+      "npm",
+      "pypi",
+      "malware",
+      "vulnerability",
+      "repository",
+      "compiler"
+     ]
+    },
+    {
+     "domain": "09-DataAgent-LLM",
+     "terms": [
+      "code generation benchmark",
+      "gui agent",
+      "web agent"
+     ]
+    }
+   ],
+   "positive": [
+    "inventory management",
+    "reinforcement learning",
+    "deep learning",
+    "supply chain",
+    "large language model",
+    "replenishment",
+    "newsvendor",
+    "data analysis agent",
+    "text-to-SQL",
+    "autonomous data science",
+    "insight generation",
+    "table",
+    "agent",
+    "reasoning",
+    "inventory optimization",
+    "multi-echelon inventory",
+    "supply network design",
+    "warehouse allocation",
+    "order fulfillment",
+    "lead time uncertainty",
+    "safety stock",
+    "perishable inventory",
+    "supply chain resilience",
+    "disruption",
+    "logistics cost",
+    "last-mile delivery",
+    "data agent",
+    "root cause analysis agent",
+    "dashboard generation",
+    "table question answering",
+    "data wrangling LLM",
+    "fill rate oos",
+    "time delivery",
+    "supplier performance alert action"
+   ],
+   "positive_sources": {
+    "harvest:04-供应链": [
+     "inventory management",
+     "reinforcement learning",
+     "deep learning",
+     "supply chain",
+     "large language model",
+     "replenishment",
+     "newsvendor"
+    ],
+    "harvest:09-DataAgent-LLM": [
+     "data analysis agent",
+     "text-to-SQL",
+     "autonomous data science",
+     "insight generation",
+     "table",
+     "agent",
+     "reasoning"
+    ],
+    "junction": [
+     "fill rate oos",
+     "time delivery",
+     "supplier performance alert action"
+    ],
+    "junction_provenance": {
+     "empty": false,
+     "n_cards": 20,
+     "n_same_family_cards": 1,
+     "n_wildcard_cards": 17
+    },
+    "keyword-lib:04-供应链": [
+     "inventory optimization",
+     "multi-echelon inventory",
+     "replenishment",
+     "supply network design",
+     "warehouse allocation",
+     "order fulfillment",
+     "lead time uncertainty",
+     "safety stock",
+     "perishable inventory",
+     "supply chain resilience",
+     "disruption",
+     "logistics cost",
+     "last-mile delivery"
+    ],
+    "keyword-lib:09-DataAgent-LLM": [
+     "data agent",
+     "text-to-SQL",
+     "data analysis agent",
+     "autonomous data science",
+     "root cause analysis agent",
+     "dashboard generation",
+     "table question answering",
+     "data wrangling LLM"
+    ]
+   },
+   "query_domains": [
+    "04-供应链",
+    "09-DataAgent-LLM"
+   ],
+   "rank": 31,
+   "responsibility": "履约跟踪",
+   "role_id": "AGT-015",
+   "role_title": "采购与合同履约",
+   "serviceability": "A",
+   "strict_ecommerce_domains": [
+    "04-供应链"
+   ],
+   "structural_blank": false
+  }
+ ],
+ "similarity": {
+  "distinct_full_vectors": 28,
+  "distinct_nonempty_junction_vectors": 26,
+  "empty_junction_count": 2,
+  "empty_junction_items": [
+   "1:线索评估",
+   "18:测试方案"
+  ],
+  "empty_junction_ranks": [
+   1,
+   18
+  ],
+  "full": {
+   "max": 0.9118,
+   "mean": 0.103,
+   "min": 0.0
+  },
+  "junction": {
+   "max": 0.2,
+   "mean": 0.0025,
+   "min": 0.0
+  },
+  "most_similar_pair": {
+   "a": "22:履约异常",
+   "b": "31:履约跟踪",
+   "full": 0.3846,
+   "junction": 0.2
+  },
+  "most_similar_pair_full": {
+   "a": "1:线索评估",
+   "b": "21:达人筛选",
+   "full": 0.9118
+  },
+  "n_pairs": 378,
+  "n_pairs_junction": 325,
+  "same_domain_set_pairs": [
+   "1:线索评估 ↔ 21:达人筛选",
+   "3:行动组合 ↔ 14:平台运营",
+   "13:供需协调 ↔ 26:订单协调",
+   "7:生命周期分析 ↔ 25:退货分流"
+  ],
+  "shell_count": 0,
+  "shells": []
+ },
+ "structural_blank": {
+  "ledger_rows_blank": 9,
+  "ledger_rows_blank_roles": [
+   "AGT-009",
+   "AGT-010",
+   "AGT-011",
+   "AGT-012",
+   "AGT-013"
+  ],
+  "retrieval_eligible_strict": 28,
+  "retrieval_eligible_wide": 26,
+  "strict_worklist": 3,
+  "strict_worklist_items": [
+   "9:AGT-011:BOM与材料分析",
+   "10:AGT-009:商业案例",
+   "15:AGT-013:研发计划"
+  ],
+  "wide_by_role_items": [
+   "9:AGT-011:BOM与材料分析",
+   "10:AGT-009:商业案例",
+   "15:AGT-013:研发计划",
+   "17:AGT-010:可用性验证",
+   "18:AGT-013:测试方案"
+  ],
+  "wide_by_role_worklist": 5,
+  "worklist_total": 31
+ }
+}

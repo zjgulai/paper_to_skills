@@ -128,5 +128,15 @@ _backup/
 # 重算需要材料目录（在仓库之外，且它自己是个 git 仓库）⇒ 不是随手可再生的东西。
 # 提升入库的理由同 gap-ledger.json。判据=`scripts/check_material_citations.py`。
 !paper2skills-research/data/contracts/material-citations.json
+# 缺口驱动的三段式检索式（PHASE6 S4）：**它是下一段的输入，不是中间态** ——
+# S4 只生成检索式、不执行检索；发查询/收割/打分要直接消费这份文件里的向量与契约挂载点。
+# 重算需要缺口账 + 图谱 + candidate_filter 的负向词分歧矩阵三处同时到位。
+# 判据=`scripts/build_search_queries.py --check`。
+!paper2skills-research/data/search-queries.json
+# venue_tier 回填的**证据账**（PHASE6 S10）：逐张卡记录「取值 + 来源」。
+# 它不是中间态而是**溯源凭证** —— 本仓库铁律 1 要求 venue 类声明必须由 arXiv 元数据 /
+# 出版方 DOI 判定，不得用底本正文；这张账就是那些判定的落点。
+# 重算需要现场打 arXiv abs 页 + Crossref（有网络依赖，且外部元数据会变）。
+!paper2skills-research/data/venue_tier_backfill.json
 !paper2skills-research/data/dedup_report.json
 !paper2skills-research/data/bundles/**
