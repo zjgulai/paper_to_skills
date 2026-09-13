@@ -248,6 +248,68 @@ def _extract_quotes(text: str) -> list[str]:
     return [m.group(1) for m in QUOTE_RE.finditer(text)]
 
 
+# ---------------------------------------------------------------------------
+# 数字扫描前的三类「非断言」剥离（X2 · 2026-09-13）
+# ---------------------------------------------------------------------------
+# 对应 PHASE4 缺陷台账的 C6 / C7 / C8。三者共性：**它们都不是事实断言**，
+# 却都被 NUM_TOKEN_RE 扫成了断言，于是要么制造假红/假黄，要么成为洗白工具。
+
+# --- C6：参考文献编号 `[8]` / `[5,6]` / `[1-3]` ---------------------------------
+# ⚠️ 这不是「多报几条」的问题，而是一条**洗白通道**：
+# `collect_evidence` 原先对可信引文做无差别 `re.findall(r"\d+")`，
+# 于是引文里一个参考文献编号 `[8]` 就把数字 `8` 放进了 `ev_nums` ——
+# 卡片正文断言「提升 8%」随即被判「有出处」。
+# 实测台账原话：「`[8]` 洗白了 `8%`、`[5,6]` 洗白了 `6倍`」。
+#
+# 判据刻意收紧到「纯数字 + 逗号/连字符」：`[0.1, 0.9]`（含小数点）与
+# `[CLS]`（含字母）都**不**剥离 —— 它们可能是真实数值区间与模型 token，
+# 误剥会制造假红，而假红会让门禁失去威信。
+_CITATION_BRACKET_RE = re.compile(r"\[\s*\d+(?:\s*[,\-–]\s*\d+)*\s*\]")
+
+
+def strip_citation_brackets(text: str) -> str:
+    """去掉参考文献编号。它证明的是**编号**，不是**被编号的那个数**。"""
+    return _CITATION_BRACKET_RE.sub(" ", text)
+
+
+# --- C7：正文日期串 --------------------------------------------------------------
+# `**发表日期**: 2025-05-16` 会被拆出 `16`（`2025`/`05` 已被既有 NOISE 规则豁免），
+# 判成「一般数字无出处」黄灯。日期是**元数据**，与 frontmatter 的
+# `created:` / `updated:` 同类 —— 后者已由 `strip_frontmatter` 处理，此处同源处理。
+_DATE_TOKEN_RE = re.compile(
+    r"\b(?:19|20)\d{2}\s*[-/年]\s*\d{1,2}(?:\s*[-/月]\s*\d{1,2}\s*日?)?"
+    r"(?:[T\s]\d{1,2}:\d{2}(?::\d{2})?)?"
+)
+
+
+def strip_dates(text: str) -> str:
+    return _DATE_TOKEN_RE.sub(" ", text)
+
+
+# --- C8：LaTeX 公式段 ------------------------------------------------------------
+# `$t=0$` 会抽出 `0$`（`$` 被当成单位）、`$...\mathcal{R}{=}1$` 抽出 `1$`，
+# 判成「高价值断言无出处」红灯。公式是记法，不是论断。
+#
+# ⚠️ 必须做「像不像公式」的判据，**不能见 `$...$` 就挖**：
+# 卡片里有大量价格写法（`成本 $199，售价 $120`），两个 `$` 之间夹着中文与逗号，
+# 无脑挖会把**真实的价格断言**一起吃掉 —— 那是假绿灯，比假红危险。
+# 判据：不含中文 **且** 含 `= \ ^ _ { }` 之一。
+# 实测全库 849 处公式全部满足；唯一的非数学样本 `$199, 4.5★), … ($`
+# 因不含这些符号而被正确保留、继续受检。
+_MATH_SPAN_RE = re.compile(r"\$\$[^$]{1,400}?\$\$|\$[^$\n]{1,200}?\$")
+_MATHISH_RE = re.compile(r"[=\\^_{}]")
+_CJK_RE = re.compile(r"[\u4e00-\u9fff]")
+
+
+def strip_math(text: str) -> str:
+    def _repl(m: re.Match) -> str:
+        s = m.group(0)
+        if _CJK_RE.search(s) or not _MATHISH_RE.search(s):
+            return s            # 不像公式（价格 / 普通文本）→ 原样保留，继续受检
+        return " "
+    return _MATH_SPAN_RE.sub(_repl, text)
+
+
 def collect_evidence(card: Path, text: str,
                      trusted_quotes: set[str] | None = None) -> tuple[set[str], list[str]]:
     """收集证据链：卡片内引用块 + 同目录 evidence.md 的数字与出处。
@@ -265,7 +327,9 @@ def collect_evidence(card: Path, text: str,
             # 未通过逐字核验的引用不计入出处（G2b 已单独报警）
             continue
         sources.append(f"卡片引用块: {src[:80]}")
-        for n in re.findall(r"\d+(?:\.\d+)?", src):
+        # ⚠️ C6：必须先剥掉参考文献编号 `[8]` 再抽数字，否则引文里的**编号**
+        #    会让卡片正文的同名断言变成「有出处」。见 strip_citation_brackets。
+        for n in re.findall(r"\d+(?:\.\d+)?", strip_citation_brackets(src)):
             nums.add(n)
 
     # 证据链 evidence.md 的定位。
@@ -336,7 +400,7 @@ def collect_evidence(card: Path, text: str,
             for src in _extract_quotes(ev):
                 if trusted_quotes is not None and src not in trusted_quotes:
                     continue
-                for n in re.findall(r"\d+(?:\.\d+)?", src):
+                for n in re.findall(r"\d+(?:\.\d+)?", strip_citation_brackets(src)):
                     nums.add(n)
             for line in ev.splitlines():
                 if "出处" in line or "§" in line:
@@ -723,6 +787,10 @@ def gate_g2(card: Path, text: str) -> GateResult:
     # 先剥 frontmatter（元数据不是断言），再剥**作者外推作用域**（见下方说明），
     # 然后剥代码（代码里的数字不是事实断言），最后剥证据语法行（引文是证据不是断言）
     body = strip_frontmatter(text)
+    # C7/C8：正文里的日期串与 LaTeX 公式段都不是事实断言，先剥离再扫数字。
+    # 放在 `analyze_extrapolation` **之前**，是为了让外推作用域的数字计数与
+    # 正文断言用同一套剥离口径 —— 两侧口径不一致会制造「标了也白标」的错觉。
+    body = strip_math(strip_dates(body))
     extrap = analyze_extrapolation(body)
     prose = strip_evidence(strip_code(extrap["body_clean"]))
     fm = parse_frontmatter(text)
@@ -835,7 +903,10 @@ def gate_g2(card: Path, text: str) -> GateResult:
     # 若全是结构性的 → 该数字没有任何实质性出处 → 黄灯要求人工确认。
     # 不做语义相关性判断，因为引文多为英文而断言多为中文，跨语言词面重合度
     # 天然接近 0，强行相关会制造大量假阳性，而假阳性会让门禁失去威信。
-    all_quote_texts = [q.get("quote", "") for q in qrep.get("quotes", [])
+    # C6：引文里的参考文献编号同样不算「该数字的出现位置」——
+    # 否则 `[8]` 会让断言 `8%` 看起来有实质性出处，G2c 这个检查就白设了。
+    all_quote_texts = [strip_citation_brackets(q.get("quote", ""))
+                       for q in qrep.get("quotes", [])
                        if q.get("verdict") in ("VERBATIM", "UNVERIFIABLE")]
     structural_only: list[tuple[str, str]] = []
     for token, ctx in claimed:
@@ -1190,6 +1261,36 @@ def selftest() -> int:
          '> 原文:"Production attribution is timely, granular, and continuously '
          'available, but observational by construction."\n> 出处：2606.26690 §1\n',
          "FAIL", True, 0, 1),
+        # --- 用例 16–18 锁定 X2 的 C6/C7/C8（2026-09-13）----------------------
+        # 元组第 8 项 = `forbid_codes`：这些 finding **必须不出现**。
+        # 为什么需要「必须不出现」而不只是「必须是绿的」：
+        # C7/C8 的症状正是**假黄灯/假红灯** —— 卡片 outcome 可能因为别的原因
+        # 刚好也是它该有的样子，于是「断言 outcome」根本测不到我刚修的那条。
+        ("16 C7：正文日期串不得算作断言", "paper_id: 2606.26690\n",
+         "## ① 算法原理\n\n**发表日期**: 2025-05-16，本卡整理，无其他量级。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "PASS", False, None, None, None, ["G2-UNSOURCED-GENERAL"]),
+        ("17 C8：LaTeX 公式段不得被拆成断言", "paper_id: 2606.26690\n",
+         "## ① 算法原理\n\n设对齐起点为 $t=0$，则 $\\mathcal{R}{=}1$ 时收敛。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "PASS", False, None, None, None, ["G2-UNSOURCED-METRIC"]),
+        # ⚠️ 反过宽：`strip_math` **不能见 `$...$` 就挖**。
+        #    卡片里价格写法极多（`成本 $199，售价 $120`），两个 `$` 之间夹着中文，
+        #    无脑挖会把**真实的价格断言**一起吃掉 —— 那是假绿灯，比假红危险。
+        #    （本用例只保证「价格仍会导致红灯」；**「价格确实没被挖掉」由用例 20
+        #     直接测 `strip_math`** —— 变异测试证明：单靠本用例会放过「见 $ 就挖」的变异，
+        #     因为剥掉 `$199，建议售价 $` 之后剩下的 `120` 仍然触发红灯，结果碰巧一样，
+        #     而**行为已经错了**。只断言结果、不断言行为，就会这样漏。）
+        ("18 C8 反过宽：价格写法不得被当成公式剥掉", "paper_id: 2606.26690\n",
+         "## ① 算法原理\n\n采购成本 $199，建议售价 $120，均需业务方确认。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "FAIL", True, None, None, None, None),
     ]
 
     ok = True
@@ -1199,6 +1300,7 @@ def selftest() -> int:
             want_extrap = case[5] if len(case) > 5 else None
             want_viol = case[6] if len(case) > 6 else None
             want_codes = case[7] if len(case) > 7 else None
+            forbid_codes = case[8] if len(case) > 8 else None
             p = Path(td) / "Skill-Selftest.md"
             p.write_text(f"---\ntitle: selftest\n{fmx}---\n\n{body}\n", encoding="utf-8")
             r = gate_g2(p, p.read_text(encoding="utf-8"))
@@ -1223,9 +1325,55 @@ def selftest() -> int:
                 missing = [c for c in want_codes if c not in codes]
                 good = good and not missing
                 extra += f" 点名finding缺失={missing or '无'}"
+            if forbid_codes:
+                codes = {f.code for f in r.findings}
+                present = [c for c in forbid_codes if c in codes]
+                good = good and not present
+                extra += f" 禁止finding误现={present or '无'}"
             ok = ok and good
             print(f"{'✅' if good else '❌'} {name}: outcome={r.outcome}"
                   f"（期望 {want_outcome}）红灯={has_red}（期望 {want_red}）{extra}")
+
+    # --- 用例 19（C6）：引文里的参考文献编号不得洗白同名断言 ---------------
+    # ⚠️ 这条**必须**直接测 `collect_evidence`，不能只靠 G2 端到端用例：
+    # C6 的症状是「正文断言 `8%` 被判有出处」，而一张卡的红灯**可能因为别的原因**
+    # 也恰好是红的 —— 端到端只断言 outcome/红灯就会放过这条洗白通道。
+    # 实测台账原话：「`[8]` 洗白了 `8%`、`[5,6]` 洗白了 `6倍`」。
+    with tempfile.TemporaryDirectory() as td:
+        p = Path(td) / "Skill-C6.md"
+        for label, quote, expects in [
+            ("编号型 [8]/[5,6]",
+             "The effect was reported in earlier work [8] and replicated in [5,6].",
+             [("8", False), ("6", False), ("5", False)]),
+            ("真值型 8%/6x",
+             "We measure an improvement of 8% over the baseline, with 6x throughput.",
+             [("8", True), ("6", True)]),
+            # 反过宽：[0.1, 0.9] 含小数点，不是引用编号，**不得**被剥掉
+            ("数值区间 [0.1, 0.9]",
+             "The weight spans 0.5 across the range [0.1, 0.9] and stays flat.",
+             [("0.5", True), ("0.1", True), ("0.9", True)]),
+        ]:
+            body = ('---\npaper_id: 2606.26690\n---\n\n## ⑥ 原文引用\n\n'
+                    f'> 原文:"{quote}"\n> 出处：2606.26690 §1\n')
+            p.write_text(body, encoding="utf-8")
+            nums, _ = collect_evidence(p, body, trusted_quotes={quote})
+            wrong = [(t, t in nums, w) for t, w in expects if (t in nums) != w]
+            good = not wrong
+            ok = ok and good
+            print(f"{'✅' if good else '❌'} 19 C6 引文编号洗白[{label}]: "
+                  f"{'全部符合预期' if good else f'实得 {[(t, g) for t, g, _ in wrong]}'}")
+
+    # --- 用例 20（C8 反过宽）：直接测 `strip_math` 的**行为**，而不只看结果 ----
+    # 变异实测：把「像不像公式」的判据拆掉（见 `$...$` 就挖），用例 18 依然全绿 ——
+    # 因为挖掉 `$199，建议售价 $` 后剩下的 `120` 照样触发红灯，**结果碰巧一致**。
+    # 故这里直接断言函数行为：价格必须原样保留，公式必须被剥掉。
+    keep = strip_math("采购成本 $199，建议售价 $120。")
+    strip_ = strip_math("设对齐起点为 $t=0$ 时收敛。")
+    price_ok = ("199" in keep) and ("120" in keep)
+    math_ok = "0" not in strip_
+    ok = ok and price_ok and math_ok
+    print(f"{'✅' if (price_ok and math_ok) else '❌'} 20 C8 反过宽（直接测 strip_math）: "
+          f"价格保留={price_ok}（实得 {keep!r}）  公式剥离={math_ok}（实得 {strip_!r}）")
 
     # 用例 2 的正确性还依赖一个前提：经验卡确实被判成「无论文来源」。
     # 若 card_has_paper_source 有缺陷（例如把 `source: human+ai` 当论文来源），
