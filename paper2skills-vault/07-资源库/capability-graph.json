@@ -1,0 +1,7383 @@
+{
+ "_meta": {
+  "what": "五层能力图谱：50 岗位 / 4 面 / 8 域 / 151 L3 / 20 SCN / 64 格（M/R/D）/ 方案 / 卡",
+  "generated": "2026-09-13T16:54:42+0800",
+  "generator": "paper2skills-research/scripts/build_capability_graph.py",
+  "materials_root": "/Users/lute/project/AI组织变革",
+  "source_refs": [
+   {
+    "path": "/Users/lute/project/AI组织变革/docs/04-organization/organization-graph.json",
+    "sha256": "7075e16086f0435a",
+    "bytes": 25346
+   },
+   {
+    "path": "/Users/lute/project/AI组织变革/docs/05-agents/role-catalog.json",
+    "sha256": "1a52c74c61292755",
+    "bytes": 68207
+   },
+   {
+    "path": "/Users/lute/project/AI组织变革/docs/07-orchestration/collaboration-graph.json",
+    "sha256": "1bd85c1f62cb6b4b",
+    "bytes": 289755
+   },
+   {
+    "path": "paper2skills-research/reports/_survey_org_model.md",
+    "role": "A/B/C 判定（§F.3）"
+   }
+  ],
+  "l1_l2_l3_fact_source": "材料 organization-graph.json + role-catalog.json；产品侧已派生一份 dsh-paper2skills/data/taxonomy.json。本图**不重新定义** L1–L3，用 --check-taxonomy 与之逐项断言相等。",
+  "cell_kind_basis": "由 collaboration-graph.json 的 protocol.stages[].model_participation 机器导出；映射表 MODEL_PARTICIPATION_KIND 对未知取值直接失败（无默认值）。",
+  "version": 1
+ },
+ "mece": {
+  "_note": "每一层标明是**划分**还是**覆盖**。划分层可做加总，覆盖层**不可** —— 覆盖层的重数必须算出来（见 counts），不能声称。",
+  "planes": {
+   "property": "partition",
+   "of": "50 岗位",
+   "check": "四平面 role_count 相加 = 50，并集去重 = 50，无重叠无遗漏"
+  },
+  "domains": {
+   "property": "partition",
+   "of": "50 岗位",
+   "check": "8 域 role_count 相加 = 50；域与面是**正交视角**，不是层级"
+  },
+  "l3": {
+   "property": "partition",
+   "of": "151 责任名",
+   "check": "151 条全局唯一、每条唯一属一岗（重复即拒绝出图）",
+   "primary_attribution": "每条 L3 的主归属 = 它唯一所属的岗位"
+  },
+  "cells": {
+   "property": "partition",
+   "of": "8 FLOW × 8 STG",
+   "check": "8×8=64，flow_stage_bindings 长度 64；每格唯一 (flow, stage)"
+  },
+  "scenarios": {
+   "property": "cover",
+   "of": "岗位",
+   "multiplicity": "一个 SCN 可被多岗位覆盖，且**两种口径并存**：roles_direct（岗位直连声明，共 118 对）与 roles_closure（经 FLOW 传递闭包，共 701 对）。差 5.9 倍。下游必须选定一种并写明用的是哪一种。"
+  },
+  "solutions": {
+   "property": "cover",
+   "of": "64 格",
+   "multiplicity": "一个方案跨多格；当前 0 个（S1 未交付）"
+  },
+  "cards": {
+   "property": "cover",
+   "of": "L3",
+   "multiplicity": "一卡可挂 1–3 个 L3；当前 93/146 张有 L3（另 53 张待 F5）",
+   "check": "卡引用的 L3 必须都在 151 名单内（不在即拒绝出图）"
+  }
+ },
+ "planes": [
+  {
+   "id": "PLN-CTL",
+   "name": "独立控制",
+   "purpose": "审计、税务、法务、产品合规、隐私、安全与权限边界",
+   "role_ids": [
+    "AGT-005",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "role_count": 5
+  },
+  {
+   "id": "PLN-MGT",
+   "name": "经营管理",
+   "purpose": "目标、优先级、资源约束、经营判断与组织能力",
+   "role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-041"
+   ],
+   "role_count": 5
+  },
+  {
+   "id": "PLN-OPS",
+   "name": "业务运营",
+   "purpose": "产品、供应、渠道、增长、服务和GMV事实闭环",
+   "role_ids": [
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-033",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040"
+   ],
+   "role_count": 35
+  },
+  {
+   "id": "PLN-PLT",
+   "name": "数据与Agent平台",
+   "purpose": "数据口径、质量、集成工具、Skills、Memory、Model与可靠性",
+   "role_ids": [
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049"
+   ],
+   "role_count": 5
+  }
+ ],
+ "domains": [
+  {
+   "id": "DOM-01",
+   "name": "经营与组织",
+   "role_count": 5,
+   "role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005"
+   ]
+  },
+  {
+   "id": "DOM-02",
+   "name": "产品与创新",
+   "role_count": 8,
+   "role_ids": [
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013"
+   ]
+  },
+  {
+   "id": "DOM-03",
+   "name": "供应与履约",
+   "role_count": 7,
+   "role_ids": [
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020"
+   ]
+  },
+  {
+   "id": "DOM-04",
+   "name": "渠道经营",
+   "role_count": 8,
+   "role_ids": [
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028"
+   ]
+  },
+  {
+   "id": "DOM-05",
+   "name": "品牌与增长",
+   "role_count": 7,
+   "role_ids": [
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-033",
+    "AGT-034",
+    "AGT-035"
+   ]
+  },
+  {
+   "id": "DOM-06",
+   "name": "服务与体验",
+   "role_count": 4,
+   "role_ids": [
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039"
+   ]
+  },
+  {
+   "id": "DOM-07",
+   "name": "财务与合规",
+   "role_count": 5,
+   "role_ids": [
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044"
+   ]
+  },
+  {
+   "id": "DOM-08",
+   "name": "数据与AI运行",
+   "role_count": 6,
+   "role_ids": [
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ]
+  }
+ ],
+ "roles": [
+  {
+   "id": "AGT-001",
+   "alias": "衡远",
+   "title": "经营目标与资源统筹",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "group_field": "经营与组织",
+   "l3": [
+    "经营目标拆解",
+    "资源情景比较",
+    "月度经营复盘"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-001",
+    "SCN-017",
+    "SCN-019"
+   ],
+   "wired_skills": [
+    "ecommerce-monthly-review",
+    "ecommerce-quarterly-strategy",
+    "market-scenario-modeler",
+    "p2s-agentic-pnl-analyst",
+    "p2s-business-scale-kpi-growth-achievement",
+    "p2s-sc-whatif-scenario-analysis-engine",
+    "pb-002",
+    "pb-008"
+   ]
+  },
+  {
+   "id": "AGT-002",
+   "alias": "枢衡",
+   "title": "场景自主编排与异常协调",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "group_field": "经营与组织",
+   "l3": [
+    "需求分诊",
+    "能力匹配",
+    "依赖协调",
+    "异常冻结与恢复"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-001",
+    "SCN-002",
+    "SCN-003",
+    "SCN-004",
+    "SCN-005",
+    "SCN-006",
+    "SCN-007",
+    "SCN-008",
+    "SCN-009",
+    "SCN-010",
+    "SCN-011",
+    "SCN-012",
+    "SCN-013",
+    "SCN-014",
+    "SCN-015",
+    "SCN-016",
+    "SCN-017",
+    "SCN-018",
+    "SCN-019",
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "ecommerce-analytics-controller",
+    "p2s-agent-error-budget",
+    "p2s-agentrouter-kg-guided",
+    "p2s-autogen-multi-agent-conversation",
+    "p2s-business-problem-to-skill-retrieval",
+    "p2s-dynamic-dag-orchestration",
+    "p2s-ltv-cac-acquisition-gate",
+    "pb-001",
+    "pb-002",
+    "pb-003",
+    "pb-004",
+    "pb-005",
+    "pb-006",
+    "pb-007",
+    "pb-008",
+    "skill-family-manager"
+   ]
+  },
+  {
+   "id": "AGT-003",
+   "alias": "明镜",
+   "title": "经营分析与决策支持",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "group_field": "经营与组织",
+   "l3": [
+    "GMV归因分析",
+    "经营预测",
+    "情景模拟"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-001",
+    "SCN-016"
+   ],
+   "wired_skills": [
+    "attribution",
+    "ecommerce-budget-forecaster",
+    "market-scenario-modeler",
+    "p2s-automated-causal-discovery",
+    "p2s-budget-reforecast-rolling",
+    "p2s-counterfactual-sc-scenario-sim",
+    "pb-001",
+    "pb-006",
+    "pb-008"
+   ]
+  },
+  {
+   "id": "AGT-004",
+   "alias": "知人",
+   "title": "组织能力与人事行政",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "group_field": "经营与组织",
+   "l3": [
+    "岗位能力分析",
+    "培训与招聘支持",
+    "人事行政流程"
+   ],
+   "flows": [
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-019"
+   ],
+   "wired_skills": [
+    "internal-comms",
+    "lark-tools",
+    "org-structure-research",
+    "p2s-agent-workforce-replacement-calculator",
+    "p2s-skill-dependency-path-planner",
+    "pb-008",
+    "people-research"
+   ]
+  },
+  {
+   "id": "AGT-005",
+   "alias": "守衡",
+   "title": "内控审计与独立复核",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-01",
+   "group_field": "经营与组织",
+   "l3": [
+    "抽样审计",
+    "证据复核",
+    "利益冲突检查"
+   ],
+   "flows": [
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-001",
+    "SCN-016",
+    "SCN-019"
+   ],
+   "wired_skills": [
+    "p2s-compliance-ml-risk-scoring",
+    "p2s-decision-audit-trail-ontology",
+    "p2s-explainable-review-adjudication",
+    "p2s-tag-fairness-bias-audit",
+    "pb-007",
+    "pb-008"
+   ]
+  },
+  {
+   "id": "AGT-006",
+   "alias": "听澜",
+   "title": "消费者需求与VOC研究",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "用户访谈分析",
+    "需求分群",
+    "VOC编码"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "scenarios_direct": [
+    "SCN-002",
+    "SCN-003"
+   ],
+   "wired_skills": [
+    "customer-rfm-analyzer",
+    "customer-voice-analyzer",
+    "jtbd-analyzer",
+    "p2s-causal-sentiment-attribution",
+    "p2s-latent-class-demand-segmentation",
+    "p2s-personabot-rag-profiling",
+    "pb-002",
+    "pb-005"
+   ]
+  },
+  {
+   "id": "AGT-007",
+   "alias": "望野",
+   "title": "市场竞争与机会研究",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "竞品研究",
+    "趋势监测",
+    "市场机会评估"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-002",
+    "SCN-003"
+   ],
+   "wired_skills": [
+    "competitor-deep-analysis",
+    "market-insight-product-selection",
+    "p2s-category-trend-forecasting",
+    "p2s-competitor-new-product-detection",
+    "p2s-product-category-opportunity-scoring",
+    "pb-002",
+    "pb-004",
+    "trend-stage-timing-analyzer"
+   ]
+  },
+  {
+   "id": "AGT-008",
+   "alias": "拓新",
+   "title": "产品组合与新品孵化",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "组合取舍",
+    "实验组合",
+    "阶段投资建议"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-002",
+    "SCN-003",
+    "SCN-004"
+   ],
+   "wired_skills": [
+    "ab-test-setup",
+    "p2s-contextual-bandits-rec",
+    "p2s-llm-experiment-hypothesis",
+    "p2s-real-options-product-launch-timing",
+    "pb-002",
+    "pb-008",
+    "product-attribute-analyzer",
+    "product-launch-planner"
+   ]
+  },
+  {
+   "id": "AGT-009",
+   "alias": "定形",
+   "title": "产品定义与商业立项",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "产品需求定义",
+    "商业案例",
+    "产品范围管理"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-003",
+    "SCN-004"
+   ],
+   "wired_skills": [
+    "ai-product-designer",
+    "creating-financial-models",
+    "joint-solution-blueprint",
+    "p2s-conjoint-analysis-product-design",
+    "pb-002",
+    "pb-004",
+    "to-tickets",
+    "write-spec"
+   ]
+  },
+  {
+   "id": "AGT-010",
+   "alias": "映物",
+   "title": "工业设计与用户体验",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "使用旅程",
+    "工业设计简报",
+    "可用性验证"
+   ],
+   "flows": [
+    "FLOW-02"
+   ],
+   "scenarios_direct": [
+    "SCN-004",
+    "SCN-013"
+   ],
+   "wired_skills": [
+    "ai-product-designer",
+    "experience-system-blueprint",
+    "optimize-ecommerce-page-conversion",
+    "p2s-cognitive-load-ux-optimizer",
+    "p2s-peak-end-rule-customer-experience",
+    "pb-002",
+    "tech-pack-generator"
+   ]
+  },
+  {
+   "id": "AGT-011",
+   "alias": "砺器",
+   "title": "硬件结构与材料工程",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "工程需求审查",
+    "BOM与材料分析",
+    "可制造性分析"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-004",
+    "SCN-006"
+   ],
+   "wired_skills": [
+    "pb-002",
+    "pb-007",
+    "tech-pack-generator"
+   ]
+  },
+  {
+   "id": "AGT-012",
+   "alias": "灵枢",
+   "title": "软件算法与应用生态",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "软件需求分析",
+    "算法评估设计",
+    "应用生态规划"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-004",
+    "SCN-013",
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "ecommerce-ml-modeling-advisor",
+    "p2s-interleaving-experiment-design",
+    "partner-ecosystem-map",
+    "pb-002",
+    "pb-007",
+    "to-spec",
+    "write-spec"
+   ]
+  },
+  {
+   "id": "AGT-013",
+   "alias": "求证",
+   "title": "产品验证与研发项目",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "group_field": "产品与创新",
+   "l3": [
+    "研发计划",
+    "测试方案",
+    "阶段验证"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-004",
+    "SCN-005"
+   ],
+   "wired_skills": [
+    "implement",
+    "p2s-responsible-ai-red-teaming",
+    "pb-002",
+    "pb-007",
+    "prototype",
+    "tdd",
+    "to-tickets",
+    "write-spec"
+   ]
+  },
+  {
+   "id": "AGT-014",
+   "alias": "择源",
+   "title": "OEM供应商开发与协同",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "group_field": "供应与履约",
+   "l3": [
+    "供应商评估",
+    "产能调查",
+    "OEM协作"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-006"
+   ],
+   "wired_skills": [
+    "dropshipping-supplier-integrator",
+    "p2s-multi-factory-capacity-allocation",
+    "p2s-otif-on-time-in-full-analytics",
+    "p2s-supplier-development-roadmap-tracking",
+    "pb-002",
+    "pb-003",
+    "pb-007",
+    "supplier-evaluation",
+    "supplier-performance-manager"
+   ]
+  },
+  {
+   "id": "AGT-015",
+   "alias": "契约",
+   "title": "采购与合同履约",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "group_field": "供应与履约",
+   "l3": [
+    "采购比价",
+    "订单协调",
+    "履约跟踪"
+   ],
+   "flows": [
+    "FLOW-03"
+   ],
+   "scenarios_direct": [
+    "SCN-006"
+   ],
+   "wired_skills": [
+    "multi-location-order-router",
+    "p2s-omnichannel-order-orchestration-mas",
+    "p2s-order-cycle-time-otd-analytics",
+    "p2s-procurement-cost-kpi-price-achievement",
+    "pb-003",
+    "product-supplier-sourcing",
+    "shipment-tracking"
+   ]
+  },
+  {
+   "id": "AGT-016",
+   "alias": "知量",
+   "title": "需求预测与补货计划",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "group_field": "供应与履约",
+   "l3": [
+    "需求预测",
+    "补货模拟",
+    "供需协调"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "scenarios_direct": [
+    "SCN-007"
+   ],
+   "wired_skills": [
+    "amazon-fba-inventory-optimizer",
+    "inventory-demand-forecaster",
+    "p2s-agent-time-series-forecasting",
+    "p2s-automated-replenishment-decision-engine",
+    "p2s-bullwhip-effect-mitigation",
+    "p2s-demand-supply-matching-gap-analysis",
+    "pb-001",
+    "pb-003"
+   ]
+  },
+  {
+   "id": "AGT-017",
+   "alias": "衡仓",
+   "title": "库存与商品生命周期",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "group_field": "供应与履约",
+   "l3": [
+    "库存分层",
+    "生命周期分析",
+    "调拨清货建议"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-007",
+    "SCN-010"
+   ],
+   "wired_skills": [
+    "inventory-demand-forecaster",
+    "multi-location-order-router",
+    "p2s-dynamic-abc-stratification-adaptive-policy",
+    "p2s-fba-fee-intelligence",
+    "p2s-long-tail-sku-clearance-optimization",
+    "pb-001",
+    "pb-003",
+    "pb-007",
+    "product-selection"
+   ]
+  },
+  {
+   "id": "AGT-018",
+   "alias": "质守",
+   "title": "生产协同与质量控制",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "group_field": "供应与履约",
+   "l3": [
+    "质量分析",
+    "生产异常协调",
+    "纠正预防措施"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-004",
+    "SCN-006",
+    "SCN-015"
+   ],
+   "wired_skills": [
+    "p2s-cs-supply-chain-feedback-loop-tag",
+    "p2s-customer-complaint-supply-root-cause-kpi",
+    "p2s-return-root-cause-attribution-graph",
+    "pb-002",
+    "pb-003",
+    "pb-007",
+    "review-analyst-agent",
+    "supplier-performance-manager"
+   ]
+  },
+  {
+   "id": "AGT-019",
+   "alias": "通途",
+   "title": "跨境物流与关务",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "group_field": "供应与履约",
+   "l3": [
+    "物流方案",
+    "关务资料检查",
+    "到货异常追踪"
+   ],
+   "flows": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-008"
+   ],
+   "wired_skills": [
+    "international-shipping-customs",
+    "p2s-3d-bin-packing-optimization",
+    "p2s-atlas-hts-tariff-classification",
+    "p2s-in-transit-inventory-tracking-visibility",
+    "pb-003",
+    "pb-004",
+    "shipment-tracking",
+    "tariff-search"
+   ]
+  },
+  {
+   "id": "AGT-020",
+   "alias": "行舟",
+   "title": "仓储履约与退货处置",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "group_field": "供应与履约",
+   "l3": [
+    "履约异常",
+    "退货分流",
+    "仓储协作"
+   ],
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-008",
+    "SCN-014",
+    "SCN-015"
+   ],
+   "wired_skills": [
+    "multi-location-order-router",
+    "p2s-multicarrier-parcel-tracking-fusion",
+    "p2s-order-routing-intelligence-engine",
+    "p2s-predictive-batch-returns-routing",
+    "pb-003",
+    "pb-005",
+    "pb-007",
+    "returns-exchange-automator",
+    "warehouse-fulfillment-workflow"
+   ]
+  },
+  {
+   "id": "AGT-021",
+   "alias": "北辰",
+   "title": "Amazon业务经营",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "渠道经营分析",
+    "行动组合",
+    "经营复盘"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-001",
+    "SCN-009",
+    "SCN-010",
+    "SCN-011",
+    "SCN-018"
+   ],
+   "wired_skills": [
+    "amazon-ppc-campaign-manager",
+    "ecommerce-analytics-controller",
+    "ecommerce-monthly-review",
+    "p2s-contribution-margin-by-channel",
+    "p2s-multi-objective-constrained-action-planning",
+    "p2s-postpromo-retrospective-kpi",
+    "pb-001",
+    "pb-002",
+    "pb-003",
+    "pb-004",
+    "pb-006",
+    "pb-007",
+    "pb-008"
+   ]
+  },
+  {
+   "id": "AGT-022",
+   "alias": "觅位",
+   "title": "Amazon商品与搜索运营",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "商品诊断",
+    "搜索意图分析",
+    "Listing优化"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-009",
+    "SCN-018"
+   ],
+   "wired_skills": [
+    "amazon-listing-expert",
+    "multi-platform-listing-generator",
+    "p2s-amazon-a10-algorithm-ranking",
+    "p2s-amazon-search-ranking-factor-model",
+    "p2s-hierarchical-search-intent-classification",
+    "pb-001",
+    "pb-004",
+    "seo-keyword-research"
+   ]
+  },
+  {
+   "id": "AGT-023",
+   "alias": "自航",
+   "title": "独立站经营与转化",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "漏斗诊断",
+    "站点运营",
+    "转化优化"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06"
+   ],
+   "scenarios_direct": [
+    "SCN-009",
+    "SCN-010",
+    "SCN-013"
+   ],
+   "wired_skills": [
+    "checkout-flow-optimizer",
+    "optimize-ecommerce-page-conversion",
+    "p2s-abandoned-cart-recovery-ml",
+    "p2s-customer-journey-analytics",
+    "p2s-live-commerce-stream-algorithm",
+    "pb-001",
+    "pb-004",
+    "pb-005",
+    "pb-006",
+    "shopify-store-ops"
+   ]
+  },
+  {
+   "id": "AGT-024",
+   "alias": "拓域",
+   "title": "其他平台与新市场经营",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "渠道研究",
+    "市场进入",
+    "平台运营"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-009",
+    "SCN-012",
+    "SCN-018"
+   ],
+   "wired_skills": [
+    "etsy-pod-automation",
+    "gtm-strategy-planning",
+    "market-insight-product-selection",
+    "p2s-cross-platform-transfer-rec",
+    "p2s-multimarket-expansion-readiness-scorer",
+    "p2s-new-market-entry-readiness-gate",
+    "pb-001",
+    "pb-002",
+    "pb-004",
+    "shopify-store-ops",
+    "tiktok-shop-setup"
+   ]
+  },
+  {
+   "id": "AGT-025",
+   "alias": "联商",
+   "title": "零售渠道与B2B拓展",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "线索评估",
+    "渠道方案",
+    "商务交付协调"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-012",
+    "SCN-014",
+    "SCN-016"
+   ],
+   "wired_skills": [
+    "b2b-payment-terms-optimizer",
+    "channel-integration",
+    "icp-profiler",
+    "partner-ecosystem-map",
+    "partner-revenue-desk",
+    "pb-001",
+    "pb-004",
+    "sales-negotiator"
+   ]
+  },
+  {
+   "id": "AGT-026",
+   "alias": "衡价",
+   "title": "定价促销与商品组合",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "价格敏感性",
+    "促销规划",
+    "组合设计"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "scenarios_direct": [
+    "SCN-010"
+   ],
+   "wired_skills": [
+    "discount-promotion-engine",
+    "dynamic-pricing-engine",
+    "p2s-bundle-pricing-strategy",
+    "p2s-causal-rl-dynamic-pricing",
+    "p2s-causal-uplift-modeling",
+    "p2s-dynamic-bundle-pricing",
+    "pb-001",
+    "pb-003",
+    "product-attribute-analyzer"
+   ]
+  },
+  {
+   "id": "AGT-027",
+   "alias": "守店",
+   "title": "店铺账号健康与规则",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "账号诊断",
+    "规则监测",
+    "申诉材料准备"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-018"
+   ],
+   "wired_skills": [
+    "amazon-brand-protection",
+    "doc-coauthoring",
+    "p2s-account-health-early-warning-system",
+    "p2s-amazon-account-appeal-strategy",
+    "p2s-regulatory-change-monitoring",
+    "pb-001",
+    "pb-004",
+    "pb-007",
+    "platform-price-monitor"
+   ]
+  },
+  {
+   "id": "AGT-028",
+   "alias": "译境",
+   "title": "本地化与市场适配",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "group_field": "渠道经营",
+   "l3": [
+    "本地化",
+    "市场语境审查",
+    "术语治理"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05"
+   ],
+   "scenarios_direct": [
+    "SCN-005",
+    "SCN-009",
+    "SCN-012"
+   ],
+   "wired_skills": [
+    "brand-voice-glossary",
+    "multilingual-seo",
+    "p2s-ai-cultural-sensitivity-localization",
+    "p2s-cross-market-content-localization",
+    "pb-001",
+    "pb-002",
+    "pb-004",
+    "pb-005",
+    "product-marketing-context",
+    "terminology-standardizer"
+   ]
+  },
+  {
+   "id": "AGT-029",
+   "alias": "立言",
+   "title": "品牌战略与传播",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "group_field": "品牌与增长",
+   "l3": [
+    "品牌定位",
+    "传播规划",
+    "品牌反馈"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-002",
+    "SCN-012"
+   ],
+   "wired_skills": [
+    "brand-governance-os",
+    "brand-mention-tracking",
+    "p2s-share-of-voice-tracking",
+    "p2s-video-sentiment-analysis-voc",
+    "p2s-voc-competitive-positioning-map",
+    "pb-002",
+    "pb-004",
+    "pb-005",
+    "pb-007",
+    "pb-008",
+    "public-relations"
+   ]
+  },
+  {
+   "id": "AGT-030",
+   "alias": "叙事",
+   "title": "内容与创意策划",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "group_field": "品牌与增长",
+   "l3": [
+    "内容策划",
+    "创意简报",
+    "内容实验"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-009",
+    "SCN-012"
+   ],
+   "wired_skills": [
+    "ab-test-setup",
+    "content-strategy",
+    "p2s-ab-experimental-design",
+    "p2s-ai-content-marketing-growth",
+    "p2s-ai-video-script-generation",
+    "pb-001",
+    "pb-002",
+    "pb-004",
+    "product-marketing-brief"
+   ]
+  },
+  {
+   "id": "AGT-031",
+   "alias": "绘影",
+   "title": "视觉视频与素材生产",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "group_field": "品牌与增长",
+   "l3": [
+    "视觉简报",
+    "视频制作协作",
+    "素材版本管理"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-009",
+    "SCN-012"
+   ],
+   "wired_skills": [
+    "file-history-manager",
+    "image-prompt-guide",
+    "p2s-brand-video-generation",
+    "p2s-creative-fatigue-detection",
+    "p2s-diffusion-model-product-image",
+    "pb-001",
+    "pb-002",
+    "pb-004",
+    "video-prompt-guide"
+   ]
+  },
+  {
+   "id": "AGT-032",
+   "alias": "点火",
+   "title": "效果广告投放",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "group_field": "品牌与增长",
+   "l3": [
+    "投放诊断",
+    "预算分配",
+    "广告实验"
+   ],
+   "flows": [
+    "FLOW-01"
+   ],
+   "scenarios_direct": [
+    "SCN-011"
+   ],
+   "wired_skills": [
+    "ad-creative",
+    "amazon-ppc-campaign-manager",
+    "ecommerce-budget-forecaster",
+    "p2s-ad-attribution-modeling",
+    "p2s-autobidding-budget-allocation-optimization",
+    "p2s-multi-armed-bandit",
+    "pb-001"
+   ]
+  },
+  {
+   "id": "AGT-033",
+   "alias": "结伴",
+   "title": "达人与联盟合作",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "group_field": "品牌与增长",
+   "l3": [
+    "达人筛选",
+    "联盟运营",
+    "合作复盘"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "scenarios_direct": [
+    "SCN-012"
+   ],
+   "wired_skills": [
+    "attribution",
+    "influencer-marketing",
+    "p2s-bayesian-structural-time-series",
+    "p2s-kol-creator-matching",
+    "p2s-referral-network-value-attribution",
+    "pb-002",
+    "pb-004",
+    "referral-program-builder"
+   ]
+  },
+  {
+   "id": "AGT-034",
+   "alias": "续缘",
+   "title": "CRM留存与复购",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "group_field": "品牌与增长",
+   "l3": [
+    "分群",
+    "生命周期触达",
+    "复购实验"
+   ],
+   "flows": [
+    "FLOW-05"
+   ],
+   "scenarios_direct": [
+    "SCN-013",
+    "SCN-015"
+   ],
+   "wired_skills": [
+    "customer-rfm-analyzer",
+    "customer-winback-automator",
+    "lifecycle-marketing-automator",
+    "p2s-case-cadence-aware-repurchase-prediction",
+    "p2s-causal-churn-retention-attribution",
+    "p2s-dml-cohort-causal-effect",
+    "pb-005"
+   ]
+  },
+  {
+   "id": "AGT-035",
+   "alias": "试真",
+   "title": "增长实验与增量评估",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "group_field": "品牌与增长",
+   "l3": [
+    "实验设计",
+    "增量分析",
+    "因果局限审查"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-003",
+    "SCN-011",
+    "SCN-013"
+   ],
+   "wired_skills": [
+    "ab-test-setup",
+    "attribution",
+    "market-viability-logic-auditor",
+    "p2s-ab-experimental-design",
+    "p2s-augmented-synthetic-control-ml",
+    "p2s-causal-decision-graph-sc-inference",
+    "pb-001",
+    "pb-002",
+    "pb-005",
+    "pb-008"
+   ]
+  },
+  {
+   "id": "AGT-036",
+   "alias": "安心",
+   "title": "售前服务与购买指导",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "group_field": "服务与体验",
+   "l3": [
+    "产品问答",
+    "选购指导",
+    "需求识别"
+   ],
+   "flows": [
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-015"
+   ],
+   "wired_skills": [
+    "customer-voice-analyzer",
+    "jtbd-analyzer",
+    "p2s-agentic-rag-active-retrieval",
+    "p2s-shopping-companion-agent",
+    "p2s-user-profile-long-memory",
+    "pb-004",
+    "pb-005",
+    "pb-007",
+    "product-marketing-context"
+   ]
+  },
+  {
+   "id": "AGT-037",
+   "alias": "解忧",
+   "title": "售后客诉与服务补救",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "group_field": "服务与体验",
+   "l3": [
+    "客诉分诊",
+    "售后处理",
+    "服务补救"
+   ],
+   "flows": [
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-014",
+    "SCN-015"
+   ],
+   "wired_skills": [
+    "chargeback-dispute-manager",
+    "helpdesk-order-integration",
+    "p2s-emotional-ai-customer-care",
+    "p2s-mas-customer-service-intelligent-escalation",
+    "p2s-multilingual-customer-service-translation",
+    "pb-005",
+    "pb-007",
+    "returns-exchange-automator"
+   ]
+  },
+  {
+   "id": "AGT-038",
+   "alias": "回声",
+   "title": "体验洞察与质量反馈",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "group_field": "服务与体验",
+   "l3": [
+    "客诉聚类",
+    "体验分析",
+    "改进验证"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-002",
+    "SCN-004",
+    "SCN-015"
+   ],
+   "wired_skills": [
+    "ab-test-setup",
+    "customer-voice-analyzer",
+    "p2s-bertopic-neural-topic-modeling",
+    "p2s-causal-voc-sentiment-attribution",
+    "p2s-review-sentiment-growth-trigger",
+    "pb-002",
+    "pb-005",
+    "pb-007",
+    "voc-sentiment-analyzer"
+   ]
+  },
+  {
+   "id": "AGT-039",
+   "alias": "同行",
+   "title": "用户教育与会员社区",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "group_field": "服务与体验",
+   "l3": [
+    "使用教育",
+    "会员活动",
+    "用户反馈"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "scenarios_direct": [
+    "SCN-012",
+    "SCN-013",
+    "SCN-015"
+   ],
+   "wired_skills": [
+    "customer-voice-analyzer",
+    "doc-coauthoring",
+    "loyalty-points-designer",
+    "p2s-agrs-aspect-guided-review-summarization",
+    "p2s-digital-wellbeing-screen-time-model",
+    "p2s-vip-tier-upgrade-action",
+    "pb-002",
+    "pb-005"
+   ]
+  },
+  {
+   "id": "AGT-040",
+   "alias": "清账",
+   "title": "GMV结算与会计对账",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-07",
+   "group_field": "财务与合规",
+   "l3": [
+    "渠道对账",
+    "收入与费用核对",
+    "差异追踪"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-016"
+   ],
+   "wired_skills": [
+    "ecommerce-financial-dashboard",
+    "invoice-generator",
+    "p2s-accounts-receivable-intelligence",
+    "p2s-agent-finance-autopilot",
+    "p2s-agentic-etl-data-pipeline",
+    "pb-001",
+    "pb-003",
+    "pb-005",
+    "pb-006",
+    "pb-008",
+    "profit-margin-analyzer"
+   ]
+  },
+  {
+   "id": "AGT-041",
+   "alias": "守金",
+   "title": "经营财务与资金",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-07",
+   "group_field": "财务与合规",
+   "l3": [
+    "资金预测",
+    "经营预算",
+    "经济性分析"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-001",
+    "SCN-016",
+    "SCN-017"
+   ],
+   "wired_skills": [
+    "creating-financial-models",
+    "ecommerce-budget-forecaster",
+    "p2s-agentic-pnl-analyst",
+    "p2s-amazon-payment-cycle-forecast",
+    "p2s-budget-reforecast-rolling",
+    "pb-001",
+    "pb-002",
+    "pb-003",
+    "pb-007",
+    "pb-008",
+    "profit-margin-analyzer"
+   ]
+  },
+  {
+   "id": "AGT-042",
+   "alias": "合账",
+   "title": "税务与跨境实体协作",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "group_field": "财务与合规",
+   "l3": [
+    "税务资料",
+    "实体口径核对",
+    "申报协作"
+   ],
+   "flows": [
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-005",
+    "SCN-016",
+    "SCN-017"
+   ],
+   "wired_skills": [
+    "invoice-generator",
+    "p2s-cross-border-tax-tariff-modeling",
+    "p2s-multi-currency-pnl-reconciliation",
+    "p2s-vat-gst-compliance-automation",
+    "pb-003",
+    "pb-004",
+    "pb-008",
+    "sales-tax-vat-automator",
+    "tariff-search"
+   ]
+  },
+  {
+   "id": "AGT-043",
+   "alias": "律衡",
+   "title": "法务与知识产权",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "group_field": "财务与合规",
+   "l3": [
+    "合同审查支持",
+    "知识产权检索",
+    "争议证据组织"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-003",
+    "SCN-005",
+    "SCN-006",
+    "SCN-012"
+   ],
+   "wired_skills": [
+    "amazon-brand-protection",
+    "b2b-payment-terms-optimizer",
+    "chargeback-dispute-manager",
+    "p2s-brand-registry-infringement-tracker",
+    "p2s-ip-trademark-brand-monitoring",
+    "p2s-llm-contract-compliance-review",
+    "pb-002",
+    "pb-004",
+    "pb-007",
+    "pb-008"
+   ]
+  },
+  {
+   "id": "AGT-044",
+   "alias": "安界",
+   "title": "产品合规与隐私",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "group_field": "财务与合规",
+   "l3": [
+    "产品准入核对",
+    "宣称审查",
+    "隐私需求分析"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07"
+   ],
+   "scenarios_direct": [
+    "SCN-004",
+    "SCN-005",
+    "SCN-009"
+   ],
+   "wired_skills": [
+    "brand-governance-os",
+    "cross-border-category-feasibility",
+    "ecommerce-gdpr-compliance",
+    "p2s-ai-product-safety-certification",
+    "p2s-amazon-tos-compliance-guardrail",
+    "p2s-privacy-compliant-data-collection-gdpr-ccpa",
+    "p2s-privacy-coppa-compliance",
+    "pb-002",
+    "pb-004",
+    "pb-005",
+    "pb-006",
+    "pb-007"
+   ]
+  },
+  {
+   "id": "AGT-045",
+   "alias": "同尺",
+   "title": "业务口径与主数据",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "group_field": "数据与AI运行",
+   "l3": [
+    "指标契约",
+    "账号商品映射",
+    "主数据治理"
+   ],
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-001",
+    "SCN-016",
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "ecommerce-business-insights",
+    "multichannel-inventory-sync",
+    "p2s-cross-platform-user-identity",
+    "p2s-entity-resolution-kg-dedup",
+    "p2s-pvm-attribution-window-harmonization",
+    "pb-001",
+    "pb-006",
+    "pb-008",
+    "terminology-standardizer"
+   ]
+  },
+  {
+   "id": "AGT-046",
+   "alias": "清源",
+   "title": "数据工程与质量",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "group_field": "数据与AI运行",
+   "l3": [
+    "数据质量",
+    "数据管道",
+    "溯源监测"
+   ],
+   "flows": [
+    "FLOW-06"
+   ],
+   "scenarios_direct": [
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "ecommerce-csv-processing",
+    "knowledge-extraction-expert",
+    "p2s-agentic-etl-data-pipeline",
+    "p2s-amazon-sp-api-data-pipeline",
+    "p2s-blockecho-missing-data",
+    "p2s-data-provenance-lineage",
+    "pb-006"
+   ]
+  },
+  {
+   "id": "AGT-047",
+   "alias": "接桥",
+   "title": "系统集成与业务工具",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "group_field": "数据与AI运行",
+   "l3": [
+    "接口契约",
+    "业务工具实现",
+    "集成验证"
+   ],
+   "flows": [
+    "FLOW-06"
+   ],
+   "scenarios_direct": [
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "accio-mcp-cli",
+    "apify-mcp",
+    "build-deepseek-harness-plugin",
+    "dsh-dev-platform-diagnostics",
+    "p2s-agent-production-engineering",
+    "p2s-mcp-a2a-protocol-stack",
+    "p2s-sc-agent-mcp-erp-integration",
+    "p2s-schema-evolution-data-contract",
+    "pb-006"
+   ]
+  },
+  {
+   "id": "AGT-048",
+   "alias": "积知",
+   "title": "知识技能与Playbook治理",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "group_field": "数据与AI运行",
+   "l3": [
+    "知识溯源",
+    "技能版本",
+    "Playbook评估"
+   ],
+   "flows": [
+    "FLOW-02",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-004",
+    "SCN-019",
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "p2s-agent-capability-evaluation",
+    "p2s-autoskill-lifelong-learning",
+    "p2s-factscore-claim-verification-pipeline",
+    "pb-002",
+    "pb-006",
+    "pb-008",
+    "research",
+    "skill-evaluator",
+    "skill-family-manager"
+   ]
+  },
+  {
+   "id": "AGT-049",
+   "alias": "稳行",
+   "title": "Agent平台与可靠运行",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "group_field": "数据与AI运行",
+   "l3": [
+    "运行监测",
+    "容量管理",
+    "失败恢复"
+   ],
+   "flows": [
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "dsh-desktop-diagnostics",
+    "dsh-dev-platform-diagnostics",
+    "p2s-agent-cost-optimization-budget-control",
+    "p2s-agent-fault-tolerance",
+    "p2s-agent-observability-tracing",
+    "p2s-context-token-compression",
+    "pb-006",
+    "pb-008"
+   ]
+  },
+  {
+   "id": "AGT-050",
+   "alias": "门卫",
+   "title": "信息安全与权限",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-08",
+   "group_field": "数据与AI运行",
+   "l3": [
+    "访问控制",
+    "授权审查",
+    "安全事件处理"
+   ],
+   "flows": [
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "scenarios_direct": [
+    "SCN-018",
+    "SCN-020"
+   ],
+   "wired_skills": [
+    "p2s-agenttrust-runtime-safety-interception",
+    "p2s-ato-spatio-temporal-graph",
+    "p2s-cross-border-payment-fraud-detection",
+    "p2s-decision-confidence-calibration-sc",
+    "p2s-human-in-loop-approval-gate-tag",
+    "pb-004",
+    "pb-006",
+    "pb-007",
+    "pb-008",
+    "skill-vetter"
+   ]
+  }
+ ],
+ "l3": [
+  {
+   "name": "经营目标拆解",
+   "role_id": "AGT-001",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "B"
+  },
+  {
+   "name": "资源情景比较",
+   "role_id": "AGT-001",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "A"
+  },
+  {
+   "name": "月度经营复盘",
+   "role_id": "AGT-001",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "B"
+  },
+  {
+   "name": "需求分诊",
+   "role_id": "AGT-002",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "B"
+  },
+  {
+   "name": "能力匹配",
+   "role_id": "AGT-002",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "A"
+  },
+  {
+   "name": "依赖协调",
+   "role_id": "AGT-002",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "A"
+  },
+  {
+   "name": "异常冻结与恢复",
+   "role_id": "AGT-002",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "B"
+  },
+  {
+   "name": "GMV归因分析",
+   "role_id": "AGT-003",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "A"
+  },
+  {
+   "name": "经营预测",
+   "role_id": "AGT-003",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "A"
+  },
+  {
+   "name": "情景模拟",
+   "role_id": "AGT-003",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "A"
+  },
+  {
+   "name": "岗位能力分析",
+   "role_id": "AGT-004",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "B"
+  },
+  {
+   "name": "培训与招聘支持",
+   "role_id": "AGT-004",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "C"
+  },
+  {
+   "name": "人事行政流程",
+   "role_id": "AGT-004",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-01",
+   "serviceability": "C"
+  },
+  {
+   "name": "抽样审计",
+   "role_id": "AGT-005",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-01",
+   "serviceability": "A"
+  },
+  {
+   "name": "证据复核",
+   "role_id": "AGT-005",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-01",
+   "serviceability": "B"
+  },
+  {
+   "name": "利益冲突检查",
+   "role_id": "AGT-005",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-01",
+   "serviceability": "B"
+  },
+  {
+   "name": "用户访谈分析",
+   "role_id": "AGT-006",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "需求分群",
+   "role_id": "AGT-006",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "VOC编码",
+   "role_id": "AGT-006",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "竞品研究",
+   "role_id": "AGT-007",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "趋势监测",
+   "role_id": "AGT-007",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "市场机会评估",
+   "role_id": "AGT-007",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "组合取舍",
+   "role_id": "AGT-008",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "实验组合",
+   "role_id": "AGT-008",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "阶段投资建议",
+   "role_id": "AGT-008",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "产品需求定义",
+   "role_id": "AGT-009",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "商业案例",
+   "role_id": "AGT-009",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "产品范围管理",
+   "role_id": "AGT-009",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "使用旅程",
+   "role_id": "AGT-010",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "工业设计简报",
+   "role_id": "AGT-010",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "C"
+  },
+  {
+   "name": "可用性验证",
+   "role_id": "AGT-010",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "工程需求审查",
+   "role_id": "AGT-011",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "BOM与材料分析",
+   "role_id": "AGT-011",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "可制造性分析",
+   "role_id": "AGT-011",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "软件需求分析",
+   "role_id": "AGT-012",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "算法评估设计",
+   "role_id": "AGT-012",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "应用生态规划",
+   "role_id": "AGT-012",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "研发计划",
+   "role_id": "AGT-013",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "测试方案",
+   "role_id": "AGT-013",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "A"
+  },
+  {
+   "name": "阶段验证",
+   "role_id": "AGT-013",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-02",
+   "serviceability": "B"
+  },
+  {
+   "name": "供应商评估",
+   "role_id": "AGT-014",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "产能调查",
+   "role_id": "AGT-014",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "B"
+  },
+  {
+   "name": "OEM协作",
+   "role_id": "AGT-014",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "C"
+  },
+  {
+   "name": "采购比价",
+   "role_id": "AGT-015",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "订单协调",
+   "role_id": "AGT-015",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "履约跟踪",
+   "role_id": "AGT-015",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "需求预测",
+   "role_id": "AGT-016",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "补货模拟",
+   "role_id": "AGT-016",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "供需协调",
+   "role_id": "AGT-016",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "库存分层",
+   "role_id": "AGT-017",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "生命周期分析",
+   "role_id": "AGT-017",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "调拨清货建议",
+   "role_id": "AGT-017",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "质量分析",
+   "role_id": "AGT-018",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "生产异常协调",
+   "role_id": "AGT-018",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "B"
+  },
+  {
+   "name": "纠正预防措施",
+   "role_id": "AGT-018",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "B"
+  },
+  {
+   "name": "物流方案",
+   "role_id": "AGT-019",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "关务资料检查",
+   "role_id": "AGT-019",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "B"
+  },
+  {
+   "name": "到货异常追踪",
+   "role_id": "AGT-019",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "履约异常",
+   "role_id": "AGT-020",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "退货分流",
+   "role_id": "AGT-020",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "A"
+  },
+  {
+   "name": "仓储协作",
+   "role_id": "AGT-020",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-03",
+   "serviceability": "C"
+  },
+  {
+   "name": "渠道经营分析",
+   "role_id": "AGT-021",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "行动组合",
+   "role_id": "AGT-021",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "经营复盘",
+   "role_id": "AGT-021",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "商品诊断",
+   "role_id": "AGT-022",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "搜索意图分析",
+   "role_id": "AGT-022",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "Listing优化",
+   "role_id": "AGT-022",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "漏斗诊断",
+   "role_id": "AGT-023",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "站点运营",
+   "role_id": "AGT-023",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "转化优化",
+   "role_id": "AGT-023",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "渠道研究",
+   "role_id": "AGT-024",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "市场进入",
+   "role_id": "AGT-024",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "平台运营",
+   "role_id": "AGT-024",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "线索评估",
+   "role_id": "AGT-025",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "渠道方案",
+   "role_id": "AGT-025",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "商务交付协调",
+   "role_id": "AGT-025",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "C"
+  },
+  {
+   "name": "价格敏感性",
+   "role_id": "AGT-026",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "促销规划",
+   "role_id": "AGT-026",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "组合设计",
+   "role_id": "AGT-026",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "账号诊断",
+   "role_id": "AGT-027",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "规则监测",
+   "role_id": "AGT-027",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "申诉材料准备",
+   "role_id": "AGT-027",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "本地化",
+   "role_id": "AGT-028",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "市场语境审查",
+   "role_id": "AGT-028",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "B"
+  },
+  {
+   "name": "术语治理",
+   "role_id": "AGT-028",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-04",
+   "serviceability": "A"
+  },
+  {
+   "name": "品牌定位",
+   "role_id": "AGT-029",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "C"
+  },
+  {
+   "name": "传播规划",
+   "role_id": "AGT-029",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "B"
+  },
+  {
+   "name": "品牌反馈",
+   "role_id": "AGT-029",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "内容策划",
+   "role_id": "AGT-030",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "B"
+  },
+  {
+   "name": "创意简报",
+   "role_id": "AGT-030",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "C"
+  },
+  {
+   "name": "内容实验",
+   "role_id": "AGT-030",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "视觉简报",
+   "role_id": "AGT-031",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "C"
+  },
+  {
+   "name": "视频制作协作",
+   "role_id": "AGT-031",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "C"
+  },
+  {
+   "name": "素材版本管理",
+   "role_id": "AGT-031",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "B"
+  },
+  {
+   "name": "投放诊断",
+   "role_id": "AGT-032",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "预算分配",
+   "role_id": "AGT-032",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "广告实验",
+   "role_id": "AGT-032",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "达人筛选",
+   "role_id": "AGT-033",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "联盟运营",
+   "role_id": "AGT-033",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "B"
+  },
+  {
+   "name": "合作复盘",
+   "role_id": "AGT-033",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "B"
+  },
+  {
+   "name": "分群",
+   "role_id": "AGT-034",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "生命周期触达",
+   "role_id": "AGT-034",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "复购实验",
+   "role_id": "AGT-034",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "实验设计",
+   "role_id": "AGT-035",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "增量分析",
+   "role_id": "AGT-035",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "A"
+  },
+  {
+   "name": "因果局限审查",
+   "role_id": "AGT-035",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-05",
+   "serviceability": "B"
+  },
+  {
+   "name": "产品问答",
+   "role_id": "AGT-036",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "选购指导",
+   "role_id": "AGT-036",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "需求识别",
+   "role_id": "AGT-036",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "客诉分诊",
+   "role_id": "AGT-037",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "售后处理",
+   "role_id": "AGT-037",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "服务补救",
+   "role_id": "AGT-037",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "客诉聚类",
+   "role_id": "AGT-038",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "体验分析",
+   "role_id": "AGT-038",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "改进验证",
+   "role_id": "AGT-038",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "使用教育",
+   "role_id": "AGT-039",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "会员活动",
+   "role_id": "AGT-039",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "用户反馈",
+   "role_id": "AGT-039",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-06",
+   "serviceability": "B"
+  },
+  {
+   "name": "渠道对账",
+   "role_id": "AGT-040",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-07",
+   "serviceability": "A"
+  },
+  {
+   "name": "收入与费用核对",
+   "role_id": "AGT-040",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-07",
+   "serviceability": "A"
+  },
+  {
+   "name": "差异追踪",
+   "role_id": "AGT-040",
+   "plane_id": "PLN-OPS",
+   "domain_id": "DOM-07",
+   "serviceability": "A"
+  },
+  {
+   "name": "资金预测",
+   "role_id": "AGT-041",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-07",
+   "serviceability": "A"
+  },
+  {
+   "name": "经营预算",
+   "role_id": "AGT-041",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-07",
+   "serviceability": "A"
+  },
+  {
+   "name": "经济性分析",
+   "role_id": "AGT-041",
+   "plane_id": "PLN-MGT",
+   "domain_id": "DOM-07",
+   "serviceability": "A"
+  },
+  {
+   "name": "税务资料",
+   "role_id": "AGT-042",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "C"
+  },
+  {
+   "name": "实体口径核对",
+   "role_id": "AGT-042",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "B"
+  },
+  {
+   "name": "申报协作",
+   "role_id": "AGT-042",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "C"
+  },
+  {
+   "name": "合同审查支持",
+   "role_id": "AGT-043",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "B"
+  },
+  {
+   "name": "知识产权检索",
+   "role_id": "AGT-043",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "A"
+  },
+  {
+   "name": "争议证据组织",
+   "role_id": "AGT-043",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "B"
+  },
+  {
+   "name": "产品准入核对",
+   "role_id": "AGT-044",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "B"
+  },
+  {
+   "name": "宣称审查",
+   "role_id": "AGT-044",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "B"
+  },
+  {
+   "name": "隐私需求分析",
+   "role_id": "AGT-044",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-07",
+   "serviceability": "B"
+  },
+  {
+   "name": "指标契约",
+   "role_id": "AGT-045",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "账号商品映射",
+   "role_id": "AGT-045",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "主数据治理",
+   "role_id": "AGT-045",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "数据质量",
+   "role_id": "AGT-046",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "数据管道",
+   "role_id": "AGT-046",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "溯源监测",
+   "role_id": "AGT-046",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "接口契约",
+   "role_id": "AGT-047",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "业务工具实现",
+   "role_id": "AGT-047",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "集成验证",
+   "role_id": "AGT-047",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "知识溯源",
+   "role_id": "AGT-048",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "技能版本",
+   "role_id": "AGT-048",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "Playbook评估",
+   "role_id": "AGT-048",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "运行监测",
+   "role_id": "AGT-049",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "容量管理",
+   "role_id": "AGT-049",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "失败恢复",
+   "role_id": "AGT-049",
+   "plane_id": "PLN-PLT",
+   "domain_id": "DOM-08",
+   "serviceability": "A"
+  },
+  {
+   "name": "访问控制",
+   "role_id": "AGT-050",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "授权审查",
+   "role_id": "AGT-050",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  },
+  {
+   "name": "安全事件处理",
+   "role_id": "AGT-050",
+   "plane_id": "PLN-CTL",
+   "domain_id": "DOM-08",
+   "serviceability": "B"
+  }
+ ],
+ "scenarios": [
+  {
+   "id": "SCN-001",
+   "name": "经营目标、预算与资源分配",
+   "eligible_flow_ids": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "roles_direct": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-005",
+    "AGT-021",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-002",
+   "name": "市场、竞品与用户需求发现",
+   "eligible_flow_ids": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-029",
+    "AGT-038"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-003",
+   "name": "产品机会评估与立项",
+   "eligible_flow_ids": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-035",
+    "AGT-043"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-004",
+   "name": "产品定义、开发与质量",
+   "eligible_flow_ids": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-018",
+    "AGT-038",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-005",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-024",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-005",
+   "name": "产品及市场准入、知识产权",
+   "eligible_flow_ids": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-013",
+    "AGT-028",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-005",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-006",
+   "name": "供应商、采购与生产协作",
+   "eligible_flow_ids": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-011",
+    "AGT-014",
+    "AGT-015",
+    "AGT-018",
+    "AGT-043"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-005",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-024",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-007",
+   "name": "需求预测、补货与库存调拨",
+   "eligible_flow_ids": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-016",
+    "AGT-017"
+   ],
+   "roles_closure": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-045"
+   ]
+  },
+  {
+   "id": "SCN-008",
+   "name": "跨境运输与仓储履约",
+   "eligible_flow_ids": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-019",
+    "AGT-020"
+   ],
+   "roles_closure": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-009",
+   "name": "商品内容、本地化与上架",
+   "eligible_flow_ids": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-044"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-033",
+    "AGT-035",
+    "AGT-036",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-045",
+    "AGT-048",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-010",
+   "name": "定价、促销与利润管理",
+   "eligible_flow_ids": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-017",
+    "AGT-021",
+    "AGT-023",
+    "AGT-026"
+   ],
+   "roles_closure": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-045"
+   ]
+  },
+  {
+   "id": "SCN-011",
+   "name": "广告投放与预算调整",
+   "eligible_flow_ids": [
+    "FLOW-01"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-021",
+    "AGT-032",
+    "AGT-035"
+   ],
+   "roles_closure": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ]
+  },
+  {
+   "id": "SCN-012",
+   "name": "品牌内容、站外营销与活动",
+   "eligible_flow_ids": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-024",
+    "AGT-025",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-039",
+    "AGT-043"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-013",
+   "name": "独立站体验、转化与复购",
+   "eligible_flow_ids": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-010",
+    "AGT-012",
+    "AGT-023",
+    "AGT-034",
+    "AGT-035",
+    "AGT-039"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-033",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-045",
+    "AGT-048"
+   ]
+  },
+  {
+   "id": "SCN-014",
+   "name": "订单、交付与渠道异常",
+   "eligible_flow_ids": [
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-020",
+    "AGT-025",
+    "AGT-037"
+   ],
+   "roles_closure": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-006",
+    "AGT-007",
+    "AGT-009",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-015",
+   "name": "客服、退换货、评价与客诉",
+   "eligible_flow_ids": [
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-018",
+    "AGT-020",
+    "AGT-034",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039"
+   ],
+   "roles_closure": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-006",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-023",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-016",
+   "name": "渠道结算、对账与财务经营",
+   "eligible_flow_ids": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-005",
+    "AGT-025",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-045"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-006",
+    "AGT-008",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-017",
+   "name": "现金、汇率与资金安排",
+   "eligible_flow_ids": [
+    "FLOW-03",
+    "FLOW-08"
+   ],
+   "roles_direct": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-018",
+   "name": "店铺账号健康与渠道规则变化",
+   "eligible_flow_ids": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-021",
+    "AGT-022",
+    "AGT-024",
+    "AGT-027",
+    "AGT-050"
+   ],
+   "roles_closure": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-005",
+    "AGT-007",
+    "AGT-009",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-033",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-045",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-019",
+   "name": "组织、人员与绩效改进",
+   "eligible_flow_ids": [
+    "FLOW-08"
+   ],
+   "roles_direct": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-004",
+    "AGT-005",
+    "AGT-048"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ]
+  },
+  {
+   "id": "SCN-020",
+   "name": "数据质量、知识、系统与 AI 运行",
+   "eligible_flow_ids": [
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "roles_direct": [
+    "AGT-002",
+    "AGT-012",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "roles_closure": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-023",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ]
+  }
+ ],
+ "cells": [
+  {
+   "cell_id": "FLOW-01/STG-01",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收日常经营节奏或销量、转化、库存、广告异常",
+   "business_output_name": "经营信号记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-01/STG-02",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "确定渠道、市场、账号、商品集合、时间窗、GMV口径与完成条件",
+   "business_output_name": "经营Case Charter",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-01/STG-03",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "按渠道选择主岗位，装配GMV、库存、价格、广告、财务和增量评估能力",
+   "business_output_name": "FLOW-01 Context Manifest",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-01/STG-04",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对同口径订单/GMV、可售/在途库存、价格、促销、广告、供应与账号健康",
+   "business_output_name": "经营证据与偏差诊断",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-01/STG-05",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "比较价格、广告、库存与停止条件，形成联合经营行动包",
+   "business_output_name": "联合经营行动包",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-01/STG-06",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查数据质量、库存、预算、现金、账号范围和增量判断",
+   "business_output_name": "FLOW-01 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-01/STG-07",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "提交受策略约束的价格/广告Action Intent，或形成NoActionRecord",
+   "business_output_name": "动作尝试或无动作记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-01/STG-08",
+   "flow_id": "FLOW-01",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对逐对象回执、GMV、取消退款、库存、现金与增量结果",
+   "business_output_name": "经营关闭记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-016",
+    "AGT-017",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-026",
+    "AGT-027",
+    "AGT-028",
+    "AGT-030",
+    "AGT-031",
+    "AGT-032",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-045"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-01",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收需求证据、使用问题或产品组合缺口",
+   "business_output_name": "新品机会信号",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-02",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "确定用户问题、市场、产品范围、验证目标与停止条件",
+   "business_output_name": "新品验证Case Charter",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-03",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "装配需求、竞品、产品定义、工程、OEM、质量、合规和验证能力",
+   "business_output_name": "FLOW-02 Context Manifest",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-04",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "区分事实与假设，核对VOC、替代方案、技术/OEM/质量/准入证据",
+   "business_output_name": "机会与可行性诊断",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-05",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "形成商业假设、产品定义和验证方案",
+   "business_output_name": "新品验证证据包",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-06",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查可证伪性、实物/专业证据来源、合规、资源与混杂因素",
+   "business_output_name": "FLOW-02 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-07",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "发起受控外部验证Intent或记录无需动作；不得把模型判断当实物回执",
+   "business_output_name": "验证尝试或无动作记录",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-02/STG-08",
+   "flow_id": "FLOW-02",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对验证结果并形成继续、转向或停止结论",
+   "business_output_name": "新品验证关闭记录",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-006",
+    "AGT-007",
+    "AGT-008",
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-018",
+    "AGT-021",
+    "AGT-024",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-035",
+    "AGT-038",
+    "AGT-039",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-048"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-01",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收库存、预测、交期、采购或履约变化",
+   "business_output_name": "供需信号",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-02",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "确定账号、SKU/商品、仓库、供应商、时间窗和供需目标",
+   "business_output_name": "供需Case Charter",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-03",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "装配预测、库存、采购、OEM、物流、财务与质量能力",
+   "business_output_name": "FLOW-03 Context Manifest",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-04",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对可售/预留/在途、已有订单、需求区间、交付周期、产能、条款和现金",
+   "business_output_name": "供需证据与约束诊断",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-05",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "比较补货、调拨、控投放和清货方案",
+   "business_output_name": "供应计划与动作方案",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-06",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查重复订单、MOQ、产能、现金、质量、合同和对象状态",
+   "business_output_name": "FLOW-03 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-07",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "提交采购/调拨Intent或NoActionRecord；具体策略和ERP schema待配置",
+   "business_output_name": "执行尝试或无动作记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-03/STG-08",
+   "flow_id": "FLOW-03",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对订单、到货、质检、可售、结算和资金影响",
+   "business_output_name": "供需关闭记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-014",
+    "AGT-015",
+    "AGT-016",
+    "AGT-017",
+    "AGT-018",
+    "AGT-019",
+    "AGT-020",
+    "AGT-021",
+    "AGT-026",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-01",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收新市场、平台、店铺或商品上线请求",
+   "business_output_name": "市场进入信号",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-02",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "确定市场、渠道账号、商品集合、时间窗和进入成功条件",
+   "business_output_name": "市场进入Case Charter",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-03",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "装配市场机会、准入、IP/合规、本地化、履约、售后、结算和品牌能力",
+   "business_output_name": "FLOW-04 Context Manifest",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-04",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对机会、商品主数据、证据、宣称、税务、履约、售后和账号准备",
+   "business_output_name": "市场进入诊断",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-05",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "形成准入证据矩阵、本地化内容和市场进入包",
+   "business_output_name": "市场进入包",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-06",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查适用策略、市场规则、账号主体、内容、履约和结算准备",
+   "business_output_name": "FLOW-04 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-07",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "提交受控上架Intent或NoActionRecord；具体市场和接口待配置",
+   "business_output_name": "上架尝试或无动作记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-04/STG-08",
+   "flow_id": "FLOW-04",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对逐商品上线回执、异常和初步经营结果",
+   "business_output_name": "市场进入关闭记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-007",
+    "AGT-009",
+    "AGT-019",
+    "AGT-021",
+    "AGT-022",
+    "AGT-023",
+    "AGT-024",
+    "AGT-025",
+    "AGT-027",
+    "AGT-028",
+    "AGT-029",
+    "AGT-030",
+    "AGT-031",
+    "AGT-033",
+    "AGT-036",
+    "AGT-042",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-01",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收咨询、订单异常、售后或获许可的生命周期事件",
+   "business_output_name": "客户旅程信号",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-02",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "确定客户/订单最小范围、问题类型、许可状态和完成条件",
+   "business_output_name": "客户Case Charter",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-03",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "按事件类型选择主岗位，装配服务、体验、教育、CRM、隐私和质量能力",
+   "business_output_name": "FLOW-05 Context Manifest",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-04",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对客户与订单事实、历史问题、服务规则、触达许可和产品适用性",
+   "business_output_name": "客户问题诊断",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-05",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "形成答复、补救、教育或复购实验方案",
+   "business_output_name": "服务与留存方案",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-06",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查许可、隐私、健康风险、质量事件、补偿和触达边界",
+   "business_output_name": "FLOW-05 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-07",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "提交退款/补救/触达Intent或NoActionRecord",
+   "business_output_name": "客户动作尝试或无动作记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-05/STG-08",
+   "flow_id": "FLOW-05",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对问题解决、补救回执、根因反馈和复购结果",
+   "business_output_name": "客户旅程关闭记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-006",
+    "AGT-020",
+    "AGT-023",
+    "AGT-028",
+    "AGT-029",
+    "AGT-034",
+    "AGT-035",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-040",
+    "AGT-044"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-01",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收真实业务能力需求或数据错误",
+   "business_output_name": "数据与工具需求信号",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-02",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "确定业务任务、对象、现有方法、优先级、约束和验收结果",
+   "business_output_name": "能力交付Case Charter",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-03",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "装配口径、数据质量、集成、访问、安全、可靠性和能力治理Skills",
+   "business_output_name": "FLOW-06 Context Manifest",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-04",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对业务语义、对象映射、数据来源/质量、现有系统和复用可能",
+   "business_output_name": "能力缺口诊断",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-05",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "形成需求契约、数据契约或工具交付方案",
+   "business_output_name": "数据/工具交付包",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-06",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查Access、数据质量、运行恢复、安全和经营验收设计",
+   "business_output_name": "FLOW-06 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-07",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "提交受控发布Change Proposal或NoActionRecord；Bundle变更转入发布生命周期",
+   "business_output_name": "发布尝试或变更提案",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-06/STG-08",
+   "flow_id": "FLOW-06",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对业务验收、质量、运行结果并发出异步学习候选",
+   "business_output_name": "能力交付关闭记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-003",
+    "AGT-021",
+    "AGT-023",
+    "AGT-040",
+    "AGT-044",
+    "AGT-045",
+    "AGT-046",
+    "AGT-047",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-01",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收并验证质量、严重客诉或账号重大风险信号；符合D-026候选条件时交由模型外Emergency Guard评估",
+   "business_output_name": "重大事件信号与Guard评估入口",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-02",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "按已发布规则形成唯一FLOW-07 Case Charter；PROTECT或FREEZE时原子写入Case、STG-01/02接收记录与Guard证据",
+   "business_output_name": "重大事件Case Charter与本地原子提交记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-03",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "按事件类型选择主岗位，装配产品、供应、服务、渠道、法务、合规和安全能力",
+   "business_output_name": "FLOW-07 Context Manifest",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-04",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对事件时间线、受影响批次/商品/账号、已发生动作、库存和客户范围",
+   "business_output_name": "事件范围与根因诊断",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-05",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "形成隔离、处置、客户影响和恢复方案",
+   "business_output_name": "重大事件处置包",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-06",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查证据、范围、适用策略、外部承诺和恢复条件",
+   "business_output_name": "FLOW-07 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-07",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "处理正常处置Intent或NoActionRecord；恢复、重新开放、扩大范围、外部承诺、退款、召回、销毁和永久变更只能在本阶段执行",
+   "business_output_name": "正常处置、恢复尝试或无动作记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-07/STG-08",
+   "flow_id": "FLOW-07",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对紧急保护与正常处置的逐对象权威回执、影响受控、根因和恢复证据",
+   "business_output_name": "重大事件关闭与全动作对账记录",
+   "participating_role_ids": [
+    "AGT-002",
+    "AGT-005",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013",
+    "AGT-014",
+    "AGT-017",
+    "AGT-018",
+    "AGT-020",
+    "AGT-021",
+    "AGT-027",
+    "AGT-029",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-041",
+    "AGT-043",
+    "AGT-044",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-01",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-01",
+   "stage_name": "信号接收",
+   "cell_kind": "D",
+   "model_participation": "none_required",
+   "cell_kind_basis": "无模型参与",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "接收经营复盘节奏、重大目标偏差或能力退化信号",
+   "business_output_name": "经营复盘信号",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-02",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-02",
+   "stage_name": "范围确定与Case创建",
+   "cell_kind": "R",
+   "model_participation": "optional_bounded_classification",
+   "cell_kind_basis": "模型只做**有界分类**；主判据是契约与规则",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "确定经营范围、观察窗、资源/能力问题和完成条件",
+   "business_output_name": "经营复盘Case Charter",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-03",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-03",
+   "stage_name": "上下文装配",
+   "cell_kind": "D",
+   "model_participation": "case_agent_initialized_after_acceptance",
+   "cell_kind_basis": "模型在此仅被**装配**（选主岗位、钉 Bundle），不产出业务判定",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "装配经营分析、增量、财务、审计、组织、知识和运行能力",
+   "business_output_name": "FLOW-08 Context Manifest",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-04",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-04",
+   "stage_name": "证据收集与诊断",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对经营结果、全成本、自治异常、新品验证和能力表现",
+   "business_output_name": "经营与能力诊断",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-05",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-05",
+   "stage_name": "方案与标准产物",
+   "cell_kind": "M",
+   "model_participation": "primary_case_agent_with_on_demand_skills",
+   "cell_kind_basis": "模型是**主引擎**（按需装配 Skills）",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "形成资源调整、停止事项、策略或能力Change Proposal",
+   "business_output_name": "经营与能力变更建议",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-06",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-06",
+   "stage_name": "Assurance接收门禁",
+   "cell_kind": "R",
+   "model_participation": "optional_read_only_semantic_evaluator_delegate",
+   "cell_kind_basis": "模型只读评估语义；不得扩权、不得授权资产",
+   "algorithm_policy": "契约与判据为主；模型只做有界分类，**不得作主引擎**",
+   "business_step": "检查口径、现金、利益冲突、独立审计和观察窗口",
+   "business_output_name": "FLOW-08 Assurance Decision",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-07",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-07",
+   "stage_name": "受控动作",
+   "cell_kind": "D",
+   "model_participation": "case_agent_may_submit_action_intent_only",
+   "cell_kind_basis": "模型只能**提交 Action Intent**；动作由策略闸与执行代理做",
+   "algorithm_policy": "**无模型参与**；不消耗检索预算",
+   "business_step": "提交已有策略范围内的资源动作或Change Proposal；Bundle只能走D-023生命周期",
+   "business_output_name": "受控动作或无动作记录",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  },
+  {
+   "cell_id": "FLOW-08/STG-08",
+   "flow_id": "FLOW-08",
+   "stage_id": "STG-08",
+   "stage_name": "结果核验、关闭与异步学习",
+   "cell_kind": "M",
+   "model_participation": "case_agent_summarizes_against_authoritative_receipts",
+   "cell_kind_basis": "模型对**权威回执**做核验、关闭与异步学习",
+   "algorithm_policy": "算法模型在此接入（A/B 类责任名可挂方法）",
+   "business_step": "核对资源/能力结果、观察窗和回退证据",
+   "business_output_name": "经营复盘关闭记录",
+   "participating_role_ids": [
+    "AGT-001",
+    "AGT-002",
+    "AGT-003",
+    "AGT-004",
+    "AGT-005",
+    "AGT-008",
+    "AGT-021",
+    "AGT-029",
+    "AGT-035",
+    "AGT-040",
+    "AGT-041",
+    "AGT-042",
+    "AGT-043",
+    "AGT-045",
+    "AGT-048",
+    "AGT-049",
+    "AGT-050"
+   ],
+   "solution_refs": [],
+   "card_refs": []
+  }
+ ],
+ "solutions": [],
+ "cards": [
+  {
+   "name": "Skill-Agentic-Catalog-Enrichment",
+   "path": "paper2skills-vault/00-电商Agent/Skill-Agentic-Catalog-Enrichment.md",
+   "domain_dir": "00-电商Agent",
+   "l3": null
+  },
+  {
+   "name": "Skill-Live-Catalog-Conversational-Rec",
+   "path": "paper2skills-vault/00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md",
+   "domain_dir": "00-电商Agent",
+   "l3": null
+  },
+  {
+   "name": "Skill-Causal-Discovery-PC-Algorithm",
+   "path": "paper2skills-vault/01-因果推断/Skill-Causal-Discovery-PC-Algorithm.md",
+   "domain_dir": "01-因果推断",
+   "l3": [
+    "GMV归因分析",
+    "渠道经营分析"
+   ]
+  },
+  {
+   "name": "Skill-DiD-Difference-in-Differences",
+   "path": "paper2skills-vault/01-因果推断/Skill-DiD-Difference-in-Differences.md",
+   "domain_dir": "01-因果推断",
+   "l3": [
+    "经济性分析",
+    "采购比价"
+   ]
+  },
+  {
+   "name": "Skill-IV-Instrumental-Variables",
+   "path": "paper2skills-vault/01-因果推断/Skill-IV-Instrumental-Variables.md",
+   "domain_dir": "01-因果推断",
+   "l3": [
+    "价格敏感性",
+    "组合设计"
+   ]
+  },
+  {
+   "name": "Skill-Intelligent-Attribution-Causal-Forest",
+   "path": "paper2skills-vault/01-因果推断/Skill-Intelligent-Attribution-Causal-Forest.md",
+   "domain_dir": "01-因果推断",
+   "l3": [
+    "增量分析",
+    "投放诊断",
+    "预算分配"
+   ]
+  },
+  {
+   "name": "Skill-Mediation-Causal-Mechanism-Analysis",
+   "path": "paper2skills-vault/01-因果推断/Skill-Mediation-Causal-Mechanism-Analysis.md",
+   "domain_dir": "01-因果推断",
+   "l3": [
+    "GMV归因分析",
+    "增量分析"
+   ]
+  },
+  {
+   "name": "Skill-Uplift-Modeling",
+   "path": "paper2skills-vault/01-因果推断/Skill-Uplift-Modeling.md",
+   "domain_dir": "01-因果推断",
+   "l3": [
+    "生命周期触达",
+    "促销规划"
+   ]
+  },
+  {
+   "name": "Skill-AB-Experimental-Design",
+   "path": "paper2skills-vault/02-A_B实验/Skill-AB-Experimental-Design.md",
+   "domain_dir": "02-A_B实验",
+   "l3": [
+    "实验设计",
+    "转化优化",
+    "内容实验"
+   ]
+  },
+  {
+   "name": "Skill-AB-Test-Result-Interpretation",
+   "path": "paper2skills-vault/02-A_B实验/Skill-AB-Test-Result-Interpretation.md",
+   "domain_dir": "02-A_B实验",
+   "l3": [
+    "实验设计",
+    "因果局限审查"
+   ]
+  },
+  {
+   "name": "Skill-Multi-Armed-Bandit",
+   "path": "paper2skills-vault/02-A_B实验/Skill-Multi-Armed-Bandit.md",
+   "domain_dir": "02-A_B实验",
+   "l3": [
+    "广告实验",
+    "实验设计"
+   ]
+  },
+  {
+   "name": "Skill-Persona-Based-AB-Simulation",
+   "path": "paper2skills-vault/02-A_B实验/Skill-Persona-Based-AB-Simulation.md",
+   "domain_dir": "02-A_B实验",
+   "l3": null
+  },
+  {
+   "name": "Skill-Power-Analysis-Sample-Size",
+   "path": "paper2skills-vault/02-A_B实验/Skill-Power-Analysis-Sample-Size.md",
+   "domain_dir": "02-A_B实验",
+   "l3": [
+    "实验设计"
+   ]
+  },
+  {
+   "name": "Skill-Thompson-Sampling-MAB",
+   "path": "paper2skills-vault/02-A_B实验/Skill-Thompson-Sampling-MAB.md",
+   "domain_dir": "02-A_B实验",
+   "l3": [
+    "实验设计",
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-Decision-Conditioned-Forecasting",
+   "path": "paper2skills-vault/03-时间序列/Skill-Decision-Conditioned-Forecasting.md",
+   "domain_dir": "03-时间序列",
+   "l3": null
+  },
+  {
+   "name": "Skill-Intelligent-Prediction-Doubly-Robust",
+   "path": "paper2skills-vault/03-时间序列/Skill-Intelligent-Prediction-Doubly-Robust.md",
+   "domain_dir": "03-时间序列",
+   "l3": [
+    "增量分析",
+    "促销规划"
+   ]
+  },
+  {
+   "name": "Skill-Prophet-Forecasting",
+   "path": "paper2skills-vault/03-时间序列/Skill-Prophet-Forecasting.md",
+   "domain_dir": "03-时间序列",
+   "l3": [
+    "需求预测",
+    "补货模拟"
+   ]
+  },
+  {
+   "name": "Skill-Shipping-Cost-Estimation",
+   "path": "paper2skills-vault/03-时间序列/Skill-Shipping-Cost-Estimation.md",
+   "domain_dir": "03-时间序列",
+   "l3": null
+  },
+  {
+   "name": "Skill-Temporal-Fusion-Transformer",
+   "path": "paper2skills-vault/03-时间序列/Skill-Temporal-Fusion-Transformer.md",
+   "domain_dir": "03-时间序列",
+   "l3": [
+    "需求预测",
+    "补货模拟"
+   ]
+  },
+  {
+   "name": "Skill-Time-Series-Anomaly-Detection",
+   "path": "paper2skills-vault/03-时间序列/Skill-Time-Series-Anomaly-Detection.md",
+   "domain_dir": "03-时间序列",
+   "l3": [
+    "运行监测",
+    "溯源监测"
+   ]
+  },
+  {
+   "name": "Skill-Time-Series-Forecasting",
+   "path": "paper2skills-vault/03-时间序列/Skill-Time-Series-Forecasting.md",
+   "domain_dir": "03-时间序列",
+   "l3": [
+    "需求预测",
+    "补货模拟"
+   ]
+  },
+  {
+   "name": "Skill-Demand-Forecasting-Supply-Chain",
+   "path": "paper2skills-vault/04-供应链/Skill-Demand-Forecasting-Supply-Chain.md",
+   "domain_dir": "04-供应链",
+   "l3": [
+    "需求预测"
+   ]
+  },
+  {
+   "name": "Skill-Monodense-单品价格弹性估计",
+   "path": "paper2skills-vault/04-供应链/Skill-Monodense-单品价格弹性估计.md",
+   "domain_dir": "04-供应链",
+   "l3": [
+    "价格敏感性"
+   ]
+  },
+  {
+   "name": "Skill-Multi-Echelon-Inventory",
+   "path": "paper2skills-vault/04-供应链/Skill-Multi-Echelon-Inventory.md",
+   "domain_dir": "04-供应链",
+   "l3": [
+    "库存分层",
+    "补货模拟"
+   ]
+  },
+  {
+   "name": "Skill-Multi-Warehouse-Allocation-LLM",
+   "path": "paper2skills-vault/04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md",
+   "domain_dir": "04-供应链",
+   "l3": null
+  },
+  {
+   "name": "Skill-Safety-Stock-Replenishment",
+   "path": "paper2skills-vault/04-供应链/Skill-Safety-Stock-Replenishment.md",
+   "domain_dir": "04-供应链",
+   "l3": [
+    "补货模拟"
+   ]
+  },
+  {
+   "name": "Skill-Supply-Network-Simulation",
+   "path": "paper2skills-vault/04-供应链/Skill-Supply-Network-Simulation.md",
+   "domain_dir": "04-供应链",
+   "l3": null
+  },
+  {
+   "name": "Skill-Two-Echelon-Inventory-DRL",
+   "path": "paper2skills-vault/04-供应链/Skill-Two-Echelon-Inventory-DRL.md",
+   "domain_dir": "04-供应链",
+   "l3": [
+    "库存分层",
+    "补货模拟"
+   ]
+  },
+  {
+   "name": "Skill-Cold-Start-Meta-Learning-PAM",
+   "path": "paper2skills-vault/05-推荐系统/Skill-Cold-Start-Meta-Learning-PAM.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "组合取舍",
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-Deep-Learning-Recommendation-HI",
+   "path": "paper2skills-vault/05-推荐系统/Skill-Deep-Learning-Recommendation-HI.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "转化优化",
+    "组合取舍"
+   ]
+  },
+  {
+   "name": "Skill-Diversity-Reranking-SMMR",
+   "path": "paper2skills-vault/05-推荐系统/Skill-Diversity-Reranking-SMMR.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "转化优化",
+    "商品诊断"
+   ]
+  },
+  {
+   "name": "Skill-Explainable-Recommendation",
+   "path": "paper2skills-vault/05-推荐系统/Skill-Explainable-Recommendation.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "商品诊断",
+    "申诉材料准备"
+   ]
+  },
+  {
+   "name": "Skill-Matrix-Factorization",
+   "path": "paper2skills-vault/05-推荐系统/Skill-Matrix-Factorization.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-NeuralNDCG-Learning-to-Rank",
+   "path": "paper2skills-vault/05-推荐系统/Skill-NeuralNDCG-Learning-to-Rank.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "搜索意图分析",
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-Semantic-ID-Retrieval-RPG",
+   "path": "paper2skills-vault/05-推荐系统/Skill-Semantic-ID-Retrieval-RPG.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "转化优化",
+    "搜索意图分析"
+   ]
+  },
+  {
+   "name": "Skill-Session-Based-Recommendation-SR-GNN",
+   "path": "paper2skills-vault/05-推荐系统/Skill-Session-Based-Recommendation-SR-GNN.md",
+   "domain_dir": "05-推荐系统",
+   "l3": [
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-Cold-Start-Product-Recommendation",
+   "path": "paper2skills-vault/06-增长模型/Skill-Cold-Start-Product-Recommendation.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-Customer-Churn-Prediction",
+   "path": "paper2skills-vault/06-增长模型/Skill-Customer-Churn-Prediction.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "生命周期触达",
+    "分群"
+   ]
+  },
+  {
+   "name": "Skill-Customer-Journey-Prototype",
+   "path": "paper2skills-vault/06-增长模型/Skill-Customer-Journey-Prototype.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "漏斗诊断",
+    "体验分析"
+   ]
+  },
+  {
+   "name": "Skill-DQN-Purchase-Prediction",
+   "path": "paper2skills-vault/06-增长模型/Skill-DQN-Purchase-Prediction.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "生命周期触达",
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-Deep-Learning-Churn-Prediction",
+   "path": "paper2skills-vault/06-增长模型/Skill-Deep-Learning-Churn-Prediction.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "生命周期触达",
+    "分群"
+   ]
+  },
+  {
+   "name": "Skill-LTV-Prediction-ZILN",
+   "path": "paper2skills-vault/06-增长模型/Skill-LTV-Prediction-ZILN.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "生命周期触达",
+    "分群"
+   ]
+  },
+  {
+   "name": "Skill-New-Product-Opportunity-Mining",
+   "path": "paper2skills-vault/06-增长模型/Skill-New-Product-Opportunity-Mining.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "市场机会评估",
+    "组合取舍"
+   ]
+  },
+  {
+   "name": "Skill-RFM-Customer-Segmentation",
+   "path": "paper2skills-vault/06-增长模型/Skill-RFM-Customer-Segmentation.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "分群",
+    "生命周期触达"
+   ]
+  },
+  {
+   "name": "Skill-Seasonal-Aligned-Churn-Label",
+   "path": "paper2skills-vault/06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md",
+   "domain_dir": "06-增长模型",
+   "l3": null
+  },
+  {
+   "name": "Skill-Uplift-Churn-Prediction",
+   "path": "paper2skills-vault/06-增长模型/Skill-Uplift-Churn-Prediction.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "增量分析",
+    "生命周期触达"
+   ]
+  },
+  {
+   "name": "Skill-User-Lifecycle-STAN",
+   "path": "paper2skills-vault/06-增长模型/Skill-User-Lifecycle-STAN.md",
+   "domain_dir": "06-增长模型",
+   "l3": [
+    "分群",
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-ABSA-BERT-MoE",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-ABSA-BERT-MoE.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-AGRS-属性引导评论摘要",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-AGRS-属性引导评论摘要.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-ALCHEmist-Weak-Supervision",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-ALCHEmist-Weak-Supervision.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Active-Learning-Annotation",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Active-Learning-Annotation.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "数据质量",
+    "数据管道"
+   ]
+  },
+  {
+   "name": "Skill-AdaNEN-Streaming-Classifier",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-AdaNEN-Streaming-Classifier.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Aspect-Based-Sentiment-Analysis",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Aspect-Based-Sentiment-Analysis.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-AutoTag-SelfEvolving-Label-System",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-AutoTag-SelfEvolving-Label-System.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-BERT-MoE高效方面情感分析",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-BERT-MoE高效方面情感分析.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-BERT-SRL-Event-Frame-Extraction",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-BERT-SRL-Event-Frame-Extraction.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "体验分析",
+    "VOC编码"
+   ]
+  },
+  {
+   "name": "Skill-Behavioral-Intent-Tree-Parsing",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Behavioral-Intent-Tree-Parsing.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-CSK-Customer-Sentiment-Clustering",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-CSK-Customer-Sentiment-Clustering.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-CrossLingual-Semantic-Alignment",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-CrossLingual-Semantic-Alignment.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-CrossLingual-Sentiment-Transfer",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-CrossLingual-Sentiment-Transfer.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Dialogue-to-Action-Graph",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Dialogue-to-Action-Graph.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-GPLR-人群标签生成",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-GPLR-人群标签生成.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-InstructUIE-Unified-Information-Extraction",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-InstructUIE-Unified-Information-Extraction.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "数据管道",
+    "业务工具实现",
+    "体验分析"
+   ]
+  },
+  {
+   "name": "Skill-LLM-Personalized-Marketing-Copy-Generation",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-LLM-Personalized-Marketing-Copy-Generation.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-MAA-行动建议生成",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAA-行动建议生成.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-MAS-Consumer-Behavior-Simulation",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Consumer-Behavior-Simulation.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-MAS-MARL-Dynamic-Pricing",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-MARL-Dynamic-Pricing.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-MAS-Multi-Objective-Recommendation",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Multi-Objective-Recommendation.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-MAS-VOC-Data-Analyst",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-VOC-Data-Analyst.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-NPS-Driver-Analysis",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-NPS-Driver-Analysis.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-OfflineRL-触达时机优化",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OfflineRL-触达时机优化.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-OpenWorld-Class-Incremental-Learning",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OpenWorld-Class-Incremental-Learning.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-PERSONABOT-RAG用户画像生成",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-PERSONABOT-RAG用户画像生成.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Product-Attribute-Graph-Parsing",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Product-Attribute-Graph-Parsing.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-REVISION-无点击意图挖掘",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-REVISION-无点击意图挖掘.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Review-Quality-Scoring",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Review-Quality-Scoring.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Self-Improving-LLM-Agent-Pipeline",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Self-Improving-LLM-Agent-Pipeline.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Semantic-Blueprint-Compiler",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Semantic-Blueprint-Compiler.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "产品需求定义",
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-SoMeR-多视角用户表示",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-SoMeR-多视角用户表示.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Spiral-of-Silence-沉默少数派挖掘",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Spiral-of-Silence-沉默少数派挖掘.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-StaR-观点语句排序",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-StaR-观点语句排序.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-TJAP-跨市场品类组合定价",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TJAP-跨市场品类组合定价.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-TSCAN-上下文感知挽回策略",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TSCAN-上下文感知挽回策略.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-TaxoAdapt-Taxonomy-Evolution",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TaxoAdapt-Taxonomy-Evolution.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-TopicImpact-观点单元画像抽取",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TopicImpact-观点单元画像抽取.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "VOC编码",
+    "体验分析",
+    "指标契约"
+   ]
+  },
+  {
+   "name": "Skill-VOC-Semantic-Blueprint",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-VOC-Semantic-Blueprint.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-iReFeed-需求优先级排序",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-iReFeed-需求优先级排序.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-大规模消费者评论方面情感分析",
+   "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-大规模消费者评论方面情感分析.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": null
+  },
+  {
+   "name": "Skill-Dense-Retrieval-Ecommerce-Semantic-Search",
+   "path": "paper2skills-vault/08-知识图谱/Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "搜索意图分析",
+    "商品诊断"
+   ]
+  },
+  {
+   "name": "Skill-GraphRAG-Knowledge-Enhanced-Retrieval",
+   "path": "paper2skills-vault/08-知识图谱/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "业务工具实现",
+    "知识溯源"
+   ]
+  },
+  {
+   "name": "Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks",
+   "path": "paper2skills-vault/08-知识图谱/Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "主数据治理",
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-HGT-Heterogeneous-Graph-Transformer",
+   "path": "paper2skills-vault/08-知识图谱/Skill-HGT-Heterogeneous-Graph-Transformer.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "业务工具实现",
+    "主数据治理"
+   ]
+  },
+  {
+   "name": "Skill-KG-Auto-Construction-Agent-Driven",
+   "path": "paper2skills-vault/08-知识图谱/Skill-KG-Auto-Construction-Agent-Driven.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "主数据治理",
+    "数据管道"
+   ]
+  },
+  {
+   "name": "Skill-KG-Relation-Completion-CBLiP",
+   "path": "paper2skills-vault/08-知识图谱/Skill-KG-Relation-Completion-CBLiP.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "主数据治理",
+    "商品诊断"
+   ]
+  },
+  {
+   "name": "Skill-KGQA-Question-Answering",
+   "path": "paper2skills-vault/08-知识图谱/Skill-KGQA-Question-Answering.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "产品问答",
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-Knowledge-Graph-for-Skills-Management",
+   "path": "paper2skills-vault/08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "能力匹配",
+    "岗位能力分析"
+   ]
+  },
+  {
+   "name": "Skill-Multilingual-NER-Universal-v2",
+   "path": "paper2skills-vault/08-知识图谱/Skill-Multilingual-NER-Universal-v2.md",
+   "domain_dir": "08-知识图谱",
+   "l3": [
+    "本地化",
+    "主数据治理"
+   ]
+  },
+  {
+   "name": "Skill-Argos-Agentic-Anomaly-Detection",
+   "path": "paper2skills-vault/09-DataAgent-LLM/Skill-Argos-Agentic-Anomaly-Detection.md",
+   "domain_dir": "09-DataAgent-LLM",
+   "l3": [
+    "运行监测",
+    "溯源监测"
+   ]
+  },
+  {
+   "name": "Skill-Data-to-Dashboard-Multi-Agent-Visualization",
+   "path": "paper2skills-vault/09-DataAgent-LLM/Skill-Data-to-Dashboard-Multi-Agent-Visualization.md",
+   "domain_dir": "09-DataAgent-LLM",
+   "l3": [
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-DeepAnalyze-Autonomous-Data-Science-Agent",
+   "path": "paper2skills-vault/09-DataAgent-LLM/Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md",
+   "domain_dir": "09-DataAgent-LLM",
+   "l3": [
+    "业务工具实现",
+    "经营预测"
+   ]
+  },
+  {
+   "name": "Skill-Root-Cause-Analysis-Agent",
+   "path": "paper2skills-vault/09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md",
+   "domain_dir": "09-DataAgent-LLM",
+   "l3": [
+    "GMV归因分析",
+    "运行监测"
+   ]
+  },
+  {
+   "name": "Skill-SQL-Agent-Access-Control",
+   "path": "paper2skills-vault/09-DataAgent-LLM/Skill-SQL-Agent-Access-Control.md",
+   "domain_dir": "09-DataAgent-LLM",
+   "l3": null
+  },
+  {
+   "name": "Skill-SQL-Agent-Text-to-SQL",
+   "path": "paper2skills-vault/09-DataAgent-LLM/Skill-SQL-Agent-Text-to-SQL.md",
+   "domain_dir": "09-DataAgent-LLM",
+   "l3": [
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-Agent-Memory-Learning",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Agent-Memory-Learning.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "需求识别",
+    "生命周期触达"
+   ]
+  },
+  {
+   "name": "Skill-AutoGen-Multi-Agent-Conversation",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-AutoGen-Multi-Agent-Conversation.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "依赖协调"
+   ]
+  },
+  {
+   "name": "Skill-CAMEL-Role-Playing-Agents",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-CAMEL-Role-Playing-Agents.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "依赖协调",
+    "VOC编码"
+   ]
+  },
+  {
+   "name": "Skill-MAS-Orchestrator",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-MAS-Orchestrator.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "依赖协调",
+    "失败恢复"
+   ]
+  },
+  {
+   "name": "Skill-MetaGPT-SOP-Driven-Collaboration",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-MetaGPT-SOP-Driven-Collaboration.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "依赖协调",
+    "VOC编码"
+   ]
+  },
+  {
+   "name": "Skill-Multi-Agent-Debate",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Multi-Agent-Debate.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "组合取舍",
+    "依赖协调"
+   ]
+  },
+  {
+   "name": "Skill-ReAct-Reasoning-Acting",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-ReAct-Reasoning-Acting.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-Reflexion-Self-Improvement",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Reflexion-Self-Improvement.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "VOC编码"
+   ]
+  },
+  {
+   "name": "Skill-Self-Improving-Agent-Feedback-Loop",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Self-Improving-Agent-Feedback-Loop.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "技能版本"
+   ]
+  },
+  {
+   "name": "Skill-Skill-Registry-Dynamic-Loading",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Skill-Registry-Dynamic-Loading.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "技能版本"
+   ]
+  },
+  {
+   "name": "Skill-Subagent-Decomposition",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Subagent-Decomposition.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "依赖协调"
+   ]
+  },
+  {
+   "name": "Skill-Tree-of-Thoughts-Planning",
+   "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Tree-of-Thoughts-Planning.md",
+   "domain_dir": "00-知识库-Skill卡片",
+   "l3": [
+    "情景模拟",
+    "促销规划"
+   ]
+  },
+  {
+   "name": "Skill-Multi-Agent-Collaboration-Tax",
+   "path": "paper2skills-vault/10-MAS/Skill-Multi-Agent-Collaboration-Tax.md",
+   "domain_dir": "10-MAS",
+   "l3": null
+  },
+  {
+   "name": "Skill-Routed-Graph-Handoff",
+   "path": "paper2skills-vault/10-MAS/Skill-Routed-Graph-Handoff.md",
+   "domain_dir": "10-MAS",
+   "l3": null
+  },
+  {
+   "name": "Skill-Feature-Engineering",
+   "path": "paper2skills-vault/12-ML基础/Skill-Feature-Engineering.md",
+   "domain_dir": "12-ML基础",
+   "l3": [
+    "业务工具实现",
+    "数据管道",
+    "指标契约"
+   ]
+  },
+  {
+   "name": "Skill-Ad-Attribution-Modeling",
+   "path": "paper2skills-vault/13-广告分析/Skill-Ad-Attribution-Modeling.md",
+   "domain_dir": "13-广告分析",
+   "l3": [
+    "投放诊断",
+    "GMV归因分析"
+   ]
+  },
+  {
+   "name": "Skill-Cannibalization-Corrected-Attribution",
+   "path": "paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md",
+   "domain_dir": "13-广告分析",
+   "l3": null
+  },
+  {
+   "name": "Skill-Causal-Budget-Allocation",
+   "path": "paper2skills-vault/13-广告分析/Skill-Causal-Budget-Allocation.md",
+   "domain_dir": "13-广告分析",
+   "l3": null
+  },
+  {
+   "name": "Skill-Funnel-Causal-Coupon-Allocation",
+   "path": "paper2skills-vault/13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md",
+   "domain_dir": "13-广告分析",
+   "l3": null
+  },
+  {
+   "name": "Skill-ROAS-Budget-Optimization",
+   "path": "paper2skills-vault/13-广告分析/Skill-ROAS-Budget-Optimization.md",
+   "domain_dir": "13-广告分析",
+   "l3": [
+    "预算分配",
+    "投放诊断"
+   ]
+  },
+  {
+   "name": "Skill-Cohort-Retention-Analysis",
+   "path": "paper2skills-vault/14-用户分析/Skill-Cohort-Retention-Analysis.md",
+   "domain_dir": "14-用户分析",
+   "l3": [
+    "生命周期触达",
+    "分群"
+   ]
+  },
+  {
+   "name": "Skill-Incrementality-Measurement",
+   "path": "paper2skills-vault/14-用户分析/Skill-Incrementality-Measurement.md",
+   "domain_dir": "14-用户分析",
+   "l3": null
+  },
+  {
+   "name": "Skill-User-Funnel-Analysis",
+   "path": "paper2skills-vault/14-用户分析/Skill-User-Funnel-Analysis.md",
+   "domain_dir": "14-用户分析",
+   "l3": [
+    "漏斗诊断",
+    "转化优化"
+   ]
+  },
+  {
+   "name": "Skill-Marketing-Mix-Modeling",
+   "path": "paper2skills-vault/15-营销投放分析/Skill-Marketing-Mix-Modeling.md",
+   "domain_dir": "15-营销投放分析",
+   "l3": [
+    "预算分配",
+    "渠道经营分析"
+   ]
+  },
+  {
+   "name": "Skill-Promotion-Effectiveness",
+   "path": "paper2skills-vault/15-营销投放分析/Skill-Promotion-Effectiveness.md",
+   "domain_dir": "15-营销投放分析",
+   "l3": [
+    "促销规划",
+    "价格敏感性",
+    "经济性分析"
+   ]
+  },
+  {
+   "name": "Skill-Active-Context-Pruning",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Active-Context-Pruning.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "业务工具实现",
+    "容量管理"
+   ]
+  },
+  {
+   "name": "Skill-Agent-Stage-Evaluation",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Agent-Stage-Evaluation.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "运行监测",
+    "算法评估设计"
+   ]
+  },
+  {
+   "name": "Skill-Agentic-Memory-Management",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Agentic-Memory-Management.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "业务工具实现",
+    "知识溯源"
+   ]
+  },
+  {
+   "name": "Skill-Auto-Skill-Synthesis",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Auto-Skill-Synthesis.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "技能版本",
+    "Playbook评估"
+   ]
+  },
+  {
+   "name": "Skill-Co-Evolutionary-Skill-Verification",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Co-Evolutionary-Skill-Verification.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "技能版本",
+    "Playbook评估"
+   ]
+  },
+  {
+   "name": "Skill-Context-Compression",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Context-Compression.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "业务工具实现",
+    "容量管理"
+   ]
+  },
+  {
+   "name": "Skill-Long-Term-Preference-Memory",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Long-Term-Preference-Memory.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "选购指导",
+    "生命周期触达"
+   ]
+  },
+  {
+   "name": "Skill-MCP-A2A-Protocol-Stack",
+   "path": "paper2skills-vault/16-智能体工程/Skill-MCP-A2A-Protocol-Stack.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "接口契约",
+    "集成验证"
+   ]
+  },
+  {
+   "name": "Skill-MCP-Tool-Use-Benchmark",
+   "path": "paper2skills-vault/16-智能体工程/Skill-MCP-Tool-Use-Benchmark.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "运行监测",
+    "接口契约"
+   ]
+  },
+  {
+   "name": "Skill-Memory-as-Action",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Memory-as-Action.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "业务工具实现",
+    "知识溯源"
+   ]
+  },
+  {
+   "name": "Skill-Open-Source-Tool-Use-Model",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Open-Source-Tool-Use-Model.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "容量管理",
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-Orchestration-Trace-RL",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Orchestration-Trace-RL.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "依赖协调"
+   ]
+  },
+  {
+   "name": "Skill-SLM-Tool-Calling-Optimization",
+   "path": "paper2skills-vault/16-智能体工程/Skill-SLM-Tool-Calling-Optimization.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "容量管理",
+    "业务工具实现"
+   ]
+  },
+  {
+   "name": "Skill-Skill-Lifecycle-Design",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Skill-Lifecycle-Design.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "技能版本",
+    "Playbook评估"
+   ]
+  },
+  {
+   "name": "Skill-Stateful-Skill-Runtime",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Stateful-Skill-Runtime.md",
+   "domain_dir": "16-智能体工程",
+   "l3": null
+  },
+  {
+   "name": "Skill-Task-Adaptive-Topology",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Task-Adaptive-Topology.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "依赖协调"
+   ]
+  },
+  {
+   "name": "Skill-Tool-Description-Audit",
+   "path": "paper2skills-vault/16-智能体工程/Skill-Tool-Description-Audit.md",
+   "domain_dir": "16-智能体工程",
+   "l3": [
+    "接口契约",
+    "业务工具实现"
+   ]
+  }
+ ],
+ "counts": {
+  "planes": 4,
+  "domains": 8,
+  "roles": 50,
+  "l3": 151,
+  "l3_unique_names": 151,
+  "l3_serviceability": {
+   "B": 66,
+   "A": 73,
+   "C": 12
+  },
+  "scenarios": 20,
+  "cells": 64,
+  "cells_by_kind": {
+   "D": 24,
+   "R": 16,
+   "M": 24
+  },
+  "role_scenario_pairs_direct": 127,
+  "role_scenario_pairs_closure": 641,
+  "cards": 146,
+  "cards_with_l3": 93,
+  "solutions": 0,
+  "role_wiring_known": 50
+ },
+ "join_traps": [
+  {
+   "id": "JT-1",
+   "trap": "plane_id 只存在于 organization-graph.json",
+   "why": "role-catalog.json 只带 group（=责任域）。只读 role-catalog 的实现会**静默丢掉平面维度**，而四平面正是本项目治理的第一视角。",
+   "handling": "平面一律从 organization-graph 取；本图另留 group_field 以便对账。",
+   "evidence": "① group vs organization-graph.domain 不一致 0 条（应为 0：两者同义）；② 面×域非对角：3/8 个域跨多个面 —— DOM-01 域跨 2 个面 ['PLN-CTL', 'PLN-MGT']；DOM-07 域跨 3 个面 ['PLN-CTL', 'PLN-MGT', 'PLN-OPS']；DOM-08 域跨 2 个面 ['PLN-CTL', 'PLN-PLT']",
+   "group_vs_domain_mismatch": 0,
+   "plane_domain_offdiagonal": "3/8 个域跨多个面 —— DOM-01 域跨 2 个面 ['PLN-CTL', 'PLN-MGT']；DOM-07 域跨 3 个面 ['PLN-CTL', 'PLN-MGT', 'PLN-OPS']；DOM-08 域跨 2 个面 ['PLN-CTL', 'PLN-PLT']"
+  },
+  {
+   "id": "JT-2",
+   "trap": "scenarios 直连 127 条 vs 传递闭包 641 条（差 5.05 倍）",
+   "why": "两者**语义不同不是错误**：直连声明 vs「该岗位的流程覆盖到哪些场景」。混用会让某岗位的覆盖场景数虚高数倍。",
+   "handling": "两个字段名分开、都给：roles[].scenarios_direct 与 scenarios[].roles_closure。",
+   "evidence": "counts.role_scenario_pairs_direct=127 / _closure=641",
+   "⚠️_订正": "调查报告 `_survey_org_model.md` §H 与方案 §3.1 记的是「118 vs 701（5.9 倍）」，**该数字不成立**。2026-09-13 由本脚本实测订正：直连 127（role-catalog 逐岗相加，去重后同值）、闭包 641（三种独立算法全得 641：按 flow.scenario_ids 并集 / 按 flow_scenario_bindings / 按 SCN.eligible_flow_ids ∩ role.flows）。**结论方向不变**（SCN 仍是带重数的覆盖层），错的是量值。"
+  },
+  {
+   "id": "JT-3",
+   "trap": "AGT-012 ↔ SCN-020 的孤立绑定",
+   "why": "SCN-020 的 eligible_flow_ids 只有 FLOW-06/08，而 AGT-012 的 flows=FLOW-02/07，两者完全不相交 —— 该岗位-场景对在 FLOW×SCN 兼容表里无路径可解释。",
+   "handling": "记进本字段，不悄悄吞掉；按 SCN 归并论文卡时**不得**据此把该岗拉进数据/AI 运行场景。",
+   "evidence": "全量扫描 50 岗位 × 直连场景对，仅此 1 条无路径",
+   "orphans": [
+    {
+     "role_id": "AGT-012",
+     "scenario_id": "SCN-020",
+     "role_flows": [
+      "FLOW-02",
+      "FLOW-07"
+     ]
+    }
+   ]
+  }
+ ],
+ "open_items": [
+  {
+   "id": "O-SOL",
+   "what": "方案层为空",
+   "owner": "S1",
+   "why": "64 格的 solution_refs 全为空数组；S1 交付 8 方案域 + 139 契约后回填"
+  },
+  {
+   "id": "O-CARD",
+   "what": "53 张精选卡无 L3 归属",
+   "owner": "F5",
+   "why": "146 张里 93 张能 join 到产品侧分类，另 53 张（含 PHASE3/4 新卡）待 F5"
+  },
+  {
+   "id": "O-WIRE",
+   "what": "岗位接线取自运行时 preset",
+   "owner": "—",
+   "why": "roles[].wired_skills 读 `~/.dsh/.agent-presets`；取不到时为 null，**「问不到」不等于「没接线」**"
+  },
+  {
+   "id": "O-A",
+   "what": "A/B/C 名单随阈值变化",
+   "owner": "T-C",
+   "why": "A 类阈值为「算法可作主引擎」；A 名单会随阈值变，B 的 66 条不变。下游把 A 视为「优先匹配」、B 视为「需补外部证据后匹配」"
+  }
+ ]
+}

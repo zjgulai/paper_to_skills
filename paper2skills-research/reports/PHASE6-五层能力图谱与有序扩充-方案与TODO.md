@@ -54,7 +54,14 @@ supersedes: 本文件取代 2026-09-13 早先的 draft_pending_decisions 版本
 | L4 解决方案 | `playbook/solutions/*.html` | 19 个方案 / 194 卡位 | ❌ 只有 HTML | 不绑定任何 AGT / SCN / L3 |
 | L5 算法模型 | vault 146 + playbook 1338 | 146 / 1338 | 部分 | 53 张精选卡无归属；98/151 责任名无精选卡 |
 
-**两条 join 陷阱**：① `plane_id` 只在 `organization-graph.json/roles[]`（两视角刻意正交：AGT-050 域=数据与AI运行/平面=独立控制）；② **岗位↔场景两口径差 5.9 倍**（直连 `role.scenarios` 118 条 vs flows→scenario_ids 闭包 **701** 条）。
+**两条 join 陷阱**：① `plane_id` 只在 `organization-graph.json/roles[]`（两视角刻意正交：AGT-050 域=数据与AI运行/平面=独立控制）；② **岗位↔场景两口径差 5.05 倍**（直连 `role.scenarios` **127** 条 vs flows→scenario_ids 闭包 **641** 条）。
+
+> ⚠️ **2026-09-13 数字订正（F2 实测）**：本节原写「118 / 701（5.9 倍）」，**该数字不成立**。
+> 由 `build_capability_graph.py` 实测：直连 **127**（`role-catalog.json` 逐岗相加，去重后同值）、
+> 闭包 **641**（**三种独立算法全得 641**：按 `flow.scenario_ids` 并集 / 按 `flow_scenario_bindings` /
+> 按 `SCN.eligible_flow_ids ∩ role.flows`）。**结论方向不变**（SCN 仍是带重数的覆盖层，
+> 「降为标签」的决定不受影响），错的是量值。教训同「基线数字可能是过期照片」：
+> 方案文档里的数字也要能被脚本复算，否则它会带着错误一路传下去。
 
 **已校验一致**：8 FLOW 贡献岗位（19/26/13/20/14/12/19/17=140）、51 条 FLOW×SCN、64 条 FLOW×STG、`role.flows` vs `role_contributions`（50/50）、`domain` vs `group`（50/50）。
 **真不一致仅 1 条**：AGT-012 声明 `scenarios` 含 SCN-020，但其 `flows`=FLOW-02/07，而 SCN-020 的 `eligible_flow_ids` 只有 FLOW-06/08。
@@ -70,7 +77,7 @@ supersedes: 本文件取代 2026-09-13 早先的 draft_pending_decisions 版本
 | 50 岗位 / 8 域 | **划分** | 4 面 5+35+5+5=50；`domain` vs `group` 50/50 |
 | **151 细分业务** | **划分**（缺口账级） | 151 条全局唯一、每条唯一属一岗 |
 | **8 FLOW × 8 STG = 64** | **划分** | `flow_stage_bindings = 64`，已机读 |
-| 20 SCN | **覆盖，多重数** | 118 vs 701；**降为标签** |
+| 20 SCN | **覆盖，多重数** | **127 vs 641**（2026-09-13 F2 实测订正，原写 118/701）；**降为标签** |
 | N 个解决方案 | **覆盖** | 一个方案跨多格 |
 | N 张卡 | **覆盖** | 一卡可挂 1–3 个 L3；1338 张里 **269 张跨面** |
 
