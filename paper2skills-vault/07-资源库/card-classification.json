@@ -6,7 +6,7 @@
   "inbox": "paper2skills-research/data/card-classification-inbox.json",
   "drift_gate": "source=inherited 的条目逐条断言与产品侧相等；要改必须在 inbox 里写 reclassify:true + 理由（J4），静默分叉一律报红",
   "tech_domain_basis": "paper2skills-vault/<域>/… 的第一段目录名（facet，不参与主分类）",
-  "generated": "2026-09-13T21:05:47+08:00",
+  "generated": "2026-09-13T21:21:48+08:00",
   "generator": "paper2skills-research/scripts/build_card_classification.py",
   "source_refs": {
    "capability_graph": "paper2skills-vault/07-资源库/capability-graph.json",
@@ -20,7 +20,8 @@
  "unclassified": 0,
  "by_source": {
   "inherited": 93,
-  "new": 53
+  "new": 1,
+  "pushed": 52
  },
  "by_confidence": {
   "high@f5-review": 23,
@@ -2338,6 +2339,60 @@
  },
  "misplacement_evidence_line_drift": [],
  "reclassified": [],
+ "pushed_to_product": [
+  "Skill-ABSA-BERT-MoE",
+  "Skill-AGRS-属性引导评论摘要",
+  "Skill-ALCHEmist-Weak-Supervision",
+  "Skill-AdaNEN-Streaming-Classifier",
+  "Skill-Agentic-Catalog-Enrichment",
+  "Skill-Aspect-Based-Sentiment-Analysis",
+  "Skill-AutoTag-SelfEvolving-Label-System",
+  "Skill-BERT-MoE高效方面情感分析",
+  "Skill-Behavioral-Intent-Tree-Parsing",
+  "Skill-CSK-Customer-Sentiment-Clustering",
+  "Skill-Cannibalization-Corrected-Attribution",
+  "Skill-Causal-Budget-Allocation",
+  "Skill-CrossLingual-Semantic-Alignment",
+  "Skill-CrossLingual-Sentiment-Transfer",
+  "Skill-Decision-Conditioned-Forecasting",
+  "Skill-Dialogue-to-Action-Graph",
+  "Skill-Funnel-Causal-Coupon-Allocation",
+  "Skill-GPLR-人群标签生成",
+  "Skill-Incrementality-Measurement",
+  "Skill-LLM-Personalized-Marketing-Copy-Generation",
+  "Skill-Live-Catalog-Conversational-Rec",
+  "Skill-MAA-行动建议生成",
+  "Skill-MAS-Consumer-Behavior-Simulation",
+  "Skill-MAS-MARL-Dynamic-Pricing",
+  "Skill-MAS-Multi-Objective-Recommendation",
+  "Skill-MAS-VOC-Data-Analyst",
+  "Skill-Multi-Agent-Collaboration-Tax",
+  "Skill-Multi-Warehouse-Allocation-LLM",
+  "Skill-NPS-Driver-Analysis",
+  "Skill-OfflineRL-触达时机优化",
+  "Skill-OpenWorld-Class-Incremental-Learning",
+  "Skill-PERSONABOT-RAG用户画像生成",
+  "Skill-Persona-Based-AB-Simulation",
+  "Skill-Product-Attribute-Graph-Parsing",
+  "Skill-REVISION-无点击意图挖掘",
+  "Skill-Review-Quality-Scoring",
+  "Skill-Routed-Graph-Handoff",
+  "Skill-SQL-Agent-Access-Control",
+  "Skill-Seasonal-Aligned-Churn-Label",
+  "Skill-Self-Improving-LLM-Agent-Pipeline",
+  "Skill-Shipping-Cost-Estimation",
+  "Skill-SoMeR-多视角用户表示",
+  "Skill-Spiral-of-Silence-沉默少数派挖掘",
+  "Skill-StaR-观点语句排序",
+  "Skill-Stateful-Skill-Runtime",
+  "Skill-Supply-Network-Simulation",
+  "Skill-TJAP-跨市场品类组合定价",
+  "Skill-TSCAN-上下文感知挽回策略",
+  "Skill-TaxoAdapt-Taxonomy-Evolution",
+  "Skill-TopicImpact-观点单元画像抽取",
+  "Skill-VOC-Semantic-Blueprint",
+  "Skill-iReFeed-需求优先级排序"
+ ],
  "items": [
   {
    "id": "Skill-AB-Experimental-Design",
@@ -2378,9 +2433,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "以方面级情感分析把评论拆成方面-情感对，服务用户反馈的结构化编码，供产品复盘使用。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2392,9 +2448,10 @@
     "体验分析",
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "产出属性级评论摘要与负面占比预警，服务产品体验问题归因与季度复盘；属性提取即VOC编码。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2405,9 +2462,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "让LLM生成标注程序批量给评论打标签，业务动作就是把用户反馈编码成标签，即VOC编码。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2463,9 +2521,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "流式分类器持续给新增评论打标签并在反馈模式漂移时告警，服务VOC编码的持续维护。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2507,9 +2566,10 @@
     "Listing优化",
     "主数据治理"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "把SKU适用月龄材质认证等属性补齐写回商品目录，服务Listing优化；带证据的写库闸门属主数据治理。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2551,9 +2611,10 @@
     "VOC编码",
     "体验分析"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "对评论做方面级情感编码，输出各维度正负占比与负面问题清单，供体验改进与选品参考。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2593,9 +2654,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "多平台评价自动打L1-L4层级标签并支持标签自进化，业务动作就是VOC编码。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2606,9 +2668,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "用MoE版BERT做多语言评论的方面情感分类，服务VOC编码的多语种与低成本推理需求。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2635,9 +2698,10 @@
     "转化优化",
     "生命周期触达"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "由独立站行为序列识别购买意图阶段并据此推送差异化内容促转化，弃购用户用于24小时挽回触达。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2663,9 +2727,10 @@
    "l3": [
     "分群"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "用评论情感特征聚类出满意型、价格敏感型、服务抱怨型等用户分群，直接对应CRM分群责任。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2677,9 +2742,10 @@
     "增量分析",
     "预算分配"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "用增量实验标定渠道真实增量、校正品牌词收割造成的归因虚高，产出用于站内站外预算配比。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2691,9 +2757,10 @@
     "预算分配",
     "增量分析"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "卡为月度广告预算在站内广告位与站外种草之间分配，服务投放预算分配；分配依据是因果增量而非响应倾向。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2794,9 +2861,10 @@
     "术语治理",
     "主数据治理"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "卡把同一商品的多语言描述对齐成统一语义图，服务跨市场术语口径统一与商品主数据理解。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2807,9 +2875,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "卡对多语言市场评论做方面级情感分析，产出各市场可归类可对比的VOC编码结果。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2880,9 +2949,10 @@
     "补货模拟",
     "需求预测"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "卡按候选促销排期仿真未来销量轨迹，直接服务大促前FBA备货量测算与补货模拟。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -2983,9 +3053,10 @@
     "售后处理",
     "客诉分诊"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "卡从历史工单挖掘标准处理路径并预警升级风险，服务售后处理规范化与客诉分诊。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3043,9 +3114,10 @@
     "促销规划",
     "增量分析"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "卡为券档位与Best Deal锁档及补贴预算切分提供增量依据，服务促销规划。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3056,9 +3128,10 @@
    "l3": [
     "分群"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "卡把用户嵌入转为可执行人群标签并生成精准人群包，服务营销分群。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3130,9 +3203,10 @@
     "增量分析",
     "实验设计"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "卡用受众级随机化与渠道完整口径测真实增量，服务增量分析与增量实验设计。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3251,9 +3325,10 @@
     "内容策划",
     "Listing优化"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "卡按用户画像与市场生成差异化详情页与邮件文案，服务内容策划与Listing优化。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3280,9 +3355,10 @@
     "数据管道",
     "主数据治理"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "卡用三重标识做商品目录增量对账与索引同步，服务目录数据管道与商品主数据治理。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3309,9 +3385,10 @@
     "体验分析",
     "客诉聚类"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "卡把评论聚成问题主题并生成可排序的改进建议，服务体验分析与客诉聚类。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3323,9 +3400,10 @@
     "促销规划",
     "情景模拟"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "虚拟消费者仿真用于黑五折扣方案预演，拆解增量与转移效应，直接服务促销方案规划；同时属经营情景模拟。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3337,9 +3415,10 @@
     "价格敏感性",
     "促销规划"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "以价格弹性估计驱动美英德分市场动态定价，直接服务价格敏感性与黑五促销期的定价博弈。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3351,9 +3430,10 @@
     "转化优化",
     "组合设计"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "首页推荐按转化与利润多目标重排，服务站点转化优化；同时改变高利润商品与品类的曝光组合。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3380,9 +3460,10 @@
     "VOC编码",
     "体验分析"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "多智能体对35万条评论做主题编码与情感共现，产出痛点、机会与趋势洞察，服务VOC编码与体验分析。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3512,9 +3593,10 @@
     "能力匹配",
     "依赖协调"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "回答选品与补货流程该不该拆成多Agent并量化协调损耗，服务任务与能力组合的匹配判断及多角色依赖协调。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3571,9 +3653,10 @@
     "调拨清货建议",
     "补货模拟"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "把已定的补货批量分到FBA与海外仓，输出逐仓TID与平衡率，属仓间调拨建议；批量与总量由上游定，故兼补货模拟。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3600,9 +3683,10 @@
     "体验分析",
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "从评论抽取属性情感并归因NPS驱动因素，输出改进优先级，服务体验洞察；方面抽取与打分属VOC编码。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3643,9 +3727,10 @@
    "l3": [
     "生命周期触达"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "按用户状态决定推送时机与人群频次上限，避免打扰并提升留存，属CRM生命周期触达；分群来自上游GPLR不做归属。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3671,9 +3756,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "标签体系扩展后增量更新VOC分类器，避免新标签漏分错分且不遗忘旧标签，服务VOC编码能力本身。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3699,9 +3785,10 @@
     "需求分群",
     "分群"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "以真实评论检索生成个体与群体画像，按需求、痛点与使用场景聚合用户，服务需求分群，并支撑客户分群。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3713,9 +3800,10 @@
     "实验设计",
     "内容实验"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "在花掉流量前用真实行为人格agent对详情页候选做方向粗筛与排序，服务实验候选筛选，被筛对象为内容变体。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3741,9 +3829,10 @@
     "竞品研究",
     "商品诊断"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "案例A用属性图谱产出竞品属性差异矩阵支撑定位决策，主归属竞品研究；案例B评自家商品属性完整度找缺口。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3786,9 +3875,10 @@
     "搜索意图分析",
     "需求分群"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "从无点击查询聚类出隐含意图并映射响应策略，即搜索意图分析；意图类别可作需求分群输入。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3857,9 +3947,10 @@
    "l3": [
     "数据质量"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "对采集评论做质量评分与虚假检测，过滤低质评论后才进下游分析，属数据质量把关。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3886,9 +3977,10 @@
     "依赖协调",
     "接口契约"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "把多Agent委派写成带前置条件的类型化依赖图以消掉错序与丢约束，即依赖协调；交付物是交接契约。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3915,9 +4007,10 @@
     "授权审查",
     "访问控制"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "用越权率与过度拒答率双指标审取数Agent是否守住角色×表×列×操作权限，即授权审查。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3957,9 +4050,10 @@
     "分群",
     "生命周期触达"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "修正被季节性污染的衰退标签后产出复购用户衰退预警清单，供客服运营按人群干预，主属分群。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -3985,9 +4079,10 @@
     "内容实验",
     "竞品研究"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "场景一用CTR反馈迭代五十组商品文案并沉淀优劣对比，属内容实验；场景二自动萃取竞品情报。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4043,9 +4138,10 @@
     "物流方案",
     "经济性分析"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "按路由加权与费率卡估算分区加权单均运费，支撑尾程物流方案与包邮门槛、价格下限等经济性判断。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4086,9 +4182,10 @@
     "分群",
     "需求分群"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "四视角融合出统一用户嵌入并聚类细分人群，主属分群；可解释维度即需求类型，可作需求分群。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4100,9 +4197,10 @@
     "体验分析",
     "需求分群"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "从评论观点聚类中挖出被沉默的少数派意见及占比，用于发现体验隐患与被掩盖的需求。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4113,9 +4211,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "从评论提取原子观点语句、语义去重并排序成规范语句集，即把原始用户声音编码为结构化观点。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4127,9 +4226,10 @@
     "容量管理",
     "失败恢复"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "把长流程 agent 每步 prompt 锁成常数、累计 token 不二次增长，服务容量与预算控制；坏补丁回滚重试。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4155,9 +4255,10 @@
     "补货模拟",
     "物流方案"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "多级供应网络离散事件仿真，在再订货点与目标水位下算满足率、丢单与报废，服务备货档位决策；并对比双仓互备等网络配置。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4170,9 +4271,10 @@
     "价格敏感性",
     "市场进入"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "为新市场联合推荐上架产品组合与最优定价区间，实质是商品组合设计与价格敏感性估计，并支撑新市场新平台进入决策。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4183,9 +4285,10 @@
    "l3": [
     "生命周期触达"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "为流失用户估计各挽回动作的增量效果并选出最优安抚或触达策略，直接对应留存复购里的生命周期触达决策。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4210,9 +4313,10 @@
    "l3": [
     "VOC编码"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "让消费者反馈标签体系随新品类与季节性自动扩宽加深，并逐层输出每条评论的标签路径，正是 VOC 编码体系的维护。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4299,9 +4403,10 @@
     "VOC编码",
     "体验分析"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "把整条评论拆成主题、片段、情感三元的观点单元，服务 VOC 细粒度编码；并据此定位体验痛点与退货隐患。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4419,9 +4524,10 @@
     "VOC编码",
     "竞品研究"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "high",
    "note": "把评论解析为方面、观点、情感、原因、场景的结构化蓝图，正是 VOC 编码的结构化产出；同一结构可用于竞品反馈对比。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {
@@ -4433,9 +4539,10 @@
     "产品需求定义",
     "产品范围管理"
    ],
-   "source": "new",
+   "source": "pushed",
    "confidence": "medium",
    "note": "把用户反馈聚成需求簇并做三目标优化，输出下一版本该做哪些功能需求，服务需求定义与发布范围取舍。",
+   "pushed_to_product": "2026-09-13 S5 换底：由本文件派生写入产品侧 classification.json（slug None）；**产品侧是派生物，不是独立来源**",
    "confidence_source": "f5-review"
   },
   {

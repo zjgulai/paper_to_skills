@@ -196,10 +196,18 @@ def build(graph_path: Path = GRAPH,
 
         if got is not None:
             rec = bool(got.get("reclassify"))
+            pushed = (got.get("pushed_to_product") or "").strip()
             item = dict(base, l3=list(got.get("l3") or []),
-                        source="reclassified" if rec else "new",
+                        source="reclassified" if rec else ("pushed" if pushed else "new"),
                         confidence=got.get("confidence", ""),
                         note=got.get("note", ""))
+            if pushed:
+                item["pushed_to_product"] = pushed
+            if rec and pushed:
+                # ⚠️ 这两句**不能同时为真**：`reclassify` = 「我改了产品侧已有落点」，
+                # `pushed_to_product` = 「产品侧那条是从我这里派生的」。互斥必须在这里判 ——
+                # 放进下面的 `elif pushed:` 分支里等于永远不执行（那条路只在 `not rec` 时到）。
+                errs.append(f"J4 {pid}：pushed_to_product 与 reclassify 互斥（两句话不能同时为真）")
             if rec:
                 item["inherited_l3"] = list(inherited)
                 if inherited is None:
@@ -208,9 +216,23 @@ def build(graph_path: Path = GRAPH,
                     errs.append(f"J4 {pid}：声明 reclassify 却与产品侧取值相同（空声明）")
                 if not (item["note"] or "").strip():
                     errs.append(f"J4 {pid}：reclassify 必须写理由")
+            elif pushed:
+                # ⚠️ 为什么必须有第三态：`inherited` 说的是「精选线继承自产品侧」，
+                # 而换底之后**方向反了** —— 产品侧那条是从这里派生的。若把它硬记成
+                # `inherited`，登记的就是一句反过来的话；若记成 `new`，零漂移门禁会把它
+                # 当成静默分叉。两种都是**用错的词记对的事**。
+                # ⚠️ 而且它不是「豁免」：`pushed` 的判据比 `new` 更严 ——
+                # 必须**逐字等于**产品侧现值，且产品侧必须真的有这条。声明得越强，查得越紧。
+                if inherited is None:
+                    errs.append(f"J4 {pid}：声明 pushed_to_product 但产品侧**没有**这条"
+                                f"（推入没落地，或落地在别的 slug 下）")
+                elif list(inherited) != list(item["l3"]):
+                    errs.append(f"J4 {pid}：**真分叉** —— 声明产品侧由本文件派生，"
+                                f"但两边取值不同：本文件 {item['l3']} ≠ 产品侧 {inherited}")
             elif inherited is not None:
                 errs.append(f"J4 {pid}：产品侧已有落点 {inherited}，inbox 却按 new 提交 "
-                            f"—— 这正是不许的静默分叉；要改就写 reclassify: true + 理由")
+                            f"—— 这正是不许的静默分叉；要改就写 reclassify: true + 理由，"
+                            f"或（若产品侧那条本来就是从这里派生的）写 pushed_to_product: <理由>")
             item["confidence_source"] = "f5-review"
             if item["confidence"] not in CONFIDENCE:
                 errs.append(f"J2 {pid}：confidence「{item['confidence']}」不在 {CONFIDENCE}")
@@ -247,7 +269,7 @@ def build(graph_path: Path = GRAPH,
         if i["source"] != "unclassified" and not i.get("note"):
             errs.append(f"J3 {i['id']}：空 l3 必须带 note 说明理由（否则就是静默漏分）")
 
-    # 零漂移：inherited 必须与产品侧逐字相等（reclassified 的原值由 inbox 分支已断言）
+    # 零漂移：inherited 必须与产品侧逐字相等（reclassified / pushed 的原值由 inbox 分支已断言）
     for i in items:
         cur = product[i["id"]]["l3"] if i["id"] in product else None
         if i["source"] == "inherited":
@@ -455,6 +477,9 @@ def build(graph_path: Path = GRAPH,
         # 静默它，就等于把「真的内容变了」与「行号漂移」合并成同一个读数。
         "misplacement_evidence_line_drift": line_drift,
         "reclassified": sorted(i["id"] for i in items if i["source"] == "reclassified"),
+        # 第三态：产品侧那一份是**本文件的派生物**（换底推过去的）。
+        # 它必须与 `reclassified` 一样是一等输出 —— 否则「方向反了」这件事只活在理由文本里。
+        "pushed_to_product": sorted(i["id"] for i in items if i["source"] == "pushed"),
         "items": items,
     }
     return doc, errs
@@ -645,6 +670,46 @@ def selftest() -> int:
          graph, mutate_inbox(mono(reclassify=True, l3=list(product[MONO]["l3"]))), "空声明")
     case("J4 reclassify 无理由",
          graph, mutate_inbox(mono(reclassify=True, l3=["质量分析"], note="")), "必须写理由")
+
+    # ---- 第三态 pushed：产品侧那一份是**本文件的派生物**（S5 换底把它推过去的）----
+    # ⚠️ 这个状态是**人的决定**，不是脚本能代做的（S5 正路重跑生成器时它自己 exit 1 拒绝写盘）。
+    # 所以它必须配齐三条用例：两条打红（没落地 / 真分叉）+ 一条**反向控制**（正路必须不报红）。
+    GRAPH_ONLY = "Skill-大规模消费者评论方面情感分析"   # 图上有、产品侧没有（S5 实测唯一一张）
+
+    def pushed(entry_id, **kw):
+        def m(d):
+            for it in d["items"]:
+                if it["id"] == entry_id:
+                    it.pop("reclassify", None)
+                    it.update(kw)
+        return m
+
+    case("J4 pushed：声明已推入产品侧，但那边**没有**这条（推入没落地）",
+         graph, mutate_inbox(pushed(GRAPH_ONLY, l3=["VOC编码"], confidence="high",
+                                    note="selftest", pushed_to_product="selftest 声称已推入")),
+         "产品侧**没有**这条")
+    case("J4 pushed：声明派生而两边取值不同 ⇒ **真分叉**（这条才是它存在的意义）",
+         graph, mutate_inbox(pushed(MONO, l3=["质量分析"], confidence="medium",
+                                    note="selftest", pushed_to_product="selftest 声称已推入")),
+         "真分叉")
+    case("J4 pushed 与 reclassify 互斥（两句话不能同时为真）",
+         graph, mutate_inbox(pushed(MONO, l3=["价格敏感性"], confidence="medium",
+                                    note="selftest", reclassify=True,
+                                    pushed_to_product="selftest 声称已推入")),
+         "互斥")
+    push_ok = mutate_inbox(pushed(MONO, l3=list(product[MONO]["l3"]), confidence="medium",
+                                  note="selftest", pushed_to_product="selftest 声称已推入"))
+    _, push_errs = run(graph, push_ok)
+    push_hit = [e for e in push_errs if "pushed" in e or "真分叉" in e or "互斥" in e]
+    good = not push_hit
+    print(f"  {'✅' if good else '❌'} J4 pushed 正路（逐字相等）⇒ **不得报红**（反向控制）"
+          + ("" if good else f"  ← 实得 {push_hit[:2]}"))
+    ok, bad = (ok + 1, bad) if good else (ok, bad + 1)
+    pushed_out = [i["id"] for i in run(graph, push_ok)[0]["items"] if i["source"] == "pushed"]
+    good = pushed_out == [MONO] and run(graph, push_ok)[0]["pushed_to_product"] == [MONO]
+    print(f"  {'✅' if good else '❌'} J4 pushed 必须落成**一等输出**（source + 顶层名单）"
+          + ("" if good else f"  ← 实得 {pushed_out}"))
+    ok, bad = (ok + 1, bad) if good else (ok, bad + 1)
     case("J1 inbox 重复 id 必须报错",
          graph, mutate_inbox(lambda d: d["items"].append(dict(
              [i for i in d["items"] if i["id"] == MONO][0]))), "重复 id")
@@ -682,12 +747,42 @@ def selftest() -> int:
                                  for c in d["cards"] if "07-NLP-VOC" in c["path"]]),
          clean_inbox, "内层目录")
 
+    # ---- 端到端：`--check` 必须能对「产物过期」判红 ------------------------------
+    # ⚠️ 台账 #25：判据写在 `main()` 里而 selftest 只测库函数 ⇒ 把守卫改成 `if False`
+    # 照样全绿。所以这条**跑真 CLI + 真夹具**，不是 import 库函数。
+    with tempfile.TemporaryDirectory() as td:
+        real = load_json(OUT)
+        stale = json.loads(json.dumps(real))
+        stale["by_source"] = {"inherited": 93, "new": 53}
+        for it in stale["items"]:
+            if it.get("source") == "pushed":
+                it["source"] = "new"
+        sp = Path(td) / "stale.json"
+        sp.write_text(json.dumps(stale, ensure_ascii=False), encoding="utf-8")
+        here = Path(__file__).resolve()
+
+        def cli(out_path):
+            return subprocess.run(
+                [sys.executable, str(here), "--check", "--out", str(out_path)],
+                capture_output=True, text=True, cwd=str(REPO))
+
+        r = cli(sp)
+        good = r.returncode == 1 and "过期" in r.stdout
+        print(f"  {'✅' if good else '❌'} 端到端：产物过期 ⇒ exit 1（首版这里恒绿）"
+              + ("" if good else f"  ← exit={r.returncode}"))
+        ok, bad = (ok + 1, bad) if good else (ok, bad + 1)
+        r = cli(OUT)
+        good = r.returncode == 0 and "一致" in r.stdout
+        print(f"  {'✅' if good else '❌'} 端到端反向控制：盘上产物是最新的 ⇒ exit 0"
+              + ("" if good else f"  ← exit={r.returncode} {r.stdout[-160:]}"))
+        ok, bad = (ok + 1, bad) if good else (ok, bad + 1)
+
     print(f"\nselftest：{ok} 抓 / {bad} 漏")
     return 0 if bad == 0 else 1
 
 
 def mutate() -> int:
-    """变异测试：把 #60 的修复**改回旧行为/改成恒真**，看 selftest 抓不抓得住。
+    """变异测试：把判据（含 #60 的锚点修复、第三态 pushed）**改回旧行为/改成恒真**，看 selftest 抓不抓得住。
 
     纪律来源：本仓库已抓到 4 次「断言恒真 = 没断言」。
     一条用例有没有劲，只能靠**把被测判据改坏**来回答 —— 而不是靠它现在打印 ✅。
@@ -708,6 +803,29 @@ def mutate() -> int:
          "                        hits = [ln]\n"
          "                        _unused = lambda: [i + 1 for i, s in enumerate(lines)\n",
          "J9 依据行锚点：**内容真被改写**"),
+        # ---- 第三态 pushed（2026-09-13 新增）----
+        # ⚠️ 第一版 M3 写的是 `if inherited is None:` → `if False:` —— 它让变异体**自己崩了**
+        # （elif 分支拿到 None 去迭代 ⇒ TypeError），而 runner 正确地拒绝把 Traceback 算成
+        # 「被抓住」。变异必须**改变行为**，不能**改变能不能跑**。故改为只摘掉那一条报错。
+        ("M3 pushed 不再核「推入有没有落地」（把那条报错摘掉，而不是让代码崩掉）",
+         "                    errs.append(f\"J4 {pid}：声明 pushed_to_product 但产品侧**没有**这条\"\n"
+         "                                f\"（推入没落地，或落地在别的 slug 下）\")\n",
+         "                    pass\n",
+         "J4 pushed：声明已推入产品侧，但那边**没有**这条"),
+        ("M4 pushed 不再核「两边是不是真的一样」：真分叉被放行",
+         "                elif list(inherited) != list(item[\"l3\"]):\n"
+         "                    errs.append(f\"J4 {pid}：**真分叉**",
+         "                elif False:\n"
+         "                    errs.append(f\"J4 {pid}：**真分叉**",
+         "J4 pushed：声明派生而两边取值不同"),
+        ("M5 互斥判据恒假：同时写 reclassify 与 pushed 也不再报",
+         "            if rec and pushed:\n",
+         "            if False:\n",
+         "J4 pushed 与 reclassify 互斥"),
+        ("M6 过期检查恒绿：产物与盘上不一致也报「一致」",
+         "    if a == b:\n        return \"\"\n",
+         "    return \"\"\n",
+         "端到端：产物过期 ⇒ exit 1"),
     ]
     n_ok = 0
     print("build_card_classification · 变异测试（改坏 #60 的判据，看用例抓不抓得住）")
@@ -746,6 +864,40 @@ def mutate() -> int:
     return 0 if n_ok == len(MUTANTS) else 1
 
 
+def _stale_vs_disk(doc: dict, out: Path) -> str:
+    """`--check` 必须回答「盘上那份是不是就是刚重建的这份」。
+
+    ⚠️ 为什么这不是吹毛求疵：`--check` 若只重建、什么都不比，那么
+    「inbox 改了 → 忘了 `--write`」这个**最常见的操作失误**会得到绿灯，
+    而所有下游（缺口账、图谱 `cards`、验收面）读的却是**旧产物**。
+    排除的只有易变字段 `_meta.generated`（时间戳，同 build_capability_graph 的既有口径）。
+    """
+    if not out.exists():
+        return f"产物不存在：{_rel(out)} —— 判据全过不等于产物存在"
+    try:
+        disk = load_json(out)
+    except Exception as e:                                  # noqa: BLE001
+        return f"产物读不出来（{_rel(out)}）：{e}"
+    a = json.loads(json.dumps(doc))
+    b = json.loads(json.dumps(disk))
+    for d in (a, b):
+        (d.get("_meta") or {}).pop("generated", None)
+    if a == b:
+        return ""
+    keys = sorted({k for k in set(a) | set(b) if a.get(k) != b.get(k)})
+    detail = []
+    if "by_source" in keys:
+        detail.append(f"by_source 盘上 {b.get('by_source')} ≠ 重建 {a.get('by_source')}")
+    if "items" in keys:
+        ai = {i["id"]: i for i in a.get("items", [])}
+        bi = {i["id"]: i for i in b.get("items", [])}
+        diff = [k for k in sorted(set(ai) | set(bi)) if ai.get(k) != bi.get(k)]
+        detail.append(f"items 有 {len(diff)} 条不同，例：{diff[:3]}")
+    return (f"产物已过期：{_rel(out)} 与 inbox/图谱现状不一致（差异键 {keys[:6]}）"
+            + ("；" + "；".join(detail) if detail else "")
+            + " ⇒ 跑 `--write` 重生成")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
@@ -753,7 +905,7 @@ def main() -> int:
     ap.add_argument("--excerpts", type=Path)
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--mutate", action="store_true",
-                    help="把 #60 的判据改坏，检验 selftest 用例有没有劲")
+                    help="把判据改坏（#60 锚点 + 第三态 pushed），检验 selftest 用例有没有劲")
     ap.add_argument("--batch", type=int, default=13)
     ap.add_argument("--graph", type=Path, default=GRAPH)
     ap.add_argument("--classification", type=Path, default=PRODUCT_CLASSIFICATION)
@@ -786,6 +938,12 @@ def main() -> int:
               f"· 技术域 {len(doc['tech_domains'])} · L3 覆盖 {doc['l3_coverage']['l3_named']}"
               f"/{doc['l3_coverage']['l3_total']}")
         print(f"来源 {doc['by_source']} · 置信度 {doc['by_confidence']}")
+        # ⚠️ 判据全过 ≠ 产物是最新的。首版 `--check` 只重建、**不与盘上产物比对** ⇒
+        # inbox 改了而忘了重生成时它照样绿（实测撞到：52 条 pushed 已生效、盘上还是 new）。
+        # 姊妹脚本 `build_gap_ledger.py --check` 就是比对的 —— 这里补齐，同尺。
+        stale = _stale_vs_disk(doc, args.out)
+        if stale:
+            errs.append(stale)
         if errs:
             print(f"\n✗ {len(errs)} 项不合格：")
             for e in errs[:40]:
@@ -793,7 +951,7 @@ def main() -> int:
             if len(errs) > 40:
                 print(f"  …（共 {len(errs)} 项）")
             return 1
-        print("\n✅ 判据全过")
+        print("\n✅ 判据全过（且产物与盘上一致）")
         return 0
 
     if errs:
