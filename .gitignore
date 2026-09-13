@@ -154,3 +154,10 @@ _backup/
 
 # 凭证暴露面白名单：公开证书必须逐条写明理由，否则门禁判红（不被忽略就等于没交付）
 !paper2skills-research/data/key-exposure-whitelist.json
+
+# 凭证历史扫描的两份**判据输入**（S8 第三缝，2026-09-13）：
+# ① 已知暴露值登记表 —— 只存 len+sha256；丢了它 ⇒ 判据 C 静默退化成「登记表 0 条 ⇒ 全绿」，
+#    那正是它要防的那类假绿。② 可见豁免表 —— 每条必须写 reason+evidence+expires_when。
+# 两份都不入库＝新克隆没有＝等于没交付。判据=`scripts/check_history_secrets.py --check`。
+!paper2skills-research/data/exposed-credential-registry.json
+!paper2skills-research/data/history-secrets-whitelist.json

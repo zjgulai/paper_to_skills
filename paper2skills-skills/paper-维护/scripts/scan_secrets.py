@@ -166,6 +166,26 @@ def _fx(*parts: str) -> str:
     return "".join(parts)
 
 
+# 墓碑：`git filter-repo --replace-text` 把清掉的凭证替换成的标记。
+# ⚠️ **它不是凭证，它是「这里曾经有过凭证、已被清掉」的物证。**
+#    不归一化它，就会得到一个荒谬的读数：跑完清理之后，残留的墓碑本身被当成新凭证，
+#    于是「清干净了」看起来比「没清」还红。2026-09-13 实测：本仓库历史里 3 份
+#    `playbook/skills/*.html` 的旧版本命中 GENERIC_SECRET_ASSIGNMENT，命中的值就是
+#    `***REMOVED-DEEPSEEK-KEY***`。
+# ⚠️ 反向要求（漏洞 #10 的教训：**新增豁免本身就是一次放水**）：墓碑**旁边**的真凭证
+#    必须照样命中。`--selftest` 用例 21 就是为此而设（墓碑 + 真 key 同块）。
+TOMBSTONE_RE = re.compile(r"\*\*\*REMOVED-[A-Za-z0-9_.\-]*\*\*\*")
+
+
+def tombstones(text: str) -> list[str]:
+    """列出文本里的墓碑标记。
+
+    单独暴露成函数（而不是让 `scan_text` 顺带返回）是为了让**调用方把它当读数报出来**：
+    「这一处曾经有过凭证」是信息，不该被归一化悄悄吃掉。见 `check_history_secrets.py`。
+    """
+    return TOMBSTONE_RE.findall(text)
+
+
 # 白名单：确认无害/已失效的值，写在这里而不是写宽规则
 # ⚠️ 每加一条都必须写清「为什么它无害」，否则白名单就是下一个后门（漏洞 #10 的教训）。
 # ⚠️ 尤其禁止把**规则级**的东西塞进来：把 PEM 私钥头加进白名单等于放行所有私钥。
@@ -225,6 +245,11 @@ def scan_text(text: str) -> list[dict]:
     for allowed in ALLOWLIST:
         if allowed in norm:
             norm = norm.replace(allowed, "\x00ALLOWLISTED\x00")
+    # 墓碑（filter-repo 的清理标记）先换成定长哨兵再匹配。
+    # ⚠️ 必须**先替换再匹配**，与 ALLOWLIST 同理：若在匹配之后才判，同一处会被
+    #    GENERIC_SECRET_ASSIGNMENT 从 `api_key=` 起头再命中一次（用例 21 覆盖）。
+    if TOMBSTONE_RE.search(norm):
+        norm = TOMBSTONE_RE.sub("\x00TOMBSTONE\x00", norm)
 
     kept: list[dict] = []
     for rule_id, pattern, desc in RULES:  # RULES 已按「具体 → 泛化」排序
@@ -325,20 +350,31 @@ def selftest() -> int:
     """
     failures: list[str] = []
 
-    # --- 用例 1：真实历史值必须命中（这次事件的回归测试）---
+    # --- 用例 1：与真实历史值**同形**的样本必须命中（这次事件的回归测试）---
     # ⚠️ 固件必须**拼出来**，不能写成整串字面量。
     #    写整串的话，本文件自己就会被自己扫出两条命中，于是门禁永远红着 ——
     #    而一个永远红的门禁等于没有门禁（大家会学会忽略它）。
-    #    拼接后源码里不存在完整凭证，运行时构造出的样本仍然是真值。
     #
     #    ⚠️⚠️ 这里**真的被 filter-repo 打坏过一次**：hook 固件原先写成
-    #    `+ "a32b3ab7-6cfb-498d-bc3f-91d9f48b47e9"`，随后跑
-    #    `git filter-repo --replace-text` 清历史时，这个「用来抓该 webhook 的固件」
-    #    被替换成了 `***REMOVED-FEISHU-HOOK***` —— 自测从绿变红，而没有任何人预期到
-    #    「清凭证的操作」会连带打坏「抓凭证的测试」。现拆成三段，任一段都不构成完整 UUID。
-    real_key = _fx("sk-", "aae11f4438f943b9bf32a233620437bd")
+    #    `<hook 路径> + "<uuid 第 1 段>" + ...`，随后跑 `git filter-repo --replace-text` 清历史时，
+    #    这个「用来抓该 webhook 的固件」被替换成了 `***REMOVED-FEISHU-HOOK***` ——
+    #    自测从绿变红，而没有任何人预期到「清凭证的操作」会连带打坏「抓凭证的测试」。
+    #
+    #    ⚠️⚠️⚠️ **2026-09-13 第二次修正：固件里放「真值」本身就是一个错误。**
+    #    原先这里放的是**真实**的 key 与 hook 值（理由写的是「真实历史值必须命中」）。
+    #    但规则是 `\bsk-[A-Za-z0-9_-]{20,}` 这种**形状**判据，它不知道也不需要知道值是不是真的：
+    #    同形假值与真值的检出结果**逐字节等价**（把 fixture 换成同形假值后，
+    #    下面 4 条用例与转义归一化用例全绿，实测）。
+    #    而代价是实打实的：`_fx("sk-", "<值>")` 拆开只骗得过**模式扫描器**，
+    #    骗不过任何一个读源码的人 —— 一行 `+` 就能还原文。
+    #    于是「用来防泄露的固件机制」把真值以「一行可还原」的形式留在了**公开**仓库里，
+    #    而 `scan_secrets.py` 自己报「✅ 未发现凭证」——因为拆开了，它按定义看不见。
+    #    ⇒ 值维度改由 `data/exposed-credential-registry.json` + 判据 C 常驻守着
+    #      （只存 len+sha256，命中即红、无豁免）。
+    #      分工：**这里管形状，登记表管值。**
+    real_key = _fx("sk-", "f" * 20 + "0" * 12)          # 同形假值：sk- + 32 位
     real_hook = _fx("open.feishu.cn/open-apis/bot/v2/hook/",
-                    "a32b3ab7" + "-6cfb-498d" + "-bc3f-91d9f48b47e9")
+                    "00000000" + "-1111-2222" + "-3333-444444444444")
     for label, sample, expect in [
         ("裸双引号 key", f'api_key="{real_key}"', "OPENAI_STYLE_KEY"),
         ("JSON 转义 key", f'api_key=\\"{real_key}\\"', "OPENAI_STYLE_KEY"),
@@ -426,11 +462,61 @@ def selftest() -> int:
             f"用例7：扫描器自身被扫出 {len(self_hits)} 处命中 {rules} —— "
             f"全库扫描会因此恒红；请把固件改为经 _fx() 拼接")
 
+    # --- 用例 7b：**整个门禁家族**都必须干净，不只本文件 -----------------------
+    # ⚠️ 2026-09-13 实测踩到：本文件干净了，而**同一轮新写的另外三个文件**（另两个扫描器的
+    #    源码 + 两张判据表 + 那份安全报告）各自把字面量又写了一遍，`scan_secrets.py` 当场判红
+    #    —— **#72「教训写在隔壁文件里＝没写」的第三次**，这次是**在写下这条教训的同一轮里**犯的。
+    #    故把范围从「本文件」扩到「家族」，让复发当场被抓住，而不是靠人记得。
+    fam = [
+        Path(__file__).resolve().parent / "check_history_secrets.py",
+        Path(__file__).resolve().parents[3] / "paper2skills-research" / "scripts"
+        / "check_key_exposure.py",
+        Path(__file__).resolve().parents[3] / "paper2skills-research" / "data"
+        / "history-secrets-whitelist.json",
+        Path(__file__).resolve().parents[3] / "paper2skills-research" / "data"
+        / "exposed-credential-registry.json",
+    ]
+    for f in fam:
+        if not f.exists():
+            failures.append(f"用例7b：门禁家族文件缺失（{f.name}）—— 判据的输入不在，"
+                            f"「没查」不许当成「干净」")
+            continue
+        hits = scan_text(f.read_text(encoding="utf-8"))
+        if hits:
+            rules = sorted({h["rule"] for h in hits})
+            failures.append(
+                f"用例7b：{f.name} 被扫出 {len(hits)} 处命中 {rules} —— "
+                f"家族文件里不许出现凭证字面量（拼接口径见用例 7）")
+
     # --- 用例 8（元级）：全库扫描不得把「本文件」算成问题源 -------------------
     # 用例 7 只看本文件；这里确认「扫自己时也不会因为 ALLOWLIST 里留了完整字面量而漏报」。
     # （白名单条目本身若写字面量，虽然会被 scan_text 豁免，但 filter-repo 仍会改写它。）
     if re.search(r'ALLOWLIST[^}]*?"[^"]*://[^"]*:[^"]*@"', self_path.read_text(encoding="utf-8"), re.S):
         failures.append("用例8：ALLOWLIST 里仍留有完整的连接串字面量（应经 _fx 拼接）")
+
+    # --- 用例 21：墓碑不得被当成凭证；但墓碑**旁边**的真凭证必须照样命中 --------
+    # 为什么需要它：`git filter-repo --replace-text` 把清掉的凭证替换成
+    # `***REMOVED-…***`。清完之后，**墓碑自己**长得就像一条赋值语句 ——
+    # 实测 3 份 `playbook/skills/*.html` 的旧版本因此命中 GENERIC_SECRET_ASSIGNMENT。
+    # 不处理它，会出现荒谬读数：清理做得越彻底，门禁越红。
+    #
+    # ⚠️ 反向控制是这条用例的**主体**，不是补充（漏洞 #10 的教训：**新增豁免本身就是一次放水**）。
+    #    「墓碑被豁免」与「墓碑成了万能免检牌」只差一行代码 —— 后者才是真正的后门。
+    tomb = _fx("***REMOVED-", "DEEPSEEK-KEY", "***")
+    if scan_text(f'api_key="{tomb}"'):
+        failures.append("用例21a：墓碑标记本身不得被判成凭证")
+    if tombstones(f'api_key="{tomb}"') != [tomb]:
+        failures.append("用例21b：墓碑必须同时作为**读数**被报出来（豁免≠看不见）")
+    # 反向控制一：墓碑不能把同一行/同一块里的真凭证一起免掉
+    realish = _fx("sk-", "z" * 32)
+    mixed = scan_text(f'old="{tomb}"  new="' + realish + '"')
+    if not any(h["rule"] == "OPENAI_STYLE_KEY" for h in mixed):
+        failures.append("用例21c：墓碑**旁边**的真 key 必须照样命中（豁免不得成为免检牌）")
+    # 反向控制二：墓碑形状不许被放宽成通配 —— 少一个星号就不是 filter-repo 的标记
+    # （载荷必须 ≥16 字符，否则 GENERIC 规则本来就够不着，这条反向控制会变成**恒真摆设**）
+    near = _fx("**REMOVED-", "X" * 20, "***")
+    if not scan_text(f'api_key="{near}"'):
+        failures.append("用例21d：墓碑模式必须精确（`**REMOVED-…` 不是墓碑，不得免检）")
 
     if failures:
         print("❌ --selftest 未通过：")

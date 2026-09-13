@@ -76,6 +76,22 @@ SKIP_DIRS = {".git", "node_modules", ".venv", "venv", "__pycache__", ".mypy_cach
              ".pytest_cache", "dist", "build", ".next", ".turbo", ".idea"}
 
 
+def _pem(kind: str = "RSA") -> str:
+    """自测固件的私钥头 —— **拼**出来，源码里不存在完整 PEM 头。
+
+    ⚠️ 与 `scan_secrets.py` 的 `_fx()` 是同一条纪律，理由也一模一样，而这里是**第二次犯**：
+    2026-09-13 本文件初版把三处固件写成完整字面量 ⇒ `scan_secrets.py`（本仓库的
+    「推送前必跑」门禁）当场 **exit 1**，而且**没有任何人发现** —— 因为那门禁当时
+    **根本不在验收面里**（见 `run_phase6_gates.py` 的接线史）。
+    教训在 `scan_secrets.py` 的 docstring 里已经写得很清楚（「首版实测 12 处自命中」），
+    **写在了隔壁文件里，于是就等于没写。**
+
+    ⚠️ 修好源码**并不**等于修好仓库：旧 blob 仍在对象库里、仍随 push 出去。
+    这一条的完整处置见 `reports/PHASE6-F8-S8-凭证清点与暴露面.md` §4.2。
+    """
+    return f"-----BEGIN {kind} " + "PRIVATE KEY-----\nxxxx\n"
+
+
 class InputMissing(Exception):
     """根目录走不到任何文件 —— 这是「没测到」，不是「干净」。"""
 
@@ -279,10 +295,8 @@ def selftest() -> int:
                 ["git", "commit", "-qm", "init"]):
         subprocess.run(cmd, cwd=root, capture_output=True, env=env)
 
-    (root / "ignored-key.pem").write_text("-----BEGIN RSA PRIVATE KEY-----\nxxxx\n",
-                                          encoding="utf-8")
-    (root / "unignored.key").write_text("-----BEGIN OPENSSH PRIVATE KEY-----\nxxxx\n",
-                                        encoding="utf-8")
+    (root / "ignored-key.pem").write_text(_pem("RSA"), encoding="utf-8")
+    (root / "unignored.key").write_text(_pem("OPENSSH"), encoding="utf-8")
     (root / "cert.pem").write_text("-----BEGIN CERTIFICATE-----\nxxxx\n", encoding="utf-8")
     subprocess.run(["git", "add", "-f", "unignored.key"], cwd=root, capture_output=True, env=env)
     subprocess.run(["git", "commit", "-qm", "oops"], cwd=root, capture_output=True, env=env)
@@ -317,8 +331,7 @@ def selftest() -> int:
     (root / "unignored.key").unlink()
     subprocess.run(["git", "rm", "-q", "--cached", "unignored.key"], cwd=root,
                    capture_output=True, env=env)
-    (root / "floating.key").write_text("-----BEGIN OPENSSH PRIVATE KEY-----\nxxxx\n",
-                                       encoding="utf-8")
+    (root / "floating.key").write_text(_pem("OPENSSH"), encoding="utf-8")
     res2 = scan(root, {})
     fl = [r for r in res2["records"] if r["path"].endswith("floating.key")]
     check("构造样本：未跟踪 + **未忽略** ⇒ 判 UNIGNORED（红）",

@@ -203,6 +203,29 @@ GATES: list[Gate] = [
          ["check_key_exposure.py", "--check"]),
     Gate("L14b", "凭证暴露面：自检（五态 + 公开证书白名单反向控制 + 三份「门禁改坏」变异）",
          ["check_key_exposure.py", "--selftest"], kind="selftest"),
+
+    # --- 凭证扫描的另外两条缝（2026-09-13 覆盖审计的第二批发现）---
+    # ⚠️ `scan_secrets.py` 是本仓库 CLAUDE.md 里写明的「推送前必跑」门禁，**却从来没进过验收面**。
+    #    而这个事实有代价：它当时**正红着**（3 条，由 check_key_exposure.py 的固件字面量造成），
+    #    是在覆盖审计中被人肉发现的，不是被判据发现的 —— 与台账 #23（check_card_identity
+    #    交付时即 exit 1 而无人接线）**同型，而且是同一条纪律在两天内第二次被违反**。
+    Gate("L15a", "推送前凭证扫描：已入库文件内容（CLAUDE.md 的「推送前必跑」，此前从未接线）",
+         [_p("..", "..", "paper2skills-skills", "paper-维护", "scripts", "scan_secrets.py")]),
+    Gate("L15b", "推送前凭证扫描：自检（含「扫描器自身必须干净」元级用例 + 墓碑反向控制）",
+         [_p("..", "..", "paper2skills-skills", "paper-维护", "scripts", "scan_secrets.py"),
+          "--selftest"], kind="selftest"),
+    # ⚠️ L16a 现在**预期判红**：判据 C 抓到一个**实测仍然有效**的飞书 webhook
+    #    （公开仓库历史里可一行还原）。活凭证不许豁免 ⇒ 这条红要留到飞书后台轮换完成。
+    #    红在这里是对的：它对应一个真实的、有行动主的未闭环项（任务板 B14 / S8）。
+    Gate("L16a", "凭证历史扫描：对象库内容 + 路径史 + 已知暴露值还原（第三条缝）",
+         [_p("..", "..", "paper2skills-skills", "paper-维护", "scripts",
+             "check_history_secrets.py"), "--check"]),
+    Gate("L16b", "凭证历史扫描：自检（含「判据 C 抓得住而判据 B 抓不到」+ live 不许豁免反向控制）",
+         [_p("..", "..", "paper2skills-skills", "paper-维护", "scripts",
+             "check_history_secrets.py"), "--selftest"], kind="selftest"),
+    Gate("L16c", "凭证历史扫描：变异测试（5 份端到端，各要求「先证明变异改变了真实取值」）",
+         [_p("..", "..", "paper2skills-skills", "paper-维护", "scripts",
+             "check_history_secrets.py"), "--mutate"], kind="selftest"),
 ]
 
 SEV = {0: 0, 1: 1, 2: 2, 3: 3}
