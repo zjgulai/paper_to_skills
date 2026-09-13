@@ -131,6 +131,20 @@ GATES: list[Gate] = [
     Gate("L7a", "旧方案页收割：M 格素材逐条可回指源 HTML", ["harvest_legacy_solutions.py", "--check"]),
     Gate("L7b", "旧方案页收割：判据自检 + 变异（含 194 卡位丢弃登记）",
          ["harvest_legacy_solutions.py", "--selftest"], kind="selftest"),
+    # --- 「同名同物」判定（S5 换底的前提；2026-09-13 由主控接线）---
+    # ⚠️ 这条门禁交付时就是 **exit 1**，而它**没被接进验收面** —— 于是验收面报「全绿」
+    #    而一个已交付的判据在报红。这正是本验收面存在的理由：「没测到」比「测了是红的」更危险。
+    # 8 条 I3 的处置是**可见豁免**（不是修）：它们不是缺陷，是两条语料线里真实存在的近名卡，
+    # 每条的 p2s_card_id 都在 legacy 线（`playbook/domains/*.html`）里有同名条目 ——
+    # 抽样四条逐条复核过。「vault 里不存在」= 判据只看得见精选线 146 张这一个库。
+    # 豁免清单带 `expires_when`，且**转绿时会提示删除**（永久豁免＝台账 #5 那种腐烂）。
+    Gate("L8a", "同名同物：p2s 卡 ↔ 精选卡的六态判定（8 条 I3 走可见豁免，非豁免项仍判红）",
+         ["check_card_identity.py", "--check",
+          "--baseline", _p("..", "data", "card-identity-baseline.json")]),
+    Gate("L8b", "同名同物：自检（含「豁免不是全放行」的隔离用例）",
+         ["check_card_identity.py", "--selftest"], kind="selftest"),
+    Gate("L8c", "同名同物：变异测试（判据改坏必须被抓，且须证明变异真的生效）",
+         ["check_card_identity.py", "--mutate"], kind="selftest"),
 ]
 
 SEV = {0: 0, 1: 1, 2: 2, 3: 3}

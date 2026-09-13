@@ -123,6 +123,11 @@ _backup/
 !paper2skills-research/data/backlog-l3-map.json
 # S3 的接管表产物（位次 + 覆盖率账）：下游「出卡排期」要消费它，理由同 gap-ledger.json。
 !paper2skills-research/data/backlog-routing.json
+# 「同名同物」判定的可见豁免清单（验收面 L8a 的**输入**）：它是人的判定 + 到期条件，
+# 不是脚本能再生的东西。⚠️ 不入库的代价是**新克隆必然没有它** ⇒ L8a 直接 exit 2
+# （「baseline 不存在」= 没测，不是通过），陷阱对新人 100% 命中 —— 与门禁 bug #12
+# （`k1_l5.json` 被 gitignore 导致 gate_check 全库每张卡都红）**完全同型**。
+!paper2skills-research/data/card-identity-baseline.json
 # 材料引文核验产物（PHASE6 S1 收口期）：**它是一份账，不是中间态** ——
 # 逐词记录「哪些引文在材料里查无实据、最长可命中片段是什么、材料原句是哪句」。
 # 重算需要材料目录（在仓库之外，且它自己是个 git 仓库）⇒ 不是随手可再生的东西。

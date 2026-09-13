@@ -1,0 +1,49 @@
+{
+ "id": "PHASE6-S5-identity-baseline-20260913",
+ "_what": "check_card_identity.py I3 的 8 条已知红项。**它们不是待修的缺陷，是两条语料线里真实存在的近名卡**：每条的 `p2s_card_id` 指向的卡确实存在于**另一条语料线**（legacy 1338 张线，`playbook/domains/*.html` 里有同名条目），不是指错了。",
+ "_evidence": "主控抽样四条逐个复核：Skill-Causal-Uplift-Modeling / Skill-Conformal-Time-Series-Forecasting /Skill-LLMLingua-Context-Compression / Skill-Multi-Armed-Bandit-AB-Hybrid —— **四条全部**在`playbook/domains/<域>.html`（legacy 线渲染快照）里有同名条目。⇒「vault 里不存在」= 判据只看得见精选线 146 张这一个语料库（铁律：**先问我这个仪器能看见什么**）。",
+ "_why_not_fix": "改这 8 条的 `p2s_card_id` 去指向精选线的近名卡，等于**把两张不同的卡说成同一张** —— 那正是 I3 要防的事。所以正确处置是**登记 + 可见豁免**，不是「修」。",
+ "expires_when": "精选线的判定口径扩到含 legacy 语料（届时这些 id 会真的命中），或这 8 张卡在 vault 侧建出同名卡。**任一发生即本豁免必须重估**；若某条转绿，请从本文件删掉它 —— 永久豁免＝台账 #5 那种腐烂。",
+ "items": [
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-agent-time-series-forecasting"
+  },
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-causal-ml-feature-engineering"
+  },
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-conformal-time-series-forecasting"
+  },
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-temporal-fusion-transformer-inventory"
+  },
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-causal-time-series-forecasting-gcf"
+  },
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-multi-armed-bandit-ab-hybrid"
+  },
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-llmlingua-context-compression"
+  },
+  {
+   "code": "I3",
+   "kind": "SAME_NAME_DIFFERENT_THING",
+   "slug": "p2s-causal-uplift-modeling"
+  }
+ ]
+}
