@@ -114,11 +114,27 @@
 ⚠️ 腾讯云轻量服务器有**控制台 VNC 兜底** —— 这是「可以放心轮换」的前提，不是「可以不轮换」的理由。
 ⚠️ **轮换必须由所有者执行或走正当凭证通道；agent 不读取、不使用这两把私钥。**
 
-### 3.2 `ai_video.pem` 的用途鉴定（本轮未做）
+### 3.2 `ai_video.pem` 的用途鉴定（**2026-09-13 已做**，只查引用关系、未读密钥内容）
 
-方法（不需要读到密钥内容）：在引用它的项目里搜 `ssh -i` / `IdentityFile` / `ai_video.pem`，
-确认它对应哪台主机、哪个服务；再决定它是否与 `DDDD.pem` 同批轮换。
-`lute-momcozy-platform` 的 `.pem` **不在**此项内（那是公开证书）。
+做法：在引用它的项目里搜 `ai_video.pem` 与 `ssh -i` / `scp -i`（**不打开密钥文件**）。
+
+| 问题 | 实测答案 |
+|---|---|
+| 哪台主机 | **`ubuntu@101.34.52.232`** —— 腾讯云轻量服务器 |
+| 哪个服务 | **BOS Web 生产部署**：`/opt/bos-web`（nginx + docker-compose） |
+| 依据 | `VOA/docs/superpowers/plans/2026-07-02-bos-tencent-lighthouse-deployment.md` 里 **12+ 处** `ssh -i …/ai_video.pem ubuntu@101.34.52.232 …` 与 `scp -i …`（部署脚本原文） |
+| 该仓库的暴露面 | `VOA` 远端 = `https://github.com/lillian-maker/BOS`；`ai_video.pem` **未被跟踪、且被忽略**（`git check-ignore` ✅） |
+
+**结论（对轮换计划有直接影响）**：`ai_video.pem` **不是一把闲置的旧钥匙，而是一台在跑的服务器
+（`101.34.52.232`）的部署私钥** —— 它应当与 `DDDD.pem` **同批、按同一顺序**轮换，且**优先级不低于**后者。
+
+⚠️ **同时暴露了§1.3 清点的一个适用范围边界（登记不重判）**：那份部署文档把密钥路径写死为
+**`/Users/ll/Documents/VOA/ai_video.pem`** —— 而本机**没有 `/Users/ll`**（`ls /Users` 只有 `lute` 与 `Shared`）。
+⇒ 该路径属于**另一台机器**（或历史别名）。本报告的清点在 `/Users/lute` 下做（`maxdepth 5–6`），
+**它回答的是「这台机器上有几份」，不是「一共存在几份」** —— 与 §四 那条推论同一条：
+**先问仪器能不能看见，再下结论。**
+
+`lute-momcozy-platform` 的 `.pem` **不在**此项内（那是公开证书，见 §2.2）。
 
 ## 四、扫描器的**适用范围**（这一节比上面任何一条都重要）
 
