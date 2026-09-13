@@ -968,6 +968,11 @@ def gate_g2(card: Path, text: str) -> GateResult:
         "sourced_structural_only": len(structural_only),
         "cn_numeral_claims": len(cn_claims),
         "fulltext_archived": bool(qrep.get("fulltext")),
+        # --- G2b 版本层（X4）---
+        "version_verdict": qrep.get("version_verdict"),
+        "version_claim": qrep.get("version_claim"),
+        "fulltext_version": (qrep.get("fulltext_version_id")
+                             or qrep.get("fulltext_version")),
     }
 
     # --- X1 作者外推：违规标注判红（闸门 a/b）-----------------------------
@@ -999,6 +1004,27 @@ def gate_g2(card: Path, text: str) -> GateResult:
     if qrep.get("verdict") == "VERBATIM" and qrep.get("n_quotes"):
         g.add("GREEN", "G2-QUOTE-VERBATIM",
               f"{qrep['n_quotes']} 条引文全部逐字命中论文全文")
+
+    # --- G2b 版本层（X4 补充 · 2026-09-13）------------------------------------
+    # ⚠️⚠️ 只出**黄灯**，绝不改 `verdict`。
+    # 版本错配 ≠ 引文伪造：引文可能**逐字存在于底本**，只是出自另一个版本 ——
+    # 于是核验器报 VERBATIM，而它核验的是**另一版**的句子（漏洞 #15 的同类：残句/别版句子
+    # 都逐字可查，报告里却看不出来）。
+    # 实测 A6：`Skill-Reflexion-Self-Improvement` 引 NeurIPS 正式版的 HumanEval 91% pass@1，
+    # 而底本是 arXiv **v1**（v1 全文 `HumanEval`/`pass@1` 各 **0 命中**）。
+    # 故两层必须**分开报**：逐字层答「有没有这句话」，版本层答「是不是这一版」。
+    # 把黄伪装成红会打挂 K2，也违反「三层必须分开报」的口径纪律。
+    vv = qrep.get("version_verdict")
+    if vv == "MISMATCH":
+        g.add("YELLOW", "G2-QUOTE-VERSION-MISMATCH",
+              f"引文版本错配：卡片声称 `{qrep.get('version_claim')}`，"
+              f"底本实际是 `{qrep.get('fulltext_version_id') or qrep.get('fulltext_version')}` —— "
+              f"逐字核验通过的是**另一版**的句子",
+              evidence=f"{qrep.get('version_note', '')}｜声称依据："
+                       f"{qrep.get('version_claim_evidence', '')}")
+    elif vv == "UNCLAIMED":
+        g.add("INFO", "G2-QUOTE-VERSION-UNCLAIMED",
+              "卡片与底本均未声明版本，无法比对 —— 不构成缺陷，但也不构成版本证据")
 
     if not ev_sources:
         if g.outcome == "UNVERIFIABLE":
@@ -1489,6 +1515,9 @@ def summarise(gates: list[GateResult], name: str) -> dict:
         "extrapolation_violations": sum(
             1 for g in gates for f in g.findings
             if f.code == "G2-EXTRAPOLATION-FORBIDDEN-SCOPE"),
+        # --- G2b 版本层（X4）---
+        "version_mismatch_cards": sum(
+            1 for g in gates if g.metrics.get("version_verdict") == "MISMATCH"),
     }
     # 兼容旧消费者（sync.py / 报告脚本）读的键名
     out["pass_rate_over_all_cards_pct"] = (
