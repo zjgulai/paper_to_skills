@@ -49,7 +49,7 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 4 张
+- 有全文卡（优先选，可选到论文参数）：共 5 张
     - `p2s-demand-forecasting-supply-chain` · 源卡号 `Skill-Demand-Forecasting-Supply-Chain` · 04-供应链 · Demand Forecasting for Supply Chain
       - 全文卡：`/Users/lute/.dsh/skills/p2s-demand-forecasting-supply-chain/SKILL.md`
     - `p2s-prophet-forecasting` · 源卡号 `Skill-Prophet-Forecasting` · 03-时间序列 · Prophet Forecasting with Seasonality and Holidays
@@ -58,6 +58,8 @@
       - 全文卡：`/Users/lute/.dsh/skills/p2s-temporal-fusion-transformer/SKILL.md`
     - `p2s-time-series-forecasting` · 源卡号 `Skill-Time-Series-Forecasting` · 03-时间序列 · Skill Card: 时间序列预测 (Time Series Forecasting)
       - 全文卡：`/Users/lute/.dsh/skills/p2s-time-series-forecasting/SKILL.md`
+    - `p2s-decision-conditioned-forecasting` · 源卡号 `Skill-Decision-Conditioned-Forecasting` · 03-时间序列 · Skill-Decision-Conditioned-Forecasting
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-decision-conditioned-forecasting/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 90 张
     - `p2s-arima-garch-demand-volatility` · 源卡号 `Skill-ARIMA-GARCH-Demand-Volatility` · 03-时间序列 · ARIMA-GARCH Demand Volatility — 需求波动率预测（不确定性区间建模）
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-arima-garch-demand-volatility/SKILL.md`
@@ -139,9 +141,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-infant-lifecycle-purchase-rhythm/SKILL.md`
     - `p2s-intermittent-demand-croston-tsb` · 源卡号 `Skill-Intermittent-Demand-Croston-TSB` · 03-时间序列 · Intermittent Demand Croston TSB — 母婴长尾 SKU 间歇需求预测
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-intermittent-demand-croston-tsb/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 1 张
-    - `Skill-Decision-Conditioned-Forecasting` · 03-时间序列 · Skill-Decision-Conditioned-Forecasting
-      - 全文卡：`paper2skills-vault/03-时间序列/Skill-Decision-Conditioned-Forecasting.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 95。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -324,7 +325,7 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 13 张
+- 有全文卡（优先选，可选到论文参数）：共 15 张
     - `p2s-ab-experimental-design` · 源卡号 `Skill-AB-Experimental-Design` · 02-A_B实验 · Skill: A/B 实验设计基础
       - 全文卡：`/Users/lute/.dsh/skills/p2s-ab-experimental-design/SKILL.md`
     - `p2s-cold-start-meta-learning-pam` · 源卡号 `Skill-Cold-Start-Meta-Learning-PAM` · 05-推荐系统 · Popularity-Aware Meta-Learning for Cold-Start Recommendation
@@ -351,6 +352,10 @@
       - 全文卡：`/Users/lute/.dsh/skills/p2s-user-funnel-analysis/SKILL.md`
     - `p2s-user-lifecycle-stan` · 源卡号 `Skill-User-Lifecycle-STAN` · 06-增长模型 · STAN 用户生命周期自适应建模
       - 全文卡：`/Users/lute/.dsh/skills/p2s-user-lifecycle-stan/SKILL.md`
+    - `p2s-behavioral-intent-tree-parsing` · 源卡号 `Skill-Behavioral-Intent-Tree-Parsing` · 07-NLP-VOC · Skill-Behavioral-Intent-Tree-Parsing
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-behavioral-intent-tree-parsing/SKILL.md`
+    - `p2s-mas-multi-objective-recommendation` · 源卡号 `Skill-MAS-Multi-Objective-Recommendation` · 07-NLP-VOC · Skill-MAS-Multi-Objective-Recommendation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-mas-multi-objective-recommendation/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 71 张
     - `p2s-a-plus-content-video-embedding` · 源卡号 `Skill-A-Plus-Content-Video-Embedding` · 20-AI视频生成 · Skill-A-Plus-Content-Video-Embedding — A+ 内容视频嵌入转化率优化
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-a-plus-content-video-embedding/SKILL.md`
@@ -432,11 +437,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-listing-conversion-rate-optimizer/SKILL.md`
     - `p2s-listing-quality-scoring` · 源卡号 `Skill-Listing-Quality-Scoring` · 13-广告分析 · Skill-Listing-Quality-Scoring
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-listing-quality-scoring/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-Behavioral-Intent-Tree-Parsing` · 07-NLP-VOC · Skill-Behavioral-Intent-Tree-Parsing
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Behavioral-Intent-Tree-Parsing.md`
-    - `Skill-MAS-Multi-Objective-Recommendation` · 07-NLP-VOC · Skill-MAS-Multi-Objective-Recommendation
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Multi-Objective-Recommendation.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 86。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -598,7 +600,7 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 5 张
+- 有全文卡（优先选，可选到论文参数）：共 7 张
     - `p2s-ab-experimental-design` · 源卡号 `Skill-AB-Experimental-Design` · 02-A_B实验 · Skill: A/B 实验设计基础
       - 全文卡：`/Users/lute/.dsh/skills/p2s-ab-experimental-design/SKILL.md`
     - `p2s-ab-test-result-interpretation` · 源卡号 `Skill-AB-Test-Result-Interpretation` · 02-A_B实验 · A/B Test Result Interpretation and Practical Significance
@@ -609,6 +611,10 @@
       - 全文卡：`/Users/lute/.dsh/skills/p2s-power-analysis-sample-size/SKILL.md`
     - `p2s-thompson-sampling-mab` · 源卡号 `Skill-Thompson-Sampling-MAB` · 02-A_B实验 · Thompson Sampling for Multi-Armed Bandit
       - 全文卡：`/Users/lute/.dsh/skills/p2s-thompson-sampling-mab/SKILL.md`
+    - `p2s-incrementality-measurement` · 源卡号 `Skill-Incrementality-Measurement` · 14-用户分析 · Skill-Incrementality-Measurement
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-incrementality-measurement/SKILL.md`
+    - `p2s-persona-based-ab-simulation` · 源卡号 `Skill-Persona-Based-AB-Simulation` · 02-A_B实验 · Skill-Persona-Based-AB-Simulation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-persona-based-ab-simulation/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 36 张
     - `p2s-ab-testing-platform-infrastructure` · 源卡号 `Skill-AB-Testing-Platform-Infrastructure` · 02-A_B实验 · AB Testing Platform Infrastructure — A/B 实验平台基础设施：可扩展的在线实验框架
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-ab-testing-platform-infrastructure/SKILL.md`
@@ -682,11 +688,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-thompson-sampling-traffic-allocation/SKILL.md`
     - `p2s-variance-reduction-control-variates` · 源卡号 `Skill-Variance-Reduction-Control-Variates` · 02-A_B实验 · Variance Reduction via Control Variates — 控制变量法降方差（MLRATE/RL
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-variance-reduction-control-variates/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-Incrementality-Measurement` · 14-用户分析 · Skill-Incrementality-Measurement
-      - 全文卡：`paper2skills-vault/14-用户分析/Skill-Incrementality-Measurement.md`
-    - `Skill-Persona-Based-AB-Simulation` · 02-A_B实验 · Skill-Persona-Based-AB-Simulation
-      - 全文卡：`paper2skills-vault/02-A_B实验/Skill-Persona-Based-AB-Simulation.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 43。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，

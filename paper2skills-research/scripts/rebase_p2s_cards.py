@@ -70,6 +70,28 @@ EXIT_OK, EXIT_RED, EXIT_NO_INPUT, EXIT_INTERNAL = 0, 1, 2, 3
 
 MAX_SKILL_BYTES = 12 * 1024
 
+#: 给**装机后追加的 `p2s_*` 透传字段**留的余量。
+#:
+#: ⚠️ 实测撞出来的跨线耦合：12 KB 门禁是在**已装卡**上量的（`scripts/verify-install.mjs`），
+#:    而装机链在 `import-paper2skills.mjs` 之后还会跑 `sync-card-facets.mjs --apply`，
+#:    往 frontmatter 里追加 `p2s_code_level`（本包 145 张换底卡已自带另外四项 `p2s_*`，
+#:    实测只多 42 字节；`p2s-monodense` 因取值短只多 28 字节）。
+#:    ⇒ **staging ≤ 12288 推不出装机态 ≤ 12288**。首版没留余量、把 staging 顶到 12288，
+#:    装机后 13 张卡变成 12290–12330，`verify-install` 当场判红。
+#:    **48 = 实测装机追加上限 45 字节 + 3 字节余量。** 实测分布（1390 张，装机态 vs staging）：
+#:    `+42` 1196 张 / `+28` 42 张 / `0` 33 张 / `+45` 5 张。⇒ 这是**观测上界 + 固定余量**，
+#:    **不是算出来的**；`sync-card-facets.mjs` 若新增透传字段，这个数必须重测。
+#:    权威判据仍是在**已装卡**上量的 `scripts/verify-install.mjs`；本常量只是 staging 侧的前置闸。
+INSTALL_HEADROOM_BYTES = 48
+def staging_budget() -> int:
+    """换底自身的字节预算（staging 侧）。装机后仍须 ≤ MAX_SKILL_BYTES。
+
+    ⚠️ 刻意写成**函数**而不是模块级派生常量：`--selftest` 用 `mock.patch` 改
+    `MAX_SKILL_BYTES` 造预算夹具，模块级常量只在 import 时算一次、**不跟着变**
+    ⇒ 三条预算用例当场变假（实测 9b/9c 双双失败）。与「用被测常量构造夹具 = 自指」同族。
+    """
+    return MAX_SKILL_BYTES - INSTALL_HEADROOM_BYTES
+
 DEFAULT_P2S = "../magpie-horch/packages/capabilities/dsh-paper2skills"
 DEFAULT_VAULT = "paper2skills-vault"
 
@@ -301,9 +323,6 @@ def build_card(*, slug, old_text, old_fields, vault_bytes, vault_rel, vault_stem
     fm.append(("rebase_full_card_sha256", sha256_bytes(vault_bytes)))
     fm.append(("rebase_full_card_bytes", str(len(vault_bytes))))
     fm.append(("rebase_full_card_lines", str(len(vlines))))
-    fm.append(("rebase_evidence_quotes", str(nq)))
-    fm.append(("rebase_evidence_quotes_total", str(nq_total)))
-    fm.append(("rebase_evidence_quotes_complete", "true" if nq == nq_total else "false"))
     if legacy_rel:
         fm.append(("rebase_legacy_card", legacy_rel))
         fm.append(("rebase_legacy_card_sha256", sha256_bytes(old_text.encode("utf-8"))))
@@ -314,7 +333,20 @@ def build_card(*, slug, old_text, old_fields, vault_bytes, vault_rel, vault_stem
     fm.append(("enabled", "true"))
     fm.append(("disable-model-invocation", "true"))
     fm.append(("user-invocable", "true"))
-    fm_text = "---\n" + "\n".join(f"{k}: {jstr(v)}" for k, v in fm) + "\n---\n"
+    _QUOTE_KEYS = ("rebase_evidence_quotes", "rebase_evidence_quotes_total",
+                   "rebase_evidence_quotes_complete")
+
+    def fm_render(nq_in):
+        """frontmatter 必须在引文条数**定稿之后**才渲染。
+
+        ⚠️ 首版把 `fm_text` 在收缩循环之前就定死了 ⇒ 46 张卡的自报条数是**收缩前**的值
+        （实测读数：`frontmatter 说内联 32 条，实物 18 条`）。这是门禁自己抓出来的缺陷。
+        """
+        base = [(k, v) for k, v in fm if k not in _QUOTE_KEYS]
+        base.append(("rebase_evidence_quotes", str(nq_in)))
+        base.append(("rebase_evidence_quotes_total", str(nq_total)))
+        base.append(("rebase_evidence_quotes_complete", "true" if nq_in == nq_total else "false"))
+        return "---\n" + "\n".join(f"{k}: {jstr(v)}" for k, v in base) + "\n---\n"
 
     # ---- 固定骨架与预算 ----------------------------------------------------
     synth, _n_synth = (synth_block(split_frontmatter(old_text)[1]) if old_text else ("", 0))
@@ -343,7 +375,7 @@ def build_card(*, slug, old_text, old_fields, vault_bytes, vault_rel, vault_stem
         header.append("")
         quote_used = "\n".join(vlines[qspan[0]:qspan[1] + 1]) if qspan else ""
         o = io.StringIO()
-        o.write(fm_text)
+        o.write(fm_render(nq_in))
         o.write("\n".join(header) + "\n")
         o.write("## 换底正文（完整卡逐字摘录）\n\n")
         if ex_pairs:
@@ -410,15 +442,16 @@ def build_card(*, slug, old_text, old_fields, vault_bytes, vault_rel, vault_stem
 
     # 首轮估算 → 再按**真实字节**收紧，直到 ≤ 门禁。
     # 引文是**最后**才动的（它是本次任务的载荷）；先砍摘录，再砍旧合成段，最后才减引文。
-    tk, _u, cut = take_quotes(max(0, MAX_SKILL_BYTES - len(fm_text.encode())
+    fm_probe = len(fm_render(0).encode())
+    tk, _u, cut = take_quotes(max(0, staging_budget() - fm_probe
                                  - len(fixed_tail.encode()) - len(synth.encode()) - 2000))
     qspan = (tk[0][0], tk[-1][1]) if tk else None
     quote_used = "\n".join(vlines[qspan[0]:qspan[1] + 1]) if qspan else ""
-    ex = take_excerpt(max(0, MAX_SKILL_BYTES - len(fm_text.encode()) - len(fixed_tail.encode())
+    ex = take_excerpt(max(0, staging_budget() - fm_probe - len(fixed_tail.encode())
                           - len(synth.encode()) - len(quote_used.encode()) - 400), qspan)
     text = compose(ex, synth, qspan, len(tk), cut)
     for _ in range(80):
-        if len(text.encode()) <= MAX_SKILL_BYTES:
+        if len(text.encode()) <= staging_budget():
             break
         if ex:
             ex = ex[:max(0, len(ex) - max(1, len(ex) // 8))]
@@ -455,9 +488,9 @@ def build_card(*, slug, old_text, old_fields, vault_bytes, vault_rel, vault_stem
             "synth_dropped": synth == "",
             # 12 KB 是硬门禁。引文一条不截断 ⇒ 极少数卡可能连「引文 + 固定骨架」都装不下。
             # 此时**响亮失败**，绝不静默截引文（那正是本次要修的缺陷形态）。
-            "over_budget": len(text.encode()) > MAX_SKILL_BYTES,
+            "over_budget": len(text.encode()) > staging_budget(),
             "bytes": len(text.encode()),
-            "body_bytes": len(text.encode()) - len(fm_text.encode()),
+            "body_bytes": len(text.encode()) - len(fm_render(len(tk)).encode()),
             "kind": "new" if add_new else "rebase",
         },
     }
@@ -666,10 +699,13 @@ def do_check(world: dict, out, baseline: dict | None = None) -> tuple[int, dict]
 
     # C2 12 KB 硬门禁（**每张，不是抽样**）
     over = [(c["dir"].name, len(c["text"].encode())) for c in cards
-            if len(c["text"].encode()) > MAX_SKILL_BYTES]
+            if len(c["text"].encode()) > staging_budget()]
     stats["over_12k"] = len(over)
     for s, b in over:
-        problems.append(("C2", f"{s}: SKILL.md {b} 字节 > 12KB 硬门禁"))
+        problems.append(("C2", f"{s}: SKILL.md {b} 字节 > **staging 预算** {staging_budget()}"
+                               f"（12KB 门禁 {MAX_SKILL_BYTES} − 装机追加余量 {INSTALL_HEADROOM_BYTES}）"
+                               f" —— 装机后必然超限"))
+    stats["max_staging_bytes"] = max((len(c["text"].encode()) for c in cards), default=0)
 
     # C3 quality_tier 覆盖与取值域
     dom_tiers = {"curated", "preview"}
@@ -741,16 +777,31 @@ def do_check(world: dict, out, baseline: dict | None = None) -> tuple[int, dict]
                                        f"（缺 `{marker}`） —— 静默截断"))
         else:
             stats["cards_complete_evidence"] += 1
-        # 引文区间必须是完整卡的一个**连续**片段，逐字节相同
-        qs = quote_span(fbody.split("\n"))
-        if qs:
-            want = "\n".join(fbody.split("\n")[qs[0]:qs[1] + 1])
-            if want not in c["text"]:
-                problems.append(("C4", f"{slug}: 内联引文不是完整卡的逐字节连续片段"))
+        # 内联引文必须是完整卡的一个**连续**片段，逐字节相同。
+        # ⚠️ 判据要用**自报区间** `rebase_quote_span`，不能用整段引文区间 —— 有界内联时
+        #    页内只有前缀，拿整段去比会 46 张全部假红（首版实测）。
+        fbody_lines = fbody.split("\n")
+        qs_full = quote_span(fbody_lines)
+        rec_span = c["fields"].get("rebase_quote_span", "")
+        if rec_span and "-" in rec_span:
+            try:
+                a_s, b_s = rec_span.split("-", 1)
+                a_i, b_i = int(a_s), int(b_s)
+            except ValueError:
+                problems.append(("C4", f"{slug}: rebase_quote_span「{rec_span}」不成形"))
+                a_i = b_i = -1
+            if a_i >= 0 and b_i >= a_i:
+                if qs_full and not (qs_full[0] <= a_i and b_i <= qs_full[1]):
+                    problems.append(("C4", f"{slug}: 自报引文区间 {rec_span} 超出完整卡的引文区间"))
+                want = "\n".join(fbody_lines[a_i:b_i + 1])
+                if want not in c["text"]:
+                    problems.append(("C4", f"{slug}: 内联引文不是完整卡的逐字节连续片段"
+                                           f"（自报区间 {rec_span}）"))
         # 摘录必须是完整卡的可复算子序列
-        lines = fbody.split("\n")
+        lines = fbody_lines
         fences = fenced_line_set(lines)
-        qlines = set(range(qs[0], qs[1] + 1)) if qs else set()
+        # 摘录的可复算同样要用**自报引文区间**（页内只内联了引文前缀）
+        qlines = set(range(a_i, b_i + 1)) if (rec_span and a_i >= 0 and b_i >= a_i) else set()
         span = c["fields"].get("rebase_excerpt_span", "")
         if span and "-" in span:
             a, b = span.split("-", 1)
@@ -779,8 +830,15 @@ def do_check(world: dict, out, baseline: dict | None = None) -> tuple[int, dict]
         cid = c["fields"].get("p2s_card_id")
         if cid in by_id and len(by_id[cid]) > 1:
             problems.append(("C5", f"{cid} 被 {len(by_id[cid])} 张 staging 卡同时认领"))
+    # ⚠️ 底本里实测有 **11 条 `l3: []` / `facets: null`** 的「矩阵空白」卡 —— 空 L3 是**合法结论**
+    #    （产品侧已有先例），不是缺陷；这里不能对 `facets` 直接下标（首版就撞了 TypeError，
+    #    门禁自己炸掉 —— 那是 exit 3 的形态，不是「判红」）。它们单独计数，当作一等输出。
+    blank_items = [it for it in world["cls"]["items"] if not it.get("facets")]
+    stats["blank_l3_in_ledger"] = len(blank_items)
     for it in world["cls"]["items"]:
         f = it["facets"]
+        if not f:
+            continue
         hit = [c for c in cards if c["dir"].name == it["slug"]]
         if not hit:
             problems.append(("C5", f"底本条目 {it['slug']} 在 staging 里没有实物"))
@@ -808,7 +866,10 @@ def do_check(world: dict, out, baseline: dict | None = None) -> tuple[int, dict]
     out.write(f"  未打标              {stats['untagged']}\n")
     out.write(f"  vault 卡            {stats['vault_total']}\n")
     out.write(f"  其中未被认领（vault 独有） {stats['vault_cards_not_rebased']}\n")
-    out.write(f"  超 12KB             {stats['over_12k']}\n")
+    out.write(f"  超 staging 预算      {stats['over_12k']}"
+              f"（预算 {staging_budget()} = 12KB − 装机余量 {INSTALL_HEADROOM_BYTES}；"
+              f"最大卡 {stats.get('max_staging_bytes')} 字节）\n")
+    out.write(f"  底本空 L3 条目（合法）  {stats.get('blank_l3_in_ledger', 0)}\n")
     out.write(f"  quality_tier 覆盖    {stats['quality_tier_covered']}/{stats['staging_total']}"
               f"（curated {stats['quality_tier_curated']} / preview {stats['quality_tier_preview']}）\n")
     out.write(f"  内联逐字引文          {stats['evidence_quotes_inline']}/{stats['evidence_quotes_total']} 条"
@@ -1110,6 +1171,20 @@ def selftest(out) -> int:
     case("3 超 12KB ⇒ 判红", code, EXIT_RED, rep[-200:])
     case("3 报 C2", "[C2]" in rep, True)
 
+    # --- 用例 3b（装机余量的篡改样本）：staging 卡**正好 12288**也必须判红 ------
+    # 因为 12 KB 门禁量的是**已装卡**，而装机链之后还会追 `p2s_*` 透传字段。
+    # 去掉余量这条判据就形同虚设（M7 变异锁这条）。
+    d3b = tmp / "f3b"
+    shutil.copytree(tmp / "f1", d3b)
+    sk3b = d3b / "pkg" / "staging" / "供应与履约" / "p2s-sample-card" / "SKILL.md"
+    body3b = sk3b.read_text(encoding="utf-8")
+    pad = 12288 - len(body3b.encode())
+    case("3b 夹具恰好补到 12288", pad > 0, True, f"pad={pad}")
+    sk3b.write_text(body3b + "x" * pad, encoding="utf-8")
+    _c3b, rep3b = _run_cli(d3b / "pkg", d3b / "vault")
+    case("3b staging 顶到 12288 也判红（要给装机追加留余量）", _c3b, EXIT_RED, rep3b[-160:])
+    case("3b 报告写清预算 = 12KB − 余量", f"装机追加余量 {INSTALL_HEADROOM_BYTES}" in rep3b, True)
+
     # --- 用例 4（篡改样本）：源卡变了但没重换底 ⇒ 必须报源指纹漂移 ----------
     d4 = tmp / "f4"
     shutil.copytree(tmp / "f1", d4)
@@ -1240,6 +1315,11 @@ MUTATIONS = [
      "            if False:",
      "evidence_quotes_inline",
      "用例 2 应报红失败"),
+    ("M7 装机余量清零（staging 顶到 12288，装机后必然超限）",
+     "INSTALL_HEADROOM_BYTES = 48",
+     "INSTALL_HEADROOM_BYTES = 0",
+     "max_staging_bytes",
+     "用例 3b 应报红失败"),
     ("M6 frontmatter 自报条数不核（自报与实际脱节也照样绿）",
      "        if declared != n_skill:",
      "        if False:",
@@ -1321,6 +1401,17 @@ def _battery(root: Path) -> list[tuple[str, Path, Path]]:
 
     # P6 输入没拿到
     probes.append(("P6 缺输入", root / "nope-p2s", root / "nope-vault"))
+
+    # P7 staging 卡顶到 12288（装机余量判据的**唯一**承重探针）
+    # ⚠️ 没有它，`INSTALL_HEADROOM_BYTES = 0` 这条变异在六个探针上读数全不变 ——
+    #    因为那些探针的卡都远在预算之下。变异测试实测把这一点打了出来。
+    p7, v7, d7 = clone("p7")
+    f7 = d7 / "SKILL.md"
+    t7 = f7.read_text(encoding="utf-8")
+    padding = 12288 - len(t7.encode())
+    if padding > 0:
+        f7.write_text(t7 + "x" * padding, encoding="utf-8")
+    probes.append(("P7 staging 顶到 12288", p7, v7))
     return probes
 
 
@@ -1395,7 +1486,7 @@ def _codes(txt: str) -> set:
 def _readings(txt: str) -> dict:
     d = {}
     for k in ("staging 卡", "已换底（有 vault_card）", "quality_tier=preview", "未打标",
-              "超 12KB", "内联逐字引文总条数", "quality_tier 覆盖"):
+              "超 staging 预算", "内联逐字引文", "quality_tier 覆盖"):
         m = re.search(re.escape(k) + r"\s+(\S+)", txt)
         if m:
             d[k] = m.group(1)

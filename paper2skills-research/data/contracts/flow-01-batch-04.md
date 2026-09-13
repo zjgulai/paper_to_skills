@@ -208,8 +208,11 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 0 张
-    （无）
+- 有全文卡（优先选，可选到论文参数）：共 2 张
+    - `p2s-agentic-catalog-enrichment` · 源卡号 `Skill-Agentic-Catalog-Enrichment` · 00-电商Agent · Skill-Agentic-Catalog-Enrichment
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-agentic-catalog-enrichment/SKILL.md`
+    - `p2s-llm-personalized-marketing-copy-generation` · 源卡号 `Skill-LLM-Personalized-Marketing-Copy-Generation` · 07-NLP-VOC · Skill-LLM-Personalized-Marketing-Copy-Generation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-llm-personalized-marketing-copy-generation/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 43 张
     - `p2s-a-plus-content-template-engine` · 源卡号 `Skill-A-Plus-Content-Template-Engine` · 20-AI视频生成 · A+Content模板引擎 — VOC驱动的A+内容自动排版生成
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-a-plus-content-template-engine/SKILL.md`
@@ -291,11 +294,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-search-tag-keyword-auto-mapping/SKILL.md`
     - `p2s-seasonal-keyword-rotation-strategy` · 源卡号 `Skill-Seasonal-Keyword-Rotation-Strategy` · 25-搜索流量工程 · Skill-Seasonal-Keyword-Rotation-Strategy — 季节性关键词轮换策略
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-seasonal-keyword-rotation-strategy/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-Agentic-Catalog-Enrichment` · 00-电商Agent · Skill-Agentic-Catalog-Enrichment
-      - 全文卡：`paper2skills-vault/00-电商Agent/Skill-Agentic-Catalog-Enrichment.md`
-    - `Skill-LLM-Personalized-Marketing-Copy-Generation` · 07-NLP-VOC · Skill-LLM-Personalized-Marketing-Copy-Generation
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-LLM-Personalized-Marketing-Copy-Generation.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 45。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -348,7 +348,7 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 4 张
+- 有全文卡（优先选，可选到论文参数）：共 7 张
     - `p2s-intelligent-prediction-doubly-robust` · 源卡号 `Skill-Intelligent-Prediction-Doubly-Robust` · 03-时间序列 · 智能预测 - 双重稳健估计 (Doubly Robust Estimation)
       - 全文卡：`/Users/lute/.dsh/skills/p2s-intelligent-prediction-doubly-robust/SKILL.md`
     - `p2s-promotion-effectiveness` · 源卡号 `Skill-Promotion-Effectiveness` · 15-营销投放分析 · Promotion Effectiveness Evaluation with Causal ML
@@ -357,6 +357,12 @@
       - 全文卡：`/Users/lute/.dsh/skills/p2s-tree-of-thoughts-planning/SKILL.md`
     - `p2s-uplift-modeling` · 源卡号 `Skill-Uplift-Modeling` · 01-因果推断 · Uplift Modeling (元学习框架)
       - 全文卡：`/Users/lute/.dsh/skills/p2s-uplift-modeling/SKILL.md`
+    - `p2s-funnel-causal-coupon-allocation` · 源卡号 `Skill-Funnel-Causal-Coupon-Allocation` · 13-广告分析 · Skill-Funnel-Causal-Coupon-Allocation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-funnel-causal-coupon-allocation/SKILL.md`
+    - `p2s-mas-consumer-behavior-simulation` · 源卡号 `Skill-MAS-Consumer-Behavior-Simulation` · 07-NLP-VOC · Skill-MAS-Consumer-Behavior-Simulation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-mas-consumer-behavior-simulation/SKILL.md`
+    - `p2s-mas-marl-dynamic-pricing` · 源卡号 `Skill-MAS-MARL-Dynamic-Pricing` · 07-NLP-VOC · Skill-MAS-MARL-Dynamic-Pricing
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-mas-marl-dynamic-pricing/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 31 张
     - `p2s-abandoned-cart-recovery-ml` · 源卡号 `Skill-Abandoned-Cart-Recovery-ML` · 14-用户分析 · Abandoned Cart Recovery ML — 弃购挽回机器学习：预测意图×序列触达×个性化优惠
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-abandoned-cart-recovery-ml/SKILL.md`
@@ -420,13 +426,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-tag-informed-dynamic-pricing/SKILL.md`
     - `p2s-uplift-intervention-priority-queue` · 源卡号 `Skill-Uplift-Intervention-Priority-Queue` · 14-用户分析 · Uplift-Intervention-Priority-Queue — Uplift×LTV加权排序生成有限促销资源干
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-uplift-intervention-priority-queue/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 3 张
-    - `Skill-Funnel-Causal-Coupon-Allocation` · 13-广告分析 · Skill-Funnel-Causal-Coupon-Allocation
-      - 全文卡：`paper2skills-vault/13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md`
-    - `Skill-MAS-Consumer-Behavior-Simulation` · 07-NLP-VOC · Skill-MAS-Consumer-Behavior-Simulation
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Consumer-Behavior-Simulation.md`
-    - `Skill-MAS-MARL-Dynamic-Pricing` · 07-NLP-VOC · Skill-MAS-MARL-Dynamic-Pricing
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-MARL-Dynamic-Pricing.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 38。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -471,13 +472,17 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 3 张
+- 有全文卡（优先选，可选到论文参数）：共 5 张
     - `p2s-intelligent-attribution-causal-forest` · 源卡号 `Skill-Intelligent-Attribution-Causal-Forest` · 01-因果推断 · 智能归因 - 因果森林 (Causal Forest)
       - 全文卡：`/Users/lute/.dsh/skills/p2s-intelligent-attribution-causal-forest/SKILL.md`
     - `p2s-marketing-mix-modeling` · 源卡号 `Skill-Marketing-Mix-Modeling` · 15-营销投放分析 · Marketing Mix Modeling (MMM) for Macro Budget Allocation
       - 全文卡：`/Users/lute/.dsh/skills/p2s-marketing-mix-modeling/SKILL.md`
     - `p2s-roas-budget-optimization` · 源卡号 `Skill-ROAS-Budget-Optimization` · 13-广告分析 · ROAS Optimization and Ad Budget Allocation
       - 全文卡：`/Users/lute/.dsh/skills/p2s-roas-budget-optimization/SKILL.md`
+    - `p2s-cannibalization-corrected-attribution` · 源卡号 `Skill-Cannibalization-Corrected-Attribution` · 13-广告分析 · Skill-Cannibalization-Corrected-Attribution
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-cannibalization-corrected-attribution/SKILL.md`
+    - `p2s-causal-budget-allocation` · 源卡号 `Skill-Causal-Budget-Allocation` · 13-广告分析 · Skill-Causal-Budget-Allocation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-causal-budget-allocation/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 48 张
     - `p2s-ad-spend-inventory-sync` · 源卡号 `Skill-Ad-Spend-Inventory-Sync` · 13-广告分析 · Ad Spend Inventory Sync — 广告投放与库存联动的协同优化
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-ad-spend-inventory-sync/SKILL.md`
@@ -559,11 +564,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-roas-below-target-budget-freeze/SKILL.md`
     - `p2s-rtb-realtime-bidding-optimization` · 源卡号 `Skill-RTB-Realtime-Bidding-Optimization` · 13-广告分析 · RTB Realtime Bidding Optimization — 生成式自动出价与多约束实时竞价优化
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-rtb-realtime-bidding-optimization/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-Cannibalization-Corrected-Attribution` · 13-广告分析 · Skill-Cannibalization-Corrected-Attribution
-      - 全文卡：`paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md`
-    - `Skill-Causal-Budget-Allocation` · 13-广告分析 · Skill-Causal-Budget-Allocation
-      - 全文卡：`paper2skills-vault/13-广告分析/Skill-Causal-Budget-Allocation.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 53。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -723,7 +725,7 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 5 张
+- 有全文卡（优先选，可选到论文参数）：共 8 张
     - `p2s-hgcn-hyperbolic-graph-convolutional-networks` · 源卡号 `Skill-HGCN-Hyperbolic-Graph-Convolutional-Networks` · 08-知识图谱 · HGCN — 双曲图卷积网络
       - 全文卡：`/Users/lute/.dsh/skills/p2s-hgcn-hyperbolic-graph-convolutional-networks/SKILL.md`
     - `p2s-hgt-heterogeneous-graph-transformer` · 源卡号 `Skill-HGT-Heterogeneous-Graph-Transformer` · 08-知识图谱 · HGT — 异构图 Transformer 表示学习
@@ -734,6 +736,12 @@
       - 全文卡：`/Users/lute/.dsh/skills/p2s-kg-relation-completion-cblip/SKILL.md`
     - `p2s-multilingual-ner-universal-v2` · 源卡号 `Skill-Multilingual-NER-Universal-v2` · 08-知识图谱 · Multilingual Named Entity Recognition (Universal NER v2)
       - 全文卡：`/Users/lute/.dsh/skills/p2s-multilingual-ner-universal-v2/SKILL.md`
+    - `p2s-agentic-catalog-enrichment` · 源卡号 `Skill-Agentic-Catalog-Enrichment` · 00-电商Agent · Skill-Agentic-Catalog-Enrichment
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-agentic-catalog-enrichment/SKILL.md`
+    - `p2s-crosslingual-semantic-alignment` · 源卡号 `Skill-CrossLingual-Semantic-Alignment` · 07-NLP-VOC · Skill-CrossLingual-Semantic-Alignment
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-crosslingual-semantic-alignment/SKILL.md`
+    - `p2s-live-catalog-conversational-rec` · 源卡号 `Skill-Live-Catalog-Conversational-Rec` · 00-电商Agent · Skill-Live-Catalog-Conversational-Rec
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-live-catalog-conversational-rec/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 35 张
     - `p2s-autopkg-multimodal-product-attribute-kg` · 源卡号 `Skill-AutoPKG-Multimodal-Product-Attribute-KG` · 08-知识图谱 · AutoPKG — 多模态产品属性图谱自动构建：文本+图片→GMV提升
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-autopkg-multimodal-product-attribute-kg/SKILL.md`
@@ -805,13 +813,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-tagrag-hierarchical-label-kg/SKILL.md`
     - `p2s-itext2kg-schema-free-kg-induction` · 源卡号 `Skill-iText2KG-Schema-Free-KG-Induction` · 08-知识图谱 · iText2KG — 零样本增量知识图谱构建
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-itext2kg-schema-free-kg-induction/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 3 张
-    - `Skill-Agentic-Catalog-Enrichment` · 00-电商Agent · Skill-Agentic-Catalog-Enrichment
-      - 全文卡：`paper2skills-vault/00-电商Agent/Skill-Agentic-Catalog-Enrichment.md`
-    - `Skill-CrossLingual-Semantic-Alignment` · 07-NLP-VOC · Skill-CrossLingual-Semantic-Alignment
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-CrossLingual-Semantic-Alignment.md`
-    - `Skill-Live-Catalog-Conversational-Rec` · 00-电商Agent · Skill-Live-Catalog-Conversational-Rec
-      - 全文卡：`paper2skills-vault/00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 43。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -872,8 +875,9 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 0 张
-    （无）
+- 有全文卡（优先选，可选到论文参数）：共 1 张
+    - `p2s-tjap` · 源卡号 `Skill-TJAP-跨市场品类组合定价` · 07-NLP-VOC · Skill-TJAP-跨市场品类组合定价
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-tjap/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 16 张
     - `p2s-ai-product-safety-certification` · 源卡号 `Skill-AI-Product-Safety-Certification` · 21-合规决策 · AI Product Safety Certification — AI驱动产品安全认证自动化：从测试报告解析到合规路径
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-ai-product-safety-certification/SKILL.md`
@@ -907,9 +911,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-ssbc-small-sample-conformal/SKILL.md`
     - `p2s-shopee-lazada-sea-market-intelligence` · 源卡号 `Skill-Shopee-Lazada-SEA-Market-Intelligence` · 14-用户分析 · 东南亚市场情报与选品分群 — Shopee/Lazada 热搜词 + K-Means 价格带定位
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-shopee-lazada-sea-market-intelligence/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 1 张
-    - `Skill-TJAP-跨市场品类组合定价` · 07-NLP-VOC · Skill-TJAP-跨市场品类组合定价
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TJAP-跨市场品类组合定价.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 17。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -970,8 +973,9 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 0 张
-    （无）
+- 有全文卡（优先选，可选到论文参数）：共 1 张
+    - `p2s-llm-personalized-marketing-copy-generation` · 源卡号 `Skill-LLM-Personalized-Marketing-Copy-Generation` · 07-NLP-VOC · Skill-LLM-Personalized-Marketing-Copy-Generation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-llm-personalized-marketing-copy-generation/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 26 张
     - `p2s-a-plus-content-template-engine` · 源卡号 `Skill-A-Plus-Content-Template-Engine` · 20-AI视频生成 · A+Content模板引擎 — VOC驱动的A+内容自动排版生成
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-a-plus-content-template-engine/SKILL.md`
@@ -1025,9 +1029,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-videorag-video-knowledge-retrieval/SKILL.md`
     - `p2s-zero-click-search-optimization` · 源卡号 `Skill-Zero-Click-Search-Optimization` · 13-广告分析 · Zero-Click Search Optimization — 零点击搜索时代的流量保全与特色摘要抢占
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-zero-click-search-optimization/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 1 张
-    - `Skill-LLM-Personalized-Marketing-Copy-Generation` · 07-NLP-VOC · Skill-LLM-Personalized-Marketing-Copy-Generation
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-LLM-Personalized-Marketing-Copy-Generation.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 27。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，

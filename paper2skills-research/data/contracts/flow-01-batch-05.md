@@ -57,9 +57,11 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 1 张
+- 有全文卡（优先选，可选到论文参数）：共 2 张
     - `p2s-tree-of-thoughts-planning` · 源卡号 `Skill-Tree-of-Thoughts-Planning` · 10-MAS · Tree of Thoughts — 树搜索式任务规划
       - 全文卡：`/Users/lute/.dsh/skills/p2s-tree-of-thoughts-planning/SKILL.md`
+    - `p2s-mas-consumer-behavior-simulation` · 源卡号 `Skill-MAS-Consumer-Behavior-Simulation` · 07-NLP-VOC · Skill-MAS-Consumer-Behavior-Simulation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-mas-consumer-behavior-simulation/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 13 张
     - `p2s-bayesian-mmm-action-plan-generator` · 源卡号 `Skill-Bayesian-MMM-Action-Plan-Generator` · 15-营销投放分析 · Bayesian MMM Action Plan Generator — 贝叶斯后验分布生成保守/中性/激进三版预算方案
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-bayesian-mmm-action-plan-generator/SKILL.md`
@@ -87,9 +89,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-tariff-impact-margin-stress-test/SKILL.md`
     - `p2s-working-capital-stress-test` · 源卡号 `Skill-Working-Capital-Stress-Test` · 23-运营财务 · Working Capital Stress Test — 营运资金压力测试（旺季备货资金缺口模拟）
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-working-capital-stress-test/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 1 张
-    - `Skill-MAS-Consumer-Behavior-Simulation` · 07-NLP-VOC · Skill-MAS-Consumer-Behavior-Simulation
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Consumer-Behavior-Simulation.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 15。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -150,8 +151,9 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 0 张
-    （无）
+- 有全文卡（优先选，可选到论文参数）：共 1 张
+    - `p2s-multi-warehouse-allocation-llm` · 源卡号 `Skill-Multi-Warehouse-Allocation-LLM` · 04-供应链 · Skill-Multi-Warehouse-Allocation-LLM
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-multi-warehouse-allocation-llm/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 20 张
     - `p2s-combo-inventory-crisis-response` · 源卡号 `Skill-Combo-Inventory-Crisis-Response` · 16-智能体工程 · 库存危机响应 Combo Pattern — 断货/积压异常触发的 5 步自动响应链路
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-combo-inventory-crisis-response/SKILL.md`
@@ -193,9 +195,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-supply-chain-network-design/SKILL.md`
     - `p2s-unified-cross-border-inventory-dispatch` · 源卡号 `Skill-Unified-Cross-Border-Inventory-Dispatch` · 04-供应链 · 一盘货跨境库存统一调度 — 多平台多国统一库存决策与分配引擎
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-unified-cross-border-inventory-dispatch/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 1 张
-    - `Skill-Multi-Warehouse-Allocation-LLM` · 04-供应链 · Skill-Multi-Warehouse-Allocation-LLM
-      - 全文卡：`paper2skills-vault/04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 21。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -356,9 +357,13 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 1 张
+- 有全文卡（优先选，可选到论文参数）：共 3 张
     - `p2s-iv-instrumental-variables` · 源卡号 `Skill-IV-Instrumental-Variables` · 01-因果推断 · Instrumental Variables (IV) for Causal Inference with Endoge
       - 全文卡：`/Users/lute/.dsh/skills/p2s-iv-instrumental-variables/SKILL.md`
+    - `p2s-mas-multi-objective-recommendation` · 源卡号 `Skill-MAS-Multi-Objective-Recommendation` · 07-NLP-VOC · Skill-MAS-Multi-Objective-Recommendation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-mas-multi-objective-recommendation/SKILL.md`
+    - `p2s-tjap` · 源卡号 `Skill-TJAP-跨市场品类组合定价` · 07-NLP-VOC · Skill-TJAP-跨市场品类组合定价
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-tjap/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 15 张
     - `p2s-bundle-pricing-strategy` · 源卡号 `Skill-Bundle-Pricing-Strategy` · 17-价格优化 · Bundle Pricing Strategy（捆绑定价策略）
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-bundle-pricing-strategy/SKILL.md`
@@ -390,11 +395,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-mental-accounting-bundle-psychology/SKILL.md`
     - `p2s-topological-data-analysis-cross-sell` · 源卡号 `Skill-Topological-Data-Analysis-Cross-Sell` · 05-推荐系统 · 拓扑数据分析 (TDA) 挖掘时空隐性关联销售路径
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-topological-data-analysis-cross-sell/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-MAS-Multi-Objective-Recommendation` · 07-NLP-VOC · Skill-MAS-Multi-Objective-Recommendation
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Multi-Objective-Recommendation.md`
-    - `Skill-TJAP-跨市场品类组合定价` · 07-NLP-VOC · Skill-TJAP-跨市场品类组合定价
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TJAP-跨市场品类组合定价.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 18。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，

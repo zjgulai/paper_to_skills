@@ -275,13 +275,15 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 3 张
+- 有全文卡（优先选，可选到论文参数）：共 4 张
     - `p2s-dense-retrieval-ecommerce-semantic-search` · 源卡号 `Skill-Dense-Retrieval-Ecommerce-Semantic-Search` · 08-知识图谱 · 面向电商的稠密检索与语义排序
       - 全文卡：`/Users/lute/.dsh/skills/p2s-dense-retrieval-ecommerce-semantic-search/SKILL.md`
     - `p2s-neuralndcg-learning-to-rank` · 源卡号 `Skill-NeuralNDCG-Learning-to-Rank` · 05-推荐系统 · NeuralNDCG — 可微分排序优化与Learning to Rank
       - 全文卡：`/Users/lute/.dsh/skills/p2s-neuralndcg-learning-to-rank/SKILL.md`
     - `p2s-semantic-id-retrieval-rpg` · 源卡号 `Skill-Semantic-ID-Retrieval-RPG` · 05-推荐系统 · Semantic ID Retrieval for Recommendation (RPG)
       - 全文卡：`/Users/lute/.dsh/skills/p2s-semantic-id-retrieval-rpg/SKILL.md`
+    - `p2s-revision` · 源卡号 `Skill-REVISION-无点击意图挖掘` · 07-NLP-VOC · Skill-REVISION-无点击意图挖掘
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-revision/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 38 张
     - `p2s-amazon-search-ranking-factor-model` · 源卡号 `Skill-Amazon-Search-Ranking-Factor-Model` · 25-搜索流量工程 · Amazon 搜索排名因子权重建模 — 用 LightGBM+SHAP 解构 A9/A10 算法
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-amazon-search-ranking-factor-model/SKILL.md`
@@ -359,9 +361,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-visual-product-search/SKILL.md`
     - `p2s-voice-search-optimization-amazon` · 源卡号 `Skill-Voice-Search-Optimization-Amazon` · 25-搜索流量工程 · Skill-Voice-Search-Optimization-Amazon — Amazon 语音搜索优化
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-voice-search-optimization-amazon/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 1 张
-    - `Skill-REVISION-无点击意图挖掘` · 07-NLP-VOC · Skill-REVISION-无点击意图挖掘
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-REVISION-无点击意图挖掘.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 42。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -414,13 +415,17 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 3 张
+- 有全文卡（优先选，可选到论文参数）：共 5 张
     - `p2s-iv-instrumental-variables` · 源卡号 `Skill-IV-Instrumental-Variables` · 01-因果推断 · Instrumental Variables (IV) for Causal Inference with Endoge
       - 全文卡：`/Users/lute/.dsh/skills/p2s-iv-instrumental-variables/SKILL.md`
     - `p2s-monodense` · 源卡号 `Skill-Monodense-单品价格弹性估计` · 04-供应链 · Skill: Monodense 单品价格弹性估计
       - 全文卡：`/Users/lute/.dsh/skills/p2s-monodense/SKILL.md`
     - `p2s-promotion-effectiveness` · 源卡号 `Skill-Promotion-Effectiveness` · 15-营销投放分析 · Promotion Effectiveness Evaluation with Causal ML
       - 全文卡：`/Users/lute/.dsh/skills/p2s-promotion-effectiveness/SKILL.md`
+    - `p2s-mas-marl-dynamic-pricing` · 源卡号 `Skill-MAS-MARL-Dynamic-Pricing` · 07-NLP-VOC · Skill-MAS-MARL-Dynamic-Pricing
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-mas-marl-dynamic-pricing/SKILL.md`
+    - `p2s-tjap` · 源卡号 `Skill-TJAP-跨市场品类组合定价` · 07-NLP-VOC · Skill-TJAP-跨市场品类组合定价
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-tjap/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 50 张
     - `p2s-aigp-llm-dynamic-pricing` · 源卡号 `Skill-AIGP-LLM-Dynamic-Pricing` · 17-价格优化 · AIGP — LLM 动态定价：长期 GMV 对齐框架（+13% GMV A/B实测）
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-aigp-llm-dynamic-pricing/SKILL.md`
@@ -502,11 +507,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-rl-dynamic-promotion-optimization/SKILL.md`
     - `p2s-real-time-competitive-repricing` · 源卡号 `Skill-Real-Time-Competitive-Repricing` · 17-价格优化 · Real-Time Competitive Repricing — 竞品价格监测与深度强化学习自动重定价
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-real-time-competitive-repricing/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-MAS-MARL-Dynamic-Pricing` · 07-NLP-VOC · Skill-MAS-MARL-Dynamic-Pricing
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-MARL-Dynamic-Pricing.md`
-    - `Skill-TJAP-跨市场品类组合定价` · 07-NLP-VOC · Skill-TJAP-跨市场品类组合定价
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TJAP-跨市场品类组合定价.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 55。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，

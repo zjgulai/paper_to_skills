@@ -97,7 +97,7 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 8 张
+- 有全文卡（优先选，可选到论文参数）：共 10 张
     - `p2s-autogen-multi-agent-conversation` · 源卡号 `Skill-AutoGen-Multi-Agent-Conversation` · 10-MAS · AutoGen — 多智能体对话编排框架
       - 全文卡：`/Users/lute/.dsh/skills/p2s-autogen-multi-agent-conversation/SKILL.md`
     - `p2s-camel-role-playing-agents` · 源卡号 `Skill-CAMEL-Role-Playing-Agents` · 10-MAS · CAMEL — 角色扮演式自主协作多 Agent 框架
@@ -114,6 +114,10 @@
       - 全文卡：`/Users/lute/.dsh/skills/p2s-subagent-decomposition/SKILL.md`
     - `p2s-task-adaptive-topology` · 源卡号 `Skill-Task-Adaptive-Topology` · 16-智能体工程 · 任务自适应拓扑路由 — AdaptOrch 动态多智能体编排
       - 全文卡：`/Users/lute/.dsh/skills/p2s-task-adaptive-topology/SKILL.md`
+    - `p2s-multi-agent-collaboration-tax` · 源卡号 `Skill-Multi-Agent-Collaboration-Tax` · 10-MAS · Skill-Multi-Agent-Collaboration-Tax
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-multi-agent-collaboration-tax/SKILL.md`
+    - `p2s-routed-graph-handoff` · 源卡号 `Skill-Routed-Graph-Handoff` · 10-MAS · Skill-Routed-Graph-Handoff
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-routed-graph-handoff/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 16 张
     - `p2s-agent-qmix-topology-learning` · 源卡号 `Skill-Agent-QMix-Topology-Learning` · 10-MAS · Agent Q-Mix — MARL 学习最优 MAS 通信拓扑（QMIX 值分解）
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-agent-qmix-topology-learning/SKILL.md`
@@ -147,11 +151,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-sdof-state-constrained-orchestration/SKILL.md`
     - `p2s-supply-chain-agent-orchestration-hub` · 源卡号 `Skill-Supply-Chain-Agent-Orchestration-Hub` · 24-标签工程 · 供应链Agent编排中枢 — 多Agent协作、任务分发与跨域决策自动化
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-supply-chain-agent-orchestration-hub/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-Multi-Agent-Collaboration-Tax` · 10-MAS · Skill-Multi-Agent-Collaboration-Tax
-      - 全文卡：`paper2skills-vault/10-MAS/Skill-Multi-Agent-Collaboration-Tax.md`
-    - `Skill-Routed-Graph-Handoff` · 10-MAS · Skill-Routed-Graph-Handoff
-      - 全文卡：`paper2skills-vault/10-MAS/Skill-Routed-Graph-Handoff.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 26。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -305,7 +306,7 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 4 张
+- 有全文卡（优先选，可选到论文参数）：共 5 张
     - `p2s-dense-retrieval-ecommerce-semantic-search` · 源卡号 `Skill-Dense-Retrieval-Ecommerce-Semantic-Search` · 08-知识图谱 · 面向电商的稠密检索与语义排序
       - 全文卡：`/Users/lute/.dsh/skills/p2s-dense-retrieval-ecommerce-semantic-search/SKILL.md`
     - `p2s-diversity-reranking-smmr` · 源卡号 `Skill-Diversity-Reranking-SMMR` · 05-推荐系统 · Diversity-Aware Reranking with SMMR
@@ -314,6 +315,8 @@
       - 全文卡：`/Users/lute/.dsh/skills/p2s-explainable-recommendation/SKILL.md`
     - `p2s-kg-relation-completion-cblip` · 源卡号 `Skill-KG-Relation-Completion-CBLiP` · 08-知识图谱 · Knowledge Graph Relation Completion with CBLiP
       - 全文卡：`/Users/lute/.dsh/skills/p2s-kg-relation-completion-cblip/SKILL.md`
+    - `p2s-product-attribute-graph-parsing` · 源卡号 `Skill-Product-Attribute-Graph-Parsing` · 07-NLP-VOC · Skill-Product-Attribute-Graph-Parsing
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-product-attribute-graph-parsing/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 33 张
     - `p2s-a9-algorithm-sales-velocity-optimization` · 源卡号 `Skill-A9-Algorithm-Sales-Velocity-Optimization` · 25-搜索流量工程 · Skill-A9-Algorithm-Sales-Velocity-Optimization — A9 算法销量速度优化
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-a9-algorithm-sales-velocity-optimization/SKILL.md`
@@ -381,9 +384,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-search-signal-realtime-pipeline/SKILL.md`
     - `p2s-vlm-ecommerce-adaptation` · 源卡号 `Skill-VLM-Ecommerce-Adaptation` · 16-智能体工程 · VLM E-commerce Adaptation — 大规模视觉语言模型电商适配
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-vlm-ecommerce-adaptation/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 1 张
-    - `Skill-Product-Attribute-Graph-Parsing` · 07-NLP-VOC · Skill-Product-Attribute-Graph-Parsing
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Product-Attribute-Graph-Parsing.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 38。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
@@ -502,9 +504,13 @@
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
 > `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
 
-- 有全文卡（优先选，可选到论文参数）：共 1 张
+- 有全文卡（优先选，可选到论文参数）：共 3 张
     - `p2s-ab-experimental-design` · 源卡号 `Skill-AB-Experimental-Design` · 02-A_B实验 · Skill: A/B 实验设计基础
       - 全文卡：`/Users/lute/.dsh/skills/p2s-ab-experimental-design/SKILL.md`
+    - `p2s-persona-based-ab-simulation` · 源卡号 `Skill-Persona-Based-AB-Simulation` · 02-A_B实验 · Skill-Persona-Based-AB-Simulation
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-persona-based-ab-simulation/SKILL.md`
+    - `p2s-self-improving-llm-agent-pipeline` · 源卡号 `Skill-Self-Improving-LLM-Agent-Pipeline` · 07-NLP-VOC · Skill-Self-Improving-LLM-Agent-Pipeline
+      - 全文卡：`/Users/lute/.dsh/skills/p2s-self-improving-llm-agent-pipeline/SKILL.md`
 - 只有 legacy 预览版（可引 slug，但 §1 必须写明「论文实验参数未随卡进入本包」，清单按卡面可见数字列）：共 10 张
     - `p2s-ai-video-ab-test-creative` · 源卡号 `Skill-AI-Video-AB-Test-Creative` · 20-AI视频生成 · AI Video AB Test Creative — AI视频素材A/B测试（广告创意自动化迭代优化）
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-ai-video-ab-test-creative/SKILL.md`
@@ -526,11 +532,8 @@
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-tiktok-shop-content-attribution/SKILL.md`
     - `p2s-video-emotion-resonance-score` · 源卡号 `Skill-Video-Emotion-Resonance-Score` · 20-AI视频生成 · Video Emotion Resonance Score — 视频情感共鸣评分（母婴内容感动度量化）
       - 注意：**legacy 预览版**（八段式：④/⑤ 段是占位串、代码以 `references/implementation.py` 随卡且为节选、⑧ 论文出处常写「未自动抽取」或「待人工判定」）→ `/Users/lute/.dsh/skills/p2s-video-emotion-resonance-score/SKILL.md`
-- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 2 张
-    - `Skill-Persona-Based-AB-Simulation` · 02-A_B实验 · Skill-Persona-Based-AB-Simulation
-      - 全文卡：`paper2skills-vault/02-A_B实验/Skill-Persona-Based-AB-Simulation.md`
-    - `Skill-Self-Improving-LLM-Agent-Pipeline` · 07-NLP-VOC · Skill-Self-Improving-LLM-Agent-Pipeline
-      - 全文卡：`paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Self-Improving-LLM-Agent-Pipeline.md`
+- 仅精选线（尚未换底进产品线，引 `card_id`，并注明「S5 换底后替换为已装 slug」）：共 0 张
+    （无）
 
 > 候选总数 13。**`cards` 只写 1–3 张代表卡**（同族，不是全部）——
 > 契约按**责任**建、不按卡建，§1 必须写一句「本契约对同族方法卡通用；换卡时只替换方法实现，
