@@ -353,6 +353,34 @@ def measurement_numbers(text: str) -> list[str]:
     return out
 
 
+# --- Z1：历史 `extract.md` 一律不得充当证据源 -------------------------------------
+# 背景：`papers/<域>/<批次>/extract.md` 是早期批次的**手写/合成提取稿**，不是论文底本。
+# 台账（`PHASE4-发现的内容缺陷.md` 丙类 C1/C2）实测出至少 3 份含**编造内容**：
+#   · `01-因果推断/uplift_model_2019/extract.md` 把 arXiv:1801.05045 说成
+#     Athey & Imbens 的 treatment effects 论文 —— 该 ID 实为 **hep-th 物理论文**
+#   · `02-A_B实验/mab_2019/extract.md`、`03-时间序列/forecasting_2019/extract.md`
+#     的「论文摘要」是 LLM 风格**合成文本**（前者写着 "cross-border e-commerce where
+#     ad creative tracking is continuous" 这类**任何真实摘要里都没有**的句子）
+#
+# ⚠️ 2026-09-13 实测的**重要前提**：当前**没有任何脚本读 `extract.md`** ——
+# `ev_candidates` 只认 `evidence.md`（卡片同名 / 同目录 / registry `outputs.evidence` /
+# `papers/*/<p2s-id>/evidence.md`）。所以这条污染**目前不可达**。
+# 但「不可达」是靠**若干条互不相干的命名约定**维持的，任何一次「放宽 glob 找一个兜底底本」
+# 都会把它接进证据链 —— 那时**合成引文就成了出处**，属于本仓库最危险的一类缺陷
+# （漏洞 #3：在 evidence.md 裸写数字即可洗白）。
+# 故这里把「不可达」从**约定**升级为**判据**，并保留一个会失败的用例。
+# 全库现有 15 份 `extract.md`，本判据对**全部 15 份**生效，不只那 3 份已确认的。
+_FORBIDDEN_EVIDENCE_NAMES = {"extract.md"}
+
+
+def _is_forbidden_evidence_source(p: Path) -> bool:
+    """该文件是否**永不允许**充当证据源？"""
+    if p.name in _FORBIDDEN_EVIDENCE_NAMES:
+        return True
+    # `_superseded/` 下的任何文件同理（与本仓库 cards() 的既有口径一致）
+    return "_superseded" in p.parts
+
+
 def collect_evidence(card: Path, text: str,
                      trusted_quotes: set[str] | None = None) -> tuple[set[str], list[str]]:
     """收集证据链：卡片内引用块 + 同目录 evidence.md 的数字与出处。
@@ -434,12 +462,23 @@ def collect_evidence(card: Path, text: str,
     seen_ev: set[Path] = set()
     for cand in ev_candidates:
         cand = Path(cand)
+        # Z1：历史 `extract.md` 一律不得充当证据源（判据见 _is_forbidden_evidence_source）
+        if _is_forbidden_evidence_source(cand):
+            continue
         if cand in seen_ev or not cand.is_file():
             continue
         seen_ev.add(cand)
         if cand.is_file():
             ev = cand.read_text(encoding="utf-8", errors="replace")
-            sources.append(f"evidence.md: {cand.relative_to(REPO_ROOT)}")
+            # ⚠️ 必须容错：`relative_to` 对**仓库外**的路径抛 ValueError。
+            # 生产中证据都在库内所以不咬人，但一次「把底本放到临时目录」的自检
+            # 就把它撞崩了（Z1 用例 22 实测）。与 `repo_health.rel()` 同口径，
+            # 退回绝对路径即可 —— 崩掉比打印一个绝对路径糟得多。
+            try:
+                ev_label = str(cand.relative_to(REPO_ROOT))
+            except ValueError:
+                ev_label = str(cand)
+            sources.append(f"evidence.md: {ev_label}")
             for src in _extract_quotes(ev):
                 if trusted_quotes is not None and src not in trusted_quotes:
                     continue
@@ -1478,6 +1517,42 @@ def selftest() -> int:
             ok = ok and good
             print(f"{'✅' if good else '❌'} 21 C9 标识符数字洗白[{label}]: "
                   f"{'全部符合预期' if good else f'实得 {[(t, g) for t, g, _ in wrong]}'}")
+
+    # --- 用例 22（Z1）：历史 `extract.md` 永不充当证据源 ----------------------------
+    # ⚠️ 现状是「没有任何脚本读 extract.md」，即这条污染**目前不可达**；
+    # 但不可达是靠**命名约定**维持的，一次「放宽 glob 找兜底底本」就能把它接进证据链，
+    # 那时合成引文就成了出处。故把它升级成判据，并配一个会失败的用例。
+    # **必须两头都测**：只测「extract.md 被禁」的话，把判据写成 `return True` 也能全绿 ——
+    # 那会把 `evidence.md` 一起禁掉，等于**把整个证据链关掉**，症状是红灯暴涨而非报错。
+    with tempfile.TemporaryDirectory() as td:
+        d = Path(td)
+        card = d / "Skill-Z1.md"
+        q_card = "Our throughput reached 4,321 items per hour in production."
+        q_ev = "The baseline latency was 777 milliseconds."
+        card.write_text('---\npaper_id: 2606.26690\n---\n\n## ⑥ 原文引用\n\n'
+                        f'> 原文:"{q_card}"\n> 出处：2606.26690 §1\n', encoding="utf-8")
+        (d / "evidence.md").write_text(
+            '## 证据\n\n'
+            f'> 原文:"{q_ev}"\n> 出处：2606.26690 §2\n', encoding="utf-8")
+        nums, srcs = collect_evidence(card, card.read_text(encoding="utf-8"),
+                                      trusted_quotes={q_card, q_ev})
+        forbid_hit = _is_forbidden_evidence_source(d / "extract.md")
+        allow_ok = not _is_forbidden_evidence_source(d / "evidence.md")
+        # 变异 M3 实测：**只断言 extract.md 会漏掉 `_superseded` 那条路径**
+        # （把 `return "_superseded" in p.parts` 改成 `return False` 后自检全绿）。
+        # 故补一条：`_superseded/` 下的 evidence.md 也必须被禁。
+        sup_ok = _is_forbidden_evidence_source(d / "_superseded" / "evidence.md")
+        # ⚠️ 用**无千分位**的数字：`measurement_numbers("7,777")` 会切成 `['7','777']`
+        # （千分位被当分隔符，实测），拿 `"7777" in nums` 断言会假失败 —— 我第一版就踩了。
+        ev_reachable = ("777" in nums) and any("evidence.md" in s for s in srcs)
+        z1_ok = forbid_hit and allow_ok and sup_ok and ev_reachable
+        ok = ok and z1_ok
+        print(f"{'✅' if z1_ok else '❌'} 22 Z1 历史 extract.md 不得作证据源: "
+              f"extract.md 被禁={forbid_hit}  evidence.md 未被误禁={allow_ok}  "
+              f"_superseded 被禁={sup_ok}  evidence.md 数字仍可作证据={ev_reachable}")
+        # 完整链路（registry `outputs.evidence` → extract.md）**故意不做端到端**：
+        # 当前没有任何记录指向那里，构造它要改 registry。这条判据就是为那一天准备的。
+        # 全库 15 份 extract.md 一律适用，不只台账点名的 3 份。
 
     # 用例 2 的正确性还依赖一个前提：经验卡确实被判成「无论文来源」。
     # 若 card_has_paper_source 有缺陷（例如把 `source: human+ai` 当论文来源），
