@@ -69,6 +69,17 @@ def _p(*parts: str) -> str:
 
 
 GATES: list[Gate] = [
+    # --- 工作区 instruction 预算（本轮新增；实测撑爆过一次）---
+    # ⚠️ 这条门禁守的是**所有其它门禁都看不见的一类丢失**：磁盘上的 `CLAUDE.md` 是完整的，
+    # 而 agent 实际读到的被 harness **静默截断**，`AGENTS.md` / `~/.dsh/AGENTS.md` 整份没进上下文。
+    # 实测事件：`truncated CLAUDE.md from 66175 to 65244 bytes`（被砍掉的是文件尾部）。
+    # 同一个洞本仓库已经踩过第二次（上一次砍掉的恰好是 `Skill Card Format` 那一节）。
+    Gate("L1a", "工作区 instruction 预算：全部指令文件完整进入上下文（无丢弃/无截断）",
+         ["check_instruction_budget.py"]),
+    Gate("L1b", "工作区 instruction 预算：自检（含真实截断事件回归 + 边界正反证）",
+         ["check_instruction_budget.py", "--selftest"], kind="selftest"),
+    Gate("L1c", "工作区 instruction 预算：变异测试（渲染/退出码改坏必须被抓）",
+         ["check_instruction_budget.py", "--mutate"], kind="selftest"),
     # --- 图谱层（F2）---
     Gate("L2a", "五层能力图谱：图与材料一致", ["build_capability_graph.py", "--check"]),
     Gate("L2b", "五层能力图谱：L1–L3 与产品侧 taxonomy 逐项相等（证明没造第二份分类表）",
