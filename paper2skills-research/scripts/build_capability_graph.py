@@ -15,6 +15,7 @@
 | L1 面(4) / L2 域(8) / L3 责任名(151) | 材料 `organization-graph.json` + `role-catalog.json`；产品侧已派生一份 `dsh-paper2skills/data/taxonomy.json` | **join 并逐项断言相等**（`--check-taxonomy`），不重新定义 |
 | 64 格（8 FLOW × 8 STG）与 `cell_kind` | 材料 `collaboration-graph.json` 的 `flow_stage_bindings` + `protocol.stages[].model_participation` | **本图首次落库**（此前没有任何地方有这 64 格） |
 | A/B/C 算法可服务性 | `_survey_org_model.md` §F.3 的逐条判定（151 条） | 解析进图，供缺口账 join |
+| A 类**边界**条目（10 条）与**无 A 类**岗位（10 个） | `_survey_org_model.md` §F.5 / §F.6 | 解析进图（`a_scope`），**并为 T-C 的阈值敏感性提供落点**；解析值与机器算出值**逐项断言相等** |
 | 卡 ↔ L3 | 产品侧 `dsh-paper2skills/data/classification.json`（1338 条） | join 出 93 张（另 53 张等 F5），**覆盖率如实报** |
 | 方案层 | S1（尚未交付） | 只留槽位 `solutions: []` 并声明 |
 
@@ -135,6 +136,36 @@ def parse_serviceability(survey: Path) -> dict[tuple[str, str], str]:
     return out
 
 
+def parse_a_boundary(survey: Path) -> list[dict]:
+    """从 §F.5 解析 A 类中的**边界条目**（10 条）：责任名 + 计入 A 的理由 + 降级条件。
+
+    ⚠️ 与 §F.3 同一条纪律：解析的是**已交付的口径判断**，不是重判。
+        这 10 条正是 T-C（缺口账）要用的东西 —— 若把「A 类 73 条」当成铁板一块，
+        下游就会把「A 是否为主引擎尚有争议」的条目和已定条目一视同仁地排进检索预算。
+        **口径落在 §F.5 原文里有名字**，不是本脚本发明的。
+    """
+    text = survey.read_text(encoding="utf-8")
+    sec = text.split("### F.5")[1].split("### F.6")[0]
+    out: list[dict] = []
+    for line in sec.splitlines():
+        m = re.match(r"^\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*$", line)
+        if not m:
+            continue
+        name = m.group(1).strip()
+        if name in ("责任名", "---") or name.startswith("-"):
+            continue
+        out.append({"name": name, "rationale": m.group(2).strip(),
+                    "downgrade_condition": m.group(3).strip()})
+    return out
+
+
+def parse_roles_without_a(survey: Path) -> list[str]:
+    """从 §F.6 解析**无任何 A 类责任名**的岗位（10 个）。用途同 §F.5：给排序一个已交付的口径锚点。"""
+    text = survey.read_text(encoding="utf-8")
+    sec = text.split("### F.6")[1].split("## G.")[0]
+    return sorted(set(re.findall(r"^\|\s*(AGT-\d{3})\s*\|", sec, re.M)))
+
+
 def load_card_l3() -> dict[str, list[str]]:
     """vault 卡名 → L3 列表（来自产品侧已完成的分类）。缺失时返回空并如实报覆盖率。"""
     if not CLASSIFICATION.is_file():
@@ -172,6 +203,8 @@ def load_wiring() -> dict[str, list[str]]:
 def build(root: Path = MATERIAL_ROOT) -> dict:
     org, cat, coll = load_materials(root)
     serve = parse_serviceability(SURVEY)
+    boundary = parse_a_boundary(SURVEY)
+    no_a_declared = parse_roles_without_a(SURVEY)
     card_l3 = load_card_l3()
     wiring = load_wiring()
 
@@ -212,17 +245,33 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
     # --- L3 层：151 条，每条唯一属一岗（划分） ---
     l3 = []
     seen_l3: dict[str, str] = {}
+    boundary_by_name = {b["name"]: b for b in boundary}
     for r in roles:
         for name in r["l3"]:
             if name in seen_l3:
                 raise SystemExit(f"✗ L3 责任名重复：{name!r} 同属 {seen_l3[name]} 与 {r['id']}"
                                  f" —— 「151 条唯一属一岗」是划分级断言，不成立就不能出图")
             seen_l3[name] = r["id"]
+            b = boundary_by_name.get(name)
             l3.append({
                 "name": name, "role_id": r["id"],
                 "plane_id": r["plane_id"], "domain_id": r["domain_id"],
                 "serviceability": serve.get((r["id"], name)),
+                # §F.5：边界条目 —— 计入 A，但「算法是否为主引擎」有争议（口径锚点，不重判）
+                "boundary_a": b is not None,
+                "boundary_rationale": (b or {}).get("rationale"),
+                "downgrade_condition": (b or {}).get("downgrade_condition"),
             })
+
+    # ⚠️ 解析值与机器算出值**两边都存**并断言相等 —— 这是「没有另造一份口径」的证据，
+    #    也是唯一能发现「§F.5/F.6 写了一条、实际名单里没有」的判据。
+    #    只存解析值 = 抄了一遍；只存算出值 = 丢了「这是人的口径判断」这个前提。
+    a_names = {x["name"] for x in l3 if x["serviceability"] == "A"}
+    roles_without_a_computed = sorted(r["id"] for r in roles
+                                      if not any(x["name"] in a_names and x["role_id"] == r["id"]
+                                                 for x in l3))
+    for r in roles:
+        r["a_count"] = sum(1 for x in l3 if x["role_id"] == r["id"] and x["serviceability"] == "A")
 
     # --- 场景层：直连 vs 传递闭包（join 陷阱 2） ---
     flow_scn = {f["id"]: list(f.get("scenario_ids") or []) for f in coll["flows"]}
@@ -305,10 +354,65 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
         "solutions": [],
         "cards": cards,
         "counts": counts,
+        "a_scope": _a_scope(l3, boundary, no_a_declared, roles_without_a_computed),
         "join_traps": _join_traps(roles, org, plane_domain_mismatch, coll, counts),
         "open_items": _open_items(),
     }
     return graph
+
+
+def _a_scope(l3, boundary, no_a_declared, no_a_computed) -> dict:
+    """A 类口径的落点：阈值 + 边界条目 + 无 A 岗位。
+
+    它回答的问题只有一个：**「A 类 73 条」里哪些是会随阈值动摇的。**
+    下游（T-C 缺口账）据此把 A 当「优先匹配」而不是「已定名单」。
+    """
+    return {
+        "threshold": "算法可作主引擎（若放宽到「算法可作重要辅助」，可服务面达 139/151）",
+        "source": "_survey_org_model.md §F.1（标准）/ §F.5（边界条目）/ §F.6（无 A 岗位）",
+        "a_count": sum(1 for x in l3 if x["serviceability"] == "A"),
+        "boundary_a": [
+            {"name": b["name"], "role_id": next(x["role_id"] for x in l3 if x["name"] == b["name"]),
+             "rationale": b["rationale"], "downgrade_condition": b["downgrade_condition"]}
+            for b in boundary],
+        "contradictions": _a_scope_contradictions(l3, boundary),
+        "roles_without_a_declared": no_a_declared,
+        "roles_without_a_computed": no_a_computed,
+        "note": "A 名单随阈值变，B 的 66 条不变 ⇒ 下游把 A 视为「优先匹配」、B 视为"
+                "「需补外部证据后匹配」。**本条即 O-A 的落点**：阈值敏感性有名单可指，"
+                "而不是一句形容词。",
+    }
+
+
+def _a_scope_contradictions(l3, boundary) -> list[dict]:
+    """§F.5 说是 A、§F.3/F.4 却判 B 的条目 —— **登记，不重判**。
+
+    ⚠️ 这条是 2026-09-13 F3 首次跑图时被**断言当场抓到**的（断言原文：
+        「边界条目必须本身是 A 类」），实得 1 条：**产能调查**。
+        §F.5 表头写「本次计入 A」，而降级条件栏又写「输入若全依赖供方声明，则降 B」，
+        §F.3 逐条判定与 §F.4 的 B 清单（66 条）两处都把它列为 **B**。
+        ⇒ 材料内部不一致，不是本脚本解析错。
+
+    处置口径（与 JT-3 同型：**记进字段，不悄悄吞掉，也不替人重判**）：
+        · A/B/C 一律以 **§F.3 逐条判定表**为准（它是唯一「岗位 + 责任名 + 理由」俱全的表，
+          也是 F.2 唯一的 serviceability 事实源）；
+        · §F.5 的边界标签保留，但**只能挂在真为 A 的条目上**；
+        · 因此**产能调查不进靶区一**（它是 B），也就不会占检索预算 —— 这正是
+          「判据的适用范围被默认成全体」的第四个变体：§F.5 写的是「A 类中的边界条目」，
+          而它列的 10 条里实际只有 9 条是 A。
+    """
+    out = []
+    for b in boundary:
+        x = next((y for y in l3 if y["name"] == b["name"]), None)
+        if x is not None and x["serviceability"] != "A":
+            out.append({
+                "name": b["name"], "role_id": x["role_id"],
+                "declared_in": "§F.5（表头写「本次计入 A」）",
+                "actual_in": f"§F.3 逐条判定 / §F.4 清单（均判 {x['serviceability']}）",
+                "handling": f"以 §F.3 为准 ⇒ 按 {x['serviceability']} 处理，"
+                            f"**不得**计入靶区一（它是按「A ∩ 无精选卡」定义的）",
+            })
+    return out
 
 
 def _counts(roles, l3, cells, scenarios, cards) -> dict:
@@ -324,6 +428,7 @@ def _counts(roles, l3, cells, scenarios, cards) -> dict:
         "roles": len(roles), "l3": len(l3),
         "l3_unique_names": len({x["name"] for x in l3}),
         "l3_serviceability": serve,
+        "l3_boundary_a": sum(1 for x in l3 if x.get("boundary_a")),
         "scenarios": len(scenarios),
         "cells": len(cells), "cells_by_kind": kind,
         # ⚠️ 两个口径**都**给：118 是直连声明，701 是传递闭包，差 5.9 倍（join 陷阱 2）
@@ -334,6 +439,7 @@ def _counts(roles, l3, cells, scenarios, cards) -> dict:
         "cards_with_l3": sum(1 for c in cards if c["l3"]),
         "solutions": 0,
         "role_wiring_known": sum(1 for r in roles if r["wired_skills"] is not None),
+        "roles_without_a": sum(1 for r in roles if r["a_count"] == 0),
     }
 
 
@@ -452,7 +558,11 @@ def _open_items() -> list[dict]:
                 "**「问不到」不等于「没接线」**"},
         {"id": "O-A", "what": "A/B/C 名单随阈值变化", "owner": "T-C",
          "why": "A 类阈值为「算法可作主引擎」；A 名单会随阈值变，B 的 66 条不变。"
-                "下游把 A 视为「优先匹配」、B 视为「需补外部证据后匹配」"},
+                "下游把 A 视为「优先匹配」、B 视为「需补外部证据后匹配」",
+         # ⚠️ 2026-09-13 F3：本条已从「一句形容词」变成**有名单可指**的字段。
+         "handling": "落点在 `a_scope`：`boundary_a`（10 条边界条目，各带降级条件）"
+                     "与 `roles_without_a_declared/_computed`（10 个岗位，两值必须相等）。"
+                     "缺口账据此把边界条目降权排序，并把「A 是否为 73」变成断言。"},
     ]
 
 
@@ -468,7 +578,8 @@ def _meta(root: Path, org, cat, coll) -> dict:
         "generated": datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
         "generator": "paper2skills-research/scripts/build_capability_graph.py",
         "materials_root": str(root),
-        "source_refs": src + [{"path": str(SURVEY.relative_to(REPO)), "role": "A/B/C 判定（§F.3）"}],
+        "source_refs": src + [{"path": str(SURVEY.relative_to(REPO)),
+                                "role": "A/B/C 判定（§F.3）+ A 类边界条目（§F.5）+ 无 A 岗位（§F.6）"}],
         "l1_l2_l3_fact_source":
             "材料 organization-graph.json + role-catalog.json；产品侧已派生一份 "
             "dsh-paper2skills/data/taxonomy.json。本图**不重新定义** L1–L3，"
@@ -505,6 +616,38 @@ def assert_partitions(g: dict) -> list[str]:
         errs.append(f"SCN 数 {c['scenarios']} ≠ 20")
     if c["l3_serviceability"].get("UNPARSED"):
         errs.append(f"{c['l3_serviceability']['UNPARSED']} 条 L3 没解析到 A/B/C")
+    # ⚠️ A/B/C 总数是**下游靶区口径的锚点**（靶区一 = A ∩ 无精选卡）。锚点漂了必须当场红，
+    #    否则缺口账会带着一个新分母继续算，而报告里看不出它换了口径。
+    if {k: v for k, v in c["l3_serviceability"].items() if k in "ABC"} != {"A": 73, "B": 66, "C": 12}:
+        errs.append(f"A/B/C 总数 {c['l3_serviceability']} ≠ 73/66/12"
+                    f"（§F.3 变了 ⇒ 靶区口径必须重新推导，不能沿用旧工单）")
+    # --- A 类口径（§F.5/F.6）：边界条目与无 A 岗位 ---
+    if c["l3_boundary_a"] != 10:
+        errs.append(f"§F.5 边界条目 {c['l3_boundary_a']} 条 ≠ 10（原文列了 10 条）")
+    a_scope = g.get("a_scope") or {}
+    # ⚠️ 这条断言 2026-09-13 首跑就抓到了材料内部矛盾（「产能调查」§F.5 记 A、§F.3/F.4 记 B）。
+    #    **不要因为抓到就把它删掉或放宽成恒真** —— 改成：非 A 的边界条目必须**逐条登记在
+    #    contradictions 里**。于是「已知的 1 条」被显式承认，而**新出现的**仍会打红。
+    _contra = {c["name"] for c in a_scope.get("contradictions", [])}
+    misrank = [x["name"] for x in a_scope.get("boundary_a", [])
+               if next((y for y in g["l3"] if y["name"] == x["name"]), {}).get("serviceability") != "A"]
+    unregistered = [n for n in misrank if n not in _contra]
+    if unregistered:
+        errs.append(f"边界条目不是 A 类且未登记：{unregistered}"
+                    f"（若确属材料内部矛盾，请写进 a_scope.contradictions，不要删断言）")
+    stale = [n for n in _contra if n not in misrank]
+    if stale:
+        errs.append(f"contradictions 里登记了 {stale}，但它们现在已是 A 类 —— 登记过期，请撤下")
+    if c["roles_without_a"] != 10:
+        errs.append(f"无 A 类岗位 {c['roles_without_a']} 个 ≠ 10")
+    if a_scope.get("roles_without_a_declared") != a_scope.get("roles_without_a_computed"):
+        errs.append(
+            "§F.6 声明的无 A 岗位与按 §F.3 算出的不一致："
+            f"仅声明 {sorted(set(a_scope.get('roles_without_a_declared', [])) - set(a_scope.get('roles_without_a_computed', [])))}；"
+            f"仅算出 {sorted(set(a_scope.get('roles_without_a_computed', [])) - set(a_scope.get('roles_without_a_declared', [])))}")
+    if len(a_scope.get("boundary_a", [])) != c["l3_boundary_a"]:
+        errs.append(f"a_scope.boundary_a {len(a_scope.get('boundary_a', []))} 条 ≠ counts.l3_boundary_a "
+                    f"{c['l3_boundary_a']}（表与计数对不上）")
     # 覆盖层：重数必须 > 基数（真覆盖，不是装出来的）
     if not c["role_scenario_pairs_closure"] > c["roles"]:
         errs.append("SCN 覆盖层没有重数 —— 它其实退化成了一一对应？")
@@ -643,6 +786,23 @@ def _selftest() -> int:
          lambda x: x["counts"]["l3_serviceability"].__setitem__("UNPARSED", 1)),
         ("覆盖层必须有重数",
          lambda x: x["counts"].__setitem__("role_scenario_pairs_closure", 1)),
+        ("§F.5 边界条目数 10",
+         lambda x: x["counts"].__setitem__("l3_boundary_a", 9)),
+        ("边界条目本身必须是 A 类",
+         lambda x: next(y for y in x["l3"] if y["name"] == "术语治理").__setitem__(
+             "serviceability", "B")),
+        ("contradictions 登记不得过期",
+         lambda x: next(y for y in x["l3"] if y["name"] == "产能调查").__setitem__(
+             "serviceability", "A")),
+        ("A/B/C 总数锚点 73/66/12",
+         lambda x: x["counts"]["l3_serviceability"].__setitem__("A", 72)),
+        ("无 A 岗位数 10",
+         lambda x: x["counts"].__setitem__("roles_without_a", 9)),
+        ("§F.6 声明 vs 算出必须相等",
+         lambda x: x["a_scope"].__setitem__("roles_without_a_declared",
+                                            x["a_scope"]["roles_without_a_declared"] + ["AGT-001"])),
+        ("a_scope 表与计数必须对得上",
+         lambda x: x["a_scope"]["boundary_a"].pop()),
     ]
     miss = []
     for label, mut in tampers:
@@ -828,7 +988,9 @@ def main() -> int:
         print(f"  面 {c['planes']} / 域 {c['domains']} / 岗位 {c['roles']} / L3 {c['l3']}"
               f" / SCN {c['scenarios']} / 格 {c['cells']} {c['cells_by_kind']}")
         print(f"  A/B/C = {c['l3_serviceability'].get('A')}/{c['l3_serviceability'].get('B')}"
-              f"/{c['l3_serviceability'].get('C')}")
+              f"/{c['l3_serviceability'].get('C')}"
+              f"（其中边界条目 {c['l3_boundary_a']} 条：会随阈值动摇；"
+              f"无 A 类岗位 {c['roles_without_a']} 个）")
         print(f"  卡 {c['cards']} 张，其中 {c['cards_with_l3']} 张有 L3 归属"
               f"（欠 {c['cards'] - c['cards_with_l3']} 张，归 F5）")
         print(f"  岗位-场景对：直连 {c['role_scenario_pairs_direct']} / "

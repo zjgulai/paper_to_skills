@@ -1,0 +1,7191 @@
+{
+ "table": {
+  "A": {
+   "zero": 5,
+   "legacy": 31,
+   "curated": 37,
+   "total": 73
+  },
+  "B": {
+   "zero": 9,
+   "legacy": 41,
+   "curated": 16,
+   "total": 66
+  },
+  "C": {
+   "zero": 3,
+   "legacy": 9,
+   "curated": 0,
+   "total": 12
+  },
+  "_col": {
+   "zero": 17,
+   "legacy": 81,
+   "curated": 53,
+   "_total": 151
+  }
+ },
+ "targets": {
+  "T1": {
+   "rule": "A ∩ 无精选卡",
+   "count": 36,
+   "domains": {
+    "供应与履约": 11,
+    "产品与创新": 7,
+    "渠道经营": 6,
+    "财务与合规": 6,
+    "品牌与增长": 3,
+    "经营与组织": 2,
+    "数据与AI运行": 1
+   },
+   "structural_strict": 3,
+   "structural_wide": 5,
+   "retrieval_budget_positions": {
+    "strict": 33,
+    "wide": 31,
+    "default": "strict",
+    "wide_only": [
+     "可用性验证",
+     "测试方案"
+    ]
+   }
+  },
+  "T2": {
+   "rule": "零供给（连 legacy 预览都没有）",
+   "count": 17,
+   "structural_blank": 10,
+   "structural_blank_roles": [
+    "AGT-009",
+    "AGT-010",
+    "AGT-011",
+    "AGT-012",
+    "AGT-013"
+   ],
+   "items": [
+    {
+     "l3": "人事行政流程",
+     "role_id": "AGT-004",
+     "serviceability": "C",
+     "structural_blank": false
+    },
+    {
+     "l3": "利益冲突检查",
+     "role_id": "AGT-005",
+     "serviceability": "B",
+     "structural_blank": false
+    },
+    {
+     "l3": "产品范围管理",
+     "role_id": "AGT-009",
+     "serviceability": "B",
+     "structural_blank": true
+    },
+    {
+     "l3": "商业案例",
+     "role_id": "AGT-009",
+     "serviceability": "A",
+     "structural_blank": true
+    },
+    {
+     "l3": "工业设计简报",
+     "role_id": "AGT-010",
+     "serviceability": "C",
+     "structural_blank": true
+    },
+    {
+     "l3": "BOM与材料分析",
+     "role_id": "AGT-011",
+     "serviceability": "A",
+     "structural_blank": true
+    },
+    {
+     "l3": "可制造性分析",
+     "role_id": "AGT-011",
+     "serviceability": "B",
+     "structural_blank": true
+    },
+    {
+     "l3": "工程需求审查",
+     "role_id": "AGT-011",
+     "serviceability": "B",
+     "structural_blank": true
+    },
+    {
+     "l3": "应用生态规划",
+     "role_id": "AGT-012",
+     "serviceability": "B",
+     "structural_blank": true
+    },
+    {
+     "l3": "软件需求分析",
+     "role_id": "AGT-012",
+     "serviceability": "B",
+     "structural_blank": true
+    },
+    {
+     "l3": "研发计划",
+     "role_id": "AGT-013",
+     "serviceability": "A",
+     "structural_blank": true
+    },
+    {
+     "l3": "阶段验证",
+     "role_id": "AGT-013",
+     "serviceability": "B",
+     "structural_blank": true
+    },
+    {
+     "l3": "生产异常协调",
+     "role_id": "AGT-018",
+     "serviceability": "B",
+     "structural_blank": false
+    },
+    {
+     "l3": "商务交付协调",
+     "role_id": "AGT-025",
+     "serviceability": "C",
+     "structural_blank": false
+    },
+    {
+     "l3": "渠道方案",
+     "role_id": "AGT-025",
+     "serviceability": "B",
+     "structural_blank": false
+    },
+    {
+     "l3": "线索评估",
+     "role_id": "AGT-025",
+     "serviceability": "A",
+     "structural_blank": false
+    },
+    {
+     "l3": "术语治理",
+     "role_id": "AGT-028",
+     "serviceability": "A",
+     "structural_blank": false
+    }
+   ]
+  },
+  "T3": {
+   "rule": "A 类中的边界条目（§F.5）",
+   "count": 73,
+   "boundary": [
+    {
+     "name": "供应商评估",
+     "role_id": "AGT-014",
+     "rationale": "多准则决策/AHP-TOPSIS 可输出可复核评分与分级",
+     "downgrade_condition": "若评分权重只能来自现场审核证据，则降 B"
+    },
+    {
+     "name": "产能调查",
+     "role_id": "AGT-014",
+     "rationale": "排队论与瓶颈分析可量化产能与节拍",
+     "downgrade_condition": "输入若全依赖供方声明，则降 B"
+    },
+    {
+     "name": "测试方案",
+     "role_id": "AGT-013",
+     "rationale": "组合测试（pairwise/正交表）与统计抽样可直接生成用例",
+     "downgrade_condition": "若用例主要来自失效经验，则降 B"
+    },
+    {
+     "name": "研发计划",
+     "role_id": "AGT-013",
+     "rationale": "RCPSP 与关键链可求解排期",
+     "downgrade_condition": "若排期主要受组织协调约束，则降 B"
+    },
+    {
+     "name": "履约跟踪",
+     "role_id": "AGT-015",
+     "rationale": "在途时序预测与异常预警可自动化",
+     "downgrade_condition": "若交期事实只能来自承运商回执，则降 B"
+    },
+    {
+     "name": "到货异常追踪",
+     "role_id": "AGT-019",
+     "rationale": "生存分析与异常检测可预测到达偏差",
+     "downgrade_condition": "同上"
+    },
+    {
+     "name": "术语治理",
+     "role_id": "AGT-028",
+     "rationale": "术语抽取/对齐/一致性校验是标准文本算法",
+     "downgrade_condition": "若术语裁决必须由母语专家逐条确认，则降 B"
+    },
+    {
+     "name": "内容实验",
+     "role_id": "AGT-030",
+     "rationale": "DOE/bandit 是标准实验设计",
+     "downgrade_condition": "若内容产出本身无法被算法替代，则降 B"
+    },
+    {
+     "name": "平台运营",
+     "role_id": "AGT-024",
+     "rationale": "流量-转化-库存联动可建模优化",
+     "downgrade_condition": "若平台动作受规则黑箱限制，则降 B"
+    },
+    {
+     "name": "失败恢复",
+     "role_id": "AGT-049",
+     "rationale": "幂等重放与回滚验证可规则化自动执行",
+     "downgrade_condition": "若恢复动作须人工判断影响面，则降 B"
+    }
+   ],
+   "contradictions": [
+    {
+     "name": "产能调查",
+     "role_id": "AGT-014",
+     "declared_in": "§F.5（表头写「本次计入 A」）",
+     "actual_in": "§F.3 逐条判定 / §F.4 清单（均判 B）",
+     "handling": "以 §F.3 为准 ⇒ 按 B 处理，**不得**计入靶区一（它是按「A ∩ 无精选卡」定义的）"
+    }
+   ]
+  },
+  "low_priority": {
+   "rule": "无任何 A 类责任名的岗位（§F.6）",
+   "roles": [
+    "AGT-004",
+    "AGT-031",
+    "AGT-036",
+    "AGT-037",
+    "AGT-038",
+    "AGT-039",
+    "AGT-042",
+    "AGT-044",
+    "AGT-047",
+    "AGT-050"
+   ],
+   "n": 10
+  }
+ },
+ "worklist": [
+  {
+   "l3": "线索评估",
+   "role_id": "AGT-025",
+   "role_title": "零售渠道与B2B拓展",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 4.75,
+   "rank": 1
+  },
+  {
+   "l3": "术语治理",
+   "role_id": "AGT-028",
+   "role_title": "本地化与市场适配",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若术语裁决必须由母语专家逐条确认，则降 B",
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.5,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": 4.25,
+   "rank": 2
+  },
+  {
+   "l3": "渠道对账",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "domain": "财务与合规",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 1.5,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 3.625,
+   "rank": 3
+  },
+  {
+   "l3": "行动组合",
+   "role_id": "AGT-021",
+   "role_title": "Amazon业务经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 3
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 7,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.75,
+    "flow_breadth": 0.875,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 3.125,
+   "rank": 4
+  },
+  {
+   "l3": "经营预算",
+   "role_id": "AGT-041",
+   "role_title": "经营财务与资金",
+   "domain": "财务与合规",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.6,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.725,
+   "rank": 5
+  },
+  {
+   "l3": "差异追踪",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "domain": "财务与合规",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.425,
+   "rank": 6
+  },
+  {
+   "l3": "收入与费用核对",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "domain": "财务与合规",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.325,
+   "rank": 7
+  },
+  {
+   "l3": "生命周期分析",
+   "role_id": "AGT-017",
+   "role_title": "库存与商品生命周期",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 6
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.4286,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.3036,
+   "rank": 8
+  },
+  {
+   "l3": "资金预测",
+   "role_id": "AGT-041",
+   "role_title": "经营财务与资金",
+   "domain": "财务与合规",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 19
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.15,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.275,
+   "rank": 9
+  },
+  {
+   "l3": "BOM与材料分析",
+   "role_id": "AGT-011",
+   "role_title": "硬件结构与材料工程",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -1.0
+   },
+   "score": 2.25,
+   "rank": 10
+  },
+  {
+   "l3": "商业案例",
+   "role_id": "AGT-009",
+   "role_title": "产品定义与商业立项",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": true,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -1.0
+   },
+   "score": 2.25,
+   "rank": 11
+  },
+  {
+   "l3": "账号商品映射",
+   "role_id": "AGT-045",
+   "role_title": "业务口径与主数据",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.375,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.25,
+   "rank": 12
+  },
+  {
+   "l3": "账号诊断",
+   "role_id": "AGT-027",
+   "role_title": "店铺账号健康与规则",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.075,
+   "rank": 13
+  },
+  {
+   "l3": "调拨清货建议",
+   "role_id": "AGT-017",
+   "role_title": "库存与商品生命周期",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 20
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1429,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.0179,
+   "rank": 14
+  },
+  {
+   "l3": "供需协调",
+   "role_id": "AGT-016",
+   "role_title": "需求预测与补货计划",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 22
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1304,
+    "flow_breadth": 0.25,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.8804,
+   "rank": 15
+  },
+  {
+   "l3": "Listing优化",
+   "role_id": "AGT-022",
+   "role_title": "Amazon商品与搜索运营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 43
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.0682,
+    "flow_breadth": 0.25,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.8182,
+   "rank": 16
+  },
+  {
+   "l3": "平台运营",
+   "role_id": "AGT-024",
+   "role_title": "其他平台与新市场经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若平台动作受规则黑箱限制，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.5,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": 1.625,
+   "rank": 17
+  },
+  {
+   "l3": "研发计划",
+   "role_id": "AGT-013",
+   "role_title": "产品验证与研发项目",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若排期主要受组织协调约束，则降 B",
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -1.0
+   },
+   "score": 1.5,
+   "rank": 18
+  },
+  {
+   "l3": "品牌反馈",
+   "role_id": "AGT-029",
+   "role_title": "品牌战略与传播",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.6,
+    "flow_breadth": 0.625,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.225,
+   "rank": 19
+  },
+  {
+   "l3": "可用性验证",
+   "role_id": "AGT-010",
+   "role_title": "工业设计与用户体验",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-02"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 1.0,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.125,
+   "rank": 20
+  },
+  {
+   "l3": "测试方案",
+   "role_id": "AGT-013",
+   "role_title": "产品验证与研发项目",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若用例主要来自失效经验，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 1.5,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": 1.0,
+   "rank": 21
+  },
+  {
+   "l3": "资源情景比较",
+   "role_id": "AGT-001",
+   "role_title": "经营目标与资源统筹",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.6,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.85,
+   "rank": 22
+  },
+  {
+   "l3": "知识产权检索",
+   "role_id": "AGT-043",
+   "role_title": "法务与知识产权",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3333,
+    "flow_breadth": 0.5,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.8333,
+   "rank": 23
+  },
+  {
+   "l3": "达人筛选",
+   "role_id": "AGT-033",
+   "role_title": "达人与联盟合作",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.5,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.75,
+   "rank": 24
+  },
+  {
+   "l3": "履约异常",
+   "role_id": "AGT-020",
+   "role_title": "仓储履约与退货处置",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3333,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.7083,
+   "rank": 25
+  },
+  {
+   "l3": "抽样审计",
+   "role_id": "AGT-005",
+   "role_title": "内控审计与独立复核",
+   "domain": "经营与组织",
+   "plane_id": "PLN-CTL",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 6
+   },
+   "flows": [
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.4286,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.6786,
+   "rank": 26
+  },
+  {
+   "l3": "需求分群",
+   "role_id": "AGT-006",
+   "role_title": "消费者需求与VOC研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.375,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.625,
+   "rank": 27
+  },
+  {
+   "l3": "质量分析",
+   "role_id": "AGT-018",
+   "role_title": "生产协同与质量控制",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 12
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2308,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.6058,
+   "rank": 28
+  },
+  {
+   "l3": "退货分流",
+   "role_id": "AGT-020",
+   "role_title": "仓储履约与退货处置",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.575,
+   "rank": 29
+  },
+  {
+   "l3": "订单协调",
+   "role_id": "AGT-015",
+   "role_title": "采购与合同履约",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-03"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3333,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.4583,
+   "rank": 30
+  },
+  {
+   "l3": "趋势监测",
+   "role_id": "AGT-007",
+   "role_title": "市场竞争与机会研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.45,
+   "rank": 31
+  },
+  {
+   "l3": "复购实验",
+   "role_id": "AGT-034",
+   "role_title": "CRM留存与复购",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 11
+   },
+   "flows": [
+    "FLOW-05"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.25,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.375,
+   "rank": 32
+  },
+  {
+   "l3": "物流方案",
+   "role_id": "AGT-019",
+   "role_title": "跨境物流与关务",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 47
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.0625,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.3125,
+   "rank": 33
+  },
+  {
+   "l3": "供应商评估",
+   "role_id": "AGT-014",
+   "role_title": "OEM供应商开发与协同",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若评分权重只能来自现场审核证据，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 27
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1071,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": -0.2679,
+   "rank": 34
+  },
+  {
+   "l3": "到货异常追踪",
+   "role_id": "AGT-019",
+   "role_title": "跨境物流与关务",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "同上",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": -0.3,
+   "rank": 35
+  },
+  {
+   "l3": "履约跟踪",
+   "role_id": "AGT-015",
+   "role_title": "采购与合同履约",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若交期事实只能来自承运商回执，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 20
+   },
+   "flows": [
+    "FLOW-03"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1429,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": -0.4821,
+   "rank": 36
+  }
+ ],
+ "rows": [
+  {
+   "l3": "经营目标拆解",
+   "role_id": "AGT-001",
+   "role_title": "经营目标与资源统筹",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "资源情景比较",
+   "role_id": "AGT-001",
+   "role_title": "经营目标与资源统筹",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.6,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.85,
+   "rank": 22
+  },
+  {
+   "l3": "月度经营复盘",
+   "role_id": "AGT-001",
+   "role_title": "经营目标与资源统筹",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "需求分诊",
+   "role_id": "AGT-002",
+   "role_title": "场景自主编排与异常协调",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 8,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "能力匹配",
+   "role_id": "AGT-002",
+   "role_title": "场景自主编排与异常协调",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 3
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 8,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "依赖协调",
+   "role_id": "AGT-002",
+   "role_title": "场景自主编排与异常协调",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 8,
+    "n_legacy": 24
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 8,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "异常冻结与恢复",
+   "role_id": "AGT-002",
+   "role_title": "场景自主编排与异常协调",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 8,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "GMV归因分析",
+   "role_id": "AGT-003",
+   "role_title": "经营分析与决策支持",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 18
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "经营预测",
+   "role_id": "AGT-003",
+   "role_title": "经营分析与决策支持",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "情景模拟",
+   "role_id": "AGT-003",
+   "role_title": "经营分析与决策支持",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "岗位能力分析",
+   "role_id": "AGT-004",
+   "role_title": "组织能力与人事行政",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-08"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "培训与招聘支持",
+   "role_id": "AGT-004",
+   "role_title": "组织能力与人事行政",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-08"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "人事行政流程",
+   "role_id": "AGT-004",
+   "role_title": "组织能力与人事行政",
+   "domain": "经营与组织",
+   "plane_id": "PLN-MGT",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-08"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "抽样审计",
+   "role_id": "AGT-005",
+   "role_title": "内控审计与独立复核",
+   "domain": "经营与组织",
+   "plane_id": "PLN-CTL",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 6
+   },
+   "flows": [
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.4286,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.6786,
+   "rank": 26
+  },
+  {
+   "l3": "证据复核",
+   "role_id": "AGT-005",
+   "role_title": "内控审计与独立复核",
+   "domain": "经营与组织",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "利益冲突检查",
+   "role_id": "AGT-005",
+   "role_title": "内控审计与独立复核",
+   "domain": "经营与组织",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "用户访谈分析",
+   "role_id": "AGT-006",
+   "role_title": "消费者需求与VOC研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "需求分群",
+   "role_id": "AGT-006",
+   "role_title": "消费者需求与VOC研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.375,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.625,
+   "rank": 27
+  },
+  {
+   "l3": "VOC编码",
+   "role_id": "AGT-006",
+   "role_title": "消费者需求与VOC研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 5,
+    "n_legacy": 20
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "竞品研究",
+   "role_id": "AGT-007",
+   "role_title": "市场竞争与机会研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 23
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "趋势监测",
+   "role_id": "AGT-007",
+   "role_title": "市场竞争与机会研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.45,
+   "rank": 31
+  },
+  {
+   "l3": "市场机会评估",
+   "role_id": "AGT-007",
+   "role_title": "市场竞争与机会研究",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 18
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "组合取舍",
+   "role_id": "AGT-008",
+   "role_title": "产品组合与新品孵化",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 15
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "实验组合",
+   "role_id": "AGT-008",
+   "role_title": "产品组合与新品孵化",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "阶段投资建议",
+   "role_id": "AGT-008",
+   "role_title": "产品组合与新品孵化",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "产品需求定义",
+   "role_id": "AGT-009",
+   "role_title": "产品定义与商业立项",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 6
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "商业案例",
+   "role_id": "AGT-009",
+   "role_title": "产品定义与商业立项",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": true,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -1.0
+   },
+   "score": 2.25,
+   "rank": 11
+  },
+  {
+   "l3": "产品范围管理",
+   "role_id": "AGT-009",
+   "role_title": "产品定义与商业立项",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": true
+  },
+  {
+   "l3": "使用旅程",
+   "role_id": "AGT-010",
+   "role_title": "工业设计与用户体验",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "工业设计简报",
+   "role_id": "AGT-010",
+   "role_title": "工业设计与用户体验",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08"
+   ],
+   "structural_blank": true
+  },
+  {
+   "l3": "可用性验证",
+   "role_id": "AGT-010",
+   "role_title": "工业设计与用户体验",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-02"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 1.0,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.125,
+   "rank": 20
+  },
+  {
+   "l3": "工程需求审查",
+   "role_id": "AGT-011",
+   "role_title": "硬件结构与材料工程",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true
+  },
+  {
+   "l3": "BOM与材料分析",
+   "role_id": "AGT-011",
+   "role_title": "硬件结构与材料工程",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -1.0
+   },
+   "score": 2.25,
+   "rank": 10
+  },
+  {
+   "l3": "可制造性分析",
+   "role_id": "AGT-011",
+   "role_title": "硬件结构与材料工程",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true
+  },
+  {
+   "l3": "软件需求分析",
+   "role_id": "AGT-012",
+   "role_title": "软件算法与应用生态",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true
+  },
+  {
+   "l3": "算法评估设计",
+   "role_id": "AGT-012",
+   "role_title": "软件算法与应用生态",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 21
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "应用生态规划",
+   "role_id": "AGT-012",
+   "role_title": "软件算法与应用生态",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true
+  },
+  {
+   "l3": "研发计划",
+   "role_id": "AGT-013",
+   "role_title": "产品验证与研发项目",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若排期主要受组织协调约束，则降 B",
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -1.0
+   },
+   "score": 1.5,
+   "rank": 18
+  },
+  {
+   "l3": "测试方案",
+   "role_id": "AGT-013",
+   "role_title": "产品验证与研发项目",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若用例主要来自失效经验，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 1.5,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": 1.0,
+   "rank": 21
+  },
+  {
+   "l3": "阶段验证",
+   "role_id": "AGT-013",
+   "role_title": "产品验证与研发项目",
+   "domain": "产品与创新",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": true
+  },
+  {
+   "l3": "供应商评估",
+   "role_id": "AGT-014",
+   "role_title": "OEM供应商开发与协同",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若评分权重只能来自现场审核证据，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 27
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1071,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": -0.2679,
+   "rank": 34
+  },
+  {
+   "l3": "产能调查",
+   "role_id": "AGT-014",
+   "role_title": "OEM供应商开发与协同",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": true,
+   "downgrade_condition": "输入若全依赖供方声明，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "OEM协作",
+   "role_id": "AGT-014",
+   "role_title": "OEM供应商开发与协同",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "采购比价",
+   "role_id": "AGT-015",
+   "role_title": "采购与合同履约",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-03"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "订单协调",
+   "role_id": "AGT-015",
+   "role_title": "采购与合同履约",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-03"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3333,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.4583,
+   "rank": 30
+  },
+  {
+   "l3": "履约跟踪",
+   "role_id": "AGT-015",
+   "role_title": "采购与合同履约",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若交期事实只能来自承运商回执，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 20
+   },
+   "flows": [
+    "FLOW-03"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1429,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": -0.4821,
+   "rank": 36
+  },
+  {
+   "l3": "需求预测",
+   "role_id": "AGT-016",
+   "role_title": "需求预测与补货计划",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 94
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "补货模拟",
+   "role_id": "AGT-016",
+   "role_title": "需求预测与补货计划",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 6,
+    "n_legacy": 87
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "供需协调",
+   "role_id": "AGT-016",
+   "role_title": "需求预测与补货计划",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 22
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1304,
+    "flow_breadth": 0.25,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.8804,
+   "rank": 15
+  },
+  {
+   "l3": "库存分层",
+   "role_id": "AGT-017",
+   "role_title": "库存与商品生命周期",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 2,
+    "n_legacy": 31
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "生命周期分析",
+   "role_id": "AGT-017",
+   "role_title": "库存与商品生命周期",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 6
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.4286,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.3036,
+   "rank": 8
+  },
+  {
+   "l3": "调拨清货建议",
+   "role_id": "AGT-017",
+   "role_title": "库存与商品生命周期",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 20
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.1429,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.0179,
+   "rank": 14
+  },
+  {
+   "l3": "质量分析",
+   "role_id": "AGT-018",
+   "role_title": "生产协同与质量控制",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 12
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2308,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.6058,
+   "rank": 28
+  },
+  {
+   "l3": "生产异常协调",
+   "role_id": "AGT-018",
+   "role_title": "生产协同与质量控制",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "纠正预防措施",
+   "role_id": "AGT-018",
+   "role_title": "生产协同与质量控制",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "物流方案",
+   "role_id": "AGT-019",
+   "role_title": "跨境物流与关务",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 47
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.0625,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.3125,
+   "rank": 33
+  },
+  {
+   "l3": "关务资料检查",
+   "role_id": "AGT-019",
+   "role_title": "跨境物流与关务",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 15
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "到货异常追踪",
+   "role_id": "AGT-019",
+   "role_title": "跨境物流与关务",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "同上",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": -0.3,
+   "rank": 35
+  },
+  {
+   "l3": "履约异常",
+   "role_id": "AGT-020",
+   "role_title": "仓储履约与退货处置",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3333,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.7083,
+   "rank": 25
+  },
+  {
+   "l3": "退货分流",
+   "role_id": "AGT-020",
+   "role_title": "仓储履约与退货处置",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.375,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.575,
+   "rank": 29
+  },
+  {
+   "l3": "仓储协作",
+   "role_id": "AGT-020",
+   "role_title": "仓储履约与退货处置",
+   "domain": "供应与履约",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 21
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "渠道经营分析",
+   "role_id": "AGT-021",
+   "role_title": "Amazon业务经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 2,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 7,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "行动组合",
+   "role_id": "AGT-021",
+   "role_title": "Amazon业务经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 3
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 7,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.75,
+    "flow_breadth": 0.875,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 3.125,
+   "rank": 4
+  },
+  {
+   "l3": "经营复盘",
+   "role_id": "AGT-021",
+   "role_title": "Amazon业务经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 7,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "商品诊断",
+   "role_id": "AGT-022",
+   "role_title": "Amazon商品与搜索运营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 37
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "搜索意图分析",
+   "role_id": "AGT-022",
+   "role_title": "Amazon商品与搜索运营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 3,
+    "n_legacy": 41
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "Listing优化",
+   "role_id": "AGT-022",
+   "role_title": "Amazon商品与搜索运营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 43
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.0682,
+    "flow_breadth": 0.25,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.8182,
+   "rank": 16
+  },
+  {
+   "l3": "漏斗诊断",
+   "role_id": "AGT-023",
+   "role_title": "独立站经营与转化",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 2,
+    "n_legacy": 18
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "站点运营",
+   "role_id": "AGT-023",
+   "role_title": "独立站经营与转化",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 15
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "转化优化",
+   "role_id": "AGT-023",
+   "role_title": "独立站经营与转化",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 13,
+    "n_legacy": 84
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "渠道研究",
+   "role_id": "AGT-024",
+   "role_title": "其他平台与新市场经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "市场进入",
+   "role_id": "AGT-024",
+   "role_title": "其他平台与新市场经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 16
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "平台运营",
+   "role_id": "AGT-024",
+   "role_title": "其他平台与新市场经营",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若平台动作受规则黑箱限制，则降 B",
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.5,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": 1.625,
+   "rank": 17
+  },
+  {
+   "l3": "线索评估",
+   "role_id": "AGT-025",
+   "role_title": "零售渠道与B2B拓展",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.25,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 4.75,
+   "rank": 1
+  },
+  {
+   "l3": "渠道方案",
+   "role_id": "AGT-025",
+   "role_title": "零售渠道与B2B拓展",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "商务交付协调",
+   "role_id": "AGT-025",
+   "role_title": "零售渠道与B2B拓展",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "价格敏感性",
+   "role_id": "AGT-026",
+   "role_title": "定价促销与商品组合",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 3,
+    "n_legacy": 53
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "促销规划",
+   "role_id": "AGT-026",
+   "role_title": "定价促销与商品组合",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 35
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "组合设计",
+   "role_id": "AGT-026",
+   "role_title": "定价促销与商品组合",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 16
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03"
+   ],
+   "n_flows": 2,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "账号诊断",
+   "role_id": "AGT-027",
+   "role_title": "店铺账号健康与规则",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.075,
+   "rank": 13
+  },
+  {
+   "l3": "规则监测",
+   "role_id": "AGT-027",
+   "role_title": "店铺账号健康与规则",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 17
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "申诉材料准备",
+   "role_id": "AGT-027",
+   "role_title": "店铺账号健康与规则",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-04",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "本地化",
+   "role_id": "AGT-028",
+   "role_title": "本地化与市场适配",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 20
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "市场语境审查",
+   "role_id": "AGT-028",
+   "role_title": "本地化与市场适配",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 10
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "术语治理",
+   "role_id": "AGT-028",
+   "role_title": "本地化与市场适配",
+   "domain": "渠道经营",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若术语裁决必须由母语专家逐条确认，则降 B",
+   "supply": {
+    "status": "zero",
+    "n_curated": 0,
+    "n_legacy": 0
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 3.0,
+    "flow_breadth": 0.5,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.75,
+    "structural_penalty": -0.0
+   },
+   "score": 4.25,
+   "rank": 2
+  },
+  {
+   "l3": "品牌定位",
+   "role_id": "AGT-029",
+   "role_title": "品牌战略与传播",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 3
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "传播规划",
+   "role_id": "AGT-029",
+   "role_title": "品牌战略与传播",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "品牌反馈",
+   "role_id": "AGT-029",
+   "role_title": "品牌战略与传播",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.6,
+    "flow_breadth": 0.625,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 1.225,
+   "rank": 19
+  },
+  {
+   "l3": "内容策划",
+   "role_id": "AGT-030",
+   "role_title": "内容与创意策划",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 26
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "创意简报",
+   "role_id": "AGT-030",
+   "role_title": "内容与创意策划",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 2
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "内容实验",
+   "role_id": "AGT-030",
+   "role_title": "内容与创意策划",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若内容产出本身无法被算法替代，则降 B",
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 11
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "视觉简报",
+   "role_id": "AGT-031",
+   "role_title": "视觉视频与素材生产",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 10
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "视频制作协作",
+   "role_id": "AGT-031",
+   "role_title": "视觉视频与素材生产",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 20
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "素材版本管理",
+   "role_id": "AGT-031",
+   "role_title": "视觉视频与素材生产",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 12
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "投放诊断",
+   "role_id": "AGT-032",
+   "role_title": "效果广告投放",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 3,
+    "n_legacy": 88
+   },
+   "flows": [
+    "FLOW-01"
+   ],
+   "n_flows": 1,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "预算分配",
+   "role_id": "AGT-032",
+   "role_title": "效果广告投放",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 3,
+    "n_legacy": 51
+   },
+   "flows": [
+    "FLOW-01"
+   ],
+   "n_flows": 1,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "广告实验",
+   "role_id": "AGT-032",
+   "role_title": "效果广告投放",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-01"
+   ],
+   "n_flows": 1,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "达人筛选",
+   "role_id": "AGT-033",
+   "role_title": "达人与联盟合作",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.5,
+    "flow_breadth": 0.25,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.75,
+   "rank": 24
+  },
+  {
+   "l3": "联盟运营",
+   "role_id": "AGT-033",
+   "role_title": "达人与联盟合作",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 5
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "合作复盘",
+   "role_id": "AGT-033",
+   "role_title": "达人与联盟合作",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 6
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "分群",
+   "role_id": "AGT-034",
+   "role_title": "CRM留存与复购",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 6,
+    "n_legacy": 60
+   },
+   "flows": [
+    "FLOW-05"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "生命周期触达",
+   "role_id": "AGT-034",
+   "role_title": "CRM留存与复购",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 10,
+    "n_legacy": 61
+   },
+   "flows": [
+    "FLOW-05"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "复购实验",
+   "role_id": "AGT-034",
+   "role_title": "CRM留存与复购",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 11
+   },
+   "flows": [
+    "FLOW-05"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.25,
+    "flow_breadth": 0.125,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.375,
+   "rank": 32
+  },
+  {
+   "l3": "实验设计",
+   "role_id": "AGT-035",
+   "role_title": "增长实验与增量评估",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 5,
+    "n_legacy": 41
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "增量分析",
+   "role_id": "AGT-035",
+   "role_title": "增长实验与增量评估",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 55
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "因果局限审查",
+   "role_id": "AGT-035",
+   "role_title": "增长实验与增量评估",
+   "domain": "品牌与增长",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 21
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "产品问答",
+   "role_id": "AGT-036",
+   "role_title": "售前服务与购买指导",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 11
+   },
+   "flows": [
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "选购指导",
+   "role_id": "AGT-036",
+   "role_title": "售前服务与购买指导",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "需求识别",
+   "role_id": "AGT-036",
+   "role_title": "售前服务与购买指导",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 3
+   },
+   "flows": [
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "客诉分诊",
+   "role_id": "AGT-037",
+   "role_title": "售后客诉与服务补救",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "售后处理",
+   "role_id": "AGT-037",
+   "role_title": "售后客诉与服务补救",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "服务补救",
+   "role_id": "AGT-037",
+   "role_title": "售后客诉与服务补救",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 3
+   },
+   "flows": [
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "客诉聚类",
+   "role_id": "AGT-038",
+   "role_title": "体验洞察与质量反馈",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 10
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "体验分析",
+   "role_id": "AGT-038",
+   "role_title": "体验洞察与质量反馈",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 32
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "改进验证",
+   "role_id": "AGT-038",
+   "role_title": "体验洞察与质量反馈",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05",
+    "FLOW-07"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "使用教育",
+   "role_id": "AGT-039",
+   "role_title": "用户教育与会员社区",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "会员活动",
+   "role_id": "AGT-039",
+   "role_title": "用户教育与会员社区",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 11
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "用户反馈",
+   "role_id": "AGT-039",
+   "role_title": "用户教育与会员社区",
+   "domain": "服务与体验",
+   "plane_id": "PLN-OPS",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-05"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "渠道对账",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "domain": "财务与合规",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 1.5,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 3.625,
+   "rank": 3
+  },
+  {
+   "l3": "收入与费用核对",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "domain": "财务与合规",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 14
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.2,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.325,
+   "rank": 7
+  },
+  {
+   "l3": "差异追踪",
+   "role_id": "AGT-040",
+   "role_title": "GMV结算与会计对账",
+   "domain": "财务与合规",
+   "plane_id": "PLN-OPS",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-03",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.425,
+   "rank": 6
+  },
+  {
+   "l3": "资金预测",
+   "role_id": "AGT-041",
+   "role_title": "经营财务与资金",
+   "domain": "财务与合规",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 19
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.15,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.275,
+   "rank": 9
+  },
+  {
+   "l3": "经营预算",
+   "role_id": "AGT-041",
+   "role_title": "经营财务与资金",
+   "domain": "财务与合规",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 4
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.6,
+    "flow_breadth": 0.625,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.725,
+   "rank": 5
+  },
+  {
+   "l3": "经济性分析",
+   "role_id": "AGT-041",
+   "role_title": "经营财务与资金",
+   "domain": "财务与合规",
+   "plane_id": "PLN-MGT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 2,
+    "n_legacy": 57
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 5,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "税务资料",
+   "role_id": "AGT-042",
+   "role_title": "税务与跨境实体协作",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 9
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "实体口径核对",
+   "role_id": "AGT-042",
+   "role_title": "税务与跨境实体协作",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "申报协作",
+   "role_id": "AGT-042",
+   "role_title": "税务与跨境实体协作",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "C",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-03",
+    "FLOW-04",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-03/STG-04",
+    "FLOW-03/STG-05",
+    "FLOW-03/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "合同审查支持",
+   "role_id": "AGT-043",
+   "role_title": "法务与知识产权",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 1
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "知识产权检索",
+   "role_id": "AGT-043",
+   "role_title": "法务与知识产权",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.3333,
+    "flow_breadth": 0.5,
+    "first_slice": 0.0,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 0.8333,
+   "rank": 23
+  },
+  {
+   "l3": "争议证据组织",
+   "role_id": "AGT-043",
+   "role_title": "法务与知识产权",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 3
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "产品准入核对",
+   "role_id": "AGT-044",
+   "role_title": "产品合规与隐私",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 46
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07"
+   ],
+   "n_flows": 5,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "宣称审查",
+   "role_id": "AGT-044",
+   "role_title": "产品合规与隐私",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 12
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07"
+   ],
+   "n_flows": 5,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "隐私需求分析",
+   "role_id": "AGT-044",
+   "role_title": "产品合规与隐私",
+   "domain": "财务与合规",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 13
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-04",
+    "FLOW-05",
+    "FLOW-06",
+    "FLOW-07"
+   ],
+   "n_flows": 5,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-05/STG-04",
+    "FLOW-05/STG-05",
+    "FLOW-05/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "指标契约",
+   "role_id": "AGT-045",
+   "role_title": "业务口径与主数据",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 2,
+    "n_legacy": 8
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "账号商品映射",
+   "role_id": "AGT-045",
+   "role_title": "业务口径与主数据",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 7
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false,
+   "score_parts": {
+    "zero_gap": 0.375,
+    "flow_breadth": 0.375,
+    "first_slice": 1.5,
+    "boundary_penalty": -0.0,
+    "structural_penalty": -0.0
+   },
+   "score": 2.25,
+   "rank": 12
+  },
+  {
+   "l3": "主数据治理",
+   "role_id": "AGT-045",
+   "role_title": "业务口径与主数据",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 5,
+    "n_legacy": 40
+   },
+   "flows": [
+    "FLOW-01",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": true,
+   "m_cells": [
+    "FLOW-01/STG-04",
+    "FLOW-01/STG-05",
+    "FLOW-01/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "数据质量",
+   "role_id": "AGT-046",
+   "role_title": "数据工程与质量",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 51
+   },
+   "flows": [
+    "FLOW-06"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "数据管道",
+   "role_id": "AGT-046",
+   "role_title": "数据工程与质量",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 73
+   },
+   "flows": [
+    "FLOW-06"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "溯源监测",
+   "role_id": "AGT-046",
+   "role_title": "数据工程与质量",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 2,
+    "n_legacy": 11
+   },
+   "flows": [
+    "FLOW-06"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "接口契约",
+   "role_id": "AGT-047",
+   "role_title": "系统集成与业务工具",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 3,
+    "n_legacy": 16
+   },
+   "flows": [
+    "FLOW-06"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "业务工具实现",
+   "role_id": "AGT-047",
+   "role_title": "系统集成与业务工具",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 18,
+    "n_legacy": 117
+   },
+   "flows": [
+    "FLOW-06"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "集成验证",
+   "role_id": "AGT-047",
+   "role_title": "系统集成与业务工具",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 6
+   },
+   "flows": [
+    "FLOW-06"
+   ],
+   "n_flows": 1,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "知识溯源",
+   "role_id": "AGT-048",
+   "role_title": "知识技能与Playbook治理",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 3,
+    "n_legacy": 40
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "技能版本",
+   "role_id": "AGT-048",
+   "role_title": "知识技能与Playbook治理",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 5,
+    "n_legacy": 22
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "Playbook评估",
+   "role_id": "AGT-048",
+   "role_title": "知识技能与Playbook治理",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 3,
+    "n_legacy": 10
+   },
+   "flows": [
+    "FLOW-02",
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 3,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-02/STG-04",
+    "FLOW-02/STG-05",
+    "FLOW-02/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "运行监测",
+   "role_id": "AGT-049",
+   "role_title": "Agent平台与可靠运行",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 5,
+    "n_legacy": 38
+   },
+   "flows": [
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "容量管理",
+   "role_id": "AGT-049",
+   "role_title": "Agent平台与可靠运行",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "curated",
+    "n_curated": 4,
+    "n_legacy": 34
+   },
+   "flows": [
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "失败恢复",
+   "role_id": "AGT-049",
+   "role_title": "Agent平台与可靠运行",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-PLT",
+   "serviceability": "A",
+   "boundary_a": true,
+   "downgrade_condition": "若恢复动作须人工判断影响面，则降 B",
+   "supply": {
+    "status": "curated",
+    "n_curated": 1,
+    "n_legacy": 12
+   },
+   "flows": [
+    "FLOW-06",
+    "FLOW-08"
+   ],
+   "n_flows": 2,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "访问控制",
+   "role_id": "AGT-050",
+   "role_title": "信息安全与权限",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 12
+   },
+   "flows": [
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "授权审查",
+   "role_id": "AGT-050",
+   "role_title": "信息安全与权限",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 13
+   },
+   "flows": [
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  },
+  {
+   "l3": "安全事件处理",
+   "role_id": "AGT-050",
+   "role_title": "信息安全与权限",
+   "domain": "数据与AI运行",
+   "plane_id": "PLN-CTL",
+   "serviceability": "B",
+   "boundary_a": false,
+   "downgrade_condition": null,
+   "supply": {
+    "status": "legacy",
+    "n_curated": 0,
+    "n_legacy": 37
+   },
+   "flows": [
+    "FLOW-04",
+    "FLOW-06",
+    "FLOW-07",
+    "FLOW-08"
+   ],
+   "n_flows": 4,
+   "in_first_slice": false,
+   "m_cells": [
+    "FLOW-04/STG-04",
+    "FLOW-04/STG-05",
+    "FLOW-04/STG-08",
+    "FLOW-06/STG-04",
+    "FLOW-06/STG-05",
+    "FLOW-06/STG-08",
+    "FLOW-07/STG-04",
+    "FLOW-07/STG-05",
+    "FLOW-07/STG-08",
+    "FLOW-08/STG-04",
+    "FLOW-08/STG-05",
+    "FLOW-08/STG-08"
+   ],
+   "structural_blank": false
+  }
+ ],
+ "a_scope_declared": [
+  "AGT-004",
+  "AGT-031",
+  "AGT-036",
+  "AGT-037",
+  "AGT-038",
+  "AGT-039",
+  "AGT-042",
+  "AGT-044",
+  "AGT-047",
+  "AGT-050"
+ ],
+ "weights": {
+  "zero_gap": 3.0,
+  "flow_breadth": 1.0,
+  "first_slice": 1.5,
+  "boundary_penalty": 0.75,
+  "structural_penalty": 1.0
+ },
+ "_meta": {
+  "generated": "2026-09-13T17:51:48+0800",
+  "generator": "paper2skills-research/scripts/build_gap_ledger.py",
+  "graph": "paper2skills-vault/07-资源库/capability-graph.json",
+  "graph_sha256": "fd91f17f9213c416",
+  "classification": {
+   "available": true,
+   "path": "/Users/lute/project/Magpie-Horch/packages/capabilities/dsh-paper2skills/data/classification.json",
+   "n_items": 1338,
+   "declared_total": 1338,
+   "classified": 1327,
+   "unassigned": 11,
+   "sha256": "28376ccb3d8dfecd"
+  },
+  "gate_scripts_scanned": 8,
+  "exit_codes": "0 正常 / 1 判据失败 / 2 输入缺失（不是「没问题」）"
+ }
+}
