@@ -2308,7 +2308,7 @@ function saveReport(agentId, result) {
   } catch(e) {}
 }
 
-const _FEISHU_HOOK = 'https://open.feishu.cn/open-apis/bot/v2/hook/***REMOVED-FEISHU-HOOK***';
+const _FEISHU_HOOK = (typeof window !== 'undefined' && window.__PLAYBOOK_CONFIG__ && window.__PLAYBOOK_CONFIG__.feishuHook) || '';
 function pushToFeishu(entry) {
   if (!_FEISHU_HOOK) return;
   const inpLines = Object.entries(entry.inputs||{}).map(([k,v])=>k+': '+v).join('\n');

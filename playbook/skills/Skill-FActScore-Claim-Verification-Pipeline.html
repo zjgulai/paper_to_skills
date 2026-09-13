@@ -147,7 +147,7 @@ from typing import Optional
 try:
     from openai import OpenAI
     _CLIENT = OpenAI(
-        api_key=&quot;***REMOVED-DEEPSEEK-KEY***&quot;,
+        api_key=__import__('os').environ.get('DEEPSEEK_API_KEY', ''),
         base_url=&quot;https://api.deepseek.com&quot;
     )
     LLM_OK = True
