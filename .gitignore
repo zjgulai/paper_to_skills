@@ -116,5 +116,17 @@ _backup/
 # 逐卡结论，重跑要重读 53 张卡全文再判一次，不是脚本能再生的东西。
 # 产物（卡端事实源）在 paper2skills-vault/07-资源库/card-classification.json。
 !paper2skills-research/data/card-classification-inbox.json
+# backlog→L3 路由输入（PHASE6 S3 / 任务板 B9）：**这一层是人工判断，不是中间产物** ——
+# 「哪篇论文能服务哪个 L3 责任」在仓库里没有机读事实源可 join（技术域 ≠ 业务责任名，
+# 而卡的 L3 落点只覆盖**已经有卡**的论文），故它是 S3 唯一的源文件：丢了就要重判 12 篇 × 22 条。
+# 提升入库的理由同 card-classification-inbox.json。
+!paper2skills-research/data/backlog-l3-map.json
+# S3 的接管表产物（位次 + 覆盖率账）：下游「出卡排期」要消费它，理由同 gap-ledger.json。
+!paper2skills-research/data/backlog-routing.json
+# 材料引文核验产物（PHASE6 S1 收口期）：**它是一份账，不是中间态** ——
+# 逐词记录「哪些引文在材料里查无实据、最长可命中片段是什么、材料原句是哪句」。
+# 重算需要材料目录（在仓库之外，且它自己是个 git 仓库）⇒ 不是随手可再生的东西。
+# 提升入库的理由同 gap-ledger.json。判据=`scripts/check_material_citations.py`。
+!paper2skills-research/data/contracts/material-citations.json
 !paper2skills-research/data/dedup_report.json
 !paper2skills-research/data/bundles/**

@@ -44,6 +44,51 @@ BUILDER = Path(__file__).resolve().parent / "build_contracts.py"
 ACCESS_ENUM = ("自有埋点", "平台后台", "第三方 API", "需授权", "不可得")
 
 STAGE_ORDER = [f"STG-{i:02d}" for i in range(1, 9)]
+FLOW_IDS = [f"FLOW-0{i}" for i in range(1, 9)]
+
+
+def is_written(meta: dict) -> bool:
+    """契约是否已撰写 —— **判据只有一处**：骨架里还有没有 `<!-- 待撰写 -->`。
+
+    与 `check_contracts.py` 的「未撰写」判定同源（同一个 `TODO_MARK` 字面量），
+    不许在这里另发明一套（例如按文件大小/行数猜）。
+    """
+    path = CONTRACTS_DIR / f"{meta['template']}/{meta['contract_id']}-{meta['responsibility']}.md"
+    if not path.exists():
+        fail(f"骨架文件不存在：{path} —— 先跑 build_contracts.py --all-skeletons")
+    return BC.TODO_MARK not in path.read_text(encoding="utf-8")
+
+
+def pending_names(idx, flow: str, assignments: dict, written_pred=None) -> tuple:
+    """**剩余工作**（首归 FLOW 口径）—— 把「还剩多少份」变成算出来的量，不是维护出来的清单。
+
+    归类规则（两条缺一不可）：
+
+    1. 该契约**尚未撰写**（骨架里还有 TODO_MARK）；
+    2. 它**不属于任何更小编号的 FLOW 的批次** —— 否则同一份契约会在两条 FLOW 的
+       作业包里各出现一次，被两个撰写人各写一遍。
+
+    ⇒ 恒等式：`Σ_k pending(FLOW-k) = 139 − 已撰写份数`。
+    这不是巧合，是「8 个 FLOW 的批次覆盖全部 139 份」的直接推论：一份未撰写的契约
+    必然属于至少一个 FLOW，取其中编号最小的那个，它就被且仅被算一次。
+    `--audit-pending` 把这个恒等式当作**可失败的判据**跑。
+
+    `written_pred` 只为自检而开：把「已撰写」注入成常量，才能证明上面**两条规则各自**
+    都在起作用（否则真数据凑巧满足断言 ⇒ 摆设断言，F2 已抓过 7 处同型）。
+    """
+    pred = written_pred or is_written
+    claimed = set()
+    for f in FLOW_IDS:
+        if f == flow:
+            break
+        claimed |= set(idx.names_of_flow(f))
+    batch = idx.names_of_flow(flow)
+    written = [n for n in batch if pred(assignments[n])]
+    pend = [n for n in batch if n not in written and n not in claimed]
+    stats = {"batch_total": len(batch), "already_written": len(written),
+             "claimed_by_earlier_flow": len(batch) - len(written) - len(pend),
+             "pending": len(pend)}
+    return pend, stats
 
 
 def fail(msg: str):
@@ -155,13 +200,22 @@ def installed_card_exists(slug: str) -> bool:
 # ---------------------------------------------------------------------------
 # 作业包
 # ---------------------------------------------------------------------------
-def build(flow: str, batches: int, out_dir: Path, write: bool = True) -> dict:
+def build(flow: str, batches: int, out_dir: Path, write: bool = True,
+          pending: bool = False) -> dict:
     graph = BC.load_graph(GRAPH_DEFAULT)
     idx = BC.GraphIndex(graph)
     survey = parse_survey()
     cards = card_index()
     assignments = idx.assignments()
-    names = idx.names_of_flow(flow)
+    batch_names = idx.names_of_flow(flow)
+    # ⚠️ 「本 FLOW 的批次」与「本次要写的份」是**两个不同的集合**，必须分开报。
+    # 前者是覆盖视图（含别的 FLOW 批次里已写完的），后者才是剩余工作。
+    # 首版把它们混成一个 `names`，于是 FLOW-02 的作业包会把 22 份**已经写完**的契约
+    # 再列一遍 —— 撰写人照单全收就会写第二遍（同一份契约两个版本）。
+    sel_stats = None
+    names = batch_names
+    if pending:
+        names, sel_stats = pending_names(idx, flow, assignments)
 
     # FLOW 的 8 格（业务步骤与标准产物名 —— 撰写时逐字引用，别自己造词）
     stages = []
@@ -182,7 +236,7 @@ def build(flow: str, batches: int, out_dir: Path, write: bool = True) -> dict:
                        for rid in c["participating_role_ids"]})
     roles = [{"role_id": r["id"], "alias": r.get("alias"), "title": r["title"],
               "domain_id": r["domain_id"]} for r in graph["roles"] if r["id"] in role_ids]
-    batch_role_ids = sorted({assignments[n]["role_id"] for n in names})
+    batch_role_ids = sorted({assignments[n]["role_id"] for n in batch_names})
     if set(batch_role_ids) != set(role_ids):
         fail(f"{flow} 批次岗位 {batch_role_ids} 与逐格参与岗位 {role_ids} 不一致 —— "
              "两处口径不同就必须先解决，不许各写各的")
@@ -234,6 +288,8 @@ def build(flow: str, batches: int, out_dir: Path, write: bool = True) -> dict:
                        "B": sum(1 for c in contracts if c["template"] == "B"),
                        "可写": sum(1 for c in contracts if c["status"] == "可写"),
                        "待卡": sum(1 for c in contracts if c["status"] == "待卡")},
+            "selection": ({"mode": "pending", **(sel_stats or {})} if pending
+                          else {"mode": "full", "batch_total": len(batch_names)}),
         },
         "flow": flow,
         "stages": stages,
@@ -258,6 +314,12 @@ def build(flow: str, batches: int, out_dir: Path, write: bool = True) -> dict:
     print(f"\n{flow}：{pack['_meta']['counts']['total']} 份契约"
           f"（A {pack['_meta']['counts']['A']} / B {pack['_meta']['counts']['B']}）· "
           f"可写 {pack['_meta']['counts']['可写']} / 待卡 {pack['_meta']['counts']['待卡']}")
+    sel = pack["_meta"]["selection"]
+    if sel["mode"] == "pending":
+        print(f"   口径 = 待撰写（首归 {flow}）：批次 {sel['batch_total']}"
+              f" − 已撰写 {sel['already_written']}"
+              f" − 归更小 FLOW {sel['claimed_by_earlier_flow']}"
+              f" = **{sel['pending']} 份**")
     return pack
 
 
@@ -266,6 +328,14 @@ def render_common(pack: dict, survey: dict, graph: dict) -> str:
         f"| {s['stage_id']} | {s['stage_name']} | {s['cell_kind']} | {s['business_step']} | "
         f"{s['business_output_name']} |" for s in pack["stages"])
     roles = "、".join(f"{r['role_id']} {r['alias']}·{r['title']}" for r in pack["roles"])
+    stage_outputs = " · ".join(s["business_output_name"] for s in pack["stages"])
+    batch_total = (pack["_meta"].get("selection") or {}).get("batch_total", len(pack["contracts"]))
+    # FLOW ↔ 手册（PB）的对应：材料 FLOW-CATALOG 定，编号同序。
+    # ⚠️ 首版把 PB-001 与它的一条专属规则（「过期库存信息不能支撑加预算决定」）**硬编码**进
+    #    common 文件，于是 FLOW-05（手册是 PB-005）的作业包里也印着 PB-001 的原文 ——
+    #    撰写人会把它当成自己那条 FLOW 的材料事实（与 S1 第一批记的「规范里的示例被下游当成
+    #    材料事实」同型：**一处硬编码会被下游当成事实引用**）。
+    playbook = f"PB-{int(pack['flow'].split('-')[1]):03d}"
     boundary = "\n".join(
         f"| {n} | {v['counted_as_a_because']} | {v['downgrade_condition']} |"
         for n, v in sorted(survey["boundary"].items()))
@@ -277,7 +347,7 @@ def render_common(pack: dict, survey: dict, graph: dict) -> str:
 ## 0 先读这四份（按顺序）
 
 1. `paper2skills-vault/07-资源库/contracts/撰写规范.md` —— **作业规程**（v2），硬规则 R1–R10 在那里。
-2. `paper2skills-vault/07-资源库/contracts/TEMPLATE-{'A' if True else 'A'}-标定契约.md` 与
+2. `paper2skills-vault/07-资源库/contracts/TEMPLATE-A-标定契约.md` 与
    `TEMPLATE-B-完整性契约.md` —— 六段结构与每段的义务。
 3. 一份**已写好**的同模板样例（照它的密度写，不要更短）：
    - B 模板：`paper2skills-vault/07-资源库/contracts/v2/B/CTR-B-006-证据复核.md`
@@ -303,14 +373,14 @@ def render_common(pack: dict, survey: dict, graph: dict) -> str:
 
 写正文时凡是提到产物、规则、记录，**一律用材料里的原名**：
 
-- 阶段产物：经营信号记录 · 经营Case Charter · FLOW-01 Context Manifest · 经营证据与偏差诊断 ·
-  联合经营行动包 · FLOW-01 Assurance Decision · 动作尝试或无动作记录 · 经营关闭记录
+- 阶段产物：{stage_outputs}
 - 协同协议八阶段（COLLABORATION-GRAPH / CASE-PROTOCOL-8）：阶段接收记录、Assurance 接收门禁、
   受控动作、Action Intent、NoActionRecord、Pre-Case Exception、Emergency Guard（D-026 紧急保护通道）
 - 岗位：Case Control（模型外建单）、Execution Broker（执行）、Case Agent（主岗位）
 - 口径与主数据：AGT-045 指标契约与主数据、AGT-046 的质量状态/来源/新鲜度、
   `业务规则字典`、`标签分配结果表`
-- 通用工单规则（PB-001 原文）：每项记录**统计窗和新鲜度**；**过期库存信息不能支撑加预算决定**；
+- **本 FLOW 的手册 = {playbook}**（`docs/06-playbooks/PLAYBOOKS.md`；FLOW↔PB 的对应见 `FLOW-CATALOG.md`）
+- 跨手册通用工单规则（材料 CASE-PROTOCOL-8 与 PB 系列同源）：每项记录**统计窗和新鲜度**；
   缺关键输入时进入等待或自治异常，**不把缺失值当作零**；已成功动作**不得随整单重跑**
 
 ## 2.1 已定决策与业务处境数字（**可直接引用，引时注明出处**）
@@ -321,7 +391,7 @@ def render_common(pack: dict, survey: dict, graph: dict) -> str:
 
 | # | 已定内容 | 对本 FLOW 的直接后果 |
 |---|---|---|
-| **Q9** | 增量测量的主体＝**自有独立站为主** | FLOW-01 的实例主岗位按渠道四选一：Amazon→AGT-021；**独立站→AGT-023**；其他平台→AGT-024；B2B/零售→AGT-025 |
+| **Q9** | 增量测量的主体＝**自有独立站为主** | 涉及增量测量的责任，数据路径须点名独立站埋点。⚠️ 材料的渠道规则是**四选一**：Amazon→AGT-021；独立站→AGT-023；其他平台→AGT-024；B2B/零售→AGT-025 —— **别把一个渠道实例的负责人写成整条 FLOW 的负责人**（S1 第一批实测踩过） |
 | **Q10** | 独立站 holdback **没有、可以建，但需先建** | **6 条** A 类契约标 `方法待启用`：增量分析 · 广告实验 · 预算分配 · 投放诊断 · 实验设计 · 内容实验。**不得**写成「先假设有 holdback」 |
 | **Q11** | 出海历史＝**2 个完整年度** | 所有「回溯深度」维的默认取值；季节因子可从自身估形状，但**须与品类/行业先验对账**（先验来源＝开放事实 O2） |
 | **Q12** | 数据判据＝**本业务数据可得性五维**，与 registry 的 `data_availability` **分开** | 五维见 §3；**不得**把论文的数据可得性抄进来（类别错误） |
@@ -338,7 +408,7 @@ def render_common(pack: dict, survey: dict, graph: dict) -> str:
 
 1. 缺值处置必须点名**该责任实际会缺的那一维**（不是每份都缺同一维），并说清**缺了它这条责任算不出什么**。
 2. 兜底口径只许用在**确实没有更具体来源**时；有更具体来源（该责任的台账/后台/契约）就写它。
-3. 同一句话在 54 份里重复出现 ⇒ 视为未撰写。
+3. 同一句话在本 FLOW 的 {batch_total} 份里重复出现 ⇒ 视为未撰写。
 
 ## 3 数据源：只能从这些名字里选（§2 ① 必须是五选一）
 | ① 取值 | 本业务对应的命名系统（举例，可再具体到字段） |
@@ -375,6 +445,13 @@ def render_common(pack: dict, survey: dict, graph: dict) -> str:
    冲突要么说明为什么选它，要么写进「不得移植」清单 —— 不要沉默地二选一。
 
 ## 5 §F.5 的边界条目（若你的责任在表内，正文明写一句它的降级条件）
+
+> ⚠️ **来源标注（2026-09-13 补）**：本节的「计入 A 的理由」「降级条件」**不是材料原文**，
+> 是本项目《经营侧组织模型精确抽取》（`reports/_survey_org_model.md`）§F.5 的**二手判定**。
+> 写进正文时标成「本项目缺口账的降级条件」；**不得写成「材料给了」「材料已定名」**
+> ——S1 实测有撰写人写成「材料同时给了它的降级条件（§F.5）：…」，把我们的分析记成了材料的账。
+> 核验器：`python3 paper2skills-research/scripts/check_material_citations.py`
+
 | 责任名 | 计入 A 的理由 | 降级条件 |
 |---|---|---|
 {boundary}
@@ -427,7 +504,10 @@ def render_batch(pack: dict, group: list, n: int) -> str:
 | 骨架文件 | `paper2skills-vault/07-资源库/contracts/{c['file']}` |
 | `status` 初值 | **{c['status']}**（{"有候选卡" if c['status'] == '可写' else "无候选卡 —— 这就是扩充工单"}） |
 
-**本责任为什么是 {c['rationale_class']} 类（材料 §F.3 原文，别改判）**：{c['rationale']}
+**本责任为什么是 {c['rationale_class']} 类（⚠️ 来源＝本项目《经营侧组织模型精确抽取》`reports/_survey_org_model.md` §F.3 的判定，**二手来源，不是材料原文**，别改判）**：{c['rationale']}
+> 引用纪律：这句判定可以进正文，但**不得标成「材料 §F.3 原文」**。S1 实测 139 份作业包全都
+> 把它标成了「材料 §F.3 原文」，撰写人于是写出「材料 §F.3 原文写明『流程合理性须业务确认』」
+> 这类**把我们的分析记到材料账上**的句子 —— 核验器实测该句在材料里 0 命中。
 {('- **§F.5 边界条目**：' + c['boundary_note']['counted_as_a_because'] + ' ⇒ 降级条件：' + c['boundary_note']['downgrade_condition']) if c['boundary_note'] else ''}
 
 **本契约自己的格（只能引用这些格号）**：
@@ -440,7 +520,7 @@ def render_batch(pack: dict, group: list, n: int) -> str:
 
 > ⚠️ **下面是完整清单，不是节选**（首版只渲染前 6 条，实测撰写人因此漏卡 —— 一位撰写人看到
 > 「共 13 张」却只有 6 条，只能从可见的 6 张里挑）。机读版在
-> `paper2skills-research/data/contracts/flow-01-workpack.json` 的 `card_candidates`。
+> `paper2skills-research/data/contracts/{pack['flow'].lower()}-workpack.json` 的 `card_candidates`。
 
 - 有全文卡（优先选，可选到论文参数）：共 {len(paid)} 张
 {fmt(paid, 40)}
@@ -472,8 +552,28 @@ def check(pack: dict, out_dir: Path) -> int:
             problems.append(msg)
 
     names = idx.names_of_flow(pack["flow"])
-    expect(len(pack["contracts"]) == len(names),
-           f"作业包契约数 {len(pack['contracts'])} ≠ 图谱批次 {len(names)}")
+    sel = pack["_meta"].get("selection") or {"mode": "full"}
+    if sel.get("mode") == "pending":
+        # 选口径：包里的份数必须等于 `_meta` 记的 pending（不许两处各说各的）
+        expect(len(pack["contracts"]) == sel["pending"],
+               f"pending 包契约数 {len(pack['contracts'])} ≠ _meta.selection.pending {sel['pending']}")
+        # 反向①：不许把**已撰写**的契约再派一次（那会让同一份契约出现两个版本）
+        assignments = idx.assignments()
+        for c in pack["contracts"]:
+            expect(not is_written(assignments[c["responsibility"]]),
+                   f"{c['contract_id']} 已撰写却仍被派工 —— 会被写第二遍")
+        # 反向②：不许把**归更小 FLOW** 的契约算进来（那是另一个撰写人的活）
+        claimed = set()
+        for f in FLOW_IDS:
+            if f == pack["flow"]:
+                break
+            claimed |= set(idx.names_of_flow(f))
+        for c in pack["contracts"]:
+            expect(c["responsibility"] not in claimed,
+                   f"{c['contract_id']} 归更小的 FLOW（首归口径），不该出现在 {pack['flow']} 的包里")
+    else:
+        expect(len(pack["contracts"]) == len(names),
+               f"作业包契约数 {len(pack['contracts'])} ≠ 图谱批次 {len(names)}")
     flat = [cid for b in pack["batches"] for cid in b["contracts"]]
     expect(sorted(flat) == sorted(c["contract_id"] for c in pack["contracts"]),
            "分批必须恰好覆盖全部契约，不重不漏")
@@ -548,10 +648,131 @@ def selftest() -> int:
     expect(len(BC.GraphIndex(g2).names_of_flow(flow)) != n0,
            "篡改样本②：摘掉 AGT-032 的 FLOW-01 后批次规模未变 ⇒ 规模判据未被测到")
 
+    # ---- 首归 FLOW 划分（--pending 的判据）：两条规则各配一份注入样本 ----
+    g = BC.load_graph(GRAPH_DEFAULT)
+    ix = BC.GraphIndex(g)
+    asg = ix.assignments()
+
+    def sum_pending(pred):
+        return sum(pending_names(ix, f, asg, written_pred=pred)[1]["pending"] for f in FLOW_IDS)
+
+    all_unwritten = sum_pending(lambda m: False)
+    all_written = sum_pending(lambda m: True)
+    expect(all_unwritten == len(asg),
+           f"篡改样本③：「全部未撰写」时 Σ 待撰写应 = {len(asg)}（每份恰被首归 FLOW 认领一次），"
+           f"实得 {all_unwritten} ⇒ 首归划分漏了或多算了")
+    expect(all_written == 0,
+           f"篡改样本④：「全部已撰写」时 Σ 待撰写应为 0，实得 {all_written}")
+
+    # 反向：把规则 2（排除更小 FLOW 已认领）拿掉，「全部未撰写」时 Σ 必须**变大** ——
+    # 否则那条规则恒不起作用（摆设断言）。去掉规则 2 的 Σ 就是八个 FLOW 的批次规模之和。
+    naive_pending = sum(len(ix.names_of_flow(f)) for f in FLOW_IDS)
+    expect(naive_pending > all_unwritten,
+           f"反向样本⑤：去掉「首归」规则后 Σ（{naive_pending}）应当**大于**首归口径的 "
+           f"{all_unwritten}；两者相等说明规则 2 恒不起作用（摆设）")
+
+    # 独立锚点（**不经过 is_written**，否则是自我印证）：FLOW-01 批次在 S1 第一批已全部交付
+    # ⇒ 它的 54 份必须整批算作「已撰写」，且待撰写为 0。这条能抓住「is_written 恒 False」
+    # 这类变异 —— 首版这里写的是 `sum_pending(is_written) == 139 − Σ is_written(...)`，
+    # 等式两边**用的是同一个函数**，把函数改坏两边一起坏，实测变异② 10/10 照样全绿。
+    pend01, st01 = pending_names(ix, "FLOW-01", asg)
+    expect(st01["batch_total"] == 54 and st01["already_written"] == 54
+           and st01["pending"] == 0,
+           f"独立锚点：FLOW-01 批次 54 份已由 S1 第一批全部交付，应整批算已撰写，"
+           f"实得 {st01}")
+
+    # 独立计数：直接扫骨架文件里的 TODO_MARK（另一条代码路径，不经 is_written）
+    files = sorted(list((CONTRACTS_DIR / "A").glob("*.md")) + list((CONTRACTS_DIR / "B").glob("*.md")))
+    todo_files = [p for p in files if BC.TODO_MARK in p.read_text(encoding="utf-8")]
+    expect(len(files) == len(asg),
+           f"骨架文件数 {len(files)} ≠ 契约数 {len(asg)} —— 先跑 --all-skeletons")
+    expect(sum_pending(is_written) == len(todo_files),
+           f"恒等式：Σ 待撰写（{sum_pending(is_written)}）应 = 未撰写骨架数（{len(todo_files)}）"
+           f"—— 两边走的是不同代码路径，不等即 `is_written` 或首归划分有假")
+
+    # ---- 端到端：跑**真 CLI**（#25 的纪律：判据写在 main() 里就必须测 main()）----
+    # 反向控制也在这里：把包改坏，`check()` 必须**报出问题**而不是照样放行。
+    import contextlib
+    import io
+    import subprocess
+    import tempfile
+
+    self_path = str(Path(__file__).resolve())
+    quiet = contextlib.redirect_stdout(io.StringIO())  # 反向控制会打红 —— 那是预期输出，别污染自检
+
+    with tempfile.TemporaryDirectory() as td:
+        r = subprocess.run([sys.executable, self_path, "--flow", "FLOW-08",
+                            "--pending", "--batches", "1", "--out-dir", td],
+                           capture_output=True, text=True)
+        expect(r.returncode == 0,
+               f"端到端：生成 FLOW-08 待撰写包应 exit 0，实得 {r.returncode}：{r.stderr[-300:]}")
+        with quiet:
+            pack08 = build("FLOW-08", 1, Path(td), write=False, pending=True)
+            clean = 0
+            with contextlib.redirect_stdout(io.StringIO()) as buf:
+                clean = check(pack08, Path(td))
+            broken_out = {}
+        expect(clean == 0, "端到端：干净的待撰写包 --check 应为 0")
+
+        with quiet:
+            # 反向控制①：把「已撰写」的一份塞进待撰写清单 ⇒ 必须报「会被写第二遍」
+            broken = json.loads(json.dumps(pack08))
+            done = next(c for c in build("FLOW-01", 1, Path(td), write=False,
+                                         pending=False)["contracts"])
+            broken["contracts"].append(done)
+            broken["_meta"]["selection"]["pending"] += 1
+            with contextlib.redirect_stdout(io.StringIO()) as b1:
+                rc1 = check(broken, Path(td))
+            # 反向控制②：pending 数与实际份数对不上 ⇒ 必须报
+            broken2 = json.loads(json.dumps(pack08))
+            broken2["_meta"]["selection"]["pending"] += 1
+            with contextlib.redirect_stdout(io.StringIO()) as b2:
+                rc2 = check(broken2, Path(td))
+            broken_out = {"b1": b1.getvalue(), "b2": b2.getvalue()}
+        expect(rc1 != 0 and "写第二遍" in broken_out["b1"],
+               f"反向控制①：把已撰写的契约塞进待撰写包后 --check 仍放行 ⇒ 该判据是摆设\n{broken_out['b1']}")
+        expect(rc2 != 0 and "selection.pending" in broken_out["b2"],
+               f"反向控制②：pending 计数与包内容不符仍放行 ⇒ J 判据未被测到\n{broken_out['b2']}")
+
     print(f"自检：{cases - len(fails)}/{cases} 通过")
     for f in fails:
         print(f"🔴 {f}")
     return 0 if not fails else 1
+
+
+def audit_pending() -> int:
+    """恒等式判据：`Σ_k pending(FLOW-k) = 139 − 已撰写`。
+
+    这是「剩余工作已算出来」的**唯一**证据。两条都能失败：
+
+    - 左 > 右 ⇒ 有契约被两条 FLOW 各算了一次（会被写两遍）；
+    - 左 < 右 ⇒ 有契约**一条 FLOW 都没认领**（永远不会被写，而账上看不出来）。
+
+    ⚠️ 首版会写成「八个 FLOW 的批次规模相加」—— 那个数（397）恒大于 139，
+    因为它数的是**覆盖**不是**划分**；拿它当分母会得出「还差 258 份」这种假缺口。
+    """
+    graph = BC.load_graph(GRAPH_DEFAULT)
+    idx = BC.GraphIndex(graph)
+    assignments = idx.assignments()
+    total = len(assignments)
+    written = sum(1 for m in assignments.values() if is_written(m))
+    rows, s = [], 0
+    for flow in FLOW_IDS:
+        pend, st = pending_names(idx, flow, assignments)
+        s += st["pending"]
+        rows.append((flow, st))
+    print(f"{'FLOW':8} {'批次':>5} {'已撰写':>7} {'归更小FLOW':>10} {'待撰写':>7}")
+    for flow, st in rows:
+        print(f"{flow:8} {st['batch_total']:>5} {st['already_written']:>7} "
+              f"{st['claimed_by_earlier_flow']:>10} {st['pending']:>7}")
+    print(f"\n恒等式：Σ 待撰写 = {s} ｜ 139(={total}) − 已撰写({written}) = {total - written}")
+    ok = s == total - written
+    print("✅ 剩余工作是一个划分（不重不漏）" if ok else "🔴 恒等式不成立 —— 有契约被重复派工或无人认领")
+    over = [f for f in FLOW_IDS if len(idx.names_of_flow(f)) > 0]
+    print(f"（对照口径：八个 FLOW 的**批次规模**相加 = "
+          f"{sum(len(idx.names_of_flow(f)) for f in over)} —— 那是**覆盖**不是划分，"
+          f"不能拿来算缺口）")
+    return 0 if ok else 1
 
 
 def main() -> int:
@@ -560,13 +781,20 @@ def main() -> int:
     ap.add_argument("--batches", type=int, default=6)
     ap.add_argument("--out-dir", default=str(OUT_DIR_DEFAULT))
     ap.add_argument("--no-write", action="store_true")
+    ap.add_argument("--pending", action="store_true",
+                    help="只装**待撰写**的契约；且按「首归 FLOW」口径排除更小 FLOW 已认领的（避免同一份写两遍）")
+    ap.add_argument("--audit-pending", action="store_true",
+                    help="跑恒等式 Σ 待撰写 = 139 − 已撰写")
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args()
 
     if args.selftest:
         return selftest()
-    pack = build(args.flow, args.batches, Path(args.out_dir), write=not args.no_write)
+    if args.audit_pending:
+        return audit_pending()
+    pack = build(args.flow, args.batches, Path(args.out_dir), write=not args.no_write,
+                 pending=args.pending)
     if args.check:
         return check(pack, Path(args.out_dir))
     return 0
