@@ -310,6 +310,49 @@ def strip_math(text: str) -> str:
     return _MATH_SPAN_RE.sub(_repl, text)
 
 
+# --- C9：标识符里嵌的数字（`A100` / `LLaMA-7B` / `GPT-4`）------------------------
+# ⚠️ 与 C6 **同型**的第二条洗白通道。2026-09-13 由 Y2 子代理换底本时实测撞出：
+# v2 那句引文里的 `three 8 × A100 GPU machines … 8,640 cold items per hour`，
+# 被原来的 `re.findall(r"\d+(?:\.\d+)?")` 抽成 `['8','100','8','640']` ——
+# **`A100` 里的 `100` 进了证据集**。于是卡片正文里任意一个 `100`
+# （那一轮卡上正好写着「效率提升100倍+」「日均上新100+SKU」）会被判**有出处**，
+# 红灯凭空消失。一句话：**`A100` 洗白了 `100`**。
+#
+# 判据刻意**紧**（紧到只排「紧邻 ASCII 字母」的数字），因为假红会让门禁失去威信：
+#   · 左边紧邻字母          `A100` → 排除 `100`
+#   · 左边是「字母 + 连字符」 `GPT-4` / `Llama-3` / `LLaMA-7B` → 排除
+#
+# ⚠️ **刻意不排「右边紧邻字母」**（即 `7B` 这类）：第一版加了这条，自检立刻变红 ——
+# 它把 `with 6x throughput` 里的 `6` 也排掉了，而 **`6x` 正是本语料真实的倍数写法**
+# （对应「提升 6 倍」），排掉它等于把**真值**当标识符删掉。
+# `LLaMA-7B` 已由「字母 + 连字符」那条覆盖，故该规则的收益远小于代价。
+# **已知残留（登记不修）**：无连字符的 `7B`（如 "the 7B variant"）仍会注入 `7`；
+# 修它需要一份量级后缀白名单（B/K/M/G/T），而那会在 `6K`/`2M` 上制造新的歧义。
+#
+# ⚠️⚠️ **只认 ASCII 字母，绝不能用 `str.isalpha()`** —— 汉字也满足 `isalpha()`，
+# 而漏洞 #14 的整个修复前提就是「**中文紧邻的数字必须继续算断言**」
+# （`准确率92.2%` / `返工50%` 这类中文卡断言曾被系统性漏检）。
+# 用 `isalpha()` 会把 #14 的修复原地推翻，且症状是**静默漏检**，不是报错。
+_ASCII_LETTER_RE = re.compile(r"[A-Za-z]")
+
+
+def measurement_numbers(text: str) -> list[str]:
+    """抽取**度量数字**，排除标识符里嵌的数字（C9）。
+
+    只回答「哪些数字**能充当出处**」，不回答「哪些数字**是断言**」——
+    后者由 `NUM_TOKEN_RE` 负责。两者口径不同，**不要互相套用**。
+    """
+    out: list[str] = []
+    for m in re.finditer(r"\d+(?:\.\d+)?", text):
+        s = m.start()
+        if s > 0 and _ASCII_LETTER_RE.fullmatch(text[s - 1]):
+            continue                                   # `A100` / `Qwen3`
+        if s >= 2 and text[s - 1] == "-" and _ASCII_LETTER_RE.fullmatch(text[s - 2]):
+            continue                                   # `GPT-4` / `LLaMA-7B`
+        out.append(m.group(0))
+    return out
+
+
 def collect_evidence(card: Path, text: str,
                      trusted_quotes: set[str] | None = None) -> tuple[set[str], list[str]]:
     """收集证据链：卡片内引用块 + 同目录 evidence.md 的数字与出处。
@@ -329,7 +372,7 @@ def collect_evidence(card: Path, text: str,
         sources.append(f"卡片引用块: {src[:80]}")
         # ⚠️ C6：必须先剥掉参考文献编号 `[8]` 再抽数字，否则引文里的**编号**
         #    会让卡片正文的同名断言变成「有出处」。见 strip_citation_brackets。
-        for n in re.findall(r"\d+(?:\.\d+)?", strip_citation_brackets(src)):
+        for n in measurement_numbers(strip_citation_brackets(src)):
             nums.add(n)
 
     # 证据链 evidence.md 的定位。
@@ -400,11 +443,11 @@ def collect_evidence(card: Path, text: str,
             for src in _extract_quotes(ev):
                 if trusted_quotes is not None and src not in trusted_quotes:
                     continue
-                for n in re.findall(r"\d+(?:\.\d+)?", strip_citation_brackets(src)):
+                for n in measurement_numbers(strip_citation_brackets(src)):
                     nums.add(n)
             for line in ev.splitlines():
                 if "出处" in line or "§" in line:
-                    for n in re.findall(r"\d+(?:\.\d+)?", line):
+                    for n in measurement_numbers(line):
                         nums.add(n)
     return nums, sources
 
@@ -1400,6 +1443,41 @@ def selftest() -> int:
     ok = ok and price_ok and math_ok
     print(f"{'✅' if (price_ok and math_ok) else '❌'} 20 C8 反过宽（直接测 strip_math）: "
           f"价格保留={price_ok}（实得 {keep!r}）  公式剥离={math_ok}（实得 {strip_!r}）")
+
+    # --- 用例 21（C9）：引文里的**标识符数字**不得洗白同名断言 ---------------------
+    # ⚠️ 与用例 19 同理，必须直测 `collect_evidence`：C9 的症状是「正文的 `100`
+    # 因为引文里有 `A100` 而被判有出处」，而端到端用例只断言 outcome/红灯，
+    # **卡片可能因为别的数字也恰好是红的**，从而放过这条洗白通道。
+    # 台账式描述：**`A100` 洗白了 `100`**。
+    # 同时**必须带正例**：`6x` 是真值，不得被当成标识符排掉 ——
+    # 这条正是第一版判据（多排了「右边紧邻字母」）被自检当场抓住的地方。
+    with tempfile.TemporaryDirectory() as td:
+        p = Path(td) / "Skill-C9.md"
+        for label, quote, expects in [
+            ("A100 洗白 100",
+             "Our system runs on three 8 x A100 GPU machines and handles 8,640 items per hour.",
+             [("100", False), ("8", True), ("640", True)]),
+            ("6x 是倍数，必须保留",
+             "We measure 6x throughput over the baseline.",
+             [("6", True)]),
+            ("GPT-4 / LLaMA-7B 是标识符",
+             "GPT-4 and LLaMA-7B were both evaluated.",
+             [("4", False), ("7", False)]),
+            # ⚠️ 反过宽：**中文紧邻的数字必须继续算度量** —— 漏洞 #14 的整个修复前提。
+            # 用 `str.isalpha()` 判字母会把汉字也算进去，静默推翻 #14。
+            ("中文紧邻不得被当标识符（漏洞 #14）",
+             "模型准确率92.2%，返工率50%。",
+             [("92.2", True), ("50", True)]),
+        ]:
+            body = ('---\npaper_id: 2606.26690\n---\n\n## ⑥ 原文引用\n\n'
+                    f'> 原文:"{quote}"\n> 出处：2606.26690 §1\n')
+            p.write_text(body, encoding="utf-8")
+            nums, _ = collect_evidence(p, body, trusted_quotes={quote})
+            wrong = [(t, t in nums, w) for t, w in expects if (t in nums) != w]
+            good = not wrong
+            ok = ok and good
+            print(f"{'✅' if good else '❌'} 21 C9 标识符数字洗白[{label}]: "
+                  f"{'全部符合预期' if good else f'实得 {[(t, g) for t, g, _ in wrong]}'}")
 
     # 用例 2 的正确性还依赖一个前提：经验卡确实被判成「无论文来源」。
     # 若 card_has_paper_source 有缺陷（例如把 `source: human+ai` 当论文来源），
