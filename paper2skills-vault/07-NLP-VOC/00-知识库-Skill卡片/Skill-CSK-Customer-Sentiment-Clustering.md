@@ -1,4 +1,5 @@
 ---
+title: CSK Customer Sentiment Clustering
 paper: "Customer Sentiment Analysis with Cuckoo Search and K-means Clustering"
 # ⚠️ 溯源错位（2026-09-12 实测）：卡内声明的 arXiv:2311.11250 实际对应的是
 #    Kumar, Roy, Dogra & Kim, "A Comprehensive Review on Sentiment Analysis:

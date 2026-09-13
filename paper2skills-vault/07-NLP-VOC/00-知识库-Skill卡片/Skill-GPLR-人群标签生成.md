@@ -1,4 +1,5 @@
 ---
+title: GPLR 人群标签生成 — 从嵌入到可解释营销人群
 paper_id: 2504.17304
 paper: "You Are What You Bought: Generating Customer Personas for E-commerce Applications"
 venue: SIGIR 2025

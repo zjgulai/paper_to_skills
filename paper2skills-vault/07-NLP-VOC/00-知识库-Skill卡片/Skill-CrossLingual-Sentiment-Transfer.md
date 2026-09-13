@@ -1,4 +1,5 @@
 ---
+title: 跨语言情感迁移 (Cross-Lingual Sentiment Transfer)
 paper_id: 2508.09515
 paper: "LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation"
 venue: ACL 2025 (底本未声明 venue)

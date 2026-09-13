@@ -1,4 +1,5 @@
 ---
+title: 弱监督自动标注 — LLM 生成标注程序
 paper_id: 2407.11004
 paper: "The ALCHEmist: Automated Labeling 500x CHEaper Than LLM Data Annotators"
 venue: NeurIPS 2024

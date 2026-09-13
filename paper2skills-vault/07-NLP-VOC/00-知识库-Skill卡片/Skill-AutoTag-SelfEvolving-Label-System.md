@@ -1,4 +1,5 @@
 ---
+title: VOC 自动打标签与自进化标签体系
 paper_id: 2405.07195
 paper: "InsightNet : Structured Insight Mining from Customer Feedback"
 venue: arXiv preprint (Amazon)

@@ -1,4 +1,5 @@
 ---
+title: BERT-MoE 高效方面情感分析
 paper_id: 2602.12778
 paper: "Aspect-Based Sentiment Analysis for Future Tourism Experiences: A BERT-MoE Framework for Persian User Reviews"
 venue: arXiv preprint

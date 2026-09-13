@@ -1,4 +1,5 @@
 ---
+title: 跨语言语义结构对齐
 paper_id: 2206.07587
 paper: "Cross-lingual AMR Aligner: Paying Attention to Cross-Attention"
 venue: ACL 2023

@@ -1,4 +1,5 @@
 ---
+title: 行为意图树解析
 paper_id: 2408.05353
 paper: "IntentRec: Predicting User Session Intent with Hierarchical Multi-Task Learning"
 venue: arXiv preprint (Netflix)
