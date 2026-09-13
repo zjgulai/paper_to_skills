@@ -1,4 +1,35 @@
+---
+title: GraphRAG - 知识图谱增强检索生成
+module: 08-知识图谱
+topic: 把 RAG 的文本块检索升级为知识图谱结构化检索，用社区摘要回答「全局性」问题
+status: draft
+# created 未知：本卡早于 2026-09-12「首次纳管 git」的提交 c92003a，无法从版本历史确定创建日。
+updated: 2026-09-13
+owner: self
+source: ai
+evidence_basis: mixed
+paper_id: 2404.16130
+paper: "From Local to Global: A Graph RAG Approach to Query-Focused Summarization"
+venue: arXiv preprint
+venue_tier: preprint
+evidence_grade: C
+related: Skill-Agentic-Memory-Management.md, Skill-KGQA-Question-Answering.md, Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md
+---
+
 # Skill Card: GraphRAG - 知识图谱增强检索生成
+
+> **证据拓扑说明（2026-09-13 补 frontmatter 时核验）—— 本卡有「两个论文」，不要混淆**
+> - **来源论文（`paper_id: 2404.16130`）**：Edge et al.,
+>   *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*（GraphRAG 的提出者）。
+>   arXiv 元数据**无 `Comments`、无 `journal_ref`** → `venue: arXiv preprint`。
+>   ⚠️ 仓库内**没有**这篇的底本 → 故 `evidence_grade: C`（仅二手描述）。
+> - **逐字证据来源（`2608.28978`）**：本卡 ⑥ 段的 18 条逐字引文**全部**出自
+>   *Selective Forgetting: A Graph-Based Memory Framework for Long-Term LLM Agents*，
+>   它是 PHASE3 批次 3E 用来给本卡补「负结果 / 适用边界」的**增强论文**，**不是**本卡的来源论文。
+>   故 `evidence_basis: mixed` —— 来源声明与逐字证据来自**两篇不同论文**。
+> - 判读规则：**⑥ 段的逐字引文只能用来核验 ①b 的边界结论，不能用来核验 ①/②/⑤ 关于 GraphRAG 本身的表述**
+>   —— 后者目前无底本可核。这是本卡最容易被误读的地方。
+
 
 ---
 

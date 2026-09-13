@@ -1,4 +1,36 @@
+---
+title: Deep RL for Two-Echelon Inventory Optimization
+module: 04-供应链
+topic: 把两级库存系统建模为 MDP，用深度强化学习学习「生产多少、发往哪里」，并以 (s,Q) 静态策略为基准
+status: draft
+# created 未知：本卡早于 2026-09-12「首次纳管 git」的提交 c92003a，无法从版本历史确定创建日。
+# 不填一个猜的日期 —— frontmatter 里的日期是断言，不是占位符。
+updated: 2026-09-13
+owner: self
+source: ai
+evidence_basis: paper-traceable
+paper_id: 2204.09603
+paper: "Comparing Deep Reinforcement Learning Algorithms in Two-Echelon Supply Chains"
+venue: AI4M 2023 (ECML PKDD Workshop)
+venue_tier: workshop
+evidence_grade: C
+related: Skill-Multi-Echelon-Inventory.md, Skill-Multi-Warehouse-Allocation-LLM.md, Skill-Supply-Network-Simulation.md
+---
+
 # Skill Card: Deep RL for Two-Echelon Inventory Optimization
+
+> **venue 与证据基础说明（2026-09-13 补 frontmatter 时核验）**
+> - **venue 证据在底本之外**：arXiv 元数据 `Comments` 逐字为
+>   `The paper has been accepted for presentation and inclusion in the proceedings of the
+>   AI for Manufacturing workshop (AI4M), co-located with the ECML PKDD 2023`；
+>   另有 Springer Related DOI `10.1007/978-3-031-74640-6_37`。
+>   依 `venue-whitelist.md` §3「comment 含 `workshop` → 降级」，故 `venue_tier: workshop`。
+>   ⚠️ 本卡底本正文**不含**任何 venue 字样 —— 论文正文不自述 venue 是常态，
+>   **venue 声明不得用底本判定**。
+> - **`evidence_grade: C`（仅二手描述）**：仓库内**没有**该论文的底本（`papers/04-供应链/` 下无 `2204.09603/`），
+>   本卡也没有任何 `> 原文:"..."` 逐字引文 —— 卡内容是对方法的转述，**未经逐字核验**。
+>   卡内所有效果/ROI 数字均为**作者估算**，不是论文结论。补底本后应转 `paper-verbatim`。
+
 
 ---
 
