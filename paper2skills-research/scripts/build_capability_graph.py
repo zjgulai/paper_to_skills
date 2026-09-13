@@ -17,7 +17,7 @@
 | A/B/C 算法可服务性 | `_survey_org_model.md` §F.3 的逐条判定（151 条） | 解析进图，供缺口账 join |
 | A 类**边界**条目（10 条）与**无 A 类**岗位（10 个） | `_survey_org_model.md` §F.5 / §F.6 | 解析进图（`a_scope`），**并为 T-C 的阈值敏感性提供落点**；解析值与机器算出值**逐项断言相等** |
 | 卡 ↔ L3 | **精选线**卡端事实源 `paper2skills-vault/07-资源库/card-classification.json`（F5 产物，146 张） | join 147→146 张；其中 93 张是从产品侧 `classification.json`（1338 条）**逐字继承**的，由 F5 的 J4 零漂移门禁守着 |
-| 方案层 | S1（尚未交付） | 只留槽位 `solutions: []` 并声明 |
+| 方案层（L3 方案域 8 份） | `paper2skills-vault/07-资源库/solutions/*.md`（S1 逐 FLOW 交付） | **派生**：读文档 frontmatter → `solutions[]` + 该 FLOW 8 格的 `solution_refs`；文档删了图自己归零，不需手改图 |
 
 ## 必须入库的两个判据（本卡验收项）
 
@@ -57,6 +57,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 from datetime import datetime
 from pathlib import Path
 
@@ -68,6 +69,9 @@ TAXONOMY = Path("/Users/lute/project/Magpie-Horch/packages/capabilities/dsh-pape
 # 卡 ↔ L3 的事实源：**精选线**的卡端落点（F5 产物）。产品侧那份 1338 条是另一个语料，
 # 由 F5 的生成器逐条比对（J4 零漂移），本图只消费、不重判。
 CARD_CLASSIFICATION = VAULT / "07-资源库" / "card-classification.json"
+# L3 方案域的**源**（S1 逐 FLOW 交付的长文）。图里的 `solutions` 与 `cells[].solution_refs`
+# 由它派生 —— 文档在、图上就有；文档删了、图自己会说「0 份」，不需要人手改图。
+SOLUTIONS_DIR = VAULT / "07-资源库" / "solutions"
 PRESET_DIR = Path(os.path.expanduser("~/.dsh/.agent-presets"))
 
 MATERIAL_ROOT = Path(os.environ.get("AI_ORG_MATERIAL_ROOT", "/Users/lute/project/AI组织变革"))
@@ -195,6 +199,49 @@ def load_card_l3() -> dict[str, list[str]]:
     if doc.get("total") != len(doc.get("items", [])):
         raise SystemExit(f"✗ {_rel(CARD_CLASSIFICATION)} 的 total 与 items 条数对不上")
     return {i["id"]: list(i.get("l3") or []) for i in doc["items"]}
+
+
+def load_solutions() -> list[dict]:
+    """L3 方案域：读 `07-资源库/solutions/*.md` 的 frontmatter。
+
+    **文档是源，图是派生。** 目录不存在 = 0 份（S1 未交付），这是**合法状态**而不是错误；
+    但**文档存在却没有 `flow_id`** 即 SystemExit —— 那说明那份文档没资格当方案域，
+    静默跳过会让它变成一份谁也查不到的孤儿（`--cell` 永远答「方案 0」而文档明明在）。
+
+    ⚠️ 与 `load_card_l3` 的差别是有意的：那个的缺失会让 146 张卡静默退化，所以缺文件即炸；
+    这个的缺失只意味着「那一层还没交付」，如实报 0 才对。
+    """
+    if not SOLUTIONS_DIR.is_dir():
+        return []
+    out = []
+    for p in sorted(SOLUTIONS_DIR.glob("*.md")):
+        text = p.read_text(encoding="utf-8")
+        m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+        fm = {}
+        if m:
+            for line in m.group(1).splitlines():
+                if not line.strip() or line.lstrip().startswith("#"):
+                    continue
+                k, _, v = line.partition(":")
+                fm[k.strip()] = v.strip().strip('"').strip("'")
+        flow = fm.get("flow_id")
+        if not flow:
+            raise SystemExit(f"✗ {_rel(p)} 有 frontmatter 但没有 `flow_id` —— "
+                             f"方案域必须声明它属于哪条 FLOW（拿不到就炸，不给默认值）")
+        # solution_id：优先取显式字段，否则用文件名的 `FLOW-NN-` 前缀（方案域是「一条 FLOW 一份」）。
+        m2 = re.match(r"^(FLOW-\d{2})-", p.stem)
+        out.append({
+            "solution_id": fm.get("solution_id") or (m2.group(1) if m2 else p.stem),
+            "flow_id": flow,
+            "title": fm.get("title") or p.stem,
+            "status": fm.get("status"),
+            "path": _rel(p),
+            # ⚠️ **刻意不记 `bytes`**：S1 期间实测 —— 记了它，只要方案域文档被编辑一次
+            #    （哪怕只加一节正文），`--check` 就报「与现状不一致」，而图其实没变。
+            #    那是把「内容变更」误报成「图漂移」。稳定性判据要盯**结构性字段**
+            #    （flow_id / path / status），不是文件大小。
+        })
+    return out
 
 
 def load_wiring() -> dict[str, list[str]]:
@@ -330,6 +377,16 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
         stage_kind[st["id"]] = MODEL_PARTICIPATION_KIND[mp]
 
     stage_name = {st["id"]: st.get("name") for st in coll["protocol"]["stages"]}
+
+    # --- 方案层：L3 方案域（S1 逐 FLOW 交付；**文档是源，本图是派生**）---
+    # 读 `07-资源库/solutions/*.md` 的 frontmatter，再把该 FLOW 的 8 格 solution_refs 指向它。
+    # 不许手改图里的 solutions —— 手改就繁殖出第二份事实源（R4 / 漏洞 #11 同型事故）。
+    solutions = load_solutions()
+    flow_ids = {f["id"] for f in coll["flows"]}
+    for s in solutions:
+        if s["flow_id"] not in flow_ids:
+            raise SystemExit(f"✗ 方案域 {s['solution_id']} 的 flow_id={s['flow_id']!r} 不是合法 FLOW")
+
     cells = []
     for b in coll["flow_stage_bindings"]:
         sid = b["stage_id"]
@@ -347,7 +404,8 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
             "business_step": b.get("business_step"),
             "business_output_name": b.get("business_output_name"),
             "participating_role_ids": sorted(r["id"] for r in roles_in_flow),
-            "solution_refs": [],          # S1 交付后回填
+            "solution_refs": sorted(s["solution_id"] for s in solutions
+                                    if s["flow_id"] == b["flow_id"]),
             "card_refs": [],              # F5/S4 交付后回填
         })
 
@@ -362,7 +420,7 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
             "l3": card_l3.get(p.stem),
         })
 
-    counts = _counts(roles, l3, cells, scenarios, cards)
+    counts = _counts(roles, l3, cells, scenarios, cards, solutions)
     graph = {
         "_meta": _meta(root, org, cat, coll),
         "mece": _mece(),
@@ -374,7 +432,7 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
         "l3": l3,
         "scenarios": scenarios,
         "cells": cells,
-        "solutions": [],
+        "solutions": solutions,
         "cards": cards,
         "counts": counts,
         "a_scope": _a_scope(l3, boundary, no_a_declared, roles_without_a_computed),
@@ -438,7 +496,7 @@ def _a_scope_contradictions(l3, boundary) -> list[dict]:
     return out
 
 
-def _counts(roles, l3, cells, scenarios, cards) -> dict:
+def _counts(roles, l3, cells, scenarios, cards, solutions) -> dict:
     kind = {}
     for c in cells:
         kind[c["cell_kind"]] = kind.get(c["cell_kind"], 0) + 1
@@ -461,7 +519,9 @@ def _counts(roles, l3, cells, scenarios, cards) -> dict:
         "cards": len(cards),
         "cards_with_l3": sum(1 for c in cards if c["l3"]),
         "cards_unclassified": sorted(c["name"] for c in cards if not c["l3"]),
-        "solutions": 0,
+        "solutions": len(solutions),
+        "solution_cells_covered": sum(1 for c in cells if c["solution_refs"]),
+        "solution_flows_covered": sorted({s["flow_id"] for s in solutions}),
         "role_wiring_known": sum(1 for r in roles if r["wired_skills"] is not None),
         "roles_without_a": sum(1 for r in roles if r["a_count"] == 0),
     }
@@ -486,9 +546,11 @@ def _mece() -> dict:
                                       "roles_closure（经 FLOW 传递闭包，共 701 对）。"
                                       "差 5.9 倍。下游必须选定一种并写明用的是哪一种。"},
         "solutions": {"property": "cover", "of": "64 格",
-                      "multiplicity": "一个方案跨多格；当前 0 个（S1 未交付）"},
+                      "multiplicity": "**一份方案域覆盖整条 FLOW 的 8 格**（不是一格一份）——"
+                                      "8 份方案域 = 8 条 FLOW；S1 逐 FLOW 交付，"
+                                      "已交付的 FLOW 其 8 格 solution_refs 全部指向它"},
         "cards": {"property": "cover", "of": "L3",
-                  "multiplicity": "一卡可挂 1–3 个 L3；当前 93/146 张有 L3（另 53 张待 F5）",
+                  "multiplicity": "一卡可挂 1–3 个 L3；**146/146 张都有 L3**（F5 补齐）",
                   "check": "卡引用的 L3 必须都在 151 名单内（不在即拒绝出图）"},
     }
 
@@ -573,8 +635,11 @@ def _join_traps(roles, org, mismatch, coll, counts) -> list[dict]:
 
 def _open_items() -> list[dict]:
     return [
-        {"id": "O-SOL", "what": "方案层为空", "owner": "S1",
-         "why": "64 格的 solution_refs 全为空数组；S1 交付 8 方案域 + 139 契约后回填"},
+        {"id": "O-SOL", "what": "方案层只交付了一部分 FLOW", "owner": "S1",
+         "why": "`solutions` 与 `cells[].solution_refs` 由 `07-资源库/solutions/*.md` 派生。"
+                "S1 按 FLOW 纵向切片交付：已交付的 FLOW 其 8 格 solution_refs 全部有值，"
+                "未交付的仍为空数组 —— **空 = 还没做，不是缺陷**。"
+                "契约层（139 份）与方案域分开计数：方案域 8 份，契约 139 份。"},
         {"id": "O-CARD", "what": "53 张精选卡无 L3 归属", "owner": "F5",
          "why": "146 张里 93 张能 join 到产品侧分类，另 53 张（含 PHASE3/4 新卡）待 F5"},
         {"id": "O-WIRE", "what": "岗位接线取自运行时 preset", "owner": "—",
@@ -614,7 +679,8 @@ def _meta(root: Path, org, cat, coll) -> dict:
         "cell_kind_basis":
             "由 collaboration-graph.json 的 protocol.stages[].model_participation 机器导出；"
             "映射表 MODEL_PARTICIPATION_KIND 对未知取值直接失败（无默认值）。",
-        "version": 2,   # v2：卡 ↔ L3 换到精选线事实源（F5），93 → 146 张
+        "version": 3,   # v3：方案层接上 L3 方案域源（S1 起，逐 FLOW 派生）
+                        # v2：卡 ↔ L3 换到精选线事实源（F5），93 → 146 张
     }
 
 
@@ -845,6 +911,55 @@ def _selftest() -> int:
           f" 对 {len(tampers)} 条划分断言各喂一份篡改图，全部被抓（漏 {miss}）")
     ok &= not miss
 
+    # --- 判据 ③：方案层是**派生**的，不是手写进图的（S1 起） ---
+    # 断言与变异各来一份：只断言「已交付的 FLOW 有 refs」是**恒真**的（除非有人删文件），
+    # 所以必须再加一条「把源目录换空 ⇒ refs 必须清空」的注入式变异，
+    # 否则这条判据证明不了「图跟着文档走」。
+    print("\n--- 判据 ③：方案层由 solutions/*.md 派生 ---")
+    sol = g["solutions"]
+    bad_refs = []
+    for s in sol:
+        cells_of_flow = [c for c in g["cells"] if c["flow_id"] == s["flow_id"]]
+        if len(cells_of_flow) != 8 or any(s["solution_id"] not in c["solution_refs"]
+                                          for c in cells_of_flow):
+            bad_refs.append(s["solution_id"])
+    print(("✅" if not bad_refs else "❌") +
+          f" {len(sol)} 份方案域各覆盖其 FLOW 的 8 格（未覆盖：{bad_refs}）")
+    ok &= not bad_refs
+    stray = [c["cell_id"] for c in g["cells"] if c["solution_refs"]
+             and not any(s["solution_id"] in c["solution_refs"] for s in sol)]
+    print(("✅" if not stray else "❌") +
+          f" 反向：没有指向不存在方案的格（越界格：{stray}）")
+    ok &= not stray
+
+    saved_sol_dir = globals()["SOLUTIONS_DIR"]
+    try:
+        # 变异 A：源目录为空 ⇒ 全部 refs 清空，counts.solutions = 0（**图跟着文档走**）
+        with tempfile.TemporaryDirectory() as td:
+            globals()["SOLUTIONS_DIR"] = Path(td)
+            g_empty = build()
+        empty_ok = (g_empty["counts"]["solutions"] == 0
+                    and all(not c["solution_refs"] for c in g_empty["cells"]))
+        print(("✅" if empty_ok else "❌") +
+              " 变异 A：把方案源目录换空 → 64 格 refs 全清空（证明是派生，不是缓存）")
+        ok &= empty_ok
+
+        # 变异 B：一份有 frontmatter 但没有 flow_id 的文档 ⇒ 必须失败，而不是静默跳过
+        with tempfile.TemporaryDirectory() as td:
+            (Path(td) / "FLOW-09-野方案.md").write_text(
+                "---\ntitle: 野方案\n---\n\n没写 flow_id。\n", encoding="utf-8")
+            globals()["SOLUTIONS_DIR"] = Path(td)
+            crashed = False
+            try:
+                build()
+            except SystemExit as e:
+                crashed = "没有 `flow_id`" in str(e)
+        print(("✅" if crashed else "❌") +
+              " 变异 B：方案域缺 flow_id → 直接失败（静默跳过会让它成为谁也查不到的孤儿）")
+        ok &= crashed
+    finally:
+        globals()["SOLUTIONS_DIR"] = saved_sol_dir
+
     # ⚠️ 变异：把 STG-04 的语义从 M 改成 D ⇒ 分型必须变成 16/16/32 并被抓到。
     #    没有这一条，「M/R/D 分型 ≠ 24/16/24」这句断言就是个**摆设** ——
     #    把整行删掉自检照样全绿。（2026-09-13 由变异测试实测抓出；
@@ -924,7 +1039,9 @@ def _selftest() -> int:
     # ⚠️ 反向：把一份**被篡改的** taxonomy 喂进去，比对必须报错。
     #    没有这一条，上面那句「逐项一致」就是**摆设** —— 真 taxonomy 本来就是一致的，
     #    把整段比对删掉自检照样全绿（2026-09-13 由变异测试 M5 实测抓出）。
-    import tempfile
+    # ⚠️ 这里**不再** `import tempfile`：函数内的局部 import 会让 `tempfile` 在整个函数里
+    #    变成局部名，于是本函数**前面**任何一处 `tempfile.…` 都抛 UnboundLocalError
+    #    —— 又一次「自检自己崩了」。模块级已经 import 过。
     with tempfile.TemporaryDirectory() as td:
         t = json.loads(TAXONOMY.read_text(encoding="utf-8"))
         victim_l3 = t["l3"][0]

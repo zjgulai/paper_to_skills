@@ -1,7 +1,7 @@
 {
  "_meta": {
   "what": "五层能力图谱：50 岗位 / 4 面 / 8 域 / 151 L3 / 20 SCN / 64 格（M/R/D）/ 方案 / 卡",
-  "generated": "2026-09-13T18:02:34+0800",
+  "generated": "2026-09-13T18:29:42+0800",
   "generator": "paper2skills-research/scripts/build_capability_graph.py",
   "materials_root": "/Users/lute/project/AI组织变革",
   "source_refs": [
@@ -31,7 +31,7 @@
   ],
   "l1_l2_l3_fact_source": "材料 organization-graph.json + role-catalog.json；产品侧已派生一份 dsh-paper2skills/data/taxonomy.json。本图**不重新定义** L1–L3，用 --check-taxonomy 与之逐项断言相等。",
   "cell_kind_basis": "由 collaboration-graph.json 的 protocol.stages[].model_participation 机器导出；映射表 MODEL_PARTICIPATION_KIND 对未知取值直接失败（无默认值）。",
-  "version": 2
+  "version": 3
  },
  "mece": {
   "_note": "每一层标明是**划分**还是**覆盖**。划分层可做加总，覆盖层**不可** —— 覆盖层的重数必须算出来（见 counts），不能声称。",
@@ -64,12 +64,12 @@
   "solutions": {
    "property": "cover",
    "of": "64 格",
-   "multiplicity": "一个方案跨多格；当前 0 个（S1 未交付）"
+   "multiplicity": "**一份方案域覆盖整条 FLOW 的 8 格**（不是一格一份）——8 份方案域 = 8 条 FLOW；S1 逐 FLOW 交付，已交付的 FLOW 其 8 格 solution_refs 全部指向它"
   },
   "cards": {
    "property": "cover",
    "of": "L3",
-   "multiplicity": "一卡可挂 1–3 个 L3；当前 93/146 张有 L3（另 53 张待 F5）",
+   "multiplicity": "一卡可挂 1–3 个 L3；**146/146 张都有 L3**（F5 补齐）",
    "check": "卡引用的 L3 必须都在 151 名单内（不在即拒绝出图）"
   }
  },
@@ -4540,7 +4540,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -4575,7 +4577,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -4610,7 +4614,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -4645,7 +4651,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -4680,7 +4688,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -4715,7 +4725,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -4750,7 +4762,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -4785,7 +4799,9 @@
     "AGT-041",
     "AGT-045"
    ],
-   "solution_refs": [],
+   "solution_refs": [
+    "FLOW-01"
+   ],
    "card_refs": []
   },
   {
@@ -6653,7 +6669,15 @@
    "card_refs": []
   }
  ],
- "solutions": [],
+ "solutions": [
+  {
+   "solution_id": "FLOW-01",
+   "flow_id": "FLOW-01",
+   "title": "FLOW-01 存量GMV联合经营 · 方案域（L3）",
+   "status": "draft_2026-09-13_S1_batch1",
+   "path": "paper2skills-vault/07-资源库/solutions/FLOW-01-存量GMV联合经营.md"
+  }
+ ],
  "cards": [
   {
    "name": "Skill-Agentic-Catalog-Enrichment",
@@ -7970,7 +7994,11 @@
   "cards": 146,
   "cards_with_l3": 146,
   "cards_unclassified": [],
-  "solutions": 0,
+  "solutions": 1,
+  "solution_cells_covered": 8,
+  "solution_flows_covered": [
+   "FLOW-01"
+  ],
   "role_wiring_known": 50,
   "roles_without_a": 10
  },
@@ -8114,9 +8142,9 @@
  "open_items": [
   {
    "id": "O-SOL",
-   "what": "方案层为空",
+   "what": "方案层只交付了一部分 FLOW",
    "owner": "S1",
-   "why": "64 格的 solution_refs 全为空数组；S1 交付 8 方案域 + 139 契约后回填"
+   "why": "`solutions` 与 `cells[].solution_refs` 由 `07-资源库/solutions/*.md` 派生。S1 按 FLOW 纵向切片交付：已交付的 FLOW 其 8 格 solution_refs 全部有值，未交付的仍为空数组 —— **空 = 还没做，不是缺陷**。契约层（139 份）与方案域分开计数：方案域 8 份，契约 139 份。"
   },
   {
    "id": "O-CARD",

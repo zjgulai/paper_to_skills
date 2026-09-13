@@ -144,6 +144,27 @@ class GraphIndex:
             fail("C 类不建契约（139 = 151 − 12）—— 调用方应先过滤")
         fail(f"未知服务性取值：{serviceability!r}（只认 A/B/C）")
 
+    def names_of_flow(self, flow_id: str) -> list:
+        """某个 FLOW 的契约批次 = 「能力贡献岗位」的 A/B 类责任。
+
+        ⚠️ 批次规模必须**算出来**，不能手写。S1 任务卡里写的「FLOW-01 = 39 份
+        （25 可写 / 14 待卡）」实测复算不出来：FLOW-01 的贡献岗位是 19 个
+        （与 FLOW-CATALOG 逐字相等），其 A/B 责任共 **54** 条。
+        39 = 25（A 类·有卡，F5 前的快照）+ 14（**B 类总数**，被误当成「待卡数」）——
+        两个数相加还被当成了批次规模。手写的批次数字就是一张过期照片（风险 N6）。
+        """
+        if flow_id not in {c["flow_id"] for c in self.cells.values()}:
+            fail(f"图谱里没有这个 FLOW：{flow_id!r}（合法取值 FLOW-01..FLOW-08）")
+        out = []
+        for name, item in self.l3.items():
+            if item["serviceability"] not in ("A", "B"):
+                continue
+            if flow_id in self.flows_of_role(item["role_id"]):
+                out.append(name)
+        # 与契约编号同序，保证同一 FLOW 每次导出的顺序一致
+        order = {n: i for i, n in enumerate(self.ordered_responsibilities())}
+        return sorted(out, key=lambda n: order[n])
+
     def ordered_responsibilities(self) -> list:
         """稳定的编号顺序：按岗位号、再按岗位内 l3 出现顺序（与材料一致）。"""
         order = []
@@ -257,7 +278,7 @@ def write_skeleton(idx: GraphIndex, names, outdir: Path, force=False) -> list:
 # ---------------------------------------------------------------------------
 # --list / --check / --selftest
 # ---------------------------------------------------------------------------
-def emit_list(idx: GraphIndex, json_out=None):
+def emit_list(idx: GraphIndex, json_out=None, outdir: Path = CONTRACTS_DIR):
     assignments = idx.assignments()
     rows = sorted(assignments.values(), key=lambda m: m["contract_id"])
     n_a = sum(1 for m in rows if m["template"] == "A")
@@ -269,15 +290,59 @@ def emit_list(idx: GraphIndex, json_out=None):
               f"{m['role_id']:8} {m['domain_id']:7} {len(m['method_cells']):<4} "
               f"{len(m['rule_cells']):<5} {','.join(m['flows'])}")
     if json_out:
+        # 清单同时是**消费口（S12）的 join 件**：把已写文件的 `cards` / `status` 读进来，
+        # 并给一份反向索引（卡 → 引它的契约）。S12 的判据是「一张卡只有被某份契约引用，
+        # 才进模型目录」，它需要的就是这个反查。
+        # ⚠️ 这是**派生**：事实源还是契约文件本身；清单只是缓存，`--list` 一跑就刷新。
+        by_card: dict = {}
+        written = 0
+        # ⚠️ **按 contract_id 反查文件，不按 `outdir/<文件名>` 拼路径**：
+        #    F7 的 v2 试点契约住在 `contracts/v2/B/`（历史目录），拼路径会让它们**静默漏掉**
+        #    —— 清单报「written 0」而门禁 rglob 却数得到，两份口径当场分叉。
+        #    判据只有一处：契约文件自己的 frontmatter。故先扫一遍再按 id 建索引。
+        by_id: dict = {}
+        for p in sorted(outdir.rglob("CTR-*.md")):
+            cid = read_frontmatter(p.read_text(encoding="utf-8")).get("contract_id")
+            if cid:
+                by_id.setdefault(cid, []).append(p)
+        dup = {k: [safe_rel(x) for x in v] for k, v in by_id.items() if len(v) > 1}
+        for m in rows:
+            hits = by_id.get(m["contract_id"], [])
+            path = hits[0] if hits else (outdir / filename_for(m))
+            m["written"] = False
+            m["cards"] = []
+            m["status"] = None
+            m["file"] = safe_rel(path)
+            m["duplicate_files"] = [safe_rel(x) for x in hits[1:]]
+            if not path.exists():
+                continue
+            text = path.read_text(encoding="utf-8")
+            fm = read_frontmatter(text)
+            m["written"] = TODO_MARK not in text
+            m["cards"] = norm_val(fm.get("cards")) if fm.get("cards") else []
+            if isinstance(m["cards"], str):
+                m["cards"] = [m["cards"]] if m["cards"] else []
+            m["status"] = fm.get("status")
+            if m["written"]:
+                written += 1
+                for slug in m["cards"]:
+                    by_card.setdefault(slug, []).append(m["contract_id"])
+        if dup:
+            print(f"🔴 同一 contract_id 落在多个文件里（J10 会重复入账）：{dup}")
         payload = {
             "_meta": {
                 "what": "139 份供给契约的清单（机器可读）",
                 "generator": "build_contracts.py",
                 "graph_digest": idx.graph_digest,
                 "rule": "139 = 151 − 12；模板由 l3.serviceability 唯一导出",
+                "cards_index_rule": "by_card 是**反向索引**（卡 → 引它的契约），"
+                                    "供 S12 的消费口闸门用；只统计**已撰写**的契约",
             },
-            "counts": {"total": len(rows), "A": n_a, "B": n_b},
+            "counts": {"total": len(rows), "A": n_a, "B": n_b,
+                       "written": written, "unwritten": len(rows) - written,
+                       "cards_indexed": len(by_card)},
             "contracts": rows,
+            "by_card": {k: sorted(v) for k, v in sorted(by_card.items())},
         }
         Path(json_out).write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"\n→ {json_out}")
@@ -444,6 +509,31 @@ def selftest(idx: GraphIndex) -> int:
     expect(not assignments[next(iter(assignments))]["template"].islower(),
            "篡改样本④：模板值必须是大写 A/B")
 
+    # ---- 11 FLOW 批次：规模由「能力贡献岗位的 A/B 责任」算出 ----
+    # 期望值 54 是**实测登记**（与 FLOW-CATALOG 的 19 个贡献岗位逐字相等）；
+    # 图谱若变，这里必须刻意改 —— 而不是让批次悄悄变大变小。
+    f1 = idx.names_of_flow("FLOW-01")
+    expect(len(f1) == 54, f"FLOW-01 批次应 54 份（实测登记），实得 {len(f1)}")
+    a1 = sum(1 for n in f1 if idx.l3[n]["serviceability"] == "A")
+    expect(a1 == 40, f"FLOW-01 批次 A 类应 40 份，实得 {a1}")
+    # 覆盖性：139 份契约每条至少属于一个 FLOW（否则它永远不会被任何批次写到）
+    all_flows = {f"FLOW-0{i}" for i in range(1, 9)}
+    covered = set()
+    for f in sorted(all_flows):
+        covered |= set(idx.names_of_flow(f))
+    expect(covered == set(assignments),
+           f"8 个 FLOW 的批次应覆盖全部 139 份，缺：{sorted(set(assignments) - covered)[:5]}")
+
+    def mut_flow():
+        """篡改样本⑤：把 AGT-021 的 FLOW-01 摘掉，FLOW-01 批次必须变小。"""
+        g2 = json.loads(json.dumps(idx.graph))
+        for r in g2["roles"]:
+            if r["id"] == "AGT-021":
+                r["flows"] = [f for f in r["flows"] if f != "FLOW-01"]
+        return len(GraphIndex(g2).names_of_flow("FLOW-01")) == len(f1)
+
+    expect(not mut_flow(), "篡改样本⑤：摘掉一个岗位的 FLOW-01 后批次规模断言必须失败")
+
     print(f"自检：{cases - len(fails)}/{cases} 通过")
     for f in fails:
         print(f"🔴 {f}")
@@ -457,6 +547,8 @@ def main() -> int:
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--json-out")
     ap.add_argument("--skeleton", nargs="*")
+    ap.add_argument("--flow", help="按 FLOW 纵向切片生成骨架（如 FLOW-01）—— 批次规模由图谱算出")
+    ap.add_argument("--batch-only", action="store_true", help="只打印某 FLOW 的批次规模，不写文件（复现用）")
     ap.add_argument("--all-skeletons", action="store_true")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--check", action="store_true")
@@ -471,10 +563,18 @@ def main() -> int:
     if args.check:
         return check(idx, outdir)
     if args.list:
-        emit_list(idx, args.json_out)
+        emit_list(idx, args.json_out, outdir)
         return 0
-    if args.skeleton or args.all_skeletons:
+    if args.skeleton or args.all_skeletons or args.flow or args.batch_only:
         names = args.skeleton or []
+        if args.flow or args.batch_only:
+            flow = args.flow or "FLOW-01"
+            names = idx.names_of_flow(flow)
+            n_a = sum(1 for n in names if idx.l3[n]["serviceability"] == "A")
+            print(f"{flow} 批次：{len(names)} 份契约（A {n_a} / B {len(names) - n_a}）"
+                  f" ← 由「能力贡献岗位的 A/B 责任」算出，不手写")
+            if args.batch_only:
+                return 0
         if args.all_skeletons:
             names = [n for n, i in idx.l3.items() if i["serviceability"] in "AB"]
         if not names:

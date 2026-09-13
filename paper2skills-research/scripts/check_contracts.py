@@ -20,6 +20,8 @@
     python3 check_contracts.py --file <契约.md>           # 单份（写卡时用）
     python3 check_contracts.py --json-out <path>
     python3 check_contracts.py --selftest                # 13 判据 + 变异表
+
+退出码：0 全过 / 1 有判据红 / 2 输入没拿到（**不是通过**）/ 3 门禁内部错误（**不是判红**）
 """
 from __future__ import annotations
 
@@ -38,6 +40,17 @@ BUILDER = Path(__file__).resolve().parent / "build_contracts.py"
 
 # 数据要求五维的标签与 ① 的合法枚举（Q12 / S11）
 DIM_LABELS = ("获取路径", "粒度", "回溯深度", "新鲜度", "口径归属")
+
+# 五维表行的定位（门禁缺陷 #17）：**标签必须锚定到表行行首**。详见 Contract.dim_cells 的注释。
+def _dim_row(label: str):
+    """五维表行：**行首 + 标签**，标签后允许括注/补语，但不得跨过第一个 `|`。
+
+    ⚠️ 收紧到「首格必须恰好等于标签」会**新造一种假红**（2026-09-13 由 S1 撰写人实测报出）：
+    写成「| ① 获取路径（平台后台与埋点） | … |」时首格不是纯标签 ⇒ 静默读成空值 ⇒ J5 报缺维。
+    故允许标签后接任意非 `|` 字符 —— 关键是**锚在行首**（真问题从来不是括注，是段内提前出现的标签词）。
+    """
+    return re.compile(rf"(?m)^\s*\|\s*[①②③④⑤]?\s*{re.escape(label)}[^|\n]*\|")
+
 ACCESS_ENUM = ("自有埋点", "平台后台", "第三方 API", "需授权", "不可得")
 
 # A / B 模板的六段（编号 → 关键词）。关键词用于校验「段没被换掉」，
@@ -79,8 +92,24 @@ _BARE_DIGIT_RE = re.compile(r"\d")
 
 
 def has_value(text: str) -> bool:
-    """带取值标签的行里出现数字 ⇒ 认为给出了取值（模板 §3 的 `- 取值：<...>` 形态）。"""
-    return any(VALUE_LABEL_RE.search(ln) and _BARE_DIGIT_RE.search(ln) for ln in text.splitlines())
+    """带取值标签的行里出现数字 ⇒ 认为给出了取值（模板 §3 的 `- 取值：<...>` 形态）。
+
+    ⚠️ **「取值来源」不是取值**（门禁缺陷 #18，2026-09-13 由三位 S1 撰写人各自实测撞出）。
+    标签集里有「取值」，而 `- 取值来源：自有埋点 × AGT-045 指标契约（近 2 个完整年度）`
+    这一行同时满足「含标签」与「含数字」⇒ **一份整段没有业务取值的契约照样过 J13**。
+    实测探针：把一份合格契约 §3 的取值行全删、只留一行「取值来源」⇒ exit=0（假绿灯）。
+    这与 #16/#18 同型：**判据的适用范围被默认成了全体，而它其实只覆盖一个子集**。
+    修法：标签后紧跟「来源」的行**不计**（该行说的是数从哪来，不是数是多少）。
+    """
+    for ln in text.splitlines():
+        m = VALUE_LABEL_RE.search(ln)
+        if not m:
+            continue
+        if ln[m.end():m.end() + 2].startswith("来源"):
+            continue
+        if _BARE_DIGIT_RE.search(ln):
+            return True
+    return False
 
 
 def has_disposal(text: str) -> bool:
@@ -92,6 +121,29 @@ def gap_without_disposal(text: str) -> bool:
     if not any(tok in text for tok in GAP_TOKENS):
         return False
     return not (has_value(text) or has_disposal(text))
+# --- J3 的「说成算法接入」判据（门禁缺陷 #19） ---
+# ⚠️ 原实现是 `re.search(r"算法|模型", line)` —— **逐行字符串匹配**：同行只要出现「模型」二字，
+#    该 R/D 格就判红。实测误杀三类正常写法：
+#      ① 业务措辞「模型候选 + 待签」；② 引用材料原文（如「模型不得选参」）；
+#      ③ **禁令句本身**（「该格只放判据，不接入算法」）。
+#    被误杀的撰写人各自改词绕开（B-004 把「模型候选」改成「预筛候选」）——
+#    正是缺陷 #5 记过的那种消化方式：**门禁缺陷以「大家都学会绕路」的形式被吞掉**。
+#    修法：要求**接入语义**（算法/模型 与 接入/挂载 同句且相近），并放行含否定词的禁令句。
+MOUNT_RE = re.compile(
+    r"(?:算法|模型)[^。；;\n]{0,12}(?:接入|挂载|上挂|上线|运行)"
+    r"|(?:接入|挂载|上挂)[^。；;\n]{0,12}(?:算法|模型)")
+# 否定/限定词：出现即视为**禁令句或说明句**，不是「把该格当接入点」
+NEG_TOKENS = ("不得", "不许", "禁止", "不接", "不挂", "不放", "不含", "不算", "不作",
+              "不参与", "不涉及", "不再", "只放", "只写", "仅放", "仅作", "非 M", "不是 M")
+
+
+def _claims_model_at_cell(line: str) -> bool:
+    """该行是否在**断言**这个格上接了算法/模型（而不是在写禁令、提候选或引原文）。"""
+    if not MOUNT_RE.search(line):
+        return False
+    return not any(t in line for t in NEG_TOKENS)
+
+
 AGT_RE = re.compile(r"\bAGT-0\d{2}\b")
 
 
@@ -141,13 +193,26 @@ class Contract:
         return s["title"] if s else ""
 
     # 五维的「取值 + 缺值处置」两格（J13 用；data_dims 只取第一格，J5 用）
+    #
+    # ⚠️ **标签必须锚定到表行行首**（门禁缺陷 #17，2026-09-13 由三位 S1 撰写人各自撞出）。
+    #    原实现是 `re.search(rf"{label}[^\n|]*\|…")` —— 标签被当成**普通子串**，
+    #    段内任何一处提前出现的标签词都会劫持该维：实测把 ① 的处置格写成「日**粒度**不足」，
+    #    ② 的取值就被读成空串，J5 报「数据要求缺维：粒度」**假红**，撰写人只能改措辞绕开。
+    #    与 CLAUDE.md 漏洞 #11/#14 同型（**判据的适用范围被默认成全体，实际只覆盖一个子集**），
+    #    且危险方向是双向的 —— 把没值的维写成有值同样容易。
+    #    修法：只认「以 `|` 开头、且第一格恰好是该维标签（可带 ①②③④⑤ 序号）」的表行。
     def dim_cells(self) -> dict:
         n = 2 if self.template == "A" else 5
         body = self.section(n)
         out = {}
         for label in DIM_LABELS:
-            m = re.search(rf"{label}[^\n|]*\|([^\n|]*)\|([^\n|]*)", body)
-            out[label] = ((m.group(1).strip(), m.group(2).strip()) if m else ("", ""))
+            m = _dim_row(label).search(body)
+            if not m:
+                out[label] = ("", "")
+                continue
+            cells = body[m.end():].split("\n", 1)[0]
+            parts = [x.strip() for x in cells.split("|")]
+            out[label] = (parts[0] if parts else "", parts[1] if len(parts) > 1 else "")
         return out
 
     # 五维取值：从 2 段（A）或 5 段（B）取值
@@ -156,8 +221,11 @@ class Contract:
         body = self.section(n)
         dims = {}
         for label in DIM_LABELS:
-            m = re.search(rf"{label}[^\n|]*[|:：]\s*([^\n|]*)", body)
-            dims[label] = (m.group(1).strip() if m else "")
+            m = _dim_row(label).search(body)
+            if not m:
+                dims[label] = ""
+                continue
+            dims[label] = body[m.end():].split("\n", 1)[0].split("|")[0].strip()
         return dims
 
 
@@ -229,7 +297,7 @@ def _check_one(c: Contract, idx, assignments) -> list:
         for cid in CELL_RE.findall(line):
             if cid not in own:
                 red("J3", f"正文引用了不属于本契约的格：{cid}")
-            elif idx.cell_kind.get(cid) != "M" and re.search(r"算法|模型", line):
+            elif idx.cell_kind.get(cid) != "M" and _claims_model_at_cell(line):
                 red("J3", f"把非 M 格（{cid} kind={idx.cell_kind.get(cid)}）说成算法/模型接入")
 
     # --- J4 flows 必须等于该岗位的 flows ---
@@ -571,6 +639,10 @@ def selftest(idx) -> int:
 
         # --- 变异表：每条判据一份篡改样本，逐条打红 ---
         base_a = good_a.read_text(encoding="utf-8")
+
+        def cc_check(path):
+            return check_one(Contract(path), idx, assignments)
+
         base_b = good_b.read_text(encoding="utf-8")
         mutations = [
             ("J1", "把模板翻成 B", base_a.replace("template: A", "template: B", 1)),
@@ -619,6 +691,15 @@ def selftest(idx) -> int:
             # 行尾注释必须**能正常解析**（否则 norm_val 退回整串，下游按字符遍历 = 静默错配）
             ("J2", "列表字段方括号未闭合", base_a.replace("flows: [FLOW-07, FLOW-08]", "flows: [FLOW-07, FLOW-08", 1)),
             ("J12", "status=待卡 却填了卡", base_a.replace("status: 可写", "status: 待卡", 1)),
+            # --- #18：J13 的「取值」不得被**来源行**形式满足（2026-09-13 S1 三位撰写人实测撞出）---
+            ("J13", "#18 只留「取值来源」行（数字在来源行里）就想过闸",
+             re.sub(r"## 3 标定规则.*?## 4",
+                    "## 3 标定规则\n\n- 取值来源：自有埋点 × AGT-045 指标契约（近 2 个完整年度）\n\n## 4",
+                    base_a, flags=re.S)),
+            # --- #19：J3 不得因「同行出现『模型』二字」就判红 R/D 格 ---
+            ("J3", "#19 把 R 格说成接入点（应判红）",
+             base_a.replace("## 6 冻结与不许自动放行的情形",
+                            "## 6 冻结与不许自动放行的情形\n\n- FLOW-07/STG-02 接入算法模型做有界分类", 1)),
             # 反后门：未撰写骨架的五维豁免不得被滥用 —— 去掉标记但不补维度，必须判红
             ("J5", "去掉待撰写标记却不补五维（豁免不得被滥用）",
              BC.fm_block(idx.assignments()[a_name], cards=(a_card,), status="可写") + "\n\n# 空壳\n\n"
@@ -639,6 +720,34 @@ def selftest(idx) -> int:
             encoding="utf-8")
         got_ok = {c for c, _ in check_one(Contract(ok_gap), idx, assignments)}
         expect("J13" not in got_ok, f"缺口带处置不得判红（实得 {sorted(got_ok) or '全绿'}）")
+        # ③ #17 反向：① 的处置格里出现「粒度」二字，**不得**把 ② 的取值读成空串（原实现会假红）
+        probe17 = td / "ok-dim-hijack.md"
+        probe17.write_text(base_a.replace(
+            "| ① 获取路径 | 自有埋点 | — |",
+            "| ① 获取路径 | 自有埋点 | 非缺口。若某源只有日粒度汇总：先用日粒度顶替并标「粒度不足」 |", 1),
+            encoding="utf-8")
+        got17 = {c for c, _ in check_one(Contract(probe17), idx, assignments)}
+        expect("J5" not in got17, f"#17 反向：① 处置格里的维度词不得劫持 ② 的取值（实得 {sorted(got17) or '全绿'}）")
+        # ③b #17 反向之二：首格写成「① 获取路径（平台后台与埋点）」不得判红
+        probe17b = td / "ok-dim-paren.md"
+        probe17b.write_text(base_a.replace(
+            "| ① 获取路径 | 自有埋点 | — |",
+            "| ① 获取路径（平台后台与独立站埋点） | 自有埋点 | 非缺口 |", 1), encoding="utf-8")
+        got17b = {c for c, _ in cc_check(probe17b)}
+        expect("J5" not in got17b, f"#17 反向之二：维标签带括注不得判红（实得 {sorted(got17b) or '全绿'}）")
+
+        # ④ #19 反向：禁令句与「模型候选」措辞都不得被判成「把 R/D 格说成算法接入」
+        for label, extra in (("#19 反向：禁令句",
+                              "- FLOW-07/STG-02 只放判据与门禁，**不接入**算法模型"),
+                             ("#19 反向：业务措辞「模型候选」",
+                              "- FLOW-07/STG-02 的结论栏写「模型候选 + 待签」，不含算法接入")):
+            probe19 = td / f"ok-j3-{abs(hash(label)) % 10**6}.md"
+            probe19.write_text(base_a.replace(
+                "## 6 冻结与不许自动放行的情形",
+                "## 6 冻结与不许自动放行的情形\n\n" + extra, 1), encoding="utf-8")
+            got19 = {c for c, _ in check_one(Contract(probe19), idx, assignments)}
+            expect("J3" not in got19, f"{label} 不得判红（实得 {sorted(got19) or '全绿'}）")
+
         # ② 未标 template_version 的 v1 底本 ⇒ J13 不适用（豁免生效）；**但豁免必须有计数器**，
         #    计数逻辑本身在下面 run() 的摘要里，这里只锁「不误判」这一半
         v1_text = base_a.replace("template_version: 2\n", "", 1).replace(
@@ -699,7 +808,24 @@ def main() -> int:
     if not files:
         print("没有找到契约文件（--all 或 --file <路径>）", file=sys.stderr)
         return 2
-    return run(files, idx, args.json_out)
+    # 显式 --file 给出来的路径必须存在：**输入没拿到 ≠ 通过**，也**不是判红**（0/1/2/3 四态）。
+    missing = [str(f) for f in files if not f.is_file()]
+    if missing:
+        print(f"❌ 输入没拿到（退出码 2，不是判红）：{missing}", file=sys.stderr)
+        return 2
+    # ⚠️ **门禁自己崩了 ≠ 判红**（门禁缺陷 #21，2026-09-13 由 S1 撰写人实测撞出：
+    #    脚本被并发改到一半时 `NameError: _dim_row`，退出码与「真的判红」同为 1，
+    #    只有 stderr 的 traceback 能区分 —— 同事会把仪器故障误读成自己写错了）。
+    #    本仓库对这条早有纪律（`_rel()` 与 J2 的注释都写着），这里把它落到**退出码**上：
+    #    0 全过 / 1 有判据红 / 2 输入没拿到 / **3 门禁内部错误（不是判红）**。
+    try:
+        return run(files, idx, args.json_out)
+    except Exception:                      # noqa: BLE001 —— 故意兜底，见上
+        import traceback
+        print("❌ 门禁内部错误（退出码 3 —— **这不是判红**，是校验器自己崩了，"
+              "请把下面的 traceback 当作仪器缺陷上报）：", file=sys.stderr)
+        traceback.print_exc()
+        return 3
 
 
 if __name__ == "__main__":
