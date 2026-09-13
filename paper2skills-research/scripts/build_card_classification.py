@@ -36,6 +36,7 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -298,6 +299,74 @@ def build(graph_path: Path = GRAPH,
                                   "scan": s_["class"],
                                   "category_hits": s_["category_hits"],
                                   "export_hits": s_["export_hits"]})
+    # ---- 错位清单（在册不改正文）：**只登记不移动** ----
+    # 判据的**权威实现**在 `check_card_l3.py` 的 J11（S13）；这里做的是**入库前**的
+    # 同一组检查 —— 两处同时存在不是「判据有两份」，而是「生成器不许把坏数据写进产物」
+    # vs「门禁不许坏产物过关」。若两处判定不一致，以 S13 的 J11 为准并以它为准修本处。
+    ledger = inbox_doc.get("misplacement_ledger") or {}
+    ledger_entries = list(ledger.get("entries") or [])
+    ledger_groups = list(ledger.get("groups") or [])
+    if ledger and not ledger_entries:
+        errs.append("J9 错位清单存在但 entries 为空 —— 「没有错位」的结论必须先问仪器看不看得见")
+    ledger_ids = {c["id"] for c in cards}
+    # #60：依据行的**行号漂移**是一等输出 —— 它不判红，但也不许静默（静默＝下次真的内容变了也看不出来）
+    line_drift: list[dict] = []
+    for e in ledger_entries:
+        cid = e.get("card_id")
+        if cid not in ledger_ids:
+            errs.append(f"J9 错位登记指向不存在的卡：{cid}")
+            continue
+        if e.get("group") not in ledger_groups:
+            errs.append(f"J9 {cid}：group「{e.get('group')}」不在词表 {ledger_groups} 内")
+        if not (e.get("basis") or "").strip():
+            errs.append(f"J9 {cid}：错位登记必须写判定依据")
+        if not (e.get("evidence") or e.get("ref")):
+            errs.append(f"J9 {cid}：必须给 evidence（path:line）或 ref 之一，否则不可复核")
+        ev = e.get("evidence") or ""
+        m = re.match(r"^(?P<p>[^:]+):(?P<line>\d+)$", ev)
+        if m:
+            # ⚠️ 先打开文件再判它里面有没有（「某个东西不存在」先问仪器看不看得见）
+            fp = REPO / m.group("p")
+            if not fp.is_file():
+                errs.append(f"J9 {cid}：evidence 指向的文件不存在：{m.group('p')}")
+            else:
+                lines = fp.read_text(encoding="utf-8").split("\n")
+                ln = int(m.group("line"))
+                if not (1 <= ln <= len(lines)):
+                    errs.append(f"J9 {cid}：evidence 行号 {ln} 越界（共 {len(lines)} 行）")
+                elif e.get("basis_line_sha1_12"):
+                    # ⚠️ #60（2026-09-13，S13 落盘时由 `run_phase6_gates.py` 的 L3c 现出）：
+                    # 原实现**按行号取行再比 sha1** ——`lines[ln - 1]`。那是个**位置锚**，
+                    # 于是任何在依据行**之上**插入内容（S13 给 146 张卡插了 `l1_id/l2_id/l3_*`
+                    # 三行 frontmatter）都会把依据行整体下移，`lines[ln-1]` 指到空行，
+                    # 现算 sha1 变成 **da39a3ee5e6b = sha1("")**，判据报「依据行已变，须复核后重登记」。
+                    # **而那条依据行其实逐字还在**，只是换了个行号 —— 这是一条**假红**，
+                    # 且它最坏的下场不是白干：有人会照着提示"重登记"把 sha1 改成空行的，
+                    # 锚点**从此失去意义**（与台账 #11「判据只认一种字段名」同族：
+                    # **判据依赖位置而不是内容**）。
+                    # 修法：先按登记行号验收（快路径，逐字相同即过）；不符时**回捞整份文件**
+                    # 找「strip 后 sha1 相等」的那一行 —— 找到即判**通过**，只把行号漂移记进
+                    # `line_drift`（一等输出，不静默）；整份文件都没有 ⇒ 才是真的「依据行已变」。
+                    want = e["basis_line_sha1_12"]
+                    got = hashlib.sha1(lines[ln - 1].strip().encode("utf-8")).hexdigest()[:12]
+                    if got != want:
+                        hits = [i + 1 for i, s in enumerate(lines)
+                                if hashlib.sha1(s.strip().encode("utf-8")).hexdigest()[:12] == want]
+                        if hits:
+                            line_drift.append({"card": cid, "registered": ln,
+                                               "found_at": hits, "sha1": want})
+                        else:
+                            errs.append(
+                                f"J9 {cid}：依据行在**整份文件里都找不到**（登记 sha1 {want}"
+                                f" @ {m.group('p')}:{ln}，现算 {got}）"
+                                f"—— 内容确实变了（不是行号漂移），须复核后重登记")
+        if e.get("ref") and e["ref"] not in {f["id"] for f in flags}:
+            errs.append(f"J9 {cid}：ref「{e['ref']}」不在 facet_flags 里")
+        if e.get("expected_l3") is not None:
+            cur = next((i["l3"] for i in items if i["id"] == cid), None)
+            if cur != e["expected_l3"]:
+                errs.append(f"J9 {cid}：登记的 expected_l3 {e['expected_l3']} 与实测 {cur} 不符")
+
     survey_ids = load_survey_ids()
     survey_view = [{"id": i, **scan.get(i, {})} for i in survey_ids]
     # 调查报告 §5.3 的原话是「业务场景**未锚定到母婴单品/具体设定**」—— 那是散文判定。
@@ -378,6 +447,13 @@ def build(graph_path: Path = GRAPH,
             },
             "cards": survey_view,
         },
+        # 错位清单：**在册不改正文**。带 path:line + 行 sha1 ⇒ 依据可逐字复核。
+        # S13 的 `check_card_l3.py` J11 是本段的门禁（loading 它是一等输出）。
+        "misplacement_ledger": ledger,
+        # #60：依据行的**行号漂移** —— 依据逐字还在、只是换了个行号。
+        # 它**不判红**（内容没变就不该判红），但**必须是一等输出**：
+        # 静默它，就等于把「真的内容变了」与「行号漂移」合并成同一个读数。
+        "misplacement_evidence_line_drift": line_drift,
         "reclassified": sorted(i["id"] for i in items if i["source"] == "reclassified"),
         "items": items,
     }
@@ -488,6 +564,74 @@ def selftest() -> int:
 
     MONO = "Skill-Monodense-单品价格弹性估计"
 
+    # ---- J9 依据行锚点（#60）------------------------------------------------
+    # ⚠️ J9 此前**一个 selftest 用例都没有** —— 而它的失败模式恰恰是本仓库最贵的那一类：
+    #    一条**假红**，且提示语「须复核后重登记」会把人引向**把 sha1 改成空行的**，
+    #    锚点从此失去意义。故这里一次补三条：位置漂移（绿）+ 内容真变（红）+ 干净底（绿）。
+    def _ledger_case(tmpd: Path, shift: int = 0, tamper: bool = False):
+        """造一张卡 + 一条错位登记，返回 (evidence 字符串, 登记的 sha1)。
+
+        ⚠️ `shift=1` 模拟的正是 S13 的落盘：**在依据行之上插入 frontmatter 行**。
+        登记的**行号取自插入之前**（否则就复现不出漂移），文件里则已移位。
+        """
+        ev_line = "实为定价卡：卡内 ② 段写的是价格弹性，产品侧却落在 04-供应链"
+        base = ["---", "title: 夹具", "---", "", ev_line, "尾部。"]
+        ln_registered = base.index(ev_line) + 1          # ← 插入**之前**的行号
+        body = list(base)
+        if shift:
+            body = ["---", "title: 夹具", "l1_id: L1-01", "l2_id: L2-03",
+                    "l3_id: L3-007", "l3_business: 价格敏感性", "---", ""] + base[3:]
+        card = tmpd / "card.md"
+        want = hashlib.sha1(ev_line.strip().encode("utf-8")).hexdigest()[:12]
+        if tamper:
+            i = body.index(ev_line)
+            body[i] = "实为定价卡：卡内 ② 段说的是价格弹性（内容已被改写）"
+        card.write_text("\n".join(body), encoding="utf-8")
+        return f"{card}:{ln_registered}", want
+
+    for name, shift, tamper, expect_red in (
+            ("J9 依据行锚点：原样 ⇒ 不报错", 0, False, False),
+            ("J9 依据行锚点：**上方插入 3 行 frontmatter** ⇒ 只记行号漂移，"
+             "不得判红（#60 的假红）", 1, False, False),
+            ("J9 依据行锚点：**内容真被改写** ⇒ 必须判红（反向控制）", 0, True, True)):
+        with tempfile.TemporaryDirectory() as td:
+            ev, want = _ledger_case(Path(td), shift=shift, tamper=tamper)
+            doc = mutate_inbox(lambda d: d.update({
+                "misplacement_ledger": {
+                    "groups": ["定价"],
+                    "entries": [{"card_id": MONO, "group": "定价",
+                                 "basis": "selftest 夹具", "evidence": ev, "ref": None,
+                                 "basis_line_sha1_12": want}]}}))
+            doc["items"] = [it for it in doc["items"] if it["id"] != MONO]
+            doc["items"].append({"id": MONO, "l3": ["价格敏感性", "组合设计"],
+                                 "confidence": "medium", "reclassify": True,
+                                 "note": "selftest：产品侧落点属供应链，卡内实为定价"})
+            _, errs = run(graph, doc)
+            hit = any("依据行" in e for e in errs)
+            good = hit if expect_red else not hit
+            print(f"  {'✅' if good else '❌'} {name}"
+                  + ("" if good else f"  ← 期望{'报红' if expect_red else '不报红'}，实得 {errs[:2] or '0 错误'}"))
+            ok, bad = (ok + 1, bad) if good else (ok, bad + 1)
+
+    # 漂移必须是**一等输出**（静默它 = 把「行号漂移」与「内容真变」合并成同一个读数）
+    with tempfile.TemporaryDirectory() as td:
+        ev, want = _ledger_case(Path(td), shift=1)
+        doc = mutate_inbox(lambda d: d.update({
+            "misplacement_ledger": {"groups": ["定价"],
+                                    "entries": [{"card_id": MONO, "group": "定价",
+                                                 "basis": "selftest 夹具", "evidence": ev,
+                                                 "ref": None,
+                                                 "basis_line_sha1_12": want}]}}))
+        doc["items"] = [it for it in doc["items"] if it["id"] != MONO]
+        doc["items"].append({"id": MONO, "l3": ["价格敏感性", "组合设计"],
+                             "confidence": "medium", "reclassify": True, "note": "selftest"})
+        built, _ = run(graph, doc)
+        drift = built.get("misplacement_evidence_line_drift") or []
+        good = len(drift) == 1 and drift[0]["card"] == MONO
+        print(f"  {'✅' if good else '❌'} J9 行号漂移必须进一等输出 "
+              f"（misplacement_evidence_line_drift）" + ("" if good else f"  ← 实得 {drift}"))
+        ok, bad = (ok + 1, bad) if good else (ok, bad + 1)
+
     def mono(**kw):
         def m(d):
             for it in d["items"]:
@@ -542,12 +686,74 @@ def selftest() -> int:
     return 0 if bad == 0 else 1
 
 
+def mutate() -> int:
+    """变异测试：把 #60 的修复**改回旧行为/改成恒真**，看 selftest 抓不抓得住。
+
+    纪律来源：本仓库已抓到 4 次「断言恒真 = 没断言」。
+    一条用例有没有劲，只能靠**把被测判据改坏**来回答 —— 而不是靠它现在打印 ✅。
+    ⚠️ 锚点必须**唯一且落在判据分支上**；变异没施上力会被误读成「用例是摆设」
+    （台账 #58：gate runner 的 `--mutate` 首跑 0/3，就是锚点二义 + 传参没接上）。
+    """
+    import tempfile
+
+    src = Path(__file__).read_text(encoding="utf-8")
+    HITS_IF = "                        if hits:\n"
+    HITS_CALC = "                        hits = [i + 1 for i, s in enumerate(lines)\n"
+    MUTANTS = [
+        ("M1 退回位置锚：`if hits:` → `if False:`（行号漂移也判红 —— 即 #60 的假红）",
+         HITS_IF, HITS_IF.replace("if hits:", "if False:", 1),
+         "J9 依据行锚点：**上方插入 3 行 frontmatter**"),
+        ("M2 恒真放行：`hits = [...]` → `hits = [ln]`（内容真变了也当行号漂移）",
+         HITS_CALC,
+         "                        hits = [ln]\n"
+         "                        _unused = lambda: [i + 1 for i, s in enumerate(lines)\n",
+         "J9 依据行锚点：**内容真被改写**"),
+    ]
+    n_ok = 0
+    print("build_card_classification · 变异测试（改坏 #60 的判据，看用例抓不抓得住）")
+    for label, old, new, catcher in MUTANTS:
+        if src.count(old) != 1:
+            print(f"  ❌ {label} —— 变异施不上力（锚点出现 {src.count(old)} 次，须为 1）")
+            continue
+        with tempfile.TemporaryDirectory() as td:
+            # ⚠️ 变异体不能直接扔进临时目录跑：`REPO = Path(__file__).resolve().parents[2]`
+            # 是从**脚本自身位置**推出来的 ⇒ 扔到 /tmp 后仓库内路径全断，首跑 2/2 都
+            # 「没抓住」，而真相是**变异体根本没跑起来**（FileNotFoundError）。
+            # 这正是台账 #58 的同一个坑：**先证明变异体跑了，再谈判据有没有劲**。
+            # 修法：搭一个只含符号链接的假仓库根，把真 vault / data / reports 链进去。
+            farm = Path(td) / "repo"
+            (farm / "paper2skills-research" / "scripts").mkdir(parents=True)
+            (farm / "paper2skills-vault").symlink_to(REPO / "paper2skills-vault")
+            for rel in ("data", "reports"):
+                (farm / "paper2skills-research" / rel).symlink_to(
+                    REPO / "paper2skills-research" / rel)
+            mp = farm / "paper2skills-research" / "scripts" / "mutant.py"
+            mp.write_text(src.replace(old, new, 1), encoding="utf-8")
+            p = subprocess.run([sys.executable, str(mp), "--selftest"],
+                               capture_output=True, text=True, cwd=str(REPO), timeout=600)
+            out = (p.stdout or "") + (p.stderr or "")
+            if "Traceback" in out:
+                print(f"  ❌ {label} —— 变异体自己跑崩了，这次变异**不构成证据**："
+                      f"{out.strip().splitlines()[-1][:120]}")
+                continue
+            caught = any(ln.strip().startswith("❌") and catcher in ln
+                         for ln in out.splitlines())
+            print(f"  {'✅' if caught else '❌'} {label}")
+            print(f"        应由「{catcher}」抓住 —— {'抓住了' if caught else '**没抓住**（该用例是摆设）'}")
+            if caught:
+                n_ok += 1
+    print(f"\n{n_ok}/{len(MUTANTS)} 抓住")
+    return 0 if n_ok == len(MUTANTS) else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--excerpts", type=Path)
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--mutate", action="store_true",
+                    help="把 #60 的判据改坏，检验 selftest 用例有没有劲")
     ap.add_argument("--batch", type=int, default=13)
     ap.add_argument("--graph", type=Path, default=GRAPH)
     ap.add_argument("--classification", type=Path, default=PRODUCT_CLASSIFICATION)
@@ -559,6 +765,8 @@ def main() -> int:
 
     if args.selftest:
         return selftest()
+    if args.mutate:
+        return mutate()
     if args.excerpts:
         for p in excerpts(args.excerpts, args.batch, args.graph, args.classification, args.inbox):
             print(f"  {p}  {p.stat().st_size} B")

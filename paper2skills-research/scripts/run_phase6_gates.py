@@ -80,6 +80,10 @@ GATES: list[Gate] = [
     # --- 分类轴（F4/F5）---
     Gate("L3c", "卡端分类：146 张卡逐项与产品侧一致", ["build_card_classification.py", "--check"]),
     Gate("L3d", "卡端分类：自检", ["build_card_classification.py", "--selftest"], kind="selftest"),
+    # ⚠️ #60：分类层的依据行锚点是**位置锚**，S13 给 146 张卡插 frontmatter 后它整片报红。
+    # 这条变异测试守的就是「位置漂移 ≠ 内容改变」这区分 —— 没有它，下次同样的插入会再红一次。
+    Gate("L3e", "卡端分类：变异测试（位置锚 vs 内容改变）",
+         ["build_card_classification.py", "--mutate"], kind="selftest"),
     # --- 契约生成与作业包（F6/F7/S1）---
     Gate("L4a", "契约生成器：底本与实物一致", ["build_contracts.py", "--check"]),
     Gate("L4b", "契约作业包：批次与材料摘要一致", ["build_contract_workpack.py", "--check"]),
@@ -94,10 +98,7 @@ GATES: list[Gate] = [
     Gate("L4g", "契约层：跨文件同质化机检", ["check_contract_dedup.py"]),
     Gate("L4h", "契约层：同质化检测器自检", ["check_contract_dedup.py", "--selftest"], kind="selftest"),
     # --- 入卡门槛（S13）---
-    Gate("L5a", "入卡弱门槛：146 张卡的 L3 归属可机读",
-         ["check_card_l3.py", "--check"],
-         waived="S13 正在逐卡写入 l3_* frontmatter；--check 在 --apply 之前判红是设计行为",
-         waive_until="S13 --apply 落盘且实测 l3_ 覆盖率 = 146/146"),
+    Gate("L5a", "入卡弱门槛：146 张卡的 L3 归属可机读", ["check_card_l3.py", "--check"]),
     Gate("L5b", "入卡弱门槛：自检", ["check_card_l3.py", "--selftest"], kind="selftest"),
     # --- 缺口驱动检索式（S4）---
     Gate("L6a", "缺口驱动检索式：与工单/图谱一致", ["build_search_queries.py", "--check"]),
