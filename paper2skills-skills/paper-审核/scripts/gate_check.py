@@ -63,6 +63,10 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if os.environ.get("PAPER2SKILLS_ROOT"):
     REPO_ROOT = Path(os.environ["PAPER2SKILLS_ROOT"]).resolve()
 VAULT = REPO_ROOT / "paper2skills-vault"
+# K1 产物的规范路径（默认 --k1）。⚠️ 该文件被 .gitignore 忽略
+# （`paper2skills-research/data/**/*.json`，.gitignore:93），
+# 故**新克隆的仓库一定没有它**。三态诊断见 diagnose_k1_source()。
+K1_DEFAULT_REL = "paper2skills-research/data/verification/k1_l5.json"
 
 # ---------------------------------------------------------------------------
 # G2：数字分类词典
@@ -1562,6 +1566,33 @@ def selftest() -> int:
     print(f"   前提核对：无 arXiv/DOI 的正文判为无论文来源 = "
           f"{not card_has_paper_source(probe, {'source': 'human+ai'})}")
 
+    # --- 用例 23（门禁 bug #12）：K1 缺口的成因必须三态可分 --------------------
+    # ⚠️ **为什么直测 `diagnose_k1_source` 而不用端到端**：
+    #    端到端只能观察到「G1 红」，而三条成因路径**都**产生红灯 ——
+    #    只看红灯无法区分「卡片真的有缺陷」与「我根本没跑 K1」，
+    #    而那正是 bug #12 本身。与用例 19/20/21 同源（直测函数行为）。
+    # ⚠️ 四条断言缺一不可，各自防一个变异：
+    #    · 「OK 时无提示」→ 防「恒返回提示」（会让正常调用也刷屏，噪音淹没真信号）
+    #    · 「两态状态码不同」→ 防「把两种缺失合并成一态」
+    #      （合并后读者无法区分「我路径写错了」与「仓库里根本没这文件」，
+    #        而这两者的补救动作相反：前者改命令，后者跑一次 K1 全量）
+    #    · 「缺省态点名非卡片缺陷」→ 防「文案退回泛泛提示」
+    #      bug #12 的真实代价就是读者把红灯当卡片问题去改卡；
+    #      已有两个子代理各自撞上并**各自如实报告**，说明这不是假想风险。
+    #    · 「显式态指向路径写错」→ 防两态文案写反（状态码分开了但话说反了）
+    _k1_probe = Path("/nonexistent/k1_probe.json")
+    _st_ok, _note_ok = diagnose_k1_source(_k1_probe, True, {"x": {}})
+    _st_dflt, _note_dflt = diagnose_k1_source(_k1_probe, False, {})
+    _st_expl, _note_expl = diagnose_k1_source(_k1_probe, True, {})
+    for _label, _good in (
+        ("OK 时无提示", _st_ok == "OK" and _note_ok == ""),
+        ("两态状态码不同", _st_dflt != _st_expl),
+        ("缺省态点名非卡片缺陷", "不是卡片缺陷" in _note_dflt),
+        ("显式态指向路径写错", "调用路径写错" in _note_expl),
+    ):
+        ok = ok and _good
+        print(f"{'✅' if _good else '❌'} 23 K1 缺口三态可分[{_label}]")
+
     print("✅ 自检通过：G2 三态互斥，且『无论文来源』不能靠声明洗白伪造引文" if ok
           else "❌ 自检失败：G2 三态判定不可信")
     return 0 if ok else 1
@@ -1570,6 +1601,55 @@ def selftest() -> int:
 # ---------------------------------------------------------------------------
 def collect_cards() -> list[Path]:
     return sorted(p for p in VAULT.rglob("Skill-*.md") if "_superseded" not in p.parts)
+
+
+def resolve_k1_path(cli_path: Path | None) -> tuple[Path, bool]:
+    """决定用哪个 K1 产物，并标明它是不是 CLI 显式给的。
+
+    返回 (路径, 是否显式指定)。默认值存在的原因是**调用方式陷阱**：
+    早期 `--k1` 默认 None，于是「按 CLAUDE.md 的三条命令逐条跑」的人
+    会看到 G1 全库每张卡都红 `[G1-NO-EVIDENCE]` —— 而那不是卡片缺陷。
+    该陷阱由两个独立子代理各自撞上并都选择如实报告，说明它已经
+    浪费过两轮排查时间（CLAUDE.md 门禁 bug #12）。
+    """
+    if cli_path is not None:
+        return cli_path, True
+    return REPO_ROOT / K1_DEFAULT_REL, False
+
+
+def diagnose_k1_source(path: Path, explicit: bool, index: dict) -> tuple[str, str]:
+    """把「G1 全红」的成因分类，供人一眼分辨「调用方式」与「卡片缺陷」。
+
+    三态**互斥**（`--selftest` 用例 23 锁定）：
+      OK               —— 凭证已载入；此时 G1 的红灯是**真缺陷**
+      EXPLICIT_MISSING —— 显式给了 --k1 但文件不存在/为空 → **路径写错了**
+      DEFAULT_MISSING  —— 未指定 --k1 且默认产物不存在 → **调用方式问题，不是卡片缺陷**
+
+    为什么要分三态：只给一句「无 K1 验证凭证」时，读者无法区分
+    「这张卡真的没有可执行代码」与「我根本没跑 K1」。这正是本仓库
+    反复出现的「没东西可查 ≠ 查过了没问题」。
+
+    ⚠️ **只改诊断，不改判定**：三态里没有任何一态把 G1 变绿。
+    凭证缺失时 G1 **仍然判红**是正确语义 —— 我们修的是可读性，不是放行。
+    """
+    if index:
+        return "OK", ""
+    if explicit:
+        return "EXPLICIT_MISSING", (
+            f"⚠️  --k1 指定了 {path}，但该文件不存在或为空。\n"
+            f"    → 这是一次**调用路径写错**，与卡片质量无关。\n"
+            f"    → 生成命令：python3 paper2skills-skills/paper-萃取/scripts/"
+            f"verify_skill_code.py --all --level 5 --timeout 30 --json-out {path}"
+        )
+    return "DEFAULT_MISSING", (
+        f"⚠️  未指定 --k1，默认产物 {path} 不存在。\n"
+        f"    → **这不是卡片缺陷**：下方 G1 的每一条红灯都只是「没有验证凭证」，\n"
+        f"      不代表这些卡片的代码跑不起来。请勿据此修改任何卡片。\n"
+        f"    → 根因：该产物被 .gitignore 忽略（.gitignore:93），新克隆的仓库必然没有它。\n"
+        f"    → 30 秒解决：先跑一次 K1 全量（约数分钟），再重跑本条命令 ——\n"
+        f"      python3 paper2skills-skills/paper-萃取/scripts/verify_skill_code.py "
+        f"--all --level 5 --timeout 30 --json-out {path}"
+    )
 
 
 def load_k1(path: Path | None) -> dict:
@@ -1685,7 +1765,10 @@ def main() -> int:
     g.add_argument("--all", action="store_true")
     g.add_argument("--selftest", action="store_true",
                    help="自证 G2 三态判定（含『声明不得洗白伪造引文』反例）")
-    ap.add_argument("--k1", type=Path, default=None, help="K1 报告 JSON（verify_skill_code.py 产出）")
+    ap.add_argument("--k1", type=Path, default=None,
+                    help=f"K1 报告 JSON（verify_skill_code.py 产出）。"
+                         f"缺省用 {K1_DEFAULT_REL}；该文件被 .gitignore 忽略，"
+                         f"新克隆的仓库需先跑一次 K1 全量生成它")
     ap.add_argument("--outdir", type=Path, default=None, help="三份 gate_*.json 的输出目录")
     ap.add_argument("--only", choices=["G1", "G2", "G3"], default=None)
     ap.add_argument("--quiet", action="store_true")
@@ -1695,9 +1778,11 @@ def main() -> int:
         return selftest()
 
     cards = [args.card] if args.card else collect_cards()
-    k1_index = load_k1(args.k1)
-    if args.k1 and not k1_index:
-        print(f"⚠️  K1 报告 {args.k1} 为空或不存在 —— G1 将全部判为「无凭证」")
+    k1_path, k1_explicit = resolve_k1_path(args.k1)
+    k1_index = load_k1(k1_path)
+    k1_status, k1_note = diagnose_k1_source(k1_path, k1_explicit, k1_index)
+    if k1_status != "OK":
+        print(k1_note)
 
     g1s, g2s, g3s = [], [], []
     for c in cards:

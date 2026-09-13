@@ -872,8 +872,74 @@ def _selftest() -> int:
               + ("" if probe_ok else f"  ← {pr.stderr.strip().splitlines()[-1:] }"))
         ok = ok and probe_ok
 
+    # --- 第三组：CLI 退出码 / 口径提示契约自证（PHASE6 F1）---
+    # 锁定两条**只写在文档里、没有任何门禁检查**的行为。它们都属于同一族：
+    # 「没东西可查 ≠ 查过了没问题」。
+    #   · bug #11：`--card` 对「无 python 代码块」的卡片返回什么？
+    #     CLAUDE.md 曾记「返回 0」，2026-09-13 实测为 **2**（上面的 early return）。
+    #     登记「待修」的条目本身也会腐烂 —— 故把退出码钉成用例，而不是只改文档。
+    #   · bug #14：`--level 2` 全库扫描时**每个单元都判 UNVERIFIED**，退出码却是 0。
+    #     修法只补口径提示、**不动退出码**（L2 作为秒级语法门禁是合法用法，
+    #     改成非 0 会逼人绕过这道门）。故必须同时锁两个方向：
+    #     提示该出现时出现，**不该出现时不出现** —— 否则它退化成噪声。
     print()
-    print("SELFTEST " + ("PASS —— 依赖判定与 L3 探针均自证可信" if ok
+    print("--- CLI 退出码 / 口径提示契约自证 ---")
+    SELF = Path(__file__).resolve()
+
+    def _run_cli(card: Path, level: int) -> subprocess.CompletedProcess:
+        return subprocess.run(
+            [sys.executable, str(SELF), "--card", str(card), "--level", str(level)],
+            capture_output=True, text=True, timeout=180)
+
+    cli_cases: list[tuple[str, bool, str]] = []   # (说明, 是否通过, 补充信息)
+    with tempfile.TemporaryDirectory(prefix="k1_cli_") as td2:
+        t2 = Path(td2)
+        c_nocode = t2 / "card_nocode.md"
+        c_nocode.write_text("# 无代码块卡\n\n只有正文，没有任何 python 围栏。\n", encoding="utf-8")
+        c_broken = t2 / "card_broken.md"
+        c_broken.write_text("# 语法坏卡\n\n```python\ndef f(:\n    pass\n```\n", encoding="utf-8")
+        c_ok = t2 / "card_ok.md"
+        c_ok.write_text("# 好卡\n\n```python\nx = 1\nassert x == 1\n```\n", encoding="utf-8")
+
+        # 用例 A（bug #11）：无代码块 → 必须返回 2，且**不能**是 0。
+        rA = _run_cli(c_nocode, 5)
+        cli_cases.append((
+            "A 无代码块卡 `--card` 退出码 = 2（bug #11：文档曾记 0）",
+            rA.returncode == 2 and "未发现 python 代码块" in (rA.stdout + rA.stderr),
+            f"实得 rc={rA.returncode}"))
+
+        # 用例 B（反后门：不许把 #11 修成「恒返 2」）
+        # 有代码块但语法坏 → 必须是「失败」语义（1），绝不能也用 2。
+        rB = _run_cli(c_broken, 2)
+        cli_cases.append((
+            "B 语法坏卡 `--level 2` 退出码 = 1（与「无代码块=2」互斥）",
+            rB.returncode == 1,
+            f"实得 rc={rB.returncode}"))
+
+        # 用例 C（bug #14 正向）：L2 下好卡 rc=0，但必须**明说**这 0 不代表通过。
+        rC = _run_cli(c_ok, 2)
+        hint = "exit 0 只代表"
+        cli_cases.append((
+            "C L2 好卡 rc=0 **且** 出示「exit 0 只代表没有失败」口径提示（bug #14）",
+            rC.returncode == 0 and hint in rC.stdout,
+            f"实得 rc={rC.returncode} 提示={'有' if hint in rC.stdout else '无'}"))
+
+        # 用例 D（bug #14 反向 / 防噪声）：L5 下全部单元都真验过 → 提示**不得**出现。
+        # 若把提示写成无条件打印，它就会在正常全量报告里刷屏，读者会学会忽略它。
+        rD = _run_cli(c_ok, 5)
+        cli_cases.append((
+            "D L5 好卡 rc=0 **且不出现**该提示（防提示退化成噪声）",
+            rD.returncode == 0 and hint not in rD.stdout,
+            f"实得 rc={rD.returncode} 提示={'误报' if hint in rD.stdout else '未出现'}"))
+
+    for desc, passed, info in cli_cases:
+        print(("✅" if passed else "❌") + f" {desc}")
+        if not passed:
+            ok = False
+            print(f"     ← {info}")
+
+    print()
+    print("SELFTEST " + ("PASS —— 依赖判定、L3 探针与 CLI 契约均自证可信" if ok
                         else "FAIL —— 判定退化，勿信门禁数字"))
     return 0 if ok else 1
 
@@ -996,6 +1062,20 @@ def main() -> int:
           f"| 🔴 ORPHAN {tally['ORPHAN_DEP']} | 🟠 MIGRATED {tally['MIGRATED_DEP']} "
           f"| ❌ FAIL {tally['FAIL']} | ⚪ 未执行 {tally['UNVERIFIED']}")
     print(f"K1 执行率 = {rate:.1f}%   （对照：PaperCoder 17.94% / AutoReproduce 94.87%）")
+    # ⚠️ 低级别扫描的「误导性绿灯」（门禁 bug #14，2026-09-13 实测撞出）：
+    # `--level 2` 下**所有**单元都判 UNVERIFIED（判定链见 verify_unit：<3 只走到 L2），
+    # 于是出现「全库 101 单元 / ✅ PASS 0 / ❌ FAIL 0 / ⚪ 未执行 101 / **exit 0**」——
+    # 一次什么都没验证的扫描，用退出码报了「没问题」。
+    # 与 bug #11（`--card` 对无代码卡是否返回 0）同族，都是
+    # 「**没东西可查 ≠ 查过了没问题**」。它此前未被任何门禁报警。
+    # ⚠️ **刻意不改退出码**：`--level 2` 作为「秒级语法门禁」是合法用法，
+    #    改成非 0 会让每次 pre-commit 都变红，从而逼人绕过这道门 ——
+    #    那是用错的方式修对的问题。故只把口径讲清楚，让读退出码的人知道它代表什么。
+    if tally["UNVERIFIED"] > 0:
+        print(f"⚠️  本次为 L{args.level} 扫描：{tally['UNVERIFIED']}/{denom} 个单元"
+              f"**未达可判定级别**（判 PASS 需 L3 以上；执行率统计需 L4/L5）。")
+        print("    → **exit 0 只代表「没有失败」，不代表「K1 通过」**。"
+              "要拿执行率必须跑 --level 5。")
     print("=" * 66)
 
     if args.json_out:
