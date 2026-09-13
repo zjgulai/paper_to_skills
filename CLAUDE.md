@@ -100,8 +100,80 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 | `paper2skills-research/scripts/candidate_filter.py` | 三段式过滤的**可执行部件**(配置若只有文字一定会腐烂)。实测丢弃 25.8%,逐篇抽检无误杀;`--selftest` 含同词异义反例 |
 | `paper2skills-vault/07-资源库/scoring_config.json` | 评分权重/阈值/关键词表外置。缺文件时脚本退回内置默认值(不静默用空值) |
 | `paper2skills-skills/paper-维护/scripts/repo_health.py` | **仓库体检**(C1–C8:重复卡片/frontmatter/路径/围栏结构/registry/门禁时效/卫生/段落完整性)。`--selftest` 用构造样本证明检查真的会报警 |
+| `paper2skills-skills/paper-维护/scripts/scan_secrets.py` | **推送前凭证扫描门禁**。13 条规则 / 10 类凭证;**先把 `\"` 与 `&quot;` 归一化成 `"` 再匹配**,故一条规则即覆盖全部转义形态。扫到 **0 个文件时判失败(退出码 2)** —— 「没东西可查」不等于「查过了没问题」 |
 | `paper2skills-skills/paper-同步/scripts/sync.py` | Sync script;**同步前现场跑 K2 门禁,红灯即拒绝**(退出码 2);绕过须 `--force-gates "<理由>"` 并留痕 |
 | `paper2skills-research/scripts/` | 检索/评分/去重/体检脚本(见下方"检索路线") |
+
+## 版本控制与远端同步(2026-09-13 建立)
+
+**本地仓库**:`/Users/lute/project/paper_to_skills`,分支 `main`,已设上游 `origin/main`。
+**远端**:https://github.com/zjgulai/paper_to_skills (**PUBLIC**)
+
+### ⚠️ 关键事实:本地与远端是**两套不同的库**,不是新旧关系
+
+2026-09-13 首次接入远端时做了完整盘点,结论如下 —— **不要再假设「本地是最新的、远端是旧的」**:
+
+| 维度 | 本地(精选线) | 远端 main(接入前) |
+|------|-------------|-------------------|
+| git 历史 | 28 commit,全部 2026-09-12 起 | 最后推送 2026-07-15 |
+| **共同祖先** | **无**(unrelated histories) | 无 |
+| Skill 卡片 | **146 张 / 16 个域** | **1,229 张 / 26 个域** |
+| 同名卡片交集 | 92 张 | 92 张 |
+| 各自独有 | 54 张 | **1,137 张** |
+| frontmatter 风格 | MasterPrompt v2 + K1/K2 门禁口径 | `doc_type: knowledge` + `roadmap_phase` |
+| tracked 体积 | 105 MB | 2.35 GB |
+
+远端另有 **9 个本地根本不存在的业务域**:`17-价格优化` / `18-物流履约` / `19-风控反欺诈` /
+`20-AI视频生成` / `21-合规决策` / `22-数据采集工程` / `23-运营财务` / `24-标签工程` / `25-搜索流量工程`。
+
+> 本地 `playbook/` 目录里存着那套语料的**渲染快照**(`build-report.json`:`skill_pages: 1338, domains: 25`),
+> 即内容并未完全丢失,但**可编辑的 `.md` 源头不在本地**。
+
+### 处置(2026-09-13,经所有者决策选 A 案)
+
+按「以本地当前形态为主」执行,但**远端原状先钉住、一条命令可恢复**:
+
+| ref | 指向 | 含义 |
+|-----|------|------|
+| `refs/heads/main` | `d9186b2` | 本地精选线,已覆盖 |
+| `refs/heads/legacy/main-20260715` | `dc4912a` | **接入前的远端 main 原状,完整保留 1,229 张卡** |
+| `refs/tags/archive-pre-local-20260715` | `dc4912a` | 同一提交的 tag 锚点 |
+| `refs/heads/gh-pages` | `0730b89` | 线上站点,**未动** |
+| `refs/heads/feat/voc-deep-analysis-mvp` | `31927ed` | **未动** |
+
+恢复旧语料:`git fetch origin legacy/main-20260715` 即可取回全部 1,137 张卡。
+
+推送用的是 `--force-with-lease=main:<sha>`(先 `gh api` 确认远端 SHA 再断言),
+**不用裸 `--force`** —— 裸 force 会在远端被他人更新时静默覆盖。
+
+### 凭证事件(2026-09-13,首次推送前发现)
+
+推送前全库扫描命中两类硬编码凭证。**两者都不是 K1 / K2 / repo_health 任何一道门禁能发现的** ——
+那三道查重复卡/frontmatter/路径/围栏/registry/时效/卫生/段落完整性,**没有一项查凭证**。
+仓库带着它们一路 commit 了 28 次,每次门禁都是绿的。
+
+| 凭证 | 位置 | 判定 | 处置 |
+|------|------|------|------|
+| `sk-aae1…37bd`(DeepSeek key) | `playbook/` 下 6 个文件,3 种转义形态各一份 | 实测 `GET api.deepseek.com/models` → **HTTP 401,已失效**;远端**没有**它,推上去是**新**泄露 | 改为读 `DEEPSEEK_API_KEY` 环境变量 |
+| 飞书机器人 webhook `a32b3ab7…47e9` | `playbook/agents.html` | **已在公开仓库 main 上**裸奔(自 2026-07-15 前即如此)——**既成事实** | 改为读 `window.__PLAYBOOK_CONFIG__.feishuHook`;**必须在飞书后台轮换**(改本地文件追不回已暴露的那份) |
+
+后续处理:`.gitignore` 补规则 → `git filter-repo --replace-text` 重写全部 28 个 commit
+(旧提交里现在是 `***REMOVED-DEEPSEEK-KEY***`) → 新建 `scan_secrets.py` 把这次检查固化成门禁。
+`.git/` 改写前已备份到 `/tmp/pts-git-backup-20260913-115715`。
+
+> **`DDDD.pem` 的更正**:它首行是 `BEGIN RSA PRIVATE KEY`,即 **RSA 私钥**,
+> 不是此前记载/以为的「SSH 公钥」。本仓库从未 commit 过它(28 个 commit 全扫,0 命中),
+> 但它另有 3 份副本散落在 `~/Downloads/`、`~/project/思维模型/`、`~/project/Agent/lute-momcozy-audit/`。
+
+### 推送前必跑
+
+```bash
+python3 paper2skills-skills/paper-维护/scripts/scan_secrets.py \
+  --json-out paper2skills-research/data/health/secrets.json
+```
+
+退出码:0 = 干净;1 = 命中凭证;2 = **一个文件都没扫到**(这不是干净,是没测)。
+该仓库 `secret_scanning_push_protection` 已开启,GitHub 会直接拒收含凭证的 push。
 
 ## 门禁体系(K1 / K2,2026-09-12 建立)
 
