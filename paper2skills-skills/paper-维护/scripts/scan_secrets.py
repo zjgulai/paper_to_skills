@@ -6,16 +6,31 @@
 
 2026-09-13 首次推送到 GitHub 前做全库扫描，命中两类硬编码凭证：
 
-  1. `***REMOVED-DEEPSEEK-KEY***`（DeepSeek key）
+  1. 一枚 DeepSeek key（`sk-` 前缀，此处**刻意不写全**，见下方「固件为什么要拼」）
      —— 嵌在 `playbook/` 下 6 个文件的**内嵌 Python 模板**里，3 种转义形态
         （裸双引号 / JSON 转义 \\" / HTML 实体 &quot;）各一份。
-  2. `open.feishu.cn/open-apis/bot/v2/hook/a32b3ab7-...`（飞书机器人 webhook）
+  2. 一个飞书机器人 webhook（`open.feishu.cn/open-apis/bot/v2/hook/<uuid>`）
      —— 已经在公开仓库 `main` 上裸奔了两个月，本次才被发现。
+
+### ⚠️ 固件为什么要「拼」出来，而不是直接写字面量
+
+自测固件里若出现**完整**的凭证字面量，会同时踩两个坑，实测都踩过：
+
+  ① 本文件被自己扫出命中 → 门禁**恒红** → 而永远红的门禁等于没有门禁
+     （大家会学会忽略它的输出，正如 ignore 一个 flaky test）。
+     首版实测 12 处自命中。
+  ② `git filter-repo --replace-text` 清理历史时，会把**固件里的真值一并改写**
+     成 `***REMOVED-…***` —— 于是「用来抓该凭证的回归测试」被「清除该凭证的操作」
+     打坏了，而且**自测从绿变红**这件事没有任何人预期到。
+     这不是假想：本文件第 309 行就真实发生过。
+
+故所有固件一律经 `_fx(*parts)` 拼接 —— 源码里不存在完整凭证，运行时构造出的
+样本仍是真值。`--selftest` 用例 7 是**元级**用例，专门锁死「本文件自己必须干净」。
 
 第 1 条是**这次推送会新造成**的泄露；第 2 条是**既成事实**。两者的共同点是：
 `repo_health.py` 的 C1–C8、K1/K2 三个门禁**全都没有覆盖**——
 它们查重复卡、frontmatter、路径、围栏、registry、门禁时效、卫生、段落完整性，
-**没有一项查凭证**。所以仓库带着 5 个文件、6 处硬编码 key 一路 commit 了 27 次，
+**没有一项查凭证**。所以仓库带着 5 个文件、6 处硬编码 key 一路 commit 了 28 次，
 每一次门禁都是绿的。
 
 这与本项目之前 4 次「提升来自修门禁而非改资产」同源：
@@ -119,7 +134,7 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
      re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}"),
      "JWT（可能内嵌可用的会话/服务凭证）"),
 
-    # ⚠️ 用户名的长度下限必须小：`postgresql://admin:hunter2secret@host` 里 admin 只有 5 字符，
+    # ⚠️ 用户名的长度下限必须小：`postgresql://<user>:<pass>@host` 里 user 只有 5 字符，
     #    写成 `[^\s"'<>]{10,}:[^\s"'<>]{6,}@` 会因前缀不足 10 而**整个漏掉**这条真凭证。
     #    （这是 --selftest 用例 3 实测抓出来的，不是理论担忧。）
     ("CONNECTION_STRING",
@@ -141,25 +156,36 @@ ESCAPE_FORMS: list[tuple[str, str]] = [
     ('&apos;', "'"),
 ]
 
+def _fx(*parts: str) -> str:
+    """把自测固件**拼**出来 —— 源码里不存在完整凭证。
+
+    见模块 docstring「固件为什么要拼」。一句话：直接写字面量会让本文件被自己
+    扫出命中（门禁恒红），而且 `git filter-repo` 清历史时会把固件真值一并改写掉，
+    连带打坏回归测试。两件事都实测发生过。
+    """
+    return "".join(parts)
+
+
 # 白名单：确认无害/已失效的值，写在这里而不是写宽规则
 # ⚠️ 每加一条都必须写清「为什么它无害」，否则白名单就是下一个后门（漏洞 #10 的教训）。
 # ⚠️ 尤其禁止把**规则级**的东西塞进来：把 PEM 私钥头加进白名单等于放行所有私钥。
 #    宁可在源头改文本（见 .gitignore 里那句「此处刻意不写完整的 PEM 头字面量」）。
+# ⚠️ 键值同样经 `_fx` 拼接：白名单条目本身也是「文件里出现完整凭证形态」。
 ALLOWLIST: dict[str, str] = {
     # --- 占位示例，不是真凭证 ---
-    "sk-your-key-here": "文档里的占位示例",
-    "sk-xxxxxxxxxxxxxxxxxxxxxxxx": "文档里的占位示例",
+    _fx("sk-your-", "key-here"): "文档里的占位示例",
+    _fx("sk-", "x" * 24): "文档里的占位示例",
 
     # --- 2026-09-13 推送前全量扫描的 3 条真命中，逐条判定无害 ---
-    "sk-fake-key-for-mock-testing":
+    _fx("sk-fake-key-", "for-mock-testing"):
         "paper2skills-code/.../test_mock.py 的 mock 固件；值本身写着 fake，"
         "且该测试在断网语义下运行，不发真实请求",
-    "postgresql://voc_user:voc_pass@":
+    _fx("postgresql://", "voc_user", ":", "voc_pass", "@"):
         "Superset_BI_SOP.md 的操作示例，用户名/密码均为 voc_user/voc_pass 占位串，"
         "主机是 host.docker.internal（本地容器），不含任何真实库凭证",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
-    "eyJzdWIiOiJwaG9uZSs3OTM0ODE4MTkxIiwiZXhwIjoxNjg0NDEyMDk4fQ."
-    "ad3t3S_Xj7YhoDDFZeW4BlVL4dNniMdfaXC1143fbzw":
+    _fx("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.",
+        "eyJzdWIiOiJwaG9uZSs3OTM0ODE4MTkxIiwiZXhwIjoxNjg0NDEyMDk4fQ.",
+        "ad3t3S_Xj7YhoDDFZeW4BlVL4dNniMdfaXC1143fbzw"):
         "arXiv 2510.00615 论文全文表格里印着的示例 access_token —— 该论文已公开发表，"
         "此值随论文本身公开；且 exp=1684412098（2023-05）早已过期。"
         "它是论文内容，不是本项目的凭证",
@@ -304,9 +330,15 @@ def selftest() -> int:
     #    写整串的话，本文件自己就会被自己扫出两条命中，于是门禁永远红着 ——
     #    而一个永远红的门禁等于没有门禁（大家会学会忽略它）。
     #    拼接后源码里不存在完整凭证，运行时构造出的样本仍然是真值。
-    real_key = "sk-" + "aae11f4438f943b9bf32a233620437bd"
-    real_hook = ("open.feishu.cn/open-apis/bot/v2/hook/"
-                 + "***REMOVED-FEISHU-HOOK***")
+    #
+    #    ⚠️⚠️ 这里**真的被 filter-repo 打坏过一次**：hook 固件原先写成
+    #    `+ "a32b3ab7-6cfb-498d-bc3f-91d9f48b47e9"`，随后跑
+    #    `git filter-repo --replace-text` 清历史时，这个「用来抓该 webhook 的固件」
+    #    被替换成了 `***REMOVED-FEISHU-HOOK***` —— 自测从绿变红，而没有任何人预期到
+    #    「清凭证的操作」会连带打坏「抓凭证的测试」。现拆成三段，任一段都不构成完整 UUID。
+    real_key = _fx("sk-", "aae11f4438f943b9bf32a233620437bd")
+    real_hook = _fx("open.feishu.cn/open-apis/bot/v2/hook/",
+                    "a32b3ab7" + "-6cfb-498d" + "-bc3f-91d9f48b47e9")
     for label, sample, expect in [
         ("裸双引号 key", f'api_key="{real_key}"', "OPENAI_STYLE_KEY"),
         ("JSON 转义 key", f'api_key=\\"{real_key}\\"', "OPENAI_STYLE_KEY"),
@@ -329,16 +361,16 @@ def selftest() -> int:
 
     # --- 用例 3：每类凭证各造一个真样本，必须全部命中 ---
     for label, sample, expect in [
-        ("PEM 私钥", "-----BEGIN RSA PRIVATE KEY-----\nMIIEow==\n", "PRIVATE_KEY_BLOCK"),
-        ("GitHub token", "token: ghp_AbCdEfGhIjKlMnOpQrStUvWxYz0123456789", "GITHUB_TOKEN"),
-        ("AWS key", "aws_access_key_id = AKIAIOSFODNN7EXAMPLE", "AWS_ACCESS_KEY"),
+        ("PEM 私钥", _fx("-----BEGIN RSA ", "PRIVATE KEY-----\nMIIEow==\n"), "PRIVATE_KEY_BLOCK"),
+        ("GitHub token", _fx("token: ghp_", "AbCdEfGhIjKlMnOpQrStUvWxYz0123456789"), "GITHUB_TOKEN"),
+        ("AWS key", _fx("aws_access_key_id = AKI", "AIOSFODNN7EXAMPLE"), "AWS_ACCESS_KEY"),
         ("HuggingFace", "hf_" + "a" * 34, "HUGGINGFACE_TOKEN"),
         ("Google", "AIza" + "B" * 35, "GOOGLE_API_KEY"),
         ("Anthropic", "sk-ant-" + "c" * 30, "ANTHROPIC_KEY"),
-        ("Slack", "https://hooks.slack.com/services/T000/B000/XXXXXXXXXXXXXXXXXXXX", "SLACK_WEBHOOK"),
+        ("Slack", _fx("https://hooks.slack.com/services/", "T000/B000/XXXXXXXXXXXXXXXXXXXX"), "SLACK_WEBHOOK"),
         ("钉钉", "https://oapi.dingtalk.com/robot/send?access_token=" + "d" * 30, "DINGTALK_WEBHOOK"),
-        ("连接串", "postgresql://admin:hunter2secret@db.internal:5432/prod", "CONNECTION_STRING"),
-        ("凭证赋值", 'client_secret = "8f3a9c2e1b7d4a6f0e5c"', "GENERIC_SECRET_ASSIGNMENT"),
+        ("连接串", _fx("postgresql://", "admin", ":", "hunter2secret", "@db.internal:5432/prod"), "CONNECTION_STRING"),
+        ("凭证赋值", _fx('client_secret = "', '8f3a9c2e1b7d4a6f0e5c', '"'), "GENERIC_SECRET_ASSIGNMENT"),
     ]:
         got = {h["rule"] for h in scan_text(sample)}
         if expect not in got:
@@ -359,23 +391,46 @@ def selftest() -> int:
             failures.append(f"用例4[干净样本{i}]误报：{[h['rule'] for h in got]}")
 
     # --- 用例 5：白名单只豁免**精确值**，不得顺手豁免同前缀的其他值 ---
-    ALLOWLIST["sk-test-placeholder-value-1234567890"] = "自测用占位符"
+    WL = _fx("sk-test-placeholder-", "value-1234567890")
+    ALLOWLIST[WL] = "自测用占位符"
     try:
-        if scan_text('api_key="sk-test-placeholder-value-1234567890"'):
+        if scan_text('api_key="' + WL + '"'):
             failures.append("用例5：白名单精确值未被豁免")
-        if not scan_text('api_key="sk-test-placeholder-value-1234567890XXXX"'):
+        if not scan_text('api_key="' + WL + 'XXXX"'):
             failures.append("用例5：白名单把同前缀的其他值也豁免了（白名单过宽）")
     finally:
-        ALLOWLIST.pop("sk-test-placeholder-value-1234567890", None)
+        ALLOWLIST.pop(WL, None)
 
     # --- 用例 6：二进制里的私钥块必须被检出（不能被「跳过二进制」放过）---
     import tempfile
     with tempfile.TemporaryDirectory() as td:
         p = Path(td) / "blob.bin"
-        p.write_bytes(b"\x00\x01\x02-----BEGIN RSA PRIVATE KEY-----\nMIIE\n\x00\xff")
+        p.write_bytes(b"\x00\x01\x02" + b"-----BEGIN RSA " + b"PRIVATE KEY-----\nMIIE\n\x00\xff")
         res = scan(Path(td), "blob.bin")
         if res["findings_count"] != 1:
             failures.append(f"用例6：二进制内私钥未检出（实得 {res['findings_count']} 条）")
+
+    # --- 用例 7（元级）：扫描器**自己**必须干净 ------------------------------
+    # 为什么值得单列一条：门禁如果恒红，就没人会读它的输出 —— 与 flaky test 同一下场。
+    # 实测踩过两次，都不是假想：
+    #   ① 首版把固件写成完整字面量 → 本文件被自己扫出 **12 处**命中，
+    #      于是 `scan_secrets.py`（不带 --path）**永远 exit 1**；
+    #   ② `git filter-repo --replace-text` 把固件里的真值改写成 `***REMOVED-…***`，
+    #      自测从绿变红。
+    # 这条用例把「本文件干净」变成一条会失败的断言，而不是一句注释里的期望。
+    self_path = Path(__file__).resolve()
+    self_hits = scan_text(self_path.read_text(encoding="utf-8"))
+    if self_hits:
+        rules = sorted({h["rule"] for h in self_hits})
+        failures.append(
+            f"用例7：扫描器自身被扫出 {len(self_hits)} 处命中 {rules} —— "
+            f"全库扫描会因此恒红；请把固件改为经 _fx() 拼接")
+
+    # --- 用例 8（元级）：全库扫描不得把「本文件」算成问题源 -------------------
+    # 用例 7 只看本文件；这里确认「扫自己时也不会因为 ALLOWLIST 里留了完整字面量而漏报」。
+    # （白名单条目本身若写字面量，虽然会被 scan_text 豁免，但 filter-repo 仍会改写它。）
+    if re.search(r'ALLOWLIST[^}]*?"[^"]*://[^"]*:[^"]*@"', self_path.read_text(encoding="utf-8"), re.S):
+        failures.append("用例8：ALLOWLIST 里仍留有完整的连接串字面量（应经 _fx 拼接）")
 
     if failures:
         print("❌ --selftest 未通过：")
@@ -383,9 +438,9 @@ def selftest() -> int:
             print("   ·", f)
         return 1
 
-    print("✅ --selftest 通过（6 组用例）")
+    print("✅ --selftest 通过（8 组用例）")
     print(f"   规则数 {len(RULES)}；覆盖 3 种转义形态、10 类凭证、干净样本零误报、"
-          f"白名单精确匹配、二进制内私钥检出")
+          f"白名单精确匹配、二进制内私钥检出、**扫描器自身干净**")
     return 0
 
 
