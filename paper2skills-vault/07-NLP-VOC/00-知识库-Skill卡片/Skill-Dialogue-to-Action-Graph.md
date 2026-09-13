@@ -1,5 +1,7 @@
 ---
 title: 客服对话决策图
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2312.04668
 paper: "TOD-Flow: Modeling the Structure of Task-Oriented Dialogues"
 venue: arXiv preprint (LG AI Research / University of Michigan)
@@ -7,6 +9,14 @@ evidence_basis: paper-verbatim
 module: 07-NLP-VOC
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-06
+l2_domain: 服务与体验
+l3_id: DOM-06-111
+l3_business: 售后处理
+l3_all: 售后处理 / 客诉分诊
+l1_l2_l3: 业务运营/服务与体验/售后处理
 ---
 
 # Skill Card: 客服对话决策图

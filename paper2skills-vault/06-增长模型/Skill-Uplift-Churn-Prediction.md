@@ -7,12 +7,22 @@ created: 2026-05-15
 updated: 2026-09-13
 owner: self
 source: ai
+venue_tier: preprint
+venue_source: arxiv-abs(comments='8 pages, 2 figures, 5 tables, post-proceedings of the ECML PKDD 2023 Workshop on')
 paper_id: 2312.07206
 paper: A churn prediction dataset from the telecom sector: a new benchmark for uplift modeling
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 verified_at: 2026-09-12
 related: Skill-Customer-Journey-Prototype.md, Skill-DQN-Purchase-Prediction.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-105
+l3_business: 增量分析
+l3_all: 增量分析 / 生命周期触达
+l1_l2_l3: 业务运营/品牌与增长/增量分析
 ---
 
 # Skill Card: Uplift Modeling for Churn Prediction

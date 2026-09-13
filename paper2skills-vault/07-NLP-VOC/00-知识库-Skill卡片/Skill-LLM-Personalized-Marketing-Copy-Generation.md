@@ -8,8 +8,18 @@ created: 2026-04-27
 updated: 2026-09-12
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2505.23809
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-089
+l3_business: 内容策划
+l3_all: 内容策划 / Listing优化
+l1_l2_l3: 业务运营/品牌与增长/内容策划
 ---
 
 # Skill: LLM 驱动个性化营销文案生成

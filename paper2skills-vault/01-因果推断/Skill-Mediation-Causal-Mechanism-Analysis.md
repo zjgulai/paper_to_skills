@@ -8,7 +8,17 @@ created: 2026-05-15
 updated: 2026-05-15
 owner: self
 source: human+ai
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-008
+l3_business: GMV归因分析
+l3_all: GMV归因分析 / 增量分析
+l1_l2_l3: 经营管理/经营与组织/GMV归因分析
 ---
 
 # Skill Card: Causal Mediation Analysis

@@ -1,11 +1,21 @@
 ---
 title: "Skill Card: MAA-行动建议生成"
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: EXPLICIT_RETIERS(Skill-MAA-行动建议生成)
 paper: A Multi-Agent System for Generating Actionable Business Advice
 evidence_basis: paper-traceable
 source: human+ai
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-06
+l2_domain: 服务与体验
+l3_id: DOM-06-114
+l3_business: 体验分析
+l3_all: 体验分析 / 客诉聚类
+l1_l2_l3: 业务运营/服务与体验/体验分析
 ---
 
 # Skill Card: MAA-行动建议生成

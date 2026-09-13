@@ -7,12 +7,22 @@ created: 2026-05-15
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2009.12969
 paper: "Simultaneous Relevance and Diversity: A New Recommendation Inference Approach"
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 verified_at: 2026-09-12
 related: Skill-Session-Based-Recommendation-SR-GNN.md, Skill-NeuralNDCG-Learning-to-Rank.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-070
+l3_business: 转化优化
+l3_all: 转化优化 / 组合取舍
+l1_l2_l3: 业务运营/渠道经营/转化优化
 ---
 
 # Skill Card: Deep Learning Recommendation with Heterogeneous Inference

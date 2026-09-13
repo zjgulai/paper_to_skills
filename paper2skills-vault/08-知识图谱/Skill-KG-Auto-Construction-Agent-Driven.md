@@ -8,9 +8,19 @@ created: 2026-05-01
 updated: 2026-05-01
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: unlisted-venue(preprint)
 paper: arXiv:2511.11017
 paper_id: 2511.11017
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-139
+l3_business: 主数据治理
+l3_all: 主数据治理 / 数据管道
+l1_l2_l3: 数据与Agent平台/数据与AI运行/主数据治理
 ---
 
 # Skill Card: AI Agent 驱动的电商知识图谱自动构建

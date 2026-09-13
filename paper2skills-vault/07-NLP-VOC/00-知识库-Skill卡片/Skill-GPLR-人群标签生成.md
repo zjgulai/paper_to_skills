@@ -1,5 +1,7 @@
 ---
 title: GPLR 人群标签生成 — 从嵌入到可解释营销人群
+venue_tier: CCF-A
+venue_source: EXPLICIT_RETIERS(Skill-GPLR-人群标签生成)
 paper_id: 2504.17304
 paper: "You Are What You Bought: Generating Customer Personas for E-commerce Applications"
 venue: SIGIR 2025
@@ -7,6 +9,14 @@ module: 07-NLP-VOC
 created: 2026-04-08
 updated: 2026-09-12
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-101
+l3_business: 分群
+l3_all: 分群
+l1_l2_l3: 业务运营/品牌与增长/分群
 ---
 
 # Skill: GPLR人群标签生成 - 从嵌入到可解释营销人群

@@ -1,5 +1,7 @@
 ---
 title: VOC 自动打标签与自进化标签体系
+venue_tier: CCF-B
+venue_source: arxiv-abs(comments='EMNLP 2023')
 paper_id: 2405.07195
 paper: "InsightNet : Structured Insight Mining from Customer Feedback"
 venue: arXiv preprint (Amazon)
@@ -7,6 +9,14 @@ evidence_basis: paper-verbatim
 module: 07-NLP-VOC
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: VOC 自动打标签与自进化标签体系

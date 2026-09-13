@@ -8,9 +8,19 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2601.13671
 paper: "The Orchestration of Multi-Agent Systems: Architectures, Protocols, and Enterprise Adoption"
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-143
+l3_business: 接口契约
+l3_all: 接口契约 / 集成验证
+l1_l2_l3: 数据与Agent平台/数据与AI运行/接口契约
 ---
 
 # Skill Card: MCP + A2A 双协议栈 — Orchestrated MAS 企业架构

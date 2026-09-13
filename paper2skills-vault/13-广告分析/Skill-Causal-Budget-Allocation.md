@@ -11,11 +11,20 @@ paper_id: 2608.10182
 paper: From Prediction to Incrementality: Causal Optimization for Large-Scale Targeting and Recommendation
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py G2 passed + 人工抽检 3 处数字
 verified_at: 2026-09-12
 supersedes:
 related: Skill-ROAS-Budget-Optimization.md, Skill-Ad-Attribution-Modeling.md, Skill-Uplift-Modeling.md, Skill-Multi-Armed-Bandit.md, Skill-Marketing-Mix-Modeling.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-096
+l3_business: 预算分配
+l3_all: 预算分配 / 增量分析
+l1_l2_l3: 业务运营/品牌与增长/预算分配
 ---
 
 # Skill Card: 增量优先的约束预算分配（Causal Budget Allocation under Global Constraints）

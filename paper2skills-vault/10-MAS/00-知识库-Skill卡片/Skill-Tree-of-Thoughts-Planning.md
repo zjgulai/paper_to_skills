@@ -8,9 +8,19 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+venue_tier: CCF-A
+venue_source: arxiv-abs(comments='NeurIPS 2023 camera ready version. Code repo with all prompts: this https URL')
 paper_id: 2305.10601
 paper: "Tree of Thoughts: Deliberate Problem Solving with Large Language Models"
 evidence_basis: paper-verbatim
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-010
+l3_business: 情景模拟
+l3_all: 情景模拟 / 促销规划
+l1_l2_l3: 经营管理/经营与组织/情景模拟
 ---
 
 # Skill: Tree of Thoughts — 树搜索式任务规划

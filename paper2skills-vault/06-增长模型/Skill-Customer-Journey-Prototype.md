@@ -7,12 +7,22 @@ created: 2026-05-15
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2505.11086
 paper: Analysis of Customer Journeys Using Prototype Detection and Counterfactual Explanations for Sequential Data
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 verified_at: 2026-09-12
 related: Skill-User-Lifecycle-STAN.md, Skill-Cold-Start-Product-Recommendation.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-068
+l3_business: 漏斗诊断
+l3_all: 漏斗诊断 / 体验分析
+l1_l2_l3: 业务运营/渠道经营/漏斗诊断
 ---
 
 # Skill Card: Customer Journey Prototype Detection 客户旅程序列原型检测

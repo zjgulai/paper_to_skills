@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: 大规模消费者评论方面情感分析"
 module: 07-NLP-VOC
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码 / 竞品研究
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: 大规模消费者评论方面情感分析

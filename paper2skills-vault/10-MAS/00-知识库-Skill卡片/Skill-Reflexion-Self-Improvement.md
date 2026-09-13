@@ -8,9 +8,19 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: EXPLICIT_RETIERS(Skill-Reflexion-Self-Improvement)
 paper_id: 2303.11366
 paper: "Reflexion: an autonomous agent with dynamic memory and self-reflection"
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill: Reflexion — 言语强化学习与自我反思

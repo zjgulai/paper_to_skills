@@ -5,8 +5,18 @@ topic: demand-forecasting
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-03
+l2_domain: 供应与履约
+l3_id: DOM-03-047
+l3_business: 需求预测
+l3_all: 需求预测
+l1_l2_l3: 业务运营/供应与履约/需求预测
 ---
 
 # Skill Card: Demand Forecasting (Supply Chain)

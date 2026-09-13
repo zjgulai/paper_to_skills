@@ -8,9 +8,19 @@ created: 2026-05-01
 updated: 2026-05-01
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper: arXiv:2601.16492
 paper_id: 2601.16492
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-066
+l3_business: 搜索意图分析
+l3_all: 搜索意图分析 / 商品诊断
+l1_l2_l3: 业务运营/渠道经营/搜索意图分析
 ---
 
 # Skill Card: 面向电商的稠密检索与语义排序

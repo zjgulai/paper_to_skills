@@ -8,8 +8,18 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2605.02801
 evidence_basis: paper-verbatim
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-006
+l3_business: 依赖协调
+l3_all: 依赖协调
+l1_l2_l3: 经营管理/经营与组织/依赖协调
 ---
 
 # Skill Card: 编排轨迹驱动的 RL — MAS 三维设计框架与 Kimi PARL 实践

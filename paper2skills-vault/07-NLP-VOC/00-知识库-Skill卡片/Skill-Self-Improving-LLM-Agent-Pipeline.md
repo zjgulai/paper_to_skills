@@ -3,6 +3,8 @@ title: 自迭代 LLM Agent 管线
 doc_type: knowledge
 module: 07-NLP-VOC
 topic: self-improving-llm-agent-pipeline
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2408.06292
 evidence_basis: paper-verbatim
 status: stable
@@ -10,6 +12,14 @@ created: 2026-05-06
 updated: 2026-09-12
 owner: self
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-091
+l3_business: 内容实验
+l3_all: 内容实验 / 竞品研究
+l1_l2_l3: 业务运营/品牌与增长/内容实验
 ---
 
 # Skill: 自迭代 LLM Agent 管线

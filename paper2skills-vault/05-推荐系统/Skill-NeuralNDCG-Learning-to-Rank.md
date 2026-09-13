@@ -8,10 +8,20 @@ version: 0.1.0
 status: stable
 created: 2026-04-26
 updated: 2026-09-12
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper: arXiv:2102.07831
 paper_id: 2102.07831
 evidence_basis: paper-verbatim
 source: ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-066
+l3_business: 搜索意图分析
+l3_all: 搜索意图分析 / 转化优化
+l1_l2_l3: 业务运营/渠道经营/搜索意图分析
 ---
 
 # NeuralNDCG — 可微分排序优化与Learning to Rank

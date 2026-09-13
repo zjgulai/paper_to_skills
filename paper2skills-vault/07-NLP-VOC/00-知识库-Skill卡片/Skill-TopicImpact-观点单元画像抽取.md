@@ -1,10 +1,20 @@
 ---
 title: Skill Card: TopicImpact Opinion Unit Extraction
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2507.13392
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码 / 体验分析
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: TopicImpact Opinion Unit Extraction

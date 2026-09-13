@@ -8,8 +8,18 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: CCF-A
+venue_source: arxiv-abs(comments='ICML 2026')
 paper_id: 2510.00615
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-144
+l3_business: 业务工具实现
+l3_all: 业务工具实现 / 容量管理
+l1_l2_l3: 数据与Agent平台/数据与AI运行/业务工具实现
 ---
 
 # Skill Card: ACON — Agent 长上下文压缩与失败驱动准则优化

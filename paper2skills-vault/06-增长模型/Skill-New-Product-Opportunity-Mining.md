@@ -7,12 +7,22 @@ created: 2026-05-15
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2405.19456
 paper: An Automated Startup Evaluation Pipeline: Startup Success Forecasting Framework (SSFF)
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 verified_at: 2026-09-12
 related: Skill-Cold-Start-Product-Recommendation.md, Skill-Customer-Journey-Prototype.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-022
+l3_business: 市场机会评估
+l3_all: 市场机会评估 / 组合取舍
+l1_l2_l3: 业务运营/产品与创新/市场机会评估
 ---
 
 # Skill Card: New Product Opportunity Mining (新品机会挖掘模型)

@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: Knowledge Graph for Skills Management（知识图谱驱动的技能管理）"
 module: 08-知识图谱
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-005
+l3_business: 能力匹配
+l3_all: 能力匹配 / 岗位能力分析
+l1_l2_l3: 经营管理/经营与组织/能力匹配
 ---
 
 # Skill Card: Knowledge Graph for Skills Management（知识图谱驱动的技能管理）

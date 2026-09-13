@@ -12,8 +12,17 @@ paper_id: 2604.08618
 paper: "SkillForge: Forging Domain-Specific, Self-Evolving Agent Skills in Cloud Technical Support"
 venue: SIGIR 2026 (Industry Track)
 venue_tier: CCF-A
+venue_source: frontmatter-as-is
 evidence_grade: A
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-147
+l3_business: 技能版本
+l3_all: 技能版本 / Playbook评估
+l1_l2_l3: 数据与Agent平台/数据与AI运行/技能版本
 ---
 
 # Skill Card: SkillForge — 领域特定自演化 Agent Skill 萃取与优化

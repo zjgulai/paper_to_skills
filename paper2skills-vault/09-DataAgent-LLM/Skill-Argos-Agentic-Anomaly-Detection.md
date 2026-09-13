@@ -8,10 +8,20 @@ version: 0.1.0
 status: stable
 created: 2026-04-26
 updated: 2026-04-26
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper: arXiv:2501.14170
 source: ai
 paper_id: 2501.14170
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-149
+l3_business: 运行监测
+l3_all: 运行监测 / 溯源监测
+l1_l2_l3: 数据与Agent平台/数据与AI运行/运行监测
 ---
 
 # Argos — Agentic时序异常检测

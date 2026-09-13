@@ -11,11 +11,20 @@ paper_id: 2606.29366
 paper: Solver-Verified Formulation Generation and Selection for Multi-Warehouse Inventory Allocation Using Large Language Models
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py (K1 PASS) + quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G1/G2/G3
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Safety-Stock-Replenishment.md, Skill-Demand-Forecasting-Supply-Chain.md, Skill-Multi-Echelon-Inventory.md, Skill-Two-Echelon-Inventory-DRL.md, Skill-Tool-Description-Audit.md, Skill-SQL-Agent-Text-to-SQL.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-03
+l2_domain: 供应与履约
+l3_id: DOM-03-052
+l3_business: 调拨清货建议
+l3_all: 调拨清货建议 / 补货模拟
+l1_l2_l3: 业务运营/供应与履约/调拨清货建议
 ---
 
 # Skill-Multi-Warehouse-Allocation-LLM

@@ -8,9 +8,19 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+venue_tier: CCF-B
+venue_source: arxiv-abs(主会自带轨道)
 paper_id: 2305.19118
 paper: "Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate"
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-023
+l3_business: 组合取舍
+l3_all: 组合取舍 / 依赖协调
+l1_l2_l3: 业务运营/产品与创新/组合取舍
 ---
 
 # Skill: Multi-Agent Debate — 多智能体辩论共识

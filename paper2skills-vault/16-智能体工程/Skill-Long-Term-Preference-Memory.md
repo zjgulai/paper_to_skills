@@ -8,9 +8,19 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2603.14864
 paper: "Shopping Companion: A Memory-Augmented LLM Agent for Real-World E-Commerce Tasks"
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-06
+l2_domain: 服务与体验
+l3_id: DOM-06-108
+l3_business: 选购指导
+l3_all: 选购指导 / 生命周期触达
+l1_l2_l3: 业务运营/服务与体验/选购指导
 ---
 
 # Skill Card: Shopping Companion — 记忆增强的长期偏好购物 Agent

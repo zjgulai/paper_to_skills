@@ -7,12 +7,22 @@ created: 2026-05-15
 updated: 2026-09-13
 owner: self
 source: ai
+venue_tier: CCF-B
+venue_source: arxiv-abs(comments='10 pages, accepted by WSDM 2025')
 paper_id: 2402.09176
 paper: Large Language Model Simulator for Cold-Start Recommendation
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 verified_at: 2026-09-12
 related: Skill-New-Product-Opportunity-Mining.md, Skill-Uplift-Churn-Prediction.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-070
+l3_business: 转化优化
+l3_all: 转化优化
+l1_l2_l3: 业务运营/渠道经营/转化优化
 ---
 
 # Skill Card: Cold-Start Product Recommendation (冷启动商品推荐)

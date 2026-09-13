@@ -10,12 +10,21 @@ source: ai
 paper_id: 2606.26690
 paper: Attributed, But Not Incremental: Cannibalization-Corrected Attribution for Large-Scale Advertising
 venue: ADKDD 2026
-venue_tier: workshop
+venue_tier: preprint
+venue_source: EXPLICIT_RETIERS
 evidence_grade: A
 verified_by: verify_skill_code.py (K1 PASS) + quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Ad-Attribution-Modeling.md, Skill-ROAS-Budget-Optimization.md, Skill-DiD-Difference-in-Differences.md, Skill-Power-Analysis-Sample-Size.md, Skill-Marketing-Mix-Modeling.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-105
+l3_business: 增量分析
+l3_all: 增量分析 / 预算分配
+l1_l2_l3: 业务运营/品牌与增长/增量分析
 ---
 
 # Skill-Cannibalization-Corrected-Attribution

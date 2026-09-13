@@ -11,11 +11,20 @@ paper_id: 2607.22115
 paper: Benchmarking Text-to-SQL under Role-Based Access Control
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: EXPLICIT_RETIERS
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS，9 条断言）+ quote_check.py（引文逐字核验 VERBATIM，0 伪造 0 近似）+ gate_check.py G2/G3 passed + 人工抽检 5 处数字
 verified_at: 2026-09-12
 supersedes:
 related: Skill-SQL-Agent-Text-to-SQL.md, Skill-Data-to-Dashboard-Multi-Agent-Visualization.md, Skill-Root-Cause-Analysis-Agent.md, Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md
+l1_id: PLN-CTL
+l1_plane: 独立控制
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-135
+l3_business: 授权审查
+l3_all: 授权审查 / 访问控制
+l1_l2_l3: 独立控制/数据与AI运行/授权审查
 ---
 
 # Skill Card: RBAC 感知的数据 Agent 上线门禁（越权率 + 过度拒答率双指标）

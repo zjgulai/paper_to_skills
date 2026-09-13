@@ -8,9 +8,19 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: field-top
+venue_source: arxiv-abs(comments='COLM accepted')
 paper_id: 2604.01687
 paper: "EvoSkills: Self-Evolving Agent Skills via Co-Evolutionary Verification"
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-147
+l3_business: 技能版本
+l3_all: 技能版本 / Playbook评估
+l1_l2_l3: 数据与Agent平台/数据与AI运行/技能版本
 ---
 
 # Skill Card: 协同演化 Skill 验证 — EvoSkills 自动萃取 + 信息隔离审核

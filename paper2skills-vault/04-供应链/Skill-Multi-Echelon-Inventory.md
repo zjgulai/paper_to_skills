@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: Multi-Echelon Inventory Optimization (多阶库存优化)"
 module: 04-供应链
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-03
+l2_domain: 供应与履约
+l3_id: DOM-03-050
+l3_business: 库存分层
+l3_all: 库存分层 / 补货模拟
+l1_l2_l3: 业务运营/供应与履约/库存分层
 ---
 
 # Skill Card: Multi-Echelon Inventory Optimization (多阶库存优化)

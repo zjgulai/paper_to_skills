@@ -1,5 +1,7 @@
 ---
 title: 跨语言语义结构对齐
+venue_tier: CCF-A
+venue_source: EXPLICIT_RETIERS(Skill-CrossLingual-Semantic-Alignment)
 paper_id: 2206.07587
 paper: "Cross-lingual AMR Aligner: Paying Attention to Cross-Attention"
 venue: ACL 2023
@@ -7,6 +9,14 @@ evidence_basis: paper-verbatim
 module: 07-NLP-VOC
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-085
+l3_business: 术语治理
+l3_all: 术语治理 / 主数据治理
+l1_l2_l3: 业务运营/渠道经营/术语治理
 ---
 
 # Skill Card: 跨语言语义结构对齐

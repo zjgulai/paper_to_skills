@@ -11,11 +11,20 @@ paper_id: 2608.09162
 paper: Tabular Numeric Stretch Transformation
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py（K1）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py + 人工抽检
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Customer-Churn-Prediction.md, Skill-RFM-Customer-Segmentation.md, Skill-Uplift-Modeling.md
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-144
+l3_business: 业务工具实现
+l3_all: 业务工具实现 / 数据管道 / 指标契约
+l1_l2_l3: 数据与Agent平台/数据与AI运行/业务工具实现
 ---
 
 # Skill Card: Feature Engineering

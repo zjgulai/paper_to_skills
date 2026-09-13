@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: REVISION Intent Mining"
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2510.22739
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-066
+l3_business: 搜索意图分析
+l3_all: 搜索意图分析 / 需求分群
+l1_l2_l3: 业务运营/渠道经营/搜索意图分析
 ---
 
 # Skill Card: REVISION Intent Mining

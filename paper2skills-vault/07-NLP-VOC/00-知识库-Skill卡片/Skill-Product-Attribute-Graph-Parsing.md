@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: 产品属性图谱解析"
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2410.21237
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-020
+l3_business: 竞品研究
+l3_all: 竞品研究 / 商品诊断
+l1_l2_l3: 业务运营/产品与创新/竞品研究
 ---
 
 # Skill Card: 产品属性图谱解析

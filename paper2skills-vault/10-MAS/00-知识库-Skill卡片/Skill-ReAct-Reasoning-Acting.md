@@ -8,9 +8,19 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+venue_tier: CCF-A
+venue_source: arxiv-abs(comments='v3 is the ICLR camera ready version with some typos fixed. Project site with cod')
 paper_id: 2210.03629
 paper: "ReAct: Synergizing Reasoning and Acting in Language Models"
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-144
+l3_business: 业务工具实现
+l3_all: 业务工具实现
+l1_l2_l3: 数据与Agent平台/数据与AI运行/业务工具实现
 ---
 
 # Skill: ReAct — 推理与行动交替执行

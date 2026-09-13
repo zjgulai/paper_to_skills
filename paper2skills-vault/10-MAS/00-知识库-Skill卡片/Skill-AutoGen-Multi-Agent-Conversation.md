@@ -8,9 +8,19 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2308.08155
 paper: "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation"
 evidence_basis: paper-verbatim
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-006
+l3_business: 依赖协调
+l3_all: 依赖协调
+l1_l2_l3: 经营管理/经营与组织/依赖协调
 ---
 
 # Skill Card: AutoGen — 多智能体对话编排框架

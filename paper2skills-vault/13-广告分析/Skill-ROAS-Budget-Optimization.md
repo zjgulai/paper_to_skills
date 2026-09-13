@@ -5,8 +5,18 @@ topic: roas-optimization
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-096
+l3_business: 预算分配
+l3_all: 预算分配 / 投放诊断
+l1_l2_l3: 业务运营/品牌与增长/预算分配
 ---
 
 # Skill Card: ROAS Optimization & Budget Allocation

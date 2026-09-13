@@ -1,12 +1,22 @@
 ---
 title: Knowledge Graph Question Answering (KGQA)
 module: 08-知识图谱
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
 topic: kgqa
 status: stable
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-06
+l2_domain: 服务与体验
+l3_id: DOM-06-107
+l3_business: 产品问答
+l3_all: 产品问答 / 业务工具实现
+l1_l2_l3: 业务运营/服务与体验/产品问答
 ---
 
 # Skill Card: Knowledge Graph Question Answering (KGQA)

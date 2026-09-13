@@ -1,5 +1,7 @@
 ---
 title: BERT-MoE 高效方面情感分析
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2602.12778
 paper: "Aspect-Based Sentiment Analysis for Future Tourism Experiences: A BERT-MoE Framework for Persian User Reviews"
 venue: arXiv preprint
@@ -7,6 +9,14 @@ evidence_basis: paper-verbatim
 module: 07-NLP-VOC
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: BERT-MoE 高效方面情感分析

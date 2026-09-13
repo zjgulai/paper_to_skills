@@ -1,10 +1,20 @@
 ---
 title: Skill: 离线RL触达时机优化 - 不打扰的最优干预
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2202.03867
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-102
+l3_business: 生命周期触达
+l3_all: 生命周期触达
+l1_l2_l3: 业务运营/品牌与增长/生命周期触达
 ---
 
 # Skill: 离线RL触达时机优化 - 不打扰的最优干预

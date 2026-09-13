@@ -4,7 +4,8 @@
   "how": "由 5 个分类子代理按 /tmp/p2s-f5/batch-0N.md 各 11/11/11/11/9 张产出，合并前逐批断言：与题面同序同集、L3 逐字 ∈ taxonomy 151 条、无 l3 越界（实测 0 条）。",
   "items_vs_opinions": "`items[].l3` 是本文件的**结论**；`anchor_opinions` 只是**意见**—— 五个批次各用各的锚点口径（批次 02 自己就写明「若要求含跨境渠道要素，这张可复议」），故不当作测量，只登记并如实标出与机器扫描的分歧。",
   "facet_flags": "技术域（tech_domain facet）错位登记。**只登记不移动**：移动目录会断掉卡内 `related:` 与论文档案引用，而技术域只是筛选面、不参与主分类；主分类以 L3 为准。",
-  "reclassify": "本文件不含任何 reclassify —— 53 张**都不在产品侧 1338 条的落点里**（已断言零重叠），故全部是 `new`，不触碰零漂移门禁。"
+  "reclassify": "本文件不含任何 reclassify —— 53 张**都不在产品侧 1338 条的落点里**（已断言零重叠），故全部是 `new`，不触碰零漂移门禁。",
+  "misplacement_ledger": "错位清单（在册不改正文）：21 条技术域错位（ref 指向 facet_flags）+ 3 条域错位 + 2 条与母婴业务无关 + 18 条 §5.3 无锚点（其中 5 条机器可复现）。**只登记不移动**；每条带 path:line + 行 sha1 供逐字复核。"
  },
  "items": [
   {
@@ -993,5 +994,747 @@
    "criterion": "母婴品类 + 出海要素（各批自述口径，未统一）",
    "source": "f5-review-batch-05"
   }
- ]
+ ],
+ "misplacement_ledger": {
+  "_what": "错位清单（在册，不改正文）：把散落四处的散文判定合并成一份机读清单",
+  "_rule": "**只登记不移动** —— 移动目录会断掉卡内 `related:` 与论文档案引用；技术域只是筛选面（facet），主分类以 L3 为准（同 F4 的判定）",
+  "_evidence": "每条给 `path:line` 与 `basis_line_sha1_12`（该行去空白后的 sha1 前 12 位）⇒ 判定依据可**逐字复核**，不信散文。`tech_domain_misplaced` 只给 `ref`，理由不复制（同一事实两份文本会各自腐烂）",
+  "_counts": {
+   "domain_misplaced": 3,
+   "no_baby_anchor": 18,
+   "no_baby_anchor_reproducible": 5,
+   "not_baby_business": 2,
+   "tech_domain_misplaced": 21,
+   "total": 49,
+   "distinct_cards": 35
+  },
+  "groups": [
+   "domain_misplaced",
+   "not_baby_business",
+   "no_baby_anchor",
+   "no_baby_anchor_reproducible",
+   "tech_domain_misplaced"
+  ],
+  "entries": [
+   {
+    "card_id": "Skill-Behavioral-Intent-Tree-Parsing",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Behavioral-Intent-Tree-Parsing.md:2",
+    "basis_line_sha1_12": "c8a56e99e746",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Behavioral-Intent-Tree-Parsing.md",
+    "expected_l3": [
+     "转化优化",
+     "生命周期触达"
+    ],
+    "ref": "Skill-Behavioral-Intent-Tree-Parsing",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-Funnel-Causal-Coupon-Allocation",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `13-广告分析`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md:2",
+    "basis_line_sha1_12": "bb49c31965a0",
+    "path": "paper2skills-vault/13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md",
+    "expected_l3": [
+     "促销规划",
+     "增量分析"
+    ],
+    "ref": "Skill-Funnel-Causal-Coupon-Allocation",
+    "declared_tech_domain": "13-广告分析"
+   },
+   {
+    "card_id": "Skill-GPLR-人群标签生成",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-GPLR-人群标签生成.md:2",
+    "basis_line_sha1_12": "291b9ce62052",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-GPLR-人群标签生成.md",
+    "expected_l3": [
+     "分群"
+    ],
+    "ref": "Skill-GPLR-人群标签生成",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-LLM-Personalized-Marketing-Copy-Generation",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-LLM-Personalized-Marketing-Copy-Generation.md:2",
+    "basis_line_sha1_12": "f6c5e75bd09e",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-LLM-Personalized-Marketing-Copy-Generation.md",
+    "expected_l3": [
+     "内容策划",
+     "Listing优化"
+    ],
+    "ref": "Skill-LLM-Personalized-Marketing-Copy-Generation",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-MAS-Consumer-Behavior-Simulation",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Consumer-Behavior-Simulation.md:2",
+    "basis_line_sha1_12": "8fb4a222fd7d",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Consumer-Behavior-Simulation.md",
+    "expected_l3": [
+     "促销规划",
+     "情景模拟"
+    ],
+    "ref": "Skill-MAS-Consumer-Behavior-Simulation",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-MAS-MARL-Dynamic-Pricing",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-MARL-Dynamic-Pricing.md:2",
+    "basis_line_sha1_12": "448575c0b3c4",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-MARL-Dynamic-Pricing.md",
+    "expected_l3": [
+     "价格敏感性",
+     "促销规划"
+    ],
+    "ref": "Skill-MAS-MARL-Dynamic-Pricing",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-MAS-Multi-Objective-Recommendation",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Multi-Objective-Recommendation.md:2",
+    "basis_line_sha1_12": "6c01c48ee7b8",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Multi-Objective-Recommendation.md",
+    "expected_l3": [
+     "转化优化",
+     "组合设计"
+    ],
+    "ref": "Skill-MAS-Multi-Objective-Recommendation",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-OfflineRL-触达时机优化",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OfflineRL-触达时机优化.md:2",
+    "basis_line_sha1_12": "048f6a1e4613",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OfflineRL-触达时机优化.md",
+    "expected_l3": [
+     "生命周期触达"
+    ],
+    "ref": "Skill-OfflineRL-触达时机优化",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-Product-Attribute-Graph-Parsing",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Product-Attribute-Graph-Parsing.md:2",
+    "basis_line_sha1_12": "aedf6e9accce",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Product-Attribute-Graph-Parsing.md",
+    "expected_l3": [
+     "竞品研究",
+     "商品诊断"
+    ],
+    "ref": "Skill-Product-Attribute-Graph-Parsing",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-REVISION-无点击意图挖掘",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-REVISION-无点击意图挖掘.md:2",
+    "basis_line_sha1_12": "91a199da3fd5",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-REVISION-无点击意图挖掘.md",
+    "expected_l3": [
+     "搜索意图分析",
+     "需求分群"
+    ],
+    "ref": "Skill-REVISION-无点击意图挖掘",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-Self-Improving-LLM-Agent-Pipeline",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Self-Improving-LLM-Agent-Pipeline.md:2",
+    "basis_line_sha1_12": "8b413d80355c",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Self-Improving-LLM-Agent-Pipeline.md",
+    "expected_l3": [
+     "内容实验",
+     "竞品研究"
+    ],
+    "ref": "Skill-Self-Improving-LLM-Agent-Pipeline",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-Shipping-Cost-Estimation",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `03-时间序列`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/03-时间序列/Skill-Shipping-Cost-Estimation.md:2",
+    "basis_line_sha1_12": "e23dd11f3958",
+    "path": "paper2skills-vault/03-时间序列/Skill-Shipping-Cost-Estimation.md",
+    "expected_l3": [
+     "物流方案",
+     "经济性分析"
+    ],
+    "ref": "Skill-Shipping-Cost-Estimation",
+    "declared_tech_domain": "03-时间序列"
+   },
+   {
+    "card_id": "Skill-SoMeR-多视角用户表示",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-SoMeR-多视角用户表示.md:2",
+    "basis_line_sha1_12": "492764a1e439",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-SoMeR-多视角用户表示.md",
+    "expected_l3": [
+     "分群",
+     "需求分群"
+    ],
+    "ref": "Skill-SoMeR-多视角用户表示",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-TJAP-跨市场品类组合定价",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TJAP-跨市场品类组合定价.md:2",
+    "basis_line_sha1_12": "919c6b581230",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TJAP-跨市场品类组合定价.md",
+    "expected_l3": [
+     "组合设计",
+     "价格敏感性",
+     "市场进入"
+    ],
+    "ref": "Skill-TJAP-跨市场品类组合定价",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-TSCAN-上下文感知挽回策略",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TSCAN-上下文感知挽回策略.md:2",
+    "basis_line_sha1_12": "cb6034e96909",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TSCAN-上下文感知挽回策略.md",
+    "expected_l3": [
+     "生命周期触达"
+    ],
+    "ref": "Skill-TSCAN-上下文感知挽回策略",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-iReFeed-需求优先级排序",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `07-NLP-VOC`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-iReFeed-需求优先级排序.md:5",
+    "basis_line_sha1_12": "75ac2ff7e047",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-iReFeed-需求优先级排序.md",
+    "expected_l3": [
+     "产品需求定义",
+     "产品范围管理"
+    ],
+    "ref": "Skill-iReFeed-需求优先级排序",
+    "declared_tech_domain": "07-NLP-VOC"
+   },
+   {
+    "card_id": "Skill-Monodense-单品价格弹性估计",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `04-供应链`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/04-供应链/Skill-Monodense-单品价格弹性估计.md:2",
+    "basis_line_sha1_12": "a79619a24cf8",
+    "path": "paper2skills-vault/04-供应链/Skill-Monodense-单品价格弹性估计.md",
+    "expected_l3": [
+     "价格敏感性"
+    ],
+    "ref": "Skill-Monodense-单品价格弹性估计",
+    "declared_tech_domain": "04-供应链"
+   },
+   {
+    "card_id": "Skill-Cold-Start-Product-Recommendation",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `06-增长模型`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/06-增长模型/Skill-Cold-Start-Product-Recommendation.md:2",
+    "basis_line_sha1_12": "0c761b3e8a54",
+    "path": "paper2skills-vault/06-增长模型/Skill-Cold-Start-Product-Recommendation.md",
+    "expected_l3": [
+     "转化优化"
+    ],
+    "ref": "Skill-Cold-Start-Product-Recommendation",
+    "declared_tech_domain": "06-增长模型"
+   },
+   {
+    "card_id": "Skill-New-Product-Opportunity-Mining",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `06-增长模型`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/06-增长模型/Skill-New-Product-Opportunity-Mining.md:2",
+    "basis_line_sha1_12": "2dc645d7d73c",
+    "path": "paper2skills-vault/06-增长模型/Skill-New-Product-Opportunity-Mining.md",
+    "expected_l3": [
+     "市场机会评估",
+     "组合取舍"
+    ],
+    "ref": "Skill-New-Product-Opportunity-Mining",
+    "declared_tech_domain": "06-增长模型"
+   },
+   {
+    "card_id": "Skill-Knowledge-Graph-for-Skills-Management",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `08-知识图谱`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md:2",
+    "basis_line_sha1_12": "6491246f2993",
+    "path": "paper2skills-vault/08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md",
+    "expected_l3": [
+     "能力匹配",
+     "岗位能力分析"
+    ],
+    "ref": "Skill-Knowledge-Graph-for-Skills-Management",
+    "declared_tech_domain": "08-知识图谱"
+   },
+   {
+    "card_id": "Skill-Skill-Lifecycle-Design",
+    "group": "tech_domain_misplaced",
+    "basis": "技术域错位：声明 `16-智能体工程`，实际业务见 `ref` 登记",
+    "evidence": "paper2skills-vault/16-智能体工程/Skill-Skill-Lifecycle-Design.md:2",
+    "basis_line_sha1_12": "a04d67cc36ce",
+    "path": "paper2skills-vault/16-智能体工程/Skill-Skill-Lifecycle-Design.md",
+    "expected_l3": [
+     "技能版本",
+     "Playbook评估"
+    ],
+    "ref": "Skill-Skill-Lifecycle-Design",
+    "declared_tech_domain": "16-智能体工程"
+   },
+   {
+    "card_id": "Skill-Monodense-单品价格弹性估计",
+    "group": "domain_misplaced",
+    "basis": "实为定价卡：卡自述产出用于「动态定价和促销决策」，L3 落 `价格敏感性`（渠道经营），而技术域是 04-供应链",
+    "evidence": "paper2skills-vault/04-供应链/Skill-Monodense-单品价格弹性估计.md:4",
+    "basis_line_sha1_12": "81fdf3a27d9b",
+    "path": "paper2skills-vault/04-供应链/Skill-Monodense-单品价格弹性估计.md"
+   },
+   {
+    "card_id": "Skill-Cold-Start-Product-Recommendation",
+    "group": "domain_misplaced",
+    "basis": "实为**推荐**卡：来源论文标题即 Large Language Model Simulator for Cold-Start Recommendation，技术域却是 06-增长模型",
+    "evidence": "paper2skills-vault/06-增长模型/Skill-Cold-Start-Product-Recommendation.md:11",
+    "basis_line_sha1_12": "ca58893e4b12",
+    "path": "paper2skills-vault/06-增长模型/Skill-Cold-Start-Product-Recommendation.md"
+   },
+   {
+    "card_id": "Skill-New-Product-Opportunity-Mining",
+    "group": "domain_misplaced",
+    "basis": "实为**选品**卡：来源论文是创业成功预测框架 SSFF，落 `市场机会评估`；调查报告 §5.3 明写「非本域核心动作，更接近选品/组合决策」，技术域却是 06-增长模型",
+    "evidence": "paper2skills-vault/06-增长模型/Skill-New-Product-Opportunity-Mining.md:11",
+    "basis_line_sha1_12": "3ffef0b2f951",
+    "path": "paper2skills-vault/06-增长模型/Skill-New-Product-Opportunity-Mining.md"
+   },
+   {
+    "card_id": "Skill-Knowledge-Graph-for-Skills-Management",
+    "group": "not_baby_business",
+    "basis": "② 段场景是**团队内部**新人技能/学习路径推荐，不是对外经营决策",
+    "evidence": "paper2skills-vault/08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md:65",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md"
+   },
+   {
+    "card_id": "Skill-Skill-Lifecycle-Design",
+    "group": "not_baby_business",
+    "basis": "元卡：讲的是重构**本项目自己的** Skill 库，不是母婴业务",
+    "evidence": "paper2skills-vault/16-智能体工程/Skill-Skill-Lifecycle-Design.md:95",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/16-智能体工程/Skill-Skill-Lifecycle-Design.md"
+   },
+   {
+    "card_id": "Skill-Mediation-Causal-Mechanism-Analysis",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/01-因果推断/Skill-Mediation-Causal-Mechanism-Analysis.md:72",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/01-因果推断/Skill-Mediation-Causal-Mechanism-Analysis.md",
+    "expected_l3": [
+     "GMV归因分析",
+     "增量分析"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 3,
+     "export_hits": 3
+    }
+   },
+   {
+    "card_id": "Skill-AB-Test-Result-Interpretation",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=export-only）",
+    "evidence": "paper2skills-vault/02-A_B实验/Skill-AB-Test-Result-Interpretation.md:68",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/02-A_B实验/Skill-AB-Test-Result-Interpretation.md",
+    "expected_l3": [
+     "实验设计",
+     "因果局限审查"
+    ],
+    "machine_scan": {
+     "class": "export-only",
+     "category_hits": 0,
+     "export_hits": 4
+    }
+   },
+   {
+    "card_id": "Skill-Power-Analysis-Sample-Size",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/02-A_B实验/Skill-Power-Analysis-Sample-Size.md:58",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/02-A_B实验/Skill-Power-Analysis-Sample-Size.md",
+    "expected_l3": [
+     "实验设计"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 7,
+     "export_hits": 1
+    }
+   },
+   {
+    "card_id": "Skill-Temporal-Fusion-Transformer",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=category-only）",
+    "evidence": "paper2skills-vault/03-时间序列/Skill-Temporal-Fusion-Transformer.md:36",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/03-时间序列/Skill-Temporal-Fusion-Transformer.md",
+    "expected_l3": [
+     "需求预测",
+     "补货模拟"
+    ],
+    "machine_scan": {
+     "class": "category-only",
+     "category_hits": 1,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-New-Product-Opportunity-Mining",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/06-增长模型/Skill-New-Product-Opportunity-Mining.md:97",
+    "basis_line_sha1_12": "5edcf58f3759",
+    "path": "paper2skills-vault/06-增长模型/Skill-New-Product-Opportunity-Mining.md",
+    "expected_l3": [
+     "市场机会评估",
+     "组合取舍"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 15,
+     "export_hits": 5
+    }
+   },
+   {
+    "card_id": "Skill-Dialogue-to-Action-Graph",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Dialogue-to-Action-Graph.md:47",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Dialogue-to-Action-Graph.md",
+    "expected_l3": [
+     "售后处理",
+     "客诉分诊"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 1,
+     "export_hits": 1
+    }
+   },
+   {
+    "card_id": "Skill-OpenWorld-Class-Incremental-Learning",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=export-only）",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OpenWorld-Class-Incremental-Learning.md:104",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OpenWorld-Class-Incremental-Learning.md",
+    "expected_l3": [
+     "VOC编码"
+    ],
+    "machine_scan": {
+     "class": "export-only",
+     "category_hits": 0,
+     "export_hits": 1
+    }
+   },
+   {
+    "card_id": "Skill-Product-Attribute-Graph-Parsing",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Product-Attribute-Graph-Parsing.md:42",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Product-Attribute-Graph-Parsing.md",
+    "expected_l3": [
+     "竞品研究",
+     "商品诊断"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 14,
+     "export_hits": 1
+    }
+   },
+   {
+    "card_id": "Skill-Knowledge-Graph-for-Skills-Management",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md:65",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/08-知识图谱/Skill-Knowledge-Graph-for-Skills-Management.md",
+    "expected_l3": [
+     "能力匹配",
+     "岗位能力分析"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 7,
+     "export_hits": 6
+    }
+   },
+   {
+    "card_id": "Skill-Root-Cause-Analysis-Agent",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=neither）",
+    "evidence": "paper2skills-vault/09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md:55",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md",
+    "expected_l3": [
+     "GMV归因分析",
+     "运行监测"
+    ],
+    "machine_scan": {
+     "class": "neither",
+     "category_hits": 0,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-Tree-of-Thoughts-Planning",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=neither）",
+    "evidence": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Tree-of-Thoughts-Planning.md:79",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Tree-of-Thoughts-Planning.md",
+    "expected_l3": [
+     "情景模拟",
+     "促销规划"
+    ],
+    "machine_scan": {
+     "class": "neither",
+     "category_hits": 0,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-Cannibalization-Corrected-Attribution",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=export-only）",
+    "evidence": "paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md:78",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md",
+    "expected_l3": [
+     "增量分析",
+     "预算分配"
+    ],
+    "machine_scan": {
+     "class": "export-only",
+     "category_hits": 0,
+     "export_hits": 11
+    }
+   },
+   {
+    "card_id": "Skill-ROAS-Budget-Optimization",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=category-only）",
+    "evidence": "paper2skills-vault/13-广告分析/Skill-ROAS-Budget-Optimization.md:56",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/13-广告分析/Skill-ROAS-Budget-Optimization.md",
+    "expected_l3": [
+     "预算分配",
+     "投放诊断"
+    ],
+    "machine_scan": {
+     "class": "category-only",
+     "category_hits": 1,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-Marketing-Mix-Modeling",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=category-only）",
+    "evidence": "paper2skills-vault/15-营销投放分析/Skill-Marketing-Mix-Modeling.md:62",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/15-营销投放分析/Skill-Marketing-Mix-Modeling.md",
+    "expected_l3": [
+     "预算分配",
+     "渠道经营分析"
+    ],
+    "machine_scan": {
+     "class": "category-only",
+     "category_hits": 1,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-Promotion-Effectiveness",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=category-only）",
+    "evidence": "paper2skills-vault/15-营销投放分析/Skill-Promotion-Effectiveness.md:60",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/15-营销投放分析/Skill-Promotion-Effectiveness.md",
+    "expected_l3": [
+     "促销规划",
+     "价格敏感性",
+     "经济性分析"
+    ],
+    "machine_scan": {
+     "class": "category-only",
+     "category_hits": 1,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-MCP-Tool-Use-Benchmark",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/16-智能体工程/Skill-MCP-Tool-Use-Benchmark.md:129",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/16-智能体工程/Skill-MCP-Tool-Use-Benchmark.md",
+    "expected_l3": [
+     "运行监测",
+     "接口契约"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 1,
+     "export_hits": 1
+    }
+   },
+   {
+    "card_id": "Skill-Skill-Lifecycle-Design",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=both）",
+    "evidence": "paper2skills-vault/16-智能体工程/Skill-Skill-Lifecycle-Design.md:95",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/16-智能体工程/Skill-Skill-Lifecycle-Design.md",
+    "expected_l3": [
+     "技能版本",
+     "Playbook评估"
+    ],
+    "machine_scan": {
+     "class": "both",
+     "category_hits": 2,
+     "export_hits": 2
+    }
+   },
+   {
+    "card_id": "Skill-Tool-Description-Audit",
+    "group": "no_baby_anchor",
+    "basis": "调查报告 §5.3 逐卡异常：② 段未锚定到母婴单品/具体设定（散文判定，机器扫描 class=category-only）",
+    "evidence": "paper2skills-vault/16-智能体工程/Skill-Tool-Description-Audit.md:112",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/16-智能体工程/Skill-Tool-Description-Audit.md",
+    "expected_l3": [
+     "接口契约",
+     "业务工具实现"
+    ],
+    "machine_scan": {
+     "class": "category-only",
+     "category_hits": 1,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-AB-Test-Result-Interpretation",
+    "group": "no_baby_anchor_reproducible",
+    "basis": "同一张卡的另一档：母婴品类词**零命中**——这一档是**机器可复现**的（可复算 `anchor_scan.cards[].category_hits == 0`）",
+    "evidence": "paper2skills-vault/02-A_B实验/Skill-AB-Test-Result-Interpretation.md:68",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/02-A_B实验/Skill-AB-Test-Result-Interpretation.md",
+    "expected_l3": [
+     "实验设计",
+     "因果局限审查"
+    ],
+    "machine_scan": {
+     "class": "export-only",
+     "category_hits": 0,
+     "export_hits": 4
+    }
+   },
+   {
+    "card_id": "Skill-OpenWorld-Class-Incremental-Learning",
+    "group": "no_baby_anchor_reproducible",
+    "basis": "同一张卡的另一档：母婴品类词**零命中**——这一档是**机器可复现**的（可复算 `anchor_scan.cards[].category_hits == 0`）",
+    "evidence": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OpenWorld-Class-Incremental-Learning.md:104",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OpenWorld-Class-Incremental-Learning.md",
+    "expected_l3": [
+     "VOC编码"
+    ],
+    "machine_scan": {
+     "class": "export-only",
+     "category_hits": 0,
+     "export_hits": 1
+    }
+   },
+   {
+    "card_id": "Skill-Root-Cause-Analysis-Agent",
+    "group": "no_baby_anchor_reproducible",
+    "basis": "同一张卡的另一档：母婴品类词**零命中**——这一档是**机器可复现**的（可复算 `anchor_scan.cards[].category_hits == 0`）",
+    "evidence": "paper2skills-vault/09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md:55",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/09-DataAgent-LLM/Skill-Root-Cause-Analysis-Agent.md",
+    "expected_l3": [
+     "GMV归因分析",
+     "运行监测"
+    ],
+    "machine_scan": {
+     "class": "neither",
+     "category_hits": 0,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-Tree-of-Thoughts-Planning",
+    "group": "no_baby_anchor_reproducible",
+    "basis": "同一张卡的另一档：母婴品类词**零命中**——这一档是**机器可复现**的（可复算 `anchor_scan.cards[].category_hits == 0`）",
+    "evidence": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Tree-of-Thoughts-Planning.md:79",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/10-MAS/00-知识库-Skill卡片/Skill-Tree-of-Thoughts-Planning.md",
+    "expected_l3": [
+     "情景模拟",
+     "促销规划"
+    ],
+    "machine_scan": {
+     "class": "neither",
+     "category_hits": 0,
+     "export_hits": 0
+    }
+   },
+   {
+    "card_id": "Skill-Cannibalization-Corrected-Attribution",
+    "group": "no_baby_anchor_reproducible",
+    "basis": "同一张卡的另一档：母婴品类词**零命中**——这一档是**机器可复现**的（可复算 `anchor_scan.cards[].category_hits == 0`）",
+    "evidence": "paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md:78",
+    "basis_line_sha1_12": "adaca6c1d70f",
+    "path": "paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md",
+    "expected_l3": [
+     "增量分析",
+     "预算分配"
+    ],
+    "machine_scan": {
+     "class": "export-only",
+     "category_hits": 0,
+     "export_hits": 11
+    }
+   }
+  ]
+ }
 }

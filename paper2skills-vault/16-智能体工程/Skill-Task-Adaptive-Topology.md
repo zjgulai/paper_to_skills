@@ -8,9 +8,19 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2602.16873
 paper: "AdaptOrch: Task-Adaptive Multi-Agent Orchestration in the Era of LLM Performance Convergence"
 evidence_basis: paper-verbatim
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-006
+l3_business: 依赖协调
+l3_all: 依赖协调
+l1_l2_l3: 经营管理/经营与组织/依赖协调
 ---
 
 # Skill Card: 任务自适应拓扑 — AdaptOrch 动态编排与收敛定律

@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: NPS 驱动因素分析 (NPS Driver Analysis)"
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2510.16551
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-06
+l2_domain: 服务与体验
+l3_id: DOM-06-114
+l3_business: 体验分析
+l3_all: 体验分析 / VOC编码
+l1_l2_l3: 业务运营/服务与体验/体验分析
 ---
 
 # Skill Card: NPS 驱动因素分析 (NPS Driver Analysis)

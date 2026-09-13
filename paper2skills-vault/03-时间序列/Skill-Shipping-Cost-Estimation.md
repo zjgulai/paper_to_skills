@@ -11,11 +11,20 @@ paper_id: 2607.16230
 paper: RouteCost: A Production-Inspired Multi-Stage Framework for Pre-Order Shipping Cost Estimation in E-Commerce
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py (K1 PASS) + quote_check.py (引文逐字核验 VERBATIM，0 伪造 0 近似) + gate_check.py G1/G2/G3
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Demand-Forecasting-Supply-Chain.md, Skill-Prophet-Forecasting.md, Skill-Monodense-单品价格弹性估计.md, Skill-Safety-Stock-Replenishment.md, Skill-Multi-Echelon-Inventory.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-03
+l2_domain: 供应与履约
+l3_id: DOM-03-056
+l3_business: 物流方案
+l3_all: 物流方案 / 经济性分析
+l1_l2_l3: 业务运营/供应与履约/物流方案
 ---
 
 # Skill-Shipping-Cost-Estimation

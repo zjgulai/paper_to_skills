@@ -1,10 +1,20 @@
 ---
 title: Skill Card: Spiral of Silence Mining
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2502.00952
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-06
+l2_domain: 服务与体验
+l3_id: DOM-06-114
+l3_business: 体验分析
+l3_all: 体验分析 / 需求分群
+l1_l2_l3: 业务运营/服务与体验/体验分析
 ---
 
 # Skill Card: Spiral of Silence Mining

@@ -7,15 +7,24 @@ updated: 2026-09-12
 module: 10-MAS
 owner: self
 source: ai
+venue_tier: CCF-B
+venue_source: EXPLICIT_RETIERS
 paper_id: 2608.22152
 paper: The Collaboration Tax: How Much LLM Multi-Agent Systems Pay to Coordinate
 venue: EMNLP 2026
-venue_tier: top
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py G2/G3 passed + 人工抽检 3 处数字
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Subagent-Decomposition.md, Skill-MAS-Orchestrator.md, Skill-MetaGPT-SOP-Driven-Collaboration.md, Skill-Multi-Agent-Debate.md, Skill-Agent-Stage-Evaluation.md, Skill-Context-Compression.md
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-005
+l3_business: 能力匹配
+l3_all: 能力匹配 / 依赖协调
+l1_l2_l3: 经营管理/经营与组织/能力匹配
 ---
 
 # Skill Card: 多 Agent 协作税（Collaboration Tax）—— 「这个流程到底该不该拆成多 Agent」

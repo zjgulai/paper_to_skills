@@ -8,8 +8,18 @@ created: 2026-04-29
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2512.24325
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-070
+l3_business: 转化优化
+l3_all: 转化优化 / 组合设计
+l1_l2_l3: 业务运营/渠道经营/转化优化
 ---
 
 # Skill Card: MAS Multi-Objective Recommendation

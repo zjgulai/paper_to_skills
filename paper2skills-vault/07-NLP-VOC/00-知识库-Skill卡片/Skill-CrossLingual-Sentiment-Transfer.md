@@ -1,5 +1,7 @@
 ---
 title: 跨语言情感迁移 (Cross-Lingual Sentiment Transfer)
+venue_tier: CCF-A
+venue_source: EXPLICIT_RETIERS(Skill-CrossLingual-Sentiment-Transfer)
 paper_id: 2508.09515
 paper: "LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation"
 venue: ACL 2025 (底本未声明 venue)
@@ -7,6 +9,14 @@ evidence_basis: paper-verbatim
 module: 07-NLP-VOC
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: 跨语言情感迁移 (Cross-Lingual Sentiment Transfer)

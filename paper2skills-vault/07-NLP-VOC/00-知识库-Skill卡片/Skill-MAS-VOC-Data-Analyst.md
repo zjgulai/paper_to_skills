@@ -8,8 +8,18 @@ created: 2026-04-29
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2402.01386
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码 / 体验分析
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: MAS Multi-Agent VOC Data Analyst

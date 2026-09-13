@@ -5,8 +5,18 @@ topic: semantic-id-retrieval
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-070
+l3_business: 转化优化
+l3_all: 转化优化 / 搜索意图分析
+l1_l2_l3: 业务运营/渠道经营/转化优化
 ---
 
 # Skill Card: Semantic ID Retrieval (RPG)

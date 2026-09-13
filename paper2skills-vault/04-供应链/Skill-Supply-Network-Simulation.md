@@ -11,11 +11,20 @@ paper_id: 2607.09745
 paper: SupplyNetPy: An Open-Source Python Library for High-Fidelity Modeling and Simulation of Arbitrary Supply Chain and Inventory Networks
 venue: Winter Simulation Conference 2026
 venue_tier: CCF-B
+venue_source: EXPLICIT_RETIERS
 evidence_grade: A
 verified_by: verify_skill_code.py (K1 PASS) + quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G1/G2/G3
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Multi-Echelon-Inventory.md, Skill-Safety-Stock-Replenishment.md, Skill-Demand-Forecasting-Supply-Chain.md, Skill-Two-Echelon-Inventory-DRL.md, Skill-Time-Series-Forecasting.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-03
+l2_domain: 供应与履约
+l3_id: DOM-03-048
+l3_business: 补货模拟
+l3_all: 补货模拟 / 物流方案
+l1_l2_l3: 业务运营/供应与履约/补货模拟
 ---
 
 # Skill-Supply-Network-Simulation

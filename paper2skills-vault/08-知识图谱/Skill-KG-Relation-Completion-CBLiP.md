@@ -1,12 +1,22 @@
 ---
 title: Knowledge Graph Relation Completion with CBLiP
 module: 08-知识图谱
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
 topic: kg-relation-completion
 status: stable
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-139
+l3_business: 主数据治理
+l3_all: 主数据治理 / 商品诊断
+l1_l2_l3: 数据与Agent平台/数据与AI运行/主数据治理
 ---
 
 # Skill Card: KG Relation Completion (CBLiP)

@@ -6,8 +6,18 @@ topic: explainable-recommendation
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-065
+l3_business: 商品诊断
+l3_all: 商品诊断 / 申诉材料准备
+l1_l2_l3: 业务运营/渠道经营/商品诊断
 ---
 
 # Skill Card: Explainable Recommendation

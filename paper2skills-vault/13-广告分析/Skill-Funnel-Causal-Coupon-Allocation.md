@@ -11,11 +11,20 @@ paper_id: 2608.11675
 paper: FunnelCausalNet: Funnel-aware Joint Conversion-Revenue Uplift for Multi-tier Coupon Allocation
 venue: CIKM 2026
 venue_tier: CCF-B
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L1–L5）+ quote_check.py 逐字核验 + 人工抽检数字
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Uplift-Modeling.md, Skill-ROAS-Budget-Optimization.md, Skill-Ad-Attribution-Modeling.md, Skill-Promotion-Effectiveness.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-078
+l3_business: 促销规划
+l3_all: 促销规划 / 增量分析
+l1_l2_l3: 业务运营/渠道经营/促销规划
 ---
 
 # Skill Card: FunnelCausalNet — 漏斗分解的双目标优惠券 uplift 与预算分配

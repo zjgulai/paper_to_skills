@@ -11,11 +11,20 @@ paper_id: 2607.09608
 paper: "Media Measurement and the Assisted Own Goal: Attribution, Marketing-Mix Models, and Individual-Level Incrementality"
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py（G2/G3）+ 人工逐条核对 registry 与原文
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Ad-Attribution-Modeling.md, Skill-Cannibalization-Corrected-Attribution.md, Skill-Causal-Budget-Allocation.md, Skill-Marketing-Mix-Modeling.md, Skill-Uplift-Modeling.md, Skill-User-Funnel-Analysis.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-105
+l3_business: 增量分析
+l3_all: 增量分析 / 实验设计
+l1_l2_l3: 业务运营/品牌与增长/增量分析
 ---
 
 # Skill Card: 渠道完整结果的受众级增量测量（Channel-Complete ITT Incrementality Measurement）

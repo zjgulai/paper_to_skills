@@ -5,8 +5,18 @@ topic: result-interpretation
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-104
+l3_business: 实验设计
+l3_all: 实验设计 / 因果局限审查
+l1_l2_l3: 业务运营/品牌与增长/实验设计
 ---
 
 # Skill Card: A/B Test Result Interpretation

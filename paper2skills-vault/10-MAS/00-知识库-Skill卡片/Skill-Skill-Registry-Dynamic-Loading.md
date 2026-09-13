@@ -8,7 +8,17 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-147
+l3_business: 技能版本
+l3_all: 技能版本
+l1_l2_l3: 数据与Agent平台/数据与AI运行/技能版本
 ---
 
 # Skill: Skill Registry — 技能注册表与动态发现

@@ -1,10 +1,20 @@
 ---
 title: 智能预测 - 双重稳健估计 (Doubly Robust Estimation)
 module: 03-时间序列
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-105
+l3_business: 增量分析
+l3_all: 增量分析 / 促销规划
+l1_l2_l3: 业务运营/品牌与增长/增量分析
 ---
 
 # Skill Card: 智能预测 - 双重稳健估计 (Doubly Robust Estimation)

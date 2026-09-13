@@ -8,9 +8,19 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2602.20867
 paper: "SoK: Agentic Skills - Beyond Tool Use in LLM Agents"
 evidence_basis: paper-verbatim
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-147
+l3_business: 技能版本
+l3_all: 技能版本 / Playbook评估
+l1_l2_l3: 数据与Agent平台/数据与AI运行/技能版本
 ---
 
 # Skill Card: SoK Agentic Skills — Skill 全生命周期与方法论底座

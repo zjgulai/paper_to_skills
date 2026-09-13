@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: PERSONABOT RAG Persona Generation"
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2505.17156
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-018
+l3_business: 需求分群
+l3_all: 需求分群 / 分群
+l1_l2_l3: 业务运营/产品与创新/需求分群
 ---
 
 # Skill Card: PERSONABOT RAG Persona Generation

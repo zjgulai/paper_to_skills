@@ -5,8 +5,18 @@ topic: promotion-effectiveness
 created: 2026-05-15
 updated: 2026-05-15
 status: stable
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-078
+l3_business: 促销规划
+l3_all: 促销规划 / 价格敏感性 / 经济性分析
+l1_l2_l3: 业务运营/渠道经营/促销规划
 ---
 
 # Skill Card: Promotion Effectiveness Evaluation

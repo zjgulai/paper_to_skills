@@ -8,9 +8,19 @@ created: 2026-05-10
 updated: 2026-05-10
 owner: self
 source: human+ai
+venue_tier: CCF-A
+venue_source: arxiv-abs(comments="Accepted at NeurIPS'2023, 77 pages, project website: this https URL, github repo")
 paper_id: 2303.17760
 paper: "CAMEL: Communicative Agents for “Mind” Exploration of Large Scale Language Model Society"
 evidence_basis: paper-verbatim
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-006
+l3_business: 依赖协调
+l3_all: 依赖协调 / VOC编码
+l1_l2_l3: 经营管理/经营与组织/依赖协调
 ---
 
 # Skill: CAMEL — 角色扮演式自主协作多 Agent 框架

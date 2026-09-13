@@ -2,10 +2,20 @@
 title: Monodense 单品价格弹性估计
 name: Monodense-单品价格弹性估计
 description: 基于 Walmart 提出的 Monodense 深度神经网络，无需对照实验即可从大规模交易数据中学习单品价格弹性，为动态定价和促销决策提供量化依据。
+venue_tier: preprint
+venue_source: unlisted-venue(preprint)
 paper: arXiv:2603.29261
 paper_id: 2603.29261
 evidence_basis: paper-verbatim
 module: 04-供应链
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-077
+l3_business: 价格敏感性
+l3_all: 价格敏感性
+l1_l2_l3: 业务运营/渠道经营/价格敏感性
 ---
 
 # Skill: Monodense 单品价格弹性估计

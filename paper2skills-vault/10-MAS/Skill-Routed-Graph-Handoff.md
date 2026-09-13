@@ -7,15 +7,24 @@ created: 2026-09-12
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: CCF-B
+venue_source: EXPLICIT_RETIERS
 paper_id: 2608.25277
 paper: Routed Graph Handoff: Adaptive Format Selection for Multi-Agent LLM Delegation
 venue: EMNLP 2026
-venue_tier: top
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py G2 passed + 人工抽检 3 处数字
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Subagent-Decomposition.md, Skill-MAS-Orchestrator.md, Skill-MetaGPT-SOP-Driven-Collaboration.md, Skill-AutoGen-Multi-Agent-Conversation.md
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-01
+l2_domain: 经营与组织
+l3_id: DOM-01-006
+l3_business: 依赖协调
+l3_all: 依赖协调 / 接口契约
+l1_l2_l3: 经营管理/经营与组织/依赖协调
 ---
 
 # Skill Card: 路由式图交接（Routed Graph Handoff, RGH）

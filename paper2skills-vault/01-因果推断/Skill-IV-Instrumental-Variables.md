@@ -8,7 +8,17 @@ created: 2026-05-15
 updated: 2026-05-15
 owner: self
 source: human+ai
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-077
+l3_business: 价格敏感性
+l3_all: 价格敏感性 / 组合设计
+l1_l2_l3: 业务运营/渠道经营/价格敏感性
 ---
 
 # Skill Card: Instrumental Variables (IV)

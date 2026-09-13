@@ -8,6 +8,16 @@ created: 2026-05-16
 updated: 2026-05-16
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: EXPLICIT_RETIERS(Skill-Agentic-Memory-Management)
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-144
+l3_business: 业务工具实现
+l3_all: 业务工具实现 / 知识溯源
+l1_l2_l3: 数据与Agent平台/数据与AI运行/业务工具实现
 ---
 
 # Skill Card: AgeMem — 统一 LTM+STM 管理的 Agentic Memory

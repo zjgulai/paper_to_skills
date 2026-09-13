@@ -7,15 +7,24 @@ created: 2026-09-12
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: CCF-B
+venue_source: EXPLICIT_RETIERS
 paper_id: 2609.01038
 paper: Data-Driven Persona-Conditioned Agents for A/B Test Simulation
 venue: EMNLP 2026 Industry Track
-venue_tier: top
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（41/41 VERBATIM）+ gate_check.py G2/G3 passed + 人工抽检：0.90 vs 0.80 / 0.70–0.90 vs 0.57–0.69 两组数字逐个回查 fulltext.md 叙述句（表行脏串不用）
 verified_at: 2026-09-12
 supersedes:
 related: Skill-AB-Experimental-Design.md, Skill-Power-Analysis-Sample-Size.md, Skill-AB-Test-Result-Interpretation.md, Skill-Multi-Armed-Bandit.md, Skill-Incrementality-Measurement.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-104
+l3_business: 实验设计
+l3_all: 实验设计 / 内容实验
+l1_l2_l3: 业务运营/品牌与增长/实验设计
 ---
 
 # Skill Card: 数据驱动人格 A/B 仿真（Data-Driven Persona-Conditioned A/B Simulation）

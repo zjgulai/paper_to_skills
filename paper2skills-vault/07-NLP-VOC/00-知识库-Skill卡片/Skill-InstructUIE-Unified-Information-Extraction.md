@@ -1,10 +1,20 @@
 ---
 title: Skill: InstructUIE — 统一信息抽取框架
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2304.08085
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-141
+l3_business: 数据管道
+l3_all: 数据管道 / 业务工具实现 / 体验分析
+l1_l2_l3: 数据与Agent平台/数据与AI运行/数据管道
 ---
 
 # Skill: InstructUIE — 统一信息抽取框架

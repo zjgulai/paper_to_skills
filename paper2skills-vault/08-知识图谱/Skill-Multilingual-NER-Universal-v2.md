@@ -5,8 +5,18 @@ topic: multilingual-ner
 status: stable
 created: 2026-05-15
 updated: 2026-05-15
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
 source: human+ai
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-083
+l3_business: 本地化
+l3_all: 本地化 / 主数据治理
+l1_l2_l3: 业务运营/渠道经营/本地化
 ---
 
 # Skill Card: Multilingual NER (Universal NER v2)

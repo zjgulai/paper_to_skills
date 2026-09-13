@@ -1,11 +1,21 @@
 ---
 title: "Skill Card: StaR-观点语句排序"
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: EXPLICIT_RETIERS(Skill-StaR-观点语句排序)
 paper: "Rank, Don't Generate: Statement-level Ranking for Explainable Recommendation"
 evidence_basis: paper-traceable
 source: human+ai
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: StaR-观点语句排序

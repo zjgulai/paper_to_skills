@@ -12,9 +12,18 @@ evidence_basis: paper-traceable
 paper_id: 2204.09603
 paper: "Comparing Deep Reinforcement Learning Algorithms in Two-Echelon Supply Chains"
 venue: AI4M 2023 (ECML PKDD Workshop)
-venue_tier: workshop
+venue_tier: preprint
+venue_source: EXPLICIT_RETIERS
 evidence_grade: C
 related: Skill-Multi-Echelon-Inventory.md, Skill-Multi-Warehouse-Allocation-LLM.md, Skill-Supply-Network-Simulation.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-03
+l2_domain: 供应与履约
+l3_id: DOM-03-050
+l3_business: 库存分层
+l3_all: 库存分层 / 补货模拟
+l1_l2_l3: 业务运营/供应与履约/库存分层
 ---
 
 # Skill Card: Deep RL for Two-Echelon Inventory Optimization

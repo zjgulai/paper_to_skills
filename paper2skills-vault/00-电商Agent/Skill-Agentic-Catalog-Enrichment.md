@@ -11,11 +11,20 @@ paper_id: 2608.20844
 paper: TRACE: Agentic Catalog Enrichment with Multi-source Evidence Grounding
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py G2/G3 passed + 人工抽检 6 处数字回原文
 verified_at: 2026-09-12
 supersedes:
 related: Skill-KG-Auto-Construction-Agent-Driven.md, Skill-Multi-Agent-Debate.md, Skill-Agent-Stage-Evaluation.md, Skill-Dense-Retrieval-Ecommerce-Semantic-Search.md, Skill-Live-Catalog-Conversational-Rec.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-067
+l3_business: Listing优化
+l3_all: Listing优化 / 主数据治理
+l1_l2_l3: 业务运营/渠道经营/Listing优化
 ---
 
 # Skill Card: 多源证据接地的目录属性补全（Agentic Catalog Enrichment, verify-before-write）

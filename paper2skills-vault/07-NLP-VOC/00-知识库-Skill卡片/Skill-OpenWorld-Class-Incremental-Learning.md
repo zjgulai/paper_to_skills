@@ -4,10 +4,19 @@ module: 07-NLP-VOC
 paper: "OpenCML: Open-world Continual Learning for Multimodal and Multilingual Data"
 venue: ACL 2025
 venue_tier: CCF-A
+venue_source: frontmatter-as-is
 evidence_basis: paper-traceable
 source: human+ai
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-019
+l3_business: VOC编码
+l3_all: VOC编码
+l1_l2_l3: 业务运营/产品与创新/VOC编码
 ---
 
 # Skill Card: 开放世界增量分类

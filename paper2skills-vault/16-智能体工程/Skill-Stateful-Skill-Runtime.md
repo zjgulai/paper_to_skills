@@ -7,15 +7,24 @@ created: 2026-09-12
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: CCF-B
+venue_source: EXPLICIT_RETIERS
 paper_id: 2608.26263
 paper: SKILL.state: Scalable Long-Horizon Agent Skills
 venue: EMNLP
-venue_tier: top
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py（G2/G3 全绿）+ 人工抽检 5 处数字
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Context-Compression.md, Skill-Active-Context-Pruning.md, Skill-Skill-Lifecycle-Design.md, Skill-ReAct-Reasoning-Acting.md, Skill-Agent-Memory-Learning.md
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-150
+l3_business: 容量管理
+l3_all: 容量管理 / 失败恢复
+l1_l2_l3: 数据与Agent平台/数据与AI运行/容量管理
 ---
 
 # Skill Card: 状态化的 Skill 运行时（SKILL.state — 显式执行状态替代对话历史）

@@ -11,11 +11,20 @@ paper_id: 2608.18174
 paper: Seasonal false alarms in customer churn and decline early-warning systems: adjacent-window labels confound seasonality with decline, and a year-over-year correction
 venue: arXiv preprint
 venue_tier: preprint
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py（K1=PASS）+ quote_check.py（引文逐字命中）+ gate_check.py --only G2（passed）+ 人工抽检 Table 1 / Table 3 数字
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Customer-Churn-Prediction.md, Skill-Uplift-Churn-Prediction.md, Skill-Cohort-Retention-Analysis.md, Skill-Prophet-Forecasting.md, Skill-User-Lifecycle-STAN.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-101
+l3_business: 分群
+l3_all: 分群 / 生命周期触达
+l1_l2_l3: 业务运营/品牌与增长/分群
 ---
 
 # Skill Card: Seasonal-Aligned Churn Label（季节性对齐的衰退标签）

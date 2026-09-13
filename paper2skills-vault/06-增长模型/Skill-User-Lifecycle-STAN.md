@@ -7,12 +7,22 @@ created: 2026-05-15
 updated: 2026-09-13
 owner: self
 source: ai
+venue_tier: CCF-B
+venue_source: arxiv-abs(comments='')
 paper_id: 2306.12232
 paper: "STAN: Stage-Adaptive Network for Multi-Task Recommendation by Learning User Lifecycle-Based Representation"
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 verified_at: 2026-09-12
 related: Skill-Customer-Journey-Prototype.md, Skill-Uplift-Churn-Prediction.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-05
+l2_domain: 品牌与增长
+l3_id: DOM-05-101
+l3_business: 分群
+l3_all: 分群 / 转化优化
+l1_l2_l3: 业务运营/品牌与增长/分群
 ---
 
 # Skill Card: STAN 用户生命周期自适应建模

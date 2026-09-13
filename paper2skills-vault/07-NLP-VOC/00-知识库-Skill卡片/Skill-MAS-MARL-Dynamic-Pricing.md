@@ -8,8 +8,18 @@ created: 2026-04-29
 updated: 2026-09-12
 owner: self
 source: ai
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2507.02698
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-077
+l3_business: 价格敏感性
+l3_all: 价格敏感性 / 促销规划
+l1_l2_l3: 业务运营/渠道经营/价格敏感性
 ---
 
 # Skill Card: MAS MARL Dynamic Pricing

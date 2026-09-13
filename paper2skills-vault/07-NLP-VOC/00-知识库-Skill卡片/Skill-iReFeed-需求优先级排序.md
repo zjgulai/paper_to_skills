@@ -1,8 +1,18 @@
 ---
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 2603.28677
 title: "Skill Card: iReFeed-需求优先级排序"
 module: 07-NLP-VOC
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-026
+l3_business: 产品需求定义
+l3_all: 产品需求定义 / 产品范围管理
+l1_l2_l3: 业务运营/产品与创新/产品需求定义
 ---
 
 # Skill Card: iReFeed-需求优先级排序

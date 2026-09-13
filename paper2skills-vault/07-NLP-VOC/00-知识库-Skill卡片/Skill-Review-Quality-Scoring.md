@@ -1,10 +1,20 @@
 ---
 title: Skill Card: 评论质量评分与虚假检测
 module: 07-NLP-VOC
+venue_tier: CCF-B
+venue_source: arxiv-abs(comments='EMNLP 2025')
 paper_id: 2510.08081
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-140
+l3_business: 数据质量
+l3_all: 数据质量
+l1_l2_l3: 数据与Agent平台/数据与AI运行/数据质量
 ---
 
 # Skill Card: 评论质量评分与虚假检测

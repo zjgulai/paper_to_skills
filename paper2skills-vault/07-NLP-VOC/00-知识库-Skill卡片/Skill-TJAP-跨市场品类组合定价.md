@@ -1,10 +1,20 @@
 ---
 title: "Skill Card: TJAP-跨市场品类组合定价"
 module: 07-NLP-VOC
+venue_tier: preprint
+venue_source: arxiv-abs(三字段皆空)
 paper_id: 2603.18114
 evidence_basis: paper-verbatim
 created: 2026-05-15
 updated: 2026-09-12
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-04
+l2_domain: 渠道经营
+l3_id: DOM-04-079
+l3_business: 组合设计
+l3_all: 组合设计 / 价格敏感性 / 市场进入
+l1_l2_l3: 业务运营/渠道经营/组合设计
 ---
 
 # Skill Card: TJAP-跨市场品类组合定价

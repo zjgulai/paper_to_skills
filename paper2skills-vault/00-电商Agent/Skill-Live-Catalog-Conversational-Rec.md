@@ -10,12 +10,21 @@ source: ai
 paper_id: 2608.27006
 paper: Conversational Recommendation over Live E-Commerce Catalogues with Self-Refreshing Retrieval
 venue: RecSys 2026 (Demo)
-venue_tier: demo
+venue_tier: preprint
+venue_source: TRACK_RULES
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L1–L5 全绿）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py G2/G3 passed + 人工抽检：Table 1 表注与表体的全部报告值逐个回查 fulltext.md
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Diversity-Reranking-SMMR.md, Skill-Semantic-ID-Retrieval-RPG.md, Skill-Long-Term-Preference-Memory.md, Skill-Cold-Start-Meta-Learning-PAM.md, Skill-Agentic-Catalog-Enrichment.md
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-141
+l3_business: 数据管道
+l3_all: 数据管道 / 主数据治理
+l1_l2_l3: 数据与Agent平台/数据与AI运行/数据管道
 ---
 
 # Skill Card: 活目录会话推荐（Conversational Recommendation over Live Catalogues）

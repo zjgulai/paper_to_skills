@@ -8,7 +8,17 @@ created: 2026-05-15
 updated: 2026-05-15
 owner: self
 source: human+ai
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
+l1_id: PLN-MGT
+l1_plane: 经营管理
+l2_id: DOM-07
+l2_domain: 财务与合规
+l3_id: DOM-07-016
+l3_business: 经济性分析
+l3_all: 经济性分析 / 采购比价
+l1_l2_l3: 经营管理/财务与合规/经济性分析
 ---
 
 # Skill Card: Difference-in-Differences (DiD)

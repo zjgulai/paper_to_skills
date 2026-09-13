@@ -11,11 +11,20 @@ paper_id: 2608.10240
 paper: Sequential Modality Dropout for Robust Multi-Modal Sequential Recommendation
 venue: CIKM 2026
 venue_tier: CCF-B
+venue_source: frontmatter-as-is
 evidence_grade: A
 verified_by: verify_skill_code.py（K1）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py + 人工抽检
 verified_at: 2026-09-12
 supersedes:
 related: Skill-Cold-Start-Product-Recommendation.md, Skill-Matrix-Factorization.md, Skill-Semantic-ID-Retrieval-RPG.md
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-02
+l2_domain: 产品与创新
+l3_id: DOM-02-023
+l3_business: 组合取舍
+l3_all: 组合取舍 / 转化优化
+l1_l2_l3: 业务运营/产品与创新/组合取舍
 ---
 
 # Skill Card: Cold-Start Meta-Learning (PAM)

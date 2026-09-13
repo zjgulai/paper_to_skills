@@ -8,7 +8,17 @@ created: 2026-05-15
 updated: 2026-05-15
 owner: self
 source: human+ai
+venue_tier: non-paper
+venue_source: evidence_basis(author-practice)
 evidence_basis: author-practice
+l1_id: PLN-PLT
+l1_plane: 数据与Agent平台
+l2_id: DOM-08
+l2_domain: 数据与AI运行
+l3_id: DOM-08-149
+l3_business: 运行监测
+l3_all: 运行监测 / 溯源监测
+l1_l2_l3: 数据与Agent平台/数据与AI运行/运行监测
 ---
 
 # Skill Card: Time Series Anomaly Detection

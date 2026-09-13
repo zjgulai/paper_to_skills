@@ -8,9 +8,19 @@ created: 2026-05-10
 updated: 2026-09-12
 owner: self
 source: human+ai
+venue_tier: preprint
+venue_source: arxiv-abs(无发表声明)
 paper_id: 1904.05255
 paper: "Simple BERT Models for Relation Extraction and Semantic Role Labeling"
 evidence_basis: paper-verbatim
+l1_id: PLN-OPS
+l1_plane: 业务运营
+l2_id: DOM-06
+l2_domain: 服务与体验
+l3_id: DOM-06-114
+l3_business: 体验分析
+l3_all: 体验分析 / VOC编码
+l1_l2_l3: 业务运营/服务与体验/体验分析
 ---
 
 # Skill: BERT-SRL + 事件框架 — 语义角色标注与事件抽取
