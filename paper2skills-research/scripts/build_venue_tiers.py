@@ -862,6 +862,26 @@ def _anchor(kind: str, body: str) -> str:
     return f"{kind}({body})" if body else kind
 
 
+def _fill_instrument_evidence(res: dict, meta: dict) -> None:
+    """把**仪器的原始读数**放进 `evidence`，而不是「盘上取值长什么样」。
+
+    ⚠️ 这是同一个缺陷的第三处（前两处：`old_value`、`reason` 的人读列）。
+    病因一致：**回填落盘之后重跑，判定链走的是 `as-is` 分支，
+    该分支的 `evidence` 只能写 `frontmatter venue_tier='preprint'` —— 那是结论，不是依据。**
+    而 abs 页的 `Comments` 实测**永远都在** `arxiv_abs.json` 里，没有理由不写。
+    """
+    if not (meta.get("comments") or meta.get("jref") or meta.get("doi")):
+        return
+    parts = []
+    if meta.get("comments"):
+        parts.append(f"Comments={meta['comments']!r}")
+    if meta.get("jref"):
+        parts.append(f"journal_ref={meta['jref']!r}")
+    if meta.get("doi"):
+        parts.append(f"DOI={meta['doi']!r}")
+    res["evidence"] = "arxiv-abs " + " ".join(parts)
+
+
 def classify_from_evidence(card: dict, meta: dict, crossref: dict) -> dict:
     """铁律 1 的执行体：只用 arXiv abs 页字段 + Crossref 出版方记录，**不看底本正文**。
 
@@ -889,7 +909,7 @@ def classify_from_evidence(card: dict, meta: dict, crossref: dict) -> dict:
                 "tier": "preprint",
                 "status": "backfilled",
                 "source": _anchor("unlisted-venue", "preprint"),
-                "evidence": f"comments={comments!r} jref={jref!r} card.venue={card_venue_pre!r}",
+                "evidence": f"arxiv-abs Comments={comments!r} journal_ref={jref!r} card.venue={card_venue_pre!r}",
                 "reason": f"命中已登记的非白名单会 `{key}`：{why}",
             }
 
@@ -914,7 +934,7 @@ def classify_from_evidence(card: dict, meta: dict, crossref: dict) -> dict:
                     "tier": tier,
                     "status": "backfilled",
                     "source": _anchor("arxiv-abs", "主会自带轨道"),
-                    "evidence": f"comments={comments!r}",
+                    "evidence": f"arxiv-abs Comments={comments!r}",
                     "reason": (
                         f"Comments 点名 `{name}`（{tier}）且是**主会自带的 track**"
                         f"（Industry Track / Findings / Main Conference）—— 论文集是主会论文集，"
@@ -937,7 +957,7 @@ def classify_from_evidence(card: dict, meta: dict, crossref: dict) -> dict:
             "tier": applied,
             "status": "backfilled",
             "source": _anchor("arxiv-abs", f"comments={comments[:80]!r}"),
-            "evidence": f"comments={comments!r} jref={jref!r}",
+            "evidence": f"arxiv-abs Comments={comments!r} journal_ref={jref!r}",
             "reason": note,
         }
 
@@ -949,7 +969,7 @@ def classify_from_evidence(card: dict, meta: dict, crossref: dict) -> dict:
             "tier": None,
             "status": "needs-resolution",
             "source": "arxiv-abs(会名不识别)",
-            "evidence": f"comments={comments!r} jref={jref!r}",
+            "evidence": f"arxiv-abs Comments={comments!r} journal_ref={jref!r}",
             "reason": "abs 页有发表类声明，但会名不在 VENUE_NAME_TIER 里 ⇒ 登记，不猜档",
         }
 
@@ -1029,7 +1049,7 @@ def classify_from_evidence(card: dict, meta: dict, crossref: dict) -> dict:
         "tier": "preprint",
         "status": "backfilled",
         "source": _anchor("arxiv-abs", "三字段皆空"),
-        "evidence": "comments/jref/doi 皆空",
+        "evidence": "arxiv-abs Comments/journal_ref/DOI 皆空 ⇒ arXiv 未评审预印本（默认状态）",
         "reason": "abs 页三个字段皆空且卡侧无 venue ⇒ arXiv 未评审预印本（默认状态，非猜测）",
     }
 
@@ -1047,24 +1067,61 @@ def judge_card(card: dict, arxiv: dict, crossref: dict) -> dict:
     # （实测：来源分布从 4 类塌成 2 类）。
     sticky = (card["fm"].get("venue_source") or "").strip()
 
+    # ①b **保底仪器读数**：从 `paper_id` 对应的 arXiv 元数据 / Crossref 缓存里取原始字段。
+    #     为什么需要：卡一旦落盘，`as-is` 分支的 evidence 只能写「盘上取值长什么样」——
+    #     那是**结论**不是**依据**。abs 页的 Comments 实测一直躺在 `arxiv_abs.json` 里，
+    #     没有理由不把它写进账（同一个缺陷的第三处，前两处是 old_value 与 reason 人读列）。
+    fallback_ev = ""
+    if not pid:
+        # 卡本身没有论文来源 ⇒ 依据就是**卡自己的声明**，且必须说清是哪一种声明。
+        eb0 = (card["fm"].get("evidence_basis") or "").strip()
+        if eb0 == "author-practice":
+            fallback_ev = ("card-metadata evidence_basis=author-practice"
+                           "（卡自承无论文来源 ⇒ 无 venue 可判，按白名单 §5 落 non-paper）")
+        elif eb0:
+            fallback_ev = f"card-metadata evidence_basis={eb0}（卡自承的来源类别）"
+        else:
+            fallback_ev = ("card-metadata 既无 `paper_id` 也无 `evidence_basis` 声明"
+                           "（**不可回填**：不替它猜）")
+    elif re.match(r"^\d{4}\.\d{4,5}$", pid) and pid in arxiv:
+        _m = arxiv[pid]
+        _parts = []
+        if _m.get("comments"):
+            _parts.append(f"Comments={_m['comments']!r}")
+        if _m.get("jref"):
+            _parts.append(f"journal_ref={_m['jref']!r}")
+        if _m.get("doi"):
+            _parts.append(f"DOI={_m['doi']!r}")
+        fallback_ev = "arxiv-abs " + " ".join(_parts) if _parts else (
+            "arxiv-abs Comments/journal_ref/DOI 皆空 ⇒ 未评审预印本（默认状态）")
+    elif re.match(r"^10\.\d{4,9}/\S+$", pid) and crossref.get(pid):
+        _r = crossref[pid]
+        _ct = (_r.get("container-title") or [""])
+        _ct = _ct[0] if isinstance(_ct, list) and _ct else ""
+        fallback_ev = f"crossref doi={pid} container-title={_ct!r} page={_r.get('page')!r}"
+
+    def _ev(default: str) -> str:
+        return fallback_ev or default
+
     if slug in EXPLICIT_RETIERS:
         tier, why = EXPLICIT_RETIERS[slug]
         if tier not in CANONICAL_TIERS:
             return {"tier": None, "status": "bad-resolution", "source": "EXPLICIT_RETIERS",
                     "evidence": "", "reason": f"裁决值 `{tier}` 不在规范 7 档"}
         return {"tier": tier, "status": "explicit", "source": sticky or _anchor("EXPLICIT_RETIERS", slug),
-                "evidence": "见 EXPLICIT_RETIERS", "reason": why}
+                "evidence": _ev(f"逐卡裁决（理由见 venue_tier_mapping.json 的 card_resolution.{slug}）"),
+                "reason": why}
 
     # ② 已有取值：规范值原样保留；轨道标记按表折叠；表外值报红
     if cur:
         if cur in CANONICAL_TIERS:
             return {"tier": cur, "status": "as-is", "source": sticky or "frontmatter-as-is",
-                    "evidence": f"frontmatter venue_tier={cur!r}"
-                                + (f" venue_source={sticky!r}" if sticky else ""),
+                    "evidence": _ev(f"frontmatter venue_tier={cur!r}（本次未改动）"),
                     "reason": "已是规范档，逐字保留"}
         if cur in TIER_ALIAS:
             return {"tier": TIER_ALIAS[cur], "status": "legacy-mapped", "source": "TRACK_RULES",
-                    "evidence": f"frontmatter venue_tier={cur!r}", "reason": TRACK_RULES[cur][2]}
+                    "evidence": _ev(f"frontmatter venue_tier={cur!r}（轨道标记，按表折叠）"),
+                    "reason": TRACK_RULES[cur][2]}
         if cur in TRACK_MARKERS:
             return {"tier": None, "status": "needs-resolution", "source": "TRACK_RULES",
                     "evidence": f"frontmatter venue_tier={cur!r}", "reason": TRACK_RULES[cur][2]}
@@ -1076,7 +1133,7 @@ def judge_card(card: dict, arxiv: dict, crossref: dict) -> dict:
         return {
             "tier": "non-paper", "status": "backfilled",
             "source": _anchor("evidence_basis", "author-practice"),
-            "evidence": "frontmatter evidence_basis=author-practice",
+            "evidence": _ev("卡 frontmatter 显式声明 `evidence_basis: author-practice`（无 paper_id）"),
             "reason": "卡自承无论文来源（frontmatter 显式声明）⇒ §5 的 non-paper 来源类别",
             "source_class": SOURCE_CLASS_NO_PAPER,
         }
@@ -1110,6 +1167,7 @@ def judge_card(card: dict, arxiv: dict, crossref: dict) -> dict:
             return {"tier": None, "status": "fetch-failed", "source": "arxiv-abs",
                     "evidence": f"paper_id={pid}", "reason": meta["error"]}
         res = classify_from_evidence(card, meta, crossref)
+        _fill_instrument_evidence(res, meta)
         ok, why = identity_ok(card, meta)
         res["identity"] = {"ok": ok, "detail": why}
         if ok is None:
@@ -1411,6 +1469,16 @@ def j14(cards, verdicts, head_fm) -> list:
             out.append(f"{r['slug']}: old_value({old!r}) 与快照读出的值({snap_old!r}) 不一致")
         if r["changed"] != (old != new and st != "no-snapshot"):
             out.append(f"{r['slug']}: changed 标记与 old/new 不符")
+    # ④ `evidence` 必须是**依据**，不许是「盘上取值长什么样」的复述。
+    #    实测撞过三次同一缺陷：old_value（写盘后读回）、reason 人读列（复用会过期的话）、
+    #    evidence（重跑时现算 ⇒ 变成 `frontmatter venue_tier='preprint'` —— 那是**结论**）。
+    NARRATION = ("frontmatter venue_tier=", "frontmatter venue_source=")
+    for r in rows:
+        if any(r["evidence"].startswith(n) or f"；{n}" in r["evidence"] for n in NARRATION):
+            out.append(f"{r['slug']}: evidence 是「盘上取值的复述」而不是「依据」—— {r['evidence'][:60]}")
+        if not r["evidence"].strip():
+            out.append(f"{r['slug']}: evidence 为空 —— 回填不可审计")
+
     n_changed = sum(1 for r in rows if r["changed"])
     n_diff = sum(1 for r in rows if r["old_value"] != (r["new_value"] or ""))
     if n_changed != n_diff:
@@ -1559,9 +1627,17 @@ def render_map_bytes() -> bytes:
     return (json.dumps(obj, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
 
-#: 改动前快照的来源。**不接受「写盘后读回」** —— 那样 old_value 恒等于 new_value，
-#: 账就答不出它存在的那个问题（实测：146 条 old==new，改动的 121 条一条也看不出来）。
+#: 改动前快照的来源。**不接受「写盘后读回」** —— 那样 `old_value` 恒等于 `new_value`，
+#: 账就答不出它存在的那个问题（实测：146 条 `old==new`，改动的 121 条一条也看不出来）。
 SNAPSHOT_REF = "HEAD"
+
+#: 本任务**动工前的那个 commit**，钉死。
+#: ⚠️ 为什么不继续用 `HEAD`：并发会话会提交。实测 2026-09-13 本轮落盘后，
+#: 主控把 `l3_*` + `venue_tier` 一起 commit 成 `e7f74b9` ⇒ 再跑时 `HEAD` 已经是**改动后**，
+#: 三态**整片塌成 `as-is`、`changed` 归零** —— 与首版「写盘后读回」是**同一个缺陷长在另一个指针上**。
+#: ⇒ 快照必须钉在一个**不会移动**的 ref 上，并在报告里给出 SHA（便于任何人复算）。
+SNAPSHOT_PINNED_SHA = "08dd624111f92544c38b554f1bc0a3a39b5c5641"   # S10 动工前的 HEAD~1
+SNAPSHOT_REF_RESOLVED = SNAPSHOT_PINNED_SHA
 
 
 def read_head_frontmatter(rel_path: str) -> dict | None:
@@ -1572,7 +1648,7 @@ def read_head_frontmatter(rel_path: str) -> dict | None:
     """
     try:
         out = subprocess.run(
-            ["git", "show", f"{SNAPSHOT_REF}:{rel_path}"],
+            ["git", "show", f"{SNAPSHOT_REF_RESOLVED}:{rel_path}"],
             capture_output=True, text=True, cwd=str(REPO), check=True,
         ).stdout
     except subprocess.CalledProcessError:
@@ -1636,11 +1712,33 @@ def compose_ledger_reason(change_status: str, source: str, evidence: str, judge_
     return f"{head} —— 该条账不可复算：{judge_reason}"
 
 
-def render_backfill(cards, verdicts, cov, *, head_fm: dict | None = None) -> dict:
-    """逐卡账：`old_value` **取自 git HEAD 快照**，不是写盘后读回。
+def load_locked_evidence() -> dict:
+    """读回上一版账里**已经锁定**的 `evidence`（首次判定时写下的仪器读数）。
 
-    `head_fm` 允许注入（selftest 用）；默认从 git 取。
+    ⚠️ 为什么需要它 —— 这是同一个缺陷的**第三处**：
+      ① `old_value`（主控抓出）② `reason` 的人读列（主控抓出）③ **`evidence`**。
+    三处的病因一样：**账上的列在重跑时被现算，于是现算出来的是「盘上的结论」而不是
+    「当初的依据」**。实测重跑后 126 行的 `evidence` 变成
+    `frontmatter venue_tier='non-paper' venue_source='...'` —— 那是结论，不是依据。
+    修法：账自己**记住**第一版证据，后续重跑只在「这张卡还没锁过证据」时才现算。
     """
+    if not BACKFILL_JSON.exists():
+        return {}
+    try:
+        prev = json.loads(BACKFILL_JSON.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    return {r["slug"]: r.get("evidence", "") for r in prev.get("cards", [])}
+
+
+def render_backfill(cards, verdicts, cov, *, head_fm: dict | None = None,
+                    locked_evidence: dict | None = None) -> dict:
+    """逐卡账：`old_value` **取自 git HEAD 快照**，`evidence` **锁定在首次判定时**。
+
+    `head_fm` / `locked_evidence` 允许注入（selftest 用）；默认从 git / 上一版账取。
+    """
+    if locked_evidence is None:
+        locked_evidence = load_locked_evidence()
     rows = []
     for c in cards:
         v = verdicts[c["slug"]]
@@ -1656,8 +1754,12 @@ def render_backfill(cards, verdicts, cov, *, head_fm: dict | None = None) -> dic
             "status": v["status"],           # 判定链内部状态（as-is/backfilled/explicit/...）
             "change_status": status,          # 账的三态（与判定链状态**不同轴**，都要留）
             "source": v["source"],
-            "evidence": v.get("evidence", ""),
-            "reason": compose_ledger_reason(status, v["source"], v.get("evidence", ""), v["reason"]),
+            # 证据锁定：已有锁定的就沿用（**不许在重跑时现算成盘上的结论**）；
+            # 没有锁定过的（首次判定）才用当次算出的仪器读数。
+            "evidence": locked_evidence.get(c["slug"]) or v.get("evidence", ""),
+            "reason": compose_ledger_reason(
+                status, v["source"],
+                locked_evidence.get(c["slug"]) or v.get("evidence", ""), v["reason"]),
             "judge_reason": v["reason"],
             "venue": (c["fm"].get("venue") or "").strip(),
             "paper_id": (c["fm"].get("paper_id") or "").strip(),
@@ -1671,8 +1773,9 @@ def render_backfill(cards, verdicts, cov, *, head_fm: dict | None = None) -> dic
         "_meta": {
             "generator": "build_venue_tiers.py",
             "phase": "PHASE6-S10",
-            "snapshot_ref": SNAPSHOT_REF,
-            "old_value_source": f"git show {SNAPSHOT_REF}:<path> 的 venue_tier（**不是写盘后读回**）",
+            "snapshot_ref": SNAPSHOT_REF_RESOLVED,
+            "old_value_source": (f"git show {SNAPSHOT_REF_RESOLVED}:<path> 的 venue_tier"
+                                 f"（**不是写盘后读回**；SHA 已钉死，不随 HEAD 移动）"),
             "change_status_legend": {
                 "as-is": "改动前已有该字段且逐字未变",
                 "backfilled": "改动前没有该字段，本次新赋值",
@@ -2358,6 +2461,32 @@ def selftest(*, with_mutations: bool = True) -> int:
     else:
         print("  ❌ T26 " + "；".join(bad26))
         ok = False
+
+    # T27 —— 账的 `evidence` 必须是**依据**，不许是盘上取值的复述。
+    # 实测背景：同一个缺陷在账上出现过三次（old_value / reason 人读列 / evidence），
+    # 所以判据必须**正面**规定 evidence 长什么样，而不是只在某一列上打补丁。
+    with tempfile.TemporaryDirectory() as td:
+        fp = Path(td) / "Skill-T27.md"
+        body = "---\ntitle: T27\npaper_id: 2601.00001\nvenue_tier: preprint\n---\n正文\n"
+        fp.write_text(body, encoding="utf-8")
+        fc = {"slug": "T27", "rel": "T27", "domain": "03-时间序列", "path": fp,
+              "text": body, "fm": {"paper_id": "2601.00001", "venue_tier": "preprint"}}
+        vs = {"T27": judge_card(fc, {"2601.00001": {"comments": "12 pages", "jref": "", "doi": "",
+                                                     "citation_title": "A Time Series Model"}}, {})}
+        probs = j14([fc], vs, {"T27": {"venue_tier": "preprint"}})
+        ev = vs["T27"]["evidence"]
+        if not any("evidence" in x for x in probs) and ev.startswith("arxiv-abs"):
+            print(f"  ✅ T27 账的 evidence 是依据（{ev[:44]}…）")
+        else:
+            print(f"  ❌ T27 evidence={ev[:60]!r} probs={probs}")
+            ok = False
+        # 反向控制：手写一条「复述型」证据，J14 必须打红
+        bad_vs = {"T27": dict(vs["T27"], evidence="frontmatter venue_tier='preprint'（本次未改动）")}
+        if any("evidence" in x for x in j14([fc], bad_vs, {"T27": {"venue_tier": "preprint"}})):
+            print("  ✅ T27b 反向控制：复述型 evidence ⇒ J14 打红")
+        else:
+            print("  ❌ T27b 复述型 evidence 没打红")
+            ok = False
 
     # T24 —— 映射表里不得有重复键（实测被咬过：同 slug 两条 EXPLICIT_RETIERS，
     # 前一条的详细理由被静默吃掉，而门禁全绿）。

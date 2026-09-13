@@ -74,7 +74,7 @@ STATE_UNDECIDABLE = "UNDECIDABLE"
 
 RED_STATES = (STATE_DIFFERENT, STATE_UNDECIDABLE)
 
-DEFAULT_P2S_ROOT = "magpie-horch/packages/capabilities/dsh-paper2skills/staging"
+DEFAULT_P2S_ROOT = "../magpie-horch/packages/capabilities/dsh-paper2skills/staging"
 DEFAULT_VAULT = "paper2skills-vault"
 
 #: 名字近似判据的**唯一**尺度：去掉 `skill-` / `p2s-` 前缀后，只留 alnum 与汉字，小写。
@@ -215,14 +215,17 @@ def classify(p2s: list[dict], vault: dict[str, str]) -> dict:
                     and norm_name(s) in cl]
             rec["substring_of"] = sorted(hits)
             rec["substring_claimed_by"] = {s: claimed_by[s] for s in hits if s in claimed_by}
-            if any(s in claimed_by for s in hits):
+            claimed_hits = sorted(s for s in hits if s in claimed_by)
+            if claimed_hits:
                 # **承重半句**：那个近名卡已被另一张 p2s 卡认领 ⇒ 本卡是在抢名，不是同一张
+                # ⚠️ 用 `claimed_hits[0]` 而不是 `next(gen)`：后者在「判据被改坏」时抛
+                #    StopIteration 直接崩掉，报告里只剩 traceback —— 变异测试实测撞出。
                 rec["state"] = STATE_DIFFERENT
                 problems.append({
                     "code": "I3", "kind": "SAME_NAME_DIFFERENT_THING", "slug": c["slug"],
                     "detail": (f"p2s_card_id「{cid}」在 vault 里不存在；"
-                               f"近名卡「{next(s for s in hits if s in claimed_by)}」"
-                               f"已被 p2s-{claimed_by[next(s for s in hits if s in claimed_by)]} 认领 —— "
+                               f"近名卡「{claimed_hits[0]}」"
+                               f"已被 p2s-{claimed_by[claimed_hits[0]]} 认领 —— "
                                f"名字是超串 ≠ 同一张卡"),
                 })
             elif hits:
@@ -465,7 +468,11 @@ def selftest(out) -> int:
                             vault=["Skill-Time-Series-Forecasting"])
     code, txt = _run_cli_in_process(pr, vr)
     case("c2 同名异物判红 exit 1", code, EXIT_RED, txt[-160:])
-    case("c2 判成 SAME_NAME_DIFFERENT_THING", "SAME_NAME_DIFFERENT_THING" in txt, True)
+    # ⚠️ 不许用 `"SAME_NAME_DIFFERENT_THING" in txt` —— 六态表**每次都打印全部六个状态名**，
+    #    这种断言恒真。变异测试 M2 实测撞出：`"UNDECIDABLE" in txt` 在把未决改判成无事的
+    #    变异体上照样为真。必须断言**计数**。
+    case("c2 计数表里 SAME_NAME_DIFFERENT_THING=1",
+         _extract_counts(txt).get(STATE_DIFFERENT), 1)
     # 承重断言：`Skill-Time-Series-Forecasting` **只**被它真正的那张卡认领，
     # 抢名的那张卡不许也落进 SAME_KEY（否则换底会把它接到别人的卡上）
     _c2 = classify(load_p2s(pr), load_vault(vr))
@@ -485,7 +492,8 @@ def selftest(out) -> int:
                             vault=["Skill-Time-Series-Forecasting"])
     code, txt = _run_cli_in_process(pr, vr)
     case("c3 未决报红 exit 1", code, EXIT_RED, txt[-160:])
-    case("c3 判成 UNDECIDABLE", "UNDECIDABLE" in txt, True)
+    case("c3 计数表里 UNDECIDABLE=1", _extract_counts(txt).get(STATE_UNDECIDABLE), 1)
+    case("c3 未被改判成「只有预览版」", _extract_counts(txt).get(STATE_P2S_ONLY), 0)
 
     # --- 用例 4：只有预览版 / vault 独有，都是**一等输出**，不是错 ---------
     r = tmp / "c4"
@@ -592,11 +600,11 @@ def selftest(out) -> int:
 #: 每条的 `changed_marker` 是**运行时真实取值**的差异证据 —— 不是「文件被改了」。
 MUTATIONS = [
     ("M1 I3 的承重半句被拿掉（不再要求近名卡被别人认领）",
-     "            if any(s in claimed_by for s in hits):",
-     "            if True:",
+     "            if claimed_hits:",
+     "            if True  or claimed_hits:",
      "SAME_NAME_DIFFERENT_THING",
      "同名异物用例应当从「判红 I3」变成别的东西 ⇒ 用例 c2 抓住"),
-    ("M2 I4 未决改判成「无事」（拿不到输入当通过）",
+    ("M2 I4 未决改判成「无事」（把「查不出」当「没问题」）",
      "                rec[\"state\"] = STATE_UNDECIDABLE",
      "                rec[\"state\"] = STATE_P2S_ONLY",
      "UNDECIDABLE",
@@ -606,11 +614,15 @@ MUTATIONS = [
      "        return EXIT_OK\n    except Exception as e:",
      "EXIT_NO_INPUT",
      "用例 c5/c6 应报红失败"),
-    ("M4 恒等式 I8 变成恒真",
-     "    if lhs != len(p2s):",
-     "    if False:",
+    # ⚠️ 原本想把 `if lhs != len(p2s):` 直接改成 `if False:` —— 实测**变异不生效**：
+    #    现场语料与六态夹具上 lhs 本来就等于 len(p2s)，恒等式从不触发，读数不变。
+    #    「变异没改变真实取值」时判据是否承重无从判断，故换成**改坏求和式**：
+    #    丢掉 P2S_ONLY 一项 ⇒ 现场语料当场多一条 I8 判红，可观测、可被 c4 抓住。
+    ("M4 I8 恒等式的求和式被改坏（丢掉「只有预览版」一项）",
+     "           + counts.get(STATE_P2S_ONLY, 0))",
+     "           + 0)",
      "P2S_SIDE_NOT_CLOSED",
-     "用例 c9/扫描应看不出不闭合"),
+     "用例 c4 应报红失败（不闭合恒等式必须进退出码）"),
     ("M5 改名同物被静默当成普通 SAME_KEY（一等输出消失）",
      "                rec[\"state\"] = STATE_RENAMED_SAME",
      "                rec[\"state\"] = STATE_SAME_KEY",
@@ -622,63 +634,101 @@ MUTATIONS = [
 def mutate(out, err) -> int:
     """把本脚本改坏，验证端到端用例真的有劲。
 
-    ⚠️ **先证变异生效**：每条先把变异体跑一遍真 CLI，diff 它与原版在**同一份真实语料**
-    上的读数（退出码 + 六态计数）。读数没变的变异 = 变异没施上力，直接判为未抓住。
-    ⚠️ 变异体放进临时目录后用**绝对路径**驱动真实语料（本仓库两次栽在
+    ⚠️ **先证变异生效**：每条先把变异体跑一遍真 CLI，diff 它与原版在**同一批探针**上的读数
+    （退出码 + 六态计数）。读数没变的变异 = 变异没施上力，直接判为未抓住。
+
+    探针刻意有**四个**，不只用现场语料 —— 现场语料实测 `UNDECIDABLE = 0`、输入都在，
+    只看它的话「把未决改判成无事」「把 exit 2 改成 exit 0」这两条变异**读数不变**，
+    于是会被误判成「用例是摆设」。探针覆盖六态夹具 / 缺输入 / 空 vault。
+
+    ⚠️ 变异体放进临时目录后用**绝对路径**驱动探针（本仓库两次栽在
     `cli()` 硬编码原文件路径 / `REPO = parents[2]`：变异体根本没跑起来，读数却像「用例是摆设」）。
+
+    ⚠️ 锚点计数**必须排除 MUTATIONS 表自身** —— 表里逐字写着锚点，首版
+    `src.count(anchor)` 因此恒为 2，5 条变异全被判「锚点不唯一」。
     """
     src_path = Path(__file__).resolve()
     src = src_path.read_text(encoding="utf-8")
-    here = Path.cwd()
-    p2s_root = Path(os.environ.get("P2S_STAGING", here / DEFAULT_P2S_ROOT)).resolve()
-    vault = Path(os.environ.get("P2S_VAULT", here / DEFAULT_VAULT)).resolve()
+    # 变异只施在**代码区**：表自身也逐字含锚点，若不切开，count 恒 ≥2
+    code_part, marker, table_part = src.partition("\nMUTATIONS = [")
+    assert marker, "找不到 MUTATIONS 表的起点 —— 变异器自身坏了"
 
-    # 原版在真实语料上的读数
-    base_code, base_txt = _run_cli_in_process(p2s_root, vault)
-    base_counts = _extract_counts(base_txt)
-    out.write(f"变异测试基线（真实语料）：exit={base_code} 计数={base_counts}\n")
+    here = Path.cwd()
+    live_p2s = Path(os.environ.get("P2S_STAGING", here / DEFAULT_P2S_ROOT)).resolve()
+    live_vault = Path(os.environ.get("P2S_VAULT", here / DEFAULT_VAULT)).resolve()
 
     tmp = Path(tempfile.mkdtemp(prefix="cci-mutate-"))
+    # 六态夹具：五个都在 / 改名同物 / 抢名 / 未决 / 只有预览 / vault 独有
+    fx = tmp / "fx"
+    fx_p2s, fx_vault = _write_fixture(
+        fx,
+        p2s=[("p2s-agent-time-series-forecasting", "Skill-Agent-Time-Series-Forecasting"),
+             ("p2s-time-series-forecasting", "Skill-Time-Series-Forecasting"),
+             ("p2s-renamed-thing", "Skill-Original-Name"),
+             ("p2s-conformal-ts-forecasting", "Skill-Conformal-TS-Forecasting"),
+             ("p2s-my-free-standing-thing-x", "Skill-My-Free-Standing-Thing-X"),
+             ("p2s-unrelated", "Skill-Unrelated")],
+        vault=["Skill-Time-Series-Forecasting", "Skill-Original-Name",
+               "Skill-Free-Standing-Thing", "Skill-Lonely"])
+    probes = [
+        ("现场语料", live_p2s, live_vault),
+        ("六态夹具", fx_p2s, fx_vault),
+        ("缺输入", tmp / "nope-p2s", tmp / "nope-vault"),
+        ("空 vault", fx_p2s, tmp / "empty-vault-dir"),
+    ]
+    (tmp / "empty-vault-dir").mkdir(parents=True, exist_ok=True)
+
+    def readings(script_py: Path, cwd: Path) -> dict:
+        rd = {}
+        for pname, pr, vr in probes:
+            try:
+                p = subprocess.run([sys.executable, str(script_py), "--check",
+                                    "--p2s-root", str(pr), "--vault", str(vr)],
+                                   capture_output=True, text=True, timeout=600, cwd=str(cwd))
+                txt = p.stdout + p.stderr
+                # ⚠️ 读数必须含**判红条数**，不能只取退出码 —— 现场语料本来就是红的，
+                #    再叠一条 I8 判红时退出码 1→1 不变；首版因此把 M4 误判成「变异没生效」。
+                rd[pname] = (p.returncode, _extract_counts(txt), _extract_red_count(txt))
+            except subprocess.TimeoutExpired:
+                rd[pname] = ("TIMEOUT", {}, -1)
+        return rd
+
+    base_readings = readings(src_path, here)
+    out.write("变异测试基线读数：\n")
+    for k, v in base_readings.items():
+        out.write(f"  {k:8} exit={v[0]} 计数={v[1]}\n")
+
     results = []
-    for name, anchor, repl, marker, expect in MUTATIONS:
-        if src.count(anchor) != 1:
+    for name, anchor, repl, marker_of, expect in MUTATIONS:
+        n = code_part.count(anchor)
+        if n != 1:
             results.append((name, False, False,
-                            f"锚点在源文件里出现 {src.count(anchor)} 次（必须恰好 1 次，否则变异施不上力）"))
+                            f"锚点在**代码区**出现 {n} 次（必须恰好 1 次，否则变异施不上力）"))
             continue
-        variant = src.replace(anchor, repl)
+        variant = code_part.replace(anchor, repl, 1) + marker + table_part
         assert variant != src, "变异没改变文本"
         vp = tmp / (re.sub(r"\W+", "-", name)[:40] + ".py")
         vp.write_text(variant, encoding="utf-8")
-        # **证明变异真的改变了真实取值**：跑真 CLI，比对读数
-        try:
-            p = subprocess.run([sys.executable, str(vp), "--check",
-                                "--p2s-root", str(p2s_root), "--vault", str(vault)],
-                               capture_output=True, text=True, timeout=600, cwd=str(here))
-            vcode, vtxt = p.returncode, p.stdout + p.stderr
-        except subprocess.TimeoutExpired:
-            results.append((name, False, False, "变异体超时"))
-            continue
-        vcounts = _extract_counts(vtxt)
-        changed = (vcode != base_code) or (vcounts != base_counts)
-        if not changed:
+        v_readings = readings(vp, tmp)
+        diff = [k for k in base_readings if base_readings[k] != v_readings.get(k)]
+        if not diff:
             results.append((name, False, False,
-                            f"**变异没改变真实取值**（exit {base_code}→{vcode}，计数未变）"
+                            f"**变异没改变任何探针的真实取值**（{list(base_readings)}）"
                             f" ⇒ 这条变异不算数，判据是否承重无从判断"))
             continue
-        # 变异生效了：端到端用例必须把它抓住
         try:
             st = subprocess.run([sys.executable, str(vp), "--selftest"],
                                 capture_output=True, text=True, timeout=600, cwd=str(tmp))
-            stcode = st.returncode
-            sttxt = st.stdout + st.stderr
+            stcode, sttxt = st.returncode, st.stdout + st.stderr
         except subprocess.TimeoutExpired:
             results.append((name, True, False, "变异体 selftest 超时（但变异已生效）"))
             continue
-        caught = stcode != EXIT_OK and "❌" in sttxt
+        caught = stcode != EXIT_OK and ("❌" in sttxt or "Traceback" in sttxt)
+        detail = "；".join(re.findall(r"❌ ([^\n]+?)\s{2,}got=", sttxt)[:3]) or \
+                 "；".join(re.findall(r"❌ ([^\n]+)", sttxt)[:3])
         results.append((name, True, caught,
-                        f"变异已生效（exit {base_code}→{vcode}，计数 {base_counts}→{vcounts}）；"
-                        f"selftest exit={stcode}，失败项："
-                        + "；".join(re.findall(r"❌ ([^\n]+)", sttxt)[:3])))
+                        f"变异已生效于探针 {diff}（exit {base_readings[diff[0]][0]}→{v_readings[diff[0]][0]}）；"
+                        f"selftest exit={stcode}，失败项：{detail}"))
 
     caught_n = sum(1 for _, ok, c, _ in results if ok and c)
     applied_n = sum(1 for _, ok, _, _ in results if ok)
@@ -693,10 +743,21 @@ def mutate(out, err) -> int:
 
 
 def _extract_counts(txt: str) -> dict:
+    """从报告的六态表里取计数。**只认计数行**，不认表头。"""
     d = {}
-    for m in re.finditer(r"^  ([A-Z_]{4,})\s+(\d+)\s*$", txt, re.M):
+    # ⚠️ 状态名里有数字（`P2S_ONLY_PREVIEW`），首版写成 `[A-Z_]{4,}` ⇒ 该行**整条不被计数**，
+    #    取到的是 None 而不是 0，于是「未被改判成只有预览版」这条断言恒假。
+    for m in re.finditer(r"^  ([A-Z0-9_]{4,})\s+(\d+)\s*$", txt, re.M):
         d[m.group(1)] = int(m.group(2))
     return d
+
+
+def _extract_red_count(txt: str) -> int:
+    """取「🔴 判红 N 条」的 N；没有判红行时返回 0。"""
+    m = re.search(r"判红 (\d+) 条", txt)
+    if m:
+        return int(m.group(1))
+    return 0 if "✅ 全部判据通过" in txt else -1
 
 
 if __name__ == "__main__":

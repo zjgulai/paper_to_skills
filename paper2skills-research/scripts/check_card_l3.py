@@ -48,6 +48,7 @@ l3_business / l3_all / l1_l2_l3`，其中 L1/L2 由**首个 L3** 唯一导出，
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -366,7 +367,7 @@ def l3_count_problems(l3: list) -> list:
 
 
 def audit(src: Sources, files: list[Path] | None = None,
-          allow_missing_fields: bool = True) -> dict:
+          allow_missing_fields: bool = True, repo_root: Path | None = None) -> dict:
     """核心判定。返回一份**完整账**（覆盖率、逐卡记录、问题列表）。
 
     `allow_missing_fields=False` 时，frontmatter 缺 l3_* 字段**本身**就是判红 ——
@@ -590,7 +591,7 @@ def audit(src: Sources, files: list[Path] | None = None,
                                      f"现场重算={live_named}（产物台账与实物不符）"))
 
     # ---- J11 错位清单 ----
-    ledger_problems = audit_ledger(src, records)
+    ledger_problems = audit_ledger(src, records, repo_root)
     problems.extend(ledger_problems)
 
     return {
@@ -612,7 +613,81 @@ def audit(src: Sources, files: list[Path] | None = None,
     }
 
 
-def audit_ledger(src: Sources, records: list[dict]) -> list[dict]:
+def _sha12(line: str) -> str:
+    return hashlib.sha1(line.strip().encode("utf-8")).hexdigest()[:12]
+
+
+def _git_history_lines(path: str, repo_root: Path | None = None) -> list[str]:
+    """该文件**全部历史版本**的行（`git log --follow -p`）。
+
+    「锚点在任何版本里都不存在」这个结论必须由**真的看过全部版本**支撑 ——
+    只用「当前文件 + 工作区」，就是把「我没看见」当成「它没出现过」
+    （本仓库那条纪律：判「某个东西不存在」之前，先问「我用的仪器能看见它吗」）。
+    拿不到 git（不在仓库里 / 无历史）就返回空表，调用方据此**不下结论**。
+    """
+    try:
+        proc = subprocess.run(["git", "log", "--follow", "-p", "--format=%H", "--", path],
+                              capture_output=True, text=True, encoding="utf-8",
+                              errors="replace", cwd=str(repo_root or REPO), timeout=120)
+    except (OSError, subprocess.SubprocessError):
+        return []
+    if proc.returncode != 0:
+        return []
+    out = []
+    for ln in (proc.stdout or "").split("\n"):
+        if ln[:1] in ("+", "-") and not ln.startswith(("+++", "---")):
+            out.append(ln[1:])
+    return out
+
+
+def _anchor_problems(cid: str, e: dict, rel_path: str, lines: list[str], ln: int,
+                     repo_root: Path | None = None) -> list[dict]:
+    """J11 的**锚点判据**：登记的那一行 sha1 必须对得上。
+
+    ⚠️ **必须分两态，不许合并**（2026-09-13 由主控独立复核撞出，事故复盘）：
+    首版只判「整份文件里找不到 ⇒ **内容确实变了**」。而真凶是**锚点值本身写错了**
+    （`Skill-Cold-Start-Product-Recommendation` 登记 `ca58893e4b12 @ :11`，
+    那个值在文件的**任何版本**里都不存在）——**内容一个字符都没变**（git 证明纯插入）。
+    ⇒ 门禁在说一件没发生的事，下一个人会去查「谁改了这张卡」。
+    这与「门禁自己崩了 ≠ 判红」同型：**报错文案指错对象，比不报还贵。**
+
+      · A 态：值曾在该文件的历史里出现过、现在没了 ⇒ **内容确实变了**（要人复核）
+      · B 态：值在该文件的任何版本里都没出现过 ⇒ **锚点登记有误（从未从文件算出）**
+    """
+    want = (e.get("basis_line_sha1_12") or "").strip()
+    if not want:
+        return [_p("J11", cid, "错位登记缺 basis_line_sha1_12（依据行哈希）⇒ 不可逐字复核")]
+    got = _sha12(lines[ln - 1])
+    if got == want:
+        return []
+    # 快路径失败 ⇒ 先在工作区里回捞（行号漂了但内容还在）
+    now = {_sha12(x) for x in lines}
+    if want in now:
+        return [_p("J11", cid,
+                   f"依据行**行号漂了**（登记 @{rel_path}:{ln}，但该哈希现位于别处）"
+                   f"—— 内容还在，重跑 `build_misplacement_ledger.py --write` 重新登记即可")]
+    # 回捞也失败 ⇒ 用 git 历史分辨 A/B 两态（**先证明仪器看得见，再下结论**）
+    hist = _git_history_lines(rel_path, repo_root)
+    if not hist:
+        return [_p("J11", cid,
+                   f"依据行现算 {got} ≠ 登记 {want}，且**拿不到 git 历史**⇒ 无法分辨"
+                   f"「内容变了」与「锚点登记有误」，**不下结论**（请手动复核 {rel_path}:{ln}）",
+                   anchor_registered=want, anchor_current=got, verdict="unknown")]
+    if want in {_sha12(x) for x in hist}:
+        return [_p("J11", cid,
+                   f"依据行**内容确实变了**：登记 {want} 曾出现在 `{rel_path}` 的历史里，"
+                   f"现已不在（现值 {got}）⇒ 复核该卡的判定依据是否仍成立",
+                   anchor_registered=want, anchor_current=got, verdict="content-changed")]
+    return [_p("J11", cid,
+               f"**锚点登记有误（从未从文件算出）**：{want} 在 `{rel_path}` 的**任何版本**里"
+               f"都找不到；第 {ln} 行现值的 sha1 是 **{got}**。"
+               f"⇒ 这不是「谁改了卡」，是登记值时就没从文件里算 —— "
+               f"重跑 `build_misplacement_ledger.py --write`（它现在写盘前逐条回读自验）",
+               anchor_registered=want, anchor_current=got, verdict="anchor-invalid")]
+
+
+def audit_ledger(src: Sources, records: list[dict],
+                 repo_root: Path | None = None) -> list[dict]:
     """J11：错位清单的每一条都必须落地 —— 卡存在、组别在词表内、**依据可复核**。
 
     「依据可复核」不是形容词：每条要么给 `evidence:`（`path:line` 或字段名），
@@ -670,6 +745,8 @@ def audit_ledger(src: Sources, records: list[dict]) -> list[dict]:
                     ln = int(m.group("line"))
                     if not (1 <= ln <= len(lines)):
                         out.append(_p("J11", cid, f"evidence 行号 {ln} 越界（文件共 {len(lines)} 行）"))
+                    else:
+                        out.extend(_anchor_problems(cid, e, m.group("p"), lines, ln))
         if e.get("path") and e["path"] != by_id[cid]["path"]:
             out.append(_p("J11", cid, f"登记的 path {e['path']} 与分类文件 {by_id[cid]['path']} 不符"))
         rec = rec_by_id.get(cid)
@@ -949,7 +1026,12 @@ def selftest() -> int:
             "entries": [{"card_id": real_class["items"][0]["id"],
                          "group": "meta_card",
                          "basis": "selftest 干净底用的占位依据",
-                         "evidence": f"{real_class['items'][0]['path']}:1"}],
+                         "evidence": f"{clean_class['items'][0]['path']}:1",
+                         # 锚点必须**真的从那行算出来**（夹具也不例外）——
+                         # 否则干净底会先被 J11 打红，把后面每条断言都顶账。
+                         "basis_line_sha1_12": _sha12(
+                             (REPO / clean_class["items"][0]["path"])
+                             .read_text(encoding="utf-8").split("\n")[0])}],
         }
 
         def variant(mut_class=None, mut_graph=None, mut_tax=None,
@@ -1377,6 +1459,33 @@ def selftest() -> int:
              {"groups": ["tech_domain_misplaced"],
               "entries": [{"card_id": c_first, "group": "tech_domain_misplaced",
                            "basis": "x", "evidence": f"{real_class['items'][0]['path']}:999999"}]}, None),
+            # ⚠️ 锚点判据的**两态**必须分开测（事故复盘：门禁在说一件没发生的事）。
+            # A 态「内容确实变了」与 B 态「锚点登记有误」的文案不同，
+            # 只测「有没有 J11」会把两态混成一个红因，下一个人就被带到错的结论上。
+            ("锚点值从未在任何版本存在过（应报「锚点登记有误」）",
+             {"groups": ["tech_domain_misplaced"],
+              "entries": [{"card_id": c_first, "group": "tech_domain_misplaced",
+                           "basis": "x", "evidence": f"{real_class['items'][0]['path']}:1",
+                           "basis_line_sha1_12": "deadbeef0000"}]},
+             "从未从文件算出"),
+            # ⚠️ 这里**只有三态里的两态**能用「改一份已存在的卡」造出来：
+            #   · 锚点值在**当前文件**里（只是行号漂了）⇒「行号漂了」
+            #   · 锚点值在**任何版本**里都没有 ⇒「锚点登记有误」
+            #   而「内容确实变了」**造不出来** —— 全库 146 张卡相对 HEAD 实测
+            #   `git diff --numstat` 全是 `-0`（纯插入），一个字符都没删过。
+            #   那一态改用**一次性 git 仓库**验（见下面 `fixture-repo` 段）：
+            #   **先造出能让判据显形的世界**，而不是因为它碰巧不出现就当它不存在。
+            ("锚点值在当前文件里、只是行号漂了（应报「行号漂了」）",
+             {"groups": ["tech_domain_misplaced"],
+              "entries": [{"card_id": c_first, "group": "tech_domain_misplaced",
+                           "basis": "x", "evidence": f"{real_class['items'][0]['path']}:1",
+                           "basis_line_sha1_12": _hist_sha12(real_class["items"][0]["path"])}]},
+             "行号漂了"),
+            ("锚点缺 basis_line_sha1_12（不可复核）",
+             {"groups": ["tech_domain_misplaced"],
+              "entries": [{"card_id": c_first, "group": "tech_domain_misplaced",
+                           "basis": "x", "evidence": f"{real_class['items'][0]['path']}:1"}]},
+             "缺 basis_line_sha1_12"),
             ("basis 为空（不可复核）",
              {"groups": ["tech_domain_misplaced"],
               "entries": [{"card_id": c_first, "group": "tech_domain_misplaced",
@@ -1410,6 +1519,61 @@ def selftest() -> int:
         cd11n = clone(clean_class)
         cd11n.pop("misplacement_ledger", None)
         case("分类文件缺 misplacement_ledger 段", "J11", mut_class=cd11n)
+
+        # 「内容确实变了」这一态**无法用当前数据构造**（全库 146 张卡相对 HEAD 都【没有】
+        # 删除行 —— 实测 numstat 全是 `-0`），所以造一个**一次性 git 仓库**：
+        # v1 有 `依据在变革前`，v2 换成 `依据在变革后` ⇒ 该哈希「历史上出现过、现已不在」。
+        # 这是「我的仪器能看见它吗」的正面用法：**先造出能让判据显形的世界**，
+        # 而不是因为真数据碰巧满足就把它当成恒真断言。
+        git_ok = False
+        try:
+            gr = td / "fixture-repo"
+            gr.mkdir()
+            def _git(*a):
+                return subprocess.run(["git", *a], cwd=str(gr), capture_output=True,
+                                      text=True, encoding="utf-8", errors="replace",
+                                      env=dict(os.environ, GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@t",
+                                               GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@t"),
+                                      timeout=60)
+            _git("init", "-q")
+            (gr / "x.md").write_text("---\ntitle: X\n---\n依据在变革前\n", encoding="utf-8")
+            _git("add", "-A"); _git("commit", "-qm", "v1")
+            old_line = (gr / "x.md").read_text(encoding="utf-8").split("\n")[3]
+            (gr / "x.md").write_text("---\ntitle: X\n---\n依据在变革后\n", encoding="utf-8")
+            _git("add", "-A"); _git("commit", "-qm", "v2")
+            is_git = (gr / ".git").is_dir() and _git("log", "--oneline").returncode == 0
+            if is_git:
+                hist = _git_history_lines("x.md", gr)
+                git_ok = bool(hist)
+                expect(_sha12(old_line) in {_sha12(x) for x in hist},
+                       f"仪器自证：一次性 git 仓库里，「变革前」那行必须能被历史看见"
+                       f"（否则下面那条两态断言是本仓库第 N 次假绿）")
+                cur_lines = (gr / "x.md").read_text(encoding="utf-8").split("\n")
+                probs = _anchor_problems(
+                    "Skill-X", {"basis_line_sha1_12": _sha12(old_line),
+                                "evidence": "x.md:4"}, "x.md", cur_lines, 4, repo_root=gr)
+                msgs = [x["msg"] for x in probs]
+                expect(any("内容确实变了" in m for m in msgs),
+                       f"J11 A 态：锚点值曾出现在历史里、现已不在 ⇒ 必须报「内容确实变了」"
+                       f"（实得 {msgs or '全绿'}）")
+                expect(not any("从未从文件算出" in m for m in msgs),
+                       "J11 两态不得混淆：A 态（内容变了）不得被报成 B 态（锚点登记有误）")
+                probs_b = _anchor_problems(
+                    "Skill-X", {"basis_line_sha1_12": "deadbeef0000",
+                                "evidence": "x.md:4"}, "x.md", cur_lines, 4, repo_root=gr)
+                msgs_b = [x["msg"] for x in probs_b]
+                expect(any("从未从文件算出" in m for m in msgs_b),
+                       f"J11 B 态：锚点值在任何版本里都不存在 ⇒ 必须报「锚点登记有误」"
+                       f"（实得 {msgs_b or '全绿'}）")
+                expect(any(_sha12(cur_lines[3]) in m for m in msgs_b)
+                       and any("从未从文件算出" in m for m in msgs_b),
+                       f"J11 B 态必须给出**该行现值的 sha1**（{_sha12(cur_lines[3])}）供对照"
+                       f"（否则读者无从下手）：{msgs_b}")
+            else:
+                expect(False, "仪器自证：一次性 git 仓库建不起来 ⇒ 两态断言无法验证"
+                              "（**不算通过**，请修样本环境）")
+        except (OSError, subprocess.SubprocessError) as exc:
+            expect(False, f"仪器自证：一次性 git 仓库构造失败（{exc}）—— 两态断言未验证")
 
         # ---------------------------------------------------------------- #
         # 写盘器的三态 + 「只加字段不改正文」的仪器自证
@@ -1620,6 +1784,13 @@ MUTANTS = [
      r"            if not fp\.is_file\(\):", "            if False:"),
     ("J11c", "evidence 读不到时不再收成判据（裸读 ⇒ 门禁崩掉而不是判红）",
      r"except \(UnicodeDecodeError, OSError\) as exc:", "except ZeroDivisionError as exc:"),
+    # --- 锚点判据（事故复盘新增）：三态各自要能被单独打残，不许互相顶账 ---
+    ("J11d", "锚点判据整个失效（不再校验 basis_line_sha1_12）",
+     r'    if got == want:\n        return \[\]', '    return []'),
+    ("J11e", "两态合并：任何不匹配都报「锚点登记有误」（A 态被误报）",
+     r'    if want in \{_sha12\(x\) for x in hist\}:', '    if False:'),
+    ("J11f", "B 态不再回捞（行号漂了也被报成「登记有误」）",
+     r'    now = \{_sha12\(x\) for x in lines\}\n    if want in now:', '    now = set()\n    if want in now:'),
 ]
 
 
@@ -1689,6 +1860,32 @@ def mutation_selftest() -> int:
           + (f"；另 {crashed_n} 份只让门禁崩掉（算抓到，不计入判据覆盖率）" if crashed_n else "")
           + "；scripts/ 下残留 0 份")
     return 0 if bad == 0 else 1
+
+
+def _hist_sha12(rel_path: str, line_no: int = 2) -> str:
+    """取该文件某个**有区分度的行**的 sha1[:12]（默认第 2 行 = 卡标题）。
+
+    ⚠️ 默认取第 2 行而不是第 1 行：**每张卡的第 1 行都是 `---`**，
+    用第 1 行会把「别处的值」在这张卡上变成**恰好命中**（首版就是这么让样本失效的）——
+    取样点必须能区分对象，否则样本测的不是它声称的那件事。
+
+    自检样本需要「一个**确实在历史里出现过**的值」，用来把「内容变了」与
+    「锚点登记有误」两态分开。取不到 git 历史就返回一个显式的哨兵 ——
+    让样本**失败**（而不是悄悄退化成另一态）。取不到时返回 `""`，
+    对应断言会落空并报出「样本自身失效」。
+    """
+    try:
+        proc = subprocess.run(["git", "show", f"HEAD:{rel_path}"],
+                              capture_output=True, text=True, encoding="utf-8",
+                              errors="replace", cwd=str(REPO), timeout=120)
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    if proc.returncode != 0 or not (proc.stdout or "").strip():
+        return ""
+    lines = proc.stdout.split("\n")
+    if line_no > len(lines):
+        return ""
+    return _sha12(lines[line_no - 1])
 
 
 def repo_card_text(rel_path: str) -> str:
