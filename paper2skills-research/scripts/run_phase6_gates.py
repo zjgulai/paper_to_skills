@@ -97,6 +97,15 @@ GATES: list[Gate] = [
     # --- 跨契约同质化（S1 收口期新增）---
     Gate("L4g", "契约层：跨文件同质化机检", ["check_contract_dedup.py"]),
     Gate("L4h", "契约层：同质化检测器自检", ["check_contract_dedup.py", "--selftest"], kind="selftest"),
+    # --- 契约「数据要求」栏五维判据（S11）---
+    # ⚠️ **不与 J1–J13 同号**：J5 已判「五维齐全 + ① 断言枚举」，但它的颗粒度是**行**
+    # （J5 自己的注释里就记着实测边界：① 写「本企业无自有埋点，实际全靠人工估算」而 exit=0）。
+    # S11 把颗粒度降到**格**，只问「这一维点名了吗」，**不替换** J5/J6/J13。
+    # 本仓库已两次因颗粒度（列 vs 行 vs 块）翻面判决，故两者并存、分开报。
+    Gate("L4i", "契约数据要求：五维逐格点名（与 J5 的行颗粒度分开）",
+         ["check_data_requirements.py", "--dir", str(REPO / "paper2skills-vault" / "07-资源库" / "contracts")]),
+    Gate("L4j", "契约数据要求：自检 + 变异（含「不可得是合法结论」反向控制）",
+         ["check_data_requirements.py", "--selftest"], kind="selftest"),
     # --- 入卡门槛（S13）---
     Gate("L5a", "入卡弱门槛：146 张卡的 L3 归属可机读", ["check_card_l3.py", "--check"]),
     Gate("L5b", "入卡弱门槛：自检", ["check_card_l3.py", "--selftest"], kind="selftest"),
@@ -104,6 +113,13 @@ GATES: list[Gate] = [
     Gate("L6a", "缺口驱动检索式：与工单/图谱一致", ["build_search_queries.py", "--check"]),
     Gate("L6b", "缺口驱动检索式：自检 + 价值变异", ["build_search_queries.py", "--selftest"],
          kind="selftest"),
+    # --- 旧方案页收割（S2）---
+    # ⚠️ 这条门禁守的是**负知识的落点**：19 个旧方案页是第四套平行分类（不绑任何 AGT/SCN），
+    # 其「三大架构陷阱」不可能从 64 格骨架推出来。J13 里「87/151 L3 有落点、64 个 L3 无人触及」
+    # 才是缺口图；而「24/24 M 格都有落点」**没有区分度**（每格 14–19 页可达），故不得当供给结论用。
+    Gate("L7a", "旧方案页收割：M 格素材逐条可回指源 HTML", ["harvest_legacy_solutions.py", "--check"]),
+    Gate("L7b", "旧方案页收割：判据自检 + 变异（含 194 卡位丢弃登记）",
+         ["harvest_legacy_solutions.py", "--selftest"], kind="selftest"),
 ]
 
 SEV = {0: 0, 1: 1, 2: 2, 3: 3}
