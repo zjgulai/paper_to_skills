@@ -13,6 +13,7 @@ venue: arXiv preprint
 venue_tier: preprint
 evidence_grade: A
 verified_by: verify_skill_code.py（K1）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py + 人工抽检
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Customer-Churn-Prediction.md, Skill-RFM-Customer-Segmentation.md, Skill-Uplift-Modeling.md
 ---

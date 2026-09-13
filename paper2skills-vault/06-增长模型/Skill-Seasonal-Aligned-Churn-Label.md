@@ -13,6 +13,7 @@ venue: arXiv preprint
 venue_tier: preprint
 evidence_grade: A
 verified_by: verify_skill_code.py（K1=PASS）+ quote_check.py（引文逐字命中）+ gate_check.py --only G2（passed）+ 人工抽检 Table 1 / Table 3 数字
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Customer-Churn-Prediction.md, Skill-Uplift-Churn-Prediction.md, Skill-Cohort-Retention-Analysis.md, Skill-Prophet-Forecasting.md, Skill-User-Lifecycle-STAN.md
 ---

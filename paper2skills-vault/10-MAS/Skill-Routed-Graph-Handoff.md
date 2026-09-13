@@ -13,6 +13,7 @@ venue: EMNLP 2026
 venue_tier: top
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py G2 passed + 人工抽检 3 处数字
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Subagent-Decomposition.md, Skill-MAS-Orchestrator.md, Skill-MetaGPT-SOP-Driven-Collaboration.md, Skill-AutoGen-Multi-Agent-Conversation.md
 ---

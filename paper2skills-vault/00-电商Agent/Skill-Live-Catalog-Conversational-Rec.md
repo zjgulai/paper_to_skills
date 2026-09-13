@@ -13,6 +13,7 @@ venue: RecSys 2026 (Demo)
 venue_tier: demo
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L1–L5 全绿）+ quote_check.py（引文逐字核验 VERBATIM）+ gate_check.py G2/G3 passed + 人工抽检：Table 1 表注与表体的全部报告值逐个回查 fulltext.md
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Diversity-Reranking-SMMR.md, Skill-Semantic-ID-Retrieval-RPG.md, Skill-Long-Term-Preference-Memory.md, Skill-Cold-Start-Meta-Learning-PAM.md, Skill-Agentic-Catalog-Enrichment.md
 ---

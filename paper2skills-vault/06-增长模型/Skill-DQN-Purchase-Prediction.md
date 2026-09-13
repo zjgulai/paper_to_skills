@@ -11,6 +11,7 @@ paper_id: 2506.17543
 paper: Predicting E-commerce Purchase Behavior using a DQN-Inspired Deep Learning Model
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 related: Skill-User-Lifecycle-STAN.md, Skill-Customer-Journey-Prototype.md
 ---
 

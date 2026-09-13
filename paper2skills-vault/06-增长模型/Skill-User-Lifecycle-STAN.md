@@ -11,6 +11,7 @@ paper_id: 2306.12232
 paper: "STAN: Stage-Adaptive Network for Multi-Task Recommendation by Learning User Lifecycle-Based Representation"
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 related: Skill-Customer-Journey-Prototype.md, Skill-Uplift-Churn-Prediction.md
 ---
 

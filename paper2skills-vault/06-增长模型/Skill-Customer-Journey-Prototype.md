@@ -11,6 +11,7 @@ paper_id: 2505.11086
 paper: Analysis of Customer Journeys Using Prototype Detection and Counterfactual Explanations for Sequential Data
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 related: Skill-User-Lifecycle-STAN.md, Skill-Cold-Start-Product-Recommendation.md
 ---
 

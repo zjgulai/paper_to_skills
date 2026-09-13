@@ -13,6 +13,7 @@ venue: arXiv preprint
 venue_tier: preprint
 evidence_grade: A
 verified_by: verify_skill_code.py (K1 PASS) + quote_check.py (引文逐字核验 VERBATIM，0 伪造 0 近似) + gate_check.py G1/G2/G3
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Demand-Forecasting-Supply-Chain.md, Skill-Prophet-Forecasting.md, Skill-Monodense-单品价格弹性估计.md, Skill-Safety-Stock-Replenishment.md, Skill-Multi-Echelon-Inventory.md
 ---

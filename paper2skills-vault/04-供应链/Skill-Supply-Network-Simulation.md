@@ -13,6 +13,7 @@ venue: Winter Simulation Conference 2026
 venue_tier: CCF-B
 evidence_grade: A
 verified_by: verify_skill_code.py (K1 PASS) + quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G1/G2/G3
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Multi-Echelon-Inventory.md, Skill-Safety-Stock-Replenishment.md, Skill-Demand-Forecasting-Supply-Chain.md, Skill-Two-Echelon-Inventory-DRL.md, Skill-Time-Series-Forecasting.md
 ---

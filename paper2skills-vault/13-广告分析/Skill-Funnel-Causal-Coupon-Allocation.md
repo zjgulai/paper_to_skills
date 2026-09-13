@@ -13,6 +13,7 @@ venue: CIKM 2026
 venue_tier: CCF-B
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L1–L5）+ quote_check.py 逐字核验 + 人工抽检数字
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Uplift-Modeling.md, Skill-ROAS-Budget-Optimization.md, Skill-Ad-Attribution-Modeling.md, Skill-Promotion-Effectiveness.md
 ---

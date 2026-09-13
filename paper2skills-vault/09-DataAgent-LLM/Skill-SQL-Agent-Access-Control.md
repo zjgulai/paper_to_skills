@@ -13,6 +13,7 @@ venue: arXiv preprint
 venue_tier: preprint
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS，9 条断言）+ quote_check.py（引文逐字核验 VERBATIM，0 伪造 0 近似）+ gate_check.py G2/G3 passed + 人工抽检 5 处数字
+verified_at: 2026-09-12
 supersedes:
 related: Skill-SQL-Agent-Text-to-SQL.md, Skill-Data-to-Dashboard-Multi-Agent-Visualization.md, Skill-Root-Cause-Analysis-Agent.md, Skill-DeepAnalyze-Autonomous-Data-Science-Agent.md
 ---

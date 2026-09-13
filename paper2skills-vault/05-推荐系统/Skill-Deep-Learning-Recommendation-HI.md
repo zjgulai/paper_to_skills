@@ -11,6 +11,7 @@ paper_id: 2009.12969
 paper: "Simultaneous Relevance and Diversity: A New Recommendation Inference Approach"
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 related: Skill-Session-Based-Recommendation-SR-GNN.md, Skill-NeuralNDCG-Learning-to-Rank.md
 ---
 

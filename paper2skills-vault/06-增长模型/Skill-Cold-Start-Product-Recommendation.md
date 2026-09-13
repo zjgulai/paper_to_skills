@@ -11,6 +11,7 @@ paper_id: 2402.09176
 paper: Large Language Model Simulator for Cold-Start Recommendation
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 related: Skill-New-Product-Opportunity-Mining.md, Skill-Uplift-Churn-Prediction.md
 ---
 

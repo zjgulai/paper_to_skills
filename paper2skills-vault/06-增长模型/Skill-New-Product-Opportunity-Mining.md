@@ -11,6 +11,7 @@ paper_id: 2405.19456
 paper: An Automated Startup Evaluation Pipeline: Startup Success Forecasting Framework (SSFF)
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 related: Skill-Cold-Start-Product-Recommendation.md, Skill-Customer-Journey-Prototype.md
 ---
 

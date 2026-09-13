@@ -11,6 +11,7 @@ paper_id: 2312.07206
 paper: A churn prediction dataset from the telecom sector: a new benchmark for uplift modeling
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 related: Skill-Customer-Journey-Prototype.md, Skill-DQN-Purchase-Prediction.md
 ---
 

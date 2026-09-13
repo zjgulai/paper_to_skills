@@ -492,11 +492,210 @@ def c8_sections() -> dict:
                         f"（其中 {len(only3)} 张仅有 ①②③，是 v1 遗留）")}
 
 
+# ---------------------------------------------------------------------------
+# C10 验证声明的时间锚点（PHASE6 F1，2026-09-13）
+# ---------------------------------------------------------------------------
+# 卡片 frontmatter 的 `verified_by` 是一句**没有时间的断言**：
+#     verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（…VERBATIM）
+#                  + gate_check.py G2 passed + 人工抽检 3 处数字
+# 读者无法分辨这是昨天验的还是半年前验的 —— 而两者含义完全不同。
+#
+# **实测（2026-09-13，PHASE6 F1 现场）**：25 张卡有 `verified_by`、**0 张有 `verified_at`**；
+# 按当时权威门禁产物，其中 **9 张已实测为红**，而它们**当初是真的** ——
+# PHASE5 的 C6（引用编号 `[8]` 洗白数字）与 C9（`A100` 洗白 `100`）把 G2a 改严了，
+# 卡片并不知道。⇒ **声明腐烂时，卡片自己不会说话。**
+#
+# ⚠️ 本项**刻意不引入任何人工状态字段**（如 `verified_stale: true`）：
+#    任何「由人写、能让检查闭嘴」的字段都是一个新后门（参见漏洞 #10 的教训）。
+#    stale 与否**由测量导出**，卡片只记录「断言是在哪一天作出的」这个事实。
+
+# 声明里的 token → 它实际支撑的门禁层。
+_CLAIM_LAYER_TOKENS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("G1",  (r"\bG1\b", r"\bK1\b", r"verify_skill_code")),
+    ("G3",  (r"\bG3\b",)),
+    ("G2",  (r"\bG2\b",)),
+    ("G2b", (r"quote_check",)),
+)
+
+# ⚠️⚠️ **反后门（本项最容易做错的地方）**：
+# `G2b`（逐字引文层）被指责的**只能**是引文层自己的红灯。
+# 实测反例：9 张被判矛盾的卡**全部只因 `G2-UNSOURCED-METRIC` 变红**（G2a 层），
+# 而它们的 `quote_check` 逐字核验至今仍是真的（`G2-QUOTE-VERBATIM` 绿）。
+# 若把「G2 聚合红」直接算成「引文声明被推翻」，就会报 9 条**假矛盾** ——
+# 与漏洞 #11「判据只认一种字段名」同族：**判据的适用范围被默认成了全体。**
+QUOTE_LAYER_RED_CODES = frozenset({
+    "G2-QUOTE-FABRICATED",     # 引文在底本里找不到 → 伪造
+    "G2-QUOTE-TRUNCATED",      # 引文被截成残句（漏洞 #15）
+    "G2-NO-EVIDENCE-CHAIN",    # 卡内既无引用块也无 evidence.md ⇒「VERBATIM」无从成立
+})
+QUOTE_LAYER_RED_PREFIX = "G2-QUOTE-"
+
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _git_commit_dates() -> dict[str, dict[str, str]]:
+    """一次 `git log` 拿到每个文件的首次/末次提交日。
+
+    只调一次 git：逐卡调 `git log` 是 146 次进程启动，体检会从秒级退化到分钟级。
+    """
+    try:
+        p = subprocess.run(
+            ["git", "-c", "core.quotepath=false", "log",
+             "--format=@@%cs", "--name-only", "--no-renames"],
+            cwd=REPO, capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.SubprocessError):
+        return {}
+    if p.returncode != 0:
+        return {}
+    out: dict[str, dict[str, str]] = {}
+    cur = ""
+    for line in p.stdout.splitlines():
+        if line.startswith("@@"):
+            cur = line[2:].strip()
+        elif line.strip() and cur:
+            # git log 按时间倒序 ⇒ 首次见到的就是**末次**提交；持续覆盖得到**首次**
+            e = out.setdefault(line.strip(), {"first": cur, "last": cur})
+            e["first"] = cur
+    return out
+
+
+def _gate_lookup() -> dict[str, dict]:
+    """卡片 rel 路径 → 三个门禁的当前判定（读权威产物，不重跑）。"""
+    out: dict[str, dict] = {}
+    for g in ("g1", "g2", "g3"):
+        f = GATES / f"gate_{g}.json"
+        if not f.is_file():
+            continue
+        try:
+            d = json.loads(f.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        for r in d.get("results", []):
+            e = out.setdefault(r.get("target", ""), {})
+            e[g.upper()] = {
+                "passed": r.get("passed"),
+                "red_codes": [f2.get("code", "") for f2 in r.get("findings", [])
+                              if f2.get("level") == "RED"],
+            }
+    return out
+
+
+def c10_verified_claims(dates: dict | None = None,
+                        gates: dict | None = None,
+                        today: str | None = None) -> dict:
+    """C10 验证声明的时间锚点与实测一致性。
+
+    `dates` / `gates` / `today` 可注入 —— 自检靠它用构造样本喂假数据，
+    否则「C10 真的会报警」这句话无法被证明（构造一个 git 仓库与时间机器都不现实）。
+    """
+    dates = _git_commit_dates() if dates is None else dates
+    gates = _gate_lookup() if gates is None else gates
+    today = datetime.now().astimezone().strftime("%Y-%m-%d") if today is None else today
+
+    anchor_missing: list[dict] = []
+    bad_anchor: list[dict] = []
+    contradicted: list[dict] = []
+    unspecific: list[dict] = []
+    ok_cards: list[str] = []
+    bad_seen: set[str] = set()
+    contra_seen: set[str] = set()
+    unspec_seen: set[str] = set()
+
+    for c in cards():
+        text = c.read_text(encoding="utf-8", errors="replace")
+        fm = _fm(text)
+        claim = (fm.get("verified_by") or "").strip()
+        if not claim:
+            continue
+        relp = rel(c)
+        vat = (fm.get("verified_at") or "").strip()
+
+        # (a) 有声明、无锚点
+        if not vat:
+            anchor_missing.append({"card": relp, "claim": claim[:80]})
+        elif not _DATE_RE.match(vat):
+            bad_anchor.append({"card": relp, "verified_at": vat,
+                               "why": "不是 YYYY-MM-DD 格式，无法比较"})
+            bad_seen.add(relp)
+        else:
+            # (b) 声称了一个还没发生的验证
+            if vat > today:
+                bad_anchor.append({"card": relp, "verified_at": vat,
+                                   "why": f"晚于今天（{today}）—— 该验证不可能已发生"})
+                bad_seen.add(relp)
+            # (c) 声称在卡片存在之前就验过
+            d = dates.get(relp) or {}
+            if d.get("first") and vat < d["first"]:
+                bad_anchor.append({"card": relp, "verified_at": vat,
+                                   "why": f"早于该卡首次提交（{d['first']}）—— 卡还不存在"})
+                bad_seen.add(relp)
+
+        # (d) 点名了 `gate_check` 却**没说它判了哪个门禁** ⇒ 不可复核（🟡，非矛盾）。
+        # 实测命中 2 张：`… + gate_check.py + 人工抽检`（无 G2/G3 字样）。
+        # ⚠️ 这里**不能**把它当成「声称了 G2」去报矛盾 —— 卡并没有断言 G2 通过，
+        #    报矛盾就是我们自己造了一个它没做过的声明（同「假红灯」家族）。
+        #    但它也确实不可复核，故单列一档，而不是静默丢弃。
+        if re.search(r"gate_check", claim) and not re.search(r"\bG[123]\b", claim):
+            unspecific.append({"card": relp, "claim": claim[:90],
+                               "why": "点名 gate_check 但未写判了哪个门禁（G1/G2/G3），无法复核"})
+            unspec_seen.add(relp)
+
+        # (e) 声明点名的门禁**当前实测为红**
+        hit = gates.get(relp) or {}
+        for ly, toks in _CLAIM_LAYER_TOKENS:
+            if not any(re.search(t, claim) for t in toks):
+                continue
+            if ly == "G2b":
+                reds = [code for code in (hit.get("G2") or {}).get("red_codes", [])
+                        if code in QUOTE_LAYER_RED_CODES
+                        or code.startswith(QUOTE_LAYER_RED_PREFIX)]
+                if reds:
+                    contradicted.append({"card": relp, "layer": "G2b（逐字引文）",
+                                         "red_codes": sorted(set(reds)),
+                                         "verified_at": vat or "—"})
+                    contra_seen.add(relp)
+            else:
+                g = hit.get(ly)
+                if g and g.get("passed") is False:
+                    contradicted.append({"card": relp, "layer": ly,
+                                         "red_codes": sorted(set(g.get("red_codes", [])))[:4],
+                                         "verified_at": vat or "—"})
+                    contra_seen.add(relp)
+        if vat and relp not in bad_seen and relp not in contra_seen and relp not in unspec_seen:
+            ok_cards.append(relp)
+
+    # ⚠️ total 必须是**去重后的张数**：一张卡可以同时「无锚点」且「矛盾」，
+    #    早期写成四项相加，25 + 7 报成 32 —— 与本仓库反复出现的
+    #    「分子分母口径不一致」同族（G2 漏洞 #8/#9 就是这个形态）。
+    #    另：`consistent` 也曾把「不可复核」的卡算进去（7+2+18=27 > 25），
+    #    现已互斥 —— 五档相加 == total（存在「既无锚点又矛盾」的重叠时，
+    #    以去重后的 total 为准，故下方 summary 里 total 单独报）。
+    total = len({e["card"] for e in anchor_missing} | bad_seen | contra_seen
+                | unspec_seen | set(ok_cards))
+    return {
+        "id": "C10", "name": "验证声明时间锚点",
+        # 矛盾是真红线（卡片在断言一件可测量为假的事）；
+        # 缺锚点/不可复核是欠账，不是撒谎 —— 必须分开，否则红线会被欠账淹没。
+        "critical": bool(bad_anchor or contradicted),
+        "detail": {"total_with_claim": total,
+                   "anchor_missing": anchor_missing,
+                   "bad_anchor": bad_anchor,
+                   "claim_contradicted": contradicted,
+                   "claim_unspecific": unspecific,
+                   "consistent": len(ok_cards)},
+        "total": len(anchor_missing) + len(unspecific),
+        "summary": (f"{total} 张有 verified_by：无锚点 {len(anchor_missing)} / "
+                    f"锚点不实 {len(bad_seen)} / **声明与实测矛盾 {len(contra_seen)}** / "
+                    f"点名工具但不可复核 {len(unspecific)} / 一致 {len(ok_cards)}"),
+    }
+
+
 CHECKS = {
     "C1": c1_duplicate_cards, "C2": c2_frontmatter, "C3": c3_hardcoded_paths,
     "C4": c4_code_fences, "C5": c5_registry_consistency, "C6": c6_gate_summary,
     "C7": c7_repo_hygiene,
     "C8": c8_sections,
+    "C10": c10_verified_claims,
 }
 
 
@@ -612,6 +811,29 @@ def _c2_samples() -> dict[str, tuple[str, dict]]:
     return samples
 
 
+def _c10_isolated_noanchor(root: Path) -> bool:
+    """在**只含一张无锚点卡**的隔离 vault 里跑 C10，断言 critical=False。
+
+    隔离是必需的：调用方所在的 vault 里还有「锚点晚于今天」的样本，
+    critical 会被它合理地抬起 —— 那样测到的就不是本用例想测的东西。
+    """
+    global VAULT
+    saved = VAULT
+    try:
+        iso = root / "vault-iso-c10"
+        (iso / "01-域").mkdir(parents=True, exist_ok=True)
+        (iso / "01-域" / "Skill-Iso-NoAnchor.md").write_text(
+            "---\ntitle: iso\nverified_by: gate_check.py G2 passed\n---\n\n# 样本\n",
+            encoding="utf-8")
+        VAULT = iso.resolve()
+        rep = c10_verified_claims(dates={}, gates={}, today="2026-09-13")
+        # 前提核对：确实抓到了那一张（否则「没报警」可能只是「没扫到」）
+        got = len(rep["detail"]["anchor_missing"]) == 1
+        return got and rep["critical"] is False
+    finally:
+        VAULT = saved
+
+
 def selftest() -> int:
     """自检：用构造样本证明 C1/C2/C4 真的会报警，且**豁免不许溢出**。
 
@@ -707,6 +929,105 @@ def selftest() -> int:
             # --- X3(a)：--json-out 必须能自己建父目录 --------------------------
             ("--json-out 在父目录不存在时不崩、且文件可被 json.load 读回",
              _selftest_json_out(root)),
+        ]
+
+        # --- C10：验证声明的时间锚点（PHASE6 F1）---------------------------
+        # 构造样本 + **注入**假 git 日期与假门禁产物 —— 两项都不可能真的造出来。
+        # 样本设计为「每条判据各有其对应反例」，而不是一条大样本测全部：
+        # 一条大样本全绿会掩盖「判据恒真」，而判据恒真是本仓库反复踩到的假绿灯形态。
+        _GREEN = {"G1": {"passed": True, "red_codes": []},
+                  "G2": {"passed": True, "red_codes": []},
+                  "G3": {"passed": True, "red_codes": []}}
+        _G2A_RED = {"G1": {"passed": True, "red_codes": []},
+                    "G2": {"passed": False, "red_codes": ["G2-UNSOURCED-METRIC"]},
+                    "G3": {"passed": True, "red_codes": []}}
+        _G2B_RED = {"G1": {"passed": True, "red_codes": []},
+                    "G2": {"passed": False, "red_codes": ["G2-QUOTE-FABRICATED"]},
+                    "G3": {"passed": True, "red_codes": []}}
+
+        def _mk(name: str, claim: str, at: str | None) -> str:
+            body = f"---\ntitle: {name}\nverified_by: {claim}\n"
+            if at is not None:
+                body += f"verified_at: {at}\n"
+            body += "---\n\n# 样本\n"
+            (root / "vault" / "03-C10").mkdir(parents=True, exist_ok=True)
+            (root / "vault" / "03-C10" / f"{name}.md").write_text(body, encoding="utf-8")
+            return f"vault/03-C10/{name}.md"
+
+        c_noanchor = _mk("Skill-C10-NoAnchor", "gate_check.py G2 passed", None)
+        c_future = _mk("Skill-C10-Future", "gate_check.py G2 passed", "2099-01-01")
+        c_predate = _mk("Skill-C10-Predate", "gate_check.py G2 passed", "2020-01-01")
+        c_contra_g2 = _mk("Skill-C10-ContraG2", "gate_check.py G2 passed", "2026-09-12")
+        c_quote_only = _mk("Skill-C10-QuoteOnly", "quote_check.py（逐字核验 VERBATIM）",
+                           "2026-09-12")
+        c_quote_fab = _mk("Skill-C10-QuoteFab", "quote_check.py（逐字核验 VERBATIM）",
+                          "2026-09-12")
+        c_clean = _mk("Skill-C10-Clean", "gate_check.py G2 passed + quote_check.py VERBATIM",
+                      "2026-09-12")
+        # 实测原型的复刻：点名 gate_check 但没写判了哪个门禁（真实命中 2 张）
+        c_unspec = _mk("Skill-C10-Unspecific",
+                       "verify_skill_code.py（K1）+ quote_check.py（…VERBATIM）+ gate_check.py + 人工抽检",
+                       "2026-09-12")
+        # 「无锚点」且「矛盾」同时成立 —— 专为 total 去重那条用例而设
+        c_both = _mk("Skill-C10-Both", "gate_check.py G2 passed", None)
+
+        r10 = c10_verified_claims(
+            dates={c_predate: {"first": "2026-01-01", "last": "2026-01-01"},
+                   c_future: {"first": "2026-01-01", "last": "2026-01-01"}},
+            gates={c_contra_g2: _G2A_RED, c_quote_only: _G2A_RED,
+                   c_quote_fab: _G2B_RED, c_clean: _GREEN, c_noanchor: _GREEN,
+                   c_unspec: _G2A_RED, c_both: _G2A_RED},
+            today="2026-09-13")
+        d10 = r10["detail"]
+        miss10 = {e["card"] for e in d10["anchor_missing"]}
+        bad10 = {e["card"]: e["why"] for e in d10["bad_anchor"]}
+        con10 = {e["card"]: e["layer"] for e in d10["claim_contradicted"]}
+        uns10 = {e["card"] for e in d10["claim_unspecific"]}
+
+        checks += [
+            ("C10 抓到『有 verified_by 无 verified_at』且不误判为矛盾",
+             c_noanchor in miss10 and c_noanchor not in con10),
+            ("C10 抓到『锚点晚于今天』（声称了一个还没发生的验证）",
+             "晚于今天" in bad10.get(c_future, "")),
+            ("C10 抓到『锚点早于卡片首次提交』（卡还不存在就验过）",
+             "早于该卡首次提交" in bad10.get(c_predate, "")),
+            ("C10 抓到『声称 G2 而 G2 实测为红』",
+             con10.get(c_contra_g2) == "G2"),
+            # --- 反后门：判据的适用范围不许被默认成全体 ----------------------
+            # 实测原型：9 张卡的 quote_check 至今为真，只因 G2a 变红 ⇒ **不得**报矛盾。
+            ("C10 不把 G2a 的红算成引文声明的矛盾（否则报 9 条假矛盾）",
+             c_quote_only not in con10),
+            # 反向：引文层自己红了，就必须报 —— 否则上面那条会退化成「永不报」
+            ("C10 抓到『声称 quote_check 而引文层伪造』",
+             con10.get(c_quote_fab) == "G2b（逐字引文）"),
+            # --- 第三档：点名了工具但没说判了什么 ⇒ 不可复核，且**不得**报成矛盾 ---
+            # 卡并没有断言 G2 通过；报矛盾＝我们替它造了一个它没做过的声明。
+            ("C10 抓到『点名 gate_check 未写门禁』并单列（不报成矛盾）",
+             c_unspec in uns10 and c_unspec not in con10),
+            ("C10 一致样本零告警（判据不是恒真）",
+             c_clean not in miss10 and c_clean not in bad10 and c_clean not in con10
+             and c_clean not in uns10 and d10["consistent"] >= 1),
+            # total 必须去重：一张卡可同时「无锚点」且「矛盾」，不得相加。
+            # ⚠️ 这里必须把**全部五个桶**都加进去。第一版漏了 `claim_unspecific`，
+            #    于是加了该桶之后「朴素和」恰好等于去重值，用例当场报红 ——
+            #    **是断言漏了一个桶，不是检查坏了**（与「判据没错、作用域错了」同族）。
+            ("C10 total 去重（五项相加会把 9 张报成 %d）"
+             % (len(d10["anchor_missing"]) + len(d10["bad_anchor"])
+                + len(d10["claim_contradicted"]) + len(d10["claim_unspecific"])
+                + d10["consistent"]),
+             d10["total_with_claim"] == 9
+             and (len(d10["anchor_missing"]) + len(d10["bad_anchor"])
+                  + len(d10["claim_contradicted"]) + len(d10["claim_unspecific"])
+                  + d10["consistent"])
+             > d10["total_with_claim"]),
+            # critical 语义：欠账不得把红线抬起来，否则红线会被欠账淹没
+            # ⚠️ 必须在**只含这一张卡**的隔离目录里跑：第一版直接复用上面的 root，
+            #    而那里还躺着 `Skill-C10-Future`（2099-01-01）⇒ critical 被它
+            #    合理地抬成 True，用例报红。**是断言写错了，不是检查错了。**
+            #    与「变异测试台复制到 /tmp 后 REPO_ROOT 解析错」同族：
+            #    判据没错，**作用域**错了。
+            ("C10 只有『无锚点』时 critical=False（欠账≠撒谎）", _c10_isolated_noanchor(root)),
+            ("C10 存在矛盾时 critical=True（红线是真的）", r10["critical"] is True),
         ]
 
     # --- 交叉验证：C2 的豁免判据是否与 gate_check 同口径 -------------------

@@ -13,6 +13,7 @@ venue: EMNLP 2026 Industry Track
 venue_tier: top
 evidence_grade: A
 verified_by: verify_skill_code.py（K1 L5 PASS）+ quote_check.py（41/41 VERBATIM）+ gate_check.py G2/G3 passed + 人工抽检：0.90 vs 0.80 / 0.70–0.90 vs 0.57–0.69 两组数字逐个回查 fulltext.md 叙述句（表行脏串不用）
+verified_at: 2026-09-12
 supersedes:
 related: Skill-AB-Experimental-Design.md, Skill-Power-Analysis-Sample-Size.md, Skill-AB-Test-Result-Interpretation.md, Skill-Multi-Armed-Bandit.md, Skill-Incrementality-Measurement.md
 ---

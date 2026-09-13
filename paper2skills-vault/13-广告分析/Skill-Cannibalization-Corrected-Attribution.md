@@ -13,6 +13,7 @@ venue: ADKDD 2026
 venue_tier: workshop
 evidence_grade: A
 verified_by: verify_skill_code.py (K1 PASS) + quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
+verified_at: 2026-09-12
 supersedes:
 related: Skill-Ad-Attribution-Modeling.md, Skill-ROAS-Budget-Optimization.md, Skill-DiD-Difference-in-Differences.md, Skill-Power-Analysis-Sample-Size.md, Skill-Marketing-Mix-Modeling.md
 ---
