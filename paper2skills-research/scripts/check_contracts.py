@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""契约层（L4）校验器 —— 判据 J1–J12 + 自检 + 变异测试。
+"""契约层（L4）校验器 —— 判据 J1–J13 + 自检 + 变异测试。
 
 判据只认一处事实源：`capability-graph.json`（PHASE6 F2 产出）。
 契约文件里凡与图谱相关的字段都由 `build_contracts.py --skeleton` 生成，
@@ -19,7 +19,7 @@
     python3 check_contracts.py --all                     # 扫契约目录
     python3 check_contracts.py --file <契约.md>           # 单份（写卡时用）
     python3 check_contracts.py --json-out <path>
-    python3 check_contracts.py --selftest                # 12 判据 + 变异表
+    python3 check_contracts.py --selftest                # 13 判据 + 变异表
 """
 from __future__ import annotations
 
@@ -50,6 +50,48 @@ STATUS_ENUM = ("可写", "待卡", "数据待盘", "方法待启用")
 # 反对冲：这三句是 SkillOpt 补丁的死法（26/40 挂上对冲措辞，Δ 从 −0.95 变 −1.10）
 HEDGE_TOKENS = ("临时默认值", "需重新标定", "须重新标定", "待标定")
 CELL_RE = re.compile(r"FLOW-0[1-8]/STG-0[1-8]")
+
+# --- J13（v2 正面义务）：写了缺口就必须写「那先用什么」 ---
+# 来由：F6 实测契约臂「以省略代对冲」——量化判据中位 3（对照 19.5 / 单卡 22），
+# 弃权语中位 2（其余两臂 0），缺口句处置率 **0.000**。修法是给禁令补上对称的义务，
+# 所以判据必须能**打红**「只写缺口不写处置」——否则模板里那句「不得留白」就是摆设。
+UNIT_RE = re.compile(r"\d+(?:\.\d+)?\s*(?:%|％|倍|天|小时|分钟|秒|日|周|月|年|个|条|款|元|美元|万|亿|次|人|分|折|国|SKU|pp|‰)")
+GAP_TOKENS = ("暂无", "未定名", "不可得", "拿不到", "取不到", "尚未", "待定", "未知")
+DISPOSAL_TOKENS = ("替换", "失效", "改用", "顶替", "代为", "先行", "暂按", "暂用",
+                   "生效条件", "到位后", "上线后", "接入后", "补充后")
+ALT_MARK = "替代路径"
+# ⚠️ 只认 ASCII 声明的模板版本；拿不到就按 v1 免检，但**数量进摘要**（run() 里报出来）。
+#    「静默豁免」是本仓库吃过四次亏的东西，所以豁免一律要计数。
+def is_v2(c) -> bool:
+    v = c.fm.get("template_version")
+    try:
+        return int(str(v)) >= 2
+    except (TypeError, ValueError):
+        return False
+
+
+# 「取值」必须是**带标签的行**里的数字。
+# ⚠️ 首版直接用 UNIT_RE 扫全段，自检当场打红：散文里的「近 2 个完整年度」被当成了取值
+#    （`2 个`名副其实地匹配上了单位表）—— 那是 §2 的数据要求，不是本业务的标定取值。
+#    这与漏洞 #14 同源：**判据的适用范围被默认成了全体，而它其实只覆盖一个子集。**
+VALUE_LABEL_RE = re.compile(r"(取值|阈值|默认值|基线|区间|容差档|目标值|分档)")
+_BARE_DIGIT_RE = re.compile(r"\d")
+
+
+def has_value(text: str) -> bool:
+    """带取值标签的行里出现数字 ⇒ 认为给出了取值（模板 §3 的 `- 取值：<...>` 形态）。"""
+    return any(VALUE_LABEL_RE.search(ln) and _BARE_DIGIT_RE.search(ln) for ln in text.splitlines())
+
+
+def has_disposal(text: str) -> bool:
+    return any(tok in text for tok in DISPOSAL_TOKENS)
+
+
+def gap_without_disposal(text: str) -> bool:
+    """该段写了缺口却没有处置 ⇒ True（= 应当判红）。"""
+    if not any(tok in text for tok in GAP_TOKENS):
+        return False
+    return not (has_value(text) or has_disposal(text))
 AGT_RE = re.compile(r"\bAGT-0\d{2}\b")
 
 
@@ -98,6 +140,16 @@ class Contract:
         s = self.sections.get(n)
         return s["title"] if s else ""
 
+    # 五维的「取值 + 缺值处置」两格（J13 用；data_dims 只取第一格，J5 用）
+    def dim_cells(self) -> dict:
+        n = 2 if self.template == "A" else 5
+        body = self.section(n)
+        out = {}
+        for label in DIM_LABELS:
+            m = re.search(rf"{label}[^\n|]*\|([^\n|]*)\|([^\n|]*)", body)
+            out[label] = ((m.group(1).strip(), m.group(2).strip()) if m else ("", ""))
+        return out
+
     # 五维取值：从 2 段（A）或 5 段（B）取值
     def data_dims(self) -> dict:
         n = 2 if self.template == "A" else 5
@@ -145,6 +197,12 @@ def _check_one(c: Contract, idx, assignments) -> list:
 
     # --- J2 frontmatter 与图谱逐字段一致（防手改成第二份事实源）---
     for k in BC.FM_KEYS:
+        if k == "template_version":
+            # 期望值来自生成器常量，不由图谱导出。缺席 = F6 v1 底本 ⇒ 不算错，
+            # 但**必须计数**（见 run() 的摘要）：静默豁免正是本仓库吃过四次亏的东西。
+            if "template_version" in c.fm and BC.norm_val(c.fm.get(k)) != str(BC.TEMPLATE_VERSION):
+                red("J2", f"template_version={c.fm.get(k)!r}，本版生成器写 {BC.TEMPLATE_VERSION}")
+            continue
         got, want = BC.norm_val(c.fm.get(k)), meta[k]
         if got != want:
             red("J2", f"{k} 与图谱不一致：文件={got!r} 图谱={want!r}")
@@ -249,6 +307,39 @@ def _check_one(c: Contract, idx, assignments) -> list:
         red("J12", "status=待卡 却有 cards —— 两者必须一致")
     if st == "可写" and not (BC.norm_val(c.fm.get("cards")) or []):
         red("J12", "status=可写 却无 cards")
+
+    # --- J13（v2 正面义务）---
+    # 只对声明了 template_version ≥ 2 的契约生效；缺席 = F6 v1 底本，按 v1 口径免检，
+    # 免检份数在 run() 的摘要里如实报出（豁免必须可见，否则就是新后门）。
+    if c.written and is_v2(c):
+        if meta["template"] == "A":
+            rule = c.section(3)
+            if gap_without_disposal(rule):
+                red("J13", "§3 以缺口结案却没写处置 —— 缺口陈述不是结论，必须接「先用什么 + 何时换」")
+            elif not has_value(rule):
+                red("J13", "§3 只有算式、没有本业务取值（既无「数字+单位」也无缺口+处置）")
+        else:
+            reach = c.section(1)
+            if gap_without_disposal(reach):
+                red("J13", "§1 以缺口结案却没写处置 —— 「可复算」是形容词，不是取值")
+            elif not has_value(reach):
+                red("J13", "§1 没有给出本业务取值（既无「数字+单位」也无缺口+处置）")
+            # B 模板 §2：每一条不可达都必须带替代路径（「不可达」是分工，不是免责）
+            body2 = c.section(2)
+            items = [ln for ln in body2.splitlines() if re.match(r"^\s*(?:[-*]|\d+[.、])\s+\S", ln)]
+            marks = len(re.findall(ALT_MARK, body2))
+            if not items:
+                red("J13", "§2 没有列出任何不可达条目")
+            elif marks < len(items):
+                red("J13", f"§2 有 {len(items)} 条不可达但只有 {marks} 条「{ALT_MARK}」——"
+                           "只写「做不到」是免责，写出「谁在何时补」才是分工")
+        # 五维：取值为缺口时，缺值处置格必填
+        for label, (val, disp) in c.dim_cells().items():
+            if any(tok in val for tok in GAP_TOKENS):
+                if not disp or disp in ("—", "-", "无"):
+                    red("J13", f"{label} 是缺口但「缺值处置」为空 —— 那先用什么？")
+                elif not (_BARE_DIGIT_RE.search(disp) or has_disposal(disp)):
+                    red("J13", f"{label} 的「缺值处置」既没有替代取值也没有替换条件：{disp!r}")
     return bad
 
 
@@ -283,6 +374,19 @@ def find_card(slug: str, idx) -> bool:
 # ---------------------------------------------------------------------------
 # 汇总 / 覆盖率 / 计数
 # ---------------------------------------------------------------------------
+def _rel(p: Path) -> str:
+    """仓库内路径 → 相对路径；仓库外路径 → 原样返回。
+
+    ⚠️ 原来直接 `p.relative_to(REPO_ROOT)`：传**仓库外的相对路径**时抛 ValueError，
+    于是**判红的原因被 traceback 吞掉**，只剩一个退出码 1 —— 门禁自己崩了与门禁判红
+    在流水线里必须可区分（这条与已登记的缺陷 #13 同源，由 F7 的契约撰写人实测撞出）。
+    """
+    try:
+        return str(p.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(p)
+
+
 def collect_files(paths) -> list:
     if paths:
         return [Path(p) for p in paths]
@@ -300,7 +404,7 @@ def run(files, idx, json_out=None) -> int:
     problems = []
     for c in contracts:
         for code, msg in check_one(c, idx, assignments):
-            problems.append({"file": str(c.path.relative_to(REPO_ROOT)), "code": code, "msg": msg})
+            problems.append({"file": _rel(c.path), "code": code, "msg": msg})
 
     seen = {c.fm.get("responsibility") for c in contracts if c.fm}
     n_a = sum(1 for c in contracts if c.template == "A")
@@ -311,6 +415,13 @@ def run(files, idx, json_out=None) -> int:
     print(f"契约文件 {len(contracts)} 份（A {n_a} / B {n_b}） · 已撰写 {len(written)} · 未撰写 {len(contracts) - len(written)}")
     print(f"目标分母 {total_expected}（A {exp_a} / B {exp_b}） · 入账覆盖 {len(seen & set(assignments))}/{total_expected} "
           f"= {coverage:.1%} · 已撰写覆盖 {written_cov:.1%}")
+    # J13 的豁免必须**可见**：未标 template_version 的按 v1 口径免检，份数是一等输出。
+    # 「静默豁免」与「新增一个不阻塞的结局」同型，都是新后门（见 CLAUDE.md #10）。
+    v2 = [c for c in written if is_v2(c)]
+    v1 = [c for c in written if not is_v2(c)]
+    print(f"模板版本：v2 {len(v2)} 份（J13 生效） · 无 template_version {len(v1)} 份（F6 v1 底本，J13 免检）")
+    if v1:
+        print("  免检名单：" + "、".join(sorted(c.fm.get("contract_id", "?") for c in v1)))
     if coverage and coverage < 1.0:
         print("⚠️ 覆盖不足 ⇒ **不给「139 份齐全」的结论**（核对率是一等输出）")
     if n_a > exp_a or n_b > exp_b:
@@ -330,6 +441,8 @@ def run(files, idx, json_out=None) -> int:
             "counts": {"files": len(contracts), "written": len(written), "A": n_a, "B": n_b,
                        "expected_total": total_expected, "expected_A": exp_a, "expected_B": exp_b},
             "coverage": {"entered": coverage, "written": written_cov},
+            "template_version": {"v2": len(v2), "v1_exempt": len(v1),
+                                 "v1_ids": sorted(c.fm.get("contract_id", "?") for c in v1)},
             "problems": problems,
         }, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"→ {json_out}")
@@ -351,20 +464,21 @@ def _fixture(idx, template: str, name: str, cards=(), status="可写") -> str:
 - 卡：{cards[0] if cards else '（无）'}
 - **不得移植的部分**：卡内阈值 0.75 与 0.2、迭代 3 轮
 
-## 2 数据要求（五维）
+## 2 数据要求（五维 · 三列）
 
-| 维 | 取值 |
-|---|---|
-| 获取路径 | 自有埋点 |
-| 粒度 | 用户 × 日 |
-| 回溯深度 | 2 个完整年度 |
-| 新鲜度 | T+1 |
-| 口径归属 | AGT-045 指标契约 |
+| 维 | 取值 | 缺值处置 |
+|---|---|---|
+| ① 获取路径 | 自有埋点 | — |
+| ② 粒度 | 用户 × 日 | — |
+| ③ 回溯深度 | 2 个完整年度 | — |
+| ④ 新鲜度 | T+1 | — |
+| ⑤ 口径归属 | AGT-045 指标契约 | — |
 
 ## 3 标定规则
 
 - 取值来源：自有埋点（{name} 台账）
 - 算式：按近 2 个完整年度的分组分配率取最大差，与业务规则字典的容差档比较
+- 取值：容差档 5%（= 业务规则字典里该标签的容差档）
 
 ## 4 重标定触发条件
 
@@ -383,30 +497,33 @@ def _fixture(idx, template: str, name: str, cards=(), status="可写") -> str:
 ## 1 算法可达部分
 
 - 按历史台账算出排序分（可取数复算）
+- 算式：按〈采购台账〉近 2 个完整年度的准时交付率、批次不良率与采购价加权
+- 取值：排序分 0–100，取数即得
 
 ## 2 不可达部分
 
 - 需外部事实：验厂结论与真实产能
+  → 替代路径：由 AGT-014 在 STG-04 前补齐验厂报告；补不上时该供应商不进候选集
 
 ## 3 必须的外部证据与责任岗位
 
-| 证据 | 由谁提供（AGT） | 何时必须拿到 |
-|---|---|---|
-| 验厂报告 | AGT-014 | STG-04 前 |
+| 证据 | 由谁提供（AGT） | 何时必须拿到 | 拿不到时的处置 |
+|---|---|---|---|
+| 验厂报告 | AGT-014 | STG-04 前 | 不进候选集，先用上一轮合格名录顶替 |
 
 ## 4 该格何时必须冻结
 
 - 排序进前 3 但验厂报告缺失时不得进入 STG-07
 
-## 5 数据要求（五维）
+## 5 数据要求（五维 · 三列）
 
-| 维 | 取值 |
-|---|---|
-| 获取路径 | 需授权 |
-| 粒度 | 供应商 × 批次 |
-| 回溯深度 | 2 个完整年度 |
-| 新鲜度 | 每季 |
-| 口径归属 | AGT-045 指标契约 |
+| 维 | 取值 | 缺值处置 |
+|---|---|---|
+| ① 获取路径 | 需授权 | — |
+| ② 粒度 | 供应商 × 批次 | — |
+| ③ 回溯深度 | 2 个完整年度 | — |
+| ④ 新鲜度 | 每季 | — |
+| ⑤ 口径归属 | AGT-045 指标契约 | — |
 
 ## 6 适用 FLOW
 
@@ -464,19 +581,40 @@ def selftest(idx) -> int:
             ("J3", "正文把 R 格说成算法接入格",
              base_a.replace("## 6 冻结与不许自动放行的情形", "## 6 冻结与不许自动放行的情形\n\n- FLOW-07/STG-02 上挂分类模型", 1)),
             ("J4", "flows 里加一条不属于该岗位的 FLOW", base_a.replace("flows: [FLOW-07, FLOW-08]", "flows: [FLOW-07, FLOW-08, FLOW-01]", 1)),
-            ("J5", "把获取路径改成「数据可得」", base_a.replace("| 获取路径 | 自有埋点 |", "| 获取路径 | 数据可得 |", 1)),
-            ("J5", "删掉一回溯深度", base_a.replace("| 回溯深度 | 2 个完整年度 |", "", 1)),
-            ("J6", "写不可得但仍标可写", base_a.replace("| 获取路径 | 自有埋点 |", "| 获取路径 | 不可得 |", 1)),
+            ("J5", "把获取路径改成「数据可得」", base_a.replace("| ① 获取路径 | 自有埋点 | — |", "| ① 获取路径 | 数据可得 | — |", 1)),
+            ("J5", "删掉一回溯深度", base_a.replace("| ③ 回溯深度 | 2 个完整年度 | — |", "", 1)),
+            ("J6", "写不可得但仍标可写", base_a.replace("| ① 获取路径 | 自有埋点 | — |", "| ① 获取路径 | 不可得 | — |", 1)),
             ("J6", "不可得只作子项却仍标可写（两级判据的另一半）",
-             base_a.replace("| 获取路径 | 自有埋点 |", "| 获取路径 | 自有埋点；不可得：审计容量台账 |", 1)),
+             base_a.replace("| ① 获取路径 | 自有埋点 | — |", "| ① 获取路径 | 自有埋点；不可得：审计容量台账 | — |", 1)),
             ("J7", "删掉标定规则段", re.sub(r"## 3 标定规则.*?## 4", "## 4", base_a, flags=re.S)),
             ("J7", "把段标题里的关键词换掉", base_a.replace("## 3 标定规则", "## 3 参数说明", 1)),
-            ("J8", "第 3 段点名一个不存在的岗位号", base_b.replace("AGT-014", "AGT-099", 1)),
+            ("J8", "第 3 段点名一个不存在的岗位号",
+             base_b.replace("| 验厂报告 | AGT-014 |", "| 验厂报告 | AGT-099 |", 1)),
             ("J8", "第 3 段一个岗位号都不写", base_b.replace("| 验厂报告 | AGT-014 | STG-04 前 |", "| 验厂报告 | 供应商管理 | STG-04 前 |", 1)),
             ("J9", "标定规则换成纯对冲句",
              re.sub(r"## 3 标定规则.*?## 4",
                     "## 3 标定规则\n\n- 阈值需重新标定，标定前当临时默认值\n\n## 4", base_a, flags=re.S)),
             ("J12", "引用一张不存在的卡", base_a.replace(f"cards: [{a_card}]", "cards: [Skill-Not-Exist-At-All]", 1)),
+            # --- J13（v2 正面义务）四份变异 + 两份反向 ---
+            ("J13", "A §3 只有算式、没有本业务取值",
+             re.sub(r"## 3 标定规则.*?## 4",
+                    "## 3 标定规则\n\n- 取值来源：自有埋点（台账）\n"
+                    "- 算式：按近 2 个完整年度的分组分配率取最大差\n\n## 4", base_a, flags=re.S)),
+            ("J13", "A §3 以缺口结案却不写处置",
+             re.sub(r"## 3 标定规则.*?## 4",
+                    "## 3 标定规则\n\n- 阈值：本业务暂无此数据\n\n## 4", base_a, flags=re.S)),
+            ("J13", "B §1 只写「可复算」不给取值",
+             re.sub(r"## 1 算法可达部分.*?## 2",
+                    "## 1 算法可达部分\n\n- 按历史台账算出排序分（可取数复算）\n\n## 2", base_b, flags=re.S)),
+            ("J13", "B §2 拿掉替代路径（只写「做不到」= 免责）",
+             base_b.replace("  → 替代路径：由 AGT-014 在 STG-04 前补齐验厂报告；补不上时该供应商不进候选集", "", 1)),
+            ("J13", "取值标签在但没给数字（「取值：待定」）",
+             re.sub(r"## 3 标定规则.*?## 4",
+                    "## 3 标定规则\n\n- 取值来源：自有埋点（台账）\n- 算式：按近 2 个完整年度的分组分配率取最大差\n"
+                    "- 取值：待定\n\n## 4", base_a, flags=re.S)),
+            ("J13", "五维取值是缺口、缺值处置为空",
+             base_a.replace("| ③ 回溯深度 | 2 个完整年度 | — |",
+                            "| ③ 回溯深度 | 本业务暂无此数据 | — |", 1)),
             # 解析层的两个方向：方括号未闭合必须**收成判据**（不是让门禁崩掉），
             # 行尾注释必须**能正常解析**（否则 norm_val 退回整串，下游按字符遍历 = 静默错配）
             ("J2", "列表字段方括号未闭合", base_a.replace("flows: [FLOW-07, FLOW-08]", "flows: [FLOW-07, FLOW-08", 1)),
@@ -491,6 +629,27 @@ def selftest(idx) -> int:
             p.write_text(text, encoding="utf-8")
             got = {c for c, _ in check_one(Contract(p), idx, assignments)}
             expect(code in got, f"变异应被 {code} 抓住：{label}（实得 {sorted(got) or '全绿'}）")
+
+        # --- J13 的两份**反向**用例：判据过宽会把正常写作判红，那比漏判更糟 ---
+        # ① 缺口**带**处置 ⇒ 不得红（这正是 v2 要求的形态）
+        ok_gap = td / "ok-gap.md"
+        ok_gap.write_text(base_a.replace(
+            "| ③ 回溯深度 | 2 个完整年度 | — |",
+            "| ③ 回溯深度 | 本业务暂无此数据 | 先按经营者自述的近 2 个完整年度暂按取值，〈采购台账〉接入后替换为台账首单日 |", 1),
+            encoding="utf-8")
+        got_ok = {c for c, _ in check_one(Contract(ok_gap), idx, assignments)}
+        expect("J13" not in got_ok, f"缺口带处置不得判红（实得 {sorted(got_ok) or '全绿'}）")
+        # ② 未标 template_version 的 v1 底本 ⇒ J13 不适用（豁免生效）；**但豁免必须有计数器**，
+        #    计数逻辑本身在下面 run() 的摘要里，这里只锁「不误判」这一半
+        v1_text = base_a.replace("template_version: 2\n", "", 1).replace(
+            "## 3 标定规则", "## 3 标定规则", 1)
+        v1_text = re.sub(r"## 3 标定规则.*?## 4",
+                         "## 3 标定规则\n\n- 阈值：本业务暂无此数据\n\n## 4", v1_text, flags=re.S)
+        p_v1 = td / "mut-v1-exempt.md"
+        p_v1.write_text(v1_text, encoding="utf-8")
+        got_v1 = {c for c, _ in check_one(Contract(p_v1), idx, assignments)}
+        expect("J13" not in got_v1, f"v1 底本（无 template_version）不适用 J13（实得 {sorted(got_v1) or '全绿'}）")
+        expect(not is_v2(Contract(p_v1)), "未标 template_version 的契约必须被判为非 v2")
 
         # --- 覆盖率与计数：篡改总量必须让「139」这条断言失败 ---
         expect(len(assignments) == 139, f"契约总数应为 139，实得 {len(assignments)}")

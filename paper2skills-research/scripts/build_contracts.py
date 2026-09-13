@@ -43,10 +43,14 @@ RD_STAGES = ("STG-01", "STG-02", "STG-03", "STG-06", "STG-07")
 
 TODO_MARK = "<!-- 待撰写 -->"
 UNWRITTEN_STATUS = "待卡"  # 骨架默认；撰写人按实际覆盖
+# 模板版本：写进 frontmatter，决定 J13（正面义务）是否适用。
+# 为什么是字段而不是目录约定：目录可以被搬，字段跟着文件走；且「没有这个字段」这件事本身
+# 就是「F6 v1 底本」的可核验标记 —— 摘要里如实报「按 v1 免检 N 份」，不是静默豁免。
+TEMPLATE_VERSION = 2
 
 A_HEADERS = (
     "## 1 方法来源（卡供方法）",
-    "## 2 数据要求（五维）",
+    "## 2 数据要求（五维 · 三列）",
     "## 3 标定规则",
     "## 4 重标定触发条件",
     "## 5 适用 FLOW",
@@ -57,7 +61,7 @@ B_HEADERS = (
     "## 2 不可达部分",
     "## 3 必须的外部证据与责任岗位",
     "## 4 该格何时必须冻结",
-    "## 5 数据要求（五维）",
+    "## 5 数据要求（五维 · 三列）",
     "## 6 适用 FLOW",
 )
 
@@ -193,6 +197,10 @@ def fm_block(meta: dict, cards=(), status=UNWRITTEN_STATUS, blocked_by=None) -> 
         "---",
         f"contract_id: {meta['contract_id']}",
         f"template: {meta['template']}",
+        # 模板版本：J13（正面义务）按 v2 口径生效。
+        # 显式写进 frontmatter 而不是靠目录推断 —— F6 的 v1 底本没有这个字段，
+        # 于是 J13 对它们不适用；摘要里「按 v1 免检 N 份」是一等输出，不是静默豁免。
+        f"template_version: {TEMPLATE_VERSION}",
         f"responsibility: {meta['responsibility']}",
         f"role_id: {meta['role_id']}",
         f"role_title: {meta['role_title']}",
@@ -276,7 +284,7 @@ def emit_list(idx: GraphIndex, json_out=None):
     return rows
 
 
-FM_KEYS = ("contract_id", "template", "responsibility", "role_id", "role_title",
+FM_KEYS = ("contract_id", "template", "template_version", "responsibility", "role_id", "role_title",
            "domain_id", "plane_id", "serviceability", "flows", "method_cells", "rule_cells")
 
 
@@ -316,7 +324,7 @@ def check(idx: GraphIndex, outdir: Path):
     """frontmatter 漂移检测：重算一遍，与文件逐字段比对。"""
     assignments = idx.assignments()
     files = sorted(p for p in outdir.rglob("CTR-*.md"))
-    problems, checked, written, unwritten = [], 0, 0, 0
+    problems, checked, written, unwritten, legacy_v1 = [], 0, 0, 0, []
     for p in files:
         text = p.read_text(encoding="utf-8")
         fm = read_frontmatter(text)
@@ -328,7 +336,16 @@ def check(idx: GraphIndex, outdir: Path):
             problems.append((p, f"责任名不在图谱内：{name!r}"))
             continue
         exp = assignments[name]
+        # template_version 的缺席是**可核验的**「F6 v1 底本」标记：老文件不因此报错，
+        # 但数量必须报出来（漏报 = 静默豁免，本仓库付过学费）。
+        if "template_version" not in fm:
+            legacy_v1.append(p)
         for k in FM_KEYS:
+            if k == "template_version":
+                # 期望值来自脚本常量（不由图谱导出）；缺席已记入 legacy_v1
+                if "template_version" in fm and norm_val(fm.get(k)) != str(TEMPLATE_VERSION):
+                    problems.append((p, f"template_version={fm.get(k)!r}，本版生成器写 {TEMPLATE_VERSION}"))
+                continue
             got, want = norm_val(fm.get(k)), exp[k]
             if got != want:
                 problems.append((p, f"{k} 与图谱不一致：文件={got!r} 图谱={want!r}"))
@@ -341,6 +358,8 @@ def check(idx: GraphIndex, outdir: Path):
     cov = checked / total if total else 0.0
     print(f"契约文件 {len(files)} 个 · frontmatter 与图谱一致 {checked}/{total}（核对率 {cov:.1%}）")
     print(f"已撰写 {written} · 未撰写（含 {TODO_MARK}）{unwritten}")
+    print(f"模板版本：v{TEMPLATE_VERSION} {checked - len(legacy_v1)} 份 · "
+          f"无 template_version（F6 v1 底本，J13 不适用）{len(legacy_v1)} 份")
     if cov < 0.9:
         print("⚠️ 核对率 < 90% ⇒ **不给「完整」结论**（「没东西可查」不等于「查过了没问题」）")
     for p, why in problems:
