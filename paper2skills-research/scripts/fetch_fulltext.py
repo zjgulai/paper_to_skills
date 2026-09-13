@@ -12,6 +12,26 @@ PHASE 3 前置工具：萃取卡片前必须拿到**全文**，不能只看摘�
    关键：**保留章节层级**，否则无法产出可核验的出处标注。
 3. **存档**：落到 `paper2skills-vault/papers/<domain>/<paper_id>/fulltext.md`
    （+ `paper.pdf` 若有），与 `evidence.md` 同目录，形成「全文 ↔ 证据」闭环。
+   **落盘时必须写清这是哪个版本**（下方「版本标识」一节）。
+
+## 版本标识（2026-09-13 新增，对应缺陷 C5 / 甲类 A6）
+
+为什么必须写：同一篇论文的 arXiv v1 与正式发表版**内容可以完全不同**。
+实测 A6（`Skill-Reflexion-Self-Improvement.md`）：卡片引的是 **NeurIPS 正式版**结论
+（HumanEval 91% pass@1），而仓库底本是 **arXiv v1**（只评测 AlfWorld 与 HotPotQA，
+全文 `HumanEval` / `pass@1` **各 0 命中**）。引文本身逐字存在于 v1，于是
+`quote_check.py` 报 VERBATIM —— **绿的是另一句话**。
+
+故底本头部固定写两个字段（`quote_check.py` 直接读它们）：
+
+    arxiv_version : v1              # 人类可读
+    version_id    : 2303.11366v1    # 机器可读，唯一键
+
+- HTML 路径：版本来自实际命中的 `https://arxiv.org/html/{id}v{n}`（`fetch()` 的 `version`）。
+- PDF 路径：arXiv 的 `/pdf/{id}` 不带版本号 → 写 `unknown`。
+  **`unknown` 不等于「版本一致」** —— 它表示「无从比较」，`quote_check` 对此只出
+  `UNKNOWN`，不产生任何版本结论。
+- 若 `source` 里能解出版本号（含历史存档），优先用 `source`，与 `version` 参数互为兜底。
 
 用法：
     python3 fetch_fulltext.py --arxiv 2606.26690 --domain 13-广告分析 --paper-id p2s-2026-0001
@@ -412,17 +432,47 @@ def fetch(arxiv_id: str, max_time: int = 120, verbose: bool = True) -> dict:
 # --------------------------------------------------------------------------
 
 
+_ARXIV_URL_VER_RE = re.compile(
+    r"arxiv\.org/(?:html|pdf|abs)/(\d{4}\.\d{4,5})v(\d+)")
+
+
+def version_of(arxiv_id: str, source: str, version: int = 0) -> tuple[str, str]:
+    """→ (version_id, arxiv_version)，形如 `("2303.11366v1", "v1")`。
+
+    解不出时返回 `("unknown", "unknown")` —— **不要退回空串**：
+    空串在有版本与无版本之间不可区分，会被下游误读成「一致」。
+    `quote_check.py` 对 `unknown` 只出 `UNKNOWN`（无从比较），绝不给出版本结论。
+
+    优先级：`source` URL 里的 `v{n}` > `fetch()` 的 `version` 参数。
+    （`source` 是**实际命中**的那个 URL，比参数更可信；PDF 路径两者都解不出。）
+    """
+    m = _ARXIV_URL_VER_RE.search(source or "")
+    if m:
+        return f"{m.group(1)}v{m.group(2)}", f"v{m.group(2)}"
+    if version:
+        return f"{arxiv_id}v{version}", f"v{version}"
+    return "unknown", "unknown"
+
+
 def archive(arxiv_id: str, domain: str, paper_id: str, md: str,
-            source: str, ok: bool) -> Path:
-    outdir = PAPERS_DIR / domain / paper_id
+            source: str, ok: bool, version: int = 0,
+            out_root: Path | None = None) -> Path:
+    outdir = (out_root or PAPERS_DIR) / domain / paper_id
     outdir.mkdir(parents=True, exist_ok=True)
+    vid, vlabel = version_of(arxiv_id, source, version)
     header = (
         f"<!-- 自动生成 by paper2skills-research/scripts/fetch_fulltext.py\n"
         f"     arxiv_id : {arxiv_id}\n"
         f"     paper_id : {paper_id}\n"
         f"     source   : {source}\n"
         f"     fulltext : {'是' if ok else '否（仅摘要）'}\n"
+        f"     arxiv_version : {vlabel}\n"
+        f"     version_id : {vid}\n"
         f"     用途     : evidence.md 的 `> 原文:\"...\"` 引用块的出处核验底本\n"
+        f"     版本标识 : quote_check.py 直接读 arxiv_version / version_id ——\n"
+        f"                同一论文的 v1 与正式版内容可不同，缺这两行会让\n"
+        f"                「引正式版结论、底本是 v1」静默通过（缺陷 C5 / A6）。\n"
+        f"                不要删除或改名。\n"
         f"-->\n\n"
     )
     dst = outdir / "fulltext.md"
@@ -454,6 +504,23 @@ BATCHES = {
 # 走 registry 会把它们全落到 `papers/_unfiled/`，与卡片目录脱节。
 # 而 quote_check 是按 **paper_id 匹配**找底本，与目录位置无关，所以放对域更可读。
 
+def _rel(p: Path) -> Path:
+    """尽量给仓库相对路径，给不出就原样返回绝对路径。
+
+    ⚠️ 不能直接用 `p.relative_to(REPO_ROOT)`（2026-09-13 修）：
+    `convert_pdf_mode()` 的 `out_root` 是可传参的，一旦指向仓库外
+    （例如自检/验证时落到 `tempfile.mkdtemp()`），`relative_to` 会抛
+    `ValueError` —— 于是**整个函数在合法入参下崩溃**，
+    而它崩在**写盘之后**的日志行上：文件已落盘、调用方却看到异常。
+    这种「已经成功却报失败」的形态正是本仓库反复封堵的假失败类型
+    （与 repo_health `--json-out` 父目录不存在而崩同类）。
+    """
+    try:
+        return p.relative_to(REPO_ROOT)
+    except ValueError:
+        return p
+
+
 def convert_pdf_mode(src_pdf: Path, domain: str, paper_id: str,
                      out_root: Path, verbose: bool = True) -> tuple[bool, str]:
     """把已存在的本地 PDF 转成 fulltext.md（不做网络请求）。
@@ -475,20 +542,26 @@ def convert_pdf_mode(src_pdf: Path, domain: str, paper_id: str,
 
     outdir = out_root / domain / paper_id
     outdir.mkdir(parents=True, exist_ok=True)
+    vid, vlabel = version_of(paper_id, str(src_pdf))
     header = (
         f"<!-- 自动生成 by paper2skills-research/scripts/fetch_fulltext.py --pdf\n"
         f"     arxiv_id : {paper_id}\n"
         f"     paper_id : {paper_id}\n"
-        f"     source   : {src_pdf.relative_to(REPO_ROOT)}\n"
+        f"     source   : {_rel(src_pdf)}\n"
         f"     fulltext : 是（本地 PDF 转换）\n"
+        f"     arxiv_version : {vlabel}\n"
+        f"     version_id : {vid}\n"
         f"     用途     : evidence.md 的 `> 原文:\"...\"` 引用块的出处核验底本\n"
+        f"     版本标识 : 本地 PDF 文件名里一般不含版本号 → 通常为 `unknown`。\n"
+        f"                `unknown` 表示**无从比较**，不是「版本一致」；\n"
+        f"                quote_check.py 对此只出 UNKNOWN，不给版本结论。\n"
         f"-->\n\n"
     )
     dst = outdir / "fulltext.md"
     dst.write_text(header + md, encoding="utf-8")
-    log(f"  ✅ {src_pdf.name} → {dst.relative_to(REPO_ROOT)}  "
+    log(f"  ✅ {src_pdf.name} → {_rel(dst)}  "
         f"（raw {len(raw)} → 接行 {len(md)} 字符）")
-    return True, str(dst.relative_to(REPO_ROOT))
+    return True, str(_rel(dst))
 
 
 def _run_from_worklist(worklist: Path, only: set[str], out_root: Path,
@@ -535,7 +608,8 @@ def _run_from_worklist(worklist: Path, only: set[str], out_root: Path,
             failures.append(f"{c['card']} ({pid}): {res['reason']}")
             fail += 1
             continue
-        dst = archive(pid, dom, pid, res["markdown"], res["source"], res["ok"])
+        dst = archive(pid, dom, pid, res["markdown"], res["source"], res["ok"],
+                      res.get("version", 0))
         if res["ok"]:
             ok += 1
         else:
@@ -543,7 +617,7 @@ def _run_from_worklist(worklist: Path, only: set[str], out_root: Path,
             # quote_check 的 MIN_FULLTEXT_CHARS，所以它**不能**算成功。
             failures.append(f"{c['card']} ({pid}): {res['reason']}")
             fail += 1
-        print(f"  → {dst.relative_to(REPO_ROOT)}  ({len(res['markdown'])} 字符)")
+        print(f"  → {_rel(dst)}  ({len(res['markdown'])} 字符)")
         time.sleep(THROTTLE_SECONDS)
 
     print(f"\n完成: 成功 {ok}，失败/降级 {fail}")
@@ -634,8 +708,9 @@ def main() -> int:
             failures.append(f"{aid}: {res['reason']}")
             continue
 
-        dst = archive(aid, domain, pid, res["markdown"], res["source"], res["ok"])
-        print(f"  → {dst.relative_to(REPO_ROOT)}  ({len(res['markdown'])} 字符)")
+        dst = archive(aid, domain, pid, res["markdown"], res["source"], res["ok"],
+                      res.get("version", 0))
+        print(f"  → {_rel(dst)}  ({len(res['markdown'])} 字符)")
         if not res["ok"]:
             failures.append(f"{aid}: {res['reason']}")
         time.sleep(THROTTLE_SECONDS)
