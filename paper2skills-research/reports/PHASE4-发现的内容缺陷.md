@@ -42,8 +42,8 @@
 
 | # | 问题 | 状态 |
 |---|------|------|
-| C1 | `papers/01-因果推断/uplift_model_2019/extract.md` **把 arXiv:1801.05045 说成 Athey & Imbens 的 treatment effects 论文**，而该 ID 实为 hep-th 物理论文；同目录 PDF 就是那篇物理文。摘要亦为编造 | **待修**：删除或标注该 extract.md 为错误 |
-| C2 | `papers/02-A_B实验/mab_2019/extract.md`、`papers/03-时间序列/forecasting_2019/extract.md` 的「论文摘要」是 LLM 风格**合成文本**（其中一条还写着 "cross-border e-commerce where ad creative testing is continuous"，非任何真实摘要）；旁边才是真本 PDF（1707.02038 / 1912.09363） | **待修**：同 C1。⚠️ 建议 G2 证据收集**明确排除历史 `extract.md`**，否则等于把合成引文接进证据链 |
+| C1 | `papers/01-因果推断/uplift_model_2019/extract.md` **把 arXiv:1801.05045 说成 Athey & Imbens 的 treatment effects 论文**，而该 ID 实为 hep-th 物理论文；同目录 PDF 就是那篇物理文。摘要亦为编造 | ✅ **已修**（`c9e8151`）：加文件内作废头，逐条写明该份错在哪。另 `cead938` 让 `gate_check` **硬拦截** |
+| C2 | `papers/02-A_B实验/mab_2019/extract.md`、`papers/03-时间序列/forecasting_2019/extract.md` 的「论文摘要」是 LLM 风格**合成文本**（其中一条还写着 "cross-border e-commerce where ad creative testing is continuous"，非任何真实摘要）；旁边才是真本 PDF（1707.02038 / 1912.09363） | ✅ **已修**（`c9e8151` 作废头 + `cead938` 硬拦截）。**C2 末尾的建议已按原话实现**：G2 证据收集现在明确排除历史 `extract.md`。⚠️ 实测补充：全库实有 **15 份** `extract.md`（台账只点名 3 份），另 12 份**未审计** → 判据对**全部 15 份**生效，使「其余是否干净」不再影响正确性 |
 | C3 | `papers/02-A_B实验/1803.06258/paper.pdf`（Liu & Chamberlain）**全库无任何卡片引用** | 孤儿档案，待裁决保留/清理 |
 | C4 | 底本含 **Unicode 细空格**（`+4.5\u2009pp`），肉眼与普通空格无异，手写锚点必然失配 | 已确认 `quote_check.normalize()` 的 NFKC 会等同二者；抽取工具须先归一化 |
 | C5 | `quote_check` **不校验 arXiv 版本号** | **待修**：`fetch_fulltext.py` 落盘时应把版本号写进底本头部（如 `2303.11366v1`）并纳入 `_index_keys`，否则「引正式版结论、底本是 v1」会静默通过（A6 即此情形） |
@@ -72,3 +72,61 @@
 → **结论：G2 的可核验通过率有结构性上限**，除非新增一个「业务外推」的显式标注机制
 （例如要求 ROI 表标注「本表为作者估算」并把它从 G2 断言集中排除）。
 这是下一轮该做的**口径设计**，而不是继续补引文。
+
+---
+
+## 甲类逐条处置（2026-09-13，PHASE5 下午段）
+
+> **索引消歧**：PHASE5 TODO 里的 Y1–Y5 与本表的 A 编号**不是同一套编号**。
+> 对应关系：**Y1=A1、Y2=A2、Y3=A9、Y4=A10、Y5=A3**（按「读者会据此做错决策」的风险排的 Top5）。
+
+| # | 卡片 | 状态 | commit |
+|---|------|------|--------|
+| **A1** | `Skill-Uplift-Churn-Prediction` | ✅ **已修**（真缺陷） | `22e625b` |
+| **A2** | `Skill-Cold-Start-Product-Recommendation` | ✅ **已修**，但**原判「编造」不成立** —— 见下方订正 | `e00e80d` |
+| **A3** | `Skill-Auto-Skill-Synthesis` | ✅ **已修**，但**原处置「应降为 preprint」是错的** —— 见下方订正 | `1c9949d` |
+| **A9** | `Skill-DQN-Purchase-Prediction` | ✅ **已修**（真缺陷），另核出 2 处新不符 | `d879300` |
+| **A10** | `Skill-User-Lifecycle-STAN` | ✅ **已修**，但**归因写法必须改** —— 见下方订正 | `c248957` |
+| A4/A5/A6/A7/A8/A11/A12/A13 | 其余 8 张 | ⏸ **顺延**（PHASE5 TODO §3 S1）。⚠️ **A6 的修法是「补抓正式版全文」而非改卡**，与 A2 同型 | — |
+
+### ⚠️⚠️ 三条「缺陷」经复核**不成立** —— 台账的取证方法本身错了
+
+这三条我都派了子代理，其中**两条被子代理当场拒绝执行并升级**（A2、A3）。
+逐条复核后确认**它们不是卡片缺陷**，而是**台账的取证方法有范畴错误**：
+
+| # | 台账原判 | 复核结论 | 证据 |
+|---|---------|---------|------|
+| **A2** | 卡片称 `ColdLLM`/WSDM 2025/`10.79%` 而底本是 `LLM-InS`，**「疑似编造」** | ❌ **不成立**。`2402.09176` 有 **v1/v2 两版**，仓库底本抓的是 **v1**，而**卡片写的是 v2（WSDM 2025 正式版）**。台账称「编造」的每一项都在 v2 **逐字命中** | `ColdLLM` 在 v2 命中 62 次；arXiv abs `Comments: accepted by WSDM 2025`；DOI `10.1145/3701551.3703546` |
+| **A3** | 卡片写「SIGIR 2026 Industry Track」而底本 `SIGIR` 0 次，**「无录用证据 → 应降为 preprint」** | ❌ **不成立**。**论文正文从不自述 venue**，故底本正文对 venue 声明而言是**错误的仪器**。录用为真 | arXiv abs v2 `Comments: Accepted at ACM SIGIR 2026 Industry Track.`；ACM DOI `10.1145/3805712.3808466`（SIGIR '26 proceedings，**pages 4763-4768**）；本仓库 `venue-whitelist.md` §8 自己就登记着该 DOI 前缀 |
+| **A1** 附带 | 子代理报 `ECML PKDD 2023 Workshop` 底本零命中 →「疑似版本错配，待定」 | ❌ **不成立**。该 venue 为真，证据同样在底本之外 | arXiv abs `Comments: …post-proceedings of the ECML PKDD 2023 Workshop on Uplift Modeling and Causal Machine Learning for Operational Decision Making` |
+
+**根因（一条，三个变体）**：台账把「**与本地 v1 底本不一致**」直接等同于「**卡片与论文实质不符**」。
+但卡片追的往往是**正式发表版**，而 venue 这类事实**本来就不写在论文正文里**。
+
+> ### 📌 由此定下的两条取证规则（凌驾于本表原判法）
+> 1. **venue / 发表类声明 → 一律用 arXiv 元数据（`Comments` / `journal_ref`）与出版方 DOI 判定，
+>    不得用底本正文判定。** 正文里 0 命中是**常态，不是反证**。
+> 2. **内容类声明 → 必须先问「卡片写的是哪一版」，再判对错。**
+>    底本与卡片版本不一致时，先怀疑**底本抓错版本**，而不是先怀疑卡片。
+>
+> 这两条与本仓库既有教训**同源**：漏洞 #11（判据只认一种字段名）、K1 的 `ORPHAN_DEP`
+> （判据只认一种路径）、C2 口径未跟上口径。**这是第四种变体：判据用错了信息源。**
+
+### A10 的归因写法必须改（否则下一个人一次 grep 就能推翻整条台账）
+台账原文写「底本里 `gating network` **只出现在 MMOE baseline 的描述中**」——**不成立**。
+实测 2 处命中：① Fig. 4 **本文框架图**的标签；② **§3.1 STAN 自己的 backbone**。
+MMOE baseline 用的词是 `gates`。
+**结论（卡片把 §3.1 backbone 的门控写成了阶段表示机制）不变**，但归因必须按实测写。
+
+### A2 留下的一个结构性教训（值得单列）
+卡片正文依 **v2**、而 ⑥ 段 11 条引文里 **10 条是 v1 特有措辞** ——
+`quote_check` 之所以一直报 VERBATIM，**只是因为底本恰好是 v1**。
+即：**「逐字核验通过」证明不了「引文与正文同源」**。
+已按 A 案换 v2 底本（v1 留档为 `fulltext.v1.md`），引文全部改写为 v2 逐字，版本错配黄灯清零。
+
+### 本轮另在甲类卡片上新核出、并经登记的问题（非 A 类原判）
+| 卡片 | 新发现问题 | 处置 |
+|------|-----------|------|
+| `Skill-Uplift-Churn-Prediction` | ③ 段引用的 `paper2skills-code/growth_model/uplift_churn_prediction/model.py` 内含 `SLearner`/`XLearner`/`Qini`，**与论文基准（outcome RF / uplift RF / T-learner RF + AUUC）不符** | 未改（超出「保守修改」范围），已在卡内加显式注记隔断误导。**建议另开一单**同步该代码包 |
+| `Skill-DQN-Purchase-Prediction` | ①「行业基准 AUC-ROC 0.65-0.75」**编造**；② 论文**自己的表 V** 是 `0.6257`，**低于它同时评测的全部传统基线**（LR 0.8152 / RF 0.8599 / XGBoost 0.8366） | ✅ 已修（删编造值、优先级 5/5→3/5）。另：`model.py` 仍是 bidirectional LSTM + 自注意力，**与 §III-C 不符** → 同上，建议单独派单 |
+| `Skill-Auto-Skill-Synthesis` | 参考的 `arxiv:2602.12430` **是另一篇论文**（底本 [5] 实为 Anthropic 工程博客，未给 arXiv ID） | ✅ 已修（`1c9949d`） |

@@ -288,6 +288,7 @@ python3 paper2skills-skills/paper-审核/scripts/gate_check.py --all \
 | 15 | **引文内嵌双引号被截成残句**(2026-09-12 由子代理发现 1 例,全库扫描另查出 3 例) | `"[^"\n]+"` 非贪婪,遇到内层引号就闭合。实测 `> 原文:"These results indicate that the LLM-based "Fuzzy" Random Forest model is …"` 被抽成 **42 字符的残句** `These results indicate that the LLM-based ` —— 而**残句确实逐字存在于底本**,于是报 VERBATIM:**门禁核验的不是卡片声称的那句话,而是一段更短的碎片**,且报告里看不出来(`n_quotes` 与逐字命中都正常)。全库 2,085 条引文中 **4 条**中招。修法:ASCII 分支改**贪婪** `"(.+)"`,匹配到行内最后一个引号;`--selftest` 用例 5 锁定「抽出的必须与写入的一致」 |
 | 16 | **参考文献编号 `[8]` 洗白同名断言**(C6,**2026-09-13 由 X2 修复**) | `collect_evidence` 对可信引文做无差别 `re.findall(r"\d+")`,于是引文里一个引用编号 `[8]` 就把数字 `8` 放进 `ev_nums`,正文断言「提升 8%」随即被判**有出处**。台账原话:「`[8]` 洗白了 `8%`、`[5,6]` 洗白了 `6倍`」。**实测隔离:19 张卡、96 个数字此前仅靠引用编号获得「出处」** —— 即全库 96 处断言是假绿灯。修法:`strip_citation_brackets()` 剥 `[8]`/`[5,6]`/`[1-3]`;⚠️ 判据须收紧到「纯数字+逗号/连字符」,`[0.1, 0.9]` 与 `[CLS]` **不得**剥(误剥制造假红)。selftest 用例 19 直接测 `collect_evidence` |
 | 17 | **正文日期串 / LaTeX 公式段被当成断言**(C7/C8,**2026-09-13 由 X2 修复**) | C7:`**发表日期**: 2025-05-16` 被拆出 `16` 判成「一般数字无出处」黄灯(与漏洞 #12 同源 —— 日期是元数据)。C8:`$t=0$` 抽出 `0$`、`\mathcal{R}{=}1$` 抽出 `1$`,判成「高价值断言无出处」红灯。修法:`strip_dates()` / `strip_math()`。⚠️ `strip_math` **不能见 `$...$` 就挖** —— 卡片里价格写法极多(`成本 $199，售价 $120`),无脑挖会吃掉**真实的价格断言**(假绿灯,比假红危险);判据为「不含中文 **且** 含 `= \ ^ _ { }` 之一」。**变异测试抓出「用例 18 是摆设」**,故补用例 20 直接断言函数行为 |
+| 18 | **标识符里嵌的数字洗白同名断言**(C9,**2026-09-13 由 Y2 换底本时实测撞出并修复**) | `collect_evidence` 对可信引文做 `re.findall(r"\d+(?:\.\d+)?")`,于是底本那句 `three 8 × A100 GPU machines … 8,640 cold items per hour` 被抽成 `['8','100','8','640']` —— **`A100` 里的 `100` 进了证据集**,卡片正文里任意一个 `100`(原卡正写着「效率提升100倍+」「日均上新100+SKU」)随即被判**有出处**,红灯凭空消失。**与 #16 完全同型**,只是载体从「引用编号」换成了「标识符」。修法:新增 `measurement_numbers()` 排除**紧邻 ASCII 字母**的数字(3 个抽取点统一改用它)。实测全库**红灯 1,503→1,523(+20)、黄灯 679→692(+13)**,而**卡片通过数 16→16 不变** —— 即没有任何卡是**靠**它才通过的;20 条新增红灯**逐条追溯过来源,17/17 确认为真阳性**:`Qwen3-4B-Instruct`→`3`、`Web30K`→`30`、`NVIDIA H100`→`100`、`p2p`→`2`、`algorithm1`→`1`、`MCP and A2A`→`2`。⚠️ **刻意不排「右边紧邻字母」** —— 第一版加了它、自检当场变红:它把 `with 6x throughput` 里的 `6` 也排掉了,而 **`6x` 正是本语料真实的倍数写法**。⚠️⚠️ **只认 ASCII 字母,绝不用 `str.isalpha()`** —— 汉字也满足 `isalpha()`,用它会把漏洞 #14 的修复**原地推翻且静默漏检**。用例 21(4 子例);**变异 3/3 抓住,且各自由对应用例抓住**。已知残留(登记不修):无连字符的 `7B` 仍注入 `7` |
 
 > **#10 的教训值得单列**:修复 #8/#9 时新增了一个「不阻塞」的结局,**这本身就是一次放水**。
 > 任何「新增豁免」都必须同时写清「什么情况下不许豁免」,否则修复动作会制造下一个漏洞。
@@ -326,6 +327,41 @@ python3 paper2skills-skills/paper-维护/scripts/repo_health.py \
 **三个脚本都要跑,不能只跑 gate_check**:`gate_check` 的 G1 依赖 K1 产物,
 而 `quote_check` 才是判定引文真伪的那一层。只跑 `gate_check` 会得到一个
 「有出处但出处可能是编的」的绿灯 —— 这正是本轮封堵的漏洞之一。
+
+## ⚠️ 事实核验的两条铁律(2026-09-13 立,由三次误判换来)
+
+这两条凌驾于「与底本逐字比对」之上 —— 因为**底本不是万能的仪器**。
+
+### 铁律 1:venue / 发表类声明 → 用 arXiv 元数据 + 出版方 DOI 判定,**不得用底本正文判定**
+
+**论文正文几乎从不写自己的 venue。** 所以「底本里 `SIGIR` 0 命中」**不是**「没有录用证据」——
+它只是**用错了仪器**。正确仪器:
+- arXiv abs 页的 `Comments:` 字段(`Accepted at …` / `post-proceedings of …` / `Workshop` / `Under review`)
+- `journal_ref` 字段
+- **出版方 DOI**(Crossref:`container-title` / `event` / `pages` / `published-online`)
+
+**实测代价**:台账 A3 曾据「底本 `SIGIR` 0 次」判定「无录用证据 → 应降为 preprint」,
+A1 曾据「底本 `ECML`/`PKDD` 零命中」判定「疑似版本错配」——**两条都是假的**。
+复核:arXiv v2 `Comments` 明写 `Accepted at ACM SIGIR 2026 Industry Track`,
+DOI `10.1145/3805712.3808466` 在 Crossref 解析为 SIGIR '26 proceedings(page 4763-4768);
+`2312.07206` 的 `Comments` 写明 `post-proceedings of the ECML PKDD 2023 Workshop`。
+**照原判执行会删掉两个真实且可核验的录用事实。**
+
+### 铁律 2:内容类声明 → 先问「卡片写的是**哪一版**」,再判对错
+
+**底本与卡片版本不一致时,先怀疑底本抓错了版本,而不是先怀疑卡片。**
+
+**实测代价**:台账 A2 曾判定卡片「方法名与论文不一致、`10.79%` 疑似编造」。
+真相是 `2402.09176` 有 **v1/v2 两版**,仓库底本抓的是 **v1**,而**卡片写的是 v2(WSDM 2025 正式版)**;
+台账称「编造」的每一项都在 v2 **逐字命中**(`ColdLLM` 62 次)。**照原判执行会把一张正确的卡改成错的。**
+
+> ### 这两条与本仓库既有教训同源,只是第四个变体
+> 漏洞 #11(判据只认一种字段名)、K1 的 `ORPHAN_DEP`(判据只认一种路径)、
+> C2(口径未跟上口径)—— **本轮是「判据用错了信息源」。**
+> 共同结构:**判据的适用范围被默认成了全体,而它其实只覆盖一个子集。**
+>
+> 📌 推论(比单条修复更重要):**每次「某个东西不存在」的结论,都要先问「我用的仪器能看见它吗」。**
+> 这与「判某个东西不存在之前先 `ls` 一次」是同一条纪律的推广。
 
 ## 检索路线(2026-09 实测结论)
 
@@ -456,52 +492,12 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 > ⚠️ 存量 130 张的 G2 仍全红,根因未变:**引用块为 0**。这不是「新卡拉高了均值」,
 > 而是「新卡是唯一有证据链的资产」。
 
-### PHASE3 批次 3A 交付(4 张,三门前全绿)
+### PHASE3 批次 3A–3E 交付明细 ↗
 
-| 卡片 | 论文 | venue | K1 | 引文 | G2 | G3 |
-|------|------|-------|----|------|----|----|
-| `13-广告分析/Skill-Cannibalization-Corrected-Attribution.md` | 2606.26690 | ADKDD 2026 (**workshop**) | PASS | 18/18 | ✅ | ✅ |
-| `13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md` | 2608.11675 | CIKM 2026 | PASS | 28/28 | ✅ | ✅ |
-| `13-广告分析/Skill-Causal-Budget-Allocation.md` | 2608.10182 | arXiv preprint | PASS | 38/38 | ✅ | ✅ |
-| `06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md` | 2608.18174 | arXiv preprint | PASS | 40/40 | ✅ | ✅ |
-
-### PHASE3 批次 3B 交付(4 张,三门前全绿)
-
-| 卡片 | 论文 | venue | K1 | 引文 | G2 | G3 |
-|------|------|-------|----|------|----|----|
-| `03-时间序列/Skill-Decision-Conditioned-Forecasting.md` | 2608.25871 | **KDD 2026** (CCF-A) | PASS | 47/47 | ✅ | ✅ |
-| `03-时间序列/Skill-Shipping-Cost-Estimation.md` | 2607.16230 | arXiv preprint | PASS | 36/36 | ✅ | ✅ |
-| `04-供应链/Skill-Supply-Network-Simulation.md` | 2607.09745 | WSC 2026 (CCF-B) | PASS | 38/38 | ✅ | ✅ |
-| `04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md` | 2606.29366 | arXiv preprint | PASS | 41/41 | ✅ | ✅ |
-
-### PHASE3 批次 3C 交付(3 张,三门前全绿)
-
-| 卡片 | 论文 | venue | K1 | 引文 | G2 | G3 |
-|------|------|-------|----|------|----|----|
-| `14-用户分析/Skill-Incrementality-Measurement.md` | 2607.09608 | arXiv preprint | PASS | 31/31 | ✅ | ✅ |
-| `00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md` | 2608.27006 | RecSys'26 **Demo** | PASS | 37/37 | ✅ | ✅ |
-| `00-电商Agent/Skill-Agentic-Catalog-Enrichment.md` | 2608.20844 | arXiv preprint | PASS | 45/45 | ✅ | ✅ |
-
-### PHASE3 批次 3D 交付(5 张,三门前全绿)
-
-| 卡片 | 论文 | venue | K1 | 引文 | G2 | G3 |
-|------|------|-------|----|------|----|----|
-| `16-智能体工程/Skill-Stateful-Skill-Runtime.md` | 2608.26263 | arXiv preprint | PASS | 50/50 | ✅ | ✅ |
-| `10-MAS/Skill-Multi-Agent-Collaboration-Tax.md` | 2608.22152 | arXiv preprint | PASS | 55/55 | ✅ | ✅ |
-| `10-MAS/Skill-Routed-Graph-Handoff.md` | 2608.25277 | arXiv preprint | PASS | 51/51 | ✅ | ✅ |
-| `09-DataAgent-LLM/Skill-SQL-Agent-Access-Control.md` | 2607.22115 | arXiv preprint | PASS | 39/39 | ✅ | ✅ |
-| `02-A_B实验/Skill-Persona-Based-AB-Simulation.md` | 2609.01038 | arXiv preprint | PASS | 41/41 | ✅ | ✅ |
-
-### PHASE3 批次 3E 交付(增强既有卡,不新增)
-
-| 论文 | 被增强的卡 | 引用块 | 说明 |
-|------|-----------|--------|------|
-| 2608.28978 | `08-知识图谱/Skill-GraphRAG-Knowledge-Enhanced-Retrieval.md` | 0 → **18/18** | 负结果:「反例与适用边界」 |
-| 2608.28978 | `16-智能体工程/Skill-Agentic-Memory-Management.md` | 0 → **17/17** | 同上 |
-| 2608.09162 | `12-ML基础/Skill-Feature-Engineering.md` | 0 → **30/30** | 数值特征变换形式化为优化问题（摘要称「一致优于所有基线」，但论文自己的 Table 1 里 `mlp`/`mlp_plr` 两行 PLE 优于 stretch —— 反例已写进 1b）|
-| 2608.10240 | `05-推荐系统/Skill-Cold-Start-Meta-Learning-PAM.md` | 0 → **32/32** | 顺序模态丢弃 |
-
-**这 16 张(3A–3D)也是全库唯一的 G2 通过者** —— 存量 130 张的 G2 全红,根因是**引用块为 0**。
+> 18 张新卡 + 4 张增强卡的**逐卡明细表**（venue / K1 / 引文数 / G2 / G3）
+> 已移至 `paper2skills-research/reports/PHASE3-交付归档.md`（2026-09-13，
+> 因 CLAUDE.md 超出 workspace instruction 预算被截断而搬出，内容未改）。
+> **结论留在本文件**:这 16 张（3A–3D）当时是全库唯一的 G2 通过者。
 
 ### registry 被出卡过程反向修正的断言(4 处)
 
@@ -571,6 +567,10 @@ venue 白名单中不得出现该项。完整规则见 `paper2skills-vault/07-�
 | 7 | **`quote_check` 把「没有引用块」算作「通过」** | `NO_QUOTES` 的卡被并进「N 通过」汇总 —— 「没东西可查」≠「出处为真」,又一个假绿灯 | 汇总行现单列 |
 | 8 | **`repo_health --json-out` 因父目录不存在而崩溃** ✅**2026-09-13 已修**(X3a) | 体检报告**全部正常打印完**、结论「✅ 无 CRITICAL」,最后一步写 JSON 时 `FileNotFoundError` → **退出码 1**。后果:① PHASE5 T5-4「周日体检 + 趋势追踪」拿不到可比较的历史文件;② 这个失败**看起来像体检失败**,而体检其实是过的 —— 与 #6 同类的「静默退回/假失败」 | **待修**(`json_out.parent.mkdir(parents=True, exist_ok=True)`) |
 | 9 | **`repo_health` C2 不认 `author-practice` 口径** ✅**2026-09-13 已修**(X3b) | C2 报「有 frontmatter 但缺 v2 必填字段 **126 张**」,其中 **48 张是 `evidence_basis: author-practice` 卡** —— 它们**按设计就不该有**来源字段(漏洞 #8/#10 的三类口径)。真实欠账:无 frontmatter **2 张**;96 张有来源卡中缺 `venue` 66 / `venue_tier` 74 / `evidence_grade` 78。**口径未跟上口径**,与漏洞 #11(参考区词汇表)同源 | **待修**;豁免后仍需用构造样本自证会抓真缺陷 |
+| 10 | **`quote_check` 的 `paper_version:`(`declared`)分支永远拿不到 `MATCH`** ✅**2026-09-13 已修** | `version_check()` 原写 `if kind == "explicit" and claim == vlabel` —— 于是 frontmatter `paper_version:` 这条路径**永远拿不到 MATCH**,直落 `else` 被贴上「卡片声称**正式发表版**」的标签判 `MISMATCH`:**版本一致却报黄灯**。判据与自身 docstring(把 `declared` 称为「**最强**」的声明强度)**自相矛盾**。**最要命的是门禁印给用户的处置建议原文就是「补 `paper_version:`」** —— 即**门禁在推荐一条会把门禁自己搞出假黄灯的路径**。修法:`declared` 与 `explicit` 同权。**用例 6k/6l + 一条消息断言**;**变异 3/3 抓住且各由对应断言抓住**(只测 6k 则「恒 MATCH」也能全绿;只断 verdict 则消息退回也能全绿) |
+| 11 | **`verify_skill_code.py --card` 对「无代码块」的退出码是 `0`** | 只打一句 `⚠️ 未发现 python 代码块` 就返回 0 → **只跑它看退出码,发现不了「这张卡根本没有代码」**。该缺陷只有 `gate_check` 的 `G1-NO-CODE` 能抓。又一次「**没东西可查 ≠ 查过了没问题**」。⚠️ 排除干扰:它对**正常卡**的退出码是对的,故不能简单改成非零 —— 归 `ENV_BLOCKED` 一类的口径设计问题,**登记待修** |
+| 12 | **`gate_check --card` 不带 `--k1` 时全库每张卡都红 `[G1-NO-EVIDENCE]`** | 脚本**没有默认 K1 产物路径**,于是「按 CLAUDE.md 的三条命令逐条跑」的人会看到 G1 全红,而那是**调用方式陷阱、不是卡片缺陷**。**由两个子代理各自独立撞上并都选择如实报告**(而不是去改卡)—— 说明这条已经浪费过两轮排查时间。登记待修(给 `--k1` 一个默认值或让红线文案自带「这不是卡片缺陷」) |
+| 13 | **`gate_check` 的 `relative_to(REPO_ROOT)` 对仓库外路径抛 `ValueError`** ✅**2026-09-13 已修** | 生产中证据都在库内故不咬人,但一次「把底本放到临时目录」的自检就把它撞崩了。现按 `repo_health.rel()` 的既有口径 try/except 退回绝对路径 —— **崩掉比打印一个绝对路径糟得多**,与 #6/#8 同属「静默退回/假失败」家族 |
 
 **#5 的最小复现**(`from __future__ import annotations` 是触发条件 —— 它让所有注解变成字符串,
 `dataclasses._is_type` 才会走 forward-ref 分支去查 `sys.modules[cls.__module__]`):
