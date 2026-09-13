@@ -1779,7 +1779,7 @@ MUTANTS = [
      r'    if not p\.is_file\(\):\n        raise InputMissing\(f"\{what\} 不存在：\{p\}"\)',
      '    if not p.is_file():\n        return {}'),
     ("J11", "错位清单不再校验（整段跳过）",
-     r"    ledger_problems = audit_ledger\(src, records\)", "    ledger_problems = []"),
+     r"    ledger_problems = audit_ledger\(src, records, repo_root\)", "    ledger_problems = []"),
     ("J11b", "错位清单的悬空 evidence 不再打开文件核实",
      r"            if not fp\.is_file\(\):", "            if False:"),
     ("J11c", "evidence 读不到时不再收成判据（裸读 ⇒ 门禁崩掉而不是判红）",

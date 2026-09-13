@@ -262,9 +262,29 @@ def check_input_freshness(graph_path: Path, ledger: dict, f3_ledger: dict) -> tu
     图谱若在那之后被别的任务重生成，这份缺口账就是**过期照片** —— 而它是本脚本排序的全部依据。
 
     处置分两态（**不是一句「过期了」**）：
-    · 声明 sha ≠ 当前图谱 sha，但用 F3 **现场现算**（只读、不落盘）得到的 151 行 / 31 条工单
-      与已入库产物**实质相等** ⇒ 过期但**无实质影响**，作为一等输出登记（不判红）；
+    · 用 F3 **现场现算**（只读、不落盘）得到的 151 行 / 31 条工单与已入库产物**实质相等**
+      ⇒ 登记为新鲜（或「过期但无实质影响」），作为一等输出；
     · 实质有差异 ⇒ **判红**（此刻的位次是拿旧底本算的，不许出表）。
+
+    ⚠️ **2026-09-13 修掉一个「判据永远不可能失败」的结构洞**（本函数第一版的形态）：
+
+        第一版把「逐行内容核对」写在 `if info["stale"]:` 分支**里面** ——
+        于是 `声明 sha == 当前图谱 sha` 时**提前 `return fresh`，一行内容都不看**。
+
+    这错在**把自述当成了核验**：`_meta.graph_sha256` 是**生成者自己写下的**「我读的是哪张图谱」，
+    它**不是缺口账内容的指纹**。一份内容被改过、而 `_meta` 里仍写着当前 sha 的缺口账，
+    在第一版下**畅通无阻**；反倒是「老实声明自己读的是旧图谱」的那种才会被逐行核对。
+    ⇒ **越是看起来新鲜的，越没人查。**
+
+    实测证据（不是推理）：`git log` 逐提交复算 `graph sha` 与 `declared` ——
+    `4e1b498`（F3 自身）· `59429b9`（F4/F5）· `bb06b74`（S5）三处 `stale=False`
+    ⇒ **内容核对是死代码**；只有 `dfe9eff`（S1）一处 `stale=True` 时它才真跑过。
+    连带后果：`--selftest` 里那条「篡改：过期底本 + 排序依据被改 ⇒ 判红」**从 `dfe9eff` 起就在失败**
+    （41 条里 1 条败），而没有人看见 —— 因为本脚本**当时还没被接进验收面**。
+    ⇒ 两条纪律的交叉：**「判据的适用范围被默认成了全体」×「交付了但没人看得见」**。
+
+    修法：**内容核对与 sha 状态无关，每次都必须跑**。sha 只决定**归因**（新鲜 / 过期但无实质影响），
+    不决定**判不判**。
     """
     cur = _sha(graph_path)
     declared = (ledger.get("_meta") or {}).get("graph_sha256")
@@ -272,11 +292,9 @@ def check_input_freshness(graph_path: Path, ledger: dict, f3_ledger: dict) -> tu
             "stale": bool(declared) and declared != cur}
     if not declared:
         info["verdict"] = "unknown"
-        return ["J9 gap-ledger.json 没声明生成时的图谱 sha256 —— 过期与否**无从判断**"], info
-    if not info["stale"]:
-        info["verdict"] = "fresh"
-        return [], info
+        return ["J9 gap-ledger.json 没声明生成时的图谱 sha256 —— 过期与否与内容来源**都无从判断**"], info
 
+    # —— 以下是**内容核对**：无条件执行（第一版把它关在 stale 分支里，见 docstring）——
     mine_rows = {r["l3"]: (r["serviceability"], r["supply"]["status"],
                            r["supply"]["n_legacy"], r["n_flows"], r["in_first_slice"],
                            bool(r["boundary_a"]), bool(r.get("structural_blank")))
@@ -292,14 +310,20 @@ def check_input_freshness(graph_path: Path, ledger: dict, f3_ledger: dict) -> tu
     info.update({"n_row_diff": len(diff_rows), "row_diff_sample": diff_rows[:6],
                  "worklist_identical": mine_wl == fresh_wl})
     if diff_rows or mine_wl != fresh_wl:
-        info["verdict"] = "stale_material"
-        return [f"J9 缺口账过期且**有实质影响**：图谱 sha {declared}→{cur}，"
-                f"151 行里 {len(diff_rows)} 行变了（样本 {diff_rows[:4]}）、"
-                f"工单是否逐条相同={mine_wl == fresh_wl} —— 先重跑 build_gap_ledger.py"], info
-    info["verdict"] = "stale_immaterial"
-    info["why_immaterial"] = ("图谱换了底本（多为 cells[].solution_refs / solutions 层），"
-                              "但本脚本排序所依赖的 151 行（L3/服务性/供给/FLOW/边界）与 31 条工单"
-                              "**现算逐条相同** ⇒ 不影响位次")
+        info["verdict"] = "material_mismatch"
+        return [f"J9 缺口账与本脚本现场现算的 F3 结果**实质不符**：151 行里 {len(diff_rows)} 行不同"
+                f"（样本 {diff_rows[:4]}）、工单是否逐条相同={mine_wl == fresh_wl}；"
+                f"声明 sha {declared} vs 现状 {cur}"
+                f"（{'**一致**' if not info['stale'] else '不一致'}）。"
+                f"⚠️ 声明 sha 与现状一致**不能**证明内容没被改过 —— 它是生成者的自述，"
+                f"不是内容的指纹 ⇒ 先重跑 build_gap_ledger.py，再判差异是真变化还是被改过"], info
+    if info["stale"]:
+        info["verdict"] = "stale_immaterial"
+        info["why_immaterial"] = ("图谱换了底本（多为 cells[].solution_refs / solutions 层），"
+                                  "但本脚本排序所依赖的 151 行（L3/服务性/供给/FLOW/边界）与 31 条工单"
+                                  "**现算逐条相同** ⇒ 不影响位次")
+        return [], info
+    info["verdict"] = "fresh"
     return [], info
 
 
@@ -1214,9 +1238,20 @@ def _selftest() -> int:
     for r in tam["rows"]:
         if r["l3"] == "复购实验":
             r["supply"]["n_legacy"] = 999          # 供给列被改 ⇒ 排序依据变了
-    t_errs, t_info = check_input_freshness(GRAPH, tam, f3_led)
+    tam["_meta"]["graph_sha256"] = _sha(GRAPH)     # ⚠️ 显式把 sha 设成「与现状一致」
+    tA_errs, tA_info = check_input_freshness(GRAPH, tam, f3_led)
+    rec("J9", "篡改（结构洞）：sha 与现状**一致** + 排序依据被改 ⇒ 必须判红",
+        bool(tA_errs) and tA_info["verdict"] == "material_mismatch",
+        (tA_errs[0][:95] if tA_errs else "**没抓住**（内容被改而 sha 自述新鲜 ⇒ 照样出表）"
+         f"；verdict={tA_info['verdict']}"))
+    tamB = copy.deepcopy(ledger)
+    for r in tamB["rows"]:
+        if r["l3"] == "复购实验":
+            r["supply"]["n_legacy"] = 999
+    tamB["_meta"]["graph_sha256"] = "0" * 64       # sha 显式过期 + 内容被改
+    t_errs, t_info = check_input_freshness(GRAPH, tamB, f3_led)
     rec("J9", "篡改：过期底本 + 排序依据被改 ⇒ 判红",
-        bool(t_errs) and t_info["verdict"] == "stale_material",
+        bool(t_errs) and t_info["verdict"] == "material_mismatch",
         (t_errs[0][:95] if t_errs else "**没抓住**（过期账照样出表）"))
     tam2 = copy.deepcopy(ledger)
     tam2["_meta"].pop("graph_sha256", None)

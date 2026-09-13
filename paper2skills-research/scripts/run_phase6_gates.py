@@ -145,6 +145,51 @@ GATES: list[Gate] = [
          ["check_card_identity.py", "--selftest"], kind="selftest"),
     Gate("L8c", "同名同物：变异测试（判据改坏必须被抓，且须证明变异真的生效）",
          ["check_card_identity.py", "--mutate"], kind="selftest"),
+    # --- extract backlog 接管（S3；2026-09-13 由主控接线，**接上时它就是红的**）---
+    # ⚠️ 接线时的实况：`--check` **exit 1**。根因不是判据坏了，是**产物是 S5 换底前的照片**
+    #    —— 产品侧分类 1338 → 1390（S5 推的 52 张），逐 L3 供给数跟着变。
+    #    **决策部分逐条相同**（12 条接管序、L3 落点、档位、占检索预算的 3 条全不变），
+    #    变的只有供给读数（9 条 `n_legacy` **全部上移 +1..+5**，与「只增不减」互为佐证）。
+    # ⚠️ 同一次检查还撞出 J9 一个「判据永远不可能失败」的结构洞：第一版把逐行内容核对
+    #    关在 `stale` 分支里 ⇒ sha 自述新鲜时**一行都不看**。已修（见 route_backlog.py 的 docstring），
+    #    并在 L9b 里补上结构洞专用用例；`git log` 逐提交复算证明该洞在 4 个提交里的 3 个上是活的。
+    Gate("L9a", "extract backlog 接管：与 registry/缺口账/映射一致（含 J9 输入新鲜度内容核对）",
+         ["route_backlog.py", "--check"]),
+    Gate("L9b", "extract backlog 接管：自检（J9 含「sha 自述新鲜但内容被改」的结构洞用例）",
+         ["route_backlog.py", "--selftest"], kind="selftest"),
+    # --- p2s 换底（S5）---
+    Gate("L10a", "p2s 换底：两语料收编后卡片 / references / staging 预算一致",
+         ["rebase_p2s_cards.py", "--check"]),
+    Gate("L10b", "p2s 换底：自检", ["rebase_p2s_cards.py", "--selftest"], kind="selftest"),
+    Gate("L10c", "p2s 换底：变异测试", ["rebase_p2s_cards.py", "--mutate"], kind="selftest"),
+    # --- 独立站 holdback（S9）---
+    # ⚠️ `--check` 是 0，但本脚本的**主运行按设计是 exit 2**（无 `--traffic` 时「输入没拿到」
+    #    —— 独立站流量在本仓库确实没有事实源）。验收面只取 `--check`：产物与现算一致与否是判据，
+    #    「流量拿到了没有」不是。
+    Gate("L11a", "独立站 holdback：分流口径与逐条责任功效产物与现算一致",
+         ["holdback_power.py", "--check"]),
+    Gate("L11b", "独立站 holdback：自检", ["holdback_power.py", "--selftest"], kind="selftest"),
+    Gate("L11c", "独立站 holdback：变异测试", ["holdback_power.py", "--mutate"], kind="selftest"),
+    # --- venue 分层（S10）---
+    Gate("L12a", "venue 三词表统一：146 张卡 venue_tier 全量回填且与规范表逐条一致",
+         ["build_venue_tiers.py", "--check"]),
+    Gate("L12b", "venue 三词表统一：自检 + 变异（默认带变异，`--no-mutations` 才是快路径）",
+         ["build_venue_tiers.py", "--selftest"], kind="selftest"),
+    # --- K2/G3 卡侧门禁（PHASE6 从两侧改动了它，故它必须进验收面）---
+    # ⚠️ 为什么一个**既有**门禁要进 PHASE6 的验收面：本阶段的产出物**从两侧**改动了它 ——
+    #    ① 146 张卡新增了 `l3_*` / `venue_tier` / `venue_source` 等 frontmatter 字段；
+    #    ② 主控据此改了 `gate_g3` 的扫描口径（台账 #70：元数据不得当业务场景信号）。
+    #    一个「被本阶段改动过的判据」若不跑，就等于本阶段对自己最相关的那道门没有任何读数。
+    # ⚠️ 这里只接 `--selftest`（0.6s，确定性）：`--all` 是**报告生成器**（写着红灯也退 1，
+    #    那不是「门禁判红」而是「库里确实有红卡」），接进来会把报告与判据两种退出码语义混在一个数里。
+    #    判据是否可信 = selftest；库里有几张红卡 = 报告。**两者分开**。
+    #    ⚠️ 路径口径：`_p()` 是相对**本脚本所在目录**（`paper2skills-research/scripts`）拼接的，
+    #    这是验收面里第一条跨目录的门禁，所以要显式走 `../..`。首版写成了
+    #    `paper-审核/scripts/gate_check.py` ⇒ 解析到一个不存在的路径 ⇒ 汇总报 **exit=2「输入没拿到」**。
+    #    **这正是三态设计该有的样子**：不是 0（假绿），也不是 1（假红）。
+    Gate("L13a", "卡侧 G3 判据：自检（含「元数据不得当业务场景信号」的隔离用例 + 反向控制）",
+         [_p("..", "..", "paper2skills-skills", "paper-审核", "scripts", "gate_check.py"),
+          "--selftest"], kind="selftest"),
 ]
 
 SEV = {0: 0, 1: 1, 2: 2, 3: 3}

@@ -1,8 +1,8 @@
 # PHASE6 S3 · extract backlog 靶区接管表（**由脚本生成，勿手改**）
 
-> 生成时间：2026-09-13T20:30:46+0800　|　生成器：`paper2skills-research/scripts/route_backlog.py`
+> 生成时间：2026-09-13T21:33:08+0800　|　生成器：`paper2skills-research/scripts/route_backlog.py`
 > 复算：`python3 paper2skills-research/scripts/route_backlog.py --check`
-> 输入：`papers_registry.json` sha256:`34311e1e343e479b` · `gap-ledger.json` sha256:`06fdb22a11784f3a` · `backlog-l3-map.json` sha256:`368fedc17a08d13b` · `capability-graph.json` sha256:`be36dd1d197def0e`
+> 输入：`papers_registry.json` sha256:`34311e1e343e479b` · `gap-ledger.json` sha256:`19737135cd64cf5d` · `backlog-l3-map.json` sha256:`368fedc17a08d13b` · `capability-graph.json` sha256:`be36dd1d197def0e`
 
 **backlog 是现算的，不是抄的。** 口径：registry 里 `decision=extract` ∧ 无已交付产物。实测 **12 篇**（naive 只数 `skill_card` 得 15 篇，扣掉 3 篇增强交付才对齐 —— 即 PHASE5 登记的 N4）。
 
@@ -30,11 +30,11 @@
 | 1 | 3 | +2 | `p2s-2026-0015` | **靶区内** | 27 | 趋势监测 → AGT-007 市场竞争与机会研究 | legacy |
 | 2 | 2 | 0 | `p2s-2026-0007` | **靶区内** | 28 | 复购实验 → AGT-034 CRM留存与复购 | legacy |
 | 3 | 7 | +4 | `p2s-2026-0024` | **靶区内** | 28 | 复购实验 → AGT-034 CRM留存与复购 | legacy |
-| 4 | 10 | +6 | `p2s-2026-0033` | 靶区外 | 靶区外 #22 | 指标契约 → AGT-045 业务口径与主数据 | curated |
-| 5 | 8 | +3 | `p2s-2026-0020` | 靶区外 | 靶区外 #34 | 实验设计 → AGT-035 增长实验与增量评估 | curated |
-| 6 | 4 | -2 | `p2s-2026-0022` | 靶区外 | 靶区外 #38 | 转化优化 → AGT-023 独立站经营与转化 | curated |
+| 4 | 10 | +6 | `p2s-2026-0033` | 靶区外 | 靶区外 #21 | 指标契约 → AGT-045 业务口径与主数据 | curated |
+| 5 | 8 | +3 | `p2s-2026-0020` | 靶区外 | 靶区外 #32 | 实验设计 → AGT-035 增长实验与增量评估 | curated |
+| 6 | 4 | -2 | `p2s-2026-0022` | 靶区外 | 靶区外 #37 | 转化优化 → AGT-023 独立站经营与转化 | curated |
 | 7 | 6 | -1 | `p2s-2026-0021` | 靶区外 | 靶区外 #62 | 预算分配 → AGT-032 效果广告投放 | curated |
-| 8 | 1 | -7 | `p2s-2026-0012` | 靶区外 | 靶区外 #65 | 内容实验 → AGT-030 内容与创意策划 | curated |
+| 8 | 1 | -7 | `p2s-2026-0012` | 靶区外 | 靶区外 #66 | 内容实验 → AGT-030 内容与创意策划 | curated |
 | 9 | 12 | +3 | `p2s-2026-0034` | 靶区外 | 靶区外 #82 | 访问控制 → AGT-050 信息安全与权限 | curated |
 | 10 | 5 | -5 | `p2s-2026-0028` | 靶区外 | 靶区外 #101 | 知识溯源 → AGT-048 知识技能与Playbook治理 | curated |
 | 11 | 9 | -2 | `p2s-2026-0032` | 靶区外 | 靶区外 #109 | 容量管理 → AGT-049 Agent平台与可靠运行 | curated |
@@ -72,7 +72,7 @@
 | J6 | 反向控制：干净输入 exit 0 | ✅ 本行即证据 |
 | J8 | 接管确实改变了旧顺序（双边） | ✅ 11/12 篇位次动了，最大位移 7 |
 | J3b | 位次靠旧顺序 tiebreak 决定的篇数（可见账） | ✅ 1 篇；低置信映射 1 篇 |
-| J9 | 输入新鲜度：缺口账声明的图谱 sha vs 现状（风险 N6） | ✅ 图谱已变（7ede8be116ca7672→be36dd1d197def0e），现算核对：stale_immaterial（图谱换了底本（多为 cells[].solution_refs / solutions 层），但本脚本排序所依赖的 151 行（L3/服务性/供给/FLOW/边界）与 31 条工单**现算逐条相同** ⇒ 不影响位次） |
+| J9 | 输入新鲜度：缺口账声明的图谱 sha vs 现状（风险 N6） | ✅ 图谱未变（fresh） |
 | J7 | registry 自洽（N4：15 = 12 + 3） | ✅ naive 15 − 增强交付 3 = 12 |
 
 ## 6. 未做 / 留给下游

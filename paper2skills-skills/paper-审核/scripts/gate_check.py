@@ -1198,17 +1198,46 @@ def gate_g2(card: Path, text: str) -> GateResult:
 def gate_g3(card: Path, text: str) -> GateResult:
     rel = rel_to_repo(card)
     g = GateResult("G3", rel, True)
-    prose = strip_code(text)
+    # ⚠️ 2026-09-13：原口径 `prose = strip_code(text)` **没剥 frontmatter**，而 G2 剥了
+    #    （漏洞 #12 的修法）。后果：**元数据被当成业务场景信号** —— S13 新加的 `l3_business`/`l3_all`
+    #    是**能力名**，恰好命中 CONCRETE_SIGNALS 关键词表。
+    #    实测（146 张全量，用与门禁同尺的 `rglob`）：**5 张卡各多出 1 个信号，其中 1 张跨过 ≥3 门槛** ——
+    #    `Skill-Dialogue-to-Action-Graph` 3→2，`G3-NOT-CONCRETE` **整条红线消失**，而它的卡正文
+    #    一个字节没动；那个多出来的信号来自 `l3_all: 售后处理 / 客诉分诊` 里的「客诉分诊」。
+    #    ⇒ 一个**纯记账字段**不该成为「场景具体」的证据。这与 #13「自引文洗白」同族：
+    #      **卡片自己的元数据替卡片自己作证。**
+    #    ⚠️ 同一族的坑我在量它的时候自己也踩了一次：先用 `vault/*/Skill-*.md` 扫，只看到 92 张
+    #      （全库 146，另 54 张在 `07-NLP-VOC/00-知识库-Skill卡片/` 这类**嵌套目录**里），
+    #      于是「因 frontmatter 跨门槛的卡 = 0」—— **判据的 glob 一变，结论就翻面**。
+    body = strip_frontmatter(text)
+    prose = strip_code(body)
 
     concrete = sorted({s for s in CONCRETE_SIGNALS if s in prose})
     vague = sorted({s for s in VAGUE_PHRASES if s in prose})
+
+    # ⚠️ `skill_relations` **不跟着一起剥**，理由与上面相反，且同样是实测出来的：
+    #    段④「技能关联」在这批卡里大量用**技能名**（`Time Series Forecasting`、`Causal Forest`）
+    #    而不是 `Skill-*.md` 文件名 ⇒ 全文里唯一能被机器读到的关联声明往往就是 frontmatter 的 `related:`。
+    #    实测：若把它也改成只读正文，**8 张卡掉到 0 条**（如 `Skill-Two-Echelon-Inventory-DRL` 的段④
+    #    只有名字、`related:` 里有 3 条），其中 5 张会把「≥2 条关联」判成 YELLOW。
+    #    **那不是修好，是把判据换成看不见**（漏洞 #11「判据只认一种字段名」同族）。
+    #    ⇒ 保留 `related:` 的贡献，但**只认 `related` 这一个字段**，并把两个来源**分开报**：
+    #      `venue_source` 里也含 `Skill-*.md`，那是**溯源**不是关联（实测 4 张卡因此各虚增 1 条）。
+    fm = parse_frontmatter(text)
+    fm_related = fm.get("related") or ""
+    rel_body = set(SKILL_REF_RE.findall(body))
+    rel_fm = set(SKILL_REF_RE.findall(str(fm_related)))
+    relations = rel_body | rel_fm
 
     g.metrics = {
         "concrete_signals": len(concrete),
         "vague_phrases": len(vague),
         "has_data_requirement": bool(DATA_AVAIL_RE.search(prose)),
         "has_roi_basis": bool(ROI_FORMULA_RE.search(prose)),
-        "skill_relations": len(set(SKILL_REF_RE.findall(text))),
+        "skill_relations": len(relations),
+        # 两个来源分开报 —— 「这条关联是从哪来的」是读数，不是推测
+        "skill_relations_body": len(rel_body),
+        "skill_relations_frontmatter": len(rel_fm),
     }
 
     if len(concrete) < 3:
@@ -1592,6 +1621,46 @@ def selftest() -> int:
     ):
         ok = ok and _good
         print(f"{'✅' if _good else '❌'} 23 K1 缺口三态可分[{_label}]")
+
+    # --- 用例 24（台账 #70，2026-09-13 主控）：G3 不得把**元数据**当成业务场景信号 ------
+    # 现状：`gate_g3` 原先 `prose = strip_code(text)` **没剥 frontmatter**（G2 剥了）。
+    # 后果（实测，146 张全量）：S13 新加的 `l3_business`/`l3_all` 是**能力名**，恰好命中
+    # CONCRETE_SIGNALS 关键词表 ⇒ **纯记账字段在替卡片自己刷「场景具体」的分**。
+    # `Skill-Dialogue-to-Action-Graph` 因 `l3_all: 售后处理 / 客诉分诊` 的「客诉」从 2 → 3，
+    # **`G3-NOT-CONCRETE` 整条红线消失，而卡正文一个字节没动**。
+    # ⚠️ 四条断言各自防一个变异，缺一不可：
+    #    · (a) 纯 frontmatter 命中 ⇒ 信号数必须为 0 且仍判红 → 防「泄漏复活」
+    #    · (b) 正文命中 ⇒ 必须计入且不红 → **反向控制**：防「一刀切把正文也剥了」
+    #      （真那么改，全库 146 张会一起判红 —— 那是把判据换成恒真/恒假，不是修好）
+    #    · (c) `related:` 计入关联 → 防「跟着一起剥」（实测会让 8 张卡掉到 0 条关联）
+    #    · (d) `venue_source` **不**计入关联 → 防「拿整块 frontmatter 当关联来源」
+    #      （`venue_source` 里也含 `Skill-*.md`，那是**溯源**不是关联，实测 4 张卡各虚增 1 条）
+    _fm_card = Path("/nonexistent/Skill-probe.md")
+    # ⚠️ 故意放**三个**业务词（= 恰好跨过「≥3」门槛）：旧口径下这张卡会拿到 3 个信号、
+    #    于是 `G3-NOT-CONCRETE` 不出现 —— 与真实事故（`Skill-Dialogue-to-Action-Graph`）同形。
+    _g3a = gate_g3(_fm_card, "---\ntitle: x\nl3_all: 售后处理 / 客诉分诊\n"
+                             "l3_business: 补货模拟\nl3_related: 复购\n---\n\n## ② 应用案例\n\n泛泛而谈。\n")
+    _g3b = gate_g3(_fm_card, "---\ntitle: x\n---\n\n## ② 应用案例\n\n"
+                             "客诉分诊、补货节奏、Listing 优化都要做。\n"
+                             "数据要求：平台后台可得。\n")
+    _g3c = gate_g3(_fm_card, "---\ntitle: x\nrelated: Skill-A.md, Skill-B.md\n---\n\n正文。\n")
+    _g3d = gate_g3(_fm_card, "---\ntitle: x\nvenue_source: Skill-Zzz.md\n---\n\n正文。\n")
+    for _label, _good in (
+        ("frontmatter 里的业务词不计入具体信号",
+         _g3a.metrics["concrete_signals"] == 0
+         and any(f.code == "G3-NOT-CONCRETE" for f in _g3a.findings)),
+        ("正文里的业务词必须计入（反向控制）",
+         _g3b.metrics["concrete_signals"] >= 3
+         and not any(f.code == "G3-NOT-CONCRETE" for f in _g3b.findings)),
+        ("frontmatter `related:` 计入关联声明",
+         _g3c.metrics["skill_relations"] == 2
+         and _g3c.metrics["skill_relations_frontmatter"] == 2),
+        ("frontmatter `venue_source` 不计入关联声明",
+         _g3d.metrics["skill_relations"] == 0
+         and _g3d.metrics["skill_relations_body"] == 0),
+    ):
+        ok = ok and _good
+        print(f"{'✅' if _good else '❌'} 24 G3 元数据隔离[{_label}]")
 
     print("✅ 自检通过：G2 三态互斥，且『无论文来源』不能靠声明洗白伪造引文" if ok
           else "❌ 自检失败：G2 三态判定不可信")
