@@ -27,6 +27,7 @@
     },
     "gated_extracted": 8
   },
+  "coverage_note": "**本 registry 是本轮检索窗口的账本，不是全库论文总账。** 它只覆盖 window 2026-06-12 ~ 2026-09-12 的检索结果（45 条记录）。\n\n2026-09-13 实测（146 张卡）：\n· 无 `paper_id` 的卡 **56 张**（其中 48 张声明 `evidence_basis: author-practice`，按设计就无论文来源；另 8 张是欠账）\n· 有 `paper_id` 的卡 **90 张** → **能命中本 registry 的只有 18 张**，**其余 72 张不在其中**\n\n⚠️ **那 72 张不是「数据错误」，也不该被批量补进 registry** —— 它们来自更早的批次（PHASE3 之前的历史论文），与本窗口的检索账本无交集。判定规则：\n1. **本窗口检索命中并出卡的论文** → 必须在 registry（缺失=真缺陷，由 `registry_consistency.py` 抓）；\n2. **历史批次论文** → 不在 registry 属**预期**；它们的事实源是卡片 frontmatter 的 `paper_id`/`paper` 与 `papers/<域>/<id>/` 下的底本，**不是**本文件；\n3. 要把历史卡纳入 registry，需要先设计 schema 兼容（历史卡的 `gates`/`outputs`/`score` 多半为空），属独立任务，**不要顺手批量追加**。\n\n覆盖率的一等输出：`registry_consistency.py` 打印「已核对 N/M → 覆盖率 X%」（分母已排除占位），低于 90% 拒绝给「一致」结论；`repo_health.py` 的 C5 打印「卡片 paper_id 不在 registry」的条数。**两个方向都要看**：前者问「registry 声明的东西在不在磁盘上」，后者问「卡片的论文在不在 registry 里」。",
   "records": [
     {
       "paper_id": "p2s-2026-0001",
@@ -1590,6 +1591,14 @@
         "p2s-2026-0043: title 回填（Deep Learning-Based Causal Inference for Large-Scale…）；DOI 10.1287/mnsc.2023.04987 → 10.1287/mnsc.2024.04625；venue/tier 补 UTD24；url/published 补全",
         "p2s-2026-0044: title 回填（Fast Selection from Multiple Treatments: A Sequentia…）；DOI 10.1287/mnsc.2024.00567 → 10.1287/isre.2024.1537；venue/tier 补 UTD24；url/published 补全",
         "p2s-2026-0045: title 回填（Scalable Bundle Recommendations: A Large-Scale Field…）；DOI 10.1287/mnsc.2023.04712 → 10.1287/mnsc.2022.01864；venue/tier 补 UTD24；url/published 补全"
+      ]
+    },
+    {
+      "at": "2026-09-13",
+      "by": "PHASE5-Z4",
+      "reason": "补 `coverage_note`：把「registry 只覆盖本轮窗口」这件事写成 registry 自己的说明，并给出 2026-09-13 实测的覆盖率数字（90 张有 paper_id 的卡里只有 18 张命中），避免下一个人把「72 张卡不在 registry」当成数据错误去批量补。",
+      "changes": [
+        "新增顶层字段 coverage_note（不改任何记录）"
       ]
     }
   ]
