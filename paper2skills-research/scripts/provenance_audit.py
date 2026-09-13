@@ -35,11 +35,15 @@
 
 用法：
     python3 provenance_audit.py                              # 控制台报告
-    python3 provenance_audit.py --json-out <path>            # 机器可读
+    python3 provenance_audit.py --json-out <path>            # 机器可读（父目录会自动创建）
     python3 provenance_audit.py --worklist-out <path.md>     # 生成可执行工单
-    python3 provenance_audit.py --selftest                   # 自检
+    python3 provenance_audit.py --selftest                   # 自检：构造样本锁定五层判定
 
 退出码：0 正常；1 自检失败。
+
+⚠️ `--selftest` 锁定的核心是**「有来源」与「没来源」不许互相冒充**：
+PHASE4 实测本脚本曾把 7 张「用论文标题声明来源」的卡判成「无论文来源」，
+F4 照章给其中 4 张加了**假声明** —— 判某个东西「不存在」之前先 `ls` 一次。
 """
 
 from __future__ import annotations
@@ -343,45 +347,281 @@ def audit_card(card: Path, idx: PaperIndex, by_arxiv: dict, by_card: dict) -> di
     }
 
 
-def selftest() -> int:
-    """自检：证明本脚本真的能区分「可修」与「不可修」。
+def write_report(path_str: str, text: str) -> None:
+    """写产物文件 —— **先建父目录**（2026-09-13）。
 
-    构造三个卡片的等价输入，检查判定互斥且与预期一致。
+    ⚠️ 与 `repo_health.py` 漏洞 #8 是**同一个缺陷、同一类后果**，在本脚本上也实测复现了：
+
+        $ python3 provenance_audit.py --json-out /tmp/notexist/a/b.json
+        FileNotFoundError: ... '/tmp/notexist/a/b.json'
+        exit=1
+
+    审计结果其实**已经算完**了，只是最后一步落盘失败 —— 退出码 1 会让自动化
+    把一次**成功的**审计记成失败，而产物又没生成，两边都拿不到真相。
+    这类「静默假失败」在本仓库已出现 3 次（gate_check 找不到 evidence.md、
+    repo_health --json-out、本脚本），所以两处都用同一个写法。
     """
-    idx = PaperIndex.build()
-    ok = True
+    p = Path(path_str)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(text, encoding="utf-8")
 
-    # 1｜证据：至少存在一个 fulltext_ok 与一个 pdf_only（否则索引本身失效）
+
+# ---------------------------------------------------------------------------
+# 自检
+# ---------------------------------------------------------------------------
+# 构造样本的**设计口径**：本脚本最危险的失效方向不是「漏报」，而是
+# **判一个东西「不存在」** —— PHASE4 实测：早期版本只认 arXiv ID / DOI 形式，
+# 把 7 张「用论文标题声明来源」的卡判成「无论文来源」，于是 F4 照章给其中 4 张
+# 加了**假声明**。教训已写进 CLAUDE.md：**判某个东西「不存在」之前先 `ls` 一次**。
+# 所以这里给这条判据配了回归用例，并且**反向也配了一条**（`paper: n/a` 这种
+# 非标题值不许凭空造出来源）—— 只测一个方向会让判据在另一个方向上失守。
+_SELFTEST_FULLTEXT = (
+    "---\narxiv_id: 2606.26690\npaper_id: p2s-test-0001\n---\n\n"
+    "# A Test Paper For The Provenance Selftest\n\n"
+    + ("This is filler text standing in for a real fulltext archive. " * 200)
+)
+
+_SELFTEST_REGISTRY = {
+    "records": [
+        {"paper_id": "p2s-test-0003",
+         "identifiers": {"arxiv": "2606.26690"},
+         "outputs": {"skill_card": "paper2skills-vault/01-域/Skill-RegistryOnly.md"}},
+    ]
+}
+
+# name -> (卡片文本, 期望判定)
+_SELFTEST_CARDS: dict[str, tuple[str, str]] = {
+    # ① PHASE4 回归用例（本条是本次 X5 的核心）
+    "Skill-TitleOnly": ("""---
+title: Title Only Card
+module: 01-域
+paper: "A Real Paper Title Declared Without Any Identifier At All"
+---
+# 正文
+
+本卡只写了论文标题，没有 arXiv ID，也没有 DOI。
+""", "NEEDS_FULLTEXT"),
+    # ② 真的没有论文来源：只能诚实声明，不可"修复"
+    "Skill-Practice": ("""---
+title: Practice Card
+module: 01-域
+evidence_basis: author-practice
+---
+# 正文
+
+纯作者经验卡，卡内没有任何论文线索。
+""", "NO_PAPER_SOURCE"),
+    # ③ 最理想状态：有 ID、有全文底本、有逐字引用块
+    "Skill-Verified": ("""---
+title: Verified Card
+module: 01-域
+paper_id: 2606.26690
+---
+# 正文
+
+> 原文:"This is filler text standing in for a real fulltext archive."
+
+出处：arXiv:2606.26690 §1
+""", "VERIFIED"),
+    # ④ 全文就位但没写引用块 → 最优先的工单
+    "Skill-Retrofit": ("""---
+title: Retrofit Card
+module: 01-域
+paper_id: 2606.26690
+---
+# 正文
+
+本卡有来源、底本也在，但一条逐字引文都没写。
+""", "RETROFIT_READY"),
+    # ⑤ 溯源信息只在正文（frontmatter 什么都没有）—— 首版只扫 frontmatter，
+    #    曾把 47 张这类卡误判成「无论文来源」
+    "Skill-BodyOnly": ("""---
+title: Body Only Card
+module: 01-域
+---
+# 正文
+
+本卡来源：arXiv:2408.05353（frontmatter 里没有任何溯源字段）。
+""", "NEEDS_FULLTEXT"),
+    # ⑥ 反向用例：`paper:` 里是垃圾值而不是标题 → 不许凭空造出来源
+    "Skill-ShortPaperField": ("""---
+title: Short Paper Field Card
+module: 01-域
+paper: n/a
+---
+# 正文
+
+frontmatter 的 paper 字段是占位符，不是论文标题。
+""", "NO_PAPER_SOURCE"),
+    # ⑦ 第五层（任务书里的「四层」之外还有一层）：只有本地 PDF
+    "Skill-PdfOnly": ("""---
+title: Pdf Only Card
+module: 02-域
+paper_id: 2607.12345
+---
+# 正文
+
+底本只存了 PDF，还没转成 fulltext。
+""", "NEEDS_PDF_CONVERT"),
+    # ⑧ 卡内无线索，但 registry 反查能认领（第三条线索）
+    "Skill-RegistryOnly": ("""---
+title: Registry Only Card
+module: 01-域
+---
+# 正文
+
+本卡自己没写来源，靠 registry 的 outputs.skill_card 反查认领。
+""", "RETROFIT_READY"),
+}
+
+
+def _selftest_constructed() -> list[tuple[str, bool]]:
+    """构造一棵临时仓库，端到端跑 `audit_card`，验证五层判定与互斥性。
+
+    原有自检只测了 `classify_hit` / `title_overlap` 两个**辅助函数** ——
+    那证明不了「一张卡会被判成哪一层」。PHASE4 的误判恰恰出在 audit_card 的
+    判定链上，所以这里必须**端到端**测。
+
+    ⚠️ 会临时改写模块级路径常量，**finally 里一定还原**（自检不许把配置改脏）。
+    """
+    import json as _json
+    import tempfile
+    global REPO_ROOT, VAULT, PAPERS, REGISTRY
+    saved = (REPO_ROOT, VAULT, PAPERS, REGISTRY)
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td).resolve()          # ⚠️ macOS 的 /var 是符号链接，必须 resolve
+        vault = root / "paper2skills-vault"
+        papers = vault / "papers"
+        (papers / "01-域" / "p2s-test-0001").mkdir(parents=True)
+        (papers / "02-域").mkdir(parents=True)
+        (vault / "01-域").mkdir(parents=True)
+        (vault / "02-域").mkdir(parents=True)
+        (vault / "07-资源库").mkdir(parents=True)
+        (papers / "01-域" / "p2s-test-0001" / "fulltext.md").write_text(
+            _SELFTEST_FULLTEXT, encoding="utf-8")
+        (papers / "02-域" / "2607.12345.pdf").write_bytes(b"%PDF-1.4\n" + b"0" * 5000)
+        reg = vault / "07-资源库" / "papers_registry.json"
+        reg.write_text(_json.dumps(_SELFTEST_REGISTRY, ensure_ascii=False), encoding="utf-8")
+        for name, (text, _want) in _SELFTEST_CARDS.items():
+            domain = "02-域" if name == "Skill-PdfOnly" else "01-域"
+            (vault / domain / f"{name}.md").write_text(text, encoding="utf-8")
+
+        try:
+            REPO_ROOT, VAULT, PAPERS, REGISTRY = root, vault, papers, reg
+            idx = PaperIndex.build()
+            by_arxiv, by_card = load_registry()
+            got = {}
+            for name, (text, want) in _SELFTEST_CARDS.items():
+                domain = "02-域" if name == "Skill-PdfOnly" else "01-域"
+                rep = audit_card(vault / domain / f"{name}.md", idx, by_arxiv, by_card)
+                got[name] = rep["verdict"]
+            n_cards = len(got)
+            tally = {v: 0 for v in VERDICT_ORDER}
+            for v in got.values():
+                tally[v] = tally.get(v, 0) + 1
+            layers_reached = {v for v in got.values()}
+        finally:
+            REPO_ROOT, VAULT, PAPERS, REGISTRY = saved
+
+    def one(name: str) -> tuple[str, bool]:
+        want = _SELFTEST_CARDS[name][1]
+        return got[name] == want, want
+
+    checks: list[tuple[str, bool]] = []
+    for name, title in (
+        ("Skill-TitleOnly", "【PHASE4 回归】只有 `paper:` 标题、无 arXiv/DOI → 判『有来源』，"
+                            "**不得**判 NO_PAPER_SOURCE"),
+        ("Skill-Practice", "只有 `evidence_basis: author-practice`、无任何论文线索 → "
+                           "判 NO_PAPER_SOURCE"),
+        ("Skill-Verified", "有 arXiv ID + 全文底本 + 引用块 → 判 VERIFIED"),
+        ("Skill-Retrofit", "有 arXiv ID + 全文底本、无引用块 → 判 RETROFIT_READY"),
+        ("Skill-BodyOnly", "溯源线索只在正文（frontmatter 无 ID）→ 仍判『有来源』"),
+        ("Skill-ShortPaperField", "`paper: n/a` 非标题值 → 不得凭空造出来源（判 NO_PAPER_SOURCE）"),
+        ("Skill-PdfOnly", "只有本地 PDF → 判 NEEDS_PDF_CONVERT（第五层可达）"),
+        ("Skill-RegistryOnly", "卡内无线索但 registry 反查认领 → 判『有来源』"),
+    ):
+        passed, want = one(name)
+        checks.append((f"{title}（实得 {got[name]}，期望 {want}）", passed))
+
+    # 互斥性：一张卡只能落一层 —— 逐项验证「每张卡的判定都在枚举内」且
+    # 「五个层各自可达且互不重叠」（八张样本卡 → 五种判定值，不多不少）
+    all_in_enum = all(v in VERDICT_ORDER for v in got.values())
+    checks.append((
+        f"四层判定互斥：{n_cards} 张样本卡各落**恰好一层**，"
+        f"tally 求和={sum(tally.values())}（应={n_cards}），"
+        f"可达层={len(layers_reached)}（应≥4，本次={sorted(layers_reached)}）",
+        all_in_enum and sum(tally.values()) == n_cards and len(layers_reached) >= 4))
+    # 同一张卡不可能同时是两个判定 —— 逐卡再确认一次（判定是单值字符串，
+    # 这条防的是「有人把 verdict 改成 list/多值」这种结构漂移）
+    checks.append((
+        "每张卡的 verdict 都是**单个字符串**（不是多值/集合）",
+        all(isinstance(v, str) for v in got.values())
+        and len(got) == len(_SELFTEST_CARDS)))
+    return checks
+
+
+def _selftest_output_paths() -> list[tuple[str, bool]]:
+    """产物落盘：父目录不存在时必须自建（本轮新修的漏洞 #8 同类缺陷）。"""
+    import tempfile
+    results = []
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td).resolve()
+        for label, fname in (("--json-out", "deep/a/b.json"), ("--worklist-out", "deep/c/w.md")):
+            target = root / fname
+            if target.parent.exists():
+                results.append((f"{label} 父目录不存在 → 自建并写出", False))
+                continue
+            try:
+                write_report(str(target), "x")
+                results.append((f"{label} 父目录不存在 → 自建并写出",
+                                target.is_file() and target.read_text(encoding="utf-8") == "x"))
+            except OSError:
+                results.append((f"{label} 父目录不存在 → 自建并写出", False))
+    return results
+
+
+def selftest() -> int:
+    """自检：证明本脚本真的能区分「可修」与「不可修」，且**不会把有来源判成没来源**。
+
+    分两段：
+      A. 真实仓库索引 + 辅助函数（原有）—— 证明索引本身可用
+      B. 构造样本端到端（2026-09-13 新增）—— 证明**判定链**本身可信
+    """
+    checks: list[tuple[str, bool]] = []
+
+    # --- A. 真实仓库索引（原有）------------------------------------------------
+    idx = PaperIndex.build()
     kinds = {e["kind"] for e in idx.entries}
     print(f"索引：{len(idx.entries)} 个论文实物，类型 {sorted(kinds)}")
-    if "fulltext" not in kinds:
-        print("❌ 索引里没有任何 fulltext.md —— 索引构建失效")
-        ok = False
-
-    # 2｜classify_hit 三分互斥
-    cases = [
+    checks.append(("索引里有 fulltext（否则索引构建失效）", "fulltext" in kinds))
+    for ent, want in [
         ({"kind": "fulltext", "size": MIN_FULLTEXT_CHARS + 1}, "fulltext_ok"),
         ({"kind": "fulltext", "size": MIN_FULLTEXT_CHARS - 1}, "fulltext_short"),
         ({"kind": "pdf", "size": 10 ** 7}, "pdf_only"),
-    ]
-    for ent, want in cases:
+    ]:
         got = idx.classify_hit(ent)
-        flag = "✅" if got == want else "❌"
-        if got != want:
-            ok = False
-        print(f"{flag} classify_hit({ent['kind']},{ent['size']}) = {got}（期望 {want}）")
-
-    # 3｜标题重叠：真匹配应高分，无关标题应低分
+        checks.append((f"classify_hit({ent['kind']},{ent['size']}) = {got}（期望 {want}）",
+                       got == want))
     hi = title_overlap("ReAct Synergizing Reasoning and Acting in Language Models",
                        "papers/10-MAS/00-知识库-Skill卡片/Skill-ReAct-Reasoning-Acting.md")
     lo = title_overlap("ReAct Synergizing Reasoning and Acting in Language Models",
                        "papers/13-广告分析/p2s-2026-0001/fulltext.md")
-    print(f"标题重叠 相关={hi:.2f} 无关={lo:.2f}")
-    if not (hi > lo):
-        print("❌ 标题重叠无法区分相关/无关")
-        ok = False
+    checks.append((f"标题重叠能区分相关/无关（相关={hi:.2f} > 无关={lo:.2f}）", hi > lo))
 
-    print("✅ 自检通过：三层判定互斥可区分" if ok else "❌ 自检失败")
+    # --- B. 构造样本端到端（新增）----------------------------------------------
+    print("构造样本（临时仓库，端到端跑 audit_card）：")
+    checks += _selftest_constructed()
+
+    # --- C. 产物落盘 -----------------------------------------------------------
+    checks += _selftest_output_paths()
+
+    ok = True
+    for name, passed in checks:
+        print(f"  {'✅' if passed else '❌'} {name}")
+        ok &= passed
+    print("✅ 自检通过：判定链可信 —— 有来源的不会被判成没来源，没来源的也不会被凭空认领"
+          if ok else "❌ 自检失败")
     return 0 if ok else 1
 
 
@@ -440,13 +680,12 @@ def main() -> int:
                 hp = ", ".join(h["path"] for h in r["hits"]) or "—"
                 lines.append(f"| `{r['card']}` | {ids} | {hp} | {r['n_quotes']} |")
             lines.append("")
-        Path(args.worklist_out).write_text("\n".join(lines), encoding="utf-8")
+        write_report(args.worklist_out, "\n".join(lines))
         print(f"\n工单 → {args.worklist_out}")
 
     if args.json_out:
-        Path(args.json_out).write_text(
-            json.dumps({"tally": tally, "cards": reports},
-                       ensure_ascii=False, indent=2), encoding="utf-8")
+        write_report(args.json_out, json.dumps({"tally": tally, "cards": reports},
+                                               ensure_ascii=False, indent=2))
         print(f"JSON → {args.json_out}")
 
     return 0
