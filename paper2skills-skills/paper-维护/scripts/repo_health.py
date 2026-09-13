@@ -582,6 +582,29 @@ def _c2_samples() -> dict[str, tuple[str, dict]]:
             "正文，来源见 10.1287/mnsc.2022.02462\n"),
         "经验卡·缺结构性字段 title": mk(
             "---\nmodule: 01-域\nevidence_basis: author-practice\n---\n正文\n"),
+        # ⚠️ 下面两例锁定一个**刻意做出的决定**，不是随手补的边界测试（2026-09-13）：
+        #
+        # 全库实测有 **11 张卡 frontmatter 没有 `title:`** —— 但其中只有 **2 张**改用
+        # 了 Skill 格式的 `name:`/`description`，另 **9 张连标题字段都没有**（标题只写在
+        # 正文 H1 里）。当时的登记文案写作「11 张卡用 `name:` 而非 `title:`」，**与实物不符**。
+        #
+        # 它看起来像漏洞 #11（「判据只认一种字段名 → 把另一种形态漏掉」），
+        # 但**不是**：#11 里被漏掉的是**同一概念的另一种合规写法**（`参考资料`/`参考论文`），
+        # 而 `name:`+`description` 是 **Claude Code Skill 的格式**（见 CLAUDE.md
+        #「Skill File Format」），属于**另一种交付物**，vault 卡片的唯一格式权威
+        #（`MasterPrompt-v2.md` 第 57 行）明写必填的是 `title:`。
+        #
+        # 所以处置是**修资产而不是放松判据**：给这 11 张补 `title:`（另 2 张的 `area:`
+        # 改名 `module:`）。放松判据会让 C2 从此接受一个**没有格式依据**的替代字段 ——
+        # 那正是「加一行 frontmatter 就能全库免检」（漏洞 #10）的同型风险。
+        # 这两条用例就是防止后来者「为了让 11 张卡变绿」把判据改宽。
+        "经验卡·用 name 代替 title（不算有 title）": mk(
+            "---\nname: Some-Skill\ndescription: 该技能应在…时使用\nmodule: 01-域\n"
+            "evidence_basis: author-practice\n---\n正文\n"),
+        "有来源卡·用 area 代替 module（不算有 module）": mk(
+            "---\ntitle: T\narea: 01-域\npaper_id: 2606.26690\n"
+            "paper: A Real Paper Title\nvenue: KDD 2026\nvenue_tier: CCF-A\n"
+            "evidence_grade: A\n---\n正文\n"),
         "经验卡·带文档来源 source:human+ai": mk(
             "---\ntitle: T\nmodule: 01-域\nevidence_basis: author-practice\n"
             "source: human+ai\n---\n正文\n"),
@@ -659,6 +682,11 @@ def selftest() -> int:
             # --- 豁免不许溢出（四条反例，漏洞 #10 的纪律）-----------------------
             ("C2 豁免只管来源字段：经验卡缺 title 仍报",
              _reported("经验卡·缺结构性字段 title") == ["title"]),
+            # --- 结构性字段的**格式权威**：不许用别的字段名顶替（2026-09-13）--------
+            ("C2 不认 `name:` 顶替 `title`（Skill 格式不等于 vault v2 格式）",
+             _reported("经验卡·用 name 代替 title（不算有 title）") == ["title"]),
+            ("C2 不认 `area:` 顶替 `module`",
+             _reported("有来源卡·用 area 代替 module（不算有 module）") == ["module"]),
             ("C2 抓到『声明 author-practice 但有 paper_id』的矛盾",
              _card_for("经验卡·声明矛盾(带 paper_id)") in contra
              and _card_for("经验卡·声明矛盾(带 paper_id)") not in exempt),
