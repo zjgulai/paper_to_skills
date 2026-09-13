@@ -4,11 +4,11 @@ module: 06-增长模型
 topic: 用 LLM 模拟用户-商品交互，把冷商品直接转成「伪热商品」再走标准嵌入优化
 status: draft
 created: 2026-05-15
-updated: 2026-09-12
+updated: 2026-09-13
 owner: self
 source: ai
 paper_id: 2402.09176
-paper: Large Language Model Interaction Simulator for Cold-Start Item Recommendation
+paper: Large Language Model Simulator for Cold-Start Recommendation
 evidence_basis: paper-verbatim
 verified_by: quote_check.py (引文逐字核验 VERBATIM) + gate_check.py G2
 related: Skill-New-Product-Opportunity-Mining.md, Skill-Uplift-Churn-Prediction.md
@@ -77,7 +77,7 @@ $$
 
 - 使用LLM最后一层token嵌入
 - 均值池化获得商品内容表征
-- 维度：与推荐骨干网络一致（如64维）
+- 维度：论文将嵌入维度统一设为 **200**（§5.1.3；v1 与 v2 措辞一致）
 
 **Embedding 优化**
 
@@ -155,10 +155,10 @@ $$
 - 推荐的冷启动展示位置优化建议
 
 **业务价值**：
-- 冷启动期转化率提升 **21.69%**（基于论文实验）
-- 缩短冷启动周期：从传统2-4周缩短到3-7天
+- 冷商品推荐效果提升 **21.69%**：论文报告的**离线推荐指标**（Recall / NDCG）相对提升 —— ⚠️ 这是排序质量指标，**不是转化率**
+- 线上冷启动期 GMV：论文 §5.5 的两周 A/B 测试报告 Cold-GMV 相对 Random **+23.80%**
 - 降低无效曝光：精准触达高潜用户，减少广告浪费
-- GMV提升：两周A/B测试显示冷启动期GMV显著增长
+- ⚠️ 原卡所写的「缩短冷启动周期」一条在 v1 与 v2 中**均无出处**（v2 §5.5 反而把冷启动期定义为「商品发布后至发布后两小时」），已删除
 
 ---
 
@@ -185,8 +185,8 @@ $$
 - 实时冷启动推荐能力提升
 
 **业务价值**：
-- **规模化处理能力**：支撑日均上新100+SKU的快速迭代业务
-- **系统ROI**：相比人工冷启动策略，自动化处理效率提升100倍+
+- **规模化处理能力**：支撑高频上新、快速迭代的业务（本卡场景假设，非论文结论）
+- **系统ROI**：⚠️ 论文未给出与人工冷启动策略的效率对比；原卡所写的「自动化处理效率提升」倍数估算无任何出处，已删除
 - **持续优化**：冷商品随模拟数据积累快速"变热"
 
 ---
@@ -665,7 +665,7 @@ if __name__ == '__main__':
 
 | 维度 | 评估 |
 |------|------|
-| **ROI估算** | 冷启动期GMV显著提升（论文两周A/B测试验证），缩短冷启动周期从2-4周到3-7天，预计新品ROI提升20-30% |
+| **ROI估算** | 论文 §5.5 两周线上 A/B 测试：冷启动期 Cold-GMV 相对 Random **+23.80%**、Cold-PCTR **+5.60%**、Cold-PV **+11.45%**。⚠️ 论文未给任何 ROI / 金额口径推算；原卡的「冷启动周期」与「预计 ROI 提升」两条估算在 v1 与 v2 中均无出处，已删除 |
 | **实施难度** | ★★★★☆ (4/5) - 需要LLM推理能力、GPU资源、FAISS索引基础设施 |
 | **数据需求** | ★★★☆☆ (3/5) - 需要商品内容特征（标题、描述）、用户历史交互 |
 | **模型复杂度** | ★★★★☆ (4/5) - 双阶段架构较复杂，但开源代码可参考 |
@@ -699,41 +699,69 @@ if __name__ == '__main__':
 
 ## ⑥ 原文引用
 
-> 原文："Existing cold-start models use mapping functions to generate fake behavioral embeddings based on the content feature of cold items. However, these generated embeddings have significant differences from the real behavioral embeddings, leading to a negative impact on cold recommendation performance."
-> 出处：2402.09176 §Abstract / §1（PDF 第 1 页）
+> ⚠️ **底本版本声明**：本卡依据 **arXiv 2402.09176v2**，即 **WSDM 2025 正式发表版**（arXiv 摘要页 `Comments` 字段写明该文录用于 WSDM 2025；v2 首页含 WSDM 会议头与 DOI）。本仓库底本 `fulltext.md` 已同步为 v2，旧 v1 存档保留在同目录 `fulltext.v1.md`。v1 预印本标题为 *Large Language Model **Interaction** Simulator for Cold-Start **Item** Recommendation*、方法名 `LLM-InS`；**v2 起更名为 `ColdLLM`**，故本卡正文使用 `ColdLLM`。以下引文全部逐字取自 v2。
 
-> 原文："To address this challenge, we propose an LLM Interaction Simulator (LLM-InS) to model users’ behavior patterns based on the content aspect. This simulator allows recommender systems to simulate vivid interactions for each cold item and transform them from cold to warm items directly."
-> 出处：2402.09176 §Abstract（PDF 第 1 页）
+> 原文："Recommending cold items remains a significant challenge in billion-scale online recommendation systems. While warm items benefit from historical user behaviors, cold items rely solely on content features, limiting their recommendation performance and impacting user experience and revenue."
+> 出处：2402.09176v2 §Abstract
 
-> 原文："Additionally, we introduce an efficient “filtering-and-refining” approach to take full advantage of the simulation power of the LLMs."
-> 出处：2402.09176 §Abstract（PDF 第 1 页）
+> 原文："Current models generate synthetic behavioral embeddings from content features but fail to address the core issue: the absence of historical behavior data."
+> 出处：2402.09176v2 §Abstract
 
-> 原文："Unlike conventional “embedding simulation” methods, we propose an “interaction simulation” approach. Obviously, predicting interactions for all users in large datasets is impractical."
-> 出处：2402.09176 §4.2 Hierarchical Interaction Simulator（PDF 第 4 页）
+> 原文："To manage the computational complexity, we propose a coupled funnel ColdLLM framework for online recommendation. ColdLLM efficiently reduces the number of candidate users from billions to hundreds using a trained coupled filter, allowing the LLM to operate efficiently and effectively on the filtered set."
+> 出处：2402.09176v2 §Abstract —— 卡片 ① 段「十亿→百级候选」与 ② 段「Coupled Funnel 双阶段架构」的出处
 
-> 原文："Collaborative Filtering (CF) is essential for billion-scale recommender systems to filter the most interesting items for users from billions of candidates."
-> 出处：2402.09176 §1 Introduction（PDF 第 1 页）
+> 原文："Extensive experiments show that ColdLLM significantly surpasses baselines in cold-start recommendations, including Recall and NDCG metrics. A two-week A/B test also validates that ColdLLM can effectively increase the cold-start period GMV."
+> 出处：2402.09176v2 §Abstract —— 卡片 ② 段「两周 A/B 测试 … GMV」的出处
 
-> 原文："we calculate its top-K user candidates"
-> 出处：2402.09176 §4.2.1 式 (17)（PDF 第 5 页）
+> 原文："In this subsection, we propose the coupled-funnel ColdLLM to incorporate coupled filter models efficiently and effectively simulate cold item behaviors."
+> 出处：2402.09176v2 §4.2 Coupled Funnel ColdLLM
+
+> 原文："To filter users who are likely to interact with the cold item, we consider both content embeddings and behavioral embeddings. We use the dot product of the mapped user embedding and the mapped item embedding to identify the top-$K$ highest score candidates"
+> 出处：2402.09176v2 §4.2.1 Filtering Simulation 式 (7)
 
 > 原文："We opted for a top-k value of 20."
 > 出处：2402.09176 §5.1.3 Hyperparameter Setting（PDF 第 6 页）
 
-> 原文："By convention, we set K to 20 and report the average values obtained across all users in the test set."
-> 出处：2402.09176 §5.1.4 Evaluation Metrics（PDF 第 7 页）
+> 原文："This top-$K$ computation can be accelerated using efficient similarity search platforms, such as FAISS (Johnson et al., 2019), resulting in ${\mathcal{O}}(1)$ computational complexity."
+> 出处：2402.09176v2 §4.2.1 Filtering Simulation
 
-> 原文："Table 1. Overall, cold and warm recommendation performance comparison over three backbone models (MF, NGCF, LightGCN). The best and second-best results in each column are highlighted in bold font and underlined."
-> 出处：2402.09176 §5.2 Main Results (RQ1) 表 1 标题（PDF 第 7 页）
+> 原文："Coupled Filtering: Leveraging similarity indexing frameworks like FAISS, we can efficiently downscale the candidate users from billions to hundreds with a complexity of $\mathcal{O}(1)$ in approximately 60 ms."
+> 出处：2402.09176v2 §4.4 Implementation Strategy → Complexity Analysis —— 卡片 ① 段「FAISS / O(1) / ~60ms」的出处
 
-> 原文："| %Improv. | 43.48% | 44.87% | 3.88% | 4.72% | 22.05% | 21.69% | 63.41% | 49.33% | 24.56% | 23.76% | 3.58% | 4.45% |"
-> 出处：2402.09176 §5.2 表 1（NGCF 骨干网络 %Improv. 行）。列序 = Overall / Cold / Warm × CiteULike / MovieLens × Recall / NDCG；故第 6 列 **21.69%** = CiteULike 数据集上**冷商品 NDCG** 的相对提升，第 2 列 44.87% 才是 CiteULike 整体 NDCG 提升
+> 原文："Coupled Refining: We refine the filtered candidates using fine-tuned LLaMA-7B models to identify 20 qualified users. This process takes about 200-400 ms for each user-item pair. In total, the LLM-refining stage requires less than 8 seconds."
+> 出处：2402.09176v2 §4.4 Implementation Strategy → Complexity Analysis —— 卡片 ① 段「微调 LLaMA-7B / 200-400ms / <8 秒」的出处
 
-> 原文："Extensive experiments using real behavioral embeddings demonstrate that our proposed model, LLM-InS, outperforms nine state-of-the-art cold-start methods and three LLM models in cold-start item recommendations."
-> 出处：2402.09176 §Abstract（PDF 第 1 页）
+> 原文："When equipped with three 8$\times$A100 GPU machines, our system can handle a load of 8,640 cold items per hour."
+> 出处：2402.09176v2 §4.4 Implementation Strategy —— 卡片 ② 段「3×8×A100 / 8,640 商品/小时」的出处
 
-> **底本标题差异（不改正文，仅记录）**：卡片正文与「参考论文」段把本文称作 **ColdLLM** / *Large Language Model Simulator for Cold-Start Recommendation*（WSDM 2025）；
-> 全文底本首页标题为 *Large Language Model Interaction Simulator for Cold-Start Item Recommendation*，方法名 **LLM-InS**，全文无 `ColdLLM` / `WSDM` 命中，也未见 LLaMA-7B 与任何时延/吞吐数字。
+> 原文："The dimension of the embeddings was standardized to 200 for all models."
+> 出处：2402.09176v2 §5.1.3 Hyperparameter Setting —— 卡片 ① 段「嵌入维度 200」的出处
+
+> 原文："Specifically, we employ Recall@$K$ and NDCG@$K$ as our primary metrics, where $k=20$."
+> 出处：2402.09176v2 §5.1.4 Evaluation Metrics
+
+> 原文："ColdLLM brings an average NDCG improvement of 10.79% and 37.10% on overall and cold item recommendations over LightGCN."
+> 出处：2402.09176v2 §5.2 Main Results (RQ1) —— 卡片 ⑤ 段「整体 NDCG 提升 +10.79%」的出处
+
+> 原文："We conduct extensive offline experiments, demonstrating that our model outperforms existing solutions by 21.69% in cold recommendation performance."
+> 出处：2402.09176v2 §1 Introduction —— 卡片 ② / ⑤ 段「冷商品 +21.69%」的出处
+
+> 原文："*Table 1. Comparison results on overall, cold, and warm item recommendations over three backbone models (MF, NGCF, LightGCN). The best and second-best results in each column are highlighted in bold font and underlined.*"
+> 出处：2402.09176v2 §5.2 Main Results (RQ1) 表 1 标题
+
+> 原文："| Improvement | 43.48% | 42.75% | 3.28% | 3.18% | 20.28% | 19.35% | 63.41% | 49.33% | 5.84% | 7.88% | 2.64% | 2.66% |"
+> 出处：2402.09176v2 §5.2 表 1（NGCF 骨干网络 Improvement 行）。列序 = Overall / Cold / Warm × CiteULike / MovieLens × Recall / NDCG。⚠️ **v2 起该行数值与 v1 不同**，卡片 ⑤ 段引用的 21.69% 与 10.79% **不出自本行**，其出处见上方 §1 与 §5.2 两条
+
+> 原文："To validate the effectiveness of ColdLLM in an industrial setting, we conducted an online A/B test on one of the largest e-commerce platforms. The experiment ran for two consecutive weeks, involving 5% of users for each group."
+> 出处：2402.09176v2 §5.5 Online Evaluation (RQ4)
+
+> 原文："We define the cold-start period as the interval from the item’s publication to two hours after its release."
+> 出处：2402.09176v2 §5.5 Online Evaluation (RQ4) —— 「冷启动期」的口径定义
+
+> 原文："Specifically, compared to the random baseline, ColdLLM achieves substantial improvements of 11.45% in Cold-PV, 5.60% in Cold-PCTR, and 23.80% in Cold-GMV for cold items."
+> 出处：2402.09176v2 §5.5 Online Evaluation (RQ4) 表 3 —— 卡片 ② / ⑤ 段线上冷启动期 Cold-GMV / Cold-PCTR / Cold-PV 提升的出处
+
+> **版本错配记录（2026-09-13 核实）**：本卡曾被依据 v1 预印本（*Large Language Model Interaction Simulator for Cold-Start Item Recommendation*，方法名 `LLM-InS`）判为「方法名与论文不符 / 数字疑似编造」。经逐项核实：卡片的 `ColdLLM`、`WSDM 2025`、`Coupled Funnel`、`10.79%`、`LLaMA-7B`、`FAISS`、`A100`、`8,640` 等**全部是 v2（WSDM 2025 正式版）的事实**，在 v1 中的零命中是**版本差异**所致，**不是编造**。此前依赖 v1 措辞的引文已在上方替换为 v2 逐字引文；v1 存档保留为 `fulltext.v1.md` 以备对照。
 
 ---
 
