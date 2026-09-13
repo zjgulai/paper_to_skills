@@ -4,7 +4,7 @@ module: 06-增长模型
 topic: 用 Uplift/ITE 而非流失概率本身，识别「干预才留下」的可说服者
 status: draft
 created: 2026-05-15
-updated: 2026-09-12
+updated: 2026-09-13
 owner: self
 source: ai
 paper_id: 2312.07206
@@ -18,7 +18,7 @@ related: Skill-Customer-Journey-Prototype.md, Skill-DQN-Purchase-Prediction.md
 
 **论文来源**: A churn prediction dataset from the telecom sector: a new benchmark for uplift modeling  
 **arXiv ID**: [2312.07206](https://arxiv.org/abs/2312.07206)  
-**发表会议**: ECML PKDD 2023 Workshop  
+**发表会议**: ECML PKDD 2023 Workshop（post-proceedings）✅ 已核验 —— 证据在 arXiv 元数据 `Comments`，**不在**底本正文（论文正文通常不写自己的 venue）；见附录  
 **适用领域**: 用户流失预测、干预效果评估、精准营销
 
 ---
@@ -26,7 +26,9 @@ related: Skill-Customer-Journey-Prototype.md, Skill-DQN-Purchase-Prediction.md
 ## ① 算法原理
 
 ### 核心思想
-Uplift Modeling解决的核心问题：**识别哪些用户会因为干预（如优惠券、客服电话）而降低流失概率**。传统流失预测模型只告诉你会流失，Uplift模型告诉你干预对谁有效。将用户分为四类：可说服者（Persuadables）、必然转化者（Sure Things）、无法挽回者（Lost Causes）、不要打扰者（Sleeping Dogs）。
+Uplift Modeling解决的核心问题：**识别哪些用户会因为干预（如优惠券、客服电话）而降低流失概率**。它估计干预对个体的因果效应，从而只挑选出「对干预有正向反应」的那部分人，而不是对所有高危用户统一施策。论文按潜在结果 $(y_0,y_1)$ 的联合分布把用户分为四类：必然转化者（Sure thing）、可说服者（Persuadable）、无法挽回者（Lost cause）、不要打扰者（Do-not-disturb）。
+
+> ⚠️ 论文用的是「可说服者 / 必然转化者 / 无法挽回者 / 不要打扰者」这四个名字，**没有**「Sleeping Dogs」，该词在底本中零命中。四类标签与流失语境的对应见 §3 表 3。
 
 ### 数学直觉
 **个体干预效应 (ITE)**：
@@ -37,23 +39,40 @@ $$\tau(x) = P(Y=1|T=1,X=x) - P(Y=1|T=0,X=x)$$
 - T=1 表示接受干预，T=0 表示未接受干预
 - 负的ITE表示干预降低流失概率（好效果）
 
-**T-Learner方法**：
-分别训练两个独立的分类器：
-- μ₁(x)：处理组模型，预测P(Y=1|T=1,X=x)
-- μ₀(x)：对照组模型，预测P(Y=1|T=0,X=x)
-- ITE估计：τ̂(x) = μ̂₁(x) - μ̂₀(x)
+### 论文基准里实际比较的三个模型（§5）
+论文没有提出新算法，而是**在一个新数据集上比较了三个既有模型**，这也是这张卡唯一可核验的「哪种模型更优」的来源：
 
-**X-Learner方法**（本文推荐）：
-1. 阶段一：训练T-Learner的基础模型
-2. 阶段二：计算imputed treatment effects
-   - 处理组：Dᵢ = Yᵢ - μ̂₀(Xᵢ)
-   - 对照组：Dᵢ = μ̂₁(Xᵢ) - Yᵢ
-3. 阶段三：用回归模型预测ITE：τ̂(x) = E[D|X=x]
+| 模型（论文原称） | 论文的定义 |
+|---|---|
+| **outcome RF** | 经典随机森林，**只用对照组样本**预测流失，「without explicitly considering the individual treatment effect」，作为评估 uplift 模型的**基线** |
+| **uplift RF** | uplift random forest |
+| **T-learner RF** | T-learner uplift model，base learner 用随机森林 |
 
-### 关键假设
-1. **SUTVA**：稳定单元处理值假设，用户间无干扰
-2. **无混淆性**：给定特征X，处理分配与潜在结果条件独立
-3. **正向性**：每个用户都有被干预和不被干预的可能性
+三者统一配置：100 trees、max depth 20、min 10 samples per leaf；类别不平衡用 EasyEnsemble（8 folds）；K-fold 交叉验证 $k=3$；整个实验重复 10 次。评价指标是 **AUUC（area under the uplift curve）**。
+
+> ⚠️ 旧版此处还有 SUTVA / 无混淆性 / 正向性三条「关键假设」（原文写作 `SUTVA`、`unconfoundedness`、`positivity`）与 T-Learner 双模型公式、X-Learner 三阶段流程。底本中 `SUTVA`、`unconfoundedness`、`positivity`、`X-Learner`、`S-Learner` **全部零命中**，论文未列出建模假设清单、基准里也没有 X/S-Learner，故一并删除。旧版的模型对比结论与论文相反，详见 ①b。
+
+---
+
+## ①b 反例与适用边界
+
+> **这一节是本卡最重要的一节。** 论文的核心实测结论是**负结果**：在这份流失基准上，普通流失预测反而最好，uplift 并不必然更优。本卡旧版把它写成了正结果，已改正。
+
+- **什么时候不要用 uplift（论文的直接反例）**
+  1. **只看「uplift 一定比普通预测模型好」这一条就上马**：论文 §6 实测 **outcome RF 的 AUUC 始终最高** —— 「the performance of the outcome RF model is consistently the highest, showing that the uplift approach is not always preferable」。§7 结论段再次确认「classical predictive modeling is more effective than uplift modeling」，并说明**其产业合作方在实践中也观察到同样现象**。故 uplift 只在「普通预测模型作为基线已被打败」之后才值得投入。
+  2. **小样本 + 低信息量的场景**：本文数据集只有 11,896 样本 / 178 特征，互信息极低（论文表 2 的估计值显示，对照组的特征-结果互信息仅约 0.0008，远低于 Criteo 数据集的 0.0429），论文自述这是「a low information rate, a low outcome probability, and a small number of samples」的困难设定。
+  3. **干预效应本身微弱时**：论文明确「Uplift modeling is even more difficult than predicting the outcome probability alone due to the relatively small effect of the treatment」。
+  4. **流失在对照组也极少发生**：该数据中「无论是否干预都会流失」的 Lost cause 比例极低（表 3 第四行 $0.1\%$），论文称「a negligible number of customers are likely to churn regardless of the targeted marketing action」。这种情况下 uplift 的可操作空间本就窄。
+  5. **把四象限当作可直接触达的名单**：四象限来自**估计**出的反事实联合分布（表 3），论文未给出任何象限归属的准确率或校准证据，不能直接当成发券名单。
+- **已知的失败模式**
+  - **估计量方差压过效应**：论文表 5 实测，两个 uplift 模型（uplift RF / T-learner RF）的预测方差都**高于 outcome RF**。论文把方差列为「classical predictive modeling outperforms uplift modeling」的可能原因之一（§6 与参考文献 [5,6]），即效应小 + 方差大时，uplift 的排序会被噪声吃掉。
+  - **把「uplift 排名第一」当成论文结论**：论文的基准里根本没有该模型。**任何在本卡上声称「某 uplift 变体显著优于其他变体」的说法都超出了底本。**
+  - **跨数据集外推胜负关系**：论文表 4 显示，胜负关系随数据集而变 —— 在 Hillstrom 上 T-learner RF 的 AUUC 最高（$2.72\%$），而在 churn 与 Criteo 上 outcome RF 最高。**不能把 churn 上的结论直接搬到别的域。**
+- **论文自己承认的局限**
+  1. 数据只来自比利时一家电信运营商（Orange Belgium）的三次营销活动（2020 年 9–12 月），**跨行业、跨企业迁移性未验证**；
+  2. 数值特征经 PCA 投影匿名化，论文承认匿名化后性能略降，但因 AUUC 不确定性高，**无法排除差异来自随机波动**；
+  3. 流失结果只在活动后**两个月窗口**内判定，更晚的流失不归因于该次活动；
+  4. 作者把「普通预测模型为何更好」列为**未来工作**：「we intend to investigate this question from a theoretical perspective」—— 即本文**没有**给出该负结果的理论解释。
 
 ---
 
@@ -67,17 +86,20 @@ $$\tau(x) = P(Y=1|T=1,X=x) - P(Y=1|T=0,X=x)$$
 **数据要求**
 - 用户特征：在网时长、月消费金额、累计消费、客服通话次数、购买产品数量
 - 历史干预数据：是否发放优惠券、是否进行客服回访
-- 流失标签：30天内是否流失
-- 样本量：建议≥5000条（处理组和对照组各2500+）
+- 流失标签：30天内是否流失（**卡片自定的电商业务口径**；论文的观察窗是 activity 后 **two-month window** 的流失，本卡此处的 30 天不代表论文口径）
+- 样本量：必须有**足够的历史随机对照实验数据**，即同一时期内明确划分了处理组与对照组、且两组都记录了流失结果。论文的自述弱点是样本小 + 信息率低（11,896 样本 / 178 特征），**样本量下限论文未给出**，需按自己实验的历史实验量评估。
 
 **预期产出**
 - 每个用户的Uplift分数：干预对降低流失的概率
-- 四象限分群：
-  - 可说服者（Persuadables）：Uplift>0.1，发券显著降低流失
-  - 必然转化者（Sure Things）：0<Uplift<0.1，会自然留存，无需发券
-  - 无法挽回者（Lost Causes）：Uplift≈0，发券无效，节省成本
-  - 不要打扰者（Sleeping Dogs）：Uplift<0，发券可能增加流失
-- 分群触达策略：仅对"可说服者"发放高价值优惠券
+- **同时产出普通流失预测（outcome RF 口径）分数作为对照基线** —— 论文实测在流失数据集上该基线反而最优（见 ①b），不并列基线就无法判断 uplift 是否值得上线
+- 四象限分群（论文四类反事实，§3 表 3）：
+  - 可说服者（Persuadable）：干预对其有正向因果效应，是值得触达的对象
+  - 必然转化者（Sure thing）：不给干预也会留存，无需发券
+  - 无法挽回者（Lost cause）：给不给干预都会流失，发券无效，节省成本
+  - 不要打扰者（Do-not-disturb）：干预反而有害，应避免触达
+- 分群触达策略：仅对"可说服者"发放高价值优惠券，且**上线前须与上一行的普通预测基线做同期 A/B 对比**
+
+> ⚠️ 旧版此处的 `Uplift>0.1` / `0<Uplift<0.1` / `Uplift≈0` / `Uplift<0` 是**卡片自定的分群阈值，论文中零命中、无依据**，已删除；建议按自己的实验数据用 AUUC 曲线选阈值。旧版第四类的名字 `Sleeping Dogs` 在底本中同样零命中，已替换为论文自己的第四类 `Do-not-disturb`（§3 表 3）。
 
 **业务价值**
 - 优惠券成本降低30-40%（假设月发券成本10万，节省3-4万）
@@ -105,11 +127,14 @@ $$\tau(x) = P(Y=1|T=1,X=x) - P(Y=1|T=0,X=x)$$
   | Loyalty | 高满意 | 低 | 减少打扰 |
   | Awareness | 服务抱怨 | 负 | 客服介入而非营销 |
 - 个性化干预策略：根据AIPL+VOC标签自动选择干预方式
+- **必须提交一份「特征分层 vs 统一策略」的基线对比**：矩阵里的「高/低/负」只有在**打过普通流失预测基线**之后才有决策意义 —— 论文的负结果（①b）说明，不做这一步就可能把预算投向一个并不优于普通预测模型的方案
 
 **业务价值**
 - 营销ROI提升2-3倍（精准匹配干预方式）
 - 用户满意度提升（减少无效打扰）
 - 建立"标签→Uplift→策略"的自动化运营闭环
+
+> ⚠️ 上述 2–3 倍 ROI 为**作者业务估算，论文无对应量**；且在本卡场景下必须先通过 ①b 的基线检验，否则该倍数不成立。
 
 ---
 
@@ -124,6 +149,8 @@ $$\tau(x) = P(Y=1|T=1,X=x) - P(Y=1|T=0,X=x)$$
 4. **UpliftMetrics**: Qini曲线和AUUC评估指标
 5. **CustomerUpliftAnalyzer**: 业务分析器，输出四象限分群和策略建议
 
+> ⚠️ **本节与底本的关系必须说清**：上面 1–3 的类名是本卡自带代码包的组件，**不是论文的基准模型**。底本 §5 的基准只有 **outcome RF / uplift RF / T-learner RF** 三个（后见 ① 节表格），其中只有 T-learner 与本节组件同名同源；`SLearner` 与 `XLearner` 在底本中零命中，`Qini` 亦然（论文评价指标是 AUUC）。本节代码块未改动（按本次任务范围），但**读者不应据此认为论文验证过 S/X-Learner 或 Qini**。
+
 运行测试:
 ```bash
 cd paper2skills-code/growth_model/uplift_churn_prediction
@@ -136,7 +163,7 @@ python3 model.py
 
 ### 前置技能
 - **Skill-Customer-Churn-Prediction**: 掌握传统流失预测方法，理解用户行为特征
-- **Skill-Uplift-Modeling**: 理解Uplift Modeling基础概念（T/S/X-Learner）
+- **Skill-Uplift-Modeling**: 理解Uplift Modeling基础概念（该卡覆盖各类 meta-learner；注意**本卡底本 2312.07206 并没有比较 T/S/X-Learner**，见 ① 与 ①b）
 - **Skill-A-B-Test-Design**: 需要A/B测试数据作为训练样本
 
 ### 延伸技能
@@ -173,8 +200,8 @@ python3 model.py
 2/5星
 
 **依据**：
-- 论文已有成熟方法，代码实现清晰
-- 依赖A/B测试数据，需确保历史实验数据质量
+- 论文给出了可直接复用的基准实验设置（三个模型、100 trees / depth 20 / EasyEnsemble / $k=3$、重复 10 次），复现路径清晰
+- 依赖 A/B测试数据，需确保历史实验数据质量
 - 与现有流失预测系统整合有一定工程复杂度
 
 ### 优先级评分
@@ -183,11 +210,11 @@ python3 model.py
 **依据**：
 - **业务价值明确**：直接降低优惠券成本，效果可量化
 - **与现有体系契合**：可与AIPL-VOC标签体系深度结合
-- **技术成熟度**：X-Learner方法在顶会验证
+- **前提条件（必读）**：论文在流失数据集上的实测是 **outcome RF 的 AUUC 始终最高**，且 §7 称其产业合作方在实践中也观察到普通预测模型更有效（①b）。**故本卡的优先级只在「普通预测基线在同一数据上被 uplift 打败」后才成立**；未做该对比前不应按 4 星投入。
 - **实施周期短**：2-3周可完成MVP
 
 ### 实施建议
-1. **MVP阶段**（2周）：用历史优惠券实验数据训练模型，输出四象限分群报告
+1. **MVP阶段**（2周）：用历史优惠券实验数据训练模型，输出四象限分群报告，**并同期跑通普通流失预测基线（outcome RF 口径）做对比** —— 未过这一关就不进入试点
 2. **试点阶段**（2周）：选择"兴趣期+价格敏感"用户群体进行A/B测试
 3. **全面推广**（1个月）：集成到优惠券发放系统，实现自动化分群触达
 
@@ -237,6 +264,18 @@ python3 model.py
 > 原文："The performance of each model was estimated in terms of the area under the uplift curve (AUUC) [7]."
 > 出处：2312.07206 §5 Benchmark experimental setup（PDF 第 4 页）——评价指标是 **AUUC**，不是 Qini
 
+> 原文："All three models used 100 trees, a maximum depth of 20, and a minimum of 10 samples per leaf."
+> 出处：2312.07206 §5 Benchmark experimental setup（PDF 第 4 页）——这是本卡 ① 三个模型统一配置（100 trees / depth 20 / min 10 samples per leaf）的出处
+
+> 原文："Finally, the whole experiment was repeated 10 times to obtain a more robust estimation of the performance, as well as an estimation of its variability."
+> 出处：2312.07206 §5 Benchmark experimental setup（PDF 第 4 页）
+
+> 原文："The dataset comes from a series of three marketing campaigns conducted between September and December 2020."
+> 出处：2312.07206 §2 Churn campaigns（PDF 第 1 页）——本卡 ①b 引用的 2020 年 9–12 月三次活动的出处
+
+> 原文："More generally, researchers and practitioners can leverage this dataset to develop and benchmark new algorithms, feature engineering approaches, and model evaluation metrics tailored to uplift modeling in difficult settings characterized by a low information rate, a low outcome probability, and a small number of samples."
+> 出处：2312.07206 §7 Conclusion（PDF 第 5 页）——本卡 ①b 第 2 条「小样本 + 低信息量」的直接出处
+
 > 原文："Interestingly, the performance of the outcome RF model is consistently the highest, showing that the uplift approach is not always preferable, as discussed in [5, 6]."
 > 出处：2312.07206 §6 Results（PDF 第 4 页）
 
@@ -253,8 +292,8 @@ python3 model.py
 | 项目 | 内容 |
 |------|------|
 | 论文标题 | A churn prediction dataset from the telecom sector: a new benchmark for uplift modeling |
-| 作者 | Matthias Aßenmacher et al. |
-| 发表 | ECML PKDD 2023 Workshop |
-| arXiv | 2312.07206 |
-| 核心贡献 | 提供电信行业大规模Uplift Modeling基准数据集，验证X-Learner在流失预测中的有效性 |
-| 实验结果 | X-Learner在Qini曲线上显著优于T-Learner和S-Learner |
+| 作者 | Théo Verhelst、Denis Mercier、Jeevan Shrestha、Gianluca Bontempi |
+| 发表 | **ECML PKDD 2023 Workshop**（post-proceedings, *Uplift Modeling and Causal Machine Learning for Operational Decision Making*）—— ✅ **已核验，但证据不在底本里**：arXiv 元数据 `Comments` 逐字为 `8 pages, 2 figures, 5 tables, post-proceedings of the ECML PKDD 2023 Workshop on Uplift Modeling and Causal Machine Learning for Operational Decision Making`（2026-09-13 复核）。⚠️ 底本 v1 正文 `ECML`/`PKDD` **零命中是正常的** —— 论文正文通常不写自己的 venue，所以 **venue 声明不得用底本判定**，须用 arXiv 元数据 / 出版方 DOI |
+| arXiv | 2312.07206 (v1) |
+| 核心贡献 | 提供电信行业（Orange Belgium，2020 年 9–12 月三次营销活动）的公开 churn uplift 基准数据集：**11,896 样本 / 178 特征**，数值特征经 PCA 匿名化；论文另给出三模型基准实验设置 |
+| 实验结果 | **outcome RF 的 AUUC 在流失数据集上始终最高**（§6）；Hillstrom 上 T-learner RF 最高（$2.72\%$）；两个 uplift 模型的预测方差均高于 outcome RF（表 5）。**「哪种模型更优」随数据集而变，且论文结论是 uplift 并不必然更优** |
