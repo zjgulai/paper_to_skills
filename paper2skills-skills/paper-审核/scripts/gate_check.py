@@ -528,12 +528,203 @@ def card_has_paper_source(text: str, fm: dict) -> bool:
     return bool(ARXIV_ANY_RE.search(body) or DOI_ANY_RE.search(body))
 
 
+# ---------------------------------------------------------------------------
+# 作者外推标注（X1 · 2026-09-13）
+# ---------------------------------------------------------------------------
+# ## 为什么需要这个
+#
+# PHASE4 三个 F3 分组**独立统计后得到同一结论**:残余 G2 红灯的 **75%–85% 是「作者外推」**——
+# v1 五段式 ⑤「商业价值评估」与 ②「应用案例」里的工期 / ROI / 倍数 / 示例数据,
+# **论文里本就不存在这些事实**。
+#
+# 把它们与「论文断言」混在同一个分母里判红,有三个后果:
+#   1. 继续补引文**不会**让通过率上升(已补到 0 伪造,还是 16.3%);
+#   2. 红灯数**不反映真实欠账**,无法据此排期;
+#   3. 最糟的是——它会**诱导后来者去给 ROI 数字找个论文出处**,那正是制造假引文的动机。
+#
+# ## 语法
+#
+#     <!-- extrapolation:scope=section -->   本段（到本段结束）为作者估算
+#     <!-- extrapolation:scope=table -->     紧随其后的表格为作者估算
+#
+# 写在 ⑤ 商业价值评估 / ② 应用案例 段内。命中作用域的数字判为**第三态
+# `EXTRAPOLATION`（不是 PASS）**,单列计数,不计入红灯也不再计入「论文断言」分母。
+#
+# ## ⚠️ 这本身就是一次放水,所以必须自带闸门
+#
+# 这正是漏洞 #10 的翻版——「新增一个不阻塞的结局」= 新的免检通道。
+# 三道闸门缺一不可:
+#   (a) **段位白名单**:只在 ⑤/② 生效;标到 ① 算法原理 / ①b 反例 / ⑥ 原文引用
+#       一律判红(那里的内容按定义必须来自论文);
+#   (b) **默认拒绝**:段名不在白名单内也判红,而不是默默放行 —— 宁可让作者
+#       显式来扩白名单,也不要让一个没见过的段名成为后门;
+#   (c) **标注不得豁免引文核验**:G2b 的伪造判定独立于本机制,标了外推的卡
+#       若引文伪造,照样红(见 `--selftest` 用例 12)。
+#
+# `--selftest` 用例 9 是**反后门自测**:往一张全绿的卡里插一个**未标注**的
+# ROI 数字,必须重新变红。没有这条,本机制等于给全库发免检章。
+EXTRAPOLATION_MARK_RE = re.compile(
+    r"<!--\s*extrapolation\s*:\s*scope\s*=\s*(section|table)\s*-->", re.I)
+
+_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$", re.M)
+
+# 允许标注的段(⑤ 商业价值评估 / ② 应用案例及其同义写法)
+_EXTRAP_ALLOWED_RE = re.compile(
+    r"商业价值|价值评估|ROI|投入产出|应用案例|业务应用|业务价值|实施建议|场景|案例")
+# 明确禁止标注的段:这些段的内容按定义**必须**来自论文
+# ⚠️ 必须先判禁止再判允许 —— 段名可能同时包含两类词(如「ROI 的算法原理」)。
+_EXTRAP_FORBIDDEN_RE = re.compile(
+    r"算法原理|核心思想|数学|原理|反例|适用边界|原文引用|参考论文|参考文献|参考资料"
+    r"|References|机制|相关工作|架构|建模")
+
+
+def parse_sections(body: str) -> list[dict]:
+    """按 markdown 标题切段,返回 [{level, title, start, end}]。
+
+    段的 end = 下一个 **level 不大于自己** 的标题位置(即同级或更高级标题之前)。
+    """
+    heads = [(m.start(), len(m.group(1)), m.group(2).strip())
+             for m in _HEADING_RE.finditer(body)]
+    out = []
+    for i, (start, level, title) in enumerate(heads):
+        end = len(body)
+        for j in range(i + 1, len(heads)):
+            if heads[j][1] <= level:
+                end = heads[j][0]
+                break
+        out.append({"level": level, "title": title, "start": start, "end": end})
+    return out
+
+
+def section_at(sections: list[dict], pos: int) -> dict | None:
+    """返回包含 pos 的**最内层**段(嵌套时取 start 最大者)。无标题结构时返回 None。"""
+    best = None
+    for s in sections:
+        if s["start"] <= pos < s["end"] and (best is None or s["start"] > best["start"]):
+            best = s
+    return best
+
+
+def _metric_tokens(text: str) -> list[tuple[str, str]]:
+    """抽出文本里带度量语义的数字(与 gate_g2 主循环同口径)。"""
+    out: list[tuple[str, str]] = []
+    for m in NUM_TOKEN_RE.finditer(text):
+        num, unit = m.group(1), (m.group(2) or "")
+        prefix = text[max(0, m.start() - 12):m.start()]
+        suffix = text[m.end():m.end() + 12]
+        if is_noise(num, unit, prefix, suffix):
+            continue
+        ctx = text[max(0, m.start() - 30): m.end() + 30].replace("\n", " ")
+        if is_metric(ctx, num, unit):
+            out.append((f"{num}{unit}", ctx.strip()))
+    return out
+
+
+def analyze_extrapolation(body: str) -> dict:
+    """识别作者外推标注,切出作用域,并返回剥离作用域后的正文。
+
+    返回:
+      body_clean           —— 去掉所有标注作用域后的正文(供后续数字扫描)
+      extrapolated         —— 作用域内的度量数字 [(token, ctx)]
+      scopes               —— 生效的标注 [{title, scope, n_metrics}]
+      violations           —— 违规标注 [{title, reason}]
+    """
+    sections = parse_sections(body)
+    removed: list[list[int]] = []
+    scopes: list[dict] = []
+    violations: list[dict] = []
+
+    for m in EXTRAPOLATION_MARK_RE.finditer(body):
+        scope = m.group(1).lower()
+        line_start = body.rfind("\n", 0, m.start()) + 1
+        sec = section_at(sections, m.start())
+        title = sec["title"] if sec else "(无标题结构)"
+
+        # --- 闸门 (a)(b):段位白名单 + 默认拒绝 ---
+        if _EXTRAP_FORBIDDEN_RE.search(title):
+            violations.append({
+                "title": title,
+                "reason": f"该段（{title}）的内容按定义必须来自论文，不接受「作者估算」标注",
+            })
+            removed.append([line_start, m.end()])
+            continue
+        if not _EXTRAP_ALLOWED_RE.search(title):
+            violations.append({
+                "title": title,
+                "reason": f"该段（{title}）不在允许标注的段位白名单内"
+                          f"（仅限 ⑤ 商业价值评估 / ② 应用案例及其同义写法）—— "
+                          f"默认拒绝，请显式扩白名单而不是默默放行",
+            })
+            removed.append([line_start, m.end()])
+            continue
+
+        # --- 计算作用域 ---
+        if scope == "section":
+            removed.append([line_start, sec["end"]])
+        else:  # table
+            q = body.find("\n", m.end())
+            q = len(body) if q == -1 else q + 1
+            while q < len(body) and body[q] == "\n":       # 跳过空行
+                q += 1
+            if q >= len(body) or not body[q:q + 200].lstrip().startswith("|"):
+                violations.append({
+                    "title": title,
+                    "reason": "scope=table 的标注后面没有表格（悬空标注）—— "
+                              "它豁免不了任何东西，请删掉或改 scope=section",
+                })
+                removed.append([line_start, m.end()])
+                continue
+            end = q
+            while end < len(body):
+                e = body.find("\n", end)
+                e = len(body) if e == -1 else e
+                if body[end:e].strip().startswith("|"):
+                    end = e + 1
+                else:
+                    break
+            removed.append([line_start, end])
+
+    removed.sort()
+    merged: list[list[int]] = []
+    for s, e in removed:
+        if merged and s <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], e)
+        else:
+            merged.append([s, e])
+
+    parts, ext_texts, cursor = [], [], 0
+    for s, e in merged:
+        parts.append(body[cursor:s])
+        ext_texts.append(body[s:e])
+        cursor = e
+    parts.append(body[cursor:])
+
+    extrapolated = list(dict.fromkeys(_metric_tokens("\n".join(ext_texts))))
+    # scopes 只统计**生效**的标注(违规的已进 violations,不重复计数)
+    for s, e in merged:
+        seg = body[s:e]
+        if EXTRAPOLATION_MARK_RE.search(seg):
+            sc = section_at(sections, s)
+            scopes.append({"title": sc["title"] if sc else "(无标题结构)",
+                           "scope": (EXTRAPOLATION_MARK_RE.search(seg).group(1).lower()),
+                           "n_metrics": len(_metric_tokens(seg))})
+
+    return {
+        "body_clean": "".join(parts),
+        "extrapolated": extrapolated,
+        "scopes": scopes,
+        "violations": violations,
+    }
+
+
 def gate_g2(card: Path, text: str) -> GateResult:
     rel = rel_to_repo(card)
     g = GateResult("G2", rel, True)
-    # 先剥 frontmatter（元数据不是断言），再剥代码（代码里的数字不是事实断言），
-    # 最后剥证据语法行（引文是证据不是断言）
-    prose = strip_evidence(strip_code(strip_frontmatter(text)))
+    # 先剥 frontmatter（元数据不是断言），再剥**作者外推作用域**（见下方说明），
+    # 然后剥代码（代码里的数字不是事实断言），最后剥证据语法行（引文是证据不是断言）
+    body = strip_frontmatter(text)
+    extrap = analyze_extrapolation(body)
+    prose = strip_evidence(strip_code(extrap["body_clean"]))
     fm = parse_frontmatter(text)
 
     # --- 证据基础分类（决定本卡是「该修」还是「修不了」）-------------------
@@ -684,6 +875,17 @@ def gate_g2(card: Path, text: str) -> GateResult:
         "evidence_sources": len(ev_sources),
         "has_paper_field": bool(fm.get("paper") or fm.get("paper_id")),
         "traceability_pct": round(len(green) / len(claimed) * 100, 1) if claimed else None,
+        # --- X1 作者外推：第三态,单列,不计入 PASS 也不计入红灯 ---
+        # `paper_assertions` 才是「论文断言」的真实分母(已扣除标注过的外推段);
+        # 与 `metric_numbers` 的差额即被标注豁免的条数。
+        "paper_assertions": len(claimed),
+        "extrapolated_metrics": len(extrap["extrapolated"]),
+        "extrapolation_scopes": len(extrap["scopes"]),
+        "extrapolation_violations": len(extrap["violations"]),
+        "extrapolation_pct": (
+            round(len(extrap["extrapolated"])
+                  / (len(claimed) + len(extrap["extrapolated"])) * 100, 1)
+            if (claimed or extrap["extrapolated"]) else None),
         # --- G2b 引文逐字核验 ---
         "quotes_total": len(qrep.get("quotes", [])),
         "quotes_verbatim": qrep.get("n_verbatim"),
@@ -696,6 +898,13 @@ def gate_g2(card: Path, text: str) -> GateResult:
         "cn_numeral_claims": len(cn_claims),
         "fulltext_archived": bool(qrep.get("fulltext")),
     }
+
+    # --- X1 作者外推：违规标注判红（闸门 a/b）-----------------------------
+    # 只有**作用域合法**的标注才豁免数字。标错段位、或标了却没有对象,
+    # 都判红 —— 否则「随手加一行注释」就成了全库免检通道。
+    for v in extrap["violations"]:
+        g.add("RED", "G2-EXTRAPOLATION-FORBIDDEN-SCOPE",
+              f"`<!-- extrapolation -->` 标注位置非法：{v['reason']}")
 
     # --- G2b 报警 -------------------------------------------------------
     for q in fabricated[:10]:
@@ -757,6 +966,27 @@ def gate_g2(card: Path, text: str) -> GateResult:
               f"断言 `{token}` 的数字只在引文的**结构性语境**（表号/图号/章节号/样本量）中出现，"
               f"未见实质性出处 —— 请人工确认该断言是否真的有引文支撑",
               evidence=f"…{ctx}…")
+
+    # --- X1 作者外推：报告第三态（**不是 PASS**）----------------------------
+    if extrap["scopes"]:
+        titles = "、".join(f"{s['title']}({s['scope']},{s['n_metrics']}个数字)"
+                           for s in extrap["scopes"][:5])
+        g.add("INFO", "G2-EXTRAPOLATION-MARKED",
+              f"{len(extrap['scopes'])} 处「作者外推」标注生效，"
+              f"{len(extrap['extrapolated'])} 个度量数字被单列为 EXTRAPOLATION"
+              f"（既不计入 PASS，也不计入红灯）",
+              evidence=f"作用域：{titles}")
+    # ⚠️ 一张卡若把全部数字都标成外推,`claimed` 会变成 0 → 无红灯 → 判 PASS。
+    #    那**看起来**像「这卡没问题」,实际是「这卡没有任何可核验的论文断言」——
+    #    与漏洞 #7（NO_QUOTES 被并进「N 通过」）是同一个病根:没东西可查 ≠ 查过了没问题。
+    #    故显式出一条黄灯,让这种状态**可见**而不是伪装成绿。
+    if not claimed and extrap["extrapolated"] and g.outcome != "UNVERIFIABLE":
+        g.add("YELLOW", "G2-EXTRAPOLATION-ONLY",
+              f"本卡**没有任何论文断言**：全部 {len(extrap['extrapolated'])} 个度量数字"
+              f"都落在「作者外推」标注内 —— 这不构成缺陷，但也不构成「论文可溯源」证据",
+              evidence="若这确实是纯作者经验卡，请改用 `evidence_basis: author-practice`；"
+                       "若不是，说明标注用得过宽")
+
     if green:
         g.add("GREEN", "G2-SOURCED", f"{len(green)} 个高价值断言有出处")
 
@@ -871,19 +1101,131 @@ def selftest() -> int:
          '> 「本行以中文开引号，闭引号后面还有字」。\n'
          '> 这一行是卡片自己的正文，**42.7%** 与 **2300万** 都是本卡的数字。\n',
          "UNVERIFIABLE", False),
+        # --- 用例 8–14 锁定 X1「作者外推标注」机制（2026-09-13）---------------
+        # 元组第 6 项 = 期望的 `extrapolated_metrics`（None = 不校验）。
+        # 这一组里**只有用例 8/14 是「机制生效」，其余 5 条全是「闸门必须拦住」**——
+        # 比例是故意的：新增豁免的放水风险远大于不生效的风险（漏洞 #10 的教训）。
+        ("8 合法外推标注生效（⑤ 段 scope=section）",
+         "paper_id: 2606.26690\n",
+         "## ① 算法原理\n\n本方法基于反事实推断，不涉及具体量级。\n\n"
+         "## ⑤ 商业价值评估\n\n<!-- extrapolation:scope=section -->\n"
+         "母婴出海场景下预计 ROI 提升 **42.7%**，约为基线 **3.5 倍**。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "PASS", False, 2),
+        # ⚠️ **反后门自测（本机制最重要的一条）**：同一张卡,只把标注去掉,
+        #    未标注的外推数字必须重新变红。没有这条,X1 等于给全库发免检章。
+        ("9 反后门：未标注的外推数字必须变红",
+         "paper_id: 2606.26690\n",
+         "## ① 算法原理\n\n本方法基于反事实推断，不涉及具体量级。\n\n"
+         "## ⑤ 商业价值评估\n\n"
+         "母婴出海场景下预计 ROI 提升 **42.7%**，约为基线 **3.5 倍**。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "FAIL", True, 0),
+        ("10 作用域封死：标注放到 ① 算法原理判红",
+         "paper_id: 2606.26690\n",
+         "## ① 算法原理\n\n<!-- extrapolation:scope=section -->\n"
+         "本方法把准确率提升 **42.7%**。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "FAIL", True, 0, 1),
+        ("11 默认拒绝：段名不在白名单内判红",
+         "paper_id: 2606.26690\n",
+         "## 与同领域 Skill 的对比\n\n<!-- extrapolation:scope=section -->\n"
+         "本卡覆盖 **2300万** 用户。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "FAIL", True, 0, 1),
+        # 闸门 (c)：标注只管「数字有没有出处」,**不豁免引文真伪**。
+        # 否则「标一下外推」就成了伪造引文的免罪符。
+        #
+        # ⚠️ 本用例原先只断言「有红灯」,被变异测试判为**不可信**:
+        #    把 `G2-QUOTE-FABRICATED` 报警整段拆掉后用例**依然全绿** ——
+        #    因为这张卡还会同时触发 `G2-NO-EVIDENCE-CHAIN`(伪造引文不算可信出处,
+        #    于是证据链为空),红灯被**另一个原因**顶上了。
+        #    故必须点名要求**具体那条 finding 出现**:否则测的是「红了」,
+        #    而不是「因为引文伪造而红」—— 在门禁里这两件事完全不同。
+        ("12 外推标注不得豁免引文伪造",
+         "paper_id: 2606.26690\n",
+         "## ⑤ 商业价值评估\n\n<!-- extrapolation:scope=section -->\n"
+         "预计 ROI 提升 **42.7%**。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"our framework improves incremental ROAS by 42.7% across all markets"\n'
+         "> 出处：2606.26690 §1\n",
+         "FAIL", True, 1, None, ["G2-QUOTE-FABRICATED"]),
+        ("13 scope=table 悬空（标记后没有表格）判红",
+         "paper_id: 2606.26690\n",
+         "## ⑤ 商业价值评估\n\n<!-- extrapolation:scope=table -->\n\n"
+         "这一段只是散文，没有表格。预计 ROI 提升 **42.7%**。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "FAIL", True, 0, 1),
+        ("14 scope=table 合法标注生效",
+         "paper_id: 2606.26690\n",
+         "## ⑤ 商业价值评估\n\n<!-- extrapolation:scope=table -->\n\n"
+         "| 指标 | 估算值 |\n|------|--------|\n| ROI 提升 | **42.7%** |\n| 工期 | **3.5 倍** |\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "PASS", False, 2),
+        # ⚠️ 用例 10 其实是被**默认拒绝**闸门抓住的,不是被「禁止闸门」抓住的 ——
+        #    `① 算法原理` 既不匹配允许词,自然进不了白名单。
+        #    变异测试（拆掉 `_EXTRAP_FORBIDDEN_RE` 那段检查）时自测**依然全绿**,
+        #    暴露出「禁止闸门当时没有任何用例覆盖它」。
+        #    只有当段名**同时**命中允许词与禁止词时,禁止闸门才独立起作用 ——
+        #    本用例就是构造那个交叉点:段名含「商业价值评估」(允许) 也含「算法原理」(禁止)。
+        #    顺序必须**先判禁止**:否则「把标注挂到名为『商业价值评估的算法原理』的段」
+        #    就成了绕过白名单的一个口子。
+        ("15 禁止闸门优先：段名同时含允许词与禁止词时判红",
+         "paper_id: 2606.26690\n",
+         "## ⑤ 商业价值评估 · 算法原理\n\n<!-- extrapolation:scope=section -->\n"
+         "本方法把准确率提升 **42.7%**。\n\n"
+         "## ⑥ 原文引用\n\n"
+         '> 原文:"Production attribution is timely, granular, and continuously '
+         'available, but observational by construction."\n> 出处：2606.26690 §1\n',
+         "FAIL", True, 0, 1),
     ]
 
     ok = True
     with tempfile.TemporaryDirectory() as td:
-        for name, fmx, body, want_outcome, want_red in cases:
+        for case in cases:
+            name, fmx, body, want_outcome, want_red = case[:5]
+            want_extrap = case[5] if len(case) > 5 else None
+            want_viol = case[6] if len(case) > 6 else None
+            want_codes = case[7] if len(case) > 7 else None
             p = Path(td) / "Skill-Selftest.md"
             p.write_text(f"---\ntitle: selftest\n{fmx}---\n\n{body}\n", encoding="utf-8")
             r = gate_g2(p, p.read_text(encoding="utf-8"))
             has_red = any(f.level == "RED" for f in r.findings)
+            n_viol = r.metrics.get("extrapolation_violations")
             good = (r.outcome == want_outcome) and (has_red == want_red)
+            extra = ""
+            if want_extrap is not None:
+                got_extrap = r.metrics.get("extrapolated_metrics")
+                good = good and got_extrap == want_extrap
+                extra += f" 外推={got_extrap}（期望 {want_extrap}）"
+            # ⚠️ 只断言「结果对不对」不够:违规标注可能**碰巧也没豁免任何东西**,
+            #    于是红灯照旧、用例照绿,而「违规被报告出来」这件事从未被验证。
+            #    变异测试实测:拆掉 scope=table 悬空检查后,用例 13 依然全绿。
+            if want_viol is not None:
+                good = good and n_viol == want_viol
+                extra += f" 违规标注={n_viol}（期望 {want_viol}）"
+            # 点名要求**具体 finding 出现** —— 见用例 12 上方说明:
+            # 只断言「有红灯」会被同卡上的其他红灯顶替,从而放过拆掉该报警的变异。
+            if want_codes:
+                codes = {f.code for f in r.findings}
+                missing = [c for c in want_codes if c not in codes]
+                good = good and not missing
+                extra += f" 点名finding缺失={missing or '无'}"
             ok = ok and good
             print(f"{'✅' if good else '❌'} {name}: outcome={r.outcome}"
-                  f"（期望 {want_outcome}）红灯={has_red}（期望 {want_red}）")
+                  f"（期望 {want_outcome}）红灯={has_red}（期望 {want_red}）{extra}")
 
     # 用例 2 的正确性还依赖一个前提：经验卡确实被判成「无论文来源」。
     # 若 card_has_paper_source 有缺陷（例如把 `source: human+ai` 当论文来源），
@@ -956,6 +1298,24 @@ def summarise(gates: list[GateResult], name: str) -> dict:
 
     reds = sum(1 for g in gates for f in g.findings if f.level == "RED")
     yellows = sum(1 for g in gates for f in g.findings if f.level == "YELLOW")
+
+    # --- X1：三个数必须**分开报**（2026-09-13）------------------------------
+    # 只报一个「通过率」会把三件不同的事混成一个数字：
+    #   ① 论文断言通过率 —— 卡片里**声称来自论文**的数字有多少真有出处;
+    #   ② 外推标注数     —— 作者主动声明「这段是我的估算,不是论文结论」的条数;
+    #   ③ 未标注红灯数   —— 既没出处、也没声明外推的数字(真实欠账)。
+    # 与「Cited but Not Verified」的教训同源:合成一个总分会把最弱的那维平均掉。
+    #
+    # ⚠️ 特别地,② 上升**不是**坏事、① 上升也**不一定**是好事 ——
+    # 作者老老实实把估算标出来,会让 ② 上升而红灯下降;
+    # 而把估算偷偷删掉,红灯也会下降但资产实际变差了。
+    # 所以这三个数必须并列看,任何一个单独拿出来都会被误读。
+    paper_assertions = sum(g.metrics.get("paper_assertions") or 0 for g in gates)
+    onesourced = sum(g.metrics.get("sourced") or 0 for g in gates)
+    extrapolated = sum(g.metrics.get("extrapolated_metrics") or 0 for g in gates)
+    unsourced_red = sum(
+        1 for g in gates for f in g.findings if f.code == "G2-UNSOURCED-METRIC")
+
     # 「可核验分母」= 排除无法核验的卡；通过率只在它之上计算
     verifiable = counts["passed"] + counts["failed"]
     out = {
@@ -968,6 +1328,19 @@ def summarise(gates: list[GateResult], name: str) -> dict:
         "pass_rate_pct": round(counts["passed"] / verifiable * 100, 1) if verifiable else 0.0,
         "red_findings": reds,
         "yellow_findings": yellows,
+        # --- X1 三数 ---
+        "paper_assertions": paper_assertions,
+        "paper_assertions_sourced": onesourced,
+        "paper_assertion_pass_rate_pct": (
+            round(onesourced / paper_assertions * 100, 1) if paper_assertions else None),
+        "extrapolated_metrics": extrapolated,
+        "extrapolation_tagged": extrapolated,
+        "unsourced_red_metrics": unsourced_red,
+        "cards_with_extrapolation": sum(
+            1 for g in gates if (g.metrics.get("extrapolation_scopes") or 0) > 0),
+        "extrapolation_violations": sum(
+            1 for g in gates for f in g.findings
+            if f.code == "G2-EXTRAPOLATION-FORBIDDEN-SCOPE"),
     }
     # 兼容旧消费者（sync.py / 报告脚本）读的键名
     out["pass_rate_over_all_cards_pct"] = (
