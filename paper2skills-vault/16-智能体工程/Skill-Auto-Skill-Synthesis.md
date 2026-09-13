@@ -5,11 +5,14 @@ module: 16-智能体工程
 topic: auto-skill-synthesis
 status: stable
 created: 2026-05-16
-updated: 2026-05-16
+updated: 2026-09-13
 owner: self
 source: human+ai
 paper_id: 2604.08618
 paper: "SkillForge: Forging Domain-Specific, Self-Evolving Agent Skills in Cloud Technical Support"
+venue: SIGIR 2026 (Industry Track)
+venue_tier: CCF-A
+evidence_grade: A
 evidence_basis: paper-verbatim
 ---
 
@@ -286,14 +289,15 @@ python skillforge.py
 
 1. **SkillForge: Forging Domain-Specific, Self-Evolving Agent Skills in Cloud Technical Support** (SIGIR 2026 Industry Track)
    - Liu, X., Luo, X., Li, L., Huang, G., Liu, J., Qiao, H. — Alibaba Cloud Computing
+   - **venue 证据在底本(v1)之外**：arXiv v2 `Comments: Accepted at ACM SIGIR 2026 Industry Track.`；ACM DOI [10.1145/3805712.3808466](https://doi.org/10.1145/3805712.3808466)（SIGIR '26 proceedings, pages 4763-4768, published 2026-07-19）。底本(v1)全文 `SIGIR` 0 次属正常 —— 论文正文不自述 venue，**不代表无录用证据**
    - 核心贡献:Domain-Contextualized Skill Creator + 三阶段自演化管道(Failure Analyzer / Skill Diagnostician / Skill Optimizer)
    - arxiv:[2604.08618](https://arxiv.org/abs/2604.08618)
 
 ## 相关基础
 
-- **SKILL.md 规范**:Anthropic Agent Skills 概念(arxiv:2602.12430)
+- **SKILL.md 规范**:Anthropic Agent Skills 概念(底本 [5]:Anthropic 工程博客 "Equipping agents for the real world with agent skills",2025-10-16)
 - **SkillsBench 基准**:验证 curated skills 比 self-generated 高 +16.2pp(arxiv:2602.12670)
-- **ReAct paradigm**:Skill Diagnostician 的基础推理框架(ICLR 2023)
+- **ReAct paradigm**:Skill Diagnostician 的基础推理框架(ICLR 2023 —— 底本 [6] 未给 venue,venue 证据在底本之外)
 
 ---
 
