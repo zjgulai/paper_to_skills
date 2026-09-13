@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "purpose": "凭证暴露面门禁（check_key_exposure.py）的**公开证书白名单**。key = 文件路径（仓库内用相对路径；跨仓库广扫用绝对路径，也可用 basename），value = {reason, expires_when, evidence}。",
+    "why_this_file_exists": "「扫到 .pem 就报」是一条会把**公开 X.509 证书**也算成事故的假阳性规则。本仓库已四次栽在「判据的适用范围被默认成了全体」上，故公开证书**不是默认放行**，而是**必须由人写下理由**才放行 —— 理由写在下面，可复核、可到期。",
+    "expires_when": "文件名不在 frontmatter 里时按条目各自判；本文件在**条目全部过期或被删**时应整体复查。",
+    "note_on_scope": "跨仓库的条目（如 /Users/lute/project/Agent/…）只对 `--sweep-roots` 生效；`--check` 只扫本仓库工作区，因此这些条目**不影响门禁判定**。"
+  },
+  "entries": {
+    "/Users/lute/project/Agent/lute-momcozy-platform/config/ci-artifact-encryption-cert.pem": {
+      "kind": "public-cert",
+      "reason": "**公开 X.509 证书，不是私钥**（首行 `-----BEGIN CERTIFICATE-----`）。删了会让 CI 的 artifact 解密接收方失效，并打红该仓库自己的四条测试 ⇒ **不要删**。",
+      "evidence": [
+        "docs/superpowers/plans/2026-07-29-ci-minimum-permission-repair.md:61 — 「Create: `config/ci-artifact-encryption-cert.pem` (**public certificate only**)」",
+        "README.md:107 — 「仓库仅提交 `config/ci-artifact-encryption-cert.pem` public certificate；对应 private key 不得写入仓库、artifact 或日志」",
+        "tests/tencent-workflow-contract.test.mjs — 四条断言把「该文件存在 / 且被 workflow 的 `-recpt` 引用」锁住"
+      ],
+      "expires_when": "该文件被重命名、或 README:107 与那四条测试不再存在时（届时本条理由失效，必须重新鉴定）",
+      "recorded_at": "2026-09-13",
+      "recorded_by": "PHASE6 S8（reports/PHASE6-F8-S8-凭证清点与暴露面.md §2.2）"
+    }
+  }
+}

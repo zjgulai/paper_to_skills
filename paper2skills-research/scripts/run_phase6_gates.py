@@ -190,6 +190,19 @@ GATES: list[Gate] = [
     Gate("L13a", "卡侧 G3 判据：自检（含「元数据不得当业务场景信号」的隔离用例 + 反向控制）",
          [_p("..", "..", "paper2skills-skills", "paper-审核", "scripts", "gate_check.py"),
           "--selftest"], kind="selftest"),
+    # --- 凭证暴露面（S8 报告 §四 的待办；2026-09-13 由主控落地）---
+    # ⚠️ 它补的是 `scan_secrets.py` **结构性看不见**的那一类：那边**只扫已入库文件**，
+    #    因此「未被跟踪但**也未被忽略**」的私钥（一次 `git add -A` 即入库）不在它的适用范围里 ——
+    #    S8 实测的那条真暴露面正是这一态，而 `scan_secrets.py` 对 DDDD.pem / ai_video.pem
+    #    **一把都查不到**（不是失灵，是它们从未入库）。
+    # ⚠️ **只接 `--check`（扫本仓库工作区，确定性）与 `--selftest`**；
+    #    `--sweep-roots`（广扫任意目录，如 ~/project）**刻意不进验收面** ——
+    #    它随环境漂移、跨机器结果不同，是**一等读数**不是判决（默认恒 exit 0，`--strict` 才判红）。
+    #    把两者混起来，就会造出一条「结果取决于谁在哪台机器上跑」的门禁。
+    Gate("L14a", "凭证暴露面：工作区里没有被跟踪、也没有「未被忽略」的密钥（补 scan_secrets 的盲区）",
+         ["check_key_exposure.py", "--check"]),
+    Gate("L14b", "凭证暴露面：自检（五态 + 公开证书白名单反向控制 + 三份「门禁改坏」变异）",
+         ["check_key_exposure.py", "--selftest"], kind="selftest"),
 ]
 
 SEV = {0: 0, 1: 1, 2: 2, 3: 3}
