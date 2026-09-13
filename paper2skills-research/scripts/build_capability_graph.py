@@ -16,7 +16,7 @@
 | 64 格（8 FLOW × 8 STG）与 `cell_kind` | 材料 `collaboration-graph.json` 的 `flow_stage_bindings` + `protocol.stages[].model_participation` | **本图首次落库**（此前没有任何地方有这 64 格） |
 | A/B/C 算法可服务性 | `_survey_org_model.md` §F.3 的逐条判定（151 条） | 解析进图，供缺口账 join |
 | A 类**边界**条目（10 条）与**无 A 类**岗位（10 个） | `_survey_org_model.md` §F.5 / §F.6 | 解析进图（`a_scope`），**并为 T-C 的阈值敏感性提供落点**；解析值与机器算出值**逐项断言相等** |
-| 卡 ↔ L3 | 产品侧 `dsh-paper2skills/data/classification.json`（1338 条） | join 出 93 张（另 53 张等 F5），**覆盖率如实报** |
+| 卡 ↔ L3 | **精选线**卡端事实源 `paper2skills-vault/07-资源库/card-classification.json`（F5 产物，146 张） | join 147→146 张；其中 93 张是从产品侧 `classification.json`（1338 条）**逐字继承**的，由 F5 的 J4 零漂移门禁守着 |
 | 方案层 | S1（尚未交付） | 只留槽位 `solutions: []` 并声明 |
 
 ## 必须入库的两个判据（本卡验收项）
@@ -65,7 +65,9 @@ VAULT = REPO / "paper2skills-vault"
 OUT_DEFAULT = VAULT / "07-资源库" / "capability-graph.json"
 SURVEY = REPO / "paper2skills-research" / "reports" / "_survey_org_model.md"
 TAXONOMY = Path("/Users/lute/project/Magpie-Horch/packages/capabilities/dsh-paper2skills/data/taxonomy.json")
-CLASSIFICATION = Path("/Users/lute/project/Magpie-Horch/packages/capabilities/dsh-paper2skills/data/classification.json")
+# 卡 ↔ L3 的事实源：**精选线**的卡端落点（F5 产物）。产品侧那份 1338 条是另一个语料，
+# 由 F5 的生成器逐条比对（J4 零漂移），本图只消费、不重判。
+CARD_CLASSIFICATION = VAULT / "07-资源库" / "card-classification.json"
 PRESET_DIR = Path(os.path.expanduser("~/.dsh/.agent-presets"))
 
 MATERIAL_ROOT = Path(os.environ.get("AI_ORG_MATERIAL_ROOT", "/Users/lute/project/AI组织变革"))
@@ -166,12 +168,33 @@ def parse_roles_without_a(survey: Path) -> list[str]:
     return sorted(set(re.findall(r"^\|\s*(AGT-\d{3})\s*\|", sec, re.M)))
 
 
+def _rel(p: Path) -> str:
+    """仓库内相对路径；仓库外原样返回。
+
+    门禁缺陷 #13（`relative_to(REPO)` 对仓库外路径抛 ValueError）的**同族第三次**出现：
+    F3 修在 `build_gap_ledger.py`，本脚本当时没被扫到，而它有两处 `relative_to(REPO)`。
+    改成统一走 `_rel()`，并配 `--selftest` 的 3 条探针（仓库内 / 仓库外 / 前缀相似）。
+    """
+    try:
+        return str(p.relative_to(REPO))
+    except ValueError:
+        return str(p)
+
+
 def load_card_l3() -> dict[str, list[str]]:
-    """vault 卡名 → L3 列表（来自产品侧已完成的分类）。缺失时返回空并如实报覆盖率。"""
-    if not CLASSIFICATION.is_file():
-        return {}
-    items = json.loads(CLASSIFICATION.read_text(encoding="utf-8")).get("items", [])
-    return {i["id"]: list(i.get("l3") or []) for i in items}
+    """vault 卡名 → L3 列表（F5 的卡端事实源）。
+
+    ⚠️ **缺失即 SystemExit，不返回空**：静默返回空会让 146 张卡全部退化成「无 L3」，
+    而图上一切下游计数（`cards_with_l3`、格子的 `card_refs`、缺口账）都会跟着静默变错
+    —— 「拿不到就炸，不要给默认值」。
+    """
+    if not CARD_CLASSIFICATION.is_file():
+        raise SystemExit(f"✗ 缺少 {_rel(CARD_CLASSIFICATION)}（F5 的卡端分类事实源）"
+                         f"\n  先跑：python3 paper2skills-research/scripts/build_card_classification.py --write")
+    doc = json.loads(CARD_CLASSIFICATION.read_text(encoding="utf-8"))
+    if doc.get("total") != len(doc.get("items", [])):
+        raise SystemExit(f"✗ {_rel(CARD_CLASSIFICATION)} 的 total 与 items 条数对不上")
+    return {i["id"]: list(i.get("l3") or []) for i in doc["items"]}
 
 
 def load_wiring() -> dict[str, list[str]]:
@@ -334,7 +357,7 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
         if "_superseded" in p.parts:
             continue
         cards.append({
-            "name": p.stem, "path": str(p.relative_to(REPO)),
+            "name": p.stem, "path": _rel(p),
             "domain_dir": p.parent.name,
             "l3": card_l3.get(p.stem),
         })
@@ -437,6 +460,7 @@ def _counts(roles, l3, cells, scenarios, cards) -> dict:
             len([s for s in scenarios if r["id"] in s["roles_closure"]]) for r in roles),
         "cards": len(cards),
         "cards_with_l3": sum(1 for c in cards if c["l3"]),
+        "cards_unclassified": sorted(c["name"] for c in cards if not c["l3"]),
         "solutions": 0,
         "role_wiring_known": sum(1 for r in roles if r["wired_skills"] is not None),
         "roles_without_a": sum(1 for r in roles if r["a_count"] == 0),
@@ -578,8 +602,11 @@ def _meta(root: Path, org, cat, coll) -> dict:
         "generated": datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
         "generator": "paper2skills-research/scripts/build_capability_graph.py",
         "materials_root": str(root),
-        "source_refs": src + [{"path": str(SURVEY.relative_to(REPO)),
-                                "role": "A/B/C 判定（§F.3）+ A 类边界条目（§F.5）+ 无 A 岗位（§F.6）"}],
+        "source_refs": src + [{"path": _rel(SURVEY),
+                                "role": "A/B/C 判定（§F.3）+ A 类边界条目（§F.5）+ 无 A 岗位（§F.6）"},
+                               {"path": _rel(CARD_CLASSIFICATION),
+                                "role": "卡 ↔ L3 落点（F5）；其中 93 张逐字继承产品侧 "
+                                        "classification.json，由 F5 的 J4 零漂移门禁守着"}],
         "l1_l2_l3_fact_source":
             "材料 organization-graph.json + role-catalog.json；产品侧已派生一份 "
             "dsh-paper2skills/data/taxonomy.json。本图**不重新定义** L1–L3，"
@@ -587,7 +614,7 @@ def _meta(root: Path, org, cat, coll) -> dict:
         "cell_kind_basis":
             "由 collaboration-graph.json 的 protocol.stages[].model_participation 机器导出；"
             "映射表 MODEL_PARTICIPATION_KIND 对未知取值直接失败（无默认值）。",
-        "version": 1,
+        "version": 2,   # v2：卡 ↔ L3 换到精选线事实源（F5），93 → 146 张
     }
 
 
@@ -717,6 +744,12 @@ def query_cell(g: dict, cell_id: str) -> dict:
 # ---------------------------------------------------------------------------
 def _selftest() -> int:
     ok = True
+    # F5 的卡端事实源是**已入库的产物**：自检直接用它（更诚实），但缺了要炸得明白，
+    # 否则后面每个变异块都会因为同一个缺文件而报 ❌，看起来像判据坏了。
+    if not CARD_CLASSIFICATION.is_file():
+        print(f"✗ 自检需要 {_rel(CARD_CLASSIFICATION)}（F5 产物）才能跑："
+              f"先执行 build_card_classification.py --write")
+        return 1
     # ⚠️ 在这里**保存一次**，供后面每个变异块共用。
     #    第一版只在第二个变异块里定义它，于是先跑的 M/R/D 变异块在 finally 里
     #    引用了尚未赋值的名字 → UnboundLocalError（**自检自己崩了**）。
@@ -904,6 +937,23 @@ def _selftest() -> int:
               f" 变异：篡改 taxonomy 里一条 L3 的岗位归属 → 比对报错（该比对不是摆设）")
         ok &= caught
 
+    print("\n--- `_rel()`：仓库外路径不得抛 ValueError（门禁缺陷 #13 同族第三次）---")
+    probes = [
+        (REPO / "paper2skills-vault" / "07-资源库" / "capability-graph.json",
+         "paper2skills-vault/07-资源库/capability-graph.json"),
+        (Path("/tmp/p2s-f5/somewhere.json"), "/tmp/p2s-f5/somewhere.json"),
+        (Path("/Users/lute/project/paper_to_skills-OTHER/x.json"),
+         "/Users/lute/project/paper_to_skills-OTHER/x.json"),
+    ]
+    for path, want in probes:
+        try:
+            got = _rel(path)
+        except ValueError as e:                       # 旧写法在这里抛
+            got = f"ValueError: {e}"
+        good = got == want
+        print(("✅" if good else "❌") + f" {path} → {got}")
+        ok &= good
+
     print("\n--- 三个 join 陷阱都在图里 ---")
     ids = {t["id"] for t in g["join_traps"]}
     jt = ids == {"JT-1", "JT-2", "JT-3"}
@@ -992,7 +1042,8 @@ def main() -> int:
               f"（其中边界条目 {c['l3_boundary_a']} 条：会随阈值动摇；"
               f"无 A 类岗位 {c['roles_without_a']} 个）")
         print(f"  卡 {c['cards']} 张，其中 {c['cards_with_l3']} 张有 L3 归属"
-              f"（欠 {c['cards'] - c['cards_with_l3']} 张，归 F5）")
+              + (f"（欠 {c['cards'] - c['cards_with_l3']} 张）"
+                 if c["cards_with_l3"] != c["cards"] else "（F5 已覆盖全部）"))
         print(f"  岗位-场景对：直连 {c['role_scenario_pairs_direct']} / "
               f"闭包 {c['role_scenario_pairs_closure']}（两口径都给，勿混用）")
         print(f"  岗位接线已知 {c['role_wiring_known']}/{c['roles']}"

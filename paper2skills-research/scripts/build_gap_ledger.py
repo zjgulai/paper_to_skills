@@ -79,7 +79,16 @@ GATE_SCRIPTS = [
 #:    为了过闸把文档删掉，或把判据放宽 —— 两条都比「把 needle 收窄到**能定位产物的标识**」更糟。
 #:    同族教训在 CLAUDE.md 里有名字：**判据的适用范围被默认成了全体**。
 #:    代价如实登记：若有人把产物改成中文文件名再读，本判据看不见。
-GATE_NEEDLES = ["gap-ledger", "gap_ledger", "缺口账.json", "PHASE6-F3"]
+#:
+#: ⚠️⚠️ **第二次假阳性（2026-09-13 F5 实测）**：裸 `gap_ledger` 这条 needle 打中了
+#:    `build_capability_graph.py` 里一句**改动说明**「F3 修在 `build_gap_ledger.py`」——
+#:    那是在讲**修 bug 的历史**，不是数据流。F3 当时的处置是「把 needle 收窄到能定位产物的标识」，
+#:    这次继续按同一条规则收窄：**产物标识**（`gap-ledger` / `缺口账.json` / `PHASE6-F3`）
+#:    + **能表达数据流的语句**（`import gap_ledger` / `from build_gap_ledger`）。
+#:    裸模块名 `gap_ledger` 被移除 —— 因为它同时是「脚本文件名」和「产物名」，无法区分两者。
+#:    并补一条**反向探针**：只提脚本名的散文**不得**被判红（豁免条款必须比拦截条款测得更严）。
+GATE_NEEDLES = ["gap-ledger", "缺口账.json", "PHASE6-F3",
+                "import gap_ledger", "from build_gap_ledger"]
 
 DEFAULT_WEIGHTS = {
     #: 供给密度越低越优先：1/(1+n_legacy)。**零供给自然 = 1.0**（无需特判，故不存在
@@ -98,16 +107,31 @@ DEFAULT_WEIGHTS = {
 #: 「结构性空白」岗位（方案 §4 靶区二：硬件研发 / 工业设计 / 工程制造）
 STRUCTURAL_BLANK_ROLES = ["AGT-009", "AGT-010", "AGT-011", "AGT-012", "AGT-013"]
 
-#: 方案 §4 的交叉表（**逐格断言**，不是注释）
-EXPECT_TABLE = {
+#: 方案 §4 的交叉表（**逐格断言**，不是注释）。
+#:
+#: ⚠️ **两套数：F3 时点与 F5 时点。** 这不是「方案写错了」，是**上游真的变了**：
+#:    F3 落地时精选线只有 93 张卡有 L3 落点；F5 把剩下 53 张补上后，「有精选卡」的
+#:    责任名从 53 涨到 67 —— 没有任何一条 L3 的语义或 A/B/C 判定被改动，
+#:    变的只是「这一格有没有卡」。故保留两套并逐格登记差额，而不是把旧数擦掉。
+EXPECT_TABLE_F3 = {          # F3 时点（93/146 张有 L3）—— 历史基线，只留档不再断言
     "A": {"zero": 5, "legacy": 31, "curated": 37, "total": 73},
     "B": {"zero": 9, "legacy": 41, "curated": 16, "total": 66},
     "C": {"zero": 3, "legacy": 9, "curated": 0, "total": 12},
     "_col": {"zero": 17, "legacy": 81, "curated": 53, "_total": 151},
 }
-#: 方案 §4 靶区一的域分布（七个数）
-EXPECT_T1_DOMAINS = {"供应与履约": 11, "产品与创新": 7, "渠道经营": 6,
+EXPECT_TABLE = {             # F5 时点（146/146 张有 L3）—— 现行断言
+    "A": {"zero": 4, "legacy": 27, "curated": 42, "total": 73},
+    "B": {"zero": 8, "legacy": 33, "curated": 25, "total": 66},
+    "C": {"zero": 3, "legacy": 9, "curated": 0, "total": 12},
+    "_col": {"zero": 15, "legacy": 69, "curated": 67, "_total": 151},
+}
+#: 靶区一的域分布（七个数）。F3 时点：11/7/6/6/3/2/1（合计 36）
+EXPECT_T1_COUNT = 31
+EXPECT_T1_DOMAINS = {"供应与履约": 9, "产品与创新": 6, "渠道经营": 4,
                      "财务与合规": 6, "品牌与增长": 3, "经营与组织": 2, "数据与AI运行": 1}
+#: 靶区二。F3 时点：零供给 17 / 结构性空白 10
+EXPECT_T2_COUNT = 15
+EXPECT_T2_BLANK = 9
 
 
 def _sha(p: Path) -> str:
@@ -313,8 +337,8 @@ def check_against_plan(led: dict) -> list[str]:
             errs.append(f"J1 交叉表合计 {k}：方案 {want} vs 实测 {got}")
 
     t1 = led["targets"]["T1"]
-    if t1["count"] != 36:
-        errs.append(f"J2 靶区一 {t1['count']} 条 ≠ 36")
+    if t1["count"] != EXPECT_T1_COUNT:
+        errs.append(f"J2 靶区一 {t1['count']} 条 ≠ {EXPECT_T1_COUNT}")
     for d, want in EXPECT_T1_DOMAINS.items():
         got = t1["domains"].get(d, 0)
         if got != want:
@@ -324,10 +348,10 @@ def check_against_plan(led: dict) -> list[str]:
         errs.append(f"J2 靶区一出现方案里没有的域：{extra}")
 
     t2 = led["targets"]["T2"]
-    if t2["count"] != 17:
-        errs.append(f"J3 零供给 {t2['count']} 条 ≠ 17")
-    if t2["structural_blank"] != 10:
-        errs.append(f"J3 结构性空白 {t2['structural_blank']} 条 ≠ 10")
+    if t2["count"] != EXPECT_T2_COUNT:
+        errs.append(f"J3 零供给 {t2['count']} 条 ≠ {EXPECT_T2_COUNT}")
+    if t2["structural_blank"] != EXPECT_T2_BLANK:
+        errs.append(f"J3 结构性空白 {t2['structural_blank']} 条 ≠ {EXPECT_T2_BLANK}")
     bad = [i["l3"] for i in t2["items"]
            if i["structural_blank"] and i["role_id"] not in STRUCTURAL_BLANK_ROLES]
     if bad:
@@ -407,6 +431,22 @@ def render_md(led: dict, g: dict, meta: dict) -> str:
     A("")
     A("口径：**零供给** = 连 legacy 预览卡都没有；**仅 legacy** = 只有 1338 张预览卡里有它、")
     A("精选 146 张里没有；**有精选卡** = 精选线里至少一张卡挂了该责任名。")
+    A("")
+    A("### ⚠️ 与 F3 首次落库时的差额（**上游真的变了，不是判据变了**）")
+    A("")
+    A("| | F3 时点（93/146 张有 L3） | 现在（146/146） | 差 |")
+    A("|---|---:|---:|---:|")
+    for k, lab in (("zero", "零供给"), ("legacy", "仅 legacy"), ("curated", "有精选卡")):
+        f3, now = EXPECT_TABLE_F3["_col"][k], t["_col"][k]
+        A(f"| {lab} | {f3} | **{now}** | {now - f3:+d} |")
+    A(f"| 靶区一 | 36 | **{tg['T1']['count']}** | {tg['T1']['count'] - 36:+d} |")
+    A(f"| 零供给结构空白 | 10 | **{tg['T2']['structural_blank']}** | "
+      f"{tg['T2']['structural_blank'] - 10:+d} |")
+    A("")
+    A("原因单一：F5 把精选线剩下 53 张卡的 L3 落点补齐（`card-classification.json`），")
+    A("**没有任何一条 L3 的语义、A/B/C 判定或边界条目被改动** —— 变的只是「这一格有没有卡」。")
+    A("⇒ 靶区一从 36 条缩到 %d 条：这 %d 条正是 F5 新分类的卡已经供给上的。" % (
+        tg["T1"]["count"], 36 - tg["T1"]["count"]))
     A("")
     A("## 2. 靶区一：A ∩ 无精选卡 = %d 条（扩充工单）" % tg["T1"]["count"])
     A("")
@@ -587,7 +627,10 @@ def _selftest() -> int:
         # 每种 needle 各喂一次：两个产物文件（JSON / MD）都在射程内，才算扫描覆盖了产物面
         probes = [("# 读 gap-ledger.json 决定放行\n", "gap-ledger"),
                   ("NOTE = 'PHASE6-F3-缺口账与靶区工单.md'\n", "PHASE6-F3"),
-                  ("import gap_ledger\n", "gap_ledger")]
+                  ("import gap_ledger\n", "import gap_ledger")]
+        # 反向探针：只提**脚本名**的散文不得判红（这正是不许把文档删掉的那类行）
+        negative = [("# F3 修在 `build_gap_ledger.py`，本脚本当时没被扫到\n", "散文提到脚本名"),
+                    ("# 供缺口账 join\n", "散文提到中文词")]
         results = []
         try:
             for i, (body, lab) in enumerate(probes):
@@ -601,8 +644,22 @@ def _selftest() -> int:
         miss = [lab for lab, okk in results if not okk]
         caught = not miss
         print(("✅" if caught else "❌") +
-              f" 变异：三种 needle（{len(probes)} 种引用写法）各喂一次 → 全部抓住（漏 {miss}）")
+              f" 变异：{len(probes)} 种引用写法各喂一次 → 全部抓住（漏 {miss}）")
         ok &= caught
+        neg_bad = []
+        try:
+            for i, (body, lab) in enumerate(negative):
+                victim = Path(td) / f"prose_{i}.py"
+                victim.write_text(body, encoding="utf-8")
+                GATE_SCRIPTS[:] = [victim.name]
+                ge, sc = check_not_a_gate(repo=Path(td))
+                if ge:
+                    neg_bad.append(f"{lab} 被判红（假阳性复发）")
+        finally:
+            GATE_SCRIPTS[:] = saved
+        print(("✅" if not neg_bad else "❌") +
+              f" 反向：{len(negative)} 种「只提名字、不是数据流」的散文不得判红（误报 {neg_bad}）")
+        ok &= not neg_bad
 
     # 反向：扫不到文件必须判失败，而不是「干净」
     saved = GATE_SCRIPTS[:]

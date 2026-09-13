@@ -1,7 +1,7 @@
 {
  "_meta": {
   "what": "五层能力图谱：50 岗位 / 4 面 / 8 域 / 151 L3 / 20 SCN / 64 格（M/R/D）/ 方案 / 卡",
-  "generated": "2026-09-13T17:48:00+0800",
+  "generated": "2026-09-13T18:02:34+0800",
   "generator": "paper2skills-research/scripts/build_capability_graph.py",
   "materials_root": "/Users/lute/project/AI组织变革",
   "source_refs": [
@@ -23,11 +23,15 @@
    {
     "path": "paper2skills-research/reports/_survey_org_model.md",
     "role": "A/B/C 判定（§F.3）+ A 类边界条目（§F.5）+ 无 A 岗位（§F.6）"
+   },
+   {
+    "path": "paper2skills-vault/07-资源库/card-classification.json",
+    "role": "卡 ↔ L3 落点（F5）；其中 93 张逐字继承产品侧 classification.json，由 F5 的 J4 零漂移门禁守着"
    }
   ],
   "l1_l2_l3_fact_source": "材料 organization-graph.json + role-catalog.json；产品侧已派生一份 dsh-paper2skills/data/taxonomy.json。本图**不重新定义** L1–L3，用 --check-taxonomy 与之逐项断言相等。",
   "cell_kind_basis": "由 collaboration-graph.json 的 protocol.stages[].model_participation 机器导出；映射表 MODEL_PARTICIPATION_KIND 对未知取值直接失败（无默认值）。",
-  "version": 1
+  "version": 2
  },
  "mece": {
   "_note": "每一层标明是**划分**还是**覆盖**。划分层可做加总，覆盖层**不可** —— 覆盖层的重数必须算出来（见 counts），不能声称。",
@@ -6655,13 +6659,19 @@
    "name": "Skill-Agentic-Catalog-Enrichment",
    "path": "paper2skills-vault/00-电商Agent/Skill-Agentic-Catalog-Enrichment.md",
    "domain_dir": "00-电商Agent",
-   "l3": null
+   "l3": [
+    "Listing优化",
+    "主数据治理"
+   ]
   },
   {
    "name": "Skill-Live-Catalog-Conversational-Rec",
    "path": "paper2skills-vault/00-电商Agent/Skill-Live-Catalog-Conversational-Rec.md",
    "domain_dir": "00-电商Agent",
-   "l3": null
+   "l3": [
+    "数据管道",
+    "主数据治理"
+   ]
   },
   {
    "name": "Skill-Causal-Discovery-PC-Algorithm",
@@ -6750,7 +6760,10 @@
    "name": "Skill-Persona-Based-AB-Simulation",
    "path": "paper2skills-vault/02-A_B实验/Skill-Persona-Based-AB-Simulation.md",
    "domain_dir": "02-A_B实验",
-   "l3": null
+   "l3": [
+    "实验设计",
+    "内容实验"
+   ]
   },
   {
    "name": "Skill-Power-Analysis-Sample-Size",
@@ -6773,7 +6786,10 @@
    "name": "Skill-Decision-Conditioned-Forecasting",
    "path": "paper2skills-vault/03-时间序列/Skill-Decision-Conditioned-Forecasting.md",
    "domain_dir": "03-时间序列",
-   "l3": null
+   "l3": [
+    "补货模拟",
+    "需求预测"
+   ]
   },
   {
    "name": "Skill-Intelligent-Prediction-Doubly-Robust",
@@ -6797,7 +6813,10 @@
    "name": "Skill-Shipping-Cost-Estimation",
    "path": "paper2skills-vault/03-时间序列/Skill-Shipping-Cost-Estimation.md",
    "domain_dir": "03-时间序列",
-   "l3": null
+   "l3": [
+    "物流方案",
+    "经济性分析"
+   ]
   },
   {
    "name": "Skill-Temporal-Fusion-Transformer",
@@ -6855,7 +6874,10 @@
    "name": "Skill-Multi-Warehouse-Allocation-LLM",
    "path": "paper2skills-vault/04-供应链/Skill-Multi-Warehouse-Allocation-LLM.md",
    "domain_dir": "04-供应链",
-   "l3": null
+   "l3": [
+    "调拨清货建议",
+    "补货模拟"
+   ]
   },
   {
    "name": "Skill-Safety-Stock-Replenishment",
@@ -6869,7 +6891,10 @@
    "name": "Skill-Supply-Network-Simulation",
    "path": "paper2skills-vault/04-供应链/Skill-Supply-Network-Simulation.md",
    "domain_dir": "04-供应链",
-   "l3": null
+   "l3": [
+    "补货模拟",
+    "物流方案"
+   ]
   },
   {
    "name": "Skill-Two-Echelon-Inventory-DRL",
@@ -7025,7 +7050,10 @@
    "name": "Skill-Seasonal-Aligned-Churn-Label",
    "path": "paper2skills-vault/06-增长模型/Skill-Seasonal-Aligned-Churn-Label.md",
    "domain_dir": "06-增长模型",
-   "l3": null
+   "l3": [
+    "分群",
+    "生命周期触达"
+   ]
   },
   {
    "name": "Skill-Uplift-Churn-Prediction",
@@ -7049,19 +7077,26 @@
    "name": "Skill-ABSA-BERT-MoE",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-ABSA-BERT-MoE.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-AGRS-属性引导评论摘要",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-AGRS-属性引导评论摘要.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "体验分析",
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-ALCHEmist-Weak-Supervision",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-ALCHEmist-Weak-Supervision.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-Active-Learning-Annotation",
@@ -7076,25 +7111,34 @@
    "name": "Skill-AdaNEN-Streaming-Classifier",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-AdaNEN-Streaming-Classifier.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-Aspect-Based-Sentiment-Analysis",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Aspect-Based-Sentiment-Analysis.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码",
+    "体验分析"
+   ]
   },
   {
    "name": "Skill-AutoTag-SelfEvolving-Label-System",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-AutoTag-SelfEvolving-Label-System.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-BERT-MoE高效方面情感分析",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-BERT-MoE高效方面情感分析.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-BERT-SRL-Event-Frame-Extraction",
@@ -7109,37 +7153,52 @@
    "name": "Skill-Behavioral-Intent-Tree-Parsing",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Behavioral-Intent-Tree-Parsing.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "转化优化",
+    "生命周期触达"
+   ]
   },
   {
    "name": "Skill-CSK-Customer-Sentiment-Clustering",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-CSK-Customer-Sentiment-Clustering.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "分群"
+   ]
   },
   {
    "name": "Skill-CrossLingual-Semantic-Alignment",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-CrossLingual-Semantic-Alignment.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "术语治理",
+    "主数据治理"
+   ]
   },
   {
    "name": "Skill-CrossLingual-Sentiment-Transfer",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-CrossLingual-Sentiment-Transfer.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-Dialogue-to-Action-Graph",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Dialogue-to-Action-Graph.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "售后处理",
+    "客诉分诊"
+   ]
   },
   {
    "name": "Skill-GPLR-人群标签生成",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-GPLR-人群标签生成.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "分群"
+   ]
   },
   {
    "name": "Skill-InstructUIE-Unified-Information-Extraction",
@@ -7155,85 +7214,124 @@
    "name": "Skill-LLM-Personalized-Marketing-Copy-Generation",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-LLM-Personalized-Marketing-Copy-Generation.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "内容策划",
+    "Listing优化"
+   ]
   },
   {
    "name": "Skill-MAA-行动建议生成",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAA-行动建议生成.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "体验分析",
+    "客诉聚类"
+   ]
   },
   {
    "name": "Skill-MAS-Consumer-Behavior-Simulation",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Consumer-Behavior-Simulation.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "促销规划",
+    "情景模拟"
+   ]
   },
   {
    "name": "Skill-MAS-MARL-Dynamic-Pricing",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-MARL-Dynamic-Pricing.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "价格敏感性",
+    "促销规划"
+   ]
   },
   {
    "name": "Skill-MAS-Multi-Objective-Recommendation",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-Multi-Objective-Recommendation.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "转化优化",
+    "组合设计"
+   ]
   },
   {
    "name": "Skill-MAS-VOC-Data-Analyst",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-MAS-VOC-Data-Analyst.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码",
+    "体验分析"
+   ]
   },
   {
    "name": "Skill-NPS-Driver-Analysis",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-NPS-Driver-Analysis.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "体验分析",
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-OfflineRL-触达时机优化",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OfflineRL-触达时机优化.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "生命周期触达"
+   ]
   },
   {
    "name": "Skill-OpenWorld-Class-Incremental-Learning",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-OpenWorld-Class-Incremental-Learning.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-PERSONABOT-RAG用户画像生成",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-PERSONABOT-RAG用户画像生成.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "需求分群",
+    "分群"
+   ]
   },
   {
    "name": "Skill-Product-Attribute-Graph-Parsing",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Product-Attribute-Graph-Parsing.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "竞品研究",
+    "商品诊断"
+   ]
   },
   {
    "name": "Skill-REVISION-无点击意图挖掘",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-REVISION-无点击意图挖掘.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "搜索意图分析",
+    "需求分群"
+   ]
   },
   {
    "name": "Skill-Review-Quality-Scoring",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Review-Quality-Scoring.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "数据质量"
+   ]
   },
   {
    "name": "Skill-Self-Improving-LLM-Agent-Pipeline",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Self-Improving-LLM-Agent-Pipeline.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "内容实验",
+    "竞品研究"
+   ]
   },
   {
    "name": "Skill-Semantic-Blueprint-Compiler",
@@ -7248,43 +7346,62 @@
    "name": "Skill-SoMeR-多视角用户表示",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-SoMeR-多视角用户表示.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "分群",
+    "需求分群"
+   ]
   },
   {
    "name": "Skill-Spiral-of-Silence-沉默少数派挖掘",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-Spiral-of-Silence-沉默少数派挖掘.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "体验分析",
+    "需求分群"
+   ]
   },
   {
    "name": "Skill-StaR-观点语句排序",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-StaR-观点语句排序.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-TJAP-跨市场品类组合定价",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TJAP-跨市场品类组合定价.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "组合设计",
+    "价格敏感性",
+    "市场进入"
+   ]
   },
   {
    "name": "Skill-TSCAN-上下文感知挽回策略",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TSCAN-上下文感知挽回策略.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "生命周期触达"
+   ]
   },
   {
    "name": "Skill-TaxoAdapt-Taxonomy-Evolution",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TaxoAdapt-Taxonomy-Evolution.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码"
+   ]
   },
   {
    "name": "Skill-TopicImpact-观点单元画像抽取",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-TopicImpact-观点单元画像抽取.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码",
+    "体验分析"
+   ]
   },
   {
    "name": "Skill-VOC-Proxy-NPS-AIPL-统一萃取引擎",
@@ -7300,19 +7417,28 @@
    "name": "Skill-VOC-Semantic-Blueprint",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-VOC-Semantic-Blueprint.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码",
+    "竞品研究"
+   ]
   },
   {
    "name": "Skill-iReFeed-需求优先级排序",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-iReFeed-需求优先级排序.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "产品需求定义",
+    "产品范围管理"
+   ]
   },
   {
    "name": "Skill-大规模消费者评论方面情感分析",
    "path": "paper2skills-vault/07-NLP-VOC/00-知识库-Skill卡片/Skill-大规模消费者评论方面情感分析.md",
    "domain_dir": "00-知识库-Skill卡片",
-   "l3": null
+   "l3": [
+    "VOC编码",
+    "竞品研究"
+   ]
   },
   {
    "name": "Skill-Dense-Retrieval-Ecommerce-Semantic-Search",
@@ -7434,7 +7560,10 @@
    "name": "Skill-SQL-Agent-Access-Control",
    "path": "paper2skills-vault/09-DataAgent-LLM/Skill-SQL-Agent-Access-Control.md",
    "domain_dir": "09-DataAgent-LLM",
-   "l3": null
+   "l3": [
+    "授权审查",
+    "访问控制"
+   ]
   },
   {
    "name": "Skill-SQL-Agent-Text-to-SQL",
@@ -7550,13 +7679,19 @@
    "name": "Skill-Multi-Agent-Collaboration-Tax",
    "path": "paper2skills-vault/10-MAS/Skill-Multi-Agent-Collaboration-Tax.md",
    "domain_dir": "10-MAS",
-   "l3": null
+   "l3": [
+    "能力匹配",
+    "依赖协调"
+   ]
   },
   {
    "name": "Skill-Routed-Graph-Handoff",
    "path": "paper2skills-vault/10-MAS/Skill-Routed-Graph-Handoff.md",
    "domain_dir": "10-MAS",
-   "l3": null
+   "l3": [
+    "依赖协调",
+    "接口契约"
+   ]
   },
   {
    "name": "Skill-Feature-Engineering",
@@ -7581,19 +7716,28 @@
    "name": "Skill-Cannibalization-Corrected-Attribution",
    "path": "paper2skills-vault/13-广告分析/Skill-Cannibalization-Corrected-Attribution.md",
    "domain_dir": "13-广告分析",
-   "l3": null
+   "l3": [
+    "增量分析",
+    "预算分配"
+   ]
   },
   {
    "name": "Skill-Causal-Budget-Allocation",
    "path": "paper2skills-vault/13-广告分析/Skill-Causal-Budget-Allocation.md",
    "domain_dir": "13-广告分析",
-   "l3": null
+   "l3": [
+    "预算分配",
+    "增量分析"
+   ]
   },
   {
    "name": "Skill-Funnel-Causal-Coupon-Allocation",
    "path": "paper2skills-vault/13-广告分析/Skill-Funnel-Causal-Coupon-Allocation.md",
    "domain_dir": "13-广告分析",
-   "l3": null
+   "l3": [
+    "促销规划",
+    "增量分析"
+   ]
   },
   {
    "name": "Skill-ROAS-Budget-Optimization",
@@ -7617,7 +7761,10 @@
    "name": "Skill-Incrementality-Measurement",
    "path": "paper2skills-vault/14-用户分析/Skill-Incrementality-Measurement.md",
    "domain_dir": "14-用户分析",
-   "l3": null
+   "l3": [
+    "增量分析",
+    "实验设计"
+   ]
   },
   {
    "name": "Skill-User-Funnel-Analysis",
@@ -7776,7 +7923,10 @@
    "name": "Skill-Stateful-Skill-Runtime",
    "path": "paper2skills-vault/16-智能体工程/Skill-Stateful-Skill-Runtime.md",
    "domain_dir": "16-智能体工程",
-   "l3": null
+   "l3": [
+    "容量管理",
+    "失败恢复"
+   ]
   },
   {
    "name": "Skill-Task-Adaptive-Topology",
@@ -7818,7 +7968,8 @@
   "role_scenario_pairs_direct": 127,
   "role_scenario_pairs_closure": 641,
   "cards": 146,
-  "cards_with_l3": 93,
+  "cards_with_l3": 146,
+  "cards_unclassified": [],
   "solutions": 0,
   "role_wiring_known": 50,
   "roles_without_a": 10

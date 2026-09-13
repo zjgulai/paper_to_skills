@@ -1,15 +1,15 @@
 {
  "table": {
   "A": {
-   "zero": 5,
-   "legacy": 31,
-   "curated": 37,
+   "zero": 4,
+   "legacy": 27,
+   "curated": 42,
    "total": 73
   },
   "B": {
-   "zero": 9,
-   "legacy": 41,
-   "curated": 16,
+   "zero": 8,
+   "legacy": 33,
+   "curated": 25,
    "total": 66
   },
   "C": {
@@ -19,21 +19,21 @@
    "total": 12
   },
   "_col": {
-   "zero": 17,
-   "legacy": 81,
-   "curated": 53,
+   "zero": 15,
+   "legacy": 69,
+   "curated": 67,
    "_total": 151
   }
  },
  "targets": {
   "T1": {
    "rule": "A ∩ 无精选卡",
-   "count": 36,
+   "count": 31,
    "domains": {
-    "供应与履约": 11,
-    "产品与创新": 7,
-    "渠道经营": 6,
+    "供应与履约": 9,
+    "产品与创新": 6,
     "财务与合规": 6,
+    "渠道经营": 4,
     "品牌与增长": 3,
     "经营与组织": 2,
     "数据与AI运行": 1
@@ -41,8 +41,8 @@
    "structural_strict": 3,
    "structural_wide": 5,
    "retrieval_budget_positions": {
-    "strict": 33,
-    "wide": 31,
+    "strict": 28,
+    "wide": 26,
     "default": "strict",
     "wide_only": [
      "可用性验证",
@@ -52,8 +52,8 @@
   },
   "T2": {
    "rule": "零供给（连 legacy 预览都没有）",
-   "count": 17,
-   "structural_blank": 10,
+   "count": 15,
+   "structural_blank": 9,
    "structural_blank_roles": [
     "AGT-009",
     "AGT-010",
@@ -73,12 +73,6 @@
      "role_id": "AGT-005",
      "serviceability": "B",
      "structural_blank": false
-    },
-    {
-     "l3": "产品范围管理",
-     "role_id": "AGT-009",
-     "serviceability": "B",
-     "structural_blank": true
     },
     {
      "l3": "商业案例",
@@ -155,12 +149,6 @@
     {
      "l3": "线索评估",
      "role_id": "AGT-025",
-     "serviceability": "A",
-     "structural_blank": false
-    },
-    {
-     "l3": "术语治理",
-     "role_id": "AGT-028",
      "serviceability": "A",
      "structural_blank": false
     }
@@ -299,53 +287,6 @@
    "rank": 1
   },
   {
-   "l3": "术语治理",
-   "role_id": "AGT-028",
-   "role_title": "本地化与市场适配",
-   "domain": "渠道经营",
-   "plane_id": "PLN-OPS",
-   "serviceability": "A",
-   "boundary_a": true,
-   "downgrade_condition": "若术语裁决必须由母语专家逐条确认，则降 B",
-   "supply": {
-    "status": "zero",
-    "n_curated": 0,
-    "n_legacy": 0
-   },
-   "flows": [
-    "FLOW-01",
-    "FLOW-02",
-    "FLOW-04",
-    "FLOW-05"
-   ],
-   "n_flows": 4,
-   "in_first_slice": true,
-   "m_cells": [
-    "FLOW-01/STG-04",
-    "FLOW-01/STG-05",
-    "FLOW-01/STG-08",
-    "FLOW-02/STG-04",
-    "FLOW-02/STG-05",
-    "FLOW-02/STG-08",
-    "FLOW-04/STG-04",
-    "FLOW-04/STG-05",
-    "FLOW-04/STG-08",
-    "FLOW-05/STG-04",
-    "FLOW-05/STG-05",
-    "FLOW-05/STG-08"
-   ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 3.0,
-    "flow_breadth": 0.5,
-    "first_slice": 1.5,
-    "boundary_penalty": -0.75,
-    "structural_penalty": -0.0
-   },
-   "score": 4.25,
-   "rank": 2
-  },
-  {
    "l3": "渠道对账",
    "role_id": "AGT-040",
    "role_title": "GMV结算与会计对账",
@@ -394,7 +335,7 @@
     "structural_penalty": -0.0
    },
    "score": 3.625,
-   "rank": 3
+   "rank": 2
   },
   {
    "l3": "行动组合",
@@ -453,7 +394,7 @@
     "structural_penalty": -0.0
    },
    "score": 3.125,
-   "rank": 4
+   "rank": 3
   },
   {
    "l3": "经营预算",
@@ -504,7 +445,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.725,
-   "rank": 5
+   "rank": 4
   },
   {
    "l3": "差异追踪",
@@ -555,7 +496,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.425,
-   "rank": 6
+   "rank": 5
   },
   {
    "l3": "收入与费用核对",
@@ -606,7 +547,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.325,
-   "rank": 7
+   "rank": 6
   },
   {
    "l3": "生命周期分析",
@@ -649,7 +590,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.3036,
-   "rank": 8
+   "rank": 7
   },
   {
    "l3": "资金预测",
@@ -700,7 +641,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.275,
-   "rank": 9
+   "rank": 8
   },
   {
    "l3": "BOM与材料分析",
@@ -739,7 +680,7 @@
     "structural_penalty": -1.0
    },
    "score": 2.25,
-   "rank": 10
+   "rank": 9
   },
   {
    "l3": "商业案例",
@@ -778,7 +719,7 @@
     "structural_penalty": -1.0
    },
    "score": 2.25,
-   "rank": 11
+   "rank": 10
   },
   {
    "l3": "账号商品映射",
@@ -821,7 +762,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.25,
-   "rank": 12
+   "rank": 11
   },
   {
    "l3": "账号诊断",
@@ -864,50 +805,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.075,
-   "rank": 13
-  },
-  {
-   "l3": "调拨清货建议",
-   "role_id": "AGT-017",
-   "role_title": "库存与商品生命周期",
-   "domain": "供应与履约",
-   "plane_id": "PLN-OPS",
-   "serviceability": "A",
-   "boundary_a": false,
-   "downgrade_condition": null,
-   "supply": {
-    "status": "legacy",
-    "n_curated": 0,
-    "n_legacy": 20
-   },
-   "flows": [
-    "FLOW-01",
-    "FLOW-03",
-    "FLOW-07"
-   ],
-   "n_flows": 3,
-   "in_first_slice": true,
-   "m_cells": [
-    "FLOW-01/STG-04",
-    "FLOW-01/STG-05",
-    "FLOW-01/STG-08",
-    "FLOW-03/STG-04",
-    "FLOW-03/STG-05",
-    "FLOW-03/STG-08",
-    "FLOW-07/STG-04",
-    "FLOW-07/STG-05",
-    "FLOW-07/STG-08"
-   ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.1429,
-    "flow_breadth": 0.375,
-    "first_slice": 1.5,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 2.0179,
-   "rank": 14
+   "rank": 12
   },
   {
    "l3": "供需协调",
@@ -946,46 +844,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.8804,
-   "rank": 15
-  },
-  {
-   "l3": "Listing优化",
-   "role_id": "AGT-022",
-   "role_title": "Amazon商品与搜索运营",
-   "domain": "渠道经营",
-   "plane_id": "PLN-OPS",
-   "serviceability": "A",
-   "boundary_a": false,
-   "downgrade_condition": null,
-   "supply": {
-    "status": "legacy",
-    "n_curated": 0,
-    "n_legacy": 43
-   },
-   "flows": [
-    "FLOW-01",
-    "FLOW-04"
-   ],
-   "n_flows": 2,
-   "in_first_slice": true,
-   "m_cells": [
-    "FLOW-01/STG-04",
-    "FLOW-01/STG-05",
-    "FLOW-01/STG-08",
-    "FLOW-04/STG-04",
-    "FLOW-04/STG-05",
-    "FLOW-04/STG-08"
-   ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.0682,
-    "flow_breadth": 0.25,
-    "first_slice": 1.5,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 1.8182,
-   "rank": 16
+   "rank": 13
   },
   {
    "l3": "平台运营",
@@ -1028,7 +887,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.625,
-   "rank": 17
+   "rank": 14
   },
   {
    "l3": "研发计划",
@@ -1067,7 +926,7 @@
     "structural_penalty": -1.0
    },
    "score": 1.5,
-   "rank": 18
+   "rank": 15
   },
   {
    "l3": "品牌反馈",
@@ -1118,7 +977,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.225,
-   "rank": 19
+   "rank": 16
   },
   {
    "l3": "可用性验证",
@@ -1153,7 +1012,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.125,
-   "rank": 20
+   "rank": 17
   },
   {
    "l3": "测试方案",
@@ -1192,7 +1051,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.0,
-   "rank": 21
+   "rank": 18
   },
   {
    "l3": "资源情景比较",
@@ -1231,7 +1090,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.85,
-   "rank": 22
+   "rank": 19
   },
   {
    "l3": "知识产权检索",
@@ -1278,7 +1137,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.8333,
-   "rank": 23
+   "rank": 20
   },
   {
    "l3": "达人筛选",
@@ -1317,7 +1176,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.75,
-   "rank": 24
+   "rank": 21
   },
   {
    "l3": "履约异常",
@@ -1360,7 +1219,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.7083,
-   "rank": 25
+   "rank": 22
   },
   {
    "l3": "抽样审计",
@@ -1399,46 +1258,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.6786,
-   "rank": 26
-  },
-  {
-   "l3": "需求分群",
-   "role_id": "AGT-006",
-   "role_title": "消费者需求与VOC研究",
-   "domain": "产品与创新",
-   "plane_id": "PLN-OPS",
-   "serviceability": "A",
-   "boundary_a": false,
-   "downgrade_condition": null,
-   "supply": {
-    "status": "legacy",
-    "n_curated": 0,
-    "n_legacy": 7
-   },
-   "flows": [
-    "FLOW-02",
-    "FLOW-05"
-   ],
-   "n_flows": 2,
-   "in_first_slice": false,
-   "m_cells": [
-    "FLOW-02/STG-04",
-    "FLOW-02/STG-05",
-    "FLOW-02/STG-08",
-    "FLOW-05/STG-04",
-    "FLOW-05/STG-05",
-    "FLOW-05/STG-08"
-   ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.375,
-    "flow_breadth": 0.25,
-    "first_slice": 0.0,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 0.625,
-   "rank": 27
+   "rank": 23
   },
   {
    "l3": "质量分析",
@@ -1481,7 +1301,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.6058,
-   "rank": 28
+   "rank": 24
   },
   {
    "l3": "退货分流",
@@ -1524,7 +1344,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.575,
-   "rank": 29
+   "rank": 25
   },
   {
    "l3": "订单协调",
@@ -1559,7 +1379,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.4583,
-   "rank": 30
+   "rank": 26
   },
   {
    "l3": "趋势监测",
@@ -1598,7 +1418,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.45,
-   "rank": 31
+   "rank": 27
   },
   {
    "l3": "复购实验",
@@ -1633,46 +1453,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.375,
-   "rank": 32
-  },
-  {
-   "l3": "物流方案",
-   "role_id": "AGT-019",
-   "role_title": "跨境物流与关务",
-   "domain": "供应与履约",
-   "plane_id": "PLN-OPS",
-   "serviceability": "A",
-   "boundary_a": false,
-   "downgrade_condition": null,
-   "supply": {
-    "status": "legacy",
-    "n_curated": 0,
-    "n_legacy": 47
-   },
-   "flows": [
-    "FLOW-03",
-    "FLOW-04"
-   ],
-   "n_flows": 2,
-   "in_first_slice": false,
-   "m_cells": [
-    "FLOW-03/STG-04",
-    "FLOW-03/STG-05",
-    "FLOW-03/STG-08",
-    "FLOW-04/STG-04",
-    "FLOW-04/STG-05",
-    "FLOW-04/STG-08"
-   ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.0625,
-    "flow_breadth": 0.25,
-    "first_slice": 0.0,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 0.3125,
-   "rank": 33
+   "rank": 28
   },
   {
    "l3": "供应商评估",
@@ -1715,7 +1496,7 @@
     "structural_penalty": -0.0
    },
    "score": -0.2679,
-   "rank": 34
+   "rank": 29
   },
   {
    "l3": "到货异常追踪",
@@ -1754,7 +1535,7 @@
     "structural_penalty": -0.0
    },
    "score": -0.3,
-   "rank": 35
+   "rank": 30
   },
   {
    "l3": "履约跟踪",
@@ -1789,7 +1570,7 @@
     "structural_penalty": -0.0
    },
    "score": -0.4821,
-   "rank": 36
+   "rank": 31
   }
  ],
  "rows": [
@@ -1860,7 +1641,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.85,
-   "rank": 22
+   "rank": 19
   },
   {
    "l3": "月度经营复盘",
@@ -1957,7 +1738,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 1,
+    "n_curated": 2,
     "n_legacy": 3
    },
    "flows": [
@@ -2011,7 +1792,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 8,
+    "n_curated": 10,
     "n_legacy": 24
    },
    "flows": [
@@ -2187,7 +1968,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 1,
+    "n_curated": 2,
     "n_legacy": 14
    },
    "flows": [
@@ -2325,7 +2106,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.6786,
-   "rank": 26
+   "rank": 23
   },
   {
    "l3": "证据复核",
@@ -2427,8 +2208,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 4,
     "n_legacy": 7
    },
    "flows": [
@@ -2445,16 +2226,7 @@
     "FLOW-05/STG-05",
     "FLOW-05/STG-08"
    ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.375,
-    "flow_breadth": 0.25,
-    "first_slice": 0.0,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 0.625,
-   "rank": 27
+   "structural_blank": false
   },
   {
    "l3": "VOC编码",
@@ -2467,7 +2239,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 5,
+    "n_curated": 21,
     "n_legacy": 20
    },
    "flows": [
@@ -2496,8 +2268,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 4,
     "n_legacy": 23
    },
    "flows": [
@@ -2553,7 +2325,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.45,
-   "rank": 31
+   "rank": 27
   },
   {
    "l3": "市场机会评估",
@@ -2686,7 +2458,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 1,
+    "n_curated": 2,
     "n_legacy": 6
    },
    "flows": [
@@ -2742,7 +2514,7 @@
     "structural_penalty": -1.0
    },
    "score": 2.25,
-   "rank": 11
+   "rank": 10
   },
   {
    "l3": "产品范围管理",
@@ -2754,8 +2526,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "zero",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 0
    },
    "flows": [
@@ -2772,7 +2544,7 @@
     "FLOW-04/STG-05",
     "FLOW-04/STG-08"
    ],
-   "structural_blank": true
+   "structural_blank": false
   },
   {
    "l3": "使用旅程",
@@ -2859,7 +2631,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.125,
-   "rank": 20
+   "rank": 17
   },
   {
    "l3": "工程需求审查",
@@ -2928,7 +2700,7 @@
     "structural_penalty": -1.0
    },
    "score": 2.25,
-   "rank": 10
+   "rank": 9
   },
   {
    "l3": "可制造性分析",
@@ -3087,7 +2859,7 @@
     "structural_penalty": -1.0
    },
    "score": 1.5,
-   "rank": 18
+   "rank": 15
   },
   {
    "l3": "测试方案",
@@ -3126,7 +2898,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.0,
-   "rank": 21
+   "rank": 18
   },
   {
    "l3": "阶段验证",
@@ -3199,7 +2971,7 @@
     "structural_penalty": -0.0
    },
    "score": -0.2679,
-   "rank": 34
+   "rank": 29
   },
   {
    "l3": "产能调查",
@@ -3328,7 +3100,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.4583,
-   "rank": 30
+   "rank": 26
   },
   {
    "l3": "履约跟踪",
@@ -3363,7 +3135,7 @@
     "structural_penalty": -0.0
    },
    "score": -0.4821,
-   "rank": 36
+   "rank": 31
   },
   {
    "l3": "需求预测",
@@ -3376,7 +3148,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 4,
+    "n_curated": 5,
     "n_legacy": 94
    },
    "flows": [
@@ -3406,7 +3178,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 6,
+    "n_curated": 9,
     "n_legacy": 87
    },
    "flows": [
@@ -3462,7 +3234,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.8804,
-   "rank": 15
+   "rank": 13
   },
   {
    "l3": "库存分层",
@@ -3539,7 +3311,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.3036,
-   "rank": 8
+   "rank": 7
   },
   {
    "l3": "调拨清货建议",
@@ -3551,8 +3323,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 20
    },
    "flows": [
@@ -3573,16 +3345,7 @@
     "FLOW-07/STG-05",
     "FLOW-07/STG-08"
    ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.1429,
-    "flow_breadth": 0.375,
-    "first_slice": 1.5,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 2.0179,
-   "rank": 14
+   "structural_blank": false
   },
   {
    "l3": "质量分析",
@@ -3625,7 +3388,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.6058,
-   "rank": 28
+   "rank": 24
   },
   {
    "l3": "生产异常协调",
@@ -3705,8 +3468,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 2,
     "n_legacy": 47
    },
    "flows": [
@@ -3723,16 +3486,7 @@
     "FLOW-04/STG-05",
     "FLOW-04/STG-08"
    ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.0625,
-    "flow_breadth": 0.25,
-    "first_slice": 0.0,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 0.3125,
-   "rank": 33
+   "structural_blank": false
   },
   {
    "l3": "关务资料检查",
@@ -3801,7 +3555,7 @@
     "structural_penalty": -0.0
    },
    "score": -0.3,
-   "rank": 35
+   "rank": 30
   },
   {
    "l3": "履约异常",
@@ -3844,7 +3598,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.7083,
-   "rank": 25
+   "rank": 22
   },
   {
    "l3": "退货分流",
@@ -3887,7 +3641,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.575,
-   "rank": 29
+   "rank": 25
   },
   {
    "l3": "仓储协作",
@@ -4030,7 +3784,7 @@
     "structural_penalty": -0.0
    },
    "score": 3.125,
-   "rank": 4
+   "rank": 3
   },
   {
    "l3": "经营复盘",
@@ -4093,7 +3847,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 4,
+    "n_curated": 5,
     "n_legacy": 37
    },
    "flows": [
@@ -4123,7 +3877,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 3,
+    "n_curated": 4,
     "n_legacy": 41
    },
    "flows": [
@@ -4152,8 +3906,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 2,
     "n_legacy": 43
    },
    "flows": [
@@ -4170,16 +3924,7 @@
     "FLOW-04/STG-05",
     "FLOW-04/STG-08"
    ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 0.0682,
-    "flow_breadth": 0.25,
-    "first_slice": 1.5,
-    "boundary_penalty": -0.0,
-    "structural_penalty": -0.0
-   },
-   "score": 1.8182,
-   "rank": 16
+   "structural_blank": false
   },
   {
    "l3": "漏斗诊断",
@@ -4268,7 +4013,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 13,
+    "n_curated": 15,
     "n_legacy": 84
    },
    "flows": [
@@ -4339,8 +4084,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 16
    },
    "flows": [
@@ -4404,7 +4149,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.625,
-   "rank": 17
+   "rank": 14
   },
   {
    "l3": "线索评估",
@@ -4516,7 +4261,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 3,
+    "n_curated": 5,
     "n_legacy": 53
    },
    "flows": [
@@ -4546,7 +4291,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 4,
+    "n_curated": 7,
     "n_legacy": 35
    },
    "flows": [
@@ -4576,7 +4321,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 1,
+    "n_curated": 3,
     "n_legacy": 16
    },
    "flows": [
@@ -4636,7 +4381,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.075,
-   "rank": 13
+   "rank": 12
   },
   {
    "l3": "规则监测",
@@ -4792,8 +4537,8 @@
    "boundary_a": true,
    "downgrade_condition": "若术语裁决必须由母语专家逐条确认，则降 B",
    "supply": {
-    "status": "zero",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 0
    },
    "flows": [
@@ -4818,16 +4563,7 @@
     "FLOW-05/STG-05",
     "FLOW-05/STG-08"
    ],
-   "structural_blank": false,
-   "score_parts": {
-    "zero_gap": 3.0,
-    "flow_breadth": 0.5,
-    "first_slice": 1.5,
-    "boundary_penalty": -0.75,
-    "structural_penalty": -0.0
-   },
-   "score": 4.25,
-   "rank": 2
+   "structural_blank": false
   },
   {
    "l3": "品牌定位",
@@ -4962,7 +4698,7 @@
     "structural_penalty": -0.0
    },
    "score": 1.225,
-   "rank": 19
+   "rank": 16
   },
   {
    "l3": "内容策划",
@@ -4974,8 +4710,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 26
    },
    "flows": [
@@ -5043,7 +4779,7 @@
    "downgrade_condition": "若内容产出本身无法被算法替代，则降 B",
    "supply": {
     "status": "curated",
-    "n_curated": 1,
+    "n_curated": 3,
     "n_legacy": 11
    },
    "flows": [
@@ -5205,7 +4941,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 3,
+    "n_curated": 5,
     "n_legacy": 51
    },
    "flows": [
@@ -5283,7 +5019,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.75,
-   "rank": 24
+   "rank": 21
   },
   {
    "l3": "联盟运营",
@@ -5356,7 +5092,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 6,
+    "n_curated": 11,
     "n_legacy": 60
    },
    "flows": [
@@ -5382,7 +5118,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 10,
+    "n_curated": 14,
     "n_legacy": 61
    },
    "flows": [
@@ -5430,7 +5166,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.375,
-   "rank": 32
+   "rank": 28
   },
   {
    "l3": "实验设计",
@@ -5443,7 +5179,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 5,
+    "n_curated": 7,
     "n_legacy": 41
    },
    "flows": [
@@ -5481,7 +5217,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 4,
+    "n_curated": 8,
     "n_legacy": 55
    },
    "flows": [
@@ -5658,8 +5394,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 7
    },
    "flows": [
@@ -5688,8 +5424,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 9
    },
    "flows": [
@@ -5748,8 +5484,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 10
    },
    "flows": [
@@ -5783,7 +5519,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 4,
+    "n_curated": 11,
     "n_legacy": 32
    },
    "flows": [
@@ -5979,7 +5715,7 @@
     "structural_penalty": -0.0
    },
    "score": 3.625,
-   "rank": 3
+   "rank": 2
   },
   {
    "l3": "收入与费用核对",
@@ -6030,7 +5766,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.325,
-   "rank": 7
+   "rank": 6
   },
   {
    "l3": "差异追踪",
@@ -6081,7 +5817,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.425,
-   "rank": 6
+   "rank": 5
   },
   {
    "l3": "资金预测",
@@ -6132,7 +5868,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.275,
-   "rank": 9
+   "rank": 8
   },
   {
    "l3": "经营预算",
@@ -6183,7 +5919,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.725,
-   "rank": 5
+   "rank": 4
   },
   {
    "l3": "经济性分析",
@@ -6196,7 +5932,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 2,
+    "n_curated": 3,
     "n_legacy": 57
    },
    "flows": [
@@ -6412,7 +6148,7 @@
     "structural_penalty": -0.0
    },
    "score": 0.8333,
-   "rank": 23
+   "rank": 20
   },
   {
    "l3": "争议证据组织",
@@ -6653,7 +6389,7 @@
     "structural_penalty": -0.0
    },
    "score": 2.25,
-   "rank": 12
+   "rank": 11
   },
   {
    "l3": "主数据治理",
@@ -6666,7 +6402,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 5,
+    "n_curated": 8,
     "n_legacy": 40
    },
    "flows": [
@@ -6700,7 +6436,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 1,
+    "n_curated": 2,
     "n_legacy": 51
    },
    "flows": [
@@ -6726,7 +6462,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 4,
+    "n_curated": 5,
     "n_legacy": 73
    },
    "flows": [
@@ -6778,7 +6514,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 3,
+    "n_curated": 4,
     "n_legacy": 16
    },
    "flows": [
@@ -6988,7 +6724,7 @@
    "downgrade_condition": null,
    "supply": {
     "status": "curated",
-    "n_curated": 4,
+    "n_curated": 5,
     "n_legacy": 34
    },
    "flows": [
@@ -7018,7 +6754,7 @@
    "downgrade_condition": "若恢复动作须人工判断影响面，则降 B",
    "supply": {
     "status": "curated",
-    "n_curated": 1,
+    "n_curated": 2,
     "n_legacy": 12
    },
    "flows": [
@@ -7047,8 +6783,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 12
    },
    "flows": [
@@ -7085,8 +6821,8 @@
    "boundary_a": false,
    "downgrade_condition": null,
    "supply": {
-    "status": "legacy",
-    "n_curated": 0,
+    "status": "curated",
+    "n_curated": 1,
     "n_legacy": 13
    },
    "flows": [
@@ -7172,10 +6908,10 @@
   "structural_penalty": 1.0
  },
  "_meta": {
-  "generated": "2026-09-13T17:51:48+0800",
+  "generated": "2026-09-13T18:03:39+0800",
   "generator": "paper2skills-research/scripts/build_gap_ledger.py",
   "graph": "paper2skills-vault/07-资源库/capability-graph.json",
-  "graph_sha256": "fd91f17f9213c416",
+  "graph_sha256": "7ede8be116ca7672",
   "classification": {
    "available": true,
    "path": "/Users/lute/project/Magpie-Horch/packages/capabilities/dsh-paper2skills/data/classification.json",
