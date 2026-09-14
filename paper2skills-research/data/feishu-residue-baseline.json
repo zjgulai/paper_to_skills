@@ -1,0 +1,72 @@
+{
+  "_note": "飞书残留门禁的裸词 baseline。判据 A（集成标识）不需要 baseline —— 它恒为 0。",
+  "why": "裸词不能一刀切判红：存量分四类合法来源，见 families。",
+  "families": {
+    "playbook/ 卡片正文（业务场景描述，非集成）": "卡面文字里写「告警推送（微信/飞书）」「每晚自动推送飞书日报卡片」——那是业务语义，删它等于改卡片内容。上游重建时随卡片一起回来，属预期存量。",
+    "paper2skills-vault/07-NLP-VOC/**（已迁出的 VOC 子项目存档）": "该子项目 2026-05-17 已迁出到 ../ai_nlp_voc/；这里是有意保留的存档。改存档等于改另一个项目的历史（所有者 2026-09-14 决定：不动）。",
+    "凭证仪器与事故归档（保留，见所有者决定）": "scan_secrets.py 的 FEISHU_WEBHOOK 规则、暴露值登记表、以及记录本次凭证事故的报告。这几样是**抓到这次事故的仪器与证据** —— 删掉它们会让 L16a 变成假绿。",
+    "历史记录（logs/ 与 paper-同步/evolve/）": "带日期的历史记录：会话日志与 skill 演进轮次。属于「记录」而非「指示」，改它=改历史。"
+  },
+  "identifier_exemptions": [
+    {
+      "file": "paper2skills-research/reports/远端同步与凭证事件归档-20260913.md",
+      "identifiers": [
+        "feishuHook"
+      ],
+      "reason": "事故归档里的取证叙述：说明那个暴露的 webhook 曾写在 agents.html，后来改为读 window.__PLAYBOOK_CONFIG__.feishuHook。这是「这里曾有过凭证」的物证，不是集成代码。同族的 scan_secrets 墓碑归一化（台账 #73）是同一个道理。",
+      "expires_when": "该报告被归档格式替换、或飞书 webhook 在飞书后台轮换后本条可删。"
+    }
+  ],
+  "expires_when": "当 playbook 卡片正文的飞书表述被上游改写、或 07-NLP-VOC 存档迁出后，相应条目应删到 0；本文件归零时本门禁可退化为纯判据 A。",
+  "files": {
+    "CLAUDE.md": 10,
+    "logs/2026-03-28_skills_iteration_summary.md": 1,
+    "logs/session-summary-2026-05-06.md": 5,
+    "paper2skills-research/data/exposed-credential-registry.json": 5,
+    "paper2skills-research/data/history-secrets-whitelist.json": 2,
+    "paper2skills-research/reports/PHASE6-F8-S1W-材料归属改标与残留门禁.md": 3,
+    "paper2skills-research/reports/PHASE6-F8-S8-凭证扫描第三缝.md": 5,
+    "paper2skills-research/reports/PHASE6-F8-S8-凭证清点与暴露面.md": 1,
+    "paper2skills-research/reports/PHASE6-门禁缺陷台账与验证锚点.md": 1,
+    "paper2skills-research/reports/远端同步与凭证事件归档-20260913.md": 3,
+    "paper2skills-research/scripts/run_phase6_gates.py": 13,
+    "paper2skills-skills/paper-同步/evolve/evolution-log.md": 2,
+    "paper2skills-skills/paper-同步/evolve/round-1/changes.md": 3,
+    "paper2skills-skills/paper-同步/evolve/round-1/observations.md": 5,
+    "paper2skills-skills/paper-同步/evolve/round-1/patterns.md": 5,
+    "paper2skills-skills/paper-同步/evolve/round-1/prompt-2.md": 5,
+    "paper2skills-skills/paper-同步/evolve/round-1/prompt-4.md": 1,
+    "paper2skills-skills/paper-维护/scripts/scan_secrets.py": 10,
+    "paper2skills-vault/07-NLP-VOC/00-知识库-架构图谱/用户画像×AIPL指标体系与价值洞察引擎-架构设计.md": 2,
+    "paper2skills-vault/07-NLP-VOC/presentation/index.html": 3,
+    "paper2skills-vault/07-NLP-VOC/research/00-archived/labeling-outputs/v1/export_dashboard.py": 2,
+    "paper2skills-vault/07-NLP-VOC/research/00-归档资料/labeling-outputs/v1/export_dashboard.py": 2,
+    "paper2skills-vault/07-NLP-VOC/research/01-设计文档/00-Phase5-汇报与复盘/milestone-audit-map.md": 2,
+    "paper2skills-vault/07-NLP-VOC/research/01-设计文档/00-Phase5-汇报与复盘/phase6-7-executive-brief.md": 3,
+    "paper2skills-vault/07-NLP-VOC/research/01-设计文档/00-Phase5-汇报与复盘/phase7-architecture-diagrams.html": 1,
+    "paper2skills-vault/07-NLP-VOC/research/01-设计文档/00-Phase5-汇报与复盘/phase7-architecture-diagrams.md": 3,
+    "paper2skills-vault/07-NLP-VOC/research/01-设计文档/08-Phase计划/voc-tag-evolution-phase5-product-closed-loop-plan.md": 9,
+    "paper2skills-vault/07-NLP-VOC/research/01-设计文档/08-Phase计划/voc-tag-evolution-phase7-bi-superset-plan.md": 2,
+    "paper2skills-vault/07-NLP-VOC/research/01-设计文档/phase5-bi-dashboard-spec.md": 8,
+    "paper2skills-vault/07-NLP-VOC/research/02-scripts/nps-pipeline/export_dashboard.py": 8,
+    "paper2skills-vault/07-NLP-VOC/research/02-脚本工具/01-标签进化/com.momcozy.voc.monthly-evolution.plist": 2,
+    "paper2skills-vault/07-NLP-VOC/research/02-脚本工具/01-标签进化/monthly_evolution_cron.py": 10,
+    "paper2skills-vault/07-NLP-VOC/research/02-脚本工具/05-NPS管道/export_dashboard.py": 8,
+    "paper2skills-vault/07-NLP-VOC/research/02-脚本工具/nps-pipeline/export_dashboard.py": 8,
+    "paper2skills-vault/07-NLP-VOC/research/04-输出结果/03-审计报告/mvp_l7_progress_report.md": 1,
+    "paper2skills-vault/07-NLP-VOC/research/04-输出结果/03-审计报告/phase5_d12_progress_report.md": 20,
+    "paper2skills-vault/07-NLP-VOC/research/04-输出结果/03-审计报告/phase5_d14_progress_report.md": 1,
+    "paper2skills-vault/07-NLP-VOC/research/04-输出结果/03-审计报告/phase6_d10_progress_report.md": 1,
+    "paper2skills-vault/07-NLP-VOC/research/04-输出结果/03-审计报告/阶段汇报/voc-stage-report-2026-05-14.html": 2,
+    "paper2skills-vault/07-NLP-VOC/research/04-输出结果/03-审计报告/阶段汇报/voc-stage-report-2026-05-14.md": 2,
+    "playbook/assets/playbook-data.js": 11,
+    "playbook/assets/playbook-data.json": 11,
+    "playbook/skills/Skill-AGRS-Aspect-Guided-Review-Summarization.html": 1,
+    "playbook/skills/Skill-Agent-Finance-Autopilot.html": 1,
+    "playbook/skills/Skill-Domain-Adaptive-Continual-Pretraining.html": 1,
+    "playbook/skills/Skill-Knowledge-Conflict-Detection-Resolution.html": 1,
+    "playbook/skills/Skill-LLM-Ecommerce-Report-Automation.html": 1,
+    "playbook/skills/Skill-RAGAS-RAG-Evaluation-Framework.html": 1,
+    "playbook/skills/Skill-Search-Signal-Realtime-Pipeline.html": 2
+  }
+}

@@ -27,7 +27,6 @@
       <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
         <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
         <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
-        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
       </div>
     </div>
   </header>
@@ -67,9 +66,8 @@
 <div class='pb-roi-callout'>HTS 编码优化节税<span class='pb-roi-val'>年均 20-200 万元</span></div><div class='pb-roi-callout'>封号损失（不防御）<span class='pb-roi-val'>30-80 万 GMV/次</span></div><div class='pb-roi-callout'>主动召回 vs 被动召回<span class='pb-roi-val'>成本差 10 倍</span></div>
 <div class='pb-intro'>跨境母婴品牌面临三类「隐形合规炸弹」：① 产品认证缺失导致 Amazon 强制下架（一次损失 30-80 万 GMV）；② HTS 关税编码错误导致多缴 7.5-25% 关税（年均损失 20-200 万）；③ Listing 被封号后不知道如何写 POA 申诉（恢复周期从 2 周拖到 2 个月）。这三类风险有一个共同特点：大多数团队在事后才意识到——因为没有系统性的事前排查机制。本手册从选品阶段就建立合规防线，让你在 listing 上线前发现问题，而不是等平台下架通知。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 新品上架前合规扫描：0 因合规被强制下架（vs 平均每季度 1-2 次被动处理）</li><li>[OK] HTS 编码优化：年均节税 20-200 万元（视 SKU 数量和进口额）</li><li>[OK] 合规文案审查：AI 生成内容违规率从 15% → &lt; 2%</li><li>[OK] 法规变更响应从滞后 90 天 → 提前 90 天预警</li><li>[OK] POA 申诉成功率从 20-30%（模板）→ 65-80%（结构化策略）</li><li>[OK] 封号恢复周期从 2-4 周 → 3-7 天</li></ul></div>
-<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+<div class='pb-progress-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
   <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-compliance">0</strong> / 6 步</span>
-  <button onclick="pbShareFeishu('pb-compliance','跨境合规全链路手册',6)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
 </div>
 <div class='pb-steps'>
 <div class='pb-step'>
@@ -427,27 +425,6 @@
     }
   }).catch(function(){});
 
-  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
-    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
-    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
-    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
-    fetch('/api/feishu-callback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        action: {value: {
-          action: 'confirm',
-          agent_id: 'playbook-progress',
-          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
-        }}
-      })
-    }).then(() => {
-      const btn = event.target;
-      btn.textContent = '✅ 已推送';
-      btn.style.background = '#059669';
-      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
-    }).catch(() => {});
-  };
   </script>
 </body>
 </html>

@@ -27,7 +27,6 @@
       <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
         <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
         <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
-        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
       </div>
     </div>
   </header>
@@ -67,9 +66,8 @@
 
 <div class='pb-intro'>2025 年跨境电商面临的最大不确定性：关税政策随时变动。今天大多数团队面对关税冲击的响应方式是：开会讨论、人工拉数据、各部门各自决策——这个流程通常需要 3-5 天，而关税政策生效后的前 72 小时是争夺市场份额的黄金窗口。某母婴品牌在 2025 年关税调整中，因响应慢了 2 周，损失了 BSR 前 10 排名并花了 3 个月才恢复。没有 AI 的团队靠开会讨论，有 AI 的团队 72 小时内拿到完整行动清单并已在执行。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 72 小时内输出完整行动清单，替代 3 天团队讨论</li><li>[OK] 定价响应精准化：弹性低的 SKU 维价，弹性高的提前清仓</li><li>[OK] 供应链转移决策有数据支撑：不靠直觉，知道转移到哪里、什么时候、成本差多少</li><li>[OK] 关税冲击期间广告预算不盲目暂停，基于饱和曲线做有依据的调整</li><li>[OK] 一次关税冲击响应提速 = 保护 3-6 个月 BSR 排名稳定</li></ul></div>
-<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+<div class='pb-progress-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
   <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-tariff-response">0</strong> / 4 步</span>
-  <button onclick="pbShareFeishu('pb-tariff-response','关税冲击 72h 响应手册',4)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
 </div>
 <div class='pb-steps'>
 <div class='pb-step'>
@@ -325,27 +323,6 @@
     }
   }).catch(function(){});
 
-  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
-    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
-    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
-    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
-    fetch('/api/feishu-callback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        action: {value: {
-          action: 'confirm',
-          agent_id: 'playbook-progress',
-          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
-        }}
-      })
-    }).then(() => {
-      const btn = event.target;
-      btn.textContent = '✅ 已推送';
-      btn.style.background = '#059669';
-      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
-    }).catch(() => {});
-  };
   </script>
 </body>
 </html>

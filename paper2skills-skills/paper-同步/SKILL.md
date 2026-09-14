@@ -1,6 +1,6 @@
 ---
 name: paper-同步
-description: This skill should be used when the user asks to "同步skill", "多端同步", "同步到飞书", "同步到github", "同步到notion". Synchronizes skill cards and code templates to multiple platforms.
+description: This skill should be used when the user asks to "同步skill", "多端同步", "同步到github", "同步到notion". Synchronizes skill cards and code templates to multiple platforms.
 version: 0.1.0
 ---
 
@@ -20,7 +20,7 @@ version: 0.1.0
 用户提及以下内容时触发：
 - "同步 skill 卡片" 或 "多端同步"
 - "同步到 vault" 或 "同步到 GitHub"
-- "同步到飞书" 或 "同步到 Notion"
+- "同步到 Notion"
 - "查看同步状态"
 
 ## 同步目标
@@ -42,10 +42,9 @@ version: 0.1.0
 └── example.py
 ```
 
-### 3. 飞书/Notion（可选）
+### 3. Notion（可选）
 
 需要配置：
-- 飞书 Webhook URL（配置到 `~/.paper2skills/feishu_webhook`）
 - Notion API Key（配置到 `~/.paper2skills/notion_api_key`）
 - 数据库 ID（配置到 `~/.paper2skills/notion_db_id`）
 
@@ -79,13 +78,12 @@ python <REPO_ROOT>/paper2skills-skills/paper-同步/scripts/sync.py --status
 {
   "Skill-Uplift-Modeling.md": {
     "vault": { "synced": true, "timestamp": "2026-03-28T10:00:00" },
-    "github": { "synced": true, "timestamp": "2026-03-28T10:00:01" },
-    "feishu": { "synced": false, "error": "not configured" }
+    "github": { "synced": true, "timestamp": "2026-03-28T10:00:01" }
   }
 }
 ```
 
-### 手动同步（飞书/Notion）
+### 手动同步（Notion）
 
 对于远程平台，需要：
 1. 配置 API 凭证（见上方配置路径）
@@ -136,5 +134,5 @@ paper2skills-code/
 
 - 同步前确认文件路径正确
 - 代码模板需要测试通过后再同步
-- 飞书/Notion 同步需要配置凭证
+- Notion 同步需要配置凭证
 - 建议使用 git 进行版本控制

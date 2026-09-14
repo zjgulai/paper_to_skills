@@ -27,7 +27,6 @@
       <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
         <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
         <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
-        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
       </div>
     </div>
   </header>
@@ -67,9 +66,8 @@
 
 <div class='pb-intro'>传统定价依赖价格弹性——价格降X%，销量增Y%。这个模型假设消费者是理性人。2002年诺贝尔经济学奖得主Kahneman的Prospect Theory证明：人类系统性偏离理性，损失的痛苦是同等收益快乐的2.25倍，「限时最后3件」比「立省30元」更有效。本手册把行为经济学的顶级理论变成你的促销和定价武器。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 锚定效应优化：相同折扣深度感知价值提升 25%，转化率 +12%</li><li>[OK] 损失框架重构：促销文案 CTR 提升 18-35%</li><li>[OK] 捆绑定价优化：AOV（客单价）提升 22%，利润率不降</li><li>[OK] 禀赋效应试用：付费转化率提升 40-60%</li></ul></div>
-<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+<div class='pb-progress-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
   <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-behavioral-pricing">0</strong> / 4 步</span>
-  <button onclick="pbShareFeishu('pb-behavioral-pricing','行为经济学定价手册',4)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
 </div>
 <div class='pb-steps'>
 <div class='pb-step'>
@@ -325,27 +323,6 @@
     }
   }).catch(function(){});
 
-  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
-    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
-    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
-    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
-    fetch('/api/feishu-callback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        action: {value: {
-          action: 'confirm',
-          agent_id: 'playbook-progress',
-          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
-        }}
-      })
-    }).then(() => {
-      const btn = event.target;
-      btn.textContent = '✅ 已推送';
-      btn.style.background = '#059669';
-      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
-    }).catch(() => {});
-  };
   </script>
 </body>
 </html>

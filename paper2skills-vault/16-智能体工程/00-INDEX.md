@@ -91,7 +91,7 @@ source: human+ai
     ↓
 [paper-审核] 总分 ≥ 7/10 且代码 ≥ 7/10
     ↓
-[paper-同步] vault + github + feishu
+[paper-同步] vault + github
     ↓
 落入 paper2skills-vault/16-智能体工程/00-知识库-Skill卡片/
 ```

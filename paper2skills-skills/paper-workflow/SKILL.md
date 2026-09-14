@@ -15,7 +15,7 @@ version: 0.1.0
 1. **paper-选题** - 从 ArXiv 筛选高质量论文
 2. **paper-萃取** - 使用 Master Prompt 生成 Skill 卡片
 3. **paper-审核** - 质量检查和修改
-4. **paper-同步** - 多端同步（飞书、GitHub、Notion）
+4. **paper-同步** - 多端同步（Obsidian Vault、GitHub、Notion）
 
 ## 工作流程
 
@@ -58,7 +58,7 @@ version: 0.1.0
 
 - 同步到 Obsidian vault
 - 同步到 GitHub 代码仓库
-- 同步到飞书/Notion（可选）
+- 同步到 Notion（可选）
 - 更新同步状态追踪
 
 **进度**：100%

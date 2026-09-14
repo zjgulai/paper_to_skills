@@ -27,7 +27,6 @@
       <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
         <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
         <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
-        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
       </div>
     </div>
   </header>
@@ -67,9 +66,8 @@
 
 <div class='pb-intro'>母婴跨境电商的算法同质化严重——大家都在用需求预测、价格弹性、A/B测试。真正的竞争壁垒来自「别处心裁的算法迁移」：把酒店收益管理迁移到SKU容量定价，把火箭制导的Kalman Filter迁移到库存信号滤波，把博弈论迁移到竞争定价，把行为经济学迁移到促销设计。这些算法在本行业几乎无人使用，但在各自的原生领域已被证明有效。本手册是一本「算法创新地图」，指引从传统电商算法到跨域顶刊迁移的升级路径。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] Revenue Management迁移：动态定价年化提升毛利率 3-5pp</li><li>[OK] Kalman Filter迁移：需求预测误差降低 35%，库存周转率提升 20%</li><li>[OK] Choice Modeling迁移：推荐精准度+41%，WTP指导差异化定价</li><li>[OK] MTL迁移：冷启动SKU预测误差从±80%降至±25%</li></ul></div>
-<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+<div class='pb-progress-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
   <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-cross-domain-algorithm-innovation">0</strong> / 4 步</span>
-  <button onclick="pbShareFeishu('pb-cross-domain-algorithm-innovation','跨域算法创新手册',4)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
 </div>
 <div class='pb-steps'>
 <div class='pb-step'>
@@ -325,27 +323,6 @@
     }
   }).catch(function(){});
 
-  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
-    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
-    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
-    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
-    fetch('/api/feishu-callback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        action: {value: {
-          action: 'confirm',
-          agent_id: 'playbook-progress',
-          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
-        }}
-      })
-    }).then(() => {
-      const btn = event.target;
-      btn.textContent = '✅ 已推送';
-      btn.style.background = '#059669';
-      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
-    }).catch(() => {});
-  };
   </script>
 </body>
 </html>

@@ -18,7 +18,7 @@
 - 📚 每天从学术文献中筛选高价值论文
 - 🤖 使用 Master Prompt 自动生成 Skill 卡片
 - ✅ 质量审核确保可落地性
-- 🔄 多端同步（Obsidian / GitHub / 飞书）
+- 🔄 多端同步（Obsidian / GitHub）
 
 ---
 
@@ -88,7 +88,7 @@ paper_to_skills/
 | 1 | `paper-选题` | 从 ArXiv/GitHub 筛选高质量论文，排除纯理论/综述类 | 20% |
 | 2 | `paper-萃取` | 使用 Master Prompt 生成 Skill 卡片和代码模板 | 50% |
 | 3 | `paper-审核` | 5 维度质量评分（算法/案例/代码/关联/价值）| 70% |
-| 4 | `paper-同步` | 同步到 Obsidian Vault / GitHub / 飞书 | 100% |
+| 4 | `paper-同步` | 同步到 Obsidian Vault / GitHub | 100% |
 
 **注意**：Step 2 和 Step 3 可以并行执行，但 Step 4 必须在审核通过后进行。
 

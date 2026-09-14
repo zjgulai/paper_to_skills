@@ -27,7 +27,6 @@
       <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
         <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
         <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
-        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
       </div>
     </div>
   </header>
@@ -67,9 +66,8 @@
 
 <div class='pb-intro'>每个月运营拿到四份报告：Amazon 说 TikTok 贡献 15%，TikTok 说自己贡献 45%，Meta 说 30%，加起来超过 100%。今天大多数团队面对这个数字时的做法是：取平均、凭感觉调预算、或者直接信任「效果最好看」的平台数据。这导致每月 10-20% 的广告预算被浪费在归因错误上，高价值渠道（如 TikTok 品牌建设）被系统性低估和砍预算。本手册提供从跨设备追踪到贝叶斯 MMM 的完整「真相还原」链路，让每一分广告费的真实贡献可量化、可对比、可优化。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 归因窗口统一后各渠道 ROAS 真正可比，消除「平台各自抢功劳」（ROI 480万/年）</li><li>[OK] 跨设备路径拼接恢复 TikTok 真实贡献，防止因误判而削减高价值渠道（ROI 600-1200万）</li><li>[OK] MTA 多触点归因识别品牌建设渠道的真实价值（ROI 150-300万）</li><li>[OK] Bayesian MMM 预算分配：每 100 万预算多出 15-20 万 GMV（ROI 1000万）</li><li>[OK] 「广告数据对账」从每月 2-3 天人工 → 全自动实时更新</li></ul></div>
-<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+<div class='pb-progress-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
   <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-attribution-unification">0</strong> / 5 步</span>
-  <button onclick="pbShareFeishu('pb-attribution-unification','全渠道归因统一手册',5)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
 </div>
 <div class='pb-steps'>
 <div class='pb-step'>
@@ -376,27 +374,6 @@
     }
   }).catch(function(){});
 
-  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
-    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
-    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
-    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
-    fetch('/api/feishu-callback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        action: {value: {
-          action: 'confirm',
-          agent_id: 'playbook-progress',
-          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
-        }}
-      })
-    }).then(() => {
-      const btn = event.target;
-      btn.textContent = '✅ 已推送';
-      btn.style.background = '#059669';
-      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
-    }).catch(() => {});
-  };
   </script>
 </body>
 </html>

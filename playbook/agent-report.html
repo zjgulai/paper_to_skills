@@ -27,7 +27,6 @@
       <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
         <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
         <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
-        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
       </div>
     </div>
   </header>
@@ -73,10 +72,6 @@
     <div class="rpt-detail-inputs" id="rpt-detail-inputs"></div>
     <div class="rpt-detail-body" id="rpt-detail-body"></div>
     <div class="rpt-detail-footer">
-      <button class="rpt-detail-btn rpt-detail-btn-feishu" id="rpt-detail-feishu-btn" onclick="pushDetailToFeishu()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        推送飞书
-      </button>
       <button class="rpt-detail-btn" onclick="copyCurrentRpt()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         复制报告
@@ -208,8 +203,6 @@
 .rpt-detail-footer{padding:14px 22px;border-top:1px solid var(--line,#E5E5E5);display:flex;gap:8px;flex-shrink:0;background:#fff}
 .rpt-detail-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid var(--line,#E5E5E5);background:#fff;color:var(--ink,#0C0C0C);transition:all .15s}
 .rpt-detail-btn:hover{border-color:var(--ink,#0C0C0C)}
-.rpt-detail-btn-feishu{background:#00b96b;border-color:#00b96b;color:#fff}
-.rpt-detail-btn-feishu:hover{background:#009a5a;border-color:#009a5a}
 .rpt-detail-btn-del{margin-left:auto;color:#dc2626;border-color:#fecaca}
 .rpt-detail-btn-del:hover{background:#fef2f2;border-color:#dc2626}
 
@@ -272,7 +265,6 @@ function _catColor(id){return _CAT_COLORS[_AGENT_CAT_CLASS[id]]||'#555';}
 
 let _activeFilter='all';
 let _currentRptIdx=-1;
-const _FEISHU_HOOK_RPT=typeof _FEISHU_HOOK!=='undefined'?_FEISHU_HOOK:'';
 
 function _initSeeds(){
   try{
@@ -566,33 +558,6 @@ function deleteCurrentRpt(){
   _renderR();
 }
 
-function pushDetailToFeishu(){
-  if(_currentRptIdx<0)return;
-  const r=_loadR()[_currentRptIdx];
-  if(!r||!_FEISHU_HOOK_RPT){alert('飞书推送未配置');return;}
-  const name=_AGENT_NAMES[r.id]||r.name||r.id;
-  const btn=document.getElementById('rpt-detail-feishu-btn');
-  if(btn){btn.textContent='推送中…';btn.disabled=true;}
-  const inpLines=Object.entries(r.inputs||{}).map(([k,v])=>k+': '+v).join(String.fromCharCode(10));
-  const resultText=(r.result||'').replace(/\*\*/g,'').replace(/#+\s/g,'').trim().slice(0,1800);
-  const body=JSON.stringify({
-    msg_type:'interactive',
-    card:{
-      header:{title:{tag:'plain_text',content:'📊 '+name+' — 报告推送'},template:'green'},
-      elements:[
-        {tag:'div',text:{tag:'plain_text',content:'时间: '+r.ts+(inpLines?'\
-\
-输入:\
-'+inpLines:'')}},
-        {tag:'hr'},
-        {tag:'div',text:{tag:'plain_text',content:resultText}}
-      ]
-    }
-  });
-  fetch(_FEISHU_HOOK_RPT,{method:'POST',headers:{'Content-Type':'application/json'},body})
-    .then(()=>{if(btn){btn.innerHTML='✓ 已推送';setTimeout(()=>{btn.innerHTML='推送飞书';btn.disabled=false;},2000);};})
-    .catch(()=>{if(btn){btn.textContent='推送失败';btn.disabled=false;};});
-}
 
 // ESC 关闭
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRptDetail();});
@@ -672,27 +637,6 @@ window.addEventListener('storage',e=>{if(e.key==='agentReports')_renderR();});
     }
   }).catch(function(){});
 
-  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
-    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
-    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
-    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
-    fetch('/api/feishu-callback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        action: {value: {
-          action: 'confirm',
-          agent_id: 'playbook-progress',
-          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
-        }}
-      })
-    }).then(() => {
-      const btn = event.target;
-      btn.textContent = '✅ 已推送';
-      btn.style.background = '#059669';
-      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
-    }).catch(() => {});
-  };
   </script>
 </body>
 </html>

@@ -256,6 +256,20 @@ GATES: list[Gate] = [
     Gate("L16c", "凭证历史扫描：变异测试（5 份端到端，各要求「先证明变异改变了真实取值」）",
          [_p("..", "..", "paper2skills-skills", "paper-维护", "scripts",
              "check_history_secrets.py"), "--mutate"], kind="selftest"),
+
+    # ---- L17 飞书残留（2026-09-14 立）----
+    # 起因：所有者要求把飞书 webhook 及飞书相关内容全部移出本项目。playbook/ 下 1496 个页面
+    # 是**上游构建产物**、本仓库没有生成器 ⇒ 剥掉不等于不会回来，而上游重建注回来的那种
+    # 回归**没有任何现有门禁看得见**（K1/K2 看卡片，凭证扫描看密钥，契约门禁看契约）。
+    # 判据 A：10 个集成标识必须全 0（唯一一处定义在 check_feishu_residue.py，
+    #         剥器 strip_feishu_from_playbook.py 从那里 import —— 风险 N2）。
+    # 判据 B：裸词普查 vs baseline，**只判增长**；收缩点名提示收紧 baseline。
+    Gate("L17a", "飞书残留：集成标识必须归零 + 裸词普查不许增长",
+         [_p("check_feishu_residue.py"), "--check", "--quiet"]),
+    Gate("L17b", "飞书残留：自检（真实语料反向控制 + 增长正控制 + 豁免颗粒度三向 + 输入没拿到 exit 2）",
+         [_p("check_feishu_residue.py"), "--selftest"], kind="selftest"),
+    Gate("L17c", "飞书残留：剥离器自检（11 种形态 + 嵌套花括号 + 变体容错 + 幂等 + 不许切坏文件）",
+         [_p("strip_feishu_from_playbook.py"), "--selftest"], kind="selftest"),
 ]
 
 SEV = {0: 0, 1: 1, 2: 2, 3: 3}

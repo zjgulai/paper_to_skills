@@ -27,7 +27,6 @@
       <div id="p2s-auth-widget" style="margin-left:8px;display:flex;align-items:center;gap:8px">
         <span id="p2s-user-avatar" style="width:22px;height:22px;border-radius:999px;display:none;align-items:center;justify-content:center;background:#111827;color:#fff;font-size:11px;font-weight:700;flex:0 0 auto"></span>
         <span id="p2s-user-name" style="font-size:12px;color:#94a3b8;display:none;white-space:nowrap"></span>
-        <a id="p2s-login-btn" href="/auth/login" style="font-size:11px;padding:4px 10px;background:#B5323E;color:#fff;border-radius:5px;text-decoration:none;white-space:nowrap">飞书登录</a>
       </div>
     </div>
   </header>
@@ -67,9 +66,8 @@
 
 <div class='pb-intro'>跨境电商供应链最大的效率陷阱：每个系统都有数据，每个团队都有分析，但没有任何一个标准化的「语言」让数据跨系统流动，也没有任何机制让分析结果自动变成业务操作。本手册构建以「标签（Tag）」为语言、以「本体（Ontology）」为骨架、以「Action 触发」为终点的完整闭环——实现从「只读分析」到「业务行动」的进化：SKU 断货风险标签变化 → 4 小时内自动触发补货工单，无需人工干预。</div>
 <div class="wf-outcomes"><h3>预期收益</h3><ul><li>[OK] 统一 Tag Schema 消除数据孤岛：断货识别延迟 8 小时→15 分钟，跨渠道库存准确率 74%→99%</li><li>[OK] 自动打标覆盖率 30%→97%：人工审核量降至 3%，节省标注成本 4 万元/年</li><li>[OK] Palantir 本体 + Action 触发：补货响应 2 天→4 小时，年化减少断货损失 25 万+</li><li>[OK] 跨域信号融合：单域中风险识别为极高风险，黑五防护年化价值 50 万+</li></ul></div>
-<div class='pb-feishu-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
+<div class='pb-progress-bar' style='display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:8px;flex-wrap:wrap'>
   <span style='font-size:12.5px;color:var(--muted);flex:1'>执行进度 <strong id="pb-step-done-pb-supply-chain-tagging-ontology">0</strong> / 5 步</span>
-  <button onclick="pbShareFeishu('pb-supply-chain-tagging-ontology','标签工程与本体驱动手册',5)" style='padding:6px 14px;background:#00B96B;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer'>推送进度到飞书</button>
 </div>
 <div class='pb-steps'>
 <div class='pb-step'>
@@ -376,27 +374,6 @@
     }
   }).catch(function(){});
 
-  window.pbShareFeishu = function(pbId, pbName, totalSteps) {
-    const done = document.querySelectorAll('.pb-step-check:checked, .step-done, [data-done="1"]').length;
-    const pct = totalSteps > 0 ? Math.round(done / totalSteps * 100) : 0;
-    const bar = '█'.repeat(Math.round(pct/10)) + '░'.repeat(10-Math.round(pct/10));
-    fetch('/api/feishu-callback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        action: {value: {
-          action: 'confirm',
-          agent_id: 'playbook-progress',
-          inputs_str: '手册: '+pbName+' | 进度: '+done+'/'+totalSteps+' ('+pct+'%) '+bar+' | 时间: '+new Date().toLocaleString('zh-CN')
-        }}
-      })
-    }).then(() => {
-      const btn = event.target;
-      btn.textContent = '✅ 已推送';
-      btn.style.background = '#059669';
-      setTimeout(() => { btn.textContent = '推送进度到飞书'; btn.style.background = '#00B96B'; }, 2000);
-    }).catch(() => {});
-  };
   </script>
 </body>
 </html>

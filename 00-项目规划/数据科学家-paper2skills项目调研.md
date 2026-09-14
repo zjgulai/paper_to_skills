@@ -50,7 +50,7 @@
 
 **第三步：审核打磨（40分钟）** 重点检查两个地方：算法原理有没有被过度简化？母婴出海的应用案例有没有真实的落地路径？
 
-**第四步：多端同步（20分钟）** Skill 卡片 → 飞书/Notion（知识库）+ GitHub（代码模板）+ 本地 Markdown（离线备份）
+**第四步：多端同步（20分钟）** Skill 卡片 → Notion（知识库）+ GitHub（代码模板）+ 本地 Markdown（离线备份）
 
 ---
 
@@ -106,7 +106,7 @@ Skill Card: [算法名称]
 
 *   Day 1-2：打磨 Master Prompt，用1篇 paper 跑通整个流水线，验证输出质量
     
-*   Day 3-4：建立飞书/Notion 知识库模板 + GitHub repo 结构
+*   Day 3-4：建立Notion 知识库模板 + GitHub repo 结构
     
 *   Day 5-7：完成3篇paper → 3个skill，验证节奏可持续性
     
@@ -134,7 +134,7 @@ Skill Card: [算法名称]
 
 A. 现在就一起打磨 **Master Prompt** — 这是整个系统的发动机
 
-B. 设计 **飞书/Notion 知识库结构** — 决定 skill 怎么存怎么用
+B. 设计 **Notion 知识库结构** — 决定 skill 怎么存怎么用
 
 C. 选第一篇 paper，直接 **跑一遍完整流水线** — 最快验证可行性
 

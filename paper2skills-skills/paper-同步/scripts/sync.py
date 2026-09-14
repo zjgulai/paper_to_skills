@@ -184,55 +184,6 @@ def sync_code(skill_name, domain=None):
     return True
 
 
-def sync_feishu(skill_name):
-    """同步到飞书（需要配置 webhook）"""
-    webhook_path = Path.home() / ".paper2skills" / "feishu_webhook"
-
-    if not webhook_path.exists():
-        update_status(skill_name, "feishu", False, "not configured")
-        print("飞书 webhook 未配置，跳过")
-        return False
-
-    with open(webhook_path, 'r') as f:
-        webhook_url = f.read().strip()
-
-    if not webhook_url:
-        update_status(skill_name, "feishu", False, "webhook empty")
-        return False
-
-    # 读取 skill 内容
-    skill_content = ""
-    for domain_dir in VAULT_DIR.iterdir():
-        if domain_dir.is_dir():
-            skill_file = domain_dir / f"{skill_name}.md"
-            if skill_file.exists():
-                skill_content = skill_file.read_text()
-                break
-
-    if not skill_content:
-        update_status(skill_name, "feishu", False, "skill content not found")
-        return False
-
-    # 发送飞书消息（简化版）
-    import requests
-    try:
-        payload = {
-            "msg_type": "text",
-            "content": {"text": f"Skill 同步: {skill_name}\n\n{skill_content[:500]}..."}
-        }
-        response = requests.post(webhook_url, json=payload, timeout=10)
-        if response.status_code == 200:
-            update_status(skill_name, "feishu", True)
-            print(f"已同步到飞书")
-            return True
-        else:
-            update_status(skill_name, "feishu", False, f"HTTP {response.status_code}")
-            return False
-    except Exception as e:
-        update_status(skill_name, "feishu", False, str(e))
-        return False
-
-
 def show_status(skill_name):
     """显示同步状态"""
     status = load_status()
@@ -335,7 +286,7 @@ def main():
     parser = argparse.ArgumentParser(description="paper2skills 同步脚本")
     parser.add_argument("--skill", help="技能名称")
     parser.add_argument("--domain", help="领域名称（可选，自动检测）")
-    parser.add_argument("--target", default="vault,github", help="目标：vault,github,feishu,all")
+    parser.add_argument("--target", default="vault,github", help="目标：vault,github,all")
     parser.add_argument("--status", action="store_true", help="查看同步状态")
     parser.add_argument("--gate", choices=["enforce", "warn", "off"], default="enforce",
                         help="同步前门禁强度：enforce 红灯即拒绝（默认）/ warn 只警告 / off 不跑")
@@ -396,9 +347,6 @@ def main():
 
     if "github" in targets:
         success &= sync_code(args.skill, args.domain)
-
-    if "feishu" in targets:
-        success &= sync_feishu(args.skill)
 
     if success:
         print("同步完成!")
