@@ -405,12 +405,49 @@ RULES_SWAP = [
      '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度属本档**；（c）§1 算式的输出（由命名的数据系统直出）。'),
 ]
 
+# ── B-056 的两处归位（W-67d 续，所有者裁定「同一件事写了两遍」）──────────────
+#
+# 所有者裁定 B-056 ↔ B-033 是**同一件事写了两遍**。实测把「同一件事」定在哪一段：
+# 两份契约之间有 **51 段 ≥18 字的公共块**，但其中绝大多数是**该共享的**样板
+# （FLOW/STG 枚举、口径抬头句、覆盖率公式、渠道构成、卡面清单）—— 按份数去重是**做戏**。
+# 真正属于「一件自由裁量的事被写了两遍」的只有 **一段 57 字**：
+#   `接入并覆盖满1个完整自然季度后改用实测漏扫组合数与实测命中分布重算
+#     替换前该结论只能表述为未检出漏扫不得表述为不存在`
+# ⇒ 本表只动这一段，外加 B-056 §0 里**我自己上一批插错的那一项**。
+RULES_DEDUP = [
+    # ① B-056 的 §0(b) 那一项是**本批自己插错的**：值名错 + 条件借错。
+    #    实测 B-056 全文的「季」只出现在 4 行：§0 的这两行（本批插的），
+    #    以及正文 51/57 行的 `1 个完整自然季度` —— **那是替换条件的触发语，不是档位值**。
+    #    ⇒ B-056 **根本没有季度档位**；插进 §0(b) 的 `「季度经营策略」＝1 个自然季度`
+    #    是一个**正文从不消费的幻影值**，而给它的条件又是我从它自己的覆盖率那条抄来的。
+    #    ⇒ 删掉。删的是**我自己上一批的产出**，不是作者的话。
+    ('B/CTR-B-056-宣称审查.md',
+     '——**「季度经营策略」＝1 个自然季度记本档**；\n'
+     '> （季度粒度材料里没有）；替换条件 ＝〈合规条款库〉按市场覆盖满 1 个完整自然季度后，'
+     '改用实测漏扫组合数与命中分布定复核周期；',
+     '；'),
+    # ② 那一段 57 字：改述 B-056 一侧（保留每一个语义要素：来源〈合规条款库〉· 触发「接入并覆盖满
+    #    1 个完整自然季度」· 换法「改用实测漏扫组合数与实测命中分布」· 换法前的措辞纪律
+    #    「只能写未检出漏扫、不得写不存在违规」）—— 只改**措辞**，不改判据。
+    ('B/CTR-B-056-宣称审查.md',
+     '**替换条件** ＝ 〈合规条款库〉按市场接入并覆盖满 **1** 个完整自然季度后，'
+     '改用**实测漏扫组合数**与**实测命中分布**重算；替换前该结论只能表述为「**未检出**漏扫」，'
+     '**不得**表述为「不存在违规」。',
+     '**替换条件** ＝ 〈合规条款库〉按市场接入并跑满 **1** 个完整自然季度之后，'
+     '这两个数改由**实测漏扫组合数**与**实测命中分布**给出；'
+     '尚未换法之前，措辞一律写作「本轮**未检出**漏扫」，写作「不存在违规」一律不许。'),
+]
+
+# 被 RULES_DEDUP 合法删掉 §0(b) 项的契约 —— **派生，不手写**（见 apply_pointer 的第三态）。
+SUPERSEDED = {rel for rel, *_ in RULES_DEDUP}
+
 N_REWORDS = 3          # ← 改述处数写死；新增改述必须同时改这个常数与 docstring
 N_INSERT = 7           # ← 插入式锚点条数（B-025 一份里两条）
 N_MOVE = 37            # ← §0 搬家处数（37 处：把项本身从 (a) 摘出）
 N_POINTER = 25         # ← §0「就地短标」⇒ 搬家处数（W-67d，删的是**指针**不是内容）
 N_ENROLL = 1           # ← §0 完全没收 ⇒ 只在 (b) 备案（W-67d）
 N_SWAP = 10            # ← 附录挂错子句 ⇒ 挪回「业务侧默认」那一栏（W-67d，纯挪位）
+N_DEDUP = 2            # ← B-056：删幻影项 + 改述那一段 57 字的重复（W-67d 续）
 
 # ── 跨契约同质化判据的**可见豁免**（W-67d）──────────────────────────────────
 #
@@ -425,16 +462,13 @@ N_SWAP = 10            # ← 附录挂错子句 ⇒ 挪回「业务侧默认」�
 # 同一套口径（覆盖满 1 个完整自然季度 → 改用实测漏扫组合数与命中分布）。
 # 要么是同一件事被写了两遍，要么是两件事被写成了一样 —— 两种都该由人来判，故留在这里可见。
 # (本契约, 对方契约, 窗口里必须出现的子串, 为什么可以豁免, 何时删除)
-DUP_ALLOW = [
-    (
-        'B/CTR-B-056-宣称审查.md', 'B/CTR-B-033-市场语境审查.md',
-        '覆盖满1个完整自然季度后改用实测漏扫',
-        '该窗口在 B-056 **改动前**的盘上文本里就存在（已实测：改动前后都在），本次只是把作者原句'
-        '从 §0(a) 挪到 (b)，**没有新写任何文本**；改述它＝改作者的话，未获授权。',
-        '任一方重写该条件句后删除本豁免；某次运行里它不再命中 ⇒ **判红**'
-        '（过期豁免＝永久后门，台账 #5 / #84）。',
-    ),
-]
+# ⚠️ **现在是空的**，而且这是**结论不是省事**：所有者裁定 B-056 ↔ B-033 是「同一件事写了两遍」
+# ⇒ `RULES_DEDUP` ② 把 B-056 一侧改述掉了；`RULES_DEDUP` ① 又删掉了 B-056 §0 里那个
+# **本批自己插错的**幻影项（它的条件与 B-033 的 (b) 行另有 24 字公共块）。
+# ⇒ 原豁免的到期条件（「任一方重写该条件句后删除本豁免」）**已达成** ⇒ 删除。
+# ⚠️ 空表会让「过期豁免判红」这条判据**空转**（没有条目可判）—— 故 selftest ㊲ 改为
+# **显式断言「现在没有豁免」**，而不是断言一个恒真的空探针。
+DUP_ALLOW: list[tuple[str, str, str, str, str]] = []
 
 
 class AlreadyApplied(Exception):
@@ -535,8 +569,16 @@ def apply_pointer(
     lines = text.split("\n")
     done_b = f"——**{Q}＝1 个自然季度{tail}**" in text
     done_a = a_old is None or a_old not in text
-    if done_b and done_a:
-        raise AlreadyApplied(f"{rel}: (b) 已带落定词且 (a) 侧指针已撤 ⇒ 已应用")
+    # ⚠️ **被后续类取代**的情形：`RULES_DEDUP` 会删掉 B-056 §0(b) 那个幻影项
+    # ⇒ 本行赖以判「已应用」的落定词**被一个合法的后续编辑去掉了**。
+    # 若不加这一态，`--check` 会把「两批都改完了」误报成「补丁过期」。
+    # 这一态**由 RULES_DEDUP 派生**（不是逐行手写开关），所以它不能用来放宽任意一行 ——
+    # 只有「该契约确实有本批的 dedup 行」时才成立。
+    superseded = rel in SUPERSEDED and a_old is not None
+    if done_a and (done_b or superseded):
+        raise AlreadyApplied(f"{rel}: (a) 侧指针已撤"
+                             + ("（(b) 项被本批的 dedup 行合法删除）" if superseded and not done_b
+                                else "且 (b) 已带落定词") + " ⇒ 已应用")
     if done_b and not done_a:
         raise ValueError(f"{rel}: (b) 已带落定词，但 (a) 侧指针还在 ⇒ **改了一半**，拒绝读成「已应用」")
 
@@ -673,11 +715,14 @@ def build_all() -> tuple[dict[str, str], list[str]]:
         return per_file[rel]
 
     def commit(rel: str, kind: str, before: str, t2: str, dels: list[str], news: list[str],
-               extra: list[str] | None = None) -> None:
+               extra: list[str] | None = None, allow_q_drop: bool = False) -> None:
         if kind != "unpoint":
             problems.extend(check_delta(rel, before, t2, dels, kind))
         problems.extend(extra or [])
-        if Q in before and before.count(Q) != t2.count(Q):
+        # `Q` 计数守卫：防的是**静默**丢档。`allow_q_drop` 只给「**故意**删掉一个幻影项」用，
+        # 且必须伴随一条独立理由（删的是本批自己插错的项，不是作者的话）。
+        drop_ok = allow_q_drop and t2.count(Q) <= before.count(Q)
+        if Q in before and before.count(Q) != t2.count(Q) and not drop_ok:
             problems.append(f"{rel}: `{Q}` 出现次数变了 {before.count(Q)} → {t2.count(Q)}")
         # 具名系统必须在本契约别处已经存在（条件句是从契约自己的取数口长出来的，不是新造系统名）
         for term in re.findall(r"〈([^〉]+)〉", "".join(news)) + re.findall(r"`([^`]+)`", "".join(news)):
@@ -731,6 +776,22 @@ def build_all() -> tuple[dict[str, str], list[str]]:
             problems.append(str(exc))
             continue
         commit(rel, "unpoint", t, t2, d, a)
+
+    for rel, old, new in RULES_DEDUP:
+        t = load(rel)
+        # ⚠️ 三态守卫。本类**首版漏了它** —— 落盘后再跑 `--check` 直接抛 ValueError
+        #（「锚点出现 0 次」），把「已应用」误报成「补丁过期」。本脚本**每一类**都必须有这一对：
+        # `new 在、old 不在` ⇒ 已应用；否则才谈锚点对不对。这是 `--check` 跟着 `--apply`
+        # 跑第二遍的价值 —— 幂等不是想出来的，是**跑出来的**。
+        if new in t and old not in t:
+            n_applied += 1
+            continue
+        try:
+            t2, d, a = apply_reword(t, rel, old, new)
+        except ValueError as exc:
+            problems.append(str(exc))
+            continue
+        commit(rel, "reword", t, t2, d, a, allow_q_drop=True)
 
     for rel, old, new in RULES_SWAP:
         t = load(rel)
@@ -929,9 +990,12 @@ def main() -> int:
     if len(RULES_SWAP) != N_SWAP:
         print(f"❌ 附录挪位处数 {len(RULES_SWAP)} ≠ 写死的 {N_SWAP}", file=sys.stderr)
         return 3
+    if len(RULES_DEDUP) != N_DEDUP:
+        print(f"❌ B-056 归位处数 {len(RULES_DEDUP)} ≠ 写死的 {N_DEDUP}", file=sys.stderr)
+        return 3
 
     per_file, problems, n_applied = build_all()
-    n_entries = N_MOVE + N_POINTER + N_ENROLL + N_SWAP + N_INSERT + N_REWORDS
+    n_entries = N_MOVE + N_POINTER + N_ENROLL + N_SWAP + N_DEDUP + N_INSERT + N_REWORDS
     if n_applied == n_entries:
         print(f"✅ **已应用**：{n_entries} 处锚点全部处于「改过之后」的形态 —— 这不是「无事可做」，"
               f"而是本补丁已落盘（对着已改的语料再跑一次，只会得出一批对不上的锚点）")
@@ -966,7 +1030,7 @@ def main() -> int:
     if a.check:
         print(f"✅ 锚点全部对上：{len(changed)} 份契约 / 搬家 {N_MOVE} 处（项本身）· "
               f"就地短标⇒搬家 {N_POINTER} 处（指针）· 只备案 {N_ENROLL} 处 · "
-              f"附录挪位 {N_SWAP} 处 · 正文插入 {N_INSERT} 处 · 改述 {N_REWORDS} 处")
+              f"附录挪位 {N_SWAP} 处 · B-056 归位 {N_DEDUP} 处 · 正文插入 {N_INSERT} 处 · 改述 {N_REWORDS} 处")
         print(f"   本次新增文本（共 {sum(len(v) for v in deltas.values())} 段）：两两 ≥18 字公共窗口 0 处 · "
               f"与别的契约原有正文的 ≥18 字公共窗口 0 处")
         print("   条件里的具名系统：全部在本契约别处已存在，且改后仍有独立取数口")
@@ -982,7 +1046,7 @@ def main() -> int:
     for rel in changed:
         (CONTRACTS / rel).write_text(per_file[rel], encoding="utf-8")
     print(f"✅ 已落盘：{len(changed)} 份契约（搬家 {N_MOVE} · 就地短标⇒搬家 {N_POINTER} · "
-          f"只备案 {N_ENROLL} · 附录挪位 {N_SWAP} · 插入 {N_INSERT} · 改述 {N_REWORDS}）")
+          f"只备案 {N_ENROLL} · 附录挪位 {N_SWAP} · B-056 归位 {N_DEDUP} · 插入 {N_INSERT} · 改述 {N_REWORDS}）")
     return 0
 
 
@@ -1231,13 +1295,28 @@ def selftest() -> int:
     case("㊱ 附录挪位处数写死并与表一致",
          len(RULES_SWAP) == N_SWAP and all(sorted(o) == sorted(n) for _r, o, n in RULES_SWAP), "")
 
-    # ㊲ **活体探针**：豁免必须真的还成立（对着**语料**判，不是对着本次 delta 判）
-    case("㊲ 活体探针：DUP_ALLOW 里每一条豁免的窗口现在**都还在两边**（否则判过期）",
-         stale_exemptions({}) == [], str(stale_exemptions({})[:2]))
+    # ㊲ 豁免表**现在是空的**（所有者裁定「同一件事写了两遍」⇒ RULES_DEDUP 改述掉了那一段，
+    #    原豁免的到期条件达成 ⇒ 删除）。空表会让「过期豁免判红」空转，故这里**显式断言空**，
+    #    而不是断言一个恒真的空探针 —— 「判据跑了没有」和「判据的结论」必须分开证。
+    case("㊲ 豁免表为空（到期条件已达成，豁免已删除）—— 不是省事，是结论", DUP_ALLOW == [],
+         str(DUP_ALLOW))
+    case("㊲a `SUPERSEDED` 由 RULES_DEDUP **派生**（不是逐行手写开关 ⇒ 不能用来放宽任意一行）",
+         SUPERSEDED == {r for r, *_ in RULES_DEDUP} and len(SUPERSEDED) > 0, str(SUPERSEDED))
+    # ㊲b **反向控制（这条才是真承重的）**：把改述过的那句**还原成原文** ⇒ 闸门必须**重新判红**，
+    #     且此刻**没有任何豁免**可挡。它证明的是「改述真的消掉了重复」，而不是「判据被调松了」。
+    _orig = ('**替换条件** ＝ 〈合规条款库〉按市场接入并覆盖满 **1** 个完整自然季度后，'
+             '改用**实测漏扫组合数**与**实测命中分布**重算；替换前该结论只能表述为「**未检出**漏扫」，'
+             '**不得**表述为「不存在违规」。')
+    _corpus = {"B/CTR-B-033-市场语境审查.md":
+               (CONTRACTS / "B/CTR-B-033-市场语境审查.md").read_text(encoding="utf-8")}
+    _probs, _used = check_dup({"B/CTR-B-056-宣称审查.md": [_orig]}, _corpus)
+    case("㊲b 反向控制：把那句还原成原文 ⇒ 闸门**重新判红**且**无豁免可挡**"
+         "（证明改述真解决了重复，不是把判据调松了）",
+         len(_probs) > 0 and not _used, str(_probs[:1]))
     _saved = list(DUP_ALLOW)
     DUP_ALLOW.append(("A/CTR-A-004-GMV归因分析.md", "B/CTR-B-033-市场语境审查.md",
                       "这句窗口在任何一份契约里都不存在", "构造样本", "构造样本"))
-    case("㊲b 反向控制：窗口不存在的豁免 ⇒ 判过期（过期豁免＝永久后门）",
+    case("㊲c 反向控制：窗口不存在的豁免 ⇒ 判过期（过期豁免＝永久后门）",
          len(stale_exemptions({})) == 1, str(len(stale_exemptions({}))))
     DUP_ALLOW[:] = _saved
 
