@@ -113,7 +113,7 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 | `dsh-paper2skills/lib/axis.js` + `scripts/check-axis.mjs` | **五层分类轴 + facet 层（PHASE6 F4 起，产品侧）**：复用 `lib/taxonomy.js` 判据（不重造分类学），加五层链与三个 facet（`tech_domain`/`venue_tier`/`quality_tier`）。`test/axis.spec.mjs` 17 用例 / 9 变异。⚠️ 技术域取 **vault 顶层目录**而非父目录名（否则 `00-知识库-Skill卡片` 会把 07-NLP-VOC 与 10-MAS 混成假域）；技术域是 facet，**错位只登记不移动** |
 | `paper2skills-research/scripts/check_contract_dedup.py` | **跨契约同质化机检（S1 收口期）**：判据 D1（A §2 / B §5 五维表**缺值处置列**跨契约**同维**重复）/ D2（B §2 `→ 替代路径：` 行重复）/ D3（正文长行重复，**默认关闭**）/ D4（覆盖率，含「某判据开着却 0 条可比条目」⇒ **exit 2**）/ D5（**每次运行**的活体探针：正探针抓到、反探针不误报、专名遮罩必须活着 ⇒ 死了 **exit 3**）。算法是 n 字滑窗纯字符串比较，**无模糊/语义相似度**；另有一份**不复用检测器任何函数**的暴力实现独立复核 D1。**整改前后（同一冻结快照）**：D1 **2113 对 / 涉事 291 格 / 125 份 → 0**、D2 **538 对 / 55 份 → 0**（整改 **135 份 / 483 格**）。⚠️ 整改中由撰写人撞出的**假绿通路**：把 `替换` 写成 `**替换**` 或换全角标点即可切断 18 字窗口（补 NFKC + 去 `*` 后 **D1 当场 1554 → 2074**）。⚠️ **n=18 不是数据选出来的阈值**（曲线 12→6354 … 18→2113 … 40→75，**平滑无天然拐点**），唯一硬依据是它与规范/现场实测同尺 —— **如实登记，不许写成「由数据确定」**；D3 那条全语料级欠账（剔除模板原句后仍 6934 条）已单开工单。详见 **`reports/PHASE6-工具详解与缺陷史.md`** |
 | `paper2skills-skills/paper-维护/scripts/repo_health.py` | **仓库体检**(C1–C8 + **C10**:重复卡片/frontmatter/路径/围栏结构/registry/门禁时效/卫生/段落完整性/**验证声明时间锚点**)。`--selftest` 用构造样本证明检查真的会报警。⚠️ 编号跳过 C9:该号预留给「悬空 `Skill-*.md` 引用」(见 §PHASE5 遗留),**尚未实现** |
-| `paper2skills-research/scripts/check_instruction_budget.py` | **工作区 instruction 预算门禁（2026-09-13 立，验收面 L1a/L1b/L1c）**：守的是**其它门禁都看不见的一类丢失** —— 磁盘上 `CLAUDE.md` 是完整的，而 agent 读到的被 harness **静默截断**、`AGENTS.md` 与 `~/.dsh/AGENTS.md` **整份没进上下文**（实测 `truncated CLAUDE.md from 66175 to 65244 bytes`；同族已踩第二次，上一次砍掉的恰好是 `Skill Card Format` 那节）。**复刻 harness 两条渲染路径**（首次加载 / 变更对账，包装实测 **430 vs 292 B**），截断点**逐字节复算**出 harness 报的 `65244` —— 不是抄的常数。三态 **FULL(0) / OMITTED(0，一等输出) / TRUNCATED(1)**；预算取不到 ⇒ **exit 2**。`--selftest` 15/15（真实事件回归 + 边界正反证 + 端到端反向控制）· **变异 5/5**（含「锚点被变异表自己抄一遍」这个 S11 踩过的坑）。⚠️ 现状 **三份指令文件全部装得下** —— **余量 ＝ 65,536 − 渲染后字节**，**每次量都要现跑**（`--json` 给 `total`/`render_bytes`）：2026-09-13 W-67d 后实测 `total` 63,637 / `render_bytes` 64,012 ⇒ 余量约 **1.5 KB**。⚠️ 这个数**会自己变**（连写读数这个动作都改它）⇒ 只给**算法**，数字以现跑为准）。它已经**两次**逼着搬家：把 `Key Files` 四条最长的行搬到 `reports/PHASE6-工具详解与缺陷史.md`（余量 3.3 KB），以及把 **G2 的 18 条漏洞表整段**搬到 `reports/G2漏洞表归档-18条.md`（+2.7 KB 的新增把它挤爆、**`AGENTS.md` 与 `~/.dsh/AGENTS.md` 当时被整份丢弃**）—— **每次按「逐字节复制 + 留指针」办** |
+| `paper2skills-research/scripts/check_instruction_budget.py` | **工作区 instruction 预算门禁（2026-09-13 立，验收面 L1a/L1b/L1c）**：守的是**其它门禁都看不见的一类丢失** —— 磁盘上 `CLAUDE.md` 是完整的，而 agent 读到的被 harness **静默截断**、`AGENTS.md` 与 `~/.dsh/AGENTS.md` **整份没进上下文**（实测 `truncated CLAUDE.md from 66175 to 65244 bytes`；同族已踩第二次，上一次砍掉的恰好是 `Skill Card Format` 那节）。**复刻 harness 两条渲染路径**（首次加载 / 变更对账，包装实测 **430 vs 292 B**），截断点**逐字节复算**出 harness 报的 `65244` —— 不是抄的常数。三态 **FULL(0) / OMITTED(0，一等输出) / TRUNCATED(1)**；预算取不到 ⇒ **exit 2**。`--selftest` 15/15（真实事件回归 + 边界正反证 + 端到端反向控制）· **变异 5/5**（含「锚点被变异表自己抄一遍」这个 S11 踩过的坑）。⚠️ 现状 **三份指令文件全部装得下** —— **余量 ＝ 65,536 − 渲染后字节**，**每次量都要现跑**（`--json` 给 `total`/`render_bytes`）：2026-09-13 收口实测（搬出「远端同步与凭证事件」取证叙述后）`render_bytes` **62,049** ⇒ 余量约 **3.4 KB**。⚠️ 这个数**会自己变**（连写读数这个动作都改它）⇒ 只给**算法**，数字以现跑为准）。它已经**两次**逼着搬家：把 `Key Files` 四条最长的行搬到 `reports/PHASE6-工具详解与缺陷史.md`（余量 3.3 KB），以及把 **G2 的 18 条漏洞表整段**搬到 `reports/G2漏洞表归档-18条.md`（+2.7 KB 的新增把它挤爆、**`AGENTS.md` 与 `~/.dsh/AGENTS.md` 当时被整份丢弃**）—— **每次按「逐字节复制 + 留指针」办** |
 | `paper2skills-research/scripts/check_card_identity.py` + `data/card-identity-baseline.json` | **「同名同物」判定器（S5 换底的前提；验收面 L8a/L8b/L8c）**：p2s 卡（1390）与精选卡（146）是不是同一张，判成**六态**（SAME_KEY / RENAMED_SAME / P2S_ONLY_PREVIEW / VAULT_ONLY / **SAME_NAME_DIFFERENT_THING** / **UNDECIDABLE**）且恒等式进判据（防静默丢卡）。⚠️ 它交付时就是 **exit 1（8 条 I3）而没人接进验收面** ⇒ 验收面报「全绿」、判据在报红。⚠️ 那 8 条的处置是**可见豁免、不是修**：主控抽样四条复核，**四条全部**在 legacy 线（`playbook/domains/*.html`）里有同名条目 ⇒ 「vault 里不存在」是**判据只看得见一个语料库**；改 `p2s_card_id` 去指向近名卡＝把两张不同的卡说成同一张，正是 I3 要防的事。baseline 带 `expires_when` 且转绿时提示删除。selftest 31/31 · **变异 5/5（每条打印「已生效于探针」）** |
 | `paper2skills-skills/paper-维护/scripts/scan_secrets.py` | **推送前凭证扫描门禁（现 L15a/L15b）**。13 条规则 / 10 类凭证;**先把 `\"` 与 `&quot;` 归一化成 `"` 再匹配**,故一条规则即覆盖全部转义形态。扫到 **0 个文件时判失败(退出码 2)** —— 「没东西可查」不等于「查过了没问题」。⚠️ **2026-09-13：它从来没进过验收面，而当时它正红着**（3 条，由 `check_key_exposure.py` 的固件字面量造成）—— 与台账 **#23** 同型、**两天内第二次**，见 **#71**。⚠️ 新增**墓碑归一化**：filter-repo 的清理标记 `***REMOVED-…***` 不是凭证，是「这里曾有过凭证」的**物证**（不处理会产生「清理得越彻底、门禁越红」的荒谬读数）；`tombstones()` 单独把它当读数报出来，`--selftest` **用例 21** 的主体是反向控制（**墓碑旁边的真 key 必须照样命中**，见 #73） |
 | `check_key_exposure.py` + `data/key-exposure-whitelist.json` | **凭证暴露面门禁（L14a/L14b；补上一行的盲区）**：上一行**只扫已入库文件**，查不到「**未跟踪但也未忽略**」的密钥（一次 `git add -A` 即入库）—— S8 实测的真暴露面正是这一态。五态含**公开证书须白名单写明理由**。⚠️ `--check` 进验收面；**`--sweep-roots` 广扫刻意不进**（随环境漂移，是读数不是判决）。实测**零硬编码复现**了 S8 的两条结论。⚠️ 它的自测固件原先把 PEM 头写成**完整字面量** ⇒ 把 `scan_secrets.py` 弄红（**教训写在隔壁文件里＝没写**，#72）|
@@ -128,61 +128,16 @@ The workflow transforms academic research (primarily from ArXiv) into practical 
 
 ### ⚠️ 关键事实:本地与远端是**两套不同的库**,不是新旧关系
 
-2026-09-13 首次接入远端时做了完整盘点,结论如下 —— **不要再假设「本地是最新的、远端是旧的」**:
+**不要再假设「本地是最新的、远端是旧的」** —— 最 LOCAL 一代也没错：本地精选线 **146 张卡 / 16 域**，
+接入前的远端 main 是 **1,229 张卡 / 26 域**，**两者无共同祖先**（unrelated histories），
+远端另有 9 个本地根本不存在的业务域。接入时按「以本地形态为主」处置，但**把远端原状钉住了**：
+`legacy/main-20260715` 与 `tags/archive-pre-local-20260715` 都指向 `dc4912a`，
+`git fetch origin legacy/main-20260715` 即可取回全部 1,137 张卡。
 
-| 维度 | 本地(精选线) | 远端 main(接入前) |
-|------|-------------|-------------------|
-| git 历史 | 28 commit,全部 2026-09-12 起 | 最后推送 2026-07-15 |
-| **共同祖先** | **无**(unrelated histories) | 无 |
-| Skill 卡片 | **146 张 / 16 个域** | **1,229 张 / 26 个域** |
-| 同名卡片交集 | 92 张 | 92 张 |
-| 各自独有 | 54 张 | **1,137 张** |
-| frontmatter 风格 | MasterPrompt v2 + K1/K2 门禁口径 | `doc_type: knowledge` + `roadmap_phase` |
-| tracked 体积 | 105 MB | 2.35 GB |
-
-远端另有 **9 个本地根本不存在的业务域**:`17-价格优化` / `18-物流履约` / `19-风控反欺诈` /
-`20-AI视频生成` / `21-合规决策` / `22-数据采集工程` / `23-运营财务` / `24-标签工程` / `25-搜索流量工程`。
-
-> 本地 `playbook/` 目录里存着那套语料的**渲染快照**(`build-report.json`:`skill_pages: 1338, domains: 25`),
-> 即内容并未完全丢失,但**可编辑的 `.md` 源头不在本地**。
-
-### 处置(2026-09-13,经所有者决策选 A 案)
-
-按「以本地当前形态为主」执行,但**远端原状先钉住、一条命令可恢复**:
-
-| ref | 指向 | 含义 |
-|-----|------|------|
-| `refs/heads/main` | `d9186b2` | 本地精选线,已覆盖 |
-| `refs/heads/legacy/main-20260715` | `dc4912a` | **接入前的远端 main 原状,完整保留 1,229 张卡** |
-| `refs/tags/archive-pre-local-20260715` | `dc4912a` | 同一提交的 tag 锚点 |
-| `refs/heads/gh-pages` | `0730b89` | 线上站点,**未动** |
-| `refs/heads/feat/voc-deep-analysis-mvp` | `31927ed` | **未动** |
-
-恢复旧语料:`git fetch origin legacy/main-20260715` 即可取回全部 1,137 张卡。
-
-推送用的是 `--force-with-lease=main:<sha>`(先 `gh api` 确认远端 SHA 再断言),
-**不用裸 `--force`** —— 裸 force 会在远端被他人更新时静默覆盖。
-
-### 凭证事件(2026-09-13,首次推送前发现)
-
-推送前全库扫描命中两类硬编码凭证。**两者都不是 K1 / K2 / repo_health 任何一道门禁能发现的** ——
-那三道查重复卡/frontmatter/路径/围栏/registry/时效/卫生/段落完整性,**没有一项查凭证**。
-仓库带着它们一路 commit 了 28 次,每次门禁都是绿的。
-
-| 凭证 | 位置 | 判定 | 处置 |
-|------|------|------|------|
-| `sk-aae1…37bd`(DeepSeek key) | `playbook/` 下 6 个文件,3 种转义形态各一份 | 实测 `GET api.deepseek.com/models` → **HTTP 401,已失效**;远端**没有**它,推上去是**新**泄露 | 改为读 `DEEPSEEK_API_KEY` 环境变量 |
-| 飞书机器人 webhook `a32b3ab7…47e9` | `playbook/agents.html` | **已在公开仓库 main 上**裸奔(自 2026-07-15 前即如此)——**既成事实** | 改为读 `window.__PLAYBOOK_CONFIG__.feishuHook`;**必须在飞书后台轮换**(改本地文件追不回已暴露的那份) |
-
-后续处理:`.gitignore` 补规则 → `git filter-repo --replace-text` 重写全部 28 个 commit
-(旧提交里现在是 `***REMOVED-DEEPSEEK-KEY***`) → 新建 `scan_secrets.py` 把这次检查固化成门禁。
-`.git/` 改写前已备份到 `/tmp/pts-git-backup-20260913-115715`。
-
-> **`DDDD.pem` 三点更正**（完整清单/鉴定/暴露面见 **`reports/PHASE6-F8-S8-凭证清点与暴露面.md`**）：
-> ① 首行 `BEGIN RSA PRIVATE KEY` ⇒ 是 **RSA 私钥**，不是旧记载以为的「SSH 公钥」；
-> ② 副本是 **4 份不是 3 份**（漏记的正是**本仓库根目录**那份）；同批另有**一把不同的** `ai_video.pem` **10 份**；
-> ③ **两把都从未入库**（`scan_secrets.py` 因此**一把都查不到** —— 它只扫已入库文件，是适用范围不是失灵）。
-> ⚠️ 轮换顺序**不可颠倒**：旧密钥追加 → 验证能登录 → **才**移除旧公钥。
+📁 **完整取证叙述（关键事实表 · A 案处置的 5 个 ref 表 · 2026-09-13 凭证事件两类凭证 ·
+`DDDD.pem` 三点更正）已搬到 `reports/远端同步与凭证事件归档-20260913.md`**
+（**逐字节复制，内容未改**）。留在此处的只有**要照着做的**：单一远端政策（见上）、
+推送前必跑的三道扫描、以及必须走代理这一条。
 
 ### 推送前必跑
 

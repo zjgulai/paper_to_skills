@@ -438,6 +438,7 @@ def build(root: Path = MATERIAL_ROOT) -> dict:
         "a_scope": _a_scope(l3, boundary, no_a_declared, roles_without_a_computed),
         "join_traps": _join_traps(roles, org, plane_domain_mismatch, coll, counts),
         "open_items": _open_items(),
+        "closed_items": _closed_items(),
     }
     return graph
 
@@ -634,14 +635,15 @@ def _join_traps(roles, org, mismatch, coll, counts) -> list[dict]:
 
 
 def _open_items() -> list[dict]:
+    """**只列真正还开着的**。已闭合的进 `_closed_items()`，不在这里占位。
+
+    ⚠️ 2026-09-13 收口时实测：本表原有 4 条，其中 **O-SOL 与 O-CARD 已经完成而没销项** ——
+    O-SOL 写「方案层只交付了一部分 FLOW」，现算 8 份方案域 **8/8 FLOW 全在**；
+    O-CARD 写「53 张精选卡无 L3」，F5 已做到 **146/146**。
+    这与「任务板落后仓库两个阶段」（台账 #23/#24 那一族）**同族：账落后于实物**。
+    ⇒ 闭合的条目移入 `closed_items` 并带证据，**不删除**（删了就没人能复核它当初为何关）。
+    """
     return [
-        {"id": "O-SOL", "what": "方案层只交付了一部分 FLOW", "owner": "S1",
-         "why": "`solutions` 与 `cells[].solution_refs` 由 `07-资源库/solutions/*.md` 派生。"
-                "S1 按 FLOW 纵向切片交付：已交付的 FLOW 其 8 格 solution_refs 全部有值，"
-                "未交付的仍为空数组 —— **空 = 还没做，不是缺陷**。"
-                "契约层（139 份）与方案域分开计数：方案域 8 份，契约 139 份。"},
-        {"id": "O-CARD", "what": "53 张精选卡无 L3 归属", "owner": "F5",
-         "why": "146 张里 93 张能 join 到产品侧分类，另 53 张（含 PHASE3/4 新卡）待 F5"},
         {"id": "O-WIRE", "what": "岗位接线取自运行时 preset", "owner": "—",
          "why": "roles[].wired_skills 读 `~/.dsh/.agent-presets`；取不到时为 null，"
                 "**「问不到」不等于「没接线」**"},
@@ -652,6 +654,24 @@ def _open_items() -> list[dict]:
          "handling": "落点在 `a_scope`：`boundary_a`（10 条边界条目，各带降级条件）"
                      "与 `roles_without_a_declared/_computed`（10 个岗位，两值必须相等）。"
                      "缺口账据此把边界条目降权排序，并把「A 是否为 73」变成断言。"},
+    ]
+
+
+def _closed_items() -> list[dict]:
+    """曾经开着、**已闭合**的条目 —— 保留是为了可复核，不是待办。
+
+    ⚠️ 这里的每一条都必须带**能被脚本复算的证据**，否则就是把「我说做完了」写进产物。
+    """
+    return [
+        {"id": "O-SOL", "owner": "S1", "closed_at": "2026-09-13",
+         "what": "方案层只交付了一部分 FLOW",
+         "evidence": "现算：`07-资源库/solutions/*.md` 共 8 份，覆盖 **FLOW-01 ~ FLOW-08 全部八条**"
+                     "（逐份读 flow_id）。契约层 139 份，八条 FLOW 均有契约。"
+                     "⇒ 原判「只交付了一部分」已不成立。"},
+        {"id": "O-CARD", "owner": "F5", "closed_at": "2026-09-13",
+         "what": "53 张精选卡无 L3 归属",
+         "evidence": "F5 交付后 **146/146** 张卡有 L3 归属（`07-资源库/card-classification.json`，"
+                     "零漂移门禁：93 张逐字继承产品侧 classification.json）。"},
     ]
 
 

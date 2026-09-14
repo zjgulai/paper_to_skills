@@ -1,8 +1,8 @@
 # PHASE6 F3 · 缺口账与靶区工单
 
-> 生成时间：2026-09-13T21:17:22+0800　|　生成器：`paper2skills-research/scripts/build_gap_ledger.py`
+> 生成时间：2026-09-14T15:42:48+0800　|　生成器：`paper2skills-research/scripts/build_gap_ledger.py`
 > 复算：`python3 paper2skills-research/scripts/build_gap_ledger.py --check`
-> 输入：`capability-graph.json` sha256:`be36dd1d197def0e` · 产品侧 `classification.json` sha256:`07395d2059081620`（1390 条 legacy 卡）
+> 输入：`capability-graph.json` sha256:`ecda4970bbb7b56b` · 产品侧 `classification.json` sha256:`07395d2059081620`（1390 条 legacy 卡）
 
 机读产物 `paper2skills-research/data/gap-ledger.json`（含逐条 `m_cells` 格号与分数分解）—— `data/**/*.json` 按仓库惯例默认不入库，本条按 `skill_audit.json` / `dedup_report.json` 的先例用 `!` 规则**提升入库**：它是 S3/S4/S12 要消费的工单，不是中间产物。
 

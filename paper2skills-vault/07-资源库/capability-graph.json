@@ -1,7 +1,7 @@
 {
  "_meta": {
   "what": "五层能力图谱：50 岗位 / 4 面 / 8 域 / 151 L3 / 20 SCN / 64 格（M/R/D）/ 方案 / 卡",
-  "generated": "2026-09-13T20:19:51+0800",
+  "generated": "2026-09-14T15:39:28+0800",
   "generator": "paper2skills-research/scripts/build_capability_graph.py",
   "materials_root": "/Users/lute/project/AI组织变革",
   "source_refs": [
@@ -8309,18 +8309,6 @@
  ],
  "open_items": [
   {
-   "id": "O-SOL",
-   "what": "方案层只交付了一部分 FLOW",
-   "owner": "S1",
-   "why": "`solutions` 与 `cells[].solution_refs` 由 `07-资源库/solutions/*.md` 派生。S1 按 FLOW 纵向切片交付：已交付的 FLOW 其 8 格 solution_refs 全部有值，未交付的仍为空数组 —— **空 = 还没做，不是缺陷**。契约层（139 份）与方案域分开计数：方案域 8 份，契约 139 份。"
-  },
-  {
-   "id": "O-CARD",
-   "what": "53 张精选卡无 L3 归属",
-   "owner": "F5",
-   "why": "146 张里 93 张能 join 到产品侧分类，另 53 张（含 PHASE3/4 新卡）待 F5"
-  },
-  {
    "id": "O-WIRE",
    "what": "岗位接线取自运行时 preset",
    "owner": "—",
@@ -8332,6 +8320,22 @@
    "owner": "T-C",
    "why": "A 类阈值为「算法可作主引擎」；A 名单会随阈值变，B 的 66 条不变。下游把 A 视为「优先匹配」、B 视为「需补外部证据后匹配」",
    "handling": "落点在 `a_scope`：`boundary_a`（10 条边界条目，各带降级条件）与 `roles_without_a_declared/_computed`（10 个岗位，两值必须相等）。缺口账据此把边界条目降权排序，并把「A 是否为 73」变成断言。"
+  }
+ ],
+ "closed_items": [
+  {
+   "id": "O-SOL",
+   "owner": "S1",
+   "closed_at": "2026-09-13",
+   "what": "方案层只交付了一部分 FLOW",
+   "evidence": "现算：`07-资源库/solutions/*.md` 共 8 份，覆盖 **FLOW-01 ~ FLOW-08 全部八条**（逐份读 flow_id）。契约层 139 份，八条 FLOW 均有契约。⇒ 原判「只交付了一部分」已不成立。"
+  },
+  {
+   "id": "O-CARD",
+   "owner": "F5",
+   "closed_at": "2026-09-13",
+   "what": "53 张精选卡无 L3 归属",
+   "evidence": "F5 交付后 **146/146** 张卡有 L3 归属（`07-资源库/card-classification.json`，零漂移门禁：93 张逐字继承产品侧 classification.json）。"
   }
  ]
 }

@@ -1,8 +1,8 @@
 # PHASE6 S3 · extract backlog 靶区接管表（**由脚本生成，勿手改**）
 
-> 生成时间：2026-09-13T21:33:08+0800　|　生成器：`paper2skills-research/scripts/route_backlog.py`
+> 生成时间：2026-09-14T15:42:49+0800　|　生成器：`paper2skills-research/scripts/route_backlog.py`
 > 复算：`python3 paper2skills-research/scripts/route_backlog.py --check`
-> 输入：`papers_registry.json` sha256:`34311e1e343e479b` · `gap-ledger.json` sha256:`19737135cd64cf5d` · `backlog-l3-map.json` sha256:`368fedc17a08d13b` · `capability-graph.json` sha256:`be36dd1d197def0e`
+> 输入：`papers_registry.json` sha256:`34311e1e343e479b` · `gap-ledger.json` sha256:`b886c17cdcce0641` · `backlog-l3-map.json` sha256:`368fedc17a08d13b` · `capability-graph.json` sha256:`ecda4970bbb7b56b`
 
 **backlog 是现算的，不是抄的。** 口径：registry 里 `decision=extract` ∧ 无已交付产物。实测 **12 篇**（naive 只数 `skill_card` 得 15 篇，扣掉 3 篇增强交付才对齐 —— 即 PHASE5 登记的 N4）。
 
