@@ -274,6 +274,49 @@ def _sha16(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
 
 
+def _rel(p: Path) -> str:
+    """仓库内给相对路径；仓库外原样返回。
+
+    ⚠️ **门禁缺陷 #13 的第二个副本**：`p.relative_to(REPO)` 对仓库外路径抛 `ValueError`。
+    产物比对会在**临时夹具目录**（仓外）上跑 —— 那种路径一旦走进 `relative_to`
+    就会让整道门禁崩成 exit 3，而「门禁自己崩了」正是本仓库要求与判红分开的那一态。
+    """
+    try:
+        return str(Path(p).relative_to(REPO))
+    except ValueError:
+        return str(p)
+
+
+def artifact_staleness(pairs: list[tuple[Path, str | None, str]]) -> list[str]:
+    """逐对比较「现场重建的文本」与「盘上产物」，返回差异说明（空表 = 一致）。
+
+    ⚠️ **为什么判据必须读盘上产物，而不是把它重写一遍**：
+    重写会把「产物滞后于上游」这件事**抹掉** —— 上游一变，门禁先把产物改对，
+    再宣称「与上游一致」，于是它**永远不会报它本该报的那件事**。
+    本仓库已踩过同族两次（`build_card_classification.py:941` 自述其首版即此形态；
+    本脚本是第三例，2026-09-14 由「把产物改坏 ⇒ 门禁重写回正确值并报 exit 0」的
+    实验当场证明）。⇒ 比对**逐字节**且**只报不改**。
+
+    ⚠️ 逐字节比对在本脚本是**合法**的，前提是它**没有时间源、没有随机**
+    （实测 `grep datetime|time.|random|uuid` 全空，且 J4 已把「两次构建逐字节相同」
+    钉成判据）。姊妹脚本 `build_capability_graph.py` 之所以必须剔 `_meta.generated`
+    再比，是因为它有后者、没有前者 —— **同一句「逐字节比」在两个脚本里的合法性不同，
+    不能互相抄**。
+    """
+    out: list[str] = []
+    for path, fresh, label in pairs:
+        if fresh is None:
+            continue
+        p = Path(path)
+        if not p.is_file():
+            out.append(f"{label} {_rel(p)} 不存在：先跑一次生成")
+        elif p.read_text(encoding="utf-8") != fresh:
+            out.append(
+                f"{label} {_rel(p)} 与**上游现状不一致**（现场重建的结果与盘上产物不同）："
+                f"重跑生成器。⚠️ 本判据只报不改 —— 门禁顺手改写产物会把「滞后」抹掉")
+    return out
+
+
 def load_inputs() -> dict:
     """读全部输入。缺任何一项抛 `InputMissing` ⇒ main 返回 exit 2。"""
     if not LEDGER.is_file():
@@ -1653,8 +1696,13 @@ def synonymy_probe(cf, div: dict) -> tuple[list[tuple[str, str, str, str]], list
 
 
 def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
-        quiet: bool = False) -> tuple[int, dict]:
-    """返回 (exit_code, summary)。`as_json` 时把产物写到 json_out。"""
+        quiet: bool = False, check: bool = False) -> tuple[int, dict]:
+    """返回 (exit_code, summary)。
+
+    · `check=False`（默认）：重建并**写盘**（`as_json` 时写机读产物；人读产物总是写）。
+    · `check=True`：重建后**只与盘上产物比对、绝不写盘**；不一致 ⇒
+      `judge_errors["ARTIFACT"]` 非空 ⇒ exit 1（判红）。
+    """
     inputs = load_inputs()
     ledger = inputs["ledger"]
     worklist = ledger["worklist"]
@@ -1782,6 +1830,32 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
                 "**保留这句是为了说明「漂移是被消除的，不是被忽略的」** —— "
                 "而不是继续声称「仍可能滞后」。"
             ),
+            #: ⚠️ 2026-09-14 主控修复（台账 **#98**）。这条登记必须留在报告里，
+            #: 因为它是「本脚本自己的 `--check` 曾经是一条假绿」的唯一现场记录。
+            "🔴 **已修（2026-09-14，台账 #98）：本脚本的 `--check` 曾经是一条假绿，"
+            "它把滞后的产物改对再报绿。** 修复前 `main()` 里写着 "
+            "`as_json=not args.check or True` —— **恒真表达式**，`--check` 与默认动作"
+            "走同一条路径，而那条路径尾部无条件 `write_text` ⇒ 「比对现状」实际做的是"
+            "「按现状重写一遍」。**实测证明**：把已入库产物 `coverage.generated` 改成 `999` "
+            "并加篡改标记 ⇒ 跑 L6a 的原命令 ⇒ **exit=0**，产物被重写回 `28`、标记消失、"
+            "md5 与备份逐字节相同。⇒ 它**永远报不出它本该报的那件事**（产物滞后于上游），"
+            "连产物里的 `_input_fingerprints` 也被一并悄悄更新，"
+            "恰好把「自述新鲜度」这件事抹掉。"
+            "**修法**：`run()` 新增 `check` 形参，`check=True` 时**只比对、绝不写盘**；"
+            "判据抽成纯函数 `artifact_staleness()`；不一致 / 产物缺失 ⇒ "
+            "`judge_errors[\"ARTIFACT\"]` 非空 ⇒ exit 1。"
+            "**为什么这里可以逐字节比**：本脚本**无时间源、无随机**"
+            "（实测 `grep datetime|time.|random|uuid` 全空，J4 已把「两次构建逐字节相同」"
+            "钉成判据）—— 姊妹脚本 `build_capability_graph.py` 必须剔 `_meta.generated` "
+            "再比，是因为它有后者、没有前者。**同一句「逐字节比」在两个脚本里的合法性不同，"
+            "不能互相抄。** "
+            "**同族普查（1/17）**：验收面里用 `--check` 的门禁共 17 条，逐条核对后"
+            "**只有 L6a 在 check 路径上写盘**。"
+            "⚠️ **而同一个缺陷已经被修过一次**：`build_card_classification.py` 自己写着"
+            "「首版 `--check` 只重建、不与盘上产物比对 ⇒ 照样绿（实测撞到）……"
+            "姊妹脚本 `build_gap_ledger.py --check` 就是比对的 —— 这里补齐，**同尺**」——"
+            "**「同尺」只写在注释里，它就只是一句愿望**：第三个脚本不会因为前两个改好了"
+            "而自动变好。",
         ],
     }
 
@@ -1848,6 +1922,15 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
          "✅ AST 扫 11 个判据函数、0 命中；反向探针注入即被抓；"
          "反向控制（注入非判据函数**不**报）生效"
          if not judge_errors["J10"] else "🔴"),
+        #: ⚠️ 本行必须是**描述性常量**，两个模式下渲染逐字节相同 ——
+        #: 若它按 `check` 分支写不同文字，`--check` 会把「两种模式的措辞差异」
+        #: 当成「产物滞后」，于是**永久判红**（那会让这道门禁被当成坏工具绕过）。
+        #: 所以这里不给恒绿的假读数，只如实说这条判据的读数在哪产生。
+        ("ARTIFACT", "产物一致性：盘上产物 = 现场重建（**只报不改**）",
+         "门禁先按上游现状把滞后产物**改对**、再宣称「一致」 ⇒ 它永远报不出"
+         "它本该报的那件事（2026-09-14 实测：改坏的产物被重写回正确值，exit 0）",
+         "**比对型判据，读数只在 `--check` 下产生**：不一致 / 产物缺失 ⇒ exit 1，"
+         "**且判据不写盘**；反向控制「判红之后盘上仍是坏值」在 `--mutate` 的 (C) 节"),
     ]
 
     baseline = dict(BASELINE)
@@ -1914,12 +1997,24 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
             "queries": queries,
             "baseline": baseline,
         }
-        json_out.parent.mkdir(parents=True, exist_ok=True)
-        json_out.write_text(json.dumps(payload, ensure_ascii=False, indent=1,
-                                       sort_keys=True), encoding="utf-8")
-    md_out.parent.mkdir(parents=True, exist_ok=True)
-    md_out.write_text(render_md(queries, sim, div, readings, coverage, jrows, baseline,
-                                notes), encoding="utf-8")
+        fresh_json: str | None = json.dumps(payload, ensure_ascii=False, indent=1,
+                                            sort_keys=True)
+    else:
+        fresh_json = None
+    fresh_md = render_md(queries, sim, div, readings, coverage, jrows, baseline, notes)
+
+    if check:
+        #: ⚠️ `--check` = **只比对、不写盘**（本行是本任务 2026-09-14 的修复点）。
+        #: 修复前这里是 `json_out.write_text(...)` 无条件执行，于是 `--check`
+        #: 会把滞后的产物**改对**再报绿 —— 它永远报不出它该报的那件事。
+        judge_errors["ARTIFACT"] = artifact_staleness(
+            [(json_out, fresh_json, "机读产物"), (md_out, fresh_md, "人读产物")])
+    else:
+        if fresh_json is not None:
+            json_out.parent.mkdir(parents=True, exist_ok=True)
+            json_out.write_text(fresh_json, encoding="utf-8")
+        md_out.parent.mkdir(parents=True, exist_ok=True)
+        md_out.write_text(fresh_md, encoding="utf-8")
 
     if not quiet:
         print("=" * 78)
@@ -1940,10 +2035,21 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
                 for line in v:
                     print(f"   [{k}] {line}")
         else:
-            print("✅ 全部判据通过（10/10）")
-        print()
-        print(f"→ {json_out}")
-        print(f"→ {md_out}")
+            print(f"✅ 全部判据通过（{len(jrows)}/{len(jrows)}）")
+        if check:
+            art = judge_errors.get("ARTIFACT") or []
+            print()
+            if art:
+                print(f"🔴 产物比对不通过（{len(art)} 条）—— **本判据只报不改**：")
+                for line in art:
+                    print(f"   [ARTIFACT] {line}")
+            else:
+                print(f"✅ 产物与上游现状一致（逐字节比对，未写盘）："
+                      f"{_rel(json_out)} · {_rel(md_out)}")
+        else:
+            print()
+            print(f"→ {json_out}")
+            print(f"→ {md_out}")
 
     summary = {"coverage": coverage, "judge_errors": judge_errors, "similarity": sim,
                "divergence": {"n_divergent": div["n_divergent"],
@@ -2218,9 +2324,75 @@ def _report_mutations(collect, base: dict, n_base: int, src_text: str) -> int:
     print(f"  删除型判红 {b_red}/{b_ran} —— "
           f"未判红的条目**如实登记**，不得当成「判据有效」的证据")
     print()
-    ok = (a_red == a_ran) and not miss and (b_ran == len(dels)) and not any(base.values())
-    print(f"✅ 端到端变异通过：10 条判据在真实数据上都会失败"
-          f"（值变异 {a_red}/{a_ran}，判据覆盖 {len(covered)}/10），基线本身全绿"
+    print("（C）**产物一致性变异** —— 唯一作用在**盘上产物**上的判据，变异必须在盘上做")
+    print("-" * 78)
+    #: ⚠️ 本节是 2026-09-14 修复的**回归守卫**。修复前 `--check` 会把滞后产物
+    #: **改对再报绿**（实测：把 `generated` 改成 999 ⇒ 门禁重写回 28 并 exit 0）。
+    #: ⇒ 本节的期望不是「判红」而是「判红 **且** 产物原封不动」，
+    #: **后半句才是照妖镜** —— 少了它，同一个缺陷可以再长回来而不被任何断言发现。
+    c_n = c_pass = 0
+    _md5_before = (_sha16(OUT_JSON), _sha16(OUT_MD))
+    with tempfile.TemporaryDirectory(prefix="sq-artifact-") as td:
+        _tj, _tm = Path(td) / "search-queries.json", Path(td) / "queries.md"
+
+        def _cli(*extra: str):
+            return subprocess.run(
+                [sys.executable, str(Path(__file__).resolve()), *extra],
+                capture_output=True, text=True, cwd=str(REPO), check=False)
+
+        # 夹具：把**干净**产物生成到临时目录（全程不碰仓库里的真产物）
+        _cli("--quiet", "--json-out", str(_tj), "--md-out", str(_tm))
+
+        def _check_cli():
+            return _cli("--check", "--quiet", "--json-out", str(_tj), "--md-out", str(_tm))
+
+        def _report(desc: str, cond: bool, detail: str):
+            nonlocal c_n, c_pass
+            c_n += 1
+            c_pass += int(cond)
+            print(f"  {'✅' if cond else '❌'} {desc}  ← {detail}")
+
+        # 1) 正向控制：干净夹具必须 exit 0。少了它，判据过严时会被当成坏工具绕过。
+        _r = _check_cli()
+        _report("正向控制：干净夹具必须 exit 0", _r.returncode == 0,
+                f"实测 exit {_r.returncode}")
+
+        # 2) 值变异：产物滞后 ⇒ 必须判红
+        _b = json.loads(_tj.read_text(encoding="utf-8"))
+        _b["coverage"]["generated"] = 999
+        _tj.write_text(json.dumps(_b, ensure_ascii=False, indent=1, sort_keys=True),
+                       encoding="utf-8")
+        _r = _check_cli()
+        _report("[ARTIFACT] 产物滞后于上游（generated 999 ≠ 现场重建值）⇒ 必须 exit 1",
+                _r.returncode == 1, f"实测 exit {_r.returncode}")
+
+        # 3) ⭐ 反向控制：判红之后**产物必须原封不动**。
+        #    修复前这一条会失败 —— 门禁把 999 改回 28 再报绿（exit 0）。
+        _still = json.loads(_tj.read_text(encoding="utf-8"))["coverage"]["generated"] == 999
+        _report("⭐ **门禁不许顺手改写产物**：判红后盘上仍是坏值",
+                _still, "仍是 999" if _still else "被改回了 —— 这就是假绿的机制")
+
+        # 4) 缺失型：产物不存在 ⇒ 判红（不是「没东西可查 ⇒ 绿」）
+        _tj.unlink()
+        _r = _check_cli()
+        _report("[ARTIFACT] 产物不存在 ⇒ 必须 exit 1（先跑一次生成）",
+                _r.returncode == 1, f"实测 exit {_r.returncode}")
+
+    # 5) 自证：整个 (C) 节不得改动仓库里的真产物
+    _md5_after = (_sha16(OUT_JSON), _sha16(OUT_MD))
+    _report("自证：变异全程未改动仓库产物", _md5_before == _md5_after,
+            f"{_md5_before[0]} · {_md5_before[1]}")
+    c_ok = (c_pass == c_n)
+    print("-" * 78)
+    print(f"  产物一致性 {c_pass}/{c_n} 符合预期"
+          f"{'（含「判红且不改写产物」这条反向控制 ✅）' if c_ok else ' ❌'}")
+
+    print()
+    ok = (a_red == a_ran) and not miss and (b_ran == len(dels)) and c_ok \
+        and not any(base.values())
+    print(f"✅ 端到端变异通过：10 条判据 + 产物一致性在真实数据上都会失败"
+          f"（值变异 {a_red}/{a_ran}，判据覆盖 {len(covered)}/10，"
+          f"产物一致性 {c_pass}/{c_n}），基线本身全绿"
           if ok else "❌ 端到端变异未通过")
     if b_red < b_ran:
         print(f"   登记：删除型变异 {b_red}/{b_ran} 判红 —— 未判红的那几条"
@@ -2512,6 +2684,32 @@ def selftest() -> int:
     except Exception as e:  # noqa: BLE001
         check("缺输入必须抛 InputMissing", False, f"抛了 {type(e).__name__}")
 
+    print("\n--- 判据 12：ARTIFACT 产物一致性（**只报不改**）---")
+    with tempfile.TemporaryDirectory(prefix="sq-selftest-") as td:
+        _p = Path(td) / "art.json"
+        _p.write_text("FRESH", encoding="utf-8")
+        check("产物与现场重建一致 ⇒ 不报（正向控制）",
+              not artifact_staleness([(_p, "FRESH", "机读产物")]))
+        mut("产物滞后（盘上是旧的）⇒ 必须报",
+            bool(artifact_staleness([(_p, "REBUILT", "机读产物")])),
+            "上游变了而忘了重生成")
+        _p.write_text("REBUILT", encoding="utf-8")
+        #: ⭐ 这条是 2026-09-14 修复的**核心**：判据只报不改 ——
+        #: 比对跑完之后盘上必须**还是**旧内容。修复前它会被改对（假绿的机制）。
+        artifact_staleness([(_p, "FRESH", "机读产物")])
+        check("**判据只报不改**：比对之后盘上产物原封不动（修复前此处会被改对）",
+              _p.read_text(encoding="utf-8") == "REBUILT",
+              "门禁顺手改写产物 = 把「滞后」抹掉")
+        _p.unlink()
+        mut("产物不存在 ⇒ 必须报（不是「没东西可查 ⇒ 绿」）",
+            bool(artifact_staleness([(_p, "FRESH", "机读产物")])), "先跑一次生成")
+        #: 仓外路径（临时夹具目录）不得让门禁崩 —— 门禁缺陷 #13 的第二个副本。
+        check("仓外路径走 `_rel` 不抛异常（门禁缺陷 #13 同族）",
+              bool(_rel(Path(td) / "art.json")), "夹具在 temp 目录，仓外")
+        check("仓内路径仍给相对路径（不许为了「不抛异常」就全给绝对路径）",
+              _rel(OUT_JSON) == "paper2skills-research/data/search-queries.json",
+              _rel(OUT_JSON))
+
     print(f"\n{'✅ 自检通过' if ok else '❌ 自检失败'}：{cases} 用例 · {mutations} 变异样本")
     return EXIT_OK if ok else EXIT_RED
 
@@ -2554,8 +2752,11 @@ def main() -> int:
         return run_mutations()
 
     try:
-        code, _ = run(as_json=not args.check or True, json_out=Path(args.json_out),
-                      md_out=Path(args.md_out), quiet=args.quiet)
+        #: ⚠️ 这里原先是 `as_json=not args.check or True` —— **恒真表达式**，
+        #: 于是 `--check` 根本没有独立代码路径（`--check` 与默认动作逐字节同路）。
+        #: 那句恒真就是「门禁把产物改对再报绿」这条假绿的**入口**。
+        code, _ = run(as_json=True, json_out=Path(args.json_out),
+                      md_out=Path(args.md_out), quiet=args.quiet, check=args.check)
         return code
     except InputMissing as e:
         print(f"❌ 输入没拿到：{e}", file=sys.stderr)
