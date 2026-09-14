@@ -83,10 +83,24 @@ def tracked_files(root: Path) -> list[str]:
 
 
 def scan(root: Path) -> tuple[dict[str, int], dict[str, list[str]]]:
-    """返回 (裸词逐文件计数, 判据A 逐标识命中文件)。"""
+    """返回 (裸词逐文件计数, 判据A 逐标识命中文件)。
+
+    ⚠️ **不扫 baseline 自己**（`data/feishu-residue-baseline.json`）：它必然写出被豁免的标识名，
+    而它又记录全库计数 ⇒ 写它就会改它自己的计数，**自指**（实测：写完 9 → 53，永远判红）。
+    仪器自身的状态文件不属于「被检语料」—— 这一点明写在这里，不靠豁免条目掩盖。
+    """
+    # ⚠️ 只在「扫的就是本仓库」时排除自己；自测拿临时树跑，baseline 不在那棵树里 ⇒ 不排除。
+    self_rel = None
+    if BASELINE.exists():
+        try:
+            self_rel = BASELINE.resolve().relative_to(root.resolve()).as_posix()
+        except ValueError:
+            self_rel = None
     bare: dict[str, int] = {}
     ident: dict[str, list[str]] = {k: [] for k in A_IDENTIFIERS}
     for rel in tracked_files(root):
+        if self_rel and rel == self_rel:
+            continue
         p = root / rel
         try:
             text = p.read_text(encoding="utf-8")
@@ -159,10 +173,18 @@ def report(root: Path, baseline: dict, quiet: bool = False) -> int:
         print(f"    ❌ {k} —— 命中 {len(files)} 个文件：{files[:4]}")
     if a_red:
         print("    ⇒ 修法：跑 paper2skills-research/scripts/strip_feishu_from_playbook.py（幂等）")
-    # 豁免**每次跑都打印**（台账 #84：豁免只 printf 在绿门上根本看不见）
-    for f, i, why in exempt_hits:
-        print(f"    ⚠️  [已豁免] {i} ∈ {f}")
-        print(f"        理由：{why}")
+    # 豁免**每次跑都打印**（台账 #84：豁免只 printf 在绿门上根本看不见）。
+    # 按文件归并成一行：仪器类豁免一个文件就覆盖 10 个标识，逐标识打印会刷掉 30 行。
+    if exempt_hits:
+        by_file: dict[str, list[str]] = {}
+        why_of: dict[str, str] = {}
+        for f, i, why in exempt_hits:
+            by_file.setdefault(f, []).append(i)
+            why_of[f] = why
+        print(f"    ⚠️  已豁免 {len(by_file)} 个文件 / {len(exempt_hits)} 条（逐文件 × 逐标识，全部列出）：")
+        for f, ids in sorted(by_file.items()):
+            print(f"        · {f}  [{len(ids)} 个标识]")
+            print(f"          理由：{why_of[f]}")
 
     # ---- 判据 B ----
     grown, shrunk, same = compare(bare, baseline.get("files", {}))
@@ -265,6 +287,21 @@ def selftest() -> int:
            red8 == {"pbShareFeishu": ["rec.md"]} and len(ok8) == 1, f"判红={red8}")
         red9, _ok9 = split_exempt({"feishuHook": ["rec.md"]}, [])
         ck("⑦c 没有豁免条目时判红（豁免不许凭空生效）", red9 == {"feishuHook": ["rec.md"]})
+
+        # ⑨ 环境一致性：**仪器自身的文件必须在扫描范围内** ——
+        # ⚠️ #97：首次交付时这几份文件还是**未跟踪**的，`git ls-files` 看不见它们，
+        # 于是「反向控制 ①」在一个**取样范围比交付范围小**的树上通过了；commit 之后它们
+        # 进入扫描范围，门禁当场判自己的源码与自己的报告为「集成残留」。
+        # 与台账 #12（`k1_l5.json` 被 gitignore ⇒ 新克隆上 gate_check 全红）同型：
+        # **在 A 环境测的，在 B 环境交付。** 这条用例把「自测环境 ⊇ 交付环境」钉住。
+        tracked = set(tracked_files(REPO))
+        me = Path(__file__).resolve().relative_to(REPO).as_posix()
+        strip_me = "paper2skills-research/scripts/strip_feishu_from_playbook.py"
+        ck(
+            "⑨ 自测环境一致性：仪器自身已入库且在扫描范围内（防 #97 复发）",
+            me in tracked and strip_me in tracked,
+            f"{me}={'在' if me in tracked else '不在'} / 剥离器={'在' if strip_me in tracked else '不在'}",
+        )
 
         # ⑧ 输入没拿到必须是 exit 2，不是 0
         with tempfile.TemporaryDirectory() as t6:
