@@ -116,6 +116,16 @@ GATES: list[Gate] = [
          ["check_material_residue.py", "--family", "sections", "--material", MATERIAL]),
     Gate("L4l", "材料归属残留：自检（含「家族开关隔离」双向反向控制）",
          ["check_material_residue.py", "--selftest"], kind="selftest"),
+    # 家族一（词）**现在也真判了**（W-67c 收口，2026-09-13）：
+    # 定标前提是「**先定标再决定接不接**」—— 台账 #67 当时不接，是因为 20 个词里 13 个是假阳性
+    #（#79 同尺、#80 锚点），照单改会把**本来正确的东西改错**。
+    # 现本体已清：49 处「季度经营策略」全部改标（`patch_material_quarter_tier.py`，41 → 4 处），
+    # 余 4 处**逐处复核为假阳性**（`材料` 作普通名词 / 契约自述）⇒ 走**可见豁免** baseline。
+    # ⚠️ 豁免**带到期条件**，且**用不上的豁免判红**：验收面里绿门禁的 stdout 根本不显示，
+    #    在绿门禁里喊「请取消豁免」＝没人看得见 ⇒ 提示必须走退出码。
+    Gate("L4m", "材料归属残留：块内声称「材料」而词查无实据（家族一，本体已清 + 可见豁免）",
+         ["check_material_residue.py", "--family", "terms", "--material", MATERIAL,
+          "--baseline", str(REPO / "paper2skills-research" / "data" / "material-residue-baseline.json")]),
     # --- 跨契约同质化（S1 收口期新增）---
     Gate("L4g", "契约层：跨文件同质化机检", ["check_contract_dedup.py"]),
     Gate("L4h", "契约层：同质化检测器自检", ["check_contract_dedup.py", "--selftest"], kind="selftest"),
@@ -391,7 +401,7 @@ def e2e_material_residue_gate(checker: Path | None = None) -> tuple:
                 ("① 注入 `材料 §F.5` ⇒ exit 1（这道门会红）", d1, 1, mroot, "sections"),
                 ("② 干净夹具（材料真有的 `§1.2`）⇒ exit 0", d2, 0, mroot, "sections"),
                 ("③ 材料根不存在 ⇒ exit 2（≠ 0）", d2, 2, tmp / "nope", "sections"),
-                ("④ 只有家族一残留 ⇒ `--family sections` exit 0（不越界判未定标的那一家）",
+                ("④ 只有家族一残留 ⇒ `--family sections` exit 0（各判各的：L4k 不替 L4m 判，也不认它的豁免）",
                  d4, 0, mroot, "sections"),
                 ("⑤ 同一夹具 `--family all` ⇒ exit 1（隔离双向，不是恒绿）",
                  d4, 1, mroot, "all")):
@@ -546,10 +556,16 @@ def mutate() -> int:
          '|第\\s*[0-9一二三四五六七八九十]+\\s*[章节])")',
          'SECTION_RE = re.compile(r"(?!x)x")',
          "① 注入 `材料 §F.5` ⇒ exit 1（这道门会红）"),
-        ("R4 越界判：`--family sections` 也把未定标的家族一算进退出码",
+        # ⚠️ 这条的理由**随家族一的定标状态改过一次**（W-67c 收口）：
+        #    接上 L4m 之前，「不越界判家族一」的理由是**它未定标**；
+        #    现在家族一**已真判**（L4m），理由变成「**两条门禁各判各的**」——
+        #    家族一的判据**带可见豁免清单**（baseline），家族二不带；
+        #    越界判会让 L4k 退化成一个**不认豁免的重复判据**（同一批残留报两次，且其中一次不可豁免）。
+        #    ⇒ 变异不变、**用例不变**，但**理由过期了要改**：理由是判据的一部分。
+        ("R4 越界判：`--family sections` 也把家族一算进退出码（两族各判各的，混判会绕过 baseline）",
          '    total = (n_term if judge_terms else 0) + (n_sect if judge_sects else 0)',
          '    total = n_term + (n_sect if judge_sects else 0)',
-         "④ 只有家族一残留 ⇒ `--family sections` exit 0（不越界判未定标的那一家）"),
+         "④ 只有家族一残留 ⇒ `--family sections` exit 0（各判各的：L4k 不许替 L4m 判，也不认它的豁免）"),
     ]
     for label, old, new, catcher in RMUTANTS:
         if old not in rsrc:

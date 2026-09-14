@@ -313,7 +313,35 @@ def collect(contracts: Path):
     return files
 
 
-def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all") -> int:
+def apply_baseline(
+    term_counter: dict, baseline: dict | None
+) -> tuple[dict, list[dict], list[dict]]:
+    """按 `--baseline` 豁免**已知假阳性**。返回 (留下的, 被豁免的, **用不上了的**)。
+
+    ⚠️ 第三项是关键。豁免的语义是「这一处**已逐处定标为假阳性**，不是待办」，
+    所以一旦判据收窄到它不再报，这条豁免就**过期**了 —— 过期的豁免会腐烂成永久后门（台账 #5）。
+    过期**判红而不是只打印提示**：验收面里绿门禁的 stdout **根本不显示**，
+    在绿门禁里喊「请取消豁免」＝**没人看得见**。故提示必须走退出码。
+    """
+    if not baseline:
+        return term_counter, [], []
+    keys = {(it.get("term"), it.get("file")) for it in baseline.get("items", [])}
+    kept: dict = {}
+    waived: list[dict] = []
+    matched: set = set()
+    for term, fs in term_counter.items():
+        for f in fs:
+            if (term, f) in keys:
+                waived.append({"term": term, "file": f})
+                matched.add((term, f))
+            else:
+                kept.setdefault(term, []).append(f)
+    stale = [it for it in baseline.get("items", []) if (it.get("term"), it.get("file")) not in matched]
+    return kept, waived, stale
+
+
+def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all",
+        baseline: dict | None = None, baseline_path: str = "") -> int:
     if family not in FAMILIES:
         raise SystemExit(f"未知 --family {family!r}，只认 {FAMILIES}")
     try:
@@ -337,12 +365,16 @@ def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all
     judge_terms = family in ("all", "terms")
     judge_sects = family in ("all", "sections")
 
+    waived: list[dict] = []
+    stale: list[dict] = []
+    if judge_terms:
+        term_counter, waived, stale = apply_baseline(term_counter, baseline)
+
     if not quiet:
         print(f"材料根：{material}（{n_mat} 个文件，已排 `.git/`）· 扫描 {len(files)} 份契约")
         print(f"扫描单元：**blockquote 条目块**（连续 `>` 行成块）—— 故意比 L4e 的「行」宽")
         if family != "all":
-            unjudged = "家族一 · 词（未定标，见台账 #67 的 W-67c）" if family == "sections" \
-                else "家族二 · 章节号"
+            unjudged = "家族一 · 词" if family == "sections" else "家族二 · 章节号"
             print(f"⚠️ 本次只判 `--family {family}`；**{unjudged} 只扫不判**"
                   f"（不参与退出码 —— 未判定 ≠ 干净）")
         print()
@@ -361,21 +393,36 @@ def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all
                   f"{len({f for v in sect_counter.values() for f in v})} 份**")
             for hit, fs in sorted(sect_counter.items(), key=lambda kv: -len(kv[1])):
                 print(f"    · `{hit}` ×{len(fs)} 份")
-        if judge_terms and judge_sects and not term_counter and not sect_counter:
+        if judge_terms and judge_sects and not term_counter and not sect_counter and not waived:
             print("✅ 无残留（家族一、家族二均为 0）")
+
+    if not quiet and waived:
+        print(f"\n🟡 可见豁免（`--baseline {baseline_path or '(未传)'}`，共 {len(waived)} 处）：")
+        for w in waived:
+            print(f"    · 「{w['term']}」@{w['file']}")
+        print(f"  到期条件：{baseline.get('expires_when', '（未写 —— 必须补）') if baseline else '（未写）'}")
+        print("  ⇒ 这几处是**逐处定标为假阳性**（`材料` 在这里是普通名词），不是待办；"
+              "判据一旦收窄到它们不再报，**请删掉 baseline 里的对应项**")
 
     n_term = sum(len(v) for v in term_counter.values())
     n_sect = sum(len(v) for v in sect_counter.values())
     total = (n_term if judge_terms else 0) + (n_sect if judge_sects else 0)
+    if stale:
+        print(f"\n❌ baseline 里有 {len(stale)} 条豁免**已经用不上了**（判据不再报它）——"
+              f"过期的豁免会腐烂成永久后门（台账 #5）：", file=sys.stderr)
+        for it in stale:
+            print(f"    · 「{it.get('term')}」@{it.get('file')} —— 请从 baseline 删掉这一条", file=sys.stderr)
+        return 1
     if not quiet:
         scope = "本次判定范围内" if family != "all" else ""
-        print(f"\n⇒ {scope}残留合计 **{total} 处** —— exit {1 if total else 0}")
+        print(f"\n⇒ {scope}残留合计 **{total} 处**"
+              f"（另有可见豁免 {len(waived)} 处，不计入）—— exit {1 if total else 0}")
         if not judge_terms and n_term:
-            print(f"   （另有家族一 {n_term} 处**未被判定** —— 它未定标，"
-                  f"不得读作「干净」，见台账 #67 的 W-67c）")
+            print(f"   （另有家族一 {n_term} 处**未被判定** —— 见台账 #67 的 W-67c）")
         if not judge_sects and n_sect:
             print(f"   （另有家族二 {n_sect} 处**未被判定**）")
     return 1 if total else 0
+
 
 
 
@@ -434,7 +481,7 @@ def selftest() -> int:
     import tempfile
     cases = []
 
-    def scan_one(body: str, material_files: dict, family: str = "all"):
+    def scan_one(body: str, material_files: dict, family: str = "all", baseline: dict | None = None):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             mroot = root / "material"
@@ -444,7 +491,7 @@ def selftest() -> int:
             croot = root / "contracts"
             (croot / "A").mkdir(parents=True)
             (croot / "A" / "CTR-A-999-夹具.md").write_text(body, encoding="utf-8")
-            code = run(croot, mroot, quiet=True, family=family)
+            code = run(croot, mroot, quiet=True, family=family, baseline=baseline)
             return code
 
     # 材料里只有「月度经营复盘」，没有「季度经营策略」、没有 §F.5
@@ -527,6 +574,20 @@ template_version: v2
     cases.append(("⑳ 反向控制：**去掉**那句归属语后 ⇒ 必须照旧 exit 1（豁免不是全放行）",
                   scan_one(UNLABELED, MAT, family="terms") == 1))
 
+    # ㉑–㉓ `--baseline`：可见豁免的**双向**控制（台账 #82 同族：豁免条款必须比拦截条款测得更严）
+    BL = {"expires_when": "判据收窄到能区分「材料作普通名词」时删除", "items": [
+        {"term": "没有、可以建、但需先建", "file": "CTR-A-999-夹具.md"}]}
+    cases.append(("㉑ baseline 命中的残留 ⇒ exit 0（豁免生效，且不参与退出码）",
+                  scan_one(UNLABELED, MAT, family="terms", baseline=BL) == 0))
+    cases.append(("㉒ 反向控制：baseline 只豁免它点名的**那一处**，别的残留照旧判红",
+                  scan_one(UNLABELED + "\n> 材料「另一个不存在的词」＝1。\n", MAT,
+                           family="terms", baseline=BL) == 1))
+    cases.append(("㉓ 反向控制：baseline 里有**用不上**的豁免 ⇒ 判红（过期豁免＝永久后门，台账 #5）",
+                  scan_one(LABELED, MAT, family="terms",
+                           baseline={"items": [{"term": "没有、可以建、但需先建",
+                                               "file": "CTR-A-999-夹具.md"}]}) == 1))
+    cases.append(("㉔ baseline 为空/未传 ⇒ 与不传时**逐字同判**（豁免不许改变默认行为）",
+                  scan_one(UNLABELED, MAT, family="terms", baseline=None) == 1))
     ok = True
     for label, passed in cases:
         print(f"  {'✅' if passed else '❌'} {label}")
@@ -542,12 +603,23 @@ def main() -> int:
     ap.add_argument("--json-out", default="", help="机读产物路径")
     ap.add_argument("--quiet", action="store_true")
     ap.add_argument("--family", default="all", choices=FAMILIES,
-                    help="只判哪个家族（默认 all；验收面 L4k 用 sections —— 家族一未定标）")
+                    help="只判哪个家族（默认 all；验收面 L4k 用 sections、L4m 用 terms）")
+    ap.add_argument("--baseline", default="",
+                    help="可见豁免清单（json）；**显式传了但文件不存在 ⇒ exit 2**，不是「没有豁免」")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
     if a.selftest:
         return selftest()
-    code = run(Path(a.contracts), Path(a.material), quiet=a.quiet, family=a.family)
+    baseline = None
+    if a.baseline:
+        bp = Path(a.baseline)
+        if not bp.is_file():
+            print(f"❌ 显式传了 --baseline 但文件不存在：{bp} —— "
+                  f"「没拿到豁免清单」不等于「没有豁免」，按 exit 2 处理", file=sys.stderr)
+            return 2
+        baseline = json.loads(bp.read_text(encoding="utf-8"))
+    code = run(Path(a.contracts), Path(a.material), quiet=a.quiet, family=a.family,
+               baseline=baseline, baseline_path=a.baseline)
     if a.json_out:
         Path(a.json_out).write_text(
             json.dumps({"exit": code, "family": a.family}, ensure_ascii=False), encoding="utf-8")
