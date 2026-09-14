@@ -73,6 +73,10 @@ from pathlib import Path
 
 FAMILIES = ("all", "terms", "sections")
 
+# 同尺归一化：**引用**引文器的那一份实现，不另抄（台账 #79）
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from check_material_citations import normalize as _citations_normalize  # noqa: E402
+
 REPO = Path(__file__).resolve().parents[2]
 DEFAULT_MATERIAL = Path("/Users/lute/project/AI组织变革")
 DEFAULT_CONTRACTS = REPO / "paper2skills-vault" / "07-资源库" / "contracts"
@@ -96,11 +100,18 @@ DEATTRIB = (
 
 
 def normalize(s: str) -> str:
-    """NFKC + 去全部空白。
+    """**必须与 `check_material_citations.py::normalize()` 同尺** —— 故直接**引用**它，不另抄一份。
 
-    ⚠️ 与 `check_material_citations.py::normalize()` 同尺（那两个脚本的结论要能对比）。
+    ⚠️ 2026-09-13 实测（台账 **#79**）：本函数原先只做「NFKC + 去空白」，
+    而引文器的同门函数**还剥 markdown 强调符**（`*_`>#|~`）。两者被 docstring 声明为「同尺」，
+    **实际不同尺** —— 后果是**家族一 20 个词里 13 个是假阳性**：
+    材料里**逐字就有**，只是契约在引文里写了 `**复用效果和过期知识控制**`，
+    去空白后带 `**` 的串当然不在语料里 ⇒ 被判「查无实据」。
+    ⇒ 教训与 `check_material_citations.py` 记的那条同源（`str.translate({c: None})` 静默不做事）：
+      **「同尺」不能靠注释声明，要有判据**（selftest 用例⑯直接断言两个函数相等）。
     """
-    return re.sub(r"\s+", "", unicodedata.normalize("NFKC", s))
+    return _citations_normalize(s)
+
 
 
 def strip_punct(s: str) -> str:
@@ -466,6 +477,26 @@ template_version: v2
         empty = root / "empty"
         (empty / "A").mkdir(parents=True)
         cases.append(("⑦ 契约目录里 0 份 ⇒ exit 2（≠ 0）", run(empty, mroot, quiet=True) == 2))
+
+    # ⑯–⑱ **同尺**（台账 #79）：两族判据的归一化必须真的相等，且要**端到端**证明它有后果。
+    #     ⚠️ 只断言 `normalize(x) == citations.normalize(x)` 是**弱**断言（两边可能是同一个错的实现）；
+    #     故 ⑰/⑱ 用夹具走完整条链：**强调符包裹的真引文不得报**、**强调符包裹的假引文必须报**。
+    import check_material_citations as _c
+
+    cases.append(("⑯ 两个脚本的 `normalize()` 必须**逐字节相等**（同尺是判据，不是注释）",
+                  all(normalize(x) == _c.normalize(x) for x in
+                      ("**复用效果和过期知识控制**", "a b\tc", "ｆｕｌｌ", "`code`", "A|B", "> quote"))))
+    # ⚠️ 夹具措辞有讲究：`材料` 前 12 字内**不许出现去归属语**（`本契约`/`本项目`/`决策 Q`…），
+    #    否则会走 DEATTRIB 分支、夹具根本到不了判据 —— 首版夹具写的就是「本契约的数取自材料…」，
+    #    于是 ⑱ 落空。**夹具自己也要先证明它落在被测判据上**（本仓库记过的「用例是摆设」同族）。
+    EMPH_OK = """> **取值来源纪律**：阈值来源只有三类 —— 材料「**月度经营复盘**」＝1 个自然月。
+"""
+    EMPH_BAD = """> **取值来源纪律**：阈值来源只有三类 —— 材料「**季度经营策略**」＝1 个自然季度。
+"""
+    cases.append(("⑰ 强调符包裹的**真引文** ⇒ exit 0（原先被 `**` 判成「查无实据」）",
+                  scan_one(EMPH_OK, MAT, family="terms") == 0))
+    cases.append(("⑱ 反向控制：强调符包裹的**假引文** ⇒ 必须照旧 exit 1",
+                  scan_one(EMPH_BAD, MAT, family="terms") == 1))
 
     ok = True
     for label, passed in cases:
