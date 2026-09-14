@@ -105,6 +105,17 @@ GATES: list[Gate] = [
     Gate("L4e", "材料引文：契约声称的『材料「X」』必须真的在材料里",
          ["check_material_citations.py", "--material", MATERIAL]),
     Gate("L4f", "材料引文：自检", ["check_material_citations.py", "--selftest"], kind="selftest"),
+    # --- 材料**归属改标**残留（#67 的 W-67a；家族二已定标，家族一未定标）---
+    # ⚠️ 为什么只接家族二：家族一（块内声称「材料」而词查无实据）的 24 个词里只有
+    # `季度经营策略` 经独立确认是真阳性，其余大部分逐条看下来仍是假阳性 ⇒
+    # **把一个未定标的仪器接进门禁 = 制造噪声，而噪声会被忽略**（台账 #67）。
+    # 家族二（`材料 §X`）已逐号对材料核实：材料编号章节只有 `1–12` 与 `R01–R05`，
+    # `§E.`/`§F.` 是**我方综述** `_survey_org_model.md` 的章节号 ⇒ 可机械判定。
+    # 实测：接上时 **38 处 / 23 份**，改标后归零（补丁见 `patch_material_attribution.py`）。
+    Gate("L4k", "材料归属残留：声称「材料 §X」而材料没有该编号（家族二，已定标）",
+         ["check_material_residue.py", "--family", "sections", "--material", MATERIAL]),
+    Gate("L4l", "材料归属残留：自检（含「家族开关隔离」双向反向控制）",
+         ["check_material_residue.py", "--selftest"], kind="selftest"),
     # --- 跨契约同质化（S1 收口期新增）---
     Gate("L4g", "契约层：跨文件同质化机检", ["check_contract_dedup.py"]),
     Gate("L4h", "契约层：同质化检测器自检", ["check_contract_dedup.py", "--selftest"], kind="selftest"),
@@ -335,13 +346,74 @@ def e2e_material_gate(checker: Path | None = None) -> tuple:
     return cases, detail
 
 
+def e2e_material_residue_gate(checker: Path | None = None) -> tuple:
+    """把**材料归属残留**门禁（L4k）端到端跑一遍（真 CLI + 构造契约夹具）。
+
+    为什么它必须自成一条：L4k 接上时是**绿的**（改标后家族二归零）——
+    而**一条绿的判据无法自证有劲**。故这里造四份夹具，其中两份专门造「该红」的输入：
+    ① 注入 `材料 §F.5` ⇒ exit 1；② 干净夹具 ⇒ exit 0；③ 材料根不存在 ⇒ exit 2（≠0）；
+    ④ **反向隔离**：只有家族一残留的夹具在 `--family sections` 下必须 exit 0
+    （防止这道门在将来被人顺手扩到未定标的家族一上去 —— 那正是 #67 警告的「噪声会被忽略」）。
+    `checker` 可指向被篡改的副本（见 `mutate()`）。
+    """
+    checker = checker or Path(_p("check_material_residue.py"))
+    cases, detail = [], []
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        mroot = tmp / "material"
+        mroot.mkdir()
+        # 材料自己的编号章节只有 `1` 与 `1.2`；**没有** `F.5`
+        (mroot / "m.md").write_text(
+            "# 1 总则\n\n## 1.2 运行边界\n\n动作策略必须绑定具体范围、工具、参数与回执。\n",
+            encoding="utf-8")
+
+        def fixture(name: str, body: str) -> Path:
+            d = tmp / name
+            (d / "A").mkdir(parents=True)
+            (d / "A" / "CTR-A-999-夹具.md").write_text(body, encoding="utf-8")
+            return d
+
+        head = "---\ntemplate_version: v2\n---\n\n# 夹具\n\n"
+        # ① 章节号残留 ⇒ 必须 exit 1
+        d1 = fixture("residue", head + "> **本责任同时是材料 §F.5 的 A 类边界条目**，故降级条件明写在这里。\n")
+        # ② 干净夹具：材料真有的编号 `§1.2` ⇒ 必须 exit 0（逐号核实，不是一律可疑）
+        d2 = fixture("clean", head + "> 依据＝材料 §1.2 的运行边界。\n")
+        # ④ 只有家族一残留（`材料「季度经营策略」`）⇒ `--family sections` 必须 exit 0
+        d4 = fixture("family1only", head + "> （a）材料已给出的数（经营节奏「季度经营策略」＝1 个自然季度）；\n")
+
+        def cli(d, material=mroot, family="sections"):
+            p = subprocess.run([sys.executable, str(checker), "--family", family,
+                                "--material", str(material), "--contracts", str(d)],
+                               capture_output=True, text=True, timeout=300)
+            return p.returncode, (p.stdout or "") + (p.stderr or "")
+
+        for label, d, want, mat, fam in (
+                ("① 注入 `材料 §F.5` ⇒ exit 1（这道门会红）", d1, 1, mroot, "sections"),
+                ("② 干净夹具（材料真有的 `§1.2`）⇒ exit 0", d2, 0, mroot, "sections"),
+                ("③ 材料根不存在 ⇒ exit 2（≠ 0）", d2, 2, tmp / "nope", "sections"),
+                ("④ 只有家族一残留 ⇒ `--family sections` exit 0（不越界判未定标的那一家）",
+                 d4, 0, mroot, "sections"),
+                ("⑤ 同一夹具 `--family all` ⇒ exit 1（隔离双向，不是恒绿）",
+                 d4, 1, mroot, "all")):
+            got, out = cli(d, mat, fam)
+            cases.append((label, got == want))
+            detail.append({"case": label, "want": want, "got": got,
+                           "head": out.strip().splitlines()[0] if out.strip() else ""})
+    return cases, detail
+
+
 def selftest() -> int:
-    """runner 自检 —— 三条判据，每条都能失败。"""
+    """runner 自检 —— 判据，每条都能失败。"""
     cases = []
 
     # ① 端到端：材料引文门禁真的会红（这是 W3 的验收原话）
     mat_cases, mat_detail = e2e_material_gate()
     cases += mat_cases
+
+    # ①b 端到端：材料**归属残留**门禁（L4k）真的会红 —— 它接上时是绿的，
+    #     而一条绿的判据无法自证有劲，只能靠造一份该红的输入来问。
+    res_cases, res_detail = e2e_material_residue_gate()
+    cases += res_cases
 
     # ② runner 会把「红」传播出来（用一个故意 exit 1 的假门禁）
     fake = Gate("FAKE-RED", "假门禁（应判红）", ["run_phase6_gates.py", "--list"])
@@ -404,6 +476,9 @@ def selftest() -> int:
             print(f"  want={d['want']} got={d['got']}  {d['case']}")
             if d["head"]:
                 print(f"      {d['head'][:100]}")
+    print("材料归属残留端到端明细（L4k）：")
+    for d in res_detail:
+        print(f"  want={d['want']} got={d['got']}  {d['case']}")
     return 0 if n_ok == len(cases) else 1
 
 
@@ -452,8 +527,49 @@ def mutate() -> int:
                   f"{'抓住了' if caught else '**没抓住**（该用例是摆设）'}")
             if caught:
                 n_ok += 1
-    print(f"\n{n_ok}/{len(MUTANTS)} 抓住")
-    return 0 if n_ok == len(MUTANTS) else 1
+
+    # ---- 第二组：L4k 的被检门禁（材料归属残留）----
+    # ⚠️ 这一组存在的理由与 L4k 接线的理由同源：**它接上时是绿的** ——
+    #    绿的判据若没有「改坏它必须被抓」的证明，就没人知道它到底还在不在判。
+    rsrc = Path(_p("check_material_residue.py")).read_text(encoding="utf-8")
+    RMUTANTS = [
+        ("R1 恒绿放行：`return 1 if total else 0` → `return 0`（残留照打，但不再判红）",
+         "    return 1 if total else 0\n",
+         "    return 0\n",
+         "① 注入 `材料 §F.5` ⇒ exit 1（这道门会红）"),
+        ("R2 材料根取不到也放行：`return 2` → `return 0`",
+         '「没拿到输入」不等于「通过」", file=sys.stderr)\n        return 2',
+         '「没拿到输入」不等于「通过」", file=sys.stderr)\n        return 0',
+         "③ 材料根不存在 ⇒ exit 2（≠ 0）"),
+        ("R3 判据失效：`SECTION_RE` 改成永不匹配（`材料 §F.5` 看不见了）",
+         'SECTION_RE = re.compile(r"材料\\s*(?:§\\s*[A-Za-z0-9.\\-]+'
+         '|第\\s*[0-9一二三四五六七八九十]+\\s*[章节])")',
+         'SECTION_RE = re.compile(r"(?!x)x")',
+         "① 注入 `材料 §F.5` ⇒ exit 1（这道门会红）"),
+        ("R4 越界判：`--family sections` 也把未定标的家族一算进退出码",
+         '    total = (n_term if judge_terms else 0) + (n_sect if judge_sects else 0)',
+         '    total = n_term + (n_sect if judge_sects else 0)',
+         "④ 只有家族一残留 ⇒ `--family sections` exit 0（不越界判未定标的那一家）"),
+    ]
+    for label, old, new, catcher in RMUTANTS:
+        if old not in rsrc:
+            print(f"  ❌ {label} —— 变异施不上力（锚点文本找不到，说明上游改了代码）")
+            continue
+        with tempfile.TemporaryDirectory() as td:
+            mp = Path(td) / "check_material_residue_mutant.py"
+            mp.write_text(rsrc.replace(old, new, 1), encoding="utf-8")
+            cases, _ = e2e_material_residue_gate(checker=mp)
+            hit = dict(cases)
+            caught = hit.get(catcher) is False
+            print(f"  {'✅' if caught else '❌'} {label}")
+            print(f"        应由「{catcher}」抓住 —— "
+                  f"{'抓住了' if caught else '**没抓住**（该用例是摆设）'}")
+            if caught:
+                n_ok += 1
+
+    total_mutants = len(MUTANTS) + len(RMUTANTS)
+    print(f"\n{n_ok}/{total_mutants} 抓住")
+    return 0 if n_ok == total_mutants else 1
 
 
 def main() -> int:

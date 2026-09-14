@@ -90,6 +90,34 @@ RUN_NONATTRIB = re.compile(
     r"|上标注|等级|成本冲击|例[（,，]|^标$|\|)"
 )
 
+# ---------------------------------------------------------------------------
+# 去归属短语：**明说「这不是材料说的」的那句话本身，不许被读成归属**
+#
+# ⚠️ 这一条来自 2026-09-13 的一次实测假红（#67 的 W-67a 收口时）：
+#   语料里通行的那句去归属标记是 `（**二手来源，不是材料原文**）`（S1-W 先例，十余处）。
+#   它**自己含 `材料` 二字**，于是当它在引号前 20 字以内时，`extract()` 取到的
+#   「最后一个 `材料`」正是**标记里的那一个**，`run` 成了 `原文**）` —— 命中 RUN_ATTRIB
+#   ⇒ 一句**明说「不是材料原文」的话，被仪器读成了「材料原文」**。
+#   实测后果：1 条假红（`CTR-B-020:69`）+ **3 种限定语形态直接变成 unclassified ⇒ exit 3**。
+#
+#   ⇒ 处置不是「下次注意别这么写」，而是**把这一类从判据里遮掉**：
+#   否定形式（`不是材料原文` / `非材料原文` / `材料未给` …）在**取 `材料` 之前**整段替换成
+#   等长占位符（等长是为了不破坏引号偏移），随后按常规路径判 —— 若该行再无别的 `材料`，
+#   这条引号就**本就不该被当成材料引文**（与 `non_attrib` 同一语义：材料只是顺带出现）。
+#
+#   ⚠️ 遮蔽的是**否定/缺失**形态，不是「材料」二字：`（材料原文）：「X」` 照旧按归属判、
+#   照旧会红（selftest 用例⑬是这条的反向控制 —— 豁免条款必须比拦截条款测得更严）。
+DEATTRIB_NEG = re.compile(
+    r"(?:不是|而不是|并不是|并非|非|不算|不能算|≠)\s*材料"
+    r"(?:原文|原话|章节号|章节|里|中|内部)?"
+    r"|材料(?:未给|未命名|没有|里没有|中无|无此|里无)"
+)
+
+
+def mask_deattrib(line: str) -> str:
+    """把去归属短语替换成**等长**占位符（保偏移），其余一字不动。"""
+    return DEATTRIB_NEG.sub(lambda m: "〇" * len(m.group(0)), line)
+
 
 def normalize(s: str) -> str:
     """markdown 强调符与空白抹掉，其余（含标点）保留 —— 抹多了会把不同的词抹成同一个。
@@ -185,6 +213,9 @@ def extract(files: list[Path]):
     unclass: dict[str, list] = {}
     for p in files:
         for ln_no, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+            # ⚠️ 先遮去归属短语，再取「最后一个 `材料`」——
+            #    `（不是材料原文）：「X」` 否则会被读成 `材料原文：「X」`（等长遮罩，偏移不变）。
+            line = mask_deattrib(line)
             for pm in PAIR_RE.finditer(line):
                 term = next(g for g in pm.groups() if g is not None).strip()
                 head = line[: pm.start()]
@@ -404,6 +435,26 @@ def selftest() -> int:
         a, _, _ = cls("材料原文「**月度经营复盘**」")
         cases.append(("⑪ 引文含 `**` 但逐字相同 ⇒ 不得判 altered",
                       bool(a) and all(verdict(t, corpus, raw)["ok"] for t in a)))
+        # ⑫ 去归属标记**自己含 `材料` 二字** ⇒ 不许被读成归属（2026-09-13 实测假红 + exit 3）
+        a, n, u = cls("> 本项目综述 §F.3 记 AGT-013 的判定（**二手来源，不是材料原文**）："
+                      "「缺陷收敛可用可靠性统计量化，但放行判定是治理门」")
+        cases.append(("⑫ `（不是材料原文）：「X」` ⇒ 不计为材料引文（也不得 unclassified）",
+                      not a and not u))
+        # ⑬ **反向控制**：同样的引号、同样的位置，把标记换成**肯定**形式 ⇒ 必须照旧判红。
+        #    这一条证明 ⑫ 的遮罩是「否定形式」专用，不是给所有引文开的万能豁免。
+        a, _, _ = cls("> 材料原文：「缺陷收敛可用可靠性统计量化，但放行判定是治理门」")
+        cases.append(("⑬ 反向控制：`（材料原文）：「X」` 且 X 不在材料里 ⇒ 必须判红",
+                      bool(a) and not all(verdict(t, corpus, raw)["ok"] for t in a)))
+        # ⑭ **反向控制 2**：遮罩不得把正常的归属路径一起关掉
+        a, _, _ = cls("> 材料原文：「月度经营复盘」")
+        cases.append(("⑭ 反向控制：正常归属仍须计为引文且通过",
+                      bool(a) and all(verdict(t, corpus, raw)["ok"] for t in a)))
+        # ⑮ 遮罩必须**等长**（否则引号偏移被破坏，后面所有判据都错位）
+        cases.append(("⑮ 遮罩等长（含 `不是材料原文` 与 `材料未给` 两族）",
+                      len(mask_deattrib("xx 不是材料原文 yy 材料未命名 zz"))
+                      == len("xx 不是材料原文 yy 材料未命名 zz")
+                      and "材料" not in mask_deattrib("不是材料原文")
+                      and "材料" not in mask_deattrib("材料未命名")))
 
     ok = True
     print("check_material_citations · selftest")

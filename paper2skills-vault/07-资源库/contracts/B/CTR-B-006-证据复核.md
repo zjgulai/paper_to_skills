@@ -28,7 +28,7 @@ blocked_by: null
 > 规则格为两个 FLOW 的 STG-01／STG-02／STG-03／STG-06／STG-07，**这些格只放判据与门禁条件**（§4 的落脚处），本层不在其上选参。
 >
 > **取值来源纪律（全文适用）**：本契约出现的每一个阈值、比例与时限，来源只有三种 ——
-> （a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；材料 §E 的 STG-04 最低接收条件 `sources_and_versions_recorded`／`freshness_and_quality_status_recorded`／`conflicts_and_missing_data_explicit`／`claims_trace_to_evidence`／`uncertainty_explicit`，§E.2 的 Case 状态机与关闭结果六档，§E.3 的异常与恢复条件，PB-007／PB-008 的责任与产物）；
+> （a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；本项目综述 §E 的 STG-04 最低接收条件 `sources_and_versions_recorded`／`freshness_and_quality_status_recorded`／`conflicts_and_missing_data_explicit`／`claims_trace_to_evidence`／`uncertainty_explicit`，§E.2 的 Case 状态机与关闭结果六档，§E.3 的异常与恢复条件，PB-007／PB-008 的责任与产物；**§E 的编号与这些标识符出自本项目综述，不是材料原文**）；
 > （b）业务侧默认（经营者自述、平台规则或行业惯例，逐条附替换条件）；
 > （c）§1 算式的输出（由命名的数据系统直出）。**候选卡的卡面数字不构成第四种来源** —— 逐条清单见 §1 末尾。
 

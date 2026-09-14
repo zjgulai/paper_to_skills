@@ -123,6 +123,11 @@ _backup/
 !paper2skills-research/data/backlog-l3-map.json
 # S3 的接管表产物（位次 + 覆盖率账）：下游「出卡排期」要消费它，理由同 gap-ledger.json。
 !paper2skills-research/data/backlog-routing.json
+# S9 独立站 holdback 的**判决产物**（验收面 L11a 的被检对象）：门禁 `--check` 就是拿它
+# 与现算逐字段比对。⚠️ 原先被 `data/**/*.json` 挡住 ⇒ **新克隆里这个文件不存在**，
+# L11a 会停在 `exit 2 没拿到输入`（不是判红，也不是通过 —— 台账 #12 那一族：
+# 「交付物不在仓库里」＝ 那条门禁在别人机器上从来不跑）。理由同 gap-ledger.json。
+!paper2skills-research/data/holdback-design.json
 # 「同名同物」判定的可见豁免清单（验收面 L8a 的**输入**）：它是人的判定 + 到期条件，
 # 不是脚本能再生的东西。⚠️ 不入库的代价是**新克隆必然没有它** ⇒ L8a 直接 exit 2
 # （「baseline 不存在」= 没测，不是通过），陷阱对新人 100% 命中 —— 与门禁 bug #12

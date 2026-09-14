@@ -1,0 +1,994 @@
+{
+  "schema": "holdback-design/v1",
+  "generated_at": "2026-09-14T10:15:50+08:00",
+  "generator": "paper2skills-research/scripts/holdback_power.py",
+  "mode": "assumed",
+  "provenance": {
+    "traffic": {
+      "status": "absent",
+      "source": null,
+      "error": null,
+      "searched_for_fact_source": [
+        "playbook/（渲染快照：assets/*.json、*.html）",
+        "paper2skills-vault/07-资源库/（*.md、*.json）",
+        "paper2skills-research/data/（全部 JSON）",
+        "/Users/lute/project/AI组织变革/（材料《AI组织变革》，docs/ 全量）"
+      ],
+      "found": "无任何「日均访客/会话/曝光」读数。材料 docs/01-discovery/FACTS.md 的「尚无事实依据的内容」一节把**订单量**一并列为未知，并明写「不得从年营收或店铺数估算这些指标后再当作企业事实」。",
+      "not_convertible": "F-002（年规模约 100 亿人民币，口径待核对）与 F-004（独立站 15%）是 **GMV 构成**，不是访客数；从 GMV 推访客需要客单价与订单量，两者均无事实源 ⇒ 本脚本拒绝换算。"
+    },
+    "baseline": {
+      "value": {
+        "site_conversion_rate": 0.02,
+        "content_ctr": 0.02,
+        "source": null,
+        "label": "示例点，来源为空"
+      },
+      "source": null
+    },
+    "split_source": "builtin",
+    "contracts": [
+      {
+        "contract_id": "CTR-A-048",
+        "path": "paper2skills-vault/07-资源库/contracts/A/CTR-A-048-内容实验.md",
+        "sha256": "a669a5659cac01454cda32852f2c4bfe5554b70a2ee018bb32731548d10d6514",
+        "responsibility": "内容实验",
+        "alpha": "0.05",
+        "power": "0.80",
+        "mde_pct": "5"
+      },
+      {
+        "contract_id": "CTR-A-049",
+        "path": "paper2skills-vault/07-资源库/contracts/A/CTR-A-049-投放诊断.md",
+        "sha256": "700a9492f8ac1512ca495a748ac88a69c21d9f2b3b5a8bef1e90464992ac3fba",
+        "responsibility": "投放诊断",
+        "alpha": null,
+        "power": null,
+        "mde_pct": null
+      },
+      {
+        "contract_id": "CTR-A-050",
+        "path": "paper2skills-vault/07-资源库/contracts/A/CTR-A-050-预算分配.md",
+        "sha256": "9b6f650c5f5eb4d95e0fea7ebcbcb3e2335690a78761f47c6ea9e2640408639c",
+        "responsibility": "预算分配",
+        "alpha": null,
+        "power": null,
+        "mde_pct": null
+      },
+      {
+        "contract_id": "CTR-A-051",
+        "path": "paper2skills-vault/07-资源库/contracts/A/CTR-A-051-广告实验.md",
+        "sha256": "d5645bb39a50df735296ca35571aac03685e95b48de3b7d7ce8c0ca512d7f23f",
+        "responsibility": "广告实验",
+        "alpha": null,
+        "power": null,
+        "mde_pct": null
+      },
+      {
+        "contract_id": "CTR-A-056",
+        "path": "paper2skills-vault/07-资源库/contracts/A/CTR-A-056-实验设计.md",
+        "sha256": "b409bf0f578341469fb1cb7df160ea674d2930f3165c4f15c0db94c89c11011d",
+        "responsibility": "实验设计",
+        "alpha": "0.05",
+        "power": "0.80",
+        "mde_pct": "10"
+      },
+      {
+        "contract_id": "CTR-A-057",
+        "path": "paper2skills-vault/07-资源库/contracts/A/CTR-A-057-增量分析.md",
+        "sha256": "5945cdbacda7d2560754f8d1e1eb1b29a7153a04f3dc546821e50692e874062e",
+        "responsibility": "增量分析",
+        "alpha": "0.05",
+        "power": "0.80",
+        "mde_pct": "5"
+      }
+    ]
+  },
+  "assumption_set": {
+    "note": "以下每一个数都**没有事实来源**（source 为空）。它们只用来把算式参数化，不得当作实测值引用。",
+    "traffic": {
+      "measurement_id": "independent_site_traffic",
+      "source": null,
+      "searched": [
+        "playbook/（渲染快照：assets/*.json、*.html）",
+        "paper2skills-vault/07-资源库/（*.md、*.json）",
+        "paper2skills-research/data/（全部 JSON）",
+        "/Users/lute/project/AI组织变革/（材料《AI组织变革》，docs/ 全量）"
+      ],
+      "found": "无任何「日均访客/会话/曝光」读数。材料 docs/01-discovery/FACTS.md 的「尚无事实依据的内容」一节把**订单量**一并列为未知，并明写「不得从年营收或店铺数估算这些指标后再当作企业事实」。",
+      "not_convertible": "F-002（年规模约 100 亿人民币，口径待核对）与 F-004（独立站 15%）是 **GMV 构成**，不是访客数；从 GMV 推访客需要客单价与订单量，两者均无事实源 ⇒ 本脚本拒绝换算。"
+    },
+    "baseline_grid": {
+      "site_conversion_rate": [
+        0.005,
+        0.01,
+        0.02,
+        0.03,
+        0.05
+      ],
+      "content_ctr": [
+        0.005,
+        0.01,
+        0.02,
+        0.03,
+        0.05
+      ]
+    },
+    "baseline_default": {
+      "site_conversion_rate": 0.02,
+      "content_ctr": 0.02,
+      "source": null,
+      "label": "示例点，来源为空"
+    },
+    "traffic_grid": {
+      "L-USER": [
+        1000,
+        5000,
+        10000,
+        50000
+      ],
+      "L-GEO": [
+        2,
+        5,
+        20,
+        100
+      ],
+      "daily_content_impressions": [
+        10000,
+        50000,
+        200000,
+        1000000
+      ]
+    },
+    "geo_cluster_cv_grid": [
+      0.05,
+      0.1,
+      0.2,
+      0.3
+    ]
+  },
+  "split": {
+    "program": "独立站 holdback 分流程序",
+    "version": "v1",
+    "layers": [
+      {
+        "id": "L-USER",
+        "unit_field": "visitor_id",
+        "unit_level": "user",
+        "randomizable": true,
+        "nesting_rule": null,
+        "label": "独立站访客标识（用户级）",
+        "share_of_frontend_traffic": 0.2,
+        "pool_allocation": {
+          "treatment": 0.5,
+          "control": 0.5
+        },
+        "effective_control_share_of_frontend": 0.1,
+        "allocation_rationale": "契约 CTR-A-057 §3 T2 同时写了两条：对照臂占独立站前台流量 10%（业务侧默认）与层内处理/对照 1:1。同时满足两条的唯一读法是「池 = 前台流量 20%，池内 1:1」；另一读法（100% 前台直接 90/10）违反层内 1:1。两者在同样 n 下的前台流量代价由本脚本现算并列。",
+        "stratify_keys": [
+          "currency_or_country",
+          "device_type",
+          "new_or_returning"
+        ],
+        "stratify_source": "契约 CTR-A-057 §3 T2「分层键从〈独立站埋点〉可判定的字段中选」",
+        "idempotency": {
+          "key_fields": [
+            "visitor_id",
+            "salt"
+          ],
+          "salt": "holdback-v1",
+          "hash": "sha256",
+          "modulus": 10000,
+          "deterministic": true,
+          "recompute_rule": "arm = int(sha256(salt + '|' + visitor_id)[:8], 16) % modulus；同一单元永不重抽"
+        },
+        "attribution_compat": {
+          "unit_grain": "与 AGT-045 指标契约的「分流单元」同粒度",
+          "ledger": "Case/Event Ledger 的 Execution Attempt 回执逐条落分流臂",
+          "quality_fields": "每条记录随带 AGT-046 的质量状态、来源与新鲜度",
+          "attribution_excluded": true,
+          "exclusion_note": "对照臂须在平台归因报表口径外单独成列，否则「零处理」会被平台归因销量掩盖"
+        }
+      },
+      {
+        "id": "L-GEO",
+        "unit_field": "geo_region",
+        "unit_level": "geo",
+        "randomizable": true,
+        "nesting_rule": null,
+        "label": "地理区隔（站点/地区）",
+        "share_of_frontend_traffic": null,
+        "pool_allocation": {
+          "treatment": 0.5,
+          "control": 0.5
+        },
+        "stratify_keys": [
+          "country",
+          "currency"
+        ],
+        "idempotency": {
+          "key_fields": [
+            "geo_region",
+            "salt"
+          ],
+          "salt": "holdback-geo-v1",
+          "hash": "sha256",
+          "modulus": 10000,
+          "deterministic": true,
+          "recompute_rule": "区隔级整体分配；同一区隔在实验期内不得换臂"
+        },
+        "attribution_compat": {
+          "unit_grain": "geo 级（区隔内全部流量同臂）",
+          "ledger": "广告实验台账逐区隔落臂",
+          "attribution_excluded": true,
+          "exclusion_note": "对照区隔在实验期内保持不投放，平台侧归因不得用于判定"
+        }
+      },
+      {
+        "id": "L-SESSION",
+        "unit_field": "session_id",
+        "unit_level": "session",
+        "randomizable": true,
+        "nesting_rule": null,
+        "label": "会话级（仅站内即时交互）",
+        "share_of_frontend_traffic": null,
+        "pool_allocation": {
+          "treatment": 0.5,
+          "control": 0.5
+        },
+        "stratify_keys": [
+          "device_type"
+        ],
+        "idempotency": {
+          "key_fields": [
+            "session_id",
+            "salt"
+          ],
+          "salt": "holdback-sess-v1",
+          "hash": "sha256",
+          "modulus": 10000,
+          "deterministic": true,
+          "recompute_rule": "会话级哈希；跨会话不复用"
+        },
+        "attribution_compat": {
+          "unit_grain": "会话级",
+          "ledger": "站内事件流",
+          "attribution_excluded": true
+        },
+        "admissible_only_for": "站内即时交互（点击/停留/加购等当次会话可闭合的行为）",
+        "not_admissible_for": [
+          "跨窗增量（观测窗 ≥ 14 个自然日）",
+          "用户级 LTV / 复购 / 退款闭合类结果",
+          "内容实验的格分配（契约 CTR-A-048 §2 ② 要求分流单元 = 独立站访客标识）"
+        ]
+      },
+      {
+        "id": "L-CHANNEL",
+        "unit_field": "channel",
+        "unit_level": "channel",
+        "randomizable": false,
+        "nesting_rule": null,
+        "label": "渠道层（不随机化）",
+        "share_of_frontend_traffic": null,
+        "pool_allocation": {},
+        "stratify_keys": [],
+        "idempotency": {
+          "key_fields": [
+            "channel",
+            "salt"
+          ],
+          "salt": "holdback-channel-v1",
+          "hash": "sha256",
+          "modulus": 10000,
+          "deterministic": true,
+          "recompute_rule": "渠道层只做口径归属登记，不产生分流臂"
+        },
+        "attribution_compat": {
+          "unit_grain": "渠道",
+          "ledger": "渠道经营台账",
+          "attribution_excluded": false
+        },
+        "why_not_randomizable": "渠道层没有可保持整块不投放/不花钱的对照单元：减预算本身就是被检验的动作，随机化它等于把处理定义成对照"
+      }
+    ],
+    "unassigned_layer_policy": "责任声明的 layer_id 不在 layers 里 ⇒ 判红，不得默认落到 L-USER",
+    "routing_declarations": {
+      "增量分析": {
+        "if_feasible": "randomized_holdback",
+        "if_infeasible": "quasi_experiment"
+      },
+      "实验设计": {
+        "if_feasible": "randomized_holdback",
+        "if_infeasible": "quasi_experiment"
+      },
+      "内容实验": {
+        "if_feasible": "randomized_holdback",
+        "if_infeasible": "quasi_experiment"
+      },
+      "广告实验": {
+        "if_feasible": "randomized_holdback",
+        "if_infeasible": "quasi_experiment"
+      },
+      "投放诊断": {
+        "if_feasible": "holdback_corroboration_only",
+        "if_infeasible": "holdback_corroboration_only"
+      },
+      "预算分配": {
+        "if_feasible": "holdback_corroboration_only",
+        "if_infeasible": "holdback_corroboration_only"
+      }
+    },
+    "routing_declaration_policy": "本块是**预登记**：建成前就把两条分支都写死，由实测流量决定走哪条。缺任何一条声明 ⇒ 判红（未声明即未标定）；声明与现算不一致 ⇒ 判红（J8）。"
+  },
+  "pollution_controls": [
+    {
+      "id": "P1",
+      "name": "跨渠道曝光泄漏",
+      "criterion": "对照单元在观测窗内的站外触点计数",
+      "threshold": {
+        "field": "external_touch_count",
+        "must_equal": 0
+      },
+      "measure": "contamination_rate = 受站外触达的对照单元数 ÷ 对照单元总数",
+      "ledger": "holdback_unit_ledger.external_touches（平台后台触点回传 + 广告后台受众投放日志）",
+      "falsifier": "任一对照单元 external_touch_count > 0 ⇒ contamination_rate 必须现算并登记；>0 时该窗只出 ITT 口径并标「对照非零处理」",
+      "why": "独立站 holdback 挡不住 Amazon/Meta 侧对同一批人的再触达，「零处理」是设计意图不是事实"
+    },
+    {
+      "id": "P2",
+      "name": "再营销受众重叠",
+      "criterion": "受众包导出集合 ∩ holdback 单元集合",
+      "threshold": {
+        "intersection_size": 0
+      },
+      "measure": "overlap_count = |audience_export ∩ holdback_units|",
+      "ledger": "受众包导出清单（Customer Match / lookalike seed / 平台受众包）+ holdback 分配台账",
+      "falsifier": "交集非空 ⇒ 该窗作废并重新分流；每次受众推送前跑一次 exclusion 校验并留痕",
+      "why": "把对照臂当种子灌进再营销，等于亲手把对照变成处理臂"
+    },
+    {
+      "id": "P3",
+      "name": "自然流量污染",
+      "criterion": "对照臂自然访问量 > 0，且分流后结构同分布",
+      "threshold": {
+        "natural_sessions_min": 1,
+        "balance_test": "预登记两比例检验 α=0.05"
+      },
+      "measure": "对照臂自然会话数；分流后新老访客比 / 设备构成的层间差异",
+      "ledger": "独立站埋点事件流（source 维）+ 分流台账",
+      "falsifier": "对照臂自然会话数 = 0（流量被截断，不是 holdback）或分流后构成差异显著 ⇒ 分流实现有缺陷，窗作废",
+      "why": "站内 holdback 不阻断自然访问与自然转化；且 SEO/口碑外溢会让对照臂也受益 ⇒ 只能判 ITT"
+    },
+    {
+      "id": "P4",
+      "name": "平台算法学习期",
+      "criterion": "预算/出价/素材变更后的冷却天数与单次幅度",
+      "threshold": {
+        "cooldown_days": 7,
+        "max_single_change_pct": 20
+      },
+      "measure": "变更日 → 判定日的天数；单次调整相对当前月预算的百分比",
+      "ledger": "Case/Event Ledger 的 Execution Attempt 时间戳 + 预算调整记录",
+      "falsifier": "变更后不足 7 个自然日的读数被判为效果，或单次调整 > 20% ⇒ 该读数标 in_learning 并从判定中剔除",
+      "why": "契约 CTR-A-050 §3 T3：单次调整超过 20% 会触发平台重新学习，短期效果反而更差；CTR-A-051 T4 的淘汰线用的正是「近 7 个自然日」窗口"
+    }
+  ],
+  "stopping_rules": [
+    {
+      "id": "S1",
+      "kind": "安全停止",
+      "criterion": "可售天数 < 在途预计到货天数（可售天数按近 14 个自然日日均销量算）",
+      "source": "CTR-A-049 §3 T4",
+      "action": "不得加预算"
+    },
+    {
+      "id": "S2",
+      "kind": "输入过期",
+      "criterion": "花费/库存/现金三份快照非同窗，或任一侧过期 > 1 个自然日",
+      "source": "CTR-A-049 §6 / CTR-A-050 §6",
+      "action": "该 Case 在接收门禁判 HOLD，转人工复核"
+    },
+    {
+      "id": "S3",
+      "kind": "劣臂淘汰",
+      "criterion": "该臂近 7 个自然日的增量 ROAS 后验中位数 < 1.0",
+      "source": "CTR-A-051 §3 T4",
+      "action": "淘汰该臂，预算迁回主臂"
+    },
+    {
+      "id": "S4",
+      "kind": "提前终止-无效",
+      "criterion": "预置无效边界：在信息比例 t 处条件功效 < 0.20",
+      "source": "本设计补充（source 为空，assumption）",
+      "action": "停止并关闭为 NoEffect，不得改判为「方向正确」"
+    },
+    {
+      "id": "S5",
+      "kind": "提前终止-有效",
+      "criterion": "仅在预置信息时点按 O'Brien–Fleming 型 α 消耗读出；终期回到 α = 0.05",
+      "source": "CTR-A-056 §3 T3",
+      "action": "达边界才允许固化；禁止按固定 α 逐日检验"
+    },
+    {
+      "id": "S6",
+      "kind": "提前终止-污染",
+      "criterion": "contamination_rate > 0.05，或对照臂出现系统性站外触达",
+      "source": "本设计补充（source 为空，assumption）",
+      "action": "立即停止并作废该窗，重新分流"
+    },
+    {
+      "id": "S7",
+      "kind": "观测窗下限",
+      "criterion": "观测窗 < 14 个自然日，或退款/取消尚未闭合",
+      "source": "CTR-A-057 §3/§6、CTR-A-048 §3、CTR-A-051 §3、CTR-A-056 §3",
+      "action": "不得写入关闭记录"
+    },
+    {
+      "id": "S8",
+      "kind": "幂等与单元占用",
+      "criterion": "同一分流单元当周内已进入另一未回填实验（CTR-A-056 为 1 个自然月）；同渠道并行实验 > 3 个",
+      "source": "CTR-A-057 §6、CTR-A-056 §3 T7",
+      "action": "不得发起新分流，进等待队列，不降级为「无对照观察」"
+    }
+  ],
+  "responsibilities": [
+    {
+      "contract_id": "CTR-A-057",
+      "responsibility": "增量分析",
+      "role_id": "AGT-035",
+      "metric": "增量转化（处理组实测值 − 对照组实测值）",
+      "result_type": "rate",
+      "inference_level": "user",
+      "layer_id": "L-USER",
+      "alpha": 0.05,
+      "power": 0.8,
+      "alpha_source": "paper2skills-vault/07-资源库/contracts/A/CTR-A-057-增量分析.md §3",
+      "result_denominator": "unit",
+      "inference_level_note": "契约 CTR-A-057 §2 ②：分流单元＝独立站访客标识",
+      "note": "对照臂占前台流量 10%（§3 业务侧默认）＋ 层内 1:1（同处）",
+      "mde_rel": 0.05,
+      "mde_source": "paper2skills-vault/07-资源库/contracts/A/CTR-A-057-增量分析.md §3（相对提升 5%）",
+      "baseline_key": "site_conversion_rate",
+      "baseline_value": 0.02,
+      "baseline_source": null,
+      "cells": 1,
+      "n_per_arm": 315208,
+      "n_total_units": 630416,
+      "pool_share_of_frontend": 0.2,
+      "n_star_daily_units_pool": 7005,
+      "n_star_daily_units": 35024,
+      "cycle_days": 90,
+      "declared_routing_infeasible": "quasi_experiment",
+      "declared_routing_feasible": "randomized_holdback",
+      "declared_routing": null,
+      "computed_routing": null,
+      "verdict": "TRAFFIC_INPUT_MISSING",
+      "reason": "无带来源的实测流量 ⇒ 只出 N* 与分支预备，不出「已达功效」"
+    },
+    {
+      "contract_id": "CTR-A-056",
+      "responsibility": "实验设计",
+      "role_id": "AGT-035",
+      "metric": "实验主指标（OEC，由 Case Charter 指定）",
+      "result_type": "rate",
+      "inference_level": "user",
+      "layer_id": "L-USER",
+      "alpha": 0.05,
+      "power": 0.8,
+      "alpha_source": "paper2skills-vault/07-资源库/contracts/A/CTR-A-056-实验设计.md §3",
+      "result_denominator": "unit",
+      "inference_level_note": "契约 CTR-A-056 §2 ②：分流单元＝独立站访客标识（不能访客级时退到账号级）",
+      "note": "T6 留出比例取分流单元 5%（上限 10%），且须满足 90 天内可检出 T2 的 MDE",
+      "mde_rel": 0.1,
+      "mde_source": "paper2skills-vault/07-资源库/contracts/A/CTR-A-056-实验设计.md §3（相对提升 10%）",
+      "baseline_key": "site_conversion_rate",
+      "baseline_value": 0.02,
+      "baseline_source": null,
+      "cells": 1,
+      "n_per_arm": 80683,
+      "n_total_units": 161366,
+      "pool_share_of_frontend": 0.2,
+      "n_star_daily_units_pool": 1793,
+      "n_star_daily_units": 8965,
+      "cycle_days": 90,
+      "declared_routing_infeasible": "quasi_experiment",
+      "declared_routing_feasible": "randomized_holdback",
+      "declared_routing": null,
+      "computed_routing": null,
+      "verdict": "TRAFFIC_INPUT_MISSING",
+      "reason": "无带来源的实测流量 ⇒ 只出 N* 与分支预备，不出「已达功效」"
+    },
+    {
+      "contract_id": "CTR-A-048",
+      "responsibility": "内容实验",
+      "role_id": "AGT-035",
+      "metric": "内容点击率 content_click ÷ content_impression",
+      "result_type": "rate_impression",
+      "inference_level": "user",
+      "layer_id": "L-USER",
+      "alpha": 0.05,
+      "power": 0.8,
+      "alpha_source": "paper2skills-vault/07-资源库/contracts/A/CTR-A-048-内容实验.md §3",
+      "result_denominator": "impression",
+      "inference_level_note": "契约 CTR-A-048 §2 ② 明写分流单元＝独立站访客标识 ⇒ 效应层级是访客级；曝光只是结果的分母，不是随机化单元",
+      "note": "分母是曝光不是访客；替代口径为站内随机化对照（§3 T5）",
+      "mde_rel": 0.05,
+      "mde_source": "paper2skills-vault/07-资源库/contracts/A/CTR-A-048-内容实验.md §3（相对提升 5%）",
+      "baseline_key": "content_ctr",
+      "baseline_value": 0.02,
+      "baseline_source": null,
+      "cells": 4,
+      "n_per_arm": 315208,
+      "n_total_units": 1260832,
+      "pool_share_of_frontend": 0.2,
+      "n_star_daily_units_pool": 14010,
+      "n_star_daily_units": 14010,
+      "cycle_days": 90,
+      "declared_routing_infeasible": "quasi_experiment",
+      "declared_routing_feasible": "randomized_holdback",
+      "declared_routing": null,
+      "computed_routing": null,
+      "verdict": "TRAFFIC_INPUT_MISSING",
+      "reason": "无带来源的实测流量 ⇒ 只出 N* 与分支预备，不出「已达功效」"
+    },
+    {
+      "contract_id": "CTR-A-051",
+      "responsibility": "广告实验",
+      "role_id": "AGT-021",
+      "metric": "增量 ROAS = 增量 GMV ÷ 该实验组广告花费",
+      "result_type": "cluster_continuous",
+      "inference_level": "geo",
+      "layer_id": "L-GEO",
+      "alpha": null,
+      "power": null,
+      "alpha_source": "契约未给 α/β（该条不是功效设计）",
+      "result_denominator": null,
+      "inference_level_note": null,
+      "note": "geo/switchback 要求对照单元在实验期内保持不投放（T5）",
+      "mde_rel": null,
+      "min_clusters": 2,
+      "min_exposure_per_arm": 1000,
+      "detectable_rel_effect": null,
+      "cv_upper_bound_for_actionable": null,
+      "declared_routing": "quasi_experiment",
+      "computed_routing": "quasi_experiment",
+      "verdict": "USE_QUASI_EXPERIMENT",
+      "reason": "geo CV 未提供",
+      "n_star_daily_units": null
+    },
+    {
+      "contract_id": "CTR-A-049",
+      "responsibility": "投放诊断",
+      "role_id": "AGT-021",
+      "metric": "ROAS 与归因份额差（规则口径份额 − 数据驱动份额）",
+      "result_type": "structural",
+      "inference_level": "channel",
+      "layer_id": "L-CHANNEL",
+      "alpha": null,
+      "power": null,
+      "alpha_source": "契约未给 α/β（该条不是功效设计）",
+      "result_denominator": null,
+      "inference_level_note": null,
+      "note": "契约自带准实验窗（暂停/关闭投放前后各 14 个自然日）；holdback 只作佐证读数",
+      "declared_routing": "holdback_corroboration_only",
+      "computed_routing": "holdback_corroboration_only",
+      "verdict": "USE_QUASI_EXPERIMENT",
+      "reason": "契约自身把识别口径定为准实验/响应曲线；holdback 只替换被解释变量或提供佐证读数，不承载该条的判定量 ⇒ 该条用准实验（holdback 仅佐证）",
+      "n_star_daily_units": null,
+      "mde_rel": null
+    },
+    {
+      "contract_id": "CTR-A-050",
+      "responsibility": "预算分配",
+      "role_id": "AGT-021",
+      "metric": "各渠道边际回报（每多花一元带来的成交额增量）",
+      "result_type": "structural",
+      "inference_level": "channel",
+      "layer_id": "L-CHANNEL",
+      "alpha": null,
+      "power": null,
+      "alpha_source": "契约未给 α/β（该条不是功效设计）",
+      "result_denominator": null,
+      "inference_level_note": null,
+      "note": "识别靠响应曲线与三类硬约束；holdback 建成后被解释变量由名义成交额换成增量成交额（T6）",
+      "declared_routing": "holdback_corroboration_only",
+      "computed_routing": "holdback_corroboration_only",
+      "verdict": "USE_QUASI_EXPERIMENT",
+      "reason": "契约自身把识别口径定为准实验/响应曲线；holdback 只替换被解释变量或提供佐证读数，不承载该条的判定量 ⇒ 该条用准实验（holdback 仅佐证）",
+      "n_star_daily_units": null,
+      "mde_rel": null
+    }
+  ],
+  "judgements": {
+    "J1_split_self_consistent": {
+      "pass": true,
+      "violations": []
+    },
+    "J2_idempotency": {
+      "pass": true,
+      "violations": []
+    },
+    "J3_layer_match": {
+      "pass": true,
+      "violations": []
+    },
+    "J10_coverage": {
+      "pass": true,
+      "violations": []
+    },
+    "J4_contract_source": {
+      "pass": true,
+      "violations": []
+    },
+    "J5_known_answer": {
+      "pass": true,
+      "n_per_arm": 31235,
+      "accepted_range": [
+        29000,
+        34000
+      ],
+      "case": "p̄=5%、相对 MDE=10%（5% vs 5.5%）、α=0.05 双侧、power=0.80"
+    },
+    "J6_inverse": {
+      "pass": true,
+      "rel_mde_inverted_exact": 0.09999999999999679,
+      "abs_err_exact": 3.219646771412954e-15,
+      "rel_mde_inverted_rounded_n": 0.09999937263887276,
+      "abs_err_rounded": 6.273611272422652e-07,
+      "note": "取整后的 n 反解会有 1/(2n) 量级的偏差（此处 ~1.6e-6），故两条容差分开给"
+    },
+    "J9_geo_consistency": {
+      "pass": true,
+      "violations": [],
+      "pending": [
+        "geo CV 未提供 ⇒ 该条只出假设网格，不出判定"
+      ],
+      "clusters_per_arm": 2,
+      "cv": null,
+      "computed_routing": null
+    },
+    "J11_stopping_falsifiable": {
+      "pass": true,
+      "violations": []
+    },
+    "J8_route_match": {
+      "pass": true,
+      "violations": [],
+      "pending": [
+        "增量分析：预登记 randomized_holdback / quasi_experiment，计算值待实测流量定",
+        "实验设计：预登记 randomized_holdback / quasi_experiment，计算值待实测流量定",
+        "内容实验：预登记 randomized_holdback / quasi_experiment，计算值待实测流量定"
+      ]
+    },
+    "J7_traffic_provenance": {
+      "pass": false,
+      "source": null,
+      "violations": [
+        "流量来源为空"
+      ]
+    }
+  },
+  "summary": {
+    "n_responsibilities": 6,
+    "verdict_tally": {
+      "TRAFFIC_INPUT_MISSING": 3,
+      "USE_QUASI_EXPERIMENT": 3
+    },
+    "quasi_list": [
+      "广告实验",
+      "投放诊断",
+      "预算分配"
+    ],
+    "randomized_list": [],
+    "missing_traffic_list": [
+      "增量分析",
+      "实验设计",
+      "内容实验"
+    ],
+    "n_judgements_failed": 1
+  },
+  "split_cost_comparison": {
+    "note": "读法 A 满足契约两条（对照 10% + 层内 1:1）；读法 B 违反层内 1:1 但在同样 n 下更省前台流量。两个数都由本脚本现算，随基线 p̄ 变动（此处取示例点，来源为空）。",
+    "by_responsibility": {
+      "增量分析": {
+        "pool_20_1to1": {
+          "pool_units": 630416,
+          "frontend_units": 3152080
+        },
+        "direct_90_10": {
+          "pool_units": 1751152,
+          "frontend_units": 1751152,
+          "ratio_treatment_over_control": 9.0
+        },
+        "frontend_ratio_direct_over_pool": 0.5555544275526002
+      },
+      "实验设计": {
+        "pool_20_1to1": {
+          "pool_units": 161366,
+          "frontend_units": 806830
+        },
+        "direct_90_10": {
+          "pool_units": 448237,
+          "frontend_units": 448237,
+          "ratio_treatment_over_control": 9.0
+        },
+        "frontend_ratio_direct_over_pool": 0.5555532144317886
+      }
+    }
+  },
+  "sensitivity": {
+    "baseline_grid": {
+      "site_conversion_rate": [
+        0.005,
+        0.01,
+        0.02,
+        0.03,
+        0.05
+      ],
+      "content_ctr": [
+        0.005,
+        0.01,
+        0.02,
+        0.03,
+        0.05
+      ]
+    },
+    "traffic_grid": {
+      "L-USER": [
+        1000,
+        5000,
+        10000,
+        50000
+      ],
+      "L-GEO": [
+        2,
+        5,
+        20,
+        100
+      ],
+      "daily_content_impressions": [
+        10000,
+        50000,
+        200000,
+        1000000
+      ]
+    },
+    "geo_cv_grid": [
+      0.05,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "rows": [
+      {
+        "responsibility": "增量分析",
+        "baseline": 0.005,
+        "cells": 1,
+        "n_total_units": 2561240,
+        "n_star_daily_units_pool": 28459,
+        "n_star_daily_frontend_units": 142292,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 12806.2,
+          "5000": 2561.2,
+          "10000": 1280.6,
+          "50000": 256.1
+        }
+      },
+      {
+        "responsibility": "增量分析",
+        "baseline": 0.01,
+        "cells": 1,
+        "n_total_units": 1274024,
+        "n_star_daily_units_pool": 14156,
+        "n_star_daily_frontend_units": 70780,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 6370.1,
+          "5000": 1274.0,
+          "10000": 637.0,
+          "50000": 127.4
+        }
+      },
+      {
+        "responsibility": "增量分析",
+        "baseline": 0.02,
+        "cells": 1,
+        "n_total_units": 630416,
+        "n_star_daily_units_pool": 7005,
+        "n_star_daily_frontend_units": 35024,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 3152.1,
+          "5000": 630.4,
+          "10000": 315.2,
+          "50000": 63.0
+        }
+      },
+      {
+        "responsibility": "增量分析",
+        "baseline": 0.03,
+        "cells": 1,
+        "n_total_units": 415880,
+        "n_star_daily_units_pool": 4621,
+        "n_star_daily_frontend_units": 23105,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 2079.4,
+          "5000": 415.9,
+          "10000": 207.9,
+          "50000": 41.6
+        }
+      },
+      {
+        "responsibility": "增量分析",
+        "baseline": 0.05,
+        "cells": 1,
+        "n_total_units": 244250,
+        "n_star_daily_units_pool": 2714,
+        "n_star_daily_frontend_units": 13570,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 1221.2,
+          "5000": 244.2,
+          "10000": 122.1,
+          "50000": 24.4
+        }
+      },
+      {
+        "responsibility": "实验设计",
+        "baseline": 0.005,
+        "cells": 1,
+        "n_total_units": 655846,
+        "n_star_daily_units_pool": 7288,
+        "n_star_daily_frontend_units": 36436,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 3279.2,
+          "5000": 655.8,
+          "10000": 327.9,
+          "50000": 65.6
+        }
+      },
+      {
+        "responsibility": "实验设计",
+        "baseline": 0.01,
+        "cells": 1,
+        "n_total_units": 326192,
+        "n_star_daily_units_pool": 3625,
+        "n_star_daily_frontend_units": 18122,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 1631.0,
+          "5000": 326.2,
+          "10000": 163.1,
+          "50000": 32.6
+        }
+      },
+      {
+        "responsibility": "实验设计",
+        "baseline": 0.02,
+        "cells": 1,
+        "n_total_units": 161366,
+        "n_star_daily_units_pool": 1793,
+        "n_star_daily_frontend_units": 8965,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 806.8,
+          "5000": 161.4,
+          "10000": 80.7,
+          "50000": 16.1
+        }
+      },
+      {
+        "responsibility": "实验设计",
+        "baseline": 0.03,
+        "cells": 1,
+        "n_total_units": 106424,
+        "n_star_daily_units_pool": 1183,
+        "n_star_daily_frontend_units": 5913,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 532.1,
+          "5000": 106.4,
+          "10000": 53.2,
+          "50000": 10.6
+        }
+      },
+      {
+        "responsibility": "实验设计",
+        "baseline": 0.05,
+        "cells": 1,
+        "n_total_units": 62470,
+        "n_star_daily_units_pool": 695,
+        "n_star_daily_frontend_units": 3471,
+        "traffic_key": "L-USER",
+        "days_at_grid": {
+          "1000": 312.4,
+          "5000": 62.5,
+          "10000": 31.2,
+          "50000": 6.2
+        }
+      },
+      {
+        "responsibility": "内容实验",
+        "baseline": 0.005,
+        "cells": 4,
+        "n_total_units": 5122480,
+        "n_star_daily_units_pool": 56917,
+        "n_star_daily_frontend_units": 56917,
+        "traffic_key": "daily_content_impressions",
+        "days_at_grid": {
+          "10000": 512.2,
+          "50000": 102.4,
+          "200000": 25.6,
+          "1000000": 5.1
+        }
+      },
+      {
+        "responsibility": "内容实验",
+        "baseline": 0.01,
+        "cells": 4,
+        "n_total_units": 2548048,
+        "n_star_daily_units_pool": 28312,
+        "n_star_daily_frontend_units": 28312,
+        "traffic_key": "daily_content_impressions",
+        "days_at_grid": {
+          "10000": 254.8,
+          "50000": 51.0,
+          "200000": 12.7,
+          "1000000": 2.5
+        }
+      },
+      {
+        "responsibility": "内容实验",
+        "baseline": 0.02,
+        "cells": 4,
+        "n_total_units": 1260832,
+        "n_star_daily_units_pool": 14010,
+        "n_star_daily_frontend_units": 14010,
+        "traffic_key": "daily_content_impressions",
+        "days_at_grid": {
+          "10000": 126.1,
+          "50000": 25.2,
+          "200000": 6.3,
+          "1000000": 1.3
+        }
+      },
+      {
+        "responsibility": "内容实验",
+        "baseline": 0.03,
+        "cells": 4,
+        "n_total_units": 831760,
+        "n_star_daily_units_pool": 9242,
+        "n_star_daily_frontend_units": 9242,
+        "traffic_key": "daily_content_impressions",
+        "days_at_grid": {
+          "10000": 83.2,
+          "50000": 16.6,
+          "200000": 4.2,
+          "1000000": 0.8
+        }
+      },
+      {
+        "responsibility": "内容实验",
+        "baseline": 0.05,
+        "cells": 4,
+        "n_total_units": 488500,
+        "n_star_daily_units_pool": 5428,
+        "n_star_daily_frontend_units": 5428,
+        "traffic_key": "daily_content_impressions",
+        "days_at_grid": {
+          "10000": 48.9,
+          "50000": 9.8,
+          "200000": 2.4,
+          "1000000": 0.5
+        }
+      }
+    ]
+  },
+  "exit": {
+    "code": 2,
+    "reason": "输入没拿到（≠ 通过）"
+  }
+}

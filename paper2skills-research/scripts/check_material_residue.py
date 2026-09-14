@@ -50,6 +50,16 @@ D27 是「豁免只认**词**不认**话题**」⇒ 收紧到**条目块**；
 
 ⚠️ **`2` 不是 `0`**：没扫到 ≠ 干净。本仓库已有 `scan_secrets.py`（扫到 0 文件判失败）与
 `run_phase6_gates.py`（一个门禁都没跑到 = exit 3）两条先例。
+
+## `--family`：两个家族的定标状态不同，**判定必须分开**
+
+| 家族 | 定标状态 | 能否进验收面 |
+|---|---|---|
+| **一 · 词**（块内声称「材料」而词查无实据） | **未定标**（24 个词里只有 `季度经营策略` 经独立确认是真阳性，其余大部分逐条看下来仍是假阳性） | ❌ **不许**（把一个未定标的仪器接进门禁 = 制造噪声，而噪声会被忽略 —— 台账 #67） |
+| **二 · 章节号**（声称「材料 §X / 第X章」而材料没有该编号） | **已逐号对材料核实**（材料编号章节只有 `1–12` 与 `R01–R05`；`§E.`/`§F.` 是我方综述的章节号） | ✅ **已接**（`--family sections` ⇒ 验收面 **L4k**） |
+
+`--family sections` 下**家族一照常扫描、但不参与退出码**，并**在输出里明写它未被判定**
+（未判定的那一维必须看得见，否则「没测到」会被读成「测了是干净的」—— 本仓库台账 #23 同族）。
 """
 
 from __future__ import annotations
@@ -60,6 +70,8 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+
+FAMILIES = ("all", "terms", "sections")
 
 REPO = Path(__file__).resolve().parents[2]
 DEFAULT_MATERIAL = Path("/Users/lute/project/AI组织变革")
@@ -274,7 +286,9 @@ def collect(contracts: Path):
     return files
 
 
-def run(contracts: Path, material: Path, quiet: bool = False) -> int:
+def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all") -> int:
+    if family not in FAMILIES:
+        raise SystemExit(f"未知 --family {family!r}，只认 {FAMILIES}")
     try:
         corpus, n_mat = load_corpus(material)
         sections = material_sections(material)
@@ -293,29 +307,49 @@ def run(contracts: Path, material: Path, quiet: bool = False) -> int:
         for x in s:
             sect_counter.setdefault(x["hit"], []).append(p.name)
 
+    judge_terms = family in ("all", "terms")
+    judge_sects = family in ("all", "sections")
+
     if not quiet:
         print(f"材料根：{material}（{n_mat} 个文件，已排 `.git/`）· 扫描 {len(files)} 份契约")
-        print(f"扫描单元：**blockquote 条目块**（连续 `>` 行成块）—— 故意比 L4e 的「行」宽\n")
+        print(f"扫描单元：**blockquote 条目块**（连续 `>` 行成块）—— 故意比 L4e 的「行」宽")
+        if family != "all":
+            unjudged = "家族一 · 词（未定标，见台账 #67 的 W-67c）" if family == "sections" \
+                else "家族二 · 章节号"
+            print(f"⚠️ 本次只判 `--family {family}`；**{unjudged} 只扫不判**"
+                  f"（不参与退出码 —— 未判定 ≠ 干净）")
+        print()
         if term_counter:
-            print(f"❌ 家族一 · 块内声称「材料」而词在材料里查无实据："
+            head = "❌" if judge_terms else "⚠️[未判]"
+            print(f"{head} 家族一 · 块内声称「材料」而词在材料里查无实据："
                   f"**{sum(len(v) for v in term_counter.values())} 处 / "
                   f"{len({f for v in term_counter.values() for f in v})} 份 / {len(term_counter)} 个词**")
             for term, fs in sorted(term_counter.items(), key=lambda kv: -len(kv[1])):
                 print(f"    · 「{term}」 ×{len(fs)} 份：{'、'.join(sorted(set(fs))[:8])}"
                       f"{' …' if len(set(fs)) > 8 else ''}")
         if sect_counter:
-            print(f"\n❌ 家族二 · 声称「材料 §X / 第X章」："
+            head = "❌" if judge_sects else "⚠️[未判]"
+            print(f"\n{head} 家族二 · 声称「材料 §X / 第X章」："
                   f"**{sum(len(v) for v in sect_counter.values())} 处 / "
                   f"{len({f for v in sect_counter.values() for f in v})} 份**")
             for hit, fs in sorted(sect_counter.items(), key=lambda kv: -len(kv[1])):
                 print(f"    · `{hit}` ×{len(fs)} 份")
-        if not term_counter and not sect_counter:
+        if judge_terms and judge_sects and not term_counter and not sect_counter:
             print("✅ 无残留（家族一、家族二均为 0）")
 
-    total = sum(len(v) for v in term_counter.values()) + sum(len(v) for v in sect_counter.values())
+    n_term = sum(len(v) for v in term_counter.values())
+    n_sect = sum(len(v) for v in sect_counter.values())
+    total = (n_term if judge_terms else 0) + (n_sect if judge_sects else 0)
     if not quiet:
-        print(f"\n⇒ 残留合计 **{total} 处** —— exit {1 if total else 0}")
+        scope = "本次判定范围内" if family != "all" else ""
+        print(f"\n⇒ {scope}残留合计 **{total} 处** —— exit {1 if total else 0}")
+        if not judge_terms and n_term:
+            print(f"   （另有家族一 {n_term} 处**未被判定** —— 它未定标，"
+                  f"不得读作「干净」，见台账 #67 的 W-67c）")
+        if not judge_sects and n_sect:
+            print(f"   （另有家族二 {n_sect} 处**未被判定**）")
     return 1 if total else 0
+
 
 
 # --------------------------------------------------------------------------- #
@@ -373,7 +407,7 @@ def selftest() -> int:
     import tempfile
     cases = []
 
-    def scan_one(body: str, material_files: dict):
+    def scan_one(body: str, material_files: dict, family: str = "all"):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             mroot = root / "material"
@@ -383,7 +417,7 @@ def selftest() -> int:
             croot = root / "contracts"
             (croot / "A").mkdir(parents=True)
             (croot / "A" / "CTR-A-999-夹具.md").write_text(body, encoding="utf-8")
-            code = run(croot, mroot, quiet=True)
+            code = run(croot, mroot, quiet=True, family=family)
             return code
 
     # 材料里只有「月度经营复盘」，没有「季度经营策略」、没有 §F.5
@@ -396,6 +430,29 @@ def selftest() -> int:
     cases.append(("④ `材料 §F.5` 章节号 ⇒ exit 1", scan_one(RESIDUE_SECTION, MAT) == 1))
     cases.append(("⑤ 去归属语在块内 ⇒ exit 0（不许把「本契约的读法」算成材料声称）",
                   scan_one(DEATTRIB_FIXTURE, MAT) == 0))
+
+    # ⑧–⑪ `--family` 开关的**隔离性**：两个家族的定标状态不同，判定必须真的分开。
+    #     ⚠️ 只测「开关能选」是没劲的 —— 必须证明**同一个夹具在两个家族下判决相反**。
+    cases.append(("⑧ `--family sections` 对「只有家族一残留」的夹具 ⇒ exit 0（不越界判）",
+                  scan_one(RESIDUE_CONT, MAT, family="sections") == 0))
+    cases.append(("⑨ 同一夹具 `--family terms` ⇒ exit 1（隔离是双向的，不是恒绿）",
+                  scan_one(RESIDUE_CONT, MAT, family="terms") == 1))
+    cases.append(("⑩ `--family terms` 对「只有家族二残留」的夹具 ⇒ exit 0（反向隔离）",
+                  scan_one(RESIDUE_SECTION, MAT, family="terms") == 0))
+    cases.append(("⑪ `--family sections` 对「只有家族二残留」的夹具 ⇒ exit 1"
+                  "（L4k 就是靠这一条有劲）",
+                  scan_one(RESIDUE_SECTION, MAT, family="sections") == 1))
+    # ⑫ 材料**真有**该章节号时不算残留（防止 `--family sections` 变成恒红）
+    MAT_SEC = {"m.md": "# 1 总则\n\n## 1.2 运行边界\n\n材料原文：动作策略必须绑定具体范围。\n"}
+    FIX_HIT = """---
+template_version: v2
+---
+
+- 依据＝材料 §1.2 的运行边界。
+"""
+    cases.append(("⑫ 材料真有 `§1.2` ⇒ exit 0（逐号核实，不是一律可疑）",
+                  scan_one(FIX_HIT, MAT_SEC, family="sections") == 0))
+
 
     # ⑥ 输入没拿到 ⇒ exit 2，**不是 0**
     with tempfile.TemporaryDirectory() as td:
@@ -424,13 +481,16 @@ def main() -> int:
     ap.add_argument("--contracts", default=str(DEFAULT_CONTRACTS), help="契约目录")
     ap.add_argument("--json-out", default="", help="机读产物路径")
     ap.add_argument("--quiet", action="store_true")
+    ap.add_argument("--family", default="all", choices=FAMILIES,
+                    help="只判哪个家族（默认 all；验收面 L4k 用 sections —— 家族一未定标）")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
     if a.selftest:
         return selftest()
-    code = run(Path(a.contracts), Path(a.material), quiet=a.quiet)
+    code = run(Path(a.contracts), Path(a.material), quiet=a.quiet, family=a.family)
     if a.json_out:
-        Path(a.json_out).write_text(json.dumps({"exit": code}, ensure_ascii=False), encoding="utf-8")
+        Path(a.json_out).write_text(
+            json.dumps({"exit": code, "family": a.family}, ensure_ascii=False), encoding="utf-8")
     return code
 
 
