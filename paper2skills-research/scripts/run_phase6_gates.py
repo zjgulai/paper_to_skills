@@ -555,17 +555,31 @@ def mutate() -> int:
         if old not in rsrc:
             print(f"  ❌ {label} —— 变异施不上力（锚点文本找不到，说明上游改了代码）")
             continue
-        with tempfile.TemporaryDirectory() as td:
-            mp = Path(td) / "check_material_residue_mutant.py"
-            mp.write_text(rsrc.replace(old, new, 1), encoding="utf-8")
-            cases, _ = e2e_material_residue_gate(checker=mp)
-            hit = dict(cases)
-            caught = hit.get(catcher) is False
-            print(f"  {'✅' if caught else '❌'} {label}")
-            print(f"        应由「{catcher}」抓住 —— "
-                  f"{'抓住了' if caught else '**没抓住**（该用例是摆设）'}")
-            if caught:
-                n_ok += 1
+        # ⚠️ 变异副本**必须写在原文件旁边**，不能写进 `TemporaryDirectory`：
+        #    `check_material_residue.py` 要 `from check_material_citations import normalize`
+        #    （#79 的同尺要求），副本落在别处 ⇒ **ImportError ⇒ 变异体根本没跑起来**，
+        #    而读数长得像「用例是摆设」（实测 R1/R3 从 7/7 掉到 5/7 就是这个原因）。
+        #    这是本仓库记过的同一条：「变异体因硬编码路径**从没被跑过**」。
+        #    故本目录写、用完即删，并断言**不留残件**。
+        mut = Path(_p("check_material_residue.py")).with_name("_mutant_check_material_residue.py")
+        try:
+            mut.write_text(rsrc.replace(old, new, 1), encoding="utf-8")
+            cases, _ = e2e_material_residue_gate(checker=mut)
+        finally:
+            mut.unlink(missing_ok=True)
+        assert not mut.exists(), f"变异副本未清理：{mut}"
+        hit = dict(cases)
+        caught = hit.get(catcher) is False
+        print(f"  {'✅' if caught else '❌'} {label}")
+        print(f"        应由「{catcher}」抓住 —— "
+              f"{'抓住了' if caught else '**没抓住**（该用例是摆设）'}")
+        if caught:
+            n_ok += 1
+
+    leftovers = sorted(p.name for p in Path(_p("")).glob("_mutant_*.py"))
+    print(f"  变异副本残留：{len(leftovers)} 份{'（' + '、'.join(leftovers) + '）' if leftovers else ''}")
+    if leftovers:
+        return 1
 
     total_mutants = len(MUTANTS) + len(RMUTANTS)
     print(f"\n{n_ok}/{total_mutants} 抓住")

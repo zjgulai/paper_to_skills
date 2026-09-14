@@ -284,6 +284,22 @@ def scan_file(path: Path, corpus: str, sections: set[str]):
             gov = normalize(block[max(0, lo - 12): lo + 12])
             if any(d in gov for d in DEATTRIB):
                 continue
+            # 去归属语**还要看词自己身边**（前后各 12 字）—— 2026-09-13 实测补上（台账 **#80**）。
+            #
+            # ⚠️ 为什么必须两处都看：`材料已给出的数（…）` 的**括号跨度**是个**语法容器**，
+            #    它把整个枚举**都**算成了材料的声称 —— 而枚举里的每一项**自带归属**：
+            #    实测 4 处假阳性全在这个形态里，且每处的归属就写在**词自己旁边**：
+            #      · `独立站 holdback「没有、可以建、但需先建」＝**决策 Q10**；`   （×3 份）
+            #      · `「…其余 20% 渠道构成未明」＝**开放事实 O1**）；`
+            #    只查 `材料` 邻域 ⇒ 这 4 处都被判成「声称材料说了」。
+            #    两处都查 = 「**容器说是材料的 ≠ 容器里每一项都是材料的**」。
+            # ⚠️ 反向风险（本仓库亲手踩过，D27）：豁免只认词不认话题 ⇒ 假绿。
+            #    故窗口**只有 12 字**、且配套 selftest ⑲/⑳ 一正一反：
+            #    带 `＝决策 Q10` 的不报，**去掉那三个字后必须照旧报**。
+            tstart, tend = qm.start(1), qm.end(1)
+            near_term = normalize(block[max(0, tstart - 12): tend + 12])
+            if any(d in near_term for d in DEATTRIB):
+                continue
             if normalize(term) in corpus:
                 continue
             term_res.append({"line": ln, "term": term})
@@ -497,6 +513,19 @@ template_version: v2
                   scan_one(EMPH_OK, MAT, family="terms") == 0))
     cases.append(("⑱ 反向控制：强调符包裹的**假引文** ⇒ 必须照旧 exit 1",
                   scan_one(EMPH_BAD, MAT, family="terms") == 1))
+
+    # ⑲/⑳ 去归属语**看词自己身边**（台账 #80）：`材料已给出的数（…）` 的括号跨度是语法容器，
+    #      容器里每一项**自带归属**。一正一反：带 `＝决策 Q10` 的不报，**去掉那三个字后必须报**。
+    LABELED = """> **取值来源纪律**：来源只有三类 ——
+> （a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；独立站 holdback「没有、可以建、但需先建」＝决策 Q10）；
+"""
+    UNLABELED = """> **取值来源纪律**：来源只有三类 ——
+> （a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；独立站 holdback「没有、可以建、但需先建」）；
+"""
+    cases.append(("⑲ 容器里**自带归属**的枚举项（`＝决策 Q10`）⇒ exit 0，不得算成材料声称",
+                  scan_one(LABELED, MAT, family="terms") == 0))
+    cases.append(("⑳ 反向控制：**去掉**那句归属语后 ⇒ 必须照旧 exit 1（豁免不是全放行）",
+                  scan_one(UNLABELED, MAT, family="terms") == 1))
 
     ok = True
     for label, passed in cases:
