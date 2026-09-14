@@ -1705,6 +1705,12 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
 
     #: 端到端变异（值变异）在 --check 里也算一遍 —— 报告必须能回答
     #: 「你说每条判据都会失败，证据呢」。它只做**值变异**（不 spawn 子进程），开销可忽略。
+    #: 图谱漂移判据的两侧指纹 —— 在 dict **之前**算好：报告正文是一个列表字面量，
+    #: 里面**放不了赋值语句**（首版把 `x = ...` 写进列表 ⇒ SyntaxError）。
+    _graph_sha_now = _sha16(REPO / 'paper2skills-vault' / '07-资源库' / 'capability-graph.json')
+    _ledger_sha = ledger['_meta'].get('graph_sha256')
+    _drift = _graph_sha_now != _ledger_sha
+
     muts = mutation_table(make_collector(inputs, src_text, worklist), len(queries))
     if muts["judges_uncovered"]:
         judge_errors["J1"].append(
@@ -1748,15 +1754,34 @@ def run(as_json: bool = False, json_out: Path = OUT_JSON, md_out: Path = OUT_MD,
             "`adhd` / `alzheimer` 收窄实现）。按纪律**只登记不重判、不擅自改 filter**；"
             "同时配了一条能打红的判据：**若哪天 filter 真把 `trial` 列进 01/02 域（即开始误杀 RCT "
             "方法论论文）必须报红**（`FORBIDDEN_NEGATIVES`，selftest 里有对应变异）。",
-            "🔴 **登记（不重判）：上游图谱在本任务执行期间被改动过** —— "
-            f"工单账 `_meta.graph_sha256` 记的是 `{ledger['_meta'].get('graph_sha256')}`，"
-            f"而 `capability-graph.json` 现在的 sha256 前 16 位是 `{_sha16(REPO / 'paper2skills-vault' / '07-资源库' / 'capability-graph.json')}`"
-            "（文件 mtime 也晚于工单生成时间）。⇒ **工单可能已滞后于图谱**。"
-            "本任务（S4）只消费工单、不重建它（纪律 6：不改缺口账生成器），"
-            "故只登记：下一次跑 F3 的 `--check` 会由**它自己的**判据报出来。"
-            "产物的 `_input_fingerprints` 已把两侧指纹都记下，消费方可自查。"
-            "实测确认：`build_gap_ledger.py --check` 现在确实判红（红在「工单与图谱/分类现状不一致」），"
-            "而那是**上游改动**造成的，不是本脚本改的。",
+            # ⚠️ 这一段**必须条件化**（`_drift` 在 dict 之前算好 —— 列表里放不了语句）。
+            # 首版是**冻结的一句话**：不管指纹是否相同都写「上游图谱被改动过 ⇒ 工单可能已滞后」，
+            # 于是**上游漂移被消除之后，这句话本身变成了假话** ——
+            # 实测：重生成缺口账后两侧指纹都成了 `ecda4970…`，报告却仍写着
+            # 「记的是 ecda49…，而现在是 ecda49… ⇒ 工单可能已滞后」（自相矛盾），
+            # 并仍断言「`build_gap_ledger.py --check` 现在确实判红」（此时已绿）。
+            # ⇒ **「登记」不是「刻石」**：一条登记的成立条件变了，它就得跟着变。
+            # 这正是本仓库反复记的那一族（#23/#24：账落后于实物；#88：把「本次没命中」当「过期」）。
+            (
+                "🔴 **登记（不重判）：上游图谱在本任务执行期间被改动过** —— "
+                f"工单账 `_meta.graph_sha256` 记的是 `{_ledger_sha}`，"
+                f"而 `capability-graph.json` 现在的 sha256 前 16 位是 `{_graph_sha_now}`"
+                "（文件 mtime 也晚于工单生成时间）。⇒ **工单可能已滞后于图谱**。"
+                "本任务（S4）只消费工单、不重建它（纪律 6：不改缺口账生成器），"
+                "故只登记：下一次跑 F3 的 `--check` 会由**它自己的**判据报出来。"
+                "产物的 `_input_fingerprints` 已把两侧指纹都记下，消费方可自查。"
+                "实测确认：`build_gap_ledger.py --check` 现在确实判红"
+                "（红在「工单与图谱/分类现状不一致」），而那是**上游改动**造成的，不是本脚本改的。"
+                if _drift else
+                f"✅ **无漂移（本条前身是一条真实漂移登记，现已消除）** —— 工单账与图谱的指纹"
+                f"**两侧相同**（均 `{_graph_sha_now}`）⇒ 工单不再滞后于图谱，"
+                "`build_gap_ledger.py --check` 已转绿（由门禁 **L3a** 判）。"
+                "⚠️ 本行的**前身**（2026-09-13）登记过一次真实漂移"
+                "（`be36dd1d197def0e` → `ecda4970bbb7b56b`，因图谱新增 `closed_items`），"
+                "那次确实由 F3 自己的 `--check` 报了出来、并已重生成。"
+                "**保留这句是为了说明「漂移是被消除的，不是被忽略的」** —— "
+                "而不是继续声称「仍可能滞后」。"
+            ),
         ],
     }
 
