@@ -126,6 +126,15 @@ GATES: list[Gate] = [
     Gate("L4m", "材料归属残留：块内声称「材料」而词查无实据（家族一，本体已清 + 可见豁免）",
          ["check_material_residue.py", "--family", "terms", "--material", MATERIAL,
           "--baseline", str(REPO / "paper2skills-research" / "data" / "material-residue-baseline.json")]),
+    # 家族三 · **归属形态**（W-67d 统一形态，2026-09-13）：一个值必须住在它自己那一栏里。
+    # 之所以另立一条而不是并进 L4k/L4m：它判的**不是「这个词在不在材料里」**（那是 L4e/L4m 的事），
+    # 而是「**这个值住在 §0 的哪一栏**」—— 同一句话，位置不同，读法就不同。
+    # 四条判据分开报（它们问的是四个不同的问题）：指针留在 (a) / 负项留在 (a) /
+    # 附录挂错子句 / 该值完全没备案。接上时实测 **76 处**，统一后归零。
+    # ⚠️ 判据的**适用面**本身就是一条要守的东西：139 份里 8 份没有 §0 块 ⇒ 那一族
+    #    **无从判定**，必须当读数打出来（未判定 ≠ 干净，台账 #67）。
+    Gate("L4n", "契约 §0：一个值必须住在它自己那一栏里（归属形态，四判据）",
+         ["check_material_residue.py", "--family", "form", "--material", MATERIAL]),
     # --- 跨契约同质化（S1 收口期新增）---
     Gate("L4g", "契约层：跨文件同质化机检", ["check_contract_dedup.py"]),
     Gate("L4h", "契约层：同质化检测器自检", ["check_contract_dedup.py", "--selftest"], kind="selftest"),

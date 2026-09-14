@@ -201,9 +201,240 @@ REWORDS = [
     ),
 ]
 
+# ── §0（a）枚举里的 25 处「就地短标」⇒ 搬家（W-67d 统一形态）─────────────────
+#
+# `fb2546a` 之后，全库两种形态并存：**37 处搬家** 与 **25 处就地短标**
+# （`季度档不在材料里 ⇒ 本档改记（b）` 留在 (a) 的枚举里）。主控上一轮把它登记为
+# 「待决策」；所有者裁定 **统一**，本批即把 25 处改成搬家。
+#
+# ⚠️ 上一轮登记的是「13 处」，**那个数是错的** —— 它来自 `grep "改记（b）"`，
+# 而另一半用的是别的动词（`并归` / `归` / `转` / `并记` / `转`）。本批改用**结构判据**
+# （见 `check_a_span`）重数，得 25 处；**这正是「判据只认一种写法」的第 N 次复发**。
+#
+# 这 25 处的 (a) 文本**已经是诚实的**（它们没说材料给了季度档），坏的是：(i) 一个
+# **不属于 (a) 的项**住在 (a) 的枚举里、(ii) (b) 的账不收它、(iii) 那个「⇒ 改记（b）」
+# 是**人写的、机器不验的**交叉引用。故本批的删除物是**指针**，不是内容。
+#
+# 每行八元组：
+#   (相对路径, (a) 侧原串, (a) 侧新串, 点名的指针, 该契约自己的缺档原话, 条件词, 替换条件, 落定词)
+# `(a) 侧原串 = None` ⇒ 该契约 (a) 里没有指针（只补 (b) 的账，见 RULES_ENROLL）。
+RULES_POINTER = [
+    # —— 形态一：同行内嵌括注（5 处）—— 删整个括注，标点不动
+    ('A/CTR-A-004-GMV归因分析.md',
+     '（材料只到月度这一档 ⇒ 季度档记（b））', '', '材料只到月度这一档 ⇒ 季度档记（b）',
+     '材料只到月度这一档', '替换条件 ＝',
+     ' 待〈平台后台〉与〈独立站埋点〉各读满 2 个完整年度，改用使条件独立性检验在留出窗上可复现的最小周数', '属本档'),
+    ('A/CTR-A-010-趋势监测.md',
+     '（材料未给季度粒度 ⇒ 季度节奏归（b））', '', '材料未给季度粒度 ⇒ 季度节奏归（b）',
+     '材料未给季度粒度', '替换条件 ＝',
+     ' 〈新品验证证据包〉与〈市场进入包〉按季回填满 2 个完整年度后，换成实测季节周期长度', '归本档'),
+    ('A/CTR-A-015-算法评估设计.md',
+     '（材料侧无季度粒度 ⇒ 改记（b））', '', '材料侧无季度粒度 ⇒ 改记（b）',
+     '材料侧无季度粒度', '替换条件 ＝',
+     ' staging 故障注入能力到位后，按该任务实测执行次数分布定窗', '转本档'),
+    ('A/CTR-A-025-库存分层.md',
+     '（材料未定名季度粒度 ⇒ 本档改记（b））', '', '材料未定名季度粒度 ⇒ 本档改记（b）',
+     '材料未定名季度粒度', '替换条件 ＝',
+     ' 〈采购台账〉与〈平台后台〉的仓库清单满 2 个完整年度后，换成实测补货提前期的 P75', '同属本档'),
+    ('A/CTR-A-071-运行监测.md',
+     '（材料只写给月档 ⇒ 季度档改记（b））', '', '材料只写给月档 ⇒ 季度档改记（b）',
+     '材料只写给月档', '替换条件 ＝',
+     ' 〈Agent 运行日志〉满 2 个完整年度后，扩量观察窗换成各层可用性波动的自相关长度', '归本档'),
+    # —— 形态二：跨行独立项（18 处）——「、」收尾 ⇒ 改成「；」，指针整段删
+    ('A/CTR-A-012-商业案例.md',
+     '、\n> 季度档不在材料里 ⇒ 本档改记（b）**业务侧默认**；', '；',
+     '季度档不在材料里 ⇒ 本档改记（b）**业务侧默认**',
+     '季度档不在材料里', '替换条件 ＝',
+     ' 报价单按季换版即换数，改用该季首版报价重算保本与回收期', '记本档'),
+    ('A/CTR-A-014-BOM与材料分析.md',
+     '、\n> 材料只有月度粒度 ⇒ 季度档并（b）；', '；',
+     '材料只有月度粒度 ⇒ 季度档并（b）',
+     '材料只有月度粒度', '替换条件 ＝',
+     ' 〈图纸与规格受控库〉换版是替换点，届时按该版的公差清单与替代料候选表重算', '并本档'),
+    ('A/CTR-A-019-采购比价.md',
+     '、\n> 季度档不在材料里 ⇒ 记（b）；', '；',
+     '季度档不在材料里 ⇒ 记（b）',
+     '季度档不在材料里', '替换条件 ＝',
+     ' 〈采购台账〉按季跑满 2 个完整年度后，占款阈值换成实测占款周转分布', '计本档'),
+    ('A/CTR-A-024-供需协调.md',
+     '、\n> 季度粒度不属材料 ⇒ 并记（b）；', '；',
+     '季度粒度不属材料 ⇒ 并记（b）',
+     '季度粒度不属材料', '替换条件 ＝',
+     ' 〈采购台账〉与〈平台后台〉的可用量口径满 2 个完整年度后，换成实测投放可支撑天数分布', '并入本档'),
+    ('A/CTR-A-029-物流方案.md',
+     '、\n> 材料未给季度粒度 ⇒ 本档并归（b）；', '；',
+     '材料未给季度粒度 ⇒ 本档并归（b）',
+     '材料未给季度粒度', '替换条件取 ',
+     '〈承运商费率卡与合同〉满 2 个完整年度后，换成实际换版间隔的中位数', '并归本档'),
+    ('A/CTR-A-032-退货分流.md',
+     '、\n> 季度粒度不由材料给出 ⇒ 本档改归（b）；', '；',
+     '季度粒度不由材料给出 ⇒ 本档改归（b）',
+     '季度粒度不由材料给出', '替换条件 ＝',
+     ' 〈处置渠道报价台账〉按季满 2 个完整年度后，换成实测回收价与排产节奏的波动带', '改归本档'),
+    ('A/CTR-A-040-平台运营.md',
+     '、\n> 季度档改记（b）—— 材料侧无季度粒度；', '；',
+     '季度档改记（b）—— 材料侧无季度粒度',
+     '材料侧无季度粒度', '替换条件 ＝',
+     ' 〈平台后台〉的月度可比单元数满 2 个完整年度后，重算周期换成断点序列自身间距分布的 P75', '归本档'),
+    ('A/CTR-A-049-投放诊断.md',
+     '、\n> 季度档不在材料里 ⇒ 改记（b）；', '；',
+     '季度档不在材料里 ⇒ 改记（b）',
+     '季度档不在材料里', '替换条件 ＝',
+     ' 〈平台后台〉响应曲线满 2 个完整年度后，复核周期换成实测响应衰减半衰期', '并入本档'),
+    ('A/CTR-A-057-增量分析.md',
+     '、\n> 材料只有月度粒度 ⇒ 季度档转（b）业务侧默认；', '；',
+     '材料只有月度粒度 ⇒ 季度档转（b）业务侧默认',
+     '材料只有月度粒度', '替换条件 ＝',
+     ' 待独立站 holdback 产出受众级分流回执后，复核周期换成其对照臂占比的更新节奏', '也属本档'),
+    ('A/CTR-A-061-资金预测.md',
+     '、\n> 季度档并非材料所给 ⇒ 本档改记（b）；', '；',
+     '季度档并非材料所给 ⇒ 本档改记（b）',
+     '季度档并非材料所给', '替换条件 ＝',
+     ' 该司账期结构在〈财务系统对账表〉里读得 2 个完整年度后，按实测营运资金周期长度定窗', '属本档'),
+    ('A/CTR-A-063-经济性分析.md',
+     '、\n> 季度粒度材料未定名 ⇒ 并记（b）；', '；',
+     '季度粒度材料未定名 ⇒ 并记（b）',
+     '季度粒度材料未定名', '替换条件 ＝',
+     ' 该品类的投入台账与结算记录在〈采购台账〉与〈财务系统对账表〉里齐备 2 个完整年度后，改用开品投入摊销期分布的 P75', '计本档'),
+    ('A/CTR-A-070-知识溯源.md',
+     '、\n> 季度档不在材料里 ⇒ 本档并归（b）；', '；',
+     '季度档不在材料里 ⇒ 本档并归（b）',
+     '季度档不在材料里', '替换条件 ＝',
+     ' 〈引用核验台账〉满 2 个完整年度后，全量复核周期换成实测资产改版间隔', '属本档'),
+    ('B/CTR-B-001-经营目标拆解.md',
+     '、\n> 材料只写到月 ⇒ 季度档记（b）；', '；',
+     '材料只写到月 ⇒ 季度档记（b）',
+     '材料只写到月', '替换条件 ＝',
+     ' 〈经营与能力变更建议〉按季回填满 2 个完整年度后，时间步换成实测子目标重拆间隔的 P75', '属本档'),
+    ('B/CTR-B-003-需求分诊.md',
+     '、\n> 材料侧没有季度这一档 ⇒ 改（b）；', '；',
+     '材料侧没有季度这一档 ⇒ 改（b）',
+     '材料侧没有季度这一档', '替换条件 ＝',
+     ' 按键组归集满 2 个完整年度后，观察窗换成实测接收至关闭时延的 P90', '记本档'),
+    ('B/CTR-B-011-实验组合.md',
+     '、\n> 材料未定名季度粒度 ⇒ 本档并归（b）；', '；',
+     '材料未定名季度粒度 ⇒ 本档并归（b）',
+     '材料未定名季度粒度', '替换条件 ＝',
+     ' 实验登记满 2 个完整年度后，换成实测假设到达显著周期的 P75', '并归本档'),
+    ('B/CTR-B-027-渠道研究.md',
+     '、\n> 季度粒度不在材料里 ⇒ 归（b）；', '；',
+     '季度粒度不在材料里 ⇒ 归（b）',
+     '季度粒度不在材料里', '替换条件 ＝',
+     ' 公开字段恢复按自然月刷新后，人工核对基线换成最近一个自然月', '归本档'),
+    # B-056 的 (a) 句里**还夹着条件**（它没有正文消费点，(b) 的账一直挂在 (a) 里）
+    # ⇒ 这一段是 25 处里唯一「指针之外还有内容要搬」的，`check_unpoint` 的
+    # 「余下部分必须逐字进入插入文本」那条就是为它写的。
+    ('B/CTR-B-056-宣称审查.md',
+     '、\n> 季度粒度材料里没有 ⇒ 改记（b）**业务侧默认**，替换条件 ＝〈合规条款库〉按市场覆盖满 1 个完整自然季度后，'
+     '改用实测漏扫组合数与命中分布定复核周期；', '；',
+     '季度粒度材料里没有 ⇒ 改记（b）**业务侧默认**',
+     '季度粒度材料里没有', '替换条件 ＝',
+     '〈合规条款库〉按市场覆盖满 1 个完整自然季度后，改用实测漏扫组合数与命中分布定复核周期', '记本档'),
+    ('B/CTR-B-063-Playbook评估.md',
+     '、\n> 季度档不由材料给出 ⇒ 并记（b）；', '；',
+     '季度档不由材料给出 ⇒ 并记（b）',
+     '季度档不由材料给出', '替换条件 ＝',
+     ' 按 Playbook 版本归集满 2 个完整年度后，回放窗换成实测版本上线到效果稳定间隔的 P75', '并归本档'),
+    # —— 形态三：指针在前、用「、」挂在月项之前（2 处）
+    ('A/CTR-A-035-商品诊断.md',
+     '；材料只到月粒度 ⇒ 季度档转（b）、\n> ', '；',
+     '材料只到月粒度 ⇒ 季度档转（b）',
+     '材料只到月粒度', '替换条件 ＝',
+     ' AGT-045 的自然季口径签发后，改用其定义的自然季周数', '属本档'),
+    ('A/CTR-A-041-线索评估.md',
+     '；季度粒度材料未定名 ⇒ 本档转（b）、\n> ', '；',
+     '季度粒度材料未定名 ⇒ 本档转（b）',
+     '季度粒度材料未定名', '替换条件 ＝',
+     ' B 档培育记录在〈CRM〉里满 2 个完整年度后，复评周期换成实测培育到报价转化时延的 P75', '转本档'),
+]
+
+# ── §0 完全没收的那一处（1 处）────────────────────────────────────────────
+#
+# 判据（三段式：形态一/二 = 指针留在 (a)、形态三 = **§0 一个字都不提**）扫出来的第三处。
+# A-054 正文写着「每 1 个自然季度（**业务侧默认**：材料只写了月度，…）」，
+# 而 §0 的 (a) 没提、(b) 也没收 —— 它既没搬错位置，也**没留下任何指针**，
+# 于是上一轮两次机械对差（按 `改记（b）`、按「季」）**都没看见它**。
+# 形态三比前两种更坏：读者在 §0 里根本看不到这个值的存在。
+RULES_ENROLL = [
+    ('A/CTR-A-054-生命周期触达.md',
+     '材料只写了月度', '替换条件 ＝',
+     ' 〈独立站埋点〉触达记录满 2 个完整年度后，复核周期换成实测退订与回流间隔', '属本档'),
+]
+
+# ── 附录挂错了子句：把它挪回「业务侧默认」那一栏（10 处，W-67d）─────────────────
+#
+# `fb2546a` 的插入规则是「插在 (b)/(c) 行的**收尾标点之前**」。当 (b) 与 (c) 分处两行时，
+# 这正是 (b) 行的行尾 ✓；但当 **`（b）…；（c）…` 写在同一行**时，「收尾标点」指的是
+# (c) 子句的句号 ⇒ 附录挂到了 (c) 的尾巴上：
+#   `…；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度属本档**。`
+# 读起来这一项属于 (c)，而 (c) 是「算式直出」，与业务侧默认无关。
+#
+# ⚠️ 这是**形态闸门（家族三 · misplaced）抓出来的**，不是人翻出来的 —— 上面那条插入规则
+# 在写它的时候是对的（三份先例都是 (b)/(c) 分行写），是语料的**第二种写法**让它失了准。
+# 本表是**纯挪位**：每行都断言 `sorted(old) == sorted(new)`（字符多重集逐字不变，机器可证）。
+RULES_SWAP = [
+    ('A/CTR-A-004-GMV归因分析.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度属本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度属本档**；（c）§3 算式的输出（由命名的数据系统直出）。'),
+    ('A/CTR-A-015-算法评估设计.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，**逐条附替换条件**）；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度转本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，**逐条附替换条件**）——**「季度经营策略」＝1 个自然季度转本档**；（c）§3 算式的输出（由命名的数据系统直出）。'),
+    ('A/CTR-A-021-履约跟踪.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度同属本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度同属本档**；（c）§3 算式的输出（由命名的数据系统直出）。'),
+    ('A/CTR-A-025-库存分层.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度同属本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度同属本档**；（c）§3 算式的输出（由命名的数据系统直出）。'),
+    ('A/CTR-A-031-履约异常.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度属本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度属本档**；（c）§3 算式的输出（由命名的数据系统直出）。'),
+    ('A/CTR-A-058-渠道对账.md',
+     '> （b）业务侧默认（经营者自述，逐条附替换条件）；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度同属本档**。',
+     '> （b）业务侧默认（经营者自述，逐条附替换条件）——**「季度经营策略」＝1 个自然季度同属本档**；（c）§3 算式的输出（由命名的数据系统直出）。'),
+    ('A/CTR-A-065-指标契约.md',
+     '> （b）业务侧默认（经营者自述，逐条附替换条件）；（c）§3 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度属本档**。',
+     '> （b）业务侧默认（经营者自述，逐条附替换条件）——**「季度经营策略」＝1 个自然季度属本档**；（c）§3 算式的输出（由命名的数据系统直出）。'),
+    ('B/CTR-B-014-产品范围管理.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，**逐条附替换条件**）；（c）§1 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度并入本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，**逐条附替换条件**）——**「季度经营策略」＝1 个自然季度并入本档**；（c）§1 算式的输出（由命名的数据系统直出）。'),
+    ('B/CTR-B-050-会员活动.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，**逐条附替换条件**）；（c）§1 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度并入本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，**逐条附替换条件**）——**「季度经营策略」＝1 个自然季度并入本档**；（c）§1 算式的输出（由命名的数据系统直出）。'),
+    ('B/CTR-B-052-实体口径核对.md',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；（c）§1 算式的输出（由命名的数据系统直出）——**「季度经营策略」＝1 个自然季度属本档**。',
+     '> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度属本档**；（c）§1 算式的输出（由命名的数据系统直出）。'),
+]
+
 N_REWORDS = 3          # ← 改述处数写死；新增改述必须同时改这个常数与 docstring
 N_INSERT = 7           # ← 插入式锚点条数（B-025 一份里两条）
-N_MOVE = 37            # ← §0 搬家处数
+N_MOVE = 37            # ← §0 搬家处数（37 处：把项本身从 (a) 摘出）
+N_POINTER = 25         # ← §0「就地短标」⇒ 搬家处数（W-67d，删的是**指针**不是内容）
+N_ENROLL = 1           # ← §0 完全没收 ⇒ 只在 (b) 备案（W-67d）
+N_SWAP = 10            # ← 附录挂错子句 ⇒ 挪回「业务侧默认」那一栏（W-67d，纯挪位）
+
+# ── 跨契约同质化判据的**可见豁免**（W-67d）──────────────────────────────────
+#
+# 本条判据的对象是「本次**新写的**文本」，但它的实现是 diff —— 于是**逐字挪位**的文本
+# 会被读成新增，把**挪位之前就存在的**跨契约重复算到本次头上。这是本判据已知的盲区：
+# 它证不了「这一段是挪来的还是新写的」。
+#
+# B-056 ↔ B-033 这一处已**实测**是存量：那个 18 字窗口在 B-056 **改动前**的盘上文本里就存在。
+# 本次处置是**挪位、不改述**（那句条件是作者写的，改它需要授权），故重复照旧 ——
+# 登记为**已定标的存量欠账**，不是本次的产出。
+# ⚠️ 它**不是「没问题」**：两份 B 契约（宣称审查 / 市场语境审查）把复核周期条件句写成了
+# 同一套口径（覆盖满 1 个完整自然季度 → 改用实测漏扫组合数与命中分布）。
+# 要么是同一件事被写了两遍，要么是两件事被写成了一样 —— 两种都该由人来判，故留在这里可见。
+# (本契约, 对方契约, 窗口里必须出现的子串, 为什么可以豁免, 何时删除)
+DUP_ALLOW = [
+    (
+        'B/CTR-B-056-宣称审查.md', 'B/CTR-B-033-市场语境审查.md',
+        '覆盖满1个完整自然季度后改用实测漏扫',
+        '该窗口在 B-056 **改动前**的盘上文本里就存在（已实测：改动前后都在），本次只是把作者原句'
+        '从 §0(a) 挪到 (b)，**没有新写任何文本**；改述它＝改作者的话，未获授权。',
+        '任一方重写该条件句后删除本豁免；某次运行里它不再命中 ⇒ **判红**'
+        '（过期豁免＝永久后门，台账 #5 / #84）。',
+    ),
+]
 
 
 class AlreadyApplied(Exception):
@@ -218,6 +449,29 @@ class AlreadyApplied(Exception):
 
 def read(p: Path) -> str:
     return p.read_text(encoding="utf-8")
+
+
+def append_to_b(lines: list[str], rel: str, phrase: str, label: str, cond: str, tail: str) -> tuple[str, str]:
+    """把季度档挂到 §0「（b）业务侧默认」那一行的行尾，并在下一行补出它的替换条件。
+
+    三种补丁类（搬家 / 就地短标⇒搬家 / 只备案）**共用这一处实现** ——
+    形态统一的前提是落点统一，落点若各写一份，「统一」就只是这一次的手工结果。
+    """
+    bidx = [j for j, l in enumerate(lines) if B_LINE_RE.match(l)]
+    if len(bidx) != 1:
+        raise ValueError(f"{rel}: 「业务侧默认」行数为 {len(bidx)}，要求恰好 1 行")
+    b = bidx[0]
+    if f"——**{Q}＝1 个自然季度{tail}**" in lines[b]:
+        raise AlreadyApplied(f"{rel}: (b) 行已带本处落定词「{tail}」⇒ 已应用")
+    add1 = f"——**{Q}＝1 个自然季度{tail}**"
+    add2 = f"> （{phrase}）；{label}{cond}；"
+    # 插在 (b)/(c) 行的**收尾标点之前** —— 否则会得到 `…条件）；——**…**` 这种 `；——` 连排，
+    # 与先例（`6a3a215` 的三份）读法不一致。标点原地保留，只是被推到了插入文本之后。
+    cur = lines[b].rstrip()
+    term = cur[-1] if cur[-1:] in ("；", ";", "。") else ""
+    lines[b] = (cur[:-1] if term else cur) + add1 + term
+    lines.insert(b + 1, add2)
+    return add1, add2
 
 
 def apply_move(text: str, rel: str, phrase: str, label: str, cond: str, tail: str) -> tuple[str, list[str], list[str]]:
@@ -256,21 +510,100 @@ def apply_move(text: str, rel: str, phrase: str, label: str, cond: str, tail: st
         dels = [lines[i][d0:d1]]
         lines[i] = newline
 
-    bidx = [j for j, l in enumerate(lines) if B_LINE_RE.match(l)]
-    if len(bidx) != 1:
-        raise ValueError(f"{rel}: 「业务侧默认」行数为 {len(bidx)}，要求恰好 1 行")
-    b = bidx[0]
-    if f"——**{Q}＝1 个自然季度{tail}**" in lines[b]:
-        raise AlreadyApplied(f"{rel}: (b) 行已带本处落定词「{tail}」⇒ 已应用")
-    add1 = f"——**{Q}＝1 个自然季度{tail}**"
-    add2 = f"> （{phrase}）；{label}{cond}；"
-    # 插在 (b)/(c) 行的**收尾标点之前** —— 否则会得到 `…条件）；——**…**` 这种 `；——` 连排，
-    # 与先例（`6a3a215` 的三份）读法不一致。标点原地保留，只是被推到了插入文本之后。
-    cur = lines[b].rstrip()
-    term = cur[-1] if cur[-1:] in ("；", ";", "。") else ""
-    lines[b] = (cur[:-1] if term else cur) + add1 + term
-    lines.insert(b + 1, add2)
+    add1, add2 = append_to_b(lines, rel, phrase, label, cond, tail)
     return "\n".join(lines), dels, [add1, add2]
+
+
+def apply_pointer(
+    text: str, rel: str, a_old: str | None, a_new: str, pointer: str | None,
+    phrase: str, label: str, cond: str, tail: str,
+) -> tuple[str, list[str], list[str], str | None]:
+    """§0 就地短标 ⇒ 搬家：撤掉 (a) 里的**指针**，把项与条件落到 (b)。
+
+    ⚠️ 这一类**不是 `move`**：被删的是「⇒ 改记（b）」这个**指向**，而指向本身在项搬进 (b)
+    之后就变成一句空话（在 (b) 里说「改记 (b)」）。但「不删内容」仍要可证，故纪律拆成两条：
+
+    ① **缺档原话**（`材料未给季度粒度` 之类）必须**逐字重现**于 (b) 的插入文本；
+    ② **指针**必须**逐处点名**（表里 `pointer` 列 + 计数断言 + `--check` 并排打印），
+       并断言它**在改后文本里一次都不剩**。
+
+    台账 #82 的纪律在这里的形态是：`move` 的代理指标（「删除必须重现于插入」）对指针不成立，
+    所以**另立一类并给它自己的判据**，而不是把指针也算进 `move` 里去凑那个恒等式。
+
+    `a_old is None` ⇒ 该契约 (a) 里没有指针（RULES_ENROLL 用）。
+    """
+    lines = text.split("\n")
+    done_b = f"——**{Q}＝1 个自然季度{tail}**" in text
+    done_a = a_old is None or a_old not in text
+    if done_b and done_a:
+        raise AlreadyApplied(f"{rel}: (b) 已带落定词且 (a) 侧指针已撤 ⇒ 已应用")
+    if done_b and not done_a:
+        raise ValueError(f"{rel}: (b) 已带落定词，但 (a) 侧指针还在 ⇒ **改了一半**，拒绝读成「已应用」")
+
+    dels: list[str] = []
+    if a_old is not None:
+        if a_old not in text:
+            raise ValueError(f"{rel}: (a) 侧锚点对不上（语料变了）：{a_old[:44]!r}")
+        if pointer is None or pointer not in a_old:
+            raise ValueError(f"{rel}: 点名的指针不在 (a) 侧原串里：{pointer!r}")
+        if text.count(a_old) != 1:
+            raise ValueError(f"{rel}: (a) 侧锚点出现 {text.count(a_old)} 次，要求恰好 1 次")
+        if text.count(pointer) != 1:
+            raise ValueError(f"{rel}: 指针在全文出现 {text.count(pointer)} 次，要求恰好 1 次（点名必须唯一）")
+        text = text.replace(a_old, a_new, 1)
+        dels = [a_old]
+        lines = text.split("\n")
+
+    add1, add2 = append_to_b(lines, rel, phrase, label, cond, tail)
+    return "\n".join(lines), dels, [add1, add2], pointer
+
+
+def check_unpoint(rel: str, a_old: str | None, a_new: str, pointer: str | None,
+                  phrase: str, inserted: str, after: str) -> list[str]:
+    """「就地短标 ⇒ 搬家」的自证。返回问题清单（空 = 通过）。"""
+    problems: list[str] = []
+    if a_old is None:
+        return problems
+    removed, keeps = content_of(a_old), content_of(a_new)
+    if keeps:
+        if not removed.startswith(keeps):
+            return [f"{rel}: (a) 侧新串的内容不是原串的前缀 ⇒ 声明对不上（会把别的东西一起删掉）"]
+        removed = removed[len(keeps):]
+    if not removed.startswith(content_of(pointer)):
+        problems.append(f"{rel}: (a) 侧删掉的不是点名的指针 ⇒ 实际 {removed[:44]!r} / 点名 {pointer!r}")
+    else:
+        rest = removed[len(content_of(pointer)):]
+        if rest and rest not in content_of(inserted):
+            problems.append(f"{rel}: 指针之外被删的内容没进插入文本 ⇒ {rest[:44]!r}")
+    if content_of(phrase) not in content_of(inserted):
+        problems.append(f"{rel}: 该契约自己的缺档原话没有逐字重现于 (b) 插入文本 ⇒ {phrase!r}")
+    if pointer and pointer in after:
+        problems.append(f"{rel}: 点名的指针在改后文本里还在 ⇒ {pointer[:44]!r}")
+    return problems
+
+
+def apply_swap(text: str, rel: str, old: str, new: str) -> tuple[str, list[str], list[str]]:
+    """把附录从 (c) 子句尾巴挪回「业务侧默认」那一栏。**纯挪位**：字符一个不多一个不少。
+
+    ⚠️ 为什么它不是 `insert`：`insert` 的判据是「diff 里不许出现删除」，而挪位在 diff 里
+    必然表现为「一处删 + 一处插」。所以它归 `move` —— 声明要删的片段必须逐字重现于插入文本，
+    且**额外**断言 `sorted(old) == sorted(new)`（这条比 diff 更强：它连标点都不许动）。
+    """
+    if old not in text:
+        if new in text:
+            raise AlreadyApplied(f"{rel}: 已是「附录在默认栏里」的形态 ⇒ 已应用")
+        raise ValueError(f"{rel}: 挪位锚点对不上（语料变了）：{old[:44]!r}")
+    if text.count(old) != 1:
+        raise ValueError(f"{rel}: 挪位锚点出现 {text.count(old)} 次，要求恰好 1 次")
+    if sorted(old) != sorted(new):
+        raise ValueError(f"{rel}: 声明的挪位**改变了字符多重集** ⇒ 不是纯挪位，拒绝落盘")
+    # 声明要给**机器看得见的那一侧**：纯挪位里 diff 会把「(c) 子句」读成被删的那段
+    # （它比附录长，LCS 会选它当共同块）—— 哪一侧算「删」对纯挪位是任意的，
+    # 所以声明跟着 diff 走，而真正的保证是上面那条 `sorted(old) == sorted(new)`：
+    # 它比 diff 强，连一个标点都不许动。
+    i = old.index("；（c）")
+    j = old.index("——**", i)
+    return text.replace(old, new, 1), [old[i:j]], [new]
 
 
 def apply_insert(text: str, rel: str, old: str, new: str) -> tuple[str, list[str], list[str]]:
@@ -339,14 +672,26 @@ def build_all() -> tuple[dict[str, str], list[str]]:
             per_file[rel] = read(CONTRACTS / rel)
         return per_file[rel]
 
-    def commit(rel: str, kind: str, before: str, t2: str, dels: list[str], news: list[str]) -> None:
-        problems.extend(check_delta(rel, before, t2, dels, kind))
+    def commit(rel: str, kind: str, before: str, t2: str, dels: list[str], news: list[str],
+               extra: list[str] | None = None) -> None:
+        if kind != "unpoint":
+            problems.extend(check_delta(rel, before, t2, dels, kind))
+        problems.extend(extra or [])
         if Q in before and before.count(Q) != t2.count(Q):
             problems.append(f"{rel}: `{Q}` 出现次数变了 {before.count(Q)} → {t2.count(Q)}")
         # 具名系统必须在本契约别处已经存在（条件句是从契约自己的取数口长出来的，不是新造系统名）
         for term in re.findall(r"〈([^〉]+)〉", "".join(news)) + re.findall(r"`([^`]+)`", "".join(news)):
             if term not in before:
                 problems.append(f"{rel}: 条件引用了本契约里不存在的具名系统 {term!r}")
+                continue
+            # ⚠️ 加严（W-67d）：上面那条查的是**改前**文本 —— 而本批的第一类补丁**会删掉 (a) 里
+            # 一段**（B-056 的条件句原本就挂在 (a)）。若把唯一的出现删掉，改后该具名系统就只剩
+            # 本次插入这一处 —— 那不是「引用契约自己的取数口」，是**本次补丁自己造出来的名字**。
+            stripped = t2
+            for nw in news:
+                stripped = stripped.replace(nw, "")
+            if term not in stripped:
+                problems.append(f"{rel}: 具名系统 {term!r} 在改后文本里只存在于本次插入中 ⇒ 没有独立的取数口")
         per_file[rel] = t2
         adds.setdefault(rel, []).extend(news)
 
@@ -354,6 +699,43 @@ def build_all() -> tuple[dict[str, str], list[str]]:
         t = load(rel)
         try:
             t2, d, a = apply_move(t, rel, phrase, label, cond, tail)
+        except AlreadyApplied:
+            n_applied += 1
+            continue
+        except ValueError as exc:
+            problems.append(str(exc))
+            continue
+        commit(rel, "move", t, t2, d, a)
+
+    for rel, a_old, a_new, pointer, phrase, label, cond, tail in RULES_POINTER:
+        t = load(rel)
+        try:
+            t2, d, a, ptr = apply_pointer(t, rel, a_old, a_new, pointer, phrase, label, cond, tail)
+        except AlreadyApplied:
+            n_applied += 1
+            continue
+        except ValueError as exc:
+            problems.append(str(exc))
+            continue
+        commit(rel, "unpoint", t, t2, d, a,
+               check_unpoint(rel, a_old, a_new, ptr, phrase, "".join(a), t2))
+
+    for rel, phrase, label, cond, tail in RULES_ENROLL:
+        t = load(rel)
+        try:
+            t2, d, a, _ptr = apply_pointer(t, rel, None, "", None, phrase, label, cond, tail)
+        except AlreadyApplied:
+            n_applied += 1
+            continue
+        except ValueError as exc:
+            problems.append(str(exc))
+            continue
+        commit(rel, "unpoint", t, t2, d, a)
+
+    for rel, old, new in RULES_SWAP:
+        t = load(rel)
+        try:
+            t2, d, a = apply_swap(t, rel, old, new)
         except AlreadyApplied:
             n_applied += 1
             continue
@@ -433,8 +815,12 @@ def entry_deltas(per_file: dict[str, str], originals: dict[str, str]) -> dict[st
     return out
 
 
-def check_dup(deltas: dict[str, list[str]], corpus: dict[str, str], n: int = 18) -> list[str]:
-    """本次新增文本：① 两两之间 ② 与**别的契约原有正文**之间，都不许有 ≥ n 字公共窗口。"""
+def check_dup(deltas: dict[str, list[str]], corpus: dict[str, str], n: int = 18) -> tuple[list[str], set[int]]:
+    """本次新增文本：① 两两之间 ② 与**别的契约原有正文**之间，都不许有 ≥ n 字公共窗口。
+
+    返回 (问题清单, 本次真正用得上的豁免下标)。**过期豁免由调用方判红** ——
+    豁免一旦不再命中就说明它已经没用，留着就是永久后门（台账 #5 / #84）。
+    """
     items = [(rel, x) for rel, xs in deltas.items() for x in xs]
     out: list[str] = []
     for i in range(len(items)):
@@ -452,17 +838,56 @@ def check_dup(deltas: dict[str, list[str]], corpus: dict[str, str], n: int = 18)
                 hit = lcp_ge(xs[i], xs[j], 30)
                 if hit:
                     out.append(f"{rel} 内部两处新增文本逐字重复 ≥30 字：{hit!r}")
+    used: set[int] = set()
     masked_corpus = {rel: mask_terms(content_of(text)) for rel, text in corpus.items()}
     for rel, x in items:
         mx = mask_terms(content_of(x))
         for other, mtext in masked_corpus.items():
             if other == rel:
                 continue
-            hit = next((mx[k : k + n] for k in range(max(0, len(mx) - n + 1))
-                        if "\x00" not in mx[k : k + n] and mx[k : k + n] in mtext), None)
-            if hit:
-                out.append(f"{rel} 的新增文本与 {other} 原有正文共享 {n} 字窗口 {hit!r}")
-                break
+            # ⚠️ 不能只看 `lcp_ge` 返回的**第一个**窗口 —— 它可能命中契约模板的样板句
+            # （实测：B-056 ↔ B-033 的第一窗口是 `templateBtemplatev`），于是豁免"命中与否"
+            # 取决于窗口的枚举顺序。这里逐个窗口判，只报**第一个不被任何豁免覆盖**的。
+            hits = [mx[k : k + n] for k in range(max(0, len(mx) - n + 1))
+                    if "\x00" not in mx[k : k + n] and mx[k : k + n] in mtext]
+            if not hits:
+                continue
+            bad = None
+            for w in hits:
+                if not any(r[0] == rel and r[1] == other and r[2] in w for r in DUP_ALLOW):
+                    bad = w
+                    break
+            if bad is None:
+                for i, r in enumerate(DUP_ALLOW):
+                    if r[0] == rel and r[1] == other and any(r[2] in w for w in hits):
+                        used.add(i)
+                continue
+            out.append(f"{rel} 的新增文本与 {other} 原有正文共享 {n} 字窗口 {bad!r}")
+            break
+    return out, used
+
+
+def stale_exemptions(per_file: dict[str, str]) -> list[str]:
+    """哪些豁免**已经用不上了**（= 它豁免的那个重复现在不在语料里了）。
+
+    ⚠️ 判据必须对着**语料**判，不能对着**本次 delta** 判。首版把「本次没命中」当作过期，
+    而补丁落盘之后再跑，那一行根本不在 delta 里（它已经是「已应用」）⇒ 「已应用」与
+    「过期」被混成一件事：全落盘时豁免**永远**判不出过期，混合状态下又被**误判**过期
+    （本批实测就撞上了：25 处已落盘、10 处未落盘 ⇒ B-056 那一行不在 delta 里 ⇒ 报过期）。
+    正确的问法是「这个重复**现在**还在不在」，那是一个关于语料的性质，与本次改哪些行无关。
+    """
+    def text_of(rel: str) -> str:
+        return per_file.get(rel) or (CONTRACTS / rel).read_text(encoding="utf-8")
+    out: list[str] = []
+    for rel, other, win, _why, exp in DUP_ALLOW:
+        # ⚠️ 直接查**那一个窗口**在不在两边 —— 不能拿 `lcp_ge` 的返回值去比：
+        # 它给的是「第一个 ≥18 的公共窗口」，实测给的是样板句 `templateBtemplatev`，
+        # 与豁免的那个窗口无关 ⇒ 那样写会**恒报过期**（假红）。
+        a, b = content_of(text_of(rel)), content_of(text_of(other))
+        if win not in a or win not in b:
+            out.append(f"{rel} ↔ {other}：窗口 {win!r} 现在已不存在"
+                       f"（本契约里在={win in a} · 对方契约里在={win in b}）"
+                       f"⇒ 该豁免用不上了，请删掉它（{exp}）")
     return out
 
 
@@ -495,9 +920,18 @@ def main() -> int:
     if len(RULES_TERMS) != N_MOVE:
         print(f"❌ 搬家处数 {len(RULES_TERMS)} ≠ 写死的 {N_MOVE}", file=sys.stderr)
         return 3
+    if len(RULES_POINTER) != N_POINTER:
+        print(f"❌ 就地短标处数 {len(RULES_POINTER)} ≠ 写死的 {N_POINTER}（删的是指针，必须逐处点名）", file=sys.stderr)
+        return 3
+    if len(RULES_ENROLL) != N_ENROLL:
+        print(f"❌ 只备案处数 {len(RULES_ENROLL)} ≠ 写死的 {N_ENROLL}", file=sys.stderr)
+        return 3
+    if len(RULES_SWAP) != N_SWAP:
+        print(f"❌ 附录挪位处数 {len(RULES_SWAP)} ≠ 写死的 {N_SWAP}", file=sys.stderr)
+        return 3
 
     per_file, problems, n_applied = build_all()
-    n_entries = N_MOVE + N_INSERT + N_REWORDS
+    n_entries = N_MOVE + N_POINTER + N_ENROLL + N_SWAP + N_INSERT + N_REWORDS
     if n_applied == n_entries:
         print(f"✅ **已应用**：{n_entries} 处锚点全部处于「改过之后」的形态 —— 这不是「无事可做」，"
               f"而是本补丁已落盘（对着已改的语料再跑一次，只会得出一批对不上的锚点）")
@@ -515,24 +949,40 @@ def main() -> int:
     originals = {rel: read(CONTRACTS / rel) for rel in per_file}
     corpus = {p.relative_to(CONTRACTS).as_posix(): read(p) for p in files}
     deltas = entry_deltas(per_file, originals)
-    dups = check_dup(deltas, corpus)
-    if dups:
-        print(f"❌ 本次新增文本有 ≥18 字公共窗口 {len(dups)} 处（术语与取值已遮罩）：", file=sys.stderr)
-        for d in dups[:10]:
-            print("   ·", d, file=sys.stderr)
+    dups, _used = check_dup(deltas, corpus)
+    # 过期豁免判红（台账 #84）：豁免的语义是「已知存量、不是本次产出」，
+    # 一旦那个重复不在了，豁免留着就是**永久后门**。判据对着语料，不对着 delta。
+    stale = stale_exemptions(per_file)
+    if dups or stale:
+        if dups:
+            print(f"❌ 本次新增文本有 ≥18 字公共窗口 {len(dups)} 处（术语与取值已遮罩）：", file=sys.stderr)
+            for d in dups[:10]:
+                print("   ·", d, file=sys.stderr)
+        for r in stale:
+            print(f"❌ 过期豁免：{r}", file=sys.stderr)
         return 1
 
     changed = [rel for rel, t in per_file.items() if t != originals[rel]]
     if a.check:
-        print(f"✅ 锚点全部对上：{len(changed)} 份契约 / 搬家 {N_MOVE} 处 · 正文插入 {N_INSERT} 处 · 改述 {N_REWORDS} 处")
+        print(f"✅ 锚点全部对上：{len(changed)} 份契约 / 搬家 {N_MOVE} 处（项本身）· "
+              f"就地短标⇒搬家 {N_POINTER} 处（指针）· 只备案 {N_ENROLL} 处 · "
+              f"附录挪位 {N_SWAP} 处 · 正文插入 {N_INSERT} 处 · 改述 {N_REWORDS} 处")
         print(f"   本次新增文本（共 {sum(len(v) for v in deltas.values())} 段）：两两 ≥18 字公共窗口 0 处 · "
               f"与别的契约原有正文的 ≥18 字公共窗口 0 处")
-        print("   条件里的具名系统：全部在本契约别处已存在")
+        print("   条件里的具名系统：全部在本契约别处已存在，且改后仍有独立取数口")
+        # 台账 #82：删字的两类必须**逐处打出来给人看**，不许只报一个总数
+        print(f"\n   逐处点名 —— 撤掉的 {N_POINTER} 个「⇒ 改记（b）」指针（这些是本次删掉的东西）：")
+        for rel, _ao, _an, ptr, phrase, _lb, _c, tail in RULES_POINTER:
+            print(f"     · {rel:32s} 撤「{ptr}」→ 落 (b) 落定词「{tail}」· 缺档原话「{phrase}」保留")
+        print(f"   逐处点名 —— 改述 {N_REWORDS} 处（原句的错话本来就要删，机器证不了没丢东西）：")
+        for rel, old, new in REWORDS:
+            print(f"     · {rel:32s} 原句 {old[:38]!r} → 改写后 {len(new)} 字")
         return 0
 
     for rel in changed:
         (CONTRACTS / rel).write_text(per_file[rel], encoding="utf-8")
-    print(f"✅ 已落盘：{len(changed)} 份契约（搬家 {N_MOVE} · 插入 {N_INSERT} · 改述 {N_REWORDS}）")
+    print(f"✅ 已落盘：{len(changed)} 份契约（搬家 {N_MOVE} · 就地短标⇒搬家 {N_POINTER} · "
+          f"只备案 {N_ENROLL} · 附录挪位 {N_SWAP} · 插入 {N_INSERT} · 改述 {N_REWORDS}）")
     return 0
 
 
@@ -661,6 +1111,135 @@ def selftest() -> int:
          "季度经营策略" not in masked and "个自然季度" not in masked, masked)
     case("⑪b 反向控制：普通散文不许被遮掉（遮罩只管术语，不是万能橡皮）",
          mask_terms(content_of("每季度复核一次口径与容差档")) == "每季度复核一次口径与容差档", "")
+
+    # ⑬–⑳ 「就地短标 ⇒ 搬家」这一类（W-67d）：判据必须能证明它区分得开
+    P1 = """> （a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；经营节奏「月度经营复盘」＝1 个自然月（材料只到月度这一档 ⇒ 季度档记（b））；阶段边界 STG-01…STG-08）；
+> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；
+> （c）§3 算式的输出。"""
+    P2 = """> （a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；经营节奏「月度经营复盘」＝1 个自然月、
+> 季度档不在材料里 ⇒ 本档改记（b）**业务侧默认**；阶段边界 STG-01…STG-08）；
+> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；
+> （c）§3 算式的输出。"""
+    P3 = """> （a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；材料只到月粒度 ⇒ 季度档转（b）、
+> 「月度经营复盘」＝1 个自然月；阶段边界 STG-01…STG-08）；
+> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；
+> （c）§3 算式的输出。"""
+    KW = dict(phrase="材料只到月度这一档", label="替换条件 ＝", cond=" 〈X〉读满 2 个完整年度", tail="属本档")
+
+    # ⑬ 形态一：同行括注整段撤掉，(a) 里不再留 `（b）`
+    try:
+        out, d, a, ptr = apply_pointer(P1, "T", "（材料只到月度这一档 ⇒ 季度档记（b））", "",
+                                       "材料只到月度这一档 ⇒ 季度档记（b）",
+                                       KW["phrase"], KW["label"], KW["cond"], KW["tail"])
+        a_span = out.split("（b）业务侧默认")[0]
+        case("⑬ 形态一：括注整段撤掉，(a) 跨度里 `（b）` 一次不剩",
+             "＝1 个自然月；阶段边界" in out and "（b）" not in a_span, out)
+        case("⑬b 缺档原话「材料只到月度这一档」逐字进了 (b)",
+             "（材料只到月度这一档）；替换条件 ＝ 〈X〉读满 2 个完整年度；" in out, out)
+    except ValueError as exc:  # pragma: no cover
+        case("⑬ 形态一", False, str(exc))
+
+    # ⑭ 形态二：`、` 收尾 ⇒ 改成 `；`，两行并一行（不粘字、不丢分隔）
+    try:
+        out2, _d, _a, ptr2 = apply_pointer(P2, "T", "、\n> 季度档不在材料里 ⇒ 本档改记（b）**业务侧默认**；", "；",
+                                           "季度档不在材料里 ⇒ 本档改记（b）**业务侧默认**",
+                                           "季度档不在材料里", KW["label"], KW["cond"], "记本档")
+        case("⑭ 形态二：`、` 换成 `；`，两行并一行",
+             "＝1 个自然月；阶段边界 STG-01…STG-08）；" in out2, out2)
+        case("⑭b 反向控制：不许粘成「＝1 个自然月阶段边界」",
+             "＝1 个自然月阶段边界" not in out2, "")
+        case("⑭c 指针在改后文本里一次不剩", ptr2 not in out2, "")
+    except ValueError as exc:  # pragma: no cover
+        case("⑭ 形态二", False, str(exc))
+
+    # ⑮ 形态三：指针挂在月项**之前**（用 `、`）⇒ 撤掉后月项留下
+    try:
+        out3, _d, _a, _p = apply_pointer(P3, "T", "；材料只到月粒度 ⇒ 季度档转（b）、\n> ", "；",
+                                         "材料只到月粒度 ⇒ 季度档转（b）",
+                                         "材料只到月粒度", KW["label"], KW["cond"], "转本档")
+        case("⑮ 形态三：指针在前 ⇒ 撤掉后月项与后项都留下",
+             "＝1 个自然月；阶段边界 STG-01…STG-08）；" in out3, out3)
+    except ValueError as exc:  # pragma: no cover
+        case("⑮ 形态三", False, str(exc))
+
+    # ⑯ **反向控制**：缺档原话没进 (b) ⇒ 必须判红（否则「内容不丢」形同虚设）
+    probs = check_unpoint("T", "（材料只到月度这一档 ⇒ 季度档记（b））", "",
+                          "材料只到月度这一档 ⇒ 季度档记（b）",
+                          "材料其实给了季度档", "（材料只到月度这一档）；替换条件 ＝ 〈X〉读满 2 个完整年度；", "")
+    case("⑯ 反向控制：缺档原话没进 (b) ⇒ 判红",
+         any("没有逐字重现" in p for p in probs), str(probs))
+
+    # ⑰ **反向控制**：点名的指针与实际要删的对不上 ⇒ 判红（点错名＝偷偷删了别的东西）
+    probs = check_unpoint("T", "；材料只到月粒度 ⇒ 季度档转（b）、其它内容、", "；",
+                          "材料只到月粒度 ⇒ 季度档转（b）",
+                          "材料只到月粒度", "（材料只到月粒度）；替换条件 ＝ 〈X〉读满", "")
+    case("⑰ 反向控制：指针之外还有别的内容没搬 ⇒ 判红",
+         any("指针之外被删的内容没进插入文本" in p for p in probs), str(probs))
+
+    # ⑱ 三态守卫：`(b)` 已收但指针还在 ⇒ **改了一半**，不许读成「已应用」
+    half = P2.replace("（b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；",
+                      "（b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度记本档**；")
+    try:
+        apply_pointer(half, "T", "、\n> 季度档不在材料里 ⇒ 本档改记（b）**业务侧默认**；", "；",
+                      "季度档不在材料里 ⇒ 本档改记（b）**业务侧默认**",
+                      "季度档不在材料里", KW["label"], KW["cond"], "记本档")
+        case("⑱ 反向控制：改了一半必须报**对不上**（不是「已应用」）", False, "")
+    except AlreadyApplied:
+        case("⑱ 反向控制：改了一半必须报**对不上**（不是「已应用」）", False, "误判成已应用")
+    except ValueError:
+        case("⑱ 反向控制：改了一半（(b) 已收、指针还在）报**对不上**，不许报「已应用」", True, "")
+
+    # ⑲ 常数与表一致（W-67d 新增两类）
+    case("⑲ 就地短标/只备案的处数写死并与表一致",
+         len(RULES_POINTER) == N_POINTER and len(RULES_ENROLL) == N_ENROLL, "")
+
+    # ⑳ **过期豁免判红**：把一个不再命中的豁免留给 main ⇒ 必须判红（台账 #84）
+    case("⑳ 过期豁免判红：本次没命中的豁免 ⇒ stale 非空",
+         [r for i, r in enumerate(DUP_ALLOW) if i not in check_dup({"X/Y.md": ["这一句跟谁都不撞"]}, {})[1]] == list(DUP_ALLOW), "")
+
+    # ㉝–㊲ 「附录挪位」这一类（W-67d）与两条豁免判据的活体探针
+    SW_OLD = ("> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；（c）§3 算式的输出（由命名的数据系统直出）"
+              "——**「季度经营策略」＝1 个自然季度属本档**。\n> （c）别的。\n")
+    SW_NEW = ("> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）"
+              "——**「季度经营策略」＝1 个自然季度属本档**；（c）§3 算式的输出（由命名的数据系统直出）。\n> （c）别的。\n")
+    SW_A, SW_B = SW_OLD.split("\n")[0], SW_NEW.split("\n")[0]
+    try:
+        out, d, a = apply_swap(SW_OLD, "T", SW_A, SW_B)
+        case("㉝ 附录挪位：从 (c) 子句尾巴挪到「业务侧默认」栏里",
+             "）——**「季度经营策略」＝1 个自然季度属本档**；（c）§3 算式的输出" in out, out)
+        case("㉝b 挪位后**字符多重集逐字不变**（比 diff 更强：连标点都不许动）",
+             sorted(SW_OLD) == sorted(out), "")
+    except ValueError as exc:  # pragma: no cover
+        case("㉝ 附录挪位", False, str(exc))
+
+    # ㉞ 反向控制：声明成「挪位」但实际改了字 ⇒ 必须拒绝落盘（不许拿挪位当改述的挡箭牌）
+    try:
+        apply_swap(SW_OLD, "T", SW_A, SW_B.replace("属本档", "属本栏"))
+        case("㉞ 反向控制：声明的挪位改了一个字 ⇒ 拒绝落盘（不是纯挪位）", False, "居然放过了")
+    except ValueError:
+        case("㉞ 反向控制：声明的挪位改了一个字 ⇒ 拒绝落盘（纯挪位判据真的在承重）", True, "")
+
+    # ㉟ 幂等：已挪过的文本再跑 ⇒ 报「已应用」，不许把附录再挪一遍
+    try:
+        apply_swap(SW_NEW, "T", SW_A, SW_B)
+        case("㉟ 幂等：已挪过的文本再跑 ⇒ 报「已应用」", False, "又挪了一遍")
+    except AlreadyApplied:
+        case("㉟ 幂等：已挪过的文本再跑 ⇒ 报「已应用」（不是再挪一次）", True, "")
+    except ValueError:
+        case("㉟ 幂等：已挪过的文本再跑 ⇒ 报「已应用」", False, "报的是「对不上」")
+
+    case("㊱ 附录挪位处数写死并与表一致",
+         len(RULES_SWAP) == N_SWAP and all(sorted(o) == sorted(n) for _r, o, n in RULES_SWAP), "")
+
+    # ㊲ **活体探针**：豁免必须真的还成立（对着**语料**判，不是对着本次 delta 判）
+    case("㊲ 活体探针：DUP_ALLOW 里每一条豁免的窗口现在**都还在两边**（否则判过期）",
+         stale_exemptions({}) == [], str(stale_exemptions({})[:2]))
+    _saved = list(DUP_ALLOW)
+    DUP_ALLOW.append(("A/CTR-A-004-GMV归因分析.md", "B/CTR-B-033-市场语境审查.md",
+                      "这句窗口在任何一份契约里都不存在", "构造样本", "构造样本"))
+    case("㊲b 反向控制：窗口不存在的豁免 ⇒ 判过期（过期豁免＝永久后门）",
+         len(stale_exemptions({})) == 1, str(len(stale_exemptions({}))))
+    DUP_ALLOW[:] = _saved
 
     bad = [c for c in cases if not c[1]]
     for i, (name, ok, detail) in enumerate(cases, 1):

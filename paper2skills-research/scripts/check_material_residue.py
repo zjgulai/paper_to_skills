@@ -71,7 +71,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-FAMILIES = ("all", "terms", "sections")
+FAMILIES = ("all", "terms", "sections", "form")
 
 # 同尺归一化：**引用**引文器的那一份实现，不另抄（台账 #79）
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -306,6 +306,136 @@ def scan_file(path: Path, corpus: str, sections: set[str]):
     return term_res, sect_res
 
 
+FORM_CLAUSE_B = re.compile(r"(?:^|[；。])\s*(?:>\s*)?（b）", re.MULTILINE)
+FORM_CLAUSE_A = re.compile(r"(?:^|[；。])\s*(?:>\s*)?（a）", re.MULTILINE)
+FORM_CLAUSE_ANY = re.compile(r"(?:^|[；。])\s*(?:>\s*)?（[a-d]）", re.MULTILINE)
+FORM_NEG = re.compile(
+    r"材料[^；。）\n]{0,14}?(?:没有|未给|未定名|不在|并非|只有|只到|只写|不由|不属|侧无|里没有)"
+    r"|季度[^；。）\n]{0,12}?(?:不在材料|不由材料|并非材料|不属材料)")
+FORM_ITEM = "＝1 个自然季度"
+FORM_DEFAULT = "业务侧默认"
+
+
+def section0_columns(text: str):
+    """取 §0 的 (a) 栏与**「业务侧默认」那一子句**。
+
+    返回 `(a 栏, 默认子句, §0 全文, 有没有 §0 块)`。
+
+    ⚠️ 三处都不能想当然：
+    · 不能用 `blockquote_items()` —— 它把块内各行并成一行，而分栏靠的正是这些标记；
+    · **不能只认行首**的 `> （b）` —— 实测 139 份里有 **4 份**把
+      `（a）…）；（b）业务侧默认…；（c）…` 全写在**同一行**（A-018 / B-017 / B-018 / B-054）；
+    · **更不能假定「业务侧默认」那一栏一定叫 (b)** —— 实测有 **3 份**把它排在 (c)
+      （`（b）材料已定名的规则与产物…；（c）业务侧默认…`，如 CTR-A-062）。
+      按 (b) 硬取会把 A-062 判成「(b) 栏没收该值」，而它的账其实收得好好的。
+    ⇒ 分栏按**子句标记**切，取「含 `业务侧默认` 的那一段」，不认字母。
+    """
+    blocks, cur = [], []
+    for ln in text.splitlines():
+        if ln.lstrip().startswith(">"):
+            cur.append(ln)
+        else:
+            if cur:
+                blocks.append(cur)
+                cur = []
+    if cur:
+        blocks.append(cur)
+    for b in blocks:
+        j = "\n".join(b)
+        if "取值来源纪律" not in j:
+            continue
+        ms = list(FORM_CLAUSE_ANY.finditer(j))
+        ma = FORM_CLAUSE_A.search(j)
+        a_span = ""
+        if ma:
+            nxt = next((m.start() for m in ms if m.start() >= ma.end()), len(j))
+            a_span = j[ma.end():nxt].strip()
+        for k, m in enumerate(ms):
+            seg = j[m.end():(ms[k + 1].start() if k + 1 < len(ms) else len(j))]
+            if FORM_DEFAULT in seg:
+                return a_span, seg.strip(), j, True
+        return a_span, "", j, True
+    return None, None, None, False
+
+
+def _is_clause_marker(a: str, at: int) -> bool:
+    """`a[at:]` 以 `（b）` 开头时，它到底是**子句标记**还是**指向 (b) 的指针**？
+
+    判据只有一个字：**前一非空字符是不是 `；` 或 `。`**。
+      · `…＝开放事实 O1）；（b）业务侧默认…`  ⇒ 是子句标记（实测 4 份这么写）
+      · `…本档改记（b）**业务侧默认**；…`    ⇒ 是指针（前一字符是 `记`）
+
+    ⚠️ **不许**把「行首」也算成子句标记。首版用了带 `^` 的正则，在只回看 1 个字符的切片上
+    `^` 恒真，于是 `改记（b）` 被判成子句标记 ⇒ **指针一处都抓不到**（假绿方向）。
+    这里连正则都不用，就是为了让这个判别只有一条规则、没有第二种解释。
+    `a` 是多行拼起来的，指针前的实词一定在（`记`/`转`/`归`/`并`/`改`），不会落在行首。
+    """
+    i = at - 1
+    while i >= 0 and a[i] in " \t":
+        i -= 1
+    return i >= 0 and a[i] in "；。"
+
+
+def scan_form(path: Path) -> list[dict]:
+    """第三族 · **归属形态**：一个值必须住在它自己那一栏里。
+
+    四条判据**分开报**（问的是四个不同的问题）：
+
+    · `pointer`   —— (a) 栏里有**指向 (b) 的指针**（`⇒ 改记（b）` 这类）。项搬到 (b) 之后，
+                     这句话就成了一句空话（在 (b) 里说「改记 (b)」），而它又是**人写的、机器不验的**
+                     交叉引用 ⇒ 判红。
+                     ⚠️ 判法**不能**是「(a) 栏里找 `（b）` 子串」：实测 139 份里有 **4 份**把
+                     `（a）…）；（b）业务侧默认…` 写在同一行，那是**子句标记**不是指针。
+                     首版按子串判 ⇒ 那 4 份全成了假红。
+    · `negative`  —— (a) 栏里有**负向材料归属语**（`材料没有季度档` 这类）。这一栏的抬头写着
+                     「业务处境或材料已给出的数」，栏里的项却自己说材料没有 ⇒ **类目矛盾**：
+                     读的人只看抬头。
+    · `misplaced` —— §0 里**有** `＝1 个自然季度`，但它**不在**含 `业务侧默认` 的那一子句里
+                     ⇒ 挂错了栏。实测 10 份：附录被插在 `…；（c）§3 算式的输出（由命名的数据系统直出）`
+                     **尾巴上**，读起来这一项属于 (c)，而 (c) 是「算式直出」，与业务侧默认无关。
+    · `unfiled`   —— 正文用了标着 `业务侧默认` 的 `1 个自然季度`，而 §0 **一个字都没提**这个值。
+                    实测 1 份（CTR-A-054）：它既没搬错位置、也没留下指针 ⇒
+                    前两次按关键词的机械对差**都没看见它**。
+
+    ⚠️ `misplaced` 与 `unfiled` 必须分开：合成一条时，前半段的「挂错栏」会被后半段的
+    「正文有没有用这个值」当成门禁 —— 实测 10 份里只有 5 份同时满足，另 5 份**因此漏判**。
+    一个判据里塞两个必要条件，等于把判据的适用面悄悄缩到两者的交集上。
+
+    另有第五种读数 `no-section0`（没有 §0 块）：**本族无从判定**，只报不判 ——
+    「未判定 ≠ 干净」，故它必须可见（台账 #67）。
+    """
+    text = path.read_text(encoding="utf-8")
+    a, default_seg, s0, has_s0 = section0_columns(text)
+    if not has_s0:
+        return [{"kind": "no-section0", "detail": "全文没有 §0「取值来源纪律」块"}]
+    if a is None:
+        return [{"kind": "no-section0", "detail": "有 §0 块但没有 (a) 栏"}]
+    out: list[dict] = []
+    for m in re.finditer(r"（b）", a):
+        if not _is_clause_marker(a, m.start()):
+            out.append({"kind": "pointer",
+                        "detail": a[max(0, m.start() - 26):m.end() + 10].replace("\n", " ")})
+    for m in FORM_NEG.finditer(a):
+        out.append({"kind": "negative", "detail": m.group(0)})
+    has_item = FORM_ITEM in (s0 or "")
+    if has_item and not default_seg:
+        # §0 里有这个值，却**没有「业务侧默认」这一栏** ⇒ 本族无从判定它该住哪
+        # （不是「挂错了」—— 没有可挂的栏）。只报不判，与 no-section0 同类。
+        return [{"kind": "no-default-clause",
+                 "detail": "§0 里有「＝1 个自然季度」，但没有含「业务侧默认」的子句 ⇒ 无处可住，本族无从判定"}]
+    if has_item and FORM_ITEM not in default_seg:
+        out.append({"kind": "misplaced",
+                    "detail": "§0 里有「＝1 个自然季度」，但不在含「业务侧默认」的那一子句里"})
+    if not has_item:
+        body = "\n".join(l for l in text.splitlines() if not l.lstrip().startswith(">"))
+        for para in re.split(r"\n\s*\n", body):
+            if "1 个自然季度" in para and FORM_DEFAULT in para:
+                out.append({"kind": "unfiled",
+                            "detail": "正文有标着业务侧默认的「1 个自然季度」，而 §0 没有「＝1 个自然季度」"})
+                break
+    return out
+
+
 def collect(contracts: Path):
     files = sorted(list(contracts.glob("A/CTR-*.md")) + list(contracts.glob("B/CTR-*.md")))
     if not files:
@@ -362,8 +492,19 @@ def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all
         for x in s:
             sect_counter.setdefault(x["hit"], []).append(p.name)
 
+    form_counter: dict[str, list[tuple[str, str]]] = {}
+    not_judged: list[tuple[str, str]] = []      # 「本族无从判定」的读数（不参与退出码，但必须可见）
+    NOT_JUDGED = ("no-section0", "no-default-clause")
+    for p in files:
+        for h in scan_form(p):
+            if h["kind"] in NOT_JUDGED:
+                not_judged.append((p.name, h["kind"]))
+            else:
+                form_counter.setdefault(h["kind"], []).append((p.name, h["detail"]))
+
     judge_terms = family in ("all", "terms")
     judge_sects = family in ("all", "sections")
+    judge_form = family in ("all", "form")
 
     waived: list[dict] = []
     stale: list[dict] = []
@@ -374,7 +515,8 @@ def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all
         print(f"材料根：{material}（{n_mat} 个文件，已排 `.git/`）· 扫描 {len(files)} 份契约")
         print(f"扫描单元：**blockquote 条目块**（连续 `>` 行成块）—— 故意比 L4e 的「行」宽")
         if family != "all":
-            unjudged = "家族一 · 词" if family == "sections" else "家族二 · 章节号"
+            names = {"terms": "家族一 · 词", "sections": "家族二 · 章节号", "form": "家族三 · 归属形态"}
+            unjudged = "、".join(v for k, v in names.items() if k != family)
             print(f"⚠️ 本次只判 `--family {family}`；**{unjudged} 只扫不判**"
                   f"（不参与退出码 —— 未判定 ≠ 干净）")
         print()
@@ -393,8 +535,31 @@ def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all
                   f"{len({f for v in sect_counter.values() for f in v})} 份**")
             for hit, fs in sorted(sect_counter.items(), key=lambda kv: -len(kv[1])):
                 print(f"    · `{hit}` ×{len(fs)} 份")
-        if judge_terms and judge_sects and not term_counter and not sect_counter and not waived:
-            print("✅ 无残留（家族一、家族二均为 0）")
+        if form_counter or not_judged:
+            n_form = sum(len(v) for v in form_counter.values())
+            head = ("❌" if n_form else "✅") if judge_form else "⚠️[未判]"
+            print(f"\n{head} 家族三 · 归属形态（一个值必须住在它自己那一栏里）：**{n_form} 份**")
+            LBL = {"pointer": "(a) 栏里有指向 (b) 的指针（项该搬家，不该留指针）",
+                   "negative": "(a) 栏里有负向材料归属语（抬头写着「材料已给出的数」，项却说自己不是）",
+                   "misplaced": "附录挂错了子句（§0 里有该值，却不在含「业务侧默认」的那一栏里）",
+                   "unfiled": "该值完全没备案（正文用了业务侧默认的值，§0 一个字都没提）"}
+            for kind, label in LBL.items():
+                hits = form_counter.get(kind, [])
+                if hits:
+                    names_ = "、".join(n for n, _ in hits[:8])
+                    print(f"    · {label}：**{len(hits)} 份**")
+                    print(f"        {names_}{' …' if len(hits) > 8 else ''}")
+                    print(f"        例：{hits[0][1][:110]}")
+            for kind, why in (("no-section0", "没有 §0「取值来源纪律」块"),
+                              ("no-default-clause", "有 §0 但没有含「业务侧默认」的子句")):
+                names_ = sorted(n for n, k in not_judged if k == kind)
+                if names_:
+                    print(f"    ○ **读数**（不判）：{len(names_)} 份{why} —— 本族**无从判定**；未判定 ≠ 干净")
+                    print(f"        {'、'.join(names_[:8])}{' …' if len(names_) > 8 else ''}")
+
+        if judge_terms and judge_sects and not term_counter and not sect_counter and not waived \
+                and (not judge_form or not form_counter):
+            print("✅ 无残留（本次判定范围内的每一族均为 0）")
 
     if not quiet and waived:
         print(f"\n🟡 可见豁免（`--baseline {baseline_path or '(未传)'}`，共 {len(waived)} 处）：")
@@ -406,7 +571,9 @@ def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all
 
     n_term = sum(len(v) for v in term_counter.values())
     n_sect = sum(len(v) for v in sect_counter.values())
-    total = (n_term if judge_terms else 0) + (n_sect if judge_sects else 0)
+    n_form = sum(len(v) for v in form_counter.values())
+    total = ((n_term if judge_terms else 0) + (n_sect if judge_sects else 0)
+             + (n_form if judge_form else 0))
     if stale:
         print(f"\n❌ baseline 里有 {len(stale)} 条豁免**已经用不上了**（判据不再报它）——"
               f"过期的豁免会腐烂成永久后门（台账 #5）：", file=sys.stderr)
@@ -421,6 +588,8 @@ def run(contracts: Path, material: Path, quiet: bool = False, family: str = "all
             print(f"   （另有家族一 {n_term} 处**未被判定** —— 见台账 #67 的 W-67c）")
         if not judge_sects and n_sect:
             print(f"   （另有家族二 {n_sect} 处**未被判定**）")
+        if not judge_form and n_form:
+            print(f"   （另有家族三 {n_form} 份**未被判定**）")
     return 1 if total else 0
 
 
@@ -438,6 +607,44 @@ template_version: v2
 > （a）材料已给出的数（经营节奏「月度经营复盘」＝1 个自然月）；
 > （b）**业务侧默认**（本契约自定的门禁名，材料未命名）；
 > （c）本契约 §3 算式的输出。
+"""
+
+# ── 家族三 · 归属形态的夹具（W-67d）─────────────────────────────────────────
+S0_HEAD = "> **取值来源纪律（全文适用）**：来源只有三类 ——\n> "
+
+# ① 改动前的形态：(a) 栏里留着指向 (b) 的指针
+FORM_POINTER = S0_HEAD + """（a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；经营节奏「月度经营复盘」＝1 个自然月（材料只到月度这一档 ⇒ 季度档记（b））；阶段边界 STG-01…STG-08）；
+> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；
+> （c）§3 算式的输出。
+"""
+
+# ② **(a) 与 (b) 写在同一行** —— 那个 `（b）` 是**子句标记**不是指针。
+#    实测 139 份里有 4 份是这个写法（A-018 / B-017 / B-018 / B-054）；判成指针就是**假红**。
+FORM_CLAUSE_OK = S0_HEAD + """（a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；其余 20% 渠道构成未明＝开放事实 O1）；（b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；（c）§3 算式的输出。
+"""
+
+# ③ 改动后的形态：(a) 栏干净，(b) 栏收了这个值
+FORM_CLEAN = S0_HEAD + """（a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；经营节奏「月度经营复盘」＝1 个自然月；阶段边界 STG-01…STG-08）；
+> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）——**「季度经营策略」＝1 个自然季度属本档**；
+> （材料只到月度这一档）；替换条件 ＝ 〈某台账〉读满 2 个完整年度后定档；
+> （c）§3 算式的输出。
+"""
+
+# ④ (b) 栏没收，而正文用了标着业务侧默认的该值
+FORM_UNFILED = S0_HEAD + """（a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；阶段边界 STG-01…STG-08）；
+> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；
+> （c）§3 算式的输出。
+
+- **周期到期**：每 2 个完整年度重算基线；每 1 个自然季度（**业务侧默认**：材料只写了月度）复核一次。
+"""
+
+# ⑤ **精度反向控制**：正文里的 `1 个完整自然季度` 是**替换条件的触发语**，不是那个取值
+#    ⇒ 不许把它读成「用了该值而 (b) 没收」。判据一旦写成「正文含 1 个…自然季度」，这里就会假红。
+FORM_TRIGGER_ONLY = S0_HEAD + """（a）业务处境或材料已给出的数（出海历史 2 个完整年度＝决策 Q11；阶段边界 STG-01…STG-08）；
+> （b）业务侧默认（经营者自述或行业惯例，逐条附替换条件）；
+> （c）§3 算式的输出。
+
+- 取值：复核覆盖率 ＝ 100%（**业务侧默认**）；**替换条件** ＝ 〈合规条款库〉按市场覆盖满 1 个完整自然季度后，改用实测分布重算。
 """
 
 # ① 续行形态：引号在 blockquote 续行上，与「材料」**不在同一行**
@@ -588,6 +795,32 @@ template_version: v2
                                                "file": "CTR-A-999-夹具.md"}]}) == 1))
     cases.append(("㉔ baseline 为空/未传 ⇒ 与不传时**逐字同判**（豁免不许改变默认行为）",
                   scan_one(UNLABELED, MAT, family="terms", baseline=None) == 1))
+    # ㉕–㉛ 家族三 · 归属形态：三条判据都要能打红，且**两个方向的反向控制**都不能少
+    cases.append(("㉕ 家族三：(a) 栏留指针 ⇒ exit 1", scan_one(FORM_POINTER, MAT, family="form") == 1))
+    cases.append(("㉖ 家族三：`（a）…）；（b）业务侧默认` 写在同一行 ⇒ exit 0"
+                  "（那个 `（b）` 是**子句标记**不是指针；实测 4 份这么写）",
+                  scan_one(FORM_CLAUSE_OK, MAT, family="form") == 0))
+    cases.append(("㉗ 家族三：改后的形态（(a) 干净 + (b) 收了该值）⇒ exit 0（防恒红）",
+                  scan_one(FORM_CLEAN, MAT, family="form") == 0))
+    cases.append(("㉘ 家族三：(b) 栏没收而正文用了该值 ⇒ exit 1",
+                  scan_one(FORM_UNFILED, MAT, family="form") == 1))
+    cases.append(("㉙ 家族三**精度**反向控制：`1 个完整自然季度` 是替换条件的触发语 ⇒ 不许读成该值",
+                  scan_one(FORM_TRIGGER_ONLY, MAT, family="form") == 0))
+    cases.append(("㉚ 家族三的隔离：同一「只有家族三残留」的夹具在 `--family terms` 下 ⇒ exit 0",
+                  scan_one(FORM_POINTER, MAT, family="terms") == 0))
+    cases.append(("㉛ 隔离是双向的：`--family form` 对「只有家族一残留」的夹具 ⇒ exit 0",
+                  scan_one(RESIDUE_CONT, MAT, family="form") == 0))
+
+    # ⚠️ **非空过守卫**：家族三的夹具必须先被真的解析成 (a)/(b) 两栏。
+    #    首版夹具第一行漏了 `> ` ⇒ 整段没进 blockquote、判据**一次都没跑**，
+    #    于是「干净夹具 exit 0」这类用例**空过**成假绿。判据有没有跑，要和判据的结论分开证。
+    for _name, _fx in (("POINTER", FORM_POINTER), ("CLAUSE_OK", FORM_CLAUSE_OK),
+                       ("CLEAN", FORM_CLEAN), ("UNFILED", FORM_UNFILED),
+                       ("TRIGGER_ONLY", FORM_TRIGGER_ONLY)):
+        _a, _b, _s0, _has = section0_columns(_fx)
+        cases.append((f"㉜ 非空过守卫：夹具 {_name} 真的解析出了 (a)/(b) 两栏（否则上面的用例是假绿）",
+                      _has and _a is not None and _b != ""))
+
     ok = True
     for label, passed in cases:
         print(f"  {'✅' if passed else '❌'} {label}")
