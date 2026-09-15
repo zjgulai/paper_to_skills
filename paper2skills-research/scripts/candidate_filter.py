@@ -32,6 +32,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 from collections import Counter
 from pathlib import Path
 
@@ -431,6 +432,10 @@ def filter_pool(items: list[dict]) -> dict:
     evidence: dict[str, list[dict]] = {}
     late_class_ids: list[dict] = []
     no_class_ids: list[str] = []
+    #: ⚠️ **逐条**留名（#105 接线后新增）：`reasons` 是直方图，回答不了
+    #: 「这一篇为什么没了」。接线之后本产物就是打分器的输入，没有这一栏，
+    #: 「274 篇去哪了」在链上不可审计 —— 其中恰好有一篇已是 `decision: extract`。
+    dropped: list[dict] = []
     judged = 0
 
     #: ⚠️ 类表**每次现算**，绝不存盘：把精度写进文件就是把它冻成一个会腐烂的豁免
@@ -502,10 +507,15 @@ def filter_pool(items: list[dict]) -> dict:
             # 一篇论文同时属于 3 个域而都被拒时，另两条原因不计入直方图。
             # 保留/丢弃的**结论**不受影响，受影响的只有「为什么」的归属。
             reasons[verdicts[0][1]] += 1
+            # ⚠️ **逐条留名**（#105 接线后新增）：`reasons` 是直方图，回答不了
+            # 「这一篇为什么没了」。下游只会看到「772 篇」，没有这一栏，
+            # 「274 篇去哪了」在链上不可审计。
+            dropped.append({"arxiv_id": _item_id(it), "domains": list(domains),
+                            "reason": verdicts[0][1]})
 
     return {
         "kept": kept, "reasons": reasons, "per_domain": per_domain,
-        "judged": judged,
+        "judged": judged, "dropped": dropped,
         "unresolved": unresolved, "unresolved_ids": unresolved_ids,
         "no_groups_ids": no_groups_ids,
         "tiers": tiers, "incidental_ids": incidental_ids, "evidence": evidence,
@@ -866,6 +876,65 @@ def selftest() -> int:
     print(f"  {'✅' if good else '❌'} 不提供类表时 `late_class` 必须是 **None 而不是 False**"
           f"（「问不到」≠「不晚」，同 NO_CONSTRAINT 的纪律）→ {ev_none['late_class']!r}")
 
+    # ------------------------------------------------------------------
+    # ⚠️ 读者判据的**形态矩阵**（台账 #116）
+    # ------------------------------------------------------------------
+    # J3 的双向锁靠 `_reads_file()` 回答「谁真的把过滤产物当成输入」。
+    # 本批接线时它对着刚接好的线判了一条**假红** —— 旧版只认「字面量出现在读调用子树里」，
+    # 而接线的**最自然写法**是模块常量 + 参数化路径。同族第 N 次（#2/#11/#93），
+    # 只是这次伤的是它自己守护的那个接线。
+    # ⚠️ 两个方向都要钉：正向少了 ⇒ 假红挡住接线；**负向少了 ⇒ 假绿放行假接线**。
+    print("=== 判据：读者判据认三种写法、且不认四种像读者的写法 ===")
+    _POS = [
+        ("① 字面量在读调用子树里",
+         'import json\nx = json.loads(open("arxiv_candidates_filtered.json").read())\n'),
+        ("② 模块常量（含传递绑定）",
+         'import json\nK = "arxiv_candidates_filtered.json"\n'
+         'F = "d/" + K\nx = json.loads(open(F).read())\n'),
+        ("③ 常量经 argparse 默认值再传给读取函数",
+         'import argparse, json\nfrom pathlib import Path\n'
+         'K = "arxiv_candidates_filtered.json"\nD = Path("data")\n'
+         'def load(p):\n    return json.loads(p.read_text())\n'
+         'def go():\n    ap = argparse.ArgumentParser()\n'
+         '    ap.add_argument("--pool", default=D/K)\n'
+         '    a = ap.parse_args()\n    return load(a.pool)\n'),
+    ]
+    _NEG = [
+        ("✗ -a 只提到名字、不做任何读",
+         'NOTE = "arxiv_candidates_filtered.json"\nprint(NOTE)\n'),
+        ("✗ -b 读了别的文件",
+         'import json\nP = "recommendations.json"\nx = json.loads(open(P).read())\n'),
+        ("✗ -c 常量与读调用无关（读的是第三条路径）",
+         'import json\nK = "arxiv_candidates_filtered.json"\n'
+         'x = json.loads(open("/tmp/other.json").read())\nprint(K)\n'),
+        ("✗ -d 参数化但默认值是**别的**常量",
+         'import argparse, json\nK = "arxiv_candidates_filtered.json"\n'
+         'OTHER = "recommendations.json"\n'
+         'def load(p):\n    return json.loads(p.read_text())\n'
+         'def go():\n    ap = argparse.ArgumentParser()\n'
+         '    ap.add_argument("--pool", default=OTHER)\n'
+         '    a = ap.parse_args()\n    return load(a.pool)\n'),
+    ]
+    with tempfile.TemporaryDirectory() as _td:
+        for desc, body in _POS + _NEG:
+            fp = Path(_td) / "m.py"
+            fp.write_text(body, encoding="utf-8")
+            got = _reads_file(fp, FILTERED_POOL)
+            want = not desc.startswith("✗")
+            good = got == want
+            ok &= good
+            print(f"  {'✅' if good else '❌'} {desc} → "
+                  f"{'读者' if got else '不是读者'}（期望 {'读者' if want else '不是读者'}）")
+        # ⭐ 反向控制：同一份代码换成**另一个** needle，正向那三条必须全部失效 ——
+        # 证明判据问的是「读的是不是这一份」，而不是「有没有在读文件」。
+        fp = Path(_td) / "m.py"
+        fp.write_text(_POS[2][1], encoding="utf-8")
+        good = (not _reads_file(fp, "recommendations.json")) and _reads_file(fp, FILTERED_POOL)
+        ok &= good
+        print(f"  {'✅' if good else '❌'} 反向控制：同一份代码换成别的 needle 必须判「不是读者」"
+              f"→ rec={'读者' if _reads_file(fp, 'recommendations.json') else '不是读者'} "
+              f"flt={'读者' if _reads_file(fp, FILTERED_POOL) else '不是读者'}")
+
     print("✅ 自检通过：负向词/约束词/三态判定均按预期生效" if ok
           else "❌ 自检失败：过滤逻辑与关键词库 v2 的约定不符")
     return 0 if ok else 1
@@ -1090,32 +1159,154 @@ FILTERED_POOL = "arxiv_candidates_filtered.json"
 _READ_FUNCS = ("open", "read_text", "read_bytes", "load", "loads")
 
 
+def _needle_names(tree) -> set[str]:
+    """模块级「**名字 → 携带 needle**」的绑定，含**传递**（`P = D / N` 也算，因为 N 算了）。
+
+    为什么需要这一层：接线的**最自然写法**是把产物名提成模块常量、
+    再把常量交给一个读文件的函数（`POOL_PATH = DATA / FILTERED_POOL`，
+    `load_filtered_pool(args.pool)`）。而「字面量必须出现在读调用的子树里」
+    这条判据**看不见这种写法** —— 于是它对着刚接好的线判了一条假红。
+    这是本仓库 #2/#11/#93 那一族「判据只认一种写法」的第 N 次，
+    只不过这次伤的是**它自己守护的那个接线**。
+    """
+    import ast
+    names: set[str] = set()
+    changed = True
+    assigns = [(n, t) for n in ast.walk(tree) if isinstance(n, (ast.Assign, ast.AnnAssign))
+               for t in (n.targets if isinstance(n, ast.Assign) else [n.target])]
+    while changed:
+        changed = False
+        for node, tgt in assigns:
+            if not isinstance(tgt, ast.Name) or tgt.id in names:
+                continue
+            val = node.value
+            if val is None:
+                continue
+            for sub in ast.walk(val):
+                if isinstance(sub, ast.Constant) and isinstance(sub.value, str) \
+                        and _NEEDLE_HINT[0] in sub.value:
+                    names.add(tgt.id); changed = True; break
+                if isinstance(sub, ast.Name) and sub.id in names:
+                    names.add(tgt.id); changed = True; break
+    return names
+
+
+#: 由 `_reads_file` 在每次调用时设置（模块级单槽，避免把 needle 透传进 `_needle_names`）。
+_NEEDLE_HINT: list[str] = [""]
+
+
+def _expr_key(node) -> str:
+    """把表达式归一成一个可比较的键。只认两种形态，其余返回 ``""``：
+
+      `Name`              → `"K"`（模块常量 / 变量）
+      `Attribute(Name,.)` → `"args.pool"`（argparse 的取值入口）
+
+    ⚠️ 只认这两种是**刻意的**：每多认一种写法就多一个假绿入口。边界由 selftest 双向钉住。
+    """
+    import ast
+    if isinstance(node, ast.Name):
+        return node.id
+    if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
+        return f"{node.value.id}.{node.attr}"
+    return ""
+
+
+def _call_site_names(tree) -> set[str]:
+    """`args.<dest>` 形式的「携带 needle 的表达式」。
+
+    只处理一种形态、且**显式写明只处理这一种**：`add_argument("--x", default=<携带 needle>)`
+    ⇒ `args.x` 携带 needle。这样 `load_filtered_pool(args.pool)` 里的参数就能被接上。
+    ⚠️ 这是个**有意收窄**的近似：它回答的是「这个脚本是不是把该产物当成输入」，
+    **不是**「每一次具体读取都读的是它」。收窄的边界由 selftest 双向钉住。
+    """
+    import ast
+    names = _needle_names(tree)
+    out: set[str] = set()
+    # ⚠️ argparse 的取值变量名**不是恒等于 `args`** —— 首版把它写死了，
+    #    于是夹具里叫 `a` 的那种写法静默判成「不是读者」。名字必须**从代码里读出来**
+    #    （`X = <parser>.parse_args()`），这与本仓库「不设默认值」的纪律同款：
+    #    取不到就不产生键（判成非读者 = 安全方向的假红），而不是猜一个。
+    argvars = {t.id for n in ast.walk(tree) if isinstance(n, ast.Assign)
+               and isinstance(n.value, ast.Call)
+               and getattr(n.value.func, "attr", None) == "parse_args"
+               for t in n.targets if isinstance(t, ast.Name)}
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        fn = node.func
+        if (getattr(fn, "attr", None) or getattr(fn, "id", None)) != "add_argument":
+            continue
+        flags = [a.value for a in node.args
+                 if isinstance(a, ast.Constant) and isinstance(a.value, str)]
+        dests = [f.lstrip("-").replace("-", "_") for f in flags if f.startswith("--")]
+        kw = [k.value for k in node.keywords if k.arg in ("default", "type", "const")]
+        for sub in kw:
+            for s2 in ast.walk(sub):
+                if isinstance(s2, ast.Constant) and isinstance(s2.value, str) \
+                        and _NEEDLE_HINT[0] in s2.value:
+                    out |= {f"{v}.{d}" for d in dests for v in argvars}
+                if isinstance(s2, ast.Name) and s2.id in names:
+                    out |= {f"{v}.{d}" for d in dests for v in argvars}
+    return out
+
+
 def _reads_file(path: Path, needle: str) -> bool:
-    """该脚本里是否**真的**把 `needle` 这个字符串传进了某个读函数。
+    """该脚本里是否**真的**把 `needle` 这个产物当成输入读进来。
 
     ⚠️ 用 AST 而不是文本邻近：首版是「`needle` 附近 ±400 字符里有没有 `read_text`」，
     于是 `run_phase6_gates.py` 里**那段构造假读者的字符串**被当成了真读者（假红）。
     邻近启发式问的是「附近像不像在读」，AST 问的是「**是不是在读**」。
+
+    认三种写法（**三种都认，是因为只认一种会把接线判成没接线**）：
+      ① 字面量出现在读调用的子树里 —— `json.loads(Path("x.json").read_text())`；
+      ② 模块级常量（含传递绑定）出现在读调用的子树里 —— `POOL_PATH.read_text()`；
+      ③ 该常量经 `add_argument(default=…)` 变成 `args.<dest>`，
+         再传给某个函数、在该函数体内被读 —— `load(args.pool)`。
     """
     import ast
     try:
         tree = ast.parse(path.read_text(encoding="utf-8"))
     except (SyntaxError, OSError, UnicodeDecodeError):
         return False
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.Call):
-            continue
-        fn = node.func
-        name = getattr(fn, "attr", None) or getattr(fn, "id", None)
-        if name not in _READ_FUNCS:
-            continue
-        # 搜整个调用子树：`json.loads(Path('x').read_text(...))` 里 needle 在**接收者**上，
-        # 只搜 args 会漏（而漏 = 假绿，比假红危险）。
-        for sub in ast.walk(node):
-            if isinstance(sub, ast.Constant) and isinstance(sub.value, str) \
-                    and needle in sub.value:
-                return True
-    return False
+    _NEEDLE_HINT[0] = needle
+    try:
+        carry = _needle_names(tree) | _call_site_names(tree)
+        # ③ 参数化：某函数体内出现 `Name(p)` 被读，而该参数在**本模块的某个调用点**
+        #    收到了携带 needle 的表达式 ⇒ 体内那个 `Name(p)` 也算携带。
+        for fn in [n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]:
+            params = {a.arg for a in fn.args.args}
+            passed: set[str] = set()
+            for c in ast.walk(tree):
+                if not isinstance(c, ast.Call) or (getattr(c.func, "id", None) != fn.name):
+                    continue
+                for idx, a in enumerate(c.args):
+                    # ⚠️ `args.pool` 是 `Attribute`，**不是** `Name` —— 首版只认 Name，
+                    #    于是③这种写法静默判成「不是读者」（正是本条要修的那个形态本身）。
+                    if _expr_key(a) in carry and idx < len(fn.args.args):
+                        passed.add(fn.args.args[idx].arg)
+                for k in c.keywords:
+                    if k.arg in params and _expr_key(k.value) in carry:
+                        passed.add(k.arg)
+            carry |= passed
+
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call):
+                continue
+            fn = node.func
+            name = getattr(fn, "attr", None) or getattr(fn, "id", None)
+            if name not in _READ_FUNCS:
+                continue
+            # 搜整个调用子树：`json.loads(Path('x').read_text(...))` 里 needle 在**接收者**上，
+            # 只搜 args 会漏（而漏 = 假绿，比假红危险）。
+            for sub in ast.walk(node):
+                if isinstance(sub, ast.Constant) and isinstance(sub.value, str) \
+                        and needle in sub.value:
+                    return True
+                if isinstance(sub, ast.Name) and sub.id in carry:
+                    return True
+        return False
+    finally:
+        _NEEDLE_HINT[0] = ""
 
 
 def check_spec(spec_path: Path | None = None) -> int:
@@ -1749,6 +1940,20 @@ def main() -> int:
              # ⚠️ 没判定的条目 id 必须进产物：否则下游只看 count，
              # 会把「没测到」当成「通过」—— 这里是它唯一能被看见的地方。
              "unjudged_ids": r["unresolved_ids"] + r["no_groups_ids"],
+             # ⚠️ **打分器（rank_candidates.py）只认这一块**：它据此判定
+             # 「输入到底是不是过滤器的产物」。缺这一块 ⇒ 那边 exit 2，**没有回退路径**
+             # —— 静默回退会让「接线了」与「没接线」在产物上长得一模一样（#105）。
+             "filter": {
+                 "count_before": n,
+                 "count": len(kept),
+                 "judged": r["judged"],
+                 "unjudged_ids": r["unresolved_ids"] + r["no_groups_ids"],
+                 "dropped_ids": [d["arxiv_id"] for d in r["dropped"]],
+                 "dropped": r["dropped"],
+                 "drop_reasons": dict(reasons),
+                 "source_pool": src.get("source_pool_name", args.pool.name),
+                 "generated_by": "candidate_filter.py --apply",
+             },
              # ⚠️ 证据形态进产物：下游（打分/短名单/人工判定）据此知道
              # 「这篇是凭什么进这个域的」。**没有这一栏，9 篇污染与 19 篇真命中
              # 在文件里长得一模一样**（这正是本批要修的那个缺陷）。

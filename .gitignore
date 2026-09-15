@@ -103,6 +103,13 @@ _backup/
 # ---------------------------------------------------------------------------
 !paper2skills-research/data/arxiv_candidates.csv
 !paper2skills-research/data/arxiv_candidates.json
+# ⚠️ **过滤产物也入库**（PHASE6 #105 接线批，2026-09-14）：接线之后它是
+# `rank_candidates.py` 的**直接输入**，而 `recommendations.json`（已入库）由它派生 ——
+# 不入库则**已入库产物的父节点在克隆里不存在**，血缘断在第一跳（与门禁 bug #12
+# 「`k1_l5.json` 被 ignore ⇒ 新克隆必然没有它」同型，只是后果轻一档：这边是 exit 2 且报出命令）。
+# 代价 2.0 MB（源池 2.2 MB 已在库）。它可由 `candidate_filter.py --apply` **逐字节复现**，
+# `check_pipeline_chain.py --check` 的 J2 会真跑一遍证明这一点。
+!paper2skills-research/data/arxiv_candidates_filtered.json
 !paper2skills-research/data/journal_candidates.csv
 !paper2skills-research/data/journal_candidates.json
 !paper2skills-research/data/recommendations.csv

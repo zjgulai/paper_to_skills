@@ -18,6 +18,7 @@
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import re
@@ -29,6 +30,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 CONFIG_PATH = ROOT.parent / "paper2skills-vault" / "07-资源库" / "scoring_config.json"
+
+# ---------------------------------------------------------------------------
+# 接线（PHASE6 #105）：打分器的输入是**三段式过滤器的产物**，不是原始收割池
+# ---------------------------------------------------------------------------
+# 本仓库实测过：`关键词库-v2.md` §0 写着「过滤阶段由 `apply_negative_filter()` 与
+# `require_constraint()` 承担」，而这两个函数**在全仓库只出现一次，就是那一行**；
+# 过滤器的 `--apply` 产物**从未生成过**，本文件读的是**未过滤**的池子。
+# ⇒ 负向词与约束词至今只影响一份报告与一道门禁，**不影响进入打分与短名单的论文集合**。
+# 这是「交付≠接线」的第五次（#11 / #23 / #98 / #105）。
+#
+# ⚠️ **本文件是那条断链的唯一接线点，所以三条硬纪律都在这里：**
+#   ① **没有静默回退。** 过滤产物不存在 ⇒ **exit 2**（「没测到」≠「通过」）。
+#      绝不允许「读不到就退回未过滤池」——那会让「接线了」与「没接线」
+#      在产物上长得一模一样，而 L19c/L19d 全都是绿的。
+#   ② **不许把未过滤池喂进来。** 判据是「输入里有没有过滤器的自述块 `filter`」，
+#      不是「文件名对不对」。指错了就 exit 2，并告诉你那条命令。
+#   ③ **`unjudged_ids` 非空 ⇒ exit 2。** 那一栏是「域标签认不出来、负向词与约束词
+#      一条都没生效」的论文 —— 危险性排序 **3 > 2 > 1 > 0**，不许被算成通过。
+FILTERED_POOL = "arxiv_candidates_filtered.json"
+POOL_PATH = DATA / FILTERED_POOL
 
 
 
@@ -265,23 +286,97 @@ def score(item: dict) -> dict:
     }
 
 
-def main() -> None:
-    src = json.loads((DATA / "arxiv_candidates.json").read_text(encoding="utf-8"))
+def load_filtered_pool(path: Path) -> dict:
+    """读三段式过滤器的产物。**三条拒绝全部 fail loud**，退回码一律 2。
+
+    退出码 **2 = 输入没拿到**，与「判红」分开：这里没有任何一篇论文被判错，
+    只是**仪器没接上**。混成一个码会让「没接线」看起来像「接线了但有问题」。
+    """
+    if not path.is_file():
+        print(f"🔴 过滤产物读不到：{path}\n"
+              f"   ⇒ 本文件**故意没有回退路径**：读不到就 exit 2，不许退回未过滤池\n"
+              f"     （回退会让「接线了」与「没接线」在产物上长得一模一样）。\n"
+              f"   先跑：python3 paper2skills-research/scripts/candidate_filter.py "
+              f"--apply")
+        return None
+    src = json.loads(path.read_text(encoding="utf-8"))
+    flt = src.get("filter")
+    if not isinstance(flt, dict):
+        print(f"🔴 {path.name} 里没有 `filter` 自述块 ⇒ **它不像过滤器的产物**。\n"
+              f"   ⚠️ 判据问的是「输入里有没有过滤器的自述块」，**不是文件名对不对** ——\n"
+              f"   把未过滤池复制成这个名字同样会被拒（漏洞 #11 同族：判据只认一种写法）。\n"
+              f"   先跑：python3 paper2skills-research/scripts/candidate_filter.py --apply")
+        return None
+    unj = flt.get("unjudged_ids")
+    if unj is None:
+        print(f"🔴 过滤产物缺 `filter.unjudged_ids` ⇒ **「没测到」这一栏读不到**，"
+              f"exit 2（没测到 ≠ 通过）")
+        return None
+    if unj:
+        print(f"🔴 **仪器瞎了：{len(unj)} 篇的域标签认不出来** —— 这些论文的负向词与"
+              f"约束词**一条都没生效**，而它们会被算进「保留」。\n"
+              f"   危险性排序 3 > 2 > 1 > 0：**没测到比测了是红的更危险**（红会有人修）。\n"
+              f"   id（前 10）：{unj[:10]}\n"
+              f"   ⇒ 修好域标签后重跑 candidate_filter.py --apply。")
+        return None
+    return src
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(
+        description="候选打分（输入 = 三段式过滤器的产物，PHASE6 #105 起）")
+    ap.add_argument("--pool", type=Path, default=POOL_PATH,
+                    help=f"过滤产物路径（默认 {FILTERED_POOL}）")
+    # ⚠️ `--out-dir` 是**为了让门禁能不碰真产物**（`check_pipeline_chain.py` 的
+    # 端到端夹具要用真脚本跑真判定，而默认路径会把 data/ 下的三个产物覆盖掉）。
+    # 没有它，门禁的「自证」就只能靠嘴说。
+    ap.add_argument("--out-dir", type=Path, default=DATA,
+                    help="产物目录（默认 data/；夹具用它隔离写盘）")
+    args = ap.parse_args()
+    out = args.out_dir
+    out.mkdir(parents=True, exist_ok=True)
+
+    src = load_filtered_pool(args.pool)
+    if src is None:
+        return 2
     items = src["items"]
+    flt = src["filter"]
+    if not items:
+        print("🔴 过滤后一篇都不剩 —— 「没东西可查」不等于「查过了没问题」，exit 2")
+        return 2
+
+    # ⚠️ 收缩必须**看得见**：接线后 274 篇会离开打分集合，其中恰好有一篇已是
+    # `decision: extract`（p2s-2026-0007 / 2607.12714，收割查询把它挂在 04-供应链 下，
+    # 它一条约束词都不命中）。只改数字不报账，下一个人只能看到「候选少了」，
+    # 看不到「少的是谁、为什么」。
+    print(f"输入：{args.pool.name} —— 过滤前 {flt['count_before']} 篇 → "
+          f"保留 {flt['count']} 篇（丢弃 {flt['count_before'] - flt['count']}，"
+          f"{100 * (flt['count_before'] - flt['count']) / max(1, flt['count_before']):.1f}%）")
+    print(f"  丢弃原因 Top: {dict(sorted(flt.get('drop_reasons', {}).items(), key=lambda x: -x[1])[:5])}")
+    print(f"  被丢的 id 逐条留在产物 `filter.dropped_ids`（{len(flt.get('dropped_ids', []))} 条）"
+          f"—— 「离开打分集合」**不等于**「查不到了」")
+
     rows = []
     for it in items:
         s = score(it)
-        rows.append({**it, **s})
+        # ⚠️ 约束词证据随条目一起流下去：下游（短名单/人工判定/契约）据此知道
+        # 「这篇是凭什么进这个域的」。**没有这一栏，9 篇污染与 19 篇真命中在文件里
+        # 长得一模一样** —— 这正是 P2/P2b 两批要修的那个缺陷。
+        ev = (src.get("constraint_evidence") or {}).get(it["arxiv_id"])
+        rows.append({**it, **s, **({"constraint_evidence": ev} if ev else {})})
     rows.sort(key=lambda r: -r["score"])
 
-    (DATA / "recommendations.json").write_text(
+    (out / "recommendations.json").write_text(
         json.dumps({"generated_at": datetime.now().isoformat(timespec="seconds"),
-                    "window": src["window"], "count": len(rows), "items": rows},
+                    "window": src["window"], "count": len(rows),
+                    # 过滤器自述块**原样带过**：这是「过了哪一版词表、丢了哪些」的唯一凭据
+                    "filter": {**flt, "source_pool": args.pool.name},
+                    "items": rows},
                    ensure_ascii=False, indent=1), encoding="utf-8")
 
     cols = ["score", "s_venue", "s_code", "s_business", "s_method", "s_gap", "venue",
             "arxiv_id", "published", "domains", "title", "journal_ref", "strong_hits", "url"]
-    with (DATA / "recommendations.csv").open("w", newline="", encoding="utf-8") as fh:
+    with (out / "recommendations.csv").open("w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(cols)
         for r in rows:
@@ -304,7 +399,7 @@ def main() -> None:
         for r in sub:
             lines.append(f"| {r['score']} | {r['venue'] or '—'} | {r['arxiv_id']} | {r['published'][:10]} | {r['title'][:95]} |")
         lines.append("")
-    (DATA / "shortlist.md").write_text("\n".join(lines), encoding="utf-8")
+    (out / "shortlist.md").write_text("\n".join(lines), encoding="utf-8")
 
     print("Top 40 总榜")
     print(f"{'分':>5} {'venue':<10} {'arxiv':<12} {'日期':<11} title")
@@ -317,7 +412,8 @@ def main() -> None:
     print(f"阈值（scoring_config.json）: P0≥{THRESH.get('p0', 60)} "
           f"P1≥{THRESH.get('p1', 40)} P2≥{THRESH.get('p2', 30)}"
           + ("" if CFG else "   ⚠️ 未找到配置文件，正在使用内置默认值"))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

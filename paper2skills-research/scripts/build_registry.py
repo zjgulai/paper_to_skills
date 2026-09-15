@@ -13,6 +13,7 @@
 """
 from __future__ import annotations
 
+import argparse
 import json
 from datetime import datetime
 import sys
@@ -55,8 +56,17 @@ def _assert_canonical(labels, where: str) -> None:
             + f"   规范名以 `domains.py` 的 CANONICAL 为准（{len(_domains.CANONICAL)} 个）。")
 
 _assert_canonical(CODE_DIR, "build_registry.CODE_DIR")
-_assert_canonical([d["d"] for d in DECISIONS], "build_registry.DECISIONS 的 `d` 字段")
 
+# ⚠️⚠️ **DECISIONS 的守卫必须写在 DECISIONS 定义之后。**
+# 它一度写在这一行（第 58 行），而 `DECISIONS` 定义在第 62 行 ——
+# 模块级前向引用 ⇒ **`NameError` at import ⇒ 本脚本从被加守卫的那天起就无法运行**
+# （台账 #113：加于 P1 `4dfa9f2`，此后每一次「跑一下 build_registry」都会当场炸）。
+# 它没被发现，是因为**没有任何门禁跑过它**，而 `papers_registry.json` 是**已入库的产物**，
+# 所有下游读的是产物不是生成器 —— 与 #105（过滤器无消费者）同型：
+# **「交付」不是「接线」，而「接线」也不是「跑得起来」。**
+# ⇒ 结构性修法见 `run_phase6_gates.py` 的 **L19e**：流水线脚本必须能被 `import`
+#   （import 会执行模块级代码，正是这条会炸的地方）。
+#
 # 本轮经原文核对（arXiv API / Crossref）后的决策表
 # 字段: arxiv_id, domain, priority, decision, reason, data_availability, venue_verified
 DECISIONS: list[dict] = [
@@ -204,11 +214,81 @@ DECISIONS: list[dict] = [
 
 PLACEHOLDER = {"2608.25871x", "2608.20844b"}
 
+# 域名守卫的**第二条**：`DECISIONS` 与 `PLACEHOLDER` 都已定义完毕，这里才是它合法的位置。
+#
+# ⚠️ 两条判据，缺一它就有后门：
+#   J-a  **真正会被使用的**条目（不在 PLACEHOLDER 里的）域名必须是规范名；
+#   J-b  域名为空的行**必须恰好是**已声明的 PLACEHOLDER。
+# 少了 J-b，`d=""` 就是一个可以随手扩大的豁免面（「先留空，回头再填」永远不会被抓）；
+# 少了 J-a，空域名会一路混进事实源 —— 那正是 P1 要拦的「认不出的名字静默通过」。
+# ⚠️ 原来那条守卫把 **J-a 的适用范围写成了整张表**：表里两条占位行 `d=""`，
+# 于是即使修好前向引用，脚本**仍然跑不起来**（本批实测：修完 NameError 立刻撞上这条）。
+# 两条缺陷叠在一起 —— 前向引用让脚本根本到不了这里，所以第二条**从来没有被人看见过**。
+_used = [d for d in DECISIONS if d["a"] not in PLACEHOLDER]
+_assert_canonical([d["d"] for d in _used], "build_registry.DECISIONS 的 `d` 字段")
+_empty = {d["a"] for d in DECISIONS if not d["d"]}
+if _empty != PLACEHOLDER:
+    raise SystemExit(
+        "🔴 `DECISIONS` 里「域名为空」的行与已声明的 `PLACEHOLDER` 不是同一批：\n"
+        f"   域名为空：{sorted(_empty)}\n"
+        f"   PLACEHOLDER：{sorted(PLACEHOLDER)}\n"
+        "   ⇒ 空域名是一个**豁免面**，它必须与显式声明的占位集合逐项相等，"
+        "不许顺手扩大（漏洞 #11 同族：判据的适用范围被默认成了全体）。")
 
-def main() -> None:
-    rec = {i["arxiv_id"]: i for i in json.loads((DATA / "recommendations.json").read_text(encoding="utf-8"))["items"]}
+
+
+def load_scoring_set() -> dict:
+    """打分集（**已被三段式过滤器过滤**，PHASE6 #105 接线后）。
+
+    ⚠️ 与 `load_full_pool()` 分开是**必须的**，不是冗余：打分集回答「要不要选它」，
+    全量池回答「它是什么」。把两者合并会让「过滤器丢了它」变成「它不存在」——
+    而 `DECISIONS` 是**人的决策记录**，不该被一个筛选器作废（详见 `enrich()`）。
+    """
+    p = DATA / "recommendations.json"
+    if not p.is_file():
+        raise SystemExit(f"🔴 打分集读不到：{p} —— 先跑 rank_candidates.py（它读过滤产物）")
+    return {i["arxiv_id"]: i for i in json.loads(p.read_text(encoding="utf-8"))["items"]}
+
+
+def load_full_pool() -> dict:
+    """全量候选池（未过滤）。**只用于补充元数据，不用于入选判定。**"""
+    p = DATA / "arxiv_candidates.json"
+    if not p.is_file():
+        raise SystemExit(f"🔴 全量候选池读不到：{p}")
+    return {i["arxiv_id"]: i for i in json.loads(p.read_text(encoding="utf-8"))["items"]}
+
+
+def enrich(a: str, scored: dict, pool: dict) -> tuple[dict, str]:
+    """给一条已决策论文取元数据。返回 (src, provenance)。
+
+    provenance 三态（**这是一等输出，不是调试信息**）：
+      `scored`     —— 在打分集里（正常路径）；
+      `pool_only`  —— **被过滤器丢了，但论文确实存在** ⇒ 用全量池补元数据。
+                      这一态是本条存在的**全部理由**：`papers_registry.json` 是
+                      唯一事实源，一篇已 `decision: extract` 的论文不该因为
+                      一个**筛选器**没选它，就在事实源里退化成 `(待补：见 note)`、
+                      `url` 变空、`venue` 变空、`score` 变 `None`。
+                      ⚠️ 首版（#105 接线前）这里是 `(src or {}).get(...)` —— 三态被
+                      压成一态，**降级是静默的**。
+      `missing`    —— 两处都找不到 ⇒ 下面的 `main()` 必须**点名报出**，不许静默填占位符。
+    """
+    if a in scored:
+        return scored[a], "scored"
+    if a in pool:
+        # 全量池没有 `venue`/`score`（那是打分层算出来的）⇒ 用**同一个打分器**补，
+        # 而不是在这里另写一份口径（漏洞 #11 同族：同一件事两处各写一份）。
+        import rank_candidates as _rc
+        return _rc.score(pool[a]), "pool_only"
+    return {}, "missing"
+
+
+def build_registry() -> tuple[dict, dict]:
+    """**纯计算**：造出 registry 对象并返回，不碰盘。写盘由 `main()` 决定。"""
+    scored = load_scoring_set()
+    pool = load_full_pool()
     jrn = {i["doi"]: i for i in json.loads((DATA / "journal_candidates.json").read_text(encoding="utf-8"))["items"]}
 
+    provenance = {"scored": [], "pool_only": [], "missing": []}
     records, n = [], 0
     for d in DECISIONS:
         if d["a"] in PLACEHOLDER:
@@ -216,15 +296,21 @@ def main() -> None:
         n += 1
         pid = f"p2s-2026-{n:04d}"
         is_journal = d["a"].startswith("10.")
-        src = jrn.get(d["a"]) if is_journal else rec.get(d["a"])
+        if is_journal:
+            src, prov = jrn.get(d["a"]), ("scored" if d["a"] in jrn else "missing")
+        else:
+            src, prov = enrich(d["a"], scored, pool)
+        provenance[prov].append({"a": d["a"], "paper_id": pid, "domain": d["d"],
+                                 "decision": d["dec"]})
+        src = src or {}
         rec_item = {
             "paper_id": pid,
             "identifiers": ({"doi": d["a"]} if is_journal else {"arxiv": d["a"]}),
-            "title": (src or {}).get("title", "(待补：见 note)"),
-            "url": (src or {}).get("url", ""),
-            "published": (src or {}).get("published", "")[:10] if not is_journal else (src or {}).get("published", ""),
-            "journal": (src or {}).get("journal", "") if is_journal else "",
-            "venue": (src or {}).get("venue", "") or (src or {}).get("journal", ""),
+            "title": src.get("title", "(待补：见 note)"),
+            "url": src.get("url", ""),
+            "published": (src.get("published", "") or "")[:10] if not is_journal else src.get("published", ""),
+            "journal": src.get("journal", "") or "" if is_journal else "",
+            "venue": src.get("venue", "") or src.get("journal", "") or "",
             "venue_tier": d["tier"],
             "domain": d["d"],
             "priority": d["p"],
@@ -232,7 +318,7 @@ def main() -> None:
             "decision_reason": d["reason"],
             "data_availability": d["data"],
             "note": d["note"],
-            "score": (src or {}).get("score", None),
+            "score": src.get("score", None),
             "source_route": "crossref" if is_journal else "arxiv",
             "outputs": {
                 "skill_card": f"paper2skills-vault/{d['d']}/Skill-<方法名>.md" if d["d"] else "",
@@ -249,7 +335,10 @@ def main() -> None:
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "window": {"start": "2026-06-12", "end": "2026-09-12"},
         "sources": {
-            "arxiv": {"queries": 49, "candidates": 1046},
+            # ⚠️ `candidates` 与 `scored` **是两个数**，接线（#105）之后不再相等：
+            #    candidates = 收割到的全量池；scored = 过了三段式过滤器、真的进打分的那些。
+            # 写死一个数会让「过滤器到底有没有生效」在事实源里看不见。
+            "arxiv": {"queries": 49, "candidates": len(pool), "scored": len(scored)},
             "crossref": {"journals": 28, "candidates": 1751, "biz_hits": 783},
         },
         "stats": {
@@ -260,15 +349,128 @@ def main() -> None:
         },
         "records": records,
     }
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(registry, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(registry["stats"], ensure_ascii=False, indent=2))
-    print(f"\n-> {OUT}")
+
+    # --- 元数据来源账（**一等输出**） ----------------------------------------
+    # 「谁被过滤器丢了」必须看得见。否则接线（#105）的后果是：
+    # 274 篇候选**静默**离开打分集，而其中恰好有一篇已是 `decision: extract`
+    # （p2s-2026-0007 / 2607.12714：收割查询把它挂在 04-供应链 下，它一条约束词都不命中，
+    #  于是被丢；而人的决策把它放在 05-推荐系统）。没有这一栏，事实源里那一条会
+    # 从「有 title/url/venue/score」**静默退化成** `(待补：见 note)`。
+    print(f"\n元数据来源（scored {len(provenance['scored'])} / "
+          f"pool_only {len(provenance['pool_only'])} / missing {len(provenance['missing'])}）：")
+    for x in provenance["pool_only"]:
+        print(f"  ⚠️ pool_only  {x['paper_id']}  {x['a']}  {x['domain']}  {x['decision']}"
+              f"  ← **被三段式过滤器丢弃，但论文存在**：元数据取自全量池，"
+              f"丢弃原因见 data/arxiv_candidates_filtered.json 的 filter.dropped_ids 反查")
+    for x in provenance["missing"]:
+        print(f"  🔴 missing    {x['paper_id']}  {x['a']}  {x['domain']}  {x['decision']}"
+              f"  ← 打分集与全量池**都没有它** ⇒ 事实源里这一条会退化成占位符")
+    if provenance["missing"]:
+        print(f"\n🔴 {len(provenance['missing'])} 条决策论文在候选池里查无此篇 —— "
+              f"「查不到」不等于「没影响」：请先核实标识符，别让占位符入库。")
+    if provenance["pool_only"]:
+        print("\n⚠️ 上列条目**不在打分集里**（过滤器未选它），元数据走全量池补齐。"
+              "\n   这不是错误，但它意味着：**过滤器的判定与人的决策在这些条目上不一致** ——"
+              "\n   逐条记在册，别静默。")
     print("\nP0 萃取队列:")
     for r in records:
         if r["priority"] == "P0":
             print(f"  {r['paper_id']} [{r['domain']}] {r['title'][:64]}")
 
+    return registry, provenance
+
+
+# ---------------------------------------------------------------------------
+# ⚠️⚠️ 覆盖守卫（台账 #114）：**本脚本不是 `papers_registry.json` 的生成器**
+# ---------------------------------------------------------------------------
+# 盘上那份是**唯一事实源**，PHASE3–PHASE5 期间由人逐条补过：venue_tier 校正 31 条、
+# 已交付卡的 `status/gates/outputs` 回指 19 条、`note` 口径修正 9 条、
+# **DOI 更正 8 条**、R4 的 `venue_track` 降级 7 条…… 只有 **6/45** 条能被本脚本原样复现。
+#
+# 本脚本的真实身份是**一次性初始化器**：DECISIONS 停在「初版建档」那一刻的快照。
+# ⇒ 默认**只做只读对账、绝不写盘**。写盘必须 `--force-reinit --reason "<理由>"`。
+#
+# 这一条之所以必须是默认行为，而不是一句文档警告：
+# **「跑不起来」掩盖了「跑起来会毁数据」** —— #113 让本脚本在模块级就 `NameError`，
+# 于是两天里没有任何人知道它一旦能跑会发生什么。第一版复核我还把它读成了
+# 「生成器与盘上一致」（见 #115：脚本在写盘前就炸了，我比的其实是同一份文件）。
+# 门禁的价值在于**把「如果它跑了会怎样」变成每次都能看见的一行读数**。
+HUMAN_FIELDS = ("note", "status", "gates", "outputs", "venue_tier", "venue_track",
+                "venue_track_note", "decision_reason", "data_availability",
+                "title", "url", "journal", "venue", "published", "score", "identifiers")
+
+
+def overwrite_account(fresh: dict) -> tuple[int, dict, list]:
+    """盘上那份若被本次生成覆盖，会改动多少条记录、哪些字段。**纯计算，不写盘。**"""
+    if not OUT.is_file():
+        return 0, {}, []
+    disk = json.loads(OUT.read_text(encoding="utf-8"))
+    kd = {r["paper_id"]: r for r in disk.get("records", [])}
+    kf = {r["paper_id"]: r for r in fresh["records"]}
+    fields, changed = {}, []
+    for pid in sorted(set(kd) & set(kf)):
+        diff = [f for f in HUMAN_FIELDS if kd[pid].get(f) != kf[pid].get(f)]
+        if diff:
+            changed.append(pid)
+            for f in diff:
+                fields[f] = fields.get(f, 0) + 1
+    return len(kf) - len(kd), fields, changed
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(
+        description="初版建档（**一次性初始化器**，默认只对账、不写盘）")
+    ap.add_argument("--force-reinit", action="store_true",
+                    help="真的覆盖 papers_registry.json（会毁掉人工核对过的字段，见覆盖账）")
+    ap.add_argument("--reason", default="",
+                    help="与 --force-reinit 同用：写清为什么可以覆盖（必填，留痕）")
+    args = ap.parse_args()
+    if args.force_reinit and not args.reason.strip():
+        print("🔴 `--force-reinit` 必须与 `--reason \"<理由>\"` 同用 —— "
+              "覆盖唯一事实源这件事必须留痕（三条扫描与推送纪律同款）。")
+        return 2
+
+    registry, provenance = build_registry()
+
+    print(f"\n=== 覆盖账（本脚本 vs 盘上 {OUT.name}）===")
+    delta, fields, changed = overwrite_account(registry)
+    if not changed and delta == 0:
+        print("盘上那份与本次生成逐字段相同 —— 覆盖是安全的。")
+    else:
+        same = 45 - len(changed) if len(changed) <= 45 else 0
+        print(f"⚠️ 覆盖会改动 **{len(changed)}/45** 条记录（逐字段完全相同的只有 {same} 条），"
+              f"逐字段受影响记录数：")
+        for f, c in sorted(fields.items(), key=lambda x: -x[1]):
+            print(f"     {c:>3}  {f}")
+        print(f"   受影响 paper_id（全部）：{changed}")
+        print("   ⇒ 这些字段是**人逐条核对过的**（venue_tier 校正 / 已交付卡回指 / "
+              "note 口径修正 / DOI 更正 / R4 降级）。本脚本是初版快照，不是生成器。")
+
+    if provenance["missing"]:
+        print(f"\n🔴 {len(provenance['missing'])} 条决策论文在候选池里查无此篇 ⇒ "
+              f"本脚本的输出**不能**直接入库（那 8 条会退化成占位符）。"
+              f"先核实标识符。")
+        return 1
+
+    if not args.force_reinit:
+        print(f"\n⏸️  **未写盘**（默认行为）。盘上 {OUT.name} 原样保留。")
+        print("   要覆盖：`--force-reinit --reason \"<理由>\"`。"
+              "先读完上面的覆盖账，再决定值不值。")
+        return 0
+    if changed:
+        print(f"\n🔴 拒绝覆盖：本脚本会改动 {len(changed)}/45 条**人工核对过**的记录，"
+              f"而 `--reason` 没有对它们逐类给出处置。\n"
+              f"   `--reason` 收到的是：{args.reason!r}\n"
+              f"   ⇒ 一次性初始化器**不允许**在事实源已经长出手工内容之后被重跑；"
+              f"要把某条决策搬进事实源，就**手工改那一条**（并留下可复核的理由），"
+              f"不要用整表重写去覆盖 45 条里的 39 条。")
+        return 1
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(registry, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"\n✅ 已写 -> {OUT}（理由：{args.reason}）")
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

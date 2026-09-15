@@ -139,6 +139,19 @@ GATES: list[Gate] = [
     # J3 `judge()` 源码里不许出现类感知字段（AST，三种写法都认）· J4 计数等于基线。
     Gate("L19d", "主题类表可独立复算 · 盲区已报出 · `judge()` 不含类感知字段",
          ["candidate_filter.py", "--check-class"]),
+    # ⚠️ L19e 守的是**验收面自己看不见的一格**：65 条门禁里**没有一条跑过流水线脚本**，
+    # 于是 `build_registry.py` 的模块级前向引用（加于 P1 `4dfa9f2`）让它**死了两天**
+    # 而全部门禁照绿（台账 #113）。三条判据各有反向控制：
+    #   J1 **加载得起来**（不是「文件在」—— `isfile` 对死脚本完全无感）；
+    #   J2 第 2 环接线（#105）的三条纪律：缺产物 ⇒ exit 2 · 未过滤池改名冒充 ⇒ exit 2 ·
+    #      `unjudged_ids` 非空 ⇒ exit 2；且**反向控制「干净夹具必须 exit 0」**常驻
+    #      （判据过严 ⇒ 会被当坏工具绕过）；
+    #   J3 **一次性初始化器默认不许改写唯一事实源** —— 看行为不看措辞，
+    #      因为 #114 的危险恰恰在于「源码读起来一直是对的」。
+    Gate("L19e", "第 2 环接线：脚本加载得起来 · 三条纪律能被打红 · 初始化器不改写事实源",
+         ["check_pipeline_chain.py", "--check"]),
+    Gate("L19f", "第 2 环接线：自检（J1/J2/J3 各有能失败的反向控制）",
+         ["check_pipeline_chain.py", "--selftest"], kind="selftest"),
     Gate("L4a", "契约生成器：底本与实物一致", ["build_contracts.py", "--check"]),
     Gate("L4b", "契约作业包：批次与材料摘要一致", ["build_contract_workpack.py", "--check"]),
     # --- 契约层判据（J1–J13）---
